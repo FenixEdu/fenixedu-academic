@@ -1,96 +1,92 @@
-/* logdotist.css | SOP - v.01c: 24.01.2003*/
+/* logdotist.css | SOP : 21.08.2003*/
 
 /******************************************
 	Global Text Proprieties
 ******************************************/
 
 body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	line-height: 14px;
-	color: #000000;
-	background-color: #B5BDD6;
-}
+	background-color:/* #B5BDD6*/ #999;
+	}
+	
 table, div, span {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	background-color: #FFFFFF;
-}
+	background-color: #fff;
+	}
+	
 h1 {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	font-weight: bold;
-	color: #003366;
-	background-color: transparent;
-}
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #036;
+	margin: 0;
+	padding: 20px 0 0 20px;
+	}
 
 /******************************************
 	Global Link Proprieties
 ******************************************/
 
-a:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
+a:link, a:visited {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
-	background-color: transparent;
-}
-a:active {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #00427b;
-	background-color: transparent;
-}
-a:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #00427b;
-	background-color: transparent;
-}
-
+	background: transparent;
+	}
+	
 /******************************************
 	Structural Classes: Header & Tables
 ******************************************/
 
-.ist {
- 	background-color: #FF9933 ;
-}
+#container {
+	margin: 100px auto 0 auto;
+	background: #fff;
+	width:500px;
+	border: 1px solid #333;
+	padding: 0 0 20px 0;
+	}
+
+#dotist_id {
+	height: 70px;
+ 	background:url("../images/header_bck.gif") repeat-x top;
+ 	margin: 0;
+ 	padding: 0 0 0 20px;
+	}
+	
+#txt p {
+	font: 11px/15px Verdana, Arial, Helvetica, sans-serif;
+	padding: 0 20px 0 20px;
+	}
+	
+#alert p{
+	font: 11px/15px Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	margin: 0;
+	padding: 0 20px 0 20px;
+	}
+	 
 .error {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	font-weight: bold;
-	color: #CC0000;
-	background-color: #FFFFCC;
-}
-.introtexto {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	text-align: left;
-	line-height: 15px;
-	padding: 20px;
-	background-color: #FFFFFF;
-}
-.tablebrd {
-	border: 1px solid #333333;
-}
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #c00;
+	text-align: center;
+	background: #ffc;
+	}
+
+.wrapper {
+	text-align: center;
+	}
 
 /******************************************
 	Form Classes: Input & Input Table
 ******************************************/
 
-.inputtable {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	border-top: 1px solid #CCCCCC;
-}
+form {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	}
+
+
 input.button {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #000000;
-	background-color: #b5bdd6;
+	font:11px Verdana, Arial, Helvetica, sans-serif;
+	color: #000;
+	background: #b5bdd6;
 	width: 100px;
+	padding: 2px;
 }
 
 /****************************************************

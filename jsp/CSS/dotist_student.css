@@ -1,83 +1,55 @@
-/* dotist Student CSS v.1c - 24.01.2003 */
+/* dotist Student CSS - 27.08.2003
+   by Bruno Monteiro @ GAEL		    	*/
 
 /**************************************** 
 	Global Text Proprieties 
 *****************************************/
 
 body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	color: #333333;
+	color: #333;
 	text-align: left;
-	margin: 0px;
-	background: #fff;
-}
+	background: #369;
+	margin: 0;
+	padding: 0;
+	}
+
 table {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	background-color: transparent;
-}
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	}
+
 h1	{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #FFFFFF;
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #fff;
 	background-color: transparent;
-}
+	}
+
 h2	{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #003366;
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	/*color: #036;*/
 	background-color: transparent;
-}
+	}
+
+h3 {
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #666;
+	background-color: transparent;
+	}
+	
 /******************************************
 	Global Links Proprieties
 *******************************************/
 
-a:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+a:link, a:visited {
 	color: #00427b;
 	text-decoration: underline;
 	}
 
-a:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #00427b;
-	background-color: transparent;
-	}
-
 a:hover {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #00427b;
 	text-decoration: none;
 	}
-
-/******************************************
-	NavGeral Links Proprieties
-*******************************************/
-	
-.navopgeral a:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-}
-.navopgeral a:active {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-}
-.navopgeral a:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
-}
-.navopgeral a:hover {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: transparent;
-	color: #B5BDD6;
-}
 
 /********************************************
 	Structural & Templating Classes
@@ -86,114 +58,162 @@ a:hover {
 .centerContent {
 	text-align: center;
 	}
-	
-.header-td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #FFFFFF;
-	background-color: #6699CC;
-	padding-right: 20px;
-	padding-left: 20px;
+
+#header {
+	display: block;
+	height: 70px;
+	background: url("../images/header_bck.gif") repeat-x top;
+	padding: 0 0 0 20px;
+	margin: 0;
 	}
 	
-.navbargeral-td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #FFFFFF;
-	background-color: #003366;
-	text-align: center;
-	}
-	
-.navopgeral-td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #FFFFFF;
-	background-color: #003366;
-	text-align: center;
-	padding: 5px;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #b5bdd6;
+#header p {
+	position: absolute;
+	top: 30px;
+	right: 20px;
+	font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #fff;
+	margin: 0;
+	padding: 0;
 	}
 
-.navopgeralSelected-td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #FFFFFF;
-	background-color: #6699DD;
-	text-align: center;
-	padding: 5px;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #b5bdd6;
+/*
+	suporte and logoff nav
+*/
+
+#hdr-nav {
+	position: absolute;
+	top: 0;
+	right: 15px;
+	width: 250px;
+	text-align: right;
+	margin-right: -15px; /* IE5/Mac hor-scr hack */
+	padding: 0;
 	}
 
-.navlateral-td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #CCCCCC;
-	padding: 20px;
+#hdr-nav img{
+	border: 0;
 	}
 
-.bodycontent {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	color: #333333;
-	padding: 20px;
+/*
+	site-wide navigation
+*/
+
+#navgeral {
+	position: relative;
+	left: 0;
+	height: 20px;
+	background: #C0A488;
+	margin: 0;
+	padding: 5px 0 0 150px ;
+	border-bottom: 2px solid #223D4A; 
+   }
+
+	
+#navgeral li {
+	display: inline;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 	}
-	
-.footer-td {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
-	text-align: center;
-	padding: 20px;
-	border-top-width: 4px;
-	border-top-style: solid;
-	border-top-color: #6699CC;
-	}
-	
-/******************************************
-	NavGeral Links Proprieties
-*******************************************/
-	
-.navopgeral-td a:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
+
+#navgeral a:link, #navgeral a:visited {
+	float: left;
+	font: 11px/14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #223D4A;
 	text-decoration: none;
-	}
-	
-.navopgeral-td a:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFFFFF;
-	text-decoration: none;
+	margin: 0px 10px 0px 10px;
+	padding-bottom: 6px;
 	}
 
-.navopgeral-td a:hover {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: transparent;
-	color: #B5BDD6;
+#navgeral a:link.active, #navgeral a:visited.active, #navgeral a:hover {
+	border-bottom: 4px solid #223D4A;
+	padding-bottom: 2px;
+	}
+/*
+	end site-wide navigation
+*/
+	
+
+#navlateral, #navlateral_photos {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	background: #fff;
+	padding: 20px;
+	}
+
+#navlateral {
+	border-right: 1px solid #ccc;
+	}
+
+	
+#bodycontent {
+	font: 11px/16px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+	background: #fff;
+	padding: 20px;
+	}
+
+#footer {
+	background: #C0A488;
+	padding: 10px;
+	border-bottom: 10px solid #223D4A;
+	}
+
+#footer p {
+	font: 11px/14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	color: #333;
+	margin: 0;
+	}
+	
+.wrapper {
+	/*position: relative; */
+	background: #fff;
+	}
+	
+.clear {
+	clear: both;
+	background: #fff;
 	}
 	
 /**********************************************
-	 navlateral list
+	 navlateral list & links
 ***********************************************/	
-
-.navlateral-td ul {
-	list-style-type: square;
+#navlateral ul {
+	list-style: none;
+	margin: 0;
 	}
-	
-.navlateral-td li {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	color: #333;
+
+#navlateral li {
+	list-style: none;
+	background: url("../images/red-list-bullet.gif") no-repeat 0 2px;
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	padding: 0 0 0 10px;
 	margin: 5px 0 5px 0;
 	}
+	
+#navlateral a:link, #navlateral a:visited {
+	/*font-weight: bold;*/
+	color:#666;
+	text-decoration: none;
+	}
 
+#navlateral a:hover {
+	/*font-weight: bold*/
+	color:#666;
+	text-decoration: underline;
+	}
+	
+/**********************************************
+	 Other text formatting classes
+***********************************************/
 
+.emphasis {
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #930:
+	}
+	
 /**********************************************
 	 FORMS Classes: inputs
 ***********************************************/
