@@ -284,6 +284,11 @@ p.contacto {
 .tall-td {
 	height: 50px;
 	}
+.greytxt {
+	font: 11px  Arial, Helvetica, sans-serif;
+	color: #666;
+	}	
+	
  /**********************************************
 	 FORMS Classes: inputs
 ***********************************************/
