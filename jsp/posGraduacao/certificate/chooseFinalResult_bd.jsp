@@ -6,7 +6,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
     
-    <h2><bean:message key="label.certificate.declaration.create" /></h2>
+    <h2><bean:message key="label.certificate.finalResult.create" /></h2>
    <span class="error"><html:errors/></span>
    
    <table>

@@ -48,6 +48,7 @@ public class InfoCurricularCourse  extends InfoObject{
 		result += ", nome =" + name;
 		result += ", sigla =" + code;
 		result += ", type =" + this.type;
+		result += ", credits =" + this.credits;
 		result += "]\n";
 		return result;
 	}

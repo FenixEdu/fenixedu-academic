@@ -22,13 +22,17 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
+import DataBeans.InfoFinalResult;
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.EnrolmentState;
@@ -69,6 +73,12 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.APROVMENT);
 			session.removeAttribute(SessionConstants.EXTRA_CURRICULAR_APROVMENT);
 			session.removeAttribute(SessionConstants.EXTRA_ENROLMENT_LIST);
+			session.removeAttribute(SessionConstants.INFO_FINAL_RESULT);	
+			session.removeAttribute(SessionConstants.CONCLUSION_DATE);
+			session.removeAttribute(SessionConstants.FINAL_RESULT_SIMPLE);
+			session.removeAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE);
+			session.removeAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE);
+			
 			
 			InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) session.getAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
 			
@@ -158,6 +168,67 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 						if (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))
 							session.setAttribute(SessionConstants.EXTRA_CURRICULAR_APROVMENT, certificate.toUpperCase());
 						
+				}
+				if ((certificate.equals("Fim parte escolar simples")) 
+				   || (certificate.equals("Fim parte escolar discriminada sem média")) 
+				   || (certificate.equals("Fim parte escolar discriminada com média"))){
+						
+					InfoFinalResult infoFinalResult = null;
+					try {	
+						Object args[] = {infoStudentCurricularPlan};	
+						infoFinalResult =  (InfoFinalResult) serviceManager.executar(userView, "FinalResult", args);
+					}catch (FenixServiceException e){
+						throw new FenixServiceException ("");	
+					}
+					if (infoFinalResult == null){
+						throw new FinalResulUnreachedActionException("");
+					}
+					Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
+					try {
+						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+	
+					} catch (NonExistingServiceException e) {
+						throw new NonExistingActionException("Inscrição", e);
+					}
+					if (enrolmentList.size() == 0){
+						ActionErrors errors = new ActionErrors();
+						errors.add("AlunoNãoExiste",
+									new ActionError("error.enrolment.notExist"));
+						saveErrors(request, errors);
+						return new ActionForward(mapping.getInput());
+					}
+					InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+					String conclusionDate = "00/00/00";
+					String dataAux = null;					
+					Object result = null;
+					List normalEnrolment = new ArrayList();
+					List extraEnrolment = new ArrayList();
+					Iterator iterator = enrolmentList.iterator();
+					int i = 0;
+					while(iterator.hasNext()) {	
+						result = iterator.next();
+						infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
+						dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
+						if (conclusionDate.compareTo(dataAux) == -1){
+							conclusionDate = dataAux;
+						}		
+						if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+							extraEnrolment.add(result);		
+						else
+							normalEnrolment.add(result);			 
+					}			
+					
+					session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
+					session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);						
+					session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
+					session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);
+					
+					if (certificate.equals("Fim parte escolar simples"))	
+						session.setAttribute(SessionConstants.FINAL_RESULT_SIMPLE, certificate.toUpperCase());
+					if (certificate.equals("Fim parte escolar discriminada sem média"))	
+						session.setAttribute(SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE, certificate.toUpperCase());
+					if (certificate.equals("Fim parte escolar discriminada com média"))	
+						session.setAttribute(SessionConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());					
 				}
 			}	
 			

@@ -4,6 +4,7 @@ package ServidorApresentacao.Action.certificate;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,6 +18,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoFinalResult;
 import DataBeans.InfoStudent;
@@ -92,8 +95,11 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
 			session.removeAttribute(SessionConstants.DEGREE_TYPE);
 			session.removeAttribute(SessionConstants.DATE);
-			session.removeAttribute(SessionConstants.DOCUMENT_REASON_LIST);
+			session.removeAttribute(SessionConstants.INFO_FINAL_RESULT);
 			session.removeAttribute(SessionConstants.ENROLMENT_LIST);
+			session.removeAttribute(SessionConstants.INFO_EXECUTION_YEAR);
+			session.removeAttribute(SessionConstants.CONCLUSION_DATE);
+			
 
 			
 			// Get request Information
@@ -150,6 +156,22 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						throw new NonExistingActionException("Inscrição em Disciplinas");
 					}
 					else {
+						//check the last exam date
+						InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+						String conclusionDate = "00/00/00";
+						String dataAux = null;					
+						Object result = null;
+						Iterator iterator = enrolmentList.iterator();
+						int i = 0;
+						while(iterator.hasNext()) {	
+							result = iterator.next();
+							infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
+							dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
+							if (conclusionDate.compareTo(dataAux) == -1){
+								conclusionDate = dataAux;
+							}					 
+						}			
+						session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
 						try {
 							infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadActualExecutionYear", null);
 		
@@ -163,7 +185,8 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						session.setAttribute(SessionConstants.DATE, formatedDate);			
 						session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);	
 						session.setAttribute(SessionConstants.ENROLMENT_LIST, enrolmentList);	
-System.out.println(enrolmentList.get(0));					
+						session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);	
+						
 						return mapping.findForward("ChooseSuccess"); 
 				 
 				    }

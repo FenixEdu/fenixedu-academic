@@ -48,6 +48,23 @@
 		<jsp:include page="./certificateTemplate4.jsp" flush="true" />
 	</logic:present>
 	
+	<logic:present name="<%= SessionConstants.FINAL_RESULT_SIMPLE%>">
+	  	<jsp:include page="./certificateTemplate7.jsp" flush="true" />
+		<jsp:include page="./certificateTemplate8.jsp" flush="true" />
+	</logic:present>
+	
+	<logic:present name="<%= SessionConstants.DISCRIMINATED_WITHOUT_AVERAGE%>">
+	  	<jsp:include page="./certificateTemplate9.jsp" flush="true" />
+	  	<jsp:include page="./certificateTemplate8.jsp" flush="true" />
+	  	<jsp:include page="./certificateTemplate10.jsp" flush="true" />
+	</logic:present>
+	
+	<logic:present name="<%= SessionConstants.DISCRIMINATED_WITH_AVERAGE%>">
+	  	<jsp:include page="./certificateTemplate9.jsp" flush="true" />
+	  	<jsp:include page="./certificateTemplate8.jsp" flush="true" />
+	  	<jsp:include page="./certificateTemplate10.jsp" flush="true" />
+	</logic:present>
+	
 	
 	<logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST%>">
 		<jsp:include page="./templateDocumentReason.jsp" flush="true" />

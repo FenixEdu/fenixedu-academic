@@ -59,27 +59,35 @@
      <logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
         <tr>
         <td ><bean:write name="itr" property="infoCurricularCourse.name" /></td>
-     	<td align="center"><logic:iterate id="itr1" name="itr" property="infoEvaluations">
- 			<bean:write name="itr1" property="grade" />
-			</logic:iterate>
-		</td>
-     	<td align="center">&nbsp;</td>
+     	
+ 			<td align="center">
+ 				<logic:iterate id="itr1" name="itr" property="infoEvaluations">
+ 					<bean:write name="itr1" property="grade" />
+ 				</logic:iterate>
+ 			</td>
+ 			<td align="center">	<bean:write name="itr" property="infoCurricularCourse.credits" /></td>  	
      	</tr>
 	</logic:iterate>
 	</table> 
-	
-
-	<%-- The Original Declaration 
-	<jsp:include page="./declarationTemplate1.jsp" flush="true" />
-
-   <logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">--%>
-    	<%-- Candidate Information if necessary
-   		<jsp:include page="./declarationTemplate2.jsp" flush="true" />
-	</logic:equal >	
-
-	<jsp:include page="./templateDocumentReason.jsp" flush="true" />
-	
-	<jsp:include page="./templateFinal.jsp" flush="true" />--%>
+	</td>
+	</tr>
+	<tr>
+ 	<td> 
+	<table width="80%">
+	<tr>
+	<b><td align="right"> Total de créditos:</td></b>
+	<td align='center'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	<td align='center'>Total</td>
+	</tr>
+	</table>
 	</td>
 	</tr>
 	</table> 
+	
+<%-- BRUNO ESTA PARTE DEVERÁ SER IMPRESSA NO VERSO DA ÚLTIMA PAGINA --%> 	
+	
+	
+	 <%--The Final Result --%>
+		<jsp:include page="./finalResultTemplate1.jsp" flush="true" />
+	
+	

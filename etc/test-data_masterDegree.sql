@@ -90,6 +90,9 @@ INSERT INTO PRICE values (8, 2, 1, 'Aproveitamento de Disciplinas Extra Curricul
 INSERT INTO PRICE values (9, 2, 4, 'Emolumentos de Candidatura', '100');
 INSERT INTO PRICE values (10, 2, 4, 'Mestrado', '100');
 INSERT INTO PRICE values (11, 2, 4, 'Especialização', '100');
+INSERT INTO PRICE values (12, 2, 1, 'Fim parte escolar simples', '100');
+INSERT INTO PRICE values (13, 2, 1, 'Fim parte escolar discriminada sem média', '100');
+INSERT INTO PRICE values (14, 2, 1, 'Fim parte escolar discriminada com média', '100');
 
 
 

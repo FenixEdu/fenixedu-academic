@@ -121,6 +121,13 @@ public abstract class SessionConstants {
 	public static final String INFO_EVALUATION_LIST = "infoEvaluations";
 	public static final String EXTRA_ENROLMENT_LIST = "extraEnrolmentList";
 	public static final String EXTRA_CURRICULAR_APROVMENT = "extraCurricularAprovment";
+	public static final String INFO_FINAL_RESULT = "infoFinalResult";
+	public static final String CONCLUSION_DATE = "ConclusionDate";
+	public static final String FINAL_RESULT_SIMPLE = "fimParteEscolarSimples";
+	public static final String DISCRIMINATED_WITHOUT_AVERAGE = "fimParteEscolarDiscriminadaSemMedia";
+	public static final String DISCRIMINATED_WITH_AVERAGE = "fimParteEscolarDiscriminadaComMedia";
+	
+	
 	
 	
 	
