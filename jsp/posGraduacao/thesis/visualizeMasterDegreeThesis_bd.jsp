@@ -103,7 +103,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-				<td align="left"><bean:write name="externalGuider" property="workLocation"/></td>
+				<td align="left"><bean:write name="externalGuider" property="infoWorkLocation.name"/></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>					
 			</tr>				
@@ -160,7 +160,7 @@
 			<tr>
 				<td>&nbsp;</td>
 				<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-				<td align="left"><bean:write name="externalAssistentGuider" property="workLocation"/></td>
+				<td align="left"><bean:write name="externalAssistentGuider" property="infoWorkLocation.name"/></td>
 				<td>&nbsp;</td>						
 			</tr>				
 		</logic:iterate>

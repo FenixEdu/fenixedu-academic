@@ -207,7 +207,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="workLocation"/></td>
+					<td align="left"><bean:write name="externalJury" property="infoWorkLocation.name"/></td>
 					<td align="center">
 						<html:multibox property="removedExternalJuriesIDs">
 							<bean:write name="externalJury" property="idInternal"/>
@@ -277,7 +277,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="workLocation"/></td>						
+					<td align="left"><bean:write name="externalJury" property="infoWorkLocation.name"/></td>						
 					<td>
 						<html:radio idName="externalJury" property="externalJuriesIDs" value="idInternal"/>	
 					</td>

@@ -118,7 +118,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalGuider" property="workLocation"/></td>
+					<td align="left"><bean:write name="externalGuider" property="infoWorkLocation.name"/></td>
 					<td align="center">
 						<html:multibox property="removedExternalGuidersIDs">
 							<bean:write name="externalGuider" property="idInternal"/>
@@ -188,7 +188,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalGuider" property="workLocation"/></td>						
+					<td align="left"><bean:write name="externalGuider" property="infoWorkLocation.name"/></td>						
 					<td>
 						<html:radio idName="externalGuider" property="externalGuidersIDs" value="idInternal"/>	
 					</td>
@@ -273,7 +273,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="workLocation"/></td>
+					<td align="left"><bean:write name="externalAssistentGuider" property="infoWorkLocation.name"/></td>
 					<td align="center">
 						<html:multibox property="removedExternalAssistentGuidersIDs">
 							<bean:write name="externalAssistentGuider" property="idInternal"/>
@@ -343,7 +343,7 @@
 				<tr>
 					<td>&nbsp;</td>
 					<td align="left"><bean:write name="externalAssistentGuider" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalAssistentGuider" property="workLocation"/></td>						
+					<td align="left"><bean:write name="externalAssistentGuider" property="infoWorkLocation.name"/></td>						
 					<td>
 						<html:radio idName="externalAssistentGuider" property="externalAssistentGuidersIDs" value="idInternal"/>	
 					</td>

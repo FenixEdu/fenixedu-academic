@@ -137,7 +137,7 @@
 			<logic:iterate id="externalJury" name="externalJuriesList">
 				<tr>
 					<td align="left" ><bean:write name="externalJury" property="infoPerson.nome"/></td>
-					<td align="left"><bean:write name="externalJury" property="workLocation"/></td>					
+					<td align="left"><bean:write name="externalJury" property="infoWorkLocation.name"/></td>					
 				</tr>				
 			</logic:iterate>
 			<tr> 
