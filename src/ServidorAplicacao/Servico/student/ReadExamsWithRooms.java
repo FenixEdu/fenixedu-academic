@@ -57,7 +57,7 @@ public class ReadExamsWithRooms implements IServico {
 		return "ReadExamsWithRooms";
 	}
 
-	public Object run(Integer studentId) throws FenixServiceException {
+	public Object run(String username) throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -70,9 +70,7 @@ public class ReadExamsWithRooms implements IServico {
 			IExecutionPeriod currentPeriod =
 				persistentExecutionPeriod.readActualExecutionPeriod();
 			IStudent student =
-				(IStudent) persistentStudent.readByOId(
-					new Student(studentId),
-					true);
+				(IStudent) persistentStudent.readByUsername(username);
 			if (student == null) {
 				throw new InvalidArgumentsServiceException();
 			}

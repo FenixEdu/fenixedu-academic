@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class InfoSiteStudentExamDistributions implements ISiteComponent {
 
-private List examDistributions;
+	private List examDistributions;
 	/**
 	 * 
 	 */
@@ -22,20 +22,20 @@ private List examDistributions;
 
 	public InfoSiteStudentExamDistributions(List examDistributions) {
 		setExamDistributions(examDistributions);
-		}
+	}
 
-/**
- * @return
- */
-public List getExamDistributions() {
-	return examDistributions;
-}
+	/**
+	 * @return
+	 */
+	public List getExamDistributions() {
+		return examDistributions;
+	}
 
-/**
- * @param list
- */
-public void setExamDistributions(List list) {
-	examDistributions = list;
-}
+	/**
+	 * @param list
+	 */
+	public void setExamDistributions(List list) {
+		examDistributions = list;
+	}
 
 }

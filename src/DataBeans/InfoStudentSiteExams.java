@@ -14,6 +14,26 @@ import java.util.List;
 public class InfoStudentSiteExams implements ISiteComponent {
 	private List examsToEnroll;
 	private List examsEnrolled;
+	private List studentDistributions;
+
+	/**
+	 * @param studentDistributions
+	 */
+	public void setStudentDistributions(List studentDistributions) {
+		this.studentDistributions = studentDistributions;
+	}
+	
+	public InfoExamStudentRoom getInfoExamStudentRoom (int examIdInternal) {
+		InfoExamStudentRoom infoExamStudentRoom = null;
+		for (int i=0; i < studentDistributions.size(); i++) {
+			infoExamStudentRoom = (InfoExamStudentRoom) studentDistributions.get(0);
+			if (infoExamStudentRoom.getIdInternal().intValue() == examIdInternal) {
+				break;
+			}
+		}
+		return infoExamStudentRoom;
+	}
+
 	/**
 	 * 
 	 */
@@ -58,9 +78,7 @@ public class InfoStudentSiteExams implements ISiteComponent {
 		if (arg0 instanceof InfoStudentSiteExams) {
 			InfoStudentSiteExams component = (InfoStudentSiteExams) arg0;
 			result =
-				listEquals(
-					getExamsEnrolled(),
-					component.getExamsEnrolled())
+				listEquals(getExamsEnrolled(), component.getExamsEnrolled())
 					&& listEquals(
 						getExamsToEnroll(),
 						component.getExamsToEnroll());

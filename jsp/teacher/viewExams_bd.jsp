@@ -48,19 +48,19 @@
 						</td>
 					</tr>			
 					<tr>
-						<td colspan="3" class="bottomborder">
+						<td colspan="3">
 							<html:link 
 								page="<%= "/showStudentsEnrolledInExam.do?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("examCode") %>" >
 								<b><bean:message key="link.students.enrolled.exam"/> <bean:message key="label.students.enrolled.exam"/></b></html:link>				 <br />
 						</td>
 					</tr>
-					<tr>
+<%--					<tr>
 						<td colspan="3">
 							<html:link 
 								page="<%= "/showMarksListOptions?objectCode="+ pageContext.findAttribute("objectCode")+"&amp;examCode=" +pageContext.findAttribute("examCode") %>" >
 								<b><bean:message key="link.students.listMarks"/> <bean:message key="label.students.listMarks"/></b></html:link><br />
 						</td>
-					</tr>
+					</tr> --%>
 				</table>
 			</html:form>
 		</logic:iterate>

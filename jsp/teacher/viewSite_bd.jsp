@@ -15,7 +15,9 @@
 <br />
 <li>Se existirem outros docentes a leccionar a disciplina podem ser indicados através da opção <strong>Docentes</strong>.</li>
 <br />
-<li>Através da opcão <strong>Exames</strong> pode-se gerir as inscrições para exame e ver alunos inscritos.</li>
+<li>A lista de alunos a frequentar a disciplina é obtida através da opção <strong>Alunos</strong>.</li>
+<br />
+<li>Através da opcão <strong>Exames</strong> pode-se gerir as inscrições para exame e ver alunos inscritos. Permite ainda, a distribuição aleatória dos alunos, inscritos para exame, pelas salas reservadas pelo SOP.</li>
 <br />
 <li>A opção <strong>Gestão de Secções</strong> permite criar secções e sub-secções opcionais nas páginas da disciplina para conterem informação como listas de problemas, material de apoio, etc.</li>
 <br />

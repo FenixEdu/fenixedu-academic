@@ -9,16 +9,19 @@ import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExam;
+import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
+import Dominio.IExamStudentRoom;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.utils.ExamsNotEnrolledPredicate;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -58,28 +61,43 @@ public class ReadExamsByStudent implements IServico {
 
 		List infoExamsEnrolled = new ArrayList();
 		List infoExamsToEnroll = new ArrayList();
+		List studentExamDistribution = new ArrayList();
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
 			IStudent student =
 				(IStudent) sp.getIPersistentStudent().readByUsername(username);
 
 			if (student != null) {
 				List examsEnrolled = student.getExamsEnrolled();
 
-				Iterator iter1 = examsEnrolled.iterator();
-				while (iter1.hasNext()) {
-					IExam exam = (IExam) iter1.next();
+				Iterator examsEnrolledIterator = examsEnrolled.iterator();
+				while (examsEnrolledIterator.hasNext()) {
+					IExam exam = (IExam) examsEnrolledIterator.next();
+					InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+					infoExam.setInfoExecutionCourse(
+						Cloner.copyIExecutionCourse2InfoExecutionCourse(
+							(IDisciplinaExecucao) exam
+								.getAssociatedExecutionCourses()
+								.get(
+								0)));
 
-					if (isInDate(exam)) {
-						InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
-						infoExam.setInfoExecutionCourse(
-							Cloner.copyIExecutionCourse2InfoExecutionCourse(
-								(IDisciplinaExecucao) exam
-									.getAssociatedExecutionCourses()
-									.get(
-									0)));
-						infoExamsEnrolled.add(infoExam);
+					infoExamsEnrolled.add(infoExam);
+
+					if (!isInDate(exam)) {
+						//closedEnrollmentExams.add(infoExam);
+						IExamStudentRoom examStudentRoom = examStudentRoomDAO.readBy(exam, student);
+						InfoExamStudentRoom infoExamStudentRoom = null;
+						if (examStudentRoom != null) {
+							infoExamStudentRoom = Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);							
+						} else {
+							infoExamStudentRoom = new InfoExamStudentRoom();
+							infoExamStudentRoom.setInfoRoom(null);
+							infoExamStudentRoom.setInfoStudent(null);
+							infoExamStudentRoom.setInfoExam(infoExam);
+						}
+						studentExamDistribution.add(infoExamStudentRoom);
 					}
 
 				}
@@ -87,10 +105,10 @@ public class ReadExamsByStudent implements IServico {
 				List attends =
 					sp.getIFrequentaPersistente().readByStudentId(
 						student.getNumber());
-				Iterator iter2 = attends.iterator();
-				while (iter2.hasNext()) {
+				Iterator examsToEnrollIterator = attends.iterator();
+				while (examsToEnrollIterator.hasNext()) {
 					examsToEnroll.addAll(
-						((IFrequenta) iter2.next())
+						((IFrequenta) examsToEnrollIterator.next())
 							.getDisciplinaExecucao()
 							.getAssociatedExams());
 				}
@@ -121,8 +139,9 @@ public class ReadExamsByStudent implements IServico {
 			e.printStackTrace();
 		}
 
-		ISiteComponent component =
+		InfoStudentSiteExams component =
 			new InfoStudentSiteExams(infoExamsToEnroll, infoExamsEnrolled);
+		component.setStudentDistributions(studentExamDistribution);
 		SiteView siteView = new SiteView(component);
 		return siteView;
 

@@ -22,4 +22,7 @@
 	<definition name="definition.myExams" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewExams_bd.jsp"/>
 	</definition>
+	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyExamRooms">
+	</definition>
+	
 </tiles-definitions>

@@ -265,8 +265,8 @@ public class InfoExam extends InfoObject{
 			result += calendar.get(Calendar.HOUR_OF_DAY);
 			result += ":";
 			if (calendar.get(Calendar.MINUTE)<10){
-				result += calendar.get(Calendar.MINUTE);
 				result += "0";
+				result += calendar.get(Calendar.MINUTE);
 			}else{
 				result += calendar.get(Calendar.MINUTE);
 			}
