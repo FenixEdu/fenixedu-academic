@@ -135,7 +135,7 @@
 			<include name="**/oscache.properties"/>
 			<include name="**/OJB.properties"/>
 			<include name="**/SMSConfiguration.properties"/>
-			<include name="**/**/logAnalyser.properties"/>
+			<include name="**/logAnalyser.properties"/>
 
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
@@ -419,6 +419,10 @@
 
 		  	<replacefilter token="@log.image.directory@"
 		  				   property="log.image.directory"/>
+		  	<replacefilter token="@log.profile.dir@"
+		  				   property="log.profile.dir"/>
+		  	<replacefilter token="@log.profile.filename@"
+		  				   property="log.profile.filename"/>
 
 		<replacefilter 
 		    token="@index.html.link@" 
