@@ -208,6 +208,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			try {
 				Object args[] = {graduationType, infoExecutionDegree, number, requesterType, contributorNumberToRead, contributorName, contributorAddress };
 				infoGuide = (InfoGuide) serviceManager.executar(userView, "PrepareCreateGuide", args);
+			} catch (ExistingServiceException e) {
+				throw new ExistingActionException("O Contribuinte", e);
 			} catch (NonExistingContributorServiceException e) {
 				session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
 				return mapping.getInputForward();

@@ -9,8 +9,7 @@ package Dominio;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class Contributor implements IContributor{
-	private Integer idInternal;
+public class Contributor extends DomainObject implements IContributor{
 	private Integer contributorNumber;
 	private String contributorName;
 	private String contributorAddress;
@@ -38,7 +37,7 @@ public class Contributor implements IContributor{
 
 	public String toString() {
 		String result = "Contributor:\n";
-		result += "\n  - Internal Code : " + idInternal;
+		result += "\n  - Internal Code : " + getIdInternal();
 		result += "\n  - Contributor Number : " + contributorNumber;
 		result += "\n  - Contributor Name : " + contributorName;
 		result += "\n  - Contributor Address : " + contributorAddress;
@@ -66,13 +65,7 @@ public class Contributor implements IContributor{
 		return contributorNumber;
 	}
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
-
+	
 	/**
 	 * Sets the contributorAddress.
 	 * @param contributorAddress The contributorAddress to set
@@ -97,12 +90,5 @@ public class Contributor implements IContributor{
 		this.contributorNumber = contributorNumber;
 	}
 
-	/**
-	 * Sets the idInternal.
-	 * @param idInternal The idInternal to set
-	 */
-	public void setIdInternal(Integer idInternal) {
-		this.idInternal = idInternal;
-	}
 
 }

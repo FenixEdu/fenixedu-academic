@@ -252,7 +252,7 @@
       		  attribute="chooseCourseListForm"
 		      name="chooseCourseListForm"
 		      parameter="method"
-		      scope="session"
+		      scope="request"
 		      validate="true"
 		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
 			  >

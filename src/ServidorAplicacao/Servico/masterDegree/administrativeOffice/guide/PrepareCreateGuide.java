@@ -24,6 +24,7 @@ import Dominio.IPrice;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -86,9 +87,11 @@ public class PrepareCreateGuide implements IServico {
 
 	
 		if ((contributor == null) && ((contributorAddress == null) || (contributorAddress.length() == 0) || 
-		    (contributorName.length() == 0) || (contributorName == null)))
+		    (contributorName.length() == 0) || (contributorName == null))){
 				throw new NonExistingContributorServiceException();
-		else if ((contributor == null) && (contributorAddress != null) && (contributorAddress.length() != 0) && 
+		    }
+				
+		if ((contributor == null) && (contributorAddress != null) && (contributorAddress.length() != 0) && 
 				 (contributorName.length() != 0) && (contributorName != null)) {
 			// Create the Contributor
 			contributor = new Contributor();
@@ -96,7 +99,11 @@ public class PrepareCreateGuide implements IServico {
 			contributor.setContributorAddress(contributorAddress);
 			contributor.setContributorName(contributorName);
 			sp.getIPersistentContributor().write(contributor);
+		} else if ((contributor != null) && (contributorAddress != null) && (contributorAddress.length() != 0) && 
+				   (contributorName.length() != 0) && (contributorName != null)) {
+			throw new ExistingServiceException();
 		}
+				   
 
 		Integer year = null;
 		Calendar calendar = Calendar.getInstance();

@@ -806,6 +806,10 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
               validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+              
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
 	         <forward name="CreateStudentGuide" path="/guide/chooseStudentGuide.jsp"/>  

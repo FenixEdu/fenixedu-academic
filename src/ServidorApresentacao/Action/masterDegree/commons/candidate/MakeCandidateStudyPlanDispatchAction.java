@@ -497,6 +497,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 		}
 
 		request.setAttribute("executionDegree", infoExecutionDegree);
+		request.setAttribute("candidateID", candidateID);
 	
 		return mapping.findForward("ChooseSuccess");
 	}
@@ -545,7 +546,7 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 
-		    Integer candidateID = (Integer) chooseCurricularCoursesForm.get("candidateID");
+		    Integer candidateID = new Integer(request.getParameter("candidateID"));
 
 		    
 			List candidateEnrolments = null;		

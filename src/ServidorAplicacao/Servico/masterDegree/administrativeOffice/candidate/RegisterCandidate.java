@@ -103,6 +103,12 @@ public class RegisterCandidate implements IServico {
 
 			// Check if a Master Degree Student Already Exists
 			IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(masterDegreeCandidate.getPerson(), TipoCurso.MESTRADO_OBJ);
+
+			IRole role = new Role();
+			role.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
+			IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(masterDegreeCandidate.getPerson(), role);
+			sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+
 			
 			if (student == null){
 				student = new Student();
@@ -123,12 +129,6 @@ public class RegisterCandidate implements IServico {
 					roles.add(Cloner.copyIRole2InfoRole((IRole) iterator.next()));
 				}
 
-				IRole role = new Role();
-				role.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
-				IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(masterDegreeCandidate.getPerson(), role);
-				sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
-
-
 				// Give The Student Role if Necessary
 				if (!AuthorizationUtils.containsRole(roles, RoleType.STUDENT)){
 					personRole = new PersonRole();
@@ -144,10 +144,10 @@ public class RegisterCandidate implements IServico {
 			if (studentCurricularPlanOld != null){
 				sp.getIStudentCurricularPlanPersistente().lockWrite(studentCurricularPlanOld);
 
-				System.out.println("------------- MASTER DEGREE STUDENT WITH ACTIVE CURRICULAR PLAN ----------------");
-				System.out.println(" -- STUDENT NUMBER: " + studentCurricularPlanOld.getStudent().getNumber() + "[id: " + studentCurricularPlanOld.getStudent().getIdInternal() + "]");
-				System.out.println(" -- STUDENT CURRICULAR PLAN ID : " + studentCurricularPlanOld.getIdInternal());
-				System.out.println("--------------------------------------------------------------------------------");
+//				System.out.println("------------- MASTER DEGREE STUDENT WITH ACTIVE CURRICULAR PLAN ----------------");
+//				System.out.println(" -- STUDENT NUMBER: " + studentCurricularPlanOld.getStudent().getNumber() + "[id: " + studentCurricularPlanOld.getStudent().getIdInternal() + "]");
+//				System.out.println(" -- STUDENT CURRICULAR PLAN ID : " + studentCurricularPlanOld.getIdInternal());
+//				System.out.println("--------------------------------------------------------------------------------");
 
 				throw new ActiveStudentCurricularPlanAlreadyExistsServiceException();
 			}

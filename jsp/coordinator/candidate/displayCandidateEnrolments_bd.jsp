@@ -41,7 +41,11 @@
    		<br />
    		<br />
  	    
- 	    <html:link page="/displayCourseListToStudyPlan.do?method=print" target="_blank">
+ 	    
+		<bean:define id="link">
+			/displayCourseListToStudyPlan.do?method=print<%= "&" %>candidateID=<bean:write name="candidateID"/>
+		</bean:define> 	    
+ 	    <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
 	   		<bean:message key="link.masterDegree.printCandidateStudyPlan" />
 	    </html:link>
 	
