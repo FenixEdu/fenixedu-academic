@@ -657,12 +657,18 @@ public abstract class Cloner {
 		public static ISection copyInfoSection2ISection(InfoSection infoSection) {
 			
 				ISection section = new Section();
-			
+				
+				ISection fatherSection = null;
+				
 				ISite site = Cloner.copyInfoSite2ISite(infoSection.getSite());
 			
 				InfoSection infoSuperiorSection = (InfoSection) infoSection.getSuperiorSection();
 		    
-				ISection fatherSection = Cloner.copyInfoSection2ISection(infoSuperiorSection);
+		    	while(infoSuperiorSection!=null)
+		    	{
+					fatherSection = Cloner.copyInfoSection2ISection(infoSuperiorSection);
+		    	}
+				
 				 	
 				copyObjectProperties(section, infoSection);
 			
