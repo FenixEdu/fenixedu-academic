@@ -31,6 +31,9 @@ Aulas já atribuidas ao turno
 				<td class="listClasses-header">
 		        </td>
 			</tr>
+			<bean:define id="deleteConfirm">
+				return confirm('<bean:message key="message.confirm.delete.lesson"/>')
+			</bean:define>			
 			<logic:iterate id="lesson" name="shift" property="infoLessons">
 				<bean:define id="lessonOID" name="lesson" property="idInternal"/>
 				<tr align="center">
@@ -82,6 +85,33 @@ Aulas já atribuidas ao turno
 						</html:link>
 					</td>
 					<td class="listClasses">
+						<html:link page="<%= "/manageLesson.do?method=deleteLesson&amp;page=0&amp;"
+    	           							+ SessionConstants.LESSON_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("lessonOID")
+               					   			+ "&amp;"
+    	           							+ SessionConstants.SHIFT_OID
+				  							+ "="
+            	   				   			+ pageContext.findAttribute("shiftOID")
+               					   			+ "&amp;"
+			  								+ SessionConstants.EXECUTION_COURSE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionCourseOID")
+               				   				+ "&amp;"
+			  								+ SessionConstants.EXECUTION_PERIOD_OID
+  											+ "="
+	  										+ pageContext.findAttribute("executionPeriodOID")
+  											+ "&amp;"
+  											+ SessionConstants.CURRICULAR_YEAR_OID
+				  							+ "="
+  											+ pageContext.findAttribute("curricularYearOID")
+  											+ "&amp;"
+			  								+ SessionConstants.EXECUTION_DEGREE_OID
+  											+ "="
+  											+ pageContext.findAttribute("executionDegreeOID") %>"
+  								onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+								<bean:message key="link.delete"/>
+						</html:link>					
 					</td>
 				</tr>
 			</logic:iterate>

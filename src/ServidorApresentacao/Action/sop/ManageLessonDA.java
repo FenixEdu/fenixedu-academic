@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -20,8 +21,16 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
+import DataBeans.KeyLesson;
+import DataBeans.RoomKey;
 import DataBeans.comparators.RoomAlphabeticComparator;
-import ServidorApresentacao.Action.sop.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -294,6 +303,57 @@ public class ManageLessonDA
 						+ endMinAppend));
 		}
 		return actionErrors;
+	}
+
+	public ActionForward deleteLesson(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		HttpSession sessao = request.getSession(false);
+
+		IUserView userView = (IUserView) sessao.getAttribute("UserView");
+		GestorServicos gestor = GestorServicos.manager();
+
+		System.out.println(
+			"##### lessonOID = "
+				+ request.getParameter(SessionConstants.LESSON_OID));
+		Object argsReadLessonByOID[] =
+			{ new Integer(request.getParameter(SessionConstants.LESSON_OID))};
+
+		InfoLesson lessonToDelete =
+			(InfoLesson) ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"ReadLessonByOID",
+				argsReadLessonByOID);
+
+		if (lessonToDelete != null) {
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) request.getAttribute(
+					SessionConstants.EXECUTION_PERIOD);
+
+			Object argsApagarAula[] =
+				{
+					new KeyLesson(
+						lessonToDelete.getDiaSemana(),
+						lessonToDelete.getInicio(),
+						lessonToDelete.getFim(),
+						new RoomKey(lessonToDelete.getInfoSala().getNome())),
+					infoExecutionPeriod };
+			Boolean result =
+				(Boolean) gestor.executar(
+					userView,
+					"ApagarAula",
+					argsApagarAula);
+
+			//		if (result != null && result.booleanValue()) {
+			//		}
+
+		}
+
+		return mapping.findForward("LessonDeleted");
 	}
 
 }

@@ -1162,6 +1162,7 @@
     	<forward name="ShowLessonForm" path="/manageLesson.jsp"/>
     	<forward name="ShowChooseRoomForm" path="/chooseRoomForLesson.jsp"/>
     	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+    	<forward name="LessonDeleted" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
 	</action>
 
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
