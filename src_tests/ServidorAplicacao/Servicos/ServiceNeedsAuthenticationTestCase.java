@@ -99,6 +99,7 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 	 */
     protected void assertAuthorizedResult(Object result)
     {
+        //
     }
 
     public void testNonAuthenticatedUser()

@@ -39,6 +39,7 @@ public abstract class CoordinatorBelongsToExecutionDegree
 	}
 
 	protected void tearDown() throws Exception {
+        //
 	}
 
 	public void testNonCoordinatorUser() {

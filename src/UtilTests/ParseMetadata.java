@@ -39,7 +39,7 @@ public class ParseMetadata extends DefaultHandler
 	private Element current = null;
 
 	public void MySAXParserBean()
-	{
+	{//
 	}
 
 	public XMLReader getXMLReader(String path) throws Exception
