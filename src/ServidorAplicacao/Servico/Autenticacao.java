@@ -110,9 +110,6 @@ public class Autenticacao implements IServico {
 				
 				userView.setCandidateView(candidateView);
 				
-				System.out.println(userView.getCandidateView().getInfoApplicationInfos().size());				
-				System.out.println(userView.getCandidateView().changeablePersonalInfo());				
-				
 			} else userView.setCandidateView(null);
 			
 			
