@@ -123,7 +123,7 @@ class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge
 	Integer keyParentSection;
 
 	interface "
-    public IFAQSection getParentSection()
+    public IFAQSection getParentSection();
 
     public void setParentSection(IFAQSection parentSection);
     "
@@ -334,6 +334,75 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 
 	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
 	"
+}
+
+
+class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
+	String localidade;
+	String codigoFiscal;
+	String telemovel;
+	String enderecoWeb;
+	Date dataValidadeDocumentoIdentificacao;
+	String distritoMorada;
+	String numeroDocumentoIdentificacao;
+	Integer chavePais;
+	String profissao;
+	String concelhoNaturalidade;
+	Date dataEmissaoDocumentoIdentificacao;
+	String morada;
+	Boolean availableWebSite;
+	String nacionalidade;
+	String numContribuinte;
+	String localidadeCodigoPostal;
+	String username;
+	String telefone;
+	String localEmissaoDocumentoIdentificacao;
+	String distritoNaturalidade;
+	String password;
+	Boolean availableEmail;
+	String workPhone;
+	String nome;
+	String freguesiaNaturalidade;
+	String codigoPostal;
+	String nomePai;
+	String nomeMae;
+	Boolean availablePhoto;
+	String email;
+	String concelhoMorada;
+	Date nascimento;
+	String freguesiaMorada;
+
+	interface "
+    public java.util.List getManageableDepartmentCredits();
+
+    public void setManageableDepartmentCredits(final java.util.List manageableDepartmentCredits);
+
+    public net.sourceforge.fenixedu.util.EstadoCivil getEstadoCivil();
+
+    public ICountry getPais();
+
+    public java.util.Collection getPersonRoles();
+
+    public net.sourceforge.fenixedu.domain.person.Sex getSex();
+
+    public net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao getTipoDocumentoIdentificacao();
+
+    public void setEstadoCivil(net.sourceforge.fenixedu.util.EstadoCivil estadoCivil);
+
+    public void setPais(ICountry pais);
+
+    public void setPersonRoles(java.util.Collection personRoles);
+
+    public void setSex(net.sourceforge.fenixedu.domain.person.Sex sex);
+
+    public void setTipoDocumentoIdentificacao(net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao tipoDocumentoIdentificacao);
+
+    public java.util.List getAdvisories();
+
+    public void setAdvisories(java.util.List list);
+
+    public String getSlideName();
+    "
 }
 
 

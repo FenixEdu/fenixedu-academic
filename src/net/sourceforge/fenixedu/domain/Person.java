@@ -9,80 +9,21 @@ import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
-public class Person extends DomainObject implements IPerson {
-    private Boolean availableEmail = Boolean.FALSE;
+public class Person extends Person_Base {
+
+	private Boolean availableEmail = Boolean.FALSE;
 
     private Boolean availableWebSite = Boolean.FALSE;
 
-    private Integer chavePais;
-
-    private String codigoFiscal;
-
-    private String codigoPostal;
-
-    private String concelhoMorada;
-
-    private String concelhoNaturalidade;
-
-    private Date dataEmissaoDocumentoIdentificacao;
-
-    private Date dataValidadeDocumentoIdentificacao;
-
-    private String distritoMorada;
-
-    private String distritoNaturalidade;
-
-    private String email;
-
-    private String enderecoWeb;
-
     private EstadoCivil estadoCivil;
-
-    private String freguesiaMorada;
-
-    private String freguesiaNaturalidade;
-
-    private String localEmissaoDocumentoIdentificacao;
-
-    private String localidade;
-
-    private String localidadeCodigoPostal;
-
-    private String morada;
-
-    private String nacionalidade;
-
-    private Date nascimento;
-
-    private String nome;
-
-    private String nomeMae;
-
-    private String nomePai;
-
-    private String numContribuinte;
-
-    private String numeroDocumentoIdentificacao;
 
     private ICountry pais;
 
-    private String password;
-
     private Collection personRoles;
-
-    private String profissao;
 
     private Sex sex;
 
-    private String telefone;
-
-    private String telemovel;
-
     private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
-
-    private String username;
-
-    private String workPhone;
 
     private List manageableDepartmentCredits;
 
@@ -100,44 +41,12 @@ public class Person extends DomainObject implements IPerson {
     /**
      * @param manageableDepartmentCredits
      */
-    public void setManageableDepartmentCredits(List manageableDepartmentCredits) {
+    public void setManageableDepartmentCredits(final List manageableDepartmentCredits) {
         this.manageableDepartmentCredits = manageableDepartmentCredits;
     }
 
-    /* Construtores */
-
     public Person() {
-        //		this.numeroDocumentoIdentificacao = "";
-        //		this.tipoDocumentoIdentificacao = null;
-        //		this.localEmissaoDocumentoIdentificacao = "";
-        //		this.dataEmissaoDocumentoIdentificacao = null;
-        //		this.dataValidadeDocumentoIdentificacao = null;
-        //		this.nome = "";
-        //		this.sexo = null;
-        //		this.estadoCivil = null;
-        //		this.nascimento = null;
-        //		this.nomePai = "";
-        //		this.nomeMae = "";
-        //		this.nacionalidade = "";
-        //		this.freguesiaNaturalidade = "";
-        //		this.concelhoNaturalidade = "";
-        //		this.distritoNaturalidade = "";
-        //		this.morada = "";
-        //		this.localidade = "";
-        //		this.codigoPostal = "";
-        //		this.localidadeCodigoPostal = "";
-        //		this.freguesiaMorada = "";
-        //		this.concelhoMorada = "";
-        //		this.distritoMorada = "";
-        //		this.telefone = "";
-        //		this.telemovel = "";
-        //		this.email = "";
-        //		this.enderecoWeb = "";
-        //		this.numContribuinte = "";
-        //		this.profissao = "";
-        //		this.username = "";
-        //		this.pais = null;
-        //		this.codigoFiscal = "";
+		super();
     }
 
     public Person(String username) {
@@ -145,38 +54,8 @@ public class Person extends DomainObject implements IPerson {
     }
 
     public Person(TipoDocumentoIdentificacao idDocumentType, String userName) {
-        //		this.numeroDocumentoIdentificacao = "";
-        this.tipoDocumentoIdentificacao = idDocumentType;
-        this.username = userName;
-        //		this.localEmissaoDocumentoIdentificacao = "";
-        //		this.dataEmissaoDocumentoIdentificacao = null;
-        //		this.dataValidadeDocumentoIdentificacao = null;
-        //		this.nome = "";
-        //		this.sexo = null;
-        //		this.estadoCivil = null;
-        //		this.nascimento = null;
-        //		this.nomePai = "";
-        //		this.nomeMae = "";
-        //		this.nacionalidade = "";
-        //		this.freguesiaNaturalidade = "";
-        //		this.concelhoNaturalidade = "";
-        //		this.distritoNaturalidade = "";
-        //		this.morada = "";
-        //		this.localidade = "";
-        //		this.codigoPostal = "";
-        //		this.localidadeCodigoPostal = "";
-        //		this.freguesiaMorada = "";
-        //		this.concelhoMorada = "";
-        //		this.distritoMorada = "";
-        //		this.telefone = "";
-        //		this.telemovel = "";
-        //		this.email = "";
-        //		this.enderecoWeb = "";
-        //		this.numContribuinte = "";
-        //		this.profissao = "";
-        //		this.username = userName;
-        //		this.pais = null;
-        //		this.codigoFiscal = "";
+		setTipoDocumentoIdentificacao(idDocumentType);
+		setUsername(userName);
     }
 
     /*
@@ -238,35 +117,30 @@ public class Person extends DomainObject implements IPerson {
 
         setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
         setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(tipoDocumentoIdentificacao));
-        this.localEmissaoDocumentoIdentificacao = "";
-        this.dataEmissaoDocumentoIdentificacao = null;
-        this.dataValidadeDocumentoIdentificacao = null;
+        setLocalEmissaoDocumentoIdentificacao("");
         setNome(nome);
-        this.estadoCivil = null;
-        this.nascimento = null;
-        this.nomePai = "";
-        this.nomeMae = "";
-        this.nacionalidade = "";
-        this.freguesiaNaturalidade = "";
-        this.concelhoNaturalidade = "";
-        this.distritoNaturalidade = "";
-        this.morada = "";
-        this.localidade = "";
-        this.codigoPostal = "";
-        this.localidadeCodigoPostal = "";
-        this.freguesiaMorada = "";
-        this.concelhoMorada = "";
-        this.distritoMorada = "";
-        this.telefone = "";
-        this.telemovel = "";
-        this.email = "";
-        this.enderecoWeb = "";
-        this.numContribuinte = "";
-        this.profissao = "";
+        setNomePai("");
+        setNomeMae("");
+        setNacionalidade("");
+        setFreguesiaNaturalidade("");
+        setConcelhoNaturalidade("");
+        setDistritoNaturalidade("");
+        setMorada("");
+        setLocalidade("");
+        setCodigoPostal("");
+        setLocalidadeCodigoPostal("");
+        setFreguesiaMorada("");
+        setConcelhoMorada("");
+        setDistritoMorada("");
+        setTelefone("");
+        setTelemovel("");
+        setEmail("");
+        setEnderecoWeb("");
+        setNumContribuinte("");
+        setProfissao("");
         setUsername(username);
         setPassword(password);
-        this.pais = null;
-        this.codigoFiscal = "";
+        setCodigoFiscal("");
     }
 
     public Person(String numeroDocumentoIdentificacao,
@@ -313,126 +187,15 @@ public class Person extends DomainObject implements IPerson {
         setCodigoFiscal(codigoFiscal);
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
+    public boolean equals(final Object obj) {
         if (obj instanceof IPerson) {
             IPerson person = (IPerson) obj;
-            resultado = (((this.numeroDocumentoIdentificacao.equals(person
+            return (((getNumeroDocumentoIdentificacao().equals(person
                     .getNumeroDocumentoIdentificacao())) && (this.tipoDocumentoIdentificacao
-                    .equals(person.getTipoDocumentoIdentificacao()))) || (this.username.equals(person
+                    .equals(person.getTipoDocumentoIdentificacao()))) || (getUsername().equals(person
                     .getUsername())));
         }
-        return resultado;
-    }
-
-    /**
-     * Getter for property chavePais.
-     * 
-     * @return Value of property chavePais.
-     *  
-     */
-    public java.lang.Integer getChavePais() {
-        return chavePais;
-    }
-
-    /**
-     * Getter for property codigoFiscal.
-     * 
-     * @return Value of property codigoFiscal.
-     *  
-     */
-    public java.lang.String getCodigoFiscal() {
-        return codigoFiscal;
-    }
-
-    /**
-     * Getter for property codigoPostal.
-     * 
-     * @return Value of property codigoPostal.
-     *  
-     */
-    public java.lang.String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    /**
-     * Getter for property concelhoMorada.
-     * 
-     * @return Value of property concelhoMorada.
-     *  
-     */
-    public java.lang.String getConcelhoMorada() {
-        return concelhoMorada;
-    }
-
-    /**
-     * Getter for property concelhoNaturalidade.
-     * 
-     * @return Value of property concelhoNaturalidade.
-     *  
-     */
-    public java.lang.String getConcelhoNaturalidade() {
-        return concelhoNaturalidade;
-    }
-
-    /**
-     * Getter for property dataEmissaoDocumentoIdentificacao.
-     * 
-     * @return Value of property dataEmissaoDocumentoIdentificacao.
-     *  
-     */
-    public java.util.Date getDataEmissaoDocumentoIdentificacao() {
-        return dataEmissaoDocumentoIdentificacao;
-    }
-
-    /**
-     * Getter for property dataValidadeDocumentoIdentificacao.
-     * 
-     * @return Value of property dataValidadeDocumentoIdentificacao.
-     *  
-     */
-    public java.util.Date getDataValidadeDocumentoIdentificacao() {
-        return dataValidadeDocumentoIdentificacao;
-    }
-
-    /**
-     * Getter for property distritoMorada.
-     * 
-     * @return Value of property distritoMorada.
-     *  
-     */
-    public java.lang.String getDistritoMorada() {
-        return distritoMorada;
-    }
-
-    /**
-     * Getter for property distritoNaturalidade.
-     * 
-     * @return Value of property distritoNaturalidade.
-     *  
-     */
-    public java.lang.String getDistritoNaturalidade() {
-        return distritoNaturalidade;
-    }
-
-    /**
-     * Getter for property email.
-     * 
-     * @return Value of property email.
-     *  
-     */
-    public java.lang.String getEmail() {
-        return email;
-    }
-
-    /**
-     * Getter for property enderecoWeb.
-     * 
-     * @return Value of property enderecoWeb.
-     *  
-     */
-    public java.lang.String getEnderecoWeb() {
-        return enderecoWeb;
+        return false;
     }
 
     /**
@@ -446,136 +209,6 @@ public class Person extends DomainObject implements IPerson {
     }
 
     /**
-     * Getter for property freguesiaMorada.
-     * 
-     * @return Value of property freguesiaMorada.
-     *  
-     */
-    public java.lang.String getFreguesiaMorada() {
-        return freguesiaMorada;
-    }
-
-    /**
-     * Getter for property freguesiaNaturalidade.
-     * 
-     * @return Value of property freguesiaNaturalidade.
-     *  
-     */
-    public java.lang.String getFreguesiaNaturalidade() {
-        return freguesiaNaturalidade;
-    }
-
-    /**
-     * Getter for property localEmissaoDocumentoIdentificacao.
-     * 
-     * @return Value of property localEmissaoDocumentoIdentificacao.
-     *  
-     */
-    public java.lang.String getLocalEmissaoDocumentoIdentificacao() {
-        return localEmissaoDocumentoIdentificacao;
-    }
-
-    /**
-     * Getter for property localidade.
-     * 
-     * @return Value of property localidade.
-     *  
-     */
-    public java.lang.String getLocalidade() {
-        return localidade;
-    }
-
-    /**
-     * Getter for property localidadeCodigoPostal.
-     * 
-     * @return Value of property localidadeCodigoPostal.
-     *  
-     */
-    public java.lang.String getLocalidadeCodigoPostal() {
-        return localidadeCodigoPostal;
-    }
-
-    /**
-     * Getter for property morada.
-     * 
-     * @return Value of property morada.
-     *  
-     */
-    public java.lang.String getMorada() {
-        return morada;
-    }
-
-    /**
-     * Getter for property nacionalidade.
-     * 
-     * @return Value of property nacionalidade.
-     *  
-     */
-    public java.lang.String getNacionalidade() {
-        return nacionalidade;
-    }
-
-    /**
-     * Getter for property nascimento.
-     * 
-     * @return Value of property nascimento.
-     *  
-     */
-    public java.util.Date getNascimento() {
-        return nascimento;
-    }
-
-    /**
-     * Getter for property nome.
-     * 
-     * @return Value of property nome.
-     *  
-     */
-    public java.lang.String getNome() {
-        return nome;
-    }
-
-    /**
-     * Getter for property nomeMae.
-     * 
-     * @return Value of property nomeMae.
-     *  
-     */
-    public java.lang.String getNomeMae() {
-        return nomeMae;
-    }
-
-    /**
-     * Getter for property nomePai.
-     * 
-     * @return Value of property nomePai.
-     *  
-     */
-    public java.lang.String getNomePai() {
-        return nomePai;
-    }
-
-    /**
-     * Getter for property numContribuinte.
-     * 
-     * @return Value of property numContribuinte.
-     *  
-     */
-    public java.lang.String getNumContribuinte() {
-        return numContribuinte;
-    }
-
-    /**
-     * Getter for property numeroDocumentoIdentificacao.
-     * 
-     * @return Value of property numeroDocumentoIdentificacao.
-     *  
-     */
-    public java.lang.String getNumeroDocumentoIdentificacao() {
-        return numeroDocumentoIdentificacao;
-    }
-
-    /**
      * Getter for property pais.
      * 
      * @return Value of property pais.
@@ -586,30 +219,10 @@ public class Person extends DomainObject implements IPerson {
     }
 
     /**
-     * Getter for property password.
-     * 
-     * @return Value of property password.
-     *  
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
      * @return List
      */
     public Collection getPersonRoles() {
         return personRoles;
-    }
-
-    /**
-     * Getter for property profissao.
-     * 
-     * @return Value of property profissao.
-     *  
-     */
-    public java.lang.String getProfissao() {
-        return profissao;
     }
 
     /**
@@ -623,26 +236,6 @@ public class Person extends DomainObject implements IPerson {
     }
 
     /**
-     * Getter for property telefone.
-     * 
-     * @return Value of property telefone.
-     *  
-     */
-    public java.lang.String getTelefone() {
-        return telefone;
-    }
-
-    /**
-     * Getter for property telemovel.
-     * 
-     * @return Value of property telemovel.
-     *  
-     */
-    public java.lang.String getTelemovel() {
-        return telemovel;
-    }
-
-    /**
      * Getter for property tipoDocumentoIdentificacao.
      * 
      * @return Value of property tipoDocumentoIdentificacao.
@@ -650,137 +243,6 @@ public class Person extends DomainObject implements IPerson {
      */
     public TipoDocumentoIdentificacao getTipoDocumentoIdentificacao() {
         return tipoDocumentoIdentificacao;
-    }
-
-    /**
-     * Getter for property username.
-     * 
-     * @return Value of property username.
-     *  
-     */
-    public java.lang.String getUsername() {
-        return username;
-    }
-
-    /**
-     * Setter for property chavePais.
-     * 
-     * @param chavePais
-     *            New value of property chavePais.
-     *  
-     */
-    public void setChavePais(java.lang.Integer chavePais) {
-        this.chavePais = chavePais;
-    }
-
-    /**
-     * Setter for property codigoFiscal.
-     * 
-     * @param codigoFiscal
-     *            New value of property codigoFiscal.
-     *  
-     */
-    public void setCodigoFiscal(java.lang.String codigoFiscal) {
-        this.codigoFiscal = codigoFiscal;
-    }
-
-    /**
-     * Setter for property codigoPostal.
-     * 
-     * @param codigoPostal
-     *            New value of property codigoPostal.
-     *  
-     */
-    public void setCodigoPostal(java.lang.String codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
-
-    /**
-     * Setter for property concelhoMorada.
-     * 
-     * @param concelhoMorada
-     *            New value of property concelhoMorada.
-     *  
-     */
-    public void setConcelhoMorada(java.lang.String concelhoMorada) {
-        this.concelhoMorada = concelhoMorada;
-    }
-
-    /**
-     * Setter for property concelhoNaturalidade.
-     * 
-     * @param concelhoNaturalidade
-     *            New value of property concelhoNaturalidade.
-     *  
-     */
-    public void setConcelhoNaturalidade(java.lang.String concelhoNaturalidade) {
-        this.concelhoNaturalidade = concelhoNaturalidade;
-    }
-
-    /**
-     * Setter for property dataEmissaoDocumentoIdentificacao.
-     * 
-     * @param dataEmissaoDocumentoIdentificacao
-     *            New value of property dataEmissaoDocumentoIdentificacao.
-     *  
-     */
-    public void setDataEmissaoDocumentoIdentificacao(java.util.Date dataEmissaoDocumentoIdentificacao) {
-        this.dataEmissaoDocumentoIdentificacao = dataEmissaoDocumentoIdentificacao;
-    }
-
-    /**
-     * Setter for property dataValidadeDocumentoIdentificacao.
-     * 
-     * @param dataValidadeDocumentoIdentificacao
-     *            New value of property dataValidadeDocumentoIdentificacao.
-     *  
-     */
-    public void setDataValidadeDocumentoIdentificacao(java.util.Date dataValidadeDocumentoIdentificacao) {
-        this.dataValidadeDocumentoIdentificacao = dataValidadeDocumentoIdentificacao;
-    }
-
-    /**
-     * Setter for property distritoMorada.
-     * 
-     * @param distritoMorada
-     *            New value of property distritoMorada.
-     *  
-     */
-    public void setDistritoMorada(java.lang.String distritoMorada) {
-        this.distritoMorada = distritoMorada;
-    }
-
-    /**
-     * Setter for property distritoNaturalidade.
-     * 
-     * @param distritoNaturalidade
-     *            New value of property distritoNaturalidade.
-     *  
-     */
-    public void setDistritoNaturalidade(java.lang.String distritoNaturalidade) {
-        this.distritoNaturalidade = distritoNaturalidade;
-    }
-
-    /**
-     * Setter for property email.
-     * 
-     * @param email
-     *            New value of property email.
-     *  
-     */
-    public void setEmail(java.lang.String email) {
-        this.email = email;
-    }
-
-    /**
-     * Setter for property enderecoWeb.
-     * 
-     * @param enderecoWeb
-     *            New value of property enderecoWeb.
-     *  
-     */
-    public void setEnderecoWeb(java.lang.String enderecoWeb) {
-        this.enderecoWeb = enderecoWeb;
     }
 
     /**
@@ -795,149 +257,6 @@ public class Person extends DomainObject implements IPerson {
     }
 
     /**
-     * Setter for property freguesiaMorada.
-     * 
-     * @param freguesiaMorada
-     *            New value of property freguesiaMorada.
-     *  
-     */
-    public void setFreguesiaMorada(java.lang.String freguesiaMorada) {
-        this.freguesiaMorada = freguesiaMorada;
-    }
-
-    /**
-     * Setter for property freguesiaNaturalidade.
-     * 
-     * @param freguesiaNaturalidade
-     *            New value of property freguesiaNaturalidade.
-     *  
-     */
-    public void setFreguesiaNaturalidade(java.lang.String freguesiaNaturalidade) {
-        this.freguesiaNaturalidade = freguesiaNaturalidade;
-    }
-
-    /**
-     * Setter for property localEmissaoDocumentoIdentificacao.
-     * 
-     * @param localEmissaoDocumentoIdentificacao
-     *            New value of property localEmissaoDocumentoIdentificacao.
-     *  
-     */
-    public void setLocalEmissaoDocumentoIdentificacao(java.lang.String localEmissaoDocumentoIdentificacao) {
-        this.localEmissaoDocumentoIdentificacao = localEmissaoDocumentoIdentificacao;
-    }
-
-    /**
-     * Setter for property localidade.
-     * 
-     * @param localidade
-     *            New value of property localidade.
-     *  
-     */
-    public void setLocalidade(java.lang.String localidade) {
-        this.localidade = localidade;
-    }
-
-    /**
-     * Setter for property localidadeCodigoPostal.
-     * 
-     * @param localidadeCodigoPostal
-     *            New value of property localidadeCodigoPostal.
-     *  
-     */
-    public void setLocalidadeCodigoPostal(java.lang.String localidadeCodigoPostal) {
-        this.localidadeCodigoPostal = localidadeCodigoPostal;
-    }
-
-    /**
-     * Setter for property morada.
-     * 
-     * @param morada
-     *            New value of property morada.
-     *  
-     */
-    public void setMorada(java.lang.String morada) {
-        this.morada = morada;
-    }
-
-    /**
-     * Setter for property nacionalidade.
-     * 
-     * @param nacionalidade
-     *            New value of property nacionalidade.
-     *  
-     */
-    public void setNacionalidade(java.lang.String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
-    /**
-     * Setter for property nascimento.
-     * 
-     * @param nascimento
-     *            New value of property nascimento.
-     *  
-     */
-    public void setNascimento(java.util.Date nascimento) {
-        this.nascimento = nascimento;
-    }
-
-    /**
-     * Setter for property nome.
-     * 
-     * @param nome
-     *            New value of property nome.
-     *  
-     */
-    public void setNome(java.lang.String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * Setter for property nomeMae.
-     * 
-     * @param nomeMae
-     *            New value of property nomeMae.
-     *  
-     */
-    public void setNomeMae(java.lang.String nomeMae) {
-        this.nomeMae = nomeMae;
-    }
-
-    /**
-     * Setter for property nomePai.
-     * 
-     * @param nomePai
-     *            New value of property nomePai.
-     *  
-     */
-    public void setNomePai(java.lang.String nomePai) {
-        this.nomePai = nomePai;
-    }
-
-    /**
-     * Setter for property numContribuinte.
-     * 
-     * @param numContribuinte
-     *            New value of property numContribuinte.
-     *  
-     */
-    public void setNumContribuinte(java.lang.String numContribuinte) {
-        this.numContribuinte = numContribuinte;
-    }
-
-    /**
-     * Setter for property numeroDocumentoIdentificacao.
-     * 
-     * @param numeroDocumentoIdentificacao
-     *            New value of property numeroDocumentoIdentificacao.
-     *  
-     */
-    public void setNumeroDocumentoIdentificacao(java.lang.String numeroDocumentoIdentificacao) {
-        this.numeroDocumentoIdentificacao = numeroDocumentoIdentificacao;
-    }
-
-    /**
      * Setter for property pais.
      * 
      * @param pais
@@ -949,17 +268,6 @@ public class Person extends DomainObject implements IPerson {
     }
 
     /**
-     * Setter for property password.
-     * 
-     * @param password
-     *            New value of property password.
-     *  
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
      * Sets the personRoles.
      * 
      * @param personRoles
@@ -967,17 +275,6 @@ public class Person extends DomainObject implements IPerson {
      */
     public void setPersonRoles(Collection personRoles) {
         this.personRoles = personRoles;
-    }
-
-    /**
-     * Setter for property profissao.
-     * 
-     * @param profissao
-     *            New value of property profissao.
-     *  
-     */
-    public void setProfissao(java.lang.String profissao) {
-        this.profissao = profissao;
     }
 
     /**
@@ -992,28 +289,6 @@ public class Person extends DomainObject implements IPerson {
     }
 
     /**
-     * Setter for property telefone.
-     * 
-     * @param telefone
-     *            New value of property telefone.
-     *  
-     */
-    public void setTelefone(java.lang.String telefone) {
-        this.telefone = telefone;
-    }
-
-    /**
-     * Setter for property telemovel.
-     * 
-     * @param telemovel
-     *            New value of property telemovel.
-     *  
-     */
-    public void setTelemovel(java.lang.String telemovel) {
-        this.telemovel = telemovel;
-    }
-
-    /**
      * Setter for property tipoDocumentoIdentificacao.
      * 
      * @param tipoDocumentoIdentificacao
@@ -1024,54 +299,14 @@ public class Person extends DomainObject implements IPerson {
         this.tipoDocumentoIdentificacao = tipoDocumentoIdentificacao;
     }
 
-    /**
-     * Setter for property username.
-     * 
-     * @param username
-     *            New value of property username.
-     *  
-     */
-    public void setUsername(java.lang.String username) {
-        this.username = username;
-    }
-
     public String toString() {
-        String result = "Person :\n";
-        result += "\n  - Internal Code : " + getIdInternal();
-        result += "\n  - Identification Document Number : " + numeroDocumentoIdentificacao;
-        result += "\n  - Identification Document Type : " + tipoDocumentoIdentificacao;
-        result += "\n  - Identification Document Issue Place : " + localEmissaoDocumentoIdentificacao;
-        result += "\n  - Identification Document Issue Date : " + dataEmissaoDocumentoIdentificacao;
-        result += "\n  - Identification Document Expiration Date : "
-                + dataValidadeDocumentoIdentificacao;
-        result += "\n  - Name : " + nome;
-        result += "\n  - Sex : " + sex;
-        result += "\n  - Marital Status : " + estadoCivil;
-        result += "\n  - Birth : " + nascimento;
-        result += "\n  - Father Name : " + nomePai;
-        result += "\n  - Mother Name : " + nomeMae;
-        result += "\n  - Nationality : " + nacionalidade;
-        result += "\n  - Birth Place Parish : " + freguesiaNaturalidade;
-        result += "\n  - Birth Place Municipality : " + concelhoNaturalidade;
-        result += "\n  - Birth Place District : " + distritoNaturalidade;
-        result += "\n  - Address : " + morada;
-        result += "\n  - Place : " + localidade;
-        result += "\n  - Post Code : " + codigoPostal;
-        result += "\n  - Address Parish : " + freguesiaMorada;
-        result += "\n  - Address Municipality : " + concelhoMorada;
-        result += "\n  - Address District : " + distritoMorada;
-        result += "\n  - Telephone : " + telefone;
-        result += "\n  - MobilePhone : " + telemovel;
-        result += "\n  - WorkPhone : " + workPhone;
-        result += "\n  - E-Mail : " + email;
-        result += "\n  - HomePage : " + enderecoWeb;
-        result += "\n  - Contributor Number : " + numContribuinte;
-        result += "\n  - Username : " + username;
-        result += "\n  - Password : " + password;
-        result += "\n  - Occupation : " + profissao;
-        result += "\n  - Pais : " + pais;
-        result += "\n  - Codigo Fiscal : " + codigoFiscal;
-        return result;
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[Person idInternal= ");
+		stringBuilder.append(getIdInternal());
+		stringBuilder.append(" username= ");
+		stringBuilder.append(getUsername());
+		stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 
     /**
@@ -1101,21 +336,6 @@ public class Person extends DomainObject implements IPerson {
      */
     public void setAvailableEmail(Boolean availableEmail) {
         this.availableEmail = availableEmail;
-    }
-
-    /**
-     * @return Returns the workPhone.
-     */
-    public String getWorkPhone() {
-        return workPhone;
-    }
-
-    /**
-     * @param workPhone
-     *            The workPhone to set.
-     */
-    public void setWorkPhone(String workPhone) {
-        this.workPhone = workPhone;
     }
 
     /**
@@ -1149,7 +369,6 @@ public class Person extends DomainObject implements IPerson {
     }
 
     public String getSlideName() {
-        String result = "/photos/person/P" + getIdInternal();
-        return result;
+        return "/photos/person/P" + getIdInternal();
     }
 }
