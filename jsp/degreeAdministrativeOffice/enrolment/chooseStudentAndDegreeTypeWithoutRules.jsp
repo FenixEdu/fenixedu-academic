@@ -4,14 +4,18 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <bean:define id="degreeTypeList" name="<%= SessionConstants.DEGREE_TYPE %>"/>
+
 <center>
 <h2><bean:message key="title.student.enrolment.without.rules"/></h2>
+<html:errors/>
+<br/>
 </center>
 <b><bean:message key="label.first.step"/></b>
 <center>
-<p>&nbsp;</p>
-<html:form action="/prepareStudentEnrolment.do?method=withoutRules">
-	<html:hidden property="method" value="start"/>
+<br/>
+<br/>
+<html:form action="/prepareStudentEnrolment.do">
+	<html:hidden property="method" value="withoutRules"/>
 	<table border="0">
 		<tr>
 			<td align="left"><bean:message key="label.choose.degree.type"/>&nbsp;</td>
@@ -28,7 +32,9 @@
 			</td>
 		</tr>
 	</table>
-	<p>&nbsp;</p>
+	<br/>
+	<br/>
+	<%--<p>&nbsp;</p>--%>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.submit.degree.type.and.student"/>
 	</html:submit>

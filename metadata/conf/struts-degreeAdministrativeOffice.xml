@@ -83,7 +83,6 @@
 		<action	name="setStartModeForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.SetStartModeDispatchAction"
 				path="/setStartMode"
-				input="/setStartMode.do"
 				parameter="method"
 				scope="session"
 				validate="false">
@@ -100,12 +99,14 @@
 				validate="true">
 			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
 			<forward name="startCurricularCourseEnrolmentWithoutRules" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
+			<forward name="errorWithRules" path="/setStartMode.do?method=withRules"/>
+			<forward name="errorWithoutRules" path="/setStartMode.do?method=withoutRules"/>
 		</action>
 
 		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareEnrolmentContextAction"
 				path="/prepareEnrolmentContext"
-				input="/prepareEnrolmentContext.do"
+				input="/prepareStudentEnrolment.do"
 				scope="session"
 				validate="true">
 			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
@@ -114,7 +115,6 @@
 		<action	name="curricularCourseEnrolmentWithRulesForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithRulesManagerDispatchAction"
 				path="/curricularCourseEnrolmentWithRulesManager"
-				input="/curricularCourseEnrolmentWithRulesManager.do?method=start"
 				parameter="method"
 				scope="session"
 				validate="false">
@@ -126,7 +126,7 @@
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 
 			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithRules"/>
-			<forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
+			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
@@ -135,24 +135,13 @@
 		<action	name="curricularCourseEnrolmentWithoutRulesForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
 				path="/curricularCourseEnrolmentWithoutRulesManager"
-				input="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"
 				parameter="method"
 				scope="session"
 				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-			<exception	type="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
-						key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-
-			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
-<!--
-			<forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
-			<forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
-			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
-			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
--->
+			<forward name="showAvailableCurricularCourses" path="/prepareEnrolmentContext.do"/>
+			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
+			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
+			<forward name="back" path="/prepareStudentEnrolment.do?method=withoutRules"/>
 		</action>
 	</action-mappings>
 

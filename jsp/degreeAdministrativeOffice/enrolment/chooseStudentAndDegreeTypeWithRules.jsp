@@ -7,12 +7,15 @@
 
 <center>
 <h2><bean:message key="title.student.enrolment.with.rules"/></h2>
+<html:errors/>
+<br/>
 </center>
 <b><bean:message key="label.first.step"/></b>
 <center>
-<p>&nbsp;</p>
-<html:form action="/prepareStudentEnrolment.do?method=withRules">
-	<html:hidden property="method" value="start"/>
+<br/>
+<br/>
+<html:form action="/prepareStudentEnrolment.do">
+	<html:hidden property="method" value="withRules"/>
 	<table border="0">
 		<tr>
 			<td align="left"><bean:message key="label.choose.degree.type"/>&nbsp;</td>
@@ -29,7 +32,8 @@
 			</td>
 		</tr>
 	</table>
-	<p>&nbsp;</p>
+	<br/>
+	<br/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.submit.degree.type.and.student"/>
 	</html:submit>

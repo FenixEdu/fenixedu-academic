@@ -13,8 +13,7 @@
 <bean:size id="sizeAprovedAndEnroled" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent"/>
 
 <logic:notEqual name="sizeToBeEnroled" value="0">
-	<html:form action="curricularCourseEnrolmentWithoutRulesManager">
-		<html:hidden property="step" value="0"/>
+	<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
 		<html:hidden property="method" value="verifyEnrolment"/>
 		<table>
 			<tr>
@@ -49,6 +48,9 @@
 					<html:submit styleClass="inputbutton">
 						<bean:message key="button.continue.enrolment"/>
 					</html:submit>
+					<html:cancel styleClass="inputbutton">
+						<bean:message key="button.cancel"/>	
+					</html:cancel>		
 				</td>
 			</tr>
 		</table>
@@ -65,11 +67,11 @@
 	<b><bean:message key="message.curricular.courses.from.this.degree" arg0="<%= degreeName.toString() %>" arg1="<%= studentNumber.toString() %>"/></b>
 	<br/>
 	<br/>
-	<table>
+	<table border="1" cellpadding="2" cellspacing="0">
 		<tr>
-			<td><u><bean:message key="label.curricular.course.name"/></u></td>
-			<td><u><bean:message key="label.curricular.course.semester"/></u></td>
-			<td><u><bean:message key="label.curricular.course.year"/></u></td>
+			<td align="center"><u><bean:message key="label.curricular.course.name"/></u></td>
+			<td align="center"><u><bean:message key="label.curricular.course.semester"/></u></td>
+			<td align="center"><u><bean:message key="label.curricular.course.year"/></u></td>
 			<td align="center"><u><bean:message key="label.curricular.course.enrolment.state"/></u></td>
 		</tr>
 		<logic:iterate id="infoEnrolment" name="infoEnrolmentContext" property="infoEnrolmentsAprovedByStudent">
@@ -88,10 +90,10 @@
 						<bean:message key="message.enrolment.state.aproved"/>
 					</logic:equal>
 					<logic:equal name="infoEnrolment" property="enrolmentState.state" value="3">
-						<bean:message key="message.enrolment.state.enroled"/>
+						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page=""><bean:message key="link.student.unenrolment"/></html:link>
 					</logic:equal>
 					<logic:equal name="infoEnrolment" property="enrolmentState.state" value="4">
-						<bean:message key="message.enrolment.state.enroled"/>
+						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page=""><bean:message key="link.student.unenrolment"/></html:link>
 					</logic:equal>
 				</td>
 			</tr>

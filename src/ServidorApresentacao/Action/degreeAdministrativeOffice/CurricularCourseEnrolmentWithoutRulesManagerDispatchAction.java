@@ -1,6 +1,5 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,16 +16,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
-import ServidorApresentacao.Action.exceptions.FenixTransactionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.CurricularCourseType;
 
 /**
  * @author David Santos
@@ -35,36 +30,19 @@ import Util.CurricularCourseType;
 
 public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends DispatchAction {
 
-	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment" };
-
-//	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//
-//		createToken(request);
-//
-//		HttpSession session = request.getSession();
-//
-//		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-//		IUserView actor = (IUserView) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-//		Object args[] = { actor };
-//
-//		InfoEnrolmentContext infoEnrolmentContext = null;
-//		try {
-//			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args);
-//		} catch (OutOfCurricularCourseEnrolmentPeriod e) {
-//			throw new OutOfCurricularEnrolmentPeriodActionException(e.getMessageKey(), e.getStartDate(), e.getEndDate(), mapping.findForward("globalOutOfPeriod"));
-//		}
-//
-//		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-//		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-//		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
-//		return mapping.findForward(forwards[0]);
-//	}
+	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment", "back" };
 
 	public ActionForward verifyEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		validateToken(request, form, mapping);
 
 		DynaActionForm enrolmentForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
+
+		if (isCancelled(request)) {
+			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+			request.setAttribute("degreeType", infoEnrolmentContext.getChosenOptionalInfoDegree().getTipoCurso());
+			request.setAttribute("studentNumber", infoEnrolmentContext.getInfoStudentActiveCurricularPlan().getInfoStudent().getNumber());
+			return mapping.findForward(forwards[3]);
+		}
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -72,23 +50,23 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualEnrolmentWithRules", args);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ValidateActualEnrolmentWithoutRules", args);
 		ActionForward nextForward = null;
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		if (!infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
 			this.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
-			nextForward = getBeforeForward(request, mapping);
+			nextForward = mapping.findForward(forwards[0]);
 		} else {
-			nextForward = getNextForward(request, mapping);
+			nextForward = mapping.findForward(forwards[1]);
 		}
 		return nextForward;
 	}
 
 	public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		if (isCancelled(request)) {
-			return getBeforeForward(request, mapping);
+			return mapping.findForward(forwards[0]);
 		}
-		validateToken(request, form, mapping);
 
 		HttpSession session = request.getSession();
 
@@ -98,60 +76,14 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 
 		Object args[] = { infoEnrolmentContext };
 
-		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualEnrolmentWithRules", args);
+		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ConfirmActualEnrolmentWithoutRules", args);
 		if (infoEnrolmentContext.getEnrolmentValidationResult().isSucess()) {
-			return getNextForward(request, mapping);
+			return mapping.findForward(forwards[2]);
 		} else {
 			session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-			saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
+			this.saveErrorsFromInfoEnrolmentContext(request, infoEnrolmentContext);
 			return mapping.findForward(forwards[0]);
 		}
-
-	}
-
-	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
-
-		if (!isTokenValid(request)) {
-			form.reset(mapping, request);
-			throw new FenixTransactionException("error.transaction.enrolment");
-		} else {
-			createToken(request);
-		}
-	}
-
-	private void createToken(HttpServletRequest request) {
-		generateToken(request);
-		saveToken(request);
-	}
-
-	private void initializeForm(InfoEnrolmentContext infoEnrolmentContext, DynaActionForm enrolmentForm) {
-		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
-		List infoFinalSpan = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		Integer[] curricularCoursesIndexes = new Integer[infoFinalSpan.size()];
-
-		for (int i = 0; i < infoFinalSpan.size(); i++) {
-			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoFinalSpan.get(i);
-			InfoCurricularCourse infoCurricularCourse = infoCurricularCourseScope.getInfoCurricularCourse();
-
-			if (infoCurricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
-				List optionalEnrolments = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
-				Iterator optionalEnrolmentsIterator = optionalEnrolments.iterator();
-				while (optionalEnrolmentsIterator.hasNext()) {
-					InfoEnrolmentInOptionalCurricularCourse optionalEnrolment = (InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator.next();
-					if (optionalEnrolment.getInfoCurricularCourseScope().getInfoCurricularCourse().equals(infoCurricularCourse)) {
-						curricularCoursesIndexes[i] = new Integer(i);
-						break;
-					}
-				}
-			} else {
-				if (actualEnrolment.contains(infoCurricularCourseScope)) {
-					curricularCoursesIndexes[i] = new Integer(i);
-				} else {
-					curricularCoursesIndexes[i] = null;
-				}
-			}
-		}
-		enrolmentForm.set("curricularCourses", curricularCoursesIndexes);
 	}
 
 	private InfoEnrolmentContext processEnrolment(HttpServletRequest request, DynaActionForm enrolmentForm, HttpSession session) {
@@ -170,64 +102,34 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		actualEnrolment.addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
 
 		List curricularCourseScopesToBeEnrolled = infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		List optionalCurricularCoursesChoosen = new ArrayList();
+//		List optionalCurricularCoursesChoosen = new ArrayList();
 		if (curricularCourses != null) {
 			for (int i = 0; i < curricularCourses.length; i++) {
 				Integer curricularCourseIndex = curricularCourses[i];
 				if (curricularCourseIndex != null) {
 					InfoCurricularCourseScope curricularCourseScope = (InfoCurricularCourseScope) curricularCourseScopesToBeEnrolled.get(curricularCourseIndex.intValue());
-					if (!curricularCourseScope.getInfoCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
+//					if (!curricularCourseScope.getInfoCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
 						actualEnrolment.add(curricularCourseScope);
-					} else {
-						optionalCurricularCoursesChoosen.add(curricularCourseScope.getInfoCurricularCourse());
-					}
+//					} else {
+//						optionalCurricularCoursesChoosen.add(curricularCourseScope.getInfoCurricularCourse());
+//					}
 				}
 			}
 		}
 
-		List enrolmentsInOptionalCourses = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
-
-		if (enrolmentsInOptionalCourses.size() != optionalCurricularCoursesChoosen.size()) {
-			Iterator optionalEnrolmentsIterator = enrolmentsInOptionalCourses.iterator();
-			while (optionalEnrolmentsIterator.hasNext()) {
-				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator.next();
-				InfoCurricularCourse optionalCurricularCourse = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse();
-				if (!optionalCurricularCoursesChoosen.contains(optionalCurricularCourse)) {
-					optionalEnrolmentsIterator.remove();
-				}
-			}
-		}
+//		List enrolmentsInOptionalCourses = infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
+//
+//		if (enrolmentsInOptionalCourses.size() != optionalCurricularCoursesChoosen.size()) {
+//			Iterator optionalEnrolmentsIterator = enrolmentsInOptionalCourses.iterator();
+//			while (optionalEnrolmentsIterator.hasNext()) {
+//				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse = (InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator.next();
+//				InfoCurricularCourse optionalCurricularCourse = infoEnrolmentInOptionalCurricularCourse.getInfoCurricularCourseScope().getInfoCurricularCourse();
+//				if (!optionalCurricularCoursesChoosen.contains(optionalCurricularCourse)) {
+//					optionalEnrolmentsIterator.remove();
+//				}
+//			}
+//		}
 		return infoEnrolmentContext;
-	}
-
-	private ActionForward getBeforeForward(HttpServletRequest request, ActionMapping mapping) throws Exception {
-		int step = 0;
-		try {
-			step = Integer.parseInt(request.getParameter("step"));
-		} catch (NumberFormatException e) {
-		}
-
-		if (step < 0 && step >= forwards.length) {
-			throw new IllegalArgumentException("Illegal step!");
-		}
-
-		if (step != 0) {
-			step -= 1;
-		}
-
-		return mapping.findForward(forwards[step]);
-	}
-
-	private ActionForward getNextForward(HttpServletRequest request, ActionMapping mapping) throws Exception {
-		int step = 0;
-		try {
-			step = Integer.parseInt(request.getParameter("step"));
-		} catch (NumberFormatException e) {
-		}
-
-		step = step < 0 ? 0 : step;
-		step = step > forwards.length ? forwards.length - 2 : step;
-		return mapping.findForward(forwards[step + 1]);
 	}
 
 	private void saveErrorsFromInfoEnrolmentContext(HttpServletRequest request, InfoEnrolmentContext infoEnrolmentContext) {
@@ -247,5 +149,4 @@ public class CurricularCourseEnrolmentWithoutRulesManagerDispatchAction extends 
 		}
 		saveErrors(request, actionErrors);
 	}
-
 }

@@ -7,10 +7,13 @@
 
 <center>
 <h2><bean:message key="title.student.enrolment.without.rules"/></h2>
+<html:errors/>
+<br/>
 </center>
 <b><bean:message key="label.second.step"/></b>
 <center>
-<p>&nbsp;</p>
+<br/>
+<br/>
 <html:form action="/prepareEnrolmentContext.do">
 	<table border="0">
 		<tr>
@@ -54,7 +57,8 @@
 			</td>
 		</tr>
 	</table>
-	<p>&nbsp;</p>
+	<br/>
+	<br/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.submit.degree.type.and.student"/>
 	</html:submit>
