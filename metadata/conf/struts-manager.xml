@@ -1241,6 +1241,22 @@
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
 	
+	<action
+			path="/deletePrecedence"
+			input="df.page.manage.precedences"
+			scope="request"
+			type="ServidorApresentacao.Action.manager.precedences.DeletePrecedenceFromDegreeCurricularPlanAction">
+       <forward name="showPrecedences" path="df.page.manage.precedences"/>
+	</action>
+	
+	<action
+			path="/deleteRestriction"
+			input="df.page.manage.precedences"
+			scope="request"
+			type="ServidorApresentacao.Action.manager.precedences.DeleteRestrictionFromDegreeCurricularPlanAction">
+       <forward name="showPrecedences" path="df.page.manage.precedences"/>
+	</action>
+	
 	<action path="/makeSimplePrecedence" 
 		input="/managePrecedences.do"
 		type="ServidorApresentacao.Action.manager.precedences.MakeSimplePrecedenceAction"
@@ -1252,8 +1268,6 @@
 	</action>	
 	
 	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>
-	<action path="/deletePrecedence" forward="df.page.manage.precedences"/>
-	<action path="/deleteRestriction" forward="df.page.manage.precedences"/>
 
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"

@@ -6878,6 +6878,24 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
+	<service>
+        <name>DeletePrecedenceFromDegreeCurricularPlan</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.precedences.DeletePrecedenceFromDegreeCurricularPlan</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>DeleteRestrictionFromDegreeCurricularPlan</name>
+        <implementationClass>ServidorAplicacao.Servico.manager.precedences.DeleteRestrictionFromDegreeCurricularPlan</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
 
 
 <!-- =============================================================================================== -->
