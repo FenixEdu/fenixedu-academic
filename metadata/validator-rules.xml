@@ -39,7 +39,17 @@
 <form-validation>
 
    <global>
-
+     <validator name="twoFields"
+            classname="ServidorApresentacao.validator.form.ValidateTwoFields"
+               method="validate"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="errors.different.passwords"/>
+   
       <validator name="required"
             classname="org.apache.struts.validator.FieldChecks"
                method="validateRequired"
