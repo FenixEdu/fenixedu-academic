@@ -100,7 +100,7 @@
 								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="degreetablestd">
-								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;ePName=<bean:write name="ePName" />&amp;eYName=<bean:write name="eYName" />'>
+								<a href='siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="infoLesson" property="infoSala.nome"/>&amp;objectCode=<bean:write name="executionPeriodCode" />'>
 									<bean:write name="infoLesson" property="infoSala.nome"/>
 								</a>
 							</td class="degreetablestd">
