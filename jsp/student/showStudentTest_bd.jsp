@@ -64,6 +64,7 @@
 		</logic:iterate>
 		<logic:equal name="imageLabel" value="true">
 			</td></tr></table>
+			<bean:define id="imageLabel" value="false"/>
 		</logic:equal>
 		
 		<bean:define id="cardinality" name="question" property="questionType.cardinalityType.type"/>
@@ -234,6 +235,7 @@
 		</logic:iterate>
 		<logic:equal name="imageLabel" value="true">
 			</td></tr></table>
+			<bean:define id="imageLabel" value="false"/>
 		</logic:equal>
 		<%if((((Integer)testType).intValue()!=3) &&(((Integer)formula).intValue()==1)){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>
 			<%if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
