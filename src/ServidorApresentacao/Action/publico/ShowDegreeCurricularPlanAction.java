@@ -132,9 +132,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
 
-        Integer index = getFromRequest("index", request);
-        request.setAttribute("index", index);
-
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
         List activeCurricularCourseScopes = null;
