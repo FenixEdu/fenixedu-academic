@@ -31,6 +31,8 @@ import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IPessoa;
+import Dominio.Pessoa;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Util.EnrolmentEvaluationState;
@@ -325,7 +327,7 @@ public class MigrateInscricoes2FenixEnrolments {
 					enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				}
 				
-//				broker.store(enrolment);			
+				broker.store(enrolment);			
 				enrolmentsWritten++;
 
 
@@ -351,28 +353,26 @@ public class MigrateInscricoes2FenixEnrolments {
 					result = (List) broker.getCollectionByQuery(query);		
 
 					if (result.size() != 1) {
-System.out.println("Funcionario " + inscricao.getCreditos() + " Nao Existe !!");
-
-//						throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
+						throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
 					}
 
-//					Funcionario funcionario = (Funcionario) result.get(0);
-//					
-//					criteria = new Criteria();
-//					criteria.addEqualTo("id_internal", new Integer(String.valueOf(funcionario.getChavePessoa())));
-//					query = new QueryByCriteria(Pessoa.class,criteria);
-//
-//					result = (List) broker.getCollectionByQuery(query);		
+					Funcionario funcionario = (Funcionario) result.get(0);
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("id_internal", new Integer(String.valueOf(funcionario.getChavePessoa())));
+					query = new QueryByCriteria(Pessoa.class,criteria);
 
-//					if (result.size() != 1) {
-//						throw new Exception("Error Reading Pessoa [" + result.size() + "]");
-//					}
-//
-//					IPessoa person = (IPessoa) result.get(0);
-//					
-//					enrolmentEvaluation.setPersonResponsibleForGrade(person);
+					result = (List) broker.getCollectionByQuery(query);		
 
-//					broker.store(enrolmentEvaluation);
+					if (result.size() != 1) {
+						throw new Exception("Error Reading Pessoa [" + result.size() + "]");
+					}
+
+					IPessoa person = (IPessoa) result.get(0);
+					
+					enrolmentEvaluation.setPersonResponsibleForGrade(person);
+
+					broker.store(enrolmentEvaluation);
 					evaluationsWritten++;
 				}
 			}
