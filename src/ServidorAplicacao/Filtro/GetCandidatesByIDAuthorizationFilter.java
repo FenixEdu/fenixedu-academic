@@ -9,8 +9,6 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoRole;
-import Dominio.CurricularCourseScope;
-import Dominio.ICurricularCourseScope;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.ITeacher;
 import Dominio.MasterDegreeCandidate;
@@ -26,10 +24,10 @@ import Util.RoleType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
+public class GetCandidatesByIDAuthorizationFilter extends Filtro {
 
-	public final static WriteCandidateEnrolmentsAuhorizationFilter instance =
-		new WriteCandidateEnrolmentsAuhorizationFilter();
+	public final static GetCandidatesByIDAuthorizationFilter instance =
+		new GetCandidatesByIDAuthorizationFilter();
 
 	/**
 	 * The singleton access method of this class.
@@ -115,17 +113,12 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 			// Read The ExecutionDegree
 			try {
 								
-				Integer selection[] = (Integer[]) arguments[0];
-				Integer candidateID = (Integer) arguments[1];
-				Double givenCredits = (Double) arguments[2];
-				String givenCreditsString = (String) arguments[3];
-				
+				Integer candidateID = (Integer) arguments[0];
 				
 				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
 				IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
 				mdcTemp.setIdInternal(candidateID);
-
 				IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
 				
 				if (masterDegreeCandidate == null){
@@ -136,15 +129,6 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 					return false;
 				}
 
-				
-				for(int i = 0; i < selection.length ; i++){
-					ICurricularCourseScope ccScopeTemp = new CurricularCourseScope();
-					ccScopeTemp.setIdInternal(selection[i]);
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourse().readByOId(ccScopeTemp, false);
-					if (!curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().equals(masterDegreeCandidate.getExecutionDegree().getCurricularPlan())){
-						return false;
-					} 
-				}
 				return true;				
 				
 			} catch (Exception e) {

@@ -65,6 +65,9 @@ public class WriteCandidateEnrolments implements IServico {
 			if (credits.floatValue() != 0){
 				masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);	
 			}
+
+			System.out.println("Servico Creditos " + masterDegreeCandidate.getGivenCredits());
+			System.out.println("Servico Creditos OBS" + masterDegreeCandidate.getGivenCreditsRemarks());
 			
 
 			// Clean the Enrolment Information

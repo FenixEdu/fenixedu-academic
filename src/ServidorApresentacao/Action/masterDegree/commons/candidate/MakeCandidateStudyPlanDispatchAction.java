@@ -441,6 +441,9 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 	    
 	    String givenCreditsRemarks = (String) chooseCurricularCoursesForm.get("givenCreditsRemarks");
 
+		System.out.println("Credtitos " + attributedCredits);
+		System.out.println("Credtitos OBS " + givenCreditsRemarks);
+
 		
 		try {
 			Object args[] = { selection, candidateID , attributedCredits, givenCreditsRemarks};
