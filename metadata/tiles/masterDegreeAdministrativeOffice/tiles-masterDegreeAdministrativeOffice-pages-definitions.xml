@@ -46,4 +46,20 @@
 		<put name="body" value="/posGraduacao/externalPerson/insertExternalPerson.jsp"/>
 	</definition>
 	
+	<definition name="df.page.insertWorkLocation" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/insertWorkLocation.jsp"/>
+	</definition>
+	
+	<definition name="df.page.insertWorkLocation_success" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/insertWorkLocation_success.jsp"/>
+	</definition>
+	
+	<definition name="df.page.editWorkLocation" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/editWorkLocation.jsp"/>
+	</definition>
+	
+	<definition name="df.page.editWorkLocation_success" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/editWorkLocation_success.jsp"/>
+	</definition>
+	
 </tiles-definitions>
