@@ -41,3 +41,11 @@ CREATE TABLE almeida_inscricoes (
   ramo varchar(200) default NULL,
   PRIMARY KEY  (codInt)
 ) TYPE=MyISAM;
+
+create table EXAM_ROOM (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EXAM int(11) not null,
+   KEY_ROOM int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXAM, KEY_ROOM))
+   type=InnoDB;
