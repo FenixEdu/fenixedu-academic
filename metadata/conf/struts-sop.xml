@@ -37,8 +37,6 @@
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
 
-
-
 	  <!-- AULAS -->
       <!-- Dynamic-FormBean para CriarAula -->
       <form-bean name="aulaForm"
@@ -471,7 +469,7 @@
               name="roomForm"
               path="/pesquisarSala"
               scope="request"
-              type="ServidorApresentacao.Action.publico.SelectRoomsFormAction"
+              type="ServidorApresentacao.Action.sop.SelectRoomsFormAction"
               validate="false">
         <forward name="Sucess" path="/manipularSalas.jsp" />
       </action>
@@ -526,7 +524,7 @@
       		  path="/viewRoom"
               scope="session"
               validate="true"
-              type="ServidorApresentacao.Action.publico.ViewRoomFormAction">
+              type="ServidorApresentacao.Action.sop.ViewRoomFormAction">
           <forward name="Sucess" path="/sopViewRoom.jsp"/>
       </action>
 

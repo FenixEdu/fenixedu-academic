@@ -15,6 +15,7 @@
         <tr align="center">
           <td>
             <html:radio property="index" value="<%= (new Integer(i)).toString()%>"/>
+            <html:hidden property="nome" value='<bean:write name="infoRoom" property="nome"/>'/>
           </td>
           <td><bean:write name="infoRoom" property="nome"/></td>
         </tr>
