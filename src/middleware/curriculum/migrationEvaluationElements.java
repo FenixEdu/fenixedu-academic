@@ -13,14 +13,13 @@ import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Tânia Pousão
- * Created on 24/Out/2003
+ * @author Tânia Pousão Created on 24/Out/2003
  */
 public class migrationEvaluationElements {
-	//This class migrates all evaluation elements in curriculum table 
+	//This class migrates all evaluation elements in curriculum table
 	//for a evalaution method table.
-	//And more, at evaluation method table a key 
-	//already it is not for curricular course but for execution course 
+	//And more, at evaluation method table a key
+	//already it is not for curricular course but for execution course
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Reading evaluation elements ....");
@@ -60,17 +59,20 @@ public class migrationEvaluationElements {
 							IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator2.next();
 							System.out.println("Writing EvaluationMethods of the execution course " + executionCourse.getIdInternal());
 
-							//put Evaluation Elements of the curriculum in Evaluation Method Objects
-							IEvaluationMethod evaluationMethod = new EvaluationMethod();
-							evaluationMethod.setEvaluationElements(curriculum.getEvaluationElements());
-							evaluationMethod.setEvaluationElementsEn(curriculum.getEvaluationElementsEn());
+							if (curriculum.getEvaluationElements() != null && curriculum.getEvaluationElements().length() > 0 &&
+							curriculum.getEvaluationElementsEn() != null && curriculum.getEvaluationElementsEn().length() > 0) {
+								//put Evaluation Elements of the curriculum in Evaluation Method Objects
+								IEvaluationMethod evaluationMethod = new EvaluationMethod();
+								evaluationMethod.setEvaluationElements(curriculum.getEvaluationElements());
+								evaluationMethod.setEvaluationElementsEn(curriculum.getEvaluationElementsEn());
 
-							evaluationMethod.setExecutionCourse(executionCourse);
-							evaluationMethod.setKeyExecutionCourse(executionCourse.getIdInternal());
+								evaluationMethod.setExecutionCourse(executionCourse);
+								evaluationMethod.setKeyExecutionCourse(executionCourse.getIdInternal());
 
-							sp.iniciarTransaccao();
-							persistentEvaluationMethod.lockWrite(evaluationMethod);
-							sp.confirmarTransaccao();
+								sp.iniciarTransaccao();
+								persistentEvaluationMethod.lockWrite(evaluationMethod);
+								sp.confirmarTransaccao();
+							}
 						}
 					} else {
 						System.out.println("Don't exist execution course!!");
