@@ -2,9 +2,9 @@
  * Created on 6/Jan/2004
  *
  */
-package ServidorPersistente;
+package ServidorPersistente.OJB;
 
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.IPersistentGratuitySituation;
 
 /**
  * @author Tânia Pousão
