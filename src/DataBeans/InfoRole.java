@@ -17,6 +17,10 @@ public class InfoRole extends InfoObject {
 
 	public InfoRole(){
 	}
+	
+	public InfoRole(RoleType roleType){
+		setRoleType(roleType);	
+	}
 	/**
 	 * @return String
 	 */

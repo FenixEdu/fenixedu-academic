@@ -419,7 +419,23 @@
             <form-property name="articlesChaptersPublicationsNumberId" type="java.lang.Integer"/>
             <form-property name="articlesChaptersNational" type="java.lang.String"/>
             <form-property name="articlesChaptersInternational" type="java.lang.String"/>
-        </form-bean>
+		</form-bean>
+
+		<!-- ******************* LEEC Enrollment **************** -->
+		<form-bean name="curricularCoursesEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="specializationArea" type="java.lang.Integer"/>
+			<form-property name="secondaryArea" type="java.lang.Integer"/>
+			<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
+			<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
+			<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>            
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
     <global-exceptions>
@@ -1133,6 +1149,51 @@
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
         <!-- ======================================================================== -->
+        
+		<!-- ****************** LEEC Enrollment **************************** -->
+		<action path="/tutorSection"
+		type="ServidorApresentacao.Action.commons.VoidAction"
+		parameter="method"
+		>
+			<forward name="Success" path="firstPageTutorSection"/>
+		</action>
+		
+		<action	path="/curricularCoursesEnrollment"
+			type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCoursesEnrollmentDispatchAction"
+			name="curricularCoursesEnrollmentForm"				
+			parameter="method"
+			scope="request"
+			validate="true"
+			input="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent">
+			<exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+				key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+				handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+					
+			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
+			<forward name="prepareEnrollmentChooseStudent" path="df.page.prepareEnrollmentChooseStudent"/>
+			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
+			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>
+			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
+			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
+		</action>
+			
+		<action path="/viewStudentCurriculum"
+		   	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
+	       	parameter="method">
+			<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
+	    </action>
+	      	
+		<action path="/viewCurriculum"
+		  	type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
+	        parameter="method"
+	      	name="curriculumForm"	
+			scope="request"
+			validate="true"
+			input="/viewStudentCurriculum.do?method=prepareViewStudentCurriculumChooseStudent&amp;page=0">
+	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+	        	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
+	    </action>	        
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>

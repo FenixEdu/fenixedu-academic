@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoObject;
+import DataBeans.InfoRole;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ChosenAreasAreIncompatibleServiceException;
@@ -124,8 +125,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
-			if (!(userView.getRoles().contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-				|| userView.getRoles().contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))
+			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
+				|| userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
 			{
 				errors.add("enrolment", new ActionError(e.getMessage()));
 			}

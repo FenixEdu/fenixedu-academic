@@ -99,4 +99,36 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/credits/showTeacherCreditsSheet.jsp"></put>
 	</definition>
+
+	<!-- Enrollment -->
+    <definition name="firstPageTutorSection" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/teacher/tutor/help.jsp" />
+    </definition>
+    
+	<!-- ************************************** LEEC Enrollment **************************** -->
+	<definition name="df.page.prepareEnrollmentChooseStudent" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseStudent.jsp"/>
+	</definition>
+	<definition name="df.page.prepareEnrollmentChooseAreas" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseAreas.jsp"/>
+	</definition>
+	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseCurricularCourses.jsp"/>
+	</definition>
+	<definition name="df.page.enrollmentConfirmation" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/degreeAdministrativeOffice/enrolment/enrollmentConfirmation.jsp"/>
+	</definition>
+
+	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/degreeAdministrativeOffice/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
+	</definition>
+	<definition name="df.page.showStudentCurricularPlans" extends="definition.teacher.two-column.extra-menu.tutor">
+        <put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>
+	</definition>
+	<definition name="df.page.notAuthorized" extends="definition.teacher.two-column.extra-menu.tutor" >
+        <put name="body" value="/student/notAuthorized_bd.jsp" />
+	</definition>	
+	<definition name="df.page.showStudentCurriculum" extends="definition.teacher.two-column.extra-menu.tutor" >
+        <put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>		
 </tiles-definitions>

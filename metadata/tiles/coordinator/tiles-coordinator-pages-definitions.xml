@@ -91,10 +91,11 @@
 	</definition>
 	
 	<!-- Enrollment -->
-    <definition name="firstPageStudentEnrollementSection" extends="definition.coordinator.two-column.extra-menu">
+    <definition name="firstPageStudentEnrollementSection" extends="definition.coordinator.two-column.extra-menu.student">
         <put name="navLocalExtra" value="/coordinator/enrollment/enrollmentStudentMenu.jsp" />
         <put name="body" value="/coordinator/enrollment/help.jsp" />
     </definition>
+    
 	<!-- ************************************** LEEC Enrollment **************************** -->
 	<definition name="df.page.prepareEnrollmentChooseStudent" extends="definition.coordinator.two-column.extra-menu.student">
         <put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseStudent.jsp"/>

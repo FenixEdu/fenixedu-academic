@@ -7,7 +7,7 @@
   	</html:link>
   </li>
   <li>
-  	<html:link href="<%= request.getContextPath() + "/teacher/prepareTeacherCreditsSheet.do" %>">
+  	<html:link href="<%= request.getContextPath() + "/teacher/tutorSection.do" %>">
   		<bean:message key="link.teacher.tutor.operations"/>
   	</html:link>  
   </li>  
