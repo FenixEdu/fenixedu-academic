@@ -32,86 +32,85 @@ import constants.assiduousness.Constants;
  * @author  Fernanda Quitério & Tania Pousão
  */
 public final class ConsultarFuncionarioMostrarAction extends Action {
-  
-  public ActionForward execute(ActionMapping mapping,
-  ActionForm form,
-  HttpServletRequest request,
-  HttpServletResponse response)
-  throws IOException, ServletException {
-    System.out.println("--->No ConsultarFuncionarioMostrarAction...");
-    
-    ActionErrors errors = new ActionErrors();
-    HttpSession session = request.getSession();
-        
-    Pessoa pessoa = (Pessoa)session.getAttribute(Constants.USER_KEY);
 
-    ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-    ServicoSeguroLerFuncionario servicoSeguroLerFuncionario =
-    new ServicoSeguroLerFuncionario(servicoAutorizacaoLer, pessoa.getIdInternal().intValue());
-    
-    try {
-      Executor.getInstance().doIt(servicoSeguroLerFuncionario);
-      
-    } catch (NotAuthorizeException nae) {
-      errors.add(ActionErrors.GLOBAL_ERROR,
-      new ActionError(nae.getMessage()));
-    } catch (NotExecuteException nee) {
-      errors.add(ActionErrors.GLOBAL_ERROR,
-      new ActionError(nee.getMessage()));
-    } catch (PersistenceException pe) {
-      errors.add(ActionErrors.GLOBAL_ERROR,
-      new ActionError("error.server"));
-    } finally {
-      if (!errors.isEmpty()) {
-        saveErrors(request, errors);
-        return (new ActionForward(mapping.getInput()));
-      }
-    }
-    
-    Funcionario funcionario = servicoSeguroLerFuncionario.getFuncionario();
-    
-    ServicoSeguroConsultarFuncionario servicoSeguroConsultarFuncionario =
-    new ServicoSeguroConsultarFuncionario(servicoAutorizacaoLer, funcionario.getNumeroMecanografico());
-    
-    try {
-      
-      /* funcionario a consultar */
-      Executor.getInstance().doIt(servicoSeguroConsultarFuncionario);
-      
-    } catch (NotAuthorizeException nae) {
-      errors.add(ActionErrors.GLOBAL_ERROR,
-      new ActionError(nae.getMessage()));
-    } catch (NotExecuteException nee) {
-      errors.add(ActionErrors.GLOBAL_ERROR,
-      new ActionError(nee.getMessage()));
-    } catch (PersistenceException pe) {
-      errors.add(ActionErrors.GLOBAL_ERROR,
-      new ActionError("error.server"));
-    } finally {
-      if (!errors.isEmpty()) {
-        saveErrors(request, errors);
-        return (new ActionForward(mapping.getInput()));
-      }
-    }
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+		System.out.println("--->No ConsultarFuncionarioMostrarAction...");
 
-    session.setAttribute("numMecanografico", new Integer(funcionario.getNumeroMecanografico()));
-    session.setAttribute("pessoa", servicoSeguroConsultarFuncionario.getPessoa());
-    session.setAttribute("centroCusto", servicoSeguroConsultarFuncionario.getCentroCusto());
+		ActionErrors errors = new ActionErrors();
+		HttpSession session = request.getSession();
 
-    /*    
-    if (mapping.getAttribute() != null) {
-      if ("request".equals(mapping.getScope()))
-        request.removeAttribute(mapping.getAttribute());
-      else
-        session.removeAttribute(mapping.getAttribute());
-    }
-    */
-    
-    ConsultarFuncionarioMostrarForm funcNaoDocenteForm = (ConsultarFuncionarioMostrarForm) form;
-    funcNaoDocenteForm.setForm((Date) session.getAttribute(Constants.INICIO_CONSULTA),
-		(Date) session.getAttribute(Constants.FIM_CONSULTA), servicoSeguroConsultarFuncionario.getPessoa(), servicoSeguroConsultarFuncionario.getFuncionario(),
-    servicoSeguroConsultarFuncionario.getStatusAssiduidade(), servicoSeguroConsultarFuncionario.getCentroCusto(), servicoSeguroConsultarFuncionario.getFuncNaoDocente(),
-    servicoSeguroConsultarFuncionario.getRotacaoHorario(), servicoSeguroConsultarFuncionario.getListaRegimesRotacao());    
-    return (mapping.findForward("ConsultarFuncionarioMostrar"));
-  }
+		Pessoa pessoa = (Pessoa) session.getAttribute(Constants.USER_KEY);
+
+		ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
+		ServicoSeguroLerFuncionario servicoSeguroLerFuncionario =
+			new ServicoSeguroLerFuncionario(servicoAutorizacaoLer, pessoa.getCodigoInterno().intValue());
+
+		try {
+			Executor.getInstance().doIt(servicoSeguroLerFuncionario);
+
+		} catch (NotAuthorizeException nae) {
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+		} catch (NotExecuteException nee) {
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+		} catch (PersistenceException pe) {
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+		} finally {
+			if (!errors.isEmpty()) {
+				saveErrors(request, errors);
+				return (new ActionForward(mapping.getInput()));
+			}
+		}
+
+		Funcionario funcionario = servicoSeguroLerFuncionario.getFuncionario();
+
+		ServicoSeguroConsultarFuncionario servicoSeguroConsultarFuncionario =
+			new ServicoSeguroConsultarFuncionario(servicoAutorizacaoLer, funcionario.getNumeroMecanografico());
+
+		try {
+
+			/* funcionario a consultar */
+			Executor.getInstance().doIt(servicoSeguroConsultarFuncionario);
+
+		} catch (NotAuthorizeException nae) {
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+		} catch (NotExecuteException nee) {
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+		} catch (PersistenceException pe) {
+			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+		} finally {
+			if (!errors.isEmpty()) {
+				saveErrors(request, errors);
+
+				return mapping.getInputForward();
+			}
+		}
+
+		session.setAttribute("numMecanografico", new Integer(funcionario.getNumeroMecanografico()));
+		session.setAttribute("pessoa", servicoSeguroConsultarFuncionario.getPessoa());
+		session.setAttribute("centroCusto", servicoSeguroConsultarFuncionario.getCentroCusto());
+
+		/*    
+		if (mapping.getAttribute() != null) {
+		  if ("request".equals(mapping.getScope()))
+		    request.removeAttribute(mapping.getAttribute());
+		  else
+		    session.removeAttribute(mapping.getAttribute());
+		}
+		*/
+
+		ConsultarFuncionarioMostrarForm funcNaoDocenteForm = (ConsultarFuncionarioMostrarForm) form;
+		funcNaoDocenteForm.setForm(
+			(Date) session.getAttribute(Constants.INICIO_CONSULTA),
+			(Date) session.getAttribute(Constants.FIM_CONSULTA),
+			servicoSeguroConsultarFuncionario.getPessoa(),
+			servicoSeguroConsultarFuncionario.getFuncionario(),
+			servicoSeguroConsultarFuncionario.getStatusAssiduidade(),
+			servicoSeguroConsultarFuncionario.getCentroCusto(),
+			servicoSeguroConsultarFuncionario.getFuncNaoDocente(),
+			servicoSeguroConsultarFuncionario.getRotacaoHorario(),
+			servicoSeguroConsultarFuncionario.getListaRegimesRotacao());
+			
+		return (mapping.findForward("ConsultarFuncionarioMostrar"));
+	}
 }
