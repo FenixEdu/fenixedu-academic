@@ -1,4 +1,3 @@
-
 ----------------------------------------------
 Public Services (before Gesdis):
 ----------------------------------------------
@@ -35,9 +34,9 @@ Nome:SelectShifts
 Parametros:InfoShift infoShift
 Role: none
 ----------------------------------------------
+
 ----------------------------------------------
 Teacher Services:
-----------------------------------------------
 ----------------------------------------------
 Nome:AssociateTeacher
 Parametros:InfoExecutionCourse infoExecutionCourse,Integer teacherNumber
@@ -122,4 +121,69 @@ Role: teacher
 Nome:RemoveTeacher
 Parametros:InfoExecutionCourse infoExecutionCourse,	Integer teacherNumber
 Role: teacher
+----------------------------------------------
+
+----------------------------------------------
+Gesdis Public Services:
+----------------------------------------------
+----------------------------------------------
+Nome: ReadAnnouncements
+Parametros: 1- InfoSite:
+				infoExecutionCourse
+Role: person				
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadCurriculum
+Parametros: 1- InfoExecutionCourse
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadItems
+Parametros: 1- InfoSection
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadLastAnnouncement
+Parametros: 1- InfoSite
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadSections
+Parametros: 1- InfoSite
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadSectionsBySiteAndSuperiorSection
+Parametros: 1- InfoSite
+			2- InfoSection
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadSite
+Parametros: 1- InfoExecutionCourse
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadSites
+Parametros: 
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadTeachersByExecutionCourseProfessorship
+Parametros: InfoExecutionCourse
+Role: person
+----------------------------------------------
+
+----------------------------------------------
+Nome: ReadTeachersByExecutionCourseResponsibility
+Parametros: InfoExecutionCourse
+Role: person
 ----------------------------------------------
