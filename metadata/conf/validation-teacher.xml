@@ -657,6 +657,19 @@
 			<arg0 key="label.professionalCareer.function"/>
 		</field>
 	</form>
+	
+	<form name="externalActivityForm">
+		<field property="activity" depends="required" page="1">
+			<arg0 key="label.externalActivity.activity"/>
+		</field>
+	</form>
+	
+	<form name="oldPublicationForm">
+		<field property="publication" depends="required" page="1">
+			<arg0 key="label.oldPublication.publication"/>
+		</field>
+	</form>
+	
 
   </formset>
 </form-validation>
