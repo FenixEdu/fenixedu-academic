@@ -910,11 +910,11 @@
 	        depends="compile-proj, load-2003-enrolments, clean-persons-with-duplicate-id, load-semester-students">
 -->
 
-	<target name="update-students-enrolments">
+	<target name="update-students-enrolments" depends="compile-proj, load-2003-enrolments, clean-persons-with-duplicate-id, load-semester-students">
 		<java classname="middleware.studentMigration.UpdateStudentEnrolments"
 			fork="yes"
 			failonerror="false"
-			maxmemory="128m"
+			maxmemory="512m"
 		>
 	    	<classpath>
 	        	<pathelement path="${webapp.classes}"/>
