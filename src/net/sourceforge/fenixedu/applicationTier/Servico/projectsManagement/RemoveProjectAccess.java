@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonRole;
@@ -11,8 +12,6 @@ import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -30,7 +29,7 @@ public class RemoveProjectAccess implements IService {
     public RemoveProjectAccess() {
     }
 
-    public void run(IUserView userView, String personUsername, Integer projectCode) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(IUserView userView, String personUsername, Integer projectCode) throws ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);

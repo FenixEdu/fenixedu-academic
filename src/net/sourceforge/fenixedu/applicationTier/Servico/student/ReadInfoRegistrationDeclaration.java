@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -32,7 +31,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadInfoRegistrationDeclaration implements IService {
 
     public InfoRegistrationDeclaration run(Integer studentNumber, TipoCurso degreeType)
-            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         IPersistentStudent persistentStudent = null;

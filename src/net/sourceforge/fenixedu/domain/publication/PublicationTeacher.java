@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.util.PublicationArea;
  */
 public class PublicationTeacher extends DomainObject implements IPublicationTeacher {
 	
-	private Integer idInternal;
-    private Integer keyPublication;
+	private Integer keyPublication;
     private Integer keyTeacher;
     private PublicationArea publicationArea;
     private ITeacher teacher;

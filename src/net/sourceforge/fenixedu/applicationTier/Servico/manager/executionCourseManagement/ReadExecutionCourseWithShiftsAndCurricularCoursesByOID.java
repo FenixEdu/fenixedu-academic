@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,7 +36,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID implements IService {
 
-    public InfoExecutionCourse run(final Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
 
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         final IPersistentObject persistentObject = sp.getIPersistentObject();

@@ -312,27 +312,4 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
 
         return null;
     }
-
-    private InfoExtraWork getIDExtraWork(HttpServletRequest request, int index) {
-        try {
-            Integer idInternal = null;
-
-            if (request.getParameter("infoExtraWork[" + index + "].idInternal") != null
-                    && request.getParameter("infoExtraWork[" + index + "].idInternal").length() > 0) {
-                idInternal = Integer.valueOf(request.getParameter("infoExtraWork[" + index
-                        + "].idInternal"));
-            }
-
-            if (idInternal != null) {
-                InfoExtraWork infoExtraWork = new InfoExtraWork();
-
-                infoExtraWork.setIdInternal(idInternal);
-                return infoExtraWork;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 }

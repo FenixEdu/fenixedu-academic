@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
 import net.sourceforge.fenixedu.domain.support.IFAQEntry;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQEntries;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,7 +24,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadFAQEntries implements IService {
 
-    public Collection run() throws FenixServiceException, ExcepcaoPersistencia {
+    public Collection run() throws ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentFAQEntries dao = sp.getIPersistentFAQEntries();
 

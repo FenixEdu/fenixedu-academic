@@ -47,7 +47,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
 
     // some of these arguments may be null. they are only needed for filter
     public InfoStudentEnrollmentContext run(Integer executionDegreeId, Integer studentCurricularPlanId,
-            Integer studentNumber) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer studentNumber) throws Exception {
         try {
             IStudent student = getStudent(studentNumber);
 

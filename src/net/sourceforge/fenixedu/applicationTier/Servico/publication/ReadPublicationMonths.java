@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.util.Mes;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
+import net.sourceforge.fenixedu.util.Mes;
 
 /**
  * @author TJBF
@@ -41,7 +40,7 @@ public class ReadPublicationMonths implements IServico {
         return "ReadPublicationMonths";
     }
 
-    public List run(String user, int publicationTypeId) throws FenixServiceException {
+    public List run(String user, int publicationTypeId) {
         List MonthList = new ArrayList();
         int i = PublicationConstants.MONTHS_INIT;
         while (i < PublicationConstants.MONTHS_LIMIT) {

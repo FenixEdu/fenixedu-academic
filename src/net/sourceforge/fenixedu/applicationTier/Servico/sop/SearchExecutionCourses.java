@@ -168,7 +168,7 @@ public class SearchExecutionCourses implements IServico {
                  * @param sp
                  * @return
                  */
-                private Integer getApproved(List enrolments) throws ExcepcaoPersistencia {
+                private Integer getApproved(List enrolments) {
                     int approved = 0;
                     Iterator iter = enrolments.iterator();
                     while (iter.hasNext()) {
@@ -181,7 +181,7 @@ public class SearchExecutionCourses implements IServico {
                     return new Integer(approved);
                 }
 
-                private Integer getEvaluated(List enrolments) throws ExcepcaoPersistencia {
+                private Integer getEvaluated(List enrolments) {
                     int evaluated = 0;
                     Iterator iter = enrolments.iterator();
                     while (iter.hasNext()) {

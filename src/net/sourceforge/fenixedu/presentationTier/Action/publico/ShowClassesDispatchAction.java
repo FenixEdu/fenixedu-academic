@@ -82,34 +82,6 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
      * @param classViews
      * @param previousExecutionPeriod
      */
-    private void organizeClassViews(HttpServletRequest request, List classViews,
-            InfoExecutionPeriod previousExecutionPeriod) {
-
-        Table classViewsTableCurrent = new Table(5);
-        Table classViewsTablePrevious = new Table(5);
-
-        for (Iterator iterator = classViews.iterator(); iterator.hasNext();) {
-            ClassView classView = (ClassView) iterator.next();
-
-            if (classView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal())) {
-                classViewsTablePrevious.appendToColumn(classView.getCurricularYear().intValue() - 1,
-                        classView);
-            } else {
-                classViewsTableCurrent.appendToColumn(classView.getCurricularYear().intValue() - 1,
-                        classView);
-            }
-        }
-
-        request.setAttribute("classViewsTableCurrent", classViewsTableCurrent);
-        request.setAttribute("classViewsTablePrevious", classViewsTablePrevious);
-
-    }
-
-    /**
-     * @param request
-     * @param classViews
-     * @param previousExecutionPeriod
-     */
     private void organizeClassViewsNext(HttpServletRequest request, List classViews,
             InfoExecutionPeriod previousExecutionPeriod) {
 

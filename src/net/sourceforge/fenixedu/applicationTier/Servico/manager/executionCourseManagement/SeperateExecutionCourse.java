@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
@@ -54,7 +53,7 @@ public class SeperateExecutionCourse implements IService {
 
     public void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
             final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia {
 
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         final IPersistentObject persistentObject = sp.getIPersistentObject();

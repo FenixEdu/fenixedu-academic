@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
@@ -51,8 +50,7 @@ public class SchoolRegistration implements IService {
     }
 
     public Boolean run(UserView userView, HashMap answers, InfoPerson infoPerson,
-            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia,
-            FenixServiceException {
+            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
         IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
@@ -92,7 +90,7 @@ public class SchoolRegistration implements IService {
     }
 
     private void writeInquiryAnswers(ISuportePersistente sp, IStudent student, HashMap answers)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws ExcepcaoPersistencia {
 
         IPersistentPersonalDataUseInquiryAnswers persistentPDUIA = sp
                 .getIPersistentPersonalDataUseInquiryAnswers();
@@ -116,7 +114,7 @@ public class SchoolRegistration implements IService {
     }
 
     private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson, IPerson pessoa)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws ExcepcaoPersistencia {
 
         IPersistentRole pRole = sp.getIPersistentRole();
         IRole newRole = pRole.readByRoleType(RoleType.STUDENT);
@@ -175,8 +173,7 @@ public class SchoolRegistration implements IService {
     }
 
     private void writeResidenceCandidacy(ISuportePersistente sp, IStudent student,
-            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia,
-            FenixServiceException {
+            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
             IPersistentResidenceCandidacies pResidenceCandidacies = sp
@@ -193,7 +190,7 @@ public class SchoolRegistration implements IService {
     }
 
     private void updateStudentInfo(ISuportePersistente sp, IStudent student)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws ExcepcaoPersistencia {
 
         IPersistentExecutionYear pExecutionYear = sp.getIPersistentExecutionYear();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();

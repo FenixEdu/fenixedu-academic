@@ -144,7 +144,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @throws NotAuthorizedFilterException
      * @throws ExcepcaoPersistencia
      */
-    private boolean isTeacherResponsible(Object[] arguments, ServiceRequest request) throws NotAuthorizedFilterException, ExcepcaoPersistencia {
+    private boolean isTeacherResponsible(Object[] arguments, ServiceRequest request) throws NotAuthorizedFilterException {
         IUserView userView = getRemoteUser(request);              
         List responsibleTeachers = getResponsibleTeachers((Integer) arguments[0]);  
         boolean loggedIsResponsible = false;  

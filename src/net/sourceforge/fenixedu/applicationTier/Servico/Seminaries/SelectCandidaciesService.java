@@ -176,7 +176,7 @@ public class SelectCandidaciesService implements IService {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private List getSeminaries(Boolean inEnrollmentPeriod, List seminaries) throws ExcepcaoPersistencia {
+    private List getSeminaries(Boolean inEnrollmentPeriod, List seminaries) {
         List result = new ArrayList();
 
         for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
@@ -10,7 +11,6 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,14 +31,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
     protected List readActiveCurricularCourseScopes(IDegreeCurricularPlan degreeCurricularPlan,
-            ISuportePersistente sp) throws FenixServiceException, ExcepcaoPersistencia {
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
 
         return readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal());
 
     }
 
     protected List readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia {
         List infoActiveScopes = null;
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

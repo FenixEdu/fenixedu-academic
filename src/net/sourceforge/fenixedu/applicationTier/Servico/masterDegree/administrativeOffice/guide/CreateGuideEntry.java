@@ -2,18 +2,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Iterator;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.NumberUtils;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 
@@ -23,8 +22,7 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 public class CreateGuideEntry implements IService {
 
     public void run(Integer guideID, GraduationType graduationType, DocumentType documentType,
-            String description, Double price, Integer quantity) throws FenixServiceException,
-            ExcepcaoPersistencia {
+            String description, Double price, Integer quantity) throws ExcepcaoPersistencia {
 
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

@@ -16,17 +16,8 @@ public class InfoGroupPropertiesExecutionCourse extends InfoObject{
 
     private InfoExecutionCourse infoExecutionCourse;
     
-    private InfoPerson infoSenderPerson;
-    
-    private InfoPerson infoReceiverPerson;
-    
-    private InfoExecutionCourse infoSenderExecutionCourse;
-
-    /**
-     * Construtor
-     */
-
     public InfoGroupPropertiesExecutionCourse() {
+        super();
     }
 
     /**

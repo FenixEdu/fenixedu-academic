@@ -130,7 +130,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
     private void calculateGroupsCreditsFromEnrollments(IStudentCurricularPlan studentCurricularPlan,
             List specializationAndSecundaryAreaCurricularCoursesToCountForCredits,
             HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups,
-            HashMap creditsInSecundaryAreaGroups) throws ExcepcaoPersistencia {
+            HashMap creditsInSecundaryAreaGroups) {
         
         List specCurricularCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
         List secCurricularCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
@@ -153,8 +153,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
     private List selectCurricularCourses(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInSpecializationAreaGroups, HashMap creditsInSecundaryAreaGroups,
             int creditsInAnySecundaryArea,
-            List specializationAndSecundaryAreaCurricularCoursesToCountForCredits)
-            throws ExcepcaoPersistencia {
+            List specializationAndSecundaryAreaCurricularCoursesToCountForCredits) {
 
         boolean isSpecializationAreaDone = isAreaDone(studentCurricularPlan.getBranch().getSpecializationCredits(),
                 creditsInSpecializationArea);

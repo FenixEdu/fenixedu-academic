@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -38,7 +39,6 @@ import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -87,8 +87,7 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param infoExecutionPeriod
      * @return
      */
-    private List readInfoMasterDegreeProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod)
-            throws FenixServiceException {
+    private List readInfoMasterDegreeProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod) {
         List professorships = teacher.getProfessorships();
 
         List infoMasterDegreeProfessorships = new ArrayList();
@@ -113,8 +112,7 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param infoExecutionPeriod
      * @return
      */
-    private List readInfoShiftProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia {
+    private List readInfoShiftProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod) {
         List professorships = teacher.getProfessorships();
         List shiftProfessorships = new ArrayList();
         for (int i = 0; i < professorships.size(); i++) {
@@ -142,8 +140,7 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    private List readInfoSupportLessonList(ITeacher teacher, IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia {
+    private List readInfoSupportLessonList(ITeacher teacher, IExecutionPeriod executionPeriod) {
 
         List professorships = teacher.getProfessorships();
         List supportLessonList = new ArrayList();
@@ -173,8 +170,7 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    private List readInfoTeacherInstitutionWorkingTime(ITeacher teacher, IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia {
+    private List readInfoTeacherInstitutionWorkingTime(ITeacher teacher, IExecutionPeriod executionPeriod) {
         List teacherInstitutionWorkingTimeList = teacher.getInstitutionWorkTimePeriods();
 
         List infoTeacherInstitutionWorkingTimeList = new ArrayList();
@@ -209,7 +205,7 @@ public class ReadTeacherCreditsSheet implements IService {
      * @return
      */
     private List readTeacherDegreeFinalProjectStudentList(ITeacher teacher,
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+            IExecutionPeriod executionPeriod) {
 
         List teacherDegreeFinalProjectStudentList = teacher.getDegreeFinalProjectStudents();
 
@@ -360,8 +356,7 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    private List readOtherTypeCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia {
+    private List readOtherTypeCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod) {
 
         List otherCreditLines = teacher.getOtherTypeCreditLines();
         List infoOtherCreditLines = new ArrayList();

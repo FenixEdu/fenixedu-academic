@@ -19,7 +19,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public abstract class DeleteDomainObjectService implements IService {
-    public void run(Integer objectId) throws FenixServiceException {
+    public void run(Integer objectId) throws Exception {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = getIPersistentObject(sp);
@@ -42,14 +42,13 @@ public abstract class DeleteDomainObjectService implements IService {
      * @param sp
      */
     protected void doBeforeDelete(IDomainObject domainObject, ISuportePersistente sp)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws Exception {
     }
 
     /**
      * @param domainObject
      */
-    protected void doAfterDelete(IDomainObject domainObject, ISuportePersistente sp)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    protected void doAfterDelete(IDomainObject domainObject, ISuportePersistente sp) {
 
     }
 
@@ -59,8 +58,7 @@ public abstract class DeleteDomainObjectService implements IService {
      * @param newDomainObject
      * @return
      */
-    protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp) {
         return true;
     }
 

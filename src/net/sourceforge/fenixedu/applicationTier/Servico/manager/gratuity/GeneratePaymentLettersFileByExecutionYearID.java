@@ -216,8 +216,6 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
     private static final String DATA_SEPARATOR = "\t";
 
-    private static final String EMPTY = "-";
-
     private static final String STUDENT_NUMBER_COLUMN = "NUMERO";
     
     private static final String AREA_COLUMN = "LOCALIDADE";
@@ -396,8 +394,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
      * @throws InsufficientSibsPaymentPhaseCodesServiceException
      */
     private GratuityLetterFileEntry createGratuityLetterFileEntry(IGratuitySituation gratuitySituation,
-            String shortYear) throws ExcepcaoPersistencia,
-            InsufficientSibsPaymentPhaseCodesServiceException {
+            String shortYear) throws InsufficientSibsPaymentPhaseCodesServiceException {
 
         GratuityLetterFileEntry gratuityLetterFileEntry = null;
 

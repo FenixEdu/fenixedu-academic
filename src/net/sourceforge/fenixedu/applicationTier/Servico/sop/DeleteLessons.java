@@ -12,7 +12,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -20,7 +19,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteLessons implements IService {
 
-    public Object run(List lessonOIDs) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(List lessonOIDs) throws ExcepcaoPersistencia {
 
         boolean result = false;
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();

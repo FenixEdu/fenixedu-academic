@@ -270,7 +270,7 @@ public class InsertExercise implements IService {
     //		return result.toString();
     //	}
 
-    private List getXmlFilesList(FormFile xmlZipFile) throws FenixServiceException {
+    private List getXmlFilesList(FormFile xmlZipFile) {
         List xmlFilesList = new ArrayList();
         ZipInputStream zipFile = null;
 

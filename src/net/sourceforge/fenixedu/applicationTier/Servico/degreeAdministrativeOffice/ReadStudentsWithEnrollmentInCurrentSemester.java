@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -32,8 +31,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
     public ReadStudentsWithEnrollmentInCurrentSemester() {
     }
 
-    public List run(Integer fromNumber, Integer toNumber) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List run(Integer fromNumber, Integer toNumber) throws ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
 

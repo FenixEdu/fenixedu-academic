@@ -96,7 +96,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
      *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
      */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException {
+            ISuportePersistente sp) throws Exception {
         InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
 
         Calendar begin = Calendar.getInstance();

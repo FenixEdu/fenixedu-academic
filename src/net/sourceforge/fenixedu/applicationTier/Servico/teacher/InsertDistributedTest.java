@@ -187,7 +187,7 @@ public class InsertDistributedTest implements IService {
         }
     }
 
-    private IQuestion getStudentQuestion(List questions) throws ExcepcaoPersistencia {
+    private IQuestion getStudentQuestion(List questions) {
         IQuestion question = null;
         if (questions.size() != 0) {
             Random r = new Random();

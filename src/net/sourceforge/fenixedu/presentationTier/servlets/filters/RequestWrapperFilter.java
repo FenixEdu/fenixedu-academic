@@ -14,10 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.RoleType;
@@ -39,40 +37,6 @@ public class RequestWrapperFilter implements Filter {
             throws IOException, ServletException {
         chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
         setSessionTimeout((HttpServletRequest) request);
-    }
-
-    private String constructQueryString(HttpServletRequest request) {
-        StringBuffer queryString = new StringBuffer();
-
-        String requestQueryString = request.getQueryString();
-        if (requestQueryString != null) {
-            queryString.append(requestQueryString);
-        }
-
-        Enumeration parameterNames = request.getParameterNames();
-        if (parameterNames != null) {
-            while (parameterNames.hasMoreElements()) {
-                String parameterName = (String) parameterNames.nextElement();
-                if (!StringUtils.contains(parameterName, "password")) {
-                    String[] parameterValues = request.getParameterValues(parameterName);
-                    for (int i = 0; i < parameterValues.length; i++) {
-                        String parameterValue = parameterValues[i];
-                        if (queryString.length() != 0) {
-                            queryString.append("&");
-                        }
-                        queryString.append(parameterName);
-                        queryString.append("=");
-                        queryString.append(parameterValue);
-                    }
-                }
-            }
-        }
-
-        if (queryString.length() != 0) {
-            return queryString.toString();
-        }
-        return null;
-
     }
 
     /**

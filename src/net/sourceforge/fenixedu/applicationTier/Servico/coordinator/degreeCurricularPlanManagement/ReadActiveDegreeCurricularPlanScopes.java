@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCurricularPlanBaseService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -16,8 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadActiveDegreeCurricularPlanScopes extends ReadDegreeCurricularPlanBaseService {
 
-    public List run(final Integer degreeCurricularPlanId) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List run(final Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
 
         return super.readActiveCurricularCourseScopes(degreeCurricularPlanId);
 

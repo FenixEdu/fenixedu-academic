@@ -36,7 +36,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     private static Map connectionsMap = new HashMap();
 
-    public static synchronized PersistentSuportOracle getInstance() throws ExcepcaoPersistencia {
+    public static synchronized PersistentSuportOracle getInstance() {
         if (instance == null) {
             instance = new PersistentSuportOracle();
         }

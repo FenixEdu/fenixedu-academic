@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
@@ -19,7 +18,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadAuthorsByName implements IService {
 
-    public List run(String stringtoSearch) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String stringtoSearch) throws ExcepcaoPersistencia {
 
         IPersistentAuthor persistentAuthor = SuportePersistenteOJB.getInstance().getIPersistentAuthor();
 

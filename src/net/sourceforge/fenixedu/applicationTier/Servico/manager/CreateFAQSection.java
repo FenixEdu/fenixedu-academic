@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.domain.support.IFAQSection;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -19,7 +18,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateFAQSection implements IService {
 
-    public void run(InfoFAQSection infoFAQSection) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoFAQSection infoFAQSection) throws ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentObject dao = sp.getIPersistentObject();
 

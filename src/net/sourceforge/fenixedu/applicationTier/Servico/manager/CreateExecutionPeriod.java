@@ -21,7 +21,7 @@ public class CreateExecutionPeriod implements IService {
 
     //SERVICO PARA SER REMOVIDO
     public Boolean run(InfoExecutionPeriod infoExecutionPeriodOfWorkingArea,
-            InfoExecutionPeriod infoExecutionPeriodToExportDataFrom) throws FenixServiceException {
+            InfoExecutionPeriod infoExecutionPeriodToExportDataFrom) {
         /*
          * Boolean result = new Boolean(false);
          * 

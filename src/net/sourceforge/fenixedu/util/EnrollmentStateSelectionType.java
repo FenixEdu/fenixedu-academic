@@ -43,12 +43,6 @@ public class EnrollmentStateSelectionType extends FenixUtil {
         setSelectionType(new Integer(selType));
     }
 
-    private EnrollmentStateSelectionType(Integer selType)
-    {
-        setSelectionType(selType);
-    }
-
-
 	public static List getLabelValueBeanList()
 	{
 		ArrayList result = new ArrayList();

@@ -241,12 +241,10 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
      * @param outgoingSibsPaymentFile
      * @param gratuitySituation
      * @param shortYear
-     * @throws ExcepcaoPersistencia
      * @throws InsufficientSibsPaymentPhaseCodesServiceException
      */
     private int addGratuityLines(StringBuffer outgoingSibsPaymentFile,
-            IGratuitySituation gratuitySituation, String shortYear) throws ExcepcaoPersistencia,
-            InsufficientSibsPaymentPhaseCodesServiceException {
+            IGratuitySituation gratuitySituation, String shortYear) throws InsufficientSibsPaymentPhaseCodesServiceException {
 
         int totalLinesAdded = 0;
 

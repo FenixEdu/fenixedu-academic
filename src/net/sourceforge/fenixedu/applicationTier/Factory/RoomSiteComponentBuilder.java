@@ -54,8 +54,7 @@ public class RoomSiteComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Calendar day, IRoom room)
-            throws FenixServiceException {
+    public ISiteComponent getComponent(ISiteComponent component, Calendar day, IRoom room)  {
 
         if (component instanceof InfoSiteRoomTimeTable) {
             return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room);
@@ -67,7 +66,7 @@ public class RoomSiteComponentBuilder {
 
     /* TODO (rspl): alterar as aulas a ler e o dia da semana */
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-            IRoom room) throws FenixServiceException {
+            IRoom room) {
 
         List infoShowOccupations = new ArrayList();
         /*

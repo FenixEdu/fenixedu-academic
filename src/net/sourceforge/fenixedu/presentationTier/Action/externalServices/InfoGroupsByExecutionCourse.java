@@ -36,7 +36,6 @@ public class InfoGroupsByExecutionCourse extends FenixAction
     private final String SEPARATOR = ","; //$NON-NLS-1$
     private String studentUsername;
     private String studentPassword;
-    private String format;
     private Integer[] executionCourseIds;
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -115,7 +114,6 @@ public class InfoGroupsByExecutionCourse extends FenixAction
         this.studentUsername = request.getParameter("username"); //$NON-NLS-1$
         this.studentPassword = request.getParameter("password"); //$NON-NLS-1$
         String idsString = request.getParameter("ids"); //$NON-NLS-1$
-        this.format = request.getParameter("format"); //$NON-NLS-1$
         this.executionCourseIds = buildIdsArray(idsString);
     }
 

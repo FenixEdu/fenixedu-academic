@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
@@ -23,7 +22,7 @@ public class ReadRubric implements IService {
     public ReadRubric() {
     }
 
-    public List run(RubricType rubricType) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(RubricType rubricType) throws ExcepcaoPersistencia {
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         List rubricList = p.getIPersistentRubric().getRubricList(rubricType.getRubricTableName());
         List infoRubricList = new ArrayList();

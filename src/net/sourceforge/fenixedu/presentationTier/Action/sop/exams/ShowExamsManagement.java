@@ -62,8 +62,7 @@ public class ShowExamsManagement
         return mapping.findForward("viewExamsMap");
     }
 
-    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException,
-            FenixServiceException, FenixFilterException {
+    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request

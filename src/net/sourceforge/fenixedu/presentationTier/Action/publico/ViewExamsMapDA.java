@@ -119,23 +119,6 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
         return parameterCode;
     }
 
-    private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
-        Boolean parameterBoolean = null;
-
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null) {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null) {
-            try {
-                parameterBoolean = new Boolean(parameterCodeString);
-            } catch (Exception exception) {
-                return null;
-            }
-        }
-        return parameterBoolean;
-    }
-    
     private InfoExamsMap getInfoExamsMap(InfoExecutionDegree infoExecutionDegree,InfoExecutionPeriod infoExecutionPeriod,
      							 List curricularYears, IUserView userView,HttpServletRequest request)  
      							 throws FenixActionException, FenixServiceException, FenixFilterException{

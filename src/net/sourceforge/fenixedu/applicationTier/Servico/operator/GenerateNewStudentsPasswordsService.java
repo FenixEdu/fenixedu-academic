@@ -7,14 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.operator;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -22,6 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Nuno Correia
@@ -32,8 +29,7 @@ public class GenerateNewStudentsPasswordsService implements IService {
     public GenerateNewStudentsPasswordsService() {
     }
 
-    public List run(Integer fromNumber, Integer toNumber) throws ExcepcaoInexistente,
-            FenixServiceException, InvalidPasswordServiceException, ExistingPersistentException,
+    public List run(Integer fromNumber, Integer toNumber) throws ExistingPersistentException,
             ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;

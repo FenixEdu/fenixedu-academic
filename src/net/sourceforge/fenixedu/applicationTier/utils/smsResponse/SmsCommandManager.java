@@ -110,7 +110,7 @@ public class SmsCommandManager {
     }
 
     public void handleCommand(String senderMsisdn, String smsText)
-            throws SmsCommandConfigurationException, FenixFilterException {
+            throws FenixFilterException {
         for (Iterator iter = this.smsCommandList.iterator(); iter.hasNext();) {
             SmsCommand smsCommand = (SmsCommand) iter.next();
             if (smsCommand.handleCommand(senderMsisdn, smsText) == true) {

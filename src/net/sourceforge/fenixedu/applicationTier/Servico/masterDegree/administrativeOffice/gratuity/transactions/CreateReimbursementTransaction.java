@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -17,7 +16,7 @@ public class CreateReimbursementTransaction implements IService {
 
     }
 
-    public void run() throws FenixServiceException {
+    public void run() {
 
     }
 

@@ -36,8 +36,6 @@ public class StudentInfoByUsername extends FenixAction
 
     private String studentUsername;
     private String studentPassword;
-    private String format;
-
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException
     {

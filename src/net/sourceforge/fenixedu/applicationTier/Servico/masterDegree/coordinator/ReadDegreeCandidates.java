@@ -98,8 +98,7 @@ public class ReadDegreeCandidates implements IService {
         return result;
     }
 
-    public List run(Integer degreeCurricularPlanId) throws ExcepcaoInexistente, FenixServiceException,
-            ExcepcaoPersistencia {
+    public List run(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
 

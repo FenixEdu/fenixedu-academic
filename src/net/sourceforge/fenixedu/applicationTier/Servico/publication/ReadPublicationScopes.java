@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 
 /**
@@ -40,7 +39,7 @@ public class ReadPublicationScopes implements IServico {
         return "ReadPublicationScopes";
     }
 
-    public List run(String user, int publicationTypeId) throws FenixServiceException {
+    public List run(String user, int publicationTypeId) {
         List scopeList = new ArrayList();
 
         scopeList.add(PublicationConstants.SCOPE_LOCAL);

@@ -27,15 +27,11 @@ public class DMLRelationDescriptor
 
     final private CollectionDescriptor collectionDescriptor1;
 
-    private String keyToClassDescriptor2 = null;
-
     final private ClassDescriptor classDescriptor2;
 
     private ObjectReferenceDescriptor objectReferenceDescriptor2 = null;
 
     private CollectionDescriptor collectionDescriptor2 = null;
-
-    private String keyToClassDescriptor1 = null;
 
     private String key = null;
 

@@ -68,7 +68,7 @@ public abstract class EditDomainObjectService implements IService {
      * @param sp
      */
     protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException {
+            ISuportePersistente sp) throws Exception {
     }
 
     /**
@@ -79,7 +79,7 @@ public abstract class EditDomainObjectService implements IService {
      * @param sp
      */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException {
+            ISuportePersistente sp) throws Exception {
     }
 
     /**
@@ -135,7 +135,7 @@ public abstract class EditDomainObjectService implements IService {
      *         the object that we want to create never exists.
      */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws Exception {
         return null;
     }
 
@@ -196,7 +196,7 @@ public abstract class EditDomainObjectService implements IService {
     }
 
     private IDomainObject getObjectFromDatabase(IDomainObject objectToEdit, ISuportePersistente sp)
-            throws ExcepcaoPersistencia, FenixServiceException, NonExistingServiceException {
+            throws Exception {
         IDomainObject objectFromDatabase = readObjectByUnique(objectToEdit, sp);
 
         // if the editing means alter unique keys or the there is no unique

@@ -35,12 +35,6 @@ public class AttendacyStateSelectionType
         setSelectionType(new Integer(selType));
     }
 
-    private AttendacyStateSelectionType(Integer selType)
-    {
-        setSelectionType(selType);
-    }
-
-
     public Integer getSelectionType()
     {
         return this.selectionType;

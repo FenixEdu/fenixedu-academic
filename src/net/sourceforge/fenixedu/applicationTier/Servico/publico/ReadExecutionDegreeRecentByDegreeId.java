@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionDegreeRecentByDegreeId implements IService {
 
-    public InfoExecutionDegree run(final Integer degreeId) throws ExcepcaoPersistencia, FenixServiceException{
+    public InfoExecutionDegree run(final Integer degreeId) throws ExcepcaoPersistencia{
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
         List listExecutionDegrees = persistentExecutionDegree.readAll();

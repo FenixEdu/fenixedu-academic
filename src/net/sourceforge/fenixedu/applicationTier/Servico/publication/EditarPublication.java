@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
@@ -32,7 +31,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class EditarPublication implements IService {
 
 
-    public void run(InfoPublication infoPublication) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(InfoPublication infoPublication) throws ExcepcaoPersistencia {
 
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         final IPersistentPublication persistentPublication = sp.getIPersistentPublication();

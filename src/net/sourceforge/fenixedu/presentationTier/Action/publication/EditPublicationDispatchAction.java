@@ -12,6 +12,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
@@ -22,14 +26,10 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -49,7 +49,7 @@ import org.apache.struts.action.DynaActionForm;
 public class EditPublicationDispatchAction extends FenixDispatchAction {
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -266,7 +266,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 	}
 	
     public ActionForward lightPrepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
     	
     	DynaActionForm insertPublicationForm = (DynaActionForm) form;    	
     	
@@ -317,7 +317,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
     
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
     	
         loadData(mapping,form,request,response);
         lightPrepare(mapping,form,request,response);
@@ -326,7 +326,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
     
     public ActionForward externalAuthor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
     	DynaActionForm insertPublicationForm = (DynaActionForm) form;
     	
     	String name = (String)insertPublicationForm.get("authorName");
@@ -356,7 +356,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward up(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         reorderAuthorsList(form, -1);
         lightPrepare(mapping, form, request, response);
@@ -366,7 +366,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward down(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         reorderAuthorsList(form, 1);
         lightPrepare(mapping, form, request, response);
@@ -375,7 +375,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
     
     public ActionForward remove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-    		HttpServletResponse response) throws FenixFilterException, FenixActionException, FenixServiceException {
+    		HttpServletResponse response) throws FenixFilterException, FenixServiceException {
     	DynaActionForm insertPublicationForm = (DynaActionForm) form;
 
         int index = ((Integer) insertPublicationForm.get("index")).intValue();
@@ -428,7 +428,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareSearchAuthor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) {
 
         return mapping.findForward("searchAuthors");
     }
@@ -497,7 +497,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward searchAuthor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
@@ -616,80 +616,6 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         return infoAuthors;
     }
 
-    private List removeFromAuthorsTheAuthorsInserted(List authors, List authorsIds) {
-        List newAuthors = new ArrayList();
-
-        Boolean contains;
-        Iterator iteratorAuthors = authors.iterator();
-        Iterator iteratorAuthorsIds;
-
-        while (iteratorAuthors.hasNext()) {
-
-            IAuthor author = (IAuthor) iteratorAuthors.next();
-            iteratorAuthorsIds = authorsIds.iterator();
-            contains = Boolean.FALSE;
-            while (iteratorAuthorsIds.hasNext()) {
-                
-                Integer authorId = (Integer) iteratorAuthorsIds.next();
-
-                if (authorId.intValue() == author.getIdInternal().intValue()) {
-                    contains = Boolean.TRUE;
-                }
-            }
-            if (!contains.booleanValue()) {
-                newAuthors.add(author);
-            }
-
-        }
-
-        return newAuthors;
-    }
-    
-    private List removeFromPersonsTheAuthorsInserted(List persons, List authorsIds, IUserView userView)
-	    throws FenixFilterException, FenixServiceException {
-		// TODO Auto-generated method stub
-		
-		List newAuthorsIds = new ArrayList();
-		Iterator iteratorIds = authorsIds.iterator();
-		
-		while (iteratorIds.hasNext()) {
-		    newAuthorsIds.add(iteratorIds.next());
-		}
-		
-		Object[] args = { newAuthorsIds };
-		
-		List authors = (List) ServiceUtils.executeService(userView, "ReadAuthorsToInsert", args);
-		
-		List newPersons = new ArrayList();
-		
-		Boolean contains;
-		Iterator authorsIterator;
-		Iterator personsIterator = persons.iterator();
-		
-		while (personsIterator.hasNext()) {
-		    IPerson person = (IPerson) personsIterator.next();
-		    authorsIterator = authors.iterator();
-		    contains = Boolean.FALSE;
-		
-		    while (authorsIterator.hasNext()) {
-		        IAuthor author = (IAuthor) authorsIterator.next();
-		
-		        if (author.getKeyPerson() != null
-		                && author.getKeyPerson().intValue() != PublicationConstants.ZERO_VALUE) {
-		            if (author.getKeyPerson().intValue() == person.getIdInternal().intValue()) {
-		                contains = Boolean.TRUE;
-		            }
-		        }
-		    }
-		
-		    if (!contains.booleanValue()) {
-		        newPersons.add(person);
-		    }
-		}
-		
-		return newPersons;
-	}
-    
     public List infoAuthorsPersons(List listObjects, Object object) {
         List infoAuthorPersons = new ArrayList();
 

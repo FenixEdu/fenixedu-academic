@@ -83,7 +83,7 @@ public class AdicionarAula implements IService {
         return serviceResult;
     }
 
-    private InfoShiftServiceResult valid(IShift shift, ILesson lesson) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(IShift shift, ILesson lesson) {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
 
@@ -119,7 +119,7 @@ public class AdicionarAula implements IService {
         return result;
     }
 
-    private double getTotalHoursOfShiftType(IShift shift) throws ExcepcaoPersistencia {
+    private double getTotalHoursOfShiftType(IShift shift) {
         /*
          * IShift shiftCriteria = new Shift();
          * shiftCriteria.setNome(shift.getNome());

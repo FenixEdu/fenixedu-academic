@@ -291,8 +291,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
     }
 
     public ActionForward copySite(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {        
+            HttpServletRequest request, HttpServletResponse response) {        
         IUserView userView = SessionUtils.getUserView(request);
         
         Integer executionCourseIDFrom = new Integer(request.getParameter("executionCourseId"));

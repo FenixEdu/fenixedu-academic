@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -24,7 +23,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
 
-    public Object run(Integer degreeOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
                 .getIPersistentExecutionPeriod();

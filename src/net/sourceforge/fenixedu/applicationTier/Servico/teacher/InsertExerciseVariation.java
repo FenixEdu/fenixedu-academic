@@ -105,7 +105,7 @@ public class InsertExerciseVariation implements IService {
         }
     }
 
-    public List getXmlFilesList(FormFile xmlZipFile) throws FenixServiceException {
+    public List getXmlFilesList(FormFile xmlZipFile) {
         List xmlFilesList = new ArrayList();
         ZipInputStream zipFile = null;
 

@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -33,7 +32,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionYearsByDegreeCurricularPlanID implements IService {
 
-    public List run(Integer degreeCurricularPlanID) throws FenixServiceException {
+    public List run(Integer degreeCurricularPlanID) {
 
         List result = null;
 

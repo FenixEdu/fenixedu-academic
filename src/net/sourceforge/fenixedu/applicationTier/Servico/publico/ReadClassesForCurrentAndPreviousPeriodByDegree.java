@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
@@ -24,7 +23,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadClassesForCurrentAndPreviousPeriodByDegree implements IService {
 
-    public Object run(Integer degreeOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
                 .getIPersistentExecutionPeriod();

@@ -66,7 +66,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward testsFirstPage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         return mapping.findForward("testsFirstPage");
     }
@@ -1146,7 +1146,7 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareChangeStudentTestQuestion(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("questionCode", getCodeFromRequest(request, "questionCode"));
         request.setAttribute("distributedTestCode", getCodeFromRequest(request, "distributedTestCode"));

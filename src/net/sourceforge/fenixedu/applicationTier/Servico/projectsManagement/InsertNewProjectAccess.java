@@ -8,6 +8,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonRole;
@@ -17,9 +19,6 @@ import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.UserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -36,8 +35,7 @@ public class InsertNewProjectAccess implements IService {
     public InsertNewProjectAccess() {
     }
 
-    public void run(UserView userView, String username, GregorianCalendar beginDate, GregorianCalendar endDate) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public void run(UserView userView, String username, GregorianCalendar beginDate, GregorianCalendar endDate) throws ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
@@ -72,7 +70,7 @@ public class InsertNewProjectAccess implements IService {
     }
 
     public void run(UserView userView, String username, String[] projectCodes, GregorianCalendar beginDate, GregorianCalendar endDate)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)

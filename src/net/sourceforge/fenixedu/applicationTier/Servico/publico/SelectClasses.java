@@ -19,8 +19,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class SelectClasses implements IService {
 
-    private static SelectClasses _servico = new SelectClasses();
-
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
 
         List classes = new ArrayList();

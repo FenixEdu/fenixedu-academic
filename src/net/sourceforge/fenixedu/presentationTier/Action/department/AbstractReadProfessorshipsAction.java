@@ -61,7 +61,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
      * @param dynaForm
      */
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher,
-            HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
+            HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
     }
 
     protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm)

@@ -62,7 +62,7 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
      *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
      */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException {
+            ISuportePersistente sp) throws Exception {
         super.doBeforeLock(domainObjectToLock, infoObject, sp);
 
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;

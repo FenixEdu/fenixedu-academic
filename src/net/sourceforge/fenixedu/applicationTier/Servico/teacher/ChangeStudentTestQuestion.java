@@ -220,7 +220,7 @@ public class ChangeStudentTestQuestion implements IService {
         return result;
     }
 
-    private IQuestion getNewQuestion(List questions) throws ExcepcaoPersistencia {
+    private IQuestion getNewQuestion(List questions) {
 
         IQuestion question = null;
         if (questions.size() != 0) {
@@ -231,8 +231,7 @@ public class ChangeStudentTestQuestion implements IService {
         return question;
     }
 
-    private List getNewQuestionList(IMetadata metadata, IQuestion oldQuestion)
-            throws ExcepcaoPersistencia {
+    private List getNewQuestionList(IMetadata metadata, IQuestion oldQuestion) {
         List result = new ArrayList();
         if (metadata != null) {
             result.addAll(metadata.getVisibleQuestions());

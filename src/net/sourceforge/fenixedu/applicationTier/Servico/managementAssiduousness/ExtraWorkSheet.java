@@ -49,7 +49,6 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
 import net.sourceforge.fenixedu.util.Comparador;
-import net.sourceforge.fenixedu.util.FormataCalendar;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -71,8 +70,6 @@ public class ExtraWorkSheet implements IService {
     private Timestamp _dataFimEscolha = null;
 
     private Boolean _oracleDB = null;
-
-    private Locale _locale = null;
 
     private ArrayList _listaFuncionarios = new ArrayList();
 
@@ -199,7 +196,6 @@ public class ExtraWorkSheet implements IService {
         _dataInicioEscolha = firstDay;
         _dataFimEscolha = lastDay;
         _oracleDB = Boolean.TRUE;
-        _locale = locale;
 
         _dataConsulta = new Timestamp(_dataInicioEscolha.getTime());
 
@@ -925,54 +921,6 @@ public class ExtraWorkSheet implements IService {
         _listaMarcacoesPonto = servicoSeguro.getListaMarcacoesPonto();
     } /* consultarMarcacaoPonto */
 
-    private String formataMarcacoes() {
-        Calendar calendario = Calendar.getInstance();
-        String marcacoes = new String();
-
-        if (_listaMarcacoesPonto.size() > 0) {
-            // lista ordenada das marcacoes de ponto
-            Comparador comparadorMarcacoes = new Comparador(new String("MarcacaoPonto"),
-                    new String("crescente"));
-            Collections.sort(_listaMarcacoesPonto, comparadorMarcacoes);
-
-            // formatacao do campo das marcacoes
-            ListIterator iteradorMarcacoes = _listaMarcacoesPonto.listIterator();
-            MarcacaoPonto entrada = null;
-            MarcacaoPonto saida = null;
-
-            while (iteradorMarcacoes.hasNext()) {
-                entrada = (MarcacaoPonto) iteradorMarcacoes.next();
-
-                // escreve marcacao no verbete
-                calendario.clear();
-                calendario.setTime(entrada.getData());
-                if (entrada.getEstado().equals("regularizada")) {
-                    marcacoes = marcacoes
-                            .concat("<b>" + FormataCalendar.horas(calendario) + "</b>");
-                } else {
-                    marcacoes = marcacoes.concat(FormataCalendar.horas(calendario));
-                }
-
-                if (iteradorMarcacoes.hasNext()) {
-                    saida = (MarcacaoPonto) iteradorMarcacoes.next();
-                    // escreve marcacao no verbete
-                    calendario.clear();
-                    calendario.setTime(saida.getData());
-                    marcacoes = marcacoes.concat("-");
-                    if (saida.getEstado().equals("regularizada")) {
-                        marcacoes = marcacoes.concat("<b>" + FormataCalendar.horas(calendario)
-                                + "</b>");
-                    } else {
-                        marcacoes = marcacoes.concat(FormataCalendar.horas(calendario));
-                    }
-                }
-            }
-        } else { // nao existem marcacoes de ponto neste dia
-            marcacoes = marcacoes.concat("&nbsp;");
-        }
-
-        return marcacoes;
-    } /* formataMarcacoes */
 
     private void consultarJustificacoesPorDia() throws NotExecuteException {
 
@@ -997,49 +945,6 @@ public class ExtraWorkSheet implements IService {
         servicoSeguro.execute();
         _listaParamJustificacoes = (ArrayList) servicoSeguro.getListaJustificacoes();
     } /* buscarParamJustificacoes */
-
-    private String formataJustificacoes() {
-        String justificacoes = new String();
-
-        // formata justificacoes para o jsp
-        if (_listaParamJustificacoes.size() > 0) {
-            ListIterator iterJustificacoes = _listaJustificacoes.listIterator();
-
-            ParamJustificacao paramJustificacao = null;
-            while (iterJustificacoes.hasNext()) {
-                iterJustificacoes.next();
-                paramJustificacao = (ParamJustificacao) _listaParamJustificacoes
-                        .get(iterJustificacoes.previousIndex());
-
-                if ((_horario.getSigla() != null)
-                        && (_horario.getSigla().equals(Constants.DSC)
-                                || _horario.getSigla().equals(Constants.DS) || _horario.getSigla()
-                                .equals(Constants.FERIADO))) { // Dias
-                    // de
-                    // Descanso
-                    if (paramJustificacao.getTipoDias().equals(Constants.TODOS)) {
-                        // formatacao necessaria para o caso de varias
-                        // justificacoes por dia
-                        justificacoes = justificacoes.concat(new String(paramJustificacao
-                                .getSigla()));
-                        if (iterJustificacoes.hasNext()) {
-                            justificacoes = justificacoes.concat("<br>");
-                        }
-                    } else {
-                        justificacoes = justificacoes.concat("&nbsp;");
-                    }
-                } else {
-                    justificacoes = justificacoes.concat(new String(paramJustificacao.getSigla()));
-                    if (iterJustificacoes.hasNext()) {
-                        justificacoes = justificacoes.concat("<br>");
-                    }
-                }
-            }
-        } else { // nao existem justificacoes de ponto neste dia
-            justificacoes = justificacoes.concat("&nbsp;");
-        }
-        return justificacoes;
-    } /* formataJustificacoes */
 
     private void completaListaMarcacoes() {
         ListIterator iterador = _listaJustificacoes.listIterator();

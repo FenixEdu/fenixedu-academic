@@ -654,7 +654,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     }
     
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

@@ -44,7 +44,7 @@ public class UploadFilesAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareChooseForUploadFiles(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) {
         String file = request.getParameter("file");
         request.setAttribute("file", file);
 

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -29,7 +28,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements IService
 {
 
-    public Object run(Integer degreeOID) throws FenixServiceException, ExcepcaoPersistencia
+    public Object run(Integer degreeOID) throws ExcepcaoPersistencia
     {
         List executionCourseViews = new ArrayList();
 

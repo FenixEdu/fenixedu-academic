@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsAbstractService;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsAbstractService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -29,7 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
  */
 public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public List run(IUserView userView, Integer executionPeriodCode) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(IUserView userView, Integer executionPeriodCode) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport;
         persistentSuport = SuportePersistenteOJB.getInstance();
 

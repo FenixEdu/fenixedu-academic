@@ -36,16 +36,6 @@ public class SectionMenuContentRenderer extends TagSupport implements ISectionMe
         return strBuffer;
     }
 
-    private StringBuffer renderDepthIdent(InfoSection infoSection) {
-        StringBuffer strBuffer = new StringBuffer();
-        int depth = infoSection.getSectionDepth().intValue();
-        while (depth > 1) {
-            strBuffer.append("&nbsp&nbsp");
-            depth--;
-        }
-        return strBuffer;
-    }
-    
     private StringBuffer renderDepthContent(InfoSection infoSection, int i, String path,
             boolean hasChilds) {
         StringBuffer strBuffer = new StringBuffer();

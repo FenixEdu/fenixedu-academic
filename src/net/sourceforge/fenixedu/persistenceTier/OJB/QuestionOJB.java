@@ -86,8 +86,7 @@ public class QuestionOJB extends PersistentObjectOJB implements IPersistentQuest
         }
     }
 
-    private int countReferences(Integer distributedTestId, Integer questionId)
-            throws ExcepcaoPersistencia {
+    private int countReferences(Integer distributedTestId, Integer questionId) {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("keyDistributedTest", distributedTestId);
         criteria.addEqualTo("keyQuestion", questionId);

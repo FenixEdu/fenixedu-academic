@@ -7,13 +7,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -28,7 +27,7 @@ public class ReadUserProjects implements IService {
     public ReadUserProjects() {
     }
 
-    public List run(IUserView userView, Boolean all) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(IUserView userView, Boolean all) throws ExcepcaoPersistencia {
         List infoProjectList = new ArrayList();
 
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();

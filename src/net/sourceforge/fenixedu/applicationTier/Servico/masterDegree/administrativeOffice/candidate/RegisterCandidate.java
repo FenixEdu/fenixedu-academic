@@ -6,10 +6,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
@@ -25,7 +28,6 @@ import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuity;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
@@ -39,13 +41,6 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidStudentNumberServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
@@ -65,6 +60,11 @@ import net.sourceforge.fenixedu.util.StudentState;
 import net.sourceforge.fenixedu.util.StudentType;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 
@@ -429,60 +429,6 @@ public class RegisterCandidate implements IService {
             totalValue = new Double(gratuityValues.getScholarShipValue().doubleValue()
                     + (gratuityValues.getFinalProofValue() == null ? 0 : gratuityValues
                             .getFinalProofValue().doubleValue()));
-
-        }
-
-        return totalValue;
-    }
-
-    /**
-     * @param gratuityValues
-     * @return
-     */
-    private Double calculateTotalValueForSpecialization(IExecutionYear executionYear,
-            IGratuityValues gratuityValues, IStudentCurricularPlan studentCurricularPlan) {
-
-        Double totalValue = null;
-
-        if ((gratuityValues.getCourseValue() != null)
-                && (gratuityValues.getCourseValue().doubleValue() != 0)) {
-
-            // calculate using value per course
-            double valuePerCourse = gratuityValues.getCourseValue().doubleValue();
-
-            int totalCourses = 0;
-
-            for (Iterator iter = studentCurricularPlan.getEnrolments().iterator(); iter.hasNext();) {
-
-                IEnrollment enrolment = (IEnrollment) iter.next();
-
-                if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
-
-                    totalCourses++;
-                }
-            }
-
-            totalValue = new Double(totalCourses * valuePerCourse);
-
-        } else if ((gratuityValues.getCreditValue() != null)
-                && (gratuityValues.getCreditValue().doubleValue() != 0)) {
-
-            // calculate using value per credit
-            double valuePerCredit = gratuityValues.getCreditValue().doubleValue();
-
-            double totalCredits = 0;
-
-            for (Iterator iter = studentCurricularPlan.getEnrolments().iterator(); iter.hasNext();) {
-
-                IEnrollment enrolment = (IEnrollment) iter.next();
-
-                if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
-
-                    totalCredits += enrolment.getCurricularCourse().getCredits().doubleValue();
-                }
-            }
-
-            totalValue = new Double(totalCredits * valuePerCredit);
 
         }
 

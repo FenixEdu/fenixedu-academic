@@ -6,7 +6,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,10 +28,9 @@ public class DeletePublicationAuthors implements IService {
     /**
      * This method deletes all the PublicationAuthors for a given publication in the Database.
      * @param publicationId the id of the publication.
-     * @throws FenixServiceException 
      * @throws ExcepcaoPersistencia
      */
-	public void run(Integer publicationId) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Integer publicationId) throws ExcepcaoPersistencia {
 	    ISuportePersistente sp = null;
 	    IPersistentPublicationAuthor persistentPublicationAuthor = null;
 	    

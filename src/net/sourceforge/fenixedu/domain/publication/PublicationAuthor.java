@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
  */
 public class PublicationAuthor extends DomainObject implements IPublicationAuthor{
     
-    private Integer idInternal;
     private Integer keyPublication;
     private Integer keyAuthor;
     private Integer order;

@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoQuestion;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -14,9 +16,6 @@ import net.sourceforge.fenixedu.domain.IMetadata;
 import net.sourceforge.fenixedu.domain.IQuestion;
 import net.sourceforge.fenixedu.domain.Metadata;
 import net.sourceforge.fenixedu.domain.Question;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,8 +38,7 @@ public class CreateExercise implements IService {
             Calendar learningTime, String level, InfoQuestion infoQuestion, String questionText,
             String secondQuestionText, String[] options, String[] correctOptions, String[] shuffle,
             String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
-            Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
-            NotExecuteException {
+            Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
 
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();

@@ -13,7 +13,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
@@ -35,15 +34,13 @@ public class InsertPublicationAuthors implements IService {
      * @param infoAuthorsList
      *            the list of InfoAuthors that will be converted to authors and
      *            inserted in the DB.
-     * @throws FenixServiceException
      * @throws ExcepcaoPersistencia
      */
-    public void run(final List infoAuthorsList) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(final List infoAuthorsList) throws ExcepcaoPersistencia {
         insertAuthors(infoAuthorsList);
     }
 
-    public List insertAuthors(final List infoAuthorsList) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List insertAuthors(final List infoAuthorsList) throws ExcepcaoPersistencia {
         final List authors = new ArrayList(infoAuthorsList.size());
         for (final Iterator iterator = infoAuthorsList.iterator(); iterator.hasNext();) {
             final InfoAuthor infoAuthor = (InfoAuthor) iterator.next();
