@@ -17,7 +17,7 @@ import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.NotAuthorizedException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentTeacher;
