@@ -28,7 +28,7 @@
         	    <html:hidden property="page" value="2"/>
                 <!-- Estado Civil -->
                 <tr>
-                 <td><bean:message key="label.person.maritalStatus" /></td>
+                 <td with="15%"><bean:message key="label.person.maritalStatus" /></td>
                  <td>
                     <html:select property="maritalStatus">
                         <html:options collection="<%= SessionConstants.MARITAL_STATUS_LIST_KEY %>" property="value" labelProperty="label"/>
@@ -189,7 +189,7 @@
                      </html:select>          
                  </td>
                 </tr>
-         	<% } else { %>
+         	<% }else { %>
       	   	    <html:hidden property="page" value="1"/>
               	<html:hidden property="sex" />
               	<html:hidden property="identificationDocumentType" />
@@ -221,10 +221,21 @@
               	<html:hidden property="idExpirationDateMonth" />
               	<html:hidden property="idExpirationDateYear" />
               	<html:hidden property="areaOfAreaCode" />
+				<tr>
+         			<td colspan="2">
+         				<span class="error"> A informação que vai alterar terá efeito apenas nesta aplicação</span> e tem como objectivo, 
+         				serem enviadas mensagens de correio electrónico e sms.
+         				<br/>
+						<i>
+         				As alterações dos seus dados pessoais com efeitos administrativos devem ser feitas directamente na secção de pessoal, secretaria de graduação
+         				ou secretaria de pós-graduação, consoante o seu caso. 
+         				</i><br/><br/>
+         			</td>
+         		</tr>
          	<% } %>
           <!-- Telemovel -->
           <tr>
-            <td><bean:message key="label.person.mobilePhone" /></td>
+            <td width="15%"><bean:message key="label.person.mobilePhone" /></td>
             <td><html:text property="mobilePhone"/></td>
           </tr>
           <!-- E-Mail -->
