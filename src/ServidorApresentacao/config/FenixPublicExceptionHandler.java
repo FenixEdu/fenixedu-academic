@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -23,13 +22,12 @@ import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
  */
-public class FenixExceptionHandler extends ExceptionHandler {
+public class FenixPublicExceptionHandler extends ExceptionHandler {
 
 	/**
 		 * Handle the exception.
@@ -56,20 +54,10 @@ public class FenixExceptionHandler extends ExceptionHandler {
 		HttpServletResponse response)
 		throws ServletException {
 		ActionForward forward = null;
-
+		System.out.println("entrei");
 		ActionError error = null;
 
-		HttpSession session = request.getSession(false);
-
-		if (ex instanceof InvalidSessionActionException) {
-
-			ActionErrors errors = new ActionErrors();
-			error = new ActionError("error.invalid.session");
-			errors.add("error.invalid.session", error);
-			request.setAttribute(Globals.ERROR_KEY, errors);
-			return mapping.findForward("firstPage");
-
-		}
+		HttpSession session = request.getSession(true);
 
 		session.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
 
@@ -77,12 +65,12 @@ public class FenixExceptionHandler extends ExceptionHandler {
 			SessionConstants.EXCEPTION_STACK_TRACE,
 			ex.getStackTrace());
 
-		session.setAttribute(
+			session.setAttribute(
 			SessionConstants.REQUEST_CONTEXT,
 			requestContextGetter(request));
 
 		if (ae.getScope() != "request") {
-			ae.setScope("session");
+			ae.setScope("request");
 		}
 
 		String property = null;
@@ -92,18 +80,16 @@ public class FenixExceptionHandler extends ExceptionHandler {
 			error = ((FenixActionException) ex).getError();
 			property = ((FenixActionException) ex).getProperty();
 		} else {
-			System.out.println("ExceptionConfig:"+ae);
 			error = new ActionError(ae.getKey(), ex.getMessage());
 			property = error.getKey();
 		}
 
 		// Store the exception
-		session.setAttribute(Globals.EXCEPTION_KEY, ex);
+		request.setAttribute(Globals.EXCEPTION_KEY, ex);
 		super.storeException(request, property, error, forward, ae.getScope());
 
 		// Print info to standard output
 		ex.printStackTrace(System.out);
-		System.out.println("MAPPING: "+mapping);
 		return super.execute(ex, ae, mapping, formInstance, request, response);
 	}
 
