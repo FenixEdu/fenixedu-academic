@@ -43,9 +43,9 @@
                     </td>
                     <td align="left">
                       <font size="2" face="Arial, Helvetica, sans-serif">
-                        <html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
+                      	<html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
                           <app:options name="ConsultarFuncionarioMostrarForm" property="listaEscolhas"/>
-                        </html:select>
+                        </html:select> 
                         <bean:message key="prompt.de"/>
                         <html:text name="ConsultarFuncionarioMostrarForm" property="diaInicioEscolha" size="2" maxlength="2"/> / 
                         <html:text name="ConsultarFuncionarioMostrarForm" property="mesInicioEscolha" size="2" maxlength="2"/> / 
@@ -311,7 +311,7 @@
                 </td>
                 <td align="left">
                   <font size="2" face="Arial, Helvetica, sans-serif">
-                    <app:write name="horario" property="modalidade" />
+                    <bean:message name="horario" property="modalidade" />
                   </font>
                 </td>
               </tr>
@@ -325,7 +325,7 @@
                 <td align="left">
                   <font size="2" face="Arial, Helvetica, sans-serif">
                     <logic:iterate id="listaRegimes" name="horario" property="listaRegimes">
-                      <app:message key="listaRegimes"/>&nbsp;          
+                      <bean:message name="listaRegimes"/>&nbsp;
                     </logic:iterate>
                   </font>
                 </td>     
