@@ -53,8 +53,8 @@
 						<tr>
 							<th>&nbsp;</th>
 							<th align="center"><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></th>
-							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
 							<th align="center"><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></th>
+							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
 						</tr>
 						<logic:iterate id="infoEnrolment" name="infoEnrolmentsToGiveEquivalence" indexId="index">
 							<tr>
@@ -71,10 +71,10 @@
 									</html:link>
 								</td>
 								<td align="center">
-									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
+									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
 								</td>
 								<td align="center">
-									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"/>
+									<bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularSemester.semester"/>
 								</td>
 							</tr>
 						</logic:iterate>
@@ -85,8 +85,8 @@
 						<tr>
 							<th>&nbsp;</th>
 							<th align="center"><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></th>
-							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
 							<th align="center"><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></th>
+							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
 						</tr>
 						<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourseScopesToGetEquivalence" indexId="index">
 							<tr>
@@ -97,10 +97,10 @@
 									<bean:write name="infoCurricularCourseScope" property="infoCurricularCourse.name"/>
 								</td>
 								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>
+									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>
 								</td>
 								<td align="center">
-									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>
+									<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>
 								</td>
 							</tr>
 						</logic:iterate>

@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="Util.Data" %>
@@ -52,14 +54,16 @@
 					<tr>
 						<bean:define id="date1" name="infoEnrolmentEvaluation" property="examDate"/>
 						<td align="left"><b><bean:message key="label.evaluation.exam.date"/></b></td>
-						<td align="center"><%= Data.format2DayMonthYear((Date) date1) %></td>
+						<%--<td align="center"><%= Data.format2DayMonthYear((Date) date1) %></td>--%>
+						<td align="center"><dt:format pattern="dd-MM-yyyy"><bean:write name="date1" property="time"/></dt:format></td>
 					</tr>
 				</logic:present>
 				<logic:present name="infoEnrolmentEvaluation" property="gradeAvailableDate">
 					<tr>
 						<bean:define id="date2" name="infoEnrolmentEvaluation" property="gradeAvailableDate"/>
 						<td align="left"><b><bean:message key="label.evaluation.grade.available.date"/></b></td>
-						<td align="center"><%= Data.format2DayMonthYear((Date) date2) %></td>
+						<%--<td align="center"><%= Data.format2DayMonthYear((Date) date2) %></td>--%>
+						<td align="center"><dt:format pattern="dd-MM-yyyy"><bean:write name="date1" property="time"/></dt:format></td>
 					</tr>
 				</logic:present>
 				<logic:present name="infoEnrolmentEvaluation" property="observation">

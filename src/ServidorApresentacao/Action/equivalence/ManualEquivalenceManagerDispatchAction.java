@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.equivalence;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -63,6 +66,18 @@ public class ManualEquivalenceManagerDispatchAction extends TransactionalDispatc
 		Object args[] = { infoStudent, userView, infoExecutionPeriod };
 
 		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "GetListsOfCurricularCoursesForEquivalence", args);
+
+
+		ComparatorChain comparatorChain1 = new ComparatorChain();
+		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.infoCurricularYear.year"));
+		comparatorChain1.addComparator(new BeanComparator("infoCurricularCourseScope.infoCurricularSemester.semester"));
+		Collections.sort(infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence(), comparatorChain1);
+
+		ComparatorChain comparatorChain2 = new ComparatorChain();
+		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+		comparatorChain2.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+		Collections.sort(infoEquivalenceContext.getInfoCurricularCourseScopesToGetEquivalence(), comparatorChain2);
+
 
 		session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
 		this.initializeForm(infoEquivalenceContext, (DynaActionForm) form);
