@@ -250,4 +250,12 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
 	}
+	
+	//added by Nuno Correia
+	public List readByBranch(IBranch branch) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("branchKey", branch.getIdInternal());
+		return (List) queryList(CurricularCourseScope.class, criteria);
+	}
 }
