@@ -108,4 +108,10 @@ public interface ISuportePersistente {
 	public IPersistentEmployee getIPersistentEmployee();
 	
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction();	
+
+	public IPersistentQualification getIPersistentQualification();
+
+
 }
+
+

@@ -5,9 +5,6 @@
 <!-- Definitions for . -->
 
 
-
-
-
 <class-descriptor 
   class="middleware.posgrad.Posgrad_aluno_mestrado"
   table="posgrad_aluno_mestrado"
@@ -291,7 +288,7 @@
   <field-descriptor id="73"
     name="media"
     column="media"
-    jdbc-type="FLOAT"
+    jdbc-type="DOUBLE"
   />
 </class-descriptor>
 

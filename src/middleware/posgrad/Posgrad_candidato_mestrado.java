@@ -47,7 +47,7 @@ public class Posgrad_candidato_mestrado
 
   private String localidade;
 
-  private float media;
+  private Double media;
 
   private String morada;
 
@@ -281,11 +281,11 @@ public class Posgrad_candidato_mestrado
   }
 
 
-  public float getMedia()
+  public Double getMedia()
   {
      return this.media;
   }
-  public void setMedia(float param)
+  public void setMedia(Double param)
   {
     this.media = param;
   }

@@ -69,6 +69,7 @@ import ServidorPersistente.IPersistentPersonRole;
 import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentPrice;
 import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentQualification;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.IPersistentRole;
@@ -483,4 +484,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction() {
 		return new EnrolmentEquivalenceRestrictionOJB();
 	}
+	
+	public IPersistentQualification getIPersistentQualification() {
+		return new QualificationOJB();
+	}
+
 }
