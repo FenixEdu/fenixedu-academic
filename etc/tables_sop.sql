@@ -29,7 +29,7 @@ CREATE TABLE CLASS (
   KEY_DEGREE int(11),
   KEY_EXECUTION_PERIOD int (11) not null,  
   PRIMARY KEY  (ID_INTERNAL),
-  UNIQUE KEY U1 (NAME, KEY_EXECUTION_PERIOD, KEY_EXECUTION_DEGREE)
+  UNIQUE KEY U1 (NAME, KEY_EXECUTION_PERIOD, KEY_EXECUTION_DEGREE),
 ) TYPE=InnoDB;
 
 #----------------------------
@@ -45,8 +45,9 @@ create table SHIFT (
    CAPACITY int(11) not null,
    AVAILLABILITY_FINAL int(11),
    primary key (ID_INTERNAL),
-   unique U1 (NAME, KEY_EXECUTION_COURSE))
-   type=InnoDB;
+   unique U1 (NAME, KEY_EXECUTION_COURSE),
+   index SHIFT_KEY_EXECUTION_COURSE (KEY_EXECUTION_COURSE)
+) type=InnoDB;
 
 #----------------------------
 # Table structure for lesson
@@ -76,8 +77,10 @@ create table CLASS_SHIFT (
    KEY_CLASS int(11) not null,
    KEY_SHIFT int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_CLASS, KEY_SHIFT))
-   type=InnoDB;
+   unique U1 (KEY_CLASS, KEY_SHIFT),
+   index CLASS_SHIFT_KEY_CLASS (KEY_CLASS),
+   index CLASS_SHIFT_KEY_SHIFT (KEY_SHIFT)
+) type=InnoDB;
 
 #----------------------------
 # Table structure for shift_student
@@ -102,8 +105,10 @@ create table SHIFT_LESSON (
    KEY_SHIFT int(11) unsigned not null,
    KEY_LESSON int(11) unsigned not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_SHIFT, KEY_LESSON))
-   type=InnoDB;
+   unique U1 (KEY_SHIFT, KEY_LESSON),
+   index SHIFT_LESSON_KEY_LESSON (KEY_LESSON);
+   index SHIFT_LESSON_KEY_SHIFT (KEY_SHIFT);
+) type=InnoDB;
 
 #----------------------------
 # Table structure for attend
