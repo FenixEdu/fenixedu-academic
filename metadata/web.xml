@@ -105,6 +105,10 @@
             <param-value>/WEB-INF/conf/struts-webSiteManager.xml</param-value>
         </init-param>
         <init-param>
+            <param-name>config/facultyAdmOffice</param-name>
+            <param-value>/WEB-INF/conf/struts-facultyAdmOffice.xml</param-value>
+        </init-param>
+        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>
