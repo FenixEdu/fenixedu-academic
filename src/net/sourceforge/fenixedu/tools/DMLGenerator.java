@@ -103,6 +103,10 @@ public class DMLGenerator
             throws IOException
     {
         final StringBuffer stringBuffer = new StringBuffer(dmlDescriptorTable.size() * 5 * 80);
+
+        // TODO : add the Domain class
+        stringBuffer.append("");
+
         for (final Iterator iterator = dmlDescriptorTable.values().iterator(); iterator.hasNext();)
         {
             final DMLClassDescriptor dmlClassDescriptor = (DMLClassDescriptor) iterator.next();

@@ -196,7 +196,7 @@ public class DMLClassDescriptor
     {
         stringBuffer.append("\n\nclass ");
         stringBuffer.append(getClassName());
-        stringBuffer.append(" {");
+        stringBuffer.append(" extends domain.dml.DomainObject {");
         for (final Iterator iterator = attributeDescriptors.values().iterator(); iterator.hasNext();)
         {
             final DMLAttributeDescriptor attributeDescriptor = (DMLAttributeDescriptor) iterator.next();
@@ -226,7 +226,9 @@ public class DMLClassDescriptor
 
         final String attributeName = fieldDescriptor.getAttributeName();
 
-        attributeDescriptors.put(attributeName, dmlAttributeDescriptor);
+        if (!attributeName.equals("idInternal") && !attributeName.equals("ackOptLock")) {
+            attributeDescriptors.put(attributeName, dmlAttributeDescriptor);
+        }
     }
 
     protected void addObjectReferenceDescriptor(final ObjectReferenceDescriptor objectReferenceDescriptor)
