@@ -276,7 +276,7 @@ public class ServicoSeguroActualizarPessoas
 					catch (Exception e)
 					{
 						e.printStackTrace();
-						System.out.println("Error with person: " + pessoaFromDB);
+						System.out.println("Error with person: " + pessoaFromDB.getNome());
 						continue;
 					}
 				}

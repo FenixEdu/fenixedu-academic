@@ -19,7 +19,6 @@ import Dominio.Employee;
 import Dominio.IEmployee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
-import Dominio.Pessoa;
 import Dominio.Role;
 import Util.RoleType;
 
@@ -142,7 +141,7 @@ public class ServicoSeguroActualizarFuncionarios
 					}
 					else
 					{
-						// The Employee doesn't exists but the person already has a employee associated
+						// The Employee exists but the person already has a employee associated
 						// Decision Time ... Keep The Old NumeroMecanografico or Put The new ?
 						employee2Write = (IEmployee) resultEmployee.get(0);
 						// Keep the higher
@@ -154,6 +153,8 @@ public class ServicoSeguroActualizarFuncionarios
 						{
 							numeroMecanografico = employee2Write.getEmployeeNumber();
 						}
+						
+						employee2Write.setActive(Boolean.TRUE);													
 					}
 					broker.store(employee2Write);
 					usedPersons.add(person);
@@ -166,47 +167,21 @@ public class ServicoSeguroActualizarFuncionarios
 				else if (resultEmployee.size() == 1)
 				{
 					IEmployee employee = (IEmployee) resultEmployee.get(0);
+					employee.setActive(Boolean.TRUE);	
 					if (!employee.getPerson().equals(person))
 					{
 						if (!usedPersons.contains(employee.getPerson()))
 						{
 							unusedPersons.add(employee.getPerson());
 						}
-						employee.setPerson(person);
+						employee.setPerson(person);						
 					}
 					broker.store(employee);
 				}
 
 				// Change the person Username
 				person.setUsername("F" + String.valueOf(numeroMecanografico));
-
-				// Check If the person already exist with this username
-				criteria = new Criteria();
-				query = null;
-				criteria.addEqualTo("username", new String("F" + numeroMecanografico));
-				query = new QueryByCriteria(Pessoa.class, criteria);
-				List resultPersonUsername = (List) broker.getCollectionByQuery(query);
-				Pessoa personUsername = null;
-				if (resultPersonUsername.size() != 0)
-				{
-					personUsername = (Pessoa) resultPersonUsername.get(0);
-					if (person.getUsername().equals(personUsername.getUsername()))
-					{
-						if (!((person
-							.getNumeroDocumentoIdentificacao()
-							.equals(personUsername.getNumeroDocumentoIdentificacao())
-							&& person.getTipoDocumentoIdentificacao().equals(
-								personUsername.getTipoDocumentoIdentificacao()))))
-						{
-							personUsername.setUsername("X" + numeroMecanografico);
-							broker.store(personUsername);
-
-							broker.commitTransaction();
-							broker.beginTransaction();
-						}
-					}
-				}
-
+				
 				IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
 				if (personRole == null)
 				{
@@ -228,7 +203,6 @@ public class ServicoSeguroActualizarFuncionarios
 					newRoles++;
 				}
 				broker.store(person);
-
 			}
 			catch (Exception e)
 			{

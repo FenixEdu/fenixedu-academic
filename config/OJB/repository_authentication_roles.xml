@@ -190,11 +190,10 @@
          name="personRoles"
          element-class-ref="Dominio.Role"
          proxy="true"
+		 collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          indirection-table = "PERSON_ROLE"
          auto-retrieve="true"
-         refresh="true"
-         auto-update="false"
-         auto-delete="false"
+         refresh="true"         
       >
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_ROLE" />
