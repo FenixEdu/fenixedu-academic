@@ -53,7 +53,7 @@ public class MigratePersons2Fenix {
 		int personsWritten = 0;
 		int personsNotWritten = 0;
 		int rolesWritten = 0;
-		
+		int i = 1;
 		
 		try {
 			System.out.print("A Ler Pessoas de Pos-Graduacao ...");
@@ -102,6 +102,7 @@ public class MigratePersons2Fenix {
 
 				if (result.size() == 0){
 					copyPessoaPG2Person(person2Write, person2Convert, identificationDocumentType);
+					person2Write.setUsername("X" + i++);
 					person2Write.setPersonRoles(new ArrayList());
 					personsWritten++;
 				} else {
@@ -120,7 +121,11 @@ public class MigratePersons2Fenix {
 					
 					if (result.size() == 0){
 						// A pessoa nao e um funcionario. Entao vamos fazer update dos campos todos
+						
+						// Backup do Username
+						String username = new String(person2Convert.getUsername());
 						copyPessoaPG2Person(person2Write, person2Convert, identificationDocumentType);
+						person2Write.setUsername(username);
 					}
 					
 				}
