@@ -65,11 +65,17 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		mailBody += "Name: " + originalMapping.getName() + "\n";
 		mailBody += stackTrace2String(stackTrace);
 		//TODO :IMPORTANT change the current mail server and e-mail to the real ones
-		//		EMail email = new EMail("localhost", "erro@dot.ist.utl.pt");
-		EMail email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
-		//email.send("suporte@dot.ist.utl.pt","Error Report",stackTrace.toString());
-		email.send("j.mota@netcabo.pt", subject, mailBody);
-		email.send("lepc@mega.ist.utl.pt", subject, mailBody);
+		EMail email =null;
+		
+		if (!request.getServerName().equals("localhost")) { email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
+		}
+		
+		else{ email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
+		}
+			
+		email.send("suporte@dot.ist.utl.pt","Error Report",stackTrace.toString());
+//		email.send("j.mota@netcabo.pt", subject, mailBody);
+//		email.send("lepc@mega.ist.utl.pt", subject, mailBody);
 		//		removes from session all the un-needed info
 		sessionRemover(request);
 		
