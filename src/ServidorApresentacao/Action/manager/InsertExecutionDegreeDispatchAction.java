@@ -124,7 +124,9 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		infoExecutionDegree.setTemporaryExamMap(new Boolean((String) dynaForm.get("tempExamMap")));
+		String tempExamMap = (String) dynaForm.get("tempExamMap");
+		if(tempExamMap.compareTo("") != 0)
+			infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMap));
 		
 		Object args[] = { infoExecutionDegree };
 		
