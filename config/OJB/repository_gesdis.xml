@@ -651,8 +651,8 @@
     />
     	 
     <field-descriptor id="4"
-         name="keyGroupProperties"
-         column="KEY_GROUP_PROPERTIES"
+         name="keyAttendsSet"
+         column="KEY_ATTENDS_SET"
     	  jdbc-type="INTEGER"
     />
       <field-descriptor
@@ -669,17 +669,18 @@
     >
 	<foreignkey field-id-ref="3"/>
 	
-
 	</reference-descriptor>
 
+
     <reference-descriptor
-         name="groupProperties"
-         class-ref="Dominio.GroupProperties"
+         name="attendsSet"
+         class-ref="Dominio.AttendsSet"
          proxy="true"
     >
 	<foreignkey field-id-ref="4"/>
 	
 	</reference-descriptor>
+
 
 </class-descriptor>
 
@@ -814,8 +815,8 @@
        />
            
     <field-descriptor id="12"
-         name="keyExecutionCourse"
-         column="KEY_EXECUTION_COURSE"
+         name="keyAttendsSet"
+         column="KEY_ATTENDS_SET"
     	  jdbc-type="INTEGER"
     />
       <field-descriptor
@@ -826,14 +827,24 @@
       />
             
     <reference-descriptor
-         name="executionCourse"
-         class-ref="Dominio.ExecutionCourse"
+         name="attendsSet"
+         class-ref="Dominio.AttendsSet"
          proxy="true"
     >
 	<foreignkey field-id-ref="12"/>
 	
 	</reference-descriptor>
+
+	<collection-descriptor 
+			name="groupPropertiesExecutionCourse" 
+			element-class-ref="Dominio.GroupPropertiesExecutionCourse"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyGroupProperties"/>
+
+    </collection-descriptor>
+			
 </class-descriptor>
+
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for Dominio.gesdis.CourseReport -->
@@ -950,4 +961,206 @@
         <foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor> 
 </class-descriptor>
+
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.AttendsSet -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.AttendsSet"
+                  table="ATTENDS_SET">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+            
+	<field-descriptor id="2"
+		name="name"
+        column="NAME"
+    	jdbc-type="VARCHAR"
+    />
+	
+    <field-descriptor id="3"
+         name="keyGroupProperties"
+         column="KEY_GROUP_PROPERTIES"
+    	  jdbc-type="INTEGER"
+    />
+
+	<field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />
+    
+	<collection-descriptor 
+			name="attendInAttendsSet" 
+			element-class-ref="Dominio.AttendInAttendsSet"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyAttendsSet"/>
+    </collection-descriptor>
+
+	<collection-descriptor 
+			name="studentGroups" 
+			element-class-ref="Dominio.StudentGroup"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyAttendsSet"/>
+    </collection-descriptor>
+
+	<reference-descriptor
+         name="groupProperties"
+         class-ref="Dominio.GroupProperties"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="3"/>
+	</reference-descriptor>
+			
+</class-descriptor>
+
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.AttendInAttendsSet -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.AttendInAttendsSet"
+                  table="ATTEND_ATTENDS_SET">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    /> 
+    <field-descriptor id="2"
+         name="keyAttend"
+         column="KEY_ATTEND"
+    	  jdbc-type="INTEGER"
+    />
+    <field-descriptor id="3"
+         name="keyAttendsSet"
+         column="KEY_ATTENDS_SET"
+    	  jdbc-type="INTEGER"
+    />
+    <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />
+    <reference-descriptor
+         name="attend"
+         class-ref="Dominio.Frequenta"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="2"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+         name="attendsSet"
+         class-ref="Dominio.AttendsSet"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="3"/>
+	</reference-descriptor>
+</class-descriptor>
+
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.GroupPropertiesExecutionCourse -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.GroupPropertiesExecutionCourse"
+                  table="GROUP_PROPERTIES_EXECUTION_COURSE">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    /> 
+    <field-descriptor id="2"
+         name="keyGroupProperties"
+         column="KEY_GROUP_PROPERTIES"
+    	  jdbc-type="INTEGER"
+    />
+    <field-descriptor id="3"
+         name="keyExecutionCourse"
+         column="KEY_EXECUTION_COURSE"
+    	  jdbc-type="INTEGER"
+    />
+    <field-descriptor id="4"
+		name="proposalState"
+        column="PROPOSAL_STATE"
+    	jdbc-type="INTEGER"
+    	conversion="ServidorPersistente.Conversores.ProposalState2EnumProposalStateFieldConversion"
+    />
+    <field-descriptor id="5"
+         name="keySenderPerson"
+         column="KEY_SENDER_PERSON"
+    	  jdbc-type="INTEGER"
+    />
+    <field-descriptor id="6"
+         name="keyReceiverPerson"
+         column="KEY_RECEIVER_PERSON"
+    	  jdbc-type="INTEGER"
+    />
+	<field-descriptor id="7"
+         name="keySenderExecutionCourse"
+         column="KEY_SENDER_EXECUTION_COURSE"
+    	  jdbc-type="INTEGER"
+    />
+    <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />
+        
+    <reference-descriptor
+         name="groupProperties"
+         class-ref="Dominio.GroupProperties"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="2"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.ExecutionCourse"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="3"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+         name="senderPerson"
+         class-ref="Dominio.Pessoa"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="5"/>
+	</reference-descriptor>
+	
+	<reference-descriptor
+         name="receiverPerson"
+         class-ref="Dominio.Pessoa"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="6"/>
+	</reference-descriptor>
+	<reference-descriptor
+         name="senderExecutionCourse"
+         class-ref="Dominio.ExecutionCourse"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="7"/>
+	</reference-descriptor>
+	
+</class-descriptor>
+
+
+
+
 <!-- Mapping of User defined classes ends here -->

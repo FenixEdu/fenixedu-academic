@@ -61,11 +61,52 @@
 	</tr>		
     		
      <logic:iterate id="infoSiteGroupsByShift" name="component" property="infoSiteGroupsByShiftList" >
+		<logic:empty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
+			<tr>
+								
+						<td  class="listClasses">
+							Sem Turno
+						</td>
+								
+						<td class="listClasses">
+								---
+						</td>
+								
+						<td class="listClasses">
+								---	
+						</td>
+								
+						<td class="listClasses">
+								---	
+						</td>
+							
+		               	<td class="listClasses">
+								---	
+						 </td>
+				 		
+				 		 <td class="listClasses" >
+                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
+							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
+                        	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+								<bean:write name="infoStudentGroup" property="groupNumber"/>
+							</html:link>
+						</logic:iterate>]
+						</logic:notEmpty>
+						
+						<logic:empty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+							<bean:message key="message.shift.without.groups"/>
+						</logic:empty>
+						
+						 </td>
+							
+						 						
+						 	</tr>
+			</logic:empty>		
+		
+		<logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
 		<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
-			
-			<logic:notEmpty name="infoSiteShift" property="infoShift">
 			<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
-															
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                 	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
@@ -130,11 +171,8 @@
 						</tr>
 					
 					</logic:iterate>
-		
-
-        </logic:notEmpty>
-                    
-        </logic:iterate>
+					</logic:notEmpty>      
+  </logic:iterate>
        
       </tbody>
 </table>

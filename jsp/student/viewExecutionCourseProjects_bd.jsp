@@ -31,10 +31,13 @@
          <tr>
 			<td class="listClasses-header" width="20%"><bean:message key="label.projectName" />
 			</td>
-			<td class="listClasses-header" width="45%"><bean:message key="label.projectDescription" />
+			<td class="listClasses-header" width="30%"><bean:message key="label.projectDescription" />
 			</td>
-			<td class="listClasses-header" width="35%"><bean:message key="label.properties" />
+			<td class="listClasses-header" width="20%"><bean:message key="label.properties" />
 			</td>		
+			</td>
+			<td class="listClasses-header" width="20%" ><bean:message key="label.newProjectProposalExecutionCourses" />
+			</td>
 		</tr>
 		
             <logic:iterate id="infoGroupProperties" name="infoGroupPropertiesList">
@@ -89,6 +92,19 @@
                    	 <bean:message key="label.individual"/>
                 	<%}%>	
                 	</td>
+                	
+                	<td class="listClasses">
+                		<bean:size id="count" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse"/>
+                		<logic:greaterThan name="count" value="1">
+            		    <logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse" >
+                		<bean:define id="infoExecutionCourse" name="infoGroupPropertiesExecutionCourseElement" property="infoExecutionCourse" />
+							<bean:write name="infoExecutionCourse" property="nome"/></br>
+                    	 </logic:iterate>
+                    		</logic:greaterThan>
+						<logic:equal name="count" value="1">
+							<bean:message key="message.project.wihtout.coavaliation"/>
+                    	</logic:equal>
+                    </td>
      
                 </tr>
 

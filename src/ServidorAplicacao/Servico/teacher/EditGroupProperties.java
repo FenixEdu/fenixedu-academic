@@ -9,7 +9,6 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGroupProperties;
-import Dominio.ExecutionCourse;
 import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
@@ -17,6 +16,7 @@ import Dominio.IStudentGroup;
 import Dominio.ITurno;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentGroupProperties;
@@ -36,20 +36,29 @@ public class EditGroupProperties implements IService {
     public EditGroupProperties() {
     }
 
-    private boolean checkIfAlreadyExists(InfoGroupProperties infoGroupProperties,
+    private boolean checkIfAlreadyExists(
+            InfoGroupProperties infoGroupProperties,
             IGroupProperties groupProperties) throws FenixServiceException {
 
         IGroupProperties existingGroupProperties = null;
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
-            if (!infoGroupProperties.getName().equals(groupProperties.getName())) {
+            IPersistentGroupProperties persistentGroupProperties = ps
+                    .getIPersistentGroupProperties();
+            
+            if (!infoGroupProperties.getName()
+                    .equals(groupProperties.getName())) {
+            	
+            	Iterator iterExecutionCourses = groupProperties
+							.getExecutionCourses().iterator();
+            	while (iterExecutionCourses.hasNext()){
+            	
                 persistentGroupProperties = ps.getIPersistentGroupProperties();
-                existingGroupProperties = persistentGroupProperties
-                        .readGroupPropertiesByExecutionCourseAndName(groupProperties
-                                .getExecutionCourse(), infoGroupProperties.getName());
+                existingGroupProperties = ((IExecutionCourse)iterExecutionCourses.next())
+										.getGroupPropertiesByName(infoGroupProperties.getName());
                 if (existingGroupProperties != null)
                     throw new ExistingServiceException();
+            	}
             }
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -58,21 +67,23 @@ public class EditGroupProperties implements IService {
         return true;
     }
 
-    private List checkIfIsPossibleToEdit(InfoGroupProperties infoGroupProperties,
+    private List checkIfIsPossibleToEdit(
+            InfoGroupProperties infoGroupProperties,
             IGroupProperties groupProperties) throws FenixServiceException {
 
-        IPersistentStudentGroup persistentStudentGroup = null;
+    	IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         List errors = new ArrayList();
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
             persistentStudentGroup = ps.getIPersistentStudentGroup();
-            persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
-            List allStudentsGroup = persistentStudentGroup
-                    .readAllStudentGroupByGroupProperties(groupProperties);
+            persistentStudentGroupAttend = ps
+                    .getIPersistentStudentGroupAttend();
+            List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroups();
 
-            Integer groupMaximumNumber = infoGroupProperties.getGroupMaximumNumber();
+            Integer groupMaximumNumber = infoGroupProperties
+                    .getGroupMaximumNumber();
             Integer maximumCapacity = infoGroupProperties.getMaximumCapacity();
             Integer minimumCapacity = infoGroupProperties.getMinimumCapacity();
 
@@ -93,9 +104,16 @@ public class EditGroupProperties implements IService {
 
                 while (iterator2.hasNext()) {
                     shift = (ITurno) iterator2.next();
+                    if(shift!=null){
                     studentGroupsList = persistentStudentGroup
-                            .readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
-                    if (studentGroupsList.size() > groupMaximumNumber.intValue()) {
+                            .readAllStudentGroupByAttendsSetAndShift(
+                                    groupProperties.getAttendsSet(), shift);
+                    }else{
+                    	studentGroupsList = groupProperties.getAttendsSet().getStudentGroups();
+                    }
+                    
+                    if (studentGroupsList.size() > groupMaximumNumber
+                            .intValue()) {
                         if (!errors.contains(new Integer(-1)))
                             errors.add(new Integer(-1));
                     }
@@ -115,7 +133,8 @@ public class EditGroupProperties implements IService {
                 allStudents = new ArrayList();
 
                 IStudentGroup studentGroup = (IStudentGroup) iterGroups.next();
-                allStudents = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+                allStudents = persistentStudentGroupAttend
+                        .readAllByStudentGroup(studentGroup);
                 size = new Integer(allStudents.size());
                 if (maximumCapacity != null) {
 
@@ -139,6 +158,26 @@ public class EditGroupProperties implements IService {
         return errors;
     }
 
+    private void unEnrollStudentGroups(List studentGroupList) throws FenixServiceException {
+    	try{
+    		ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+    		IPersistentStudentGroup persistentStudentGroup = ps.getIPersistentStudentGroup();
+
+    		Iterator iterStudentGroupList = studentGroupList.iterator();
+    		while(iterStudentGroupList.hasNext()){
+    			IStudentGroup studentGroup = (IStudentGroup)iterStudentGroupList.next();
+    			ITurno shift = studentGroup.getShift();
+    			if(shift!=null){
+    				studentGroup.setShift(null);
+    				persistentStudentGroup.simpleLockWrite(studentGroup);
+    			}
+    		}
+    	} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+    		throw new FenixServiceException(excepcaoPersistencia);
+    	}
+    }
+    
+    
     /**
      * Executes the service.
      */
@@ -150,31 +189,48 @@ public class EditGroupProperties implements IService {
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
-            IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
-            IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
+            IPersistentGroupProperties persistentGroupProperties = ps
+                    .getIPersistentGroupProperties();
+            IPersistentExecutionCourse persistentExecutionCourse = ps
+                    .getIPersistentExecutionCourse();
 
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
-                    GroupProperties.class, infoGroupProperties.getIdInternal());
-
+            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
+                    .readByOID(GroupProperties.class, infoGroupProperties
+                            .getIdInternal());
+            if(groupProperties == null){
+            	throw new InvalidSituationServiceException();
+            }
+            
             if (checkIfAlreadyExists(infoGroupProperties, groupProperties)) {
-                result = checkIfIsPossibleToEdit(infoGroupProperties, groupProperties);
-                IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class, objectCode);
-
+                result = checkIfIsPossibleToEdit(infoGroupProperties,
+                        groupProperties);
+                
                 persistentGroupProperties.simpleLockWrite(groupProperties);
-                groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
-                groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
-                groupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
-                groupProperties.setExecutionCourse(executionCourse);
-                groupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
-                groupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
-                groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
-                groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
-                groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
+                groupProperties.setEnrolmentBeginDay(infoGroupProperties
+                        .getEnrolmentBeginDay());
+                groupProperties.setEnrolmentEndDay(infoGroupProperties
+                        .getEnrolmentEndDay());
+                groupProperties.setEnrolmentPolicy(infoGroupProperties
+                        .getEnrolmentPolicy());
+                groupProperties.setGroupMaximumNumber(infoGroupProperties
+                        .getGroupMaximumNumber());
+                groupProperties.setIdealCapacity(infoGroupProperties
+                        .getIdealCapacity());
+                groupProperties.setIdInternal(infoGroupProperties
+                        .getIdInternal());
+                groupProperties.setMaximumCapacity(infoGroupProperties
+                        .getMaximumCapacity());
+                groupProperties.setMinimumCapacity(infoGroupProperties
+                        .getMinimumCapacity());
 
                 groupProperties.setName(infoGroupProperties.getName());
-                groupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
-                groupProperties.setShiftType(infoGroupProperties.getShiftType());
+                groupProperties.setProjectDescription(infoGroupProperties
+                        .getProjectDescription());
+                groupProperties
+                        .setShiftType(infoGroupProperties.getShiftType());
+                if(infoGroupProperties.getShiftType()==null){
+                	unEnrollStudentGroups(groupProperties.getAttendsSet().getStudentGroups());
+                }
 
             }
         } catch (ExcepcaoPersistencia e) {

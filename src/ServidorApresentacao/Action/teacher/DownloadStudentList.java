@@ -170,7 +170,7 @@ public class DownloadStudentList extends FenixAction {
                     for (Iterator groupsIterator = infosGroups.iterator(); groupsIterator.hasNext();) {
                         InfoGroupProjectStudents groupInfo = (InfoGroupProjectStudents) groupsIterator
                                 .next();
-                        if (projectIdInternal == groupInfo.getStudentGroup().getInfoGroupProperties()
+                        if (projectIdInternal == groupInfo.getStudentGroup().getInfoAttendsSet().getInfoGroupProperties()
                                 .getIdInternal().intValue()
                                 && groupInfo.isStudentMemberOfThisGroup(studentNumber)) {
                             groupNumber = groupInfo.getStudentGroup().getGroupNumber().intValue();

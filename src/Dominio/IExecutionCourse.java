@@ -66,7 +66,25 @@ public interface IExecutionCourse extends IDomainObject, INode {
 
     public void setExecutionCourseProperties(List executionCourseProperties);
 
-    public List getAttends();
+	public List getGroupPropertiesExecutionCourse();
+
+	public void setGroupPropertiesExecutionCourse(List groupPropertiesExecutionCourse);
+
+	public List getGroupProperties ();
+
+	public IGroupProperties getGroupPropertiesByName(String groupPropertiesName);
+
+	public void addGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+
+	public void removeGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+
+	public boolean existsGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+
+	public boolean existsGroupPropertiesExecutionCourse();
+
+	public boolean hasProposals();
+
+	public List getAttends();
 
     public void setAttends(List attends);
 

@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.Predicate;
@@ -12,7 +14,7 @@ import fileSuport.INode;
 
 public class ExecutionCourse extends DomainObject implements IExecutionCourse {
 
-    private String nome;
+	private String nome;
 
     private String sigla;
 
@@ -24,7 +26,7 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
 
     private Double labHours;
 
-    private List associatedCurricularCourses = null;
+	private List associatedCurricularCourses = null;
 
     private List associatedExams = null;
 
@@ -41,8 +43,10 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
     private List executionCourseProperties;
 
     private List attends;
+	
+	private List groupPropertiesExecutionCourse=null;
 
-    private List responsibleTeachers;
+private List responsibleTeachers;
 
     private List professorships;
 
@@ -53,7 +57,7 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
         setIdInternal(idInternal);
     }
 
-    public ExecutionCourse(String nome, String sigla, Double theoreticalHours, Double praticalHours,
+	 public ExecutionCourse(String nome, String sigla, Double theoreticalHours, Double praticalHours,
             Double theoPratHours, Double labHours, IExecutionPeriod executionPeriod) {
 
         setNome(nome);
@@ -65,8 +69,8 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
         setExecutionPeriod(executionPeriod);
         setComment(new String());
     }
-
-    public boolean equals(Object obj) {
+	
+	public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof IExecutionCourse) {
             IExecutionCourse de = (IExecutionCourse) obj;
@@ -77,154 +81,133 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
         return resultado;
     }
 
-    public String toString() {
-        String result = "[EXECUTION_COURSE";
-        result += ", codInt=" + getIdInternal();
-        result += ", sigla=" + sigla;
-        result += ", nome=" + nome;
-        result += ", theoreticalHours=" + theoreticalHours;
-        result += ", praticalHours=" + praticalHours;
-        result += ", theoPratHours=" + theoPratHours;
-        result += ", labHours=" + labHours;
-        result += ", executionPeriod=" + getExecutionPeriod();
-        result += "]";
-        return result;
-    }
+	public String toString() {
+		String result = "[EXECUTION_COURSE";
+		result += ", codInt=" + getIdInternal();
+		result += ", sigla=" + sigla;
+		result += ", nome=" + nome;
+		result += ", theoreticalHours=" + theoreticalHours;
+		result += ", praticalHours=" + praticalHours;
+		result += ", theoPratHours=" + theoPratHours;
+		result += ", labHours=" + labHours;
+		result += ", executionPeriod=" + getExecutionPeriod();
+		result += "]";
+		return result;
+	}
 
-    /**
-     * Returns the associatedCurricularCourses.
-     * 
-     * @return List
-     */
-    public List getAssociatedCurricularCourses() {
-        return associatedCurricularCourses;
-    }
+	/**
+	 * Returns the associatedCurricularCourses.
+	 * @return List
+	 */
+	public List getAssociatedCurricularCourses() {
+		return associatedCurricularCourses;
+	}
 
-    /**
-     * Returns the nome.
-     * 
-     * @return String
-     */
-    public String getNome() {
-        return nome;
-    }
+	/**
+	 * Returns the nome.
+	 * @return String
+	 */
+	public String getNome() {
+		return nome;
+	}
 
-    /**
-     * Returns the sigla.
-     * 
-     * @return String
-     */
-    public String getSigla() {
-        return sigla;
-    }
+	/**
+	 * Returns the sigla.
+	 * @return String
+	 */
+	public String getSigla() {
+		return sigla;
+	}
 
-    /**
-     * Returns the theoreticalHours.
-     * 
-     * @return double
-     */
-    public Double getTheoreticalHours() {
-        return theoreticalHours;
-    }
+	/**
+	 * Returns the theoreticalHours.
+	 * @return double
+	 */
+	public Double getTheoreticalHours() {
+		return theoreticalHours;
+	}
 
-    /**
-     * Returns the praticalHours.
-     * 
-     * @return double
-     */
-    public Double getPraticalHours() {
-        return praticalHours;
-    }
+	/**
+	 * Returns the praticalHours.
+	 * @return double
+	 */
+	public Double getPraticalHours() {
+		return praticalHours;
+	}
 
-    /**
-     * Returns the theoPratHours.
-     * 
-     * @return double
-     */
-    public Double getTheoPratHours() {
-        return theoPratHours;
-    }
+	/**
+	 * Returns the theoPratHours.
+	 * @return double
+	 */
+	public Double getTheoPratHours() {
+		return theoPratHours;
+	}
 
-    /**
-     * Returns the labHours.
-     * 
-     * @return double
-     */
-    public Double getLabHours() {
-        return labHours;
-    }
+	/**
+	 * Returns the labHours.
+	 * @return double
+	 */
+	public Double getLabHours() {
+		return labHours;
+	}
 
-    /**
-     * Sets the associatedCurricularCourses.
-     * 
-     * @param associatedCurricularCourses
-     *            The associatedCurricularCourses to set
-     */
-    public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
-        this.associatedCurricularCourses = associatedCurricularCourses;
-    }
+	/**
+	 * Sets the associatedCurricularCourses.
+	 * @param associatedCurricularCourses The associatedCurricularCourses to set
+	 */
+	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
+		this.associatedCurricularCourses = associatedCurricularCourses;
+	}
 
-    /**
-     * Sets the nome.
-     * 
-     * @param nome
-     *            The nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	/**
+	 * Sets the nome.
+	 * @param nome The nome to set
+	 */
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    /**
-     * Sets the sigla.
-     * 
-     * @param sigla
-     *            The sigla to set
-     */
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
-    }
+	/**
+	 * Sets the sigla.
+	 * @param sigla The sigla to set
+	 */
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
 
-    /**
-     * Sets the theoreticalHours.
-     * 
-     * @param theoreticalHours
-     *            The theoreticalHours to set
-     */
-    public void setTheoreticalHours(Double theoreticalHours) {
-        this.theoreticalHours = theoreticalHours;
-    }
+	/**
+	 * Sets the theoreticalHours.
+	 * @param theoreticalHours The theoreticalHours to set 
+	 */
+	public void setTheoreticalHours(Double theoreticalHours) {
+		this.theoreticalHours = theoreticalHours;
+	}
 
-    /**
-     * Sets the praticalHours.
-     * 
-     * @param praticalHours
-     *            The praticalHours to set
-     */
-    public void setPraticalHours(Double praticalHours) {
-        this.praticalHours = praticalHours;
-    }
+	/**
+	 * Sets the praticalHours.
+	 * @param praticalHours The praticalHours to set
+	 */
+	public void setPraticalHours(Double praticalHours) {
+		this.praticalHours = praticalHours;
+	}
 
-    /**
-     * Sets the theoPratHours.
-     * 
-     * @param theoPratHours
-     *            The theoPratHours to set
-     */
-    public void setTheoPratHours(Double theoPratHours) {
-        this.theoPratHours = theoPratHours;
-    }
+	/**
+	* Sets the theoPratHours.
+	 * @param theoPratHours The theoPratHours to set
+	 */
+	public void setTheoPratHours(Double theoPratHours) {
+		this.theoPratHours = theoPratHours;
+	}
 
-    /**
-     * Sets the labHours.
-     * 
-     * @param labHours
-     *            The labHours to set
-     */
-    public void setLabHours(Double labHours) {
-        this.labHours = labHours;
-    }
+	/**
+	 * Sets the labHours.
+	 * @param labHours The labHours to set
+	 */
+	public void setLabHours(Double labHours) {
+		this.labHours = labHours;
+	}
 
-    /**
+	 /**
      * @see Dominio.IDisciplinaExecucao#getExecutionPeriod()
      */
     public IExecutionPeriod getExecutionPeriod() {
@@ -238,61 +221,58 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
         this.executionPeriod = executionPeriod;
     }
 
-    /**
-     * Returns the keyExecutionPeriod.
-     * 
-     * @return Integer
-     */
-    public Integer getKeyExecutionPeriod() {
-        return keyExecutionPeriod;
-    }
+	/**
+	 * Returns the keyExecutionPeriod.
+	 * @return Integer
+	 */
+	public Integer getKeyExecutionPeriod() {
+		return keyExecutionPeriod;
+	}
 
-    /**
-     * Sets the keyExecutionPeriod.
-     * 
-     * @param keyExecutionPeriod
-     *            The keyExecutionPeriod to set
-     */
-    public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
-        this.keyExecutionPeriod = keyExecutionPeriod;
-    }
+	/**
+	 * Sets the keyExecutionPeriod.
+	 * @param keyExecutionPeriod The keyExecutionPeriod to set
+	 */
+	public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
+		this.keyExecutionPeriod = keyExecutionPeriod;
+	}
 
-    /**
-     * @return
-     */
-    public List getAssociatedExams() {
-        return associatedExams;
-    }
+	/**
+	 * @return
+	 */
+	public List getAssociatedExams() {
+		return associatedExams;
+	}
 
-    /**
-     * @param list
-     */
-    public void setAssociatedExams(List list) {
-        associatedExams = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setAssociatedExams(List list) {
+		associatedExams = list;
+	}
 
-    /**
-     * @return
-     */
-    public String getComment() {
-        return comment;
-    }
+	/**
+	 * @return
+	 */
+	public String getComment() {
+		return comment;
+	}
 
-    /**
-     * @param string
-     */
-    public void setComment(String string) {
-        comment = string;
-    }
+	/**
+	 * @param string
+	 */
+	public void setComment(String string) {
+		comment = string;
+	}
 
-    /**
-     * @return
-     */
-    public List getAssociatedEvaluations() {
-        return associatedEvaluations;
-    }
+	/**
+	 * @return
+	 */
+	public List getAssociatedEvaluations() {
+		return associatedEvaluations;
+	}
 
-    /**
+	/**
      * @param list
      */
     public void setAssociatedEvaluations(List list) {
@@ -306,49 +286,125 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
         return attendingStudents;
     }
 
-    /**
-     * @param list
-     */
-    public void setAttendingStudents(List list) {
-        attendingStudents = list;
-    }
+	/**
+	 * @param list
+	 */
+	public void setAttendingStudents(List list) {
+		attendingStudents = list;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see fileSuport.INode#getSlideName()
-     */
-    public String getSlideName() {
-        String result = getParentNode().getSlideName() + "/EC" + getIdInternal();
-        return result;
-    }
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getSlideName()
+	 */
+	public String getSlideName() {
+		String result = getParentNode().getSlideName()+"/EC"+getIdInternal();
+		return result;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see fileSuport.INode#getParentNode()
-     */
-    public INode getParentNode() {
-        IExecutionPeriod executionPeriod = getExecutionPeriod();
-        return executionPeriod;
-    }
+	/* (non-Javadoc)
+	 * @see fileSuport.INode#getParentNode()
+	 */
+	public INode getParentNode() {	
+		IExecutionPeriod executionPeriod = getExecutionPeriod();	
+		return executionPeriod;
+	}
 
-    /**
-     * @return Returns the executionCourseProperties.
-     */
-    public List getExecutionCourseProperties() {
-        return executionCourseProperties;
-    }
+	/**
+	 * @return Returns the executionCourseProperties.
+	 */
+	public List getExecutionCourseProperties()
+	{
+		return executionCourseProperties;
+	}
 
-    /**
+	 /**
      * @param executionCourseProperties
      *            The executionCourseProperties to set.
      */
     public void setExecutionCourseProperties(List executionCourseProperties) {
         this.executionCourseProperties = executionCourseProperties;
     }
+	
+	
+	public List getGroupPropertiesExecutionCourse() {
+		return groupPropertiesExecutionCourse;
+	}
+	
+	public void setGroupPropertiesExecutionCourse(List groupPropertiesExecutionCourse)
+	{
+		this.groupPropertiesExecutionCourse = groupPropertiesExecutionCourse;
+	}
+	
+	
+	public List getGroupProperties() {
+		List groupProperties = new ArrayList();
+		Iterator iterGroupPropertiesExecutionCourse = 
+			getGroupPropertiesExecutionCourse().iterator();
+		IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = null;
+		while(iterGroupPropertiesExecutionCourse.hasNext()){
+			groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse)iterGroupPropertiesExecutionCourse.next();
+			if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==1
+					|| groupPropertiesExecutionCourse.getProposalState().getState().intValue()==2){
+				groupProperties.add(groupPropertiesExecutionCourse.getGroupProperties());
+			}
+		}
+		return groupProperties;
+	}
+	
+	public IGroupProperties getGroupPropertiesByName(String name){
+		Iterator iter=getGroupProperties().iterator();
+		while(iter.hasNext()){
+			IGroupProperties gp = (IGroupProperties)iter.next();
+			if((gp.getName()).equals(name))
+				return gp;
+				} 
+		return null;
+		
+	}
+	
+	public void addGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse)
+	{
+		if(this.groupPropertiesExecutionCourse==null){
+			this.groupPropertiesExecutionCourse=new ArrayList();
+			this.groupPropertiesExecutionCourse.add(groupPropertiesExecutionCourse);
+		}
+		else{
+			this.groupPropertiesExecutionCourse.add(groupPropertiesExecutionCourse);		
+		}
+	}
+	
+	public void removeGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse){
+		this.groupPropertiesExecutionCourse.remove(groupPropertiesExecutionCourse);
+	}
 
-    /**
+	public boolean existsGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse){
+		return this.groupPropertiesExecutionCourse.contains(groupPropertiesExecutionCourse);
+	}
+	
+	
+	public boolean existsGroupPropertiesExecutionCourse(){
+		return this.groupPropertiesExecutionCourse.isEmpty();
+	}
+	
+	public boolean hasProposals(){
+		boolean result = false;
+		boolean found = false;
+		List groupPropertiesExecutionCourseList = this.groupPropertiesExecutionCourse;
+		Iterator iter = groupPropertiesExecutionCourseList.iterator();
+		while(iter.hasNext() && !found){
+			System.out.println("Inicio - hasProposals" + result);
+			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourseAux =(IGroupPropertiesExecutionCourse)iter.next();
+			if(groupPropertiesExecutionCourseAux.getProposalState().getState().intValue()==3){
+				result=true;
+				found = true;
+			}
+			System.out.println("Fim - hasProposals" + result);
+		}
+		return result;
+	}
+	
+	
+/**
      * @return Returns the attends.
      */
     public List getAttends() {

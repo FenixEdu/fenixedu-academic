@@ -5,6 +5,7 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,7 @@ import DataBeans.InfoGroupProjectStudents;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupWithAll;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -24,7 +26,7 @@ import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentGroupProperties;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
@@ -37,13 +39,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * Created at 10/Set/2003, 20:47:24
  *  
  */
-public class GetProjectsGroupsByExecutionCourseID implements IServico {
+public class GetProjectsGroupsByExecutionCourseID implements IServico
+{
     private static GetProjectsGroupsByExecutionCourseID service = new GetProjectsGroupsByExecutionCourseID();
 
     /**
      * The singleton access method of this class.
      */
-    public static GetProjectsGroupsByExecutionCourseID getService() {
+    public static GetProjectsGroupsByExecutionCourseID getService()
+    {
         return service;
     }
 
@@ -56,51 +60,57 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico {
     /**
      * Returns The Service Name
      */
-    public final String getNome() {
+    public final String getNome()
+    {
         return "teacher.GetProjectsGroupsByExecutionCourseID";
     }
 
-    public List run(Integer id) throws BDException {
+    public List run( Integer id ) throws BDException
+    {
         List infosGroupProjectStudents = new LinkedList();
-        try {
+        try
+        {
             ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
-            IPersistentGroupProperties persistentGroupProperties = persistenceSupport
-                    .getIPersistentGroupProperties();
+            IPersistentExecutionCourse persistentExecutionCourse = persistenceSupport
+                            .getIPersistentExecutionCourse();
             IPersistentStudentGroupAttend persistentGroupAttend = persistenceSupport
-                    .getIPersistentStudentGroupAttend();
+                            .getIPersistentStudentGroupAttend();
             IPersistentStudentGroup persistentStudentGroup = persistenceSupport
-                    .getIPersistentStudentGroup();
+                            .getIPersistentStudentGroup();
+            List ids = new ArrayList();
+            ids.add(id);
+            List projects = ((IExecutionCourse)persistentExecutionCourse.readByExecutionCourseIds(ids).get(0)).getGroupProperties();
 
-            List projects = persistentGroupProperties.readAllGroupPropertiesByExecutionCourseID(id);
-
-            for (Iterator projectIterator = projects.iterator(); projectIterator.hasNext();) {
+            for (Iterator projectIterator = projects.iterator(); projectIterator.hasNext(); )
+            {
                 IGroupProperties project = (IGroupProperties) projectIterator.next();
                 List projectGroups = persistentStudentGroup
-                        .readAllStudentGroupByGroupProperties(project);
+                                .readAllStudentGroupByAttendsSet(project.getAttendsSet());
 
-                for (Iterator groupsIterator = projectGroups.iterator(); groupsIterator.hasNext();) {
+                for (Iterator groupsIterator = projectGroups.iterator(); groupsIterator.hasNext(); )
+                {
                     IStudentGroup group = (IStudentGroup) groupsIterator.next();
 
                     List attendacies = persistentGroupAttend.readAllByStudentGroup(group);
 
-                    List infoStudents = (List) CollectionUtils.collect(attendacies, new Transformer() {
+                    List infoStudents = (List) CollectionUtils.collect(attendacies, new Transformer()
+                    {
 
-                        public Object transform(Object input) {
+                        public Object transform( Object input )
+                        {
                             IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) input;
                             IFrequenta attendacy = studentGroupAttend.getAttend();
                             IStudent student = attendacy.getAluno();
                             //CLONER
-                            //InfoStudent infoStudent =
-                            // Cloner.copyIStudent2InfoStudent(student);
+                            //InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
                             InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
                             return infoStudent;
                         }
                     });
                     //CLONER
-                    //InfoStudentGroup infoStudentGroup =
-                    // Cloner.copyIStudentGroup2InfoStudentGroup(group);
+                    //InfoStudentGroup infoStudentGroup = Cloner.copyIStudentGroup2InfoStudentGroup(group);
                     InfoStudentGroup infoStudentGroup = InfoStudentGroupWithAll.newInfoFromDomain(group);
-
+                    
                     InfoGroupProjectStudents info = new InfoGroupProjectStudents();
                     info.setStudentList(infoStudents);
                     info.setStudentGroup(infoStudentGroup);
@@ -109,9 +119,11 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico {
             }
 
             return infosGroupProjectStudents;
-        } catch (ExcepcaoPersistencia ex) {
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
             throw new BDException(
-                    "Got an error while trying to read a execution course projects' groups", ex);
+                            "Got an error while trying to read a execution course projects' groups", ex);
         }
     }
 }

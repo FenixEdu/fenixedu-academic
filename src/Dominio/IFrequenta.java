@@ -6,9 +6,11 @@
 
 package Dominio;
 
+import java.util.List;
+
 /**
- * 
- * @author tfc130
+ *
+ * @author  tfc130
  */
 public interface IFrequenta extends IDomainObject {
     public IStudent getAluno();
@@ -34,4 +36,14 @@ public interface IFrequenta extends IDomainObject {
     public void setChaveDisciplinaExecucao(Integer keyDisciplinaExecucao);
 
     public void setKeyEnrolment(Integer keyEnrolment);
+
+    public List getAttendInAttendsSet();
+
+    public void setAttendInAttendsSet(List attendInAttendsSet);
+	
+    public void addAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
+
+    public void removeAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
+
+    public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
 }

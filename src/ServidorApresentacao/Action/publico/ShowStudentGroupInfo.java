@@ -101,10 +101,9 @@ public class ShowStudentGroupInfo extends Action {
                                 InfoSiteStudentInformation infoSiteStudentInformation = (InfoSiteStudentInformation) iterator3
                                         .next();
                                 if (username.equalsIgnoreCase(infoSiteStudentInformation.getUsername())) {
-                                    result = project.getInfoExecutionCourse().getNome() + " ( ";
+                                    result = projects.getInfoExecutionCourse().getNome() + " ( ";
                                     int counter = 0;
-                                    for (Iterator iteratorCurricularCourses = project
-                                            .getInfoExecutionCourse()
+                                    for (Iterator iteratorCurricularCourses = projects.getInfoExecutionCourse()
                                             .getAssociatedInfoCurricularCourses().iterator(); iteratorCurricularCourses
                                             .hasNext();) {
                                         InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iteratorCurricularCourses

@@ -6,20 +6,19 @@ package Dominio;
 
 /**
  * @author asnr and scpo
- *  
+ *
  */
-public interface IStudentGroup extends IDomainObject {
+public interface IStudentGroup extends IDomainObject{
+	
+	public Integer getGroupNumber() ;
 
-    public Integer getGroupNumber();
+	public IAttendsSet getAttendsSet() ;
 
-    public IGroupProperties getGroupProperties();
+	public ITurno getShift();
+	
+	public void setGroupNumber(Integer groupNumber);
 
-    public ITurno getShift();
+	public void setAttendsSet(IAttendsSet attendsSet);
 
-    public void setGroupNumber(Integer groupNumber);
-
-    public void setGroupProperties(IGroupProperties groupProperties);
-
-    public void setShift(ITurno shift);
-
+	public void setShift(ITurno shift);	
 }

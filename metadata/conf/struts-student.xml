@@ -464,7 +464,8 @@
             parameter="method"
             name="enroledExecutionCoursesForm">
         <forward name="sucess" path="remove-Student-InGroup"/>
-         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
+        <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
     </action>
 
@@ -475,6 +476,7 @@
         scope="request"
         validate="true">                  
         <forward name="sucess" path="group-student-enrolment"/>
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
         <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.do"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
       </action>
@@ -486,6 +488,7 @@
         scope="request"
         validate="true">
         <forward name="sucess" path="group-enrolment"/>
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>
         <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.do"/>
         
       </action>

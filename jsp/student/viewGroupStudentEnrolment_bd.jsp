@@ -85,8 +85,9 @@
 				<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 				<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />	
 				<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+				<logic:present name="shiftCode">
 				<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />		
-				
+				</logic:present>
 				</html:form>
 			  </td>
 				
@@ -98,7 +99,9 @@
 			<html:hidden property="method" value="execute"/>
 			<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 			<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
+			<logic:present name="shiftCode">
 			<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
+			</logic:present>
 			<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />	
 				
 			</html:form>

@@ -5,13 +5,17 @@
 package ServidorAplicacao.Servico.teacher;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import Dominio.GroupProperties;
+import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.ITurno;
 import Dominio.StudentGroup;
 import Dominio.Turno;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
@@ -34,21 +38,34 @@ public class EditStudentGroupShift implements IService {
      * Executes the service.
      */
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer newShiftCode)
-            throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,Integer groupPropertiesCode,
+            Integer newShiftCode) throws FenixServiceException {
 
         ITurnoPersistente persistentShift = null;
         IPersistentStudentGroup persistentStudentGroup = null;
+        IPersistentGroupProperties persistentGroupProperties = null;
 
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
 
+            persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+            
+            IGroupProperties groupProperties = (IGroupProperties)persistentGroupProperties.readByOID(
+            		GroupProperties.class, groupPropertiesCode);
+                
+            if(groupProperties == null){
+            	throw new ExistingServiceException();
+            }
+            
             persistentShift = persistentSupport.getITurnoPersistente();
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, newShiftCode);
+            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
+                    newShiftCode);
 
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
-                    StudentGroup.class, studentGroupCode);
+            persistentStudentGroup = persistentSupport
+                    .getIPersistentStudentGroup();
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
+                    .readByOID(StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidArgumentsServiceException();

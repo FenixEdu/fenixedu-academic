@@ -429,4 +429,10 @@ public interface ISuportePersistente {
 
     public IPersistentGlossaryEntries getIPersistentGlossaryEntries();
 
+    public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet();
+
+    public IPersistentAttendsSet getIPersistentAttendsSet();
+
+    public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse();
+
 }

@@ -483,7 +483,16 @@
       >
          <foreignkey field-id-ref="4"/>
       </reference-descriptor> 
+
+	  <collection-descriptor 
+			name="attendInAttendsSet" 
+			element-class-ref="Dominio.AttendInAttendsSet"
+			proxy="true">
+			<inverse-foreignkey field-ref="keyAttend"/>
+      </collection-descriptor>
+
    </class-descriptor>   
+
 
 <class-descriptor class="Dominio.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 

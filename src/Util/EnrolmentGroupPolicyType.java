@@ -51,6 +51,29 @@ public class EnrolmentGroupPolicyType extends FenixUtil {
         this.type = type;
     }
 
+    
+    public String getTypeFullName() {
+
+        int value = this.type.intValue();
+        String stringValue = null;
+
+        switch (value) {
+        case ATOMIC:
+            stringValue = "ATOMICA";
+            break;
+        case INDIVIDUAL:
+            stringValue = "INDIVIDUAL";
+            break;
+        default:
+            break;
+        }
+
+        return stringValue;
+    }
+    
+    
+    
+    
     public boolean equals(Object o) {
         if (o instanceof EnrolmentGroupPolicyType) {
             EnrolmentGroupPolicyType aux = (EnrolmentGroupPolicyType) o;

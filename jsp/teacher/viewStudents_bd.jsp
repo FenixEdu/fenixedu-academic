@@ -19,6 +19,8 @@
 <bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
 <bean:define id="infosGroups" name="infosGroups" type="java.util.List"/>
 <bean:define id="projects" name="projects" type="java.util.List"/>
+
+
     <span class="error"><html:errors/></span>
 	<bean:size id="studentsListSize" name="studentsComponent" property="students"/>
 
@@ -293,7 +295,9 @@
 					int projectIdInternal = element.getIdInternal().intValue();
 					int groupNumber =-1;
 					int shiftCode = -1;
+
 					int executionCourseCode = -1;
+					Integer executionCourseCodeInteger = null;
 					int groupPropertiesCode = -1;
 					int studentGroupCode = -1;
 					Integer studentNumber = attendacy.getAluno().getNumber();
@@ -302,13 +306,14 @@
 					{
 					
 						InfoGroupProjectStudents groupInfo= (InfoGroupProjectStudents) groupsIterator.next();
-						if (projectIdInternal == groupInfo.getStudentGroup().getInfoGroupProperties().getIdInternal().intValue() &&
+						if (projectIdInternal == groupInfo.getStudentGroup().getInfoAttendsSet().getInfoGroupProperties().getIdInternal().intValue() &&
 							groupInfo.isStudentMemberOfThisGroup(studentNumber))
 						{
 							groupNumber = groupInfo.getStudentGroup().getGroupNumber().intValue();
 							studentGroupCode = groupInfo.getStudentGroup().getIdInternal().intValue();
 							shiftCode = groupInfo.getStudentGroup().getInfoShift().getIdInternal().intValue();
-							executionCourseCode = groupInfo.getStudentGroup().getInfoGroupProperties().getInfoExecutionCourse().getIdInternal().intValue();
+							executionCourseCodeInteger = new Integer((String)request.getParameter("objectCode"));
+							executionCourseCode = executionCourseCodeInteger.intValue();
 							break;
 						}
 					}

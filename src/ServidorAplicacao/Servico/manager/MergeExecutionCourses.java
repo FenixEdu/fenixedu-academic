@@ -22,7 +22,7 @@ import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
-import Dominio.IGroupProperties;
+import Dominio.IGroupPropertiesExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.IShiftProfessorship;
@@ -39,7 +39,7 @@ import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentGroupProperties;
+import ServidorPersistente.IPersistentGroupPropertiesExecutionCourse;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.IPersistentProfessorship;
@@ -194,15 +194,19 @@ public class MergeExecutionCourses implements IService {
      */
     private void copyGroups(IExecutionCourse destination, IExecutionCourse source, ISuportePersistente ps)
             throws ExcepcaoPersistencia {
-        IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
-        List sourceGroupPropertiesList = persistentGroupProperties
-                .readAllGroupPropertiesByExecutionCourse(source);
-        Iterator iter = sourceGroupPropertiesList.iterator();
-        while (iter.hasNext()) {
-            IGroupProperties groupProperties = (IGroupProperties) iter.next();
-            persistentGroupProperties.simpleLockWrite(groupProperties);
-            groupProperties.setExecutionCourse(destination);
-        }
+       IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse= 
+        						ps.getIPersistentGroupPropertiesExecutionCourse();
+       List sourceGroupPropertiesExecutionCourseList = 
+          persistentGroupPropertiesExecutionCourse.readAllByExecutionCourse(source);
+       Iterator iter = sourceGroupPropertiesExecutionCourseList.iterator();
+       while (iter.hasNext()) {
+          IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse=
+             (IGroupPropertiesExecutionCourse) iter.next();
+          persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
+          groupPropertiesExecutionCourse.setExecutionCourse(destination);
+          destination.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+          source.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+       }
 
     }
 

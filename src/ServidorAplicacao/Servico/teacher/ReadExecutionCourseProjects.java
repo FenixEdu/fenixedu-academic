@@ -10,11 +10,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoSiteProjects;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
+import Dominio.IGroupPropertiesExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -56,18 +58,29 @@ public class ReadExecutionCourseProjects implements IServico {
         return "teacher.ReadExecutionCourseProjects";
     }
 
-    public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
+    public ISiteComponent run(Integer executionCourseCode)
+            throws FenixServiceException {
 
         InfoSiteProjects infoSiteProjects = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) sp
+                    .getIPersistentExecutionCourse().readByOID(
+                            ExecutionCourse.class, executionCourseCode);
 
-            List executionCourseProjects = sp.getIPersistentGroupProperties()
-                    .readAllGroupPropertiesByExecutionCourse(executionCourse);
+            List executionCourseProjects = new ArrayList();
+            List groupPropertiesExecutionCourseList = executionCourse.getGroupPropertiesExecutionCourse();
+            Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator(); 
+            while(iterGroupPropertiesExecutionCourseList.hasNext()){
+            	IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse)iterGroupPropertiesExecutionCourseList.next();
+            	if(groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
+            			|| groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2){
+            		executionCourseProjects.add(groupPropertiesExecutionCourse.getGroupProperties());
+            	}
+            }
 
+            
             if (executionCourseProjects.size() != 0) {
                 infoSiteProjects = new InfoSiteProjects();
 
@@ -75,7 +88,8 @@ public class ReadExecutionCourseProjects implements IServico {
                 Iterator iterator = executionCourseProjects.iterator();
 
                 while (iterator.hasNext()) {
-                    IGroupProperties groupProperties = (IGroupProperties) iterator.next();
+                    IGroupProperties groupProperties = (IGroupProperties) iterator
+                            .next();
                     //CLONER
                     //infoGroupPropertiesList
                     //.add(Cloner
@@ -86,11 +100,16 @@ public class ReadExecutionCourseProjects implements IServico {
                     infoGroupPropertiesList.add(infoGroupProperties);
                 }
 
-                infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
+                infoSiteProjects
+                        .setInfoGroupPropertiesList(infoGroupPropertiesList);
+                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                .newInfoFromDomain(executionCourse);
+                infoSiteProjects.setInfoExecutionCourse(infoExecutionCourse);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
-            throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
+            throw new FenixServiceException(
+                    "error.impossibleReadExecutionCourseProjects");
         }
         return infoSiteProjects;
     }

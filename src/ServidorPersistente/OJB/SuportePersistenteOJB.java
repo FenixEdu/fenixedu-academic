@@ -1217,5 +1217,17 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentGlossaryEntries getIPersistentGlossaryEntries() {
         return new GlossaryEntriesOJB();
     }
+    
+    public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse() {
+        return new GroupPropertiesExecutionCourseOJB();
+    }
+
+    public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet() {
+    	return new AttendInAttendsSetOJB();
+    }
+
+    public IPersistentAttendsSet getIPersistentAttendsSet() {
+    	return new AttendsSetOJB();
+    }
 
 }

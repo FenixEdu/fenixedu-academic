@@ -82,9 +82,68 @@
 		</tr>
 		
 	 <logic:iterate id="infoSiteGroupsByShift" name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList" >
-		<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
-		<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
-		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>	
+	 
+	<logic:empty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
+			<tr>
+								
+								<td  class="listClasses">
+									Sem Turno
+								</td>
+								
+								<td class="listClasses">
+								---
+								</td>
+								
+								<td class="listClasses">
+								---	
+								</td>
+								
+								<td class="listClasses">
+								---	
+								</td>
+								
+								
+				               	<td class="listClasses">
+								---	
+						 		</td>
+						 		<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>
+						 		<bean:define id="nrOfGroups" name="infoSiteShift" property="nrOfGroups"/>
+						 		<td class="listClasses">
+						 			<b><bean:message key="label.nrOfGroups"/></b><bean:write name="nrOfGroups"/>
+						 			
+						 		</td>
+								
+								<td class="listClasses">
+							 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+								       <bean:message key="link.insertGroup"/>
+							        </html:link>		   
+								</td>					
+			
+			
+								 <td class="listClasses">
+		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
+									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
+		                        <html:link page="<%="/viewStudentGroupInformation.do?method=execute&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
+									</html:link>
+								</logic:iterate>]
+								</logic:notEmpty>
+								
+								<logic:empty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+									<bean:message key="message.shift.without.groups"/>
+								</logic:empty>
+								
+								 </td>
+							
+						 						
+						 	</tr>
+			</logic:empty>		
+	
+		<logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
+			<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
+			<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
+			<bean:define id="shiftCode" name="infoShift" property="idInternal"/>	
 						
 	 		<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
@@ -168,9 +227,7 @@
 						</tr>
 					</logic:iterate>
             
-           
- 
-          
+ 			</logic:notEmpty>          
       
           </logic:iterate>
         </tbody>

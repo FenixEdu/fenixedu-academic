@@ -7,9 +7,10 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
+import Dominio.GroupProperties;
+import Dominio.IAttendsSet;
 import Dominio.IFrequenta;
+import Dominio.IGroupProperties;
 import Dominio.IStudent;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
@@ -17,10 +18,14 @@ import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -29,7 +34,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *  
+ * @author joaosa and rmalo 31/Ago/2004
  */
 
 public class DeleteStudentGroupMembers implements IServico {
@@ -60,44 +65,57 @@ public class DeleteStudentGroupMembers implements IServico {
      * Executes the service.
      */
 
-    public boolean run(Integer executionCourseCode, Integer studentGroupCode, List studentUsernames)
-            throws FenixServiceException {
+    public boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode,
+            List studentUsernames) throws FenixServiceException {
 
-        IPersistentExecutionCourse persistentExecutionCourse = null;
+
         IPersistentStudentGroup persistentStudentGroup = null;
         IFrequentaPersistente persistentAttend = null;
         IPersistentStudent persistentStudent = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+        IPersistentGroupProperties persistentGroupProperties = null;
 
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
 
-            persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             persistentAttend = persistentSupport.getIFrequentaPersistente();
             persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-            persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
+            persistentStudentGroup = persistentSupport
+                    .getIPersistentStudentGroup();
+            persistentStudentGroupAttend = persistentSupport
+                    .getIPersistentStudentGroupAttend();
+            persistentGroupProperties = persistentSupport
+				.getIPersistentGroupProperties();
+            
+            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
+                    .readByOID(GroupProperties.class, groupPropertiesCode);
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseCode);
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
-                    StudentGroup.class, studentGroupCode);
+           if(groupProperties==null){
+           	throw new  InvalidChangeServiceException();
+           }
+                       
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
+                    .readByOID(StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new ExistingServiceException();
             }
+            
             Iterator iterator = studentUsernames.iterator();
 
+            IAttendsSet attendsSet = studentGroup.getAttendsSet();
             while (iterator.hasNext()) {
-                IStudent student = persistentStudent.readByUsername(iterator.next().toString());
 
-                IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
-                        executionCourse);
-
-                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(
-                        studentGroup, attend);
+                IStudent student = persistentStudent.readByUsername(iterator
+                        .next().toString());
+                IFrequenta attend = attendsSet.getStudentAttend(student);
+                
+                 IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                        .readBy(studentGroup, attend);
                 if (oldStudentGroupAttend != null) {
+
                     persistentStudentGroupAttend.delete(oldStudentGroupAttend);
                 } else {
                     throw new InvalidSituationServiceException();

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IGroupProperties;
+import Dominio.IAttendsSet;
 import Dominio.IStudentGroup;
 import Dominio.ITurno;
 import Dominio.StudentGroup;
@@ -19,52 +19,68 @@ import ServidorPersistente.IPersistentStudentGroup;
  * @author asnr and scpo
  *  
  */
-public class StudentGroupOJB extends PersistentObjectOJB implements IPersistentStudentGroup {
+public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStudentGroup
+{
 
-    public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(
-            IGroupProperties groupProperties, Integer studentGroupNumber) throws ExcepcaoPersistencia {
+    public IStudentGroup readStudentGroupByAttendsSetAndGroupNumber(
+        IAttendsSet attendsSet,
+        Integer studentGroupNumber)
+        throws ExcepcaoPersistencia
+    {
 
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("keyGroupProperties", groupProperties.getIdInternal());
+        criteria.addEqualTo("keyAttendsSet", attendsSet.getIdInternal());
         criteria.addEqualTo("groupNumber", studentGroupNumber);
 
         return (IStudentGroup) queryObject(StudentGroup.class, criteria);
     }
 
-    public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties)
-            throws ExcepcaoPersistencia {
+    public List readAllStudentGroupByAttendsSet(IAttendsSet attendsSet)
+        throws ExcepcaoPersistencia
+    {
 
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("keyGroupProperties", groupProperties.getIdInternal());
+        criteria.addEqualTo("keyAttendsSet", attendsSet.getIdInternal());
 
         return queryList(StudentGroup.class, criteria);
     }
 
-    public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,
-            ITurno shift) throws ExcepcaoPersistencia {
+    public List readAllStudentGroupByAttendsSetAndShift(
+        IAttendsSet attendsSet,
+        ITurno shift)
+        throws ExcepcaoPersistencia
+    {
 
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("keyGroupProperties", groupProperties.getIdInternal());
+        criteria.addEqualTo("keyAttendsSet", attendsSet.getIdInternal());
         criteria.addEqualTo("keyShift", shift.getIdInternal());
 
         return queryList(StudentGroup.class, criteria);
     }
 
-    public List readAll() throws ExcepcaoPersistencia {
+    public List readAll() throws ExcepcaoPersistencia
+    {
 
         return queryList(StudentGroup.class, new Criteria());
     }
 
-    public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia {
-        try {
+    
+
+    public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia
+    {
+        try
+        {
             super.delete(studentGroup);
-        } catch (ExcepcaoPersistencia ex) {
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
             throw ex;
         }
     }
+
 
     public List readAllStudentGroupByShift(ITurno shift) throws ExcepcaoPersistencia {
 
@@ -74,5 +90,7 @@ public class StudentGroupOJB extends PersistentObjectOJB implements IPersistentS
 
         return queryList(StudentGroup.class, criteria);
     }
+
+    
 
 }

@@ -26,6 +26,9 @@
 			</td>
 			<td class="listClasses-header"><bean:message key="label.projectDescription" />
 			</td>
+			</td>
+			<td class="listClasses-header"><bean:message key="label.executionCourses" />
+			</td>
 		</tr>
             <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
                 <tr>
@@ -47,6 +50,20 @@
                      	<bean:message key="message.project.wihtout.description"/>
                 	</logic:empty>
                 	</td>
+                	
+                	<td class="listClasses">
+                		<bean:size id="count" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse"/>
+                		<logic:greaterThan name="count" value="1">
+            		    <logic:iterate id="infoGroupPropertiesExecutionCourseElement" name="infoGroupProperties" property="infoGroupPropertiesExecutionCourse" >
+                		<bean:define id="infoExecutionCourse" name="infoGroupPropertiesExecutionCourseElement" property="infoExecutionCourse" />
+							<bean:write name="infoExecutionCourse" property="nome"/></br>
+                    	 </logic:iterate>
+                    		</logic:greaterThan>
+						<logic:equal name="count" value="1">
+							<bean:message key="message.project.wihtout.coavaliation"/>
+                    	</logic:equal>
+                    </td>
+                	
                 </tr>
 
             </logic:iterate>

@@ -85,7 +85,9 @@
 <html:hidden property="method" value="enrolment"/>
 <html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+<logic:present name="shiftCode"> 
 <html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+</logic:present>
 <html:hidden  property="groupNumber" value="<%= groupNumber.toString() %>" />
 
 <table>

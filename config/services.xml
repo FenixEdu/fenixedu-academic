@@ -750,6 +750,16 @@
         </filterChains>
     </service>
     <service>
+        <name>VerifyGroupPropertiesAndStudentGroupWithoutShift</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.VerifyGroupPropertiesAndStudentGroupWithoutShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>ReadExecutionCoursesByStudentTests</name>
         <implementationClass> 
             ServidorAplicacao.Servico.student.ReadExecutionCoursesByStudentTests</implementationClass>
@@ -925,6 +935,14 @@
         <name>SelectExecutionCourse</name>
         <implementationClass> 
             ServidorAplicacao.Servico.publico.SelectExecutionCourse</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>SelectExportExecutionCourse</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.SelectExportExecutionCourse</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -3545,9 +3563,29 @@
         </filterChains>
     </service>
     <service>
+        <name>VerifyStudentGroupWithoutShift</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.VerifyStudentGroupWithoutShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>PrepareEditStudentGroupMembers</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.PrepareEditStudentGroupMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>PrepareEditAttendsSetMembers</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.PrepareEditAttendsSetMembers</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3578,6 +3616,125 @@
         <name>DeleteStudentGroupMembers</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.DeleteStudentGroupMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service> <service>
+        <name>InsertAttendsSetMembers</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.InsertAttendsSetMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteAttendsSetMembers</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.DeleteAttendsSetMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteAttendsSetMembersByExecutionCourseID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.DeleteAttendsSetMembersByExecutionCourseID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteAllAttendsSetMembers</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.DeleteAllAttendsSetMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ExecutionCourseHasProposals</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ExecutionCourseHasProposals</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ExecutionCourseWaitingAnswer</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ExecutionCourseWaitingAnswer</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>RejectNewProjectProposal</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.RejectNewProjectProposal</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>AcceptNewProjectProposal</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.AcceptNewProjectProposal</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>NewProjectProposal</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.NewProjectProposal</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteProjectProposal</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.DeleteProjectProposal</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>VerifyIfGroupPropertiesHasProjectProposal</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.VerifyIfGroupPropertiesHasProjectProposal</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadExecutionPeriod</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ReadExecutionPeriod</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4769,6 +4926,16 @@
         <name>teacher.ReadStudentsByShiftID</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.ReadStudentsByShiftID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>teacher.ReadStudentsByAttendsSetID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ReadStudentsByAttendsSetID</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

@@ -5,15 +5,16 @@
 package Dominio;
 
 import java.util.Calendar;
+import java.util.List;
 
 import Util.EnrolmentGroupPolicyType;
 import Util.TipoAula;
 
 /**
  * @author asnr and scpo
- *  
+ *
  */
-public interface IGroupProperties extends IDomainObject {
+public interface IGroupProperties extends IDomainObject{
 
     public Integer getMaximumCapacity();
 
@@ -29,13 +30,17 @@ public interface IGroupProperties extends IDomainObject {
 
     public String getProjectDescription();
 
-    public IExecutionCourse getExecutionCourse();
-
     public TipoAula getShiftType();
 
     public Calendar getEnrolmentBeginDay();
 
     public Calendar getEnrolmentEndDay();
+
+    public List getGroupPropertiesExecutionCourse();
+
+    public List getExecutionCourses();
+
+    public IAttendsSet getAttendsSet();
 
     public void setMaximumCapacity(Integer maximumCapacity);
 
@@ -51,13 +56,18 @@ public interface IGroupProperties extends IDomainObject {
 
     public void setProjectDescription(String projectDescription);
 
-    public void setExecutionCourse(IExecutionCourse executionCourse);
-
     public void setShiftType(TipoAula shiftType);
 
     public void setEnrolmentBeginDay(Calendar enrolmentBeginDay);
 
     public void setEnrolmentEndDay(Calendar enrolmentEndDay);
 
-}
+    public void setGroupPropertiesExecutionCourse(List groupPropertiesExecutionCourses);
 
+    public void setAttendsSet(IAttendsSet attendsSet);
+
+    public void addGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+
+    public void removeGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+}
+		

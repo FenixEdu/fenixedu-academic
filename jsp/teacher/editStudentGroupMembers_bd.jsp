@@ -25,11 +25,14 @@
 <span class="error"><html:errors/></span>
 <br/>
 <br/>
-
+<logic:present name="shiftCode">
 <html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")+ "&amp;studentGroupCode=" + request.getParameter("studentGroupCode")%>">
     	<bean:message key="link.backToGroup"/></html:link><br/>
-  
-
+</logic:present>
+<logic:notPresent name="shiftCode"> 
+<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;studentGroupCode=" + request.getParameter("studentGroupCode")%>">
+    	<bean:message key="link.backToGroup"/></html:link><br/>
+</logic:notPresent> 
 
 <logic:empty name="component" property="infoSiteStudentInformationList">
 <h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
@@ -90,7 +93,9 @@
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 <html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
+<logic:present name="shiftCode">
 <html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+</logic:present>
 
 </html:form>
 </logic:notEmpty> 	
@@ -160,8 +165,9 @@
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 <html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
+<logic:present name="shiftCode">
 <html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
-
+</logic:present>
 
 <html:submit styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	
 </html:submit>       

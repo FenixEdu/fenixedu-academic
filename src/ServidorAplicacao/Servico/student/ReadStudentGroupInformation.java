@@ -16,14 +16,15 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteStudentInformation;
 import DataBeans.InfoStudentGroupAttend;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentGroupAttendWithAllUntilPersons;
+import DataBeans.InfoStudentGroupWithAllUntilLessons;
+import Dominio.IAttendsSet;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -56,30 +57,44 @@ public class ReadStudentGroupInformation implements IServico {
         return "ReadStudentGroupInformation";
     }
 
-    public ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
+    public ISiteComponent run(Integer studentGroupCode)
+            throws FenixServiceException {
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         List studentGroupAttendInformationList = null;
         List studentGroupAttendList = null;
         IStudentGroup studentGroup = null;
+        IGroupProperties groupProperties = null;
+        IAttendsSet attendsSet = null;
+        
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                    studentGroupCode);
+            studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup()
+                    .readByOID(StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
-                throw new InvalidSituationServiceException();
+                return null;
             }
-            studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(
-                    studentGroup);
+            
+            studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
+                    .readAllByStudentGroup(studentGroup);
 
+        	attendsSet = studentGroup.getAttendsSet();
+        	
+        	groupProperties = attendsSet.getGroupProperties();
+            
+            
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
-            throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
+
+            throw new FenixServiceException(
+                    "error.impossibleReadStudentGroupInformation");
         }
 
-        studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
+        
+        studentGroupAttendInformationList = new ArrayList(
+                studentGroupAttendList.size());
         Iterator iter = studentGroupAttendList.iterator();
         InfoSiteStudentInformation infoSiteStudentInformation = null;
         InfoStudentGroupAttend infoStudentGroupAttend = null;
@@ -87,40 +102,41 @@ public class ReadStudentGroupInformation implements IServico {
         while (iter.hasNext()) {
             infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-            infoStudentGroupAttend = Cloner
-                    .copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
+            infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons.newInfoFromDomain((IStudentGroupAttend) iter.next());
+                
+            infoSiteStudentInformation.setNumber(infoStudentGroupAttend
+                    .getInfoAttend().getAluno().getNumber());
 
-            infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getNumber());
+            infoSiteStudentInformation.setName(infoStudentGroupAttend
+                    .getInfoAttend().getAluno().getInfoPerson().getNome());
 
-            infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getNome());
+            infoSiteStudentInformation.setEmail(infoStudentGroupAttend
+                    .getInfoAttend().getAluno().getInfoPerson().getEmail());
 
-            infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getEmail());
-
-            infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno()
-                    .getInfoPerson().getUsername());
+            infoSiteStudentInformation.setUsername(infoStudentGroupAttend
+                    .getInfoAttend().getAluno().getInfoPerson().getUsername());
 
             studentGroupAttendInformationList.add(infoSiteStudentInformation);
 
         }
 
-        Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
-        infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
+        Collections.sort(studentGroupAttendInformationList, new BeanComparator(
+                "number"));
         infoSiteStudentGroup
-                .setInfoStudentGroup(Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup));
-        IGroupProperties groupProperties = studentGroup.getGroupProperties();
+                .setInfoSiteStudentInformationList(studentGroupAttendInformationList);
+        infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons.newInfoFromDomain(studentGroup));
+        
+ 
         if (groupProperties.getMaximumCapacity() != null) {
 
-            int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
-            //if (vagas >= 0)
+            int vagas = groupProperties.getMaximumCapacity().intValue()
+                    - studentGroupAttendList.size();
+
             infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
-            //else
-            //	infoSiteStudentGroup.setNrOfElements(new Integer(0));
         } else
             infoSiteStudentGroup.setNrOfElements("Sem limite");
 
+        
         return infoSiteStudentGroup;
     }
 }

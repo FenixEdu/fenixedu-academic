@@ -6,16 +6,15 @@
 <%@ page import="java.util.Map" %>
 
 
-
 <logic:present name="infoSiteStudentGroup">
 	
 	<h2><bean:message key="title.StudentGroupInformation"/></h2>
 	
 	<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
 	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
-	<bean:define id="groupPropertiesCode" name="infoStudentGroup" property="infoGroupProperties.idInternal"/>
-	<bean:define id="executionCourseCode" name="infoStudentGroup" property="infoGroupProperties.infoExecutionCourse.idInternal"/>
-	<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
+	<bean:define id="infoAttendsSet" name="infoStudentGroup" property="infoAttendsSet"/>
+	<bean:define id="groupPropertiesCode" name="infoAttendsSet" property="infoGroupProperties.idInternal"/>
+	
 	
 	
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
@@ -32,7 +31,7 @@
 	
 	 <span class="error"><html:errors/></span> 	
 
-<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + executionCourseCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
     	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
 	<br/>
 	
@@ -48,9 +47,17 @@
 	
 			 			
 	<b><bean:message key="label.groupOption"/></b>&nbsp
-	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + executionCourseCode.toString()+"&amp;groupPropertiesCode=" + groupPropertiesCode.toString() +"&amp;shiftCode=" +shiftCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+	<logic:present name="shiftCode"> 
+	<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
+	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode") +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString() +"&amp;shiftCode=" +shiftCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
     	<bean:message key="link.enrolment"/>
     </html:link>
+	</logic:present>	
+	<logic:notPresent name="shiftCode"> 
+	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode") +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+    	<bean:message key="link.enrolment"/>
+    </html:link>
+	</logic:notPresent>	
 	
 </logic:empty> 
 	
@@ -70,7 +77,7 @@
 	 <span class="error"><html:errors/></span> 	
 
 
-	<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + executionCourseCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+	<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + request.getParameter("executionCourseCode") + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
     	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
 	<br/>	
 	<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
@@ -123,21 +130,46 @@
 <tbody>
 
 	<b><bean:message key="label.groupOperations"/></b>&nbsp
-	
+	<logic:present name="shiftCode"> 
+	<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
 	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
     	<bean:message key="link.enrolment"/>
     </html:link> &nbsp|&nbsp
- 
-    
+	</logic:present>	
+	<logic:notPresent name="shiftCode"> 
+	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+    	<bean:message key="link.enrolment"/>
+    </html:link> &nbsp|&nbsp
+	</logic:notPresent>	
+
+
+
+    	<logic:present name="shiftCode"> 
+    	<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
    <html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
    	    <bean:message key="link.removeEnrolment"/>
     </html:link> &nbsp|&nbsp
-    
+	</logic:present>	    
+    	<logic:notPresent name="shiftCode"> 
+   <html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+   	    <bean:message key="link.removeEnrolment"/>
+    </html:link> &nbsp|&nbsp
+	</logic:notPresent>	    
   
+
+<logic:present name="shiftCode"> 
+     <bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
    <html:link page="<%="/editStudentGroupShift.do?method=prepareEdit&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
         <bean:message key="link.editStudentGroupShift"/>
    </html:link>
-               		
+  </logic:present>  
+
+  
+ <logic:present name="StudentGroupWithoutShift"> 
+   <html:link page="<%="/editStudentGroupShift.do?method=prepareEdit&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+        <bean:message key="link.enrollStudentGroupInShift"/>
+   </html:link>
+  </logic:present>                  		
   
   
  </tbody>

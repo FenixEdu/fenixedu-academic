@@ -1,6 +1,5 @@
 package ServidorAplicacao.Servico.student;
 
-import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -11,11 +10,11 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -52,49 +51,59 @@ public class UnEnrollStudentInGroup implements IServico {
         return "UnEnrollStudentInGroup";
     }
 
-    public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
+    public Boolean run(String userName, Integer studentGroupCode)
+            throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
 
             IPersistentStudentGroup persistentStudentGroup = persistentSuport
                     .getIPersistentStudentGroup();
             IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
                     .getIPersistentStudentGroupAttend();
-            IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
-            IFrequentaPersistente persistentAttend = persistentSuport.getIFrequentaPersistente();
+            IPersistentStudent persistentStudent = persistentSuport
+                    .getIPersistentStudent();
+            
 
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
-                    StudentGroup.class, studentGroupCode);
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
+                    .readByOID(StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
-                throw new InvalidSituationServiceException();
+            	throw new InvalidSituationServiceException();
             }
-            IExecutionCourse executionCourse = studentGroup.getGroupProperties().getExecutionCourse();
+            
+            
             IStudent student = persistentStudent.readByUsername(userName);
-            IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
-                    executionCourse);
+            
+            IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
+            
+            IFrequenta attend = studentGroup.getAttendsSet().getStudentAttend(student);
+            
+            if(attend == null){
+            	throw new NotAuthorizedException();
+            }
+            
+            IStudentGroupAttend studentGroupAttendToDelete = persistentStudentGroupAttend
+                    .readBy(studentGroup, attend);
 
-            IGroupProperties groupProperties = studentGroup.getGroupProperties();
-
-            IStudentGroupAttend studentGroupAttendToDelete = persistentStudentGroupAttend.readBy(
-                    studentGroup, attend);
-
-            if (studentGroupAttendToDelete == null)
-                throw new InvalidArgumentsServiceException();
+            if (studentGroupAttendToDelete == null){
+            	throw new InvalidArgumentsServiceException();
+                }
 
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                    .getInstance();
+			.getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                    .getGroupEnrolmentStrategyInstance(groupProperties);
+			.getGroupEnrolmentStrategyInstance(groupProperties);
 
-            boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(studentGroupAttendToDelete,
-                    studentGroup);
+            boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(
+                    studentGroupAttendToDelete, studentGroup);
 
             persistentStudentGroupAttend.delete(studentGroupAttendToDelete);
 
             if (resultEmpty) {
                 persistentStudentGroup.delete(studentGroup);
+                groupProperties.getAttendsSet().removeStudentGroup(studentGroup);
                 return new Boolean(false);
             }
 

@@ -351,7 +351,25 @@
             
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        <form-bean name="studentGroupForm" type="org.apache.struts.validator.DynaValidatorForm" 
+        
+        <!-- CONTEXTO -->
+      <!-- Dynamic-FormBean para EscolherContexto -->
+        <form-bean name="chooseSearchContextForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        	<form-property name="index" type="java.lang.String"/>
+
+        	<form-property name="curYear" type="java.lang.Integer"/>
+        	<form-property name="ePName" type="java.lang.String"/>
+        	<form-property name="eYName" type="java.lang.String"/>
+        	<form-property name="page" type="java.lang.Integer"/> 
+      	</form-bean>
+      	<form-bean name="chooseExecutionCourseFormTeacher"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="goalExecutionCourseId" type="java.lang.String"/>
+	  </form-bean>
+      	<form-bean name="studentGroupForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="nrOfElements" type="java.lang.String" />
             <form-property name="studentCodes" type="java.lang.String[]" />
@@ -367,6 +385,13 @@
             <form-property name="shift" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
+        <form-bean name="editAttendsSetForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="studentCodesToInsert" type="java.lang.Integer[]" />
+            <form-property name="studentsToRemove" type="java.lang.String[]" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+        </form-bean>
+						
         <form-bean name="showCandidacies" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="seminaryID" type="java.lang.Integer" />
@@ -1210,22 +1235,57 @@
             <forward name="insertSummary" path="insertSummary" />
             <forward name="editSummary" path="editSummary" />
         </action>
+
         <!-- Actions For Groups -->
         <action path="/viewExecutionCourseProjects" parameter="method" scope="request" 
             name="studentGroupForm" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
-        <action path="/viewShiftsAndGroups" parameter="method" scope="request" name="studentGroupForm" 
+        <action path="/viewNewProjectProposals" parameter="method" scope="request"
+            name="groupPropertiesForm" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewNewProjectProposals" path="/viewNewProjectProposals.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/viewSentedProjectProposalsWaiting" parameter="method" scope="request"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewSentedProjectProposalsWaiting" path="/viewSentedProjectProposalsWaiting.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/deleteProjectProposal" parameter="method" scope="request" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/rejectNewProjectProposal" parameter="method" scope="request"
+            name="groupPropertiesForm" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+            <forward name="viewSite" path="/viewSite.jsp"/>
+        </action>
+         <action path="/acceptNewProjectProposal" parameter="method" scope="request"
+            name="groupPropertiesForm" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+            <forward name="viewSite" path="/viewSite.jsp"/>
+        </action>
+       <action path="/viewShiftsAndGroups" parameter="method" scope="request" name="studentGroupForm" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
         <action path="/viewStudentGroupInformation" parameter="method" scope="request" 
             name="studentGroupForm" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
+		<action path="/viewAttendsSet" parameter="method" scope="request"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>        
         <action path="/createGroupProperties" name="groupPropertiesForm" parameter="method" 
             input="/createGroupProperties.do?method=prepareCreateGroupProperties&amp;page=0" 
             scope="request" 
@@ -1249,12 +1309,43 @@
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             validate="true">
             <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+            <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
         </action>
+        <action path="/importGroupProperties" parameter="method" scope="request"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <forward name="importGroupProperties" path="/importGroupProperties.jsp"/>
+            <forward name="viewNewProjectProposals" path="/viewNewProjectProposals.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/exportGroupProperties"
+	        input="/exportGroupProperties.do?method=preparePublic&amp;page=0&amp;inputPage=chooseContext"
+	        name="chooseSearchContextForm"
+        	parameter="method"
+        	scope="request"
+        	validate="false"
+            type="ServidorApresentacao.Action.teacher.ChooseContextDispatchAction">
+			<forward name="chooseContext" path="/chooseContext.jsp"/>
+        	<forward name="classSearch" path="/viewClasses.do"/>
+        	<forward name="executionCourseSearch" path="/prepareSelectExecutionCourseAction.do"/>
+        </action>
+        <action path="/prepareSelectExecutionCourseAction"
+            type="ServidorApresentacao.Action.teacher.PrepareSelectExecutionCourseAction">
+          <forward name="sucess" path="/prepareSelectExecutionCourse.jsp"/>
+		</action>
+        <action 
+		path="/viewSiteExecutionCourse"
+		name="chooseExecutionCourseFormTeacher"
+		input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch"
+		parameter="method"
+        type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">    
+     		<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/> 
+   	</action>
         <action path="/deleteStudentGroup" parameter="method" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
         </action>
-        <action path="/insertStudentGroup" name="studentGroupForm" parameter="method" scope="request" 
+       <action path="/insertStudentGroup" name="studentGroupForm" parameter="method" scope="request" 
             input="/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;page=0" validate="true" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException" 
@@ -1262,6 +1353,7 @@
                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
             <forward name="insertStudentGroup" path="/insertStudentGroup.jsp"/>
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/> 
         </action>
         <action path="/editStudentGroupShift" name="editStudentGroupForm" parameter="method" 
             scope="request" 
@@ -1269,6 +1361,7 @@
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
             <forward name="editStudentGroupShift" path="/editStudentGroupShift.jsp"/>
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
         <action path="/editStudentGroupMembers" name="editStudentGroupForm" parameter="method" 
             scope="request" 
@@ -1290,6 +1383,7 @@
             <forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
             <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
         <action path="/deleteStudentGroupMembers" name="editStudentGroupForm" parameter="method" 
             scope="request" 
@@ -1300,7 +1394,61 @@
             <forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
             <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
             <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
+		<action path="/editAttendsSetMembers" name="editAttendsSetForm" parameter="method" 
+            scope="request" 
+            input="/editAttendsSetMembers.do?method=prepareEditAttendsSetMembers&amp;page=0" 
+            validate="true" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                key="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            <forward name="editAttendsSetMembers" path="/editAttendsSetMembers.jsp"/>
+            <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+		<action path="/insertAttendsSetMembers" name="editAttendsSetForm" parameter="method" 
+            scope="request" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                key="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            <forward name="editAttendsSetMembers" path="/editAttendsSetMembers.jsp"/>
+            <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/deleteAttendsSetMembers" name="editAttendsSetForm" parameter="method" 
+            scope="request" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                key="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            <forward name="editAttendsSetMembers" path="/editAttendsSetMembers.jsp"/>
+            <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/deleteAttendsSetMembersByExecutionCourse" parameter="method" 
+            scope="request" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                key="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+        <action path="/deleteAllAttendsSetMembers" parameter="method" 
+            scope="request" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                key="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
+
+
+
         <!-- FILE UPLOAD 	-->
         <action path="/prepareFileUpload" input="/viewSection.jsp" parameter="method" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
