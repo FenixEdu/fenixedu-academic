@@ -38,10 +38,6 @@
 		<bean:message key="label.test.marks" />
 		</html:link></div>
 		</td>
-		<td>
-		<html:link page="<%= "/testsManagement.do?method=updateStudentTestQuestionMark&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
-		<bean:message key="label.change" /></html:link>
-		</td>
 	</tr>
 	</logic:iterate>
 </table>
