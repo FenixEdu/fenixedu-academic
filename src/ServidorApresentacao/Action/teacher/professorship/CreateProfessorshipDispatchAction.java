@@ -98,7 +98,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
         Integer executionDegreeId = Integer.valueOf((String) teacherExecutionCourseForm.get(
                 "executionDegreeId"));
 
-        Object[] arguments = {executionDegreeId};
+        Object[] arguments = {executionDegreeId, null};
 
         List executionCourses = (List) executeService("ReadExecutionCoursesByExecutionDegree", request,
                 arguments);
