@@ -20,11 +20,11 @@
     			<td class="listClasses"><bean:write name="equivalency" property="curricularCourse.name"/></td>	
     			<td class="listClasses"><bean:write name="equivalency" property="modality.name"/></td>		
     			<td class="listClasses">
-    				<logic:iterate indexId="index_1" id="theme_1" type="DataBeans.Seminaries.InfoTheme" name="equivalency" property="themes">
+    				<logic:iterate indexId="index_1" id="eqTheme" name="equivalency" property="themes">
 						<logic:notEqual name="index_1" value="0">
 							,
 						</logic:notEqual>
-    					<bean:write name="theme_1" property="shortName"/>
+    					<bean:write name="eqTheme" property="shortName"/>
     				</logic:iterate>
     			</td>
     			<td class="listClasses">
