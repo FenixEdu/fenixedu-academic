@@ -70,6 +70,7 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 		IRole role = null;
 		IPessoa person = null;
+		
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
@@ -126,23 +127,14 @@ public class CreateMasterDegreeCandidate implements IServico {
 				String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
 				person.setUsername(username);
 				
-				sp.getIPessoaPersistente().escreverPessoa(person);
-				
 				// Give the Person Role
 				role = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
-				IPersonRole personRole = new PersonRole();
-				personRole.setPerson(person);
-				personRole.setRole(role);
-				
-				sp.getIPersistentPersonRole().write(personRole);
-			}
-			
-			
+			}			
 			masterDegreeCandidate.setPerson(person);
 			
 			// Write the new Candidate
 			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);		
-			
+
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia ex) {
@@ -153,12 +145,13 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 		try {
 			// Give the Master Degree Candidate Role
-			IPersonRole personRole = new PersonRole();
+			IPersonRole candidateRole = new PersonRole();
 			role = sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
-			personRole.setPerson(person);
-			personRole.setRole(role);
-				
-			sp.getIPersistentPersonRole().write(personRole);
+
+			person.getPersonRoles().add(role);
+
+			sp.getIPessoaPersistente().escreverPessoa(person);
+
 
 		} catch (ExistingPersistentException ex) {
 			// This person is already a Candidate. No need to give the role again
