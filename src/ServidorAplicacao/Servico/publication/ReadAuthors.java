@@ -26,33 +26,41 @@ import ServidorPersistente.publication.IPersistentAuthor;
  * Preferences - Java - Code Generation - Code and Comments
  */
 public class ReadAuthors implements IServico {
-	public ReadAuthors() {
-	}
+    public ReadAuthors() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadAuthors";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadAuthors";
+    }
 
-	public List run(String stringtoSearch, IUserView userView) throws FenixServiceException {
+    public List run(String stringtoSearch, IUserView userView) throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-			IAuthor author = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
-			List authors = persistentAuthor.readAuthorsBySubName(stringtoSearch);
-			authors.remove(author);
-			return authors;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+            IAuthor author = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
 
-	}
+            String names[] = stringtoSearch.split(" ");
+            StringBuffer authorName = new StringBuffer(names[0]);
+            for (int iter = 1; iter <= names.length - 1; iter++) {
+                authorName.append("%");
+                authorName.append(names[iter]);
+            }
+            List authors = persistentAuthor.readAuthorsBySubName(authorName.toString());
+
+            authors.remove(author);
+            return authors;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

@@ -12,8 +12,7 @@ import java.util.List;
 import Dominio.IDepartment;
 import Dominio.ITeacher;
 
-public interface IPersistentTeacher extends IPersistentObject
-{
+public interface IPersistentTeacher extends IPersistentObject {
 
     /**
      * @param user

@@ -28,8 +28,7 @@ public class InfoStudentGroup extends InfoObject {
     /**
      * Construtor
      */
-    public InfoStudentGroup(Integer groupNumber,
-            InfoGroupProperties infoGroupProperties) {
+    public InfoStudentGroup(Integer groupNumber, InfoGroupProperties infoGroupProperties) {
 
         this.groupNumber = groupNumber;
         this.infoGroupProperties = infoGroupProperties;
@@ -38,8 +37,8 @@ public class InfoStudentGroup extends InfoObject {
     /**
      * Construtor
      */
-    public InfoStudentGroup(Integer groupNumber,
-            InfoGroupProperties infoGroupProperties, InfoShift infoShift) {
+    public InfoStudentGroup(Integer groupNumber, InfoGroupProperties infoGroupProperties,
+            InfoShift infoShift) {
 
         this.groupNumber = groupNumber;
         this.infoGroupProperties = infoGroupProperties;
@@ -52,14 +51,11 @@ public class InfoStudentGroup extends InfoObject {
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof InfoStudentGroup) {
-            result = (getInfoGroupProperties().equals(((InfoStudentGroup) arg0)
-                    .getInfoGroupProperties()))
-                    && (getGroupNumber().equals(((InfoStudentGroup) arg0)
-                            .getGroupNumber()));
+            result = (getInfoGroupProperties()
+                    .equals(((InfoStudentGroup) arg0).getInfoGroupProperties()))
+                    && (getGroupNumber().equals(((InfoStudentGroup) arg0).getGroupNumber()));
             if (getInfoShift() != null) {
-                result = result
-                        && (getInfoShift().equals(((InfoStudentGroup) arg0)
-                                .getInfoShift()));
+                result = result && (getInfoShift().equals(((InfoStudentGroup) arg0).getInfoShift()));
             } else if (((InfoStudentGroup) arg0).getInfoShift() != null) {
                 result = false;
             }
@@ -132,15 +128,15 @@ public class InfoStudentGroup extends InfoObject {
 
     public void copyFromDomain(IStudentGroup studentGroup) {
         super.copyFromDomain(studentGroup);
-        
-        if(studentGroup != null) {
+
+        if (studentGroup != null) {
             setGroupNumber(studentGroup.getGroupNumber());
         }
     }
-    
+
     public static InfoStudentGroup newInfoFromDomain(IStudentGroup studentGroup) {
         InfoStudentGroup infoStudentGroup = null;
-        if(studentGroup != null) {
+        if (studentGroup != null) {
             infoStudentGroup = new InfoStudentGroup();
             infoStudentGroup.copyFromDomain(studentGroup);
         }

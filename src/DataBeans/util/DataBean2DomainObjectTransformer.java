@@ -10,40 +10,39 @@ import DataBeans.InfoObject;
 import Dominio.IDomainObject;
 
 /**
- * @author Luis Cruz    
- *
+ * @author Luis Cruz
+ *  
  */
-public class DataBean2DomainObjectTransformer extends ObjectBeanTransformer
-{
+public class DataBean2DomainObjectTransformer extends ObjectBeanTransformer {
 
     /**
      * @param toClass
      * @param fromClass
      */
-    public DataBean2DomainObjectTransformer()
-    {
+    public DataBean2DomainObjectTransformer() {
         super(IDomainObject.class, InfoObject.class);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see dataBean.util.ObjectBeanTransformer#getHashKey(java.lang.Object)
      */
-    protected Object getHashKey(Object fromObject)
-    {
+    protected Object getHashKey(Object fromObject) {
         return fromObject.getClass().getName() + ((InfoObject) fromObject).getIdInternal();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see dataBean.util.ObjectBeanTransformer#destinationObjectConstructor(java.lang.Object)
      */
-    protected Object destinationObjectConstructor(Object fromObject)
-    {
-        String classToCreate =
-            InfoObject.class.getPackage().getName()
+    protected Object destinationObjectConstructor(Object fromObject) {
+        String classToCreate = InfoObject.class.getPackage().getName()
                 + "."
-                + StringUtils.stripStart(
-                    fromObject.getClass().getName(),
-                    fromObject.getClass().getPackage().getName() + ".Info");
+                + StringUtils.stripStart(fromObject.getClass().getName(), fromObject.getClass()
+                        .getPackage().getName()
+                        + ".Info");
         return objectConstructor(classToCreate);
     }
 

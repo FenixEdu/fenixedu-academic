@@ -13,24 +13,21 @@ import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWork
 /**
  * @author jpvl
  */
-public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization
-        extends
-            AbstractTeacherDepartmentAuthorization
-{
+public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization extends
+        AbstractTeacherDepartmentAuthorization {
     public final static ReadDeleteTeacherInstitutionWorkingTimeAuthorization filter = new ReadDeleteTeacherInstitutionWorkingTimeAuthorization();
 
-    public static ReadDeleteTeacherInstitutionWorkingTimeAuthorization getInstance()
-    {
+    public static ReadDeleteTeacherInstitutionWorkingTimeAuthorization getInstance() {
         return filter;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
-	 */
-    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
+     */
+    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
         Integer teacherInstitutionWorkingTime = (Integer) arguments[0];
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
                 .getIPersistentTeacherInstitutionWorkingTime();

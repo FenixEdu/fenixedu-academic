@@ -12,14 +12,14 @@ import Dominio.grant.contract.GrantPaymentEntity;
 import Dominio.grant.contract.GrantProject;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
 
 /**
  * @author pica
  * @author barbosa
  */
-public class GrantPaymentEntityOJB extends ObjectFenixOJB implements IPersistentGrantPaymentEntity {
+public class GrantPaymentEntityOJB extends PersistentObjectOJB implements IPersistentGrantPaymentEntity {
 
     public IGrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass)
             throws ExcepcaoPersistencia {

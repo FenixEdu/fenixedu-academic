@@ -63,8 +63,7 @@ public class ReadStudentTestTest extends TestCaseReadServices {
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         String userName = new String("L48283");
         Integer distributedTestId = new Integer(2);
-        String path = new String(
-                "e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
+        String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
 
         Object[] args = { userName, distributedTestId, new Boolean(true), path };
         return args;
@@ -81,17 +80,14 @@ public class ReadStudentTestTest extends TestCaseReadServices {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            IStudent student = sp.getIPersistentStudent().readByUsername(
-                    (String) args[0]);
+            IStudent student = sp.getIPersistentStudent().readByUsername((String) args[0]);
             assertNotNull("student is null", student);
 
-            IDistributedTest distributedTest = (IDistributedTest) sp
-                    .getIPersistentDistributedTest().readByOID(
-                            DistributedTest.class, (Integer) args[1]);
+            IDistributedTest distributedTest = (IDistributedTest) sp.getIPersistentDistributedTest()
+                    .readByOID(DistributedTest.class, (Integer) args[1]);
 
             assertNotNull("DistributedTest is null", distributedTest);
-            List studentTestQuestionList = sp
-                    .getIPersistentStudentTestQuestion()
+            List studentTestQuestionList = sp.getIPersistentStudentTestQuestion()
                     .readByStudentAndDistributedTest(student, distributedTest);
             sp.confirmarTransaccao();
 
@@ -134,30 +130,21 @@ public class ReadStudentTestTest extends TestCaseReadServices {
     public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(
             IStudentTestQuestion studentTestQuestion) {
         InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
-        infoStudentTestQuestion.setIdInternal(studentTestQuestion
-                .getIdInternal());
-        infoStudentTestQuestion.setOptionShuffle(studentTestQuestion
-                .getOptionShuffle());
-        infoStudentTestQuestion.setOldResponse(studentTestQuestion
-                .getOldResponse());
-        infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion
-                .getTestQuestionOrder());
-        infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion
-                .getTestQuestionValue());
-        infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion
-                .getTestQuestionMark());
+        infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
+        infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
+        infoStudentTestQuestion.setOldResponse(studentTestQuestion.getOldResponse());
+        infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
+        infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
+        infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
         InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
         try {
-            CopyUtils.copyProperties(infoDistributedTest, studentTestQuestion
-                    .getDistributedTest());
+            CopyUtils.copyProperties(infoDistributedTest, studentTestQuestion.getDistributedTest());
         } catch (Exception e) {
             fail("ReadStudentTestTest " + "cloner");
         }
 
-        InfoStudent infoStudent = Cloner
-                .copyIStudent2InfoStudent(studentTestQuestion.getStudent());
-        InfoQuestion infoQuestion = InfoQuestion
-                .newInfoFromDomain(studentTestQuestion.getQuestion());
+        InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(studentTestQuestion.getStudent());
+        InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(studentTestQuestion.getQuestion());
 
         infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
         infoStudentTestQuestion.setStudent(infoStudent);

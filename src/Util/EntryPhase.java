@@ -18,11 +18,9 @@ public class EntryPhase {
 
     public static final String SECOND_PHASE_STRING = "2ª Fase";
 
-    public static final EntryPhase FIRST_PHASE_OBJ = new EntryPhase(
-            EntryPhase.FIRST_PHASE);
+    public static final EntryPhase FIRST_PHASE_OBJ = new EntryPhase(EntryPhase.FIRST_PHASE);
 
-    public static final EntryPhase SECOND_PHASE_OBJ = new EntryPhase(
-            EntryPhase.SECOND_PHASE);
+    public static final EntryPhase SECOND_PHASE_OBJ = new EntryPhase(EntryPhase.SECOND_PHASE);
 
     private Integer entryPhase;
 
@@ -39,9 +37,9 @@ public class EntryPhase {
 
     public EntryPhase(String entryPhase) {
         if (entryPhase.equals(EntryPhase.FIRST_PHASE_STRING))
-                this.entryPhase = new Integer(EntryPhase.FIRST_PHASE);
+            this.entryPhase = new Integer(EntryPhase.FIRST_PHASE);
         if (entryPhase.equals(EntryPhase.SECOND_PHASE_STRING))
-                this.entryPhase = new Integer(EntryPhase.SECOND_PHASE);
+            this.entryPhase = new Integer(EntryPhase.SECOND_PHASE);
     }
 
     /**
@@ -50,8 +48,10 @@ public class EntryPhase {
     public Integer getEntryPhase() {
         return entryPhase;
     }
+
     /**
-     * @param entryPhase The entryPhase to set.
+     * @param entryPhase
+     *            The entryPhase to set.
      */
     public void setEntryPhase(Integer entryPhase) {
         this.entryPhase = entryPhase;

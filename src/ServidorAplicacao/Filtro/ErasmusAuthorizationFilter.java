@@ -1,8 +1,8 @@
 package ServidorAplicacao.Filtro;
 
 /**
- * This class is responsible for verifying if a given user has the
- * authorization to run a service with certain attributes.
+ * This class is responsible for verifying if a given user has the authorization
+ * to run a service with certain attributes.
  * 
  * @author Angela
  * @version
@@ -16,29 +16,26 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import Util.RoleType;
 
-public class ErasmusAuthorizationFilter extends Filtro
-{
-    public ErasmusAuthorizationFilter()
-    {
+public class ErasmusAuthorizationFilter extends Filtro {
+    public ErasmusAuthorizationFilter() {
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView requester = getRemoteUser(request);
         Collection roles = requester.getRoles();
         boolean authorizedRequester = false;
 
-        if (AuthorizationUtils.containsRole(roles, RoleType.ERASUMS)) authorizedRequester = true;
-        if (!authorizedRequester)
-        {
+        if (AuthorizationUtils.containsRole(roles, RoleType.ERASUMS))
+            authorizedRequester = true;
+        if (!authorizedRequester) {
             throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
-                            + "ACCESS NOT GRANTED!");
+                    + "ACCESS NOT GRANTED!");
         }
     }
 }

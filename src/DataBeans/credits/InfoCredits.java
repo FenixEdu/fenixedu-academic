@@ -8,6 +8,7 @@ import DataBeans.DataTranferObject;
  */
 public class InfoCredits extends DataTranferObject {
     private Double degreeFinalProjectStudents;
+
     private Double institutionWorkTime;
 
     private Double lessons;
@@ -30,7 +31,7 @@ public class InfoCredits extends DataTranferObject {
         if (number == null || number.doubleValue() == 0) {
             return "0";
         }
-        
+
         return String.valueOf(number.doubleValue());
     }
 

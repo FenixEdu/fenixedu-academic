@@ -8,7 +8,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -29,14 +29,11 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
 
-        if (id == null
-                || id.getRoles() == null
-                || !AuthorizationUtils.containsRole(id.getRoles(),
-                        getRoleType())
+        if (id == null || id.getRoles() == null
+                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                 || !curriculumOwner(id, request.getArguments())) {
             throw new NotAuthorizedFilterException();
         }
@@ -51,17 +48,15 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
         IStudentCurricularPlan studentCurricularPlan;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
 
-            studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
-                    .readByOID(StudentCurricularPlan.class,
-                            (Integer) arguments[1]);
+            studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
+                    StudentCurricularPlan.class, (Integer) arguments[1]);
             if (studentCurricularPlan == null) {
                 return false;
             }
-            if (!studentCurricularPlan.getStudent().getPerson().getUsername()
-                    .equals(id.getUtilizador())) {
+            if (!studentCurricularPlan.getStudent().getPerson().getUsername().equals(id.getUtilizador())) {
                 return false;
             }
         } catch (Exception exception) {

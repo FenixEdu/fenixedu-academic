@@ -19,14 +19,10 @@ import ServidorPersistente.IPersistentStudentGroup;
  * @author asnr and scpo
  *  
  */
-public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStudentGroup
-{
+public class StudentGroupOJB extends PersistentObjectOJB implements IPersistentStudentGroup {
 
     public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(
-        IGroupProperties groupProperties,
-        Integer studentGroupNumber)
-        throws ExcepcaoPersistencia
-    {
+            IGroupProperties groupProperties, Integer studentGroupNumber) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 
@@ -37,8 +33,7 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
     }
 
     public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 
@@ -47,11 +42,8 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
         return queryList(StudentGroup.class, criteria);
     }
 
-    public List readAllStudentGroupByGroupPropertiesAndShift(
-        IGroupProperties groupProperties,
-        ITurno shift)
-        throws ExcepcaoPersistencia
-    {
+    public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,
+            ITurno shift) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 
@@ -61,26 +53,18 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
         return queryList(StudentGroup.class, criteria);
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
 
         return queryList(StudentGroup.class, new Criteria());
     }
 
-    
-
-    public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia
-    {
-        try
-        {
+    public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+        try {
             super.delete(studentGroup);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw ex;
         }
     }
-
 
     public List readAllStudentGroupByShift(ITurno shift) throws ExcepcaoPersistencia {
 
@@ -90,7 +74,5 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
 
         return queryList(StudentGroup.class, criteria);
     }
-
-    
 
 }

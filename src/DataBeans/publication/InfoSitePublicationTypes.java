@@ -15,22 +15,23 @@ import DataBeans.ISiteComponent;
  */
 public class InfoSitePublicationTypes extends DataTranferObject implements ISiteComponent {
 
-	private List infoPublicationTypes;
+    private List infoPublicationTypes;
 
-	public InfoSitePublicationTypes() {
-	}
+    public InfoSitePublicationTypes() {
+    }
 
+    /**
+     * @return Returns the infoPublicationTypes.
+     */
+    public List getInfoPublicationTypes() {
+        return infoPublicationTypes;
+    }
 
-	/**
-	 * @return Returns the infoPublicationTypes.
-	 */
-	public List getInfoPublicationTypes() {
-		return infoPublicationTypes;
-	}
-	/**
-	 * @param infoPublicationTypes The infoPublicationTypes to set.
-	 */
-	public void setInfoPublicationTypes(List infoPublicationTypes) {
-		this.infoPublicationTypes = infoPublicationTypes;
-	}
+    /**
+     * @param infoPublicationTypes
+     *            The infoPublicationTypes to set.
+     */
+    public void setInfoPublicationTypes(List infoPublicationTypes) {
+        this.infoPublicationTypes = infoPublicationTypes;
+    }
 }

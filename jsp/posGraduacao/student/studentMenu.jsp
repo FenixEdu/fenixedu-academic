@@ -11,7 +11,6 @@
 	    <li><html:link page="/chooseCertificateInfoAction.do?method=prepare&page=0"><bean:message key="link.certificate" /></html:link></li>
 	    <li><html:link page="/chooseDeclarationInfoAction.do?method=prepare&page=0"><bean:message key="link.declarations" /></html:link></li>
 	    <li><html:link page="/chooseFinalResultInfoAction.do?method=prepare&page=0"><bean:message key="link.finalResult" /></html:link></li>
-	    <li><html:link page="/studentGratuity.do"><bean:message key="link.masterDegree.gratuityOperations" /></html:link></li>
 	    <li><html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=2"><bean:message key="link.masterDegree.enrollment"/></html:link></li>
 	    <li><html:link forward="equivalence"><bean:message key="link.masterDegree.equivalence"/></html:link></li>
 	    <li><html:link page="/seeStudentAndCurricularPlans.do?method=start"><bean:message key="link.masterDegree.administrativeOffice.seeStudentCurricularPlans"/></html:link></li>

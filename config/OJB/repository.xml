@@ -13,7 +13,6 @@
 <!ENTITY sop SYSTEM "repository_sop.xml">
 <!ENTITY masterDegree SYSTEM "repository_masterDegree.xml">
 <!ENTITY treasury SYSTEM "repository_treasury.xml">
-<!ENTITY treasury SYSTEM "repository_coordinator.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY gesdis SYSTEM "repository_gesdis.xml">
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
@@ -44,6 +43,20 @@
 <!ENTITY schoolRegistrationInquiryAnswer SYSTEM "repository_school_registration_inquiry_answer.xml">
 <!ENTITY curricularCourseGroup SYSTEM "repository_curricular_course_group.xml">
 <!ENTITY enrollment SYSTEM "repository_enrollment.xml">
+<!ENTITY person SYSTEM "repository_person.xml">
+<!ENTITY transaction SYSTEM "repository_transaction.xml">
+<!ENTITY paymentTransaction SYSTEM "repository_paymentTransaction.xml">
+<!ENTITY gratuityTransaction SYSTEM "repository_gratuityTransaction.xml">
+<!ENTITY smsTransaction SYSTEM "repository_smsTransaction.xml">
+<!ENTITY reimbursementTransaction SYSTEM "repository_reimbursementTransaction.xml">
+<!ENTITY insuranceTransaction SYSTEM "repository_insuranceTransaction.xml">
+<!ENTITY insuranceValue SYSTEM "repository_insuranceValue.xml">
+<!ENTITY personAccount SYSTEM "repository_personAccount.xml">
+<!ENTITY executionCourse SYSTEM "repository_execution_course.xml">
+<!ENTITY curriculum SYSTEM "repository_curriculum.xml">
+<!ENTITY faqEntry SYSTEM "repository_faqEntry.xml">
+<!ENTITY faqSection SYSTEM "repository_faqSection.xml">
+<!ENTITY glossaryEntry SYSTEM "repository_glossaryEntry.xml">
 ]>
 
 
@@ -56,7 +69,7 @@
     &internal;
 
     <!-- include user defined mappings here -->
-	&fenix-department;
+&fenix-department;
     &secretaria;
     &enrolment;
     &enrolment-precedences;
@@ -93,5 +106,19 @@
 	&schoolRegistrationInquiryAnswer;
 	&curricularCourseGroup;
 	&enrollment;
+    &person;
+	&transaction;
+	&paymentTransaction;
+	&gratuityTransaction;
+	&smsTransaction;
+	&reimbursementTransaction;
+	&insuranceTransaction;
+	&insuranceValue;
+	&personAccount;
+    &executionCourse;
+    &curriculum;
+	&faqEntry;
+	&faqSection;
+	&glossaryEntry;
 
 </descriptor-repository>

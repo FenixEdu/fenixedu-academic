@@ -15,12 +15,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionDegreeWithInfoExecutionYear;
 import DataBeans.InfoExecutionYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -32,11 +33,11 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 
     public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
-        ArrayList infoExecutionDegreeList = null;
+        List infoExecutionDegreeList = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
             List executionDegrees = null;
             if (infoExecutionYear == null) {
@@ -52,8 +53,7 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 
             while (iterator.hasNext()) {
                 ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-                //System.out.println("EXECUTION_COURSE: " + executionDegree.getIdInternal());
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
                         .newInfoFromDomain(executionDegree);
                 if (executionDegree.getCurricularPlan() == null) {
                     System.out.println("--> CurricularPlan null");

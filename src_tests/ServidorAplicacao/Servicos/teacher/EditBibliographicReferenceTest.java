@@ -10,151 +10,163 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- * 
+ *  
  */
 public class EditBibliographicReferenceTest extends ServiceNeedsAuthenticationTestCase {
 
-	String author = "Shari Pfleeger";
-	String title = "Software Engineering: Theory and Practice";
-	String reference = "Recomended bibliografy";
-	String year = "2002";
-	Boolean optional = new Boolean(false);
+    String author = "Shari Pfleeger";
 
-	/**
-	 * @param testName
-	 */
-	public EditBibliographicReferenceTest(String testName) {
-		super(testName);
-	}
+    String title = "Software Engineering: Theory and Practice";
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "EditBibliographicReference";
-	}
+    String reference = "Recomended bibliografy";
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testEditBibliographicReferenceDataSet.xml";
-	}
+    String year = "2002";
 
-	protected String getRecomendedExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedEditRecomendedBibliographicReferenceDataSet.xml";
-	}
+    Boolean optional = new Boolean(false);
 
-	protected String getOptionalExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedEditOptionalBibliographicReferenceDataSet.xml";
-	}
+    /**
+     * @param testName
+     */
+    public EditBibliographicReferenceTest(String testName) {
+        super(testName);
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "EditBibliographicReference";
+    }
 
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testEditBibliographicReferenceDataSet.xml";
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
+    protected String getRecomendedExpectedDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testExpectedEditRecomendedBibliographicReferenceDataSet.xml";
+    }
 
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
+    protected String getOptionalExpectedDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testExpectedEditOptionalBibliographicReferenceDataSet.xml";
+    }
 
-	protected String[] getNotAuthenticatedUser() {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments() {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		Integer executionCourseCode = new Integer(24);
-		Integer bibliographicReferenceCode = new Integer(1);
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-		Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference, year, optional };
+    protected String[] getNotAuthenticatedUser() {
 
-		return args;
-	}
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getTestBibliographicReferenceSuccessfullArguments() {
+    protected Object[] getAuthorizeArguments() {
 
-		Integer executionCourseCode = new Integer(24);
-		Integer bibliographicReferenceCode = new Integer(1);
+        Integer executionCourseCode = new Integer(24);
+        Integer bibliographicReferenceCode = new Integer(1);
 
-		Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference, year, optional };
+        Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference,
+                year, optional };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getTestBibliographicReferenceUnsuccessfullArguments() {
+    protected Object[] getTestBibliographicReferenceSuccessfullArguments() {
 
-		Integer executionCourseCode = new Integer(24);
-		Integer bibliographicReferenceCode = new Integer(123);
+        Integer executionCourseCode = new Integer(24);
+        Integer bibliographicReferenceCode = new Integer(1);
 
-		Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference, year, optional };
+        Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference,
+                year, optional };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+    protected Object[] getTestBibliographicReferenceUnsuccessfullArguments() {
 
-	public void testEditRecomendedBibliographicReferenceByAuthenticatedAndAuthorizedUser() {
+        Integer executionCourseCode = new Integer(24);
+        Integer bibliographicReferenceCode = new Integer(123);
 
-		try {
+        Object[] args = { executionCourseCode, bibliographicReferenceCode, title, author, reference,
+                year, optional };
 
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+        return args;
+    }
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-			// verificar as alteracoes da bd
-			compareDataSet(getRecomendedExpectedDataSetFilePath());
+    public void testEditRecomendedBibliographicReferenceByAuthenticatedAndAuthorizedUser() {
 
-		} catch (FenixServiceException ex) {
-			fail("testSuccessfullEditRecomendedBibliographicReference" + ex);
-		} catch (Exception ex) {
-			fail("testSuccessfullEditRecomendedBibliographicReference error on compareDataSet" + ex);
-		}
-	}
+        try {
 
-	public void testEditOptionalBibliographicReferenceAuthenticatedAndAuthorizedUser() {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-		try {
-			author = "Shari Pfleeger";
-			title = "Software Engineering: Theory and Practice";
-			reference = "Optional bibliografy";
-			year = "2002";
-			optional = new Boolean(true);
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+            // verificar as alteracoes da bd
+            compareDataSet(getRecomendedExpectedDataSetFilePath());
 
-			// verificar as alteracoes da bd
-			compareDataSet(getOptionalExpectedDataSetFilePath());
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullEditRecomendedBibliographicReference" + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullEditRecomendedBibliographicReference error on compareDataSet" + ex);
+        }
+    }
 
-		} catch (FenixServiceException ex) {
-			fail("testSuccessfullEditOptionalBibliographicReference" + ex);
-		} catch (Exception ex) {
-			fail("testSuccessfullEditOptionalBibliographicReference error on compareDataSet" + ex);
-		}
-	}
+    public void testEditOptionalBibliographicReferenceAuthenticatedAndAuthorizedUser() {
 
-	public void testEditBibliographicReferenceNotBelongsExecutionCourse() {
+        try {
+            author = "Shari Pfleeger";
+            title = "Software Engineering: Theory and Practice";
+            reference = "Optional bibliografy";
+            year = "2002";
+            optional = new Boolean(true);
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-		Object serviceArguments[] = getTestBibliographicReferenceUnsuccessfullArguments();
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
 
-		try {
-			 ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testBibliographicReferenceNotBelongsExecutionCourse");
-		} catch (NotAuthorizedException ex) {
+            // verificar as alteracoes da bd
+            compareDataSet(getOptionalExpectedDataSetFilePath());
 
-			System.out.println(
-				"testBibliographicReferenceNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (Exception ex) {
-			fail(getNameOfServiceToBeTested() + "fail testBibliographicReferenceNotBelongsExecutionCourse");
-		}
-	}
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullEditOptionalBibliographicReference" + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullEditOptionalBibliographicReference error on compareDataSet" + ex);
+        }
+    }
+
+    public void testEditBibliographicReferenceNotBelongsExecutionCourse() {
+
+        Object serviceArguments[] = getTestBibliographicReferenceUnsuccessfullArguments();
+
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            fail(getNameOfServiceToBeTested()
+                    + "fail testBibliographicReferenceNotBelongsExecutionCourse");
+        } catch (NotAuthorizedException ex) {
+
+            System.out
+                    .println("testBibliographicReferenceNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (Exception ex) {
+            fail(getNameOfServiceToBeTested()
+                    + "fail testBibliographicReferenceNotBelongsExecutionCourse");
+        }
+    }
 
 }

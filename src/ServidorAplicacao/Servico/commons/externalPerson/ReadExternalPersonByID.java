@@ -1,10 +1,10 @@
 package ServidorAplicacao.Servico.commons.externalPerson;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExternalPerson;
 import DataBeans.util.Cloner;
 import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -13,53 +13,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public class ReadExternalPersonByID implements IServico {
+public class ReadExternalPersonByID implements IService {
 
-	private static ReadExternalPersonByID servico = new ReadExternalPersonByID();
+    /**
+     * The actor of this class.
+     */
+    public ReadExternalPersonByID() {
+    }
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadExternalPersonByID getService() {
-		return servico;
-	}
+    public Object run(Integer externalPersonID) throws FenixServiceException {
+        InfoExternalPerson infoExternalPerson = null;
+        IExternalPerson externalPerson = null;
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadExternalPersonByID() {
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            externalPerson = (IExternalPerson) sp.getIPersistentExternalPerson().readByOID(
+                    ExternalPerson.class, externalPersonID);
 
-	/**
-	 * Returns The Service Name */
-	public final String getNome() {
-		return "ReadExternalPersonByID";
-	}
+            if (externalPerson == null)
+                throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
 
-	public Object run(Integer externalPersonID) throws FenixServiceException {
-		InfoExternalPerson infoExternalPerson = null;
-		IExternalPerson externalPerson = null;
+            infoExternalPerson = Cloner.copyIExternalPerson2InfoExternalPerson(externalPerson);
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			externalPerson = (IExternalPerson) sp.getIPersistentExternalPerson().readByOID(ExternalPerson.class, externalPersonID);
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-			if (externalPerson == null)
-				throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound"); 
-					
-			infoExternalPerson = Cloner.copyIExternalPerson2InfoExternalPerson(externalPerson);
-
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-
-		return infoExternalPerson;
-	}
+        return infoExternalPerson;
+    }
 }

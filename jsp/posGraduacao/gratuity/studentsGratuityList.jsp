@@ -2,6 +2,17 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="Util.RoleType" %>
+
+<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+<% boolean masterDegreeUser = false; %>
+<logic:iterate id="role" name="userView" property="roles">
+	<logic:equal name="role" property="roleType" value="<%= RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.toString() %>" >
+		<% masterDegreeUser = true; %>
+	</logic:equal>	
+</logic:iterate>	
+	
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
 <span class="error"><html:errors/></span>
 <p />
@@ -49,14 +60,15 @@
 		<bean:size id="sizeList" name="infoGratuitySituationList"/>
 		<h2><bean:message key="label.masterDegree.gratuity.sizeList" arg0="<%= sizeList.toString() %>" /></h2>	
 		<h2>
-		<logic:present name="totalPayedValue">
 		<logic:present name="totalRemaingValue">
-		<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.payedValue"/>:
-		&nbsp;<bean:write name="totalPayedValue" />€
-		<br>
-		<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.notPayedValue"/>:
-		&nbsp;<bean:write name="totalRemaingValue" />€
+			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.notPayedValue"/>:
+			&nbsp;<bean:write name="totalRemaingValue" />€
 		</logic:present>
+		</h2>
+		<h2>
+		<logic:present name="totalPayedValue">
+			<bean:message key="label.masterDegree.gratuity.total" />&nbsp;<bean:message key="label.masterDegree.gratuity.payedValue"/>:
+			&nbsp;<bean:write name="totalPayedValue" />€
 		</logic:present>
 		</h2>
 		
@@ -70,10 +82,10 @@
 					<center><bean:message key="label.masterDegree.gratuity.SCPlan"/></center></html:link></th>	
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=gratuitySituation&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.state"/></center></html:link></th>
-				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=payedValue&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
-					<center><bean:message key="label.masterDegree.gratuity.payedValue"/></center></html:link></th>
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=notPayedValue&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.gratuity.notPayedValue"/></center></html:link></th>
+				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=payedValue&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
+					<center><bean:message key="label.masterDegree.gratuity.payedValue"/></center></html:link></th>				
 				<th><html:link page="<%= "/studentsGratuityList.do?method=studentsGratuityList&amp;order=insurance&amp;executionYear="+executionYearLabel+"&amp;specialization="+specializationLabel+"&amp;situation="+gratuitySituationName+"&amp;degree="+degreeString%>" >
 					<center><bean:message key="label.masterDegree.gratuity.insurance"/></center></html:link></th>					
 				
@@ -82,17 +94,26 @@
 				<bean:define id="isEven">
 					<%= String.valueOf(row.intValue() % 2) %>
 				</bean:define>
+				<bean:define id="studentNumber" name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/>
 				<bean:define id="situationType" name="infoGratuitySituation" property="situationType.name"/>
 				<bean:define id="insurancePayedKey" name="infoGratuitySituation" property="insurancePayed"/>
 							
 				<logic:equal name="isEven" value="0"> <!-- Linhas pares -->
 					<tr>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
-						<td bgcolor='#C0C0C0'><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/></td>
+						<td bgcolor='#C0C0C0'>		
+							<% if(masterDegreeUser) {%>					
+							<html:link page="<%= "/studentSituation.do?method=readStudent&degreeType=2&studentNumber="+studentNumber %>" >
+								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+							</html:link>
+							<% } else {%>							
+								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+							<% } %>
+						</td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
-						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
+						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>	
 						<td bgcolor='#C0C0C0'><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
 					</tr>
 				</logic:equal>
@@ -100,11 +121,19 @@
 				<logic:equal name="isEven" value="1"> <!-- Linhas pares  -->
 					<tr>
 						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
-						<td><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/></td>
+						<td>
+							<% if(masterDegreeUser) {%>					
+							<html:link page="<%= "/studentSituation.do?method=readStudent&degreeType=2&studentNumber="+studentNumber %>" >
+								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+							</html:link>
+							<% } else {%>							
+								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+							<% } %>							
+						</td>
 						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
 						<td><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
-						<td><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>
+						<td><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
 					</tr>
 				</logic:equal>

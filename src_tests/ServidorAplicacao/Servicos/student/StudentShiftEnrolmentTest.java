@@ -26,34 +26,28 @@ import Util.TipoCurso;
  * @author jpvl
  * 
  * 
- * FIXME the service requires the readByStudentIdAndShiftType which is messed
- * up
+ * FIXME the service requires the readByStudentIdAndShiftType which is messed up
  */
-public class StudentShiftEnrolmentTest extends TestCaseReadServices
-{
+public class StudentShiftEnrolmentTest extends TestCaseReadServices {
 
-    public StudentShiftEnrolmentTest(String testName)
-    {
+    public StudentShiftEnrolmentTest(String testName) {
         super(testName);
     }
-    public static void main(java.lang.String[] args)
-    {
+
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(StudentShiftEnrolmentTest.class);
         return suite;
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "StudentShiftEnrolment";
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
         //
         //		try {
@@ -61,7 +55,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
         //			
         //			
         //			_student2 = new Student(new Integer("41329"),new Integer(1),
-		// _pessoa2, new TipoCurso(TipoCurso.LICENCIATURA));
+        // _pessoa2, new TipoCurso(TipoCurso.LICENCIATURA));
         //			_alunoPersistente.lockWrite(_student2);
         //			
         //			IFrequenta assist = new Frequenta(_aluno1, _disciplinaExecucao1);
@@ -89,53 +83,41 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
         //
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         return null;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         InfoStudent infoStudent = null;
         IStudent student = null;
         InfoShift infoShift = null;
-        try
-        {
+        try {
             SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            student =
-                SuportePersistenteOJB.getInstance().getIPersistentStudent().readStudentByNumberAndDegreeType(
-                    new Integer(600),
-                    new TipoCurso(TipoCurso.LICENCIATURA));
+            student = SuportePersistenteOJB.getInstance().getIPersistentStudent()
+                    .readStudentByNumberAndDegreeType(new Integer(600),
+                            new TipoCurso(TipoCurso.LICENCIATURA));
             assertNotNull(student);
             infoStudent = Cloner.copyIStudent2InfoStudent(student);
 
             IExecutionCourse executionCourse = null;
-            executionCourse =
-                SuportePersistenteOJB
-                    .getInstance()
-                    .getIPersistentExecutionCourse()
+            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
 
             ITurno shift = new Turno();
-            shift =
-                SuportePersistenteOJB.getInstance().getITurnoPersistente().readByNameAndExecutionCourse(
-                    "turno4",
-                    executionCourse);
+            shift = SuportePersistenteOJB.getInstance().getITurnoPersistente()
+                    .readByNameAndExecutionCourse("turno4", executionCourse);
             assertNotNull(shift);
 
             infoShift = (InfoShift) Cloner.get(shift);
 
             SuportePersistenteOJB.getInstance().confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 
@@ -143,23 +125,21 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
         return result;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 5;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         return null;
     }
 
     /**
-	 * Service Tests
-	 */
+     * Service Tests
+     */
 
     /**
-	 * Tests Unauthorized Access.
-	 */
+     * Tests Unauthorized Access.
+     */
     //	public void testUnauthorizedShiftEnrolment() {
     //		Object args[] = { null, null };
     //
@@ -203,7 +183,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
     //		InfoEnrolmentServiceResult result = getServiceResult(args);
     //		
     //		assertEquals(result.getMessageType(),
-	// InfoEnrolmentServiceResult.NON_EXISTING_SHIFT);
+    // InfoEnrolmentServiceResult.NON_EXISTING_SHIFT);
     //		
     //	}
     //
@@ -214,7 +194,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
     //
     //		InfoEnrolmentServiceResult result = getServiceResult(args);
     //		assertEquals(result.getMessageType(),
-	// InfoEnrolmentServiceResult.NON_EXISTING_STUDENT);
+    // InfoEnrolmentServiceResult.NON_EXISTING_STUDENT);
     //	}
     //	
     //	public void testEnrolmentIntoShiftFull() {
@@ -232,7 +212,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
     //		
     //		
     //		assertEquals(result2.getMessageType(),
-	// InfoEnrolmentServiceResult.SHIFT_FULL);
+    // InfoEnrolmentServiceResult.SHIFT_FULL);
     //				
     //	}
     //
@@ -296,15 +276,15 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices
     //		return infoStudent;
     //	}
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see junit.framework.TestCase#tearDown()
+     */
 
     /**
-	 * Constructor for StudentShiftEnrolmentTest.
-	 * 
-	 * @param testName
-	 */
+     * Constructor for StudentShiftEnrolmentTest.
+     * 
+     * @param testName
+     */
 
 }

@@ -8,7 +8,7 @@ import Util.TipoDocumentoIdentificacao;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author Shezad Anavarali (sana@mega.ist.utl.pt) 
+ * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class ReadExternalPersonsByWorkLocationTest extends ServiceTestCase {
@@ -26,7 +26,7 @@ public class ReadExternalPersonsByWorkLocationTest extends ServiceTestCase {
         } else {
             this.dataSetFilePath = "etc/datasets/servicos/commons/externalPerson/testReadExternalPersonsByWorkLocationDataSet.xml";
         }
-        
+
     }
 
     protected void setUp() {
@@ -44,7 +44,7 @@ public class ReadExternalPersonsByWorkLocationTest extends ServiceTestCase {
     public void testReadExistingExternalPersonsInWorkLocation() {
         try {
             Integer workLocationID = new Integer(22);
-            Object[] args = { workLocationID};
+            Object[] args = { workLocationID };
 
             List infoExternalPersonList = (List) ServiceManagerServiceFactory.executeService(null,
                     getNameOfServiceToBeTested(), args);
@@ -107,7 +107,7 @@ public class ReadExternalPersonsByWorkLocationTest extends ServiceTestCase {
     public void testReadNonExistingExternalPersonsInWorkLocation() {
         try {
             Integer workLocationID = new Integer(24);
-            Object[] args = { workLocationID};
+            Object[] args = { workLocationID };
 
             List infoExternalPersonList = (List) ServiceManagerServiceFactory.executeService(null,
                     getNameOfServiceToBeTested(), args);
@@ -127,7 +127,7 @@ public class ReadExternalPersonsByWorkLocationTest extends ServiceTestCase {
     public void testReadExistingExternalPersonsInAnyWorkLocation() {
         try {
 
-            Object[] args = { null};
+            Object[] args = { null };
 
             List infoExternalPersonList = (List) ServiceManagerServiceFactory.executeService(null,
                     getNameOfServiceToBeTested(), args);
@@ -211,7 +211,7 @@ public class ReadExternalPersonsByWorkLocationTest extends ServiceTestCase {
     public void testNonExistingExternalPersonsInAnyWorkLocation() {
         try {
 
-            Object[] args = { null};
+            Object[] args = { null };
 
             List infoExternalPersonList = (List) ServiceManagerServiceFactory.executeService(null,
                     getNameOfServiceToBeTested(), args);

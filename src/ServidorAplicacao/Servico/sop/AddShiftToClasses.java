@@ -47,8 +47,7 @@ public class AddShiftToClasses implements IServico {
         return service;
     }
 
-    public void run(Integer keyShift, String[] classesList)
-            throws FenixServiceException {
+    public void run(Integer keyShift, String[] classesList) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
@@ -64,8 +63,7 @@ public class AddShiftToClasses implements IServico {
             int length = classesList.length;
             while (iter < length) {
                 Integer keyClass = new Integer(classesList[iter]);
-                ITurma dClass = (ITurma) persistentClass.readByOID(Turma.class,
-                        keyClass);
+                ITurma dClass = (ITurma) persistentClass.readByOID(Turma.class, keyClass);
                 if (dClass == null) {
                     throw new InvalidArgumentsServiceException();
                 }

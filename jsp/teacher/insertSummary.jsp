@@ -116,31 +116,38 @@
 <br/>
 <br/>	
 <!-- Teachers -->
-<table width="100%">
+
+<logic:equal name="loggedIsResponsible" value="true">
+	<table width="100%">
 	<tr>
 		<td class="infoop"><bean:message key="help.summary.chooseTeacher" /></td>
 	</tr>
-</table>
-<br />
-<table border="0">
-	<logic:iterate id="professorship" name="professorships">
-		<bean:define id="professorshipId" name="professorship" property="idInternal" />
+	</table>
+	<br />
+	<table border="0">
+		  <logic:iterate id="professorship" name="professorships">
+		 	<bean:define id="professorshipId" name="professorship" property="idInternal" />
+		 	<tr>
+		 		<td><bean:write name="professorship" property="infoTeacher.infoPerson.nome"/>:</td>
+		 		<td><html:radio property="teacher" value="<%= professorshipId.toString()%>" /></td>				
+		 	</tr>
+		 </logic:iterate>
 		<tr>
-			<td><bean:write name="professorship" property="infoTeacher.infoPerson.nome"/>:</td>
-			<td><html:radio property="teacher" value="<%= professorshipId.toString()%>" /></td>				
+			<td><bean:message key="label.teacher.in" />:</td>
+			<td><html:radio property="teacher" value="0" /></td>
+			<td><bean:message key="label.number" />:</td><td><html:text property="teacherNumber" size="4" /></td>
 		</tr>
-	</logic:iterate>
-	<tr>
-		<td><bean:message key="label.teacher.in" />:</td>
-		<td><html:radio property="teacher" value="0" /></td>
-		<td><bean:message key="label.number" />:</td><td><html:text property="teacherNumber" size="4" /></td>
-	</tr>
-	<tr>
-		<td><bean:message key="label.teacher.out" />:</td>
-		<td><html:radio property="teacher" value="-1" /></td>
-		<td><bean:message key="label.name" />:</td><td><html:text property="teacherName" size="40"/></td>				
-	</tr>				
-</table>
+		<tr>
+			<td><bean:message key="label.teacher.out" />:</td>
+			<td><html:radio property="teacher" value="-1" /></td>
+			<td><bean:message key="label.name" />:</td><td><html:text property="teacherName" size="40"/></td>				
+		</tr>				
+	</table>
+</logic:equal>
+<logic:equal name="loggedIsResponsible" value="false">
+	<bean:define name="loggedTeacherProfessorship" id="loggedTeacherProfessorship"/>
+	<input type="hidden" name="teacher" value="<%=loggedTeacherProfessorship%>" />
+</logic:equal>
 <br/>
 <br/>		
 <table border="0">

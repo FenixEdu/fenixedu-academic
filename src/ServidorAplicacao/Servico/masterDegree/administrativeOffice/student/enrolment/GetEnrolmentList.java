@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod;
 import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
-import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.util.Cloner;
 import Dominio.IEnrollment;
-import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -24,100 +22,78 @@ import Util.CurricularCourseType;
 import Util.EnrollmentState;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GetEnrolmentList implements IServico {
+public class GetEnrolmentList implements IService {
 
-	private static GetEnrolmentList servico = new GetEnrolmentList();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static GetEnrolmentList getService() {
-		return servico;
-	}
+    public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState)
+            throws FenixServiceException, Exception {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private GetEnrolmentList() { 
-	}
+        ISuportePersistente sp = null;
+        List enrolmentList = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-	/**
-	 * Returns The Service Name */
+            // Read the list
 
-	public final String getNome() {
-		return "GetEnrolmentList";
-	}
+            enrolmentList = sp.getIPersistentEnrolment()
+                    .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
+                            enrollmentState);
 
-	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan, EnrollmentState enrollmentState) throws FenixServiceException, Exception {
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-		ISuportePersistente sp = null;
-		List enrolmentList = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-		    IStudentCurricularPlan iStudentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
-			
-			// Read the list 
-			
-			enrolmentList = sp.getIPersistentEnrolment().readEnrolmentsByStudentCurricularPlanAndEnrolmentState(iStudentCurricularPlan, enrollmentState);
-	
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
+        List result = new ArrayList();
+        Iterator iterator = enrolmentList.iterator();
 
-			
-		List result = new ArrayList();
-		Iterator iterator = enrolmentList.iterator();
+        while (iterator.hasNext()) {
+            IEnrollment enrolment = (IEnrollment) iterator.next();
+            if (!enrolment.getCurricularCourse().getType()
+                    .equals(CurricularCourseType.P_TYPE_COURSE_OBJ)) {
+                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
+                        .newInfoFromDomain(enrolment);
+                result.add(infoEnrolment);
+            }
+        }
 
-		while(iterator.hasNext()) {	
-		    IEnrollment enrolment = (IEnrollment) iterator.next();
-		    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
-                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
-		        result.add(infoEnrolment);	
-		    }
-		}
-		
-		
-		return result;		
-	}
-	
-	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, Exception {
+        return result;
+    }
 
-			ISuportePersistente sp = null;
-			List enrolmentList = null;
-			try {
-				sp = SuportePersistenteOJB.getInstance();
-				IStudentCurricularPlan iStudentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
-			
-				// Read the list 
-			
-				enrolmentList = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(iStudentCurricularPlan);
-	
-			} catch (ExcepcaoPersistencia ex) {
-				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-				newEx.fillInStackTrace();
-				throw newEx;
-			} 
+    public List run(Integer studentCurricularPlanID) throws FenixServiceException, Exception {
 
-			
-			List result = new ArrayList();
-			Iterator iterator = enrolmentList.iterator();
+        ISuportePersistente sp = null;
+        List enrolmentList = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-			while(iterator.hasNext()) {	
-			    IEnrollment enrolment = (IEnrollment) iterator.next();
-			    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
-	                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
-			        result.add(infoEnrolment);	
-			    }
-			}
-		
-		
-			return result;		
-		}
-	
-	
+            // Read the list
+
+            enrolmentList = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(
+                    studentCurricularPlanID);
+
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+
+        List result = new ArrayList();
+        Iterator iterator = enrolmentList.iterator();
+
+        while (iterator.hasNext()) {
+            IEnrollment enrolment = (IEnrollment) iterator.next();
+            if (!enrolment.getCurricularCourse().getType()
+                    .equals(CurricularCourseType.P_TYPE_COURSE_OBJ)) {
+                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+                        .newInfoFromDomain(enrolment);
+                result.add(infoEnrolment);
+            }
+        }
+
+        return result;
+    }
+
 }

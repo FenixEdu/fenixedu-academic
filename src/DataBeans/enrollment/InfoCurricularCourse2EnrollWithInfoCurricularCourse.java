@@ -13,15 +13,14 @@ import Dominio.degree.enrollment.CurricularCourse2Enroll;
  * @author João Mota
  *  
  */
-public class InfoCurricularCourse2EnrollWithInfoCurricularCourse extends
-        InfoCurricularCourse2Enroll implements Serializable {
+public class InfoCurricularCourse2EnrollWithInfoCurricularCourse extends InfoCurricularCourse2Enroll
+        implements Serializable {
 
     public void copyFromDomain(CurricularCourse2Enroll curricularCourse2Enroll) {
         super.copyFromDomain(curricularCourse2Enroll);
         if (curricularCourse2Enroll != null) {
-            setInfoCurricularCourse(InfoCurricularCourse
-                    .newInfoFromDomain(curricularCourse2Enroll
-                            .getCurricularCourse()));
+            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourse2Enroll
+                    .getCurricularCourse()));
         }
     }
 

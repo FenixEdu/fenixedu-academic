@@ -135,7 +135,8 @@
 			<include name="**/oscache.properties"/>
 			<include name="**/OJB.properties"/>
 			<include name="**/SMSConfiguration.properties"/>
-			<include name="**/logAnalyser.properties"/>
+			<include name="**/**/logAnalyser.properties"/>
+			<include name="**/GratuitySituationCreatorTask.properties"/>
 
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
@@ -205,6 +206,12 @@
                  token="@ftp.IST.server.address@" 
                  property="ftp.IST.server.address"/>
             <replacefilter 
+                 token="@ftp.IST.scp.command@" 
+                 property="ftp.IST.scp.command"/>
+		  <replacefilter 
+                 token="@ftp.IST.scp.args@" 
+                 property="ftp.IST.scp.args"/>
+            <replacefilter 
                  token="@ftp.degree.grades.server.user@" 
                  property="ftp.degree.grades.server.user"/>
 		  <replacefilter 
@@ -267,6 +274,8 @@
 			<replacefilter token="@sms.delivery.password@"
 		    			   property="sms.delivery.password"/>
                            
+			<replacefilter token="@gratuity.situation.creator.task.hour@"
+		    			   property="gratuity.situation.creator.task.hour"/>
                       
 
 		</replace>
@@ -395,11 +404,15 @@
 		<replace dir="${build.web-client}"
 				 propertyFile="build.properties">
 			<include name="**/**/*.xml"/>
+			<include name="**/web.xml"/>
 			<include name="**/**/ApplicationResources.properties"/>
+			<include name="**/**/ManagerResources.properties"/>
             <include name="**/**/IstFtpServerConfig.properties"/>
 			<include name="**/**/logAnalyser.properties"/>
 			<include name="index.html"/>
 			<include name="**/degreeAdministrativeOffice/enrolment/withRules/*.jsp"/>
+            <include name="**/student/enrollment/warning.jsp"/>
+			<include name="**/**/*.jsp"/>
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
          <replacefilter 
@@ -411,6 +424,12 @@
 		  <replacefilter 
 		    token="@ftp.IST.server.address@" 
 		    property="ftp.IST.server.address"/>
+		  <replacefilter 
+		    token="@ftp.IST.scp.command@" 
+		    property="ftp.IST.scp.command"/>
+		  <replacefilter 
+		    token="@ftp.IST.scp.args@" 
+		    property="ftp.IST.scp.args"/>
 			<replacefilter token="@application@" 
 		    			   property="application"/>
 
@@ -429,11 +448,15 @@
 		    property="index.html.link"/>
 
 		<replacefilter 
-		    token="@request.capture.filename@" 
-		    property="request.capture.filename"/>
+			    token="@institution.url@" 
+			    property="institution.url"/>
 
              <replacefilter token="@enrollment.faq.url@"
 		    			   property="enrollment.faq.url"/>    
+
+		<replacefilter 
+		    token="@request.capture.filename@" 
+		    property="request.capture.filename"/>
 
 		</replace>
 	</target>

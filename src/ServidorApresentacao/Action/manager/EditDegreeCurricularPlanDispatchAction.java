@@ -36,16 +36,10 @@ import Util.MarkType;
  * @author lmac1
  */
 
-public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
-{
+public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareEdit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) form;
@@ -56,29 +50,21 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
 
         Object args[] = { degreeCurricularPlanId };
 
-        try
-        {
-            oldInfoDegreeCP =
-                (InfoDegreeCurricularPlan) ServiceUtils.executeService(
-                    userView,
-                    "ReadDegreeCurricularPlan",
-                    args);
+        try {
+            oldInfoDegreeCP = (InfoDegreeCurricularPlan) ServiceUtils.executeService(userView,
+                    "ReadDegreeCurricularPlan", args);
 
-        } catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(
-                "message.nonExistingDegreeCurricularPlan",
-                mapping.findForward("readDegree"));
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping
+                    .findForward("readDegree"));
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
         dynaForm.set("name", oldInfoDegreeCP.getName());
         dynaForm.set("state", oldInfoDegreeCP.getState().getDegreeState().toString());
 
-        if (oldInfoDegreeCP.getInitialDate() != null)
-        {
+        if (oldInfoDegreeCP.getInitialDate() != null) {
 
             JavaDate2SqlDateFieldConversion iJavaDate = new JavaDate2SqlDateFieldConversion();
             Date iSqlDate = (Date) iJavaDate.javaToSql(oldInfoDegreeCP.getInitialDate());
@@ -93,8 +79,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
             dynaForm.set("initialDate", initialDateString);
         }
 
-        if (oldInfoDegreeCP.getEndDate() != null)
-        {
+        if (oldInfoDegreeCP.getEndDate() != null) {
 
             JavaDate2SqlDateFieldConversion javaDate = new JavaDate2SqlDateFieldConversion();
             Date sqlDate = (Date) javaDate.javaToSql(oldInfoDegreeCP.getEndDate());
@@ -110,10 +95,13 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
 
         }
 
-        dynaForm.set("degreeDuration", oldInfoDegreeCP.getDegreeDuration().toString());
-        dynaForm.set(
-            "minimalYearForOptionalCourses",
-            oldInfoDegreeCP.getMinimalYearForOptionalCourses().toString());
+        if (oldInfoDegreeCP.getDegreeDuration() != null) {
+            dynaForm.set("degreeDuration", oldInfoDegreeCP.getDegreeDuration().toString());
+        }
+        if (oldInfoDegreeCP.getMinimalYearForOptionalCourses() != null) {
+            dynaForm.set("minimalYearForOptionalCourses", oldInfoDegreeCP
+                    .getMinimalYearForOptionalCourses().toString());
+        }
 
         if (oldInfoDegreeCP.getNeededCredits() != null)
             dynaForm.set("neededCredits", oldInfoDegreeCP.getNeededCredits().toString());
@@ -126,13 +114,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
         return mapping.findForward("editDegreeCP");
     }
 
-    public ActionForward edit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaValidatorForm) form;
@@ -148,8 +131,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
         String endDateString = (String) dynaForm.get("endDate");
 
         Integer degreeDuration = new Integer((String) dynaForm.get("degreeDuration"));
-        Integer minimalYearForOptionalCourses =
-            new Integer((String) dynaForm.get("minimalYearForOptionalCourses"));
+        Integer minimalYearForOptionalCourses = new Integer((String) dynaForm
+                .get("minimalYearForOptionalCourses"));
 
         String neededCreditsString = (String) dynaForm.get("neededCredits");
 
@@ -159,8 +142,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
         DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
 
         Calendar initialDate = Calendar.getInstance();
-        if (initialDateString.compareTo("") != 0)
-        {
+        if (initialDateString.compareTo("") != 0) {
             String[] initialDateTokens = initialDateString.split("/");
             initialDate.set(Calendar.DAY_OF_MONTH, (new Integer(initialDateTokens[0])).intValue());
             initialDate.set(Calendar.MONTH, (new Integer(initialDateTokens[1])).intValue() - 1);
@@ -169,8 +151,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
         }
 
         Calendar endDate = Calendar.getInstance();
-        if (endDateString.compareTo("") != 0)
-        {
+        if (endDateString.compareTo("") != 0) {
             String[] endDateTokens = endDateString.split("/");
             endDate.set(Calendar.DAY_OF_MONTH, (new Integer(endDateTokens[0])).intValue());
             endDate.set(Calendar.MONTH, (new Integer(endDateTokens[1])).intValue() - 1);
@@ -181,22 +162,19 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
         if (endDate.before(initialDate))
             throw new InvalidArgumentsActionException("message.manager.date.restriction");
 
-        if (neededCreditsString.compareTo("") != 0)
-        {
+        if (neededCreditsString.compareTo("") != 0) {
             Double neededCredits = new Double(neededCreditsString);
             newInfoDegreeCP.setNeededCredits(neededCredits);
         }
 
-        if (markTypeString.compareTo("") != 0)
-        {
+        if (markTypeString.compareTo("") != 0) {
 
             Integer markTypeInt = new Integer(markTypeString);
             MarkType markType = new MarkType(markTypeInt);
             newInfoDegreeCP.setMarkType(markType);
         }
 
-        if (numerusClaususString.compareTo("") != 0)
-        {
+        if (numerusClaususString.compareTo("") != 0) {
             Integer numerusClausus = new Integer(numerusClaususString);
             newInfoDegreeCP.setNumerusClausus(numerusClausus);
         }
@@ -209,18 +187,14 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction
 
         Object args[] = { newInfoDegreeCP };
 
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "EditDegreeCurricularPlan", args);
 
-        } catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException("message.manager.existing.degree.curricular.plan");
-        } catch (NonExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("readDegree"));
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
         return mapping.findForward("readDegreeCP");

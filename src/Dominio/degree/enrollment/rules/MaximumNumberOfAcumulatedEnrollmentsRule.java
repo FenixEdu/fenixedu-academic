@@ -3,6 +3,9 @@ package Dominio.degree.enrollment.rules;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
@@ -12,55 +15,63 @@ import Dominio.degree.enrollment.CurricularCourse2Enroll;
  * @author David Santos in Jun 22, 2004
  */
 
-public class MaximumNumberOfAcumulatedEnrollmentsRule implements IEnrollmentRule
-{
-	private IStudentCurricularPlan studentCurricularPlan;
-	private IExecutionPeriod executionPeriod;
+public class MaximumNumberOfAcumulatedEnrollmentsRule implements IEnrollmentRule {
+    private IStudentCurricularPlan studentCurricularPlan;
 
-	public MaximumNumberOfAcumulatedEnrollmentsRule(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod)
-	{
-		this.studentCurricularPlan = studentCurricularPlan;
-		this.executionPeriod = executionPeriod;
-	}
+    private IExecutionPeriod executionPeriod;
 
-	public List apply(List curricularCoursesToBeEnrolledIn)
-	{
-		List curricularCoursesToRemove = new ArrayList();
-		List allStudentEnrolledEnrollments = this.studentCurricularPlan
+    public MaximumNumberOfAcumulatedEnrollmentsRule(IStudentCurricularPlan studentCurricularPlan,
+            IExecutionPeriod executionPeriod) {
+        this.studentCurricularPlan = studentCurricularPlan;
+        this.executionPeriod = executionPeriod;
+    }
+
+    public List apply(List curricularCoursesToBeEnrolledIn) {
+        List curricularCoursesToRemove = new ArrayList();
+        List allStudentEnrolledEnrollments = this.studentCurricularPlan
                 .getAllStudentEnrolledEnrollmentsInExecutionPeriod(this.executionPeriod);
 
-		int totalNAC = 0;
-		int size = allStudentEnrolledEnrollments.size();
+        int totalNAC = 0;
+        int size = allStudentEnrolledEnrollments.size();
 
-		for(int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             IEnrollment enrollment = (IEnrollment) allStudentEnrolledEnrollments.get(i);
             totalNAC += enrollment.getAccumulatedWeight().intValue();
         }
-		
-		int maxNAC = this.studentCurricularPlan.getMaximumNumberOfAcumulatedEnrollments().intValue();
-		
-		if (totalNAC >= maxNAC)
-		{
-			return new ArrayList();
-		}
 
-		int availableNACToEnroll = maxNAC - totalNAC;
+        int maxNAC = this.studentCurricularPlan.getMaximumNumberOfAcumulatedEnrollments().intValue();
 
-		size = curricularCoursesToBeEnrolledIn.size();
-		for(int i = 0; i < size; i++)
-        {
-            CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) curricularCoursesToBeEnrolledIn.get(i);
-            int ac = this.studentCurricularPlan.getCurricularCourseAcumulatedEnrollments(
-                    curricularCourse2Enroll.getCurricularCourse()).intValue();
-            if (ac > availableNACToEnroll)
-            {
-            	curricularCoursesToRemove.add(curricularCourse2Enroll);
+        if (totalNAC >= maxNAC) {
+
+            List result = (List) CollectionUtils.select(curricularCoursesToBeEnrolledIn,
+                    new Predicate() {
+                        public boolean evaluate(Object obj) {
+                            CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
+                            return curricularCourse2Enroll.getCurricularCourse().getEnrollmentWeigth()
+                                    .intValue() == 0;
+                        }
+                    });
+
+            if (result.isEmpty()) {
+                return new ArrayList();
             }
         }
 
-   		curricularCoursesToBeEnrolledIn.removeAll(curricularCoursesToRemove);
+        int availableNACToEnroll = maxNAC - totalNAC;
 
-		return curricularCoursesToBeEnrolledIn;
-	}
+        size = curricularCoursesToBeEnrolledIn.size();
+        for (int i = 0; i < size; i++) {
+            CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) curricularCoursesToBeEnrolledIn
+                    .get(i);
+            int ac = this.studentCurricularPlan.getCurricularCourseAcumulatedEnrollments(
+                    curricularCourse2Enroll.getCurricularCourse()).intValue();
+            if (ac > availableNACToEnroll) {
+                curricularCoursesToRemove.add(curricularCourse2Enroll);
+            }
+        }
+
+        curricularCoursesToBeEnrolledIn.removeAll(curricularCoursesToRemove);
+
+        return curricularCoursesToBeEnrolledIn;
+    }
 }

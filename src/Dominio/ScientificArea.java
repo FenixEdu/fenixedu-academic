@@ -10,64 +10,57 @@ import java.util.List;
 
 /**
  * 
- * @author  Nuno Correia
- * @author  Ricardo Rodrigues
+ * @author Nuno Correia
+ * @author Ricardo Rodrigues
  */
 
-public class ScientificArea extends DomainObject implements IScientificArea
-{
+public class ScientificArea extends DomainObject implements IScientificArea {
     private String name;
+
     private List areaCurricularCourseGroups;
 
-	public ScientificArea()
-	{
-	}
-	
+    public ScientificArea() {
+    }
+
     /**
      * @return
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
     /**
      * @param name
      */
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-	/**
-	 * @return Returns the curricularCourseGroups.
-	 */
-	public List getAreaCurricularCourseGroups()
-	{
-		return areaCurricularCourseGroups;
-	}
+    /**
+     * @return Returns the curricularCourseGroups.
+     */
+    public List getAreaCurricularCourseGroups() {
+        return areaCurricularCourseGroups;
+    }
 
-	/**
-	 * @param curricularCourseGroups The curricularCourseGroups to set.
-	 */
-	public void setAreaCurricularCourseGroups(List curricularCourseGroups)
-	{
-		this.areaCurricularCourseGroups = curricularCourseGroups;
-	}
+    /**
+     * @param curricularCourseGroups
+     *            The curricularCourseGroups to set.
+     */
+    public void setAreaCurricularCourseGroups(List curricularCourseGroups) {
+        this.areaCurricularCourseGroups = curricularCourseGroups;
+    }
 
-	public String toString()
-	{
-		return "name[" + name + "]";
-	}
+    public String toString() {
+        return "name[" + name + "]";
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof IScientificArea)
-		{
-			IScientificArea scientificArea = (IScientificArea) obj;
-			result = scientificArea.getName().equals(getName());            
-		}
-		return result;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IScientificArea) {
+            IScientificArea scientificArea = (IScientificArea) obj;
+            result = scientificArea.getName().equals(getName());
+        }
+        return result;
+    }
 }

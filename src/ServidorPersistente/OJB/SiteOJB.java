@@ -7,8 +7,8 @@
 package ServidorPersistente.OJB;
 
 /**
- *
- * @author  ars
+ * 
+ * @author ars
  */
 
 //import java.util.ArrayList;
@@ -22,31 +22,26 @@ import Dominio.Site;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSite;
 
-public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
+public class SiteOJB extends PersistentObjectOJB implements IPersistentSite {
 
-	/** Creates a new instance of SitioOJB */
-	public SiteOJB() {
-	}
+    /** Creates a new instance of SitioOJB */
+    public SiteOJB() {
+    }
 
-	
-	public ISite readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
-		return (ISite) queryObject(Site.class, crit);
+    public ISite readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+        return (ISite) queryObject(Site.class, crit);
 
-	}
+    }
 
-	public List readAll() throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		return queryList(Site.class,crit);
-	}
+    public List readAll() throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        return queryList(Site.class, crit);
+    }
 
-	
-
-	public void delete(ISite site) throws ExcepcaoPersistencia {
-		super.delete(site);
-	}
-
-	
+    public void delete(ISite site) throws ExcepcaoPersistencia {
+        super.delete(site);
+    }
 
 }

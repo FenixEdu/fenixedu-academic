@@ -13,8 +13,7 @@ import Dominio.IMark;
 /**
  * @author Angela
  */
-public interface IPersistentMark extends IPersistentObject
-{
+public interface IPersistentMark extends IPersistentObject {
 
     public List readAll() throws ExcepcaoPersistencia;
 

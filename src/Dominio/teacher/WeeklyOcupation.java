@@ -12,155 +12,152 @@ import Dominio.ITeacher;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation
-{
+public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation {
     private Integer research;
+
     private Integer management;
+
     private Integer other;
+
     private Integer lecture;
+
     private Integer support;
+
     private ITeacher teacher;
+
     private Integer keyTeacher;
+
     private Date lastModificationDate;
 
     /**
-     * 
+     *  
      */
-    public WeeklyOcupation()
-    {
+    public WeeklyOcupation() {
     }
-    
-    public WeeklyOcupation(Integer idInternal)
-    {
+
+    public WeeklyOcupation(Integer idInternal) {
         setIdInternal(idInternal);
     }
-    
+
     /**
      * @return Returns the other.
      */
-    public Integer getOther()
-    {
+    public Integer getOther() {
         return other;
     }
 
     /**
-     * @param other The other to set.
+     * @param other
+     *            The other to set.
      */
-    public void setOther(Integer other)
-    {
+    public void setOther(Integer other) {
         this.other = other;
     }
 
     /**
      * @return Returns the research.
      */
-    public Integer getResearch()
-    {
+    public Integer getResearch() {
         return research;
     }
 
     /**
-     * @param research The research to set.
+     * @param research
+     *            The research to set.
      */
-    public void setResearch(Integer research)
-    {
+    public void setResearch(Integer research) {
         this.research = research;
     }
+
     /**
      * @return Returns the teacher.
      */
-    public ITeacher getTeacher()
-    {
+    public ITeacher getTeacher() {
         return teacher;
     }
 
     /**
-     * @param teacher The teacher to set.
+     * @param teacher
+     *            The teacher to set.
      */
-    public void setTeacher(ITeacher teacher)
-    {
+    public void setTeacher(ITeacher teacher) {
         this.teacher = teacher;
     }
 
     /**
      * @return Returns the keyTeacher.
      */
-    public Integer getKeyTeacher()
-    {
+    public Integer getKeyTeacher() {
         return keyTeacher;
     }
 
     /**
-     * @param keyTeacher The keyTeacher to set.
+     * @param keyTeacher
+     *            The keyTeacher to set.
      */
-    public void setKeyTeacher(Integer keyTeacher)
-    {
+    public void setKeyTeacher(Integer keyTeacher) {
         this.keyTeacher = keyTeacher;
     }
 
     /**
      * @return Returns the management.
      */
-    public Integer getManagement()
-    {
+    public Integer getManagement() {
         return management;
     }
 
     /**
-     * @param management The management to set.
+     * @param management
+     *            The management to set.
      */
-    public void setManagement(Integer management)
-    {
+    public void setManagement(Integer management) {
         this.management = management;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
     /**
      * @return Returns the lecture.
      */
-    public Integer getLecture()
-    {
+    public Integer getLecture() {
         return lecture;
     }
 
     /**
-     * @param lecture The lecture to set.
+     * @param lecture
+     *            The lecture to set.
      */
-    public void setLecture(Integer lecture)
-    {
+    public void setLecture(Integer lecture) {
         this.lecture = lecture;
     }
 
     /**
      * @return Returns the support.
      */
-    public Integer getSupport()
-    {
+    public Integer getSupport() {
         return support;
     }
 
     /**
-     * @param support The support to set.
+     * @param support
+     *            The support to set.
      */
-    public void setSupport(Integer support)
-    {
+    public void setSupport(Integer support) {
         this.support = support;
     }
 

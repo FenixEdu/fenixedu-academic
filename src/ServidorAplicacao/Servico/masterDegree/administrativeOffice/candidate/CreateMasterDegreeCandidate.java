@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.CandidateSituation;
@@ -18,12 +19,11 @@ import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.person.GenerateUsername;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -37,33 +37,9 @@ import Util.State;
  * @author Joana Mota (jccm@rnl.ist.utl.pt) modified by Fernanda Quitério
  *  
  */
-public class CreateMasterDegreeCandidate implements IServico {
+public class CreateMasterDegreeCandidate implements IService {
 
-    private static CreateMasterDegreeCandidate servico = new CreateMasterDegreeCandidate();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static CreateMasterDegreeCandidate getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private CreateMasterDegreeCandidate() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "CreateMasterDegreeCandidate";
-    }
-
-    public InfoMasterDegreeCandidate run(
-            InfoMasterDegreeCandidate newMasterDegreeCandidate)
+    public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate)
             throws Exception {
 
         IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
@@ -74,23 +50,19 @@ public class CreateMasterDegreeCandidate implements IServico {
 
         try {
             sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente executionDegreeDAO = sp
-                    .getICursoExecucaoPersistente();
-            IPersistentMasterDegreeCandidate masterDegreeDAO = sp
-                    .getIPersistentMasterDegreeCandidate();
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+            IPersistentMasterDegreeCandidate masterDegreeDAO = sp.getIPersistentMasterDegreeCandidate();
 
             // Read the Execution of this degree in the current execution Year
-            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO
-                    .readByOID(CursoExecucao.class, newMasterDegreeCandidate
-                            .getInfoExecutionDegree().getIdInternal());
+            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO.readByOID(
+                    CursoExecucao.class, newMasterDegreeCandidate.getInfoExecutionDegree()
+                            .getIdInternal());
 
             IMasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeDAO
                     .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-                            newMasterDegreeCandidate.getInfoPerson()
-                                    .getNumeroDocumentoIdentificacao(),
-                            newMasterDegreeCandidate.getInfoPerson()
-                                    .getTipoDocumentoIdentificacao().getTipo(),
-                            executionDegree, newMasterDegreeCandidate
+                            newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
+                            newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao()
+                                    .getTipo(), executionDegree, newMasterDegreeCandidate
                                     .getSpecialization());
 
             if (masterDegreeCandidateFromDB != null) {
@@ -99,10 +71,8 @@ public class CreateMasterDegreeCandidate implements IServico {
 
             // Check if the person Exists
             person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
-                    newMasterDegreeCandidate.getInfoPerson()
-                            .getNumeroDocumentoIdentificacao(),
-                    newMasterDegreeCandidate.getInfoPerson()
-                            .getTipoDocumentoIdentificacao());
+                    newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
+                    newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
 
             if (person != null) {
                 sp.getIPessoaPersistente().simpleLockWrite(person);
@@ -114,16 +84,13 @@ public class CreateMasterDegreeCandidate implements IServico {
             List situations = new ArrayList();
             ICandidateSituation candidateSituation = new CandidateSituation();
 
-            sp.getIPersistentCandidateSituation().simpleLockWrite(
-                    candidateSituation);
+            sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
             //			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
 
             // First candidate situation
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
-            candidateSituation
-                    .setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
-            candidateSituation.setSituation(new SituationName(
-                    SituationName.PRE_CANDIDATO));
+            candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
+            candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
             candidateSituation.setValidation(new State(State.ACTIVE));
 
             Calendar actualDate = Calendar.getInstance();
@@ -135,19 +102,14 @@ public class CreateMasterDegreeCandidate implements IServico {
 
             masterDegreeCandidate.setSituations(situations);
             masterDegreeCandidate.setPerson(person);
-            masterDegreeCandidate.setSpecialization(newMasterDegreeCandidate
-                    .getSpecialization());
+            masterDegreeCandidate.setSpecialization(newMasterDegreeCandidate.getSpecialization());
             masterDegreeCandidate.setExecutionDegree(executionDegree);
 
             // Generate the Candidate's number
-            Integer number = sp
-                    .getIPersistentMasterDegreeCandidate()
-                    .generateCandidateNumber(
-                            masterDegreeCandidate.getExecutionDegree()
-                                    .getExecutionYear().getYear(),
-                            masterDegreeCandidate.getExecutionDegree()
-                                    .getCurricularPlan().getDegree().getSigla(),
-                            masterDegreeCandidate.getSpecialization());
+            Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
+                    masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear(),
+                    masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree()
+                            .getSigla(), masterDegreeCandidate.getSpecialization());
 
             masterDegreeCandidate.setCandidateNumber(number);
 
@@ -156,32 +118,25 @@ public class CreateMasterDegreeCandidate implements IServico {
                 person = new Pessoa();
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
-                person.setNome(newMasterDegreeCandidate.getInfoPerson()
-                        .getNome());
-                person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate
-                        .getInfoPerson().getNumeroDocumentoIdentificacao());
-                person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate
-                        .getInfoPerson().getTipoDocumentoIdentificacao());
+                person.setNome(newMasterDegreeCandidate.getInfoPerson().getNome());
+                person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson()
+                        .getNumeroDocumentoIdentificacao());
+                person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson()
+                        .getTipoDocumentoIdentificacao());
 
                 // Generate Person Username
-                String username = GenerateUsername
-                        .getCandidateUsername(masterDegreeCandidate);
+                String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
 
                 person.setUsername(username);
 
                 // Give the Person Role
                 person.setPersonRoles(new ArrayList());
-                person.getPersonRoles()
-                        .add(
-                                sp.getIPersistentRole().readByRoleType(
-                                        RoleType.PERSON));
+                person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
             }
             if (!person.getPersonRoles().contains(
-                    sp.getIPersistentRole().readByRoleType(
-                            RoleType.MASTER_DEGREE_CANDIDATE))) {
+                    sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE))) {
                 person.getPersonRoles().add(
-                        sp.getIPersistentRole().readByRoleType(
-                                RoleType.MASTER_DEGREE_CANDIDATE));
+                        sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
             }
             masterDegreeCandidate.setPerson(person);
 
@@ -191,8 +146,7 @@ public class CreateMasterDegreeCandidate implements IServico {
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }

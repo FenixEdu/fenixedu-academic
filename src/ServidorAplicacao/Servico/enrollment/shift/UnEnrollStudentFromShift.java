@@ -33,27 +33,32 @@ public class UnEnrollStudentFromShift implements IService {
      *         StudentNotFoundServiceException
      * @throws FenixServiceException
      */
-    public Boolean run(Integer studentId, Integer shiftId)
-            throws StudentNotFoundServiceException,
-            ShiftNotFoundServiceException,
-            ShiftEnrolmentNotFoundServiceException, FenixServiceException {
+    public Boolean run(Integer studentId, Integer shiftId) throws StudentNotFoundServiceException,
+            ShiftNotFoundServiceException, ShiftEnrolmentNotFoundServiceException, FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-            ITurno shift = (ITurno) persistentSupport.getITurnoPersistente()
-                    .readByOID(Turno.class, shiftId);
-            if (shift == null) { throw new ShiftNotFoundServiceException(); }
+            ITurno shift = (ITurno) persistentSupport.getITurnoPersistente().readByOID(Turno.class,
+                    shiftId);
+            if (shift == null) {
+                throw new ShiftNotFoundServiceException();
+            }
 
-            IStudent student = (IStudent) persistentSupport
-                    .getIPersistentStudent()
-                    .readByOID(Student.class, studentId);
-            if (student == null) { throw new StudentNotFoundServiceException(); }
+            IStudent student = (IStudent) persistentSupport.getIPersistentStudent().readByOID(
+                    Student.class, studentId);
+            if (student == null) {
+                throw new StudentNotFoundServiceException();
+            }
 
-            ITurnoAluno studentShift = persistentSupport
-                    .getITurnoAlunoPersistente().readByTurnoAndAluno(shift,
-                            student);
-            if (studentShift == null) { throw new ShiftEnrolmentNotFoundServiceException(); }
+            if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
+                throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+            }
+
+            ITurnoAluno studentShift = persistentSupport.getITurnoAlunoPersistente()
+                    .readByTurnoAndAluno(shift, student);
+            if (studentShift == null) {
+                throw new ShiftEnrolmentNotFoundServiceException();
+            }
 
             persistentSupport.getITurnoAlunoPersistente().delete(studentShift);
             return new Boolean(true);
@@ -68,8 +73,7 @@ public class UnEnrollStudentFromShift implements IService {
     public class ShiftNotFoundServiceException extends FenixServiceException {
     }
 
-    public class ShiftEnrolmentNotFoundServiceException extends
-            FenixServiceException {
+    public class ShiftEnrolmentNotFoundServiceException extends FenixServiceException {
     }
 
 }

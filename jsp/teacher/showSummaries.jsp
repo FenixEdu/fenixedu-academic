@@ -138,7 +138,6 @@
 					<bean:write name="summary" property="infoProfessorship.infoTeacher.infoPerson.nome" />&nbsp;
 				</logic:notEmpty>
 				<logic:notEmpty name="summary" property="infoTeacher">
-				<bean:message key="label.teacher.abbreviation" />&nbsp;
 					<bean:message key="label.teacher.abbreviation" />&nbsp;								
 					<bean:write name="summary" property="infoTeacher.infoPerson.nome" />&nbsp;			
 				</logic:notEmpty>

@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Serviço ApagarSala.
- *
+ * 
  * @author tfc130
- **/
+ */
 import DataBeans.RoomKey;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
@@ -22,65 +22,65 @@ import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
 public class ApagarSala implements IServico {
 
-	private static ApagarSala _servico = new ApagarSala();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ApagarSala getService() {
-		return _servico;
-	}
+    private static ApagarSala _servico = new ApagarSala();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ApagarSala() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ApagarSala getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ApagarSala";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ApagarSala() {
+    }
 
-	public Object run(RoomKey keySala) throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ApagarSala";
+    }
 
-		ISala sala1 = null;
-		boolean result = false;
+    public Object run(RoomKey keySala) throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			sala1 = sp.getISalaPersistente().readByName(keySala.getNomeSala());
-			if (sala1 != null) {
-				sp.getISalaPersistente().delete(sala1);
-				result = true;
-			}
-		} catch (notAuthorizedPersistentDeleteException ex) {
-			throw new NotAuthorizedServiceDeleteRoomException(ex);
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+        ISala sala1 = null;
+        boolean result = false;
 
-		return new Boolean(result);
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            sala1 = sp.getISalaPersistente().readByName(keySala.getNomeSala());
+            if (sala1 != null) {
+                sp.getISalaPersistente().delete(sala1);
+                result = true;
+            }
+        } catch (notAuthorizedPersistentDeleteException ex) {
+            throw new NotAuthorizedServiceDeleteRoomException(ex);
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
 
-	public class NotAuthorizedServiceDeleteRoomException
-		extends FenixServiceException {
+        return new Boolean(result);
+    }
 
-		/**
-		 * 
-		 */
-		private NotAuthorizedServiceDeleteRoomException() {
-			super();
-		}
+    public class NotAuthorizedServiceDeleteRoomException extends FenixServiceException {
 
-		/**
-		 * @param cause
-		 */
-		NotAuthorizedServiceDeleteRoomException(Throwable cause) {
-			super(cause);
-		}
+        /**
+         *  
+         */
+        private NotAuthorizedServiceDeleteRoomException() {
+            super();
+        }
 
-	}
+        /**
+         * @param cause
+         */
+        NotAuthorizedServiceDeleteRoomException(Throwable cause) {
+            super(cause);
+        }
+
+    }
 
 }

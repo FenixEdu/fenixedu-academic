@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
@@ -23,7 +24,6 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -42,33 +42,10 @@ import Util.EnrolmentEvaluationState;
  * @author Fernanda Quitério 10/07/2003
  *  
  */
-public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
+public class ReadStudentsFinalEvaluationForConfirmation implements IService {
 
-    private static ReadStudentsFinalEvaluationForConfirmation servico = new ReadStudentsFinalEvaluationForConfirmation();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadStudentsFinalEvaluationForConfirmation getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadStudentsFinalEvaluationForConfirmation() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ReadStudentsFinalEvaluationForConfirmation";
-    }
-
-    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode,
-            String yearString) throws FenixServiceException {
+    public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString)
+            throws FenixServiceException {
 
         List infoEnrolmentEvaluations = new ArrayList();
         InfoTeacher infoTeacher = new InfoTeacher();
@@ -77,24 +54,20 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
                     .getIPersistentEnrolmentEvaluation();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
-            IPersistentEnrollment persistentEnrolment = sp
-                    .getIPersistentEnrolment();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, curricularCourseCode);
 
             List enrolments = null;
             if (yearString != null) {
-                enrolments = persistentEnrolment.readByCurricularCourseAndYear(
-                        curricularCourse, yearString);
+                enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourse,
+                        yearString);
             } else {
-                enrolments = persistentEnrolment
-                        .readByCurricularCourse(curricularCourse);
+                enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse);
             }
 
             List enrolmentEvaluations = new ArrayList();
@@ -129,22 +102,20 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
                 // responsible for all evaluations
                 // for this
                 //				curricularCourseScope
-                IPessoa person = ((IEnrolmentEvaluation) temporaryEnrolmentEvaluations
-                        .get(0)).getPersonResponsibleForGrade();
-                ITeacher teacher = persistentTeacher
-                        .readTeacherByUsername(person.getUsername());
+                IPessoa person = ((IEnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
+                        .getPersonResponsibleForGrade();
+                ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
                 infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
                 //				transform evaluations in databeans
-                ListIterator iter = temporaryEnrolmentEvaluations
-                        .listIterator();
+                ListIterator iter = temporaryEnrolmentEvaluations.listIterator();
                 while (iter.hasNext()) {
-                    IEnrolmentEvaluation elem = (IEnrolmentEvaluation) iter
-                            .next();
+                    IEnrolmentEvaluation elem = (IEnrolmentEvaluation) iter.next();
                     InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
                             .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(elem);
 
-                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(elem.getEnrolment());
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+                            .newInfoFromDomain(elem.getEnrolment());
                     infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
                     infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
                 }
@@ -152,47 +123,42 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
             if (infoEnrolmentEvaluations.size() == 0) {
                 throw new NonExistingServiceException();
             }
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readActualExecutionPeriod();
-            infoExecutionPeriod = (InfoExecutionPeriod) Cloner
-                    .get(executionPeriod);
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
-        infoSiteEnrolmentEvaluation
-                .setEnrolmentEvaluations(infoEnrolmentEvaluations);
+        infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
         infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
-        Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations
-                .get(0)).getGradeAvailableDate();
+        Date evaluationDate = ((InfoEnrolmentEvaluation) infoEnrolmentEvaluations.get(0))
+                .getGradeAvailableDate();
         infoSiteEnrolmentEvaluation.setLastEvaluationDate(evaluationDate);
         infoSiteEnrolmentEvaluation.setInfoExecutionPeriod(infoExecutionPeriod);
 
         return infoSiteEnrolmentEvaluation;
     }
 
-    private List checkForInvalidSituations(List enrolmentEvaluations)
-            throws ExistingServiceException, InvalidSituationServiceException {
+    private List checkForInvalidSituations(List enrolmentEvaluations) throws ExistingServiceException,
+            InvalidSituationServiceException {
         //			evaluations can only be confirmated if they are not already
         // confirmated
-        List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(
-                enrolmentEvaluations, new Predicate() {
+        List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations,
+                new Predicate() {
                     public boolean evaluate(Object arg0) {
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
-                        if (enrolmentEvaluation.getEnrolmentEvaluationState()
-                                .equals(EnrolmentEvaluationState.TEMPORARY_OBJ))
+                        if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(
+                                EnrolmentEvaluationState.TEMPORARY_OBJ))
                             return true;
                         return false;
                     }
                 });
 
-        if (temporaryEnrolmentEvaluations == null
-                || temporaryEnrolmentEvaluations.size() == 0) {
+        if (temporaryEnrolmentEvaluations == null || temporaryEnrolmentEvaluations.size() == 0) {
             throw new ExistingServiceException();
         }
 
@@ -208,13 +174,11 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
                     }
                 });
         if (enrolmentEvaluationsWithoutGrade != null) {
-            if (enrolmentEvaluationsWithoutGrade.size() == temporaryEnrolmentEvaluations
-                    .size()) {
+            if (enrolmentEvaluationsWithoutGrade.size() == temporaryEnrolmentEvaluations.size()) {
                 throw new InvalidSituationServiceException();
             }
             temporaryEnrolmentEvaluations = (List) CollectionUtils.subtract(
-                    temporaryEnrolmentEvaluations,
-                    enrolmentEvaluationsWithoutGrade);
+                    temporaryEnrolmentEvaluations, enrolmentEvaluationsWithoutGrade);
         }
 
         return temporaryEnrolmentEvaluations;

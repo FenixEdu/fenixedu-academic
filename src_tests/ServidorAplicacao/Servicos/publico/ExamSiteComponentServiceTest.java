@@ -25,7 +25,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -38,29 +38,24 @@ import Util.Season;
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
  *  
  */
-public class ExamSiteComponentServiceTest extends ServiceTestCase
-{
+public class ExamSiteComponentServiceTest extends ServiceTestCase {
 
     /**
      * @param testName
      */
-    public ExamSiteComponentServiceTest(String nome)
-    {
+    public ExamSiteComponentServiceTest(String nome) {
         super(nome);
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ExamSiteComponentService";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/publico/testExamSiteComponentServiceDataSet.xml";
     }
 
-    protected Object[] getArguments()
-    {
+    protected Object[] getArguments() {
 
         InfoSiteExamMap bodyComponent = new InfoSiteExamMap();
         String executionYearName = "2003/2004";
@@ -71,70 +66,48 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
         curricularYears.add(new Integer(1));
         curricularYears.add(new Integer(2));
 
-        Object[] args =
-            {
-                bodyComponent,
-                executionYearName,
-                executionPeriodName,
-                degreeInitials,
-                nameDegreeCurricularPlan,
-                curricularYears };
+        Object[] args = { bodyComponent, executionYearName, executionPeriodName, degreeInitials,
+                nameDegreeCurricularPlan, curricularYears };
 
         return args;
     }
 
-    public void testExamSiteComponentService()
-    {
+    public void testExamSiteComponentService() {
         SiteView result = null;
         Object[] args = getArguments();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-            IPersistentExecutionCourse disciplinaExecucaoPersistente =
-                sp.getIPersistentExecutionCourse();
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+            IPersistentExecutionCourse disciplinaExecucaoPersistente = sp
+                    .getIPersistentExecutionCourse();
             IPersistentExam examePersistente = sp.getIPersistentExam();
             sp.iniciarTransaccao();
 
-            IExecutionYear executionYear =
-                persistentExecutionYear.readExecutionYearByName((String) args[1]);
+            IExecutionYear executionYear = persistentExecutionYear
+                    .readExecutionYearByName((String) args[1]);
 
-            IExecutionPeriod executionPeriod =
-                persistentExecutionPeriod.readByNameAndExecutionYear((String) args[2], executionYear);
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                    (String) args[2], executionYear);
 
-            ICursoExecucao executionDegree =
-                executionDegreeDAO.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-                    (String) args[3],
-                    (String) args[4],
-                    executionYear);
+            ICursoExecucao executionDegree = executionDegreeDAO
+                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear((String) args[3],
+                            (String) args[4], executionYear);
 
-            List executionCourses1ano =
-                disciplinaExecucaoPersistente.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                    new Integer(1),
-                    executionPeriod,
-                    executionDegree);
+            List executionCourses1ano = disciplinaExecucaoPersistente
+                    .readByCurricularYearAndExecutionPeriodAndExecutionDegree(new Integer(1),
+                            executionPeriod, executionDegree);
 
-            List executionCourses2ano =
-                disciplinaExecucaoPersistente.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                    new Integer(2),
-                    executionPeriod,
-                    executionDegree);
+            List executionCourses2ano = disciplinaExecucaoPersistente
+                    .readByCurricularYearAndExecutionPeriodAndExecutionDegree(new Integer(2),
+                            executionPeriod, executionDegree);
 
-            IExam exam1 =
-                new Exam(
-                    new GregorianCalendar(2004, 1, 27),
-                    new GregorianCalendar(2004, 1, 27, 10, 0),
-                    new GregorianCalendar(2004, 1, 27, 11, 30),
-                    new Season(1));
-            IExam exam2 =
-                new Exam(
-                    new GregorianCalendar(2004, 2, 17),
-                    new GregorianCalendar(2004, 1, 27, 10, 0),
-                    new GregorianCalendar(2004, 1, 27, 11, 30),
-                    new Season(1));
+            IExam exam1 = new Exam(new GregorianCalendar(2004, 1, 27), new GregorianCalendar(2004, 1,
+                    27, 10, 0), new GregorianCalendar(2004, 1, 27, 11, 30), new Season(1));
+            IExam exam2 = new Exam(new GregorianCalendar(2004, 2, 17), new GregorianCalendar(2004, 1,
+                    27, 10, 0), new GregorianCalendar(2004, 1, 27, 11, 30), new Season(1));
 
             examePersistente.simpleLockWrite(exam1);
             examePersistente.simpleLockWrite(exam2);
@@ -169,8 +142,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             executionCourse3.setAssociatedExams(list3);
             IExecutionCourse executionCourse4 = null;
 
-            for (int i = 3; i < executionCourses1ano.size(); i++)
-            {
+            for (int i = 3; i < executionCourses1ano.size(); i++) {
                 executionCourse4 = (ExecutionCourse) executionCourses1ano.get(i);
 
                 disciplinaExecucaoPersistente.simpleLockWrite(executionCourse4);
@@ -180,8 +152,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
                 executionCourse4.setAssociatedExams(list4);
             }
 
-            for (int i = 0; i < executionCourses2ano.size(); i++)
-            {
+            for (int i = 0; i < executionCourses2ano.size(); i++) {
                 IExecutionCourse executionCourse5 = (ExecutionCourse) executionCourses2ano.get(i);
 
                 disciplinaExecucaoPersistente.simpleLockWrite(executionCourse5);
@@ -195,7 +166,8 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             executionCourses1ano.addAll(executionCourses2ano);
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), getArguments());
+            result = (SiteView) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), getArguments());
 
             InfoSiteExamMap siteExamMap = (InfoSiteExamMap) result.getComponent();
 
@@ -205,8 +177,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             int size = executionCourses1ano.size();
 
             int n_exams = 0;
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) executionCourses.get(i);
 
                 List examsService = infoExecutionCourse.getAssociatedInfoExams();
@@ -215,8 +186,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
                 assertEquals(exams.size(), examsService.size());
                 n_exams = exams.size();
-                for (int j = 0; j < n_exams; j++)
-                {
+                for (int j = 0; j < n_exams; j++) {
                     InfoExam infoExam = (InfoExam) examsService.get(j);
                     IExam oldExam = (IExam) exams.get(j);
                     InfoExam newInfoExam = Cloner.copyIExam2InfoExam(oldExam);
@@ -226,29 +196,22 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testExamSiteComponentServiceExpectedDataSet.xml");
 
-            System.out.println(
-                "testExamSiteComponentService was SUCCESSFULY runned by class: "
+            System.out.println("testExamSiteComponentService was SUCCESSFULY runned by class: "
                     + this.getClass().getName());
 
-        } catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             ex.printStackTrace();
-            System.out.println(
-                "testExamSiteComponentService was UNSUCCESSFULY runned by class: "
+            System.out.println("testExamSiteComponentService was UNSUCCESSFULY runned by class: "
                     + this.getClass().getName());
             fail("testExamSiteComponentService");
-        } catch (OutOfMemoryError ex)
-        {
+        } catch (OutOfMemoryError ex) {
             ex.printStackTrace();
-            System.out.println(
-                "testExamSiteComponentService was UNSUCCESSFULY runned by class: "
+            System.out.println("testExamSiteComponentService was UNSUCCESSFULY runned by class: "
                     + this.getClass().getName());
             fail("testExamSiteComponentService");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println(
-                "testExamSiteComponentService was UNSUCCESSFULY runned by class: "
+            System.out.println("testExamSiteComponentService was UNSUCCESSFULY runned by class: "
                     + this.getClass().getName());
             fail("testExamSiteComponentService");
         }

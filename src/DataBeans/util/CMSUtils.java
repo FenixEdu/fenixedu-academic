@@ -18,11 +18,11 @@ import fileSuport.IFileSuport;
 
 /**
  * @author jmota
- *
+ *  
  */
 public class CMSUtils {
-    
-     /**
+
+    /**
      * @param fileSuport
      * @param item
      * @param infoItem
@@ -30,12 +30,10 @@ public class CMSUtils {
      */
     public static List getItemLinks(IFileSuport fileSuport, String slideName) throws SlideException {
         List files = fileSuport.getDirectoryFiles(slideName);
-        if (files != null && !files.isEmpty())
-        {
+        if (files != null && !files.isEmpty()) {
             List links = new ArrayList();
             Iterator iterFiles = files.iterator();
-            while (iterFiles.hasNext())
-            {
+            while (iterFiles.hasNext()) {
                 FileSuportObject file = (FileSuportObject) iterFiles.next();
                 InfoLink infoLink = new InfoLink();
                 infoLink.setLink(file.getFileName());
@@ -43,7 +41,7 @@ public class CMSUtils {
                 Collections.sort(links, new BeanComparator("linkName"));
                 links.add(infoLink);
             }
-           return links;
+            return links;
         }
         return null;
     }

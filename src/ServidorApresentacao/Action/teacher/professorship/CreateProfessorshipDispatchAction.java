@@ -23,6 +23,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
@@ -91,6 +92,8 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
 
         Collections.sort(executionDegrees, comparatorChain);
 
+        executionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(executionDegrees);
+
         return executionDegrees;
     }
 
@@ -143,11 +146,16 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
 
         List executionCourses = (List) executeService("ReadExecutionCoursesByExecutionDegree", request,
                 arguments);
-
+        Integer teacherNumber = Integer
+                .valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
+        Object[] args = { teacherNumber };
+        List executionCoursesToRemove = (List) executeService(
+                "ReadExecutionCoursesByTeacherResponsibility", request, args);
+        executionCourses.removeAll(executionCoursesToRemove);
         Collections.sort(executionCourses, new BeanComparator("nome"));
 
         request.setAttribute("executionCourses", executionCourses);
-        
+
     }
 
     private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,

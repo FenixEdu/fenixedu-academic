@@ -15,74 +15,66 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
-{
+public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase {
 
-    public EditExternalActivityTest(String testName)
-    {
+    public EditExternalActivityTest(String testName) {
         super(testName);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "EditExternalActivity";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
-	 */
-    protected String getDataSetFilePath()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+     */
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testEditExternalActivityDataSet.xml";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-	 */
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "user", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+     */
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-	 */
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = { "manager", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+     */
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "manager", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
-	 */
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = { "jccm", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
+     */
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-	 */
-    protected Object[] getAuthorizeArguments()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
+    protected Object[] getAuthorizeArguments() {
         Integer externalActivityId = new Integer(1);
 
         InfoExternalActivity infoExternalActivity = new InfoExternalActivity();
@@ -99,19 +91,16 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
-	 */
-    protected String getApplication()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testCreateNewExternalActivity()
-    {
-        try
-        {
+    public void testCreateNewExternalActivity() {
+        try {
             InfoExternalActivity infoExternalActivity = new InfoExternalActivity();
             infoExternalActivity.setActivity("viajar");
 
@@ -124,16 +113,13 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateExternalActivityDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Creating a new external activity " + ex);
         }
     }
 
-    public void testEditExistingExternalActivity()
-    {
-        try
-        {
+    public void testEditExistingExternalActivity() {
+        try {
             Integer externalActivityId = new Integer(1);
             InfoExternalActivity infoExternalActivity = new InfoExternalActivity();
             infoExternalActivity.setIdInternal(externalActivityId);
@@ -146,10 +132,9 @@ public class EditExternalActivityTest extends ServiceNeedsAuthenticationTestCase
             Object[] args = { externalActivityId, infoExternalActivity };
 
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-            
+
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditExternalActivityDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Editing an existing external activity " + ex);
         }
     }

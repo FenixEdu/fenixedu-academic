@@ -16,8 +16,7 @@ public class CourseType extends FenixUtil {
 
     public static final CourseType NORMAL_TYPE = new CourseType(NORMAL);
 
-    public static final CourseType EXTRA_CURRICULAR_TYPE = new CourseType(
-            EXTRA_CURRICULAR);
+    public static final CourseType EXTRA_CURRICULAR_TYPE = new CourseType(EXTRA_CURRICULAR);
 
     public static final String NORMAL_STRING = "Curricular";
 

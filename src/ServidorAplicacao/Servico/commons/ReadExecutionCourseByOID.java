@@ -5,14 +5,14 @@
  */
 package ServidorAplicacao.Servico.commons;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -21,56 +21,28 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class ReadExecutionCourseByOID implements IServico
-{
-
-    private static ReadExecutionCourseByOID service = new ReadExecutionCourseByOID();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionCourseByOID getService()
-    {
-        return service;
-    }
+public class ReadExecutionCourseByOID implements IService {
 
     /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadExecutionCourseByOID";
+     *  
+     */
+    public ReadExecutionCourseByOID() {
+
     }
 
-    public InfoExecutionCourse run(Integer oid) throws FenixServiceException
-    {
+    public InfoExecutionCourse run(Integer oid) throws FenixServiceException {
 
         InfoExecutionCourse result = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionDegreeDAO = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) executionDegreeDAO.readByOID(ExecutionCourse.class, oid);
-            if (executionCourse != null)
-            {
+            IPersistentObject persistentObject = sp.getIPersistentObject();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentObject.readByOID(
+                    ExecutionCourse.class, oid);
+            if (executionCourse != null) {
                 result = (InfoExecutionCourse) Cloner.get(executionCourse);
             }
 
-            //			result.setAssociatedInfoCurricularCourses(new ArrayList());
-            //			Iterator iterator =
-			// executionCourse.getAssociatedCurricularCourses().iterator();
-            //			while(iterator.hasNext()) {
-            //				ICurricularCourse curricularCourse = (ICurricularCourse)
-			// iterator.next();
-            //				result.getAssociatedInfoCurricularCourses().add(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
-            //			}
-            //			if (result.getAssociatedInfoCurricularCourses().isEmpty()) {
-            //				result.setAssociatedInfoCurricularCourses(null);
-            //			}
-
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 

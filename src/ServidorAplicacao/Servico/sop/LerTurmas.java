@@ -2,10 +2,10 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o LerTurmas
- *
+ * 
  * @author tfc130
  * @version
- **/
+ */
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,65 +25,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerTurmas implements IServico {
 
-	private static LerTurmas _servico = new LerTurmas();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static LerTurmas getService() {
-		return _servico;
-	}
+    private static LerTurmas _servico = new LerTurmas();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private LerTurmas() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static LerTurmas getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "LerTurmas";
-	}
+    /**
+     * The actor of this class.
+     */
+    private LerTurmas() {
+    }
 
-	public Object run(
-		InfoExecutionDegree infoExecutionDegree,
-		InfoExecutionPeriod infoExecutionPeriod,
-		Integer curricularYear) {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "LerTurmas";
+    }
 
-		List classesList = null;
-		List infoClassesList = null;
+    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+            Integer curricularYear) throws ExcepcaoPersistencia {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        List classesList = null;
+        List infoClassesList = null;
 
-			ITurmaPersistente classDAO = sp.getITurmaPersistente();
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionPeriod);
+        ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-			ICursoExecucao executionDegree =
-				Cloner.copyInfoExecutionDegree2ExecutionDegree(
-					infoExecutionDegree);
+        IExecutionPeriod executionPeriod = Cloner
+                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-			classesList =
-				classDAO
-					.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
-					executionPeriod,
-					curricularYear,
-					executionDegree);
+        ICursoExecucao executionDegree = Cloner
+                .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
-			Iterator iterator = classesList.iterator();
-			infoClassesList = new ArrayList();
-			while (iterator.hasNext()) {
-				ITurma elem = (ITurma) iterator.next();
-				infoClassesList.add(Cloner.copyClass2InfoClass(elem));
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new RuntimeException(ex);
-		}
-		return infoClassesList;
-	}
+        if (curricularYear != null) {
+            classesList = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
+                    executionPeriod, curricularYear, executionDegree);
+        } else {
+            classesList = classDAO.readByExecutionDegreeAndExecutionPeriod(executionDegree,
+                    executionPeriod);
+        }
+
+        Iterator iterator = classesList.iterator();
+        infoClassesList = new ArrayList();
+        while (iterator.hasNext()) {
+            ITurma elem = (ITurma) iterator.next();
+            infoClassesList.add(Cloner.copyClass2InfoClass(elem));
+        }
+
+        return infoClassesList;
+    }
 
 }

@@ -71,7 +71,8 @@
 		<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 		<bean:define id="indexOption" value="0"/>
 		<bean:define id="correct" value="false"/>
-		<logic:iterate id="optionBody" name="question" property="options">
+		<logic:iterate id="questionOption" name="question" property="options">
+		<logic:iterate id="optionBody" name="questionOption" property="optionContent">
 			<bean:define id="optionLabel" name="optionBody" property="label"/>
 			<%if (((String)optionLabel).startsWith("image/")){ %>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
@@ -177,28 +178,76 @@
 					</td></tr><tr><td>
 					</logic:equal>
 					<logic:equal name="button" value="true">
+						<bean:define id="questionValue" value='<%="question"+ optionOrder%>'/>
+						<bean:define id="responsed" value="false"/>
 						<%if(((Integer)cardinality).intValue()==1 ){ %>  <%--CardinalityType.SINGLE--%>
-							<html:radio property='<%="question["+ optionOrder+"].response"%>' value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+						<logic:equal name="<%=questionValue%>" value="<%= indexOption.toString()%>">
+							<bean:define id="responsed" value="true"/>
+						</logic:equal>
+							</tr></td><tr><td>
+							<logic:equal name="checkDisable" value="true">
+									<logic:equal name="responsed" value="true">
+										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked/>
+									</logic:equal>
+									<logic:equal name="responsed" value="false">
+										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+									</logic:equal>
+							</logic:equal>
+							<logic:equal name="checkDisable" value="false">
+									<logic:equal name="responsed" value="true">
+										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>" checked/>
+									</logic:equal>
+									<logic:equal name="responsed" value="false">
+										<input type="radio" name="<%=questionValue%>" value="<%= indexOption.toString() %>"/>
+									</logic:equal>
+							</logic:equal>
 						<%}else if(((Integer)cardinality).intValue()==2 ){ %>  <%--CardinalityType.MULTIPLE--%>
-							<html:multibox property='<%="question["+ optionOrder+"].response"%>' value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>">
-							</html:multibox>
+					
+						<%
+						String[] a = (String[])request.getAttribute(questionValue);
+						if(a!=null){
+							for(int i=0; i<a.length; i++){
+								if(a[i].equals(indexOption)){%>
+								<bean:define id="responsed" value="true"/>
+							<%  }
+							}
+						}
+						%>
+							</tr></td><tr><td>
+							<logic:equal name="checkDisable" value="true">
+								<logic:equal name="responsed" value="true">
+									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>" checked>
+								</logic:equal>
+								<logic:equal name="responsed" value="false">
+									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>">
+								</logic:equal>
+							</logic:equal>
+							<logic:equal name="checkDisable" value="false">
+								<logic:equal name="responsed" value="true">
+									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>" checked>
+								</logic:equal>
+								<logic:equal name="responsed" value="false">
+									<input type="checkbox" name="<%=questionValue%>" value="<%= indexOption.toString()%>">
+								</logic:equal>
+							</logic:equal>
 						<%}%>
 					</logic:equal>
 					
 					
 				<%}else{%> <%--QuestionType.STR or QuestionType.NUM --%>
+					<bean:define id="questionValue" name='<%="question"+ optionOrder%>'/>
 					<logic:notEmpty name="question" property="questionType.render.maxchars">
 						<bean:define id="maxchars" name="question" property="questionType.render.maxchars"/>
 						<logic:notEmpty name="question" property="questionType.render.columns">
 							<bean:define id="cols" name="question" property="questionType.render.columns"/>
-							<html:text maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+							<html:text maxlength="<%=maxchars.toString()%>" size="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 						</logic:notEmpty>
 						<logic:empty name="question" property="questionType.render.columns">
 							<bean:define id="textBoxSize" value="<%=maxchars.toString()%>"/>
 							<logic:greaterThan name="textBoxSize" value="100" >
 								<bean:define id="textBoxSize" value="100"/>
 							</logic:greaterThan>
-							<html:text maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+							<html:text maxlength="<%=maxchars.toString()%>" size="<%=textBoxSize%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 						</logic:empty>	
 					</logic:notEmpty>	
 					<logic:empty name="question" property="questionType.render.maxchars">
@@ -206,19 +255,20 @@
 							<bean:define id="rows" name="question" property="questionType.render.rows"/>
 							<logic:notEmpty name="question" property="questionType.render.columns">
 								<bean:define id="cols" name="question" property="questionType.render.columns"/>
-								<html:textarea rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:textarea rows="<%=rows.toString()%>" cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
 							<logic:empty name="question" property="questionType.render.columns">
-								<html:textarea rows="<%=rows.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+
+								<html:textarea rows="<%=rows.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:empty>
 						</logic:notEmpty>
 						<logic:empty name="question" property="questionType.render.rows">
 							<logic:notEmpty name="question" property="questionType.render.columns">
 								<bean:define id="cols" name="question" property="questionType.render.columns"/>
-								<html:textarea cols="<%=cols.toString()%>" property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:textarea cols="<%=cols.toString()%>" value="<%=questionValue.toString()%>" property='<%="question"+ optionOrder%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:notEmpty>
 							<logic:empty name="question" property="questionType.render.columns">
-								<html:text property='<%="question["+ optionOrder+"].response"%>' disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
+								<html:text property='<%="question"+ optionOrder%>' value="<%=questionValue.toString()%>" disabled="<%=new Boolean(checkDisable).booleanValue()%>"/>
 							</logic:empty>
 						</logic:empty>
 					</logic:empty>
@@ -232,6 +282,7 @@
 			<%}else {%>
 				<bean:write name="optionBody" property="value"/>
 			<%}%>
+		</logic:iterate>
 		</logic:iterate>
 		<logic:equal name="imageLabel" value="true">
 			</td></tr></table>
@@ -329,7 +380,12 @@
 					</logic:equal>
 				</logic:notEqual>
 			</logic:notEqual>
-		<%}%>
+		<%} else if(((Integer)testType).intValue()==3) {%> <%-- TestType.INQUIRY--%>
+			</td></tr>
+			<%if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
+				</table>
+			<%}
+		}%>
 		<tr><td>
 	</logic:iterate>
 	</td></tr><tr><td><hr></td></tr>

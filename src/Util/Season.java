@@ -10,6 +10,7 @@
 package Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -62,15 +63,12 @@ public class Season extends FenixUtil {
 
     }
 
-    public ArrayList toArrayList() {
-        ArrayList result = new ArrayList();
+    public List toArrayList() {
+        List result = new ArrayList();
         result.add(new LabelValueBean(Season.DEFAULT, null));
-        result.add(new LabelValueBean(Season.SEASON1_STRING,
-                Season.SEASON1_STRING));
-        result.add(new LabelValueBean(Season.SEASON2_STRING,
-                Season.SEASON2_STRING));
-        result.add(new LabelValueBean(Season.SPECIAL_SEASON_STRING,
-                Season.SPECIAL_SEASON_STRING));
+        result.add(new LabelValueBean(Season.SEASON1_STRING, Season.SEASON1_STRING));
+        result.add(new LabelValueBean(Season.SEASON2_STRING, Season.SEASON2_STRING));
+        result.add(new LabelValueBean(Season.SPECIAL_SEASON_STRING, Season.SPECIAL_SEASON_STRING));
         return result;
     }
 

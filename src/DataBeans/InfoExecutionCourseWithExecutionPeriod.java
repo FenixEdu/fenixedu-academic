@@ -20,11 +20,10 @@ public class InfoExecutionCourseWithExecutionPeriod extends InfoExecutionCourse 
         }
     }
 
-    public static InfoExecutionCourse newInfoFromDomain(
-            IExecutionCourse executionCourse) {
+    public static InfoExecutionCourse newInfoFromDomain(IExecutionCourse executionCourse) {
         InfoExecutionCourseWithExecutionPeriod infoExecutionCourse = null;
         if (executionCourse != null) {
-        	infoExecutionCourse = new InfoExecutionCourseWithExecutionPeriod();
+            infoExecutionCourse = new InfoExecutionCourseWithExecutionPeriod();
             infoExecutionCourse.copyFromDomain(executionCourse);
         }
         return infoExecutionCourse;

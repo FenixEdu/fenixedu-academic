@@ -30,44 +30,40 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadDistributedTests implements IService {
 
-	public ReadDistributedTests() {
-	}
+    public ReadDistributedTests() {
+    }
 
-	public SiteView run(Integer executionCourseId) throws FenixServiceException {
+    public SiteView run(Integer executionCourseId) throws FenixServiceException {
 
-		ISuportePersistente persistentSuport;
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport;
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-					.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-					.readByOID(ExecutionCourse.class, executionCourseId);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			IPersistentDistributedTest persistentDistrubutedTest = persistentSuport
-					.getIPersistentDistributedTest();
-			List distributedTests = persistentDistrubutedTest
-					.readByTestScopeObject(executionCourse);
-			List result = new ArrayList();
-			Iterator iter = distributedTests.iterator();
-			while (iter.hasNext()) {
-				IDistributedTest distributedTest = (IDistributedTest) iter
-						.next();
-				InfoDistributedTest infoDistributedTest = InfoDistributedTest
-						.newInfoFromDomain(distributedTest);
-				result.add(infoDistributedTest);
-			}
-			InfoSiteDistributedTests bodyComponent = new InfoSiteDistributedTests();
-			bodyComponent.setInfoDistributedTests(result);
-			bodyComponent.setExecutionCourse(InfoExecutionCourse
-					.newInfoFromDomain(executionCourse));
-			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
-					bodyComponent);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+            IPersistentDistributedTest persistentDistrubutedTest = persistentSuport
+                    .getIPersistentDistributedTest();
+            List distributedTests = persistentDistrubutedTest.readByTestScopeObject(executionCourse);
+            List result = new ArrayList();
+            Iterator iter = distributedTests.iterator();
+            while (iter.hasNext()) {
+                IDistributedTest distributedTest = (IDistributedTest) iter.next();
+                InfoDistributedTest infoDistributedTest = InfoDistributedTest
+                        .newInfoFromDomain(distributedTest);
+                result.add(infoDistributedTest);
+            }
+            InfoSiteDistributedTests bodyComponent = new InfoSiteDistributedTests();
+            bodyComponent.setInfoDistributedTests(result);
+            bodyComponent.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+            return siteView;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

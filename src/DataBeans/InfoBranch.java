@@ -22,7 +22,6 @@ public class InfoBranch extends InfoObject {
 
     private Integer secondaryCredits;
 
-    
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
     private BranchType branchType;
@@ -33,7 +32,7 @@ public class InfoBranch extends InfoObject {
         setName(null);
         setCode(null);
         setInfoDegreeCurricularPlan(null);
-       
+
     }
 
     public InfoBranch(String name, String code) {
@@ -41,8 +40,6 @@ public class InfoBranch extends InfoObject {
         setName(name);
         setCode(code);
     }
-
-   
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
@@ -56,8 +53,9 @@ public class InfoBranch extends InfoObject {
      * @author Fernanda Quitério
      */
     public Boolean representsCommonBranch() {
-        if (this.name != null && this.name.equals("") && this.code != null
-                && this.code.equals("")) { return Boolean.TRUE; }
+        if (this.name != null && this.name.equals("") && this.code != null && this.code.equals("")) {
+            return Boolean.TRUE;
+        }
         return Boolean.FALSE;
     }
 
@@ -69,7 +67,9 @@ public class InfoBranch extends InfoObject {
      * it exists
      */
     public String getPrettyCode() {
-        if (representsCommonBranch().booleanValue()) { return new String(""); }
+        if (representsCommonBranch().booleanValue()) {
+            return new String("");
+        }
         StringBuffer prettyCode = new StringBuffer();
         String namePart = null;
         StringTokenizer stringTokenizer = new StringTokenizer(this.name, " ");
@@ -116,7 +116,6 @@ public class InfoBranch extends InfoObject {
         this.name = name;
     }
 
-   
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
         return infoDegreeCurricularPlan;
     }

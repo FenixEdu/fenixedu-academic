@@ -8,6 +8,7 @@ import Dominio.ICurricularCourse;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -25,16 +26,14 @@ public class ReadCurricularCourseByID implements IService {
 
     }
 
-    public InfoCurricularCourse run(Integer curricularCourseID)
-            throws FenixServiceException {
+    public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException {
 
         ICurricularCourse curricularCourse = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-
-            curricularCourse = (ICurricularCourse) sp
-                    .getIPersistentCurricularCourse().readByOID(
-                            CurricularCourse.class, curricularCourseID);
+            IPersistentObject persistentObject = sp.getIPersistentObject();
+            curricularCourse = (ICurricularCourse) persistentObject.readByOID(CurricularCourse.class,
+                    curricularCourseID);
 
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
@@ -44,7 +43,6 @@ public class ReadCurricularCourseByID implements IService {
             throw new NonExistingServiceException();
         }
 
-        return Cloner
-                .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+        return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
     }
 }

@@ -20,87 +20,69 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class CountMetadatasByExecutionCourseTest extends ServiceNeedsAuthenticationTestCase
-{
+public class CountMetadatasByExecutionCourseTest extends ServiceNeedsAuthenticationTestCase {
 
-	public CountMetadatasByExecutionCourseTest(String testName)
-	{
-		super(testName);
-	}
+    public CountMetadatasByExecutionCourseTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testReadMetadatasByTestTestDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testReadMetadatasByTestTestDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "CountMetadatasByExecutionCourse";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "CountMetadatasByExecutionCourse";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "D2543", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "D2543", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "L48283", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser()
-	{
+    protected String[] getNotAuthenticatedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "L48283", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer executionCourseId = new Integer(34882);
-		Object[] args = { executionCourseId };
-		return args;
-	}
+    protected Object[] getAuthorizeArguments() {
+        Integer executionCourseId = new Integer(34882);
+        Object[] args = { executionCourseId };
+        return args;
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testSuccessfull()
-	{
+    public void testSuccessfull() {
 
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
-			Integer count =
-				(Integer) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
+        try {
+            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            Object[] args = getAuthorizeArguments();
+            Integer count = (Integer) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("keyExecutionCourse", args[0]);
-			Query queryCriteria = new QueryByCriteria(Metadata.class, criteria);
-			int metadataNumber = broker.getCount(queryCriteria);
-			broker.close();
-			if (count.intValue() != metadataNumber)
-				fail("CountMetadatasByExecutionCourseTest " + "wrong number of metadatas");
+            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+            Criteria criteria = new Criteria();
+            criteria.addEqualTo("keyExecutionCourse", args[0]);
+            Query queryCriteria = new QueryByCriteria(Metadata.class, criteria);
+            int metadataNumber = broker.getCount(queryCriteria);
+            broker.close();
+            if (count.intValue() != metadataNumber)
+                fail("CountMetadatasByExecutionCourseTest " + "wrong number of metadatas");
 
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("CountMetadatasByExecutionCourseTest " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("CountMetadatasByExecutionCourseTest " + ex);
-		}
-	}
+        } catch (FenixServiceException ex) {
+            fail("CountMetadatasByExecutionCourseTest " + ex);
+        } catch (Exception ex) {
+            fail("CountMetadatasByExecutionCourseTest " + ex);
+        }
+    }
 }

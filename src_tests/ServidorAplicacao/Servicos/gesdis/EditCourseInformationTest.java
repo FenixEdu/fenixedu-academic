@@ -18,50 +18,42 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCase
-{
+public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
-	 * @param testName
-	 */
-    public EditCourseInformationTest(String name)
-    {
+     * @param testName
+     */
+    public EditCourseInformationTest(String name) {
         super(name);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/gesdis/testEditCourseInformationDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "EditCourseInformation";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "jorge", "pass", getApplication()};
+        String[] args = { "jorge", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "jccm", "pass", getApplication()};
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
         Integer courseReportId = new Integer(1);
 
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
@@ -84,33 +76,25 @@ public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCas
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testSuccessfullWithCourseReport()
-    {
-        try
-        {
-            ServiceManagerServiceFactory.executeService(
-                    userView,
-                    getNameOfServiceToBeTested(),
+    public void testSuccessfullWithCourseReport() {
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
                     getAuthorizeArguments());
 
             // verifica as alteracoes da base de dados
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/gesdis/testExpectedEditCourseInformationWithCourseReportDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Editing a Course Information with a CourseReport " + ex);
         }
     }
 
-    public void testSuccessfullWithoutCourseReport()
-    {
-        try
-        {
-            String[] args = { "maria", "pass", getApplication()};
+    public void testSuccessfullWithoutCourseReport() {
+        try {
+            String[] args = { "maria", "pass", getApplication() };
             IUserView userView = authenticateUser(args);
 
             InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
@@ -130,12 +114,12 @@ public class EditCourseInformationTest extends ServiceNeedsAuthenticationTestCas
 
             Object[] serviceArgs = { null, infoCourseReport };
 
-            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
-            
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    serviceArgs);
+
             // verifica as alteracoes da base de dados
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/gesdis/testExpectedEditCourseInformationWithoutCourseReportDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Editing a Course Information without a CourseReport " + ex);
         }
     }

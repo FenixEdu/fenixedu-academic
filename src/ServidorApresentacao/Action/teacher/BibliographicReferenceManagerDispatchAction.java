@@ -29,18 +29,12 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author PTRLV
- *
+ *  
  */
-public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAction
-{
+public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAction {
 
-    public ActionForward createBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -53,11 +47,9 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         String optionalStr = (String) insertBibliographicReferenceForm.get("optional");
         Boolean optional;
 
-        if (optionalStr.equals(this.getResources(request).getMessage("message.optional")))
-        {
+        if (optionalStr.equals(this.getResources(request).getMessage("message.optional"))) {
             optional = new Boolean(true);
-        } else
-        {
+        } else {
             optional = new Boolean(false);
         }
 
@@ -67,34 +59,26 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, title, authors, reference, year, optional };
-        try
-        {
+        try {
             ServiceManagerServiceFactory.executeService(userView, "InsertBibliographicReference", args);
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         Object args1[] = { infoExecutionCourse, null };
-        ArrayList references = null;
-        try
-        {
-            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args1);
-        } catch (FenixServiceException e)
-        {
+        List references = null;
+        try {
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadBibliographicReference", args1);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
         return mapping.findForward("bibliographyManagement");
     }
 
-    public ActionForward editBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -108,44 +92,37 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         Boolean optional;
 
-        if (optionalStr.equals("opcional"))
-        {
+        if (optionalStr.equals("opcional")) {
             optional = new Boolean(true);
-        } else
-        {
+        } else {
             optional = new Boolean(false);
         }
 
-        InfoBibliographicReference infoBibliographicReferenceNew =
-            new InfoBibliographicReference(title, authors, reference, year, optional);
+        InfoBibliographicReference infoBibliographicReferenceNew = new InfoBibliographicReference(title,
+                authors, reference, year, optional);
 
         InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
         InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-        InfoBibliographicReference infoBibliographicReference =
-            (InfoBibliographicReference) session.getAttribute(
-                SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE);
+        InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) session
+                .getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE);
 
-        Object args[] =
-            { infoExecutionCourse, infoBibliographicReference, infoBibliographicReferenceNew };
+        Object args[] = { infoExecutionCourse, infoBibliographicReference, infoBibliographicReferenceNew };
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        try
-        {
+        try {
             ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         Object args1[] = { infoExecutionCourse, null };
-        ArrayList references = null;
-        try
-        {
-            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args1);
-        } catch (FenixServiceException e)
-        {
+        List references = null;
+        try {
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadBibliographicReference", args1);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
@@ -153,13 +130,8 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         return mapping.findForward("bibliographyManagement");
     }
 
-    public ActionForward deleteBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -167,46 +139,38 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-        ArrayList bibliographicReferences =
-            (ArrayList) session.getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
+        List bibliographicReferences = (ArrayList) session
+                .getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
 
         String infoBiblioRefIndex = request.getParameter("index");
 
         Integer index = new Integer(infoBiblioRefIndex);
 
-        InfoBibliographicReference infoBibliographicReference =
-            (InfoBibliographicReference) bibliographicReferences.get(index.intValue());
+        InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) bibliographicReferences
+                .get(index.intValue());
 
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, infoBibliographicReference };
-        try
-        {
+        try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         Object args1[] = { infoExecutionCourse, null };
-        ArrayList references = null;
-        try
-        {
-            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args1);
-        } catch (FenixServiceException e)
-        {
+        List references = null;
+        try {
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadBibliographicReference", args1);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
         return mapping.findForward("bibliographyManagement");
     }
 
-    public ActionForward viewBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward viewBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -217,18 +181,16 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { infoExecutionCourse, null };
         List references = null;
-        try
-        {
-            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadBibliographicReference", args);
-        } catch (FenixServiceException e)
-        {
+        try {
+            references = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadBibliographicReference", args);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
 
-        if (references.size() == 0)
-        {
+        if (references.size() == 0) {
             session.removeAttribute("bibliographicReferenceForm");
             return mapping.findForward("editBibliographicReference");
         }
@@ -236,12 +198,8 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         return mapping.findForward("bibliographyManagement");
     }
 
-    public ActionForward prepareEditBibliographicReference(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-    {
+    public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
         DynaValidatorForm referenceForm = (DynaValidatorForm) form;
 
@@ -249,16 +207,15 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
-        ArrayList referenceList = null;
-        if (index != null)
-        {
+        List referenceList = null;
+        if (index != null) {
             session.setAttribute("edit", "Editar");
             Integer indexInt = new Integer(index);
-            referenceList =
-                (ArrayList) session.getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
+            referenceList = (ArrayList) session
+                    .getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
 
-            InfoBibliographicReference infoBibRef =
-                (InfoBibliographicReference) referenceList.get(indexInt.intValue());
+            InfoBibliographicReference infoBibRef = (InfoBibliographicReference) referenceList
+                    .get(indexInt.intValue());
 
             session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE, infoBibRef);
 
@@ -270,11 +227,9 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
             if (infoBibRef.getOptional().equals(new Boolean(true)))
                 referenceForm.set("optional", this.getResources(request).getMessage("message.optional"));
             else
-                referenceForm.set(
-                    "optional",
-                    this.getResources(request).getMessage("message.recommended"));
-        } else
-        {
+                referenceForm.set("optional", this.getResources(request).getMessage(
+                        "message.recommended"));
+        } else {
             session.removeAttribute("edit");
             session.removeAttribute("bibliographicReferenceForm");
         }
@@ -282,17 +237,18 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
         return mapping.findForward("editBibliographicReference");
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
      */
-    /*	protected Map getKeyMethodMap() {
-    		Map map = new HashMap();
-    		map.put("button.insert", "prepareEditBibliographicReference");
-    		map.put("button.confirmInsert", "createBibliographicReference");
-    		map.put("button.delete", "deleteBibliographicReference");
-    		map.put("button.edit", "prepareEditBibliographicReference");
-    		map.put("button.confirmEdit", "editBibliographicReference");
-    		map.put("button.view", "viewBibliographicReference");
-    		return map;
-    	}*/
+    /*
+     * protected Map getKeyMethodMap() { Map map = new HashMap();
+     * map.put("button.insert", "prepareEditBibliographicReference");
+     * map.put("button.confirmInsert", "createBibliographicReference");
+     * map.put("button.delete", "deleteBibliographicReference");
+     * map.put("button.edit", "prepareEditBibliographicReference");
+     * map.put("button.confirmEdit", "editBibliographicReference");
+     * map.put("button.view", "viewBibliographicReference"); return map; }
+     */
 }

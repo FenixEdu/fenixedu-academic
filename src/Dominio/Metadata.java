@@ -7,160 +7,142 @@ import java.util.List;
  * @author Susana Fernandes
  */
 
-public class Metadata extends DomainObject implements IMetadata
-{
-	private String MetadataFile;
-	private IExecutionCourse executionCourse;
-	private Integer keyExecutionCourse;
+public class Metadata extends DomainObject implements IMetadata {
+    private String MetadataFile;
 
-	private String description;
-	private String difficulty;
-	private Calendar learningTime;
-	private String level;
-	private String mainSubject;
-	private String secondarySubject;
-	private String author;
-	private Integer numberOfMembers;
-	private Boolean visibility;
-	private List visibleQuestions;
+    private IExecutionCourse executionCourse;
 
-	public Metadata()
-	{
-	}
+    private Integer keyExecutionCourse;
 
-	public Metadata(Integer metadataId)
-	{
-		setIdInternal(metadataId);
-	}
+    private String description;
 
-	public IExecutionCourse getExecutionCourse()
-	{
-		return executionCourse;
-	}
+    private String difficulty;
 
-	public Integer getKeyExecutionCourse()
-	{
-		return keyExecutionCourse;
-	}
+    private Calendar learningTime;
 
-	public String getMetadataFile()
-	{
-		return MetadataFile;
-	}
+    private String level;
 
-	public String getAuthor()
-	{
-		return author;
-	}
+    private String mainSubject;
 
-	public String getDescription()
-	{
-		return description;
-	}
+    private String secondarySubject;
 
-	public String getDifficulty()
-	{
-		return difficulty;
-	}
+    private String author;
 
-	public Calendar getLearningTime()
-	{
-		return learningTime;
-	}
+    private Integer numberOfMembers;
 
-	public String getLevel()
-	{
-		return level;
-	}
+    private Boolean visibility;
 
-	public String getMainSubject()
-	{
-		return mainSubject;
-	}
+    private List visibleQuestions;
 
-	public Integer getNumberOfMembers()
-	{
-		return numberOfMembers;
-	}
+    public Metadata() {
+    }
 
-	public String getSecondarySubject()
-	{
-		return secondarySubject;
-	}
+    public Metadata(Integer metadataId) {
+        setIdInternal(metadataId);
+    }
 
-	public List getVisibleQuestions()
-	{
-		return visibleQuestions;
-	}
+    public IExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(IExecutionCourse execucao)
-	{
-		executionCourse = execucao;
-	}
+    public Integer getKeyExecutionCourse() {
+        return keyExecutionCourse;
+    }
 
-	public void setKeyExecutionCourse(Integer integer)
-	{
-		keyExecutionCourse = integer;
-	}
+    public String getMetadataFile() {
+        return MetadataFile;
+    }
 
-	public void setMetadataFile(String string)
-	{
-		MetadataFile = string;
-	}
+    public String getAuthor() {
+        return author;
+    }
 
-	public Boolean getVisibility()
-	{
-		return visibility;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setAuthor(String string)
-	{
-		author = string;
-	}
+    public String getDifficulty() {
+        return difficulty;
+    }
 
-	public void setDescription(String string)
-	{
-		description = string;
-	}
+    public Calendar getLearningTime() {
+        return learningTime;
+    }
 
-	public void setDifficulty(String string)
-	{
-		difficulty = string;
-	}
+    public String getLevel() {
+        return level;
+    }
 
-	public void setLearningTime(Calendar calendar)
-	{
-		learningTime = calendar;
-	}
+    public String getMainSubject() {
+        return mainSubject;
+    }
 
-	public void setLevel(String string)
-	{
-		level = string;
-	}
+    public Integer getNumberOfMembers() {
+        return numberOfMembers;
+    }
 
-	public void setMainSubject(String string)
-	{
-		mainSubject = string;
-	}
+    public String getSecondarySubject() {
+        return secondarySubject;
+    }
 
-	public void setNumberOfMembers(Integer integer)
-	{
-		numberOfMembers = integer;
-	}
+    public List getVisibleQuestions() {
+        return visibleQuestions;
+    }
 
-	public void setSecondarySubject(String string)
-	{
-		secondarySubject = string;
-	}
+    public void setExecutionCourse(IExecutionCourse execucao) {
+        executionCourse = execucao;
+    }
 
-	public void setVisibility(Boolean boolean1)
-	{
-		visibility = boolean1;
-	}
+    public void setKeyExecutionCourse(Integer integer) {
+        keyExecutionCourse = integer;
+    }
 
-	public void setVisibleQuestions(List list)
-	{
-		visibleQuestions = list;
-	}
+    public void setMetadataFile(String string) {
+        MetadataFile = string;
+    }
+
+    public Boolean getVisibility() {
+        return visibility;
+    }
+
+    public void setAuthor(String string) {
+        author = string;
+    }
+
+    public void setDescription(String string) {
+        description = string;
+    }
+
+    public void setDifficulty(String string) {
+        difficulty = string;
+    }
+
+    public void setLearningTime(Calendar calendar) {
+        learningTime = calendar;
+    }
+
+    public void setLevel(String string) {
+        level = string;
+    }
+
+    public void setMainSubject(String string) {
+        mainSubject = string;
+    }
+
+    public void setNumberOfMembers(Integer integer) {
+        numberOfMembers = integer;
+    }
+
+    public void setSecondarySubject(String string) {
+        secondarySubject = string;
+    }
+
+    public void setVisibility(Boolean boolean1) {
+        visibility = boolean1;
+    }
+
+    public void setVisibleQuestions(List list) {
+        visibleQuestions = list;
+    }
 
 }

@@ -41,6 +41,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
 
         IUserView userView = SessionUtils.getUserView(request);
 
+        //        Integer degreeID = new Integer(request.getParameter("degreeId"));
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
         Object args[] = { degreeCurricularPlanId };
@@ -203,6 +204,10 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
+
+        request.setAttribute("degreeId", infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
+        request.setAttribute("degreeCurricularPlanId", infoDegreeCurricularPlan.getIdInternal());
+
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         return viewCurricularCourseGroups(mapping, form, request, response);
     }
@@ -238,6 +243,9 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
+
+        request.setAttribute("degreeId", infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
+        request.setAttribute("degreeCurricularPlanId", infoDegreeCurricularPlan.getIdInternal());
 
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         return viewCurricularCourseGroups(mapping, form, request, response);
@@ -281,7 +289,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
-      //  branches.remove(infoCurricularCourseGroup.getInfoBranch());
+        //  branches.remove(infoCurricularCourseGroup.getInfoBranch());
         DynaActionForm actionForm = (DynaActionForm) form;
         actionForm.set("name", infoCurricularCourseGroup.getName());
         actionForm.set("groupId", infoCurricularCourseGroup.getIdInternal());
@@ -301,6 +309,9 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
                     ((InfoOptionalCurricularCourseGroup) infoCurricularCourseGroup)
                             .getMaximumNumberOfOptionalCourses());
         }
+
+        request.setAttribute("degreeId", infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
+        request.setAttribute("degreeCurricularPlanId", infoDegreeCurricularPlan.getIdInternal());
 
         request.setAttribute("branches", branches);
         request.setAttribute("areas", AreaType.toLabelValueBeanList());

@@ -14,123 +14,142 @@ import Dominio.ITurno;
  * @author jpvl
  */
 public class MigrationShift {
-	private Integer capacity;
-	
-	private boolean migrated = false;
-	private MigrationExecutionCourse migrationExecutionCourse;
-	private ITurno shift = null;
-	private String shiftName;
-	private String type;
-	
-	private List classList;
-	 
-	public MigrationShift(){
-		this.classList = new ArrayList();
-	}
-	/**
-	 * @return Integer
-	 */
-	public Integer getCapacity() {
-		return capacity;
-	}
+    private Integer capacity;
 
-	/**
-	 * @return MigrationExecutionCourse
-	 */
-	public MigrationExecutionCourse getMigrationExecutionCourse() {
-		return migrationExecutionCourse;
-	}
+    private boolean migrated = false;
 
-	/**
-	 * @return ITurno
-	 */
-	public ITurno getShift() {
-		return shift;
-	}
+    private MigrationExecutionCourse migrationExecutionCourse;
 
-	/**
-	 * @return String
-	 */
-	public String getShiftName() {
-		return shiftName;
-	}
+    private ITurno shift = null;
 
-	/**
-	 * @return String
-	 */
-	public String getType() {
-		return type;
-	}
-	/**
-	 * @return boolean
-	 */
-	public boolean isMigrated() {
-		return migrated;
-	}
+    private String shiftName;
 
-	/**
-	 * Sets the capacity.
-	 * @param capacity The capacity to set
-	 */
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
+    private String type;
 
-	/**
-	 * Sets the migrated.
-	 * @param migrated The migrated to set
-	 */
-	public void setMigrated(boolean migrated) {
-		this.migrated = migrated;
-	}
+    private List classList;
 
-	/**
-	 * Sets the migrationExecutionCourse.
-	 * @param migrationExecutionCourse The migrationExecutionCourse to set
-	 */
-	public void setMigrationExecutionCourse(MigrationExecutionCourse migrationExecutionCourse) {
-		this.migrationExecutionCourse = migrationExecutionCourse;
-	}
+    public MigrationShift() {
+        this.classList = new ArrayList();
+    }
 
-	/**
-	 * Sets the shift.
-	 * @param shift The shift to set
-	 */
-	public void setShift(ITurno shift) {
-		this.shift = shift;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getCapacity() {
+        return capacity;
+    }
 
-	/**
-	 * Sets the shiftName.
-	 * @param shiftName The shiftName to set
-	 */
-	public void setShiftName(String shiftName) {
-		this.shiftName = shiftName;
-	}
+    /**
+     * @return MigrationExecutionCourse
+     */
+    public MigrationExecutionCourse getMigrationExecutionCourse() {
+        return migrationExecutionCourse;
+    }
 
-	/**
-	 * Sets the type.
-	 * @param type The type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String toString(){
-		StringBuffer stringBuffer = new StringBuffer("");
-		stringBuffer.append(migrationExecutionCourse.toString());
-		return stringBuffer.toString();
-	}
-	
-	public void setClass(ITurma clazz){
-		if (!classList.contains(clazz))
-			classList.add(clazz);
-	}
+    /**
+     * @return ITurno
+     */
+    public ITurno getShift() {
+        return shift;
+    }
 
-	/**
-	 * @return List
-	 */
-	public List getClassList() {
-		return classList;
-	}
+    /**
+     * @return String
+     */
+    public String getShiftName() {
+        return shiftName;
+    }
+
+    /**
+     * @return String
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @return boolean
+     */
+    public boolean isMigrated() {
+        return migrated;
+    }
+
+    /**
+     * Sets the capacity.
+     * 
+     * @param capacity
+     *            The capacity to set
+     */
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    /**
+     * Sets the migrated.
+     * 
+     * @param migrated
+     *            The migrated to set
+     */
+    public void setMigrated(boolean migrated) {
+        this.migrated = migrated;
+    }
+
+    /**
+     * Sets the migrationExecutionCourse.
+     * 
+     * @param migrationExecutionCourse
+     *            The migrationExecutionCourse to set
+     */
+    public void setMigrationExecutionCourse(MigrationExecutionCourse migrationExecutionCourse) {
+        this.migrationExecutionCourse = migrationExecutionCourse;
+    }
+
+    /**
+     * Sets the shift.
+     * 
+     * @param shift
+     *            The shift to set
+     */
+    public void setShift(ITurno shift) {
+        this.shift = shift;
+    }
+
+    /**
+     * Sets the shiftName.
+     * 
+     * @param shiftName
+     *            The shiftName to set
+     */
+    public void setShiftName(String shiftName) {
+        this.shiftName = shiftName;
+    }
+
+    /**
+     * Sets the type.
+     * 
+     * @param type
+     *            The type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer("");
+        stringBuffer.append(migrationExecutionCourse.toString());
+        return stringBuffer.toString();
+    }
+
+    public void setClass(ITurma clazz) {
+        if (!classList.contains(clazz))
+            classList.add(clazz);
+    }
+
+    /**
+     * @return List
+     */
+    public List getClassList() {
+        return classList;
+    }
 
 }

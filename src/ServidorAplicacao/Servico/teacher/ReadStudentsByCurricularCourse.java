@@ -44,8 +44,8 @@ public class ReadStudentsByCurricularCourse implements IService {
 
     }
 
-    public Object run(Integer executionCourseCode, Integer courseCode)
-            throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(Integer executionCourseCode, Integer courseCode) throws ExcepcaoInexistente,
+            FenixServiceException {
         List infoStudentList = null;
         ISite site = null;
         ICurricularCourse curricularCourse = null;
@@ -64,16 +64,15 @@ public class ReadStudentsByCurricularCourse implements IService {
             } else {
                 IPersistentCurricularCourse persistentCurricularCourse = sp
                         .getIPersistentCurricularCourse();
-                curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                        .readByOID(CurricularCourse.class, courseCode);
+                curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                        CurricularCourse.class, courseCode);
 
-                infoStudentList = getCurricularCourseStudents(curricularCourse,
-                        sp);
+                infoStudentList = getCurricularCourseStudents(curricularCourse, sp);
 
             }
 
-            TeacherAdministrationSiteView siteView = createSiteView(
-                    infoStudentList, site, curricularCourse);
+            TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site,
+                    curricularCourse);
             return siteView;
 
         } catch (ExcepcaoPersistencia ex) {
@@ -85,61 +84,51 @@ public class ReadStudentsByCurricularCourse implements IService {
 
     }
 
-    private List getCurricularCourseStudents(
-            ICurricularCourse curricularCourse, ISuportePersistente sp)
+    private List getCurricularCourseStudents(ICurricularCourse curricularCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         List infoStudentList;
         IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
-        List enrolments = persistentEnrolment
-                .readByCurricularCourse(curricularCourse);
+        List enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse);
 
-        infoStudentList = (List) CollectionUtils.collect(enrolments,
-                new Transformer() {
-                    public Object transform(Object input) {
-                        IEnrollment enrolment = (IEnrollment) input;
-                        IStudent student = enrolment.getStudentCurricularPlan()
-                                .getStudent();
-                        //CLONER
-                        //InfoStudent infoStudent =
-                        // Cloner.copyIStudent2InfoStudent(student);
-                        InfoStudent infoStudent = InfoStudentWithInfoPerson
-                                .newInfoFromDomain(student);
-                        return infoStudent;
-                    }
-                });
+        infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
+            public Object transform(Object input) {
+                IEnrollment enrolment = (IEnrollment) input;
+                IStudent student = enrolment.getStudentCurricularPlan().getStudent();
+                //CLONER
+                //InfoStudent infoStudent =
+                // Cloner.copyIStudent2InfoStudent(student);
+                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
+                return infoStudent;
+            }
+        });
         return infoStudentList;
     }
 
-    private List getAllAttendingStudents(ISuportePersistente sp,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private List getAllAttendingStudents(ISuportePersistente sp, IExecutionCourse executionCourse)
+            throws ExcepcaoPersistencia {
         List infoStudentList;
         //	all students that attend this execution course
-        IFrequentaPersistente frequentaPersistente = sp
-                .getIFrequentaPersistente();
-        List attendList = frequentaPersistente
-                .readByExecutionCourse(executionCourse);
+        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+        List attendList = frequentaPersistente.readByExecutionCourse(executionCourse);
 
-        infoStudentList = (List) CollectionUtils.collect(attendList,
-                new Transformer() {
+        infoStudentList = (List) CollectionUtils.collect(attendList, new Transformer() {
 
-                    public Object transform(Object input) {
-                        IFrequenta attend = (IFrequenta) input;
-                        IStudent student = attend.getAluno();
-                        //CLONER
-                        //InfoStudent infoStudent =
-                        // Cloner.copyIStudent2InfoStudent(student);
-                        InfoStudent infoStudent = InfoStudentWithInfoPerson
-                                .newInfoFromDomain(student);
-                        return infoStudent;
-                    }
-                });
+            public Object transform(Object input) {
+                IFrequenta attend = (IFrequenta) input;
+                IStudent student = attend.getAluno();
+                //CLONER
+                //InfoStudent infoStudent =
+                // Cloner.copyIStudent2InfoStudent(student);
+                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
+                return infoStudent;
+            }
+        });
         return infoStudentList;
     }
 
-    private TeacherAdministrationSiteView createSiteView(List infoStudentList,
-            ISite site, ICurricularCourse curricularCourse)
-            throws FenixServiceException {
+    private TeacherAdministrationSiteView createSiteView(List infoStudentList, ISite site,
+            ICurricularCourse curricularCourse) throws FenixServiceException {
         InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
         infoSiteStudents.setStudents(infoStudentList);
 
@@ -151,11 +140,11 @@ public class ReadStudentsByCurricularCourse implements IService {
         }
 
         TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-        ISiteComponent commonComponent = componentBuilder.getComponent(
-                new InfoSiteCommon(), site, null, null, null);
+        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
+                null, null);
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
-                commonComponent, infoSiteStudents);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
+                infoSiteStudents);
         return siteView;
     }
 }

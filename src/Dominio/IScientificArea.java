@@ -11,11 +11,12 @@ import java.util.List;
  * @author Ricardo Rodrigues
  */
 
-public interface IScientificArea extends IDomainObject
-{
+public interface IScientificArea extends IDomainObject {
     public String getName();
+
     public List getAreaCurricularCourseGroups();
 
     public void setAreaCurricularCourseGroups(List curricularCourseGroups);
+
     public void setName(String name);
 }

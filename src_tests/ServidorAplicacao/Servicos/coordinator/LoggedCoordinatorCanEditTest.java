@@ -11,334 +11,297 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
  * @author Fernanda Quitério 20/Nov/2003
  *  
  */
-public class LoggedCoordinatorCanEditTest extends ServiceTestCase
-{
+public class LoggedCoordinatorCanEditTest extends ServiceTestCase {
 
-	/**
-	 * @param testName
-	 */
+    /**
+     * @param testName
+     */
 
-	public LoggedCoordinatorCanEditTest(String testName)
-	{
-		super(testName);
-	}
+    public LoggedCoordinatorCanEditTest(String testName) {
+        super(testName);
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "LoggedCoordinatorCanEdit";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "LoggedCoordinatorCanEdit";
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets_templates/servicos/coordinator/testDataSetCurriculum.xml";
-	}
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
-	protected String[] getAuthenticatedAndAuthorizedUserAnother()
-	{
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer infoExecutionDegreeCode = new Integer(24);
-		Integer infoCurricularCourseCode = new Integer(24);
-		String username = new String("user");
+    protected String getDataSetFilePath() {
+        return "etc/datasets_templates/servicos/coordinator/testDataSetCurriculum.xml";
+    }
 
-		Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
-		return args;
-	}
-	protected Object[] getCurricularCourseUnsuccessfullArguments()
-	{
-		Integer infoExecutionDegreeCode = new Integer(24);
-		Integer infoCurricularCourseCode = new Integer(15);
-		String username = new String("user");
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-		Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
-		return args;
-	}
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-	public void testLoggedCoordinatorCanEditSuccessfull()
-	{
-		try
-		{
+    protected String[] getAuthenticatedAndAuthorizedUserAnother() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-			Object[] args = getAuthorizeArguments();
+    protected Object[] getAuthorizeArguments() {
+        Integer infoExecutionDegreeCode = new Integer(24);
+        Integer infoCurricularCourseCode = new Integer(24);
+        String username = new String("user");
 
-			//Valid user
-			String[] argsUser = getAuthenticatedAndAuthorizedUser();
-			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+        Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
+        return args;
+    }
 
-			Boolean canEdit = null;
-			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
+    protected Object[] getCurricularCourseUnsuccessfullArguments() {
+        Integer infoExecutionDegreeCode = new Integer(24);
+        Integer infoCurricularCourseCode = new Integer(15);
+        String username = new String("user");
 
-			if (canEdit == null)
-			{
-				fail("Executing Service LoggedCoordinatorCanEdit with successfull arguments.");
-			}
+        Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
+        return args;
+    }
 
-			System.out.println("valor de can edit: " + canEdit);
-			//Check information read is correct
-			assertTrue(canEdit.booleanValue());
+    public void testLoggedCoordinatorCanEditSuccessfull() {
+        try {
 
-			System.out.println(
-				"testLoggedCoordinatorCanEditSuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+            Object[] args = getAuthorizeArguments();
 
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("Executing Service LoggedCoordinatorCanEdit with successfull arguments " + e);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			fail("Executing Service LoggedCoordinatorCanEdit with successfull arguments " + e);
-		}
-	}
+            //Valid user
+            String[] argsUser = getAuthenticatedAndAuthorizedUser();
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-	public void testLoggedCoordinatorCanEditUserUnsuccessfull()
-	{
-		try
-		{
-			Integer infoExecutionDegreeCode = new Integer(24);
-			Integer infoCurricularCourseCode = new Integer(24);
-			String username = new String("julia");
+            Boolean canEdit = null;
+            canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args);
 
-			Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
+            if (canEdit == null) {
+                fail("Executing Service LoggedCoordinatorCanEdit with successfull arguments.");
+            }
 
-			//Invalid user
-			String[] argsUser2 = getAuthenticatedAndUnauthorizedUser();
+            System.out.println("valor de can edit: " + canEdit);
+            //Check information read is correct
+            assertTrue(canEdit.booleanValue());
 
-			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+            System.out
+                    .println("testLoggedCoordinatorCanEditSuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
 
-			Boolean canEdit = null;
-			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("Executing Service LoggedCoordinatorCanEdit with successfull arguments " + e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Executing Service LoggedCoordinatorCanEdit with successfull arguments " + e);
+        }
+    }
 
-			if (canEdit.equals(Boolean.FALSE))
-			{
-				System.out.println(
-					"testLoggedCoordinatorCanEditUserUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Executing Service LoggedCoordinatorCanEdit with invalid user");
-			}
-		} catch (FenixServiceException e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with invalid user " + e);
-		} catch (Exception e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with invalid user " + e);
-		}
-	}
+    public void testLoggedCoordinatorCanEditUserUnsuccessfull() {
+        try {
+            Integer infoExecutionDegreeCode = new Integer(24);
+            Integer infoCurricularCourseCode = new Integer(24);
+            String username = new String("julia");
 
-	public void testLoggedCoordinatorCanEditNullCCCodeUnsuccessfull()
-	{
-		try
-		{
-			// null argument
-			Integer infoExecutionDegreeCode = new Integer(24);
-			String username = new String("user");
-			Object[] args = { infoExecutionDegreeCode, null, username };
+            Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+            //Invalid user
+            String[] argsUser2 = getAuthenticatedAndUnauthorizedUser();
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser2);
 
-			fail("Executing Service LoggedCoordinatorCanEdit with null curricular course code");
-		} catch (FenixServiceException e)
-		{
-			if (e.getMessage().equals("nullCurricularCourseCode"))
-			{
-				System.out.println(
-					"testLoggedCoordinatorCanEditNullCCCodeUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Executing Service LoggedCoordinatorCanEdit with null curricular course code " + e);
-			}
-		} catch (Exception e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with null curricular course code " + e);
-		}
-	}
+            Boolean canEdit = null;
+            canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args);
 
-	public void testLoggedCoordinatorCanEditNullEDCodeUnsuccessfull()
-	{
-		try
-		{
-			// null argument
-			Integer infoCurricularCourseCode = new Integer(24);
-			String username = new String("user");
-			Object[] args = { null, infoCurricularCourseCode, username };
+            if (canEdit.equals(Boolean.FALSE)) {
+                System.out
+                        .println("testLoggedCoordinatorCanEditUserUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Executing Service LoggedCoordinatorCanEdit with invalid user");
+            }
+        } catch (FenixServiceException e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with invalid user " + e);
+        } catch (Exception e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with invalid user " + e);
+        }
+    }
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+    public void testLoggedCoordinatorCanEditNullCCCodeUnsuccessfull() {
+        try {
+            // null argument
+            Integer infoExecutionDegreeCode = new Integer(24);
+            String username = new String("user");
+            Object[] args = { infoExecutionDegreeCode, null, username };
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			fail("Executing Service LoggedCoordinatorCanEdit with null execution degree code");
-		} catch (FenixServiceException e)
-		{
-			if (e.getMessage().equals("nullExecutionDegreeCode"))
-			{
-				System.out.println(
-					"testLoggedCoordinatorCanEditNullEDCodeUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Executing Service LoggedCoordinatorCanEdit with null execution degree code " + e);
-			}
-		} catch (Exception e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with null execution degree code " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
-	public void testLoggedCoordinatorCanEditNullUsernameUnsuccessfull()
-	{
-		try
-		{
-			// null argument
-			Integer infoCurricularCourseCode = new Integer(24);
-			Integer infoExecutionDegreeCode = new Integer(24);
-			Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, null };
+            fail("Executing Service LoggedCoordinatorCanEdit with null curricular course code");
+        } catch (FenixServiceException e) {
+            if (e.getMessage().equals("nullCurricularCourseCode")) {
+                System.out
+                        .println("testLoggedCoordinatorCanEditNullCCCodeUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Executing Service LoggedCoordinatorCanEdit with null curricular course code " + e);
+            }
+        } catch (Exception e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with null curricular course code " + e);
+        }
+    }
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+    public void testLoggedCoordinatorCanEditNullEDCodeUnsuccessfull() {
+        try {
+            // null argument
+            Integer infoCurricularCourseCode = new Integer(24);
+            String username = new String("user");
+            Object[] args = { null, infoCurricularCourseCode, username };
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			fail("Executing Service LoggedCoordinatorCanEdit with null username");
-		} catch (FenixServiceException e)
-		{
-			if (e.getMessage().equals("nullUsername"))
-			{
-				System.out.println(
-					"testLoggedCoordinatorCanEditNullUsernameUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Executing Service LoggedCoordinatorCanEdit with null username " + e);
-			}
-		} catch (Exception e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with null username " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
-	public void testLoggedCoordinatorCanEditNoCurricularCourseUnsuccessfull()
-	{
-		try
-		{
-			//				Non existing curricular course
-			Object[] args = getCurricularCourseUnsuccessfullArguments();
+            fail("Executing Service LoggedCoordinatorCanEdit with null execution degree code");
+        } catch (FenixServiceException e) {
+            if (e.getMessage().equals("nullExecutionDegreeCode")) {
+                System.out
+                        .println("testLoggedCoordinatorCanEditNullEDCodeUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Executing Service LoggedCoordinatorCanEdit with null execution degree code " + e);
+            }
+        } catch (Exception e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with null execution degree code " + e);
+        }
+    }
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+    public void testLoggedCoordinatorCanEditNullUsernameUnsuccessfull() {
+        try {
+            // null argument
+            Integer infoCurricularCourseCode = new Integer(24);
+            Integer infoExecutionDegreeCode = new Integer(24);
+            Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, null };
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			fail("Executing Service LoggedCoordinatorCanEdit with non existent curricular course");
-		} catch (NonExistingServiceException e)
-		{
-			System.out.println(
-				"testLoggedCoordinatorCanEditNoCurricularCourseUnsuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with non existent curricular course " + e);
-		} catch (Exception e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with non existent curricular course " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
-	public void testLoggedCoordinatorCanEditNoCoordinatorEDUnsuccessfull()
-	{
-		try
-		{
-			Integer infoExecutionDegreeCode = new Integer(10);
-			Integer infoCurricularCourseCode = new Integer(1);
-			String username = new String("fiado");
+            fail("Executing Service LoggedCoordinatorCanEdit with null username");
+        } catch (FenixServiceException e) {
+            if (e.getMessage().equals("nullUsername")) {
+                System.out
+                        .println("testLoggedCoordinatorCanEditNullUsernameUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Executing Service LoggedCoordinatorCanEdit with null username " + e);
+            }
+        } catch (Exception e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with null username " + e);
+        }
+    }
 
-			Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
+    public void testLoggedCoordinatorCanEditNoCurricularCourseUnsuccessfull() {
+        try {
+            //				Non existing curricular course
+            Object[] args = getCurricularCourseUnsuccessfullArguments();
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUserAnother();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			Boolean canEdit = null;
-			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
-			if (canEdit.booleanValue() != Boolean.FALSE.booleanValue())
-			{
-				fail("Executing Service LoggedCoordinatorCanEdit with no coordinator for that execution degree");
-			} else
-			{
-				System.out.println(
-					"testLoggedCoordinatorCanEditNoCoordinatorEDUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			}
-		} catch (FenixServiceException e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with no coordinator for that execution degree " + e);
-		} catch (Exception e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with no coordinator for that execution degree " + e);
-		}
-	}
-	
-	public void testLoggedCoordinatorCanEditEDNotCurrentUnsuccessfull()
-	{
-		try
-		{
-			Integer infoExecutionDegreeCode = new Integer(10);
-			Integer infoCurricularCourseCode = new Integer(1);
-			String username = new String("user");
+            fail("Executing Service LoggedCoordinatorCanEdit with non existent curricular course");
+        } catch (NonExistingServiceException e) {
+            System.out
+                    .println("testLoggedCoordinatorCanEditNoCurricularCourseUnsuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with non existent curricular course " + e);
+        } catch (Exception e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with non existent curricular course " + e);
+        }
+    }
 
-			Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
+    public void testLoggedCoordinatorCanEditNoCoordinatorEDUnsuccessfull() {
+        try {
+            Integer infoExecutionDegreeCode = new Integer(10);
+            Integer infoCurricularCourseCode = new Integer(1);
+            String username = new String("fiado");
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+            Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
 
-			Boolean canEdit = null;
-			canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUserAnother();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			if (canEdit.booleanValue() != Boolean.FALSE.booleanValue())
-			{
-				fail("Executing Service LoggedCoordinatorCanEdit with execution degree not current");
-			} else
-			{
-				System.out.println(
-					"testLoggedCoordinatorCanEditEDNotCurrentUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			}
-		} catch (FenixServiceException e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with execution degree not current " + e);
-		} catch (Exception e)
-		{
-			fail("Executing Service LoggedCoordinatorCanEdit with execution degree not current " + e);
-		}
-	}
+            Boolean canEdit = null;
+            canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id2,
+                    getNameOfServiceToBeTested(), args);
+
+            if (canEdit.booleanValue() != Boolean.FALSE.booleanValue()) {
+                fail("Executing Service LoggedCoordinatorCanEdit with no coordinator for that execution degree");
+            } else {
+                System.out
+                        .println("testLoggedCoordinatorCanEditNoCoordinatorEDUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            }
+        } catch (FenixServiceException e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with no coordinator for that execution degree "
+                    + e);
+        } catch (Exception e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with no coordinator for that execution degree "
+                    + e);
+        }
+    }
+
+    public void testLoggedCoordinatorCanEditEDNotCurrentUnsuccessfull() {
+        try {
+            Integer infoExecutionDegreeCode = new Integer(10);
+            Integer infoCurricularCourseCode = new Integer(1);
+            String username = new String("user");
+
+            Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, username };
+
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
+
+            Boolean canEdit = null;
+            canEdit = (Boolean) ServiceManagerServiceFactory.executeService(id2,
+                    getNameOfServiceToBeTested(), args);
+
+            if (canEdit.booleanValue() != Boolean.FALSE.booleanValue()) {
+                fail("Executing Service LoggedCoordinatorCanEdit with execution degree not current");
+            } else {
+                System.out
+                        .println("testLoggedCoordinatorCanEditEDNotCurrentUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            }
+        } catch (FenixServiceException e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with execution degree not current " + e);
+        } catch (Exception e) {
+            fail("Executing Service LoggedCoordinatorCanEdit with execution degree not current " + e);
+        }
+    }
 }

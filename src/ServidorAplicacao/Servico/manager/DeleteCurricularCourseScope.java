@@ -4,6 +4,7 @@
 package ServidorAplicacao.Servico.manager;
 
 import java.util.List;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourseScope;
@@ -37,8 +38,7 @@ public class DeleteCurricularCourseScope implements IService {
                 // added by Fernanda Quitério
                 List writtenEvaluations = persistentWrittenEvaluationCurricularCourseScope
                         .readByCurricularCourseScope(scope);
-                if (writtenEvaluations == null
-                        || writtenEvaluations.size() == 0) {
+                if (writtenEvaluations == null || writtenEvaluations.size() == 0) {
 
                     persistentCurricularCourseScope.delete(scope);
                 } else {

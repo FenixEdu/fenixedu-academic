@@ -55,78 +55,65 @@ public class ValidateSubmitMarks implements IServico {
         return _service;
     }
 
-    public InfoSiteSubmitMarks run(Integer executionCourseCode,
-            Integer evaluationCode, UserView userView)
+    public InfoSiteSubmitMarks run(Integer executionCourseCode, Integer evaluationCode, UserView userView)
             throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             //execution course and execution course's site
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = sp
                     .getIPersistentEnrolmentEvaluation();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
 
             //evaluation
-            IPersistentEvaluation persistentEvaluation = sp
-                    .getIPersistentEvaluation();
-            IEvaluation evaluation = (IEvaluation) persistentEvaluation
-                    .readByOID(Evaluation.class, evaluationCode);
+            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+            IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
+                    evaluationCode);
 
             //attend list
-            IFrequentaPersistente persistentAttend = sp
-                    .getIFrequentaPersistente();
-            List attendList = persistentAttend
-                    .readByExecutionCourse(executionCourse);
-            
+            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+            List attendList = persistentAttend.readByExecutionCourse(executionCourse);
 
             //verifySubmitMarks(attendList);
 
-            List enrolmentListIds = (List) CollectionUtils.collect(attendList,
-                    new Transformer() {
+            List enrolmentListIds = (List) CollectionUtils.collect(attendList, new Transformer() {
 
-                        public Object transform(Object input) {
-                            IFrequenta attend = (IFrequenta) input;
-                            IEnrollment enrolment = attend.getEnrolment();
-                            return enrolment == null ? null : enrolment
-                                    .getIdInternal();
-                        }
-                    });
+                public Object transform(Object input) {
+                    IFrequenta attend = (IFrequenta) input;
+                    IEnrollment enrolment = attend.getEnrolment();
+                    return enrolment == null ? null : enrolment.getIdInternal();
+                }
+            });
 
-            enrolmentListIds = (List) CollectionUtils.select(enrolmentListIds,
-                    new Predicate() {
-                        public boolean evaluate(Object arg0) {
-                            return arg0 != null;
-                        }
-                    });
-            List alreadySubmiteMarks = enrolmentEvaluationDAO
-                    .readAlreadySubmitedMarks(enrolmentListIds);
+            enrolmentListIds = (List) CollectionUtils.select(enrolmentListIds, new Predicate() {
+                public boolean evaluate(Object arg0) {
+                    return arg0 != null;
+                }
+            });
+            List alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
 
             if (!alreadySubmiteMarks.isEmpty()) {
-                throw new FenixServiceException(
-                        "errors.submitMarks.yetSubmited");
+                throw new FenixServiceException("errors.submitMarks.yetSubmited");
             }
-            
+
             //marks list
             IPersistentMark persistentMark = sp.getIPersistentMark();
             List markList = persistentMark.readBy(evaluation);
-            
+
             //Check if there is any mark. If not, we can not submit
-            if(markList.isEmpty())
-            {
+            if (markList.isEmpty()) {
                 throw new FenixServiceException("errors.submitMarks.noMarks");
             }
-
 
             InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
 
             //CLONER
             //infoSiteSubmitMarks.setInfoEvaluation(Cloner
-                    //.copyIEvaluation2InfoEvaluation(evaluation));
+            //.copyIEvaluation2InfoEvaluation(evaluation));
             infoSiteSubmitMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
 
             return infoSiteSubmitMarks;

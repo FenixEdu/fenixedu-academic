@@ -16,45 +16,48 @@ import Dominio.IGuide;
  * @author João Mota 13/Nov/2003
  *  
  */
-public interface IReimbursementGuide extends IDomainObject
-{
-	/**
-	 * @return
-	 */
-	public Calendar getCreationDate();
-	/**
-	 * @param creationDate
-	 */
-	public void setCreationDate(Calendar creationDate);
-	/**
-	 * @return
-	 */
-	public IGuide getGuide();
-	/**
-	 * @param paymentGuide
-	 */
-	public void setGuide(IGuide paymentGuide);
+public interface IReimbursementGuide extends IDomainObject {
+    /**
+     * @return
+     */
+    public Calendar getCreationDate();
 
-	public Integer getNumber();
+    /**
+     * @param creationDate
+     */
+    public void setCreationDate(Calendar creationDate);
 
-	/**
-	 * @param number
-	 */
-	public void setNumber(Integer number);
+    /**
+     * @return
+     */
+    public IGuide getGuide();
 
-	public IReimbursementGuideSituation getActiveReimbursementGuideSituation();
+    /**
+     * @param paymentGuide
+     */
+    public void setGuide(IGuide paymentGuide);
 
-	public List getReimbursementGuideSituations();
+    public Integer getNumber();
 
-	public void setReimbursementGuideSituations(List reimbursementGuideSituations);
+    /**
+     * @param number
+     */
+    public void setNumber(Integer number);
 
-	/**
-	 * @return Returns the reimbursementGuideEntries.
-	 */
-	public abstract List getReimbursementGuideEntries();
-	/**
-	 * @param reimbursementGuideEntries
-	 *            The reimbursementGuideEntries to set.
-	 */
-	public abstract void setReimbursementGuideEntries(List reimbursementGuideEntries);
+    public IReimbursementGuideSituation getActiveReimbursementGuideSituation();
+
+    public List getReimbursementGuideSituations();
+
+    public void setReimbursementGuideSituations(List reimbursementGuideSituations);
+
+    /**
+     * @return Returns the reimbursementGuideEntries.
+     */
+    public abstract List getReimbursementGuideEntries();
+
+    /**
+     * @param reimbursementGuideEntries
+     *            The reimbursementGuideEntries to set.
+     */
+    public abstract void setReimbursementGuideEntries(List reimbursementGuideEntries);
 }

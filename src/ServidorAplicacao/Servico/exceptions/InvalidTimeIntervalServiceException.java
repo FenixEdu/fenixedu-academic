@@ -5,46 +5,42 @@
  */
 package ServidorAplicacao.Servico.exceptions;
 
-
 /**
  * @author João Mota
  */
-public class InvalidTimeIntervalServiceException
-	extends FenixServiceException {
+public class InvalidTimeIntervalServiceException extends FenixServiceException {
 
-	/**
-	 * 
-	 */
-	public InvalidTimeIntervalServiceException() {
-		super();
-		
-	}
+    /**
+     *  
+     */
+    public InvalidTimeIntervalServiceException() {
+        super();
 
-	/**
-	 * @param s
-	 */
-	public InvalidTimeIntervalServiceException(String s) {
-		super(s);
-		
-	}
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InvalidTimeIntervalServiceException(Throwable cause) {
-		super(cause);
-		
-	}
+    /**
+     * @param s
+     */
+    public InvalidTimeIntervalServiceException(String s) {
+        super(s);
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InvalidTimeIntervalServiceException(
-		String message,
-		Throwable cause) {
-		super(message, cause);
-		
-	}
+    }
+
+    /**
+     * @param cause
+     */
+    public InvalidTimeIntervalServiceException(Throwable cause) {
+        super(cause);
+
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public InvalidTimeIntervalServiceException(String message, Throwable cause) {
+        super(message, cause);
+
+    }
 
 }

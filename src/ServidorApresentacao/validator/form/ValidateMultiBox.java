@@ -1,5 +1,3 @@
-
-
 package ServidorApresentacao.validator.form;
 
 import javax.servlet.ServletContext;
@@ -13,57 +11,41 @@ import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author João Mota
- *
- * 30/Jun/2003
- * fenix-branch
- * ServidorApresentacao.validator.form
  * 
+ * 30/Jun/2003 fenix-branch ServidorApresentacao.validator.form
+ *  
  */
 public class ValidateMultiBox {
 
-	public static boolean validate(
-		Object bean,
-		ValidatorAction va,
-		Field field,
-		ActionErrors errors,
-		HttpServletRequest request,
-		ServletContext application) {
+    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
+            HttpServletRequest request, ServletContext application) {
 
-		try {
+        try {
 
-			DynaActionForm form = (DynaActionForm) bean;
+            DynaActionForm form = (DynaActionForm) bean;
 
-			String sProperty = field.getProperty();
-			Object[] multiBox = (Object[]) form.get(sProperty);
+            String sProperty = field.getProperty();
+            Object[] multiBox = (Object[]) form.get(sProperty);
 
-			String feminin = field.getVarValue("femininProperty");
-			if ((multiBox != null) && (multiBox.length > 0)) {
-				return true;
-			} 
-				if (feminin != null && feminin.equalsIgnoreCase("true")) {
-					errors.add(
-						field.getKey(),
-						new ActionError(
-							"errors.required.a.checkbox",
-							field.getArg0().getKey()));
-				} else {
-					errors.add(
-						field.getKey(),
-						new ActionError(
-							"errors.required.checkbox",
-							field.getArg0().getKey()));
-				}
+            String feminin = field.getVarValue("femininProperty");
+            if ((multiBox != null) && (multiBox.length > 0)) {
+                return true;
+            }
+            if (feminin != null && feminin.equalsIgnoreCase("true")) {
+                errors.add(field.getKey(), new ActionError("errors.required.a.checkbox", field.getArg0()
+                        .getKey()));
+            } else {
+                errors.add(field.getKey(), new ActionError("errors.required.checkbox", field.getArg0()
+                        .getKey()));
+            }
 
-				return false;
-			
-		} catch (Exception e) {
-			errors.add(
-				field.getKey(),
-				new ActionError(
-					"errors.required.undefined.checkbox",
-					field.getArg0().getKey()));
-			return false;
-		}
+            return false;
 
-	}
+        } catch (Exception e) {
+            errors.add(field.getKey(), new ActionError("errors.required.undefined.checkbox", field
+                    .getArg0().getKey()));
+            return false;
+        }
+
+    }
 }

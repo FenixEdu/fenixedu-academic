@@ -8,13 +8,14 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o LerAulasDeDisciplinaExecucaoETipo.
- *
+ * 
  * @author tfc130
- **/
+ */
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseKeyAndLessonType;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
@@ -23,78 +24,53 @@ import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.ITurno;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeDisciplinaExecucaoETipo implements IServico {
+public class LerAulasDeDisciplinaExecucaoETipo implements IService {
 
-	private static LerAulasDeDisciplinaExecucaoETipo _servico =
-		new LerAulasDeDisciplinaExecucaoETipo();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static LerAulasDeDisciplinaExecucaoETipo getService() {
-		return _servico;
-	}
+    public Object run(ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao,
+            InfoExecutionCourse infoExecutionCourse) {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private LerAulasDeDisciplinaExecucaoETipo() {
-	}
+        ArrayList infoAulas = null;
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "LerAulasDeDisciplinaExecucaoETipo";
-	}
+        try {
 
-	public Object run(ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao, InfoExecutionCourse infoExecutionCourse) {
+            IExecutionCourse executionCourse = Cloner
+                    .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 
-		ArrayList infoAulas = null;
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            //			List aulas =
+            //				sp.getIAulaPersistente().readByExecutionCourseAndLessonType(
+            //					executionCourse,
+            //					tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
+            List aulas = new ArrayList();
 
-		try {
-			
-			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+            for (int i = 0; i < shifts.size(); i++) {
+                ITurno shift = (ITurno) shifts.get(i);
+                List aulasTemp = sp.getIAulaPersistente().readLessonsByShiftAndLessonType(shift,
+                        tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-//			List aulas =
-//				sp.getIAulaPersistente().readByExecutionCourseAndLessonType(
-//					executionCourse,
-//					tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
-			List aulas = new ArrayList();
-			
-			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
-			for (int i=0; i < shifts.size(); i++)
-			{                
-				ITurno shift = (ITurno) shifts.get(i);
-				List aulasTemp = sp.getIAulaPersistente().
-								readLessonsByShiftAndLessonType(
-									shift,
-									tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
-             	
-				aulas.addAll(aulasTemp);  
-			}
+                aulas.addAll(aulasTemp);
+            }
 
+            Iterator iterator = aulas.iterator();
+            infoAulas = new ArrayList();
+            while (iterator.hasNext()) {
+                IAula lesson = (IAula) iterator.next();
+                InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+                ITurno shift = lesson.getShift();
+                InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                infoLesson.setInfoShift(infoShift);
 
-			Iterator iterator = aulas.iterator();
-			infoAulas = new ArrayList();
-			while (iterator.hasNext()) {
-				IAula lesson = (IAula) iterator.next();
-				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
-				ITurno shift = lesson.getShift();
-				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-				infoLesson.setInfoShift(infoShift);
-				
-				infoAulas.add(infoLesson);
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return infoAulas;
-	}
+                infoAulas.add(infoLesson);
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+        return infoAulas;
+    }
 
 }

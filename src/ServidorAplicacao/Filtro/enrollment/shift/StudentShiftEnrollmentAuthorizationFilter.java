@@ -17,7 +17,7 @@ import Dominio.Student;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AccessControlFilter;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -28,8 +28,7 @@ import Util.TipoCurso;
  * @author Fernanda Quitério 13/Fev/2004
  *  
  */
-public class StudentShiftEnrollmentAuthorizationFilter extends
-        AccessControlFilter {
+public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilter {
 
     //	private static String DEGREE_LEEC_CODE = new String("LEEC");
 
@@ -43,12 +42,11 @@ public class StudentShiftEnrollmentAuthorizationFilter extends
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         String messageException = hasProvilege(id, request.getArguments());
-        if ((id == null) || (id.getRoles() == null)
-                || (!containsRole(id.getRoles())) || (messageException != null)) {
+        if ((id == null) || (id.getRoles() == null) || (!containsRole(id.getRoles()))
+                || (messageException != null)) {
             throw new NotAuthorizedFilterException(messageException);
         }
     }
@@ -93,28 +91,25 @@ public class StudentShiftEnrollmentAuthorizationFilter extends
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(
-                    Student.class, infoStudent.getIdInternal());
+            IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class,
+                    infoStudent.getIdInternal());
 
             Integer studentNumber = student.getNumber();
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
 
             studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType(studentNumber,
-                            TipoCurso.LICENCIATURA_OBJ);
+                    .readActiveByStudentNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
             if (studentCurricularPlan == null) {
                 studentCurricularPlan = persistentStudentCurricularPlan
-                        .readActiveByStudentNumberAndDegreeType(studentNumber,
-                                TipoCurso.MESTRADO_OBJ);
+                        .readActiveByStudentNumberAndDegreeType(studentNumber, TipoCurso.MESTRADO_OBJ);
             }
 
         } catch (Exception e) {
             return "noAuthorization";
         }
 
-        if (studentCurricularPlan == null
-                || studentCurricularPlan.getStudent() == null) {
+        if (studentCurricularPlan == null || studentCurricularPlan.getStudent() == null) {
             return "noAuthorization";
         }
 
@@ -123,8 +118,7 @@ public class StudentShiftEnrollmentAuthorizationFilter extends
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             try {
                 if (!id.getUtilizador().equals(
-                        studentCurricularPlan.getStudent().getPerson()
-                                .getUsername())) {
+                        studentCurricularPlan.getStudent().getPerson().getUsername())) {
                     return "noAuthorization";
                 }
 

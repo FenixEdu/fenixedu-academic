@@ -17,28 +17,26 @@ import ServidorPersistente.IPersistentDegreeObjectives;
 
 /**
  * @author João Mota
- *
- * 23/Jul/2003
- * fenix-head
- * ServidorPersistente.OJB
  * 
+ * 23/Jul/2003 fenix-head ServidorPersistente.OJB
+ *  
  */
-public class DegreeObjectivesOJB extends ObjectFenixOJB implements IPersistentDegreeObjectives{
-	
-	public IDegreeObjectives readCurrentByDegree(ICurso degree) throws ExcepcaoPersistencia{
-	
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyDegree", degree.getIdInternal());
-		criteria.addIsNull("endDate");
-		return (IDegreeObjectives)queryObject(DegreeObjectives.class, criteria);
-		
-	}
+public class DegreeObjectivesOJB extends PersistentObjectOJB implements IPersistentDegreeObjectives {
 
-	public List readByDegree(ICurso degree) throws ExcepcaoPersistencia{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyDegree", degree.getIdInternal());
-			
-		return queryList(DegreeObjectives.class, criteria);
-		}
+    public IDegreeObjectives readCurrentByDegree(ICurso degree) throws ExcepcaoPersistencia {
+
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyDegree", degree.getIdInternal());
+        criteria.addIsNull("endDate");
+        return (IDegreeObjectives) queryObject(DegreeObjectives.class, criteria);
+
+    }
+
+    public List readByDegree(ICurso degree) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyDegree", degree.getIdInternal());
+
+        return queryList(DegreeObjectives.class, criteria);
+    }
 
 }

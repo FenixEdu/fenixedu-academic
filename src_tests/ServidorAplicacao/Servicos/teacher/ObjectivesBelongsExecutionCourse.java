@@ -10,88 +10,105 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- * 
+ *  
  */
 public abstract class ObjectivesBelongsExecutionCourse extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	* @param name
-	*/
-	public ObjectivesBelongsExecutionCourse(String name) {
-		super(name);
-	}
+    /**
+     * @param name
+     */
+    public ObjectivesBelongsExecutionCourse(String name) {
+        super(name);
+    }
 
-	public void testObjectivesExecutionCourse() {
+    public void testObjectivesExecutionCourse() {
 
-		Object serviceArguments[] = getTestObjectivesSuccessfullArguments();
+        Object serviceArguments[] = getTestObjectivesSuccessfullArguments();
 
-		try {
+        try {
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
-			System.out.println(
-				"testObjectivesBelongsExecutionCourse was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            System.out
+                    .println("testObjectivesBelongsExecutionCourse was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
 
-		} catch (NotAuthorizedException ex) {
-			fail(getNameOfServiceToBeTested() + "fail testObjectivesBelongsExecutionCourse");
-		} catch (Exception ex) {
-			fail(getNameOfServiceToBeTested() + "fail testObjectivesBelongsExecutionCourse");
-		}
-	}
+        } catch (NotAuthorizedException ex) {
+            fail(getNameOfServiceToBeTested() + "fail testObjectivesBelongsExecutionCourse");
+        } catch (Exception ex) {
+            fail(getNameOfServiceToBeTested() + "fail testObjectivesBelongsExecutionCourse");
+        }
+    }
 
-	public void testObjectivesNotBelongsExecutionCourse() {
+    public void testObjectivesNotBelongsExecutionCourse() {
 
-		Object serviceArguments[] = getTestObjectivesUnsuccessfullArguments();
+        Object serviceArguments[] = getTestObjectivesUnsuccessfullArguments();
 
-		try {
-			 ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
-			fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
-		} catch (NotAuthorizedException ex) {
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
+        } catch (NotAuthorizedException ex) {
 
-			System.out.println(
-				"testObjectivesNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (Exception ex) {
-			fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
-		}
-	}
+            System.out
+                    .println("testObjectivesNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (Exception ex) {
+            fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
-	 */
-	protected abstract String[] getAuthorizedUser();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
+     */
+    protected abstract String[] getAuthorizedUser();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
-	 */
-	protected abstract String[] getUnauthorizedUser();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
+     */
+    protected abstract String[] getUnauthorizedUser();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
-	 */
-	protected abstract String[] getNonTeacherUser();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
+     */
+    protected abstract String[] getNonTeacherUser();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNameOfServiceToBeTested()
-	 */
-	protected abstract String getNameOfServiceToBeTested();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNameOfServiceToBeTested()
+     */
+    protected abstract String getNameOfServiceToBeTested();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-	 */
-	protected abstract Object[] getAuthorizeArguments();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
+    protected abstract Object[] getAuthorizeArguments();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
-	 */
-	protected abstract String getDataSetFilePath();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+     */
+    protected abstract String getDataSetFilePath();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
-	 */
-	protected abstract String getApplication();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected abstract String getApplication();
 
-	protected abstract Object[] getTestObjectivesSuccessfullArguments();
-	protected abstract Object[] getTestObjectivesUnsuccessfullArguments();
+    protected abstract Object[] getTestObjectivesSuccessfullArguments();
+
+    protected abstract Object[] getTestObjectivesUnsuccessfullArguments();
 
 }

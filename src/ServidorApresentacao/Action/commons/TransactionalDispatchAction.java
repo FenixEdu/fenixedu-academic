@@ -38,9 +38,8 @@ public class TransactionalDispatchAction extends DispatchAction {
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form,
-            ActionMapping mapping, String errorMessageKey)
-            throws FenixTransactionException {
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
+            String errorMessageKey) throws FenixTransactionException {
         validateToken(request, form, mapping, errorMessageKey, true);
     }
 
@@ -58,9 +57,8 @@ public class TransactionalDispatchAction extends DispatchAction {
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form,
-            ActionMapping mapping, String errorMessageKey, boolean renewToken)
-            throws FenixTransactionException {
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
+            String errorMessageKey, boolean renewToken) throws FenixTransactionException {
 
         if (!isTokenValid(request)) {
             form.reset(mapping, request);

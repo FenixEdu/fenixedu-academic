@@ -16,21 +16,22 @@ import ServidorPersistente.IPersistentObject;
 /**
  * @author jpvl
  */
-public interface IPersistentTeacherDegreeFinalProjectStudent extends IPersistentObject
-{
+public interface IPersistentTeacherDegreeFinalProjectStudent extends IPersistentObject {
 
     List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
     ITeacherDegreeFinalProjectStudent readByUnique(
-            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) throws ExcepcaoPersistencia;
+            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent)
+            throws ExcepcaoPersistencia;
 
     /**
      * @param student
      * @param executionPeriod
      * @return
      */
-    List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia;
 
     /**
      * @param executionPeriod

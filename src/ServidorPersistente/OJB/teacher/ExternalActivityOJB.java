@@ -11,34 +11,33 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.ITeacher;
 import Dominio.teacher.ExternalActivity;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class ExternalActivityOJB extends ObjectFenixOJB implements IPersistentExternalActivity
-{
+public class ExternalActivityOJB extends PersistentObjectOJB implements IPersistentExternalActivity {
 
     /**
-     * 
+     *  
      */
-    public ExternalActivityOJB()
-    {
+    public ExternalActivityOJB() {
         super();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorPersistente.teacher.IPersistentExternalActivity#readAllByTeacher(Dominio.ITeacher)
      */
-    public List readAllByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+    public List readAllByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
         List externalActivities = queryList(ExternalActivity.class, criteria);
-        
+
         return externalActivities;
     }
 

@@ -20,66 +20,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.publication.IPersistentPublicationType;
 
 /**
- * @author TJBF	
+ * @author TJBF
  * @author PFON
  *  
  */
-public class ReadNonRequiredAttributes implements IServico
-{
+public class ReadNonRequiredAttributes implements IServico {
     private static ReadNonRequiredAttributes service = new ReadNonRequiredAttributes();
 
     /**
-	 *  
-	 */
-    private ReadNonRequiredAttributes()
-    {
+     *  
+     */
+    private ReadNonRequiredAttributes() {
 
     }
 
-    public static ReadNonRequiredAttributes getService()
-    {
+    public static ReadNonRequiredAttributes getService() {
 
         return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadNonRequiredAttributes";
     }
 
-    public List run(String user, int publicationTypeId) throws FenixServiceException
-    {
-        try
-        {
+    public List run(String user, int publicationTypeId) throws FenixServiceException {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-            //IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+            //IPersistentTeacher persistentTeacher =
+            // persistentSuport.getIPersistentTeacher();
             //ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            //InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            //InfoTeacher infoTeacher =
+            // Cloner.copyITeacher2InfoTeacher(teacher);
 
-            IPersistentPublicationType persistentPublicationType = persistentSuport.getIPersistentPublicationType();
-            PublicationType publicationType = (PublicationType)persistentPublicationType.readByOID(PublicationType.class, new Integer(publicationTypeId));
-            
+            IPersistentPublicationType persistentPublicationType = persistentSuport
+                    .getIPersistentPublicationType();
+            PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
+                    PublicationType.class, new Integer(publicationTypeId));
+
             List nonRequiredAttributeList = publicationType.getNonRequiredAttributes();
 
-            
-            List result = (List) CollectionUtils.collect(nonRequiredAttributeList, new Transformer()
-            {
-                public Object transform(Object o)
-                {
+            List result = (List) CollectionUtils.collect(nonRequiredAttributeList, new Transformer() {
+                public Object transform(Object o) {
                     IAttribute publicationAttribute = (IAttribute) o;
                     return Cloner.copyIAttribute2InfoAttribute(publicationAttribute);
                 }
             });
 
             return result;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

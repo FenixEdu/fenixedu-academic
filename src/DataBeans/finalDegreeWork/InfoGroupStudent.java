@@ -9,78 +9,81 @@ import DataBeans.InfoStudent;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
 public class InfoGroupStudent extends InfoObject {
 
     private InfoGroup finalDegreeDegreeWorkGroup;
+
     private InfoStudent student;
+
     private InfoProposal finalDegreeWorkProposalConfirmation;
 
-	public InfoGroupStudent() {
-		super();
-	}
+    public InfoGroupStudent() {
+        super();
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoGroupStudent) {
-			InfoGroupStudent group = (InfoGroupStudent) obj;
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoGroupStudent) {
+            InfoGroupStudent group = (InfoGroupStudent) obj;
 
-			if (group.getIdInternal() != null && getIdInternal() != null)
-			{	
-				result = group.getIdInternal().equals(getIdInternal());
-			}
-		}
-		return result;
-	}
+            if (group.getIdInternal() != null && getIdInternal() != null) {
+                result = group.getIdInternal().equals(getIdInternal());
+            }
+        }
+        return result;
+    }
 
-	public String toString() {
-		String result = "[InfoGroupStudent";
-		result += ", idInternal=" + getIdInternal();
-		result += "]";
-		return result;
-	}
+    public String toString() {
+        String result = "[InfoGroupStudent";
+        result += ", idInternal=" + getIdInternal();
+        result += "]";
+        return result;
+    }
 
     /**
      * @return Returns the finalDegreeDegreeWorkGroup.
      */
-    public InfoGroup getFinalDegreeDegreeWorkGroup()
-    {
+    public InfoGroup getFinalDegreeDegreeWorkGroup() {
         return finalDegreeDegreeWorkGroup;
     }
+
     /**
-     * @param finalDegreeDegreeWorkGroup The finalDegreeDegreeWorkGroup to set.
+     * @param finalDegreeDegreeWorkGroup
+     *            The finalDegreeDegreeWorkGroup to set.
      */
-    public void setFinalDegreeDegreeWorkGroup(InfoGroup finalDegreeDegreeWorkGroup)
-    {
+    public void setFinalDegreeDegreeWorkGroup(InfoGroup finalDegreeDegreeWorkGroup) {
         this.finalDegreeDegreeWorkGroup = finalDegreeDegreeWorkGroup;
     }
+
     /**
      * @return Returns the finalDegreeWorkProposalConfirmation.
      */
-    public InfoProposal getFinalDegreeWorkProposalConfirmation()
-    {
+    public InfoProposal getFinalDegreeWorkProposalConfirmation() {
         return finalDegreeWorkProposalConfirmation;
     }
+
     /**
-     * @param finalDegreeWorkProposalConfirmation The finalDegreeWorkProposalConfirmation to set.
+     * @param finalDegreeWorkProposalConfirmation
+     *            The finalDegreeWorkProposalConfirmation to set.
      */
-    public void setFinalDegreeWorkProposalConfirmation(InfoProposal finalDegreeWorkProposalConfirmation)
-    {
+    public void setFinalDegreeWorkProposalConfirmation(InfoProposal finalDegreeWorkProposalConfirmation) {
         this.finalDegreeWorkProposalConfirmation = finalDegreeWorkProposalConfirmation;
     }
+
     /**
      * @return Returns the student.
      */
-    public InfoStudent getStudent()
-    {
+    public InfoStudent getStudent() {
         return student;
     }
+
     /**
-     * @param student The student to set.
+     * @param student
+     *            The student to set.
      */
-    public void setStudent(InfoStudent student)
-    {
+    public void setStudent(InfoStudent student) {
         this.student = student;
     }
 }

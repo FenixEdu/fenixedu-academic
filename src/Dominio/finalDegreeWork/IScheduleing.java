@@ -11,8 +11,7 @@ import Dominio.IDomainObject;
 /**
  * @author Luis Cruz
  */
-public interface IScheduleing extends IDomainObject
-{
+public interface IScheduleing extends IDomainObject {
 
     public ICursoExecucao getExecutionDegree();
 

@@ -30,7 +30,7 @@
 		<%int index = 0;%>
 		<logic:iterate id="infoExecutionDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_LIST %>">
 			<html:multibox property="selectedDegrees" value="<%= new String(""+index)%>"/>
-			<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/> em <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
+			<bean:write name="infoExecutionDegree" property="label"/><br/>
 			<%index++;%>			
 		</logic:iterate>
 	</logic:present>

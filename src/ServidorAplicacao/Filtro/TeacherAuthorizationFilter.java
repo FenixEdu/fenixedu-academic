@@ -9,15 +9,13 @@ import Util.RoleType;
 /**
  * @author jpvl
  */
-public class TeacherAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class TeacherAuthorizationFilter extends AuthorizationByRoleFilter {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 }

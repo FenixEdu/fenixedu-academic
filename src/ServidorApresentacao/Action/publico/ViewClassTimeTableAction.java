@@ -32,9 +32,8 @@ public class ViewClassTimeTableAction extends FenixContextAction {
      * Constructor for ViewClassTimeTableAction.
      */
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e) {
@@ -45,10 +44,10 @@ public class ViewClassTimeTableAction extends FenixContextAction {
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
-				request.setAttribute("degreeInitials","");
-				request.setAttribute("nameDegreeCurricularPlan","");
-				request.setAttribute("degreeCurricularPlanID", "");
-				request.setAttribute("degreeID", "");
+        request.setAttribute("degreeInitials", "");
+        request.setAttribute("nameDegreeCurricularPlan", "");
+        request.setAttribute("degreeCurricularPlanID", "");
+        request.setAttribute("degreeID", "");
         String classIdString = request.getParameter("classId");
         Integer classId = null;
         if (classIdString != null) {
@@ -59,15 +58,12 @@ public class ViewClassTimeTableAction extends FenixContextAction {
         }
         InfoSiteTimetable component = new InfoSiteTimetable();
 
-        Object[] args = { component,
-                infoExecutionPeriod.getInfoExecutionYear().getYear(),
-                infoExecutionPeriod.getName(), null, null, className, null,
-                classId};
+        Object[] args = { component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
+                infoExecutionPeriod.getName(), null, null, className, null, classId };
         SiteView siteView = null;
-        
+
         try {
-            siteView = (SiteView) ServiceUtils.executeService(null,
-                    "ClassSiteComponentService", args);
+            siteView = (SiteView) ServiceUtils.executeService(null, "ClassSiteComponentService", args);
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }

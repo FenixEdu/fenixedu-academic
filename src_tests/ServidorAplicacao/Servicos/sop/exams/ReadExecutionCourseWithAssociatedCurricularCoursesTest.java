@@ -12,158 +12,134 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public class ReadExecutionCourseWithAssociatedCurricularCoursesTest extends ServiceTestCase
-{
+public class ReadExecutionCourseWithAssociatedCurricularCoursesTest extends ServiceTestCase {
 
-	/**
-	 * @param name
-	 */
-	public ReadExecutionCourseWithAssociatedCurricularCoursesTest(java.lang.String testName)
-	{
-		super(testName);
-	}
+    /**
+     * @param name
+     */
+    public ReadExecutionCourseWithAssociatedCurricularCoursesTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadExecutionCoursewithAssociatedCurricularCourses";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadExecutionCoursewithAssociatedCurricularCourses";
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.sop.exams.ServiceNeedsAuthenticationTestCase#getDataSetFilePath()
-	 */
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets_templates/servicos/sop/testReadExecutionCourseWithAssociatedCurricularCourseDataset.xml";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.sop.exams.ServiceNeedsAuthenticationTestCase#getDataSetFilePath()
+     */
+    protected String getDataSetFilePath() {
+        return "etc/datasets_templates/servicos/sop/testReadExecutionCourseWithAssociatedCurricularCourseDataset.xml";
+    }
 
+    public void testSuccessfullReadExecutionCourseWithAllAssociatedCurricularCourses() {
+        Integer executionCourseID = new Integer(36422);
 
-	public void testSuccessfullReadExecutionCourseWithAllAssociatedCurricularCourses()
-	{
-		Integer executionCourseID = new Integer(36422);
-		
-		ReadExecutionCoursewithAssociatedCurricularCourses  service = 
-					ReadExecutionCoursewithAssociatedCurricularCourses.getService();
+        ReadExecutionCoursewithAssociatedCurricularCourses service = ReadExecutionCoursewithAssociatedCurricularCourses
+                .getService();
 
-		ISuportePersistente sp;
+        ISuportePersistente sp;
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			InfoExecutionCourse executionCourse = service.run(executionCourseID);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());									
+            InfoExecutionCourse executionCourse = service.run(executionCourseID);
 
-			assertEquals(executionCourse.getNome(), "Aprendizagem");
-			assertEquals(executionCourse.getAssociatedInfoCurricularCourses().size(), 2);			
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("testSuccessfullReadExecutionCourseWithAllAssociatedCurricularCourses - Fenix Service Exception " + ex);
-		}
-		catch (Exception ex)
-		{			
-			fail("testSuccessfullReadExecutionCourseWithAllAssociatedCurricularCourses " + ex);
-		}
-	}
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 
-	public void testSuccessfullReadExecutionCourseWithSomeAssociatedCurricularCourses()
-	{
-		Integer executionCourseID = new Integer(36721);
-		
-		ReadExecutionCoursewithAssociatedCurricularCourses  service = ReadExecutionCoursewithAssociatedCurricularCourses.getService();
+            assertEquals(executionCourse.getNome(), "Aprendizagem");
+            assertEquals(executionCourse.getAssociatedInfoCurricularCourses().size(), 2);
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullReadExecutionCourseWithAllAssociatedCurricularCourses - Fenix Service Exception "
+                    + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullReadExecutionCourseWithAllAssociatedCurricularCourses " + ex);
+        }
+    }
 
-		ISuportePersistente sp;
+    public void testSuccessfullReadExecutionCourseWithSomeAssociatedCurricularCourses() {
+        Integer executionCourseID = new Integer(36721);
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        ReadExecutionCoursewithAssociatedCurricularCourses service = ReadExecutionCoursewithAssociatedCurricularCourses
+                .getService();
 
-			InfoExecutionCourse executionCourse = service.run(executionCourseID);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());									
-			
-			assertEquals(executionCourse.getNome(), "Robótica");
+        ISuportePersistente sp;
 
-			
-			assertEquals(executionCourse.getAssociatedInfoCurricularCourses().size(), 1);			
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("testSuccessfullReadExecutionCourseWithSomeAssociatedCurricularCourses - Fenix Service Exception " + ex);
-		}
-		catch (Exception ex)
-		{			
-			fail("testSuccessfullReadExecutionCourseWithSomeAssociatedCurricularCourses " + ex);
-		}
-	}
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-	public void testSuccessfullReadExecutionCourseWithNoAssociatedCurricularCourses()
-	{
-		Integer executionCourseID = new Integer(36723);
-		
-		ReadExecutionCoursewithAssociatedCurricularCourses  service = ReadExecutionCoursewithAssociatedCurricularCourses.getService();
+            InfoExecutionCourse executionCourse = service.run(executionCourseID);
 
-		ISuportePersistente sp;
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+            assertEquals(executionCourse.getNome(), "Robótica");
 
-			InfoExecutionCourse executionCourse = service.run(executionCourseID);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());									
-			
-			assertEquals(executionCourse.getNome(), "Representação do Conhecimento");
+            assertEquals(executionCourse.getAssociatedInfoCurricularCourses().size(), 1);
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullReadExecutionCourseWithSomeAssociatedCurricularCourses - Fenix Service Exception "
+                    + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullReadExecutionCourseWithSomeAssociatedCurricularCourses " + ex);
+        }
+    }
 
-			
-			assertNull(executionCourse.getAssociatedInfoCurricularCourses());			
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("testSuccessfullReadExecutionCourseWithNoAssociatedCurricularCourses - Fenix Service Exception " + ex);
-		}
-		catch (Exception ex)
-		{			
-			fail("testSuccessfullReadExecutionCourseWithNoAssociatedCurricularCourses " + ex);
-		}
-	}
+    public void testSuccessfullReadExecutionCourseWithNoAssociatedCurricularCourses() {
+        Integer executionCourseID = new Integer(36723);
 
-	public void testUnexistingReadExecutionCourse()
-	{
-		Integer executionCourseID = new Integer(1);
-		
-		ReadExecutionCoursewithAssociatedCurricularCourses  service = ReadExecutionCoursewithAssociatedCurricularCourses.getService();
+        ReadExecutionCoursewithAssociatedCurricularCourses service = ReadExecutionCoursewithAssociatedCurricularCourses
+                .getService();
 
-		ISuportePersistente sp;
+        ISuportePersistente sp;
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			service.run(executionCourseID);
-						
-			
-			fail("testUnexistingReadExecutionCourse");
-		}
-		catch (FenixServiceException ex)
-		{
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());									
-		}
-		catch (Exception ex)
-		{			
-			fail("testUnexistingReadExecutionCourse " + ex);
-		}
-	}
+            InfoExecutionCourse executionCourse = service.run(executionCourseID);
+
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+
+            assertEquals(executionCourse.getNome(), "Representação do Conhecimento");
+
+            assertNull(executionCourse.getAssociatedInfoCurricularCourses());
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullReadExecutionCourseWithNoAssociatedCurricularCourses - Fenix Service Exception "
+                    + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullReadExecutionCourseWithNoAssociatedCurricularCourses " + ex);
+        }
+    }
+
+    public void testUnexistingReadExecutionCourse() {
+        Integer executionCourseID = new Integer(1);
+
+        ReadExecutionCoursewithAssociatedCurricularCourses service = ReadExecutionCoursewithAssociatedCurricularCourses
+                .getService();
+
+        ISuportePersistente sp;
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+
+            service.run(executionCourseID);
+
+            fail("testUnexistingReadExecutionCourse");
+        } catch (FenixServiceException ex) {
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+        } catch (Exception ex) {
+            fail("testUnexistingReadExecutionCourse " + ex);
+        }
+    }
 
 }
 

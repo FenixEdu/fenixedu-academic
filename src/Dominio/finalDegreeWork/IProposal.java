@@ -14,110 +14,109 @@ import Util.TipoCurso;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public interface IProposal extends IDomainObject
-{
+public interface IProposal extends IDomainObject {
 
-	public String getCompanyName();
+    public String getCompanyName();
 
-	public void setCompanyName(String companyName);
-	
-	public String getCompanyAdress();
-	
-	public void setCompanyAdress(String adress);
+    public void setCompanyName(String companyName);
 
-	public ITeacher getCoorientator();
+    public String getCompanyAdress();
 
-	public void setCoorientator(ITeacher coorientator);
+    public void setCompanyAdress(String adress);
 
-	public Integer getCoorientatorsCreditsPercentage();
+    public ITeacher getCoorientator();
 
-	public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage);
+    public void setCoorientator(ITeacher coorientator);
 
-	public ICursoExecucao getExecutionDegree();
+    public Integer getCoorientatorsCreditsPercentage();
 
-	public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage);
 
-	public TipoCurso getDegreeType();
+    public ICursoExecucao getExecutionDegree();
 
-	public void setDegreeType(TipoCurso degreeType);
+    public void setExecutionDegree(ICursoExecucao executionDegree);
 
-	public String getDescription();
+    public TipoCurso getDegreeType();
 
-	public void setDescription(String description);
+    public void setDegreeType(TipoCurso degreeType);
 
-	public String getObjectives();
+    public String getDescription();
 
-	public void setObjectives(String objectives);
+    public void setDescription(String description);
 
-	public String getObservations();
+    public String getObjectives();
 
-	public void setObservations(String observations);
+    public void setObjectives(String objectives);
 
-	public ITeacher getOrientator();
+    public String getObservations();
 
-	public void setOrientator(ITeacher orientator);
+    public void setObservations(String observations);
 
-	public Integer getOrientatorsCreditsPercentage();
-	
-	public void setCompanionName(String name);
-	
-	public String getCompanionName();
+    public ITeacher getOrientator();
 
-	public void setCompanionMail(String mail);
-	
-	public String getCompanionMail();
-	
-	public void setCompanionPhone(Integer phone);
-	
-	public Integer getCompanionPhone();
-	
-	public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage);
+    public void setOrientator(ITeacher orientator);
 
-	public String getRequirements();
+    public Integer getOrientatorsCreditsPercentage();
 
-	public void setRequirements(String requirements);
+    public void setCompanionName(String name);
 
-	public String getTitle();
+    public String getCompanionName();
 
-	public void setTitle(String title);
+    public void setCompanionMail(String mail);
 
-	public String getUrl();
+    public String getCompanionMail();
 
-	public void setUrl(String url);
+    public void setCompanionPhone(Integer phone);
 
-	public String getDeliverable();
+    public Integer getCompanionPhone();
 
-	public void setDeliverable(String deliverable);
+    public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage);
 
-	public String getFraming();
+    public String getRequirements();
 
-	public void setFraming(String framing);
+    public void setRequirements(String requirements);
 
-	public String getLocation();
+    public String getTitle();
 
-	public void setLocation(String location);
+    public void setTitle(String title);
 
-	public Integer getMaximumNumberOfGroupElements();
+    public String getUrl();
 
-	public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements);
+    public void setUrl(String url);
 
-	public Integer getMinimumNumberOfGroupElements();
+    public String getDeliverable();
 
-	public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements);
+    public void setDeliverable(String deliverable);
 
-	public List getBranches();
+    public String getFraming();
 
-	public void setBranches(List branches);
-	
-	public Integer getProposalNumber();
+    public void setFraming(String framing);
 
-	public void setProposalNumber(Integer proposalNumber);
+    public String getLocation();
 
-	public FinalDegreeWorkProposalStatus getStatus();
+    public void setLocation(String location);
 
-	public void setStatus(FinalDegreeWorkProposalStatus status);
+    public Integer getMaximumNumberOfGroupElements();
+
+    public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements);
+
+    public Integer getMinimumNumberOfGroupElements();
+
+    public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements);
+
+    public List getBranches();
+
+    public void setBranches(List branches);
+
+    public Integer getProposalNumber();
+
+    public void setProposalNumber(Integer proposalNumber);
+
+    public FinalDegreeWorkProposalStatus getStatus();
+
+    public void setStatus(FinalDegreeWorkProposalStatus status);
 
     public List getGroupProposals();
 

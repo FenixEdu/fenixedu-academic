@@ -16,37 +16,39 @@ import ServidorPersistente.ISuportePersistente;
  */
 public class DeleteCareer extends DeleteDomainObjectService {
 
-	private static DeleteCareer service = new DeleteCareer();
+    private static DeleteCareer service = new DeleteCareer();
 
-	public static DeleteCareer getService() {
-		return service;
-	}
-    
-	private DeleteCareer() {
-	}
+    public static DeleteCareer getService() {
+        return service;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "DeleteCareer";
-	}
-    
-    /* (non-Javadoc)
+    private DeleteCareer() {
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "DeleteCareer";
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return Career.class;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentCareer();
     }
 }

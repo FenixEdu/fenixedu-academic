@@ -48,7 +48,22 @@ h3.diploma_posGrad {
 h4.diploma_posGrad {
 	font: 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #223d4a;
-	}		
+	}	
+	
+h2.registration	{
+	font: 20px Courier;
+	color: #000;
+	}
+
+h3.registration	{
+	font: 16px Courier;
+	color: #000;
+	}
+	
+h4.registration {
+	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;		
+	color: #000;
+	}
 
 /******************************************
 	Global Links Proprieties
@@ -570,3 +585,40 @@ table#ects {
 	border: 5px solid #ccc;
 	margin: 5px;
 	}
+
+	
+/***************************************
+  School Registration - Declaration
+****************************************/
+
+
+body.registration {
+	font: 14px "Courier New", Courier, monospace;
+	color: #000;
+	text-align: justify;
+	background: #fff;
+	}
+	
+table.registration {	
+	font: 14px Courier;
+	text-align: justify;
+	}
+	
+.registration_cell  {
+	font: 12px Verdana, Arial, Helvetica, sans-serif;		
+	color: #000;
+	}	
+	
+.break-before {
+	page-break-before:always;
+	}	
+		
+#pagewrapper_registration
+{
+width: 800px;
+margin-right:auto;
+margin-left:auto;
+margin-top:30px;
+padding:0px;
+text-align: left;
+}		

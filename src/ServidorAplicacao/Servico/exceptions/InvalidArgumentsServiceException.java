@@ -5,48 +5,48 @@
  */
 package ServidorAplicacao.Servico.exceptions;
 
-
 /**
  * @author João Mota
  */
 public class InvalidArgumentsServiceException extends FenixServiceException {
 
-	/**
-	 * 
-	 */
-	public InvalidArgumentsServiceException() {
-		
-	}
+    /**
+     *  
+     */
+    public InvalidArgumentsServiceException() {
 
-	/**
-	 * @param s
-	 */
-	public InvalidArgumentsServiceException(String s) {
-		super(s);
-		
-	}
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InvalidArgumentsServiceException(Throwable cause) {
-		super(cause);
-		
-	}
+    /**
+     * @param s
+     */
+    public InvalidArgumentsServiceException(String s) {
+        super(s);
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InvalidArgumentsServiceException(String message, Throwable cause) {
-		super(message, cause);
-		
-	}
-	public String toString() {
-					String result = "[InvalidArgumentsServiceException\n";
-					result += "message" +this.getMessage()+ "\n";
-					result += "cause" +this.getCause()+ "\n";
-					result += "]";
-					return result;
-				}
+    }
+
+    /**
+     * @param cause
+     */
+    public InvalidArgumentsServiceException(Throwable cause) {
+        super(cause);
+
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public InvalidArgumentsServiceException(String message, Throwable cause) {
+        super(message, cause);
+
+    }
+
+    public String toString() {
+        String result = "[InvalidArgumentsServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

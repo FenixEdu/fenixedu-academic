@@ -8,7 +8,7 @@
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
+ * 
  * @author tfc130
  */
 import java.util.Calendar;
@@ -41,228 +41,244 @@ import Util.DiaSemana;
 
 public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
-	private InfoLesson infoLesson = null;
-	private InfoShift infoShift = null;
+    private InfoLesson infoLesson = null;
 
-	public AdicionarAulaServicosTest(java.lang.String testName) {
-		super(testName);
-	}
+    private InfoShift infoShift = null;
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public AdicionarAulaServicosTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(AdicionarAulaServicosTest.class);
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(AdicionarAulaServicosTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "AdicionarAula";
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	// TODO This class must extend class TestCaseCreateServices so this method will be gonne
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "AdicionarAula";
+    }
 
-	// write new non-existing turnoAula
-	public void testCreateNonExistingTurnoAula() {
+    // TODO This class must extend class TestCaseCreateServices so this method
+    // will be gonne
+    protected boolean needsAuthorization() {
+        return true;
+    }
 
-		DiaSemana diaSemana = null;
-		Calendar inicio = null;
-		Calendar fim = null;
-		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-		inicio = Calendar.getInstance();
-		inicio.set(Calendar.HOUR_OF_DAY, 8);
-		inicio.set(Calendar.MINUTE, 0);
-		inicio.set(Calendar.SECOND, 0);
-		fim = Calendar.getInstance();
-		fim.set(Calendar.HOUR_OF_DAY, 9);
-		fim.set(Calendar.MINUTE, 30);
-		fim.set(Calendar.SECOND, 0);
-		
-		this.ligarSuportePersistente("turno2", diaSemana, inicio, fim);
-		
-		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
+    // write new non-existing turnoAula
+    public void testCreateNonExistingTurnoAula() {
 
-		Object result = null;
-		try {
-			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
-			assertTrue("testCreateNonExistingTurnoAula", ((InfoShiftServiceResult) result).isSUCESS());
-		} catch (Exception ex) {
-			System.out.println(ex.toString());
-			fail("testCreateNonExistingTurnoAula:");
-		}
-	}
+        DiaSemana diaSemana = null;
+        Calendar inicio = null;
+        Calendar fim = null;
+        diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+        inicio = Calendar.getInstance();
+        inicio.set(Calendar.HOUR_OF_DAY, 8);
+        inicio.set(Calendar.MINUTE, 0);
+        inicio.set(Calendar.SECOND, 0);
+        fim = Calendar.getInstance();
+        fim.set(Calendar.HOUR_OF_DAY, 9);
+        fim.set(Calendar.MINUTE, 30);
+        fim.set(Calendar.SECOND, 0);
 
-	// write new non-existing turnoAula but carga-horaria maxima ja foi atingida
-	public void testCreateNonExistingTurnoAula_HoursLimitReached() {
+        this.ligarSuportePersistente("turno2", diaSemana, inicio, fim);
 
-		DiaSemana diaSemana1 = null;
-		DiaSemana diaSemana2 = null;
-		Calendar inicio = null;
-		Calendar fim1 = null;
-		Calendar fim2 = null;
-		diaSemana1 = new DiaSemana(DiaSemana.TERCA_FEIRA);
-		diaSemana2 = new DiaSemana(DiaSemana.QUARTA_FEIRA);
-		inicio = Calendar.getInstance();
-		inicio.set(Calendar.HOUR_OF_DAY, 8);
-		inicio.set(Calendar.MINUTE, 0);
-		inicio.set(Calendar.SECOND, 0);
-		fim1 = Calendar.getInstance();
-		fim1.set(Calendar.HOUR_OF_DAY, 9);
-		fim1.set(Calendar.MINUTE, 30);
-		fim1.set(Calendar.SECOND, 0);
-		fim2 = Calendar.getInstance();
-		fim2.set(Calendar.HOUR_OF_DAY, 9);
-		fim2.set(Calendar.MINUTE, 30);
-		fim2.set(Calendar.SECOND, 0);
+        Object argsCriarTurnoAula[] = { this.infoShift, this.infoLesson };
 
-		this.ligarSuportePersistente("turno3", diaSemana1, inicio, fim1);
-		Object argsCriarTurnoAula1[] = {this.infoShift, this.infoLesson};
+        Object result = null;
+        try {
+            result = ServiceManagerServiceFactory.executeService(_userView,
+                    getNameOfServiceToBeTested(), argsCriarTurnoAula);
+            assertTrue("testCreateNonExistingTurnoAula", ((InfoShiftServiceResult) result).isSUCESS());
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            fail("testCreateNonExistingTurnoAula:");
+        }
+    }
 
-		this.ligarSuportePersistente("turno3", diaSemana2, inicio, fim2);
-		Object argsCriarTurnoAula2[] = {this.infoShift, this.infoLesson};
+    // write new non-existing turnoAula but carga-horaria maxima ja foi atingida
+    public void testCreateNonExistingTurnoAula_HoursLimitReached() {
 
-		Object result = null;
-		try {
-			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
-			assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached", ((InfoShiftServiceResult) result).isSUCESS());
-			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
-			assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached", ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED).getMessageType());
-		} catch (Exception ex) {
-			fail("testCreateNonExistingTurnoAula_HoursLimitReached: " + ex);
-		}
-	}
+        DiaSemana diaSemana1 = null;
+        DiaSemana diaSemana2 = null;
+        Calendar inicio = null;
+        Calendar fim1 = null;
+        Calendar fim2 = null;
+        diaSemana1 = new DiaSemana(DiaSemana.TERCA_FEIRA);
+        diaSemana2 = new DiaSemana(DiaSemana.QUARTA_FEIRA);
+        inicio = Calendar.getInstance();
+        inicio.set(Calendar.HOUR_OF_DAY, 8);
+        inicio.set(Calendar.MINUTE, 0);
+        inicio.set(Calendar.SECOND, 0);
+        fim1 = Calendar.getInstance();
+        fim1.set(Calendar.HOUR_OF_DAY, 9);
+        fim1.set(Calendar.MINUTE, 30);
+        fim1.set(Calendar.SECOND, 0);
+        fim2 = Calendar.getInstance();
+        fim2.set(Calendar.HOUR_OF_DAY, 9);
+        fim2.set(Calendar.MINUTE, 30);
+        fim2.set(Calendar.SECOND, 0);
 
-	// write new non-existing turnoAula but carga-horaria maxima excedida
-	public void testCreateNonExistingTurnoAula_HourLimitExceeded() {
+        this.ligarSuportePersistente("turno3", diaSemana1, inicio, fim1);
+        Object argsCriarTurnoAula1[] = { this.infoShift, this.infoLesson };
 
-		DiaSemana diaSemana1 = null;
-		DiaSemana diaSemana2 = null;
-		Calendar inicio1 = null;
-		Calendar inicio2 = null;
-		Calendar fim1 = null;
-		Calendar fim2 = null;
-		diaSemana1 = new DiaSemana(DiaSemana.TERCA_FEIRA);
-		diaSemana2 = new DiaSemana(DiaSemana.QUARTA_FEIRA);
-		inicio1 = Calendar.getInstance();
-		inicio1.set(Calendar.HOUR_OF_DAY, 13);
-		inicio1.set(Calendar.MINUTE, 30);
-		inicio1.set(Calendar.SECOND, 0);
-		inicio2 = Calendar.getInstance();
-		inicio2.set(Calendar.HOUR_OF_DAY, 8);
-		inicio2.set(Calendar.MINUTE, 0);
-		inicio2.set(Calendar.SECOND, 0);
-		fim1 = Calendar.getInstance();
-		fim1.set(Calendar.HOUR_OF_DAY, 14);
-		fim1.set(Calendar.MINUTE, 0);
-		fim1.set(Calendar.SECOND, 0);
-		fim2 = Calendar.getInstance();
-		fim2.set(Calendar.HOUR_OF_DAY, 9);
-		fim2.set(Calendar.MINUTE, 30);
-		fim2.set(Calendar.SECOND, 0);
+        this.ligarSuportePersistente("turno3", diaSemana2, inicio, fim2);
+        Object argsCriarTurnoAula2[] = { this.infoShift, this.infoLesson };
 
-		this.ligarSuportePersistente("turno3", diaSemana1, inicio1, fim1);
-		Object argsCriarTurnoAula1[] = {this.infoShift, this.infoLesson};
+        Object result = null;
+        try {
+            result = ServiceManagerServiceFactory.executeService(_userView,
+                    getNameOfServiceToBeTested(), argsCriarTurnoAula1);
+            assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached",
+                    ((InfoShiftServiceResult) result).isSUCESS());
+            result = ServiceManagerServiceFactory.executeService(_userView,
+                    getNameOfServiceToBeTested(), argsCriarTurnoAula2);
+            assertTrue("testCreateNonExistingTurnoAula_HoursLimitReached",
+                    ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(
+                            InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED).getMessageType());
+        } catch (Exception ex) {
+            fail("testCreateNonExistingTurnoAula_HoursLimitReached: " + ex);
+        }
+    }
 
-		this.ligarSuportePersistente("turno3", diaSemana2, inicio2, fim2);
-		Object argsCriarTurnoAula2[] = {this.infoShift, this.infoLesson};
+    // write new non-existing turnoAula but carga-horaria maxima excedida
+    public void testCreateNonExistingTurnoAula_HourLimitExceeded() {
 
-	    Object result = null; 
-	      try {
-			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula1);
-			assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded", ((InfoShiftServiceResult) result).isSUCESS());
-			result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula2);
-			assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded", ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED).getMessageType());
-	      } catch (Exception ex) {
-	      	fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
-	      }
-	}
+        DiaSemana diaSemana1 = null;
+        DiaSemana diaSemana2 = null;
+        Calendar inicio1 = null;
+        Calendar inicio2 = null;
+        Calendar fim1 = null;
+        Calendar fim2 = null;
+        diaSemana1 = new DiaSemana(DiaSemana.TERCA_FEIRA);
+        diaSemana2 = new DiaSemana(DiaSemana.QUARTA_FEIRA);
+        inicio1 = Calendar.getInstance();
+        inicio1.set(Calendar.HOUR_OF_DAY, 13);
+        inicio1.set(Calendar.MINUTE, 30);
+        inicio1.set(Calendar.SECOND, 0);
+        inicio2 = Calendar.getInstance();
+        inicio2.set(Calendar.HOUR_OF_DAY, 8);
+        inicio2.set(Calendar.MINUTE, 0);
+        inicio2.set(Calendar.SECOND, 0);
+        fim1 = Calendar.getInstance();
+        fim1.set(Calendar.HOUR_OF_DAY, 14);
+        fim1.set(Calendar.MINUTE, 0);
+        fim1.set(Calendar.SECOND, 0);
+        fim2 = Calendar.getInstance();
+        fim2.set(Calendar.HOUR_OF_DAY, 9);
+        fim2.set(Calendar.MINUTE, 30);
+        fim2.set(Calendar.SECOND, 0);
 
-//	write existing turnoAula
-	public void testCreateExistingTurnoAula() {
+        this.ligarSuportePersistente("turno3", diaSemana1, inicio1, fim1);
+        Object argsCriarTurnoAula1[] = { this.infoShift, this.infoLesson };
 
-		 DiaSemana diaSemana = null;
-		 Calendar inicio = null;
-		 Calendar fim = null;
-		 diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-		 inicio = Calendar.getInstance();
-		 inicio.set(Calendar.HOUR_OF_DAY, 12);
-		 inicio.set(Calendar.MINUTE, 30);
-		 inicio.set(Calendar.SECOND, 0);
-		 fim = Calendar.getInstance();
-		 fim.set(Calendar.HOUR_OF_DAY, 13);
-		 fim.set(Calendar.MINUTE, 0);
-		 fim.set(Calendar.SECOND, 0);
+        this.ligarSuportePersistente("turno3", diaSemana2, inicio2, fim2);
+        Object argsCriarTurnoAula2[] = { this.infoShift, this.infoLesson };
 
-		 this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
-		 Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
+        Object result = null;
+        try {
+            result = ServiceManagerServiceFactory.executeService(_userView,
+                    getNameOfServiceToBeTested(), argsCriarTurnoAula1);
+            assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded",
+                    ((InfoShiftServiceResult) result).isSUCESS());
+            result = ServiceManagerServiceFactory.executeService(_userView,
+                    getNameOfServiceToBeTested(), argsCriarTurnoAula2);
+            assertTrue("testCreateNonExistingTurnoAula_HourLimitExceeded",
+                    ((InfoShiftServiceResult) result).getMessageType() == new InfoShiftServiceResult(
+                            InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED).getMessageType());
+        } catch (Exception ex) {
+            fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
+        }
+    }
 
-		 Object result = null;
-		 try {
-			 result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), argsCriarTurnoAula);
-			 fail("testCreateExistingTurnoAula:");
-		 } catch (Exception ex) {
-			 assertNull("testCreateExistingTurnoAula", result);
-		 }
-	 }
+    //	write existing turnoAula
+    public void testCreateExistingTurnoAula() {
 
-	private void ligarSuportePersistente(String nomeTurno, DiaSemana diaSemana, Calendar inicio, Calendar fim) {
+        DiaSemana diaSemana = null;
+        Calendar inicio = null;
+        Calendar fim = null;
+        diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+        inicio = Calendar.getInstance();
+        inicio.set(Calendar.HOUR_OF_DAY, 12);
+        inicio.set(Calendar.MINUTE, 30);
+        inicio.set(Calendar.SECOND, 0);
+        fim = Calendar.getInstance();
+        fim.set(Calendar.HOUR_OF_DAY, 13);
+        fim.set(Calendar.MINUTE, 0);
+        fim.set(Calendar.SECOND, 0);
 
-		ISuportePersistente sp = null;
+        this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
+        Object argsCriarTurnoAula[] = { this.infoShift, this.infoLesson };
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        Object result = null;
+        try {
+            result = ServiceManagerServiceFactory.executeService(_userView,
+                    getNameOfServiceToBeTested(), argsCriarTurnoAula);
+            fail("testCreateExistingTurnoAula:");
+        } catch (Exception ex) {
+            assertNull("testCreateExistingTurnoAula", result);
+        }
+    }
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+    private void ligarSuportePersistente(String nomeTurno, DiaSemana diaSemana, Calendar inicio,
+            Calendar fim) {
 
-			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
+        ISuportePersistente sp = null;
 
-			ISalaPersistente isp = sp.getISalaPersistente();
-			ISala is = isp.readByName("Ga1");
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IAulaPersistente iap = sp.getIAulaPersistente();
-			IAula ia = iap.readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio, fim, is,iep);
-			
-			String nomeDisciplinaExecucao = null;
-			if(nomeTurno.equals("turno1") || nomeTurno.equals("turno2")) {
-				nomeDisciplinaExecucao = "TFCI";
-			} else if(nomeTurno.equals("turno3")) {
-				nomeDisciplinaExecucao = "TFCII";
-			}
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
-			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod(nomeDisciplinaExecucao, iep);
-			
-			ITurnoPersistente itp = sp.getITurnoPersistente();
-			ITurno it = itp.readByNameAndExecutionCourse(nomeTurno, ide);
-			
-			this.infoLesson = Cloner.copyILesson2InfoLesson(ia);
-			this.infoShift =  (InfoShift) Cloner.get(it);
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-			sp.confirmarTransaccao();
+            ISalaPersistente isp = sp.getISalaPersistente();
+            ISala is = isp.readByName("Ga1");
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
+            IAulaPersistente iap = sp.getIAulaPersistente();
+            IAula ia = iap.readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio, fim, is, iep);
+
+            String nomeDisciplinaExecucao = null;
+            if (nomeTurno.equals("turno1") || nomeTurno.equals("turno2")) {
+                nomeDisciplinaExecucao = "TFCI";
+            } else if (nomeTurno.equals("turno3")) {
+                nomeDisciplinaExecucao = "TFCII";
+            }
+
+            IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
+            IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod(
+                    nomeDisciplinaExecucao, iep);
+
+            ITurnoPersistente itp = sp.getITurnoPersistente();
+            ITurno it = itp.readByNameAndExecutionCourse(nomeTurno, ide);
+
+            this.infoLesson = Cloner.copyILesson2InfoLesson(ia);
+            this.infoShift = (InfoShift) Cloner.get(it);
+
+            sp.confirmarTransaccao();
+
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 }

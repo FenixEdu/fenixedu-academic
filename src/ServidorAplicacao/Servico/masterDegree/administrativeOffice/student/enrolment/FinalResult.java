@@ -1,6 +1,6 @@
-
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.enrolment;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoFinalResult;
@@ -8,69 +8,50 @@ import DataBeans.InfoStudentCurricularPlan;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class FinalResult implements IServico {
+public class FinalResult implements IService {
 
-	private static FinalResult servico = new FinalResult();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static FinalResult getService() {
-		return servico;
-	}
+    public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private FinalResult() { 
-	}
+        boolean result = false;
 
-	/**
-	 * Returns The Service Name */
+        IStudentCurricularPlan studentCurricularPlan = InfoStudentCurricularPlan
+                .newDomainFromInfo(infoStudentCurricularPlan);
+        IDegreeCurricularPlan degreeCurricularPlan = InfoDegreeCurricularPlan
+                .newDomainFromInfo(infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
+        ICurso degree = InfoDegree.newDomainFromInfo(infoStudentCurricularPlan
+                .getInfoDegreeCurricularPlan().getInfoDegree());
+        degreeCurricularPlan.setDegree(degree);
+        studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
 
-	public final String getNome() {
-		return "FinalResult";
-	}
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+                .getInstance();
 
-	public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws Exception {
+        IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+                .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
+        // verify if the school part is concluded
+        if (studentCurricularPlan.getDegreeCurricularPlan().getNeededCredits() == null) {
+            return null;
+        }
 
-		boolean result = false;
+        result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
 
-		//CLONER
-		//IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
-		IStudentCurricularPlan studentCurricularPlan = InfoStudentCurricularPlan.newDomainFromInfo(infoStudentCurricularPlan);
-		IDegreeCurricularPlan degreeCurricularPlan = InfoDegreeCurricularPlan.newDomainFromInfo(infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
-		ICurso degree = InfoDegree.newDomainFromInfo(infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree());
-		degreeCurricularPlan.setDegree(degree);
-		studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
-		
-		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
-	
-		IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
+        if (result == true) {
+            InfoFinalResult infoFinalResult = new InfoFinalResult();
 
+            masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan,
+                    infoFinalResult);
 
-		// verify if the school part is concluded
-		result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
+            return infoFinalResult;
+        }
 
-		if (result == true){
-			InfoFinalResult infoFinalResult = new InfoFinalResult();
-			
-			masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan, infoFinalResult);
-
-
-			return infoFinalResult;	
-		}	
-
-		return null;
-	}
+        return null;
+    }
 }

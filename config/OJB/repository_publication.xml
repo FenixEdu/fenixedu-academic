@@ -158,6 +158,6 @@
     <attribute
      	attribute-name="cacheable"
      	attribute-value="false" />
-
+    
 </class-descriptor>				  		
 <!-- Mapping of User defined classses ends here -->

@@ -25,55 +25,40 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
- * @author Fernanda Quitério
- * 10/07/2003
- * 
+ * @author Fernanda Quitério 10/07/2003
+ *  
  */
-public class ConfirmMarksAction extends DispatchAction
-{
+public class ConfirmMarksAction extends DispatchAction {
 
-    public ActionForward prepareMarksConfirmation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-        Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest("courseId", request));
+    public ActionForward prepareMarksConfirmation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest(
+                "courseId", request));
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
-        // Get students final evaluation			
+        // Get students final evaluation
         Object args[] = { curricularCourseCode, null };
         IUserView userView = SessionUtils.getUserView(request);
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
-        try
-        {
-            infoSiteEnrolmentEvaluation =
-                (InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "ReadStudentsFinalEvaluationForConfirmation",
-                    args);
-        } catch (NonExistingServiceException e)
-        {
+        try {
+            infoSiteEnrolmentEvaluation = (InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadStudentsFinalEvaluationForConfirmation", args);
+        } catch (NonExistingServiceException e) {
             sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
             return mapping.findForward("ShowMarksManagementMenu");
-        } catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             sendErrors(request, "existing", "message.masterDegree.evaluation.alreadyConfirmed");
             return mapping.findForward("ShowMarksManagementMenu");
-        } catch (InvalidSituationServiceException e)
-        {
+        } catch (InvalidSituationServiceException e) {
             sendErrors(request, "invalidSituation", "error.masterDegree.studentsWithoutGrade");
             return mapping.findForward("ShowMarksManagementMenu");
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        Collections.sort(
-            infoSiteEnrolmentEvaluation.getEnrolmentEvaluations(),
-            new BeanComparator("infoEnrolment.infoStudentCurricularPlan.infoStudent.number"));
+        Collections.sort(infoSiteEnrolmentEvaluation.getEnrolmentEvaluations(), new BeanComparator(
+                "infoEnrolment.infoStudentCurricularPlan.infoStudent.number"));
 
         request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluation);
 
@@ -82,58 +67,47 @@ public class ConfirmMarksAction extends DispatchAction
 
     }
 
-    private String findForward(
-        HttpServletRequest request,
-        InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation)
-    {
+    private String findForward(HttpServletRequest request,
+            InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation) {
         String useCase = (String) getFromRequest("useCase", request);
         String forward = new String("MarksConfirmationMenu");
-        if (useCase != null && useCase.equals("confirm"))
-        {
+        if (useCase != null && useCase.equals("confirm")) {
             forward = "MarksConfirmation";
-        } else if (useCase != null && useCase.equals("print"))
-        {
+        } else if (useCase != null && useCase.equals("print")) {
             forward = "MarksPrint";
         }
         return forward;
     }
 
-    private void sendErrors(HttpServletRequest request, String arg0, String arg1)
-    {
+    private void sendErrors(HttpServletRequest request, String arg0, String arg1) {
         ActionErrors errors = new ActionErrors();
         errors.add(arg0, new ActionError(arg1));
         saveErrors(request, errors);
     }
-    public ActionForward confirm(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-    	Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest("courseId", request));
-    	MarksManagementDispatchAction.getFromRequest("objectCode", request);
-    	MarksManagementDispatchAction.getFromRequest("degreeId", request);
+
+    public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest(
+                "courseId", request));
+        MarksManagementDispatchAction.getFromRequest("objectCode", request);
+        MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         //		set final evaluation to final state
         IUserView userView = SessionUtils.getUserView(request);
         Object args[] = { curricularCourseCode, null, userView };
-        try
-        {
-			ServiceManagerServiceFactory.executeService(userView, "ConfirmStudentsFinalEvaluation", args);
-        } catch (FenixServiceException e)
-        {
+        try {
+            ServiceManagerServiceFactory
+                    .executeService(userView, "ConfirmStudentsFinalEvaluation", args);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         return mapping.findForward("ShowMarksManagementMenu");
     }
 
-    private Object getFromRequest(String parameter, HttpServletRequest request)
-    {
+    private Object getFromRequest(String parameter, HttpServletRequest request) {
         Object parameterString = request.getParameter(parameter);
-        if (parameterString == null)
-        {
+        if (parameterString == null) {
             parameterString = request.getAttribute(parameter);
         }
         return parameterString;

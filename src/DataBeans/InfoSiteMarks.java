@@ -9,51 +9,47 @@ import java.util.ListIterator;
  * 
  *  
  */
-public class InfoSiteMarks extends DataTranferObject implements ISiteComponent
-{
+public class InfoSiteMarks extends DataTranferObject implements ISiteComponent {
     private InfoEvaluation infoEvaluation;
+
     private List marksList;
+
     private List infoAttends;
+
     private List marksListErrors;
+
     private List studentsListErrors;
+
     private HashMap hashMarks;
 
-    public boolean equals(Object objectToCompare)
-    {
+    public boolean equals(Object objectToCompare) {
         boolean result = false;
 
         if (objectToCompare instanceof InfoSiteMarks
-            && (((((InfoSiteMarks)objectToCompare).getInfoEvaluation() != null
-                && this.getInfoEvaluation() != null
-                && ((InfoSiteMarks)objectToCompare).getInfoEvaluation().equals(this.getInfoEvaluation()))
-                || ((InfoSiteMarks)objectToCompare).getInfoEvaluation() == null
-                && this.getInfoEvaluation() == null)))
-        {
+                && (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null
+                        && this.getInfoEvaluation() != null && ((InfoSiteMarks) objectToCompare)
+                        .getInfoEvaluation().equals(this.getInfoEvaluation())) || ((InfoSiteMarks) objectToCompare)
+                        .getInfoEvaluation() == null
+                        && this.getInfoEvaluation() == null))) {
             result = true;
         }
 
-        if (((InfoSiteMarks)objectToCompare).getMarksList() == null
-            && this.getMarksList() == null
-            && result == true)
-        {
+        if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null
+                && result == true) {
             return true;
         }
 
-        if (((InfoSiteMarks)objectToCompare).getMarksList() == null
-            || this.getMarksList() == null
-            || ((InfoSiteMarks)objectToCompare).getMarksList().size() != this.getMarksList().size())
-        {
+        if (((InfoSiteMarks) objectToCompare).getMarksList() == null || this.getMarksList() == null
+                || ((InfoSiteMarks) objectToCompare).getMarksList().size() != this.getMarksList().size()) {
             return false;
         }
 
-        ListIterator iter1 = ((InfoSiteMarks)objectToCompare).getMarksList().listIterator();
+        ListIterator iter1 = ((InfoSiteMarks) objectToCompare).getMarksList().listIterator();
         ListIterator iter2 = this.getMarksList().listIterator();
-        while (result && iter1.hasNext())
-        {
-            InfoMark infoMark1 = (InfoMark)iter1.next();
-            InfoMark infoMark2 = (InfoMark)iter2.next();
-            if (!infoMark1.equals(infoMark2))
-            {
+        while (result && iter1.hasNext()) {
+            InfoMark infoMark1 = (InfoMark) iter1.next();
+            InfoMark infoMark2 = (InfoMark) iter2.next();
+            if (!infoMark1.equals(infoMark2)) {
                 result = false;
             }
         }
@@ -62,105 +58,93 @@ public class InfoSiteMarks extends DataTranferObject implements ISiteComponent
     }
 
     /**
-	 * @return
-	 */
-    public List getMarksList()
-    {
+     * @return
+     */
+    public List getMarksList() {
         return marksList;
     }
 
     /**
-	 * @param list
-	 */
-    public void setMarksList(List list)
-    {
+     * @param list
+     */
+    public void setMarksList(List list) {
         marksList = list;
     }
 
     /**
-	 * @return
-	 */
-    public InfoEvaluation getInfoEvaluation()
-    {
+     * @return
+     */
+    public InfoEvaluation getInfoEvaluation() {
         return infoEvaluation;
     }
 
     /**
-	 * @param exam
-	 */
-    public void setInfoEvaluation(InfoEvaluation evaluation)
-    {
+     * @param exam
+     */
+    public void setInfoEvaluation(InfoEvaluation evaluation) {
         infoEvaluation = evaluation;
     }
+
     /**
-	 * @return
-	 */
-    public List getMarksListErrors()
-    {
+     * @return
+     */
+    public List getMarksListErrors() {
         return marksListErrors;
     }
 
     /**
-	 * @param marksListErrors
-	 */
-    public void setMarksListErrors(List marksListErrors)
-    {
+     * @param marksListErrors
+     */
+    public void setMarksListErrors(List marksListErrors) {
         this.marksListErrors = marksListErrors;
     }
 
     /**
-	 * @return
-	 */
-    public List getStudentsListErrors()
-    {
+     * @return
+     */
+    public List getStudentsListErrors() {
         return studentsListErrors;
     }
 
     /**
-	 * @param list
-	 */
-    public void setStudentsListErrors(List list)
-    {
+     * @param list
+     */
+    public void setStudentsListErrors(List list) {
         studentsListErrors = list;
     }
 
     /**
-	 * @return Returns the attendsList.
-	 */
-    public List getInfoAttends()
-    {
+     * @return Returns the attendsList.
+     */
+    public List getInfoAttends() {
         return infoAttends;
     }
 
     /**
-	 * @param attendsList
-	 *            The attendsList to set.
-	 */
-    public void setInfoAttends(List attendsList)
-    {
+     * @param attendsList
+     *            The attendsList to set.
+     */
+    public void setInfoAttends(List attendsList) {
         this.infoAttends = attendsList;
     }
 
     /**
-	 * @return Returns the hashMarks.
-	 */
-    public HashMap getHashMarks()
-    {
+     * @return Returns the hashMarks.
+     */
+    public HashMap getHashMarks() {
         return hashMarks;
     }
 
     /**
-	 * @param hashMarks
-	 *            The hashMarks to set.
-	 */
-    public void setHashMarks(HashMap hashMarks)
-    {
+     * @param hashMarks
+     *            The hashMarks to set.
+     */
+    public void setHashMarks(HashMap hashMarks) {
         this.hashMarks = hashMarks;
     }
 
-    public String getMarks(String studentNumber)
-    {
-        return (String)hashMarks.get(studentNumber);
+    public String getMarks(String studentNumber) {
+        return (String) hashMarks.get(studentNumber);
 
     }
 

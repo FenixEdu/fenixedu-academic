@@ -26,27 +26,24 @@ public class CreateBibliographicReference implements IService {
     /**
      * Executes the service.
      */
-    public boolean run(Integer infoExecutionCourseCode,
-            String newBibliographyTitle, String newBibliographyAuthors,
-            String newBibliographyReference, String newBibliographyYear,
+    public boolean run(Integer infoExecutionCourseCode, String newBibliographyTitle,
+            String newBibliographyAuthors, String newBibliographyReference, String newBibliographyYear,
             Boolean newBibliographyOptional) throws FenixServiceException {
 
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                     .getIPersistentExecutionCourse();
             IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
                     .getIPersistentBibliographicReference();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
 
             IBibliographicReference newBibliographicReference = new BibliographicReference();
 
-            persistentBibliographicReference
-                    .simpleLockWrite(newBibliographicReference);
+            persistentBibliographicReference.simpleLockWrite(newBibliographicReference);
             newBibliographicReference.setExecutionCourse(executionCourse);
             newBibliographicReference.setTitle(newBibliographyTitle);
             newBibliographicReference.setAuthors(newBibliographyAuthors);

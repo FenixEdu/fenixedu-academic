@@ -22,49 +22,41 @@ import ServidorPersistente.IPersistentDistributedTestAdvisory;
  * @author Susana Fernandes
  */
 
-public class DistributedTestAdvisoryOJB extends ObjectFenixOJB implements
+public class DistributedTestAdvisoryOJB extends PersistentObjectOJB implements
         IPersistentDistributedTestAdvisory {
 
     public DistributedTestAdvisoryOJB() {
     }
 
-    public void updateDistributedTestAdvisoryDates(
-            IDistributedTest distributedTest, Date newExpiresDate)
+    public void updateDistributedTestAdvisoryDates(IDistributedTest distributedTest, Date newExpiresDate)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest
-                .getIdInternal());
+        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         List result = queryList(DistributedTestAdvisory.class, criteria);
         Iterator it = result.iterator();
         while (it.hasNext()) {
-            IDistributedTestAdvisory distributedTestAdvisory = (IDistributedTestAdvisory) it
-                    .next();
+            IDistributedTestAdvisory distributedTestAdvisory = (IDistributedTestAdvisory) it.next();
             simpleLockWrite(distributedTestAdvisory.getAdvisory());
             distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
         }
     }
 
-    public void deleteByDistributedTest(IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public void deleteByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest
-                .getIdInternal());
+        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         List result = queryList(DistributedTestAdvisory.class, criteria);
         Iterator it = result.iterator();
         Calendar expiresDate = Calendar.getInstance();
         expiresDate.add(Calendar.DAY_OF_MONTH, -1);
         while (it.hasNext()) {
-            IDistributedTestAdvisory distributedTestAdvisory = (IDistributedTestAdvisory) it
-                    .next();
+            IDistributedTestAdvisory distributedTestAdvisory = (IDistributedTestAdvisory) it.next();
             simpleLockWrite(distributedTestAdvisory.getAdvisory());
-            distributedTestAdvisory.getAdvisory().setExpires(
-                    expiresDate.getTime());
+            distributedTestAdvisory.getAdvisory().setExpires(expiresDate.getTime());
             delete(distributedTestAdvisory);
         }
     }
 
-    public void delete(IDistributedTestAdvisory distributedTestAdvisory)
-            throws ExcepcaoPersistencia {
+    public void delete(IDistributedTestAdvisory distributedTestAdvisory) throws ExcepcaoPersistencia {
         super.delete(distributedTestAdvisory);
     }
 }

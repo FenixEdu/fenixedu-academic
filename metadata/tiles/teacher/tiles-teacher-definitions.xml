@@ -70,5 +70,10 @@
 	<definition name="definition.teacher.two-column.extra-menu.tutor" extends="definition.teacher.two-column.extra-menu">	  
 		<put name="body-context" value="" />  
     	<put name="navLocalExtra" value="/teacher/tutor/tutorMenu.jsp" />
+	</definition>
+
+	<definition name="definition.curriculum.historic" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value=""></put>
 	</definition>    
 </tiles-definitions>

@@ -11,7 +11,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantOwner;
 import Util.TipoDocumentoIdentificacao;
 
@@ -20,8 +20,7 @@ import Util.TipoDocumentoIdentificacao;
  * @author Pica
  */
 
-public class GrantOwnerOJB extends ObjectFenixOJB implements
-        IPersistentGrantOwner {
+public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGrantOwner {
 
     public GrantOwnerOJB() {
     }

@@ -70,12 +70,10 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-            summary = (ISummary) persistentSummary.readByOID(Summary.class,
-                    summaryId);
+            summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
-            fail("Editing the summary: failed reading the summary to edit "
-                    + ex);
+            fail("Editing the summary: failed reading the summary to edit " + ex);
         }
 
         Calendar summaryDate = Calendar.getInstance();
@@ -92,9 +90,8 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
         summary.setSummaryText("Novo texto do sumario");
         Integer summaryType = new Integer(TipoAula.DUVIDAS);
 
-        Object[] args = { executionCourseId, summaryId, summaryDate,
-                summaryHour, summaryType, summary.getTitle(),
-                summary.getSummaryText() };
+        Object[] args = { executionCourseId, summaryId, summaryDate, summaryHour, summaryType,
+                summary.getTitle(), summary.getSummaryText() };
         return args;
     }
 
@@ -110,21 +107,18 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-            summary = (ISummary) persistentSummary.readByOID(Summary.class,
-                    summaryId);
+            summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
-            fail("Editing the summary: failed reading the summary to edit "
-                    + ex);
+            fail("Editing the summary: failed reading the summary to edit " + ex);
         }
 
         summary.setTitle("Novo Titulo");
         summary.setSummaryText("Novo texto do sumario");
         Integer summaryType = new Integer(TipoAula.DUVIDAS);
 
-        Object[] args = { executionCourseId, summaryId,
-                summary.getSummaryDate(), summary.getSummaryHour(),
-                summaryType, summary.getTitle(), summary.getSummaryText() };
+        Object[] args = { executionCourseId, summaryId, summary.getSummaryDate(),
+                summary.getSummaryHour(), summaryType, summary.getTitle(), summary.getSummaryText() };
         return args;
     }
 
@@ -141,33 +135,31 @@ public class EditSummaryTest extends SummaryBelongsExecutionCourseTest {
 
             Object[] args2 = getAuthorizeArguments();
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args2);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args2);
 
             Integer summaryId = (Integer) args2[1];
             ISummary summary;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-            summary = (ISummary) persistentSummary.readByOID(Summary.class,
-                    summaryId);
+            summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);
             sp.confirmarTransaccao();
 
             // verificar se o sumario foi alterado na base de dados
             Calendar expectedSummaryDate = (Calendar) args2[2];
             Calendar expectedSummaryHour = (Calendar) args2[3];
-            assertEquals(summary.getSummaryDate().get(Calendar.DAY_OF_MONTH),
-                    expectedSummaryDate.get(Calendar.DAY_OF_MONTH));
-            assertEquals(summary.getSummaryDate().get(Calendar.MONTH),
-                    expectedSummaryDate.get(Calendar.MONTH));
-            assertEquals(summary.getSummaryDate().get(Calendar.YEAR),
-                    expectedSummaryDate.get(Calendar.YEAR));
-            assertEquals(summary.getSummaryHour().get(Calendar.HOUR_OF_DAY),
-                    expectedSummaryHour.get(Calendar.HOUR_OF_DAY));
-            assertEquals(summary.getSummaryHour().get(Calendar.MINUTE),
-                    expectedSummaryHour.get(Calendar.MINUTE));
-            assertEquals(summary.getSummaryHour().get(Calendar.SECOND),
-                    expectedSummaryHour.get(Calendar.SECOND));
+            assertEquals(summary.getSummaryDate().get(Calendar.DAY_OF_MONTH), expectedSummaryDate
+                    .get(Calendar.DAY_OF_MONTH));
+            assertEquals(summary.getSummaryDate().get(Calendar.MONTH), expectedSummaryDate
+                    .get(Calendar.MONTH));
+            assertEquals(summary.getSummaryDate().get(Calendar.YEAR), expectedSummaryDate
+                    .get(Calendar.YEAR));
+            assertEquals(summary.getSummaryHour().get(Calendar.HOUR_OF_DAY), expectedSummaryHour
+                    .get(Calendar.HOUR_OF_DAY));
+            assertEquals(summary.getSummaryHour().get(Calendar.MINUTE), expectedSummaryHour
+                    .get(Calendar.MINUTE));
+            assertEquals(summary.getSummaryHour().get(Calendar.SECOND), expectedSummaryHour
+                    .get(Calendar.SECOND));
             assertEquals(summary.getSummaryType().getTipo(), args2[4]);
             assertEquals(summary.getTitle(), (String) args2[5]);
             assertEquals(summary.getSummaryText(), (String) args2[6]);

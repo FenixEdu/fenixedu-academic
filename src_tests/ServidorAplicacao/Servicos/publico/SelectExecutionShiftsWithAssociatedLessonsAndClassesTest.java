@@ -19,7 +19,7 @@ import Dominio.ISala;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionCourse;
@@ -35,16 +35,14 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author tfc130
  *  
  */
-public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends
-        TestCaseServicos {
+public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends TestCaseServicos {
 
     private InfoExecutionCourse infoExecutionCourse = null;
 
     /**
      * Constructor for SelectClassesTest.
      */
-    public SelectExecutionShiftsWithAssociatedLessonsAndClassesTest(
-            java.lang.String testName) {
+    public SelectExecutionShiftsWithAssociatedLessonsAndClassesTest(java.lang.String testName) {
         super(testName);
     }
 
@@ -53,8 +51,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite(
-                SelectExecutionShiftsWithAssociatedLessonsAndClassesTest.class);
+        TestSuite suite = new TestSuite(SelectExecutionShiftsWithAssociatedLessonsAndClassesTest.class);
 
         return suite;
     }
@@ -83,19 +80,14 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends
             result = ServiceManagerServiceFactory.executeService(_userView,
                     "SelectExecutionShiftsWithAssociatedLessonsAndClasses",
                     argsSelectExecutionShiftsWithAssociatedLessonsAndClasses);
-            assertEquals(
-                    "testReadAll: 10 shift in db with 1st shift with 1 lesson and 1 class",
-                    10, ((List) result).size());
-            assertEquals(
-                    "testReadAll: 1 lessons of 1st shift of executionCourse",
-                    1,
-                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result)
-                            .get(0)).getInfoLessons().size());
-            assertEquals(
-                    "testReadAll: 1 classes of 1st shift of executionCourse",
-                    1,
-                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result)
-                            .get(0)).getInfoClasses().size());
+            assertEquals("testReadAll: 10 shift in db with 1st shift with 1 lesson and 1 class", 10,
+                    ((List) result).size());
+            assertEquals("testReadAll: 1 lessons of 1st shift of executionCourse", 1,
+                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result).get(0))
+                            .getInfoLessons().size());
+            assertEquals("testReadAll: 1 classes of 1st shift of executionCourse", 1,
+                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result).get(0))
+                            .getInfoClasses().size());
         } catch (Exception ex) {
             fail("testReadAll: 1 shift in db with 1 lesson and 1 class: " + ex);
         }
@@ -107,19 +99,14 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends
             result = ServiceManagerServiceFactory.executeService(_userView,
                     "SelectExecutionShiftsWithAssociatedLessonsAndClasses",
                     argsSelectExecutionShiftsWithAssociatedLessonsAndClasses);
-            assertEquals(
-                    "testReadAll: 1 shift in db with no lessons and no classes",
-                    10, ((List) result).size());
-            assertEquals(
-                    "testReadAll: 0 lessons of shift in db",
-                    0,
-                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result)
-                            .get(0)).getInfoLessons().size());
-            assertEquals(
-                    "testReadAll: 0 classes of shift in db",
-                    0,
-                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result)
-                            .get(0)).getInfoClasses().size());
+            assertEquals("testReadAll: 1 shift in db with no lessons and no classes", 10,
+                    ((List) result).size());
+            assertEquals("testReadAll: 0 lessons of shift in db", 0,
+                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result).get(0))
+                            .getInfoLessons().size());
+            assertEquals("testReadAll: 0 classes of shift in db", 0,
+                    ((InfoShiftWithAssociatedInfoClassesAndInfoLessons) ((List) result).get(0))
+                            .getInfoClasses().size());
         } catch (Exception ex) {
             fail("testReadAll: 1 shift in db with no lessons and no classes");
         }
@@ -130,12 +117,10 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends
             result = ServiceManagerServiceFactory.executeService(_userView,
                     "SelectExecutionShiftsWithAssociatedLessonsAndClasses",
                     argsSelectExecutionShiftsWithAssociatedLessonsAndClasses);
-            assertEquals(
-                    "testReadAll: no shiftsWithAssociatedLessonsAndClasses to read aqui",
-                    0, ((List) result).size());
+            assertEquals("testReadAll: no shiftsWithAssociatedLessonsAndClasses to read aqui", 0,
+                    ((List) result).size());
         } catch (Exception ex) {
-            fail("testReadAll: no shiftsWithAssociatedLessonsAndClasses to read: "
-                    + ex);
+            fail("testReadAll: no shiftsWithAssociatedLessonsAndClasses to read: " + ex);
         }
     }
 
@@ -157,34 +142,27 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends
                     .readByNameAndDegree("plano1", degree);
             assertNotNull(degreeCurricularPlan);
 
-            IPersistentExecutionYear persistenExecutionYear = sp
-                    .getIPersistentExecutionYear();
-            IExecutionYear executionYear = persistenExecutionYear
-                    .readExecutionYearByName("2002/2003");
+            IPersistentExecutionYear persistenExecutionYear = sp.getIPersistentExecutionYear();
+            IExecutionYear executionYear = persistenExecutionYear.readExecutionYearByName("2002/2003");
             assertNotNull(executionYear);
 
-            ICursoExecucaoPersistente cursoExecucaoPersistente = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree cursoExecucaoPersistente = sp.getIPersistentExecutionDegree();
             ICursoExecucao executionDegree = cursoExecucaoPersistente
-                    .readByDegreeCurricularPlanAndExecutionYear(
-                            degreeCurricularPlan, executionYear);
+                    .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
             assertNotNull(executionDegree);
 
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readByNameAndExecutionYear("2º Semestre", executionYear);
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                    "2º Semestre", executionYear);
             assertNotNull(executionPeriod);
 
             IPersistentExecutionCourse disciplinaExecucaoPersistente = sp
                     .getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = disciplinaExecucaoPersistente
-                    .readByExecutionCourseInitialsAndExecutionPeriod("TFCI",
-                            executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
             assertNotNull(executionCourse);
 
-            this.infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             //			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
             //			ITurno shift =
@@ -209,9 +187,8 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends
             fim.set(Calendar.MINUTE, 30);
             fim.set(Calendar.SECOND, 0);
 
-            IAula lesson = aulaPersistente
-                    .readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio,
-                            fim, room1, executionPeriod);
+            IAula lesson = aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio, fim,
+                    room1, executionPeriod);
             assertNotNull(lesson);
 
             //ITurnoAulaPersistente turnoAulaPersistente =

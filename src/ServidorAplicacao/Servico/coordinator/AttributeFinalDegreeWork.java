@@ -16,36 +16,31 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class AttributeFinalDegreeWork implements IService
-{
+public class AttributeFinalDegreeWork implements IService {
 
-    public AttributeFinalDegreeWork()
-    {
+    public AttributeFinalDegreeWork() {
         super();
     }
 
-    public void run(Integer selectedGroupProposal) throws ExcepcaoPersistencia
-    {
+    public void run(Integer selectedGroupProposal) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
         IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork.readByOID(
                 GroupProposal.class, selectedGroupProposal);
-        if (groupProposal != null)
-        {
+        if (groupProposal != null) {
             IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
             persistentFinalDegreeWork.simpleLockWrite(proposal);
             proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());
 
             IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-            for (int i = 0; i < group.getGroupProposals().size(); i++)
-            {
+            for (int i = 0; i < group.getGroupProposals().size(); i++) {
                 IGroupProposal otherGroupProposal = (IGroupProposal) group.getGroupProposals().get(i);
                 if (!otherGroupProposal.getIdInternal().equals(groupProposal.getIdInternal())
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
-                        && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed().getIdInternal().equals(group.getIdInternal()))
-                {
+                        && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed()
+                                .getIdInternal().equals(group.getIdInternal())) {
                     IProposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
                     persistentFinalDegreeWork.simpleLockWrite(otherProposal);
                     otherProposal.setGroupAttributed(null);

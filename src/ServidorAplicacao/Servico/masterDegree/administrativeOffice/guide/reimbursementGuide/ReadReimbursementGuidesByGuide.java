@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import DataBeans.util.Cloner;
@@ -19,7 +20,6 @@ import Dominio.IGuide;
 import Dominio.reimbursementGuide.IReimbursementGuide;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
 import Dominio.reimbursementGuide.ReimbursementGuide;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,30 +34,7 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
  *  
  */
 
-public class ReadReimbursementGuidesByGuide implements IServico {
-
-    private static ReadReimbursementGuidesByGuide servico = new ReadReimbursementGuidesByGuide();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadReimbursementGuidesByGuide getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadReimbursementGuidesByGuide() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ReadReimbursementGuidesByGuide";
-    }
+public class ReadReimbursementGuidesByGuide implements IService {
 
     /**
      * @throws FenixServiceException
@@ -70,8 +47,7 @@ public class ReadReimbursementGuidesByGuide implements IServico {
 
             //guide
             IPersistentGuide persistentGuide = ps.getIPersistentGuide();
-            IGuide guide = (IGuide) persistentGuide.readByOID(Guide.class,
-                    guideId);
+            IGuide guide = (IGuide) persistentGuide.readByOID(Guide.class, guideId);
 
             //reimbursement Guides
             List reimbursementGuides = guide.getReimbursementGuides();
@@ -84,10 +60,8 @@ public class ReadReimbursementGuidesByGuide implements IServico {
 
             while (it.hasNext()) {
 
-                reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
-                        .readByOID(ReimbursementGuide.class,
-                                ((IReimbursementGuide) it.next())
-                                        .getIdInternal());
+                reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide.readByOID(
+                        ReimbursementGuide.class, ((IReimbursementGuide) it.next()).getIdInternal());
 
                 if (reimbursementGuide == null) {
                     throw new NonExistingServiceException();
@@ -95,8 +69,7 @@ public class ReadReimbursementGuidesByGuide implements IServico {
                 infoReimbursementGuide = Cloner
                         .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
 
-                List guideSituations = reimbursementGuide
-                        .getReimbursementGuideSituations();
+                List guideSituations = reimbursementGuide.getReimbursementGuideSituations();
                 CollectionUtils.transform(guideSituations, new Transformer() {
 
                     public Object transform(Object arg0) {
@@ -106,8 +79,7 @@ public class ReadReimbursementGuidesByGuide implements IServico {
                     }
 
                 });
-                infoReimbursementGuide
-                        .setInfoReimbursementGuideSituations(guideSituations);
+                infoReimbursementGuide.setInfoReimbursementGuideSituations(guideSituations);
 
                 infoReimbursementGuides.add(infoReimbursementGuide);
 

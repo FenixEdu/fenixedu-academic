@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ICurso;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
@@ -17,49 +17,28 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteDegrees implements IServico
-{
-
-    private static DeleteDegrees service = new DeleteDegrees();
-
-    public static DeleteDegrees getService()
-    {
-        return service;
-    }
-
-    private DeleteDegrees()
-    {
-    }
-
-    public final String getNome()
-    {
-        return "DeleteDegrees";
-    }
+public class DeleteDegrees implements IService {
 
     // delete a set of degrees
-    public List run(List degreesInternalIds) throws FenixServiceException
-    {
+    public List run(List degreesInternalIds) throws FenixServiceException {
 
-        try
-        {
+        try {
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-                sp.getIPersistentDegreeCurricularPlan();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+                    .getIPersistentDegreeCurricularPlan();
 
             Iterator iter = degreesInternalIds.iterator();
             List degreeCurricularPlans;
 
             List undeletedDegreesNames = new ArrayList();
 
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
 
                 Integer internalId = (Integer) iter.next();
                 ICurso degree = persistentDegree.readByIdInternal(internalId);
-                if (degree != null)
-                {
+                if (degree != null) {
                     degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegree(degree);
                     if (degreeCurricularPlans.isEmpty())
                         persistentDegree.delete(degree);
@@ -70,8 +49,7 @@ public class DeleteDegrees implements IServico
 
             return undeletedDegreesNames;
 
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

@@ -22,13 +22,13 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Sergio Montelobo
  *  
  */
-public class CareerAction extends CRUDActionByOID
-{    
-    protected void prepareFormConstants(ActionMapping mapping, ActionForm form, HttpServletRequest request) throws FenixServiceException
-    {
+public class CareerAction extends CRUDActionByOID {
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request) throws FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
-        List categories = (List) ServiceUtils.executeService(userView, "ReadCategories", new Object[]{});
-        
+        List categories = (List) ServiceUtils
+                .executeService(userView, "ReadCategories", new Object[] {});
+
         request.setAttribute("categories", categories);
     }
 }

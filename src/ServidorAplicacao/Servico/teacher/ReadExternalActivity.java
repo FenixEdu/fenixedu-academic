@@ -20,58 +20,52 @@ import ServidorPersistente.teacher.IPersistentExternalActivity;
  * @author Sergio Montelobo
  *  
  */
-public class ReadExternalActivity extends ReadDomainObjectService
-{
+public class ReadExternalActivity extends ReadDomainObjectService {
     private static ReadExternalActivity service = new ReadExternalActivity();
 
-    public static ReadExternalActivity getService()
-    {
+    public static ReadExternalActivity getService() {
         return service;
     }
 
-    public ReadExternalActivity()
-    {
+    public ReadExternalActivity() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadExternalActivity";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-	 */
-    protected Class getDomainObjectClass()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
+     */
+    protected Class getDomainObjectClass() {
         return ExternalActivity.class;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
         return persistentExternalActivity;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-	 */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
-        InfoExternalActivity infoExternalActivity = Cloner.copyIExternalActivity2InfoExternalActivity((IExternalActivity) domainObject);
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
+     */
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        InfoExternalActivity infoExternalActivity = Cloner
+                .copyIExternalActivity2InfoExternalActivity((IExternalActivity) domainObject);
         return infoExternalActivity;
     }
 }

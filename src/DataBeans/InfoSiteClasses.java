@@ -9,30 +9,31 @@ import java.util.List;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
-public class InfoSiteClasses  extends DataTranferObject implements ISiteComponent {
+public class InfoSiteClasses extends DataTranferObject implements ISiteComponent {
 
-private List classes;
-	/**
-	 * 
-	 */
-	public InfoSiteClasses() {
-	}
+    private List classes;
 
-/**
- * @return
- */
-public List getClasses() {
-	return classes;
-}
+    /**
+     *  
+     */
+    public InfoSiteClasses() {
+    }
 
-/**
- * @param list
- */
-public void setClasses(List list) {
-	classes = list;
-}
+    /**
+     * @return
+     */
+    public List getClasses() {
+        return classes;
+    }
+
+    /**
+     * @param list
+     */
+    public void setClasses(List list) {
+        classes = list;
+    }
 
 }

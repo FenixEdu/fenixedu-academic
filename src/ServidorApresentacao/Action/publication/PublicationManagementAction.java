@@ -22,28 +22,23 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author TJBF & PFON
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * 
+ * To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Generation - Code and Comments
  */
-public class PublicationManagementAction extends FenixAction{
-	
-	public ActionForward execute(
-			ActionMapping mapping,
-			ActionForm actionForm,
-			HttpServletRequest request,
-			HttpServletResponse response)
-	throws Exception
-	{
-		IUserView userView = SessionUtils.getUserView(request);
-		
-		Object[] args = { userView.getUtilizador()};
-		
-		SiteView siteView =
-			(SiteView) ServiceUtils.executeService(userView, "ReadAuthorPublications", args);
-		InfoSitePublications infoSitePublications = (InfoSitePublications)siteView.getComponent();
-		request.setAttribute("infoSitePublications",infoSitePublications);
-		return mapping.findForward("show-publications");
-	}
+public class PublicationManagementAction extends FenixAction {
+
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IUserView userView = SessionUtils.getUserView(request);
+
+        Object[] args = { userView.getUtilizador() };
+
+        SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadAuthorPublications",
+                args);
+        InfoSitePublications infoSitePublications = (InfoSitePublications) siteView.getComponent();
+        request.setAttribute("infoSitePublications", infoSitePublications);
+        return mapping.findForward("show-publications");
+    }
 
 }

@@ -24,76 +24,67 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author David Santos in Apr 28, 2004
  */
 
-public class PrepareStudentForEnrollmentEquivalenceDispachAction extends DispatchAction
-{
-	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		DynaActionForm studentNumberForm = (DynaActionForm) form;
-		ActionErrors errors = new ActionErrors();
+public class PrepareStudentForEnrollmentEquivalenceDispachAction extends DispatchAction {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        DynaActionForm studentNumberForm = (DynaActionForm) form;
+        ActionErrors errors = new ActionErrors();
 
-		Integer degreeTypeCode = (Integer) studentNumberForm.get("degreeType");
-		String studentNumberSTR = (String) studentNumberForm.get("studentNumber");
+        Integer degreeTypeCode = (Integer) studentNumberForm.get("degreeType");
+        String studentNumberSTR = (String) studentNumberForm.get("studentNumber");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		Object args[] = {studentNumber, degreeType};
-		try
-		{
-			ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndDegreeTypeForEnrollmentEquivalence", args);
-		} catch (NotAuthorizedException e)
-		{
-			errors.add("not.authorized", new ActionError(e.getMessage()));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
-		
-		doIt(mapping, form, request, response);
+        Object args[] = { studentNumber, degreeType };
+        try {
+            ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentByNumberAndDegreeTypeForEnrollmentEquivalence", args);
+        } catch (NotAuthorizedException e) {
+            errors.add("not.authorized", new ActionError(e.getMessage()));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward("start");
-	}
+        doIt(mapping, form, request, response);
 
-	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		doIt(mapping, form, request, response);
-		return mapping.findForward("error");
-	}
+        return mapping.findForward("start");
+    }
 
-	private void doIt(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		DynaActionForm studentNumberForm = (DynaActionForm) form;
+    public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        doIt(mapping, form, request, response);
+        return mapping.findForward("error");
+    }
 
-		Integer degreeType = (Integer) studentNumberForm.get("degreeType");
-		String studentNumber = (String) studentNumberForm.get("studentNumber");
-		String backLink = (String) studentNumberForm.get("backLink");
+    private void doIt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        DynaActionForm studentNumberForm = (DynaActionForm) form;
 
-		if (degreeType == null)
-		{
-			degreeType = (Integer) request.getAttribute("degreeType");
-		}
+        Integer degreeType = (Integer) studentNumberForm.get("degreeType");
+        String studentNumber = (String) studentNumberForm.get("studentNumber");
+        String backLink = (String) studentNumberForm.get("backLink");
 
-		if (studentNumber == null)
-		{
-			studentNumber = (String) request.getAttribute("studentNumber");
-		}
+        if (degreeType == null) {
+            degreeType = (Integer) request.getAttribute("degreeType");
+        }
 
-		if (backLink == null)
-		{
-			backLink = (String) request.getAttribute("backLink");
-		}
+        if (studentNumber == null) {
+            studentNumber = (String) request.getAttribute("studentNumber");
+        }
 
-		request.setAttribute("degreeType", degreeType);
-		request.setAttribute("studentNumber", studentNumber);
-		request.setAttribute("backLink", backLink);
-	}
+        if (backLink == null) {
+            backLink = (String) request.getAttribute("backLink");
+        }
+
+        request.setAttribute("degreeType", degreeType);
+        request.setAttribute("studentNumber", studentNumber);
+        request.setAttribute("backLink", backLink);
+    }
 }

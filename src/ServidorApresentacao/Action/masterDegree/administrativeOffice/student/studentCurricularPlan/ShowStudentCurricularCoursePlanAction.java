@@ -9,46 +9,45 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author Tânia Pousão
- * Created on 6/Out/2003
+ * @author Tânia Pousão Created on 6/Out/2003
  */
 public class ShowStudentCurricularCoursePlanAction extends DispatchAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
-		Integer studentCurricularPlanId = null;
-		String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
-		if (studentCurricularPlanIdString == null) {
-			studentCurricularPlanIdString = (String) request.getAttribute("studentCurricularPlanId");
-		}
-		studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
+        Integer studentCurricularPlanId = null;
+        String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
+        if (studentCurricularPlanIdString == null) {
+            studentCurricularPlanIdString = (String) request.getAttribute("studentCurricularPlanId");
+        }
+        studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object args[] = { studentCurricularPlanId };
+        Object args[] = { studentCurricularPlanId };
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		try {
-			infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadPosGradStudentCurricularPlanById", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+        try {
+            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadPosGradStudentCurricularPlanById", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
-		request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+        request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
+        request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
 
-		return mapping.findForward("ShowStudentCurricularCoursePlan");
-	}
+        return mapping.findForward("ShowStudentCurricularCoursePlan");
+    }
 }

@@ -64,13 +64,12 @@ public class Autenticacao implements IServico {
         IPessoa pessoa = null;
 
         try {
-            pessoa = SuportePersistenteOJB.getInstance()
-                    .getIPessoaPersistente().lerPessoaPorUsername(utilizador);
+            pessoa = SuportePersistenteOJB.getInstance().getIPessoaPersistente().lerPessoaPorUsername(
+                    utilizador);
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex.getMessage());
         }
-        if (pessoa != null
-                && PasswordEncryptor.areEquals(pessoa.getPassword(), password)) {
+        if (pessoa != null && PasswordEncryptor.areEquals(pessoa.getPassword(), password)) {
             Collection roles = new ArrayList();
             if (pessoa.getPersonRoles() != null) {
                 Iterator rolesIterator = pessoa.getPersonRoles().iterator();
@@ -88,10 +87,8 @@ public class Autenticacao implements IServico {
             if (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)) {
                 List masterDegreeCandidates = null;
                 try {
-                    masterDegreeCandidates = SuportePersistenteOJB
-                            .getInstance()
-                            .getIPersistentMasterDegreeCandidate()
-                            .readMasterDegreeCandidatesByUsername(
+                    masterDegreeCandidates = SuportePersistenteOJB.getInstance()
+                            .getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(
                                     userView.getUtilizador());
                 } catch (ExcepcaoPersistencia ex) {
                     ex.printStackTrace(System.out);
@@ -106,16 +103,13 @@ public class Autenticacao implements IServico {
                 while (iterator.hasNext()) {
                     IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator
                             .next();
-                    Iterator situationIter = masterDegreeCandidate
-                            .getSituations().iterator();
+                    Iterator situationIter = masterDegreeCandidate.getSituations().iterator();
                     while (situationIter.hasNext()) {
                         ICandidateSituation candidateSituation = (ICandidateSituation) situationIter
                                 .next();
-                        if (candidateSituation.getValidation().equals(
-                                new State(State.ACTIVE)))
-                            situations
-                                    .add(Cloner
-                                            .copyICandidateSituation2InfoCandidateSituation(candidateSituation));
+                        if (candidateSituation.getValidation().equals(new State(State.ACTIVE)))
+                            situations.add(Cloner
+                                    .copyICandidateSituation2InfoCandidateSituation(candidateSituation));
                     }
                 }
                 candidateView = new CandidateView(situations);
@@ -135,8 +129,7 @@ public class Autenticacao implements IServico {
      * @param userView
      */
     private void filterEmployeeRoleFromTeacher(UserView userView) {
-        if (userView.getUtilizador().charAt(0) == 'd'
-                || userView.getUtilizador().charAt(0) == 'D') {
+        if (userView.getUtilizador().charAt(0) == 'd' || userView.getUtilizador().charAt(0) == 'D') {
             CollectionUtils.filter(userView.getRoles(), new Predicate() {
 
                 public boolean evaluate(Object arg0) {
@@ -159,8 +152,7 @@ public class Autenticacao implements IServico {
         Collection rolesIntranet = new ArrayList();
 
         InfoRole masterDegreeAdministrativeOffice = new InfoRole();
-        masterDegreeAdministrativeOffice
-                .setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        masterDegreeAdministrativeOffice.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         rolesIntranet.add(masterDegreeAdministrativeOffice);
 
         InfoRole managementAssiduousness = new InfoRole();
@@ -168,8 +160,7 @@ public class Autenticacao implements IServico {
         rolesIntranet.add(managementAssiduousness);
 
         InfoRole degreeAdministrativeOffice = new InfoRole();
-        degreeAdministrativeOffice
-                .setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        degreeAdministrativeOffice.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
         rolesIntranet.add(degreeAdministrativeOffice);
 
         InfoRole degreeAdministrativeOfficeSuperUser = new InfoRole();
@@ -190,18 +181,17 @@ public class Autenticacao implements IServico {
         rolesIntranet.add(creditsManager);
 
         if (application.equalsIgnoreCase(Autenticacao.INTRANET)) {
-            Collection roles = CollectionUtils.intersection(
-                    userView.getRoles(), rolesIntranet);
+            Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);
             userView.setRoles(roles);
-        } else if (application.equals("")
-                || application.equalsIgnoreCase(Autenticacao.EXTRANET)) {
+        } else if (application.equals("") || application.equalsIgnoreCase(Autenticacao.EXTRANET)) {
 
             if (userView.getRoles().contains(manager)) {
                 rolesIntranet.remove(manager);
             }
             userView.getRoles().removeAll(rolesIntranet);
             //XXX:[SIMAS-BARBOSA] remove this lines once the portal grant_owner
-            // is working! The role already exists, but the portal is not done yet.
+            // is working! The role already exists, but the portal is not done
+            // yet.
             InfoRole grantOwner = new InfoRole();
             grantOwner.setRoleType(RoleType.GRANT_OWNER);
             userView.getRoles().remove(grantOwner);

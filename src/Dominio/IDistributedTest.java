@@ -54,8 +54,7 @@ public interface IDistributedTest extends IDomainObject {
 
     public abstract void setEndHour(Calendar calendar);
 
-    public abstract void setCorrectionAvailability(
-            CorrectionAvailability availability);
+    public abstract void setCorrectionAvailability(CorrectionAvailability availability);
 
     public abstract void setImsFeedback(Boolean imsFeedback);
 

@@ -19,12 +19,6 @@
 				<br />
 				<ul>
 					<li>
-						<html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true"%>">
-							<b><bean:message key="link.shift.chooseCourses" /></b>
-						</html:link>
-						&nbsp;-&nbsp;<bean:message key="message.shift.enrollment.chooseCourses.help" />
-					</li>
-					<li>
 						<bean:define id="link">
 							<bean:message key="link.shift.enrolement.edit"/>
 						</bean:define>
@@ -32,10 +26,6 @@
 					  		<b><bean:message key="link.shift.enrolment" />/<bean:write name="link"/></b>
 						</html:link>
 						&nbsp;-&nbsp;<bean:message key="message.shift.enrollment.modifyShifts.help" />
-					</li>
-					<li>
-						<b><bean:message key="link.unenrole.shift" /></b>
-						&nbsp;-&nbsp;<bean:message key="message.shift.enrollment.unenroll.help" />
 					</li>
 					<li>
 						<html:link page="/studentTimeTable.do" target="_blank" >
@@ -50,6 +40,13 @@
 						&nbsp;-&nbsp;<bean:message key="message.shift.enrollment.over.help" />
 					</li>
 				</ul>
+				<br/>
+					Se ainda não se inscreveu nas disciplinas, escolha	<html:link page="<%= "/warningFirst.do"%>">
+							<b><bean:message key="link.student.enrollment" /></b>
+						</html:link>
+		
+				
+				
 			</td>
 		</tr>
 		<logic:present name="infoShiftEnrollment" property="infoShiftEnrollment">
@@ -62,7 +59,7 @@
 					</logic:lessEqual>
 					
 					<logic:greaterThan  name="numberCourseWithShiftEnrollment" value="0">
-						<p><strong><bean:message key="message.student.shiftEnrollment.lacksCourses" arg0="<%= numberCourseWithShiftEnrollment.toString()%>"/></strong></p>
+						<p><span class="error"><bean:message key="message.student.shiftEnrollment.lacksCourses" arg0="<%= numberCourseWithShiftEnrollment.toString()%>"/></span></p>
 					</logic:greaterThan >
 				</td>
 			</tr>
@@ -129,6 +126,15 @@
 				</logic:iterate>
 				<bean:define id="elem" name="infoShift" property="infoDisciplinaExecucao.nome" type="java.lang.String"/> 
 			</logic:iterate>
-		</table>
-	</logic:present>
+		</logic:present>
+		<logic:notPresent name="infoShiftEnrollment" property="infoShiftEnrollment">
+			<logic:empty name="infoShiftEnrollment" property="infoShiftEnrollment">
+				<tr>
+					<td>
+						<span class="error"><bean:message key="message.warning.student.notYet.enroll" /></span>	
+					</td>
+				</tr>				
+			</logic:empty>
+		</logic:notPresent>
+	</table>
 </logic:present>

@@ -18,11 +18,8 @@
 <bean:message key="message.public.index.degree.consult"/>
 </p>
 <br />--%>
-	<br />
-	<strong><font color="#FF0000">Aviso:</font></strong>
-	<br />
-	<strong>Se pretende consultar informação relativa a disciplinas de 4º ou 5º em 2003/2004 ou 5ª em 2004/2005 do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong>
-	<br />
+	<p><strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4º ou 5º em 2003/2004 ou 5ª em 2004/2005 do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong></p>
+	<p>	<strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Devido à alteração do calendário das Licenciaturas em Engenharia Civil, em Engenharia do Território, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas três Licenciaturas foram alteradas</strong></p>
 	
 <%--	<strong><font color="#FF0000">Aviso:</font></strong>
 	<br />

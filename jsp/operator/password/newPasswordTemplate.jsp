@@ -52,6 +52,10 @@
             <td width="60%">&nbsp;</td>
           </tr>
           <tr>
+            <td> <bean:message key="label.candidate.username"/> </td>
+            <td> <bean:write name="infoPerson" property="username"/> </td>
+          </tr>
+          <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
             <td> <bean:write name="infoPerson" property="nome"/> </td>
           </tr>
@@ -62,10 +66,6 @@
           <tr>
             <td> <bean:message key="label.candidate.identificationDocumentType"/> </td>
             <td> <bean:write name="infoPerson" property="tipoDocumentoIdentificacao"/> </td>
-          </tr>
-          <tr>
-            <td> <bean:message key="label.candidate.username"/> </td>
-            <td> <bean:write name="infoPerson" property="username"/> </td>
           </tr>
           
 	      <tr>

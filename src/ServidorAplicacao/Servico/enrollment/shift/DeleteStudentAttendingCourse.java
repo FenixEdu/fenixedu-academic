@@ -26,8 +26,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *  
  */
 public class DeleteStudentAttendingCourse implements IService {
-    public class AlreadyEnrolledInGroupServiceException extends
-            FenixServiceException {
+    public class AlreadyEnrolledInGroupServiceException extends FenixServiceException {
 
     }
 
@@ -35,21 +34,18 @@ public class DeleteStudentAttendingCourse implements IService {
 
     }
 
-    public class AlreadyEnrolledInShiftServiceException extends
-            FenixServiceException {
+    public class AlreadyEnrolledInShiftServiceException extends FenixServiceException {
 
     }
 
     public DeleteStudentAttendingCourse() {
     }
 
-    public Boolean run(InfoStudent infoStudent, Integer executionCourseId)
-            throws FenixServiceException {
+    public Boolean run(InfoStudent infoStudent, Integer executionCourseId) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
             if (infoStudent == null) {
                 return new Boolean(false);
@@ -57,8 +53,8 @@ public class DeleteStudentAttendingCourse implements IService {
             if (executionCourseId != null) {
                 IStudent student = findStudent(infoStudent, persistentStudent);
 
-                IExecutionCourse executionCourse = findExecutionCourse(
-                        executionCourseId, persistentExecutionCourse);
+                IExecutionCourse executionCourse = findExecutionCourse(executionCourseId,
+                        persistentExecutionCourse);
 
                 deleteAttend(executionCourse, student, sp);
             }
@@ -70,10 +66,10 @@ public class DeleteStudentAttendingCourse implements IService {
     }
 
     private IExecutionCourse findExecutionCourse(Integer executionCourseId,
-            IPersistentExecutionCourse persistentExecutionCourse)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                .readByOID(ExecutionCourse.class, executionCourseId);
+            IPersistentExecutionCourse persistentExecutionCourse) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseId);
 
         if (executionCourse == null) {
             throw new FenixServiceException("noExecutionCourse");
@@ -81,32 +77,26 @@ public class DeleteStudentAttendingCourse implements IService {
         return executionCourse;
     }
 
-    private IStudent findStudent(InfoStudent infoStudent,
-            IPersistentStudent persistentStudent) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        IStudent student = (IStudent) persistentStudent.readByOID(
-                Student.class, infoStudent.getIdInternal());
+    private IStudent findStudent(InfoStudent infoStudent, IPersistentStudent persistentStudent)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        IStudent student = (IStudent) persistentStudent.readByOID(Student.class, infoStudent
+                .getIdInternal());
         if (student == null) {
             throw new FenixServiceException("noStudent");
         }
         return student;
     }
 
-    private void deleteAttend(IExecutionCourse executionCourse,
-            IStudent student, ISuportePersistente sp)
+    private void deleteAttend(IExecutionCourse executionCourse, IStudent student, ISuportePersistente sp)
             throws FenixServiceException {
         try {
-            IFrequentaPersistente persistentAttends = sp
-                    .getIFrequentaPersistente();
-            ITurnoAlunoPersistente persistentShiftStudent = sp
-                    .getITurnoAlunoPersistente();
-            IPersistentStudentGroupAttend studentGroupAttendDAO = sp
-                    .getIPersistentStudentGroupAttend();
+            IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
+            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+            IPersistentStudentGroupAttend studentGroupAttendDAO = sp.getIPersistentStudentGroupAttend();
 
-            IFrequenta attend = persistentAttends
-                    .readByAlunoAndDisciplinaExecucao(student, executionCourse);
-            IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO
-                    .readBy(attend);
+            IFrequenta attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
+                    executionCourse);
+            IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
             if (studentGroupAttend != null) {
                 throw new AlreadyEnrolledInGroupServiceException();
             }
@@ -116,12 +106,10 @@ public class DeleteStudentAttendingCourse implements IService {
                     throw new AlreadyEnrolledServiceException();
                 }
 
-                List shiftAttendsToDelete = persistentShiftStudent
-                        .readByStudentAndExecutionCourse(student,
-                                executionCourse);
+                List shiftAttendsToDelete = persistentShiftStudent.readByStudentAndExecutionCourse(
+                        student, executionCourse);
 
-                if (shiftAttendsToDelete != null
-                        && shiftAttendsToDelete.size() > 0) {
+                if (shiftAttendsToDelete != null && shiftAttendsToDelete.size() > 0) {
                     throw new AlreadyEnrolledInShiftServiceException();
                 }
                 persistentAttends.delete(attend);

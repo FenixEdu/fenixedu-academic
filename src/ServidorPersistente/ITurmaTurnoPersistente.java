@@ -7,8 +7,8 @@
 package ServidorPersistente;
 
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 import java.util.List;
 
@@ -18,13 +18,16 @@ import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 
 public interface ITurmaTurnoPersistente extends IPersistentObject {
-    public ITurmaTurno readByTurmaAndTurno(ITurma turma, ITurno turno)
-               throws ExcepcaoPersistencia;
-   
+    public ITurmaTurno readByTurmaAndTurno(ITurma turma, ITurno turno) throws ExcepcaoPersistencia;
+
     public void delete(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia;
-   
+
     public List readByClass(ITurma group) throws ExcepcaoPersistencia;
-	public List readClassesWithShift(ITurno turno) throws ExcepcaoPersistencia;
-	public List readByShift(ITurno group) throws ExcepcaoPersistencia;
-	public List readByShiftAndExecutionDegree(ITurno turno, ICursoExecucao execucao) throws ExcepcaoPersistencia;
+
+    public List readClassesWithShift(ITurno turno) throws ExcepcaoPersistencia;
+
+    public List readByShift(ITurno group) throws ExcepcaoPersistencia;
+
+    public List readByShiftAndExecutionDegree(ITurno turno, ICursoExecucao execucao)
+            throws ExcepcaoPersistencia;
 }

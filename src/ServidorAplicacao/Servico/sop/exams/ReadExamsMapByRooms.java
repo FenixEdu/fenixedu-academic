@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
@@ -29,40 +30,13 @@ import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IPeriod;
 import Dominio.Period;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadExamsMapByRooms implements IServico
-{
+public class ReadExamsMapByRooms implements IService {
 
-    private static ReadExamsMapByRooms servico = new ReadExamsMapByRooms();
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExamsMapByRooms getService()
-    {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadExamsMapByRooms()
-    {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public String getNome()
-    {
-        return "ReadExamsMapByRooms";
-    }
-
-    public List run(InfoExecutionPeriod infoExecutionPeriod, List infoRooms)
-    {
+    public List run(InfoExecutionPeriod infoExecutionPeriod, List infoRooms) {
 
         // Object to be returned
         List infoRoomExamMapList = new ArrayList();
@@ -70,46 +44,41 @@ public class ReadExamsMapByRooms implements IServico
         // Exam seasons hardcoded because this information
         // is not yet available from the database
         /*
-        Calendar startSeason1 = Calendar.getInstance();
-        startSeason1.set(Calendar.YEAR, 2004);
-        startSeason1.set(Calendar.MONTH, Calendar.JUNE);
-        startSeason1.set(Calendar.DAY_OF_MONTH, 14);
-        startSeason1.set(Calendar.HOUR_OF_DAY, 0);
-        startSeason1.set(Calendar.MINUTE, 0);
-        startSeason1.set(Calendar.SECOND, 0);
-        startSeason1.set(Calendar.MILLISECOND, 0);
-        Calendar endSeason2 = Calendar.getInstance();
-        endSeason2.set(Calendar.YEAR, 2004);
-        endSeason2.set(Calendar.MONTH, Calendar.JULY);
-        endSeason2.set(Calendar.DAY_OF_MONTH, 24);
-        endSeason2.set(Calendar.HOUR_OF_DAY, 0);
-        endSeason2.set(Calendar.MINUTE, 0);
-        endSeason2.set(Calendar.SECOND, 0);
-        endSeason2.set(Calendar.MILLISECOND, 0);		
-        */
-        try
-        {
+         * Calendar startSeason1 = Calendar.getInstance();
+         * startSeason1.set(Calendar.YEAR, 2004);
+         * startSeason1.set(Calendar.MONTH, Calendar.JUNE);
+         * startSeason1.set(Calendar.DAY_OF_MONTH, 14);
+         * startSeason1.set(Calendar.HOUR_OF_DAY, 0);
+         * startSeason1.set(Calendar.MINUTE, 0);
+         * startSeason1.set(Calendar.SECOND, 0);
+         * startSeason1.set(Calendar.MILLISECOND, 0); Calendar endSeason2 =
+         * Calendar.getInstance(); endSeason2.set(Calendar.YEAR, 2004);
+         * endSeason2.set(Calendar.MONTH, Calendar.JULY);
+         * endSeason2.set(Calendar.DAY_OF_MONTH, 24);
+         * endSeason2.set(Calendar.HOUR_OF_DAY, 0);
+         * endSeason2.set(Calendar.MINUTE, 0); endSeason2.set(Calendar.SECOND,
+         * 0); endSeason2.set(Calendar.MILLISECOND, 0);
+         */
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             //List rooms = sp.getISalaPersistente().readForRoomReservation();
             InfoRoom room = null;
             InfoRoomExamsMap infoExamsMap = null;
 
             // Translate to execute following queries
-            IExecutionPeriod executionPeriod =
-                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-			
-			IPeriod period = calculateExamsSeason(executionPeriod);
-			Calendar startSeason1 = period.getStartDate();
-			Calendar endSeason2 = period.getEndDate();
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+
+            IPeriod period = calculateExamsSeason(executionPeriod);
+            Calendar startSeason1 = period.getStartDate();
+            Calendar endSeason2 = period.getEndDate();
             // The calendar must start at a monday
-            if (startSeason1.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY)
-            {
+            if (startSeason1.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
                 int shiftDays = Calendar.MONDAY - startSeason1.get(Calendar.DAY_OF_WEEK);
                 startSeason1.add(Calendar.DATE, shiftDays);
             }
 
-            for (int i = 0; i < infoRooms.size(); i++)
-            {
+            for (int i = 0; i < infoRooms.size(); i++) {
                 room = (InfoRoom) infoRooms.get(i);
                 infoExamsMap = new InfoRoomExamsMap();
                 // Set Exam Season info
@@ -118,91 +87,70 @@ public class ReadExamsMapByRooms implements IServico
                 infoExamsMap.setEndSeason1(null);
                 infoExamsMap.setStartSeason2(null);
                 infoExamsMap.setEndSeason2(endSeason2);
-                List exams =
-                    sp.getIPersistentExam().readByRoomAndExecutionPeriod(
-                        Cloner.copyInfoRoom2Room(room),
-                        executionPeriod);
+                List exams = sp.getIPersistentExam().readByRoomAndExecutionPeriod(
+                        Cloner.copyInfoRoom2Room(room), executionPeriod);
                 infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
                 infoRoomExamMapList.add(infoExamsMap);
             }
 
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         return infoRoomExamMapList;
     }
 
-    private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer()
-    {
-        public Object transform(Object exam)
-        {
+    private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
+        public Object transform(Object exam) {
             InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
-            infoExam.setInfoExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(
-                    (IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
+            infoExam.setInfoExecutionCourse((InfoExecutionCourse) Cloner
+                    .get((IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }
     };
 
-    private Period calculateExamsSeason(IExecutionPeriod executionPeriod) throws Exception
-    {
-        try
-        {
+    private Period calculateExamsSeason(IExecutionPeriod executionPeriod) throws Exception {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             int semester = executionPeriod.getSemester().intValue();
 
-            List executionDegreesList =
-                sp.getICursoExecucaoPersistente().readByExecutionYear(
+            List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
             ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesList.get(0);
 
             Calendar startSeason1 = null;
             Calendar endSeason2 = null;
-            if (semester == 1)
-            {
+            if (semester == 1) {
                 startSeason1 = executionDegree.getPeriodExamsFirstSemester().getStartDate();
                 endSeason2 = executionDegree.getPeriodExamsFirstSemester().getEndDateOfComposite();
-            }
-            else
-            {
+            } else {
                 startSeason1 = executionDegree.getPeriodExamsSecondSemester().getStartDate();
                 endSeason2 = executionDegree.getPeriodExamsSecondSemester().getEndDateOfComposite();
             }
 
-            for (int i = 1; i < executionDegreesList.size(); i++)
-            {
+            for (int i = 1; i < executionDegreesList.size(); i++) {
                 executionDegree = (ICursoExecucao) executionDegreesList.get(i);
                 Calendar startExams;
                 Calendar endExams;
-                if (semester == 1)
-                {
+                if (semester == 1) {
                     startExams = executionDegree.getPeriodExamsFirstSemester().getStartDate();
                     endExams = executionDegree.getPeriodExamsFirstSemester().getEndDateOfComposite();
-                }
-                else
-                {
+                } else {
                     startExams = executionDegree.getPeriodExamsSecondSemester().getStartDate();
                     endExams = executionDegree.getPeriodExamsSecondSemester().getEndDateOfComposite();
                 }
-                if (startExams.before(startSeason1))
-                {
+                if (startExams.before(startSeason1)) {
                     startSeason1 = startExams;
                 }
-                if (endExams.after(endSeason2))
-                {
+                if (endExams.after(endSeason2)) {
                     endSeason2 = endExams;
                 }
 
             }
             return new Period(startSeason1, endSeason2);
-        }
-        catch (Exception e)
-        {
-			throw new FenixServiceException("Error calculating exams season");
+        } catch (Exception e) {
+            throw new FenixServiceException("Error calculating exams season");
         }
     }
 }

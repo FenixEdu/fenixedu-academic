@@ -40,59 +40,49 @@ public class GroupStudentEnrolment implements IService {
     public GroupStudentEnrolment() {
     }
 
-    public Boolean run(Integer studentGroupCode, String username)
-            throws FenixServiceException {
+    public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
                     .getIPersistentStudentGroupAttend();
-            IPersistentStudentGroup persistentStudentGroup = sp
-                    .getIPersistentStudentGroup();
+            IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
-            IStudent student = sp.getIPersistentStudent().readByUsername(
-                    username);
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                    StudentGroup.class, studentGroupCode);
+            IStudent student = sp.getIPersistentStudent().readByUsername(username);
 
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            IFrequenta attend = sp.getIFrequentaPersistente()
-                    .readByAlunoAndDisciplinaExecucao(
-                            student,
-                            studentGroup.getGroupProperties()
-                                    .getExecutionCourse());
-            IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend
-                    .readBy(studentGroup, attend);
+            IFrequenta attend = sp.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student,
+                    studentGroup.getGroupProperties().getExecutionCourse());
+            IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup,
+                    attend);
 
             if (studentGroupAttend != null)
                 throw new InvalidSituationServiceException();
 
-            IGroupProperties groupProperties = studentGroup
-                    .getGroupProperties();
+            IGroupProperties groupProperties = studentGroup.getGroupProperties();
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                     .getGroupEnrolmentStrategyInstance(groupProperties);
 
-            boolean result = strategy.checkPossibleToEnrolInExistingGroup(
-                    groupProperties, studentGroup, studentGroup.getShift());
+            boolean result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup,
+                    studentGroup.getShift());
             if (!result) {
                 throw new InvalidArgumentsServiceException();
             }
-            IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(
-                    studentGroup, attend);
+            IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(studentGroup, attend);
             List allStudentGroup = persistentStudentGroup
-                    .readAllStudentGroupByGroupProperties(studentGroup
-                            .getGroupProperties());
+                    .readAllStudentGroupByGroupProperties(studentGroup.getGroupProperties());
             Iterator iter = allStudentGroup.iterator();
             IStudentGroup group = null;
             IStudentGroupAttend existingStudentAttend = null;
             while (iter.hasNext()) {
                 group = (IStudentGroup) iter.next();
-                existingStudentAttend = persistentStudentGroupAttend.readBy(
-                        group, attend);
+                existingStudentAttend = persistentStudentGroupAttend.readBy(group, attend);
                 if (existingStudentAttend != null) {
                     throw new InvalidSituationServiceException();
                 }

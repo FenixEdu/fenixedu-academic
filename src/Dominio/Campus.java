@@ -3,43 +3,35 @@ package Dominio;
 /**
  * @author Tânia Pousão Create on 10/Nov/2003
  */
-public class Campus extends DomainObject implements ICampus
-{
+public class Campus extends DomainObject implements ICampus {
     private String name;
 
-    public Campus()
-    {
+    public Campus() {
         super();
     }
 
-    public Campus(Integer campusId)
-    {
+    public Campus(Integer campusId) {
         super(campusId);
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean result = false;
-        if (obj instanceof ICampus)
-        {
+        if (obj instanceof ICampus) {
             ICampus campus = (ICampus) obj;
             result = getName().equals(campus.getName());
         }
         return result;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[INFODEGREE_INFO:";
         result += " codigo interno= " + getIdInternal();
         result += " name= " + getName();

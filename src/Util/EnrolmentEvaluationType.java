@@ -1,6 +1,7 @@
 package Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -12,7 +13,8 @@ import org.apache.struts.util.LabelValueBean;
 public class EnrolmentEvaluationType extends FenixUtil {
 
     public static final int NORMAL = 1; // primeira avaliacao (engloba 1ª e 2ª
-                                        // época)
+
+    // época)
 
     public static final int IMPROVEMENT = 2; // avaliacao por melhoria
 
@@ -155,21 +157,18 @@ public class EnrolmentEvaluationType extends FenixUtil {
         return valueS;
     }
 
-    public ArrayList toArrayList() {
-        ArrayList result = new ArrayList();
+    public List toArrayList() {
+        List result = new ArrayList();
         //		   result.add(new LabelValueBean(EnrolmentEvaluationType.DEFAULT,
         // null));
-        result.add(new LabelValueBean(
-                EnrolmentEvaluationType.IMPROVEMENT_STRING, String
-                        .valueOf(EnrolmentEvaluationType.IMPROVEMENT)));
-        result.add(new LabelValueBean(EnrolmentEvaluationType.NORMAL_STRING,
-                String.valueOf(EnrolmentEvaluationType.NORMAL)));
-        result.add(new LabelValueBean(
-                EnrolmentEvaluationType.SPECIAL_SEASON_STRING, String
-                        .valueOf(EnrolmentEvaluationType.SPECIAL_SEASON)));
-        result.add(new LabelValueBean(
-                EnrolmentEvaluationType.EQUIVALENCE_STRING, String
-                        .valueOf(EnrolmentEvaluationType.EQUIVALENCE)));
+        result.add(new LabelValueBean(EnrolmentEvaluationType.IMPROVEMENT_STRING, String
+                .valueOf(EnrolmentEvaluationType.IMPROVEMENT)));
+        result.add(new LabelValueBean(EnrolmentEvaluationType.NORMAL_STRING, String
+                .valueOf(EnrolmentEvaluationType.NORMAL)));
+        result.add(new LabelValueBean(EnrolmentEvaluationType.SPECIAL_SEASON_STRING, String
+                .valueOf(EnrolmentEvaluationType.SPECIAL_SEASON)));
+        result.add(new LabelValueBean(EnrolmentEvaluationType.EQUIVALENCE_STRING, String
+                .valueOf(EnrolmentEvaluationType.EQUIVALENCE)));
         return result;
     }
 

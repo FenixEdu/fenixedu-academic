@@ -20,35 +20,30 @@ import ServidorPersistente.IPersistentTest;
 /**
  * @author Susana Fernandes
  */
-public class TestOJB extends ObjectFenixOJB implements IPersistentTest
-{
-	public TestOJB()
-	{
-	}
+public class TestOJB extends PersistentObjectOJB implements IPersistentTest {
+    public TestOJB() {
+    }
 
-	public List readByTestScopeObject(IDomainObject object) throws ExcepcaoPersistencia
-	{
-		// Force object materialization to obtain correct class name for query.
-		IDomainObject materializedObject = materialize(object);
+    public List readByTestScopeObject(IDomainObject object) throws ExcepcaoPersistencia {
+        // Force object materialization to obtain correct class name for query.
+        IDomainObject materializedObject = materialize(object);
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("className", materializedObject.getClass().getName());
-		criteria.addEqualTo("keyClass", object.getIdInternal());
-		ITestScope scope = (ITestScope) queryObject(TestScope.class, criteria);
-		if (scope == null)
-			return new ArrayList();
-		criteria = new Criteria();
-		criteria.addEqualTo("keyTestScope", scope.getIdInternal());
-		return queryList(Test.class, criteria);
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("className", materializedObject.getClass().getName());
+        criteria.addEqualTo("keyClass", object.getIdInternal());
+        ITestScope scope = (ITestScope) queryObject(TestScope.class, criteria);
+        if (scope == null)
+            return new ArrayList();
+        criteria = new Criteria();
+        criteria.addEqualTo("keyTestScope", scope.getIdInternal());
+        return queryList(Test.class, criteria);
+    }
 
-	public List readAll() throws ExcepcaoPersistencia
-	{
-		return queryList(Test.class, null);
-	}
+    public List readAll() throws ExcepcaoPersistencia {
+        return queryList(Test.class, null);
+    }
 
-	public void delete(ITest test) throws ExcepcaoPersistencia
-	{
-		super.delete(test);
-	}
+    public void delete(ITest test) throws ExcepcaoPersistencia {
+        super.delete(test);
+    }
 }

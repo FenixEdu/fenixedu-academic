@@ -29,21 +29,18 @@ public class InfoTeacherWithPerson extends InfoTeacher {
         return infoTeacher;
     }
 
-    public void copyToDomain(InfoTeacher infoTeacher,ITeacher teacher)
-    {
-        super.copyToDomain(infoTeacher,teacher);
+    public void copyToDomain(InfoTeacher infoTeacher, ITeacher teacher) {
+        super.copyToDomain(infoTeacher, teacher);
         teacher.setPerson(InfoPersonWithInfoCountry.newDomainFromInfo(infoTeacher.getInfoPerson()));
     }
-    
-    public static ITeacher newDomainFromInfo(InfoTeacher infoTeacher)
-    {
+
+    public static ITeacher newDomainFromInfo(InfoTeacher infoTeacher) {
         ITeacher teacher = null;
         InfoTeacherWithPerson infoTeacherWithPerson = null;
-        if(infoTeacher != null)
-        {
+        if (infoTeacher != null) {
             teacher = new Teacher();
             infoTeacherWithPerson = new InfoTeacherWithPerson();
-            infoTeacherWithPerson.copyToDomain(infoTeacher,teacher);
+            infoTeacherWithPerson.copyToDomain(infoTeacher, teacher);
         }
         return teacher;
     }

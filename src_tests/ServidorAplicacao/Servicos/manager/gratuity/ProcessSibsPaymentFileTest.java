@@ -9,7 +9,7 @@ import ServidorAplicacao.Servicos.manager.ManagerBaseTest;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
@@ -46,19 +46,18 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
         String filename = "testFile.txt";
         List fileEntries = new ArrayList();
 
-        Object args[] = { filename, fileEntries};
+        Object args[] = { filename, fileEntries };
 
         return args;
 
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser()
-            throws FenixServiceException {
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
 
         String filename = "testFile.txt";
         List fileEntries = new ArrayList();
 
-        Object args[] = { filename, fileEntries};
+        Object args[] = { filename, fileEntries };
 
         return args;
     }
@@ -74,10 +73,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400530047157420040312194600001500000006301003305500158384Benfica        030497040000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
         } catch (DuplicateSibsPaymentFileProcessingServiceException e) {
             //compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testProcessSibsPaymentFileDuplicateFileProcessingDataSet.xml");
@@ -99,10 +97,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400530047157420040312194600001500000006301003305500158384Benfica        030497040000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testExpectedProcessSibsPaymentFileDuplicateGratuityPaymentInsideFileDataSet.xml");
             //ok
@@ -123,10 +120,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400530047157420040312194600001500000006301003305500158384Benfica        030497040000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testExpectedProcessSibsPaymentFileDuplicateGratuityPaymentInsideSystemDataSet.xml");
             //ok
@@ -147,10 +143,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400530047157420040312194600001500000006301003305500158384Benfica        030497020000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testExpectedProcessSibsPaymentFileDuplicateInsurancePaymentInsideFileDataSet.xml");
             //ok
@@ -169,10 +164,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400180002465320040301144600000500000006305000000306500000000000000000000030497020000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testExpectedProcessSibsPaymentFileDuplicateInsurancePaymentInsideSystemDataSet.xml");
             //ok
@@ -186,8 +180,8 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
     /**
      * 
      * SIBS prevents this kind of situations to happen, because it only accepts
-     * the codes we send. Although this is unecessary, helps us to detect errors regarding
-     * to file generation
+     * the codes we send. Although this is unecessary, helps us to detect errors
+     * regarding to file generation
      */
     public void testInvalidExecutionYear() {
         try {
@@ -197,10 +191,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400180002465320040301144600000500000006305000000306500000000000000000000000497040000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testExpectedProcessSibsPaymentFileInvalidExecutionYearDataSet.xml");
             //ok
@@ -214,9 +207,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
     /**
      * 
      * SIBS prevents this kind of situations to happen, because it only accepts
-     * the codes we send. Although this is unecessary, helps us to detect errors regarding
-     * to file generation. Its particulary usefull when student is doing a master degree
-     * and a specialization
+     * the codes we send. Although this is unecessary, helps us to detect errors
+     * regarding to file generation. Its particulary usefull when student is
+     * doing a master degree and a specialization
      */
     public void testInvalidExecutionDegree() {
         try {
@@ -226,10 +219,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400180002465320040301144600000500000006305000000306500000000000000000000030497040000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testExpectedProcessSibsPaymentFileInvalidExecutionDegreeDataSet.xml");
             //ok
@@ -240,7 +232,7 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
         }
     }
 
-   public void testSuccessfullProcessing() {
+    public void testSuccessfullProcessing() {
         try {
 
             String filename = "meps_20040329.txt";
@@ -252,10 +244,9 @@ public class ProcessSibsPaymentFileTest extends ManagerBaseTest {
             fileEntries
                     .add("20400180002465320040301144600000500000006305000000306500000000000000000000030018630000000000000000  ");
 
-            Object args[] = { filename, fileEntries};
+            Object args[] = { filename, fileEntries };
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/manager/gratuity/testExpectedProcessSibsPaymentFileSuccessfullProcessingDataSet.xml");
             //ok

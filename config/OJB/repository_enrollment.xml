@@ -54,22 +54,30 @@
 		jdbc-type="TIMESTAMP"
 		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
 	/>
+    <field-descriptor
+		name="createdBy"
+		column="CREATED_BY"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
-			proxy="true">
+			proxy="true"
+            refresh="true">
 		<foreignkey field-ref="studentCurricularPlanKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
-			proxy="true">
+			proxy="true"
+            refresh="true">
 		<foreignkey field-ref="curricularCourseKey"/>
 	</reference-descriptor>      
 	<reference-descriptor 
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
-			proxy="true">
+			proxy="true"
+            refresh="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -140,6 +148,11 @@
 		jdbc-type="TIMESTAMP"
 		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
 	/>
+    <field-descriptor
+		name="createdBy"
+		column="CREATED_BY"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -155,7 +168,8 @@
 	<reference-descriptor 
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
-			proxy="true">
+			proxy="true"
+            refresh="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor
@@ -224,6 +238,11 @@
 		jdbc-type="TIMESTAMP"
 		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
 	/>
+    <field-descriptor
+		name="createdBy"
+		column="CREATED_BY"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"
@@ -239,7 +258,8 @@
 	<reference-descriptor 
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
-			proxy="true">
+			proxy="true"
+            refresh="true">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<collection-descriptor

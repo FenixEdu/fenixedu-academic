@@ -2,13 +2,11 @@ package DataBeans.credits;
 
 import DataBeans.InfoTeacherWithPerson;
 
-
 /**
  * @author Tânia Pousão
  *  
  */
-public class InfoCreditsWithTeacher extends InfoCreditsWrapper
-{
+public class InfoCreditsWithTeacher extends InfoCreditsWrapper {
 
     /**
      * @param infoCredits
@@ -18,6 +16,7 @@ public class InfoCreditsWithTeacher extends InfoCreditsWrapper
     }
 
     private InfoTeacherWithPerson infoTeacher;
+
     /**
      * @return Returns the infoTeacher.
      */

@@ -78,7 +78,8 @@ public class CreateLesson implements IServico {
 
             ITurno shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
             /*
-             * IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+             * IPersistentExecutionCourse executionCourseDAO =
+             * sp.getIPersistentExecutionCourse();
              */
             IExecutionPeriod executionPeriod = Cloner
                     .copyInfoExecutionPeriod2IExecutionPeriod(infoLesson.getInfoShift()
@@ -86,7 +87,8 @@ public class CreateLesson implements IServico {
             /*
              * IExecutionCourse executionCourse = executionCourseDAO
              * .readByExecutionCourseInitialsAndExecutionPeriod(
-             * infoLesson.getInfoDisciplinaExecucao().getSigla(), executionPeriod);
+             * infoLesson.getInfoDisciplinaExecucao().getSigla(),
+             * executionPeriod);
              */
             IAula aula = new Aula(infoLesson.getDiaSemana(), infoLesson.getInicio(),
                     infoLesson.getFim(), infoLesson.getTipo(), sala, roomOccupation, shift /* executionCourse */
@@ -99,7 +101,8 @@ public class CreateLesson implements IServico {
             if (result.isSUCESS() && resultB) {
                 try {
                     /*
-                     * ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID( Turno.class,
+                     * ITurno shift = (ITurno)
+                     * sp.getITurnoPersistente().readByOID( Turno.class,
                      * infoShift.getIdInternal());
                      */
                     InfoShiftServiceResult infoShiftServiceResult = valid(shift, aula);
@@ -119,7 +122,8 @@ public class CreateLesson implements IServico {
                         /*
                          * ITurnoAula shiftLesson = new TurnoAula();
                          * sp.getITurnoAulaPersistente().simpleLockWrite(shiftLesson);
-                         * shiftLesson.setTurno(shift); shiftLesson.setAula(aula2);
+                         * shiftLesson.setTurno(shift);
+                         * shiftLesson.setAula(aula2);
                          */
                         //sp.getIAulaPersistente().simpleLockWrite(aula2);
                         aula2.setShift(shift);
@@ -149,7 +153,7 @@ public class CreateLesson implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
-            
+
             Iterator iter = roomOccupationInDBList.iterator();
             while (iter.hasNext()) {
                 IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
@@ -163,12 +167,14 @@ public class CreateLesson implements IServico {
         }
 
         /*
-         * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance(); IAulaPersistente
-         * persistentLesson = sp.getIAulaPersistente(); List lessonMatchList =
-         * persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod); if
-         * (lessonMatchList.size() > 0) { if (lessonMatchList.contains(lesson)) { throw new
-         * ExistingServiceException(); } else { throw new InterceptingServiceException(); } } else {
-         * return true; } } catch (ExcepcaoPersistencia e) { return false; }
+         * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+         * IAulaPersistente persistentLesson = sp.getIAulaPersistente(); List
+         * lessonMatchList = persistentLesson.readLessonsInBroadPeriod(lesson,
+         * null, executionPeriod); if (lessonMatchList.size() > 0) { if
+         * (lessonMatchList.contains(lesson)) { throw new
+         * ExistingServiceException(); } else { throw new
+         * InterceptingServiceException(); } } else { return true; } } catch
+         * (ExcepcaoPersistencia e) { return false; }
          */
     }
 
@@ -215,16 +221,19 @@ public class CreateLesson implements IServico {
 
     private double getTotalHoursOfShiftType(ITurno shift) throws ExcepcaoPersistencia {
         /*
-         * ITurno shiftCriteria = new Turno(); shiftCriteria.setNome(shift.getNome());
+         * ITurno shiftCriteria = new Turno();
+         * shiftCriteria.setNome(shift.getNome());
          * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
          * 
-         * List lessonsOfShiftType = SuportePersistenteOJB .getInstance() .getITurnoAulaPersistente()
-         * .readLessonsByShift(shiftCriteria);
+         * List lessonsOfShiftType = SuportePersistenteOJB .getInstance()
+         * .getITurnoAulaPersistente() .readLessonsByShift(shiftCriteria);
          * 
-         * IAula lesson = null; double duration = 0; for (int i = 0; i < lessonsOfShiftType.size(); i++) {
-         * lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula(); try { lesson.getIdInternal();
-         * duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60); } catch (Exception ex) { //
-         * all is ok // the lesson contained a proxy to null. } } return duration;
+         * IAula lesson = null; double duration = 0; for (int i = 0; i <
+         * lessonsOfShiftType.size(); i++) { lesson = ((ITurnoAula)
+         * lessonsOfShiftType.get(i)).getAula(); try { lesson.getIdInternal();
+         * duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60); }
+         * catch (Exception ex) { // all is ok // the lesson contained a proxy
+         * to null. } } return duration;
          */
         IAula lesson = null;
         double duration = 0;
@@ -258,8 +267,8 @@ public class CreateLesson implements IServico {
     }
 
     /**
-     * To change the template for this generated type comment go to Window&gt;Preferences&gt;Java&gt;Code
-     * Generation&gt;Code and Comments
+     * To change the template for this generated type comment go to
+     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
      */
     public class InvalidLoadException extends FenixServiceException {
         /**

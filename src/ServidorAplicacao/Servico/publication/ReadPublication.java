@@ -14,57 +14,49 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
-
-public class ReadPublication extends ReadDomainObjectService
-{
+public class ReadPublication extends ReadDomainObjectService {
     private static ReadPublication service = new ReadPublication();
 
-    public static ReadPublication getService()
-    {
+    public static ReadPublication getService() {
         return service;
     }
 
-    public ReadPublication()
-    {
+    public ReadPublication() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadPublication";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-	 */
-    protected Class getDomainObjectClass()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
+     */
+    protected Class getDomainObjectClass() {
         return Publication.class;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentPublication();
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-	 */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
+     */
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
         return Cloner.copyIPublication2InfoPublication((IPublication) domainObject);
     }
 }

@@ -13,14 +13,11 @@ public class ExamSeason extends FenixUtil {
 
     public static final int SPECIAL_SEASON = 3;
 
-    public static final ExamSeason FIRST_SEASON_OBJ = new ExamSeason(
-            ExamSeason.FIRST_SEASON);
+    public static final ExamSeason FIRST_SEASON_OBJ = new ExamSeason(ExamSeason.FIRST_SEASON);
 
-    public static final ExamSeason SECOND_SEASON_OBJ = new ExamSeason(
-            ExamSeason.SECOND_SEASON);
+    public static final ExamSeason SECOND_SEASON_OBJ = new ExamSeason(ExamSeason.SECOND_SEASON);
 
-    public static final ExamSeason SPECIAL_SEASON_OBJ = new ExamSeason(
-            ExamSeason.SPECIAL_SEASON);
+    public static final ExamSeason SPECIAL_SEASON_OBJ = new ExamSeason(ExamSeason.SPECIAL_SEASON);
 
     private Integer type;
 

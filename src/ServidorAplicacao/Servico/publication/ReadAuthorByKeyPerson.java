@@ -20,44 +20,46 @@ import ServidorPersistente.publication.IPersistentAuthor;
 
 /**
  * @author TJBF & PFON
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * 
+ * To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Generation - Code and Comments
  */
 public class ReadAuthorByKeyPerson implements IServico {
 
-	/**
-	 * 
-	 */
-	public ReadAuthorByKeyPerson() {
-		
-	}
+    /**
+     *  
+     */
+    public ReadAuthorByKeyPerson() {
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		
-		return "ReadAuthorByKeyPerson";
-	}
-	
-	public IAuthor run(IUserView userView) throws FenixServiceException{
-		IAuthor author = new Author();
-		
-		ISuportePersistente sp;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-		
-		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-		IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-		
-		IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-		author = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
-		
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return author;
-	}
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+
+        return "ReadAuthorByKeyPerson";
+    }
+
+    public IAuthor run(IUserView userView) throws FenixServiceException {
+        IAuthor author = new Author();
+
+        ISuportePersistente sp;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+
+            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+
+            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            author = persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return author;
+    }
 
 }

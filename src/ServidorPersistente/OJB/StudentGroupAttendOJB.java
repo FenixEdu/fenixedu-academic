@@ -19,12 +19,10 @@ import ServidorPersistente.IPersistentStudentGroupAttend;
  * @author asnr and scpo
  *  
  */
-public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistentStudentGroupAttend
-{
+public class StudentGroupAttendOJB extends PersistentObjectOJB implements IPersistentStudentGroupAttend {
 
     public IStudentGroupAttend readBy(IStudentGroup studentGroup, IFrequenta attend)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 
@@ -35,8 +33,7 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 
     }
 
-    public List readAllByStudentGroup(IStudentGroup studentGroup) throws ExcepcaoPersistencia
-    {
+    public List readAllByStudentGroup(IStudentGroup studentGroup) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 
@@ -45,30 +42,21 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
         return queryList(StudentGroupAttend.class, criteria);
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(StudentGroupAttend.class, new Criteria());
 
     }
 
-    
-    public void delete(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia
-    {
-        try
-        {
+    public void delete(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia {
+        try {
             super.delete(studentGroupAttend);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw ex;
         }
     }
 
-   
-
     //by gedl AT rnl DOT ist DOT utl DOT pt at September the 10th, 2003
-    public IStudentGroupAttend readBy(IFrequenta attend) throws ExcepcaoPersistencia
-    {
+    public IStudentGroupAttend readBy(IFrequenta attend) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
 
@@ -77,8 +65,7 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
     }
 
     //  by gedl AT rnl DOT ist DOT utl DOT pt at September the 12th, 2003
-    public List readByStudentGroupId(Integer id) throws ExcepcaoPersistencia
-    {
+    public List readByStudentGroupId(Integer id) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("key_student_group", id);

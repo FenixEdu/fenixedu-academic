@@ -16,53 +16,55 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author Fernanda Quitério
- * 02/09/2003
- * 
+ * @author Fernanda Quitério 02/09/2003
+ *  
  */
 public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
 
-	public ActionForward viewLimitedSection(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward viewLimitedSection(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		String sectionName = request.getParameter("sectionName");
+        String sectionName = request.getParameter("sectionName");
 
-		System.out.println("nome da seccao: " + sectionName);
-		Object[] args = { sectionName };
-		InfoWebSiteSection infoWebSiteSection = null;
-		try {
-			infoWebSiteSection = (InfoWebSiteSection) ServiceManagerServiceFactory.executeService(null, "ReadLimitedWebSiteSectionByName", args);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExisting", sectionName);
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			throw new FenixActionException(e.getMessage());
-		}
+        System.out.println("nome da seccao: " + sectionName);
+        Object[] args = { sectionName };
+        InfoWebSiteSection infoWebSiteSection = null;
+        try {
+            infoWebSiteSection = (InfoWebSiteSection) ServiceManagerServiceFactory.executeService(null,
+                    "ReadLimitedWebSiteSectionByName", args);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExisting", sectionName);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e.getMessage());
+        }
 
-		request.setAttribute("infoWebSiteSection", infoWebSiteSection);
-		
-		return mapping.findForward("viewLimitedWebSiteSection");
-	}
-	public ActionForward viewAllPublishedItemsFromSection(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+        request.setAttribute("infoWebSiteSection", infoWebSiteSection);
 
-		Integer sectionCode=Integer.valueOf(request.getParameter("objectCode2"));
-		Integer itemCode=Integer.valueOf(request.getParameter("objectCode"));
+        return mapping.findForward("viewLimitedWebSiteSection");
+    }
 
-		System.out.println("section code: " + sectionCode);
-		Object[] args = { sectionCode };
-		InfoWebSiteSection infoWebSiteSection = null;
-		try {
-			infoWebSiteSection = (InfoWebSiteSection) ServiceManagerServiceFactory.executeService(null, "ReadWebSiteSectionByCode", args);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExisting");
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			throw new FenixActionException(e.getMessage());
-		}
-		
-		request.setAttribute("objectCode" , itemCode);
-		request.setAttribute("infoWebSiteSection", infoWebSiteSection);
-		return mapping.findForward("viewWebSiteSection");
-	}
+    public ActionForward viewAllPublishedItemsFromSection(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
+        Integer sectionCode = Integer.valueOf(request.getParameter("objectCode2"));
+        Integer itemCode = Integer.valueOf(request.getParameter("objectCode"));
+
+        System.out.println("section code: " + sectionCode);
+        Object[] args = { sectionCode };
+        InfoWebSiteSection infoWebSiteSection = null;
+        try {
+            infoWebSiteSection = (InfoWebSiteSection) ServiceManagerServiceFactory.executeService(null,
+                    "ReadWebSiteSectionByCode", args);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExisting");
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e.getMessage());
+        }
+
+        request.setAttribute("objectCode", itemCode);
+        request.setAttribute("infoWebSiteSection", infoWebSiteSection);
+        return mapping.findForward("viewWebSiteSection");
+    }
 }

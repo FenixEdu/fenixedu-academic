@@ -5,61 +5,53 @@
 package Dominio;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public class TestScope extends DomainObject implements ITestScope
-{
-	private IDomainObject domainObject;
-	private String className;
-	private Integer keyClass;
+public class TestScope extends DomainObject implements ITestScope {
+    private IDomainObject domainObject;
 
-	public TestScope()
-	{
-	}
+    private String className;
 
-	public TestScope(IDomainObject object)
-	{
-		super();
-		setDomainObject(object);
-		setClassName(object.getClass().getName());
-		setKeyClass(object.getIdInternal());
-	}
+    private Integer keyClass;
 
-	public TestScope(Integer idInternal)
-	{
-		super(idInternal);
-	}
+    public TestScope() {
+    }
 
-	public IDomainObject getDomainObject()
-	{
-		return domainObject;
-	}
+    public TestScope(IDomainObject object) {
+        super();
+        setDomainObject(object);
+        setClassName(object.getClass().getName());
+        setKeyClass(object.getIdInternal());
+    }
 
-	public void setDomainObject(IDomainObject object)
-	{
-		domainObject = object;
-	}
+    public TestScope(Integer idInternal) {
+        super(idInternal);
+    }
 
-	public Integer getKeyClass()
-	{
-		return keyClass;
-	}
+    public IDomainObject getDomainObject() {
+        return domainObject;
+    }
 
-	public String getClassName()
-	{
-		return className;
-	}
+    public void setDomainObject(IDomainObject object) {
+        domainObject = object;
+    }
 
-	public void setKeyClass(Integer integer)
-	{
-		keyClass = integer;
-	}
+    public Integer getKeyClass() {
+        return keyClass;
+    }
 
-	public void setClassName(String string)
-	{
-		className = string;
-	}
+    public String getClassName() {
+        return className;
+    }
+
+    public void setKeyClass(Integer integer) {
+        keyClass = integer;
+    }
+
+    public void setClassName(String string) {
+        className = string;
+    }
 
 }

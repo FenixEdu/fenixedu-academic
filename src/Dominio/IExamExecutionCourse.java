@@ -1,17 +1,18 @@
 package Dominio;
 
-
-
 /**
- *   29/Mar/2003
- *   @author     Luis Cruz & Sara Ribeiro
+ * 29/Mar/2003
+ * 
+ * @author Luis Cruz & Sara Ribeiro
  */
-public interface IExamExecutionCourse extends IEvalutionExecutionCourse{
+public interface IExamExecutionCourse extends IEvalutionExecutionCourse {
 
-	public IExam getExam();
-	public IExecutionCourse getExecutionCourse();
+    public IExam getExam();
 
-	public void setExam(IExam exam);
-	public void setExecutionCourse(IExecutionCourse executionCourse);
+    public IExecutionCourse getExecutionCourse();
+
+    public void setExam(IExam exam);
+
+    public void setExecutionCourse(IExecutionCourse executionCourse);
 
 }

@@ -10,15 +10,14 @@ import Util.enrollment.CurricularCourseEnrollmentType;
  * @author David Santos in Jun 9, 2004
  */
 
-public interface IPrecedence extends IDomainObject
-{
-	public ICurricularCourse getCurricularCourse();
+public interface IPrecedence extends IDomainObject {
+    public ICurricularCourse getCurricularCourse();
 
-	public void setCurricularCourse(ICurricularCourse curricularCourse);
+    public void setCurricularCourse(ICurricularCourse curricularCourse);
 
-	public List getRestrictions();
+    public List getRestrictions();
 
-	public void setRestrictions(List restrictions);
+    public void setRestrictions(List restrictions);
 
-	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
+    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
 }

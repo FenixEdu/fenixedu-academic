@@ -9,8 +9,7 @@ import java.util.List;
  * @author Susana Fernandes
  */
 
-public class InfoSiteExercise extends DataTranferObject implements ISiteComponent
-{
+public class InfoSiteExercise extends DataTranferObject implements ISiteComponent {
     private InfoMetadata infoMetadata;
 
     private List questionNames;
@@ -20,31 +19,25 @@ public class InfoSiteExercise extends DataTranferObject implements ISiteComponen
     public InfoSiteExercise() {
     }
 
-    public InfoExecutionCourse getExecutionCourse()
-    {
+    public InfoExecutionCourse getExecutionCourse() {
         return executionCourse;
     }
 
-    public InfoMetadata getInfoMetadata()
-    {
+    public InfoMetadata getInfoMetadata() {
         return infoMetadata;
     }
 
-    public void setExecutionCourse(InfoExecutionCourse course)
-    {
+    public void setExecutionCourse(InfoExecutionCourse course) {
         executionCourse = course;
     }
 
-    public void setInfoMetadata(InfoMetadata metadata)
-    {
+    public void setInfoMetadata(InfoMetadata metadata) {
         infoMetadata = metadata;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean result = false;
-        if (obj instanceof InfoSiteExercise)
-        {
+        if (obj instanceof InfoSiteExercise) {
             InfoSiteExercise infoSiteMetadata = (InfoSiteExercise) obj;
             result = getExecutionCourse().equals(infoSiteMetadata.getExecutionCourse())
                     && getInfoMetadata().equals(infoSiteMetadata.getInfoMetadata())
@@ -54,13 +47,11 @@ public class InfoSiteExercise extends DataTranferObject implements ISiteComponen
         return result;
     }
 
-    public List getQuestionNames()
-    {
+    public List getQuestionNames() {
         return questionNames;
     }
 
-    public void setQuestionNames(List questionNames)
-    {
+    public void setQuestionNames(List questionNames) {
         this.questionNames = questionNames;
     }
 }

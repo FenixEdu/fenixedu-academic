@@ -22,29 +22,27 @@ import Util.FinalDegreeWorkProposalStatus;
  */
 public class ChangeStatusOfFinalDegreeWorkProposals implements IService {
 
-	public ChangeStatusOfFinalDegreeWorkProposals() {
-		super();
-	}
+    public ChangeStatusOfFinalDegreeWorkProposals() {
+        super();
+    }
 
-	public void run(Integer executionDegreeOID, List selectedProposalOIDs,
-			FinalDegreeWorkProposalStatus status) throws FenixServiceException {
-		if (executionDegreeOID != null && selectedProposalOIDs != null) {
-			try {
-				ISuportePersistente persistentSupport = SuportePersistenteOJB
-						.getInstance();
-				IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-						.getIPersistentFinalDegreeWork();
-				for (int i = 0; i < selectedProposalOIDs.size(); i++) {
-					IProposal proposal = (IProposal) persistentFinalDegreeWork
-							.readByOID(Proposal.class,
-									(Integer) selectedProposalOIDs.get(i));
-					persistentFinalDegreeWork.simpleLockWrite(proposal);
-					proposal.setStatus(status);
-				}
-			} catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
-		}
-	}
+    public void run(Integer executionDegreeOID, List selectedProposalOIDs,
+            FinalDegreeWorkProposalStatus status) throws FenixServiceException {
+        if (executionDegreeOID != null && selectedProposalOIDs != null) {
+            try {
+                ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+                IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                        .getIPersistentFinalDegreeWork();
+                for (int i = 0; i < selectedProposalOIDs.size(); i++) {
+                    IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+                            (Integer) selectedProposalOIDs.get(i));
+                    persistentFinalDegreeWork.simpleLockWrite(proposal);
+                    proposal.setStatus(status);
+                }
+            } catch (ExcepcaoPersistencia e) {
+                throw new FenixServiceException(e);
+            }
+        }
+    }
 
 }

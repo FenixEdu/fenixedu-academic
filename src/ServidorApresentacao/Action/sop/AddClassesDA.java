@@ -24,77 +24,59 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *  
  */
-public class AddClassesDA
-	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+public class AddClassesDA extends
+        FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	public ActionForward listClasses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		InfoShift infoShift =
-			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+        InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-		Object[] args = { infoShift.getIdInternal()};
-		List classes = null;
-		try {
-			classes =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadAvailableClassesForShift",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        Object[] args = { infoShift.getIdInternal() };
+        List classes = null;
+        try {
+            classes = (List) ServiceUtils.executeService(userView, "ReadAvailableClassesForShift", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		if (classes != null && !classes.isEmpty()) {
-			Collections.sort(classes, new BeanComparator("nome"));
-			request.setAttribute(SessionConstants.CLASSES, classes);
-		}
+        if (classes != null && !classes.isEmpty()) {
+            Collections.sort(classes, new BeanComparator("nome"));
+            request.setAttribute(SessionConstants.CLASSES, classes);
+        }
 
-		return mapping.findForward("ListClasses");
-	}
+        return mapping.findForward("ListClasses");
+    }
 
-	public ActionForward add(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InfoShift infoShift =
-			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+        InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-		DynaActionForm addClassesForm = (DynaActionForm) form;
-		String[] selectedClasses =
-			(String[]) addClassesForm.get("selectedItems");
+        DynaActionForm addClassesForm = (DynaActionForm) form;
+        String[] selectedClasses = (String[]) addClassesForm.get("selectedItems");
 
-		List classOIDs = new ArrayList();
-		for (int i = 0; i < selectedClasses.length; i++) {
-			classOIDs.add(new Integer(selectedClasses[i]));
-		}
+        List classOIDs = new ArrayList();
+        for (int i = 0; i < selectedClasses.length; i++) {
+            classOIDs.add(new Integer(selectedClasses[i]));
+        }
 
-		Object args[] = { infoShift, classOIDs };
-		try {
-			ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"AddClassesToShift",
-				args);
-		} catch (FenixServiceException ex) {
-			// No probem, the user refreshed the page after adding classes
-			request.setAttribute("selectMultipleItemsForm", null);
-			return mapping.getInputForward();
-		}
+        Object args[] = { infoShift, classOIDs };
+        try {
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "AddClassesToShift", args);
+        } catch (FenixServiceException ex) {
+            // No probem, the user refreshed the page after adding classes
+            request.setAttribute("selectMultipleItemsForm", null);
+            return mapping.getInputForward();
+        }
 
-		request.setAttribute("selectMultipleItemsForm", null);
+        request.setAttribute("selectMultipleItemsForm", null);
 
-		return mapping.findForward("EditShift");
-	}
+        return mapping.findForward("EditShift");
+    }
 
 }

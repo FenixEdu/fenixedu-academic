@@ -16,28 +16,24 @@ import Util.TipoCurso;
  * @author dcs-rjao 19/Mar/2003
  */
 
-public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersistentDegreeCurricularPlan
-{
+public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
+        IPersistentDegreeCurricularPlan {
 
-    public DegreeCurricularPlanOJB()
-    {
+    public DegreeCurricularPlanOJB() {
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(DegreeCurricularPlan.class, new Criteria());
     }
 
     public void deleteDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         super.delete(degreeCurricularPlan);
 
     }
 
-    public List readByDegree(ICurso degree) throws ExcepcaoPersistencia
-    {
+    public List readByDegree(ICurso degree) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.nome", degree.getNome());
@@ -48,8 +44,7 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
     }
 
     public List readByDegreeAndState(ICurso degree, DegreeCurricularPlanState state)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.nome", degree.getNome());
         criteria.addEqualTo("degree.sigla", degree.getSigla());
@@ -60,8 +55,7 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
     }
 
     public IDegreeCurricularPlan readByNameAndDegree(String name, ICurso degree)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
@@ -71,8 +65,7 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
     }
 
     public List readByDegreeTypeAndState(TipoCurso degreeType, DegreeCurricularPlanState state)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.tipoCurso", degreeType);
         criteria.addEqualTo("state", state);

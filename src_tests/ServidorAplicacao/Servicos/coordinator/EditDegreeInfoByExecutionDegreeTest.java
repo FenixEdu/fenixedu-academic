@@ -13,73 +13,61 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentDegreeInfo;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão Create on 7/Nov/2003
  */
-public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
-{
-    public EditDegreeInfoByExecutionDegreeTest(String testName)
-    {
+public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
+    public EditDegreeInfoByExecutionDegreeTest(String testName) {
         super(testName);
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "EditDegreeInfoByExecutionDegree";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/coordinator/testDataSetDegreeSite.xml";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getSecondAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC2", "pass", getApplication()};
-        return args;
-    }
-    
-	protected String[] getThridAuthenticatedAndAuthorizedUser()
-	{
-		String[] args = { "userC3", "pass", getApplication()};
-		return args;
-	}
-
-    protected String[] getAuthenticatedAndAlreadyAuthorizedUser()
-    {
-        String[] args = { "userT", "pass", getApplication()};
+    protected String[] getSecondAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC2", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = { "userE", "pass", getApplication()};
+    protected String[] getThridAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC3", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = { "user", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAlreadyAuthorizedUser() {
+        String[] args = { "userT", "pass", getApplication() };
         return args;
     }
 
-    public InfoDegreeInfo getDegreeInfoForm(Integer infoDegreeInfoId)
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "userE", "pass", getApplication() };
+        return args;
+    }
+
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
+
+    public InfoDegreeInfo getDegreeInfoForm(Integer infoDegreeInfoId) {
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
 
         infoDegreeInfo.setIdInternal(infoDegreeInfoId);
@@ -101,8 +89,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
         return infoDegreeInfo;
     }
 
-    public InfoDegreeInfo getNewDegreeInfoForm(Integer infoDegreeInfoId)
-    {
+    public InfoDegreeInfo getNewDegreeInfoForm(Integer infoDegreeInfoId) {
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
 
         infoDegreeInfo.setIdInternal(infoDegreeInfoId);
@@ -124,10 +111,8 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
         return infoDegreeInfo;
     }
 
-    public void testSuccessfull()
-    {
-        try
-        {
+    public void testSuccessfull() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(10);
             Integer infoDegreeInfoCode = new Integer(1);
@@ -137,14 +122,13 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
             //Service
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
@@ -155,7 +139,8 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             sp.iniciarTransaccao();
             IDegreeInfo degreeInfoAck = new DegreeInfo();
-            degreeInfoAck = (IDegreeInfo) persistentDegreeInfo.readByOID(DegreeInfo.class, infoDegreeInfoCode);
+            degreeInfoAck = (IDegreeInfo) persistentDegreeInfo.readByOID(DegreeInfo.class,
+                    infoDegreeInfoCode);
             sp.confirmarTransaccao();
 
             assertEquals(infoDegreeInfo.getObjectives(), degreeInfoAck.getObjectives());
@@ -174,24 +159,20 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertNotNull(degreeInfoAck.getDegree());
             assertEquals(degreeInfoAck.getDegree().getIdInternal(), new Integer(10));
 
-            System.out.println(
-                "EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testSuccessfull");
+            System.out
+                    .println("EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testSuccessfull");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNewDegreeInfo()
-    {
-        try
-        {
+    public void testNewDegreeInfo() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(1000);
             Integer infoDegreeInfoCode = new Integer(0);
@@ -201,49 +182,46 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getThridAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
             //Service
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
             //Read the change in degree info
             SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente persistenExecutionDegree = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistenExecutionDegree = sp.getIPersistentExecutionDegree();
 
             //read executionDegree for find degree
-            ICursoExecucao executionDegree ;
-         
+            ICursoExecucao executionDegree;
+
             sp.iniciarTransaccao();
-            executionDegree =
-                (ICursoExecucao) persistenExecutionDegree.readByOID(CursoExecucao.class, infoExecutionDegreeCode);
+            executionDegree = (ICursoExecucao) persistenExecutionDegree.readByOID(CursoExecucao.class,
+                    infoExecutionDegreeCode);
             sp.confirmarTransaccao();
 
             assertNotNull(executionDegree);
             assertNotNull(executionDegree.getCurricularPlan());
             assertNotNull(executionDegree.getCurricularPlan().getDegree());
-            assertEquals(
-                executionDegree.getCurricularPlan().getDegree().getIdInternal(),
-                new Integer(1000));
+            assertEquals(executionDegree.getCurricularPlan().getDegree().getIdInternal(), new Integer(
+                    1000));
 
             //read degree info by degree
             IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
 
             sp.iniciarTransaccao();
-            List degreeInfoList =
-                persistentDegreeInfo.readDegreeInfoByDegree(
-                    executionDegree.getCurricularPlan().getDegree());
+            List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(executionDegree
+                    .getCurricularPlan().getDegree());
             sp.confirmarTransaccao();
 
             assertEquals(new Integer(degreeInfoList.size()), new Integer(1));
 
-            //verify change maded	
+            //verify change maded
             IDegreeInfo degreeInfoAck = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
 
             assertNotNull(degreeInfoAck);
@@ -263,105 +241,97 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertNotNull(degreeInfoAck.getDegree());
             assertEquals(degreeInfoAck.getDegree().getIdInternal(), new Integer(1000));
 
-            System.out.println(
-                "EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testNewDegreeInfo");
+            System.out
+                    .println("EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testNewDegreeInfo");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-	public void testNewDegreeInfoButWithLastPeriod()
-	{
-		try
-		{
-			//Service Argument
-			Integer infoExecutionDegreeCode = new Integer(2003);
-			Integer infoDegreeInfoCode = new Integer(4);
-			InfoDegreeInfo infoDegreeInfo = getNewDegreeInfoForm(infoDegreeInfoCode);
+    public void testNewDegreeInfoButWithLastPeriod() {
+        try {
+            //Service Argument
+            Integer infoExecutionDegreeCode = new Integer(2003);
+            Integer infoDegreeInfoCode = new Integer(4);
+            InfoDegreeInfo infoDegreeInfo = getNewDegreeInfoForm(infoDegreeInfoCode);
 
-			Object[] args = { infoExecutionDegreeCode, infoDegreeInfoCode, infoDegreeInfo };
+            Object[] args = { infoExecutionDegreeCode, infoDegreeInfoCode, infoDegreeInfo };
 
-			//Valid user
-			String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            //Valid user
+            String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-			//Service
-			try
-			{
-				ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-			} catch (FenixServiceException e)
-			{
-				e.printStackTrace();
-				fail("Reading a degree information" + e);
-			}
+            //Service
+            try {
+                ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
+            } catch (FenixServiceException e) {
+                e.printStackTrace();
+                fail("Reading a degree information" + e);
+            }
 
-			//Read the change in degree info
-			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-			ICursoExecucaoPersistente persistenExecutionDegree = sp.getICursoExecucaoPersistente();
+            //Read the change in degree info
+            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionDegree persistenExecutionDegree = sp.getIPersistentExecutionDegree();
 
-			//read executionDegree for find degree
-			ICursoExecucao executionDegree ;
+            //read executionDegree for find degree
+            ICursoExecucao executionDegree;
 
-			sp.iniciarTransaccao();
-			executionDegree =
-				(ICursoExecucao) persistenExecutionDegree.readByOID(CursoExecucao.class, infoExecutionDegreeCode);
-			sp.confirmarTransaccao();
+            sp.iniciarTransaccao();
+            executionDegree = (ICursoExecucao) persistenExecutionDegree.readByOID(CursoExecucao.class,
+                    infoExecutionDegreeCode);
+            sp.confirmarTransaccao();
 
-			assertNotNull(executionDegree);
-			assertNotNull(executionDegree.getCurricularPlan());
-			assertNotNull(executionDegree.getCurricularPlan().getDegree());
-			assertEquals(new Integer(2002),
-				executionDegree.getCurricularPlan().getDegree().getIdInternal());
+            assertNotNull(executionDegree);
+            assertNotNull(executionDegree.getCurricularPlan());
+            assertNotNull(executionDegree.getCurricularPlan().getDegree());
+            assertEquals(new Integer(2002), executionDegree.getCurricularPlan().getDegree()
+                    .getIdInternal());
 
-			//read degree info by degree
-			IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
+            //read degree info by degree
+            IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
 
-			sp.iniciarTransaccao();
-			List degreeInfoList =
-				persistentDegreeInfo.readDegreeInfoByDegree(
-					executionDegree.getCurricularPlan().getDegree());
-			sp.confirmarTransaccao();
+            sp.iniciarTransaccao();
+            List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(executionDegree
+                    .getCurricularPlan().getDegree());
+            sp.confirmarTransaccao();
 
-			assertEquals(new Integer(2), new Integer(degreeInfoList.size()));
+            assertEquals(new Integer(2), new Integer(degreeInfoList.size()));
 
-			//verify change maded	
-			IDegreeInfo degreeInfoAck = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
+            //verify change maded
+            IDegreeInfo degreeInfoAck = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
 
-			assertNotNull(degreeInfoAck);
-			assertEquals(infoDegreeInfo.getObjectives(), degreeInfoAck.getObjectives());
-			assertEquals(infoDegreeInfo.getHistory(), degreeInfoAck.getHistory());
-			assertEquals(infoDegreeInfo.getProfessionalExits(), degreeInfoAck.getProfessionalExits());
-			assertEquals(infoDegreeInfo.getAdditionalInfo(), degreeInfoAck.getAdditionalInfo());
-			assertEquals(infoDegreeInfo.getLinks(), degreeInfoAck.getLinks());
-			assertEquals(infoDegreeInfo.getTestIngression(), degreeInfoAck.getTestIngression());
-			assertEquals(infoDegreeInfo.getDriftsInitial(), degreeInfoAck.getDriftsInitial());
-			assertEquals(infoDegreeInfo.getDriftsFirst(), degreeInfoAck.getDriftsFirst());
-			assertEquals(infoDegreeInfo.getDriftsSecond(), degreeInfoAck.getDriftsSecond());
-			assertEquals(infoDegreeInfo.getClassifications(), degreeInfoAck.getClassifications());
-			assertEquals(infoDegreeInfo.getMarkMin(), degreeInfoAck.getMarkMin());
-			assertEquals(infoDegreeInfo.getMarkMax(), degreeInfoAck.getMarkMax());
-			assertEquals(infoDegreeInfo.getMarkAverage(), degreeInfoAck.getMarkAverage());
-			assertNotNull(degreeInfoAck.getDegree());
-			assertEquals(new Integer(2002), degreeInfoAck.getDegree().getIdInternal());
+            assertNotNull(degreeInfoAck);
+            assertEquals(infoDegreeInfo.getObjectives(), degreeInfoAck.getObjectives());
+            assertEquals(infoDegreeInfo.getHistory(), degreeInfoAck.getHistory());
+            assertEquals(infoDegreeInfo.getProfessionalExits(), degreeInfoAck.getProfessionalExits());
+            assertEquals(infoDegreeInfo.getAdditionalInfo(), degreeInfoAck.getAdditionalInfo());
+            assertEquals(infoDegreeInfo.getLinks(), degreeInfoAck.getLinks());
+            assertEquals(infoDegreeInfo.getTestIngression(), degreeInfoAck.getTestIngression());
+            assertEquals(infoDegreeInfo.getDriftsInitial(), degreeInfoAck.getDriftsInitial());
+            assertEquals(infoDegreeInfo.getDriftsFirst(), degreeInfoAck.getDriftsFirst());
+            assertEquals(infoDegreeInfo.getDriftsSecond(), degreeInfoAck.getDriftsSecond());
+            assertEquals(infoDegreeInfo.getClassifications(), degreeInfoAck.getClassifications());
+            assertEquals(infoDegreeInfo.getMarkMin(), degreeInfoAck.getMarkMin());
+            assertEquals(infoDegreeInfo.getMarkMax(), degreeInfoAck.getMarkMax());
+            assertEquals(infoDegreeInfo.getMarkAverage(), degreeInfoAck.getMarkAverage());
+            assertNotNull(degreeInfoAck.getDegree());
+            assertEquals(new Integer(2002), degreeInfoAck.getDegree().getIdInternal());
 
-			System.out.println(
-				"EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testNewDegreeInfo");
+            System.out
+                    .println("EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testNewDegreeInfo");
 
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("Reading a degree information" + e);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			fail("Reading a degree information" + e);
-		}
-	}
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("Reading a degree information" + e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Reading a degree information" + e);
+        }
+    }
 }

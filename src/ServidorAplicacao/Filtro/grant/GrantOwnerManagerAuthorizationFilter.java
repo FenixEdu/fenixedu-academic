@@ -10,22 +10,19 @@ import Util.RoleType;
  * @author Barbosa
  * @author Pica
  */
-public class GrantOwnerManagerAuthorizationFilter
-	extends ServidorAplicacao.Filtro.AuthorizationByRoleFilter
-{
+public class GrantOwnerManagerAuthorizationFilter extends
+        ServidorAplicacao.Filtro.AuthorizationByRoleFilter {
 
-	public GrantOwnerManagerAuthorizationFilter()
-	{
-	}
+    public GrantOwnerManagerAuthorizationFilter() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	protected RoleType getRoleType()
-	{
-		return RoleType.GRANT_OWNER_MANAGER;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
+        return RoleType.GRANT_OWNER_MANAGER;
+    }
 
 }

@@ -66,8 +66,8 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
         Object obj1 = new Integer(1);
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, obj1, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode, obj1,
+                obj2 };
         return args;
     }
 
@@ -86,9 +86,8 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
             item = (IItem) persistentItem.readByOID(Item.class, new Integer(1));
             sp.confirmarTransaccao();
 
-            result = (TeacherAdministrationSiteView) ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            getAuthorizeArguments());
+            result = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
             InfoSiteItems bodyComponent = (InfoSiteItems) result.getComponent();
             InfoItem infoItem = bodyComponent.getItem();
@@ -102,14 +101,12 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedReadSiteItemDataSet.xml");
 
-            System.out
-                    .println("testReadSiteItems was SUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadSiteItems was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out
-                    .println("testReadSiteItems was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadSiteItems was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadSiteItems");
         }
     }
@@ -123,21 +120,18 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
         Object obj1 = new Integer(2);
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, obj1, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode, obj1,
+                obj2 };
 
         try {
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            System.out
-                    .println("testReadNonSiteItem was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonSiteItem was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadNonSiteItem");
         } catch (Exception ex) {
-            System.out
-                    .println("testReadNonSiteItem was SUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonSiteItem was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
         }
     }
 
@@ -149,28 +143,24 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
         Object obj1 = new Integer(100);
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, obj1, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode, obj1,
+                obj2 };
 
         try {
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            System.out
-                    .println("testReadNonExistingItem was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonExistingItem was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadNonExistingItem");
         } catch (FenixServiceException ex) {
-            System.out
-                    .println("testReadNonExistingItem was SUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonExistingItem was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out
-                    .println("testReadNonExistingItem was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonExistingItem was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadNonExistingItem");
         }
     }

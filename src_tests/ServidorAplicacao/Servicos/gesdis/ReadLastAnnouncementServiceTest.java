@@ -27,142 +27,139 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 
-	/**
-	 * @param testName
-	 */
-	public ReadLastAnnouncementServiceTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public ReadLastAnnouncementServiceTest(String testName) {
+        super(testName);
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "ReadLastAnnouncement";
-	}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "ReadLastAnnouncement";
+    }
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(ReadLastAnnouncementServiceTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadLastAnnouncementServiceTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISuportePersistente persistentSupport = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionCourse executionCourse = null;
-		ISite site = null;
-		
-		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentSupport.iniciarTransaccao();
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        ISuportePersistente persistentSupport = null;
+        IExecutionYear executionYear = null;
+        IExecutionPeriod executionPeriod = null;
+        IExecutionCourse executionCourse = null;
+        ISite site = null;
 
-			IPersistentExecutionYear ipey = persistentSupport.getIPersistentExecutionYear();
-			executionYear = ipey.readExecutionYearByName("2002/2003");
+        try {
+            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport.iniciarTransaccao();
 
-			IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
-			executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
+            IPersistentExecutionYear ipey = persistentSupport.getIPersistentExecutionYear();
+            executionYear = ipey.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionCourse idep = persistentSupport.getIPersistentExecutionCourse();
-			executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod(
-				"TFCI", executionPeriod);
+            IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
+            executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IPersistentSite ips = persistentSupport.getIPersistentSite();
-			site = ips.readByExecutionCourse(executionCourse);
+            IPersistentExecutionCourse idep = persistentSupport.getIPersistentExecutionCourse();
+            executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",
+                    executionPeriod);
 
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
+            IPersistentSite ips = persistentSupport.getIPersistentSite();
+            site = ips.readByExecutionCourse(executionCourse);
 
-		InfoSite infoSite = Cloner.copyISite2InfoSite(site);
-		Object[] args = { infoSite };
-		return args;
-	}
+            persistentSupport.confirmarTransaccao();
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("failed setting up the test data");
+        }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-	protected int getNumberOfItemsToRetrieve() {
-		return 1;
-	}
+        InfoSite infoSite = Cloner.copyISite2InfoSite(site);
+        Object[] args = { infoSite };
+        return args;
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-	protected Object getObjectToCompare() {
-		IAnnouncement announcement = null;
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
+        return 1;
+    }
 
-		ISuportePersistente persistentSupport = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionCourse executionCourse = null;
-		ISite site = null;
-		
-		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentSupport.iniciarTransaccao();
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+     */
+    protected Object getObjectToCompare() {
+        IAnnouncement announcement = null;
 
-			IPersistentExecutionYear ipey = persistentSupport.getIPersistentExecutionYear();
-			executionYear = ipey.readExecutionYearByName("2002/2003");
+        ISuportePersistente persistentSupport = null;
+        IExecutionYear executionYear = null;
+        IExecutionPeriod executionPeriod = null;
+        IExecutionCourse executionCourse = null;
+        ISite site = null;
 
-			IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
-			executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
+        try {
+            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport.iniciarTransaccao();
 
-			IPersistentExecutionCourse idep = persistentSupport.getIPersistentExecutionCourse();
-			executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod(
-				"TFCI", executionPeriod);
+            IPersistentExecutionYear ipey = persistentSupport.getIPersistentExecutionYear();
+            executionYear = ipey.readExecutionYearByName("2002/2003");
 
-			IPersistentSite ips = persistentSupport.getIPersistentSite();
-			site = ips.readByExecutionCourse(executionCourse);
+            IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
+            executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("getObjectToCompare1:failed setting up the test data" + e);
-		}
+            IPersistentExecutionCourse idep = persistentSupport.getIPersistentExecutionCourse();
+            executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",
+                    executionPeriod);
 
-	//	InfoSite infoSite = Cloner.copyISite2InfoSite(site);
-		
-		//read existing
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, 2003);
-		calendar.set(Calendar.MONTH, Calendar.JANUARY);
-		calendar.set(Calendar.DATE, 22);
-		calendar.set(Calendar.HOUR_OF_DAY, 13);
-		calendar.set(Calendar.MINUTE, 20);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		Timestamp date = new Timestamp(calendar.getTime().getTime());
+            IPersistentSite ips = persistentSupport.getIPersistentSite();
+            site = ips.readByExecutionCourse(executionCourse);
 
-		InfoAnnouncement infoAnnouncement = null;
-		try {		
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			announcement =
-				SuportePersistenteOJB
-					.getInstance()
-					.getIPersistentAnnouncement()
-					.readAnnouncementByTitleAndCreationDateAndSite("announcement2deTFCI", date, site);
-			infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("getObjectToCompare2:failed setting up the test data" + e);
-		}
+            persistentSupport.confirmarTransaccao();
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("getObjectToCompare1:failed setting up the test data" + e);
+        }
 
-		return infoAnnouncement;
-	}
+        //	InfoSite infoSite = Cloner.copyISite2InfoSite(site);
+
+        //read existing
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2003);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DATE, 22);
+        calendar.set(Calendar.HOUR_OF_DAY, 13);
+        calendar.set(Calendar.MINUTE, 20);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Timestamp date = new Timestamp(calendar.getTime().getTime());
+
+        InfoAnnouncement infoAnnouncement = null;
+        try {
+            SuportePersistenteOJB.getInstance().iniciarTransaccao();
+            announcement = SuportePersistenteOJB.getInstance().getIPersistentAnnouncement()
+                    .readAnnouncementByTitleAndCreationDateAndSite("announcement2deTFCI", date, site);
+            infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
+            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("getObjectToCompare2:failed setting up the test data" + e);
+        }
+
+        return infoAnnouncement;
+    }
 }

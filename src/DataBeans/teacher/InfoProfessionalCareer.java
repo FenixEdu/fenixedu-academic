@@ -7,76 +7,73 @@ package DataBeans.teacher;
 import Dominio.teacher.IProfessionalCareer;
 import Util.CareerType;
 
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class InfoProfessionalCareer extends InfoCareer
-{
-	private String entity;
-	private String function;
-	
-	/**
-	 * 
-	 */
-	public InfoProfessionalCareer()
-	{
-	    setCareerType(CareerType.PROFESSIONAL);
-	}
-	
+public class InfoProfessionalCareer extends InfoCareer {
+    private String entity;
+
+    private String function;
+
+    /**
+     *  
+     */
+    public InfoProfessionalCareer() {
+        setCareerType(CareerType.PROFESSIONAL);
+    }
+
     /**
      * @return Returns the entity.
      */
-    public String getEntity()
-    {
+    public String getEntity() {
         return entity;
     }
 
     /**
-     * @param entity The entity to set.
+     * @param entity
+     *            The entity to set.
      */
-    public void setEntity(String entity)
-    {
+    public void setEntity(String entity) {
         this.entity = entity;
     }
 
     /**
      * @return Returns the function.
      */
-    public String getFunction()
-    {
+    public String getFunction() {
         return function;
     }
 
     /**
-     * @param function The function to set.
+     * @param function
+     *            The function to set.
      */
-    public void setFunction(String function)
-    {
+    public void setFunction(String function) {
         this.function = function;
     }
-    
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.teacher.InfoCareer#copyFromDomain(Dominio.teacher.ICareer)
      */
     public void copyFromDomain(IProfessionalCareer professionalCareer) {
         super.copyFromDomain(professionalCareer);
-        if(professionalCareer != null) {
+        if (professionalCareer != null) {
             setEntity(professionalCareer.getEntity());
             setFunction(professionalCareer.getFunction());
         }
     }
-    
+
     public static InfoProfessionalCareer newInfoFromDomain(IProfessionalCareer professionalCareer) {
         InfoProfessionalCareer infoProfessionalCareer = null;
-        if(professionalCareer != null) {
+        if (professionalCareer != null) {
             infoProfessionalCareer = new InfoProfessionalCareer();
             infoProfessionalCareer.copyFromDomain(professionalCareer);
         }
-        
+
         return infoProfessionalCareer;
     }
 }

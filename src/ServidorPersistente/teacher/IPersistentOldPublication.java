@@ -16,9 +16,8 @@ import Util.OldPublicationType;
  * @author Sergio Montelobo
  *  
  */
-public interface IPersistentOldPublication extends IPersistentObject
-{
+public interface IPersistentOldPublication extends IPersistentObject {
 
     List readAllByTeacherAndOldPublicationType(ITeacher teacher, OldPublicationType oldPublicationType)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 }

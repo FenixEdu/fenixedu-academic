@@ -12,11 +12,11 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.IGuide;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -26,30 +26,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ChooseGuideByPersonID implements IServico {
-
-    private static ChooseGuideByPersonID servico = new ChooseGuideByPersonID();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ChooseGuideByPersonID getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ChooseGuideByPersonID() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ChooseGuideByPersonID";
-    }
+public class ChooseGuideByPersonID implements IService {
 
     public List run(Integer personID) throws Exception {
 
@@ -62,12 +39,10 @@ public class ChooseGuideByPersonID implements IServico {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            person = (IPessoa) sp.getIPessoaPersistente().readByOID(
-                    Pessoa.class, personID);
+            person = (IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class, personID);
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error", ex);
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
 
             throw newEx;
         }
@@ -78,8 +53,7 @@ public class ChooseGuideByPersonID implements IServico {
 
         try {
             sp = SuportePersistenteOJB.getInstance();
-            guides = sp.getIPersistentGuide().readByPerson(
-                    person.getNumeroDocumentoIdentificacao(),
+            guides = sp.getIPersistentGuide().readByPerson(person.getNumeroDocumentoIdentificacao(),
                     person.getTipoDocumentoIdentificacao());
 
             BeanComparator numberComparator = new BeanComparator("number");
@@ -90,8 +64,7 @@ public class ChooseGuideByPersonID implements IServico {
             Collections.sort(guides, chainComparator);
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
@@ -122,8 +95,7 @@ public class ChooseGuideByPersonID implements IServico {
         while (iterator.hasNext()) {
             IGuide guide = (IGuide) iterator.next();
 
-            if ((numberAux == null)
-                    || (numberAux.intValue() != guide.getNumber().intValue())) {
+            if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
                 numberAux = guide.getNumber();
                 result.add(Cloner.copyIGuide2InfoGuide(guide));
             }

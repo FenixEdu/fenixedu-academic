@@ -7,78 +7,83 @@ package Dominio.teacher;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
 public class TeachingCareer extends Career implements ITeachingCareer {
-	
-	private ICategory category;
-	private Integer keyCategory;
-	private String courseOrPosition;
-	
-	/**
-	 * 
-	 */
-	public TeachingCareer() {
-		super();
-	}
 
-	/**
-	 * @param idInternal
-	 */
-	public TeachingCareer(Integer idInternal) {
-		super(idInternal);
-	}
+    private ICategory category;
 
-	/**
-	 * @return Returns the category.
-	 */
-	public ICategory getCategory() {
-		return category;
-	}
+    private Integer keyCategory;
 
-	/**
-	 * @param category The category to set.
-	 */
-	public void setCategory(ICategory category) {
-		this.category = category;
-	}
+    private String courseOrPosition;
 
-	/**
-	 * @return Returns the courseOrPosition.
-	 */
-	public String getCourseOrPosition() {
-		return courseOrPosition;
-	}
+    /**
+     *  
+     */
+    public TeachingCareer() {
+        super();
+    }
 
-	/**
-	 * @param courseOrPosition The courseOrPosition to set.
-	 */
-	public void setCourseOrPosition(String courseOrPosition) {
-		this.courseOrPosition = courseOrPosition;
-	}
+    /**
+     * @param idInternal
+     */
+    public TeachingCareer(Integer idInternal) {
+        super(idInternal);
+    }
 
-	/**
-	 * @return Returns the keyCategory.
-	 */
-	public Integer getKeyCategory() {
-		return keyCategory;
-	}
+    /**
+     * @return Returns the category.
+     */
+    public ICategory getCategory() {
+        return category;
+    }
 
-	/**
-	 * @param keyCategory The keyCategory to set.
-	 */
-	public void setKeyCategory(Integer keyCategory) {
-		this.keyCategory = keyCategory;
-	}
+    /**
+     * @param category
+     *            The category to set.
+     */
+    public void setCategory(ICategory category) {
+        this.category = category;
+    }
 
-	public String toString() {
-		String result = "[Dominio.teacher.TeachingCareer ";
-		result += ", beginYear=" + getBeginYear();
-		result += ", endYear=" + getEndYear();
-		result += ", category=" + getCategory();
-		result += ", courseOrPosition=" + getCourseOrPosition();
-		result += ", teacher=" + getTeacher();
-		result += "]";
-		return result;
-	}
+    /**
+     * @return Returns the courseOrPosition.
+     */
+    public String getCourseOrPosition() {
+        return courseOrPosition;
+    }
+
+    /**
+     * @param courseOrPosition
+     *            The courseOrPosition to set.
+     */
+    public void setCourseOrPosition(String courseOrPosition) {
+        this.courseOrPosition = courseOrPosition;
+    }
+
+    /**
+     * @return Returns the keyCategory.
+     */
+    public Integer getKeyCategory() {
+        return keyCategory;
+    }
+
+    /**
+     * @param keyCategory
+     *            The keyCategory to set.
+     */
+    public void setKeyCategory(Integer keyCategory) {
+        this.keyCategory = keyCategory;
+    }
+
+    public String toString() {
+        String result = "[Dominio.teacher.TeachingCareer ";
+        result += ", beginYear=" + getBeginYear();
+        result += ", endYear=" + getEndYear();
+        result += ", category=" + getCategory();
+        result += ", courseOrPosition=" + getCourseOrPosition();
+        result += ", teacher=" + getTeacher();
+        result += "]";
+        return result;
+    }
 }

@@ -35,8 +35,8 @@ public class TestScopeRowReader extends RowReaderDefaultImpl {
                 persistentSuport = SuportePersistenteOJB.getInstance();
 
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-                        .getIPersistentExecutionCourse().readByOID(
-                                ExecutionCourse.class, testScope.getKeyClass());
+                        .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+                                testScope.getKeyClass());
                 testScope.setDomainObject(executionCourse);
             } catch (ExcepcaoPersistencia e) {
                 return testScope;

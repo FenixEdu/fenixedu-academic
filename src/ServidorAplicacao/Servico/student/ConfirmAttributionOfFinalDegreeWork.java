@@ -25,40 +25,38 @@ public class ConfirmAttributionOfFinalDegreeWork implements IService {
         super();
     }
 
-    public boolean run(String username, Integer selectedGroupProposalOID)
-            throws ExcepcaoPersistencia, FenixServiceException {
-        ISuportePersistente persistentSupport = SuportePersistenteOJB
-                .getInstance();
+    public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia,
+            FenixServiceException {
+        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork
-                .readByOID(GroupProposal.class, selectedGroupProposalOID);
+        IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork.readByOID(
+                GroupProposal.class, selectedGroupProposalOID);
 
         if (groupProposal != null) {
             IGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal()
                     .getGroupAttributedByTeacher();
 
-            if (groupAttributed == null) { throw new NoAttributionToConfirmException(); }
+            if (groupAttributed == null) {
+                throw new NoAttributionToConfirmException();
+            }
 
             IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
             if (group != null) {
-                if (!group.getIdInternal().equals(
-                        groupAttributed.getIdInternal())) { throw new NoAttributionToConfirmException(); }
+                if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
+                    throw new NoAttributionToConfirmException();
+                }
 
                 List groupStudents = group.getGroupStudents();
                 if (groupStudents != null && !groupStudents.isEmpty()) {
                     for (int i = 0; i < groupStudents.size(); i++) {
-                        IGroupStudent groupStudent = (IGroupStudent) groupStudents
-                                .get(i);
+                        IGroupStudent groupStudent = (IGroupStudent) groupStudents.get(i);
                         if (groupStudent != null
-                                && groupStudent.getStudent().getPerson()
-                                        .getUsername().equals(username)) {
-                            persistentFinalDegreeWork
-                                    .simpleLockWrite(groupStudent);
-                            groupStudent
-                                    .setFinalDegreeWorkProposalConfirmation(groupProposal
-                                            .getFinalDegreeWorkProposal());
+                                && groupStudent.getStudent().getPerson().getUsername().equals(username)) {
+                            persistentFinalDegreeWork.simpleLockWrite(groupStudent);
+                            groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal
+                                    .getFinalDegreeWorkProposal());
                         }
                     }
                 }

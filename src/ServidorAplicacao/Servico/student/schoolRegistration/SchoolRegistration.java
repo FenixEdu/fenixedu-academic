@@ -4,54 +4,39 @@
  */
 package ServidorAplicacao.Servico.student.schoolRegistration;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
-import Dominio.ExecutionPeriod;
+import DataBeans.student.schoolRegistration.InfoResidenceCandidacy;
 import Dominio.ICountry;
-import Dominio.ICurricularCourse;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IEnrollment;
-import Dominio.IExecutionCourse;
-import Dominio.IExecutionPeriod;
-import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.IRole;
 import Dominio.IStudent;
-import Dominio.IStudentCurricularPlan;
-import Dominio.ITurma;
-import Dominio.ITurno;
 import Dominio.Pessoa;
 import Dominio.Role;
-import Dominio.Student;
-import Dominio.student.ISchoolRegistrationInquiryAnswer;
-import Dominio.student.SchoolRegistrationInquiryAnswer;
+import Dominio.student.IPersonalDataUseInquiryAnswers;
+import Dominio.student.IResidenceCandidancies;
+import Dominio.student.PersonalDataUseInquiryAnswers;
+import Dominio.student.ResidenceCandidacies;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.enrollment.WriteEnrollment;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCountry;
-import ServidorPersistente.IPersistentEnrollment;
-import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentPersonalDataUseInquiryAnswers;
+import ServidorPersistente.IPersistentResidenceCandidacies;
 import ServidorPersistente.IPersistentRole;
-import ServidorPersistente.IPersistentSchoolRegistrationInquiryAnswer;
+import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurmaPersistente;
-import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
-import Util.TipoCurso;
-import Util.enrollment.CurricularCourseEnrollmentType;
 
 import commons.CollectionUtils;
 
@@ -65,94 +50,81 @@ public class SchoolRegistration implements IService {
         super();
     }
 
-    public void run(UserView userView, HashMap answers, InfoPerson infoPerson) 
-    	throws ExcepcaoPersistencia, FenixServiceException {
+    public Boolean run(UserView userView, HashMap answers, InfoPerson infoPerson,
+            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia,
+            FenixServiceException {
 
         ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
-        String user = userView.getUtilizador();
-        Integer studentNumber = new Integer(user.substring(1));
-        
-        writeInquiryAnswers(suportePersistente,studentNumber,answers);
-        enrollStudent1stTime1stYear(suportePersistente,studentNumber);
-        updatePersonalInfo(suportePersistente,infoPerson);
-        System.out.println("Já estaaaaaaaaa!");        
+        IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
+        String username = userView.getUtilizador();
+        Integer studentNumber = new Integer(username.substring(1));
+        IStudent student = persistentStudent.readByUsername(username);
+        IPessoaPersistente pessoaPersistente = suportePersistente.getIPessoaPersistente();
 
-    }    
+        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class, infoPerson.getIdInternal());
 
-	private void writeInquiryAnswers(ISuportePersistente sp, Integer studentNumber, HashMap answers) 
-		throws ExcepcaoPersistencia, FenixServiceException {
-
-        IPersistentSchoolRegistrationInquiryAnswer persistentSRIA = sp.getIPersistentSchoolRegistrationInquiryAnswer();
-        ISchoolRegistrationInquiryAnswer schoolRegistrationInquiryAnswer = persistentSRIA.readAnswersByStudentNumber(studentNumber);
-
-        if (schoolRegistrationInquiryAnswer == null) {
-            schoolRegistrationInquiryAnswer = new SchoolRegistrationInquiryAnswer();
+        if (isStudentRegistered(pessoa)) {
+            return Boolean.FALSE;
         }
-        persistentSRIA.simpleLockWrite(schoolRegistrationInquiryAnswer);
-        IStudent student = new Student();
-        student.setNumber(studentNumber);
-        schoolRegistrationInquiryAnswer.setStudent(student);
+        updatePersonalInfo(suportePersistente, infoPerson, pessoa);
+        writeInquiryAnswers(suportePersistente, student, answers);
+        writeResidenceCandidacy(suportePersistente, student, infoResidenceCandidacy);
+        updateStudentInfo(suportePersistente, student);
+
+        return Boolean.TRUE;
+    }
+
+    private boolean isStudentRegistered(IPessoa pessoa) {
+
+        boolean result;
+        result = CollectionUtils.exists(pessoa.getPersonRoles(), new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IRole role = (Role) arg0;
+
+                IRole newRole = new Role();
+                newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
+
+                return role.equals(newRole);
+            }
+        });
+
+        return !result;
+    }
+
+    private void writeInquiryAnswers(ISuportePersistente sp, IStudent student, HashMap answers)
+            throws ExcepcaoPersistencia, FenixServiceException {
+
+        IPersistentPersonalDataUseInquiryAnswers persistentPDUIA = sp
+                .getIPersistentPersonalDataUseInquiryAnswers();
+        IPersonalDataUseInquiryAnswers personalDataUseInquiryAnswers = persistentPDUIA
+                .readAnswersByStudent(student);
+
+        if (personalDataUseInquiryAnswers == null) {
+            personalDataUseInquiryAnswers = new PersonalDataUseInquiryAnswers();
+        }
+
+        persistentPDUIA.simpleLockWrite(personalDataUseInquiryAnswers);
+
+        personalDataUseInquiryAnswers.setStudent(student);
 
         Iterator iterator = answers.keySet().iterator();
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
-            schoolRegistrationInquiryAnswer.setAnswer(new Integer(key), new Boolean((String) answers.get(key)));
+            personalDataUseInquiryAnswers.setAnswer(new Integer(key), new Boolean((String) answers
+                    .get(key)));
         }
     }
 
-    private void enrollStudent1stTime1stYear(ISuportePersistente sp, Integer studentNumber) 
-    	throws ExcepcaoPersistencia, FenixServiceException {
+    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson, IPessoa pessoa)
+            throws ExcepcaoPersistencia, FenixServiceException {
 
-        IStudentCurricularPlanPersistente scpPersistent = sp.getIStudentCurricularPlanPersistente();
-        IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
-        IPersistentExecutionPeriod persistentEP = sp.getIPersistentExecutionPeriod();
-        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-        ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
-
-        IStudentCurricularPlan scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber, TipoCurso.LICENCIATURA_OBJ);
-        IDegreeCurricularPlan dcp = scp.getDegreeCurricularPlan();
-        List curricularCourses = dcp.getCurricularCoursesByYearAndSemesterAndBranch(1, new Integer(1), scp.getBranch());
-
-        WriteEnrollment we = new WriteEnrollment();
-        for (int iter = 0; iter < curricularCourses.size(); iter++) {
-            ICurricularCourse cc = (ICurricularCourse) curricularCourses.get(iter);
-            Integer executionPeriodId = persistentEP.readActualExecutionPeriod().getIdInternal();
-            we.run(null, scp.getIdInternal(), cc.getIdInternal(), executionPeriodId, CurricularCourseEnrollmentType.DEFINITIVE, "false");
-        }
-        
-        sp.confirmarTransaccao();
-        sp.iniciarTransaccao();
-        ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
-        IStudent student = new Student();
-        student.setIdInternal(new Integer(1570));
-        IExecutionPeriod executionPeriod = new ExecutionPeriod();
-        executionPeriod.setIdInternal(new Integer(80));        
-
-        scp = scpPersistent.readActiveStudentCurricularPlan(studentNumber, TipoCurso.LICENCIATURA_OBJ);
-        List studentEnrollments = scp.getEnrolments();        
-        List executionCourses = new ArrayList();
-        for (int iter = 0; iter < studentEnrollments.size(); iter++) {
-            IEnrollment enrollment = (IEnrollment) studentEnrollments.get(iter);
-            IFrequenta attend = frequentaPersistente.readByEnrolment(enrollment);
-            List classes = turmaPersistente.readByExecutionCourse(attend.getDisciplinaExecucao());
-            ITurma chosenClass = selectClass(classes);
-            
-            List filteredShifts = filterShifts(chosenClass.getAssociatedShifts(),attend.getDisciplinaExecucao());
-            List shiftsToEnroll = selectShitfsToEnroll(filteredShifts);
-            enrollInShifts(shiftsToEnroll);            
-        }        
-            
-    }  
-
-    private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson) 
-    	throws ExcepcaoPersistencia, FenixServiceException {
-
-        IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class, infoPerson.getIdInternal());
         IPersistentRole pRole = sp.getIPersistentRole();
         IRole newRole = pRole.readByRoleType(RoleType.STUDENT);
         IPersistentCountry pCountry = sp.getIPersistentCountry();
         ICountry country = pCountry.readCountryByNationality(infoPerson.getNacionalidade());
+
+        IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
 
         pessoaPersistente.simpleLockWrite(pessoa);
 
@@ -177,11 +149,12 @@ public class SchoolRegistration implements IService {
         pessoa.setNomeMae(infoPerson.getNomeMae());
         pessoa.setNomePai(infoPerson.getNomePai());
         pessoa.setNumContribuinte(infoPerson.getNumContribuinte());
-        pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"/*infoPerson.getPassword()*/));
+        pessoa.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
         pessoa.setProfissao(infoPerson.getProfissao());
         pessoa.setTelefone(infoPerson.getTelefone());
         pessoa.setTelemovel(infoPerson.getTelemovel());
         pessoa.setPais(country);
+        pessoa.setAvailablePhoto(infoPerson.getAvailablePhoto());
 
         //remove firstTimeStudentRole and add studentRole
         CollectionUtils.filter(pessoa.getPersonRoles(), new Predicate() {
@@ -196,44 +169,38 @@ public class SchoolRegistration implements IService {
             }
         });
 
-        Object[] obj = { newRole};
+        Object[] obj = { newRole };
 
         CollectionUtils.addAll(pessoa.getPersonRoles(), obj);
 
     }
-    
-    private ITurma selectClass(List classes) {
-        
-        for(int iter=0; iter < classes.size(); iter++){
-            List shifts = ((ITurma)classes.get(iter)).getAssociatedShifts();
+
+    private void writeResidenceCandidacy(ISuportePersistente sp, IStudent student,
+            InfoResidenceCandidacy infoResidenceCandidacy) throws ExcepcaoPersistencia,
+            FenixServiceException {
+
+        if (infoResidenceCandidacy != null) {
+            IPersistentResidenceCandidacies pResidenceCandidacies = sp
+                    .getIPersistentResidenceCandidacies();
+
+            IResidenceCandidancies residenceCandidacy = new ResidenceCandidacies();
+            pResidenceCandidacies.simpleLockWrite(residenceCandidacy);
+
+            residenceCandidacy.setStudent(student);
+            residenceCandidacy.setCreationDate(new Date());
+            residenceCandidacy.setDislocated(infoResidenceCandidacy.getDislocated());
+            residenceCandidacy.setObservations(infoResidenceCandidacy.getObservations());
         }
-        return (ITurma) classes.get(0);
     }
 
-    private List filterShifts(List shifts,IExecutionCourse executionCourse){
-        
-        List filteredShifts = new ArrayList();
-        for(int iter=0; iter < shifts.size(); iter++){
-            ITurno shift = (ITurno) shifts.get(iter);
-            if(shift.getDisciplinaExecucao().equals(executionCourse)){
-                filteredShifts.add(shift);
-                System.out.println("Nome: " + shift.getNome());
-                System.out.println("Tipo: " + shift.getTipo());
-                System.out.println("IdInternal: " + shift.getIdInternal());   
-            }            
-        }
-        System.out.println("####################################################");
-        return filteredShifts;
+    private void updateStudentInfo(ISuportePersistente sp, IStudent student)
+            throws ExcepcaoPersistencia, FenixServiceException {
+
+        IPersistentExecutionYear pExecutionYear = sp.getIPersistentExecutionYear();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+
+        persistentStudent.simpleLockWrite(student);
+        student.setRegistrationYear(pExecutionYear.readCurrentExecutionYear());
     }
-    
-    private List selectShitfsToEnroll(List filteredShifts) {
-        return null;
-    }
-    
-    private void enrollInShifts(List shiftsToEnroll) {       
-        
-    }
-    
-   
 
 }

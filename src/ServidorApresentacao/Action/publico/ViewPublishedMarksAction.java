@@ -20,49 +20,47 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Fernanda Quitério
- * 
+ *  
  */
 public class ViewPublishedMarksAction extends FenixContextDispatchAction {
 
-	public ActionForward viewPublishedMarks(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward viewPublishedMarks(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		Integer objectCode = getFromRequest("objectCode", request);
-		Integer examCode = getFromRequest("evaluationCode", request);
+        Integer objectCode = getFromRequest("objectCode", request);
+        Integer examCode = getFromRequest("evaluationCode", request);
 
-		Object[] args = { objectCode, examCode };
-		ExecutionCourseSiteView siteView = null;
-		try {
-			siteView = (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(null, "ReadPublishedMarksByExam", args);
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			throw new FenixActionException(e.getMessage());
-		}
+        Object[] args = { objectCode, examCode };
+        ExecutionCourseSiteView siteView = null;
+        try {
+            siteView = (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(null,
+                    "ReadPublishedMarksByExam", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e.getMessage());
+        }
 
-		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
-		Collections.sort(infoSiteMarks.getInfoAttends(), new BeanComparator("aluno.number"));
+        InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
+        Collections.sort(infoSiteMarks.getInfoAttends(), new BeanComparator("aluno.number"));
 
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("objectCode", objectCode);
-		request.setAttribute("executionCourseCode", ((InfoSiteCommon)siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("objectCode", objectCode);
+        request.setAttribute("executionCourseCode", ((InfoSiteCommon) siteView.getCommonComponent())
+                .getExecutionCourse().getIdInternal());
 
-		return mapping.findForward("viewPublishedMarks");
-	}
-	
-	private Integer getFromRequest(String parameter, HttpServletRequest request) {
-		Integer parameterCode = null;
-		String parameterCodeString = request.getParameter(parameter);
-		if (parameterCodeString == null) {
-			parameterCodeString = (String) request.getAttribute(parameter);
-		}
-		if (parameterCodeString != null) {
-			parameterCode = new Integer(parameterCodeString);
-		}
-		return parameterCode;
+        return mapping.findForward("viewPublishedMarks");
+    }
 
-	}
+    private Integer getFromRequest(String parameter, HttpServletRequest request) {
+        Integer parameterCode = null;
+        String parameterCodeString = request.getParameter(parameter);
+        if (parameterCodeString == null) {
+            parameterCodeString = (String) request.getAttribute(parameter);
+        }
+        if (parameterCodeString != null) {
+            parameterCode = new Integer(parameterCodeString);
+        }
+        return parameterCode;
+
+    }
 }

@@ -70,6 +70,7 @@
         	<form-property name="availableEmail" type="java.lang.String" />
         	<form-property name="webSite" type="java.lang.String" />
         	<form-property name="availableWebSite" type="java.lang.String" />
+			<form-property name="availablePhoto" type="java.lang.String" />
       </form-bean>
 
 	  <!-- Dynamic-FormBean for Qualification Edit-->
@@ -110,6 +111,7 @@
 	    	<form-property name="name" type="java.lang.String"/>
 	    	<form-property name="startIndex" type="java.lang.String"/>
 	    	<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
+			<form-property name="viewPhoto" type="java.lang.String"/>
 	  </form-bean> 
     </form-beans>
     
@@ -258,6 +260,12 @@
 			>
 			<forward name="findPerson" path="findPerson"/>
 			<forward name="displayPerson" path="displayPerson"/>
+		</action>
+
+	<!-- ========== VIEW PHOTO ========== -->
+		<action path="/viewPhoto"
+			type="ServidorApresentacao.Action.person.ViewPhotoAction"
+			>
 		</action>
     </action-mappings>
     

@@ -18,8 +18,8 @@
 <logic:present name="infoBranchesList">
 
 	<html:form action="/manageBranches" method="get">
-		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
-		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
+		<html:hidden property="degreeId" />
+		<html:hidden property="degreeCurricularPlanId" />
 		<html:hidden property="method" value="delete"/>
 
  		<bean:define id="onclick">

@@ -5,81 +5,86 @@ import java.util.ListIterator;
 
 /**
  * @author Fernanda Quitério
- *
+ *  
  */
 public class InfoSiteTeachers extends DataTranferObject implements ISiteComponent {
 
-	private List infoTeachers;
-	private Boolean isResponsible;
+    private List infoTeachers;
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		String result = "[INFOSITETEACHERS";
-		result += " teachers=" + getInfoTeachers();
-		result += ", isResponsible=" + getIsResponsible();
-		result += "]";
-		return result;
-	}
+    private Boolean isResponsible;
 
-	public boolean equals(Object objectToCompare) {
-		boolean result = false;
-		if (objectToCompare instanceof InfoSiteTeachers
-			&& (((((InfoSiteTeachers) objectToCompare).getIsResponsible() != null
-				&& this.getIsResponsible() != null
-				&& ((InfoSiteTeachers) objectToCompare).getIsResponsible().equals(this.getIsResponsible()))
-				|| ((InfoSiteTeachers) objectToCompare).getIsResponsible() == null
-				&& this.getIsResponsible() == null))) {
-			result = true;
-		}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[INFOSITETEACHERS";
+        result += " teachers=" + getInfoTeachers();
+        result += ", isResponsible=" + getIsResponsible();
+        result += "]";
+        return result;
+    }
 
-		if (((InfoSiteTeachers) objectToCompare).getInfoTeachers() == null && this.getInfoTeachers() == null && result == true) {
-			return true;
-		}
-		if (((InfoSiteTeachers) objectToCompare).getInfoTeachers() == null
-			|| this.getInfoTeachers() == null
-			|| ((InfoSiteTeachers) objectToCompare).getInfoTeachers().size() != this.getInfoTeachers().size()) {
+    public boolean equals(Object objectToCompare) {
+        boolean result = false;
+        if (objectToCompare instanceof InfoSiteTeachers
+                && (((((InfoSiteTeachers) objectToCompare).getIsResponsible() != null
+                        && this.getIsResponsible() != null && ((InfoSiteTeachers) objectToCompare)
+                        .getIsResponsible().equals(this.getIsResponsible())) || ((InfoSiteTeachers) objectToCompare)
+                        .getIsResponsible() == null
+                        && this.getIsResponsible() == null))) {
+            result = true;
+        }
 
-			return false;
-		}
-		ListIterator iter1 = ((InfoSiteTeachers) objectToCompare).getInfoTeachers().listIterator();
-		ListIterator iter2 = this.getInfoTeachers().listIterator();
-		while (result && iter1.hasNext()) {
-			InfoTeacher infoTeacher1 = (InfoTeacher) iter1.next();
-			InfoTeacher infoTeacher2 = (InfoTeacher) iter2.next();
-			if (!infoTeacher1.equals(infoTeacher2)) {
-				result = false;
-				break;
-			}
-		}
-		return result;
-	}
-	/**
-	 * @return
-	 */
-	public List getInfoTeachers() {
-		return infoTeachers;
-	}
+        if (((InfoSiteTeachers) objectToCompare).getInfoTeachers() == null
+                && this.getInfoTeachers() == null && result == true) {
+            return true;
+        }
+        if (((InfoSiteTeachers) objectToCompare).getInfoTeachers() == null
+                || this.getInfoTeachers() == null
+                || ((InfoSiteTeachers) objectToCompare).getInfoTeachers().size() != this
+                        .getInfoTeachers().size()) {
 
-	/**
-	 * @param list
-	 */
-	public void setInfoTeachers(List list) {
-		infoTeachers = list;
-	}
-	/**
-	 * @return
-	 */
-	public Boolean getIsResponsible() {
-		return isResponsible;
-	}
+            return false;
+        }
+        ListIterator iter1 = ((InfoSiteTeachers) objectToCompare).getInfoTeachers().listIterator();
+        ListIterator iter2 = this.getInfoTeachers().listIterator();
+        while (result && iter1.hasNext()) {
+            InfoTeacher infoTeacher1 = (InfoTeacher) iter1.next();
+            InfoTeacher infoTeacher2 = (InfoTeacher) iter2.next();
+            if (!infoTeacher1.equals(infoTeacher2)) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * @param boolean1
-	 */
-	public void setIsResponsible(Boolean boolean1) {
-		isResponsible = boolean1;
-	}
+    /**
+     * @return
+     */
+    public List getInfoTeachers() {
+        return infoTeachers;
+    }
+
+    /**
+     * @param list
+     */
+    public void setInfoTeachers(List list) {
+        infoTeachers = list;
+    }
+
+    /**
+     * @return
+     */
+    public Boolean getIsResponsible() {
+        return isResponsible;
+    }
+
+    /**
+     * @param boolean1
+     */
+    public void setIsResponsible(Boolean boolean1) {
+        isResponsible = boolean1;
+    }
 
 }

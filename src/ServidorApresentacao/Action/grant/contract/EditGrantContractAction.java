@@ -74,6 +74,11 @@ public class EditGrantContractAction extends FenixDispatchAction {
                         "ReadGrantContractRegimeByContractAndState", argregime);
 
                 //It should only be one active contract regime
+                if (infoGrantContractRegimeActiveList.isEmpty()
+                        || infoGrantContractRegimeActiveList.size() > 1) {
+                    setError(request, mapping, "errors.grant.contract.active.regime.read",
+                            "manage-grant-contract", null);
+                }
                 InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoGrantContractRegimeActiveList
                         .get(0);
 
@@ -128,10 +133,7 @@ public class EditGrantContractAction extends FenixDispatchAction {
 
             if (infoGrantContract.getIdInternal() == null
                     || infoGrantContract.getIdInternal().equals(new Integer(0))) //In
-                                                                                 // case
-                                                                                 // of a
-                                                                                 // new
-                                                                                 // contract
+            // case of a new contract
             {
                 Object[] argcontract = { infoGrantContract.getGrantOwnerInfo().getIdInternal() };
                 infoGrantContract = null;

@@ -8,7 +8,7 @@
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
+ * 
  * @author tfc130
  */
 import junit.framework.Test;
@@ -26,7 +26,7 @@ import Dominio.ITurma;
 import Dominio.Turma;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -37,126 +37,113 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 
-	private InfoClass infoClass = null;
+    private InfoClass infoClass = null;
 
-	public EditarTurmaServicosTest(java.lang.String testName) {
-		super(testName);
-	}
+    public EditarTurmaServicosTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(EditarTurmaServicosTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(EditarTurmaServicosTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "EditarTurma";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "EditarTurma";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		this.ligarSuportePersistente(true);
+        this.ligarSuportePersistente(true);
 
-		Object argsEditarTurma[] = new Object[2];
-		argsEditarTurma[0] = this.infoClass;
-		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
-		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
-		newInfoClass.setAnoCurricular(new Integer(2));
-		//TODO: verify if infoExecutionDegree is needed for the service
-		newInfoClass.setInfoExecutionPeriod(
-			new InfoExecutionPeriod(
-				"2º Semestre",
-				new InfoExecutionYear("2002/2003")));
-		newInfoClass.setNome("turmaXPTO");
-		argsEditarTurma[1] = newInfoClass;
+        Object argsEditarTurma[] = new Object[2];
+        argsEditarTurma[0] = this.infoClass;
+        ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
+        InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+        newInfoClass.setAnoCurricular(new Integer(2));
+        //TODO: verify if infoExecutionDegree is needed for the service
+        newInfoClass.setInfoExecutionPeriod(new InfoExecutionPeriod("2º Semestre",
+                new InfoExecutionYear("2002/2003")));
+        newInfoClass.setNome("turmaXPTO");
+        argsEditarTurma[1] = newInfoClass;
 
-		return argsEditarTurma;
-	}
+        return argsEditarTurma;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-		this.ligarSuportePersistente(false);
+        this.ligarSuportePersistente(false);
 
-		Object argsEditarTurma[] = new Object[2];
-		argsEditarTurma[0] = this.infoClass;
-		ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
-		InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
-		newInfoClass.setAnoCurricular(new Integer(2));
-		//TODO: verify if infoExecutionDegree is needed for the service
-		newInfoClass.setInfoExecutionPeriod(
-			new InfoExecutionPeriod(
-				"2º Semestre",
-				new InfoExecutionYear("2002/2003")));
-		newInfoClass.setNome("turmaXPTO");
-		argsEditarTurma[1] = newInfoClass;
+        Object argsEditarTurma[] = new Object[2];
+        argsEditarTurma[0] = this.infoClass;
+        ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
+        InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+        newInfoClass.setAnoCurricular(new Integer(2));
+        //TODO: verify if infoExecutionDegree is needed for the service
+        newInfoClass.setInfoExecutionPeriod(new InfoExecutionPeriod("2º Semestre",
+                new InfoExecutionYear("2002/2003")));
+        newInfoClass.setNome("turmaXPTO");
+        argsEditarTurma[1] = newInfoClass;
 
-		return argsEditarTurma;
-	}
+        return argsEditarTurma;
+    }
 
-	private void ligarSuportePersistente(boolean existing) {
+    private void ligarSuportePersistente(boolean existing) {
 
-		ISuportePersistente sp = null;
+        ISuportePersistente sp = null;
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			ICursoPersistente icp = sp.getICursoPersistente();
-			ICurso ic = icp.readBySigla("LEIC");
+            ICursoPersistente icp = sp.getICursoPersistente();
+            ICurso ic = icp.readBySigla("LEIC");
 
-			IPersistentDegreeCurricularPlan ipccp =
-				sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan ipcc =
-				ipccp.readByNameAndDegree("plano1", ic);
+            IPersistentDegreeCurricularPlan ipccp = sp.getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan ipcc = ipccp.readByNameAndDegree("plano1", ic);
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-			ICursoExecucaoPersistente icep = sp.getICursoExecucaoPersistente();
-			ICursoExecucao ice =
-				icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
+            IPersistentExecutionDegree icep = sp.getIPersistentExecutionDegree();
+            ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
 
-			IPersistentExecutionPeriod iepp =
-				sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep =
-				iepp.readByNameAndExecutionYear("2º Semestre", iey);
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
-			ITurma turma = null;
-			if (existing) {
-				turma =
-					turmaPersistente
-						.readByNameAndExecutionDegreeAndExecutionPeriod(
-						"turma413",
-						ice,
-						iep);
-			} else {
-				turma = new Turma("asdasdsad", new Integer(1), ice, iep);
-			}
+            ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
+            ITurma turma = null;
+            if (existing) {
+                turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice,
+                        iep);
+            } else {
+                turma = new Turma("asdasdsad", new Integer(1), ice, iep);
+            }
 
-			this.infoClass = Cloner.copyClass2InfoClass(turma);
+            this.infoClass = Cloner.copyClass2InfoClass(turma);
 
-			sp.confirmarTransaccao();
+            sp.confirmarTransaccao();
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 }

@@ -9,10 +9,8 @@ import Util.TipoDocumentoIdentificacao;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public interface IPersistentGuide extends IPersistentObject
-{
+public interface IPersistentGuide extends IPersistentObject {
 
-  
     /**
      * @param number
      * @param year

@@ -32,15 +32,12 @@
     <td id="principal" width="100%">
       <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324" height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
 	  <div id="invisible"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
-	  		<div id="invisible"><tiles:insert attribute="degrees" ignore="true" /></div>	
-      <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
+      <div id="invisible"><tiles:insert attribute="degrees" ignore="true" /></div>
+      <h1><tiles:insert attribute="executionCourseName" ignore="true"/></h1>
       <br />
 	  <tiles:insert attribute="body" />      
     </td>	
     <td id="barranav" bgcolor="#EBEFFA" valign="top">
-      <div class="blue-bckgr">
-        <h3>Navega&ccedil;&atilde;o Geral</h3>
-      </div>
       <div id="nav">
       <tiles:insert attribute="navbarGeral" ignore="true"/>	
       <tiles:insert attribute="navbar" ignore="true"/>	

@@ -15,44 +15,40 @@ import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
 /**
- * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
- * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo</a>
+ * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
+ * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
  *  
  */
-public class ReadStudentCourseReport extends ReadDomainObjectService
-{
+public class ReadStudentCourseReport extends ReadDomainObjectService {
 
-    public ReadStudentCourseReport()
-    {}
+    public ReadStudentCourseReport() {
+    }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-	 */
-    protected Class getDomainObjectClass()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
+     */
+    protected Class getDomainObjectClass() {
         return StudentCourseReport.class;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentStudentCourseReport();
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-	 */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
-        return Cloner.copyIStudentCourseReport2InfoStudentCourseReport(
-            (IStudentCourseReport) domainObject);
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
+     */
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return Cloner
+                .copyIStudentCourseReport2InfoStudentCourseReport((IStudentCourseReport) domainObject);
     }
 }

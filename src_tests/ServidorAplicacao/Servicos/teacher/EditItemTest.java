@@ -6,131 +6,126 @@ import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
 /**
- * @author  Luis Egidio, lmre@mega.ist.utl.pt
- * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
- *
+ * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
+ *  
  */
 public class EditItemTest extends ItemBelongsExecutionCourseTest {
 
-	/**
-	 * @param testName
-	 */
-	public EditItemTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public EditItemTest(String testName) {
+        super(testName);
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "EditItem";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "EditItem";
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testEditItemDataSet.xml";
-	}
-	
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testEditItemDataSet.xml";
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
-		String[] args = { "3", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser() {
-		String[] args = { "13", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "3", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments() {
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "13", "pass", getApplication() };
+        return args;
+    }
 
-		InfoItem infoItem = new InfoItem();
-		infoItem.setInformation("informacao");
-		infoItem.setName("nome");
-		infoItem.setItemOrder(new Integer(0));
-		infoItem.setUrgent(new Boolean(false));
+    protected Object[] getAuthorizeArguments() {
 
-		Object[] args = { new Integer(27), new Integer(1), infoItem };
-		return args;
-	}
+        InfoItem infoItem = new InfoItem();
+        infoItem.setInformation("informacao");
+        infoItem.setName("nome");
+        infoItem.setItemOrder(new Integer(0));
+        infoItem.setUrgent(new Boolean(false));
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+        Object[] args = { new Integer(27), new Integer(1), infoItem };
+        return args;
+    }
 
-	protected Object[] getTestItemSuccessfullArguments() {
-		InfoItem infoItem = new InfoItem();
-		infoItem.setInformation("informacao");
-		infoItem.setName("nome");
-		infoItem.setItemOrder(new Integer(0));
-		infoItem.setUrgent(new Boolean(false));
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-		Object[] args = { new Integer(27), new Integer(1), infoItem };
-		return args;
+    protected Object[] getTestItemSuccessfullArguments() {
+        InfoItem infoItem = new InfoItem();
+        infoItem.setInformation("informacao");
+        infoItem.setName("nome");
+        infoItem.setItemOrder(new Integer(0));
+        infoItem.setUrgent(new Boolean(false));
 
-	}
+        Object[] args = { new Integer(27), new Integer(1), infoItem };
+        return args;
 
-	protected Object[] getTestItemUnsuccessfullArguments() {
-		InfoItem infoItem = new InfoItem();
-		infoItem.setInformation("informacao");
-		infoItem.setName("nome");
-		infoItem.setItemOrder(new Integer(0));
-		infoItem.setUrgent(new Boolean(false));
+    }
 
-		Object[] args = { new Integer(27), new Integer(2), infoItem };
-		return args;
-	}
+    protected Object[] getTestItemUnsuccessfullArguments() {
+        InfoItem infoItem = new InfoItem();
+        infoItem.setInformation("informacao");
+        infoItem.setName("nome");
+        infoItem.setItemOrder(new Integer(0));
+        infoItem.setUrgent(new Boolean(false));
 
-	public void testEditExistingItem() {
-		Object[] args = getTestItemSuccessfullArguments();
+        Object[] args = { new Integer(27), new Integer(2), infoItem };
+        return args;
+    }
 
-		try {
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+    public void testEditExistingItem() {
+        Object[] args = getTestItemSuccessfullArguments();
 
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedEditItemDataSet.xml");
-			System.out.println(
-				"testEditExistingItem was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testEditExistingItem was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testEditExistingItem");
-		}
-	}
+            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedEditItemDataSet.xml");
+            System.out.println("testEditExistingItem was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
 
-	public void testEditNonExistingItem() {
-		InfoItem infoItem = new InfoItem();
-		infoItem.setInformation("informacao");
-		infoItem.setName("nome");
-		infoItem.setItemOrder(new Integer(0));
-		infoItem.setUrgent(new Boolean(false));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("testEditExistingItem was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testEditExistingItem");
+        }
+    }
 
-		Object[] args = { new Integer(27), new Integer(100), infoItem };
+    public void testEditNonExistingItem() {
+        InfoItem infoItem = new InfoItem();
+        infoItem.setInformation("informacao");
+        infoItem.setName("nome");
+        infoItem.setItemOrder(new Integer(0));
+        infoItem.setUrgent(new Boolean(false));
 
-		try {
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-			System.out.println(
-				"testEditNonExistingItem was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testEditNonExistingItem");
+        Object[] args = { new Integer(27), new Integer(100), infoItem };
 
-		} catch (NotAuthorizedException e) {
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            System.out.println("testEditNonExistingItem was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testEditNonExistingItem");
 
-// O Teste falha pq ele n lança esta excepção, lança NullPointerException...
+        } catch (NotAuthorizedException e) {
 
-			System.out.println(
-				"testEditNonExistingItem was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testEditNonExistingItem was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testEditNonExistingItem");
-		}
-	}
+            // O Teste falha pq ele n lança esta excepção, lança
+            // NullPointerException...
+
+            System.out.println("testEditNonExistingItem was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("testEditNonExistingItem was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testEditNonExistingItem");
+        }
+    }
 
 }

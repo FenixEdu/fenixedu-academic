@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPe
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,121 +22,93 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 
 /**
  * 
- * @author :
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
 
-public class InsertExternalPersonDispatchAction extends DispatchAction
-{
+public class InsertExternalPersonDispatchAction extends DispatchAction {
 
-	public ActionForward prepare(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ActionErrors actionErrors = new ActionErrors();
-		ArrayList workLocations = getWorkLocations(request);
+        ActionErrors actionErrors = new ActionErrors();
+        List workLocations = getWorkLocations(request);
 
-		if ((workLocations == null) || (workLocations.isEmpty()))
-		{
-			actionErrors.add(
-				"label.masterDegree.administrativeOffice.nonExistingWorkLocations",
-				new ActionError("label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
+        if ((workLocations == null) || (workLocations.isEmpty())) {
+            actionErrors.add("label.masterDegree.administrativeOffice.nonExistingWorkLocations",
+                    new ActionError("label.masterDegree.administrativeOffice.nonExistingWorkLocations"));
 
-			saveErrors(request, actionErrors);
-			return mapping.findForward("error");
-		}
+            saveErrors(request, actionErrors);
+            return mapping.findForward("error");
+        }
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
-	private ArrayList getWorkLocations(HttpServletRequest request) throws FenixActionException
-	{
-		IUserView userView = SessionUtils.getUserView(request);
-		ArrayList workLocations = null;
+    private List getWorkLocations(HttpServletRequest request) throws FenixActionException {
+        IUserView userView = SessionUtils.getUserView(request);
+        List workLocations = null;
 
-		Object args[] = {
-		};
-		try
-		{
-			workLocations =
-				(ArrayList) ServiceUtils.executeService(userView, "ReadAllWorkLocations", args);
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        Object args[] = {};
+        try {
+            workLocations = (ArrayList) ServiceUtils.executeService(userView, "ReadAllWorkLocations",
+                    args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		if (workLocations != null)
-			if (workLocations.isEmpty() == false)
-			{
-				ArrayList workLocationsValueBeanList = new ArrayList();
-				Iterator it = workLocations.iterator();
-				InfoWorkLocation infoWorkLocation = null;
+        if (workLocations != null)
+            if (workLocations.isEmpty() == false) {
+                List workLocationsValueBeanList = new ArrayList();
+                Iterator it = workLocations.iterator();
+                InfoWorkLocation infoWorkLocation = null;
 
-				while (it.hasNext())
-				{
-					infoWorkLocation = (InfoWorkLocation) it.next();
-					workLocationsValueBeanList.add(
-						new LabelValueBean(
-							infoWorkLocation.getName(),
-							infoWorkLocation.getIdInternal().toString()));
-				}
+                while (it.hasNext()) {
+                    infoWorkLocation = (InfoWorkLocation) it.next();
+                    workLocationsValueBeanList.add(new LabelValueBean(infoWorkLocation.getName(),
+                            infoWorkLocation.getIdInternal().toString()));
+                }
 
-				request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, workLocationsValueBeanList);
-			}
-		return workLocations;
-	}
+                request.setAttribute(SessionConstants.WORK_LOCATIONS_LIST, workLocationsValueBeanList);
+            }
+        return workLocations;
+    }
 
-	public ActionForward insert(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        IUserView userView = SessionUtils.getUserView(request);
 
-		DynaActionForm insertExternalPersonForm = (DynaActionForm) form;
+        DynaActionForm insertExternalPersonForm = (DynaActionForm) form;
 
-		String name = (String) insertExternalPersonForm.get("name");
-		Integer workLocationID = (Integer) insertExternalPersonForm.get("workLocationID");
-		String address = (String) insertExternalPersonForm.get("address");
-		String phone = (String) insertExternalPersonForm.get("phone");
-		String mobile = (String) insertExternalPersonForm.get("mobile");
-		String homepage = (String) insertExternalPersonForm.get("homepage");
-		String email = (String) insertExternalPersonForm.get("email");
+        String name = (String) insertExternalPersonForm.get("name");
+        Integer workLocationID = (Integer) insertExternalPersonForm.get("workLocationID");
+        String address = (String) insertExternalPersonForm.get("address");
+        String phone = (String) insertExternalPersonForm.get("phone");
+        String mobile = (String) insertExternalPersonForm.get("mobile");
+        String homepage = (String) insertExternalPersonForm.get("homepage");
+        String email = (String) insertExternalPersonForm.get("email");
 
-		Object args[] = { name, address, workLocationID, phone, mobile, homepage, email };
+        Object args[] = { name, address, workLocationID, phone, mobile, homepage, email };
 
-		try
-		{
-			ServiceUtils.executeService(userView, "InsertExternalPerson", args);
-		}
-		catch (ExistingServiceException e)
-		{
-			getWorkLocations(request);
-			throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
-		}
-		catch (FenixServiceException e)
-		{
-			getWorkLocations(request);
-			throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
-		}
+        try {
+            ServiceUtils.executeService(userView, "InsertExternalPerson", args);
+        } catch (ExistingServiceException e) {
+            getWorkLocations(request);
+            throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
+        } catch (FenixServiceException e) {
+            getWorkLocations(request);
+            throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
+        }
 
-		return mapping.findForward("success");
-	}
+        return mapping.findForward("success");
+    }
 
 }

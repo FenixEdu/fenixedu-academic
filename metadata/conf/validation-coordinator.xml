@@ -43,13 +43,13 @@
       <field property="driftsSecond" depends="integer" page="1">
         <arg0 key="error.invalidNumber" resource="true"/>
       </field>	  
-      <field property="markMin" depends="integer" page="1">
+      <field property="markMin" depends="float" page="1">
         <arg0 key="error.invalidNumber" resource="true"/>
       </field>	  
-      <field property="markMax" depends="integer" page="1">
+      <field property="markMax" depends="float" page="1">
         <arg0 key="error.invalidNumber" resource="true"/>
       </field>	  
-      <field property="markAverage" depends="integer" page="1">
+      <field property="markAverage" depends="float" page="1">
         <arg0 key="error.invalidNumber" resource="true"/>
       </field>	  	  
 	</form>

@@ -8,10 +8,10 @@ import java.util.List;
 
 import org.apache.commons.collections.Transformer;
 
-import commons.CollectionUtils;
-
 import Dominio.IRoomOccupation;
 import Dominio.IWrittenEvaluation;
+
+import commons.CollectionUtils;
 
 /**
  * @author Tânia Pousão
@@ -45,8 +45,7 @@ public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluati
         return infoRoomOccupation;
     }
 
-    public static InfoWrittenEvaluation newInfoFromDomain(
-            IWrittenEvaluation writtenEvaluation) {
+    public static InfoWrittenEvaluation newInfoFromDomain(IWrittenEvaluation writtenEvaluation) {
         InfoWrittenEvaluationWithRoomOcupations infoWrittenEvaluation = null;
         if (writtenEvaluation != null) {
             infoWrittenEvaluation = new InfoWrittenEvaluationWithRoomOcupations();

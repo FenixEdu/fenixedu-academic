@@ -21,8 +21,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class ListTeacherServiceExemptionsAction extends Action
-{
+public class ListTeacherServiceExemptionsAction extends Action {
 
     /*
      * (non-Javadoc)
@@ -32,23 +31,19 @@ public class ListTeacherServiceExemptionsAction extends Action
      *      javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        
+
         Object args[] = { infoTeacher.getIdInternal() };
-        
-        List infoServiceExemptions = (List) ServiceUtils.executeService(userView, "ReadTeacherServiceExemptions", args);
-        
+
+        List infoServiceExemptions = (List) ServiceUtils.executeService(userView,
+                "ReadTeacherServiceExemptions", args);
+
         request.setAttribute("infoServiceExemptions", infoServiceExemptions);
-        
+
         return mapping.findForward("successfull-read");
     }
 }

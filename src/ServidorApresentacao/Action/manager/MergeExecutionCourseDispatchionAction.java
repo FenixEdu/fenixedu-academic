@@ -26,20 +26,14 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 3/Dez/2003
- * @author Fernanda Quitério 17/Dez/2003 
- * 
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
+ * @author Fernanda Quitério 17/Dez/2003
+ *  
  */
-public class MergeExecutionCourseDispatchionAction extends DispatchAction
-{
+public class MergeExecutionCourseDispatchionAction extends DispatchAction {
 
-    public ActionForward chooseDegreesAndExecutionPeriod(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm degreesForm = (DynaActionForm) form;
@@ -48,90 +42,64 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction
         Integer executionPeriodId = (Integer) degreesForm.get("executionPeriodId");
         Object[] args1 = { destinationDegreeId, executionPeriodId };
         Object[] args2 = { sourceDegreeId, executionPeriodId };
-        try
-        {
-            List destinationExecutionCourses =
-                (List) ServiceUtils.executeService(
-                    userView,
-                    "ReadExecutionCoursesByDegreeAndExecutionPeriodId",
-                    args1);
-            List sourceExecutionCourses =
-                (List) ServiceUtils.executeService(
-                    userView,
-                    "ReadExecutionCoursesByDegreeAndExecutionPeriodId",
-                    args2);
+        try {
+            List destinationExecutionCourses = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionCoursesByDegreeAndExecutionPeriodId", args1);
+            List sourceExecutionCourses = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionCoursesByDegreeAndExecutionPeriodId", args2);
             request.setAttribute("sourceExecutionCourses", sourceExecutionCourses);
             request.setAttribute("destinationExecutionCourses", destinationExecutionCourses);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         return mapping.findForward("chooseExecutionCourses");
     }
 
-    public ActionForward prepareChooseDegreesAndExecutionPeriod(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Object[] args = {
-        };
+        Object[] args = {};
 
-        try
-        {
+        try {
             List degrees = (List) ServiceUtils.executeService(userView, "ReadDegrees", args);
-            List executionPeriods =
-                (List) ServiceUtils.executeService(userView, "ReadAllExecutionPeriods", args);
+            List executionPeriods = (List) ServiceUtils.executeService(userView,
+                    "ReadAllExecutionPeriods", args);
 
             ComparatorChain comparator = new ComparatorChain();
             comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
             comparator.addComparator(new BeanComparator("name"), true);
             Collections.sort(executionPeriods, comparator);
-            
+
             Collections.sort(degrees, new BeanComparator("sigla"));
-            
+
             request.setAttribute("sourceDegrees", degrees);
             request.setAttribute("destinationDegrees", degrees);
             request.setAttribute("executionPeriods", executionPeriods);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         return mapping.findForward("chooseDegreesAndExecutionPeriod");
     }
 
-    public ActionForward mergeExecutionCourses(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm mergeExecutionCoursesForm = (DynaActionForm) form;
-        Integer sourceExecutionCourseId =
-            (Integer) mergeExecutionCoursesForm.get("sourceExecutionCourseId");
-        Integer destinationExecutionCourseId =
-            (Integer) mergeExecutionCoursesForm.get("destinationExecutionCourseId");
+        Integer sourceExecutionCourseId = (Integer) mergeExecutionCoursesForm
+                .get("sourceExecutionCourseId");
+        Integer destinationExecutionCourseId = (Integer) mergeExecutionCoursesForm
+                .get("destinationExecutionCourseId");
         Object[] args = { destinationExecutionCourseId, sourceExecutionCourseId };
 
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "MergeExecutionCourses", args);
 
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 

@@ -83,13 +83,13 @@ public class RenderFIB extends Render {
     public String toXML(String inside) {
         String result = new String("<render_fib");
         if (fibtype != null)
-                result = result.concat(" fibtype=\"" + getFibTypeString()
-                        + "\"");
-        if (rows != null) result = result.concat(" rows=\"" + rows + "\"");
+            result = result.concat(" fibtype=\"" + getFibTypeString() + "\"");
+        if (rows != null)
+            result = result.concat(" rows=\"" + rows + "\"");
         if (columns != null)
-                result = result.concat(" columns=\"" + columns + "\"");
+            result = result.concat(" columns=\"" + columns + "\"");
         if (maxchars != null)
-                result = result.concat(" maxchars=\"" + maxchars + "\"");
-        return result.concat(">"+inside + "</render_fib>\n");
+            result = result.concat(" maxchars=\"" + maxchars + "\"");
+        return result.concat(">" + inside + "</render_fib>\n");
     }
 }

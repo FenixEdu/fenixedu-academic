@@ -14,28 +14,22 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class CreditsServiceWithInfoProfessorshipArgumentAuthorization
-        extends
-            AbstractTeacherDepartmentAuthorization
-{
+public class CreditsServiceWithInfoProfessorshipArgumentAuthorization extends
+        AbstractTeacherDepartmentAuthorization {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
+     */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException
-    {
+            throws FenixServiceException {
         InfoProfessorship infoProfessorship = (InfoProfessorship) arguments[0];
 
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         ITeacher teacher = null;
-        try
-        {
+        try {
             teacher = teacherDAO.readByNumber(infoProfessorship.getInfoTeacher().getTeacherNumber());
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
@@ -43,10 +37,9 @@ public class CreditsServiceWithInfoProfessorshipArgumentAuthorization
     }
 
     /**
-	 *  
-	 */
-    public CreditsServiceWithInfoProfessorshipArgumentAuthorization()
-    {
+     *  
+     */
+    public CreditsServiceWithInfoProfessorshipArgumentAuthorization() {
         super();
     }
 }

@@ -1,4 +1,3 @@
-
 package ServidorApresentacao.Action.certificate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,28 +11,23 @@ import org.apache.struts.actions.DispatchAction;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * 
+ *  
  */
 public class PrintDeclarationDispatchAction extends DispatchAction {
 
-	public ActionForward prepare(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		if (session != null) {
-	
-			return mapping.findForward("PrintReady");
-		  } 
-			throw new Exception();   
+        if (session != null) {
 
-	}
+            return mapping.findForward("PrintReady");
+        }
+        throw new Exception();
 
-	  
+    }
+
 }

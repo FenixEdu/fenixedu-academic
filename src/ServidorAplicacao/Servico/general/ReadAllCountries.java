@@ -8,7 +8,8 @@
 
 /**
  * 
- * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota (jccm@rnl.ist.utl.pt)
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
  *  
  */
 
@@ -30,47 +31,40 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadAllCountries implements IService
-{
+public class ReadAllCountries implements IService {
 
     private static ReadAllCountries servico = new ReadAllCountries();
 
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadAllCountries getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadAllCountries getService() {
         return servico;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadAllCountries()
-    {
+     * The actor of this class.
+     */
+    private ReadAllCountries() {
     }
 
     /**
-	 * Returns the service name
-	 */
+     * Returns the service name
+     */
 
-    public final String getNome()
-    {
+    public final String getNome() {
         return "ReadAllCountries";
     }
 
-    public Object run() throws ExcepcaoInexistente, FenixServiceException
-    {
+    public Object run() throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
         List paises = new ArrayList();
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             paises = sp.getIPersistentCountry().readAllCountrys();
-        } catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
@@ -79,11 +73,9 @@ public class ReadAllCountries implements IService
         if (paises.size() == 0)
             throw new ExcepcaoInexistente("Non existing Countries !!");
 
-        ArrayList countryList = (ArrayList) CollectionUtils.collect(paises, new Transformer()
-        {
+        List countryList = (ArrayList) CollectionUtils.collect(paises, new Transformer() {
 
-            public Object transform(Object input)
-            {
+            public Object transform(Object input) {
                 ICountry country = (ICountry) input;
                 InfoCountry infoCountry = Cloner.copyICountry2InfoCountry(country);
                 return infoCountry;

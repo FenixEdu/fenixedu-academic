@@ -9,42 +9,44 @@ import java.util.List;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class InfoSiteObjectives extends DataTranferObject implements ISiteComponent {
 
-	private List infoCurricularCourses;
-	private List infoCurriculums;
-	
-	public int getSize() {
-		return infoCurriculums.size();
-	}
-	/**
-	 * @return
-	 */
-	public List getInfoCurricularCourses() {
-		return infoCurricularCourses;
-	}
+    private List infoCurricularCourses;
 
-	/**
-	 * @param infoCurricularCourses
-	 */
-	public void setInfoCurricularCourses(List infoCurricularCourses) {
-		this.infoCurricularCourses = infoCurricularCourses;
-	}
+    private List infoCurriculums;
 
-	/**
-	 * @return
-	 */
-	public List getInfoCurriculums() {
-		return infoCurriculums;
-	}
+    public int getSize() {
+        return infoCurriculums.size();
+    }
 
-	/**
-	 * @param infoCurriculums
-	 */
-	public void setInfoCurriculums(List infoCurriculums) {
-		this.infoCurriculums = infoCurriculums;
-	}
+    /**
+     * @return
+     */
+    public List getInfoCurricularCourses() {
+        return infoCurricularCourses;
+    }
+
+    /**
+     * @param infoCurricularCourses
+     */
+    public void setInfoCurricularCourses(List infoCurricularCourses) {
+        this.infoCurricularCourses = infoCurricularCourses;
+    }
+
+    /**
+     * @return
+     */
+    public List getInfoCurriculums() {
+        return infoCurriculums;
+    }
+
+    /**
+     * @param infoCurriculums
+     */
+    public void setInfoCurriculums(List infoCurriculums) {
+        this.infoCurriculums = infoCurriculums;
+    }
 }

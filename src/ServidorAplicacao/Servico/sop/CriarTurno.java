@@ -26,24 +26,20 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class CriarTurno implements IService
-{
+public class CriarTurno implements IService {
 
     /**
      * The actor of this class.
      */
-    public CriarTurno()
-    {
+    public CriarTurno() {
     }
 
-    public InfoShift run(InfoShift infoTurno) throws FenixServiceException
-    {
+    public InfoShift run(InfoShift infoTurno) throws FenixServiceException {
 
         ITurno turno = null;
         InfoShift result = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
@@ -57,8 +53,7 @@ public class CriarTurno implements IService
 
             turno = new Turno(infoTurno.getNome(), infoTurno.getTipo(), infoTurno.getLotacao(),
                     executionCourse);
-            try
-            {
+            try {
                 sp.getITurnoPersistente().simpleLockWrite(turno);
                 // TODO : this is required to write shifts.
                 //        I'm not sure of the significance, nor do I know if it is to
@@ -70,16 +65,12 @@ public class CriarTurno implements IService
                 turno.setAssociatedClasses(new ArrayList());
                 turno.setAssociatedShiftProfessorship(new ArrayList());
 
-            }
-            catch (ExistingPersistentException ex)
-            {
+            } catch (ExistingPersistentException ex) {
                 throw new ExistingServiceException(ex);
             }
 
             result = (InfoShift) Cloner.get(turno);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 

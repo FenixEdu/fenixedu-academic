@@ -14,8 +14,7 @@ import Dominio.ISala;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public interface IPersistentExam extends IPersistentObject
-{
+public interface IPersistentExam extends IPersistentObject {
 
     public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia;
 
@@ -30,9 +29,9 @@ public interface IPersistentExam extends IPersistentObject
 
     public List readBy(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia;
 
-	public List readByRoomAndWeek(ISala room, Calendar day) throws ExcepcaoPersistencia;
+    public List readByRoomAndWeek(ISala room, Calendar day) throws ExcepcaoPersistencia;
 
     public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername)
-    		throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 
 }

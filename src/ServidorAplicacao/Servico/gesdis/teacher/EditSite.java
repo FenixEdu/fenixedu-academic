@@ -18,18 +18,14 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author PTRLV
  */
-public class EditSite implements IService
-{
+public class EditSite implements IService {
 
-    public EditSite()
-    {
+    public EditSite() {
     }
 
-    public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException
-    {
+    public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException {
         IPersistentSite persistentSite = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             persistentSite = sp.getIPersistentSite();
             ISite siteOld = Cloner.copyInfoSite2ISite(infoSiteOld);
@@ -42,9 +38,7 @@ public class EditSite implements IService
             siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
             siteOld.setIntroduction(infoSiteNew.getIntroduction());
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
         return new Boolean(true);

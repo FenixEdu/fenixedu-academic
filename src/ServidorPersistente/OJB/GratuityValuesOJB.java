@@ -14,16 +14,16 @@ import ServidorPersistente.IPersistentGratuityValues;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class GratuityValuesOJB extends ObjectFenixOJB implements IPersistentGratuityValues
-{
+public class GratuityValuesOJB extends PersistentObjectOJB implements IPersistentGratuityValues {
 
-	public IGratuityValues readGratuityValuesByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("executionDegree.idInternal", executionDegree.getIdInternal());
-		
-		return (IGratuityValues) queryObject(GratuityValues.class, criteria);
-	}
+    public IGratuityValues readGratuityValuesByExecutionDegree(ICursoExecucao executionDegree)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("executionDegree.idInternal", executionDegree.getIdInternal());
+
+        return (IGratuityValues) queryObject(GratuityValues.class, criteria);
+    }
 
 }

@@ -37,12 +37,10 @@ import Util.TipoAula;
  * @author Luis Cruz & Sara Ribeiro
  *  
  */
-public class ManageShiftsDA extends
-        FenixExecutionDegreeAndCurricularYearContextDispatchAction {
+public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward listShifts(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -59,18 +57,13 @@ public class ManageShiftsDA extends
          * Obtain a list of shifts of specified degree for indicated curricular
          * year and execution period
          */
-        Object args[] = { infoExecutionPeriod, infoExecutionDegree,
-                infoCurricularYear};
-        List infoShifts = (List) ServiceUtils
-                .executeService(
-                        userView,
-                        "ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear",
-                        args);
+        Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear };
+        List infoShifts = (List) ServiceUtils.executeService(userView,
+                "ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear", args);
 
         /* Sort the list of shifts */
         ComparatorChain chainComparator = new ComparatorChain();
-        chainComparator.addComparator(new BeanComparator(
-                "infoDisciplinaExecucao.nome"));
+        chainComparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
         chainComparator.addComparator(new BeanComparator("tipo"));
         chainComparator.addComparator(new BeanComparator("nome"));
         Collections.sort(infoShifts, chainComparator);
@@ -89,9 +82,8 @@ public class ManageShiftsDA extends
         return mapping.findForward("ShowShiftList");
     }
 
-    public ActionForward createShift(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward createShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -99,57 +91,48 @@ public class ManageShiftsDA extends
 
         InfoShift infoShift = new InfoShift();
         infoShift.setAvailabilityFinal(new Integer(0));
-        InfoExecutionCourse infoExecutionCourse = RequestUtils
-                .getExecutionCourseBySigla(request, (String) createShiftForm
-                        .get("courseInitials"));
+        InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseBySigla(request,
+                (String) createShiftForm.get("courseInitials"));
         infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
         infoShift.setInfoLessons(null);
         infoShift.setLotacao((Integer) createShiftForm.get("lotacao"));
         infoShift.setNome((String) createShiftForm.get("nome"));
-        infoShift.setTipo(new TipoAula((Integer) createShiftForm
-                .get("tipoAula")));
+        infoShift.setTipo(new TipoAula((Integer) createShiftForm.get("tipoAula")));
 
-        Object argsCriarTurno[] = { infoShift};
+        Object argsCriarTurno[] = { infoShift };
         try {
-            infoShift = (InfoShift) ServiceUtils.executeService(userView,
-                    "CriarTurno", argsCriarTurno);
+            infoShift = (InfoShift) ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);
             infoShift.setInfoLessons(null);
             infoShift.setInfoClasses(null);
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException("O Turno", ex);
         }
 
-        request.setAttribute(SessionConstants.EXECUTION_COURSE,
-                infoExecutionCourse);
+        request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
 
         request.setAttribute(SessionConstants.SHIFT, infoShift);
 
         return mapping.findForward("EditShift");
     }
 
-    public ActionForward deleteShift(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
 
         ContextUtils.setShiftContext(request);
 
-        InfoShift infoShiftToDelete = (InfoShift) request
-                .getAttribute(SessionConstants.SHIFT);
+        InfoShift infoShiftToDelete = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-        Object args[] = { infoShiftToDelete};
+        Object args[] = { infoShiftToDelete };
         try {
             ServiceUtils.executeService(userView, "DeleteShift", args);
         } catch (FenixServiceException exception) {
             ActionErrors actionErrors = new ActionErrors();
-            if (exception.getMessage() != null
-                    && exception.getMessage().length() > 0) {
-                actionErrors.add("errors.deleteshift", new ActionError(
-                        exception.getMessage()));
+            if (exception.getMessage() != null && exception.getMessage().length() > 0) {
+                actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage()));
             } else {
-                actionErrors.add("errors.deleteshift", new ActionError(
-                        "error.deleteShift"));
+                actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
             }
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
@@ -159,45 +142,38 @@ public class ManageShiftsDA extends
     }
 
     public ActionForward deleteShifts(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm deleteShiftsForm = (DynaActionForm) form;
-        String[] selectedShifts = (String[]) deleteShiftsForm
-                .get("selectedItems");
+        String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
 
         if (selectedShifts.length == 0) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("errors.shifts.notSelected", new ActionError(
-                    "errors.shifts.notSelected"));
+            actionErrors.add("errors.shifts.notSelected", new ActionError("errors.shifts.notSelected"));
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
-        } 
+        }
 
-            List shiftOIDs = new ArrayList();
-            for (int i = 0; i < selectedShifts.length; i++) {
-                shiftOIDs.add(new Integer(selectedShifts[i]));
+        List shiftOIDs = new ArrayList();
+        for (int i = 0; i < selectedShifts.length; i++) {
+            shiftOIDs.add(new Integer(selectedShifts[i]));
+        }
+
+        Object args[] = { shiftOIDs };
+
+        try {
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteShifts", args);
+        } catch (FenixServiceException exception) {
+            ActionErrors actionErrors = new ActionErrors();
+            if (exception.getMessage() != null && exception.getMessage().length() > 0) {
+                actionErrors.add("errors.deleteshift", new ActionError(exception.getMessage()));
+            } else {
+                actionErrors.add("errors.deleteshift", new ActionError("error.deleteShift"));
             }
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
 
-            Object args[] = { shiftOIDs};
+        return mapping.findForward("ShowShiftList");
 
-            try {
-                ServiceUtils.executeService(SessionUtils.getUserView(request),
-                        "DeleteShifts", args);
-            } catch (FenixServiceException exception) {
-                ActionErrors actionErrors = new ActionErrors();
-                if (exception.getMessage() != null
-                        && exception.getMessage().length() > 0) {
-                    actionErrors.add("errors.deleteshift", new ActionError(
-                            exception.getMessage()));
-                } else {
-                    actionErrors.add("errors.deleteshift", new ActionError(
-                            "error.deleteShift"));
-                }
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }
-
-            return mapping.findForward("ShowShiftList");
-        
     }
 }

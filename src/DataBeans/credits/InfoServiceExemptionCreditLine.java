@@ -8,23 +8,21 @@ import Util.credits.ServiceExemptionType;
 /**
  * @author jpvl
  */
-public class InfoServiceExemptionCreditLine extends InfoDatePeriodBaseCreditLine
-{
+public class InfoServiceExemptionCreditLine extends InfoDatePeriodBaseCreditLine {
     private ServiceExemptionType type;
-    
+
     /**
      * @return Returns the type.
      */
-    public ServiceExemptionType getType()
-    {
+    public ServiceExemptionType getType() {
         return type;
     }
 
     /**
-     * @param type The type to set.
+     * @param type
+     *            The type to set.
      */
-    public void setType(ServiceExemptionType type)
-    {
+    public void setType(ServiceExemptionType type) {
         this.type = type;
     }
 

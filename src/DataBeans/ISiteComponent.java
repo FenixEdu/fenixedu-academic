@@ -7,11 +7,10 @@ package DataBeans;
 
 import java.io.Serializable;
 
-
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public interface ISiteComponent extends Serializable {
 

@@ -13,21 +13,23 @@ import ServidorPersistente.middleware.MigrationLesson;
  */
 abstract public class PredicateForMigrationLessonList implements Predicate {
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-	 */
-	public final boolean evaluate(Object obj) {
-		boolean evaluate = false;
-		if (obj instanceof MigrationLesson){
-			evaluate = evaluateMigrationLesson((MigrationLesson)obj);
-		}
-		return evaluate;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
+     */
+    public final boolean evaluate(Object obj) {
+        boolean evaluate = false;
+        if (obj instanceof MigrationLesson) {
+            evaluate = evaluateMigrationLesson((MigrationLesson) obj);
+        }
+        return evaluate;
 
-	}
+    }
 
-	/**
-	 * @param lesson
-	 */
-	public abstract boolean evaluateMigrationLesson(MigrationLesson lesson);
+    /**
+     * @param lesson
+     */
+    public abstract boolean evaluateMigrationLesson(MigrationLesson lesson);
 
 }

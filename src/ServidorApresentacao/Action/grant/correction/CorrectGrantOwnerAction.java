@@ -64,7 +64,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
             IUserView userView = SessionUtils.getUserView(request);
 
             //Read the grant owner
-            Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(true) };
+            Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(true), null };
             List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
                     argsGrantOwner);
 
@@ -76,7 +76,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
             //Read the new person
             Object[] argsPerson = { null, documentIdNumber.toString(), documentIdType, null,
-                    new Boolean(false) };
+                    new Boolean(false), null };
             List infoPersonList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
                     argsPerson);
 

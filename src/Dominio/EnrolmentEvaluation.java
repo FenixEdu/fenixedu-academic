@@ -2,17 +2,16 @@ package Dominio;
 
 import java.util.Date;
 
+import Util.EnrollmentState;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
  * @author dcs-rjao 24/Mar/2003
  */
 
-public class EnrolmentEvaluation extends DomainObject implements
-        IEnrolmentEvaluation, Comparable {
+public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvaluation, Comparable {
     //private String RECTIFIED = "RECTIFICADO";
     private String RECTIFICATION = "RECTIFICAÇÃO";
 
@@ -51,10 +50,8 @@ public class EnrolmentEvaluation extends DomainObject implements
         boolean result = false;
         if (obj instanceof IEnrolmentEvaluation) {
             IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-            result = this.getEnrolment().equals(
-                    enrolmentEvaluation.getEnrolment())
-                    && this.getIdInternal().equals(
-                            enrolmentEvaluation.getIdInternal());
+            result = this.getEnrolment().equals(enrolmentEvaluation.getEnrolment())
+                    && this.getIdInternal().equals(enrolmentEvaluation.getIdInternal());
         }
         return result;
     }
@@ -62,13 +59,10 @@ public class EnrolmentEvaluation extends DomainObject implements
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "grade = " + this.grade + "; ";
-        result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType
-                + "; ";
+        result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
         result += "examDate = " + this.examDate + "; ";
-        result += "personResponsibleForGrade = "
-                + this.personResponsibleForGrade + "; ";
-        result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState
-                + "; ";
+        result += "personResponsibleForGrade = " + this.personResponsibleForGrade + "; ";
+        result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
         result += "when = " + this.when + "; ";
         result += "checkSum = " + this.checkSum + "; ";
         result += "enrolment = " + this.enrolment + "; ";
@@ -194,40 +188,32 @@ public class EnrolmentEvaluation extends DomainObject implements
      */
     public int compareTo(Object o) {
         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
-        EnrollmentState myEnrolmentState = getEnrollmentStateByGrade(this
-                .getGrade());
-        EnrollmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation
-                .getGrade());
+        EnrollmentState myEnrolmentState = getEnrollmentStateByGrade(this.getGrade());
+        EnrollmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
-        if (this.getEnrolment().getStudentCurricularPlan().getStudent()
-                .getDegreeType().equals(TipoCurso.MESTRADO_OBJ)) {
+        if (this.getEnrolment().getStudentCurricularPlan().getStudent().getDegreeType().equals(
+                TipoCurso.MESTRADO_OBJ)) {
             return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-        } else if (this.getObservation() != null
-                && this.getObservation().equals(this.RECTIFICATION)
+        } else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION)
                 && enrolmentEvaluation.getObservation() != null
-                && enrolmentEvaluation.getObservation().equals(
-                        this.RECTIFICATION)) {
+                && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION)) {
             return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
-        } else if (this.getObservation() != null
-                && this.getObservation().equals(this.RECTIFICATION)) {
+        } else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION)) {
             return 1;
         } else if (enrolmentEvaluation.getObservation() != null
-                && enrolmentEvaluation.getObservation().equals(
-                        this.RECTIFICATION)) {
+                && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION)) {
             return -1;
         } else if (myEnrolmentState.equals(otherEnrolmentState)) {
-            return compareForEqualStates(myEnrolmentState, otherEnrolmentState,
-                    otherGrade, otherWhenAltered);
+            return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade,
+                    otherWhenAltered);
         } else {
-            return compareForNotEqualStates(myEnrolmentState,
-                    otherEnrolmentState);
+            return compareForNotEqualStates(myEnrolmentState, otherEnrolmentState);
         }
     }
 
-    private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(
-            Date whenAltered) {
+    private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(Date whenAltered) {
         if (this.getWhen() == null) {
             return -1;
         }
@@ -267,8 +253,7 @@ public class EnrolmentEvaluation extends DomainObject implements
     }
 
     private int compareForEqualStates(EnrollmentState myEnrolmentState,
-            EnrollmentState otherEnrolmentState, String otherGrade,
-            Date otherWhenAltered) {
+            EnrollmentState otherEnrolmentState, String otherGrade, Date otherWhenAltered) {
         if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
             return compareMyGradeToAnotherGrade(otherGrade);
         }

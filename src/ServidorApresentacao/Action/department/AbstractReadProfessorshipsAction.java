@@ -28,18 +28,16 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public abstract class AbstractReadProfessorshipsAction extends Action
-{
+public abstract class AbstractReadProfessorshipsAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         InfoTeacher infoTeacher = getInfoTeacher(request, dynaForm);
 
-        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoTeacher.getIdInternal(),
-                dynaForm, request);
+        List detailedInfoProfessorshipList = getDetailedProfessorships(userView, infoTeacher
+                .getIdInternal(), dynaForm, request);
 
         ComparatorChain chain = new ComparatorChain();
 
@@ -58,25 +56,22 @@ public abstract class AbstractReadProfessorshipsAction extends Action
     }
 
     /**
-	 * @param request
-	 * @param dynaForm
-	 */
+     * @param request
+     * @param dynaForm
+     */
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher,
-            HttpServletRequest request, DynaActionForm dynaForm)  throws FenixServiceException
-    {
+            HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException {
     }
 
-    protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm) throws Exception
-    {
+    protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm)
+            throws Exception {
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        if (infoTeacher == null)
-        {
-            infoTeacher = (InfoTeacher) ServiceUtils.executeService(SessionUtils
-                    .getUserView(request),
-                    "ReadTeacherByOID", new Object[]{Integer.valueOf(dynaForm.get("idInternal")
-                            .toString())});
+        if (infoTeacher == null) {
+            infoTeacher = (InfoTeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
+                    "ReadTeacherByOID", new Object[] { Integer.valueOf(dynaForm.get("idInternal")
+                            .toString()) });
             request.setAttribute("infoTeacher", infoTeacher);
-        
+
         }
         return infoTeacher;
     }

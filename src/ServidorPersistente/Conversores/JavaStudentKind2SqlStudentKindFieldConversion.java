@@ -10,8 +10,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.StudentType;
 
-public class JavaStudentKind2SqlStudentKindFieldConversion implements
-        FieldConversion {
+public class JavaStudentKind2SqlStudentKindFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)

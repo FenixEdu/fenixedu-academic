@@ -23,8 +23,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class ListTeacherManagementPositionsAction extends Action
-{
+public class ListTeacherManagementPositionsAction extends Action {
 
     /*
      * (non-Javadoc)
@@ -34,27 +33,23 @@ public class ListTeacherManagementPositionsAction extends Action
      *      javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        
+
         Object args[] = { infoTeacher.getIdInternal() };
-        
-        List infoManagementPositions = (List) ServiceUtils.executeService(userView, "ReadTeacherManagementPositions", args);
-        
+
+        List infoManagementPositions = (List) ServiceUtils.executeService(userView,
+                "ReadTeacherManagementPositions", args);
+
         BeanComparator dateComparator = new BeanComparator("start");
-        
+
         Collections.sort(infoManagementPositions, dateComparator);
-        
+
         request.setAttribute("infoManagementPositions", infoManagementPositions);
-        
+
         return mapping.findForward("successfull-read");
     }
 }

@@ -25,41 +25,32 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class IndexTeacherAction extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = getSession(request);
-		IUserView userView = SessionUtils.getUserView(request);
-			
+        HttpSession session = getSession(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		InfoTeacher teacher = null;
-		try {
-			Object args[] = { userView.getUtilizador()};
-			teacher =
-				(InfoTeacher) ServiceUtils.executeService(
-					userView,
-					"ReadTeacherByUsername",
-					args);
-			//TODO: fix the situation where the teacher is null
-			if (teacher == null) {
-				throw new InvalidSessionActionException();
-			}
+        InfoTeacher teacher = null;
+        try {
+            Object args[] = { userView.getUtilizador() };
+            teacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByUsername", args);
+            //TODO: fix the situation where the teacher is null
+            if (teacher == null) {
+                throw new InvalidSessionActionException();
+            }
 
-			session.setAttribute(SessionConstants.INFO_TEACHER, teacher);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("infoTeacher", teacher);
-		return mapping.findForward("success");
-	}
+            session.setAttribute(SessionConstants.INFO_TEACHER, teacher);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("infoTeacher", teacher);
+        return mapping.findForward("success");
+    }
 
 }

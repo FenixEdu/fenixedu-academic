@@ -52,7 +52,8 @@ public class InsertDegreeCurricularPlan implements IService {
             degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
             degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
             degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
-            degreeCurricularPlan.setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
+            degreeCurricularPlan.setConcreteClassForStudentCurricularPlans(degree
+                    .getConcreteClassForDegreeCurricularPlans());
 
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException("O plano curricular com nome "

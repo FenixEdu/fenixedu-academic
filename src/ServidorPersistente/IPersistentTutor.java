@@ -12,11 +12,13 @@ import Dominio.ITutor;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public interface IPersistentTutor extends IPersistentObject
-{
-	public ITutor readTutorByTeacherAndStudent(ITeacher teacher, IStudent student)  throws ExcepcaoPersistencia;
-	public ITutor readTeachersByStudent(IStudent student)  throws ExcepcaoPersistencia;
-	public List readStudentsByTeacher(ITeacher teacher)  throws ExcepcaoPersistencia;	
+public interface IPersistentTutor extends IPersistentObject {
+    public ITutor readTutorByTeacherAndStudent(ITeacher teacher, IStudent student)
+            throws ExcepcaoPersistencia;
+
+    public ITutor readTeachersByStudent(IStudent student) throws ExcepcaoPersistencia;
+
+    public List readStudentsByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

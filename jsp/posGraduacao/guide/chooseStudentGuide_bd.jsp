@@ -44,26 +44,7 @@
     	</tr>               
 	</logic:iterate>
 	
-	<tr>
-		<td><bean:message key="label.specializationGratuity" /></td>
-		<td><html:text property="specializationGratuityQuantity" size='2'/></td>
-         <td>
-  	        ----------------
-        </td>
-		<td><html:text property="specializationGratuityAmount" size='2'/> <bean:message key="label.currencySymbol" /></td>
-	</tr>
-   
-	<tr>
-		<td>
-			<bean:message key="label.otherGratuity" /><html:text property="othersGratuityDescription" size='40'/>
-		</td>
-		
-		<td>
-		</td>
-         <td>
-        </td>
-		<td><html:text property="othersGratuityAmount" size='2'/> <bean:message key="label.currencySymbol" /></td>
-	</tr>
+	
    
    </table>
    <br />

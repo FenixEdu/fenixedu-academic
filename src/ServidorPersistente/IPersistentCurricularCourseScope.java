@@ -15,8 +15,7 @@ import Dominio.IExecutionYear;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public interface IPersistentCurricularCourseScope extends IPersistentObject
-{
+public interface IPersistentCurricularCourseScope extends IPersistentObject {
 
     public void delete(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 
@@ -45,8 +44,12 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject
             ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
-    public List readCurricularCourseScopesByCurricularCourseInExecutionYear(
+    public List readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(
             IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia;
+
+    public List readCurricularCourseScopesByCurricularCourseInExecutionYear(
+            ICurricularCourse curricularCourse, IExecutionYear executionYear)
             throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
@@ -99,5 +102,13 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject
      *         ExcepcaoPersistencia
      */
     public List readByBranch(IBranch branch) throws ExcepcaoPersistencia;
+
+    public List readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(
+            IDegreeCurricularPlan degreeCurricularPlan, Integer year, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia;
+
+    public List readCurricularCourseScopesByDegreeCurricularPlanAndExecutionYear(
+            IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia;
 
 }

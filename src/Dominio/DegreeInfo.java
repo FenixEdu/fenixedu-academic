@@ -3,353 +3,349 @@ package Dominio;
 import java.sql.Timestamp;
 
 /**
- * @author Tânia Pousão 
- * Created on 30/Out/2003
+ * @author Tânia Pousão Created on 30/Out/2003
  */
 public class DegreeInfo extends DomainObject implements IDegreeInfo {
-	private Integer degreeKey;
-	private ICurso degree;
+    private Integer degreeKey;
 
-	private String description;
-	private String objectives;
-	private String history;
-	private String professionalExits;
-	private String additionalInfo;
-	private String links;
-	private String testIngression;
-	private Integer driftsInitial;
-	private Integer driftsFirst;
-	private Integer driftsSecond;
-	private String classifications;
-	private Double markMin;
-	private Double markMax;
-	private Double markAverage;
-	private Timestamp lastModificationDate;
+    private ICurso degree;
 
-	//Data in english
-	private String descriptionEn;
-	private String objectivesEn;
-	private String historyEn;
-	private String professionalExitsEn;
-	private String additionalInfoEn;
-	private String linksEn;
-	private String testIngressionEn;
-	private String classificationsEn;
-	
-	public DegreeInfo(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    private String description;
 
-	public DegreeInfo() {
-	}
+    private String objectives;
 
-	public DegreeInfo(
-		ICurso degree,
-		String objectives,
-		String history,
-		String professionalExits,
-		String additionalInfo,
-		String links,
-		String testIngression,
-		Integer driftsInitial,
-		Integer driftsFirst,
-		Integer driftsSecond,
-		String classifications,
-		Double markMin,
-		Double markMax,
-		Double markAverage,
-		Timestamp lastModificationDate) {
-		this.degreeKey = degree.getIdInternal();
-		this.degree = degree;
-		this.objectives = objectives;
-		this.history = history;
-		this.professionalExits = professionalExits;
-		this.additionalInfo = additionalInfo;
-		this.links = links;
-		this.testIngression = testIngression;
-		this.driftsInitial = driftsInitial;
-		this.driftsFirst = driftsFirst;
-		this.driftsSecond = driftsSecond;
-		this.classifications = classifications;
-		this.markMin = markMin;
-		this.markMax = markMax;
-		this.markAverage = markAverage;
-		this.lastModificationDate = lastModificationDate;
-	}
+    private String history;
 
-	public DegreeInfo(
-		Integer degreeKey,
-		ICurso degree,
-		String objectives,
-		String history,
-		String professionalExits,
-		String additionalInfo,
-		String links,
-		String testIngression,
-		Integer driftsInitial,
-		Integer driftsFirst,
-		Integer driftsSecond,
-		String classifications,
-		Double markMin,
-		Double markMax,
-		Double markAverage,
-		Timestamp lastModificationDate) {
-		this.degreeKey = degreeKey;
-		this.degree = degree;
-		this.objectives = objectives;
-		this.history = history;
-		this.professionalExits = professionalExits;
-		this.additionalInfo = additionalInfo;
-		this.links = links;
-		this.testIngression = testIngression;
-		this.driftsInitial = driftsInitial;
-		this.driftsFirst = driftsFirst;
-		this.driftsSecond = driftsSecond;
-		this.classifications = classifications;
-		this.markMin = markMin;
-		this.markMax = markMax;
-		this.markAverage = markAverage;
-		this.lastModificationDate = lastModificationDate;
-	}
+    private String professionalExits;
 
-	public String getAdditionalInfo() {
-		return additionalInfo;
-	}
+    private String additionalInfo;
 
-	public void setAdditionalInfo(String additionalInfo) {
-		this.additionalInfo = additionalInfo;
-	}
+    private String links;
 
-	public String getClassifications() {
-		return classifications;
-	}
+    private String testIngression;
 
-	public void setClassifications(String classifications) {
-		this.classifications = classifications;
-	}
+    private Integer driftsInitial;
 
-	public ICurso getDegree() {
-		return degree;
-	}
+    private Integer driftsFirst;
 
-	public void setDegree(ICurso degree) {
-		this.degree = degree;
-	}
+    private Integer driftsSecond;
 
-	public Integer getDegreeKey() {
-		return degreeKey;
-	}
+    private String classifications;
 
-	public void setDegreeKey(Integer degreeKey) {
-		this.degreeKey = degreeKey;
-	}
+    private Double markMin;
 
-	public Integer getDriftsFirst() {
-		return driftsFirst;
-	}
+    private Double markMax;
 
-	public void setDriftsFirst(Integer driftsFirst) {
-		this.driftsFirst = driftsFirst;
-	}
+    private Double markAverage;
 
-	public Integer getDriftsInitial() {
-		return driftsInitial;
-	}
+    private Timestamp lastModificationDate;
 
-	public void setDriftsInitial(Integer driftsInitial) {
-		this.driftsInitial = driftsInitial;
-	}
+    //Data in english
+    private String descriptionEn;
 
-	public Integer getDriftsSecond() {
-		return driftsSecond;
-	}
+    private String objectivesEn;
 
-	public void setDriftsSecond(Integer driftsSecond) {
-		this.driftsSecond = driftsSecond;
-	}
+    private String historyEn;
 
-	public String getHistory() {
-		return history;
-	}
+    private String professionalExitsEn;
 
-	public void setHistory(String history) {
-		this.history = history;
-	}
+    private String additionalInfoEn;
 
-	public Timestamp getLastModificationDate() {
-		return lastModificationDate;
-	}
+    private String linksEn;
 
-	public void setLastModificationDate(Timestamp lastModificationDate) {
-		this.lastModificationDate = lastModificationDate;
-	}
+    private String testIngressionEn;
 
-	public String getLinks() {
-		return links;
-	}
+    private String classificationsEn;
 
-	public void setLinks(String links) {
-		this.links = links;
-	}
+    public DegreeInfo(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	public Double getMarkAverage() {
-		return markAverage;
-	}
+    public DegreeInfo() {
+    }
 
-	public void setMarkAverage(Double markAverage) {
-		this.markAverage = markAverage;
-	}
+    public DegreeInfo(ICurso degree, String objectives, String history, String professionalExits,
+            String additionalInfo, String links, String testIngression, Integer driftsInitial,
+            Integer driftsFirst, Integer driftsSecond, String classifications, Double markMin,
+            Double markMax, Double markAverage, Timestamp lastModificationDate) {
+        this.degreeKey = degree.getIdInternal();
+        this.degree = degree;
+        this.objectives = objectives;
+        this.history = history;
+        this.professionalExits = professionalExits;
+        this.additionalInfo = additionalInfo;
+        this.links = links;
+        this.testIngression = testIngression;
+        this.driftsInitial = driftsInitial;
+        this.driftsFirst = driftsFirst;
+        this.driftsSecond = driftsSecond;
+        this.classifications = classifications;
+        this.markMin = markMin;
+        this.markMax = markMax;
+        this.markAverage = markAverage;
+        this.lastModificationDate = lastModificationDate;
+    }
 
-	public Double getMarkMax() {
-		return markMax;
-	}
+    public DegreeInfo(Integer degreeKey, ICurso degree, String objectives, String history,
+            String professionalExits, String additionalInfo, String links, String testIngression,
+            Integer driftsInitial, Integer driftsFirst, Integer driftsSecond, String classifications,
+            Double markMin, Double markMax, Double markAverage, Timestamp lastModificationDate) {
+        this.degreeKey = degreeKey;
+        this.degree = degree;
+        this.objectives = objectives;
+        this.history = history;
+        this.professionalExits = professionalExits;
+        this.additionalInfo = additionalInfo;
+        this.links = links;
+        this.testIngression = testIngression;
+        this.driftsInitial = driftsInitial;
+        this.driftsFirst = driftsFirst;
+        this.driftsSecond = driftsSecond;
+        this.classifications = classifications;
+        this.markMin = markMin;
+        this.markMax = markMax;
+        this.markAverage = markAverage;
+        this.lastModificationDate = lastModificationDate;
+    }
 
-	public void setMarkMax(Double markMax) {
-		this.markMax = markMax;
-	}
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
 
-	public Double getMarkMin() {
-		return markMin;
-	}
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
 
-	public void setMarkMin(Double markMin) {
-		this.markMin = markMin;
-	}
+    public String getClassifications() {
+        return classifications;
+    }
 
-	public String getObjectives() {
-		return objectives;
-	}
+    public void setClassifications(String classifications) {
+        this.classifications = classifications;
+    }
 
-	public void setObjectives(String objectives) {
-		this.objectives = objectives;
-	}
+    public ICurso getDegree() {
+        return degree;
+    }
 
-	public String getProfessionalExits() {
-		return professionalExits;
-	}
+    public void setDegree(ICurso degree) {
+        this.degree = degree;
+    }
 
-	public void setProfessionalExits(String professionalExits) {
-		this.professionalExits = professionalExits;
-	}
+    public Integer getDegreeKey() {
+        return degreeKey;
+    }
 
-	public String getTestIngression() {
-		return testIngression;
-	}
+    public void setDegreeKey(Integer degreeKey) {
+        this.degreeKey = degreeKey;
+    }
 
-	public void setTestIngression(String testIngression) {
-		this.testIngression = testIngression;
-	}
+    public Integer getDriftsFirst() {
+        return driftsFirst;
+    }
 
-	public String getAdditionalInfoEn() {
-		return additionalInfoEn;
-	}
+    public void setDriftsFirst(Integer driftsFirst) {
+        this.driftsFirst = driftsFirst;
+    }
 
-	public void setAdditionalInfoEn(String additionalInfoEn) {
-		this.additionalInfoEn = additionalInfoEn;
-	}
+    public Integer getDriftsInitial() {
+        return driftsInitial;
+    }
 
-	public String getClassificationsEn() {
-		return classificationsEn;
-	}
+    public void setDriftsInitial(Integer driftsInitial) {
+        this.driftsInitial = driftsInitial;
+    }
 
-	public void setClassificationsEn(String classificationsEn) {
-		this.classificationsEn = classificationsEn;
-	}
+    public Integer getDriftsSecond() {
+        return driftsSecond;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setDriftsSecond(Integer driftsSecond) {
+        this.driftsSecond = driftsSecond;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getHistory() {
+        return history;
+    }
 
-	public String getDescriptionEn() {
-		return descriptionEn;
-	}
+    public void setHistory(String history) {
+        this.history = history;
+    }
 
-	public void setDescriptionEn(String descriptionEn) {
-		this.descriptionEn = descriptionEn;
-	}
+    public Timestamp getLastModificationDate() {
+        return lastModificationDate;
+    }
 
-	public String getHistoryEn() {
-		return historyEn;
-	}
+    public void setLastModificationDate(Timestamp lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
 
-	public void setHistoryEn(String historyEn) {
-		this.historyEn = historyEn;
-	}
+    public String getLinks() {
+        return links;
+    }
 
-	public String getLinksEn() {
-		return linksEn;
-	}
+    public void setLinks(String links) {
+        this.links = links;
+    }
 
-	public void setLinksEn(String linksEn) {
-		this.linksEn = linksEn;
-	}
+    public Double getMarkAverage() {
+        return markAverage;
+    }
 
-	public String getObjectivesEn() {
-		return objectivesEn;
-	}
+    public void setMarkAverage(Double markAverage) {
+        this.markAverage = markAverage;
+    }
 
-	public void setObjectivesEn(String objectivesEn) {
-		this.objectivesEn = objectivesEn;
-	}
+    public Double getMarkMax() {
+        return markMax;
+    }
 
-	public String getProfessionalExitsEn() {
-		return professionalExitsEn;
-	}
+    public void setMarkMax(Double markMax) {
+        this.markMax = markMax;
+    }
 
-	public void setProfessionalExitsEn(String professionalExitsEn) {
-		this.professionalExitsEn = professionalExitsEn;
-	}
+    public Double getMarkMin() {
+        return markMin;
+    }
 
-	public String getTestIngressionEn() {
-		return testIngressionEn;
-	}
+    public void setMarkMin(Double markMin) {
+        this.markMin = markMin;
+    }
 
-	public void setTestIngressionEn(String testIngressionEn) {
-		this.testIngressionEn = testIngressionEn;
-	}
+    public String getObjectives() {
+        return objectives;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof IDegreeInfo) {
-			IDegreeInfo degreeInfo = (IDegreeInfo) obj;
-			result = (getDegree() != null && getDegree().equals(degreeInfo.getDegree()));
-		}
+    public void setObjectives(String objectives) {
+        this.objectives = objectives;
+    }
 
-		return result;
-	}
+    public String getProfessionalExits() {
+        return professionalExits;
+    }
 
-	public String toString() {
-		String result = "[DEGREE_INFO:";
-		result += " codigo interno= " + getIdInternal();
-		result += " degree= " + getDegreeKey();
-		result += " descrição= " + getDescription();
-		result += " objectivos= " + getObjectives();
-		result += " historial= " + getHistory();
-		result += " saidas profissionais=" + getProfessionalExits();
-		result += " informação adicional= " + getAdditionalInfo();
-		result += " links= " + getLinks();
-		result += " provas de ingresso= " + getTestIngression();
-		result += " classificações= " + getClassifications();		
-		result += " descrição(En)= " + getDescriptionEn();
-		result += " objectivos(En)= " + getObjectivesEn();
-		result += " historial(En)= " + getHistoryEn();
-		result += " saidas profissionais(En)=" + getProfessionalExitsEn();
-		result += " informação adicional(En)= " + getAdditionalInfoEn();
-		result += " links(En)= " + getLinksEn();
-		result += " provas de ingresso(En)= " + getTestIngressionEn();
-		result += " classificações(En)= " + getClassificationsEn();	
-		result += " vagas iniciais= " + getDriftsInitial();
-		result += " vagas 1ª fase= " + getDriftsFirst();
-		result += " vagas 2ªfase= " + getDriftsSecond();
-		result += " nota minima= " + getMarkMin();
-		result += " nota máxima= " + getMarkMax();
-		result += " nota média= " + getMarkAverage();
-		result += " data última modificação= " + getLastModificationDate();
-		result += "]";
-		return result;
-	}
+    public void setProfessionalExits(String professionalExits) {
+        this.professionalExits = professionalExits;
+    }
+
+    public String getTestIngression() {
+        return testIngression;
+    }
+
+    public void setTestIngression(String testIngression) {
+        this.testIngression = testIngression;
+    }
+
+    public String getAdditionalInfoEn() {
+        return additionalInfoEn;
+    }
+
+    public void setAdditionalInfoEn(String additionalInfoEn) {
+        this.additionalInfoEn = additionalInfoEn;
+    }
+
+    public String getClassificationsEn() {
+        return classificationsEn;
+    }
+
+    public void setClassificationsEn(String classificationsEn) {
+        this.classificationsEn = classificationsEn;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescriptionEn() {
+        return descriptionEn;
+    }
+
+    public void setDescriptionEn(String descriptionEn) {
+        this.descriptionEn = descriptionEn;
+    }
+
+    public String getHistoryEn() {
+        return historyEn;
+    }
+
+    public void setHistoryEn(String historyEn) {
+        this.historyEn = historyEn;
+    }
+
+    public String getLinksEn() {
+        return linksEn;
+    }
+
+    public void setLinksEn(String linksEn) {
+        this.linksEn = linksEn;
+    }
+
+    public String getObjectivesEn() {
+        return objectivesEn;
+    }
+
+    public void setObjectivesEn(String objectivesEn) {
+        this.objectivesEn = objectivesEn;
+    }
+
+    public String getProfessionalExitsEn() {
+        return professionalExitsEn;
+    }
+
+    public void setProfessionalExitsEn(String professionalExitsEn) {
+        this.professionalExitsEn = professionalExitsEn;
+    }
+
+    public String getTestIngressionEn() {
+        return testIngressionEn;
+    }
+
+    public void setTestIngressionEn(String testIngressionEn) {
+        this.testIngressionEn = testIngressionEn;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IDegreeInfo) {
+            IDegreeInfo degreeInfo = (IDegreeInfo) obj;
+            result = (getDegree() != null && getDegree().equals(degreeInfo.getDegree()));
+        }
+
+        return result;
+    }
+
+    public String toString() {
+        String result = "[DEGREE_INFO:";
+        result += " codigo interno= " + getIdInternal();
+        result += " degree= " + getDegreeKey();
+        result += " descrição= " + getDescription();
+        result += " objectivos= " + getObjectives();
+        result += " historial= " + getHistory();
+        result += " saidas profissionais=" + getProfessionalExits();
+        result += " informação adicional= " + getAdditionalInfo();
+        result += " links= " + getLinks();
+        result += " provas de ingresso= " + getTestIngression();
+        result += " classificações= " + getClassifications();
+        result += " descrição(En)= " + getDescriptionEn();
+        result += " objectivos(En)= " + getObjectivesEn();
+        result += " historial(En)= " + getHistoryEn();
+        result += " saidas profissionais(En)=" + getProfessionalExitsEn();
+        result += " informação adicional(En)= " + getAdditionalInfoEn();
+        result += " links(En)= " + getLinksEn();
+        result += " provas de ingresso(En)= " + getTestIngressionEn();
+        result += " classificações(En)= " + getClassificationsEn();
+        result += " vagas iniciais= " + getDriftsInitial();
+        result += " vagas 1ª fase= " + getDriftsFirst();
+        result += " vagas 2ªfase= " + getDriftsSecond();
+        result += " nota minima= " + getMarkMin();
+        result += " nota máxima= " + getMarkMax();
+        result += " nota média= " + getMarkAverage();
+        result += " data última modificação= " + getLastModificationDate();
+        result += "]";
+        return result;
+    }
 }

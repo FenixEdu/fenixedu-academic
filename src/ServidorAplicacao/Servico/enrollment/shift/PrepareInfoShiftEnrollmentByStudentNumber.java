@@ -35,12 +35,12 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.ITurnoAluno;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -50,7 +50,8 @@ import Util.TipoCurso;
 /**
  * @author Tânia Pousão
  * 
- * This class read and prepare all information usefull for shift enrollment use case
+ * This class read and prepare all information usefull for shift enrollment use
+ * case
  *  
  */
 public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
@@ -77,6 +78,11 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             if (student == null) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
+
+            if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
+                throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
+            }
+
             infoShiftEnrollment.setInfoStudent(InfoStudent.newInfoFromDomain(student));
 
             //retrieve all courses that student is currently attended in
@@ -144,7 +150,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                         && executionCourse.getExecutionPeriod() != null
                         && executionCourse.getExecutionPeriod().getState().equals(
                                 new PeriodState(PeriodState.CURRENT))) {
-                    infoAttendingCourses.add(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(executionCourse));
+                    infoAttendingCourses.add(InfoExecutionCourseWithExecutionPeriod
+                            .newInfoFromDomain(executionCourse));
                 }
             }
 
@@ -170,7 +177,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
                 public Object transform(Object input) {
                     ITurnoAluno shiftStudent = (ITurnoAluno) input;
-                    InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndInfoLessons.newInfoFromDomain(shiftStudent.getShift());
+                    InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndInfoLessons
+                            .newInfoFromDomain(shiftStudent.getShift());
                     return infoShift;
                 }
             });
@@ -208,7 +216,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
     private List readInfoExecutionDegrees(ISuportePersistente sp, IExecutionYear executionYear)
             throws ExcepcaoPersistencia, FenixServiceException {
-        ICursoExecucaoPersistente presistentExecutionDegree = sp.getICursoExecucaoPersistente();
+        IPersistentExecutionDegree presistentExecutionDegree = sp.getIPersistentExecutionDegree();
         List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(
                 executionYear, TipoCurso.LICENCIATURA_OBJ);
         if (executionDegrees == null || executionDegrees.size() <= 0) {
@@ -219,7 +227,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         List infoExecutionDegreeList = new ArrayList();
         while (iterator.hasNext()) {
             ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-            infoExecutionDegreeList.add(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree));
+            infoExecutionDegreeList.add(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+                    .newInfoFromDomain(executionDegree));
         }
 
         return infoExecutionDegreeList;
@@ -229,7 +238,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             IExecutionPeriod executionPeriod, InfoExecutionDegree infoExecutionDegree)
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-        ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
         ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
                 CursoExecucao.class, infoExecutionDegree.getIdInternal());
 
@@ -243,7 +252,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         List infoExecutionCourseList = new ArrayList();
         while (listIterator.hasNext()) {
             IExecutionCourse executionCourse = (IExecutionCourse) listIterator.next();
-            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                    .newInfoFromDomain(executionCourse);
             infoExecutionCourseList.add(infoExecutionCourse);
         }
 
@@ -261,7 +271,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
         //read the execution degree chosen
         if (executionDegreeIdChosen != null) {
-            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
             executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(CursoExecucao.class,
                     executionDegreeIdChosen);
@@ -270,7 +280,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             }
         }
 
-        IStudentCurricularPlanPersistente persistentCurricularPlan = sp
+        IPersistentStudentCurricularPlan persistentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
         IStudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);

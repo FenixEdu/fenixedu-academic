@@ -9,5 +9,5 @@ import javax.ejb.EJBObject;
  * @author José Pedro Pereira
  * @version
  */
-public interface ServiceManager extends EJBObject,IServiceManagerWrapper {
+public interface ServiceManager extends EJBObject, IServiceManagerWrapper {
 }

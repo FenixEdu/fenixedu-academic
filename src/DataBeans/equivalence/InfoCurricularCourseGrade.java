@@ -3,52 +3,46 @@ package DataBeans.equivalence;
 import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
 
-public class InfoCurricularCourseGrade extends DataTranferObject
-{
-	private InfoCurricularCourse infoCurricularCourse;
-	private String grade;
+public class InfoCurricularCourseGrade extends DataTranferObject {
+    private InfoCurricularCourse infoCurricularCourse;
 
-	/**
-	 * @return
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse()
-	{
-		return infoCurricularCourse;
-	}
+    private String grade;
 
-	/**
-	 * @param infoCurricularCourse
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse)
-	{
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    /**
+     * @return
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	public InfoCurricularCourseGrade()
-	{
-	}
+    /**
+     * @param infoCurricularCourse
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getGrade()
-	{
-		return grade;
-	}
+    public InfoCurricularCourseGrade() {
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setGrade(String string)
-	{
-		grade = string;
-	}
+    /**
+     * @return
+     */
+    public String getGrade() {
+        return grade;
+    }
 
-	public String toString()
-	{
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
-		result += "grade = " + this.grade + "]\n";
-		return result;
-	}
+    /**
+     * @param string
+     */
+    public void setGrade(String string) {
+        grade = string;
+    }
+
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
+        result += "grade = " + this.grade + "]\n";
+        return result;
+    }
 }

@@ -33,27 +33,24 @@ import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Ana e Ricardo
- *
  * 
+ *  
  */
 public class AssociateExecutionCourseToExamAction
-//extends FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
-//extends FenixContextDispatchAction{
-extends FenixDateAndTimeContextDispatchAction
-//extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
+//extends
+        // FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction
+        // {
+        //extends FenixContextDispatchAction{
+        extends FenixDateAndTimeContextDispatchAction
+//extends
+// FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
 {
 
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
-        if (infoExamId == null)
-        {
+        if (infoExamId == null) {
             infoExamId = request.getParameter(SessionConstants.EXAM_OID);
         }
         request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
@@ -73,23 +70,20 @@ extends FenixDateAndTimeContextDispatchAction
         ContextUtils.setCurricularYearsContext(request);
 
         IUserView userView = SessionUtils.getUserView(request);
-        InfoExecutionPeriod infoExecutionPeriod =
-            (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         /* Criar o bean de anos curriculares */
-        ArrayList anosCurriculares = createCurricularYearList();
+        List anosCurriculares = createCurricularYearList();
         request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
 
-        /* Cria o form bean com as licenciaturas em execucao.*/
-        Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear()};
+        /* Cria o form bean com as licenciaturas em execucao. */
+        Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-        List executionDegreeList =
-            (List) ServiceUtils.executeService(
-                userView,
-                "ReadExecutionDegreesByExecutionYear",
-                argsLerLicenciaturas);
+        List executionDegreeList = (List) ServiceUtils.executeService(userView,
+                "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
-        ArrayList licenciaturas = new ArrayList();
+        List licenciaturas = new ArrayList();
 
         licenciaturas.add(new LabelValueBean("", ""));
 
@@ -97,23 +91,16 @@ extends FenixDateAndTimeContextDispatchAction
 
         Iterator iterator = executionDegreeList.iterator();
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
             String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            name =
-                infoExecutionDegree
-                    .getInfoDegreeCurricularPlan()
-                    .getInfoDegree()
-                    .getTipoCurso()
+            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
                     .toString()
-                    + " em "
-                    + name;
+                    + " em " + name;
 
-            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
-                ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
-                : "";
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
             licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
         }
@@ -122,29 +109,23 @@ extends FenixDateAndTimeContextDispatchAction
 
         String nextPage = request.getParameter("nextPage");
         request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
-               	
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
 
-		request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
+
+        request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
         return mapping.findForward("showForm");
     }
 
-    public ActionForward choose(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
-		if (infoExamId == null)
-		{
-			infoExamId = request.getParameter(SessionConstants.EXAM_OID);
-		}
-		request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+        String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+        if (infoExamId == null) {
+            infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+        }
+        request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
 
         DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
@@ -157,29 +138,23 @@ extends FenixDateAndTimeContextDispatchAction
         ContextUtils.setExecutionDegreeContext(request);
         ContextUtils.setExecutionPeriodContext(request);
         ContextUtils.setCurricularYearsContext(request);
-            	
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
-		
-		request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
-		
+
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
+
+        request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
+
         return mapping.findForward("forwardChoose");
     }
 
-    public ActionForward listExecutionCourse(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward listExecutionCourse(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
-		if (infoExamId == null)
-		{
-			infoExamId = request.getParameter(SessionConstants.EXAM_OID);
-		}
-		request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
+        String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
+        if (infoExamId == null) {
+            infoExamId = request.getParameter(SessionConstants.EXAM_OID);
+        }
+        request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
 
         DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
@@ -192,8 +167,7 @@ extends FenixDateAndTimeContextDispatchAction
         request.setAttribute("rooms", roomIDArray);
 
         if (chooseCourseForm.get("executionDegreeOID").equals("")
-            || chooseCourseForm.get("executionDegreeOID").equals(null))
-        {
+                || chooseCourseForm.get("executionDegreeOID").equals(null)) {
             return mapping.findForward("showForm");
         }
         Integer executionDegreeOID = new Integer((String) chooseCourseForm.get("executionDegreeOID"));
@@ -201,8 +175,7 @@ extends FenixDateAndTimeContextDispatchAction
         ContextUtils.setExecutionDegreeContext(request);
 
         if (chooseCourseForm.get("curricularYear").equals("")
-            || chooseCourseForm.get("curricularYear").equals(null))
-        {
+                || chooseCourseForm.get("curricularYear").equals(null)) {
             return mapping.findForward("showForm");
         }
         Integer curricularYear = new Integer((String) chooseCourseForm.get("curricularYear"));
@@ -216,13 +189,13 @@ extends FenixDateAndTimeContextDispatchAction
         return mapping.findForward("showForm");
 
     }
+
     /**
      * Method createCurricularYearList.
      */
-    private ArrayList createCurricularYearList()
-    {
+    private List createCurricularYearList() {
 
-        ArrayList anosCurriculares = new ArrayList();
+        List anosCurriculares = new ArrayList();
 
         anosCurriculares.add(new LabelValueBean("", ""));
         anosCurriculares.add(new LabelValueBean("1 º", "1"));
@@ -234,18 +207,14 @@ extends FenixDateAndTimeContextDispatchAction
         return anosCurriculares;
     }
 
-    private boolean duplicateInfoDegree(
-        List executionDegreeList,
-        InfoExecutionDegree infoExecutionDegree)
-    {
+    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
         InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
         Iterator iterator = executionDegreeList.iterator();
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
             if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
                 return true;
 
         }

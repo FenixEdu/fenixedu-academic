@@ -7,7 +7,8 @@ import java.io.Serializable;
 
 /**
  * the super class of all Databeans
- * @author jmota 
+ * 
+ * @author jmota
  */
 
 public abstract class DataTranferObject implements Serializable {

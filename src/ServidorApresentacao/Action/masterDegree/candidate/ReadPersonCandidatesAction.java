@@ -1,12 +1,11 @@
 /*
  * 
  * Created on 27 of March de 2003
- *
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
+ *  
  */
 
 package ServidorApresentacao.Action.masterDegree.candidate;
@@ -27,35 +26,26 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import framework.factory.ServiceManagerServiceFactory;
 
-public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction
-{
+public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base.FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        if (session != null)
-        {
+        if (session != null) {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             Object args[] = new Object[1];
             args[0] = userView;
             List candidates = null;
-            try
-            {
-                candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadPersonCandidates", args);
-            } catch (FenixServiceException e)
-            {
+            try {
+                candidates = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadPersonCandidates", args);
+            } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
 
             }
-            if (candidates.size() == 1)
-            {
+            if (candidates.size() == 1) {
                 session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
                 return mapping.findForward("Success");
             }
@@ -63,8 +53,8 @@ public class ReadPersonCandidatesAction extends ServidorApresentacao.Action.base
             session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
             return mapping.findForward("ChooseCandidate");
 
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
 }

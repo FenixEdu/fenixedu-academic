@@ -45,41 +45,31 @@ import UtilTests.ParseQuestionException;
  */
 public class ExercisesManagementAction extends FenixDispatchAction {
 
-    public ActionForward prepareChooseExerciseType(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        request.setAttribute("exerciseCode", getCodeFromRequest(request,
-                "exerciseCode"));
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
+    public ActionForward prepareChooseExerciseType(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("questionsTypes", QuestionType.getAllTypes());
         request.setAttribute("cardinalityTypes", CardinalityType.getAllTypes());
         return mapping.findForward("chooseExerciseType");
     }
 
-    public ActionForward chooseQuestionType(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
-        Integer questionType = (Integer) ((DynaActionForm) form)
-                .get("questionType");
+    public ActionForward chooseQuestionType(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+        Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
         if (questionType.intValue() == QuestionType.LID) {
-            Integer cardinalityTypeId = (Integer) ((DynaActionForm) form)
-                    .get("cardinalityType");
+            Integer cardinalityTypeId = (Integer) ((DynaActionForm) form).get("cardinalityType");
 
             if (cardinalityTypeId == null) {
-                error(request, "chooseQuestionType",
-                        "message.cardinalityTypeRequired");
-                return prepareChooseExerciseType(mapping, form, request,
-                        response);
+                error(request, "chooseQuestionType", "message.cardinalityTypeRequired");
+                return prepareChooseExerciseType(mapping, form, request, response);
             }
             ((DynaActionForm) form).set("optionNumber", new Integer(4));
             return prepareCreateExercise(mapping, form, request, response);
         } else if (questionType.intValue() == QuestionType.STR
                 || questionType.intValue() == QuestionType.NUM) {
-            ((DynaActionForm) form).set("cardinalityType", new Integer(
-                    CardinalityType.SINGLE));
+            ((DynaActionForm) form).set("cardinalityType", new Integer(CardinalityType.SINGLE));
             ((DynaActionForm) form).set("optionNumber", new Integer(1));
             return prepareCreateExercise(mapping, form, request, response);
         } else {
@@ -89,47 +79,37 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward prepareCreateExercise(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
+    public ActionForward prepareCreateExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
 
-        Integer questionType = (Integer) ((DynaActionForm) form)
-                .get("questionType");
-//        Integer cardinalityType = (Integer) ((DynaActionForm) form)
-//                .get("cardinalityType");
-        Integer optionNumber = (Integer) ((DynaActionForm) form)
-                .get("optionNumber");
+        Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
+        //        Integer cardinalityType = (Integer) ((DynaActionForm) form)
+        //                .get("cardinalityType");
+        Integer optionNumber = (Integer) ((DynaActionForm) form).get("optionNumber");
 
         String[] options = (String[]) ((DynaActionForm) form).get("options");
         if (options == null || options.length == 0) {
-            ((DynaActionForm) form).set("options", new String[optionNumber
-                    .intValue()]);
+            ((DynaActionForm) form).set("options", new String[optionNumber.intValue()]);
         }
-        String[] correctOptions = (String[]) ((DynaActionForm) form)
-                .get("correctOptions");
+        String[] correctOptions = (String[]) ((DynaActionForm) form).get("correctOptions");
         if (correctOptions == null || correctOptions.length == 0) {
-            ((DynaActionForm) form).set("correctOptions",
-                    new String[optionNumber.intValue()]);
+            ((DynaActionForm) form).set("correctOptions", new String[optionNumber.intValue()]);
         }
 
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
         if (signal == null || signal.length == 0) {
-            ((DynaActionForm) form).set("signal", new Integer[] { new Integer(
-                    ResponseCondition.VAREQUAL)});
+            ((DynaActionForm) form).set("signal",
+                    new Integer[] { new Integer(ResponseCondition.VAREQUAL) });
         }
 
-        List questionDifficultyList = (new QuestionDifficultyType())
-                .getAllTypes();
+        List questionDifficultyList = (new QuestionDifficultyType()).getAllTypes();
         request.setAttribute("questionDifficultyList", questionDifficultyList);
 
         if (questionType.intValue() == QuestionType.STR)
-            request.setAttribute("signals", ResponseCondition
-                    .getConditionSignalsToStringQuestion());
+            request.setAttribute("signals", ResponseCondition.getConditionSignalsToStringQuestion());
         else if (questionType.intValue() == QuestionType.NUM)
-                request.setAttribute("signals", ResponseCondition
-                        .getConditionSignalsToNumericalQuestion());
+            request.setAttribute("signals", ResponseCondition.getConditionSignalsToNumericalQuestion());
 
         String maxCharString = (String) ((DynaActionForm) form).get("maxChar");
         String rowsString = (String) ((DynaActionForm) form).get("rows");
@@ -138,95 +118,73 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         if (maxCharString != null && !maxCharString.equals(""))
             checkTextBoxParams = "false";
         else if (rowsString != null && !rowsString.equals(""))
-                checkTextBoxParams = "true";
+            checkTextBoxParams = "true";
 
-        ((DynaActionForm) form).set("response",
-                new String[] { checkTextBoxParams});
+        ((DynaActionForm) form).set("response", new String[] { checkTextBoxParams });
         return mapping.findForward("prepareCreateExercise");
     }
 
     public ActionForward createExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        IUserView userView = (IUserView) request.getSession(false)
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         //METADATA
         String author = (String) ((DynaActionForm) form).get("author");
-        String description = (String) ((DynaActionForm) form)
-                .get("description");
-        Integer difficulty = (Integer) ((DynaActionForm) form)
-                .get("difficulty");
-        String mainSubject = (String) ((DynaActionForm) form)
-                .get("mainSubject");
-        String secondarySubject = (String) ((DynaActionForm) form)
-                .get("secondarySubject");
-        String learningHour = (String) ((DynaActionForm) form)
-                .get("learningHour");
-        String learningMinute = (String) ((DynaActionForm) form)
-                .get("learningMinute");
+        String description = (String) ((DynaActionForm) form).get("description");
+        Integer difficulty = (Integer) ((DynaActionForm) form).get("difficulty");
+        String mainSubject = (String) ((DynaActionForm) form).get("mainSubject");
+        String secondarySubject = (String) ((DynaActionForm) form).get("secondarySubject");
+        String learningHour = (String) ((DynaActionForm) form).get("learningHour");
+        String learningMinute = (String) ((DynaActionForm) form).get("learningMinute");
         String level = (String) ((DynaActionForm) form).get("level");
 
         Calendar learningTime = null;
-        if (learningHour != null || learningHour.equals("")
-                || learningMinute != null || learningMinute.equals("")) {
+        if (learningHour != null || learningHour.equals("") || learningMinute != null
+                || learningMinute.equals("")) {
             if (learningHour == null || learningHour.equals(""))
-                    learningHour = "0";
+                learningHour = "0";
             if (learningMinute == null || learningMinute.equals(""))
-                    learningMinute = "0";
-            learningTime = string2Hour(learningHour
-                    .concat(":" + learningMinute));
+                learningMinute = "0";
+            learningTime = string2Hour(learningHour.concat(":" + learningMinute));
         }
         QuestionDifficultyType questionDifficultyType = null;
         if (difficulty != null) {
             questionDifficultyType = new QuestionDifficultyType(difficulty);
         }
         //QUESTION
-        Integer questionTypeId = (Integer) ((DynaActionForm) form)
-                .get("questionType");
-        Integer cardinalityTypeId = (Integer) ((DynaActionForm) form)
-                .get("cardinalityType");
-        Integer optionNumber = (Integer) ((DynaActionForm) form)
-                .get("optionNumber");
-        String questionValueString = (String) ((DynaActionForm) form)
-                .get("questionValue");
+        Integer questionTypeId = (Integer) ((DynaActionForm) form).get("questionType");
+        Integer cardinalityTypeId = (Integer) ((DynaActionForm) form).get("cardinalityType");
+        Integer optionNumber = (Integer) ((DynaActionForm) form).get("optionNumber");
+        String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
         Double questionValue = new Double(0);
         if (questionValueString != null && !questionValueString.equals(""))
-                questionValue = new Double(questionValueString);
-        String questionText = (String) ((DynaActionForm) form)
-                .get("questionText");
-        String secondQuestionText = (String) ((DynaActionForm) form)
-                .get("secondQuestionText");
-        String correctFeedbackText = (String) ((DynaActionForm) form)
-                .get("correctFeedbackText");
-        String wrongFeedbackText = (String) ((DynaActionForm) form)
-                .get("wrongFeedbackText");
+            questionValue = new Double(questionValueString);
+        String questionText = (String) ((DynaActionForm) form).get("questionText");
+        String secondQuestionText = (String) ((DynaActionForm) form).get("secondQuestionText");
+        String correctFeedbackText = (String) ((DynaActionForm) form).get("correctFeedbackText");
+        String wrongFeedbackText = (String) ((DynaActionForm) form).get("wrongFeedbackText");
 
         String[] options = (String[]) ((DynaActionForm) form).get("options");
-        String[] correctOptions = (String[]) ((DynaActionForm) form)
-                .get("correctOptions");
+        String[] correctOptions = (String[]) ((DynaActionForm) form).get("correctOptions");
         String[] shuffle = (String[]) ((DynaActionForm) form).get("shuffle");
 
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
         String colsString = (String) ((DynaActionForm) form).get("cols");
         Integer cols = null;
         if (colsString != null && !colsString.equals(""))
-                cols = new Integer(colsString);
+            cols = new Integer(colsString);
         String rowsString = (String) ((DynaActionForm) form).get("rows");
         Integer rows = null;
         if (rowsString != null && !rowsString.equals(""))
-                rows = new Integer(rowsString);
+            rows = new Integer(rowsString);
         String maxCharString = (String) ((DynaActionForm) form).get("maxChar");
         Integer maxChar = null;
         if (maxCharString != null && !maxCharString.equals(""))
-                maxChar = new Integer(maxCharString);
+            maxChar = new Integer(maxCharString);
 
-        Boolean caseSensitive = (Boolean) ((DynaActionForm) form)
-                .get("caseSensitive");
-        Boolean integerType = (Boolean) ((DynaActionForm) form)
-                .get("integerType");
-        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form)
-                .get("evaluationQuestion");
+        Boolean caseSensitive = (Boolean) ((DynaActionForm) form).get("caseSensitive");
+        Boolean integerType = (Boolean) ((DynaActionForm) form).get("integerType");
+        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form).get("evaluationQuestion");
 
         Boolean breakLineBeforeResponseBox = (Boolean) ((DynaActionForm) form)
                 .get("breakLineBeforeResponseBox");
@@ -243,28 +201,24 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
         InfoQuestion infoQuestion = null;
         try {
-            infoQuestion = setInfoQuestion(questionType, questionValue,
-                    optionNumber, options, correctOptions, shuffle, signal,
-                    integerType, evaluationQuestion, caseSensitive, maxChar,
-                    cols, rows);
+            infoQuestion = setInfoQuestion(questionType, questionValue, optionNumber, options,
+                    correctOptions, shuffle, signal, integerType, evaluationQuestion, caseSensitive,
+                    maxChar, cols, rows);
         } catch (ParseQuestionException e) {
             error(request, "createExercise", e.getMessage());
             return prepareCreateExercise(mapping, form, request, response);
         }
 
-        String metadataIdString = (String) ((DynaActionForm) form)
-                .get("exerciseCode");
+        String metadataIdString = (String) ((DynaActionForm) form).get("exerciseCode");
         Integer metadataId = null;
         if (metadataIdString != null && metadataIdString.length() != 0)
-                metadataId = new Integer(metadataIdString);
+            metadataId = new Integer(metadataIdString);
         try {
-            Object[] args = { executionCourseId, metadataId, author,
-                    description, questionDifficultyType, mainSubject,
-                    secondarySubject, learningTime, level, infoQuestion,
-                    questionText, secondQuestionText, options, correctOptions,
-                    shuffle, correctFeedbackText, wrongFeedbackText,
-                    breakLineBeforeResponseBox, breakLineAfterResponseBox,
-                    getServlet().getServletContext().getRealPath("/")};
+            Object[] args = { executionCourseId, metadataId, author, description,
+                    questionDifficultyType, mainSubject, secondarySubject, learningTime, level,
+                    infoQuestion, questionText, secondQuestionText, options, correctOptions, shuffle,
+                    correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
+                    breakLineAfterResponseBox, getServlet().getServletContext().getRealPath("/") };
             ServiceUtils.executeService(userView, "CreateExercise", args);
         } catch (FenixServiceException e) {
             error(request, "createExercise", "error.exerciseCreationError");
@@ -276,56 +230,42 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward previewExercise(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+    public ActionForward previewExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         //QUESTION
-        Integer questionTypeId = (Integer) ((DynaActionForm) form)
-                .get("questionType");
-        Integer cardinalityTypeId = (Integer) ((DynaActionForm) form)
-                .get("cardinalityType");
-        Integer optionNumber = (Integer) ((DynaActionForm) form)
-                .get("optionNumber");
-        String questionValueString = (String) ((DynaActionForm) form)
-                .get("questionValue");
+        Integer questionTypeId = (Integer) ((DynaActionForm) form).get("questionType");
+        Integer cardinalityTypeId = (Integer) ((DynaActionForm) form).get("cardinalityType");
+        Integer optionNumber = (Integer) ((DynaActionForm) form).get("optionNumber");
+        String questionValueString = (String) ((DynaActionForm) form).get("questionValue");
         Double questionValue = new Double(0);
         if (questionValueString != null && !questionValueString.equals(""))
-                questionValue = new Double(questionValueString);
-        String questionText = (String) ((DynaActionForm) form)
-                .get("questionText");
-        String secondQuestionText = (String) ((DynaActionForm) form)
-                .get("secondQuestionText");
+            questionValue = new Double(questionValueString);
+        String questionText = (String) ((DynaActionForm) form).get("questionText");
+        String secondQuestionText = (String) ((DynaActionForm) form).get("secondQuestionText");
 
-        String correctFeedbackText = (String) ((DynaActionForm) form)
-                .get("correctFeedbackText");
-        String wrongFeedbackText = (String) ((DynaActionForm) form)
-                .get("wrongFeedbackText");
+        String correctFeedbackText = (String) ((DynaActionForm) form).get("correctFeedbackText");
+        String wrongFeedbackText = (String) ((DynaActionForm) form).get("wrongFeedbackText");
         String[] options = (String[]) ((DynaActionForm) form).get("options");
-        String[] correctOptions = (String[]) ((DynaActionForm) form)
-                .get("correctOptions");
+        String[] correctOptions = (String[]) ((DynaActionForm) form).get("correctOptions");
         String[] shuffle = (String[]) ((DynaActionForm) form).get("shuffle");
 
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
         String colsString = (String) ((DynaActionForm) form).get("cols");
         Integer cols = null;
         if (colsString != null && !colsString.equals(""))
-                cols = new Integer(colsString);
+            cols = new Integer(colsString);
         String rowsString = (String) ((DynaActionForm) form).get("rows");
         Integer rows = null;
         if (rowsString != null && !rowsString.equals(""))
-                rows = new Integer(rowsString);
+            rows = new Integer(rowsString);
         String maxCharString = (String) ((DynaActionForm) form).get("maxChar");
         Integer maxChar = null;
         if (maxCharString != null && !maxCharString.equals(""))
-                maxChar = new Integer(maxCharString);
-        Boolean caseSensitive = (Boolean) ((DynaActionForm) form)
-                .get("caseSensitive");
-        Boolean integerType = (Boolean) ((DynaActionForm) form)
-                .get("integerType");
-        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form)
-                .get("evaluationQuestion");
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
+            maxChar = new Integer(maxCharString);
+        Boolean caseSensitive = (Boolean) ((DynaActionForm) form).get("caseSensitive");
+        Boolean integerType = (Boolean) ((DynaActionForm) form).get("integerType");
+        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form).get("evaluationQuestion");
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
 
         Boolean breakLineBeforeResponseBox = (Boolean) ((DynaActionForm) form)
                 .get("breakLineBeforeResponseBox");
@@ -342,43 +282,37 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
         InfoQuestion infoQuestion = null;
         try {
-            infoQuestion = setInfoQuestion(questionType, questionValue,
-                    optionNumber, options, correctOptions, shuffle, signal,
-                    integerType, evaluationQuestion, caseSensitive, maxChar,
-                    cols, rows);
+            infoQuestion = setInfoQuestion(questionType, questionValue, optionNumber, options,
+                    correctOptions, shuffle, signal, integerType, evaluationQuestion, caseSensitive,
+                    maxChar, cols, rows);
         } catch (ParseQuestionException e) {
             error(request, "createExercise", e.getMessage());
             return prepareCreateExercise(mapping, form, request, response);
         }
 
         XMLQuestion xmlQuestion = new XMLQuestion();
-        infoQuestion.setXmlFile(xmlQuestion.getXmlQuestion(questionText,
-                secondQuestionText, infoQuestion.getQuestionType(), options,
-                shuffle, infoQuestion.getResponseProcessingInstructions(),
-                correctFeedbackText, wrongFeedbackText,
+        infoQuestion.setXmlFile(xmlQuestion.getXmlQuestion(questionText, secondQuestionText,
+                infoQuestion.getQuestionType(), options, shuffle, infoQuestion
+                        .getResponseProcessingInstructions(), correctFeedbackText, wrongFeedbackText,
                 breakLineBeforeResponseBox, breakLineAfterResponseBox));
         ParseQuestion parse = new ParseQuestion();
         try {
-            infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(),
-                    infoQuestion, getServlet().getServletContext().getRealPath(
-                            "/"));
+            infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, getServlet()
+                    .getServletContext().getRealPath("/"));
         } catch (Exception e) {
             error(request, "createExercise", "error.exerciseCreationError");
             return prepareCreateExercise(mapping, form, request, response);
         }
         ((DynaActionForm) form).set("response", null);
         request.setAttribute("infoQuestion", infoQuestion);
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         return mapping.findForward("previewExercise");
     }
 
-    private InfoQuestion setInfoQuestion(QuestionType questionType,
-            Double questionValue, Integer optionNumber, String[] options,
-            String[] correctOptions, String[] shuffle, Integer[] signal,
-            Boolean integerType, Boolean evaluationQuestion,
-            Boolean caseSensitive, Integer maxChar, Integer cols, Integer rows)
-            throws ParseQuestionException {
+    private InfoQuestion setInfoQuestion(QuestionType questionType, Double questionValue,
+            Integer optionNumber, String[] options, String[] correctOptions, String[] shuffle,
+            Integer[] signal, Boolean integerType, Boolean evaluationQuestion, Boolean caseSensitive,
+            Integer maxChar, Integer cols, Integer rows) throws ParseQuestionException {
         InfoQuestion infoQuestion = new InfoQuestion();
 
         //RENDER
@@ -394,16 +328,16 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             if (questionType.getType().intValue() == QuestionType.STR) {
                 render.setFibtype(RenderFIB.STRING);
             } else if (questionType.getType().intValue() == QuestionType.NUM)
-                    if (integerType.booleanValue())
-                        render.setFibtype(RenderFIB.INTEGER);
-                    else
-                        render.setFibtype(RenderFIB.DECIMAL);
+                if (integerType.booleanValue())
+                    render.setFibtype(RenderFIB.INTEGER);
+                else
+                    render.setFibtype(RenderFIB.DECIMAL);
             if (maxChar != null && !maxChar.equals(new Integer(0)))
-                    render.setMaxchars(maxChar);
+                render.setMaxchars(maxChar);
             if (cols != null && !cols.equals(new Integer(0)))
-                    render.setColumns(cols);
+                render.setColumns(cols);
             if (rows != null && !rows.equals(new Integer(0)))
-                    render.setRows(rows);
+                render.setRows(rows);
 
             questionType.setRender(render);
         }
@@ -411,16 +345,18 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         //RESPROCESSING
         if (questionType.getType().intValue() == QuestionType.LID) {
             for (int i = 0; i < options.length; i++) {
-                if (options[i] == null || options[i].equals("")) { throw new ParseQuestionException(
-                        "error.needOptionText"); }
+                if (options[i] == null || options[i].equals("")) {
+                    throw new ParseQuestionException("error.needOptionText");
+                }
             }
         }
 
         List responseConditionList = new ArrayList();
         List responseProcessingInstructionsList = new ArrayList();
         if (evaluationQuestion.booleanValue()) {
-            if (correctOptions == null || correctOptions.length == 0) { throw new ParseQuestionException(
-                    "error.needCorrectResponse"); }
+            if (correctOptions == null || correctOptions.length == 0) {
+                throw new ParseQuestionException("error.needCorrectResponse");
+            }
 
             for (int i = 0; i < correctOptions.length; i++) {
                 String condition = null;
@@ -428,49 +364,40 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                 correctResponse = convertCharacters(correctOptions[i]);
                 if (questionType.getType().intValue() == QuestionType.STR) {
                     if (correctResponse.equals(""))
-                            throw new ParseQuestionException(
-                                    "error.needCorrectResponse");
+                        throw new ParseQuestionException("error.needCorrectResponse");
                     condition = ResponseCondition.getConditionString(signal[i]);
-                    if (caseSensitive != null
-                            && caseSensitive.booleanValue() == true)
-                            condition = condition.concat("ignorecase");
+                    if (caseSensitive != null && caseSensitive.booleanValue() == true)
+                        condition = condition.concat("ignorecase");
                 } else if (questionType.getType().intValue() == QuestionType.NUM) {
                     if (correctResponse.equals(""))
-                            throw new ParseQuestionException(
-                                    "error.needResponse");
+                        throw new ParseQuestionException("error.needResponse");
                     condition = ResponseCondition.getConditionString(signal[i]);
-                    if (((RenderFIB) questionType.getRender()).getFibtype()
-                            .intValue() == RenderFIB.INTEGER_CODE)
+                    if (((RenderFIB) questionType.getRender()).getFibtype().intValue() == RenderFIB.INTEGER_CODE)
                         try {
                             new Integer(correctOptions[i]);
                         } catch (NumberFormatException ex) {
-                            throw new ParseQuestionException(
-                                    "error.responseInvalidIntegerFormat");
+                            throw new ParseQuestionException("error.responseInvalidIntegerFormat");
                         }
                     else
                         try {
-                            correctResponse = correctOptions[i].replace(',',
-                                    '.');
+                            correctResponse = correctOptions[i].replace(',', '.');
                             new Double(correctResponse);
                         } catch (NumberFormatException ex) {
-                            throw new ParseQuestionException(
-                                    "error.responseInvalidDecimalFormat");
+                            throw new ParseQuestionException("error.responseInvalidDecimalFormat");
                         }
 
                 } else if (questionType.getType().intValue() == QuestionType.LID) {
                     condition = ResponseCondition.VAREQUAL_XML_STRING;
                 }
                 if (condition != null) {
-                    ResponseCondition responseCondition = new ResponseCondition(
-                            condition, correctResponse, new String("1"));
+                    ResponseCondition responseCondition = new ResponseCondition(condition,
+                            correctResponse, new String("1"));
                     responseConditionList.add(responseCondition);
                 }
             }
-            if (responseConditionList != null
-                    && responseConditionList.size() != 0) {
-                ResponseProcessing responseProcessing = new ResponseProcessing(
-                        responseConditionList, questionValue, new Integer(
-                                ResponseProcessing.SET), null, true);
+            if (responseConditionList != null && responseConditionList.size() != 0) {
+                ResponseProcessing responseProcessing = new ResponseProcessing(responseConditionList,
+                        questionValue, new Integer(ResponseProcessing.SET), null, true);
                 responseProcessingInstructionsList.add(responseProcessing);
             }
 
@@ -479,18 +406,15 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         infoQuestion.setQuestionType(questionType);
         infoQuestion.setQuestionValue(questionValue);
 
-        infoQuestion
-                .setResponseProcessingInstructions(responseProcessingInstructionsList);
+        infoQuestion.setResponseProcessingInstructions(responseProcessingInstructionsList);
 
         return infoQuestion;
     }
 
-    public ActionForward addNewCondition(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        ((DynaActionForm) form).set("optionNumber", new Integer(
-                ((Integer) ((DynaActionForm) form).get("optionNumber"))
-                        .intValue() + 1));
+    public ActionForward addNewCondition(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        ((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form)
+                .get("optionNumber")).intValue() + 1));
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
         if (signal != null && signal.length != 0) {
             Integer[] newSignal = new Integer[signal.length + 1];
@@ -500,8 +424,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             ((DynaActionForm) form).set("signal", newSignal);
         }
 
-        Integer questionType = (Integer) ((DynaActionForm) form)
-                .get("questionType");
+        Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
         String[] options;
         if (questionType.intValue() == QuestionType.LID) {
             options = (String[]) ((DynaActionForm) form).get("options");
@@ -518,17 +441,15 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         } else
             ((DynaActionForm) form).set("correctOptions", newOptions);
 
-//        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form)
-//                .get("evaluationQuestion");
+        //        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form)
+        //                .get("evaluationQuestion");
         return prepareCreateExercise(mapping, form, request, response);
     }
 
-    public ActionForward removeCondition(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+    public ActionForward removeCondition(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-        Integer conditionId = (Integer) (((DynaActionForm) form)
-                .get("conditionId"));
+        Integer conditionId = (Integer) (((DynaActionForm) form).get("conditionId"));
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
         if (signal != null && signal.length > 1) {
             Integer[] newSignal = new Integer[signal.length - 1];
@@ -539,8 +460,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                 }
             ((DynaActionForm) form).set("signal", newSignal);
         }
-        Integer questionType = (Integer) ((DynaActionForm) form)
-                .get("questionType");
+        Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
         String[] options;
         if (questionType.intValue() == QuestionType.LID) {
             options = (String[]) ((DynaActionForm) form).get("options");
@@ -560,54 +480,47 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                 ((DynaActionForm) form).set("correctOptions", newOptions);
         }
 
-        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form)
-                .get("evaluationQuestion");
-        if (questionType.intValue() == QuestionType.LID
-                && evaluationQuestion.booleanValue()) {
-            String[] shuffle = (String[]) ((DynaActionForm) form)
-                    .get("shuffle");
+        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form).get("evaluationQuestion");
+        if (questionType.intValue() == QuestionType.LID && evaluationQuestion.booleanValue()) {
+            String[] shuffle = (String[]) ((DynaActionForm) form).get("shuffle");
 
             for (int i = 0; i < shuffle.length; i++) {
                 int value = new Integer(shuffle[i]).intValue() - 1;
                 if (value == conditionId.intValue())
                     shuffle[i] = "";
                 else if (value > conditionId.intValue())
-                        shuffle[i] = new Integer(value).toString();
+                    shuffle[i] = new Integer(value).toString();
             }
             ((DynaActionForm) form).set("shuffle", shuffle);
 
-            String[] correctOptions = (String[]) ((DynaActionForm) form)
-                    .get("correctOptions");
+            String[] correctOptions = (String[]) ((DynaActionForm) form).get("correctOptions");
             for (int i = 0; i < correctOptions.length; i++) {
                 int value = new Integer(correctOptions[i]).intValue() - 1;
                 if (value == conditionId.intValue())
                     correctOptions[i] = "";
                 else if (value > conditionId.intValue())
-                        correctOptions[i] = new Integer(value).toString();
+                    correctOptions[i] = new Integer(value).toString();
             }
             ((DynaActionForm) form).set("correctOptions", correctOptions);
         }
-        ((DynaActionForm) form).set("optionNumber", new Integer(
-                ((Integer) ((DynaActionForm) form).get("optionNumber"))
-                        .intValue() - 1));
+        ((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form)
+                .get("optionNumber")).intValue() - 1));
         return prepareCreateExercise(mapping, form, request, response);
     }
 
-    public ActionForward exercisesFirstPage(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+    public ActionForward exercisesFirstPage(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         List badXmls = (List) request.getAttribute("badXmls");
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         SiteView siteView = null;
         String order = request.getParameter("order");
         String asc = request.getParameter("asc");
+        String path = getServlet().getServletContext().getRealPath("/");
         try {
-            Object[] args = { executionCourseId, order, asc};
-            siteView = (SiteView) ServiceUtils.executeService(userView,
-                    "ReadMetadatas", args);
+            Object[] args = { executionCourseId, order, asc, path };
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadMetadatas", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -618,21 +531,19 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return mapping.findForward("exercisesFirstPage");
     }
 
-    public ActionForward chooseNewExercise(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+    public ActionForward chooseNewExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         SiteView siteView = null;
         String order = request.getParameter("order");
         String asc = request.getParameter("asc");
+        String path = getServlet().getServletContext().getRealPath("/");
         try {
-            Object[] args = { executionCourseId, order, asc};
-            siteView = (SiteView) ServiceUtils.executeService(userView,
-                    "ReadMetadatas", args);
+            Object[] args = { executionCourseId, order, asc, path };
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadMetadatas", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -642,48 +553,41 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return mapping.findForward("chooseNewExercise");
     }
 
-    public ActionForward prepareAddExerciseVariation(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
-        request.setAttribute("exerciseCode", getCodeFromRequest(request,
-                "exerciseCode"));
+    public ActionForward prepareAddExerciseVariation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+        request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
         return mapping.findForward("addExerciseVariation");
     }
 
-    public ActionForward loadExerciseVariationsFile(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception, NotExecuteException {
-        IUserView userView = (IUserView) request.getSession(false)
-                .getAttribute(SessionConstants.U_VIEW);
+    public ActionForward loadExerciseVariationsFile(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception,
+            NotExecuteException {
+        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         request.setAttribute("objectCode", executionCourseId);
         Integer metadataId = getCodeFromRequest(request, "exerciseCode");
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
 
-        FormFile xmlZipFile = (FormFile) ((DynaActionForm) form)
-                .get("xmlZipFile");
+        FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
         if (xmlZipFile == null || xmlZipFile.getFileData() == null
                 || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("addExerciseVariation");
-        } else if (!(xmlZipFile.getContentType().equals(
-                "application/x-zip-compressed")
-                || xmlZipFile.getContentType().equals("text/xml") || (xmlZipFile
-                .getContentType().equals("application/zip")))) {
+        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
+                || xmlZipFile.getContentType().equals("text/xml") || (xmlZipFile.getContentType()
+                .equals("application/zip")))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("addExerciseVariation");
         }
 
         try {
             Object[] args = { executionCourseId, metadataId, xmlZipFile,
-                    getServlet().getServletContext().getRealPath("/")};
-             ServiceUtils.executeService(userView,
-                    "InsertExerciseVariation", args);
+                    getServlet().getServletContext().getRealPath("/") };
+            ServiceUtils.executeService(userView, "InsertExerciseVariation", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -691,51 +595,43 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward insertNewExercise(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
+    public ActionForward insertNewExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
         return mapping.findForward("insertNewExercise");
     }
 
-    public ActionForward loadExerciseFiles(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception, NotExecuteException {
-        IUserView userView = (IUserView) request.getSession(false)
-                .getAttribute(SessionConstants.U_VIEW);
-        FormFile metadataFile = (FormFile) ((DynaActionForm) form)
-                .get("metadataFile");
-        FormFile xmlZipFile = (FormFile) ((DynaActionForm) form)
-                .get("xmlZipFile");
+    public ActionForward loadExerciseFiles(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception,
+            NotExecuteException {
+        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
+        FormFile metadataFile = (FormFile) ((DynaActionForm) form).get("metadataFile");
+        FormFile xmlZipFile = (FormFile) ((DynaActionForm) form).get("xmlZipFile");
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         if (metadataFile != null)
-                if ((metadataFile.getFileData().length != 0)
-                        && !(metadataFile.getContentType().equals("text/xml"))) {
-                    error(request, "FileNotExist", "error.badMetadataFile");
-                    return mapping.findForward("insertNewExercise");
-                }
+            if ((metadataFile.getFileData().length != 0)
+                    && !(metadataFile.getContentType().equals("text/xml"))) {
+                error(request, "FileNotExist", "error.badMetadataFile");
+                return mapping.findForward("insertNewExercise");
+            }
         if (xmlZipFile == null || xmlZipFile.getFileData() == null
                 || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("insertNewExercise");
-        } else if (!(xmlZipFile.getContentType().equals(
-                "application/x-zip-compressed")
-                || xmlZipFile.getContentType().equals("text/xml") || (xmlZipFile
-                .getContentType().equals("application/zip")))) {
+        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
+                || xmlZipFile.getContentType().equals("text/xml") || (xmlZipFile.getContentType()
+                .equals("application/zip")))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("insertNewExercise");
         }
         String path = getServlet().getServletContext().getRealPath("/");
         List badXmls = null;
         try {
-            Object[] args = { executionCourseId, metadataFile, xmlZipFile, path};
-            badXmls = (List) ServiceUtils.executeService(userView,
-                    "InsertExercise", args);
+            Object[] args = { executionCourseId, metadataFile, xmlZipFile, path };
+            badXmls = (List) ServiceUtils.executeService(userView, "InsertExercise", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -745,29 +641,24 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward prepareRemoveExercise(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
-        request.setAttribute("exerciseCode", getCodeFromRequest(request,
-                "exerciseCode"));
-        request.setAttribute("objectCode", getCodeFromRequest(request,
-                "objectCode"));
+    public ActionForward prepareRemoveExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
+        request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
+        request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
         return mapping.findForward("prepareRemoveExercise");
     }
 
     public ActionForward removeExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
-        IUserView userView = (IUserView) request.getSession(false)
-                .getAttribute(SessionConstants.U_VIEW);
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer metadataId = getCodeFromRequest(request, "exerciseCode");
+        String path = getServlet().getServletContext().getRealPath("/");
         try {
-            Object[] args = { executionCourseId, metadataId};
+            Object[] args = { executionCourseId, metadataId, path };
             ServiceUtils.executeService(userView, "DeleteExercise", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -778,22 +669,19 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    public ActionForward prepareEditExercise(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
-        IUserView userView = (IUserView) request.getSession(false)
-                .getAttribute(SessionConstants.U_VIEW);
+    public ActionForward prepareEditExercise(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
         Integer variationCode = getCodeFromRequest(request, "variationCode");
         String path = getServlet().getServletContext().getRealPath("/");
-        if (variationCode == null) variationCode = new Integer(-1);
+        if (variationCode == null)
+            variationCode = new Integer(-1);
         SiteView siteView = null;
         try {
-            Object[] args = { executionCourseId, exerciseId, variationCode,
-                    path};
-            siteView = (SiteView) ServiceUtils.executeService(userView,
-                    "ReadExercise", args);
+            Object[] args = { executionCourseId, exerciseId, variationCode, path };
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadExercise", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -803,17 +691,14 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         request.setAttribute("siteView", siteView);
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
-        List questionDifficultyList = (new QuestionDifficultyType())
-                .getAllTypes();
+        List questionDifficultyList = (new QuestionDifficultyType()).getAllTypes();
         request.setAttribute("questionDifficultyList", questionDifficultyList);
         return mapping.findForward("editExercise");
     }
 
     public ActionForward editExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
-        IUserView userView = (IUserView) request.getSession(false)
-                .getAttribute(SessionConstants.U_VIEW);
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
         //String path = getServlet().getServletContext().getRealPath("/");
@@ -825,15 +710,12 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         String mainSubject = request.getParameter("mainSubject");
         String secondarySubject = request.getParameter("secondarySubject");
         if (!difficulty.equals("-1"))
-                difficulty = new QuestionDifficultyType(new Integer(difficulty))
-                        .getTypeString();
+            difficulty = new QuestionDifficultyType(new Integer(difficulty)).getTypeString();
         Boolean result = null;
         try {
-            Object[] args = { executionCourseId, exerciseId, author,
-                    description, difficulty, string2Hour(learningTime), level,
-                    mainSubject, secondarySubject};
-            result = (Boolean) ServiceUtils.executeService(userView,
-                    "EditExercise", args);
+            Object[] args = { executionCourseId, exerciseId, author, description, difficulty,
+                    string2Hour(learningTime), level, mainSubject, secondarySubject };
+            result = (Boolean) ServiceUtils.executeService(userView, "EditExercise", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -844,28 +726,28 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return exercisesFirstPage(mapping, form, request, response);
     }
 
-    private Integer getCodeFromRequest(HttpServletRequest request,
-            String codeString) {
+    private Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
         Integer code = null;
         Object objectCode = request.getAttribute(codeString);
         if (objectCode != null) {
             if (objectCode instanceof String)
                 code = new Integer((String) objectCode);
             else if (objectCode instanceof Integer)
-                    code = (Integer) objectCode;
+                code = (Integer) objectCode;
         } else {
             String thisCodeString = request.getParameter(codeString);
-            if (thisCodeString != null) code = new Integer(thisCodeString);
+            if (thisCodeString != null)
+                code = new Integer(thisCodeString);
         }
         return code;
     }
 
     private Calendar string2Hour(String hour) {
-        if (hour.equals("")) return null;
+        if (hour.equals(""))
+            return null;
         String[] hourTokens = hour.split(":");
         Calendar result = Calendar.getInstance();
-        result.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0]))
-                .intValue());
+        result.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
         result.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
         result.set(Calendar.SECOND, new Integer(0).intValue());
         return result;
@@ -878,8 +760,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         return text;
     }
 
-    private void error(HttpServletRequest request, String errorProperty,
-            String error) {
+    private void error(HttpServletRequest request, String errorProperty, String error) {
         ActionErrors actionErrors = new ActionErrors();
         actionErrors.add(errorProperty, new ActionError(error));
         saveErrors(request, actionErrors);

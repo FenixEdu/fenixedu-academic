@@ -21,42 +21,36 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class ReadExecutionDegreesOfTypeDegree implements IService
-{
-	
-	/**
-	 * 
-	 */
-	public ReadExecutionDegreesOfTypeDegree()
-	{
-		super();		
-	}
-	
-	public List run() throws FenixServiceException
-	{
-		List executionDegrees = null;
-		ArrayList infoExecutionDegrees = new ArrayList();
-		try
-		{
-			SuportePersistenteOJB suportePersistenteOJB = SuportePersistenteOJB.getInstance();
-			executionDegrees = suportePersistenteOJB.getICursoExecucaoPersistente().readExecutionDegreesOfTypeDegree();
-			
-			if(executionDegrees != null)
-			{
-				Iterator iterator = executionDegrees.iterator();
-				while(iterator.hasNext())
-				{					
-					ICursoExecucao cursoExecucao = (ICursoExecucao)iterator.next();
-					InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(cursoExecucao);
-					infoExecutionDegrees.add(infoExecutionDegree);
-				}
-			}
-		}
-		catch (ExcepcaoPersistencia e)
-		{			
-			throw new FenixServiceException(e);
-		}
-				
-		return infoExecutionDegrees;
-	}
+public class ReadExecutionDegreesOfTypeDegree implements IService {
+
+    /**
+     *  
+     */
+    public ReadExecutionDegreesOfTypeDegree() {
+        super();
+    }
+
+    public List run() throws FenixServiceException {
+        List executionDegrees = null;
+        List infoExecutionDegrees = new ArrayList();
+        try {
+            SuportePersistenteOJB suportePersistenteOJB = SuportePersistenteOJB.getInstance();
+            executionDegrees = suportePersistenteOJB.getIPersistentExecutionDegree()
+                    .readExecutionDegreesOfTypeDegree();
+
+            if (executionDegrees != null) {
+                Iterator iterator = executionDegrees.iterator();
+                while (iterator.hasNext()) {
+                    ICursoExecucao cursoExecucao = (ICursoExecucao) iterator.next();
+                    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+                            .get(cursoExecucao);
+                    infoExecutionDegrees.add(infoExecutionDegree);
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+        return infoExecutionDegrees;
+    }
 }

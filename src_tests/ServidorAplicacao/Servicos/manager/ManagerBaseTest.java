@@ -15,7 +15,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public abstract class ManagerBaseTest extends ServiceTestCase {
@@ -36,8 +36,7 @@ public abstract class ManagerBaseTest extends ServiceTestCase {
     protected void setUp() {
         super.setUp();
         userView = this.authenticateUser(getAuthenticatedAndAuthorizedUser());
-        userViewNotAuthorized = this
-                .authenticateUser(getAuthenticatedAndNotAuthorizedUser());
+        userViewNotAuthorized = this.authenticateUser(getAuthenticatedAndNotAuthorizedUser());
     }
 
     protected String getDataSetFilePath() {
@@ -45,12 +44,12 @@ public abstract class ManagerBaseTest extends ServiceTestCase {
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser() {
-        String[] args = { "d2628", "pass", getApplication()};
+        String[] args = { "d2628", "pass", getApplication() };
         return args;
     }
 
     protected String[] getAuthenticatedAndNotAuthorizedUser() {
-        String[] args = { "f3667", "pass", getApplication()};
+        String[] args = { "f3667", "pass", getApplication() };
         return args;
     }
 
@@ -76,8 +75,7 @@ public abstract class ManagerBaseTest extends ServiceTestCase {
         //SuportePersistenteOJB.resetInstance();
 
         try {
-            return (IUserView) ServiceManagerServiceFactory.executeService(
-                    null, "Autenticacao", args);
+            return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
         } catch (Exception ex) {
             fail("Authenticating User!" + ex);
             return null;
@@ -86,8 +84,7 @@ public abstract class ManagerBaseTest extends ServiceTestCase {
 
     public void testNotAuthenticatedExecution() {
         try {
-            ServiceManagerServiceFactory.executeService(null,
-                    getNameOfServiceToBeTested(),
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(),
                     getServiceArgumentsForNotAuthenticatedUser());
             fail("testNotAuthenticatedExecution did not throw NotAuthorizedException");
 
@@ -104,8 +101,7 @@ public abstract class ManagerBaseTest extends ServiceTestCase {
     public void testNotAuthorizedExecution() {
         try {
             ServiceManagerServiceFactory.executeService(userViewNotAuthorized,
-                    getNameOfServiceToBeTested(),
-                    getServiceArgumentsForNotAuthorizedUser());
+                    getNameOfServiceToBeTested(), getServiceArgumentsForNotAuthorizedUser());
             fail("testNotAuthorizedExecution did not throw NotAuthorizedException");
 
         } catch (NotAuthorizedException ex) {
@@ -123,7 +119,6 @@ public abstract class ManagerBaseTest extends ServiceTestCase {
     protected abstract Object[] getServiceArgumentsForNotAuthenticatedUser()
             throws FenixServiceException;
 
-    protected abstract Object[] getServiceArgumentsForNotAuthorizedUser()
-            throws FenixServiceException;
+    protected abstract Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException;
 
 }

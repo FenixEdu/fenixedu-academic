@@ -11,21 +11,24 @@ import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 import Dominio.credits.OtherTypeCreditLine;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 
 /**
  * @author jpvl
  */
-public class OtherTypeCreditLineOJB extends ObjectFenixOJB implements IPersistentOtherTypeCreditLine
-{
+public class OtherTypeCreditLineOJB extends PersistentObjectOJB implements
+        IPersistentOtherTypeCreditLine {
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.credits.IPersistentOtherTypeCreditLine#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.credits.IPersistentOtherTypeCreditLine#readByTeacherAndExecutionPeriod(Dominio.ITeacher,
+     *      Dominio.IExecutionPeriod)
      */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
-    {
-        Criteria criteria =new Criteria();
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         return queryList(OtherTypeCreditLine.class, criteria);

@@ -13,55 +13,41 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.Seminaries.InfoEquivalency;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 4/Ago/2003, 12:14:24
- * 
+ *  
  */
-public class ShowCandidacyForm extends FenixAction
-{
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+public class ShowCandidacyForm extends FenixAction {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
         HttpSession session = this.getSession(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String equivalencyIDString = request.getParameter("objectCode");
         Integer equivalencyID;
         if (equivalencyIDString == null)
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        try
-        {
+        try {
             equivalencyID = new Integer(equivalencyIDString);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         InfoEquivalency equivalency = null;
         ActionForward destiny = null;
-        try
-        {
+        try {
             Object[] argsReadSeminary = { equivalencyID };
-            equivalency =
-                (InfoEquivalency) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "Seminaries.GetEquivalency",
-                    argsReadSeminary);
-        } catch (Exception e)
-        {
+            equivalency = (InfoEquivalency) ServiceManagerServiceFactory.executeService(userView,
+                    "Seminaries.GetEquivalency", argsReadSeminary);
+        } catch (Exception e) {
             throw new FenixActionException();
         }
 

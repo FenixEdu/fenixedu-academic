@@ -18,52 +18,41 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author lmac1
  */
-public class EditDegree implements IService
-{
-
-    
-
-    
+public class EditDegree implements IService {
 
     /**
      * The constructor of this class.
      */
-    public EditDegree()
-    {
+    public EditDegree() {
     }
 
-    
     /**
      * Executes the service.
      */
 
-    public void run(InfoDegree newInfoDegree) throws FenixServiceException
-    {
+    public void run(InfoDegree newInfoDegree) throws FenixServiceException {
 
         ISuportePersistente persistentSuport = null;
         ICursoPersistente persistentDegree = null;
         ICurso oldDegree = null;
 
-        try
-        {
+        try {
 
             persistentSuport = SuportePersistenteOJB.getInstance();
             persistentDegree = persistentSuport.getICursoPersistente();
             oldDegree = persistentDegree.readByIdInternal(newInfoDegree.getIdInternal());
 
-            if (oldDegree == null) { throw new NonExistingServiceException(); }
+            if (oldDegree == null) {
+                throw new NonExistingServiceException();
+            }
             persistentDegree.simpleLockWrite(oldDegree);
             oldDegree.setNome(newInfoDegree.getNome());
             oldDegree.setSigla(newInfoDegree.getSigla());
             oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
 
-        }
-        catch (ExistingPersistentException ex)
-        {
+        } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

@@ -33,38 +33,32 @@ import Util.SituationOfGuide;
 import Util.Specialization;
 import framework.factory.ServiceManagerServiceFactory;
 
-public class CreateGuideTest extends TestCaseServicos
-{
+public class CreateGuideTest extends TestCaseServicos {
 
-    public CreateGuideTest(java.lang.String testName)
-    {
+    public CreateGuideTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(CreateGuideTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
 
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
-    public void testCreateGuide()
-    {
+
+    public void testCreateGuide() {
         System.out.println("- Test 1 : Create Guide");
 
         UserView userView = this.getUserViewToBeTested("nmsn", true);
@@ -76,8 +70,7 @@ public class CreateGuideTest extends TestCaseServicos
         ICursoExecucao executionDegree = null;
         IExecutionYear executionYear = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             person = sp.getIPessoaPersistente().lerPessoaPorUsername("nmsn");
@@ -86,29 +79,21 @@ public class CreateGuideTest extends TestCaseServicos
             contributor = sp.getIPersistentContributor().readByContributorNumber(new Integer(123));
             assertNotNull(contributor);
 
-            price =
-                sp.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
-                    GraduationType.MASTER_DEGREE_TYPE,
-                    DocumentType.APPLICATION_EMOLUMENT_TYPE,
+            price = sp.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
+                    GraduationType.MASTER_DEGREE_TYPE, DocumentType.APPLICATION_EMOLUMENT_TYPE,
                     Specialization.MESTRADO_STRING);
             assertNotNull(price);
 
             executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName("2002/2003");
             assertNotNull(executionYear);
-            executionDegree =
-                sp
-                    .getICursoExecucaoPersistente()
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-                    "MEEC",
-                    "plano2",
-                    executionYear);
+            executionDegree = sp.getIPersistentExecutionDegree()
+                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear("MEEC", "plano2",
+                            executionYear);
 
             assertNotNull(executionDegree);
 
             sp.confirmarTransaccao();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail(e.toString());
         }
 
@@ -123,8 +108,7 @@ public class CreateGuideTest extends TestCaseServicos
 
         infoGuide.setCreationDate(Calendar.getInstance().getTime());
 
-        infoGuide.setInfoExecutionDegree(
-            (InfoExecutionDegree) Cloner.get(executionDegree));
+        infoGuide.setInfoExecutionDegree((InfoExecutionDegree) Cloner.get(executionDegree));
 
         InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
         infoGuideEntry.setDescription(price.getDescription());
@@ -140,27 +124,16 @@ public class CreateGuideTest extends TestCaseServicos
         infoGuide.setInfoGuideEntries(infoGuideEntries);
         infoGuide.setGuideRequester(GuideRequester.CANDIDATE_TYPE);
 
-        Object[] args =
-            {
-                infoGuide,
-                "Selos",
-                new Double(10),
-                "observacoes",
-                SituationOfGuide.PAYED_TYPE,
-                PaymentType.ATM_STRING };
+        Object[] args = { infoGuide, "Selos", new Double(10), "observacoes",
+                SituationOfGuide.PAYED_TYPE, PaymentType.ATM_STRING };
 
         InfoGuide result = null;
-        try
-        {
-            result =
-                (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "CreateGuide", args);
-        }
-        catch (FenixServiceException ex)
-        {
+        try {
+            result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "CreateGuide",
+                    args);
+        } catch (FenixServiceException ex) {
             fail("Fenix Service Exception" + ex);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Eception");
         }
 
@@ -173,8 +146,7 @@ public class CreateGuideTest extends TestCaseServicos
 
     }
 
-    private UserView getUserViewToBeTested(String username, boolean withRole)
-    {
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
         Collection roles = new ArrayList();
         InfoRole infoRole = new InfoRole();
         if (withRole)

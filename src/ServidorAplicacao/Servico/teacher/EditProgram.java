@@ -2,6 +2,7 @@ package ServidorAplicacao.Servico.teacher;
 
 import java.util.Calendar;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurriculum;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
@@ -9,7 +10,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.IExecutionYear;
 import Dominio.IPessoa;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -25,24 +25,13 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  * Modified by Tânia Pousão at 2/Dez/2003
  */
-public class EditProgram implements IServico {
+public class EditProgram implements IService {
 
-    private static EditProgram service = new EditProgram();
-
-    public static EditProgram getService() {
-        return service;
+    public EditProgram() {
     }
 
-    private EditProgram() {
-    }
-
-    public final String getNome() {
-        return "EditProgram";
-    }
-
-    public boolean run(Integer infoExecutionCourseCode,
-            Integer infoCurricularCourseCode, InfoCurriculum infoCurriculumNew,
-            String username) throws FenixServiceException {
+    public boolean run(Integer infoExecutionCourseCode, Integer infoCurricularCourseCode,
+            InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -64,8 +53,7 @@ public class EditProgram implements IServico {
                 throw new FenixServiceException("nullCurricularCourseCode");
             }
 
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, infoCurricularCourseCode);
@@ -74,8 +62,7 @@ public class EditProgram implements IServico {
             }
 
             //Curriculum
-            IPersistentCurriculum persistentCurriculum = sp
-                    .getIPersistentCurriculum();
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             ICurriculum curriculum = persistentCurriculum
                     .readCurriculumByCurricularCourse(curricularCourse);
 
@@ -87,16 +74,11 @@ public class EditProgram implements IServico {
                 curriculum.setLastModificationDate(today.getTime());
             }
 
-            IPersistentExecutionYear persistentExecutionYear = sp
-                    .getIPersistentExecutionYear();
-            IExecutionYear currentExecutionYear = persistentExecutionYear
-                    .readCurrentExecutionYear();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
             // modification of curriculum is made in context of an execution
             // year
-            if (!curriculum.getLastModificationDate().before(
-                    currentExecutionYear.getBeginDate())
-                    && !curriculum.getLastModificationDate().after(
-                            currentExecutionYear.getEndDate())) {
+            if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())) {
                 persistentCurriculum.simpleLockWrite(curriculum);
 
                 // let's edit curriculum
@@ -109,7 +91,7 @@ public class EditProgram implements IServico {
 
                 Calendar today = Calendar.getInstance();
                 curriculum.setLastModificationDate(today.getTime());
-                System.out.println(".........................");
+
             } else {
                 // creates new information
                 ICurriculum newCurriculum = new Curriculum();
@@ -120,11 +102,16 @@ public class EditProgram implements IServico {
                 newCurriculum.setProgram(infoCurriculumNew.getProgram());
                 newCurriculum.setProgramEn(infoCurriculumNew.getProgramEn());
 
+                newCurriculum.setGeneralObjectives(curriculum.getGeneralObjectives());
+                newCurriculum.setOperacionalObjectives(curriculum.getOperacionalObjectives());
+                newCurriculum.setGeneralObjectivesEn(curriculum.getGeneralObjectivesEn());
+                newCurriculum.setOperacionalObjectivesEn(curriculum.getOperacionalObjectivesEn());
+
                 newCurriculum.setPersonWhoAltered(person);
 
                 Calendar today = Calendar.getInstance();
                 newCurriculum.setLastModificationDate(today.getTime());
-                System.out.println("--------------------------------");
+
             }
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

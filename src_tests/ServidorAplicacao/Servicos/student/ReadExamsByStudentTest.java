@@ -21,128 +21,106 @@ import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import ServidorAplicacao.Servicos.UtilsTestCase;
 
-public class ReadExamsByStudentTest
-	extends ServiceNeedsAuthenticationTestCase {
+public class ReadExamsByStudentTest extends ServiceNeedsAuthenticationTestCase {
 
-	public ReadExamsByStudentTest(java.lang.String testName) {
-		super(testName);
-	}
+    public ReadExamsByStudentTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "13", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "13", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
-		String[] args = { "nmsn", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "nmsn", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments() {
-		Object[] args = { "13" };
-		return args;
-	}
+    protected Object[] getAuthorizeArguments() {
+        Object[] args = { "13" };
+        return args;
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/student/testReadExamsByStudentDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/student/testReadExamsByStudentDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadExamsByStudent";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadExamsByStudent";
+    }
 
-	protected String[] getNotAuthenticatedUser() {
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-	public void testNonExistingStudent() {
+    public void testNonExistingStudent() {
 
-		Object[] args = { "100" };
-		SiteView result = null;
+        Object[] args = { "100" };
+        SiteView result = null;
 
-		try {
-			result =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
-			InfoStudentSiteExams infoStudentsSiteExams =
-				(InfoStudentSiteExams) result.getComponent();
-			List examsToEnroll = infoStudentsSiteExams.getExamsToEnroll();
-			List infoExamStudentRoomList = infoStudentsSiteExams.getExamsEnrolledDistributions();
-		
-			assertEquals(examsToEnroll.size(), 0);
-			assertEquals(infoExamStudentRoomList.size(), 0);
+        try {
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
+            InfoStudentSiteExams infoStudentsSiteExams = (InfoStudentSiteExams) result.getComponent();
+            List examsToEnroll = infoStudentsSiteExams.getExamsToEnroll();
+            List infoExamStudentRoomList = infoStudentsSiteExams.getExamsEnrolledDistributions();
 
-			System.out.println(
-				"testNonExistingStudent was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
+            assertEquals(examsToEnroll.size(), 0);
+            assertEquals(infoExamStudentRoomList.size(), 0);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testNonExistingStudent was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testNonExistingStudent");
-		}
-	}
+            System.out.println("testNonExistingStudent was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
 
-	public void testReadExamsExistingStudent() {
-		Object[] args = getAuthorizeArguments();
-		SiteView result = null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("testNonExistingStudent was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testNonExistingStudent");
+        }
+    }
 
-		try {
-			result =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
+    public void testReadExamsExistingStudent() {
+        Object[] args = getAuthorizeArguments();
+        SiteView result = null;
 
-			InfoStudentSiteExams infoStudentsSiteExams =
-				(InfoStudentSiteExams) result.getComponent();
+        try {
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
-			List infoExamsStudentRoomList =
-				infoStudentsSiteExams.getExamsEnrolledDistributions();
-			assertEquals(infoExamsStudentRoomList.size(), 3);
-			
-			List examsToEnroll = infoStudentsSiteExams.getExamsToEnroll();
-			assertEquals(examsToEnroll.size(), 1);
+            InfoStudentSiteExams infoStudentsSiteExams = (InfoStudentSiteExams) result.getComponent();
 
-			
-			Object[] values = { new Integer(1), new Integer(2), new Integer(3)};
-			
-			UtilsTestCase.readTestList(
-					infoExamsStudentRoomList,
-					values,
-					"idInternal",
-					InfoExamStudentRoom.class);
-			
-			Object[] values2 = { new Integer(1)};
-			
-			UtilsTestCase.readTestList(
-			examsToEnroll,
-					values2,
-					"idInternal",
-					InfoExam.class);
+            List infoExamsStudentRoomList = infoStudentsSiteExams.getExamsEnrolledDistributions();
+            assertEquals(infoExamsStudentRoomList.size(), 3);
 
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/student/testReadExamsByStudentExpectedDataSet.xml");
+            List examsToEnroll = infoStudentsSiteExams.getExamsToEnroll();
+            assertEquals(examsToEnroll.size(), 1);
 
-			System.out.println(
-				"testReadExamsExistingStudent was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testReadExamsExistingStudent was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testReadExamsExistingStudent");
-		}
+            Object[] values = { new Integer(1), new Integer(2), new Integer(3) };
 
-	}
+            UtilsTestCase.readTestList(infoExamsStudentRoomList, values, "idInternal",
+                    InfoExamStudentRoom.class);
+
+            Object[] values2 = { new Integer(1) };
+
+            UtilsTestCase.readTestList(examsToEnroll, values2, "idInternal", InfoExam.class);
+
+            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/student/testReadExamsByStudentExpectedDataSet.xml");
+
+            System.out.println("testReadExamsExistingStudent was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("testReadExamsExistingStudent was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testReadExamsExistingStudent");
+        }
+
+    }
 
 }

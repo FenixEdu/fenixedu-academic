@@ -3,10 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="DataBeans.InfoExecutionDegree" %>
 <%@ page import="Util.TipoCurso" %>
 
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
-	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
 	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegree" property="idInternal"/>
 
 	<%-- Start of Master Degree Coordinator Options --%>
@@ -59,6 +60,21 @@
 					<html:link page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0">
 				<bean:message key="link.studentListByCourse" /></html:link>
 		        	<br/>
+					<br/>
+				</li>
+				<li>
+					<%
+						String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+			            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
+			            name = name + ">" + infoExecutionDegree.getIdInternal().toString();
+			            String linkListStudents = "/studentsGratuityList.do?method=studentsGratuityList&amp;order=studentNumber&amp;executionYear=" + infoExecutionDegree.getInfoExecutionYear().getYear()  + "&amp;specialization=all&situation=all&degree=" + name;
+					
+					%>
+						
+					<html:link page='<%= linkListStudents %>'>
+						<bean:message key="link.coordinator.studentAndGratuityListByDegree"/>
+					</html:link>
+					<br/>
 					<br/>
 				</li>
 		</ul>

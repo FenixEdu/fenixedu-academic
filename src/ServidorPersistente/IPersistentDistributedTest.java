@@ -14,12 +14,15 @@ import Dominio.IStudent;
 /**
  * @author Susana Fernandes
  */
-public interface IPersistentDistributedTest extends IPersistentObject
-{
-	public List readByTestScopeObject(IDomainObject object) throws ExcepcaoPersistencia;
-	public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
-	public List readByStudentAndExecutionCourse(IStudent student, IExecutionCourse executionCourse)
-		throws ExcepcaoPersistencia;
-	public List readAll() throws ExcepcaoPersistencia;
-	public void delete(IDistributedTest distributedTest) throws ExcepcaoPersistencia;
+public interface IPersistentDistributedTest extends IPersistentObject {
+    public List readByTestScopeObject(IDomainObject object) throws ExcepcaoPersistencia;
+
+    public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
+
+    public List readByStudentAndExecutionCourse(IStudent student, IExecutionCourse executionCourse)
+            throws ExcepcaoPersistencia;
+
+    public List readAll() throws ExcepcaoPersistencia;
+
+    public void delete(IDistributedTest distributedTest) throws ExcepcaoPersistencia;
 }

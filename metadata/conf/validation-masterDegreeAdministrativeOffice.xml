@@ -697,6 +697,16 @@
 			 	<arg0 key="label.masterDegree.administrativeOffice.address" />
 			</field>
 	</form>
+
+	<!-- edit external person form bean validation -->	
+	<form name="editExternalPersonForm">
+			<field property="name" depends="required" page="1">
+				<arg0 key="label.masterDegree.administrativeOffice.name" />
+			</field>
+			<field property="address" depends="required" page="1">
+			 	<arg0 key="label.masterDegree.administrativeOffice.address" />
+			</field>
+	</form>
 	
 	<form name="insertWorkLocationForm">
 		<field property="name" depends="required" page="1">
@@ -975,6 +985,27 @@
 		</field>
 		<field property="situation" depends="required" page="2">
 	        <arg0 key="label.masterDegree.gratuity.situation" />
+		</field>
+    </form>
+	
+	<form name="studentSituationForm">
+		<field property="studentNumber" depends="required,integer" page="1">
+	        <arg0 key="label.student.number" />
+		</field>
+    </form>
+	
+	<form name="payGratuityForm">
+		<field property="contributorNumber" depends="required,integer" page="1">
+	        <arg0 key="label.contributor.number" />
+		</field>
+		<field property="adHocValue" depends="double" page="1">
+	        <arg0 key="label.masterDegree.gratuity.adHocValue" />
+		</field>		
+    </form>
+	
+	<form name="editInsuranceForm">
+		<field property="insuranceValue" depends="required" page="2">
+	        <arg0 key="label.masterDegree.gratuity.insuranceValue" />
 		</field>
     </form>
     

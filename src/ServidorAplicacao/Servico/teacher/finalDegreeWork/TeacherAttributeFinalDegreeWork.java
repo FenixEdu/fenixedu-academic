@@ -18,89 +18,77 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class TeacherAttributeFinalDegreeWork implements IService
-{
+public class TeacherAttributeFinalDegreeWork implements IService {
 
-	public TeacherAttributeFinalDegreeWork()
-	{
-		super();
-	}
+    public TeacherAttributeFinalDegreeWork() {
+        super();
+    }
 
-	public Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
-					.getIPersistentFinalDegreeWork();
+    public Boolean run(Integer selectedGroupProposalOID) throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
+                    .getIPersistentFinalDegreeWork();
 
-			IGroupProposal groupProposal = (IGroupProposal) persistentFinalWork.readByOID(GroupProposal.class, selectedGroupProposalOID);
-			if (groupProposal != null)
-			{
-			    IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
-			    IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-			    if (proposal != null && group != null)
-			    {
-			        IProposal proposalAttributedToGroup = persistentFinalWork.readFinalDegreeWorkAttributedToGroupByTeacher(group.getIdInternal());
-			        if (proposalAttributedToGroup != null && !proposalAttributedToGroup.getIdInternal().equals(proposal.getIdInternal())) {
-			            throw new GroupAlreadyAttributed(proposalAttributedToGroup.getProposalNumber().toString());
-			        }
-			        
-			        persistentFinalWork.simpleLockWrite(proposal);
-			        if (proposal.getGroupAttributedByTeacher() == null || !proposal.getGroupAttributedByTeacher().equals(group))
-			        {
-			            proposal.setGroupAttributedByTeacher(group);
-			            for (int i = 0; i < group.getGroupProposals().size(); i++)
-			            {
-			                IGroupProposal otherGroupProposal = (IGroupProposal) group.getGroupProposals().get(i);
-			                IProposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
-			                if (!otherProposal.getIdInternal().equals(proposal.getIdInternal())
-			                        && group.equals(otherProposal.getGroupAttributedByTeacher()))
-			                {
-			                    persistentFinalWork.simpleLockWrite(otherProposal);
-			                    otherProposal.setGroupAttributedByTeacher(null);
-			                }
-			            }
-			        }
-			        else
-			        {
-			            proposal.setGroupAttributedByTeacher(null);
-			        }
-			    }
-			}
-			return new Boolean(true);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-	}
+            IGroupProposal groupProposal = (IGroupProposal) persistentFinalWork.readByOID(
+                    GroupProposal.class, selectedGroupProposalOID);
+            if (groupProposal != null) {
+                IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
+                IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+                if (proposal != null && group != null) {
+                    IProposal proposalAttributedToGroup = persistentFinalWork
+                            .readFinalDegreeWorkAttributedToGroupByTeacher(group.getIdInternal());
+                    if (proposalAttributedToGroup != null
+                            && !proposalAttributedToGroup.getIdInternal().equals(
+                                    proposal.getIdInternal())) {
+                        throw new GroupAlreadyAttributed(proposalAttributedToGroup.getProposalNumber()
+                                .toString());
+                    }
 
-    public class GroupAlreadyAttributed extends FenixServiceException
-    {
+                    persistentFinalWork.simpleLockWrite(proposal);
+                    if (proposal.getGroupAttributedByTeacher() == null
+                            || !proposal.getGroupAttributedByTeacher().equals(group)) {
+                        proposal.setGroupAttributedByTeacher(group);
+                        for (int i = 0; i < group.getGroupProposals().size(); i++) {
+                            IGroupProposal otherGroupProposal = (IGroupProposal) group
+                                    .getGroupProposals().get(i);
+                            IProposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
+                            if (!otherProposal.getIdInternal().equals(proposal.getIdInternal())
+                                    && group.equals(otherProposal.getGroupAttributedByTeacher())) {
+                                persistentFinalWork.simpleLockWrite(otherProposal);
+                                otherProposal.setGroupAttributedByTeacher(null);
+                            }
+                        }
+                    } else {
+                        proposal.setGroupAttributedByTeacher(null);
+                    }
+                }
+            }
+            return new Boolean(true);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
-        public GroupAlreadyAttributed()
-        {
+    public class GroupAlreadyAttributed extends FenixServiceException {
+
+        public GroupAlreadyAttributed() {
             super();
         }
 
-        public GroupAlreadyAttributed(int errorType)
-        {
+        public GroupAlreadyAttributed(int errorType) {
             super(errorType);
         }
 
-        public GroupAlreadyAttributed(String s)
-        {
+        public GroupAlreadyAttributed(String s) {
             super(s);
         }
 
-        public GroupAlreadyAttributed(Throwable cause)
-        {
+        public GroupAlreadyAttributed(Throwable cause) {
             super(cause);
         }
 
-        public GroupAlreadyAttributed(String message, Throwable cause)
-        {
+        public GroupAlreadyAttributed(String message, Throwable cause) {
             super(message, cause);
         }
 

@@ -11,8 +11,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Util.TipoCurso;
 
-public interface IPersistentExecutionCourse extends IPersistentObject
-{
+public interface IPersistentExecutionCourse extends IPersistentObject {
 
     public List readAll() throws ExcepcaoPersistencia;
 
@@ -29,6 +28,12 @@ public interface IPersistentExecutionCourse extends IPersistentObject
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(Integer anoCurricular,
             IExecutionPeriod executionPeriod, ICursoExecucao executionDegree)
             throws ExcepcaoPersistencia;
+
+    //	public List
+    // readByCurricularYearAndExecutionPeriodAndExecutionDegree(Integer
+    // anoCurricular,
+    //			   IExecutionPeriod executionPeriod, IExecutionCourse executionDegree)
+    //			   throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodAndExecutionDegree(IExecutionPeriod executionPeriod,
             ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
@@ -94,6 +99,10 @@ public interface IPersistentExecutionCourse extends IPersistentObject
     public List readByExecutionCourseIds(List executionCourseIds) throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodWithNoCurricularCourses(IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia;
+
+    public List readByCurricularYearAndAllExecutionPeriodAndExecutionDegree(Integer curricularYear,
+            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree)
             throws ExcepcaoPersistencia;
 
 }

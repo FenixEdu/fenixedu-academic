@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoContributor;
 import DataBeans.util.Cloner;
 import Dominio.IContributor;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -19,60 +19,37 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadContributorList implements IServico {
+public class ReadContributorList implements IService {
 
-	private static ReadContributorList servico = new ReadContributorList();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadContributorList getService() {
-		return servico;
-	}
+    public List run(Integer contributorNumber) throws FenixServiceException {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadContributorList() { 
-	}
+        ISuportePersistente sp = null;
+        List contributors = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-	/**
-	 * Returns The Service Name */
+            // Read the contributor
 
-	public final String getNome() {
-		return "ReadContributorList";
-	}
+            contributors = sp.getIPersistentContributor().readContributorListByNumber(contributorNumber);
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-	public List run(Integer contributorNumber) throws FenixServiceException {
+        if (contributors == null)
+            throw new ExcepcaoInexistente("No Contributors Found !!");
 
-		ISuportePersistente sp = null;
-		List contributors = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-		
-			// Read the contributor
-			
-			contributors = sp.getIPersistentContributor().readContributorListByNumber(contributorNumber);		
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-		
-		if (contributors == null) 
-			throw new ExcepcaoInexistente("No Contributors Found !!");
-		
-		List result = new ArrayList();
-		Iterator iterator = contributors.iterator();
-		while(iterator.hasNext()) {
-			InfoContributor infoContributor = null;
-			infoContributor = Cloner.copyIContributor2InfoContributor((IContributor) iterator.next());
-			result.add(infoContributor);
-		}
-		
-		return result;		
-	}
+        List result = new ArrayList();
+        Iterator iterator = contributors.iterator();
+        while (iterator.hasNext()) {
+            InfoContributor infoContributor = null;
+            infoContributor = Cloner.copyIContributor2InfoContributor((IContributor) iterator.next());
+            result.add(infoContributor);
+        }
+
+        return result;
+    }
 }

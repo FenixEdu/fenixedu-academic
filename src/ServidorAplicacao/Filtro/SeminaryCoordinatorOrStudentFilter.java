@@ -18,39 +18,33 @@ import Util.RoleType;
  * Created at 8/Set/2003, 14:55:43
  *  
  */
-public class SeminaryCoordinatorOrStudentFilter extends Filtro
-{
+public class SeminaryCoordinatorOrStudentFilter extends Filtro {
 
-    public SeminaryCoordinatorOrStudentFilter()
-    {
+    public SeminaryCoordinatorOrStudentFilter() {
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
 
         if (((id != null && id.getRoles() != null
-                        && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1()) && !AuthorizationUtils
-                        .containsRole(id.getRoles(), getRoleType2())))
-                        || (id == null) || (id.getRoles() == null))
-        {
+                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1()) && !AuthorizationUtils
+                .containsRole(id.getRoles(), getRoleType2())))
+                || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
 
-    protected RoleType getRoleType1()
-    {
+    protected RoleType getRoleType1() {
         return RoleType.STUDENT;
     }
 
-    protected RoleType getRoleType2()
-    {
+    protected RoleType getRoleType2() {
         return RoleType.SEMINARIES_COORDINATOR;
     }
 

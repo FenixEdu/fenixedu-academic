@@ -8,33 +8,33 @@ import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class UnEnrollStudentInGroupTest extends TestCaseDeleteAndEditServices {
 
-	public UnEnrollStudentInGroupTest(String testName) {
-		super(testName);
-	}
+    public UnEnrollStudentInGroupTest(String testName) {
+        super(testName);
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "UnEnrollStudentInGroup";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "UnEnrollStudentInGroup";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Object[] args = {"user",new Integer(47)};
-		return args;
-	}
+        return null;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        Object[] args = { "user", new Integer(47) };
+        return args;
+    }
 }

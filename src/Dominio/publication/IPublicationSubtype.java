@@ -8,12 +8,11 @@ package Dominio.publication;
 
 /**
  * @author _Sairf_
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Generation - Code and Comments
  */
-public interface IPublicationSubtype
-{
+public interface IPublicationSubtype {
 
     /**
      * @return Returns the keyPublicationType.
@@ -21,7 +20,8 @@ public interface IPublicationSubtype
     public abstract Integer getKeyPublicationType();
 
     /**
-     * @param keyPublicationType The keyPublicationType to set.
+     * @param keyPublicationType
+     *            The keyPublicationType to set.
      */
     public abstract void setKeyPublicationType(Integer keyPublicationType);
 
@@ -31,7 +31,8 @@ public interface IPublicationSubtype
     public abstract IPublicationType getPublicationType();
 
     /**
-     * @param publicationType The publicationType to set.
+     * @param publicationType
+     *            The publicationType to set.
      */
     public abstract void setPublicationType(IPublicationType publicationType);
 
@@ -41,7 +42,8 @@ public interface IPublicationSubtype
     public abstract String getSubtype();
 
     /**
-     * @param subtype The subtype to set.
+     * @param subtype
+     *            The subtype to set.
      */
     public abstract void setSubtype(String subtype);
 }

@@ -22,34 +22,32 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-		
-		
-		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+        String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
-		InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
-		Object[] args = { groupPropertiesCode };
-		try {
-			infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(userView, "ReadShiftsAndGroups", args);
+        Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		
+        InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
+        Object[] args = { groupPropertiesCode };
+        try {
+            infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(userView,
+                    "ReadShiftsAndGroups", args);
 
-		request.setAttribute("infoSiteShiftsAndGroups", infoSiteShiftsAndGroups);
-		
-		
-		return mapping.findForward("sucess");
-	}
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        request.setAttribute("infoSiteShiftsAndGroups", infoSiteShiftsAndGroups);
+
+        return mapping.findForward("sucess");
+    }
 }

@@ -27,24 +27,20 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class AdicionarTurno implements IService
-{
+public class AdicionarTurno implements IService {
 
     /**
      * The actor of this class.
      */
-    public AdicionarTurno()
-    {
+    public AdicionarTurno() {
     }
 
-    public Boolean run(InfoClass infoClass, InfoShift infoShift) throws FenixServiceException
-    {
+    public Boolean run(InfoClass infoClass, InfoShift infoShift) throws FenixServiceException {
 
         ITurmaTurno turmaTurno = null;
         boolean result = false;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
@@ -61,19 +57,14 @@ public class AdicionarTurno implements IService
 
             turmaTurno = new TurmaTurno(group, shift);
 
-            try
-            {
+            try {
                 sp.getITurmaTurnoPersistente().simpleLockWrite(turmaTurno);
-            }
-            catch (ExistingPersistentException e)
-            {
+            } catch (ExistingPersistentException e) {
                 throw new ExistingServiceException(e);
             }
 
             result = true;
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex.getMessage());
         }
 

@@ -10,8 +10,7 @@ import java.util.List;
  * @author Susana Fernandes
  *  
  */
-public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject
-        implements ISiteComponent {
+public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject implements ISiteComponent {
 
     private List correctAnswersPercentage;
 
@@ -74,8 +73,7 @@ public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject
         return partiallyCorrectAnswersPercentage;
     }
 
-    public void setPartiallyCorrectAnswersPercentage(
-            List partiallyCorrectAnswersPercentage) {
+    public void setPartiallyCorrectAnswersPercentage(List partiallyCorrectAnswersPercentage) {
         this.partiallyCorrectAnswersPercentage = partiallyCorrectAnswersPercentage;
     }
 

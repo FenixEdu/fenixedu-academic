@@ -27,20 +27,17 @@ public class CreateSiteInExecutionCourse implements IService {
     public void run(Integer executionCourseId) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = persistentSuport
-                    .getIPersistentSite();
+            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseId);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
 
             if (executionCourse == null) {
-                throw new NonExistingServiceException(
-                        "message.non.existing.execution.course", null);
+                throw new NonExistingServiceException("message.non.existing.execution.course", null);
             }
             ISite site = new Site();
             persistentSite.simpleLockWrite(site);

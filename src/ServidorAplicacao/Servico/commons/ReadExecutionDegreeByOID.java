@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCoordinatorWithInfoPerson;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
@@ -16,10 +17,9 @@ import DataBeans.util.Cloner;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -28,79 +28,62 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class ReadExecutionDegreeByOID implements IServico
-{
-
-    private static ReadExecutionDegreeByOID service = new ReadExecutionDegreeByOID();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionDegreeByOID getService()
-    {
-        return service;
-    }
+public class ReadExecutionDegreeByOID implements IService {
 
     /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadExecutionDegreeByOID";
+     *  
+     */
+    public ReadExecutionDegreeByOID() {
+
     }
 
-    public InfoExecutionDegree run(Integer oid) throws FenixServiceException
-    {
+    public InfoExecutionDegree run(Integer oid) throws FenixServiceException {
 
         InfoExecutionDegree infoExecutionDegree = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-            ICursoExecucao executionDegree =
-                (ICursoExecucao) executionDegreeDAO.readByOID(CursoExecucao.class, oid);
-            if (executionDegree != null)
-            {
-                //CLONER
-                //infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
-                infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus.newInfoFromDomain(executionDegree);
-                
-                if (executionDegree.getCoordinatorsList() != null)
-                {
+            IPersistentObject persistentObject = sp.getIPersistentObject();
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentObject.readByOID(
+                    CursoExecucao.class, oid);
+            if (executionDegree != null) {
+
+                infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
+                        .newInfoFromDomain(executionDegree);
+
+                if (executionDegree.getCoordinatorsList() != null) {
                     List infoCoordinatorList = new ArrayList();
-                    ListIterator iteratorCoordinator =
-                        executionDegree.getCoordinatorsList().listIterator();
-                    while (iteratorCoordinator.hasNext())
-                    {
+                    ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList()
+                            .listIterator();
+                    while (iteratorCoordinator.hasNext()) {
                         ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
 
                         //infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
-                        infoCoordinatorList.add(InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator));
+                        infoCoordinatorList.add(InfoCoordinatorWithInfoPerson
+                                .newInfoFromDomain(coordinator));
                     }
 
                     infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
                 }
-                
-				if(executionDegree.getPeriodExamsFirstSemester() != null)
-				{
-					infoExecutionDegree.setInfoPeriodExamsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsFirstSemester()));
-            }
-				if(executionDegree.getPeriodExamsSecondSemester() != null)
-				{
-					infoExecutionDegree.setInfoPeriodExamsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsSecondSemester()));
-        }
-				if(executionDegree.getPeriodLessonsFirstSemester() != null)
-				{
-					infoExecutionDegree.setInfoPeriodLessonsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsFirstSemester()));
-				}
-				if(executionDegree.getPeriodLessonsSecondSemester() != null)
-				{
-					infoExecutionDegree.setInfoPeriodLessonsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsSecondSemester()));
-				}
+
+                if (executionDegree.getPeriodExamsFirstSemester() != null) {
+                    infoExecutionDegree.setInfoPeriodExamsFirstSemester(Cloner
+                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsFirstSemester()));
+                }
+                if (executionDegree.getPeriodExamsSecondSemester() != null) {
+                    infoExecutionDegree.setInfoPeriodExamsSecondSemester(Cloner
+                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsSecondSemester()));
+                }
+                if (executionDegree.getPeriodLessonsFirstSemester() != null) {
+                    infoExecutionDegree.setInfoPeriodLessonsFirstSemester(Cloner
+                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsFirstSemester()));
+                }
+                if (executionDegree.getPeriodLessonsSecondSemester() != null) {
+                    infoExecutionDegree.setInfoPeriodLessonsSecondSemester(Cloner
+                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsSecondSemester()));
+                }
 
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 

@@ -141,17 +141,23 @@ public class InfoExecutionYear extends InfoObject {
         }
         return infoExecutionYear;
     }
-    
-    public static IExecutionYear newDomainFromInfo(InfoExecutionYear year) {
+
+    public void copyToDomain(InfoExecutionYear infoExecutionYear, IExecutionYear executionYear) {
+        super.copyToDomain(infoExecutionYear, executionYear);
+        executionYear.setBeginDate(infoExecutionYear.getBeginDate());
+        executionYear.setEndDate(infoExecutionYear.getEndDate());
+        executionYear.setState(infoExecutionYear.getState());
+        executionYear.setYear(infoExecutionYear.getYear());
+    }
+
+    public static IExecutionYear newDomainFromInfo(InfoExecutionYear infoExecutionYear) {
         IExecutionYear executionYear = null;
-        if (year != null) {
+
+        if (infoExecutionYear != null) {
             executionYear = new ExecutionYear();
-            executionYear.setBeginDate(year.getBeginDate());
-            executionYear.setEndDate(year.getEndDate());
-            executionYear.setState(year.getState());
-            executionYear.setYear(year.getYear());
+            infoExecutionYear.copyToDomain(infoExecutionYear, executionYear);
         }
         return executionYear;
     }
-    
+
 }

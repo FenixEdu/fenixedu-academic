@@ -24,50 +24,44 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ReadExecutionPeriodServiceTest extends TestCaseReadServices
-{
+public class ReadExecutionPeriodServiceTest extends TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public ReadExecutionPeriodServiceTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadExecutionPeriodServiceTest(String testName) {
         super(testName);
 
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "ReadExecutionPeriod";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         ISuportePersistente sp = null;
         IExecutionYear executionYear = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -75,9 +69,7 @@ public class ReadExecutionPeriodServiceTest extends TestCaseReadServices
             executionYear = ieyp.readExecutionYearByName("2002/2003");
 
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
         }
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
@@ -86,29 +78,26 @@ public class ReadExecutionPeriodServiceTest extends TestCaseReadServices
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-    protected int getNumberOfItemsToRetrieve()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
 
         return 0;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-    protected Object getObjectToCompare()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+     */
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         IExecutionYear executionYear = null;
         IExecutionPeriod executionPeriod = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -120,13 +109,10 @@ public class ReadExecutionPeriodServiceTest extends TestCaseReadServices
             executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
         }
-        InfoExecutionPeriod infoExecutionPeriod =
-            (InfoExecutionPeriod) Cloner.get(executionPeriod);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
         return infoExecutionPeriod;
     }
 

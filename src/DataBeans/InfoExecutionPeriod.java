@@ -10,7 +10,7 @@ import Util.PeriodState;
 /**
  * @author Nuno & Joana
  */
-public class InfoExecutionPeriod extends InfoObject implements Serializable{
+public class InfoExecutionPeriod extends InfoObject implements Serializable {
 
     private String name;
 
@@ -86,8 +86,7 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable{
     public boolean equals(Object obj) {
         if (obj instanceof InfoExecutionPeriod) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) obj;
-            return (getInfoExecutionYear().equals(
-                    infoExecutionPeriod.getInfoExecutionYear()) && getName()
+            return (getInfoExecutionYear().equals(infoExecutionPeriod.getInfoExecutionYear()) && getName()
                     .equals(infoExecutionPeriod.getName()));
 
         }
@@ -138,10 +137,8 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable{
 
     public int compareTo(Object arg0) {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
-        int yearCmp = this.getInfoExecutionYear().compareTo(
-                infoExecutionPeriod.getInfoExecutionYear());
-        return yearCmp + this.getSemester().intValue()
-                - infoExecutionPeriod.getSemester().intValue();
+        int yearCmp = this.getInfoExecutionYear().compareTo(infoExecutionPeriod.getInfoExecutionYear());
+        return yearCmp + this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
     }
 
     /**
@@ -202,11 +199,10 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable{
      * @param previousInfoExecutionPeriod
      *            The previousInfoExecutionPeriod to set.
      */
-    public void setPreviousInfoExecutionPeriod(
-            InfoExecutionPeriod previousInfoExecutionPeriod) {
+    public void setPreviousInfoExecutionPeriod(InfoExecutionPeriod previousInfoExecutionPeriod) {
         this.previousInfoExecutionPeriod = previousInfoExecutionPeriod;
     }
-    
+
     public void copyFromDomain(IExecutionPeriod period) {
         super.copyFromDomain(period);
         if (period != null) {
@@ -230,7 +226,7 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable{
         }
         return infoExecutionPeriod;
     }
-    
+
     public void copyToDomain(InfoExecutionPeriod infoExecutionPeriod, IExecutionPeriod executionPeriod) {
         super.copyToDomain(infoExecutionPeriod, executionPeriod);
         executionPeriod.setBeginDate(infoExecutionPeriod.getBeginDate());
@@ -239,13 +235,13 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable{
         executionPeriod.setSemester(infoExecutionPeriod.getSemester());
         executionPeriod.setState(executionPeriod.getState());
     }
-    
+
     public static IExecutionPeriod newDomainFromInfo(InfoExecutionPeriod infoExecutionPeriod) {
         IExecutionPeriod executionPeriod = null;
-        if(infoExecutionPeriod != null) {
+        if (infoExecutionPeriod != null) {
             executionPeriod = new ExecutionPeriod();
             infoExecutionPeriod.copyToDomain(infoExecutionPeriod, executionPeriod);
         }
-        return executionPeriod;    
+        return executionPeriod;
     }
 }

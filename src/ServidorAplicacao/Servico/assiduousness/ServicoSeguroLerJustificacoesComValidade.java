@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.assiduousness;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import Dominio.Funcionario;
 import ServidorAplicacao.ServicoAutorizacao;
@@ -12,49 +12,46 @@ import ServidorPersistenteJDBC.IJustificacaoPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
 /**
- *
+ * 
  * @author Fernanda Quitério & Tânia Pousão
  */
 public class ServicoSeguroLerJustificacoesComValidade extends ServicoSeguro {
-	private int _numMecanografico;
-	private Date _dataInicioEscolha = null;
-	private Date _dataFimEscolha = null;
-	private Funcionario _funcionario = null;
-	private ArrayList _listaJustificacoes = null;
+    private int _numMecanografico;
 
-	public ServicoSeguroLerJustificacoesComValidade(
-		ServicoAutorizacao servicoAutorizacaoLer,
-		int numMecanografico,
-		Date dataInicioEscolha,
-		Date dataFimEscolha) {
-		super(servicoAutorizacaoLer);
-		_numMecanografico = numMecanografico;
-		_dataInicioEscolha = dataInicioEscolha;
-		_dataFimEscolha = dataFimEscolha;
-	}
+    private Date _dataInicioEscolha = null;
 
-	public void execute() throws NotExecuteException {
+    private Date _dataFimEscolha = null;
 
-		IFuncionarioPersistente iFuncionarioPersistente =
-			SuportePersistente.getInstance().iFuncionarioPersistente();
-		
-		if ((_funcionario =
-			iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(_numMecanografico))
-			== null) {
-			throw new NotExecuteException("error.funcionario.naoExiste");
-		}
+    private Funcionario _funcionario = null;
 
-		IJustificacaoPersistente iJustificacaoPersistente =
-			SuportePersistente.getInstance().iJustificacaoPersistente();
-		
-		_listaJustificacoes =
-			iJustificacaoPersistente.lerJustificacoesFuncionarioComValidade(
-				_funcionario.getCodigoInterno(),
-				_dataInicioEscolha,
-				_dataFimEscolha);
-	}
+    private List _listaJustificacoes = null;
 
-	public ArrayList getListaJustificacoes() {
-		return _listaJustificacoes;
-	}
+    public ServicoSeguroLerJustificacoesComValidade(ServicoAutorizacao servicoAutorizacaoLer,
+            int numMecanografico, Date dataInicioEscolha, Date dataFimEscolha) {
+        super(servicoAutorizacaoLer);
+        _numMecanografico = numMecanografico;
+        _dataInicioEscolha = dataInicioEscolha;
+        _dataFimEscolha = dataFimEscolha;
+    }
+
+    public void execute() throws NotExecuteException {
+
+        IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance()
+                .iFuncionarioPersistente();
+
+        if ((_funcionario = iFuncionarioPersistente
+                .lerFuncionarioSemHistoricoPorNumMecanografico(_numMecanografico)) == null) {
+            throw new NotExecuteException("error.funcionario.naoExiste");
+        }
+
+        IJustificacaoPersistente iJustificacaoPersistente = SuportePersistente.getInstance()
+                .iJustificacaoPersistente();
+
+        _listaJustificacoes = iJustificacaoPersistente.lerJustificacoesFuncionarioComValidade(
+                _funcionario.getCodigoInterno(), _dataInicioEscolha, _dataFimEscolha);
+    }
+
+    public List getListaJustificacoes() {
+        return _listaJustificacoes;
+    }
 }

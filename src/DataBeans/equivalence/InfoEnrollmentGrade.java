@@ -3,52 +3,47 @@ package DataBeans.equivalence;
 import DataBeans.DataTranferObject;
 import DataBeans.InfoEnrolment;
 
-public class InfoEnrollmentGrade extends DataTranferObject
-{
-	private InfoEnrolment infoEnrollment;
-	private String grade;
+public class InfoEnrollmentGrade extends DataTranferObject {
+    private InfoEnrolment infoEnrollment;
 
-	public InfoEnrollmentGrade()
-	{
-	}
+    private String grade;
 
-	/**
-	 * @return
-	 */
-	public String getGrade()
-	{
-		return grade;
-	}
+    public InfoEnrollmentGrade() {
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setGrade(String string)
-	{
-		grade = string;
-	}
+    /**
+     * @return
+     */
+    public String getGrade() {
+        return grade;
+    }
 
-	public String toString()
-	{
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "infoEnrollment = " + this.infoEnrollment + "; ";
-		result += "grade = " + this.grade + "]\n";
-		return result;
-	}
+    /**
+     * @param string
+     */
+    public void setGrade(String string) {
+        grade = string;
+    }
 
-	/**
-	 * @return Returns the infoEnrollment.
-	 */
-	public InfoEnrolment getInfoEnrollment()
-	{
-		return infoEnrollment;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "infoEnrollment = " + this.infoEnrollment + "; ";
+        result += "grade = " + this.grade + "]\n";
+        return result;
+    }
 
-	/**
-	 * @param infoEnrollment The infoEnrollment to set.
-	 */
-	public void setInfoEnrollment(InfoEnrolment infoEnrollment)
-	{
-		this.infoEnrollment = infoEnrollment;
-	}
+    /**
+     * @return Returns the infoEnrollment.
+     */
+    public InfoEnrolment getInfoEnrollment() {
+        return infoEnrollment;
+    }
+
+    /**
+     * @param infoEnrollment
+     *            The infoEnrollment to set.
+     */
+    public void setInfoEnrollment(InfoEnrolment infoEnrollment) {
+        this.infoEnrollment = infoEnrollment;
+    }
 }

@@ -17,7 +17,7 @@ public class OptionalCurricularCourseGroup extends CurricularCourseGroup impleme
     }
 
     public Integer getMaximumNumberOfOptionalCourses() {
-        return super.getMinimumValue();
+        return super.getMaximumValue();
     }
 
     public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses) {

@@ -23,15 +23,15 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter
-{
-    /* (non-Javadoc)
-     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView, DataBeans.InfoObject)
+public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
+     *      DataBeans.InfoObject)
      */
-    protected boolean verifyCondition(IUserView id, InfoObject infoOject)
-    {
-        try
-        {
+    protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
+        try {
             InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoOject;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
@@ -39,34 +39,30 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            boolean isNew =
-                (infoExternalActivity.getIdInternal() == null)
+            boolean isNew = (infoExternalActivity.getIdInternal() == null)
                     || (infoExternalActivity.getIdInternal().equals(new Integer(0)));
             if (isNew)
                 return true;
 
-            IExternalActivity externalActivity =
-                (IExternalActivity) persistentExternalActivity.readByOID(
-                    ExternalActivity.class,
-                    infoExternalActivity.getIdInternal());
+            IExternalActivity externalActivity = (IExternalActivity) persistentExternalActivity
+                    .readByOID(ExternalActivity.class, infoExternalActivity.getIdInternal());
 
-           return externalActivity.getTeacher().equals(teacher);
-        } catch (ExcepcaoPersistencia e)
-        {
+            return externalActivity.getTeacher().equals(teacher);
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Filtro.framework.EditDomainObjectAuthorizationFilter#getRoleType()
      */
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 }

@@ -15,8 +15,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
  *  
  */
-public abstract class ServiceNeedsAuthenticationTestCase extends
-        ServiceTestCase {
+public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase {
 
     protected IUserView userView = null;
 
@@ -40,39 +39,36 @@ public abstract class ServiceNeedsAuthenticationTestCase extends
         Object serviceArguments[] = getAuthorizeArguments();
 
         try {
-            Object result = ServiceManagerServiceFactory.executeService(
-                    this.userView, getNameOfServiceToBeTested(),
-                    serviceArguments);
+            Object result = ServiceManagerServiceFactory.executeService(this.userView,
+                    getNameOfServiceToBeTested(), serviceArguments);
             assertAuthorizedResult(result);
         } catch (FenixServiceException ex) {
             ex.printStackTrace();
-            System.out
-                    .println("testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
+                    + getNameOfServiceToBeTested());
             fail("Unable to run service: " + getNameOfServiceToBeTested());
         } catch (AssertionFailedError ex) {
             fail(ex.getMessage());
         } catch (Exception ex) {
             ex.printStackTrace();
-            fail("Test class:" + this.getClass().getName()
-                    + "Unable to run service: " + getNameOfServiceToBeTested());
+            fail("Test class:" + this.getClass().getName() + "Unable to run service: "
+                    + getNameOfServiceToBeTested());
         }
     }
 
     public void testUnauthorizedUser() {
         Object serviceArguments[] = getAuthorizeArguments();
         try {
-            ServiceManagerServiceFactory.executeService(this.userView2,
-                    getNameOfServiceToBeTested(), serviceArguments);
-            fail(this.getClass().getName() + ": Service "
-                    + getNameOfServiceToBeTested()
+            ServiceManagerServiceFactory.executeService(this.userView2, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            fail(this.getClass().getName() + ": Service " + getNameOfServiceToBeTested()
                     + ": fail testUnauthorizedUser");
         } catch (NotAuthorizedException ex) {
             // sucessfull service execution
         } catch (Exception ex) {
             ex.printStackTrace();
-            fail("Test class:" + this.getClass().getName()
-                    + "Unable to run service: " + getNameOfServiceToBeTested());
+            fail("Test class:" + this.getClass().getName() + "Unable to run service: "
+                    + getNameOfServiceToBeTested());
         }
     }
 
@@ -86,14 +82,13 @@ public abstract class ServiceNeedsAuthenticationTestCase extends
     protected void assertAuthorizedResult(Object result) {
     }
 
-   public void testNonAuthenticatedUser() {
+    public void testNonAuthenticatedUser() {
         Object serviceArguments[] = getAuthorizeArguments();
 
         try {
-            ServiceManagerServiceFactory.executeService(this.userView3,
-                    getNameOfServiceToBeTested(), serviceArguments);
-            fail(this.getClass().getName() + ": Service "
-                    + getNameOfServiceToBeTested()
+            ServiceManagerServiceFactory.executeService(this.userView3, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            fail(this.getClass().getName() + ": Service " + getNameOfServiceToBeTested()
                     + "fail testNonAuthenticatedUser");
         } catch (NotAuthorizedException ex) {
             // sucessfull service execution
@@ -108,8 +103,7 @@ public abstract class ServiceNeedsAuthenticationTestCase extends
         String args[] = arguments;
 
         try {
-            return (IUserView) ServiceManagerServiceFactory.executeService(
-                    null, "Autenticacao", args);
+            return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
         } catch (Exception ex) {
             ex.printStackTrace();
             fail("Authenticating User!" + ex);

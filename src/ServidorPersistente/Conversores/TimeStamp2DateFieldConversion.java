@@ -7,43 +7,38 @@
 package ServidorPersistente.Conversores;
 
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 import java.sql.Timestamp;
 import java.util.Date;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class TimeStamp2DateFieldConversion implements FieldConversion
-{
+public class TimeStamp2DateFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)
      */
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof Date)
-        {
+    public Object javaToSql(Object source) {
+        if (source instanceof Date) {
             return new Timestamp(((Date) source).getTime());
         }
-        
-         	return source;   
-        
+
+        return source;
+
     }
 
     /*
      * @see FieldConversion#sqlToJava(Object)
      */
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Timestamp)
-        {
+    public Object sqlToJava(Object source) {
+        if (source instanceof Timestamp) {
             return new Date(((Timestamp) source).getTime());
         }
-        
-         	return source;   
-        
+
+        return source;
+
     }
 
 }

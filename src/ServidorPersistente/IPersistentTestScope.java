@@ -8,11 +8,10 @@ import Dominio.IDomainObject;
 import Dominio.ITestScope;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public interface IPersistentTestScope extends IPersistentObject
-{
-	public ITestScope readByDomainObject(IDomainObject object) throws ExcepcaoPersistencia;
+public interface IPersistentTestScope extends IPersistentObject {
+    public ITestScope readByDomainObject(IDomainObject object) throws ExcepcaoPersistencia;
 }

@@ -2,6 +2,7 @@ package ServidorAplicacao.Servico.assiduousness;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
@@ -10,52 +11,45 @@ import ServidorPersistenteJDBC.IMarcacaoPontoPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
 /**
- *
+ * 
  * @author Fernanda Quitério & Tânia Pousão
  */
 public class ServicoSeguroLerMarcacoesPonto extends ServicoSeguro {
-	private ArrayList _listaFuncionarios = null;
-	private ArrayList _listaCartoes = null;
-	private ArrayList _listaEstados = null;
+    private List _listaFuncionarios = null;
 
-	private Timestamp _dataInicio;
-	private Timestamp _dataFim;
+    private List _listaCartoes = null;
 
-	private ArrayList _listaMarcacoesPonto = new ArrayList();
+    private List _listaEstados = null;
 
-	public ServicoSeguroLerMarcacoesPonto(
-		ServicoAutorizacao servicoAutorizacaoLer,
-		ArrayList listaFuncionarios,
-		ArrayList listaCartoes,
-		ArrayList listaEstados,
-		Timestamp dataInicio,
-		Timestamp dataFim) {
-		super(servicoAutorizacaoLer);
-		_listaFuncionarios = listaFuncionarios;
-		_listaCartoes = listaCartoes;
-		_listaEstados = listaEstados;
-		_dataInicio = dataInicio;
-		_dataFim = dataFim;
-	}
+    private Timestamp _dataInicio;
 
-	public void execute() throws NotExecuteException {
-		
-		IMarcacaoPontoPersistente iMarcacaoPontoPersistente =
-			SuportePersistente.getInstance().iMarcacaoPontoPersistente();
-		if ((_listaMarcacoesPonto =
-			iMarcacaoPontoPersistente.consultarMarcacoesPonto(
-				_listaFuncionarios,
-				_listaCartoes,
-				_listaEstados,
-				_dataInicio,
-				_dataFim))
-			== null) {
-			throw new NotExecuteException("error.marcacaoPonto.naoExistem");
-		}
+    private Timestamp _dataFim;
 
-	}
+    private List _listaMarcacoesPonto = new ArrayList();
 
-	public ArrayList getListaMarcacoesPonto() {
-		return _listaMarcacoesPonto;
-	}
+    public ServicoSeguroLerMarcacoesPonto(ServicoAutorizacao servicoAutorizacaoLer,
+            List listaFuncionarios, List listaCartoes, List listaEstados, Timestamp dataInicio,
+            Timestamp dataFim) {
+        super(servicoAutorizacaoLer);
+        _listaFuncionarios = listaFuncionarios;
+        _listaCartoes = listaCartoes;
+        _listaEstados = listaEstados;
+        _dataInicio = dataInicio;
+        _dataFim = dataFim;
+    }
+
+    public void execute() throws NotExecuteException {
+
+        IMarcacaoPontoPersistente iMarcacaoPontoPersistente = SuportePersistente.getInstance()
+                .iMarcacaoPontoPersistente();
+        if ((_listaMarcacoesPonto = iMarcacaoPontoPersistente.consultarMarcacoesPonto(
+                _listaFuncionarios, _listaCartoes, _listaEstados, _dataInicio, _dataFim)) == null) {
+            throw new NotExecuteException("error.marcacaoPonto.naoExistem");
+        }
+
+    }
+
+    public List getListaMarcacoesPonto() {
+        return _listaMarcacoesPonto;
+    }
 }

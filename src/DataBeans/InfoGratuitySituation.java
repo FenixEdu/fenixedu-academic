@@ -17,6 +17,7 @@ import Util.GratuitySituationType;
  *  
  */
 public class InfoGratuitySituation extends InfoObject {
+
     private Integer exemptionPercentage;
 
     private ExemptionGratuityType exemptionType;
@@ -35,15 +36,19 @@ public class InfoGratuitySituation extends InfoObject {
 
     private Double payedValue;//attributes auxiliaries for calculations
 
-    private Double remainingValue;//attributes auxiliaries for calculations
+    private Double remainingValue;
+
+    private Double totalValue;
 
     private GratuitySituationType situationType; //attributes auxiliaries for
-                                                 // calculations
+
+    // calculations
 
     private String insurancePayed = SessionConstants.NOT_PAYED_INSURANCE; //attributes
-                                                                          // auxiliaries
-                                                                          // for
-                                                                          // calculations
+
+    // auxiliaries
+    // for
+    // calculations
 
     /**
      * @return Returns the insurancePayed.
@@ -196,6 +201,21 @@ public class InfoGratuitySituation extends InfoObject {
     }
 
     /**
+     * @return Returns the totalValue.
+     */
+    public Double getTotalValue() {
+        return totalValue;
+    }
+
+    /**
+     * @param totalValue
+     *            The totalValue to set.
+     */
+    public void setTotalValue(Double totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    /**
      * @return Returns the student.
      */
     public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
@@ -206,8 +226,7 @@ public class InfoGratuitySituation extends InfoObject {
      * @param student
      *            The student to set.
      */
-    public void setInfoStudentCurricularPlan(
-            InfoStudentCurricularPlan studentCurricularPlan) {
+    public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan studentCurricularPlan) {
         this.infoStudentCurricularPlan = studentCurricularPlan;
     }
 
@@ -228,15 +247,13 @@ public class InfoGratuitySituation extends InfoObject {
 
     public String toString() {
         String result = new String();
-        result += "[InfoGratuitySituation: exemptionPercentage"
-                + this.exemptionPercentage;
+        result += "[InfoGratuitySituation: exemptionPercentage" + this.exemptionPercentage;
         result += "\nexemptionType: " + this.exemptionType;
         result += "\nexemptionDescription: " + this.exemptionDescription;
         result += "\npayedValue: " + this.payedValue;
         result += "\nremainingValue: " + this.remainingValue;
         result += "\ninfoGratuityValues: " + this.infoGratuityValues;
-        result += "\ninfoStudentCurricularPlan: "
-                + this.infoStudentCurricularPlan;
+        result += "\ninfoStudentCurricularPlan: " + this.infoStudentCurricularPlan;
         return result;
     }
 
@@ -251,18 +268,28 @@ public class InfoGratuitySituation extends InfoObject {
             setExemptionPercentage(gratuitySituation.getExemptionPercentage());
             setExemptionDescription(gratuitySituation.getExemptionDescription());
             setExemptionType(gratuitySituation.getExemptionType());
-            setPayedValue(gratuitySituation.getPayedValue());
-            setRemainingValue(gratuitySituation.getRemainingValue());
+            //setPayedValue(gratuitySituation.getPayedValue());
+            if (gratuitySituation.getRemainingValue() == null) {
+                setRemainingValue(new Double(0));
+            } else {
+                setRemainingValue(gratuitySituation.getRemainingValue());
+            }
+            if (gratuitySituation.getTotalValue() == null) {
+                setTotalValue(new Double(0));
+            } else {
+                setTotalValue(gratuitySituation.getTotalValue());
+            }
             setWhen(gratuitySituation.getWhen());
         }
     }
-    
-    public static InfoGratuitySituation newInfoFromDomain(IGratuitySituation gratuitySituation){
+
+    public static InfoGratuitySituation newInfoFromDomain(IGratuitySituation gratuitySituation) {
         InfoGratuitySituation infoGratuitySituation = null;
-        if(gratuitySituation != null) {
+        if (gratuitySituation != null) {
             infoGratuitySituation = new InfoGratuitySituation();
             infoGratuitySituation.copyFromDomain(gratuitySituation);
         }
         return infoGratuitySituation;
     }
+
 }

@@ -5,125 +5,124 @@ import java.util.ListIterator;
 
 /**
  * @author Tânia Pousão
- *
  * 
+ *  
  */
 public class InfoSiteSubmitMarks extends DataTranferObject implements ISiteComponent {
-	private InfoEvaluation infoEvaluation;
-	private List marksList;
+    private InfoEvaluation infoEvaluation;
 
-	//errors		
-	private List notEnrolmented = null;
-	private List errorsMarkNotPublished = null;
-	private List mestrado = null;
+    private List marksList;
 
-	
+    //errors
+    private List notEnrolmented = null;
 
-	public boolean equals(Object objectToCompare) {
-		boolean result = false;
+    private List errorsMarkNotPublished = null;
 
-		if (objectToCompare instanceof InfoSiteStudents
-			&& (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null
-				&& this.getInfoEvaluation() != null
-				&& ((InfoSiteMarks) objectToCompare).getInfoEvaluation().equals(this.getInfoEvaluation()))
-				|| ((InfoSiteMarks) objectToCompare).getInfoEvaluation() == null
-				&& this.getInfoEvaluation() == null))) {
-			result = true;
-		}
+    private List mestrado = null;
 
-		if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null && result == true) {
-			return true;
-		}
+    public boolean equals(Object objectToCompare) {
+        boolean result = false;
 
-		if (((InfoSiteMarks) objectToCompare).getMarksList() == null
-			|| this.getMarksList() == null
-			|| ((InfoSiteMarks) objectToCompare).getMarksList().size() != this.getMarksList().size()) {
-			return false;
-		}
+        if (objectToCompare instanceof InfoSiteStudents
+                && (((((InfoSiteMarks) objectToCompare).getInfoEvaluation() != null
+                        && this.getInfoEvaluation() != null && ((InfoSiteMarks) objectToCompare)
+                        .getInfoEvaluation().equals(this.getInfoEvaluation())) || ((InfoSiteMarks) objectToCompare)
+                        .getInfoEvaluation() == null
+                        && this.getInfoEvaluation() == null))) {
+            result = true;
+        }
 
-		ListIterator iter1 = ((InfoSiteMarks) objectToCompare).getMarksList().listIterator();
-		ListIterator iter2 = this.getMarksList().listIterator();
-		while (result && iter1.hasNext()) {
-			InfoMark infoMark1 = (InfoMark) iter1.next();
-			InfoMark infoMark2 = (InfoMark) iter2.next();
-			if (!infoMark1.equals(infoMark2)) {
-				result = false;
-			}
-		}
+        if (((InfoSiteMarks) objectToCompare).getMarksList() == null && this.getMarksList() == null
+                && result == true) {
+            return true;
+        }
 
-		return result;
-	}
+        if (((InfoSiteMarks) objectToCompare).getMarksList() == null || this.getMarksList() == null
+                || ((InfoSiteMarks) objectToCompare).getMarksList().size() != this.getMarksList().size()) {
+            return false;
+        }
 
-	/**
-	 * @return
-	 */
-	public List getMarksList() {
-		return marksList;
-	}
+        ListIterator iter1 = ((InfoSiteMarks) objectToCompare).getMarksList().listIterator();
+        ListIterator iter2 = this.getMarksList().listIterator();
+        while (result && iter1.hasNext()) {
+            InfoMark infoMark1 = (InfoMark) iter1.next();
+            InfoMark infoMark2 = (InfoMark) iter2.next();
+            if (!infoMark1.equals(infoMark2)) {
+                result = false;
+            }
+        }
 
-	/**
-	 * @param list
-	 */
-	public void setMarksList(List list) {
-		marksList = list;
-	}
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoEvaluation getInfoEvaluation() {
-		return infoEvaluation;
-	}
+    /**
+     * @return
+     */
+    public List getMarksList() {
+        return marksList;
+    }
 
-	/**
-	 * @param exam
-	 */
-	public void setInfoEvaluation(InfoEvaluation evaluation) {
-		infoEvaluation = evaluation;
-	}
+    /**
+     * @param list
+     */
+    public void setMarksList(List list) {
+        marksList = list;
+    }
 
+    /**
+     * @return
+     */
+    public InfoEvaluation getInfoEvaluation() {
+        return infoEvaluation;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getErrorsMarkNotPublished() {
-		return errorsMarkNotPublished;
-	}
+    /**
+     * @param exam
+     */
+    public void setInfoEvaluation(InfoEvaluation evaluation) {
+        infoEvaluation = evaluation;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getNotEnrolmented() {
-		return notEnrolmented;
-	}
+    /**
+     * @return
+     */
+    public List getErrorsMarkNotPublished() {
+        return errorsMarkNotPublished;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setErrorsMarkNotPublished(List list) {
-		errorsMarkNotPublished = list;
-	}
+    /**
+     * @return
+     */
+    public List getNotEnrolmented() {
+        return notEnrolmented;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setNotEnrolmented(List list) {
-		notEnrolmented = list;
-	}
+    /**
+     * @param list
+     */
+    public void setErrorsMarkNotPublished(List list) {
+        errorsMarkNotPublished = list;
+    }
+
+    /**
+     * @param list
+     */
+    public void setNotEnrolmented(List list) {
+        notEnrolmented = list;
+    }
 
     /**
      * @return Returns the mestrado.
      */
-    public List getMestrado()
-    {
+    public List getMestrado() {
         return mestrado;
     }
 
     /**
-     * @param mestrado The mestrado to set.
+     * @param mestrado
+     *            The mestrado to set.
      */
-    public void setMestrado(List mestrado)
-    {
+    public void setMestrado(List mestrado) {
         this.mestrado = mestrado;
     }
 

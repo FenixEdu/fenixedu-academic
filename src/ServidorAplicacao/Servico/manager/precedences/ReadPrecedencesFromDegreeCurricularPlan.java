@@ -31,19 +31,20 @@ public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
 
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport.getIPersistentDegreeCurricularPlan();
+            IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport
+                    .getIPersistentDegreeCurricularPlan();
             IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-            
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO.readByOID(
-                    DegreeCurricularPlan.class, degreeCurricularPlanID);
+
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
+                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
             List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-//			ComparatorChain comparatorChain = new ComparatorChain();
-//			comparatorChain.addComparator(new BeanComparator("name"));
-//			Collections.sort(curricularCourses, comparatorChain);
+            //			ComparatorChain comparatorChain = new ComparatorChain();
+            //			comparatorChain.addComparator(new BeanComparator("name"));
+            //			Collections.sort(curricularCourses, comparatorChain);
 
-			int size = curricularCourses.size();
+            int size = curricularCourses.size();
 
             for (int i = 0; i < size; i++) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
@@ -54,18 +55,20 @@ public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
-        
+
         return finalListOfInfoPrecedences;
     }
 
-    private void putInMap(Map finalListOfInfoPrecedences, ICurricularCourse curricularCourse, List precedences) {
+    private void putInMap(Map finalListOfInfoPrecedences, ICurricularCourse curricularCourse,
+            List precedences) {
 
         if (!precedences.isEmpty()) {
-    		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+                    .newInfoFromDomain(curricularCourse);
 
-    		List infoPrecedences = clone(precedences);
+            List infoPrecedences = clone(precedences);
 
-    		finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
+            finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
         }
     }
 

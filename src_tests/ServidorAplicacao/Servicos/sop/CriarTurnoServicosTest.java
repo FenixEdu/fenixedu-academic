@@ -30,45 +30,37 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class CriarTurnoServicosTest extends TestCaseCreateServices
-{
+public class CriarTurnoServicosTest extends TestCaseCreateServices {
 
     private InfoShift infoShift = null;
 
-    public CriarTurnoServicosTest(java.lang.String testName)
-    {
+    public CriarTurnoServicosTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(CriarTurnoServicosTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "CriarTurno";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
         this.ligarSuportePersistente(false);
 
@@ -77,8 +69,7 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices
         return argsCriarTurno;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         this.ligarSuportePersistente(true);
 
@@ -87,18 +78,15 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices
         return argsCriarTurno;
     }
 
-    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
-    private void ligarSuportePersistente(boolean existing)
-    {
+    private void ligarSuportePersistente(boolean existing) {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -114,12 +102,9 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices
             ITurnoPersistente itp = sp.getITurnoPersistente();
             ITurno it = null;
 
-            if (existing)
-            {
+            if (existing) {
                 it = itp.readByNameAndExecutionCourse("turno1", ide);
-            }
-            else
-            {
+            } else {
                 it = new Turno("turnoXPTO", new TipoAula(TipoAula.TEORICA), new Integer(100), ide);
             }
 
@@ -127,15 +112,10 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");

@@ -11,142 +11,135 @@ import Dominio.DomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 28/Jul/2003, 15:05:18
- * 
+ *  
  */
-public class CaseStudy extends DomainObject implements ICaseStudy
-{
+public class CaseStudy extends DomainObject implements ICaseStudy {
     private Integer idInternal;
+
     private ITheme seminaryTheme;
+
     private List seminaryCandidacies;
+
     private String code;
+
     private String description;
+
     private String name;
-    
+
     private Integer seminaryThemeIdInternal;
-    
-    
-    public CaseStudy () {}
-    
-    public CaseStudy (String name, String description, String code)
-    {
+
+    public CaseStudy() {
+    }
+
+    public CaseStudy(Integer idInternal) {
+        super(idInternal);
+    }
+
+    public CaseStudy(String name, String description, String code) {
         this.setName(name);
         this.setDescription(description);
         this.setCode(code);
     }
-    
-	/**
-	 * @return
-	 */
-	public String getCode()
-	{
-		return code;
-	}
 
-	/**
-	 * @return
-	 */
-	public String getDescription()
-	{
-		return description;
-	}
+    /**
+     * @return
+     */
+    public String getCode() {
+        return code;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
+    /**
+     * @return
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getName()
-	{
-		return name;
-	}
+    /**
+     * @return
+     */
+    public Integer getIdInternal() {
+        return idInternal;
+    }
 
-	/**
-	 * @return
-	 */
-	public ITheme getSeminaryTheme()
-	{
-		return seminaryTheme;
-	}
+    /**
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setCode(String string)
-	{
-		code= string;
-	}
+    /**
+     * @return
+     */
+    public ITheme getSeminaryTheme() {
+        return seminaryTheme;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setDescription(String string)
-	{
-		description= string;
-	}
+    /**
+     * @param string
+     */
+    public void setCode(String string) {
+        code = string;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
-	}
+    /**
+     * @param string
+     */
+    public void setDescription(String string) {
+        description = string;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setName(String string)
-	{
-		name= string;
-	}
+    /**
+     * @param integer
+     */
+    public void setIdInternal(Integer integer) {
+        idInternal = integer;
+    }
 
-	/**
-	 * @param seminary
-	 */
-	public void setSeminaryTheme(ITheme seminary)
-	{
-		this.seminaryTheme= seminary;
-	}
+    /**
+     * @param string
+     */
+    public void setName(String string) {
+        name = string;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getSeminaryThemeIdInternal()
-	{
-		return seminaryThemeIdInternal;
-	}
+    /**
+     * @param seminary
+     */
+    public void setSeminaryTheme(ITheme seminary) {
+        this.seminaryTheme = seminary;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setSeminaryThemeIdInternal(Integer integer)
-	{
-		seminaryThemeIdInternal= integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getSeminaryThemeIdInternal() {
+        return seminaryThemeIdInternal;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getSeminaryCandidacies()
-	{
-		return seminaryCandidacies;
-	}
+    /**
+     * @param integer
+     */
+    public void setSeminaryThemeIdInternal(Integer integer) {
+        seminaryThemeIdInternal = integer;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setSeminaryCandidacies(List list)
-	{
-		seminaryCandidacies= list;
-	}
+    /**
+     * @return
+     */
+    public List getSeminaryCandidacies() {
+        return seminaryCandidacies;
+    }
+
+    /**
+     * @param list
+     */
+    public void setSeminaryCandidacies(List list) {
+        seminaryCandidacies = list;
+    }
 
 }

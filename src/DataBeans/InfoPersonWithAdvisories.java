@@ -22,8 +22,7 @@ public class InfoPersonWithAdvisories extends InfoPerson {
         super.copyFromDomain(person);
         if (person != null && person.getAdvisories() != null) {
 
-            setInfoAdvisories((List) CollectionUtils.collect(person
-                    .getAdvisories(), new Transformer() {
+            setInfoAdvisories((List) CollectionUtils.collect(person.getAdvisories(), new Transformer() {
 
                 public Object transform(Object arg0) {
                     return InfoAdvisory.newInfoFromDomain((IAdvisory) arg0);

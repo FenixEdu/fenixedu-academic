@@ -13,89 +13,88 @@ import Util.ProviderRegimeType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class ServiceProviderRegime extends DomainObject implements IServiceProviderRegime
-{
+public class ServiceProviderRegime extends DomainObject implements IServiceProviderRegime {
     private ProviderRegimeType providerRegimeType;
+
     private Integer keyTeacher;
+
     private ITeacher teacher;
+
     private Date lastModificationDate;
-    
+
     /**
-     * 
+     *  
      */
-    public ServiceProviderRegime()
-    {
+    public ServiceProviderRegime() {
         super();
     }
+
     /**
      * @param serviceProviderRegimeId
      */
-    public ServiceProviderRegime(Integer idInternal)
-    {
+    public ServiceProviderRegime(Integer idInternal) {
         super(idInternal);
     }
+
     /**
      * @return Returns the keyTeacher.
      */
-    public Integer getKeyTeacher()
-    {
+    public Integer getKeyTeacher() {
         return keyTeacher;
     }
 
     /**
-     * @param keyTeacher The keyTeacher to set.
+     * @param keyTeacher
+     *            The keyTeacher to set.
      */
-    public void setKeyTeacher(Integer keyTeacher)
-    {
+    public void setKeyTeacher(Integer keyTeacher) {
         this.keyTeacher = keyTeacher;
     }
 
     /**
      * @return Returns the providerRegimeType.
      */
-    public ProviderRegimeType getProviderRegimeType()
-    {
+    public ProviderRegimeType getProviderRegimeType() {
         return providerRegimeType;
     }
 
     /**
-     * @param providerRegimeType The providerRegimeType to set.
+     * @param providerRegimeType
+     *            The providerRegimeType to set.
      */
-    public void setProviderRegimeType(ProviderRegimeType providerRegimeType)
-    {
+    public void setProviderRegimeType(ProviderRegimeType providerRegimeType) {
         this.providerRegimeType = providerRegimeType;
     }
 
     /**
      * @return Returns the teacher.
      */
-    public ITeacher getTeacher()
-    {
+    public ITeacher getTeacher() {
         return teacher;
     }
 
     /**
-     * @param teacher The teacher to set.
+     * @param teacher
+     *            The teacher to set.
      */
-    public void setTeacher(ITeacher teacher)
-    {
+    public void setTeacher(ITeacher teacher) {
         this.teacher = teacher;
     }
+
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 }

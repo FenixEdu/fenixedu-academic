@@ -19,11 +19,11 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
      */
     public StringBuffer render(LessonSlot lessonSlot) {
         StringBuffer strBuffer = new StringBuffer();
-        //InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
+        //InfoLesson lesson =
+        // lessonSlot.getInfoLessonWrapper().getInfoLesson();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-        if (showOccupation instanceof InfoLesson)
-        {
+        if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
             strBuffer.append("<a href='manageExecutionCourse.do?method=prepare&amp;page=0").append(
                     "&amp;" + SessionConstants.EXECUTION_PERIOD_OID + "=").append(
@@ -44,18 +44,14 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             if (lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
-        }
-        else 
-        {
+        } else {
             InfoExam infoExam = (InfoExam) showOccupation;
-            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) 
-            {
+            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
                 InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam
                         .getAssociatedExecutionCourse().get(iterEC);
-                if(iterEC != 0)
-				{    
-				    strBuffer.append(", ");
-				}
+                if (iterEC != 0) {
+                    strBuffer.append(", ");
+                }
                 strBuffer.append(infoEC.getSigla());
 
             }

@@ -10,74 +10,80 @@ import java.util.Date;
  * @author Susana Fernandes
  */
 public class Test extends DomainObject implements ITest {
-	private String title;
-	private String information;
-	private Integer numberOfQuestions;
-	private Date creationDate;
-	private Date lastModifiedDate;
-	private ITestScope testScope;
-	private Integer keyTestScope;
+    private String title;
 
-	public Test() {
-	}
+    private String information;
 
-	public Test(Integer testId) {
-		setIdInternal(testId);
-	}
+    private Integer numberOfQuestions;
 
-	public ITestScope getTestScope() {
-		return testScope;
-	}
+    private Date creationDate;
 
-	public Integer getKeyTestScope() {
-		return keyTestScope;
-	}
+    private Date lastModifiedDate;
 
-	public Integer getNumberOfQuestions() {
-		return numberOfQuestions;
-	}
+    private ITestScope testScope;
 
-	public String getTitle() {
-		return title;
-	}
+    private Integer keyTestScope;
 
-	public void setTestScope(ITestScope testScope) {
-		this.testScope = testScope;
-	}
+    public Test() {
+    }
 
-	public void setKeyTestScope(Integer integer) {
-		keyTestScope = integer;
-	}
+    public Test(Integer testId) {
+        setIdInternal(testId);
+    }
 
-	public void setNumberOfQuestions(Integer integer) {
-		numberOfQuestions = integer;
-	}
+    public ITestScope getTestScope() {
+        return testScope;
+    }
 
-	public void setTitle(String string) {
-		title = string;
-	}
+    public Integer getKeyTestScope() {
+        return keyTestScope;
+    }
 
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    public Integer getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
 
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setCreationDate(Date date) {
-		creationDate = date;
-	}
+    public void setTestScope(ITestScope testScope) {
+        this.testScope = testScope;
+    }
 
-	public void setLastModifiedDate(Date date) {
-		lastModifiedDate = date;
-	}
+    public void setKeyTestScope(Integer integer) {
+        keyTestScope = integer;
+    }
 
-	public String getInformation() {
-		return information;
-	}
+    public void setNumberOfQuestions(Integer integer) {
+        numberOfQuestions = integer;
+    }
 
-	public void setInformation(String string) {
-		information = string;
-	}
+    public void setTitle(String string) {
+        title = string;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setCreationDate(Date date) {
+        creationDate = date;
+    }
+
+    public void setLastModifiedDate(Date date) {
+        lastModifiedDate = date;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String string) {
+        information = string;
+    }
 }

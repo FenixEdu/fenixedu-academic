@@ -25,85 +25,66 @@ import Tools.Profiler;
  */
 public class ManageCacheDA extends FenixDispatchAction {
 
-	/**
-	 * Prepare information to show existing execution periods
-	 * and working areas.
-	 **/
-	public ActionForward prepare(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    /**
+     * Prepare information to show existing execution periods and working areas.
+     */
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Profiler.getInstance();
-		Profiler.report();
-		Profiler.resetInstance();
+        Profiler.getInstance();
+        Profiler.report();
+        Profiler.resetInstance();
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer numberCachedItems =
-			(Integer) ServiceUtils.executeService(userView, "ReadNumberCachedItems", null);
+        Integer numberCachedItems = (Integer) ServiceUtils.executeService(userView,
+                "ReadNumberCachedItems", null);
 
-		request.setAttribute(
-			SessionConstants.NUMBER_CACHED_ITEMS,
-			numberCachedItems);
+        request.setAttribute(SessionConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
 
-		Integer numberCachedResponses = new Integer(ResponseCacheOSCacheImpl.getInstance().getNumberOfCachedItems());
-		Integer refreshTimeout = new Integer(ResponseCacheOSCacheImpl.getInstance().getRefreshTimeout());
-		request.setAttribute(SessionConstants.NUMBER_CACHED_RESPONSES, numberCachedResponses);
-		request.setAttribute(SessionConstants.CACHED_RESPONSES_TIMEOUT, refreshTimeout);
+        Integer numberCachedResponses = new Integer(ResponseCacheOSCacheImpl.getInstance()
+                .getNumberOfCachedItems());
+        Integer refreshTimeout = new Integer(ResponseCacheOSCacheImpl.getInstance().getRefreshTimeout());
+        request.setAttribute(SessionConstants.NUMBER_CACHED_RESPONSES, numberCachedResponses);
+        request.setAttribute(SessionConstants.CACHED_RESPONSES_TIMEOUT, refreshTimeout);
 
-		DynaActionForm dynaActionForm = (DynaActionForm) form;
-		dynaActionForm.set("responseRefreshTimeout", refreshTimeout);
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
+        dynaActionForm.set("responseRefreshTimeout", refreshTimeout);
 
-		return mapping.findForward("Manage");
-	}
+        return mapping.findForward("Manage");
+    }
 
-	/**
-	 * Prepare information to show existing execution periods
-	 * and working areas.
-	 **/
-	public ActionForward clearCache(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    /**
+     * Prepare information to show existing execution periods and working areas.
+     */
+    public ActionForward clearCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		ServiceUtils.executeService(userView, "ClearCache", null);
+        ServiceUtils.executeService(userView, "ClearCache", null);
 
-		return mapping.findForward("CacheCleared");
-	}
+        return mapping.findForward("CacheCleared");
+    }
 
-	public ActionForward clearResponseCache(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws Exception {
+    public ActionForward clearResponseCache(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ResponseCacheOSCacheImpl.getInstance().clear();
+        ResponseCacheOSCacheImpl.getInstance().clear();
 
-		return mapping.findForward("CacheCleared");
-	}
+        return mapping.findForward("CacheCleared");
+    }
 
-	public ActionForward setResponseRefreshTimeout(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws Exception {
+    public ActionForward setResponseRefreshTimeout(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		DynaActionForm dynaActionForm = (DynaActionForm) form;
+        DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-		Integer responseRefreshTimeout = (Integer) dynaActionForm.get("responseRefreshTimeout");
+        Integer responseRefreshTimeout = (Integer) dynaActionForm.get("responseRefreshTimeout");
 
-		ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(responseRefreshTimeout.intValue());
+        ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(responseRefreshTimeout.intValue());
 
-		return mapping.findForward("CacheCleared");
-	}
+        return mapping.findForward("CacheCleared");
+    }
 
 }

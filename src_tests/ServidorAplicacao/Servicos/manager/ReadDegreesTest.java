@@ -8,19 +8,19 @@ package ServidorAplicacao.Servicos.manager;
  */
 
 public class ReadDegreesTest extends TestCaseManagerReadServices {
-	    
-	/**
-	 * @param testName
-	 */
-	 public ReadDegreesTest(String testName) {
-		super(testName);
-	 }
 
-	 protected String getNameOfServiceToBeTested() {
-		return "ReadDegrees";
-	 }
+    /**
+     * @param testName
+     */
+    public ReadDegreesTest(String testName) {
+        super(testName);
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 5;
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadDegrees";
+    }
+
+    protected int getNumberOfItemsToRetrieve() {
+        return 5;
+    }
 }

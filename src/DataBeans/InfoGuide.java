@@ -12,317 +12,326 @@ import Util.GuideRequester;
 import Util.PaymentType;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class InfoGuide extends InfoObject {
-	
-	private Integer number;
-	private Integer year;
-	private Double total;
-	private String remarks;
-	private InfoPerson infoPerson;
-	private InfoContributor infoContributor;
-	private List infoGuideEntries;
-	private GuideRequester guideRequester; 
-	private InfoExecutionDegree infoExecutionDegree;
-	private PaymentType paymentType;
-	private Date creationDate;
-	private Integer version;
-	private List infoGuideSituations;
-	private InfoGuideSituation infoGuideSituation;
-	private Date paymentDate;
+
+    private Integer number;
+
+    private Integer year;
+
+    private Double total;
+
+    private String remarks;
+
+    private InfoPerson infoPerson;
+
+    private InfoContributor infoContributor;
+
+    private List infoGuideEntries;
+
+    private GuideRequester guideRequester;
+
+    private InfoExecutionDegree infoExecutionDegree;
+
+    private PaymentType paymentType;
+
+    private Date creationDate;
+
+    private Integer version;
+
+    private List infoGuideSituations;
+
+    private InfoGuideSituation infoGuideSituation;
+
+    private Date paymentDate;
+
     private List infoReimbursementGuides;
 
-	public InfoGuide() {}
-	 
-		
-	public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson, InfoContributor infoContributor, GuideRequester guideRequester,
-			InfoExecutionDegree infoExecutionDegree, PaymentType paymentType, Date creationDate, Integer version){	 		
-		this.number = number;
-		this.year = year;
-		this.total = total;
-		this.remarks = remarks;
-		this.infoPerson = infoPerson;
-		this.infoContributor = infoContributor;
-		this.guideRequester = guideRequester;
-		this.infoExecutionDegree = infoExecutionDegree;
-		this.paymentType = paymentType;
-		this.creationDate = creationDate;
-		this.version = version;
-	}
-	
-	public boolean equals(Object obj) {
-	  boolean resultado = false;
-	  if (obj instanceof InfoGuide) {
-		InfoGuide guide = (InfoGuide)obj;
+    public InfoGuide() {
+    }
 
-		resultado = getNumber().equals(guide.getNumber()) &&
-					getYear().equals(guide.getYear());
-	  }
+    public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson,
+            InfoContributor infoContributor, GuideRequester guideRequester,
+            InfoExecutionDegree infoExecutionDegree, PaymentType paymentType, Date creationDate,
+            Integer version) {
+        this.number = number;
+        this.year = year;
+        this.total = total;
+        this.remarks = remarks;
+        this.infoPerson = infoPerson;
+        this.infoContributor = infoContributor;
+        this.guideRequester = guideRequester;
+        this.infoExecutionDegree = infoExecutionDegree;
+        this.paymentType = paymentType;
+        this.creationDate = creationDate;
+        this.version = version;
+    }
 
-	  return resultado;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoGuide) {
+            InfoGuide guide = (InfoGuide) obj;
 
-	public String toString() {
-	  String result = "[INFO_GUIDE";
-	  result += ", number=" + number;
-	  result += ", year=" + year;
-	  result += ", person=" + infoPerson;
-	  result += ", contributor=" + infoContributor;
-	  result += ", total=" + total;
-	  result += ", remarks=" + remarks;
-	  result += ", infoGuideEntries=" + infoGuideEntries;
-	  result += ", guideRequester=" + guideRequester;
-	  result += ", infoExecutionDegree=" + infoExecutionDegree;
-	  result += ", paymentType=" + paymentType;
-	  result += ", creationDate=" + creationDate;
-	  result += ", version=" + version;
-	  result += ", infoGuideSituation=" + infoGuideSituation;
-	  result += ", payment Date=" + paymentDate;
-	  result += "]";
-	  return result;
-	}
+            resultado = getNumber().equals(guide.getNumber()) && getYear().equals(guide.getYear());
+        }
 
-	
-	
-	    
-	/**
-	 * @return
-	 */
-	public GuideRequester getGuideRequester() {
-		return guideRequester;
-	}
+        return resultado;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoContributor getInfoContributor() {
-		return infoContributor;
-	}
+    public String toString() {
+        String result = "[INFO_GUIDE";
+        result += ", number=" + number;
+        result += ", year=" + year;
+        result += ", person=" + infoPerson;
+        result += ", contributor=" + infoContributor;
+        result += ", total=" + total;
+        result += ", remarks=" + remarks;
+        result += ", infoGuideEntries=" + infoGuideEntries;
+        result += ", guideRequester=" + guideRequester;
+        result += ", infoExecutionDegree=" + infoExecutionDegree;
+        result += ", paymentType=" + paymentType;
+        result += ", creationDate=" + creationDate;
+        result += ", version=" + version;
+        result += ", infoGuideSituation=" + infoGuideSituation;
+        result += ", payment Date=" + paymentDate;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoExecutionDegree getInfoExecutionDegree() {
-		return infoExecutionDegree;
-	}
+    /**
+     * @return
+     */
+    public GuideRequester getGuideRequester() {
+        return guideRequester;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoGuideEntries() {
-		return infoGuideEntries;
-	}
+    /**
+     * @return
+     */
+    public InfoContributor getInfoContributor() {
+        return infoContributor;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoPerson getInfoPerson() {
-		return infoPerson;
-	}
+    /**
+     * @return
+     */
+    public InfoExecutionDegree getInfoExecutionDegree() {
+        return infoExecutionDegree;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getNumber() {
-		return number;
-	}
+    /**
+     * @return
+     */
+    public List getInfoGuideEntries() {
+        return infoGuideEntries;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks() {
-		return remarks;
-	}
+    /**
+     * @return
+     */
+    public InfoPerson getInfoPerson() {
+        return infoPerson;
+    }
 
-	/**
-	 * @return
-	 */
-	public Double getTotal() {
-		return total;
-	}
+    /**
+     * @return
+     */
+    public Integer getNumber() {
+        return number;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getYear() {
-		return year;
-	}
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
 
-	/**
-	 * @param requester
-	 */
-	public void setGuideRequester(GuideRequester requester) {
-		guideRequester = requester;
-	}
+    /**
+     * @return
+     */
+    public Double getTotal() {
+        return total;
+    }
 
-	/**
-	 * @param contributor
-	 */
-	public void setInfoContributor(InfoContributor contributor) {
-		infoContributor = contributor;
-	}
+    /**
+     * @return
+     */
+    public Integer getYear() {
+        return year;
+    }
 
-	/**
-	 * @param degree
-	 */
-	public void setInfoExecutionDegree(InfoExecutionDegree degree) {
-		infoExecutionDegree = degree;
-	}
+    /**
+     * @param requester
+     */
+    public void setGuideRequester(GuideRequester requester) {
+        guideRequester = requester;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoGuideEntries(List list) {
-		infoGuideEntries = list;
-	}
+    /**
+     * @param contributor
+     */
+    public void setInfoContributor(InfoContributor contributor) {
+        infoContributor = contributor;
+    }
 
-	/**
-	 * @param person
-	 */
-	public void setInfoPerson(InfoPerson person) {
-		infoPerson = person;
-	}
+    /**
+     * @param degree
+     */
+    public void setInfoExecutionDegree(InfoExecutionDegree degree) {
+        infoExecutionDegree = degree;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setNumber(Integer integer) {
-		number = integer;
-	}
+    /**
+     * @param list
+     */
+    public void setInfoGuideEntries(List list) {
+        infoGuideEntries = list;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setRemarks(String string) {
-		remarks = string;
-	}
+    /**
+     * @param person
+     */
+    public void setInfoPerson(InfoPerson person) {
+        infoPerson = person;
+    }
 
-	/**
-	 * @param double1
-	 */
-	public void setTotal(Double double1) {
-		total = double1;
-	}
+    /**
+     * @param integer
+     */
+    public void setNumber(Integer integer) {
+        number = integer;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setYear(Integer integer) {
-		year = integer;
-	}
+    /**
+     * @param string
+     */
+    public void setRemarks(String string) {
+        remarks = string;
+    }
 
-	/**
-	 * @return
-	 */
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
+    /**
+     * @param double1
+     */
+    public void setTotal(Double double1) {
+        total = double1;
+    }
 
-	/**
-	 * @param type
-	 */
-	public void setPaymentType(PaymentType type) {
-		paymentType = type;
-	}
+    /**
+     * @param integer
+     */
+    public void setYear(Integer integer) {
+        year = integer;
+    }
 
+    /**
+     * @return
+     */
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    /**
+     * @param type
+     */
+    public void setPaymentType(PaymentType type) {
+        paymentType = type;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getVersion() {
-		return version;
-	}
+    /**
+     * @return
+     */
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setCreationDate(Date date) {
-		creationDate = date;
-	}
+    /**
+     * @return
+     */
+    public Integer getVersion() {
+        return version;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setVersion(Integer integer) {
-		version = integer;
-	}
+    /**
+     * @param date
+     */
+    public void setCreationDate(Date date) {
+        creationDate = date;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoGuideSituations() {
-		return infoGuideSituations;
-	}
+    /**
+     * @param integer
+     */
+    public void setVersion(Integer integer) {
+        version = integer;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoGuideSituations(List list) {
-		infoGuideSituations = list;
-	}
+    /**
+     * @return
+     */
+    public List getInfoGuideSituations() {
+        return infoGuideSituations;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoGuideSituation getInfoGuideSituation() {
-		return infoGuideSituation;
-	}
+    /**
+     * @param list
+     */
+    public void setInfoGuideSituations(List list) {
+        infoGuideSituations = list;
+    }
 
-	/**
-	 * @param situation
-	 */
-	public void setInfoGuideSituation(InfoGuideSituation situation) {
-		infoGuideSituation = situation;
-	}
+    /**
+     * @return
+     */
+    public InfoGuideSituation getInfoGuideSituation() {
+        return infoGuideSituation;
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getPaymentDate() {
-		return paymentDate;
-	}
+    /**
+     * @param situation
+     */
+    public void setInfoGuideSituation(InfoGuideSituation situation) {
+        infoGuideSituation = situation;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setPaymentDate(Date date) {
-		paymentDate = date;
-	}
+    /**
+     * @return
+     */
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
 
-	
+    /**
+     * @param date
+     */
+    public void setPaymentDate(Date date) {
+        paymentDate = date;
+    }
 
     /**
      * @return Returns the reimbursementGuides.
      */
-    public List getInfoReimbursementGuides()
-    {
+    public List getInfoReimbursementGuides() {
         return infoReimbursementGuides;
     }
+
     /**
-     * @param reimbursementGuides The reimbursementGuides to set.
+     * @param reimbursementGuides
+     *            The reimbursementGuides to set.
      */
-    public void setInfoReimbursementGuides(List reimbursementGuides)
-    {
+    public void setInfoReimbursementGuides(List reimbursementGuides) {
         this.infoReimbursementGuides = reimbursementGuides;
     }
-    
-    
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IGuide guide) {
         super.copyFromDomain(guide);
-        if(guide != null) {
+        if (guide != null) {
             setCreationDate(guide.getCreationDate());
             setNumber(guide.getNumber());
             setPaymentDate(guide.getPaymentDate());
@@ -333,10 +342,10 @@ public class InfoGuide extends InfoObject {
             setYear(guide.getYear());
         }
     }
-    
+
     public static InfoGuide newInfoFromDomain(IGuide guide) {
         InfoGuide infoGuide = null;
-        if(guide != null) {
+        if (guide != null) {
             infoGuide = new InfoGuide();
             infoGuide.copyFromDomain(guide);
         }

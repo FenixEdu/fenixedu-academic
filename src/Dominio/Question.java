@@ -7,87 +7,76 @@ package Dominio;
 /**
  * @author Susana Fernandes
  */
-public class Question extends DomainObject implements IQuestion
-{
-	private String xmlFile;
-	private String xmlFileName;
-	private IMetadata metadata;
-	private Integer keyMetadata;
-	private Boolean visibility;
+public class Question extends DomainObject implements IQuestion {
+    private String xmlFile;
 
-	public Question()
-	{
-	}
-	public Question(Integer questionId)
-	{
-		setIdInternal(questionId);
-	}
-	public Integer getKeyMetadata()
-	{
-		return keyMetadata;
-	}
+    private String xmlFileName;
 
-	public IMetadata getMetadata()
-	{
-		return metadata;
-	}
+    private IMetadata metadata;
 
-	public String getXmlFile()
-	{
-		return xmlFile;
-	}
+    private Integer keyMetadata;
 
-	public String getXmlFileName()
-	{
-		return xmlFileName;
-	}
+    private Boolean visibility;
 
-	public void setKeyMetadata(Integer integer)
-	{
-		keyMetadata = integer;
-	}
+    public Question() {
+    }
 
-	public void setMetadata(IMetadata metadata)
-	{
-		this.metadata = metadata;
-	}
+    public Question(Integer questionId) {
+        setIdInternal(questionId);
+    }
 
-	public void setXmlFile(String string)
-	{
-		xmlFile = string;
-	}
+    public Integer getKeyMetadata() {
+        return keyMetadata;
+    }
 
-	public void setXmlFileName(String string)
-	{
-		xmlFileName = string;
-	}
+    public IMetadata getMetadata() {
+        return metadata;
+    }
 
-	public Boolean getVisibility()
-	{
-		return visibility;
-	}
+    public String getXmlFile() {
+        return xmlFile;
+    }
 
-	public void setVisibility(Boolean boolean1)
-	{
-		visibility = boolean1;
-	}
+    public String getXmlFileName() {
+        return xmlFileName;
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean resultado = false;
-		if (obj instanceof IQuestion)
-		{
-			IQuestion question = (IQuestion) obj;
-			resultado =
-				(question != null)
-					&& this.getIdInternal().equals(question.getIdInternal())
-					&& this.getKeyMetadata().equals(question.getKeyMetadata())
-					&& this.getVisibility().equals(question.getVisibility())
-					&& this.getXmlFile().equals(question.getXmlFile())
-					&& this.getXmlFileName().equals(question.getXmlFileName());
-		}
+    public void setKeyMetadata(Integer integer) {
+        keyMetadata = integer;
+    }
 
-		return resultado;
-	}
+    public void setMetadata(IMetadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public void setXmlFile(String string) {
+        xmlFile = string;
+    }
+
+    public void setXmlFileName(String string) {
+        xmlFileName = string;
+    }
+
+    public Boolean getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Boolean boolean1) {
+        visibility = boolean1;
+    }
+
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IQuestion) {
+            IQuestion question = (IQuestion) obj;
+            resultado = (question != null) && this.getIdInternal().equals(question.getIdInternal())
+                    && this.getKeyMetadata().equals(question.getKeyMetadata())
+                    && this.getVisibility().equals(question.getVisibility())
+                    && this.getXmlFile().equals(question.getXmlFile())
+                    && this.getXmlFileName().equals(question.getXmlFileName());
+        }
+
+        return resultado;
+    }
 
 }

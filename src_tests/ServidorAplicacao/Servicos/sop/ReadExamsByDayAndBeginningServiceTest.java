@@ -31,45 +31,37 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuthorizationServices
-{
+public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuthorizationServices {
 
     Calendar beginning = null;
 
-    public ReadExamsByDayAndBeginningServiceTest(java.lang.String testName)
-    {
+    public ReadExamsByDayAndBeginningServiceTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(ReadExamsByDayAndBeginningServiceTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExamsByDayAndBeginning";
     }
 
-    public void testReadValidResult()
-    {
+    public void testReadValidResult() {
         beginning = Calendar.getInstance();
         beginning.set(Calendar.YEAR, 2003);
         beginning.set(Calendar.MONTH, Calendar.JUNE);
@@ -82,20 +74,16 @@ public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuth
         args[0] = beginning;
         args[1] = beginning;
 
-        try
-        {
+        try {
             callServiceWithAuthorizedUserView();
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             fail("Unexpected exception: " + e);
         }
 
         InfoViewExam infoViewExam = new InfoViewExam();
-        ArrayList infoViewExams = new ArrayList();
+        List infoViewExams = new ArrayList();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             sp.iniciarTransaccao();
@@ -111,42 +99,31 @@ public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuth
             Integer numberStudentesAttendingCourse = null;
             int totalNumberStudents = 0;
 
-            for (int i = 0; i < exams.size(); i++)
-            {
+            for (int i = 0; i < exams.size(); i++) {
                 tempExam = (IExam) exams.get(i);
                 tempInfoExam = Cloner.copyIExam2InfoExam(tempExam);
                 tempInfoDegrees = new ArrayList();
                 tempInfoExecutionCourses = new ArrayList();
 
-                for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++)
-                {
-                    IExecutionCourse executionCourse =
-                        (IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
-                    tempInfoExecutionCourses.add(
-                        Cloner.get(executionCourse));
+                for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++) {
+                    IExecutionCourse executionCourse = (IExecutionCourse) tempExam
+                            .getAssociatedExecutionCourses().get(k);
+                    tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 
                     tempAssociatedCurricularCourses = executionCourse.getAssociatedCurricularCourses();
-                    for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++)
-                    {
-                        tempDegree =
-                            ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
-                                .getDegreeCurricularPlan()
-                                .getDegree();
+                    for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {
+                        tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
+                                .getDegreeCurricularPlan().getDegree();
                         tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
                     }
 
-                    numberStudentesAttendingCourse =
-                        sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(
-                            executionCourse);
+                    numberStudentesAttendingCourse = sp.getIFrequentaPersistente()
+                            .countStudentsAttendingExecutionCourse(executionCourse);
                     totalNumberStudents += numberStudentesAttendingCourse.intValue();
                 }
 
-                infoViewExams.add(
-                    new InfoViewExamByDayAndShift(
-                        tempInfoExam,
-                        tempInfoExecutionCourses,
-                        tempInfoDegrees,
-                        numberStudentesAttendingCourse));
+                infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoExecutionCourses,
+                        tempInfoDegrees, numberStudentesAttendingCourse));
             }
 
             infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);
@@ -156,20 +133,17 @@ public class ReadExamsByDayAndBeginningServiceTest extends TestCaseRequeiersAuth
             for (int i = 0; i < rooms.size(); i++)
                 totalExamCapacity += ((ISala) rooms.get(i)).getCapacidadeExame().intValue();
 
-            infoViewExam.setAvailableRoomOccupation(
-                new Integer(totalExamCapacity - totalNumberStudents));
+            infoViewExam
+                    .setAvailableRoomOccupation(new Integer(totalExamCapacity - totalNumberStudents));
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 
         assertEquals("Unexpected result!", infoViewExam, result);
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 

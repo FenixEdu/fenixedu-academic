@@ -2,10 +2,10 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o LerTurma
- *
+ * 
  * @author tfc130
  * @version
- **/
+ */
 
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionDegree;
@@ -21,45 +21,51 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerTurma implements IServico {
 
-  private static LerTurma _servico = new LerTurma();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static LerTurma getService() {
-    return _servico;
-  }
+    private static LerTurma _servico = new LerTurma();
 
-  /**
-   * The actor of this class.
-   **/
-  private LerTurma() { }
-
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "LerTurma";
-  }
-
-  public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod) {
-                        
-    InfoClass infoTurma = null;
-
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      
-      IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-      ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-      
-      ITurma turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(className, executionDegree, executionPeriod);
-
-	  if (turma != null) {
-	  	infoTurma = Cloner.copyClass2InfoClass(turma);
-	  }
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
+    /**
+     * The singleton access method of this class.
+     */
+    public static LerTurma getService() {
+        return _servico;
     }
-    return infoTurma;
-  }
+
+    /**
+     * The actor of this class.
+     */
+    private LerTurma() {
+    }
+
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "LerTurma";
+    }
+
+    public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree,
+            InfoExecutionPeriod infoExecutionPeriod) {
+
+        InfoClass infoTurma = null;
+
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            ICursoExecucao executionDegree = Cloner
+                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+
+            ITurma turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
+                    className, executionDegree, executionPeriod);
+
+            if (turma != null) {
+                infoTurma = Cloner.copyClass2InfoClass(turma);
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+        return infoTurma;
+    }
 
 }

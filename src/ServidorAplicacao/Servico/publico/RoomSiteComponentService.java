@@ -53,25 +53,25 @@ public class RoomSiteComponentService implements IServico {
         return _servico;
     }
 
-	public Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day)
-		throws FenixServiceException {
+    public Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day)
+            throws FenixServiceException {
         SiteView siteView = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ISalaPersistente persistentRoom = sp.getISalaPersistente();
-//			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            //			IPersistentExecutionPeriod persistentExecutionPeriod =
+            // sp.getIPersistentExecutionPeriod();
 
             ISala room = persistentRoom.readByName(roomKey.getNomeSala());
-//            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-//                    .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);
-//            if (executionPeriod == null) {
-//                throw new NonExistingServiceException();
-//            }
-            RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder
-                    .getInstance();
-            bodyComponent = componentBuilder.getComponent(bodyComponent,
-                    day, room);
+            //            IExecutionPeriod executionPeriod = (IExecutionPeriod)
+            // persistentExecutionPeriod
+            //                    .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);
+            //            if (executionPeriod == null) {
+            //                throw new NonExistingServiceException();
+            //            }
+            RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
+            bodyComponent = componentBuilder.getComponent(bodyComponent, day, room);
 
             siteView = new SiteView(bodyComponent);
         } catch (ExcepcaoPersistencia e) {

@@ -30,28 +30,20 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Season;
 
-public class CreateExam implements IService
-{
-
-    
+public class CreateExam implements IService {
 
     /**
      * The actor of this class.
      */
-    public CreateExam()
-    {
+    public CreateExam() {
     }
 
-    
-
     public Boolean run(Calendar examDate, Calendar examTime, Season season,
-            InfoExecutionCourse infoExecutionCourse) throws FenixServiceException
-    {
+            InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 
         Boolean result = new Boolean(false);
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
@@ -63,28 +55,24 @@ public class CreateExam implements IService
                     .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
                             executionPeriod);
 
-            for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++)
-            {
+            for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
                 IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
-                if (exam.getSeason().equals(season)) { throw new ExistingServiceException(); }
+                if (exam.getSeason().equals(season)) {
+                    throw new ExistingServiceException();
+                }
             }
-            try
-            {
+            try {
                 IExam exam = new Exam(examDate, examTime, null, season);
                 sp.getIPersistentExam().simpleLockWrite(exam);
-                
+
                 IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
                 sp.getIPersistentExamExecutionCourse().simpleLockWrite(examExecutionCourse);
-            }
-            catch (ExistingPersistentException ex)
-            {
+            } catch (ExistingPersistentException ex) {
                 throw new ExistingServiceException(ex);
             }
 
             result = new Boolean(true);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
 
             throw new FenixServiceException(ex.getMessage());
         }

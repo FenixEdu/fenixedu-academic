@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
 import Dominio.StudentCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -21,28 +21,14 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão 6/Out/2003
  */
 
-public class ReadPosGradStudentCurricularPlanById implements IServico {
+public class ReadPosGradStudentCurricularPlanById implements IService {
 
-    private static ReadPosGradStudentCurricularPlanById servico = new ReadPosGradStudentCurricularPlanById();
-
-    public static ReadPosGradStudentCurricularPlanById getService() {
-        return servico;
-    }
-
-    private ReadPosGradStudentCurricularPlanById() {
-    }
-
-    public final String getNome() {
-        return "ReadPosGradStudentCurricularPlanById";
-    }
-
-    public Object run(Integer studentCurricularPlanId)
-            throws FenixServiceException {
+    public Object run(Integer studentCurricularPlanId) throws FenixServiceException {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
 
             StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
@@ -56,11 +42,11 @@ public class ReadPosGradStudentCurricularPlanById implements IServico {
             if (studentCurricularPlan.getEnrolments() != null) {
                 List infoEnrolments = new ArrayList();
 
-                ListIterator iterator = studentCurricularPlan.getEnrolments()
-                        .listIterator();
+                ListIterator iterator = studentCurricularPlan.getEnrolments().listIterator();
                 while (iterator.hasNext()) {
                     Enrolment enrolment = (Enrolment) iterator.next();
-                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+                            .newInfoFromDomain(enrolment);
                     infoEnrolments.add(infoEnrolment);
                 }
 

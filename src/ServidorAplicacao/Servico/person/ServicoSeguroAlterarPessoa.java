@@ -8,21 +8,20 @@ import ServidorPersistenteJDBC.IPessoaPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
 public class ServicoSeguroAlterarPessoa extends ServicoSeguro {
-    
+
     private Pessoa pessoa = null;
-    
-    public ServicoSeguroAlterarPessoa(ServicoAutorizacao servicoAutorizacaoAlterarPessoa,
-    Pessoa pessoa) {
+
+    public ServicoSeguroAlterarPessoa(ServicoAutorizacao servicoAutorizacaoAlterarPessoa, Pessoa pessoa) {
         super(servicoAutorizacaoAlterarPessoa);
         this.pessoa = pessoa;
     }
-    
+
     public void execute() throws NotExecuteException {
         IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-        if(!iPessoaPersistente.alterarPessoa(pessoa))
+        if (!iPessoaPersistente.alterarPessoa(pessoa))
             throw new NotExecuteException();
     }
-    
+
     public Pessoa getPessoa() {
         return pessoa;
     }

@@ -8,8 +8,10 @@
 <bean:define id="infoRequiredAttributeList" name="component" property="infoRequiredAttributes"/>
 <bean:define id="infoNonRequiredAttributeList" name="component" property="infoNonRequiredAttributes"/>
 
+<html:form action="/publicationCientific">	
+	
 <h2><bean:message key="title.teacherInformation"/></h2>
-<html:form action="/publicationCientific">
+
 	<logic:messagesPresent>
 		<span class="error">
 			<html:errors />
@@ -25,6 +27,7 @@
 		</logic:notPresent>
 		
 </h3>
+	
 <p class="infoop"><span class="emphasis-box">1</span>
 	<logic:present name="infoPublication">
 			<bean:message key="message.publications.managementEdit" />		
@@ -33,16 +36,19 @@
 			<bean:message key="message.publications.managementInsert" />	
 		</logic:notPresent>
 </P>
+
 <p>
 	<bean:message key="message.publications.authorsInserteds"/>
 
-	<br />
+	<br />			
+	
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="teacherId"/>
-	<html:hidden property="infoPublicationTypeId"/>
+	<!--<html:hidden property="infoPublicationTypeId"/>-->
 	<html:hidden property="typePublication"/>
 	<html:hidden property="method" value="edit"/>
+	
 	<logic:present name="infoAuthorsList">
 		<logic:iterate id="infoAuthor" name="infoAuthorsList" type="DataBeans.publication.InfoAuthor">
 			<bean:define id="authorIdInserted" name="infoAuthor" property="idInternal"/>
@@ -81,6 +87,12 @@
 	<br />
 </p>
 	<bean:message key="message.publications.fieldsToFill"/>
+	
+	<html:select property="infoPublicationTypeId" onchange="this.form.method.value='prepareEdit';
+		this.form.page.value='0';this.form.typePublication.value='Cientific';this.form.submit();">
+		<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
+	</html:select>
+	<br/><br/>	
 	
 <table>
 		<logic:iterate id="att" name="infoRequiredAttributeList">

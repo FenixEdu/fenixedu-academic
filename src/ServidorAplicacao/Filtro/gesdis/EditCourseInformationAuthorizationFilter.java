@@ -32,8 +32,7 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class EditCourseInformationAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public EditCourseInformationAuthorizationFilter() {
     }
@@ -53,14 +52,13 @@ public class EditCourseInformationAuthorizationFilter extends
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
         try {
-            if (((id != null && id.getRoles() != null && !AuthorizationUtils
-                    .containsRole(id.getRoles(), getRoleType())))
+            if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
+                    getRoleType())))
                     || (id == null)
                     || (id.getRoles() == null)
                     || (!isResponsibleFor(id, (InfoCourseReport) arguments[1]))) {
@@ -71,29 +69,21 @@ public class EditCourseInformationAuthorizationFilter extends
         }
     }
 
-    private boolean isResponsibleFor(IUserView id,
-            InfoCourseReport infoCourseReport) {
+    private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport) {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
-                    .getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            InfoExecutionCourse infoExecutionCourse = infoCourseReport
-                    .getInfoExecutionCourse();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourse
-                            .getIdInternal());
+            InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
-            List responsiblesFor = persistentResponsibleFor
-                    .readByExecutionCourse(executionCourse);
-            IResponsibleFor responsibleFor = new ResponsibleFor(teacher,
-                    executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+            IResponsibleFor responsibleFor = new ResponsibleFor(teacher, executionCourse);
 
             if (!responsiblesFor.contains(responsibleFor)) {
                 return false;

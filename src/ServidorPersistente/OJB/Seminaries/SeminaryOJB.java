@@ -12,31 +12,29 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.Seminary;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
-import ServidorPersistente.Seminaries.*;
+import ServidorPersistente.OJB.PersistentObjectOJB;
+import ServidorPersistente.Seminaries.IPersistentSeminary;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 28/Jul/2003, 11:01:39
- * 
+ *  
  */
-public class SeminaryOJB extends ObjectFenixOJB implements IPersistentSeminary
-{
-    public ISeminary readByName(String name) throws ExcepcaoPersistencia
-    {
+public class SeminaryOJB extends PersistentObjectOJB implements IPersistentSeminary {
+    public ISeminary readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
         return (ISeminary) super.queryObject(Seminary.class, criteria);
     }
-    public List readAll() throws ExcepcaoPersistencia
-    {
+
+    public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         return super.queryList(Seminary.class, criteria);
     }
-    public void delete(ISeminary seminary) throws ExcepcaoPersistencia
-    {
+
+    public void delete(ISeminary seminary) throws ExcepcaoPersistencia {
         super.deleteByOID(Seminary.class, seminary.getIdInternal());
     }
 }

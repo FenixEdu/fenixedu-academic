@@ -12,20 +12,22 @@ import ServidorPersistente.middleware.Utils.ClassUtils;
 /**
  * @author jpvl
  */
-public class PredicateLessonWithOneCourseAndMoreThanOneDegree extends PredicateForMigrationLessonList{
+public class PredicateLessonWithOneCourseAndMoreThanOneDegree extends PredicateForMigrationLessonList {
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.middleware.predicates.PredicateForMigrationLessonList#evaluateMigrationLesson(ServidorPersistente.middleware.MigrationLesson)
-	 */
-	public boolean evaluateMigrationLesson(MigrationLesson lesson) {
-		boolean evaluate = false;
-		if (lesson.getCourseInitialsList().size() == 1){
-			List classList = lesson.getClassList();
-				
-			List listOfDegrees = ClassUtils.extractDegreeCodeList(classList);
-			evaluate = listOfDegrees.size() > 1;
-		}
-		return evaluate;
-	}
-	
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.middleware.predicates.PredicateForMigrationLessonList#evaluateMigrationLesson(ServidorPersistente.middleware.MigrationLesson)
+     */
+    public boolean evaluateMigrationLesson(MigrationLesson lesson) {
+        boolean evaluate = false;
+        if (lesson.getCourseInitialsList().size() == 1) {
+            List classList = lesson.getClassList();
+
+            List listOfDegrees = ClassUtils.extractDegreeCodeList(classList);
+            evaluate = listOfDegrees.size() > 1;
+        }
+        return evaluate;
+    }
+
 }

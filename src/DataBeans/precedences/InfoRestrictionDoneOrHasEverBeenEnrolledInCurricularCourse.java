@@ -14,18 +14,20 @@ public class InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends
 
     public void copyFromDomain(IRestrictionByCurricularCourse restriction) {
         super.copyFromDomain(restriction);
-        super.setRestrictionKindResourceKey("label.manager.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse");
+        super
+                .setRestrictionKindResourceKey("label.manager.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse");
     }
 
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(IRestrictionByCurricularCourse restriction) {
+    public static InfoRestrictionByCurricularCourse newInfoFromDomain(
+            IRestrictionByCurricularCourse restriction) {
 
         InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse infoRestriction = null;
-        
+
         if (restriction != null) {
             infoRestriction = new InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse();
             infoRestriction.copyFromDomain(restriction);
         }
-        
+
         return infoRestriction;
     }
 

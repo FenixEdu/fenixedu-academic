@@ -10,8 +10,7 @@ import Dominio.IPessoa;
  * @author João Mota
  *  
  */
-public class InfoPersonWithInfoCountryAndAdvisories extends
-        InfoPersonWithAdvisories {
+public class InfoPersonWithInfoCountryAndAdvisories extends InfoPersonWithAdvisories {
 
     public void copyFromDomain(IPessoa person) {
         super.copyFromDomain(person);

@@ -7,127 +7,129 @@ package Dominio;
 
 /**
  * @author João Mota
- *
+ *  
  */
 public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
-	private IExam exam;
-	private IStudent student;
-	private ISala room;
+    private IExam exam;
 
-	private Integer keyExam;
-	private Integer keyStudent;
-	private Integer keyRoom;
+    private IStudent student;
 
-	/**
-	 * 
-	 */
-	public ExamStudentRoom() {
-	}
+    private ISala room;
 
-	public ExamStudentRoom(IExam exam, IStudent student, ISala room) {
-		setExam(exam);
-		setStudent(student);
-		setRoom(room);
-	}
+    private Integer keyExam;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
+    private Integer keyStudent;
 
-		if (obj instanceof IExamStudentRoom) {
-			IExamStudentRoom examStudentRoom = (IExamStudentRoom) obj;
-			ISala room = examStudentRoom.getRoom();
-			ISala thisRoom = this.getRoom();
-			resultado =
-				this.getExam().equals(examStudentRoom.getExam())
-					&& (((thisRoom == null) && (room == null))
-						|| ((thisRoom != null) && (thisRoom.equals(room))))
-					&& this.getStudent().equals(examStudentRoom.getStudent());
-		}
-		return resultado;
-	}
+    private Integer keyRoom;
 
-	/**
-	 * @return
-	 */
-	public IExam getExam() {
-		return exam;
-	}
+    /**
+     *  
+     */
+    public ExamStudentRoom() {
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyExam() {
-		return keyExam;
-	}
+    public ExamStudentRoom(IExam exam, IStudent student, ISala room) {
+        setExam(exam);
+        setStudent(student);
+        setRoom(room);
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyRoom() {
-		return keyRoom;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyStudent() {
-		return keyStudent;
-	}
+        if (obj instanceof IExamStudentRoom) {
+            IExamStudentRoom examStudentRoom = (IExamStudentRoom) obj;
+            ISala room = examStudentRoom.getRoom();
+            ISala thisRoom = this.getRoom();
+            resultado = this.getExam().equals(examStudentRoom.getExam())
+                    && (((thisRoom == null) && (room == null)) || ((thisRoom != null) && (thisRoom
+                            .equals(room)))) && this.getStudent().equals(examStudentRoom.getStudent());
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return
-	 */
-	public ISala getRoom() {
-		return room;
-	}
+    /**
+     * @return
+     */
+    public IExam getExam() {
+        return exam;
+    }
 
-	/**
-	 * @return
-	 */
-	public IStudent getStudent() {
-		return student;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyExam() {
+        return keyExam;
+    }
 
-	/**
-	 * @param exam
-	 */
-	public void setExam(IExam exam) {
-		this.exam = exam;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyRoom() {
+        return keyRoom;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyExam(Integer integer) {
-		keyExam = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyStudent() {
+        return keyStudent;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyRoom(Integer integer) {
-		keyRoom = integer;
-	}
+    /**
+     * @return
+     */
+    public ISala getRoom() {
+        return room;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyStudent(Integer integer) {
-		keyStudent = integer;
-	}
+    /**
+     * @return
+     */
+    public IStudent getStudent() {
+        return student;
+    }
 
-	/**
-	 * @param sala
-	 */
-	public void setRoom(ISala sala) {
-		room = sala;
-	}
+    /**
+     * @param exam
+     */
+    public void setExam(IExam exam) {
+        this.exam = exam;
+    }
 
-	/**
-	 * @param student
-	 */
-	public void setStudent(IStudent student) {
-		this.student = student;
-	}
+    /**
+     * @param integer
+     */
+    public void setKeyExam(Integer integer) {
+        keyExam = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyRoom(Integer integer) {
+        keyRoom = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyStudent(Integer integer) {
+        keyStudent = integer;
+    }
+
+    /**
+     * @param sala
+     */
+    public void setRoom(ISala sala) {
+        room = sala;
+    }
+
+    /**
+     * @param student
+     */
+    public void setStudent(IStudent student) {
+        this.student = student;
+    }
 
 }

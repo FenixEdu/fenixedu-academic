@@ -32,256 +32,235 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author David Santos in Apr 30, 2004
  */
 
-public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction extends DispatchAction
-{
-	public ActionForward showStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response) throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		ActionErrors errors = new ActionErrors();
+public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction extends DispatchAction {
+    public ActionForward showStudentCurricularPlans(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        ActionErrors errors = new ActionErrors();
 
-		String degreeTypeSTR = request.getParameter("degreeType");
-		String studentNumberSTR = request.getParameter("studentNumber");
-		String backLink = request.getParameter("backLink");
+        String degreeTypeSTR = request.getParameter("degreeType");
+        String studentNumberSTR = request.getParameter("studentNumber");
+        String backLink = request.getParameter("backLink");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(Integer.valueOf(degreeTypeSTR));
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(Integer.valueOf(degreeTypeSTR));
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		List infoStudentCurricularPlans = null;
-		try
-		{
-			infoStudentCurricularPlans = runService(userView, studentNumber, degreeType);
-		}
-		catch (Exception e)
-		{
-			saveAcurateError(request, errors, e, "showStudentCurricularPlans", studentNumberSTR);
-			setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null, null, new ArrayList(), null);
-			request.setAttribute("commingFrom", "showStudentCurricularPlans");
-			return mapping.getInputForward();
-		}
+        List infoStudentCurricularPlans = null;
+        try {
+            infoStudentCurricularPlans = runService(userView, studentNumber, degreeType);
+        } catch (Exception e) {
+            saveAcurateError(request, errors, e, "showStudentCurricularPlans", studentNumberSTR);
+            setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null,
+                    null, new ArrayList(), null);
+            request.setAttribute("commingFrom", "showStudentCurricularPlans");
+            return mapping.getInputForward();
+        }
 
-		if ( (infoStudentCurricularPlans == null) || (infoStudentCurricularPlans.isEmpty()) )
-		{
-			saveAcurateError(request, errors, null, "showStudentCurricularPlans", studentNumberSTR);
-			setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null, null, new ArrayList(), null);
-			request.setAttribute("commingFrom", "showStudentCurricularPlans");
-			return mapping.getInputForward();
-		}
+        if ((infoStudentCurricularPlans == null) || (infoStudentCurricularPlans.isEmpty())) {
+            saveAcurateError(request, errors, null, "showStudentCurricularPlans", studentNumberSTR);
+            setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null,
+                    null, new ArrayList(), null);
+            request.setAttribute("commingFrom", "showStudentCurricularPlans");
+            return mapping.getInputForward();
+        }
 
-		setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null, null,
-			infoStudentCurricularPlans, buildInfoEquivalenceContext(infoStudentCurricularPlans));
+        setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null, null,
+                infoStudentCurricularPlans, buildInfoEquivalenceContext(infoStudentCurricularPlans));
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
-			"showStudentCurricularPlans", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "showStudentCurricularPlans", backLink));
+    }
 
-	public ActionForward chooseStudentCurricularPlans(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response) throws Exception
-	{
+    public ActionForward chooseStudentCurricularPlans(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm selectStudentCurricularPlansForm = (DynaActionForm) form;
-		ActionErrors errors = new ActionErrors();
+        ActionErrors errors = new ActionErrors();
 
-		Integer degreeType = (Integer) selectStudentCurricularPlansForm.get("degreeType");
-		String studentNumber = (String) selectStudentCurricularPlansForm.get("studentNumber");
+        Integer degreeType = (Integer) selectStudentCurricularPlansForm.get("degreeType");
+        String studentNumber = (String) selectStudentCurricularPlansForm.get("studentNumber");
         String backLink = (String) selectStudentCurricularPlansForm.get("backLink");
-		Integer fromStudentCurricularPlanID = (Integer) selectStudentCurricularPlansForm.get("fromStudentCurricularPlanID");
-		Integer toStudentCurricularPlanID = (Integer) selectStudentCurricularPlansForm.get("toStudentCurricularPlanID");
+        Integer fromStudentCurricularPlanID = (Integer) selectStudentCurricularPlansForm
+                .get("fromStudentCurricularPlanID");
+        Integer toStudentCurricularPlanID = (Integer) selectStudentCurricularPlansForm
+                .get("toStudentCurricularPlanID");
 
-		if (fromStudentCurricularPlanID.equals(toStudentCurricularPlanID))
-		{
-			saveAcurateError(request, errors, null, "chooseStudentCurricularPlans", studentNumber);
-			setRequestAttributes(request, degreeType, studentNumber, backLink, fromStudentCurricularPlanID,
-				toStudentCurricularPlanID, null, null);
-			request.setAttribute("commingFrom", "chooseStudentCurricularPlans");
-			return mapping.getInputForward();
-		}
+        if (fromStudentCurricularPlanID.equals(toStudentCurricularPlanID)) {
+            saveAcurateError(request, errors, null, "chooseStudentCurricularPlans", studentNumber);
+            setRequestAttributes(request, degreeType, studentNumber, backLink,
+                    fromStudentCurricularPlanID, toStudentCurricularPlanID, null, null);
+            request.setAttribute("commingFrom", "chooseStudentCurricularPlans");
+            return mapping.getInputForward();
+        }
 
-		setRequestAttributes(request, degreeType, studentNumber, backLink, fromStudentCurricularPlanID,
-			toStudentCurricularPlanID, null, null);
+        setRequestAttributes(request, degreeType, studentNumber, backLink, fromStudentCurricularPlanID,
+                toStudentCurricularPlanID, null, null);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
-			"chooseStudentCurricularPlans", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "chooseStudentCurricularPlans", backLink));
+    }
 
-	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		DynaActionForm selectStudentCurricularPlansForm = (DynaActionForm) form;
+    public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        DynaActionForm selectStudentCurricularPlansForm = (DynaActionForm) form;
 
-		Integer degreeType = (Integer) request.getAttribute("degreeType");
-		String studentNumber = (String) request.getAttribute("studentNumber");
-		String backLink = (String) request.getAttribute("backLink");
-		String commingFrom = (String) request.getAttribute("commingFrom");
+        Integer degreeType = (Integer) request.getAttribute("degreeType");
+        String studentNumber = (String) request.getAttribute("studentNumber");
+        String backLink = (String) request.getAttribute("backLink");
+        String commingFrom = (String) request.getAttribute("commingFrom");
 
-		if (degreeType == null)
-		{
-			degreeType = (Integer) selectStudentCurricularPlansForm.get("degreeType");
-		}
+        if (degreeType == null) {
+            degreeType = (Integer) selectStudentCurricularPlansForm.get("degreeType");
+        }
 
-		if (studentNumber == null)
-		{
-			studentNumber = (String) selectStudentCurricularPlansForm.get("studentNumber");
-		}
+        if (studentNumber == null) {
+            studentNumber = (String) selectStudentCurricularPlansForm.get("studentNumber");
+        }
 
-		if (backLink == null)
-		{
-			backLink = (String) selectStudentCurricularPlansForm.get("backLink");
-		}
+        if (backLink == null) {
+            backLink = (String) selectStudentCurricularPlansForm.get("backLink");
+        }
 
-		if (commingFrom == null)
-		{
-			commingFrom = request.getParameter("commingFrom");
-		}
+        if (commingFrom == null) {
+            commingFrom = request.getParameter("commingFrom");
+        }
 
-		List infoStudentCurricularPlans = null;
+        List infoStudentCurricularPlans = null;
 
-		if (commingFrom.equals("chooseStudentCurricularPlans"))
-		{
-			TipoCurso realDegreeType = new TipoCurso();
-			realDegreeType.setTipoCurso(degreeType);
-			Integer realStudentNumber = Integer.valueOf(studentNumber);
+        if (commingFrom.equals("chooseStudentCurricularPlans")) {
+            TipoCurso realDegreeType = new TipoCurso();
+            realDegreeType.setTipoCurso(degreeType);
+            Integer realStudentNumber = Integer.valueOf(studentNumber);
 
-			try
-			{
-				infoStudentCurricularPlans = runService(userView, realStudentNumber, realDegreeType);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				throw new FenixActionException(e);
-			}
-		}
-		
-		setRequestAttributes(request, degreeType, studentNumber, backLink, null, null,
-			infoStudentCurricularPlans, buildInfoEquivalenceContext(infoStudentCurricularPlans));
+            try {
+                infoStudentCurricularPlans = runService(userView, realStudentNumber, realDegreeType);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
+        }
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
-			"showStudentCurricularPlans", backLink));
-	}
+        setRequestAttributes(request, degreeType, studentNumber, backLink, null, null,
+                infoStudentCurricularPlans, buildInfoEquivalenceContext(infoStudentCurricularPlans));
 
-	/**
-	 * @param request
-	 * @param errors
-	 * @param e
-	 * @param methodName
-	 * @param studentNumber
-	 */
-	private void saveAcurateError(HttpServletRequest request, ActionErrors errors, Exception e, String methodName,
-		String studentNumber)
-	{
-		if (methodName.equals("showStudentCurricularPlans") && (e != null))
-		{
-			if (e instanceof NonExistingServiceException)
-			{
-				errors.add("no.student.curricular.plans", new ActionError(
-					"errors.enrollment.equivalence.no.student.curricular.plans", studentNumber));
-			} else if (e instanceof FenixServiceException)
-			{
-				e.printStackTrace();
-				errors.add("problems.in.persistent.suport", new ActionError(
-					"errors.enrollment.equivalence.problems.in.persistent.suport"));
-			}
-		} else if (methodName.equals("showStudentCurricularPlans") && (e == null))
-		{
-			errors.add("no.student.curricular.plans", new ActionError(
-				"errors.enrollment.equivalence.no.student.curricular.plans", studentNumber));
-		} else if (methodName.equals("chooseStudentCurricularPlans"))
-		{
-			errors.add("enrollment.equivalence.destination.student.curricular.plan.equal.to.origin.student.curricular.plan",
-				new ActionError(
-					"errors.enrollment.equivalence.destination.student.curricular.plan.equal.to.origin.student.curricular.plan"));
-		}
-		
-		saveErrors(request, errors);
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "showStudentCurricularPlans", backLink));
+    }
 
-	/**
-	 * @param infoStudentCurricularPlans
-	 * @return InfoEquivalenceContext
-	 */
-	private InfoEquivalenceContext buildInfoEquivalenceContext(List infoStudentCurricularPlans)
-	{
-		InfoEquivalenceContext infoEquivalenceContext = new InfoEquivalenceContext();
+    /**
+     * @param request
+     * @param errors
+     * @param e
+     * @param methodName
+     * @param studentNumber
+     */
+    private void saveAcurateError(HttpServletRequest request, ActionErrors errors, Exception e,
+            String methodName, String studentNumber) {
+        if (methodName.equals("showStudentCurricularPlans") && (e != null)) {
+            if (e instanceof NonExistingServiceException) {
+                errors.add("no.student.curricular.plans", new ActionError(
+                        "errors.enrollment.equivalence.no.student.curricular.plans", studentNumber));
+            } else if (e instanceof FenixServiceException) {
+                e.printStackTrace();
+                errors.add("problems.in.persistent.suport", new ActionError(
+                        "errors.enrollment.equivalence.problems.in.persistent.suport"));
+            }
+        } else if (methodName.equals("showStudentCurricularPlans") && (e == null)) {
+            errors.add("no.student.curricular.plans", new ActionError(
+                    "errors.enrollment.equivalence.no.student.curricular.plans", studentNumber));
+        } else if (methodName.equals("chooseStudentCurricularPlans")) {
+            errors
+                    .add(
+                            "enrollment.equivalence.destination.student.curricular.plan.equal.to.origin.student.curricular.plan",
+                            new ActionError(
+                                    "errors.enrollment.equivalence.destination.student.curricular.plan.equal.to.origin.student.curricular.plan"));
+        }
 
-		List infoStudentCurricularPlansList = (List) CollectionUtils.select(infoStudentCurricularPlans, new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
-				return infoStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ);
-			}
-		});
+        saveErrors(request, errors);
+    }
 
-		infoEquivalenceContext.setInfoStudentCurricularPlan((InfoStudentCurricularPlan) infoStudentCurricularPlansList.get(0));
+    /**
+     * @param infoStudentCurricularPlans
+     * @return InfoEquivalenceContext
+     */
+    private InfoEquivalenceContext buildInfoEquivalenceContext(List infoStudentCurricularPlans) {
+        InfoEquivalenceContext infoEquivalenceContext = new InfoEquivalenceContext();
 
-		return infoEquivalenceContext;
-	}
+        List infoStudentCurricularPlansList = (List) CollectionUtils.select(infoStudentCurricularPlans,
+                new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
+                        return infoStudentCurricularPlan.getCurrentState().equals(
+                                StudentCurricularPlanState.ACTIVE_OBJ);
+                    }
+                });
 
-	/**
-	 * @param userView
-	 * @param studentNumber
-	 * @param degreeType
-	 * @return infoStudentCurricularPlans
-	 * @throws FenixServiceException
-	 */
-	private List runService(IUserView userView, Integer studentNumber, TipoCurso degreeType) throws FenixServiceException
-	{
-		List infoStudentCurricularPlans = null;
+        infoEquivalenceContext
+                .setInfoStudentCurricularPlan((InfoStudentCurricularPlan) infoStudentCurricularPlansList
+                        .get(0));
 
-		Object args[] = {studentNumber, degreeType};
-		infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
-			"ReadStudentCurricularPlansByNumberAndDegreeType", args);
-		
-		if (infoStudentCurricularPlans == null)
-		{
-			infoStudentCurricularPlans = new ArrayList();
-		}
-		
-		return infoStudentCurricularPlans;
-	}
+        return infoEquivalenceContext;
+    }
 
-	/**
-	 * @param request
-	 * @param degreeType
-	 * @param studentNumber
-	 * @param backLink
-	 * @param fromStudentCurricularPlanID
-	 * @param toStudentCurricularPlanID
-	 * @param infoStudentCurricularPlans
-	 * @param infoEquivalenceContext
-	 */
-	private void setRequestAttributes(HttpServletRequest request, Integer degreeType, String studentNumber, String backLink,
-		Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID, List infoStudentCurricularPlans,
-		InfoEquivalenceContext infoEquivalenceContext)
-	{
-		request.setAttribute("degreeType", degreeType);
-		request.setAttribute("studentNumber", studentNumber);
-		request.setAttribute("backLink", backLink);
-		
-		if (fromStudentCurricularPlanID != null)
-		{
-			request.setAttribute("fromStudentCurricularPlanID", fromStudentCurricularPlanID);
-		}
+    /**
+     * @param userView
+     * @param studentNumber
+     * @param degreeType
+     * @return infoStudentCurricularPlans
+     * @throws FenixServiceException
+     */
+    private List runService(IUserView userView, Integer studentNumber, TipoCurso degreeType)
+            throws FenixServiceException {
+        List infoStudentCurricularPlans = null;
 
-		if (toStudentCurricularPlanID != null)
-		{
-			request.setAttribute("toStudentCurricularPlanID", toStudentCurricularPlanID);
-		}
+        Object args[] = { studentNumber, degreeType };
+        infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadStudentCurricularPlansByNumberAndDegreeType", args);
 
-		if (infoStudentCurricularPlans != null)
-		{
-			request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
-		}
+        if (infoStudentCurricularPlans == null) {
+            infoStudentCurricularPlans = new ArrayList();
+        }
 
-		if (infoEquivalenceContext != null)
-		{
-			// Just for displaying a context of work (not necessary).
-			request.setAttribute("infoEquivalenceContext", infoEquivalenceContext);
-		}
-	}
+        return infoStudentCurricularPlans;
+    }
+
+    /**
+     * @param request
+     * @param degreeType
+     * @param studentNumber
+     * @param backLink
+     * @param fromStudentCurricularPlanID
+     * @param toStudentCurricularPlanID
+     * @param infoStudentCurricularPlans
+     * @param infoEquivalenceContext
+     */
+    private void setRequestAttributes(HttpServletRequest request, Integer degreeType,
+            String studentNumber, String backLink, Integer fromStudentCurricularPlanID,
+            Integer toStudentCurricularPlanID, List infoStudentCurricularPlans,
+            InfoEquivalenceContext infoEquivalenceContext) {
+        request.setAttribute("degreeType", degreeType);
+        request.setAttribute("studentNumber", studentNumber);
+        request.setAttribute("backLink", backLink);
+
+        if (fromStudentCurricularPlanID != null) {
+            request.setAttribute("fromStudentCurricularPlanID", fromStudentCurricularPlanID);
+        }
+
+        if (toStudentCurricularPlanID != null) {
+            request.setAttribute("toStudentCurricularPlanID", toStudentCurricularPlanID);
+        }
+
+        if (infoStudentCurricularPlans != null) {
+            request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
+        }
+
+        if (infoEquivalenceContext != null) {
+            // Just for displaying a context of work (not necessary).
+            request.setAttribute("infoEquivalenceContext", infoEquivalenceContext);
+        }
+    }
 
 }

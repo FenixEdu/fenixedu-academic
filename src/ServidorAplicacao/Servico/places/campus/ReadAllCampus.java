@@ -22,56 +22,46 @@ import ServidorPersistente.places.campus.IPersistentCampus;
 /**
  * @author jpvl
  */
-public class ReadAllCampus implements IServico
-{
+public class ReadAllCampus implements IServico {
     private static ReadAllCampus service = new ReadAllCampus();
 
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadAllCampus getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadAllCampus getService() {
         return service;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadAllCampus()
-    {
+     * The actor of this class.
+     */
+    private ReadAllCampus() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadAllCampus";
     }
 
-    public List run() throws FenixServiceException
-    {
+    public List run() throws FenixServiceException {
         List infoCampusList;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentCampus campus = sp.getIPersistentCampus();
             List campusList = campus.readAll();
-            infoCampusList = (List) CollectionUtils.collect(campusList, new Transformer()
-            {
+            infoCampusList = (List) CollectionUtils.collect(campusList, new Transformer() {
 
-                public Object transform(Object input)
-                {
+                public Object transform(Object input) {
                     ICampus campus = (ICampus) input;
                     InfoCampus infoCampus = Cloner.copyICampus2InfoCampus(campus);
                     return infoCampus;
                 }
             });
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }

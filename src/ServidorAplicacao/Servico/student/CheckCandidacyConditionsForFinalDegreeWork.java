@@ -22,145 +22,122 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class CheckCandidacyConditionsForFinalDegreeWork implements IService
-{
+public class CheckCandidacyConditionsForFinalDegreeWork implements IService {
 
-    public CheckCandidacyConditionsForFinalDegreeWork()
-    {
+    public CheckCandidacyConditionsForFinalDegreeWork() {
         super();
     }
 
-    public boolean run(IUserView userView, Integer executionDegreeOID)
-    	throws ExcepcaoPersistencia, FenixServiceException
-    {
+    public boolean run(IUserView userView, Integer executionDegreeOID) throws ExcepcaoPersistencia,
+            FenixServiceException {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        //IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport
-        		//.getIStudentCurricularPlanPersistente();
-        IPersistentEnrollment persistentEnrolment = persistentSupport
-        	.getIPersistentEnrolment();
+        //IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
+        // persistentSupport
+        //.getIStudentCurricularPlanPersistente();
+        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         IScheduleing scheduleing = persistentFinalDegreeWork
                 .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
-        if (scheduleing == null
-                || scheduleing.getStartOfCandidacyPeriod() == null
-                || scheduleing.getEndOfCandidacyPeriod() == null)
-        {
+        if (scheduleing == null || scheduleing.getStartOfCandidacyPeriod() == null
+                || scheduleing.getEndOfCandidacyPeriod() == null) {
             throw new CandidacyPeriodNotDefinedException();
         }
 
         Calendar now = Calendar.getInstance();
         if (scheduleing.getStartOfCandidacyPeriod().after(now.getTime())
-                || scheduleing.getEndOfCandidacyPeriod().before(now.getTime()))
-        {
+                || scheduleing.getEndOfCandidacyPeriod().before(now.getTime())) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            String start = simpleDateFormat.format(new Date(scheduleing.getStartOfCandidacyPeriod().getTime()));
-            String end = simpleDateFormat.format(new Date(scheduleing.getEndOfCandidacyPeriod().getTime()));
+            String start = simpleDateFormat.format(new Date(scheduleing.getStartOfCandidacyPeriod()
+                    .getTime()));
+            String end = simpleDateFormat.format(new Date(scheduleing.getEndOfCandidacyPeriod()
+                    .getTime()));
             throw new OutOfCandidacyPeriodException(start + " - " + end);
         }
 
         IStudent student = persistentStudent.readByUsername(userView.getUtilizador());
 
         int numberOfCompletedCourses = persistentEnrolment
-        	.countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
+                .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
 
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
-        if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue())
-        {
+        if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue()) {
             throw new InsufficientCompletedCoursesException(numberOfNecessaryCompletedCourses.toString());
         }
 
         return true;
     }
 
-    public class CandidacyPeriodNotDefinedException extends FenixServiceException
-    {
+    public class CandidacyPeriodNotDefinedException extends FenixServiceException {
 
-        public CandidacyPeriodNotDefinedException()
-        {
+        public CandidacyPeriodNotDefinedException() {
             super();
         }
 
-        public CandidacyPeriodNotDefinedException(int errorType)
-        {
+        public CandidacyPeriodNotDefinedException(int errorType) {
             super(errorType);
         }
 
-        public CandidacyPeriodNotDefinedException(String s)
-        {
+        public CandidacyPeriodNotDefinedException(String s) {
             super(s);
         }
 
-        public CandidacyPeriodNotDefinedException(Throwable cause)
-        {
+        public CandidacyPeriodNotDefinedException(Throwable cause) {
             super(cause);
         }
 
-        public CandidacyPeriodNotDefinedException(String message, Throwable cause)
-        {
+        public CandidacyPeriodNotDefinedException(String message, Throwable cause) {
             super(message, cause);
         }
 
     }
 
-    public class OutOfCandidacyPeriodException extends FenixServiceException
-    {
+    public class OutOfCandidacyPeriodException extends FenixServiceException {
 
-        public OutOfCandidacyPeriodException()
-        {
+        public OutOfCandidacyPeriodException() {
             super();
         }
 
-        public OutOfCandidacyPeriodException(int errorType)
-        {
+        public OutOfCandidacyPeriodException(int errorType) {
             super(errorType);
         }
 
-        public OutOfCandidacyPeriodException(String s)
-        {
+        public OutOfCandidacyPeriodException(String s) {
             super(s);
         }
 
-        public OutOfCandidacyPeriodException(Throwable cause)
-        {
+        public OutOfCandidacyPeriodException(Throwable cause) {
             super(cause);
         }
 
-        public OutOfCandidacyPeriodException(String message, Throwable cause)
-        {
+        public OutOfCandidacyPeriodException(String message, Throwable cause) {
             super(message, cause);
         }
 
     }
 
-    public class InsufficientCompletedCoursesException extends FenixServiceException
-    {
+    public class InsufficientCompletedCoursesException extends FenixServiceException {
 
-        public InsufficientCompletedCoursesException()
-        {
+        public InsufficientCompletedCoursesException() {
             super();
         }
 
-        public InsufficientCompletedCoursesException(int errorType)
-        {
+        public InsufficientCompletedCoursesException(int errorType) {
             super(errorType);
         }
 
-        public InsufficientCompletedCoursesException(String s)
-        {
+        public InsufficientCompletedCoursesException(String s) {
             super(s);
         }
 
-        public InsufficientCompletedCoursesException(Throwable cause)
-        {
+        public InsufficientCompletedCoursesException(Throwable cause) {
             super(cause);
         }
 
-        public InsufficientCompletedCoursesException(String message, Throwable cause)
-        {
+        public InsufficientCompletedCoursesException(String message, Throwable cause) {
             super(message, cause);
         }
 

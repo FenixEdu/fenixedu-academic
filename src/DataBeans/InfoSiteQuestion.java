@@ -8,38 +8,36 @@ package DataBeans;
  * @author Susana Fernandes
  */
 public class InfoSiteQuestion extends DataTranferObject implements ISiteComponent {
-	private InfoQuestion infoQuestion;
-	private InfoExecutionCourse executionCourse;
+    private InfoQuestion infoQuestion;
 
-	public InfoSiteQuestion() {
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public InfoQuestion getInfoQuestion() {
-		return infoQuestion;
-	}
+    public InfoSiteQuestion() {
+    }
 
-	public void setInfoQuestion(InfoQuestion question) {
-		infoQuestion = question;
-	}
+    public InfoQuestion getInfoQuestion() {
+        return infoQuestion;
+    }
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public void setInfoQuestion(InfoQuestion question) {
+        infoQuestion = question;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoSiteQuestion) {
-			InfoSiteQuestion infoSiteQuestion = (InfoSiteQuestion) obj;
-			result =
-				getExecutionCourse().equals(
-					infoSiteQuestion.getExecutionCourse())
-					&& getInfoQuestion().equals(
-						infoSiteQuestion.getInfoQuestion());
-		}
-		return result;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoSiteQuestion) {
+            InfoSiteQuestion infoSiteQuestion = (InfoSiteQuestion) obj;
+            result = getExecutionCourse().equals(infoSiteQuestion.getExecutionCourse())
+                    && getInfoQuestion().equals(infoSiteQuestion.getInfoQuestion());
+        }
+        return result;
+    }
 }

@@ -19,41 +19,38 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationByRoleFilter
-{
-    /* (non-Javadoc)
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+public abstract class EditDomainObjectAuthorizationFilter extends AuthorizationByRoleFilter {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-        throws FilterException, Exception
-    {
-        try
-        {
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+            Exception {
+        try {
             Object[] arguments = request.getArguments();
             IUserView id = (IUserView) request.getRequester();
             Integer idInternal = ((InfoObject) arguments[1]).getIdInternal();
             boolean isNew = (idInternal == null) || idInternal.equals(new Integer(0));
 
-            if (((id != null
-                && id.getRoles() != null
-                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
-                || (id == null)
-                || (id.getRoles() == null)
-                || ((!isNew) && (!verifyCondition(id, (InfoObject) arguments[1]))))
-            {
+            if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
+                    getRoleType())))
+                    || (id == null)
+                    || (id.getRoles() == null)
+                    || ((!isNew) && (!verifyCondition(id, (InfoObject) arguments[1])))) {
                 throw new NotAuthorizedFilterException();
             }
-        } catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             throw new NotAuthorizedFilterException(e.getMessage());
         }
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
     abstract protected RoleType getRoleType();
 
     abstract protected boolean verifyCondition(IUserView id, InfoObject infoOject);

@@ -20,8 +20,8 @@ import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,40 +29,35 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoSala;
 
-public class ReadExamsByDayAndBeginning implements IServico
-{
+public class ReadExamsByDayAndBeginning implements IServico {
 
     private static ReadExamsByDayAndBeginning _servico = new ReadExamsByDayAndBeginning();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExamsByDayAndBeginning getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadExamsByDayAndBeginning getService() {
         return _servico;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadExamsByDayAndBeginning()
-    {
+     * The actor of this class.
+     */
+    private ReadExamsByDayAndBeginning() {
     }
 
     /**
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
         return "ReadExamsByDayAndBeginning";
     }
 
-    public InfoViewExam run(Calendar day, Calendar beginning)
-    {
+    public InfoViewExam run(Calendar day, Calendar beginning) {
         InfoViewExam infoViewExam = new InfoViewExam();
-        ArrayList infoViewExams = new ArrayList();
+        List infoViewExams = new ArrayList();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             // Read exams on requested day and start-time
@@ -81,9 +76,8 @@ public class ReadExamsByDayAndBeginning implements IServico
             //    - exam info
             //    - degrees associated with exam
             //    - number of students attending course (potentially attending
-			// exam)
-            for (int i = 0; i < exams.size(); i++)
-            {
+            // exam)
+            for (int i = 0; i < exams.size(); i++) {
                 // prepare exam info
                 tempExam = (IExam) exams.get(i);
                 tempInfoExam = Cloner.copyIExam2InfoExam(tempExam);
@@ -91,44 +85,33 @@ public class ReadExamsByDayAndBeginning implements IServico
                 tempInfoExecutionCourses = new ArrayList();
                 int totalNumberStudentsForExam = 0;
 
-                if (tempExam.getAssociatedExecutionCourses() != null)
-                {
-                    for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++)
-                    {
-                        IExecutionCourse executionCourse =
-                            (IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
-                        tempInfoExecutionCourses.add(
-                            Cloner.get(executionCourse));
+                if (tempExam.getAssociatedExecutionCourses() != null) {
+                    for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++) {
+                        IExecutionCourse executionCourse = (IExecutionCourse) tempExam
+                                .getAssociatedExecutionCourses().get(k);
+                        tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 
                         // prepare degrees associated with exam
-                        tempAssociatedCurricularCourses =
-                            executionCourse.getAssociatedCurricularCourses();
-                        for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++)
-                        {
-                            tempDegree =
-                                ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
-                                    .getDegreeCurricularPlan()
-                                    .getDegree();
+                        tempAssociatedCurricularCourses = executionCourse
+                                .getAssociatedCurricularCourses();
+                        for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++) {
+                            tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
+                                    .getDegreeCurricularPlan().getDegree();
                             tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
                         }
 
                         // determine number of students attending course and
-						// exam
-                        numberStudentesAttendingCourse =
-                            sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(
-                                executionCourse);
+                        // exam
+                        numberStudentesAttendingCourse = sp.getIFrequentaPersistente()
+                                .countStudentsAttendingExecutionCourse(executionCourse);
                         totalNumberStudents += numberStudentesAttendingCourse.intValue();
                         totalNumberStudentsForExam += numberStudentesAttendingCourse.intValue();
                     }
                 }
 
                 // add exam and degree info to result list
-                infoViewExams.add(
-                    new InfoViewExamByDayAndShift(
-                        tempInfoExam,
-                        tempInfoExecutionCourses,
-                        tempInfoDegrees,
-                        new Integer(totalNumberStudentsForExam)));
+                infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoExecutionCourses,
+                        tempInfoDegrees, new Integer(totalNumberStudentsForExam)));
             }
 
             infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);
@@ -137,21 +120,17 @@ public class ReadExamsByDayAndBeginning implements IServico
             // TODO : This can be done more efficiently.
             List rooms = sp.getISalaPersistente().readAll();
             int totalExamCapacity = 0;
-            for (int i = 0; i < rooms.size(); i++)
-            {
+            for (int i = 0; i < rooms.size(); i++) {
                 ISala room = (ISala) rooms.get(i);
-                if (!room.getTipo().equals(new TipoSala(TipoSala.LABORATORIO)))
-                {
+                if (!room.getTipo().equals(new TipoSala(TipoSala.LABORATORIO))) {
                     totalExamCapacity += room.getCapacidadeExame().intValue();
                 }
             }
 
-            infoViewExam.setAvailableRoomOccupation(
-                new Integer(totalExamCapacity - totalNumberStudents));
+            infoViewExam
+                    .setAvailableRoomOccupation(new Integer(totalExamCapacity - totalNumberStudents));
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 

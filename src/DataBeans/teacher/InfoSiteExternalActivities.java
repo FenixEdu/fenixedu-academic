@@ -15,44 +15,42 @@ import DataBeans.InfoTeacher;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteExternalActivities extends DataTranferObject implements ISiteComponent
-{
+public class InfoSiteExternalActivities extends DataTranferObject implements ISiteComponent {
 
-	private List infoExternalActivities;
+    private List infoExternalActivities;
+
     private InfoTeacher infoTeacher;
-    
-    public InfoSiteExternalActivities()
-    {
+
+    public InfoSiteExternalActivities() {
     }
-    
+
     /**
      * @return Returns the infoExternalActivities.
      */
-    public List getInfoExternalActivities()
-    {
+    public List getInfoExternalActivities() {
         return infoExternalActivities;
     }
 
     /**
-     * @param infoExternalActivities The infoExternalActivities to set.
+     * @param infoExternalActivities
+     *            The infoExternalActivities to set.
      */
-    public void setInfoExternalActivities(List infoExternalActivities)
-    {
+    public void setInfoExternalActivities(List infoExternalActivities) {
         this.infoExternalActivities = infoExternalActivities;
     }
+
     /**
      * @return Returns the infoTeacher.
      */
-    public InfoTeacher getInfoTeacher()
-    {
+    public InfoTeacher getInfoTeacher() {
         return infoTeacher;
     }
 
     /**
-     * @param infoTeacher The infoTeacher to set.
+     * @param infoTeacher
+     *            The infoTeacher to set.
      */
-    public void setInfoTeacher(InfoTeacher infoTeacher)
-    {
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
     }
 

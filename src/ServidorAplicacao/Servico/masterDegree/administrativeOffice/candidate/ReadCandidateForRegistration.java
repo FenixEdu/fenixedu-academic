@@ -22,24 +22,20 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadCandidateForRegistration implements IService
-{
+public class ReadCandidateForRegistration implements IService {
 
     /**
      * The actor of this class.
      */
-    public ReadCandidateForRegistration()
-    {
+    public ReadCandidateForRegistration() {
     }
 
-    public List run(Integer executionDegreeCode) throws FenixServiceException
-    {
+    public List run(Integer executionDegreeCode) throws FenixServiceException {
 
         ISuportePersistente sp = null;
         List result = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
 
             // Get the Actual Execution Year
@@ -49,21 +45,20 @@ public class ReadCandidateForRegistration implements IService
 
             result = sp.getIPersistentCandidateSituation().readCandidateListforRegistration(
                     executionDegree);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
 
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
-        if (result == null) { throw new NonExistingServiceException(); }
+        if (result == null) {
+            throw new NonExistingServiceException();
+        }
 
         List candidateList = new ArrayList();
         Iterator iterator = result.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next();
             InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
                     .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateSituation

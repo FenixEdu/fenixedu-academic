@@ -7,37 +7,32 @@ package DataBeans;
 import java.util.List;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public class InfoInquiryStatistics extends DataTranferObject implements ISiteComponent
-{
-	private InfoStudentTestQuestion infoStudentTestQuestion;
-	private List optionStatistics;
+public class InfoInquiryStatistics extends DataTranferObject implements ISiteComponent {
+    private InfoStudentTestQuestion infoStudentTestQuestion;
 
-	public InfoInquiryStatistics()
-	{
-	}
+    private List optionStatistics;
 
-	public List getOptionStatistics()
-	{
-		return optionStatistics;
-	}
+    public InfoInquiryStatistics() {
+    }
 
-	public InfoStudentTestQuestion getInfoStudentTestQuestion()
-	{
-		return infoStudentTestQuestion;
-	}
+    public List getOptionStatistics() {
+        return optionStatistics;
+    }
 
-	public void setOptionStatistics(List list)
-	{
-		optionStatistics = list;
-	}
+    public InfoStudentTestQuestion getInfoStudentTestQuestion() {
+        return infoStudentTestQuestion;
+    }
 
-	public void setInfoStudentTestQuestion(InfoStudentTestQuestion question)
-	{
-		infoStudentTestQuestion = question;
-	}
+    public void setOptionStatistics(List list) {
+        optionStatistics = list;
+    }
+
+    public void setInfoStudentTestQuestion(InfoStudentTestQuestion question) {
+        infoStudentTestQuestion = question;
+    }
 
 }

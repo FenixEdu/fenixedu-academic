@@ -10,34 +10,34 @@ import java.util.List;
  * @author Susana Fernandes
  */
 public class InfoSiteTests extends DataTranferObject implements ISiteComponent {
-	private List infoTests;
-	private InfoExecutionCourse executionCourse;
+    private List infoTests;
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public List getInfoTests() {
-		return infoTests;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
+    public List getInfoTests() {
+        return infoTests;
+    }
 
-	public void setInfoTests(List list) {
-		infoTests = list;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoSiteTests) {
-			InfoSiteTests infoSiteTests = (InfoSiteTests) obj;
-			result =
-				getExecutionCourse().equals(infoSiteTests.getExecutionCourse())
-					&& getInfoTests().containsAll(infoSiteTests.getInfoTests())
-					&& infoSiteTests.getInfoTests().containsAll(getInfoTests());
-		}
-		return result;
-	}
+    public void setInfoTests(List list) {
+        infoTests = list;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoSiteTests) {
+            InfoSiteTests infoSiteTests = (InfoSiteTests) obj;
+            result = getExecutionCourse().equals(infoSiteTests.getExecutionCourse())
+                    && getInfoTests().containsAll(infoSiteTests.getInfoTests())
+                    && infoSiteTests.getInfoTests().containsAll(getInfoTests());
+        }
+        return result;
+    }
 }

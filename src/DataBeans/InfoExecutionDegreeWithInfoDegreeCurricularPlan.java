@@ -11,8 +11,7 @@ import Dominio.ICursoExecucao;
  * @author João Mota
  *  
  */
-public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends
-        InfoExecutionDegree {
+public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecutionDegree {
 
     public void copyFromDomain(ICursoExecucao executionDegree) {
         super.copyFromDomain(executionDegree);
@@ -26,26 +25,27 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree newInfoFromDomain(
-            ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
         InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree.copyFromDomain(executionDegree);
         }
         return infoExecutionDegree;
     }
-    
+
     public void copyToDomain(InfoExecutionDegree infoExecutionDegree, ICursoExecucao executionDegree) {
         super.copyToDomain(infoExecutionDegree, executionDegree);
-        executionDegree.setCurricularPlan(InfoDegreeCurricularPlanWithDegree.newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
+        executionDegree.setCurricularPlan(InfoDegreeCurricularPlanWithDegree
+                .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
     }
-    
+
     public static ICursoExecucao newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
         ICursoExecucao executionDegree = null;
-        if(infoExecutionDegree != null) {
+        if (infoExecutionDegree != null) {
             executionDegree = new CursoExecucao();
             InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegreeWithInfoDegreeCurricularPlan = new InfoExecutionDegreeWithInfoDegreeCurricularPlan();
-            infoExecutionDegreeWithInfoDegreeCurricularPlan.copyToDomain(infoExecutionDegree, executionDegree);
+            infoExecutionDegreeWithInfoDegreeCurricularPlan.copyToDomain(infoExecutionDegree,
+                    executionDegree);
         }
         return executionDegree;
     }

@@ -1,7 +1,7 @@
 package ServidorAplicacao.Filtro.MetadataManager;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * @version
  */
 
@@ -15,26 +15,23 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class RepositoryDescriptorPerThreadFilter implements IFilter
-{
+public class RepositoryDescriptorPerThreadFilter implements IFilter {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-	 *      pt.utl.ist.berserk.ServiceResponse)
-	 */
-    public void execute(ServiceRequest arg0, ServiceResponse arg1) throws FilterException, Exception
-    {
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *      pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest arg0, ServiceResponse arg1) throws FilterException, Exception {
 
         MetadataManager mm = MetadataManager.getInstance();
         // tell the manager to use per thread mode
         mm.setEnablePerThreadChanges(true);
         ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-        DescriptorRepository descriptorRepository =
-            ((SuportePersistenteOJB) ps).getDescriptor("lightVersion");
-        if (descriptorRepository == null)
-        {
+        DescriptorRepository descriptorRepository = ((SuportePersistenteOJB) ps)
+                .getDescriptor("lightVersion");
+        if (descriptorRepository == null) {
             System.out.println("estava null");
             descriptorRepository = mm.readDescriptorRepository("OJB/lightVersion/repository.xml");
             ((SuportePersistenteOJB) ps).setDescriptor(descriptorRepository, "lightVersion");

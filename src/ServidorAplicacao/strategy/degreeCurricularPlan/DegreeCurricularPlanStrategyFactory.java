@@ -14,40 +14,38 @@ import Util.TipoCurso;
 
 public class DegreeCurricularPlanStrategyFactory implements IDegreeCurricularPlanStrategyFactory {
 
-	private static DegreeCurricularPlanStrategyFactory instance = null;
+    private static DegreeCurricularPlanStrategyFactory instance = null;
 
-	private DegreeCurricularPlanStrategyFactory() {
-	}
+    private DegreeCurricularPlanStrategyFactory() {
+    }
 
-	public static synchronized DegreeCurricularPlanStrategyFactory getInstance() {
-		if (instance == null) {
-			instance = new DegreeCurricularPlanStrategyFactory();
-		}
-		return instance;
-	}
+    public static synchronized DegreeCurricularPlanStrategyFactory getInstance() {
+        if (instance == null) {
+            instance = new DegreeCurricularPlanStrategyFactory();
+        }
+        return instance;
+    }
 
-	public static synchronized void resetInstance() {
-		if (instance != null) {
-			instance = null;
-		} 
-	}
+    public static synchronized void resetInstance() {
+        if (instance != null) {
+            instance = null;
+        }
+    }
 
+    public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(
+            IDegreeCurricularPlan degreeCurricularPlan) {
 
+        IDegreeCurricularPlanStrategy strategyInstance = null;
 
-	public IDegreeCurricularPlanStrategy getDegreeCurricularPlanStrategy(IDegreeCurricularPlan degreeCurricularPlan) {
-		
-		IDegreeCurricularPlanStrategy strategyInstance = null;
+        if (degreeCurricularPlan == null)
+            throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
 
-		if (degreeCurricularPlan == null)
-			throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
-
-
-		if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)){
-			strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
-		} else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)){
-			strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan); 
-		}  
-		return strategyInstance;
-	}
+        if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) {
+            strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
+        } else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)) {
+            strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan);
+        }
+        return strategyInstance;
+    }
 
 }

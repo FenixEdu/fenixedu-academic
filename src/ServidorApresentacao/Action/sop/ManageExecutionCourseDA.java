@@ -12,92 +12,67 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *  
  */
-public class ManageExecutionCourseDA
-	extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+public class ManageExecutionCourseDA extends
+        FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	public ActionForward prepare(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView =
-			(IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) request.getAttribute(
-				SessionConstants.EXECUTION_COURSE);
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
 
-		Object args[] = { infoExecutionCourse };
-		List infoClasses =
-			(List) ServiceManagerServiceFactory.executeService(
-				userView,
-				"ReadClassesByExecutionCourse",
-				args);
+        Object args[] = { infoExecutionCourse };
+        List infoClasses = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadClassesByExecutionCourse", args);
 
-		if (infoClasses != null && !infoClasses.isEmpty()) {
-			Collections.sort(infoClasses, new BeanComparator("nome"));
-			request.setAttribute(SessionConstants.LIST_INFOCLASS, infoClasses);
-		}
+        if (infoClasses != null && !infoClasses.isEmpty()) {
+            Collections.sort(infoClasses, new BeanComparator("nome"));
+            request.setAttribute(SessionConstants.LIST_INFOCLASS, infoClasses);
+        }
 
-		return mapping.findForward("ManageExecutionCourse");
-	}
+        return mapping.findForward("ManageExecutionCourse");
+    }
 
-	public ActionForward edit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView =
-			(IUserView) request.getSession(false).getAttribute("UserView");
+        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) request.getAttribute(
-				SessionConstants.EXECUTION_COURSE);
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
 
-		DynaActionForm editExecutionCourseForm = (DynaActionForm) form;
-		//System.out.println("editExecutionCourseForm.get('theoreticalHours')= " + editExecutionCourseForm.get("theoreticalHours"));
-		infoExecutionCourse.setTheoreticalHours(
-			new Double((String) editExecutionCourseForm.get("theoreticalHours")));
-		infoExecutionCourse.setTheoPratHours(
-			new Double((String) editExecutionCourseForm.get("theoPratHours")));
-		infoExecutionCourse.setPraticalHours(
-			new Double((String) editExecutionCourseForm.get("praticalHours")));
-		infoExecutionCourse.setLabHours(
-			new Double((String) editExecutionCourseForm.get("labHours")));
+        DynaActionForm editExecutionCourseForm = (DynaActionForm) form;
+        //System.out.println("editExecutionCourseForm.get('theoreticalHours')=
+        // " + editExecutionCourseForm.get("theoreticalHours"));
+        infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm
+                .get("theoreticalHours")));
+        infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm
+                .get("theoPratHours")));
+        infoExecutionCourse.setPraticalHours(new Double((String) editExecutionCourseForm
+                .get("praticalHours")));
+        infoExecutionCourse.setLabHours(new Double((String) editExecutionCourseForm.get("labHours")));
 
-		Object args[] = { infoExecutionCourse };
-		infoExecutionCourse =
-			(InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-				userView,
-				"EditExecutionCourse",
-				args);
+        Object args[] = { infoExecutionCourse };
+        infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
+                userView, "EditExecutionCourse", args);
 
-		if (infoExecutionCourse != null) {
-			request.setAttribute(
-				SessionConstants.EXECUTION_COURSE,
-				infoExecutionCourse);
-		}
+        if (infoExecutionCourse != null) {
+            request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+        }
 
-		return prepare(mapping, form, request, response);
-	}
+        return prepare(mapping, form, request, response);
+    }
 
 }

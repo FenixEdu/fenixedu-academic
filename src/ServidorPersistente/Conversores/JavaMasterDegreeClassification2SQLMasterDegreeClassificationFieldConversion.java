@@ -10,8 +10,8 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.MasterDegreeClassification;
 
-public class JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldConversion
-        implements FieldConversion {
+public class JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldConversion implements
+        FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)
@@ -33,17 +33,15 @@ public class JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldCo
         MasterDegreeClassification masterDegreeClassification = null;
         if (source instanceof Integer) {
             Integer masterDegreeClassificationID = (Integer) source;
-            masterDegreeClassification = MasterDegreeClassification
-                    .getEnum(masterDegreeClassificationID.intValue());
+            masterDegreeClassification = MasterDegreeClassification.getEnum(masterDegreeClassificationID
+                    .intValue());
 
             if (masterDegreeClassification == null) {
                 throw new IllegalArgumentException(this.getClass().getName()
-                        + ": Illegal MasterDegreeClassification!(" + source
-                        + ")");
+                        + ": Illegal MasterDegreeClassification!(" + source + ")");
             }
         } else {
-            throw new IllegalArgumentException(
-                    "Illegal MasterDegreeClassification!(" + source + ")");
+            throw new IllegalArgumentException("Illegal MasterDegreeClassification!(" + source + ")");
         }
         return masterDegreeClassification;
     }

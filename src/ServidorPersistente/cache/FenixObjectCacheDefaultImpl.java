@@ -14,27 +14,21 @@ import org.apache.ojb.broker.cache.ObjectCacheDefaultImpl;
  * @author Luis Cruz & Sara Ribeiro
  *  
  */
-public class FenixObjectCacheDefaultImpl extends ObjectCacheDefaultImpl implements ObjectCache
-{
+public class FenixObjectCacheDefaultImpl extends ObjectCacheDefaultImpl implements ObjectCache {
 
     /**
-	 * @param arg0
-	 */
-    public FenixObjectCacheDefaultImpl(PersistenceBroker arg0, Properties props)
-    {
+     * @param arg0
+     */
+    public FenixObjectCacheDefaultImpl(PersistenceBroker arg0, Properties props) {
         super(arg0, props);
     }
 
-    public Integer getNumberOfCachedObjects()
-    {
+    public Integer getNumberOfCachedObjects() {
         Integer numberCachedObjects = null;
 
-        if (objectTable != null)
-        {
+        if (objectTable != null) {
             numberCachedObjects = new Integer(objectTable.size());
-        }
-        else
-        {
+        } else {
             numberCachedObjects = new Integer(0);
         }
 

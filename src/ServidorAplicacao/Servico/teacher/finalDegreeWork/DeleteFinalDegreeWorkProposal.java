@@ -15,29 +15,23 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class DeleteFinalDegreeWorkProposal implements IService
-{
+public class DeleteFinalDegreeWorkProposal implements IService {
 
-	public DeleteFinalDegreeWorkProposal()
-	{
-		super();
-	}
+    public DeleteFinalDegreeWorkProposal() {
+        super();
+    }
 
-	public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+    public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-			IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
-					.getIPersistentFinalDegreeWork();
+            IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
+                    .getIPersistentFinalDegreeWork();
 
-			persistentFinalWork.deleteByOID(Proposal.class, finalDegreeWorkProposalOID);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
+            persistentFinalWork.deleteByOID(Proposal.class, finalDegreeWorkProposalOID);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	}
+    }
 }

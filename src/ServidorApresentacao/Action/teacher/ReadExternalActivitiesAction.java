@@ -23,35 +23,30 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author Sergio Montelobo
  *  
  */
-public class ReadExternalActivitiesAction extends FenixAction
-{
+public class ReadExternalActivitiesAction extends FenixAction {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-	 *      org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        if (session != null)
-        {
-            Object[] args = { userView.getUtilizador()};
-            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadExternalActivities", args);
+        if (session != null) {
+            Object[] args = { userView.getUtilizador() };
+            SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
+                    "ReadExternalActivities", args);
 
             request.setAttribute("siteView", siteView);
         }
 
-        return  mapping.findForward("show-form");
+        return mapping.findForward("show-form");
     }
 }

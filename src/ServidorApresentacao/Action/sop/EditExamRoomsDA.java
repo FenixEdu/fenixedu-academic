@@ -21,8 +21,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
@@ -32,32 +30,24 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao
-    .Action
-    .sop
-    .base
-    .FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.Season;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
 public class EditExamRoomsDA
-    extends FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
-{
+        extends
+        FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
         System.out.println("ainda sou usado");
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
@@ -67,67 +57,52 @@ public class EditExamRoomsDA
         //		.getAttribute(SessionConstants.INFO_EXAMS_KEY))
         //		.getInfoExam();
         ContextUtils.setExecutionCourseContext(request);
-        InfoExecutionCourse infoExecutionCourse =
-            (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
 
         //System.out.println("infoExecutionCourse= " + infoExecutionCourse);
 
         Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
-        Object args1[] =
-            {
-                infoExecutionCourse.getSigla(),
-                oldExamsSeason,
-                infoExecutionCourse.getInfoExecutionPeriod()};
+        Object args1[] = { infoExecutionCourse.getSigla(), oldExamsSeason,
+                infoExecutionCourse.getInfoExecutionPeriod() };
         InfoExam infoExam = null;
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
-        try
-        {
-            infoViewExamByDayAndShift =
-                ((InfoViewExamByDayAndShift) ServiceUtils
-                    .executeService(
-                        userView,
-                        "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
-                        args1));
+        try {
+            infoViewExamByDayAndShift = ((InfoViewExamByDayAndShift) ServiceUtils.executeService(
+                    userView, "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
             infoExam = infoViewExamByDayAndShift.getInfoExam();
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         //System.out.println("infoViewOldExam" + infoExam);
 
         List examRooms = infoExam.getAssociatedRooms();
 
-        if (examRooms != null)
-        {
+        if (examRooms != null) {
             String[] rooms = new String[examRooms.size()];
-            for (int i = 0; i < examRooms.size(); i++)
-            {
+            for (int i = 0; i < examRooms.size(); i++) {
                 rooms[i] = ((InfoRoom) examRooms.get(i)).getIdInternal().toString();
             }
             editExamRoomsForm.set("selectedRooms", rooms);
-        } else
-        {
+        } else {
             editExamRoomsForm.set("selectedRooms", null);
         }
 
         Object[] args = { infoExam };
         List availableRooms;
-        try
-        {
-            availableRooms = (List) ServiceManagerServiceFactory.executeService(userView, "ReadEmptyRoomsForExam", args);
-        } catch (FenixServiceException e)
-        {
+        try {
+            availableRooms = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadEmptyRoomsForExam", args);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         Hashtable roomsHashTable = new Hashtable();
-        for (int i = 0; i < availableRooms.size(); i++)
-        {
+        for (int i = 0; i < availableRooms.size(); i++) {
             InfoRoom infoRoom = (InfoRoom) availableRooms.get(i);
             List roomsOfBuilding = (List) roomsHashTable.get(infoRoom.getEdificio());
-            if (roomsOfBuilding == null)
-            {
+            if (roomsOfBuilding == null) {
                 roomsOfBuilding = new ArrayList();
                 roomsHashTable.put(infoRoom.getEdificio(), roomsOfBuilding);
             }
@@ -136,8 +111,7 @@ public class EditExamRoomsDA
 
         List sortedRooms = new ArrayList();
         Enumeration keyBuildings = roomsHashTable.keys();
-        while (keyBuildings.hasMoreElements())
-        {
+        while (keyBuildings.hasMoreElements()) {
             sortedRooms.add(roomsHashTable.get(keyBuildings.nextElement()));
         }
 
@@ -151,13 +125,8 @@ public class EditExamRoomsDA
         return mapping.findForward("ViewSelectRoomsForm");
     }
 
-    public ActionForward select(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward select(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
@@ -167,51 +136,39 @@ public class EditExamRoomsDA
         //		SessionConstants.INFO_EXAMS_KEY);
         //InfoExam infoExam = infoViewExamByDayAndShift.getInfoExam();
         ContextUtils.setExecutionCourseContext(request);
-        InfoExecutionCourse infoExecutionCourse =
-            (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
 
         //System.out.println("infoExecutionCourse= " + infoExecutionCourse);
 
         Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
-        Object args1[] =
-            {
-                infoExecutionCourse.getSigla(),
-                oldExamsSeason,
-                infoExecutionCourse.getInfoExecutionPeriod()};
+        Object args1[] = { infoExecutionCourse.getSigla(), oldExamsSeason,
+                infoExecutionCourse.getInfoExecutionPeriod() };
         InfoExam infoExam = null;
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
-        try
-        {
-            infoViewExamByDayAndShift =
-                ((InfoViewExamByDayAndShift) ServiceUtils
-                    .executeService(
-                        userView,
-                        "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod",
-                        args1));
+        try {
+            infoViewExamByDayAndShift = ((InfoViewExamByDayAndShift) ServiceUtils.executeService(
+                    userView, "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
             infoExam = infoViewExamByDayAndShift.getInfoExam();
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         //System.out.println("infoViewOldExam" + infoExam);
 
         String[] rooms = (String[]) editExamRoomsForm.get("selectedRooms");
         List roomsToSet = new ArrayList();
-        for (int i = 0; i < rooms.length; i++)
-        {
+        for (int i = 0; i < rooms.length; i++) {
             roomsToSet.add(new Integer(rooms[i]));
         }
 
         Object[] args = { infoExam, roomsToSet };
-        try
-        {
-            infoExam = (InfoExam) ServiceManagerServiceFactory.executeService(userView, "EditExamRooms", args);
-        } catch (NonExistingServiceException e)
-        {
+        try {
+            infoExam = (InfoExam) ServiceManagerServiceFactory.executeService(userView, "EditExamRooms",
+                    args);
+        } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -219,16 +176,16 @@ public class EditExamRoomsDA
         //session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
         request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
 
-        ArrayList horas = Util.getExamShifts();
+        List horas = Util.getExamShifts();
         request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
-        ArrayList daysOfMonth = Util.getDaysOfMonth();
+        List daysOfMonth = Util.getDaysOfMonth();
         request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
-        ArrayList monthsOfYear = Util.getMonthsOfYear();
+        List monthsOfYear = Util.getMonthsOfYear();
         request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
-        ArrayList examSeasons = Util.getExamSeasons();
+        List examSeasons = Util.getExamSeasons();
         request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
         String input = request.getParameter("input");

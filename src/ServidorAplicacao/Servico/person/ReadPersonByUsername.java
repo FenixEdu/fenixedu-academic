@@ -31,8 +31,7 @@ public class ReadPersonByUsername implements IService {
     public ReadPersonByUsername() {
     }
 
-    public Object run(UserView userView) throws ExcepcaoInexistente,
-            FenixServiceException {
+    public Object run(UserView userView) throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
 
@@ -44,22 +43,21 @@ public class ReadPersonByUsername implements IService {
             person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
-        if (person == null) { throw new ExcepcaoInexistente("Unknown Person !!"); }
+        if (person == null) {
+            throw new ExcepcaoInexistente("Unknown Person !!");
+        }
 
-        InfoPerson infoPerson = InfoPersonWithInfoCountryAndAdvisories
-                .newInfoFromDomain(person);
+        InfoPerson infoPerson = InfoPersonWithInfoCountryAndAdvisories.newInfoFromDomain(person);
 
         return infoPerson;
     }
 
-    public Object run(String username) throws ExcepcaoInexistente,
-            FenixServiceException {
+    public Object run(String username) throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
 
@@ -70,16 +68,15 @@ public class ReadPersonByUsername implements IService {
             person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
-        if (person == null) throw new ExcepcaoInexistente("Unknown Person !!");
+        if (person == null)
+            throw new ExcepcaoInexistente("Unknown Person !!");
 
-        InfoPerson infoPerson = InfoPersonWithInfoCountryAndAdvisories
-                .newInfoFromDomain(person);
+        InfoPerson infoPerson = InfoPersonWithInfoCountryAndAdvisories.newInfoFromDomain(person);
 
         return infoPerson;
     }

@@ -12,44 +12,39 @@ package Dominio;
 
 import java.util.Set;
 
-public class Department extends DomainObject implements IDepartment
-{
+public class Department extends DomainObject implements IDepartment {
 
     private String name;
+
     private String code;
+
     private Set disciplinasAssociadas;
 
-    public Department()
-    {
+    public Department() {
     }
 
-    public Department(String name, String code)
-    {
+    public Department(String name, String code) {
         setName(name);
         setCode(code);
     }
 
     /**
-	 * @param departmentId
-	 */
-    public Department(Integer departmentId)
-    {
+     * @param departmentId
+     */
+    public Department(Integer departmentId) {
         super(departmentId);
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof IDepartment)
-        {
+        if (obj instanceof IDepartment) {
             IDepartment d = (IDepartment) obj;
             resultado = getCode().equals(d.getCode());
         }
         return resultado;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[DEPARTAMENT";
         result += ", codInt=" + getIdInternal();
         result += ", sigla=" + code;
@@ -60,43 +55,37 @@ public class Department extends DomainObject implements IDepartment
     }
 
     /**
-	 * Returns the disciplinasAssociadas.
-	 * 
-	 * @return Set
-	 */
-    public Set getDisciplinasAssociadas()
-    {
+     * Returns the disciplinasAssociadas.
+     * 
+     * @return Set
+     */
+    public Set getDisciplinasAssociadas() {
         return disciplinasAssociadas;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public String getCode()
-    {
+    public String getCode() {
         return code;
     }
 
     /**
-	 * Sets the disciplinasAssociadas.
-	 * 
-	 * @param disciplinasAssociadas
-	 *                   The disciplinasAssociadas to set
-	 */
-    public void setDisciplinasAssociadas(Set disciplinasAssociadas)
-    {
+     * Sets the disciplinasAssociadas.
+     * 
+     * @param disciplinasAssociadas
+     *            The disciplinasAssociadas to set
+     */
+    public void setDisciplinasAssociadas(Set disciplinasAssociadas) {
         this.disciplinasAssociadas = disciplinasAssociadas;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setCode(String code)
-    {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -12,6 +12,7 @@ import java.util.List;
  *  
  */
 public class PersonAccount extends DomainObject implements IPersonAccount {
+
     private Integer keyPerson;
 
     private Double balance;
@@ -20,27 +21,43 @@ public class PersonAccount extends DomainObject implements IPersonAccount {
 
     private List transactions;
 
+    public PersonAccount() {
+    }
+
+    public PersonAccount(IPessoa person) {
+        this.person = person;
+        this.balance = new Double(0);
+
+    }
+
     public Double getBalance() {
         return balance;
     }
+
     public void setBalance(Double balance) {
         this.balance = balance;
     }
+
     public Integer getKeyPerson() {
         return keyPerson;
     }
+
     public void setKeyPerson(Integer keyPerson) {
         this.keyPerson = keyPerson;
     }
+
     public IPessoa getPerson() {
         return person;
     }
+
     public void setPerson(IPessoa person) {
         this.person = person;
     }
+
     public List getTransactions() {
         return transactions;
     }
+
     public void setTransactions(List transactions) {
         this.transactions = transactions;
     }

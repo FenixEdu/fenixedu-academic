@@ -9,33 +9,34 @@ import java.util.List;
 
 /**
  * @author João Mota
- *
+ *  
  */
 public class InfoSiteStudentExamDistributions extends DataTranferObject implements ISiteComponent {
 
-	private List examDistributions;
-	/**
-	 * 
-	 */
-	public InfoSiteStudentExamDistributions() {
-	}
+    private List examDistributions;
 
-	public InfoSiteStudentExamDistributions(List examDistributions) {
-		setExamDistributions(examDistributions);
-	}
+    /**
+     *  
+     */
+    public InfoSiteStudentExamDistributions() {
+    }
 
-	/**
-	 * @return
-	 */
-	public List getExamDistributions() {
-		return examDistributions;
-	}
+    public InfoSiteStudentExamDistributions(List examDistributions) {
+        setExamDistributions(examDistributions);
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setExamDistributions(List list) {
-		examDistributions = list;
-	}
+    /**
+     * @return
+     */
+    public List getExamDistributions() {
+        return examDistributions;
+    }
+
+    /**
+     * @param list
+     */
+    public void setExamDistributions(List list) {
+        examDistributions = list;
+    }
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
@@ -17,7 +18,6 @@ import Dominio.reimbursementGuide.IReimbursementGuide;
 import Dominio.reimbursementGuide.IReimbursementGuideEntry;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
 import Dominio.reimbursementGuide.ReimbursementGuide;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,37 +34,13 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
  * 
  *  
  */
-public class ViewReimbursementGuide implements IServico {
-
-    private static ViewReimbursementGuide servico = new ViewReimbursementGuide();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ViewReimbursementGuide getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ViewReimbursementGuide() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ViewReimbursementGuide";
-    }
+public class ViewReimbursementGuide implements IService {
 
     /**
      * @throws FenixServiceException
      */
 
-    public InfoReimbursementGuide run(Integer reimbursementGuideId)
-            throws FenixServiceException {
+    public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException {
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
             IPersistentReimbursementGuide persistentReimbursementGuide = ps
@@ -78,8 +54,7 @@ public class ViewReimbursementGuide implements IServico {
             InfoReimbursementGuide infoReimbursementGuide = Cloner
                     .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
 
-            List guideSituations = reimbursementGuide
-                    .getReimbursementGuideSituations();
+            List guideSituations = reimbursementGuide.getReimbursementGuideSituations();
             CollectionUtils.transform(guideSituations, new Transformer() {
 
                 public Object transform(Object arg0) {
@@ -89,23 +64,19 @@ public class ViewReimbursementGuide implements IServico {
                 }
 
             });
-            infoReimbursementGuide
-                    .setInfoReimbursementGuideSituations(guideSituations);
+            infoReimbursementGuide.setInfoReimbursementGuideSituations(guideSituations);
 
-            List reibursementGuideEntries = reimbursementGuide
-                    .getReimbursementGuideEntries();
-            CollectionUtils.transform(reibursementGuideEntries,
-                    new Transformer() {
+            List reibursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
+            CollectionUtils.transform(reibursementGuideEntries, new Transformer() {
 
-                        public Object transform(Object arg0) {
-                            InfoReimbursementGuideEntry infoReimbursementGuideEntry = Cloner
-                                    .copyIReimbursementGuideEntry2InfoReimbursementGuideEntry((IReimbursementGuideEntry) arg0);
-                            return infoReimbursementGuideEntry;
-                        }
+                public Object transform(Object arg0) {
+                    InfoReimbursementGuideEntry infoReimbursementGuideEntry = Cloner
+                            .copyIReimbursementGuideEntry2InfoReimbursementGuideEntry((IReimbursementGuideEntry) arg0);
+                    return infoReimbursementGuideEntry;
+                }
 
-                    });
-            infoReimbursementGuide
-                    .setInfoReimbursementGuideEntries(reibursementGuideEntries);
+            });
+            infoReimbursementGuide.setInfoReimbursementGuideEntries(reibursementGuideEntries);
 
             return infoReimbursementGuide;
         } catch (ExcepcaoPersistencia e) {

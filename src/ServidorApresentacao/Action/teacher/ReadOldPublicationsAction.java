@@ -24,45 +24,38 @@ import Util.OldPublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadOldPublicationsAction extends FenixAction
-{
+public class ReadOldPublicationsAction extends FenixAction {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-	 *      org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         String string = request.getParameter("oldPublicationType");
         OldPublicationType oldPublicationType = null;
         IUserView userView = SessionUtils.getUserView(request);
 
-        if ((session != null) && (string != null))
-        {
+        if ((session != null) && (string != null)) {
             oldPublicationType = OldPublicationType.getEnum(string);
 
-            Object[] args = { oldPublicationType, userView.getUtilizador()};
-            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadOldPublications", args);
+            Object[] args = { oldPublicationType, userView.getUtilizador() };
+            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadOldPublications",
+                    args);
 
             request.setAttribute("siteView", siteView);
         }
         ActionForward actionForward = null;
 
-        if (oldPublicationType.equals(OldPublicationType.CIENTIFIC))
-        {
+        if (oldPublicationType.equals(OldPublicationType.CIENTIFIC)) {
             actionForward = mapping.findForward("show-cientific-form");
-        } else
-        {
+        } else {
             actionForward = mapping.findForward("show-didactic-form");
         }
         return actionForward;

@@ -23,38 +23,36 @@ import ServidorPersistente.publication.IPersistentAuthor;
  */
 public class InsertAuthor implements IServico {
 
-	/**
-	 *  
-	 */
-	public InsertAuthor() {
-	}
+    /**
+     *  
+     */
+    public InsertAuthor() {
+    }
 
-	public String getNome() {
-		return "InsertAuthor";
-	}
+    public String getNome() {
+        return "InsertAuthor";
+    }
 
-	public IAuthor run(String name, String organisation)
-		throws FenixServiceException {
+    public IAuthor run(String name, String organisation) throws FenixServiceException {
 
-		IAuthor author = new Author();
+        IAuthor author = new Author();
 
-		ISuportePersistente sp;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-			IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+            IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
-			author.setAuthor(name);
-			author.setOrganisation(organisation);
-			
-			persistentAuthor.lockWrite(author);
-			
-			
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return author;
+            author.setAuthor(name);
+            author.setOrganisation(organisation);
 
-	}
+            persistentAuthor.lockWrite(author);
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return author;
+
+    }
 
 }

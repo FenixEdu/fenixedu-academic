@@ -40,8 +40,13 @@
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" /> </td>	
 			</tr>
 			<tr>
-				<td><b><bean:message key="message.teacherInformation.category" /></b>
-					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" /></td>
+				<td>
+					<b><bean:message key="message.teacherInformation.category" /></b>
+					&nbsp;
+					<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher.infoCategory" >
+						<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" />
+					</logic:notEmpty>
+				</td>
 			</tr>
 		</table>
 		<br />
@@ -93,7 +98,12 @@
 				<td class="listClasses"><bean:write name="infoTeachingCareer" property="beginYear"/>
 					-<bean:write name="infoTeachingCareer" property="endYear"/>
 				</td>
-				<td class="listClasses"><bean:write name="infoTeachingCareer" property="infoCategory.shortName" /></td>
+				<td class="listClasses">
+					&nbsp;
+					<logic:notEmpty name="infoTeachingCareer" property="infoCategory" >
+						<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
+					</logic:notEmpty>
+				</td>
 				<td class="listClasses"><bean:write name="infoTeachingCareer" property="courseOrPosition" /></td>
 			</tr>
 			</logic:iterate>

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import Util.GratuityState;
 import Util.State;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -11,112 +12,114 @@ import Util.State;
  */
 public class Gratuity extends DomainObject implements IGratuity {
 
+    private State state;
 
-	private State state;
-	private GratuityState gratuityState;
-	private Date date;
-	private String remarks;
-	private IStudentCurricularPlan studentCurricularPlan;
-	
-	
-	private Integer keyStudentCurricularPlan;
+    private GratuityState gratuityState;
 
-	public Gratuity(){}
-	
-	public String toString() {
-		String result = "Gratuity ";
-		result += ", Internal Code =" + getIdInternal();
-		result += ", State =" + state;
-		result += ", Gratuity State =" + gratuityState;
-		result += ", Date =" + date;
-		result += ", Remarks =" + remarks;
-		result += ", Student Curricular Plan =" + studentCurricularPlan;
-		return result;
-  }
-	
+    private Date date;
 
-	/**
-	 * @return
-	 */
-	public Date getDate() {
-		return date;
-	}
+    private String remarks;
 
-	/**
-	 * @param date
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    private IStudentCurricularPlan studentCurricularPlan;
 
-	/**
-	 * @return
-	 */
-	public GratuityState getGratuityState() {
-		return gratuityState;
-	}
+    private Integer keyStudentCurricularPlan;
 
-	/**
-	 * @param gratuityState
-	 */
-	public void setGratuityState(GratuityState gratuityState) {
-		this.gratuityState = gratuityState;
-	}
+    public Gratuity() {
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyStudentCurricularPlan() {
-		return keyStudentCurricularPlan;
-	}
+    public String toString() {
+        String result = "Gratuity ";
+        result += ", Internal Code =" + getIdInternal();
+        result += ", State =" + state;
+        result += ", Gratuity State =" + gratuityState;
+        result += ", Date =" + date;
+        result += ", Remarks =" + remarks;
+        result += ", Student Curricular Plan =" + studentCurricularPlan;
+        return result;
+    }
 
-	/**
-	 * @param keyStudentCurricularPlan
-	 */
-	public void setKeyStudentCurricularPlan(Integer keyStudentCurricularPlan) {
-		this.keyStudentCurricularPlan = keyStudentCurricularPlan;
-	}
+    /**
+     * @return
+     */
+    public Date getDate() {
+        return date;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks() {
-		return remarks;
-	}
+    /**
+     * @param date
+     */
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	/**
-	 * @param remarks
-	 */
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
+    /**
+     * @return
+     */
+    public GratuityState getGratuityState() {
+        return gratuityState;
+    }
 
-	/**
-	 * @return
-	 */
-	public State getState() {
-		return state;
-	}
+    /**
+     * @param gratuityState
+     */
+    public void setGratuityState(GratuityState gratuityState) {
+        this.gratuityState = gratuityState;
+    }
 
-	/**
-	 * @param state
-	 */
-	public void setState(State state) {
-		this.state = state;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyStudentCurricularPlan() {
+        return keyStudentCurricularPlan;
+    }
 
-	/**
-	 * @return
-	 */
-	public IStudentCurricularPlan getStudentCurricularPlan() {
-		return studentCurricularPlan;
-	}
+    /**
+     * @param keyStudentCurricularPlan
+     */
+    public void setKeyStudentCurricularPlan(Integer keyStudentCurricularPlan) {
+        this.keyStudentCurricularPlan = keyStudentCurricularPlan;
+    }
 
-	/**
-	 * @param studentCurricularPlan
-	 */
-	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
-		this.studentCurricularPlan = studentCurricularPlan;
-	}
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
+
+    /**
+     * @param remarks
+     */
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    /**
+     * @return
+     */
+    public State getState() {
+        return state;
+    }
+
+    /**
+     * @param state
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    /**
+     * @return
+     */
+    public IStudentCurricularPlan getStudentCurricularPlan() {
+        return studentCurricularPlan;
+    }
+
+    /**
+     * @param studentCurricularPlan
+     */
+    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+        this.studentCurricularPlan = studentCurricularPlan;
+    }
 
 }

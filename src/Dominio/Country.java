@@ -10,39 +10,33 @@
 
 package Dominio;
 
-public class Country extends DomainObject implements ICountry
-{
+public class Country extends DomainObject implements ICountry {
     private String name;
+
     private String nationality;
+
     private String code;
 
-    public Country()
-    {
+    public Country() {
     }
 
-    public Country(String name, String nationality, String code)
-    {
+    public Country(String name, String nationality, String code) {
         this.code = code;
         this.nationality = nationality;
         this.name = name;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof Country)
-        {
+        if (obj instanceof Country) {
             Country d = (Country) obj;
-            resultado =
-                (getName().equals(d.getName())
-                    && getNationality().equals(d.getNationality())
-                    && getCode().equals(d.getCode()));
+            resultado = (getName().equals(d.getName()) && getNationality().equals(d.getNationality()) && getCode()
+                    .equals(d.getCode()));
         }
         return resultado;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[COUNTRY";
         result += ", idInternal =" + getIdInternal();
         result += ", Name =" + name;
@@ -53,65 +47,59 @@ public class Country extends DomainObject implements ICountry
     }
 
     /**
-	 * Returns the code.
-	 * 
-	 * @return String
-	 */
-    public String getCode()
-    {
+     * Returns the code.
+     * 
+     * @return String
+     */
+    public String getCode() {
         return code;
     }
 
     /**
-	 * Returns the name.
-	 * 
-	 * @return String
-	 */
-    public String getName()
-    {
+     * Returns the name.
+     * 
+     * @return String
+     */
+    public String getName() {
         return name;
     }
 
     /**
-	 * Returns the nationality.
-	 * 
-	 * @return String
-	 */
-    public String getNationality()
-    {
+     * Returns the nationality.
+     * 
+     * @return String
+     */
+    public String getNationality() {
         return nationality;
     }
 
     /**
-	 * Sets the code.
-	 * 
-	 * @param code
-	 *            The code to set
-	 */
-    public void setCode(String code)
-    {
+     * Sets the code.
+     * 
+     * @param code
+     *            The code to set
+     */
+    public void setCode(String code) {
         this.code = code;
     }
 
     /**
-	 * Sets the name.
-	 * 
-	 * @param name
-	 *            The name to set
-	 */
-    public void setName(String name)
-    {
+     * Sets the name.
+     * 
+     * @param name
+     *            The name to set
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
-	 * Sets the nationality.
-	 * 
-	 * @param nationality
-	 *            The nationality to set
-	 */
-    public void setNationality(String nationality)
-    {
+     * Sets the nationality.
+     * 
+     * @param nationality
+     *            The nationality to set
+     */
+    public void setNationality(String nationality) {
         this.nationality = nationality;
     }
 

@@ -25,8 +25,8 @@ public class ApproveCandidates implements IService {
     public ApproveCandidates() {
     }
 
-    public void run(String[] situations, String[] ids, String[] remarks,
-            String[] substitutes) throws FenixServiceException {
+    public void run(String[] situations, String[] ids, String[] remarks, String[] substitutes)
+            throws FenixServiceException {
 
         ISuportePersistente sp = null;
         try {
@@ -35,35 +35,28 @@ public class ApproveCandidates implements IService {
             for (int i = 0; i < situations.length; i++) {
 
                 IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                        .getIPersistentMasterDegreeCandidate().readByOID(
-                                MasterDegreeCandidate.class,
+                        .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                                 new Integer(ids[i]));
                 ICandidateSituation candidateSituationOld = masterDegreeCandidate
                         .getActiveCandidateSituation();
 
                 ICandidateSituation candidateSituationOldFromBD = (ICandidateSituation) sp
-                        .getIPersistentCandidateSituation().readByOID(
-                                CandidateSituation.class,
+                        .getIPersistentCandidateSituation().readByOID(CandidateSituation.class,
                                 candidateSituationOld.getIdInternal(), true);
-                candidateSituationOldFromBD.setValidation(new State(
-                        State.INACTIVE));
+                candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
 
                 if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {
-                    masterDegreeCandidate.setSubstituteOrder(new Integer(
-                            substitutes[i]));
+                    masterDegreeCandidate.setSubstituteOrder(new Integer(substitutes[i]));
                 }
 
                 // Create the new Candidate Situation
 
                 ICandidateSituation candidateSituation = new CandidateSituation();
-                sp.getIPersistentCandidateSituation().simpleLockWrite(
-                        candidateSituation);
+                sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
                 candidateSituation.setDate(Calendar.getInstance().getTime());
-                candidateSituation
-                        .setMasterDegreeCandidate(masterDegreeCandidate);
+                candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
                 candidateSituation.setRemarks(remarks[i]);
-                candidateSituation
-                        .setSituation(new SituationName(situations[i]));
+                candidateSituation.setSituation(new SituationName(situations[i]));
                 candidateSituation.setValidation(new State(State.ACTIVE));
 
                 //				masterDegreeCandidate.getSituations().add(candidateSituation);
@@ -71,8 +64,7 @@ public class ApproveCandidates implements IService {
             }
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }

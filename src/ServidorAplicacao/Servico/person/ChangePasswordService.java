@@ -29,9 +29,8 @@ public class ChangePasswordService implements IService {
     }
 
     public void run(UserView userView, String oldPassword, String newPassword)
-            throws ExcepcaoInexistente, FenixServiceException,
-            InvalidPasswordServiceException, ExistingPersistentException,
-            ExcepcaoPersistencia {
+            throws ExcepcaoInexistente, FenixServiceException, InvalidPasswordServiceException,
+            ExistingPersistentException, ExcepcaoPersistencia {
 
         // Check if the old password is equal
 
@@ -45,30 +44,28 @@ public class ChangePasswordService implements IService {
             personDAO = sp.getIPessoaPersistente();
             person = personDAO.lerPessoaPorUsername(username);
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
-      
-        if (person == null) { throw new ExcepcaoInexistente("Unknown Person!"); }
-        if (newPassword == null || newPassword.equals("")
-                //|| person.getNumeroDocumentoIdentificacao() == null //is always not null
+        if (person == null) {
+            throw new ExcepcaoInexistente("Unknown Person!");
+        }
+        if (newPassword == null
+                || newPassword.equals("")
                 || person.getNumeroDocumentoIdentificacao().equalsIgnoreCase(newPassword)
-                || (person.getCodigoFiscal() != null //it can be null 
-                && person.getCodigoFiscal().equals(newPassword))
-                || (person.getNumContribuinte() != null  //it can be null
-                && person.getNumContribuinte().equals(newPassword))
-                || PasswordEncryptor.areEquals(person.getPassword(), newPassword)) { throw new InvalidPasswordServiceException(
-                "Invalid New Password!"); }
-        if (!PasswordEncryptor.areEquals(person.getPassword(), oldPassword))
-        {
+                || (person.getCodigoFiscal() != null && person.getCodigoFiscal().equalsIgnoreCase(
+                        newPassword))
+                || (person.getNumContribuinte() != null && person.getNumContribuinte().equalsIgnoreCase(
+                        newPassword)) || PasswordEncryptor.areEquals(person.getPassword(), newPassword)) {
+            throw new InvalidPasswordServiceException("Invalid New Password!");
+        }
+        if (!PasswordEncryptor.areEquals(person.getPassword(), oldPassword)) {
             throw new InvalidPasswordServiceException("Invalid Existing Password!");
         }
         if (!PasswordEncryptor.areEquals(person.getPassword(), oldPassword)) {
-            throw new InvalidPasswordServiceException(
-                    "Invalid Existing Password!");
+            throw new InvalidPasswordServiceException("Invalid Existing Password!");
         }
 
         // Change the Password

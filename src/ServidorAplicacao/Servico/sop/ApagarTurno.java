@@ -9,9 +9,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Serviço ApagarTurno.
- *
+ * 
  * @author tfc130
- **/
+ */
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionCourse;
@@ -24,52 +24,51 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ApagarTurno implements IServico {
 
-	private static ApagarTurno _servico = new ApagarTurno();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ApagarTurno getService() {
-		return _servico;
-	}
+    private static ApagarTurno _servico = new ApagarTurno();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ApagarTurno() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ApagarTurno getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ApagarTurno";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ApagarTurno() {
+    }
 
-	public Boolean run(ShiftKey keyTurno) {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ApagarTurno";
+    }
 
-		ITurno turno1 = null;
-		boolean result = false;
+    public Boolean run(ShiftKey keyTurno) {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-			IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
+        ITurno turno1 = null;
+        boolean result = false;
 
-			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			turno1 =
-				shiftDAO.readByNameAndExecutionCourse(
-					keyTurno.getShiftName(),
-					executionCourse);
-			if (turno1 != null) {
-				shiftDAO.delete(turno1);
-				result = true;
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
+            IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno
+                    .getInfoExecutionCourse());
 
-		return new Boolean(result);
-	}
+            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+
+            turno1 = shiftDAO.readByNameAndExecutionCourse(keyTurno.getShiftName(), executionCourse);
+            if (turno1 != null) {
+                shiftDAO.delete(turno1);
+                result = true;
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+
+        return new Boolean(result);
+    }
 
 }

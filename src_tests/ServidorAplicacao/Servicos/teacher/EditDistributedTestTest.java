@@ -30,45 +30,38 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
-{
+public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase {
     public EditDistributedTestTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testEditDistributedTestDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "EditDistributedTest";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = {"D2543", "pass", getApplication()};
+        String[] args = { "D2543", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = {"L48283", "pass", getApplication()};
+        String[] args = { "L48283", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = {"L48283", "pass", getApplication()};
+        String[] args = { "L48283", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
         Integer executionCourseId = new Integer(34882);
         Integer distributedTestId = new Integer(1);
         String info = new String("informação da ficha-alterada");
@@ -94,24 +87,21 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
         TestType testType = new TestType(1);
         CorrectionAvailability correctionAvailability = new CorrectionAvailability(1);
         Boolean studentFeedback = new Boolean(true);
-        String[] selected = {new String("11355")};
+        String[] selected = { new String("11355") };
         Boolean shifts = new Boolean(false);
         String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
-        Object[] args = {executionCourseId, distributedTestId, info, beginDate, beginHour, endDate,
-                endHour, testType, correctionAvailability, studentFeedback, selected, shifts, path};
+        Object[] args = { executionCourseId, distributedTestId, info, beginDate, beginHour, endDate,
+                endHour, testType, correctionAvailability, studentFeedback, selected, shifts, path };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testSuccessfull()
-    {
+    public void testSuccessfull() {
 
-        try
-        {
+        try {
             IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
@@ -162,7 +152,7 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 
             assertEquals(distributedTest.getTestType(), args[7]);
             assertEquals(distributedTest.getCorrectionAvailability(), args[8]);
-         //   assertEquals(distributedTest.getStudentFeedback(), args[9]);
+            //   assertEquals(distributedTest.getStudentFeedback(), args[9]);
 
             broker = PersistenceBrokerFactory.defaultPersistenceBroker();
             criteria = new Criteria();
@@ -190,8 +180,7 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
             broker.close();
             assertEquals(studentTestQuestionList.size(), 2232);
             Iterator it = studentTestQuestionList.iterator();
-            while (it.hasNext())
-            {
+            while (it.hasNext()) {
                 IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
                 assertEquals(studentTestQuestion.getKeyDistributedTest(), distributedTest
                         .getIdInternal());
@@ -199,10 +188,9 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
                     if (!studentTestQuestion.getStudent().getPerson().getAdvisories()
                             .contains(advisory2))
                         fail("Edit Distributed Test " + "Advisory1");
-                    else
-                        if (!studentTestQuestion.getStudent().getPerson().getAdvisories().contains(
-                                advisory1))
-                            fail("Edit Distributed Test " + "Advisory2");
+                    else if (!studentTestQuestion.getStudent().getPerson().getAdvisories().contains(
+                            advisory1))
+                        fail("Edit Distributed Test " + "Advisory2");
             }
 
             //			if (distributedTest.getTestType().equals(new
@@ -232,13 +220,9 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
             //				broker.close();
             //				assertNotNull(mark);
             //			}
-        }
-        catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("Edit Distributed Test " + ex);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Edit Distributed Test " + ex);
         }
     }

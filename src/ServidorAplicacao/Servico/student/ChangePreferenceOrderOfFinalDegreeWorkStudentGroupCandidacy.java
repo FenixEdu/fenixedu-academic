@@ -16,17 +16,14 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy implements IService
-{
+public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy implements IService {
 
-    public ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy()
-    {
+    public ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy() {
         super();
     }
 
     public boolean run(Integer groupOID, Integer groupProposalOID, Integer orderOfPreference)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
@@ -34,26 +31,20 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy impleme
         IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
         IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork.readByOID(
                 GroupProposal.class, groupProposalOID);
-        if (group != null && groupProposal != null)
-        {
-            for (int i = 0; i < group.getGroupProposals().size(); i++)
-            {
+        if (group != null && groupProposal != null) {
+            for (int i = 0; i < group.getGroupProposals().size(); i++) {
                 IGroupProposal otherGroupProposal = (IGroupProposal) group.getGroupProposals().get(i);
                 if (otherGroupProposal != null
-                        && !groupProposal.getIdInternal().equals(otherGroupProposal.getIdInternal()))
-                {
+                        && !groupProposal.getIdInternal().equals(otherGroupProposal.getIdInternal())) {
                     int otherOrderOfPreference = otherGroupProposal.getOrderOfPreference().intValue();
                     if (orderOfPreference.intValue() <= otherOrderOfPreference
-                            && groupProposal.getOrderOfPreference().intValue() > otherOrderOfPreference)
-                    {
+                            && groupProposal.getOrderOfPreference().intValue() > otherOrderOfPreference) {
                         persistentFinalDegreeWork.simpleLockWrite(otherGroupProposal);
                         otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference + 1));
-                    }
-                    else if (orderOfPreference.intValue() >= otherOrderOfPreference
-                            && groupProposal.getOrderOfPreference().intValue() < otherOrderOfPreference)
-                    {
+                    } else if (orderOfPreference.intValue() >= otherOrderOfPreference
+                            && groupProposal.getOrderOfPreference().intValue() < otherOrderOfPreference) {
                         persistentFinalDegreeWork.simpleLockWrite(otherGroupProposal);
-                        otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference - 1));                        
+                        otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference - 1));
                     }
                 }
             }

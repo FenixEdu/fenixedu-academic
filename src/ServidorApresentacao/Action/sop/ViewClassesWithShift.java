@@ -24,69 +24,61 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author jpvl
  */
-public class ViewClassesWithShift extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-			
-		super.execute(mapping, form, request, response);
-			
-		try {
-			//DynaValidatorForm shiftForm = (DynaValidatorForm) form;
-			//String name = (String) shiftForm.get("name");
-			//String name = request.getParameter("name");
-			InfoShift infoShift = getInfoShift(request);
-			
-			Object[] args = { infoShift };
-			List infoClasses =
-				(List) ServiceUtils.executeService(
-					SessionUtils.getUserView(request),
-					"ReadClassesWithShiftService",
-					args);
-					
-			if (infoClasses == null || infoClasses.isEmpty()) {
-				ActionErrors actionErrors = new ActionErrors();
-				actionErrors.add(
-					"message.shift.no.classes",
-					new ActionError("message.shift.no.classes", infoShift.getNome()));
-				saveErrors(request, actionErrors);
-				return mapping.getInputForward();
-			}
-			
-			Collections.sort(infoClasses, new BeanComparator("nome"));
-			request.setAttribute("classesWithShift", infoClasses);
-			
-			
-			return mapping.findForward("sucess");
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
-	}
-	/**
-	 * Method getInfoShift.
-	 * @param name
-	 * @param request
-	 * @return InfoShift
-	 */
-	private InfoShift getInfoShift(HttpServletRequest request) throws Exception {
-		Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+public class ViewClassesWithShift extends
+        FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView =
-			(IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+        super.execute(mapping, form, request, response);
 
-		Object args[] = { shiftOID };
-		InfoShift infoShift = (InfoShift) ServiceManagerServiceFactory.executeService(
-				userView,
-				"ReadShiftByOID",
-				args);
-		
-		if (infoShift == null){
-			throw new IllegalStateException("O turno pretendido não existe");}
-		
-			return infoShift;
-	}
+        try {
+            //DynaValidatorForm shiftForm = (DynaValidatorForm) form;
+            //String name = (String) shiftForm.get("name");
+            //String name = request.getParameter("name");
+            InfoShift infoShift = getInfoShift(request);
+
+            Object[] args = { infoShift };
+            List infoClasses = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
+                    "ReadClassesWithShiftService", args);
+
+            if (infoClasses == null || infoClasses.isEmpty()) {
+                ActionErrors actionErrors = new ActionErrors();
+                actionErrors.add("message.shift.no.classes", new ActionError("message.shift.no.classes",
+                        infoShift.getNome()));
+                saveErrors(request, actionErrors);
+                return mapping.getInputForward();
+            }
+
+            Collections.sort(infoClasses, new BeanComparator("nome"));
+            request.setAttribute("classesWithShift", infoClasses);
+
+            return mapping.findForward("sucess");
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    /**
+     * Method getInfoShift.
+     * 
+     * @param name
+     * @param request
+     * @return InfoShift
+     */
+    private InfoShift getInfoShift(HttpServletRequest request) throws Exception {
+        Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+
+        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
+
+        Object args[] = { shiftOID };
+        InfoShift infoShift = (InfoShift) ServiceManagerServiceFactory.executeService(userView,
+                "ReadShiftByOID", args);
+
+        if (infoShift == null) {
+            throw new IllegalStateException("O turno pretendido não existe");
+        }
+
+        return infoShift;
+    }
 }

@@ -41,10 +41,9 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
 
     }
 
-    public InfoCurriculum(String generalObjectives,
-            String operacionalObjectives, String program,
-            String generalObjectivesEn, String operacionalObjectivesEn,
-            String programEn, InfoCurricularCourse infoCurricularCourse) {
+    public InfoCurriculum(String generalObjectives, String operacionalObjectives, String program,
+            String generalObjectivesEn, String operacionalObjectivesEn, String programEn,
+            InfoCurricularCourse infoCurricularCourse) {
         setInfoCurricularCourse(infoCurricularCourse);
         setGeneralObjectives(generalObjectives);
         setOperacionalObjectives(operacionalObjectives);
@@ -99,8 +98,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
      * @param infoCurricularCourse
      *            The infoCurricularCourse to set
      */
-    public void setInfoCurricularCourse(
-            InfoCurricularCourse infoCurricularCourse) {
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
         this.infoCurricularCourse = infoCurricularCourse;
     }
 
@@ -128,8 +126,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
         boolean result = false;
         if (obj instanceof InfoCurriculum) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) obj;
-            result = getInfoCurricularCourse().equals(
-                    infoCurriculum.getInfoCurricularCourse());
+            result = getInfoCurricularCourse().equals(infoCurriculum.getInfoCurricularCourse());
         }
         return result;
     }
@@ -140,8 +137,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
         result += ", getOperacionalObjectives=" + getOperacionalObjectives();
         result += ", getProgram=" + getProgram();
         result += ", getGeneralObjectivesEn=" + getGeneralObjectivesEn();
-        result += ", getOperacionalObjectivesEn="
-                + getOperacionalObjectivesEn();
+        result += ", getOperacionalObjectivesEn=" + getOperacionalObjectivesEn();
         result += ", getProgramEn=" + getProgramEn();
         result += ", InfoCurricularCourse =" + getInfoCurricularCourse();
         result += "]";

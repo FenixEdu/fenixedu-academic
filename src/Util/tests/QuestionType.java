@@ -100,7 +100,8 @@ public class QuestionType extends FenixUtil {
             return new Integer(LID);
         else if (typeName.equals(STR_ID_STRING))
             return new Integer(STR);
-        else if (typeName.equals(NUM_ID_STRING)) return new Integer(NUM);
+        else if (typeName.equals(NUM_ID_STRING))
+            return new Integer(NUM);
         return null;
     }
 
@@ -109,7 +110,8 @@ public class QuestionType extends FenixUtil {
             return LID_ID_STRING;
         else if (this.type.intValue() == STR)
             return STR_ID_STRING;
-        else if (this.type.intValue() == NUM) return NUM_ID_STRING;
+        else if (this.type.intValue() == NUM)
+            return NUM_ID_STRING;
         return null;
     }
 
@@ -122,8 +124,7 @@ public class QuestionType extends FenixUtil {
     }
 
     public String toXML(String inside, int code) {
-        return new String("<" + getTypeString() + " ident=\"" + code + "\" "
-                + cardinalityType.toXML() + ">\n" + render.toXML(inside)
-                + "</" + getTypeString() + ">\n");
+        return new String("<" + getTypeString() + " ident=\"" + code + "\" " + cardinalityType.toXML()
+                + ">\n" + render.toXML(inside) + "</" + getTypeString() + ">\n");
     }
 }

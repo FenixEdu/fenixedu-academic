@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoPeriod;
 import Dominio.Campus;
@@ -19,13 +20,12 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IPeriod;
 import Dominio.Period;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentPeriod;
 import ServidorPersistente.ISuportePersistente;
@@ -36,40 +36,23 @@ import ServidorPersistente.places.campus.IPersistentCampus;
 /**
  * @author lmac1
  */
-public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
+public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 
-    private static InsertExecutionDegreeAtDegreeCurricularPlan service = new InsertExecutionDegreeAtDegreeCurricularPlan();
-
-    public static InsertExecutionDegreeAtDegreeCurricularPlan getService() {
-        return service;
-    }
-
-    private InsertExecutionDegreeAtDegreeCurricularPlan() {
-    }
-
-    public final String getNome() {
-        return "InsertExecutionDegreeAtDegreeCurricularPlan";
-    }
-
-    public void run(InfoExecutionDegree infoExecutionDegree)
-            throws FenixServiceException {
+    public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
 
         IExecutionYear executionYear = null;
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-            IPersistentCampus campusDAO = persistentSuport
-                    .getIPersistentCampus();
+            IPersistentCampus campusDAO = persistentSuport.getIPersistentCampus();
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
                     .getIPersistentDegreeCurricularPlan();
 
-            ICampus campus = (ICampus) campusDAO.readByOID(Campus.class,
-                    infoExecutionDegree.getInfoCampus().getIdInternal());
+            ICampus campus = (ICampus) campusDAO.readByOID(Campus.class, infoExecutionDegree
+                    .getInfoCampus().getIdInternal());
             if (campus == null) {
-                throw new NonExistingServiceException(
-                        "message.nonExistingCampus", null);
+                throw new NonExistingServiceException("message.nonExistingCampus", null);
             }
 
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
@@ -77,34 +60,30 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
                             .getInfoDegreeCurricularPlan().getIdInternal());
 
             if (degreeCurricularPlan == null) {
-                throw new NonExistingServiceException(
-                        "message.nonExistingDegreeCurricularPlan", null);
+                throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
             }
             IPersistentExecutionYear persistentExecutionYear = persistentSuport
                     .getIPersistentExecutionYear();
 
-          	IExecutionYear execYear = new ExecutionYear();
-            execYear.setIdInternal(infoExecutionDegree.getInfoExecutionYear().getIdInternal());
-            executionYear = (IExecutionYear) persistentExecutionYear.readByOId(execYear, false);
+            executionYear = (IExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
+                    infoExecutionDegree.getInfoExecutionYear().getIdInternal());
 
             if (executionYear == null) {
 
-                throw new NonExistingServiceException(
-                        "message.non.existing.execution.year", null);
+                throw new NonExistingServiceException("message.non.existing.execution.year", null);
             }
 
-            ICursoExecucaoPersistente persistentExecutionDegree = persistentSuport
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = persistentSuport
+                    .getIPersistentExecutionDegree();
 
             ICursoExecucao executionDegree = new CursoExecucao();
             persistentExecutionDegree.simpleLockWrite(executionDegree);
             executionDegree.setCurricularPlan(degreeCurricularPlan);
             executionDegree.setExecutionYear(executionYear);
-            executionDegree.setTemporaryExamMap(infoExecutionDegree
-                    .getTemporaryExamMap());
+            executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
             executionDegree.setCampus(campus);
 
-       		setPeriods(executionDegree, infoExecutionDegree);
+            setPeriods(executionDegree, infoExecutionDegree);
 
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException(
@@ -131,7 +110,8 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
         InfoPeriod infoPeriodLessonsSecondSemester = infoExecutionDegree
                 .getInfoPeriodLessonsSecondSemester();
         setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
-}
+    }
+
     private void setCompositePeriod(ICursoExecucao executionDegree, InfoPeriod infoPeriod,
             int periodToAssociateExecutionDegree) throws FenixServiceException {
         try {

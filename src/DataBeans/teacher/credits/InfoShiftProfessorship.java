@@ -12,50 +12,52 @@ import DataBeans.InfoShift;
  * @author jpvl
  */
 public class InfoShiftProfessorship extends InfoObject {
-	private InfoProfessorship infoProfessorship = null;
-	private InfoShift infoShift = null;
-	private Double percentage = null;
+    private InfoProfessorship infoProfessorship = null;
 
-	/**
-	 * @return
-	 */
-	public InfoProfessorship getInfoProfessorship() {
-		return infoProfessorship;
-	}
+    private InfoShift infoShift = null;
 
-	/**
-	 * @return
-	 */
-	public InfoShift getInfoShift() {
-		return infoShift;
-	}
+    private Double percentage = null;
 
-	/**
-	 * @return
-	 */
-	public Double getPercentage() {
-		return percentage;
-	}
+    /**
+     * @return
+     */
+    public InfoProfessorship getInfoProfessorship() {
+        return infoProfessorship;
+    }
 
-	/**
-	 * @param ship
-	 */
-	public void setInfoProfessorship(InfoProfessorship ship) {
-		infoProfessorship = ship;
-	}
+    /**
+     * @return
+     */
+    public InfoShift getInfoShift() {
+        return infoShift;
+    }
 
-	/**
-	 * @param shift
-	 */
-	public void setInfoShift(InfoShift shift) {
-		infoShift = shift;
-	}
+    /**
+     * @return
+     */
+    public Double getPercentage() {
+        return percentage;
+    }
 
-	/**
-	 * @param double1
-	 */
-	public void setPercentage(Double double1) {
-		percentage = double1;
-	}
+    /**
+     * @param ship
+     */
+    public void setInfoProfessorship(InfoProfessorship ship) {
+        infoProfessorship = ship;
+    }
+
+    /**
+     * @param shift
+     */
+    public void setInfoShift(InfoShift shift) {
+        infoShift = shift;
+    }
+
+    /**
+     * @param double1
+     */
+    public void setPercentage(Double double1) {
+        percentage = double1;
+    }
 
 }

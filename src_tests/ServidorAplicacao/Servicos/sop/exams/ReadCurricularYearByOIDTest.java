@@ -14,40 +14,33 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public class ReadCurricularYearByOIDTest extends ServiceTestCase
-{
+public class ReadCurricularYearByOIDTest extends ServiceTestCase {
 
     /**
      * @param name
      */
-    public ReadCurricularYearByOIDTest(java.lang.String testName)
-    {
+    public ReadCurricularYearByOIDTest(java.lang.String testName) {
         super(testName);
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadCurricularYearByOID";
     }
 
-
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/sop/testExamsV4dataset.xml";
     }
 
-    public void testSuccessfullReadCurricularYearByOID()
-    {
+    public void testSuccessfullReadCurricularYearByOID() {
         Integer id = new Integer(3);
 
-        ReadCurricularYearByOID service = ReadCurricularYearByOID.getService();
+        ReadCurricularYearByOID service = new ReadCurricularYearByOID();
 
         ISuportePersistente sp;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -56,53 +49,38 @@ public class ReadCurricularYearByOIDTest extends ServiceTestCase
             sp.confirmarTransaccao();
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             assertEquals(year.getYear(), new Integer(3));
-        }
-        catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("testSuccessfullReadCurricularYearByOID - Fenix Service Exception " + ex);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("testSuccessfullReadCurricularYearByOID - Exception " + ex);
         }
 
     }
 
-    public void testUnsuccessfullReadCurricularYearByOID()
-    {
+    public void testUnsuccessfullReadCurricularYearByOID() {
         Integer id = new Integer(6);
-        ReadCurricularYearByOID service = ReadCurricularYearByOID.getService();
+        ReadCurricularYearByOID service = new ReadCurricularYearByOID();
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
             service.run(id);
             fail("testUnsuccessfullReadCurricularYearByOID");
-        }
-        catch (FenixServiceException ex)
-        {
-            try
-            {
+        } catch (FenixServiceException ex) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia e)
-            {
+            } catch (ExcepcaoPersistencia e) {
 
                 fail("testUnsuccessfullReadCurricularYearByOID - Exception cancelar transacção " + ex);
             }
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        }
-        catch (Exception ex)
-        {			
+        } catch (Exception ex) {
             fail("testUnsuccessfullReadCurricularYearByOID - Exception (not fenix service) " + ex);
         }
 
-
     }
-
 
 }

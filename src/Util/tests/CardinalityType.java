@@ -79,26 +79,25 @@ public class CardinalityType extends FenixUtil {
         if (cardinalityName.equals(SINGLE_ID_STRING))
             return new Integer(SINGLE);
         else if (cardinalityName.equals(MULTIPLE_ID_STRING))
-                return new Integer(MULTIPLE);
+            return new Integer(MULTIPLE);
         return null;
     }
 
     public void setTypeString() {
         if (type.intValue() == SINGLE)
             typeString = SINGLE_ID_STRING;
-        else if (type.intValue() == MULTIPLE) typeString = MULTIPLE_ID_STRING;
+        else if (type.intValue() == MULTIPLE)
+            typeString = MULTIPLE_ID_STRING;
     }
 
     public static List getAllTypes() {
         List result = new ArrayList();
-        result.add(new LabelValueBean(SINGLE_STRING, new Integer(SINGLE)
-                .toString()));
-        result.add(new LabelValueBean(MULTIPLE_STRING, new Integer(MULTIPLE)
-                .toString()));
+        result.add(new LabelValueBean(SINGLE_STRING, new Integer(SINGLE).toString()));
+        result.add(new LabelValueBean(MULTIPLE_STRING, new Integer(MULTIPLE).toString()));
         return result;
     }
-    
+
     public String toXML() {
-        return new String("rcardinality=\""+typeString+"\"");
+        return new String("rcardinality=\"" + typeString + "\"");
     }
 }

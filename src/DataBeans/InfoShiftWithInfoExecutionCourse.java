@@ -15,8 +15,8 @@ public class InfoShiftWithInfoExecutionCourse extends InfoShift {
     public void copyFromDomain(ITurno shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
-            setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod
-                    .newInfoFromDomain(shift.getDisciplinaExecucao()));
+            setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(shift
+                    .getDisciplinaExecucao()));
         }
     }
 

@@ -7,51 +7,50 @@ package DataBeans;
 
 /**
  * @author João Mota
- *
- * 29/Jul/2003
- * fenix-head
- * DataBeans
  * 
+ * 29/Jul/2003 fenix-head DataBeans
+ *  
  */
 public class InfoSiteCurriculum extends DataTranferObject implements ISiteComponent {
-	
-	private InfoCurriculum infoCurriculum;
-	private InfoCurricularCourse infoCurricularCourse;
 
-	/**
-	 * @return
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    private InfoCurriculum infoCurriculum;
 
-	/**
-	 * @param infoCurricularCourse
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    private InfoCurricularCourse infoCurricularCourse;
 
-	/**
-	 * @return
-	 */
-	public InfoCurriculum getInfoCurriculum() {
-		return infoCurriculum;
-	}
+    /**
+     * @return
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	/**
-	 * @param infoCurriculum
-	 */
-	public void setInfoCurriculum(InfoCurriculum infoCurriculum) {
-		this.infoCurriculum = infoCurriculum;
-	}
+    /**
+     * @param infoCurricularCourse
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
-	/**
-	 * 
-	 */
-	public InfoSiteCurriculum() {
-		super();
-		
-	}
+    /**
+     * @return
+     */
+    public InfoCurriculum getInfoCurriculum() {
+        return infoCurriculum;
+    }
+
+    /**
+     * @param infoCurriculum
+     */
+    public void setInfoCurriculum(InfoCurriculum infoCurriculum) {
+        this.infoCurriculum = infoCurriculum;
+    }
+
+    /**
+     *  
+     */
+    public InfoSiteCurriculum() {
+        super();
+
+    }
 
 }

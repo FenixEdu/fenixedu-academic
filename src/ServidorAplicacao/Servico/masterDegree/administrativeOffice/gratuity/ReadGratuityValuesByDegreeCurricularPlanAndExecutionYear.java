@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuityValues;
 import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
@@ -18,11 +19,10 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.IGratuityValues;
 import Dominio.IPaymentPhase;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGratuityValues;
 import ServidorPersistente.ISuportePersistente;
@@ -32,31 +32,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *  
  */
-public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
-        IServico {
-
-    private static ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear servico = new ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear";
-    }
+public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements IService {
 
     public Object run(Integer degreeCurricularPlanID, String executionYearName)
             throws FenixServiceException {
@@ -73,33 +49,26 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                     .getIPersistentDegreeCurricularPlan();
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanID);
+                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-            IPersistentExecutionYear persistentExecutionYear = sp
-                    .getIPersistentExecutionYear();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
             IExecutionYear executionYear = persistentExecutionYear
                     .readExecutionYearByName(executionYearName);
 
             if (degreeCurricularPlan == null || executionYear == null) {
-                throw new FenixServiceException(
-                        "error.impossible.noGratuityValues");
+                throw new FenixServiceException("error.impossible.noGratuityValues");
             }
 
             //read execution degree
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             ICursoExecucao executionDegree = persistentExecutionDegree
-                    .readByDegreeCurricularPlanAndExecutionYear(
-                            degreeCurricularPlan, executionYear);
+                    .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
             if (executionDegree == null) {
-                throw new FenixServiceException(
-                        "error.impossible.noGratuityValues");
+                throw new FenixServiceException("error.impossible.noGratuityValues");
             }
 
             //read execution degree's gratuity values
-            IPersistentGratuityValues persistentGratuityValues = sp
-                    .getIPersistentGratuityValues();
+            IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
             gratuityValues = persistentGratuityValues
                     .readGratuityValuesByExecutionDegree(executionDegree);
 
@@ -110,18 +79,15 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 
         InfoGratuityValues infoGratuityValues = null;
         if (gratuityValues != null) {
-            infoGratuityValues = Cloner
-                    .copyIGratuityValues2InfoGratuityValues(gratuityValues);
+            infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
 
             infoPaymentPhases = new ArrayList();
-            CollectionUtils.collect(gratuityValues.getPaymentPhaseList(),
-                    new Transformer() {
-                        public Object transform(Object input) {
-                            IPaymentPhase paymentPhase = (IPaymentPhase) input;
-                            return Cloner
-                                    .copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
-                        }
-                    }, infoPaymentPhases);
+            CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
+                public Object transform(Object input) {
+                    IPaymentPhase paymentPhase = (IPaymentPhase) input;
+                    return Cloner.copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
+                }
+            }, infoPaymentPhases);
 
             infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
 

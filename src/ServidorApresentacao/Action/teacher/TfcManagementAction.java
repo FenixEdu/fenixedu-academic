@@ -3,6 +3,7 @@
  *
  */
 package ServidorApresentacao.Action.teacher;
+
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -23,78 +24,69 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class TfcManagementAction extends FenixDispatchAction
-{
-	public ActionForward submit(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-	{
-		DynaActionForm tfcForm = (DynaActionForm) form;
-		String nomeResponsavel = (String) tfcForm.get("responsableTeacherName");
-		String nomeCoResponsavel = (String) tfcForm
-				.get("coResponsableTeacherName");
+public class TfcManagementAction extends FenixDispatchAction {
+    public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        DynaActionForm tfcForm = (DynaActionForm) form;
+        String nomeResponsavel = (String) tfcForm.get("responsableTeacherName");
+        String nomeCoResponsavel = (String) tfcForm.get("coResponsableTeacherName");
 
-		System.out.println("O nome do prof é: " + nomeResponsavel);
-		System.out.println("O nome do co-prof é: " + nomeCoResponsavel);
+        System.out.println("O nome do prof é: " + nomeResponsavel);
+        System.out.println("O nome do co-prof é: " + nomeCoResponsavel);
 
-		Enumeration parametros = request.getParameterNames();
-		while(parametros.hasMoreElements())
-			System.out.println("O nome do elemento é: " + parametros.nextElement());
-		
-		return mapping.findForward("");
-	}
+        Enumeration parametros = request.getParameterNames();
+        while (parametros.hasMoreElements())
+            System.out.println("O nome do elemento é: " + parametros.nextElement());
 
-	public ActionForward prepareTfcInformation(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException,
-			FenixServiceException
-	{
+        return mapping.findForward("");
+    }
 
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward prepareTfcInformation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixServiceException {
 
-		Object args[] = {userView.getUtilizador()};
+        IUserView userView = SessionUtils.getUserView(request);
 
-		InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(
-				userView, "ReadTeacherByUsername", args);
+        Object args[] = { userView.getUtilizador() };
 
-		request.setAttribute("infoTeacher", infoTeacher);
+        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+                "ReadTeacherByUsername", args);
 
-		List lista = infoTeacher.getResponsibleForExecutionCourses();
+        request.setAttribute("infoTeacher", infoTeacher);
 
-		System.out.println("Responsavel por:");
-		if (lista != null)
-		{
-			for (int i = 0; i < lista.size(); i++)
-				System.out.println(lista.get(i));
-		}
-		
-		Integer degreeCurricularPlanId = new Integer(48);
-		Object[] args1 = {degreeCurricularPlanId};
-		List branches = null;
-		try
-		{
-			branches = (List) ServiceUtils.executeService(userView,
-					"ReadBranchesByDegreeCurricularPlanId", args1);
-		}
-		catch (FenixServiceException fse)
-		{
-			throw new FenixActionException(fse);
-		}
-		
-		Iterator iterator = branches.iterator();
-		while(iterator.hasNext())
-		{
-			InfoBranch infoBranch = (InfoBranch)iterator.next();
-			System.out.println("O Raio do nome do Ramo é: " + infoBranch.getName());
-		}
-	
-		System.out.println("A Lista tem o tamanho: " + branches.size());
+        List lista = infoTeacher.getResponsibleForExecutionCourses();
 
-		request.setAttribute("branchList",branches);		
-		return mapping.findForward("submitTfcProposal");
+        System.out.println("Responsavel por:");
+        if (lista != null) {
+            for (int i = 0; i < lista.size(); i++)
+                System.out.println(lista.get(i));
+        }
 
-	}
+        Integer degreeCurricularPlanId = new Integer(48);
+        Object[] args1 = { degreeCurricularPlanId };
+        List branches = null;
+        try {
+            branches = (List) ServiceUtils.executeService(userView,
+                    "ReadBranchesByDegreeCurricularPlanId", args1);
+        } catch (FenixServiceException fse) {
+            throw new FenixActionException(fse);
+        }
+
+        Iterator iterator = branches.iterator();
+        while (iterator.hasNext()) {
+            InfoBranch infoBranch = (InfoBranch) iterator.next();
+            System.out.println("O Raio do nome do Ramo é: " + infoBranch.getName());
+        }
+
+        System.out.println("A Lista tem o tamanho: " + branches.size());
+
+        request.setAttribute("branchList", branches);
+        return mapping.findForward("submitTfcProposal");
+
+    }
 }

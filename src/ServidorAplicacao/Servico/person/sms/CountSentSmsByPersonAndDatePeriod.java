@@ -18,49 +18,43 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.sms.IPersistentSentSms;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
- * <strong>Description:</strong><br>This service counts the number of sent Sms's by a person, in a
- * date period delimited by starDate(inclusive) and endDate(exclusive)
+ * <strong>Description: </strong> <br>
+ * This service counts the number of sent Sms's by a person, in a date period
+ * delimited by starDate(inclusive) and endDate(exclusive)
  *  
  */
-public class CountSentSmsByPersonAndDatePeriod implements IService
-{
+public class CountSentSmsByPersonAndDatePeriod implements IService {
 
-	/**
-	 *  
-	 */
-	public CountSentSmsByPersonAndDatePeriod()
-	{
-	}
+    /**
+     *  
+     */
+    public CountSentSmsByPersonAndDatePeriod() {
+    }
 
-	public Integer run(UserView userView, Date startDate, Date endDate) throws FenixServiceException
-	{
+    public Integer run(UserView userView, Date startDate, Date endDate) throws FenixServiceException {
 
-		try
-		{
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
+        try {
+            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
-			IPessoa person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPessoa person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
-			Integer numberOfSms =
-				persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(), startDate, endDate);
+            Integer numberOfSms = persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(),
+                    startDate, endDate);
 
-			if (numberOfSms.intValue() >= SmsUtil.getInstance().getMonthlySmsLimit())
-			{
-				throw new SmsLimitReachedServiceException("error.person.sendSmsLimitReached");
-			}
+            if (numberOfSms.intValue() >= SmsUtil.getInstance().getMonthlySmsLimit()) {
+                throw new SmsLimitReachedServiceException("error.person.sendSmsLimitReached");
+            }
 
-			return new Integer(SmsUtil.getInstance().getMonthlySmsLimit() - numberOfSms.intValue());
+            return new Integer(SmsUtil.getInstance().getMonthlySmsLimit() - numberOfSms.intValue());
 
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	}
+    }
 
 }

@@ -2,63 +2,45 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Serviï¿½o RemoverAula
- *
+ * 
  * @author tfc130
  * @version
- **/
+ */
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class RemoverAula implements IServico {
+public class RemoverAula implements IService {
 
-// FIXME : O serviço nao devolve False quando a aula nao existe!...
+    // FIXME : O serviço nao devolve False quando a aula nao existe!...
 
-  private static RemoverAula _servico = new RemoverAula();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static RemoverAula getService() {
-    return _servico;
-  }
+    public Object run(InfoLesson infoLesson, InfoShift infoShift) {
+        boolean result = false;
 
-  /**
-   * The actor of this class.
-   **/
-  private RemoverAula() { }
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            //ISala room =
+            // sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "RemoverAula";
-  }
+            //ITurno shift = Cloner.copyInfoShift2Shift(infoShift);
+            IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 
-  public Object run(InfoLesson infoLesson, InfoShift infoShift) {
-    boolean result = false;
+            sp.getIAulaPersistente().delete(lesson);
+            //      sp.getITurnoAulaPersistente().delete(shift,
+            // infoLesson.getDiaSemana(),
+            //                                           infoLesson.getInicio(), infoLesson.getFim(), room);
+            result = true;
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      //ISala room = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
-      		      
-	  //ITurno shift = Cloner.copyInfoShift2Shift(infoShift);		      
-  	  IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-  	  
-  	  sp.getIAulaPersistente().delete(lesson);	
-//      sp.getITurnoAulaPersistente().delete(shift, infoLesson.getDiaSemana(),
-//                                           infoLesson.getInicio(), infoLesson.getFim(), room);
-      result = true;
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
+        return new Boolean(result);
     }
-    
-    return new Boolean (result);
-  }
 
 }

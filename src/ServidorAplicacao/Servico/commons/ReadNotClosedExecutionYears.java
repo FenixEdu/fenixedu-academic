@@ -14,40 +14,29 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * 
- * @author Fernanda Quitério
- * 14/Jan/2004
- *
+ * @author Fernanda Quitério 14/Jan/2004
+ *  
  */
-public class ReadNotClosedExecutionYears implements IService
-{
+public class ReadNotClosedExecutionYears implements IService {
 
-	public ReadNotClosedExecutionYears()
-	{
-	}
-	
-    public List run() throws FenixServiceException
-    {
+    public ReadNotClosedExecutionYears() {
+    }
+
+    public List run() throws FenixServiceException {
 
         List result = new ArrayList();
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
             List executionYears = persistentExecutionYear.readNotClosedExecutionYears();
 
-            if (executionYears != null)
-            {
-                for (int i = 0; i < executionYears.size(); i++)
-                {
-                    result.add(
-                        Cloner.get(
-                            (IExecutionYear) executionYears.get(i)));
+            if (executionYears != null) {
+                for (int i = 0; i < executionYears.size(); i++) {
+                    result.add(Cloner.get((IExecutionYear) executionYears.get(i)));
                 }
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 

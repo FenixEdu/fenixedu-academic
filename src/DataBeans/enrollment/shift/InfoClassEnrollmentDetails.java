@@ -12,10 +12,11 @@ import DataBeans.InfoStudent;
 /**
  * @author jpvl
  */
-public class InfoClassEnrollmentDetails extends DataTranferObject
-{
+public class InfoClassEnrollmentDetails extends DataTranferObject {
     /**
-     * Map (key - classId; value - List of @see ExecutionCourseShiftEnrollmentDetails
+     * Map (key - classId; value - List of
+     * 
+     * @see ExecutionCourseShiftEnrollmentDetails
      */
     private Map classExecutionCourseShiftEnrollmentDetailsMap;
 
@@ -37,8 +38,7 @@ public class InfoClassEnrollmentDetails extends DataTranferObject
     /**
      * @return Returns the classExecutionCourseShiftEnrollmentDetails.
      */
-    public Map getClassExecutionCourseShiftEnrollmentDetailsMap()
-    {
+    public Map getClassExecutionCourseShiftEnrollmentDetailsMap() {
         return classExecutionCourseShiftEnrollmentDetailsMap;
     }
 
@@ -46,16 +46,15 @@ public class InfoClassEnrollmentDetails extends DataTranferObject
      * @param classExecutionCourseShiftEnrollmentDetails
      *            The classExecutionCourseShiftEnrollmentDetails to set.
      */
-    public void setClassExecutionCourseShiftEnrollmentDetailsMap(Map classExecutionCourseShiftEnrollmentDetails)
-    {
+    public void setClassExecutionCourseShiftEnrollmentDetailsMap(
+            Map classExecutionCourseShiftEnrollmentDetails) {
         this.classExecutionCourseShiftEnrollmentDetailsMap = classExecutionCourseShiftEnrollmentDetails;
     }
 
     /**
      * @return Returns the infoStudent.
      */
-    public InfoStudent getInfoStudent()
-    {
+    public InfoStudent getInfoStudent() {
         return infoStudent;
     }
 
@@ -63,16 +62,14 @@ public class InfoClassEnrollmentDetails extends DataTranferObject
      * @param infoStudent
      *            The infoStudent to set.
      */
-    public void setInfoStudent(InfoStudent infoStudent)
-    {
+    public void setInfoStudent(InfoStudent infoStudent) {
         this.infoStudent = infoStudent;
     }
 
     /**
      * @return Returns the infoStudentShiftList.
      */
-    public List getInfoShiftEnrolledList()
-    {
+    public List getInfoShiftEnrolledList() {
         return infoShiftEnrolledList;
     }
 
@@ -80,16 +77,14 @@ public class InfoClassEnrollmentDetails extends DataTranferObject
      * @param infoStudentShiftList
      *            The infoStudentShiftList to set.
      */
-    public void setInfoShiftEnrolledList(List infoStudentShiftList)
-    {
+    public void setInfoShiftEnrolledList(List infoStudentShiftList) {
         this.infoShiftEnrolledList = infoStudentShiftList;
     }
 
     /**
      * @return Returns the infoClassList.
      */
-    public List getInfoClassList()
-    {
+    public List getInfoClassList() {
         return infoClassList;
     }
 
@@ -97,45 +92,40 @@ public class InfoClassEnrollmentDetails extends DataTranferObject
      * @param infoClassList
      *            The infoClassList to set.
      */
-    public void setInfoClassList(List infoClassList)
-    {
+    public void setInfoClassList(List infoClassList) {
         this.infoClassList = infoClassList;
     }
-    
-    public String toString()
-    {
-    	StringBuffer string = new StringBuffer();
 
-    	string.append("[InfoClassEnrollmentDetails ");
-    	string.append("\ninfoStudent: ");
-    	string.append(infoStudent.getIdInternal());
-    	
-    	string.append("\nclassExecutionCourseShiftEnrollmentDetailsMap: ");		
-    	if (classExecutionCourseShiftEnrollmentDetailsMap != null)
-    	{
-    		string.append(classExecutionCourseShiftEnrollmentDetailsMap.size());
-    	} else {
-    		string.append("null");			
-    	}
-    	
-    	string.append("\ninfoClassList: ");
-    	if (infoClassList != null)
-    	{
-    		string.append(infoClassList.size());
-    	} else {
-    		string.append("null");			
-    	}
-    	    	
-    	string.append("\ninfoShiftEnrolledList: ");
-    	if (infoShiftEnrolledList != null)
-    	{
-    		string.append(infoShiftEnrolledList.size());
-    	} else {
-    		string.append("null");			
-    	}
-    	
-    	string.append(" ]");
+    public String toString() {
+        StringBuffer string = new StringBuffer();
 
-    	return string.toString();
+        string.append("[InfoClassEnrollmentDetails ");
+        string.append("\ninfoStudent: ");
+        string.append(infoStudent.getIdInternal());
+
+        string.append("\nclassExecutionCourseShiftEnrollmentDetailsMap: ");
+        if (classExecutionCourseShiftEnrollmentDetailsMap != null) {
+            string.append(classExecutionCourseShiftEnrollmentDetailsMap.size());
+        } else {
+            string.append("null");
+        }
+
+        string.append("\ninfoClassList: ");
+        if (infoClassList != null) {
+            string.append(infoClassList.size());
+        } else {
+            string.append("null");
+        }
+
+        string.append("\ninfoShiftEnrolledList: ");
+        if (infoShiftEnrolledList != null) {
+            string.append(infoShiftEnrolledList.size());
+        } else {
+            string.append("null");
+        }
+
+        string.append(" ]");
+
+        return string.toString();
     }
 }

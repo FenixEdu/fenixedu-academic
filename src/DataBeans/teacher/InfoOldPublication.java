@@ -16,124 +16,123 @@ import Util.OldPublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class InfoOldPublication extends InfoObject
-{
-	private OldPublicationType oldPublicationType;
+public class InfoOldPublication extends InfoObject {
+    private OldPublicationType oldPublicationType;
+
     private String oldPublicationTypeString;
-	private Date lastModificationDate;
-	private String publication;
-	private InfoTeacher infoTeacher;
 
-	/**
-	 *  
-	 */
-	public InfoOldPublication()
-	{
-		super();
-	}
+    private Date lastModificationDate;
 
-	/**
-	 * @return Returns the infoTeacher.
-	 */
-	public InfoTeacher getInfoTeacher()
-	{
-		return infoTeacher;
-	}
+    private String publication;
 
-	/**
-	 * @param infoTeacher The infoTeacher to set.
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher)
-	{
-		this.infoTeacher = infoTeacher;
-	}
+    private InfoTeacher infoTeacher;
 
-	/**
-	 * @return Returns the lastModificationDate.
-	 */
-	public Date getLastModificationDate()
-	{
-		return lastModificationDate;
-	}
+    /**
+     *  
+     */
+    public InfoOldPublication() {
+        super();
+    }
 
-	/**
-	 * @param lastModificationDate The lastModificationDate to set.
-	 */
-	public void setLastModificationDate(Date lastModificationDate)
-	{
-		this.lastModificationDate = lastModificationDate;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
 
-	/**
-	 * @return Returns the oldPublicationType.
-	 */
-	public OldPublicationType getOldPublicationType()
-	{
-		return oldPublicationType;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 
-	/**
-	 * @param oldPublicationType The oldPublicationType to set.
-	 */
-	public void setOldPublicationType(OldPublicationType oldPublicationType)
-	{
-		this.oldPublicationType = oldPublicationType;
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate() {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
+
+    /**
+     * @return Returns the oldPublicationType.
+     */
+    public OldPublicationType getOldPublicationType() {
+        return oldPublicationType;
+    }
+
+    /**
+     * @param oldPublicationType
+     *            The oldPublicationType to set.
+     */
+    public void setOldPublicationType(OldPublicationType oldPublicationType) {
+        this.oldPublicationType = oldPublicationType;
         this.oldPublicationTypeString = oldPublicationType.getName();
-	}
+    }
 
-	/**
-	 * @return Returns the publication.
-	 */
-	public String getPublication()
-	{
-		return publication;
-	}
+    /**
+     * @return Returns the publication.
+     */
+    public String getPublication() {
+        return publication;
+    }
 
-	/**
-	 * @param publication The publication to set.
-	 */
-	public void setPublication(String publication)
-	{
-		this.publication = publication;
-	}
+    /**
+     * @param publication
+     *            The publication to set.
+     */
+    public void setPublication(String publication) {
+        this.publication = publication;
+    }
 
     /**
      * @return Returns the oldPublicationTypeString.
      */
-    public String getOldPublicationTypeString()
-    {
+    public String getOldPublicationTypeString() {
         return oldPublicationTypeString;
     }
 
     /**
-     * @param oldPublicationTypeString The oldPublicationTypeString to set.
+     * @param oldPublicationTypeString
+     *            The oldPublicationTypeString to set.
      */
-    public void setOldPublicationTypeString(String oldPublicationTypeString)
-    {
+    public void setOldPublicationTypeString(String oldPublicationTypeString) {
         this.oldPublicationTypeString = oldPublicationTypeString;
         this.oldPublicationType = OldPublicationType.getEnum(oldPublicationTypeString);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IOldPublication oldPublication) {
         super.copyFromDomain(oldPublication);
-        
-        if(oldPublication != null) {
+
+        if (oldPublication != null) {
             setLastModificationDate(oldPublication.getLastModificationDate());
             setOldPublicationType(oldPublication.getOldPublicationType());
             setOldPublicationTypeString(oldPublication.getOldPublicationType().toString());
             setPublication(oldPublication.getPublication());
         }
     }
-    
+
     public static InfoOldPublication newInfoFromDomain(IOldPublication oldPublication) {
         InfoOldPublication infoOldPublication = null;
-        if(oldPublication != null) {
+        if (oldPublication != null) {
             infoOldPublication = new InfoOldPublication();
             infoOldPublication.copyFromDomain(oldPublication);
-        } 
+        }
         return infoOldPublication;
     }
 }

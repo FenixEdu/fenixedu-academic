@@ -6,10 +6,10 @@ package Dominio;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public interface IEmployeeNotTeacher extends IDomainObject
-{
-	public IEmployee getEmployee();
-	public void setEmployee(IEmployee employee);	
+public interface IEmployeeNotTeacher extends IDomainObject {
+    public IEmployee getEmployee();
+
+    public void setEmployee(IEmployee employee);
 }

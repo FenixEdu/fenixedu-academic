@@ -29,51 +29,45 @@ import Util.OldPublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadOldPublications implements IServico
-{
+public class ReadOldPublications implements IServico {
     private static ReadOldPublications service = new ReadOldPublications();
 
     /**
-	 *  
-	 */
-    private ReadOldPublications()
-    {
+     *  
+     */
+    private ReadOldPublications() {
 
     }
 
-    public static ReadOldPublications getService()
-    {
+    public static ReadOldPublications getService() {
 
         return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadOldPublications";
     }
 
-    public SiteView run(OldPublicationType oldPublicationType, String user) throws FenixServiceException
-    {
-        try
-        {
+    public SiteView run(OldPublicationType oldPublicationType, String user) throws FenixServiceException {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
-            IPersistentOldPublication persistentOldPublication = persistentSuport.getIPersistentOldPublication();
-            List publications = persistentOldPublication.readAllByTeacherAndOldPublicationType(teacher, oldPublicationType);
-            
-            List result = (List) CollectionUtils.collect(publications, new Transformer()
-            {
-                public Object transform(Object o)
-                {
+            IPersistentOldPublication persistentOldPublication = persistentSuport
+                    .getIPersistentOldPublication();
+            List publications = persistentOldPublication.readAllByTeacherAndOldPublicationType(teacher,
+                    oldPublicationType);
+
+            List result = (List) CollectionUtils.collect(publications, new Transformer() {
+                public Object transform(Object o) {
                     IOldPublication oldPublication = (IOldPublication) o;
                     return Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
                 }
@@ -86,8 +80,7 @@ public class ReadOldPublications implements IServico
 
             SiteView siteView = new SiteView(bodyComponent);
             return siteView;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

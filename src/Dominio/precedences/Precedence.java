@@ -10,103 +10,89 @@ import Util.enrollment.CurricularCourseEnrollmentType;
  * @author David Santos in Jun 9, 2004
  */
 
-public class Precedence extends DomainObject implements IPrecedence
-{
-	private Integer keyCurricularCourse;
-	private ICurricularCourse curricularCourse;
-	private List restrictions;
+public class Precedence extends DomainObject implements IPrecedence {
+    private Integer keyCurricularCourse;
 
-	public Precedence()
-	{
-		super();
-	}
+    private ICurricularCourse curricularCourse;
 
-	public ICurricularCourse getCurricularCourse()
-	{
-		return curricularCourse;
-	}
+    private List restrictions;
 
-	public void setCurricularCourse(ICurricularCourse curricularCourse)
-	{
-		this.curricularCourse = curricularCourse;
-	}
+    public Precedence() {
+        super();
+    }
 
-	public Integer getKeyCurricularCourse()
-	{
-		return keyCurricularCourse;
-	}
+    public ICurricularCourse getCurricularCourse() {
+        return curricularCourse;
+    }
 
-	public void setKeyCurricularCourse(Integer keyCurricularCourse)
-	{
-		this.keyCurricularCourse = keyCurricularCourse;
-	}
+    public void setCurricularCourse(ICurricularCourse curricularCourse) {
+        this.curricularCourse = curricularCourse;
+    }
 
-	public List getRestrictions()
-	{
-		return restrictions;
-	}
+    public Integer getKeyCurricularCourse() {
+        return keyCurricularCourse;
+    }
 
-	public void setRestrictions(List restrictions)
-	{
-		this.restrictions = restrictions;
-	}
+    public void setKeyCurricularCourse(Integer keyCurricularCourse) {
+        this.keyCurricularCourse = keyCurricularCourse;
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if ((obj != null) && (this.getClass().equals(obj.getClass())))
-		{
-			IPrecedence precedence = (IPrecedence) obj;
-			result = this.getCurricularCourse().equals(precedence.getCurricularCourse());
-			if (result)
-			{
-				List precedenceRestrictions = precedence.getRestrictions();
-				if (precedenceRestrictions != null)
-				{
-					for (int i = 0; i < precedenceRestrictions.size() && result; i++)
-					{
-						IRestriction restriction = (IRestriction) precedenceRestrictions.get(i);
-						result = this.getRestrictions().contains(restriction);
-					}
-				} else
-				{
-					result = this.getRestrictions() == null;
-				}
+    public List getRestrictions() {
+        return restrictions;
+    }
 
-			}
-		}
-		return result;
-	}
+    public void setRestrictions(List restrictions) {
+        this.restrictions = restrictions;
+    }
 
-	public String toString()
-	{
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append("Precedence:\n");
-		stringBuffer.append(this.getCurricularCourse()).append("\n");
-		List restrictions = this.getRestrictions();
-		for (int i = 0; i < restrictions.size(); i++)
-		{
-			IRestriction restriction = (IRestriction) restrictions.get(i);
-			stringBuffer.append(restriction).append("\n");
-		}
-		stringBuffer.append("---------\n");
-		return stringBuffer.toString();
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if ((obj != null) && (this.getClass().equals(obj.getClass()))) {
+            IPrecedence precedence = (IPrecedence) obj;
+            result = this.getCurricularCourse().equals(precedence.getCurricularCourse());
+            if (result) {
+                List precedenceRestrictions = precedence.getRestrictions();
+                if (precedenceRestrictions != null) {
+                    for (int i = 0; i < precedenceRestrictions.size() && result; i++) {
+                        IRestriction restriction = (IRestriction) precedenceRestrictions.get(i);
+                        result = this.getRestrictions().contains(restriction);
+                    }
+                } else {
+                    result = this.getRestrictions() == null;
+                }
 
-	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
-	{
-	    List restrictions = getRestrictions();
-		
-		int size = restrictions.size();
-		CurricularCourseEnrollmentType evaluate = ((IRestriction) restrictions.get(0)).evaluate(precedenceContext);
+            }
+        }
+        return result;
+    }
 
-		for (int i = 1; i < size; i++)
-		{
-			IRestriction restriction = (IRestriction) restrictions.get(i);
-			evaluate = evaluate.and(restriction.evaluate(precedenceContext));
-		}
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Precedence:\n");
+        stringBuffer.append(this.getCurricularCourse()).append("\n");
+        List restrictions = this.getRestrictions();
+        for (int i = 0; i < restrictions.size(); i++) {
+            IRestriction restriction = (IRestriction) restrictions.get(i);
+            stringBuffer.append(restriction).append("\n");
+        }
+        stringBuffer.append("---------\n");
+        return stringBuffer.toString();
+    }
 
-		return evaluate;
-	}
+    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
+        List restrictions = getRestrictions();
+
+        int size = restrictions.size();
+
+        CurricularCourseEnrollmentType evaluate = ((IRestriction) restrictions.get(0))
+                .evaluate(precedenceContext);
+
+        for (int i = 1; i < size; i++) {
+            IRestriction restriction = (IRestriction) restrictions.get(i);
+            evaluate = evaluate.and(restriction.evaluate(precedenceContext));
+        }
+
+        return evaluate;
+    }
 
 }

@@ -23,64 +23,48 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class MonitorServicesDA extends FenixDispatchAction {
 
-	public ActionForward monitor(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Boolean loggingIsOn = ServiceManagerServiceFactory.serviceLoggingIsOn(userView);
-		request.setAttribute("loggingIsOn", loggingIsOn);
+        Boolean loggingIsOn = ServiceManagerServiceFactory.serviceLoggingIsOn(userView);
+        request.setAttribute("loggingIsOn", loggingIsOn);
 
-		Map serviceLogs = ServiceManagerServiceFactory.getServicesLogInfo(userView);
-		request.setAttribute("serviceLogs", serviceLogs);
-		
-		return mapping.findForward("Show");
-	}
+        Map serviceLogs = ServiceManagerServiceFactory.getServicesLogInfo(userView);
+        request.setAttribute("serviceLogs", serviceLogs);
 
-	public ActionForward activateMonotoring(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+        return mapping.findForward("Show");
+    }
 
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward activateMonotoring(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ServiceManagerServiceFactory.turnServiceLoggingOn(userView);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		return monitor(mapping, form, request, response);
-	}
+        ServiceManagerServiceFactory.turnServiceLoggingOn(userView);
 
-	public ActionForward deactivateMonotoring(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+        return monitor(mapping, form, request, response);
+    }
 
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward deactivateMonotoring(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ServiceManagerServiceFactory.turnServiceLoggingOff(userView);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		return monitor(mapping, form, request, response);
-	}
+        ServiceManagerServiceFactory.turnServiceLoggingOff(userView);
 
-	public ActionForward clearServiceLogs(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+        return monitor(mapping, form, request, response);
+    }
 
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward clearServiceLogs(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ServiceManagerServiceFactory.clearServiceLogHistory(userView);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		return monitor(mapping, form, request, response);
-	}
+        ServiceManagerServiceFactory.clearServiceLogHistory(userView);
+
+        return monitor(mapping, form, request, response);
+    }
 
 }

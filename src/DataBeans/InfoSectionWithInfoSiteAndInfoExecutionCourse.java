@@ -8,23 +8,25 @@ import Dominio.ISection;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
 public class InfoSectionWithInfoSiteAndInfoExecutionCourse extends InfoSection {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoSection#copyFromDomain(Dominio.ISection)
      */
     public void copyFromDomain(ISection section) {
         super.copyFromDomain(section);
-        if(section != null) {
+        if (section != null) {
             setInfoSite(InfoSiteWithInfoExecutionCourse.newInfoFromDomain(section.getSite()));
         }
     }
-    
+
     public static InfoSection newInfoFromDomain(ISection section) {
         InfoSectionWithInfoSiteAndInfoExecutionCourse infoSection = null;
-        if(section != null) {
+        if (section != null) {
             infoSection = new InfoSectionWithInfoSiteAndInfoExecutionCourse();
             infoSection.copyFromDomain(section);
         }

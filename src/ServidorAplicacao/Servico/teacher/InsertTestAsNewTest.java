@@ -28,57 +28,50 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class InsertTestAsNewTest implements IService {
 
-	public InsertTestAsNewTest() {
-	}
+    public InsertTestAsNewTest() {
+    }
 
-	public Integer run(Integer executionCourseId, Integer oldTestId)
-			throws FenixServiceException {
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB
-					.getInstance();
-			IPersistentTest persistentTest = persistentSuport
-					.getIPersistentTest();
+    public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
 
-			ITest oldTest = (ITest) persistentTest.readByOID(Test.class,
-					oldTestId);
-			if (oldTest == null)
-				throw new InvalidArgumentsServiceException();
-			ITest test = new Test();
+            ITest oldTest = (ITest) persistentTest.readByOID(Test.class, oldTestId);
+            if (oldTest == null)
+                throw new InvalidArgumentsServiceException();
+            ITest test = new Test();
 
-			test.setTitle(oldTest.getTitle().concat(" (Duplicado)"));
-			test.setInformation(oldTest.getInformation());
-			test.setNumberOfQuestions(oldTest.getNumberOfQuestions());
-			Date date = Calendar.getInstance().getTime();
-			test.setCreationDate(date);
-			test.setLastModifiedDate(date);
-			test.setKeyTestScope(oldTest.getKeyTestScope());
-			test.setTestScope(oldTest.getTestScope());
-			persistentTest.simpleLockWrite(test);
+            test.setTitle(oldTest.getTitle().concat(" (Duplicado)"));
+            test.setInformation(oldTest.getInformation());
+            test.setNumberOfQuestions(oldTest.getNumberOfQuestions());
+            Date date = Calendar.getInstance().getTime();
+            test.setCreationDate(date);
+            test.setLastModifiedDate(date);
+            test.setKeyTestScope(oldTest.getKeyTestScope());
+            test.setTestScope(oldTest.getTestScope());
+            persistentTest.simpleLockWrite(test);
 
-			IPersistentTestQuestion persistentTestQuestion = persistentSuport
-					.getIPersistentTestQuestion();
+            IPersistentTestQuestion persistentTestQuestion = persistentSuport
+                    .getIPersistentTestQuestion();
 
-			List testQuestionList = persistentTestQuestion.readByTest(oldTest);
+            List testQuestionList = persistentTestQuestion.readByTest(oldTest);
 
-			Iterator it = testQuestionList.iterator();
-			while (it.hasNext()) {
-				ITestQuestion testQuestion = (ITestQuestion) it.next();
-				ITestQuestion newTestQuestion = new TestQuestion();
-				newTestQuestion.setKeyQuestion(testQuestion.getKeyQuestion());
-				newTestQuestion.setQuestion(testQuestion.getQuestion());
-				newTestQuestion.setTestQuestionOrder(testQuestion
-						.getTestQuestionOrder());
-				newTestQuestion.setTestQuestionValue(testQuestion
-						.getTestQuestionValue());
-				newTestQuestion.setCorrectionFormula(testQuestion
-						.getCorrectionFormula());
-				newTestQuestion.setKeyTest(test.getIdInternal());
-				newTestQuestion.setTest(test);
-				persistentTestQuestion.simpleLockWrite(newTestQuestion);
-			}
-			return test.getIdInternal();
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            Iterator it = testQuestionList.iterator();
+            while (it.hasNext()) {
+                ITestQuestion testQuestion = (ITestQuestion) it.next();
+                ITestQuestion newTestQuestion = new TestQuestion();
+                newTestQuestion.setKeyQuestion(testQuestion.getKeyQuestion());
+                newTestQuestion.setQuestion(testQuestion.getQuestion());
+                newTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
+                newTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+                newTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
+                newTestQuestion.setKeyTest(test.getIdInternal());
+                newTestQuestion.setTest(test);
+                persistentTestQuestion.simpleLockWrite(newTestQuestion);
+            }
+            return test.getIdInternal();
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

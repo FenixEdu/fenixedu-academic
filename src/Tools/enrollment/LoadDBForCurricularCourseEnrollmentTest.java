@@ -38,22 +38,33 @@ import Util.RoleType;
 public class LoadDBForCurricularCourseEnrollmentTest {
 
     private static final String FILE = "D:/Fenix/Files/others/dataset.xml";
+
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+
     private static final String DB_ALIAS = "jdbc:mysql://localhost/";
+
     private static final String DEFAULT_DB_NAME = "ciapl";
+
     private static final String DEFAULT_DB_PASSWORD = "";
+
     private static final String DEFAULT_DB_USERNAME = "root";
 
     private static final boolean CALL_CLEAN_DB = false;
 
     private static final Integer PERSON_ID = new Integer(18000);
+
     private static final Integer STUDENT_ID = new Integer(13000);
+
     private static final Integer STUDENT_CURRICULAR_PLAN_ID = new Integer(23000);
 
     private IDatabaseConnection connection;
+
     private String dbName;
+
     private String username;
+
     private String password;
+
     private DatabaseOperation insertDatabaseOperation;
 
     public LoadDBForCurricularCourseEnrollmentTest() {
@@ -77,20 +88,25 @@ public class LoadDBForCurricularCourseEnrollmentTest {
             persistenceDAO.iniciarTransaccao();
 
             // -------------------------------------------------------------------------------------------------------
-            IPessoa person = (IPessoa) persistenceDAO.getIPessoaPersistente().readByOID(Pessoa.class, PERSON_ID);
+            IPessoa person = (IPessoa) persistenceDAO.getIPessoaPersistente().readByOID(Pessoa.class,
+                    PERSON_ID);
 
             IRole role = new Role();
 
             role.setRoleType(RoleType.PERSON);
-            IPersonRole personRole1 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(person, role);
+            IPersonRole personRole1 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(
+                    person, role);
 
             role.setRoleType(RoleType.STUDENT);
-            IPersonRole personRole2 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(person, role);
+            IPersonRole personRole2 = persistenceDAO.getIPersistentPersonRole().readByPersonAndRole(
+                    person, role);
 
-            IStudent student = (IStudent) persistenceDAO.getIPersistentStudent().readByOID(Student.class, STUDENT_ID);
+            IStudent student = (IStudent) persistenceDAO.getIPersistentStudent().readByOID(
+                    Student.class, STUDENT_ID);
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistenceDAO
-                    .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class, STUDENT_CURRICULAR_PLAN_ID);
+                    .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+                            STUDENT_CURRICULAR_PLAN_ID);
 
             if (studentCurricularPlan != null) {
 
@@ -101,41 +117,45 @@ public class LoadDBForCurricularCourseEnrollmentTest {
 
                     int size2 = enrollment.getEvaluations().size();
                     for (int j = 0; j < size2; j++) {
-                        IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) enrollment.getEvaluations().get(j);
-                        persistenceDAO.getIPersistentEnrolmentEvaluation().deleteByOID(EnrolmentEvaluation.class,
-                                enrollmentEvaluation.getIdInternal());
+                        IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) enrollment
+                                .getEvaluations().get(j);
+                        persistenceDAO.getIPersistentEnrolmentEvaluation().deleteByOID(
+                                EnrolmentEvaluation.class, enrollmentEvaluation.getIdInternal());
                     }
 
-                    persistenceDAO.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrollment.getIdInternal());
+                    persistenceDAO.getIPersistentEnrolment().deleteByOID(Enrolment.class,
+                            enrollment.getIdInternal());
                 }
 
                 // ---------------------------------------------------------------------------------------------------
-                List creditsInAnySecundaryAreaList = persistenceDAO.getIPersistentCreditsInAnySecundaryArea()
-                        .readAllByStudentCurricularPlan(studentCurricularPlan);
+                List creditsInAnySecundaryAreaList = persistenceDAO
+                        .getIPersistentCreditsInAnySecundaryArea().readAllByStudentCurricularPlan(
+                                studentCurricularPlan);
 
                 size = creditsInAnySecundaryAreaList.size();
                 for (int i = 0; i < size; i++) {
                     ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) creditsInAnySecundaryAreaList
                             .get(i);
-                    persistenceDAO.getIPersistentCreditsInAnySecundaryArea().deleteByOID(CreditsInAnySecundaryArea.class,
-                            creditsInAnySecundaryArea.getIdInternal());
+                    persistenceDAO.getIPersistentCreditsInAnySecundaryArea().deleteByOID(
+                            CreditsInAnySecundaryArea.class, creditsInAnySecundaryArea.getIdInternal());
                 }
 
                 // ---------------------------------------------------------------------------------------------------
-                List creditsInScientificAreaList = persistenceDAO.getIPersistentCreditsInSpecificScientificArea()
-                        .readAllByStudentCurricularPlan(studentCurricularPlan);
+                List creditsInScientificAreaList = persistenceDAO
+                        .getIPersistentCreditsInSpecificScientificArea().readAllByStudentCurricularPlan(
+                                studentCurricularPlan);
 
                 size = creditsInScientificAreaList.size();
                 for (int i = 0; i < size; i++) {
                     ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) creditsInScientificAreaList
                             .get(i);
-                    persistenceDAO.getIPersistentCreditsInSpecificScientificArea().deleteByOID(CreditsInScientificArea.class,
-                            creditsInScientificArea.getIdInternal());
+                    persistenceDAO.getIPersistentCreditsInSpecificScientificArea().deleteByOID(
+                            CreditsInScientificArea.class, creditsInScientificArea.getIdInternal());
                 }
 
                 // ---------------------------------------------------------------------------------------------------
-                persistenceDAO.getIStudentCurricularPlanPersistente().deleteByOID(StudentCurricularPlan.class,
-                        studentCurricularPlan.getIdInternal());
+                persistenceDAO.getIStudentCurricularPlanPersistente().deleteByOID(
+                        StudentCurricularPlan.class, studentCurricularPlan.getIdInternal());
             }
 
             // -------------------------------------------------------------------------------------------------------
@@ -144,15 +164,18 @@ public class LoadDBForCurricularCourseEnrollmentTest {
             }
 
             if (student != null) {
-                persistenceDAO.getIPersistentStudent().deleteByOID(Student.class, student.getIdInternal());
+                persistenceDAO.getIPersistentStudent().deleteByOID(Student.class,
+                        student.getIdInternal());
             }
 
             if (personRole1 != null) {
-                persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole1.getIdInternal());
+                persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class,
+                        personRole1.getIdInternal());
             }
 
             if (personRole2 != null) {
-                persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole2.getIdInternal());
+                persistenceDAO.getIPersistentPersonRole().deleteByOID(PersonRole.class,
+                        personRole2.getIdInternal());
             }
 
             // -------------------------------------------------------------------------------------------------------
@@ -167,17 +190,18 @@ public class LoadDBForCurricularCourseEnrollmentTest {
         obj.closeConnection();
     }
 
-//    private static void clearCache() throws ExcepcaoPersistencia {
-//        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-//        persistenceDAO.iniciarTransaccao();
-//        persistenceDAO.clearCache();
-//        persistenceDAO.confirmarTransaccao();
-//    }
+    //    private static void clearCache() throws ExcepcaoPersistencia {
+    //        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+    //        persistenceDAO.iniciarTransaccao();
+    //        persistenceDAO.clearCache();
+    //        persistenceDAO.confirmarTransaccao();
+    //    }
 
     public void openConnection() throws Exception {
         if (this.connection == null) {
             Class.forName(DB_DRIVER);
-            Connection jdbcConnection = DriverManager.getConnection(this.getDbName(), this.getUsername(), this.getPassword());
+            Connection jdbcConnection = DriverManager.getConnection(this.getDbName(),
+                    this.getUsername(), this.getPassword());
             this.connection = new DatabaseConnection(jdbcConnection);
         }
     }
@@ -200,9 +224,9 @@ public class LoadDBForCurricularCourseEnrollmentTest {
     public String getDbName() {
         if (this.dbName == null) {
             return DB_ALIAS + DEFAULT_DB_NAME;
-        } 
-            return DB_ALIAS + this.dbName;
-        
+        }
+        return DB_ALIAS + this.dbName;
+
     }
 
     public void setDbName(String dbName) {
@@ -212,9 +236,9 @@ public class LoadDBForCurricularCourseEnrollmentTest {
     public String getPassword() {
         if (this.password == null) {
             return DEFAULT_DB_PASSWORD;
-        } 
-            return this.password;
-        
+        }
+        return this.password;
+
     }
 
     public void setPassword(String password) {
@@ -224,9 +248,9 @@ public class LoadDBForCurricularCourseEnrollmentTest {
     public String getUsername() {
         if (this.username == null) {
             return DEFAULT_DB_USERNAME;
-        } 
-            return this.username;
-        
+        }
+        return this.username;
+
     }
 
     public void setUsername(String username) {

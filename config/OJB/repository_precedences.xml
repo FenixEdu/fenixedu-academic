@@ -48,6 +48,21 @@
 </class-descriptor>
 
 <class-descriptor class="Dominio.precedences.RestrictionNotDoneCurricularCourse" table="RESTRICTION">
+    <extent-class class-ref="Dominio.precedences.RestrictionNotEnrolledInCurricularCourse"/>
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+    <reference-descriptor name="precedence" class-ref="Dominio.precedences.Precedence" proxy="true">
+	    <foreignkey field-ref="keyPrecedence"/>
+    </reference-descriptor>
+	<field-descriptor name="keyPrecedentCurricularCourse" column="KEY_CURRICULAR_COURSE" jdbc-type="INTEGER" nullable="false"/>
+    <reference-descriptor name="precedentCurricularCourse" class-ref="Dominio.CurricularCourse">
+	    <foreignkey field-ref="keyPrecedentCurricularCourse"/>
+    </reference-descriptor>
+</class-descriptor>
+
+<class-descriptor class="Dominio.precedences.RestrictionNotEnrolledInCurricularCourse" table="RESTRICTION">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      

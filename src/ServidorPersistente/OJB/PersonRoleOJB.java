@@ -12,16 +12,13 @@ import ServidorPersistente.IPersistentPersonRole;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class PersonRoleOJB extends ObjectFenixOJB implements IPersistentPersonRole
-{
+public class PersonRoleOJB extends PersistentObjectOJB implements IPersistentPersonRole {
 
-    public PersonRoleOJB()
-    {
+    public PersonRoleOJB() {
         super();
     }
 
-    public IPersonRole readByPersonAndRole(IPessoa person, IRole role) throws ExcepcaoPersistencia
-    {
+    public IPersonRole readByPersonAndRole(IPessoa person, IRole role) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("role.roleType", new Integer(role.getRoleType().getValue()));

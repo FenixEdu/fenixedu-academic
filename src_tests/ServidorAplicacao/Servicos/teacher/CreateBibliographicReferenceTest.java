@@ -9,222 +9,232 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
- * 
+ *  
  */
 public class CreateBibliographicReferenceTest extends ServiceNeedsAuthenticationTestCase {
 
-	String author = "Shari Pfleeger";
-	String title = "Software Engineering: Theory and Practice";
-	String reference = "Recomended bibliography";
-	String year = "2002";
-	Boolean optional = new Boolean(false);
+    String author = "Shari Pfleeger";
 
-	/**
-	 * @param testName
-	 */
-	public CreateBibliographicReferenceTest(String testName) {
-		super(testName);
-	}
+    String title = "Software Engineering: Theory and Practice";
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "CreateBibliographicReference";
-	}
+    String reference = "Recomended bibliography";
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testCreateBibliographicReferenceDataSet.xml";
-	}
+    String year = "2002";
 
-	protected String getRecomendedExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedCreateRecomendedBibliographicReferenceDataSet.xml";
-	}
+    Boolean optional = new Boolean(false);
 
-	protected String getOptionalExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedCreateOptionalBibliographicReferenceDataSet.xml";
-	}
+    /**
+     * @param testName
+     */
+    public CreateBibliographicReferenceTest(String testName) {
+        super(testName);
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-	 */
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "CreateBibliographicReference";
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-	 */
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testCreateBibliographicReferenceDataSet.xml";
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
-	 */
-	protected String[] getNotAuthenticatedUser() {
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
+    protected String getRecomendedExpectedDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testExpectedCreateRecomendedBibliographicReferenceDataSet.xml";
+    }
 
-	}
+    protected String getOptionalExpectedDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testExpectedCreateOptionalBibliographicReferenceDataSet.xml";
+    }
 
-	protected Object[] getAuthorizeArguments() {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+     */
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-		Integer executionCourseCode = new Integer(24);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+     */
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-		Object[] args = { executionCourseCode, title, author, reference, year, optional };
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
+     */
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
 
-		return args;
-	}
+    }
 
-	protected Object[] getTestBibliographicReferenceSuccessfullArguments() {
+    protected Object[] getAuthorizeArguments() {
 
-		Integer executionCourseCode = new Integer(24);
+        Integer executionCourseCode = new Integer(24);
 
-		Object[] args = { executionCourseCode, title, author, reference, year, optional };
+        Object[] args = { executionCourseCode, title, author, reference, year, optional };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getTestBibliographicReferenceUnsuccessfullArguments() {
+    protected Object[] getTestBibliographicReferenceSuccessfullArguments() {
 
-		Integer executionCourseCode = new Integer(242);
+        Integer executionCourseCode = new Integer(24);
 
-		Object[] args = { executionCourseCode, title, author, reference, year, optional };
+        Object[] args = { executionCourseCode, title, author, reference, year, optional };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getTestExistingRecomendedBibliographicReferenceArguments() {
+    protected Object[] getTestBibliographicReferenceUnsuccessfullArguments() {
 
-		Integer executionCourseCode = new Integer(24);
-		author = "pedro";
-		title = "xpto";
-		reference = "ref";
-		year = "2002";
-		optional = new Boolean(false);
+        Integer executionCourseCode = new Integer(242);
 
-		Object[] args = { executionCourseCode, title, author, reference, year, optional };
+        Object[] args = { executionCourseCode, title, author, reference, year, optional };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getTestExistingOptionalBibliographicReferenceArguments() {
+    protected Object[] getTestExistingRecomendedBibliographicReferenceArguments() {
 
-		Integer executionCourseCode = new Integer(24);
-		author = "rs";
-		title = "ep";
-		reference = "ref5";
-		year = "2040";
-		optional = new Boolean(true);
+        Integer executionCourseCode = new Integer(24);
+        author = "pedro";
+        title = "xpto";
+        reference = "ref";
+        year = "2002";
+        optional = new Boolean(false);
 
-		Object[] args = { executionCourseCode, title, author, reference, year, optional };
+        Object[] args = { executionCourseCode, title, author, reference, year, optional };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+    protected Object[] getTestExistingOptionalBibliographicReferenceArguments() {
 
-	public void testSuccessfullCreateRecomendedBibliographicReference() {
+        Integer executionCourseCode = new Integer(24);
+        author = "rs";
+        title = "ep";
+        reference = "ref5";
+        year = "2040";
+        optional = new Boolean(true);
 
-		try {
+        Object[] args = { executionCourseCode, title, author, reference, year, optional };
 
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+        return args;
+    }
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-			// verificar as alteracoes da bd
-			compareDataSet(getRecomendedExpectedDataSetFilePath());
-			System.out.println(
-				"testSuccessfullCreateRecomendedBibliographicReference "
-					+ "was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+    public void testSuccessfullCreateRecomendedBibliographicReference() {
 
-		} catch (FenixServiceException ex) {
-			fail("testSuccessfullCreateRecomendedBibliographicReference" + ex);
-		} catch (Exception ex) {
-			fail("testSuccessfullCreateRecomendedBibliographicReference error on compareDataSet" + ex);
-		}
-	}
+        try {
 
-	public void testUnuccessfullCreateExistingRecomendedBibliographicReference() {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-		try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
 
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+            // verificar as alteracoes da bd
+            compareDataSet(getRecomendedExpectedDataSetFilePath());
+            System.out.println("testSuccessfullCreateRecomendedBibliographicReference "
+                    + "was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestExistingRecomendedBibliographicReferenceArguments());
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullCreateRecomendedBibliographicReference" + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullCreateRecomendedBibliographicReference error on compareDataSet" + ex);
+        }
+    }
 
-			// verificar as alteracoes da bd
-			//compareDataSet(getRecomendedExpectedDataSetFilePath());
-			fail("testUnuccessfullCreateExistingRecomendedBibliographicReference: " + "insertion of an existing bibliography");
+    public void testUnuccessfullCreateExistingRecomendedBibliographicReference() {
 
-		} catch (FenixServiceException ex) {
-			System.out.println(
-				"testUnuccessfullCreateExistingRecomendedBibliographicReference "
-					+ "was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (Exception ex) {
-			fail("testUnuccessfullCreateExistingRecomendedBibliographicReference error on compareDataSet" + ex);
-		}
-	}
+        try {
 
-	public void testSuccessfullCreateOptionalBibliographicReference() {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-		author = "Shari Pfleeger";
-		title = "Software Engineering: Theory and Practice";
-		reference = "Optional bibliography";
-		year = "2002";
-		optional = new Boolean(true);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getTestExistingRecomendedBibliographicReferenceArguments());
 
-		try {
+            // verificar as alteracoes da bd
+            //compareDataSet(getRecomendedExpectedDataSetFilePath());
+            fail("testUnuccessfullCreateExistingRecomendedBibliographicReference: "
+                    + "insertion of an existing bibliography");
 
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+        } catch (FenixServiceException ex) {
+            System.out.println("testUnuccessfullCreateExistingRecomendedBibliographicReference "
+                    + "was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
+        } catch (Exception ex) {
+            fail("testUnuccessfullCreateExistingRecomendedBibliographicReference error on compareDataSet"
+                    + ex);
+        }
+    }
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+    public void testSuccessfullCreateOptionalBibliographicReference() {
 
-			// verificar as alteracoes da bd
-			compareDataSet(getOptionalExpectedDataSetFilePath());
-			System.out.println(
-				"testSuccessfullCreateOptionalBibliographicReference "
-					+ "was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+        author = "Shari Pfleeger";
+        title = "Software Engineering: Theory and Practice";
+        reference = "Optional bibliography";
+        year = "2002";
+        optional = new Boolean(true);
 
-		} catch (FenixServiceException ex) {
-			fail("testSuccessfullCreateOptionalBibliographicReference" + ex);
-		} catch (Exception ex) {
-			fail("testSuccessfullCreateOptionalBibliographicReference error on compareDataSet" + ex);
-		}
-	}
+        try {
 
-	public void testUnsuccessfullCreateExistingOptionalBibliographicReference() {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-		try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
 
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+            // verificar as alteracoes da bd
+            compareDataSet(getOptionalExpectedDataSetFilePath());
+            System.out.println("testSuccessfullCreateOptionalBibliographicReference "
+                    + "was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestExistingOptionalBibliographicReferenceArguments());
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullCreateOptionalBibliographicReference" + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullCreateOptionalBibliographicReference error on compareDataSet" + ex);
+        }
+    }
 
-			// verificar as alteracoes da bd
-			compareDataSet(getOptionalExpectedDataSetFilePath());
-			fail("testUnsuccessfullCreateExistingOptionalBibliographicReference: " + "insertion of an existing bibliography");
+    public void testUnsuccessfullCreateExistingOptionalBibliographicReference() {
 
-		} catch (FenixServiceException ex) {
-			System.out.println(
-				"testUnsuccessfullCreateExistingOptionalBibliographicReference "
-					+ "was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (Exception ex) {
-			fail("testUnsuccessfullCreateExistingOptionalBibliographicReference error on compareDataSet" + ex);
-		}
-	}
+        try {
+
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
+
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getTestExistingOptionalBibliographicReferenceArguments());
+
+            // verificar as alteracoes da bd
+            compareDataSet(getOptionalExpectedDataSetFilePath());
+            fail("testUnsuccessfullCreateExistingOptionalBibliographicReference: "
+                    + "insertion of an existing bibliography");
+
+        } catch (FenixServiceException ex) {
+            System.out.println("testUnsuccessfullCreateExistingOptionalBibliographicReference "
+                    + "was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
+        } catch (Exception ex) {
+            fail("testUnsuccessfullCreateExistingOptionalBibliographicReference error on compareDataSet"
+                    + ex);
+        }
+    }
 
 }

@@ -72,26 +72,21 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 if (inputStream != null) {
                     serProps = new Properties();
                     serProps.load(inputStream);
-                    String propSerVerify = serProps
-                            .getProperty("verify_serializable");
+                    String propSerVerify = serProps.getProperty("verify_serializable");
                     if (propSerVerify != null) {
                         propSerVerify = propSerVerify.trim();
                     }
-                    if ("true".equalsIgnoreCase(propSerVerify)
-                            || "1".equalsIgnoreCase(propSerVerify)
+                    if ("true".equalsIgnoreCase(propSerVerify) || "1".equalsIgnoreCase(propSerVerify)
                             || "on".equalsIgnoreCase(propSerVerify)
                             || "yes".equalsIgnoreCase(propSerVerify)) {
                         verifySerializable = Boolean.TRUE;
-                        System.out
-                                .println("Serialization verification is turned on.");
+                        System.out.println("Serialization verification is turned on.");
                     } else {
-                        System.out
-                                .println("Serialization verification is turned off.");
+                        System.out.println("Serialization verification is turned off.");
                     }
                 }
             } catch (java.io.IOException ex) {
-                System.out
-                        .println("Couldn't load serialization_verifier.properties file!");
+                System.out.println("Couldn't load serialization_verifier.properties file!");
             }
         }
     }
@@ -112,8 +107,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @throws FenixServiceException
      * @throws NotAuthorizedException
      */
-    public Object execute(IUserView id, String service, Object args[])
-            throws FenixServiceException {
+    public Object execute(IUserView id, String service, Object args[]) throws FenixServiceException {
         return execute(id, service, "run", args);
     }
 
@@ -123,8 +117,8 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @see pt.utl.ist.berserk.logic.serviceManager.IServiceManagerWrapper#execute(java.lang.Object,
      *      java.lang.String, java.lang.String, java.lang.Object[])
      */
-    public Object execute(IUserView id, String service, String method,
-            Object[] args) throws FenixServiceException, EJBException {
+    public Object execute(IUserView id, String service, String method, Object[] args)
+            throws FenixServiceException, EJBException {
         try {
             try {
                 Calendar serviceStartTime = null;
@@ -137,37 +131,31 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 // Do not delete. Usefull for profileing.
                 //Profiler.getInstance();
                 //Object key = Profiler.start(service);
-                Object serviceResult = manager.execute(id, service, method,
-                        args);
+                Object serviceResult = manager.execute(id, service, method, args);
                 //Profiler.stop(key);
-
                 if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                     serviceEndTime = Calendar.getInstance();
                 }
                 if (serviceLoggingIsOn) {
-                    registerServiceExecutionTime(service, method, args,
-                            serviceStartTime, serviceEndTime);
+                    registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
                 }
                 if (userLoggingIsOn && id != null) {
-                    registerUserExecutionOfService(id, service, method, args,
-                            serviceStartTime, serviceEndTime);
+                    registerUserExecutionOfService(id, service, method, args, serviceStartTime,
+                            serviceEndTime);
                 }
                 if (verifySerializable.booleanValue()) {
                     verifyResultIsSerializable(service, method, serviceResult);
                 }
-
                 return serviceResult;
             } catch (ExecutedServiceException ex) {
                 if (ex.getServiceThrownException() instanceof FenixServiceException) {
-                    throw (FenixServiceException) ex
-                            .getServiceThrownException();
+                    throw (FenixServiceException) ex.getServiceThrownException();
                 }
                 throw ex;
 
             } catch (ExecutedFilterException ex) {
                 if (ex.getCause() instanceof FenixServiceException) {
-                    System.out.println("ExecutedFilterException= "
-                            + ex.getCause().getClass().getName());
+                    System.out.println("ExecutedFilterException= " + ex.getCause().getClass().getName());
                     throw (FenixServiceException) ex.getCause();
                 }
                 throw ex;
@@ -190,8 +178,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         }
     }
 
-    private void verifyResultIsSerializable(Object service, String method,
-            Object serviceResult) {
+    private void verifyResultIsSerializable(Object service, String method, Object serviceResult) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -199,12 +186,10 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 oos.writeObject(serviceResult);
                 oos.flush();
             } catch (Exception e) {
-                System.out.println("Executing service= " + service + "."
-                        + method + "()");
+                System.out.println("Executing service= " + service + "." + method + "()");
                 System.out.println("Problem serializing service result!");
                 if (serviceResult != null) {
-                    System.out.println(serviceResult.getClass().getName()
-                            + " is not serializable.");
+                    System.out.println(serviceResult.getClass().getName() + " is not serializable.");
                 }
                 //e.printStackTrace();
             } finally {
@@ -222,8 +207,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                     }
             }
         } catch (IOException e1) {
-            System.out
-                    .println("IOException while verifying service result serialization.");
+            System.out.println("IOException while verifying service result serialization.");
         }
     }
 
@@ -263,15 +247,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
         // nothing to do
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.ejb.SessionBean#setSessionContext(javax.ejb.SessionContext)
-     */
-    private SessionContext ctx = null;
-
     public void setSessionContext(SessionContext arg0) throws EJBException {
-        ctx = arg0;
     }
 
     public synchronized void turnServiceLoggingOn(IUserView id) {
@@ -305,13 +281,11 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @param serviceStartTime
      * @param serviceEndTime
      */
-    private void registerServiceExecutionTime(String service, String method,
-            Object[] args, Calendar serviceStartTime, Calendar serviceEndTime) {
+    private void registerServiceExecutionTime(String service, String method, Object[] args,
+            Calendar serviceStartTime, Calendar serviceEndTime) {
         String hashKey = generateServiceHashKey(service, method, args);
-        long serviceExecutionTime = calculateServiceExecutionTime(
-                serviceStartTime, serviceEndTime);
-        ServiceExecutionLog serviceExecutionLog = (ServiceExecutionLog) mapServicesToWatch
-                .get(hashKey);
+        long serviceExecutionTime = calculateServiceExecutionTime(serviceStartTime, serviceEndTime);
+        ServiceExecutionLog serviceExecutionLog = (ServiceExecutionLog) mapServicesToWatch.get(hashKey);
         if (serviceExecutionLog == null) {
             serviceExecutionLog = new ServiceExecutionLog(hashKey);
             mapServicesToWatch.put(hashKey, serviceExecutionLog);
@@ -328,18 +302,15 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @param serviceStartTime
      * @param serviceEndTime
      */
-    private void registerUserExecutionOfService(IUserView id, String service,
-            String method, Object[] args, Calendar serviceStartTime,
-            Calendar serviceEndTime) {
-        UserExecutionLog userExecutionLog = (UserExecutionLog) mapUsersToWatch
-                .get(id.getUtilizador());
+    private void registerUserExecutionOfService(IUserView id, String service, String method,
+            Object[] args, Calendar serviceStartTime, Calendar serviceEndTime) {
+        UserExecutionLog userExecutionLog = (UserExecutionLog) mapUsersToWatch.get(id.getUtilizador());
         if (userExecutionLog == null) {
             userExecutionLog = new UserExecutionLog(id);
             mapUsersToWatch.put(id.getUtilizador(), userExecutionLog);
         }
 
-        userExecutionLog.addServiceCall(generateServiceHashKey(service, method,
-                args), serviceStartTime);
+        userExecutionLog.addServiceCall(generateServiceHashKey(service, method, args), serviceStartTime);
     }
 
     /**
@@ -347,10 +318,8 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @param serviceEndTime
      * @return
      */
-    private long calculateServiceExecutionTime(Calendar serviceStartTime,
-            Calendar serviceEndTime) {
-        return serviceEndTime.getTimeInMillis()
-                - serviceStartTime.getTimeInMillis();
+    private long calculateServiceExecutionTime(Calendar serviceStartTime, Calendar serviceEndTime) {
+        return serviceEndTime.getTimeInMillis() - serviceStartTime.getTimeInMillis();
     }
 
     /**
@@ -359,8 +328,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @param args
      * @return
      */
-    private String generateServiceHashKey(String service, String method,
-            Object[] args) {
+    private String generateServiceHashKey(String service, String method, Object[] args) {
         String hashKey = service + "." + method + "(";
         if (args != null) {
             for (int i = 0; i < args.length; i++) {

@@ -18,56 +18,47 @@ import Util.TipoAula;
  * @author João Mota
  *  
  */
-public class ReadShiftsByTypeFromExecutionCourse implements IServico
-{
+public class ReadShiftsByTypeFromExecutionCourse implements IServico {
 
-    private static ReadShiftsByTypeFromExecutionCourse _servico =
-        new ReadShiftsByTypeFromExecutionCourse();
+    private static ReadShiftsByTypeFromExecutionCourse _servico = new ReadShiftsByTypeFromExecutionCourse();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadShiftsByTypeFromExecutionCourse getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadShiftsByTypeFromExecutionCourse getService() {
         return _servico;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadShiftsByTypeFromExecutionCourse()
-    {
+     * The actor of this class.
+     */
+    private ReadShiftsByTypeFromExecutionCourse() {
     }
 
     /**
-	 * 
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
+     * 
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
         return "ReadShiftsByTypeFromExecutionCourse";
     }
 
-    public List run(InfoExecutionCourse iDE, TipoAula type)
-    {
+    public List run(InfoExecutionCourse iDE, TipoAula type) {
         List shifts = new ArrayList();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(iDE);
-            List dshifts =
-                sp.getITurnoPersistente().readByExecutionCourseAndType(executionCourse, type.getTipo());
+            List dshifts = sp.getITurnoPersistente().readByExecutionCourseAndType(executionCourse,
+                    type.getTipo());
 
             if (dshifts != null)
-                for (int i = 0; i < dshifts.size(); i++)
-                {
+                for (int i = 0; i < dshifts.size(); i++) {
                     ITurno dshift = (ITurno) dshifts.get(i);
                     InfoShift shift = (InfoShift) Cloner.get(dshift);
                     shifts.add(shift);
                 }
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
         return shifts;

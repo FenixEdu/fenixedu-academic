@@ -18,36 +18,32 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public class ReadExecutionYearsService implements IService
-{
+public class ReadExecutionYearsService implements IService {
 
-	public ReadExecutionYearsService()
-	{
-	  super();
-	}
+    public ReadExecutionYearsService() {
+        super();
+    }
 
-	public List run() throws FenixServiceException {
-                        
-	  List result = new ArrayList();
-	  try {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-		
-		List executionYears = executionYearDAO.readAllExecutionYear();
-		if (executionYears != null && !executionYears.isEmpty())
-		{
-			for (int i = 0; i < executionYears.size(); i++)
-			{
-				result.add(Cloner.get((IExecutionYear) executionYears.get(i)));
-			}
-		}
-	  } catch (ExcepcaoPersistencia ex) {
-	  	throw new FenixServiceException(ex);
-	  }
-    
-	  return result;
-	}
+    public List run() throws FenixServiceException {
+
+        List result = new ArrayList();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+
+            List executionYears = executionYearDAO.readAllExecutionYear();
+            if (executionYears != null && !executionYears.isEmpty()) {
+                for (int i = 0; i < executionYears.size(); i++) {
+                    result.add(Cloner.get((IExecutionYear) executionYears.get(i)));
+                }
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+
+        return result;
+    }
 
 }

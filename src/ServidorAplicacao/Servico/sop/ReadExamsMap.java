@@ -21,46 +21,40 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadExamsMap implements IServico
-{
+public class ReadExamsMap implements IServico {
 
     private static ReadExamsMap servico = new ReadExamsMap();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExamsMap getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadExamsMap getService() {
         return servico;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadExamsMap()
-    {
+     * The actor of this class.
+     */
+    private ReadExamsMap() {
     }
 
     /**
-	 * Devolve o nome do servico
-	 */
-    public String getNome()
-    {
+     * Devolve o nome do servico
+     */
+    public String getNome() {
         return "ReadExamsMap";
     }
 
-    public InfoExamsMap run(
-        InfoExecutionDegree infoExecutionDegree,
-        List curricularYears,
-        InfoExecutionPeriod infoExecutionPeriod)
-    {
+    public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
+            InfoExecutionPeriod infoExecutionPeriod) {
 
         // Object to be returned
         InfoExamsMap infoExamsMap = new InfoExamsMap();
@@ -90,22 +84,19 @@ public class ReadExamsMap implements IServico
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC"))
-        {
+        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC")) {
             startSeason1.set(Calendar.DAY_OF_MONTH, 21);
             endSeason2.set(Calendar.DAY_OF_MONTH, 17);
         }
-        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET"))
-        {
+        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET")) {
             startSeason1.set(Calendar.DAY_OF_MONTH, 21);
             endSeason2.set(Calendar.DAY_OF_MONTH, 17);
         }
-		if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA"))
-		{
-			startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-			endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-		}
-        
+        if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA")) {
+            startSeason1.set(Calendar.DAY_OF_MONTH, 21);
+            endSeason2.set(Calendar.DAY_OF_MONTH, 17);
+        }
+
         // Set Exam Season info
         infoExamsMap.setStartSeason1(startSeason1);
         infoExamsMap.setEndSeason1(null);
@@ -113,13 +104,12 @@ public class ReadExamsMap implements IServico
         infoExamsMap.setEndSeason2(endSeason2);
 
         // Translate to execute following queries
-        ICursoExecucao executionDegree =
-            Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-        IExecutionPeriod executionPeriod =
-            Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        ICursoExecucao executionDegree = Cloner
+                .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+        IExecutionPeriod executionPeriod = Cloner
+                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             // List of execution courses
@@ -127,47 +117,38 @@ public class ReadExamsMap implements IServico
 
             // Obtain execution courses and associated information
             // of the given execution degree for each curricular year specified
-            for (int i = 0; i < curricularYears.size(); i++)
-            {
+            for (int i = 0; i < curricularYears.size(); i++) {
                 // Obtain list os execution courses
-                List executionCourses =
-                    sp
-                        .getIPersistentExecutionCourse()
+                List executionCourses = sp.getIPersistentExecutionCourse()
                         .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                        (Integer) curricularYears.get(i),
-                        executionPeriod,
-                        executionDegree);
+                                (Integer) curricularYears.get(i), executionPeriod, executionDegree);
 
                 // For each execution course obtain curricular courses and
                 // exams
-                for (int j = 0; j < executionCourses.size(); j++)
-                {
-                    InfoExecutionCourse infoExecutionCourse =
-                        (InfoExecutionCourse) Cloner.get(
-                        (IExecutionCourse) executionCourses.get(j));
+                for (int j = 0; j < executionCourses.size(); j++) {
+                    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+                            .get((IExecutionCourse) executionCourses.get(j));
 
                     infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
                     List associatedInfoCurricularCourses = new ArrayList();
-                    List associatedCurricularCourses =
-                        ((IExecutionCourse) executionCourses.get(j)).getAssociatedCurricularCourses();
+                    List associatedCurricularCourses = ((IExecutionCourse) executionCourses.get(j))
+                            .getAssociatedCurricularCourses();
                     // Curricular courses
-                    for (int k = 0; k < associatedCurricularCourses.size(); k++)
-                    {
-                        InfoCurricularCourse infoCurricularCourse =
-                            Cloner.copyCurricularCourse2InfoCurricularCourse(
-                                (ICurricularCourse) associatedCurricularCourses.get(k));
+                    for (int k = 0; k < associatedCurricularCourses.size(); k++) {
+                        InfoCurricularCourse infoCurricularCourse = Cloner
+                                .copyCurricularCourse2InfoCurricularCourse((ICurricularCourse) associatedCurricularCourses
+                                        .get(k));
                         associatedInfoCurricularCourses.add(infoCurricularCourse);
                     }
-                    infoExecutionCourse.setAssociatedInfoCurricularCourses(
-                        associatedInfoCurricularCourses);
+                    infoExecutionCourse
+                            .setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
 
                     List associatedInfoExams = new ArrayList();
-                    List associatedExams =
-                        ((IExecutionCourse) executionCourses.get(j)).getAssociatedExams();
+                    List associatedExams = ((IExecutionCourse) executionCourses.get(j))
+                            .getAssociatedExams();
                     // Exams
-                    for (int k = 0; k < associatedExams.size(); k++)
-                    {
+                    for (int k = 0; k < associatedExams.size(); k++) {
                         InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) associatedExams.get(k));
                         associatedInfoExams.add(infoExam);
                     }
@@ -178,9 +159,7 @@ public class ReadExamsMap implements IServico
             }
 
             infoExamsMap.setExecutionCourses(infoExecutionCourses);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 

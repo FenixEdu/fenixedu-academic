@@ -5,7 +5,7 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class InsertWorkLocationTest extends ServiceTestCase {
@@ -37,15 +37,14 @@ public class InsertWorkLocationTest extends ServiceTestCase {
     public void testSuccessfullInsert() {
         try {
 
-            Object[] args = { "Some name"};
+            Object[] args = { "Some name" };
 
-            ServiceManagerServiceFactory.executeService(null,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/commons/workLocation/testExpectedInsertWorkLocationSucessfullInsertDataSet.xml");
 
             //ok
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
             fail("testSuccessfullInsert " + ex.getMessage());
@@ -56,13 +55,12 @@ public class InsertWorkLocationTest extends ServiceTestCase {
     public void testInsertExisting() {
         try {
 
-            Object[] args = { "INSTITUTO DE TELECOMUNICAÇÕES"};
+            Object[] args = { "INSTITUTO DE TELECOMUNICAÇÕES" };
 
-            ServiceManagerServiceFactory.executeService(null,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
 
             fail("testInsertExisting did not throw ExistingServiceException");
-            
+
         } catch (ExistingServiceException ex) {
             //ok
         } catch (Exception ex) {

@@ -27,47 +27,42 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadShiftsByDistributedTest implements IService {
 
-	public ReadShiftsByDistributedTest() {
-	}
+    public ReadShiftsByDistributedTest() {
+    }
 
-	public Object run(Integer executionCourseId, Integer distributedTestId)
-			throws FenixServiceException {
+    public Object run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
 
-		ISuportePersistente persistentSuport;
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport;
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
 
-			List studentsList = new ArrayList();
-			IDistributedTest distributedTest = new DistributedTest(
-					distributedTestId);
-			if (distributedTestId != null) //lista de alunos que tem teste
-				studentsList = persistentSuport
-						.getIPersistentStudentTestQuestion()
-						.readStudentsByDistributedTest(distributedTest);
+            List studentsList = new ArrayList();
+            IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+            if (distributedTestId != null) //lista de alunos que tem teste
+                studentsList = persistentSuport.getIPersistentStudentTestQuestion()
+                        .readStudentsByDistributedTest(distributedTest);
 
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-					.getIPersistentExecutionCourse().readByOID(
-							ExecutionCourse.class, executionCourseId);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+                    .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
-			List infoShiftList = persistentSuport.getITurnoPersistente()
-					.readByExecutionCourse(executionCourse);
-			Iterator itShiftList = infoShiftList.iterator();
+            List infoShiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(
+                    executionCourse);
+            Iterator itShiftList = infoShiftList.iterator();
 
-			List result = new ArrayList();
-			ITurnoAlunoPersistente turnoAlunoPersistente = persistentSuport
-					.getITurnoAlunoPersistente();
-			while (itShiftList.hasNext()) {
-				ITurno shift = (ITurno) itShiftList.next();
-				List shiftStudents = turnoAlunoPersistente.readByShift(shift);
-				if (!studentsList.containsAll(shiftStudents))
-					result.add(Cloner.get(shift));
-			}
-			return result;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            List result = new ArrayList();
+            ITurnoAlunoPersistente turnoAlunoPersistente = persistentSuport.getITurnoAlunoPersistente();
+            while (itShiftList.hasNext()) {
+                ITurno shift = (ITurno) itShiftList.next();
+                List shiftStudents = turnoAlunoPersistente.readByShift(shift);
+                if (!studentsList.containsAll(shiftStudents))
+                    result.add(Cloner.get(shift));
+            }
+            return result;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

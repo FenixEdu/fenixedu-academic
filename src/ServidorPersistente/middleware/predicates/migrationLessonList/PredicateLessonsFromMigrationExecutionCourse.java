@@ -10,18 +10,21 @@ import ServidorPersistente.middleware.MigrationLesson;
 /**
  * @author jpvl
  */
-public class PredicateLessonsFromMigrationExecutionCourse
-	extends PredicateForMigrationLessonList {
-	private MigrationExecutionCourse executionCourse;
-	public PredicateLessonsFromMigrationExecutionCourse(MigrationExecutionCourse executionCourse){
-		this.executionCourse = executionCourse;
-	}
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.middleware.predicates.migrationLessonList.PredicateForMigrationLessonList#evaluateMigrationLesson(ServidorPersistente.middleware.MigrationLesson)
-	 */
-	public boolean evaluateMigrationLesson(MigrationLesson lesson) {
-		return lesson.getMigrationExecutionCourse().equals(executionCourse);
+public class PredicateLessonsFromMigrationExecutionCourse extends PredicateForMigrationLessonList {
+    private MigrationExecutionCourse executionCourse;
 
-	}
+    public PredicateLessonsFromMigrationExecutionCourse(MigrationExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.middleware.predicates.migrationLessonList.PredicateForMigrationLessonList#evaluateMigrationLesson(ServidorPersistente.middleware.MigrationLesson)
+     */
+    public boolean evaluateMigrationLesson(MigrationLesson lesson) {
+        return lesson.getMigrationExecutionCourse().equals(executionCourse);
+
+    }
 
 }

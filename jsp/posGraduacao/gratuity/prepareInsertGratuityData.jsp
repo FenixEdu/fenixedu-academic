@@ -31,7 +31,7 @@
 				<td>
 					<html:select property="executionYear" onchange="document.insertGratuityDataForm.method.value='prepareInsertGratuityDataChooseDegree';document.insertGratuityDataForm.submit();">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
+							<bean:message key="label.choose.one"/>
 						</html:option>
 						<html:optionsCollection name="executionYears"/>
 					</html:select>
@@ -59,7 +59,7 @@
 				<td>
 					<html:select property="degree">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
+							<bean:message key="label.choose.one"/>
 						</html:option>
 						<html:optionsCollection name="<%=SessionConstants.DEGREES%>"/>
 					</html:select>

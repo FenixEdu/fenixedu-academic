@@ -23,18 +23,15 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class EditOldPublicationTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter
-{
+public class EditOldPublicationTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-	 *      DataBeans.InfoObject)
-	 */
-    protected boolean verifyCondition(IUserView id, InfoObject infoOject)
-    {
-        try
-        {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
+     *      DataBeans.InfoObject)
+     */
+    protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
+        try {
             InfoOldPublication infoOldPublication = (InfoOldPublication) infoOject;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
@@ -42,24 +39,19 @@ public class EditOldPublicationTeacherAuthorizationFilter extends EditDomainObje
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            boolean isNew =
-                (infoOldPublication.getIdInternal() == null)
+            boolean isNew = (infoOldPublication.getIdInternal() == null)
                     || (infoOldPublication.getIdInternal().equals(new Integer(0)));
             if (isNew)
                 return true;
 
-            IOldPublication oldPublication =
-                (IOldPublication) persistentOldPublication.readByOID(
-                    OldPublication.class,
-                    infoOldPublication.getIdInternal());
+            IOldPublication oldPublication = (IOldPublication) persistentOldPublication.readByOID(
+                    OldPublication.class, infoOldPublication.getIdInternal());
 
             return oldPublication.getTeacher().equals(teacher);
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();
             return false;
@@ -67,12 +59,11 @@ public class EditOldPublicationTeacherAuthorizationFilter extends EditDomainObje
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.EditDomainObjectAuthorizationFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectAuthorizationFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 }

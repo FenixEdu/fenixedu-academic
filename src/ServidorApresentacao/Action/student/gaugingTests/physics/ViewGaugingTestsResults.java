@@ -21,35 +21,23 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 26/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 26/Nov/2003
  *  
  */
-public class ViewGaugingTestsResults extends FenixAction
-{
+public class ViewGaugingTestsResults extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object[] args = { userView };
-        try
-        {
-            InfoGaugingTestResult result =
-                (InfoGaugingTestResult) ServiceUtils.executeService(
-                    userView,
-                    "readGaugingTestsResults",
-                    args);
+        try {
+            InfoGaugingTestResult result = (InfoGaugingTestResult) ServiceUtils.executeService(userView,
+                    "readGaugingTestsResults", args);
             request.setAttribute("gaugingTestResult", result);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 

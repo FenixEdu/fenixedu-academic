@@ -8,9 +8,9 @@ import Dominio.IGroupProperties;
 
 /**
  * @author scpo and asnr
- *
+ *  
  */
 public interface IGroupEnrolmentStrategyFactory {
-	public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties);
-		
+    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties);
+
 }

@@ -28,16 +28,10 @@ import Util.TipoCurso;
  * @author lmac1
  */
 
-public class EditDegreeDispatchAction extends FenixDispatchAction
-{
+public class EditDegreeDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareEdit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -49,17 +43,13 @@ public class EditDegreeDispatchAction extends FenixDispatchAction
 
         Object args[] = { degreeId };
 
-        try
-        {
+        try {
             oldInfoDegree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
 
-        } catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(
-                "message.nonExistingDegree",
-                mapping.findForward("readDegrees"));
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExistingDegree", mapping
+                    .findForward("readDegrees"));
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
@@ -71,13 +61,8 @@ public class EditDegreeDispatchAction extends FenixDispatchAction
         return mapping.findForward("editDegree");
     }
 
-    public ActionForward edit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -93,20 +78,15 @@ public class EditDegreeDispatchAction extends FenixDispatchAction
 
         Object args[] = { newInfoDegree };
 
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "EditDegree", args);
 
-        } catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(
-                "message.nonExistingDegree",
-                mapping.findForward("readDegrees"));
-        } catch (ExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExistingDegree", mapping
+                    .findForward("readDegrees"));
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException("message.manager.existing.degree");
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
         return mapping.findForward("readDegree");

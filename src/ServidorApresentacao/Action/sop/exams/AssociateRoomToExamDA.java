@@ -33,23 +33,18 @@ import Util.DiaSemana;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
 public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
-//	extends	FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
+//	extends
+// FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction
 {
 
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
-        if (infoExamId == null)
-        {
+        if (infoExamId == null) {
             infoExamId = request.getParameter(SessionConstants.EXAM_OID);
         }
         request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
@@ -62,16 +57,12 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
         List executionCourseNames = new ArrayList();
 
-        for (int iterEC = 0; iterEC < executionCourse.length; iterEC++)
-        {
+        for (int iterEC = 0; iterEC < executionCourse.length; iterEC++) {
 
-            Object args[] = { new Integer(executionCourse[iterEC])};
+            Object args[] = { new Integer(executionCourse[iterEC]) };
 
-            InfoExecutionCourse infoExecutionCourse =
-                (InfoExecutionCourse) ServiceUtils.executeService(
-                    userView,
-                    "ReadExecutionCourseByOID",
-                    args);
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
+                    userView, "ReadExecutionCourseByOID", args);
 
             executionCourseNames.add(infoExecutionCourse.getNome());
         }
@@ -106,46 +97,41 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { new Period(examDate, examDate), examStartTime, examEndTime, dayOfWeek, null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false)};
+        Object args[] = { new Period(examDate, examDate), examStartTime, examEndTime, dayOfWeek, null,
+                null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false) };
 
-        List availableInfoRoom =
-            (List) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
+        List availableInfoRoom = (List) ServiceUtils.executeService(userView,
+                "ReadAvailableRoomsForExam", args);
 
         String[] rooms = (String[]) examForm.get("rooms");
         List selectedRooms = new ArrayList();
         List finalAvailableRooms = new ArrayList();
 
-        if (rooms != null && rooms.length > 0)
-        {
+        if (rooms != null && rooms.length > 0) {
 
-            for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++)
-            {
-                Integer argRoom[] = { Integer.valueOf(rooms[iterRooms])};
-                InfoRoom infoRoom =
-                    (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", argRoom);
+            for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
+                Integer argRoom[] = { Integer.valueOf(rooms[iterRooms]) };
+                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
+                        argRoom);
 
                 selectedRooms.add(infoRoom);
             }
 
-            for (int iterSR = 0; iterSR < selectedRooms.size(); iterSR++)
-            {
+            for (int iterSR = 0; iterSR < selectedRooms.size(); iterSR++) {
                 InfoRoom selectedInfoRoom = (InfoRoom) selectedRooms.get(iterSR);
 
                 boolean infoContida = false;
 
-                for (int iterAIF = 0; iterAIF < availableInfoRoom.size(); iterAIF++)
-                {
+                for (int iterAIF = 0; iterAIF < availableInfoRoom.size(); iterAIF++) {
                     InfoRoom availInfoRoom = (InfoRoom) availableInfoRoom.get(iterAIF);
 
-                    if (selectedInfoRoom.equals(availInfoRoom))
-                    {
+                    if (selectedInfoRoom.equals(availInfoRoom)) {
                         infoContida = true;
                         break;
                     }
                 }
 
-                if (!infoContida)
-                {
+                if (!infoContida) {
                     finalAvailableRooms.add(selectedInfoRoom);
                 }
             }
@@ -155,51 +141,38 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
             sortList(request, finalAvailableRooms);
 
             request.setAttribute(SessionConstants.AVAILABLE_ROOMS, finalAvailableRooms);
-        }
-        else
-        {
+        } else {
             sortList(request, availableInfoRoom);
             request.setAttribute(SessionConstants.AVAILABLE_ROOMS, availableInfoRoom);
         }
 
-        String date =
-            new String(
-                (String) examForm.get("day")
-                    + "/"
-                    + (String) examForm.get("month")
-                    + "/"
-                    + (String) examForm.get("year"));
+        String date = new String((String) examForm.get("day") + "/" + (String) examForm.get("month")
+                + "/" + (String) examForm.get("year"));
 
-        String startTime =
-            new String(
-                (String) examForm.get("beginningHour") + ":" + (String) examForm.get("beginningMinute"));
+        String startTime = new String((String) examForm.get("beginningHour") + ":"
+                + (String) examForm.get("beginningMinute"));
 
-        String endTime =
-            new String((String) examForm.get("endHour") + ":" + (String) examForm.get("endMinute"));
-        
-        request.setAttribute(SessionConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " às " + endTime);
+        String endTime = new String((String) examForm.get("endHour") + ":"
+                + (String) examForm.get("endMinute"));
+
+        request.setAttribute(SessionConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " às "
+                + endTime);
 
         String[] scopeIDArray = (String[]) examForm.get("scopes");
         request.setAttribute("scopes", scopeIDArray);
 
-        InfoExecutionCourse infoExecutionCourse =
-            (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
         request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
         return mapping.findForward("AssociateRoom");
     }
 
-    public ActionForward choose(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
-        if (infoExamId == null)
-        {
+        if (infoExamId == null) {
             infoExamId = request.getParameter(SessionConstants.EXAM_OID);
         }
         request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
@@ -219,39 +192,30 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
         String executionDegreeOID = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
         request.setAttribute("executionDegreeOID", executionDegreeOID);
-//		request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeOID);
-		
-        InfoExecutionCourse infoExecutionCourse =
-            (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+        //		request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID,
+        // executionDegreeOID);
+
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
         request.setAttribute("executionCourseOID", infoExecutionCourse.getIdInternal());
 
         return mapping.findForward("forwardChoose");
     }
 
-    private void sortList(HttpServletRequest request, List infoRooms)
-    {
+    private void sortList(HttpServletRequest request, List infoRooms) {
 
         String sortParameter = request.getParameter("sortBy");
 
-        if ((sortParameter != null) && (sortParameter.length() != 0))
-        {
-            if (sortParameter.equals("capacity"))
-            {
-                Collections.sort(
-                    infoRooms,
-                    new ReverseComparator(new BeanComparator("capacidadeExame")));
-            }
-            else if (sortParameter.equals("building"))
-            {
+        if ((sortParameter != null) && (sortParameter.length() != 0)) {
+            if (sortParameter.equals("capacity")) {
+                Collections
+                        .sort(infoRooms, new ReverseComparator(new BeanComparator("capacidadeExame")));
+            } else if (sortParameter.equals("building")) {
                 Collections.sort(infoRooms, new BeanComparator("edificio"));
-            }
-            else
-            {
+            } else {
                 Collections.sort(infoRooms, new BeanComparator("tipo"));
             }
-        }
-        else
-        {
+        } else {
             Collections.sort(infoRooms, new BeanComparator("capacidadeExame"));
         }
     }

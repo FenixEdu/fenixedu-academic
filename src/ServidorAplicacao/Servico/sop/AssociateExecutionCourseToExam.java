@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o CriarAula.
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
@@ -31,77 +31,71 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class AssociateExecutionCourseToExam implements IService {
 
-	
+    /**
+     * The actor of this class.
+     */
+    public AssociateExecutionCourseToExam() {
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	public AssociateExecutionCourseToExam() {
-	}
+    public Boolean run(InfoViewExamByDayAndShift infoViewExam, InfoExecutionCourse infoExecutionCourse)
+            throws FenixServiceException {
 
-	
+        Boolean result = new Boolean(false);
 
-	public Boolean run(InfoViewExamByDayAndShift infoViewExam, InfoExecutionCourse infoExecutionCourse)
-		throws FenixServiceException {
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-		Boolean result = new Boolean(false);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
+                            .getInfoExecutionPeriod());
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourseToBeAssociatedWithExam = executionCourseDAO
+                    .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
+                            executionPeriod);
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionCourse.getInfoExecutionPeriod());
+            // We assume it's the same execution period.
+            IExecutionCourse someExecutionCourseAlreadyAssociatedWithExam = executionCourseDAO
+                    .readByExecutionCourseInitialsAndExecutionPeriod(((InfoExecutionCourse) infoViewExam
+                            .getInfoExecutionCourses().get(0)).getSigla(), executionPeriod);
 
-			IExecutionCourse executionCourseToBeAssociatedWithExam =
-				executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoExecutionCourse.getSigla(),
-					executionPeriod);
+            // Obtain a mapped exam
+            IExam examFromDBToBeAssociated = null;
+            for (int i = 0; i < someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().size(); i++) {
+                IExam exam = (IExam) someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams()
+                        .get(i);
+                if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
+                    examFromDBToBeAssociated = exam;
+                }
+            }
 
-			// We assume it's the same execution period.
-			IExecutionCourse someExecutionCourseAlreadyAssociatedWithExam =
-				executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(
-					((InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0)).getSigla(),
-					executionPeriod);
+            // Check that the execution course which will be associated with the
+            // exam
+            // doesn't already have an exam scheduled for the corresponding
+            // season
+            for (int i = 0; i < executionCourseToBeAssociatedWithExam.getAssociatedExams().size(); i++) {
+                IExam exam = (IExam) executionCourseToBeAssociatedWithExam.getAssociatedExams().get(i);
+                if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
+                    throw new ExistingServiceException();
+                }
+            }
 
-			// Obtain a mapped exam
-			IExam examFromDBToBeAssociated = null;
-			for (int i = 0; i < someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().size(); i++) {
-				IExam exam = (IExam) someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().get(i);
-				if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
-					examFromDBToBeAssociated = exam;
-				}
-			}
+            IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(examFromDBToBeAssociated,
+                    executionCourseToBeAssociatedWithExam);
 
-			// Check that the execution course which will be associated with the exam
-			// doesn't already have an exam scheduled for the corresponding season
-			for (int i = 0; i < executionCourseToBeAssociatedWithExam.getAssociatedExams().size(); i++) {
-				IExam exam = (IExam) executionCourseToBeAssociatedWithExam.getAssociatedExams().get(i);
-				if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
-					throw new ExistingServiceException();
-				}
-			}
+            try {
+                sp.getIPersistentExamExecutionCourse().simpleLockWrite(examExecutionCourse);
+            } catch (ExistingPersistentException ex) {
+                throw new ExistingServiceException(ex);
+            }
 
-			IExamExecutionCourse examExecutionCourse =
-				new ExamExecutionCourse(
-					examFromDBToBeAssociated,
-					executionCourseToBeAssociatedWithExam);
+            result = new Boolean(true);
+        } catch (ExcepcaoPersistencia ex) {
 
-			try {
-				sp.getIPersistentExamExecutionCourse().simpleLockWrite(examExecutionCourse);
-			} catch (ExistingPersistentException ex) {
-				throw new ExistingServiceException(ex);
-			}
+            throw new FenixServiceException(ex.getMessage());
+        }
 
-			result = new Boolean(true);
-		} catch (ExcepcaoPersistencia ex) {
-
-			throw new FenixServiceException(ex.getMessage());
-		}
-
-		return result;
-	}
+        return result;
+    }
 
 }

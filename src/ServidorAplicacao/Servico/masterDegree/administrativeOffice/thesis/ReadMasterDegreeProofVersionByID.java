@@ -1,10 +1,10 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.thesis;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.util.Cloner;
 import Dominio.IMasterDegreeProofVersion;
 import Dominio.MasterDegreeProofVersion;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -13,53 +13,35 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public class ReadMasterDegreeProofVersionByID implements IServico {
+public class ReadMasterDegreeProofVersionByID implements IService {
 
-	private static ReadMasterDegreeProofVersionByID servico = new ReadMasterDegreeProofVersionByID();
+    public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException {
+        InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
+        IMasterDegreeProofVersion masterDegreeProofVersion = null;
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadMasterDegreeProofVersionByID getService() {
-		return servico;
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            masterDegreeProofVersion = (IMasterDegreeProofVersion) sp
+                    .getIPersistentMasterDegreeProofVersion().readByOID(MasterDegreeProofVersion.class,
+                            masterDegreeProofVersionID);
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadMasterDegreeProofVersionByID() {
-	}
+            if (masterDegreeProofVersion == null)
+                throw new NonExistingServiceException(
+                        "error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
 
-	/**
-	 * Returns The Service Name */
-	public final String getNome() {
-		return "ReadMasterDegreeProofVersionByID";
-	}
+            infoMasterDegreeProofVersion = Cloner
+                    .copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(masterDegreeProofVersion);
 
-	public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException {
-		InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
-		IMasterDegreeProofVersion masterDegreeProofVersion = null;
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			masterDegreeProofVersion = (IMasterDegreeProofVersion) sp.getIPersistentMasterDegreeProofVersion().readByOID(MasterDegreeProofVersion.class, masterDegreeProofVersionID);
-
-			if (masterDegreeProofVersion == null)
-				throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeProofVersion"); 
-					
-			infoMasterDegreeProofVersion = Cloner.copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(masterDegreeProofVersion);
-
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-
-		return infoMasterDegreeProofVersion;
-	}
+        return infoMasterDegreeProofVersion;
+    }
 }

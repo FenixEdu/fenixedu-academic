@@ -3,31 +3,52 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import Dominio.GuideEntry;
+import Dominio.ICursoExecucao;
 import Dominio.IEmployee;
+import Dominio.IGratuitySituation;
+import Dominio.IGuideEntry;
+import Dominio.IPersonAccount;
 import Dominio.IPessoa;
+import Dominio.IStudent;
 import Dominio.reimbursementGuide.IReimbursementGuide;
+import Dominio.reimbursementGuide.IReimbursementGuideEntry;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
 import Dominio.reimbursementGuide.ReimbursementGuide;
+import Dominio.reimbursementGuide.ReimbursementGuideEntry;
 import Dominio.reimbursementGuide.ReimbursementGuideSituation;
+import Dominio.transactions.IReimbursementTransaction;
+import Dominio.transactions.ReimbursementTransaction;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
+import ServidorAplicacao.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
+import ServidorPersistente.IPersistentGratuitySituation;
+import ServidorPersistente.IPersistentGuideEntry;
+import ServidorPersistente.IPersistentObject;
+import ServidorPersistente.IPersistentPersonAccount;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
-import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
+import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
+import ServidorPersistente.transactions.IPersistentReimbursementTransaction;
+import Util.DocumentType;
 import Util.ReimbursementGuideState;
 import Util.State;
+import Util.TipoCurso;
+import Util.transactions.TransactionType;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> <br>
@@ -54,40 +75,37 @@ public class EditReimbursementGuide implements IService {
      *             InvalidGuideSituationServiceException
      */
 
-    public void run(Integer reimbursementGuideId, String situation,
-            Date officialDate, String remarks, IUserView userView)
-            throws FenixServiceException {
+    public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks,
+            IUserView userView) throws FenixServiceException {
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
             IPersistentReimbursementGuide persistentReimbursementGuide = ps
                     .getIPersistentReimbursementGuide();
+
+            IPersistentReimbursementGuideEntry reimbursementGuideEntryDAO = ps
+                    .getIPersistentReimbursementGuideEntry();
             IReimbursementGuide reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
-                    .readByOID(ReimbursementGuide.class, reimbursementGuideId,
-                            true);
+                    .readByOID(ReimbursementGuide.class, reimbursementGuideId);
+
+            reimbursementGuideEntryDAO.simpleLockWrite(reimbursementGuide);
 
             if (reimbursementGuide == null) {
                 throw new NonExistingServiceException();
             }
+            IPersistentObject persistentObject = ps.getIPersistentObject();
 
-            IPersistentReimbursementGuideSituation persistentReimbursementGuideSituation = ps
-                    .getIPersistentReimbursementGuideSituation();
             IReimbursementGuideSituation activeSituation = reimbursementGuide
                     .getActiveReimbursementGuideSituation();
 
             if (!validateReimbursementGuideSituation(activeSituation, situation)) {
                 throw new InvalidGuideSituationServiceException();
             }
-            persistentReimbursementGuideSituation
-                    .simpleLockWrite(activeSituation);
-            activeSituation.setState(new State(State.INACTIVE_STRING));
             IReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
 
-            IPersistentEmployee persistentEmployee = ps
-                    .getIPersistentEmployee();
+            IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
             IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
-            IPessoa person = persistentPerson.lerPessoaPorUsername(userView
-                    .getUtilizador());
+            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = persistentEmployee.readByPerson(person);
 
             newActiveSituation.setEmployee(employee);
@@ -101,26 +119,104 @@ public class EditReimbursementGuide implements IService {
                 newActiveSituation.setOfficialDate(Calendar.getInstance());
             }
 
-            ReimbursementGuideState newState = ReimbursementGuideState
-                    .getEnum(situation);
+            ReimbursementGuideState newState = ReimbursementGuideState.getEnum(situation);
             newActiveSituation.setReimbursementGuideState(newState);
 
             newActiveSituation.setReimbursementGuide(reimbursementGuide);
             newActiveSituation.setState(new State(State.ACTIVE));
             newActiveSituation.setRemarks(remarks);
 
-            List reimbursementGuideSituations = reimbursementGuide
-                    .getReimbursementGuideSituations();
-            reimbursementGuideSituations.add(newActiveSituation);
-            reimbursementGuide
-                    .setReimbursementGuideSituations(reimbursementGuideSituations);
+            //persistentObject.simpleLockWrite(newActiveSituation);
 
-            persistentReimbursementGuideSituation
-                    .simpleLockWrite(newActiveSituation);
-
+            // REIMBURSEMENT TRANSACTIONS
             if (newState.equals(ReimbursementGuideState.PAYED)) {
-                //TODO: create reimbursement transactions
+                List reimbursementGuideEntries = reimbursementGuide.getReimbursementGuideEntries();
+                Iterator iterator = reimbursementGuideEntries.iterator();
+                IReimbursementGuideEntry reimbursementGuideEntry = null;
+                IReimbursementTransaction reimbursementTransaction = null;
+
+                IPersistentPersonAccount persistentPersonAccount = ps.getIPersistentPersonAccount();
+                IPersonAccount personAccount = persistentPersonAccount.readByPerson(reimbursementGuide
+                        .getGuide().getPerson());
+
+                IPersistentReimbursementTransaction persistentReimbursementTransaction = ps
+                        .getIPersistentReimbursementTransaction();
+
+                IPersistentGratuitySituation persistentGratuitySituation = ps
+                        .getIPersistentGratuitySituation();
+
+                while (iterator.hasNext()) {
+                    reimbursementGuideEntry = (IReimbursementGuideEntry) iterator.next();
+
+                    if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry, ps) == false) {
+                        throw new InvalidReimbursementValueServiceException(
+                                "error.exception.masterDegree.invalidReimbursementValue");
+
+                    }
+                    if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
+                            DocumentType.GRATUITY_TYPE)) {
+
+                        //                        // because of an OJB with cache bug we have to read
+                        // the guide entry again
+                        //                        reimbursementGuideEntry = (IReimbursementGuideEntry)
+                        // reimbursementGuideEntryDAO
+                        //                                .readByOID(ReimbursementGuideEntry.class,
+                        //                                        reimbursementGuideEntry.getIdInternal());
+
+                        reimbursementTransaction = new ReimbursementTransaction(reimbursementGuideEntry
+                                .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
+                                "", reimbursementGuideEntry.getGuideEntry().getGuide().getPaymentType(),
+                                TransactionType.GRATUITY_REIMBURSEMENT, Boolean.FALSE, person,
+                                personAccount, reimbursementGuideEntry);
+
+                        persistentReimbursementTransaction.lockWrite(reimbursementTransaction);
+
+                        IPessoa studentPerson = reimbursementGuide.getGuide().getPerson();
+                        IStudent student = ps.getIPersistentStudent().readByPersonAndDegreeType(
+                                studentPerson, TipoCurso.MESTRADO_OBJ);
+                        ICursoExecucao executionDegree = reimbursementGuide.getGuide()
+                                .getExecutionDegree();
+
+                        IGratuitySituation gratuitySituation = persistentGratuitySituation
+                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree,
+                                        student);
+
+                        if (gratuitySituation == null) {
+                            throw new FenixServiceException(
+                                    "Database is inconsistent. The gratuity situation is supposed to exist");
+                        }
+
+                        persistentGratuitySituation.lockWrite(gratuitySituation);
+
+                        Double remainingValue = gratuitySituation.getRemainingValue();
+
+                        gratuitySituation.setRemainingValue(new Double(remainingValue.doubleValue()
+                                + reimbursementTransaction.getValue().doubleValue()));
+
+                    }
+
+                    if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
+                            DocumentType.INSURANCE_TYPE)) {
+
+                        reimbursementTransaction = new ReimbursementTransaction(reimbursementGuideEntry
+                                .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
+                                "", reimbursementGuideEntry.getGuideEntry().getGuide().getPaymentType(),
+                                TransactionType.INSURANCE_REIMBURSEMENT, Boolean.FALSE, person,
+                                personAccount, reimbursementGuideEntry);
+
+                        persistentReimbursementTransaction.lockWrite(reimbursementTransaction);
+                    }
+                }
             }
+
+            persistentObject.simpleLockWrite(activeSituation);
+            activeSituation.setState(new State(State.INACTIVE_STRING));
+
+            List reimbursementGuideSituations = reimbursementGuide.getReimbursementGuideSituations();
+            reimbursementGuideSituations.add(newActiveSituation);
+            reimbursementGuide.setReimbursementGuideSituations(reimbursementGuideSituations);
+
+            persistentObject.simpleLockWrite(newActiveSituation);
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -137,13 +233,11 @@ public class EditReimbursementGuide implements IService {
      *         state is annuled it cannot be changed Also the state doesnt need
      *         to change
      */
-    private boolean validateReimbursementGuideSituation(
-            IReimbursementGuideSituation activeSituation, String situation) {
+    private boolean validateReimbursementGuideSituation(IReimbursementGuideSituation activeSituation,
+            String situation) {
 
-        ReimbursementGuideState newState = ReimbursementGuideState
-                .getEnum(situation);
-        ReimbursementGuideState currentState = activeSituation
-                .getReimbursementGuideState();
+        ReimbursementGuideState newState = ReimbursementGuideState.getEnum(situation);
+        ReimbursementGuideState currentState = activeSituation.getReimbursementGuideState();
 
         if (currentState.equals(newState))
             return false;
@@ -172,6 +266,65 @@ public class EditReimbursementGuide implements IService {
             return false;
         }
         return false;
+    }
+
+    /**
+     * @param reimbursementGuideEntry
+     * @param suportePersistente
+     * @return true if the sum of existents reeimbursement guide entries of a
+     *         guide entry with the new reimbursement guide entry is less or
+     *         equal than their guide entry
+     */
+    private boolean checkReimbursementGuideEntriesSum(IReimbursementGuideEntry reimbursementGuideEntry,
+            ISuportePersistente suportePersistente) throws FenixServiceException {
+        IPersistentGuideEntry persistentGuideEntry = suportePersistente.getIPersistentGuideEntry();
+        IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = suportePersistente
+                .getIPersistentReimbursementGuideEntry();
+
+        IGuideEntry guideEntry = null;
+        List reimbursementGuideEntries = null;
+
+        try {
+            guideEntry = (IGuideEntry) persistentGuideEntry.readByOID(GuideEntry.class,
+                    reimbursementGuideEntry.getGuideEntry().getIdInternal());
+
+            reimbursementGuideEntries = persistentReimbursementGuideEntry.readByGuideEntry(guideEntry);
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        Iterator it = reimbursementGuideEntries.iterator();
+        Double sum = reimbursementGuideEntry.getValue();
+
+        while (it.hasNext()) {
+            IReimbursementGuideEntry reimbursementGuideEntryTmp = (IReimbursementGuideEntry) it.next();
+
+            try {
+                // because of an OJB with cache bug we have to read the guide
+                // entry again
+                reimbursementGuideEntryTmp = (IReimbursementGuideEntry) persistentReimbursementGuideEntry
+                        .readByOID(ReimbursementGuideEntry.class, reimbursementGuideEntryTmp
+                                .getIdInternal());
+            } catch (ExcepcaoPersistencia e1) {
+                throw new FenixServiceException(e1);
+            }
+
+            if (reimbursementGuideEntryTmp.getReimbursementGuide()
+                    .getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(
+                            ReimbursementGuideState.PAYED)) {
+                sum = new Double(sum.doubleValue() + reimbursementGuideEntryTmp.getValue().doubleValue());
+            }
+
+        }
+
+        Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
+                * guideEntry.getQuantity().intValue());
+
+        if (sum.doubleValue() > guideEntryValue.doubleValue()) {
+            return false;
+        }
+        return true;
+
     }
 
 }

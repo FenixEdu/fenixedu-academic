@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
@@ -15,7 +16,6 @@ import Dominio.ITeacher;
 import Dominio.Professorship;
 import Dominio.ResponsibleFor;
 import Dominio.Teacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -29,60 +29,33 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class SaveTeachersBody implements IServico {
-
-    private static SaveTeachersBody service = new SaveTeachersBody();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static SaveTeachersBody getService() {
-        return service;
-    }
-
-    /**
-     * The constructor of this class.
-     */
-    private SaveTeachersBody() {
-    }
-
-    /**
-     * Service name
-     */
-    public final String getNome() {
-        return "SaveTeachersBody";
-    }
+public class SaveTeachersBody implements IService {
 
     /**
      * Executes the service.
      */
 
-    public Boolean run(List responsibleTeachersIds,
-            List professorShipTeachersIds, Integer executionCourseId)
-            throws FenixServiceException {
+    public Boolean run(List responsibleTeachersIds, List professorShipTeachersIds,
+            Integer executionCourseId) throws FenixServiceException {
 
         try {
             boolean result = true;
             Integer id;
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseId);
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
             if (executionCourse == null) {
 
-                throw new NonExistingServiceException(
-                        "message.nonExistingCurricularCourse", null);
+                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
             }
 
             // RESPONSIBLES MODIFICATIONS
 
             // get the ids of the teachers that used to be responsible
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
-            List oldResponsibles = persistentResponsibleFor
-                    .readByExecutionCourse(executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List oldResponsibles = persistentResponsibleFor.readByExecutionCourse(executionCourse);
             List oldResponsibleTeachersIds = new ArrayList();
             if (oldResponsibles != null) {
 
@@ -99,11 +72,9 @@ public class SaveTeachersBody implements IServico {
                 while (oldRespIterator.hasNext()) {
                     id = (Integer) oldRespIterator.next();
                     if (!responsibleTeachersIds.contains(id))
-                        persistentResponsibleFor.deleteByOID(
-                                ResponsibleFor.class,
-                                ((IResponsibleFor) oldResponsibles
-                                        .get(oldResponsibleTeachersIds
-                                                .indexOf(id))).getIdInternal());
+                        persistentResponsibleFor.deleteByOID(ResponsibleFor.class,
+                                ((IResponsibleFor) oldResponsibles.get(oldResponsibleTeachersIds
+                                        .indexOf(id))).getIdInternal());
                 }
             }
 
@@ -116,13 +87,11 @@ public class SaveTeachersBody implements IServico {
                 if (!oldResponsibleTeachersIds.contains(id)) {
                     responsibleForToWrite = new ResponsibleFor();
                     responsibleForToWrite.setExecutionCourse(executionCourse);
-                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(
-                            Teacher.class, id);
+                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class, id);
                     if (teacher == null)
                         result = false;
                     else {
-                        persistentResponsibleFor
-                                .simpleLockWrite(responsibleForToWrite);
+                        persistentResponsibleFor.simpleLockWrite(responsibleForToWrite);
                         responsibleForToWrite.setTeacher(teacher);
 
                     }
@@ -132,10 +101,8 @@ public class SaveTeachersBody implements IServico {
             // PROFESSORSHIPS MODIFICATIONS
 
             // get the ids of the teachers that used to teach the course
-            IPersistentProfessorship persistentProfessorShip = sp
-                    .getIPersistentProfessorship();
-            List oldProfessorShips = persistentProfessorShip
-                    .readByExecutionCourse(executionCourse);
+            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
+            List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse);
             List oldProfessorShipTeachersIds = new ArrayList();
             if (oldProfessorShips != null && !oldProfessorShips.isEmpty()) {
 
@@ -149,17 +116,13 @@ public class SaveTeachersBody implements IServico {
                 }
 
                 // remove old professorShips
-                Iterator oldProfIterator = oldProfessorShipTeachersIds
-                        .iterator();
+                Iterator oldProfIterator = oldProfessorShipTeachersIds.iterator();
                 while (oldProfIterator.hasNext()) {
                     id = (Integer) oldProfIterator.next();
-                    if (!professorShipTeachersIds.contains(id)
-                            && !responsibleTeachersIds.contains(id))
-                        persistentProfessorShip.deleteByOID(
-                                Professorship.class,
-                                ((IProfessorship) oldProfessorShips
-                                        .get(oldProfessorShipTeachersIds
-                                                .indexOf(id))).getIdInternal());
+                    if (!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id))
+                        persistentProfessorShip.deleteByOID(Professorship.class,
+                                ((IProfessorship) oldProfessorShips.get(oldProfessorShipTeachersIds
+                                        .indexOf(id))).getIdInternal());
                 }
             }
             // add new professorShips
@@ -170,13 +133,11 @@ public class SaveTeachersBody implements IServico {
                 if (!oldProfessorShipTeachersIds.contains(id)) {
                     professorShipToWrite = new Professorship();
                     professorShipToWrite.setExecutionCourse(executionCourse);
-                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(
-                            Teacher.class, id);
+                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class, id);
                     if (teacher == null)
                         result = false;
                     else {
-                        persistentProfessorShip
-                                .simpleLockWrite(professorShipToWrite);
+                        persistentProfessorShip.simpleLockWrite(professorShipToWrite);
                         professorShipToWrite.setTeacher(teacher);
 
                     }

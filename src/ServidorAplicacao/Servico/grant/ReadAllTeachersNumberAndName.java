@@ -50,7 +50,7 @@ public class ReadAllTeachersNumberAndName implements IService {
         /*
          * Set the InfoObject only with the needed fields to be presented.
          */
-        ArrayList teachersList = new ArrayList();
+        List teachersList = new ArrayList();
         while (teachersIterator.hasNext()) {
             InfoTeacher infoTeacher = new InfoTeacher();
             InfoPerson infoPerson = new InfoPerson();

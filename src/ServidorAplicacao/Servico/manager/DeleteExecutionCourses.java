@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISite;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSite;
@@ -30,36 +30,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *  
  */
 
-public class DeleteExecutionCourses implements IServico {
-
-    private static DeleteExecutionCourses service = new DeleteExecutionCourses();
-
-    public static DeleteExecutionCourses getService() {
-        return service;
-    }
-
-    private DeleteExecutionCourses() {
-    }
-
-    public final String getNome() {
-        return "DeleteExecutionCourses";
-    }
+public class DeleteExecutionCourses implements IService {
 
     // delete a set of execution courses
     public List run(List internalIds) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            IFrequentaPersistente persistentAttend = sp
-                    .getIFrequentaPersistente();
+            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
             IPersistentExamExecutionCourse persistentExamExecutionCourse = sp
                     .getIPersistentExamExecutionCourse();
-            IPersistentProfessorship persistentProfessorShip = sp
-                    .getIPersistentProfessorship();
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
+            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
             IPersistentSite persistentSite = sp.getIPersistentSite();
 
             Iterator iter = internalIds.iterator();
@@ -80,35 +63,26 @@ public class DeleteExecutionCourses implements IServico {
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
                         .readByOID(ExecutionCourse.class, internalId);
                 if (executionCourse != null) {
-                    shifts = persistentShift
-                            .readByExecutionCourse(executionCourse);
+                    shifts = persistentShift.readByExecutionCourse(executionCourse);
                     if (shifts != null && !shifts.isEmpty())
-                        undeletedExecutionCoursesCodes.add(executionCourse
-                                .getSigla());
+                        undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
                     else {
-                        attends = persistentAttend
-                                .readByExecutionCourse(executionCourse);
+                        attends = persistentAttend.readByExecutionCourse(executionCourse);
                         if (attends != null && !attends.isEmpty()) {
-                            undeletedExecutionCoursesCodes.add(executionCourse
-                                    .getSigla());
+                            undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
                         } else {
-                            exams = persistentExamExecutionCourse
-                                    .readByExecutionCourse(executionCourse);
+                            exams = persistentExamExecutionCourse.readByExecutionCourse(executionCourse);
                             if (exams != null && !exams.isEmpty()) {
-                                undeletedExecutionCoursesCodes
-                                        .add(executionCourse.getSigla());
+                                undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
                             } else {
-                                persistentExecutionCourse
-                                        .deleteExecutionCourse(executionCourse);
+                                persistentExecutionCourse.deleteExecutionCourse(executionCourse);
                                 professorShips = persistentProfessorShip
                                         .readByExecutionCourse(executionCourse);
                                 if (professorShips != null) {
                                     iterator = professorShips.iterator();
                                     while (iterator.hasNext()) {
-                                        professorShip = (IProfessorship) iterator
-                                                .next();
-                                        persistentProfessorShip
-                                                .delete(professorShip);
+                                        professorShip = (IProfessorship) iterator.next();
+                                        persistentProfessorShip.delete(professorShip);
                                     }
                                 }
                                 responsibles = persistentResponsibleFor
@@ -116,14 +90,11 @@ public class DeleteExecutionCourses implements IServico {
                                 if (responsibles != null) {
                                     iterator = responsibles.iterator();
                                     while (iterator.hasNext()) {
-                                        responsibleFor = (IResponsibleFor) iterator
-                                                .next();
-                                        persistentResponsibleFor
-                                                .delete(responsibleFor);
+                                        responsibleFor = (IResponsibleFor) iterator.next();
+                                        persistentResponsibleFor.delete(responsibleFor);
                                     }
                                 }
-                                site = persistentSite
-                                        .readByExecutionCourse(executionCourse);
+                                site = persistentSite.readByExecutionCourse(executionCourse);
                                 if (site != null) {
                                     persistentSite.delete(site);
                                 }

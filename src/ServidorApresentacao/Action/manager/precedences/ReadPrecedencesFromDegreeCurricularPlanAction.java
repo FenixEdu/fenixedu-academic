@@ -22,26 +22,27 @@ import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer degreeID = new Integer(request.getParameter("degreeId"));
         Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
 
-        Object args[] = {degreeCurricularPlanID};
-        
+        Object args[] = { degreeCurricularPlanID };
+
         try {
-			Map result = (Map) ServiceManagerServiceFactory.executeService(userView, "ReadPrecedencesFromDegreeCurricularPlan", args);
-			request.setAttribute("precedences", result);
+            Map result = (Map) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadPrecedencesFromDegreeCurricularPlan", args);
+            request.setAttribute("precedences", result);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-		request.setAttribute("degreeId", degreeID);
-		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+        request.setAttribute("degreeId", degreeID);
+        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-		return mapping.findForward("showPrecedences");
+        return mapping.findForward("showPrecedences");
     }
 }

@@ -30,8 +30,7 @@ import Util.RoleType;
  * @author João Mota
  *  
  */
-public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public ExecutionCourseAndItemLecturingTeacherAuthorizationFilter() {
 
@@ -52,17 +51,13 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
-        if ((id == null)
-                || (id.getRoles() == null)
-                || !AuthorizationUtils.containsRole(id.getRoles(),
-                        getRoleType())
-                || !lecturesExecutionCourse(id, arguments)
-                || !itemBelongsExecutionCourse(id, arguments)) {
+        if ((id == null) || (id.getRoles() == null)
+                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                || !lecturesExecutionCourse(id, arguments) || !itemBelongsExecutionCourse(id, arguments)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -85,26 +80,21 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends
         try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner
-                        .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class,
-                                (Integer) argumentos[0]);
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                        ExecutionCourse.class, (Integer) argumentos[0]);
             }
             IPersistentItem persistentItem = sp.getIPersistentItem();
             if (argumentos[1] instanceof InfoItem) {
                 infoItem = (InfoItem) argumentos[1];
 
-                item = (IItem) persistentItem.readByOID(Item.class, infoItem
-                        .getIdInternal());
+                item = (IItem) persistentItem.readByOID(Item.class, infoItem.getIdInternal());
             } else {
-                item = (IItem) persistentItem.readByOID(Item.class,
-                        (Integer) argumentos[1]);
+                item = (IItem) persistentItem.readByOID(Item.class, (Integer) argumentos[1]);
 
             }
         } catch (Exception e) {
@@ -115,8 +105,7 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends
             return false;
         }
 
-        return item.getSection().getSite().getExecutionCourse().equals(
-                executionCourse);
+        return item.getSection().getSite().getExecutionCourse().equals(executionCourse);
     }
 
     /**
@@ -135,27 +124,21 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends
         try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner
-                        .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class,
-                                (Integer) argumentos[0]);
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                        ExecutionCourse.class, (Integer) argumentos[0]);
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
-                    .getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             if (teacher != null && executionCourse != null) {
-                IPersistentProfessorship persistentProfessorship = sp
-                        .getIPersistentProfessorship();
-                professorship = persistentProfessorship
-                        .readByTeacherAndExecutionCoursePB(teacher,
-                                executionCourse);
+                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(teacher,
+                        executionCourse);
             }
         } catch (Exception e) {
             return false;

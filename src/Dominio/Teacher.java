@@ -271,21 +271,24 @@ public class Teacher extends DomainObject implements ITeacher {
 
     public InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod) {
         InfoCredits credits = (InfoCredits) creditsMap.get(executionPeriod);
-        if (credits == null){
+        if (credits == null) {
             credits = InfoCreditsBuilder.build(this, executionPeriod);
             creditsMap.put(executionPeriod, credits);
         }
         return credits;
     }
 
-    /* (non-Javadoc)
-     * @see Dominio.ITeacher#notifyCreditsChange(Dominio.credits.event.CreditsEvent, Dominio.credits.event.ICreditsEventOriginator)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.ITeacher#notifyCreditsChange(Dominio.credits.event.CreditsEvent,
+     *      Dominio.credits.event.ICreditsEventOriginator)
      */
     public void notifyCreditsChange(CreditsEvent creditsEvent, ICreditsEventOriginator originator) {
         Iterator iterator = this.creditsMap.keySet().iterator();
         while (iterator.hasNext()) {
             IExecutionPeriod executionPeriod = (IExecutionPeriod) iterator.next();
-            if (originator.belongsToExecutionPeriod(executionPeriod)){
+            if (originator.belongsToExecutionPeriod(executionPeriod)) {
                 iterator.remove();
             }
         }

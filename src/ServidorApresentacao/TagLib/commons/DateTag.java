@@ -15,60 +15,61 @@ import org.apache.struts.util.ResponseUtils;
 
 /**
  * @author João Mota
- *
+ *  
  */
 public class DateTag extends TagSupport {
 
-	protected Calendar date = null;
+    protected Calendar date = null;
 
-	/**
-	 * 
-	 */
-	public DateTag() {
-		super();
-		
-	}
+    /**
+     *  
+     */
+    public DateTag() {
+        super();
 
-	/**
-	 * @return
-	 */
-	public Calendar getDate() {
-		return date;
-	}
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setDate(Calendar calendar) {
-		date = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getDate() {
+        return date;
+    }
 
-	public int doStartTag() throws JspException {
+    /**
+     * @param calendar
+     */
+    public void setDate(Calendar calendar) {
+        date = calendar;
+    }
 
-		// Special case for name anchors
-		if (date != null) {
-			StringBuffer results = new StringBuffer("");
-			results.append(date.get(Calendar.DAY_OF_MONTH));
-			results.append("/");
-			results.append(date.get(Calendar.MONTH));
-			results.append("/");
-			results.append(date.get(Calendar.YEAR));
-			ResponseUtils.write(pageContext, results.toString());
+    public int doStartTag() throws JspException {
 
-		}
+        // Special case for name anchors
+        if (date != null) {
+            StringBuffer results = new StringBuffer("");
+            results.append(date.get(Calendar.DAY_OF_MONTH));
+            results.append("/");
+            results.append(date.get(Calendar.MONTH));
+            results.append("/");
+            results.append(date.get(Calendar.YEAR));
+            ResponseUtils.write(pageContext, results.toString());
 
-		return (SKIP_BODY);
-	}
-	public int doEndTag() throws JspException {
-		return (EVAL_PAGE);
-	}
+        }
 
-	public void release() {
-		super.release();
-	}
+        return (SKIP_BODY);
+    }
 
-	//	Error Messages
-	protected static MessageResources messages =
-		MessageResources.getMessageResources("ApplicationResources");
+    public int doEndTag() throws JspException {
+        return (EVAL_PAGE);
+    }
+
+    public void release() {
+        super.release();
+    }
+
+    //	Error Messages
+    protected static MessageResources messages = MessageResources
+            .getMessageResources("ApplicationResources");
 
 }

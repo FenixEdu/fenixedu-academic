@@ -53,8 +53,7 @@ public class ReadGroupPropertiesShifts implements IServico {
     /**
      * Executes the service.
      */
-    public List run(Integer groupPropertiesCode, Integer shiftCode)
-            throws FenixServiceException {
+    public List run(Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
 
         List infoShifts = new ArrayList();
         IGroupProperties groupProperties = null;
@@ -62,28 +61,24 @@ public class ReadGroupPropertiesShifts implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            groupProperties = (IGroupProperties) sp
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+            groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
+                    GroupProperties.class, groupPropertiesCode);
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                     .getGroupEnrolmentStrategyInstance(groupProperties);
 
-            List executionCourseShifts = sp
-                    .getITurnoPersistente()
-                    .readByExecutionCourse(groupProperties.getExecutionCourse());
+            List executionCourseShifts = sp.getITurnoPersistente().readByExecutionCourse(
+                    groupProperties.getExecutionCourse());
 
-            List shifts = strategy.checkShiftsType(groupProperties,
-                    executionCourseShifts);
+            List shifts = strategy.checkShiftsType(groupProperties, executionCourseShifts);
             if (shifts == null || shifts.isEmpty()) {
 
             } else {
 
                 for (int i = 0; i < shifts.size(); i++) {
                     ITurno shift = (ITurno) shifts.get(i);
-                    result = strategy.checkNumberOfGroups(groupProperties,
-                            shift);
+                    result = strategy.checkNumberOfGroups(groupProperties, shift);
                     if (result) {
 
                         InfoShift infoShift = (InfoShift) Cloner.get(shift);
@@ -95,8 +90,8 @@ public class ReadGroupPropertiesShifts implements IServico {
                 }
 
                 if (shiftCode != null) {
-                    ITurno oldShift = (ITurno) sp.getITurnoPersistente()
-                            .readByOID(Turno.class, shiftCode);
+                    ITurno oldShift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+                            shiftCode);
                     infoShifts.add(Cloner.get(oldShift));
                 }
 

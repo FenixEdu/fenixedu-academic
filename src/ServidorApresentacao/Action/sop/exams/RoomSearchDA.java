@@ -32,27 +32,16 @@ import Util.DiaSemana;
 /**
  * @author Ana & Ricardo
  */
-public class RoomSearchDA extends FenixContextDispatchAction
-{
+public class RoomSearchDA extends FenixContextDispatchAction {
 
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         return mapping.findForward("roomSearch");
     }
 
-    public ActionForward search(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm roomSearchForm = (DynaValidatorForm) form;
 
@@ -67,8 +56,7 @@ public class RoomSearchDA extends FenixContextDispatchAction
         searchDate.set(Calendar.YEAR, year.intValue());
         searchDate.set(Calendar.MONTH, month.intValue() - 1);
         searchDate.set(Calendar.DAY_OF_MONTH, day.intValue());
-        if (searchDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-        {
+        if (searchDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             ActionError actionError = new ActionError("error.sunday");
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error.sunday", actionError);
@@ -94,8 +82,7 @@ public class RoomSearchDA extends FenixContextDispatchAction
         searchEndTime.set(Calendar.HOUR_OF_DAY, endHour.intValue());
         searchEndTime.set(Calendar.MINUTE, endMinute.intValue());
         searchEndTime.set(Calendar.SECOND, 0);
-        if (searchStartTime.after(searchEndTime))
-        {
+        if (searchStartTime.after(searchEndTime)) {
             ActionError actionError = new ActionError("error.timeSwitched");
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error.timeSwitched", actionError);
@@ -106,28 +93,21 @@ public class RoomSearchDA extends FenixContextDispatchAction
         int dayOfWeekInt = searchDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { new Period(searchDate, searchDate), searchStartTime, searchEndTime, dayOfWeek, null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false)};
+        Object args[] = { new Period(searchDate, searchDate), searchStartTime, searchEndTime, dayOfWeek,
+                null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false) };
         List availableInfoRoom = null;
-        try
-        {
-            availableInfoRoom =
-                (List) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
-        }
-        catch (ExistingServiceException ex)
-        {
+        try {
+            availableInfoRoom = (List) ServiceUtils.executeService(userView,
+                    "ReadAvailableRoomsForExam", args);
+        } catch (ExistingServiceException ex) {
 
             //throw new ExistingActionException("", ex);
         }
-        String sdate =
-            roomSearchForm.get("day")
-                + "/"
-                + roomSearchForm.get("month")
-                + "/"
+        String sdate = roomSearchForm.get("day") + "/" + roomSearchForm.get("month") + "/"
                 + roomSearchForm.get("year");
-        String startTime =
-            roomSearchForm.get("beginningHour") + ":" + roomSearchForm.get("beginningMinute");
-        String endTime =
-            roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");
+        String startTime = roomSearchForm.get("beginningHour") + ":"
+                + roomSearchForm.get("beginningMinute");
+        String endTime = roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");
         request.setAttribute(SessionConstants.DATE, sdate);
         request.setAttribute(SessionConstants.START_TIME, startTime);
         request.setAttribute(SessionConstants.END_TIME, endTime);
@@ -135,51 +115,37 @@ public class RoomSearchDA extends FenixContextDispatchAction
         Integer exam = null;
         Integer normal = null;
         List newAvailableInfoRoom = new ArrayList();
-        if (availableInfoRoom != null && !availableInfoRoom.isEmpty())
-        {
-            try
-            {
+        if (availableInfoRoom != null && !availableInfoRoom.isEmpty()) {
+            try {
                 exam = new Integer((String) roomSearchForm.get("exam"));
+            } catch (NumberFormatException ex) {
+                // the user didn't speciefy a exam minimum capacity
             }
-            catch (NumberFormatException ex)
-            {
-                // the user didn't speciefy a exam minimum capacity 
-            }
-            try
-            {
+            try {
                 normal = new Integer((String) roomSearchForm.get("normal"));
+            } catch (NumberFormatException ex) {
+                // the user didn't speciefy a normal minimum capacity
             }
-            catch (NumberFormatException ex)
-            {
-                // the user didn't speciefy a normal minimum capacity 
-            }
-            if (normal != null || exam != null)
-            {
+            if (normal != null || exam != null) {
                 Iterator iter = availableInfoRoom.iterator();
-                while (iter.hasNext())
-                {
+                while (iter.hasNext()) {
                     InfoRoom elem = (InfoRoom) iter.next();
-                    if (!((normal != null && elem.getCapacidadeNormal().intValue() < normal.intValue())
-                        || (exam != null && elem.getCapacidadeExame().intValue() < exam.intValue())))
-                    {
+                    if (!((normal != null && elem.getCapacidadeNormal().intValue() < normal.intValue()) || (exam != null && elem
+                            .getCapacidadeExame().intValue() < exam.intValue()))) {
                         newAvailableInfoRoom.add(elem);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 newAvailableInfoRoom = availableInfoRoom;
             }
         }
-        if (newAvailableInfoRoom != null && !newAvailableInfoRoom.isEmpty())
-        {
+        if (newAvailableInfoRoom != null && !newAvailableInfoRoom.isEmpty()) {
             Collections.sort(newAvailableInfoRoom, new BeanComparator("nome"));
             request.setAttribute(SessionConstants.AVAILABLE_ROOMS, newAvailableInfoRoom);
             String[] availableRoomId = new String[newAvailableInfoRoom.size()];
             Iterator iter = newAvailableInfoRoom.iterator();
             int i = 0;
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 InfoRoom elem = (InfoRoom) iter.next();
                 availableRoomId[i] = elem.getIdInternal().toString();
             }
@@ -189,69 +155,43 @@ public class RoomSearchDA extends FenixContextDispatchAction
         return mapping.findForward("showRooms");
     }
 
-    public ActionForward sort(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward sort(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         DynaValidatorForm roomSearchForm = (DynaValidatorForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
         String[] availableRoomsId = (String[]) roomSearchForm.get("availableRoomsId");
         String sortParameter = request.getParameter("sortParameter");
         List availableRooms = new ArrayList();
-        for (int i = 0; i < availableRoomsId.length; i++)
-        {
-            Object args[] = { new Integer(availableRoomsId[i])};
+        for (int i = 0; i < availableRoomsId.length; i++) {
+            Object args[] = { new Integer(availableRoomsId[i]) };
             InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", args);
             availableRooms.add(infoRoom);
         }
-        if ((sortParameter != null) && (sortParameter.length() != 0))
-        {
-            if (sortParameter.equals("name"))
-            {
+        if ((sortParameter != null) && (sortParameter.length() != 0)) {
+            if (sortParameter.equals("name")) {
                 Collections.sort(availableRooms, new BeanComparator("nome"));
-            }
-            else if (sortParameter.equals("type"))
-            {
+            } else if (sortParameter.equals("type")) {
                 Collections.sort(availableRooms, new BeanComparator("tipo"));
-            }
-            else if (sortParameter.equals("building"))
-            {
+            } else if (sortParameter.equals("building")) {
                 Collections.sort(availableRooms, new BeanComparator("edificio"));
-            }
-            else if (sortParameter.equals("floor"))
-            {
+            } else if (sortParameter.equals("floor")) {
                 Collections.sort(availableRooms, new BeanComparator("piso"));
+            } else if (sortParameter.equals("normal")) {
+                Collections.sort(availableRooms, new ReverseComparator(new BeanComparator(
+                        "capacidadeNormal")));
+            } else if (sortParameter.equals("exam")) {
+                Collections.sort(availableRooms, new ReverseComparator(new BeanComparator(
+                        "capacidadeExame")));
             }
-            else if (sortParameter.equals("normal"))
-            {
-                Collections.sort(
-                    availableRooms,
-                    new ReverseComparator(new BeanComparator("capacidadeNormal")));
-            }
-            else if (sortParameter.equals("exam"))
-            {
-                Collections.sort(
-                    availableRooms,
-                    new ReverseComparator(new BeanComparator("capacidadeExame")));
-            }
-        }
-        else
-        {
+        } else {
             Collections.sort(availableRooms, new BeanComparator("nome"));
         }
 
-        String sdate =
-            roomSearchForm.get("day")
-                + "/"
-                + roomSearchForm.get("month")
-                + "/"
+        String sdate = roomSearchForm.get("day") + "/" + roomSearchForm.get("month") + "/"
                 + roomSearchForm.get("year");
-        String startTime =
-            roomSearchForm.get("beginningHour") + ":" + roomSearchForm.get("beginningMinute");
+        String startTime = roomSearchForm.get("beginningHour") + ":"
+                + roomSearchForm.get("beginningMinute");
         String endTime = roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");
         request.setAttribute(SessionConstants.DATE, sdate);
         request.setAttribute(SessionConstants.START_TIME, startTime);

@@ -9,10 +9,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-
 /**
  * @author Luis Cruz
- *
+ *  
  */
 public class Profiler {
 
@@ -27,18 +26,17 @@ public class Profiler {
     private static int[] objectSynchCreateInstance = new int[0];
 
     private static void init() {
-		synchronized (objectSynchCreateInstance)
-		{
-		    if (profiler == null) {
-		        profiler = new Profiler();
-		    }
-		    if (startTimes == null) {
-		        startTimes = new HashMap();
-		    }
-		    if (times == null) {
-		        times = new HashMap();
-		    }
-		}
+        synchronized (objectSynchCreateInstance) {
+            if (profiler == null) {
+                profiler = new Profiler();
+            }
+            if (startTimes == null) {
+                startTimes = new HashMap();
+            }
+            if (times == null) {
+                times = new HashMap();
+            }
+        }
     }
 
     public static Profiler getInstance() {
@@ -47,8 +45,8 @@ public class Profiler {
     }
 
     public static void resetInstance() {
-    	startTimes = null;
-    	times = null;
+        startTimes = null;
+        times = null;
         init();
     }
 
@@ -110,6 +108,7 @@ public class Profiler {
     public class HashKey {
 
         private String key = null;
+
         private int index = 0;
 
         public HashKey(String keyArg, int indexArg) {
@@ -120,12 +119,15 @@ public class Profiler {
         public int getIndex() {
             return index;
         }
+
         public void setIndex(int index) {
             this.index = index;
         }
+
         public String getKey() {
             return key;
         }
+
         public void setKey(String key) {
             this.key = key;
         }

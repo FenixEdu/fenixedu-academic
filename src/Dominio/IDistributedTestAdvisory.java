@@ -10,21 +10,20 @@ package Dominio;
  *  
  */
 
-public interface IDistributedTestAdvisory extends IDomainObject
-{
-	public abstract IAdvisory getAdvisory();
+public interface IDistributedTestAdvisory extends IDomainObject {
+    public abstract IAdvisory getAdvisory();
 
-	public abstract void setAdvisory(IAdvisory advisory);
+    public abstract void setAdvisory(IAdvisory advisory);
 
-	public abstract IDistributedTest getDistributedTest();
+    public abstract IDistributedTest getDistributedTest();
 
-	public abstract void setDistributedTest(IDistributedTest distributedTest);
+    public abstract void setDistributedTest(IDistributedTest distributedTest);
 
-	public abstract Integer getKeyAdvisory();
+    public abstract Integer getKeyAdvisory();
 
-	public abstract void setKeyAdvisory(Integer keyAdvisory);
+    public abstract void setKeyAdvisory(Integer keyAdvisory);
 
-	public abstract Integer getKeyDistributedTest();
+    public abstract Integer getKeyDistributedTest();
 
-	public abstract void setKeyDistributedTest(Integer keyDistributedTest);
+    public abstract void setKeyDistributedTest(Integer keyDistributedTest);
 }

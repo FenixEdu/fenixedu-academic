@@ -18,61 +18,53 @@ import Util.ProviderRegimeType;
  * @author Sergio Montelobo
  *  
  */
-public class EditTeacherInformationTest extends ServiceNeedsAuthenticationTestCase
-{
+public class EditTeacherInformationTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
-	 * @param testName
-	 */
-    public EditTeacherInformationTest(String name)
-    {
+     * @param testName
+     */
+    public EditTeacherInformationTest(String name) {
         super(name);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testEditTeacherInformationDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath()
-    {
+    protected String getExpectedDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testExpectedEditTeacherInformationDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "EditTeacherInformation";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "jorge", "pass", getApplication()};
+        String[] args = { "jorge", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "jccm", "pass", getApplication()};
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setIdInternal(new Integer(1));
 
         InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
         infoServiceProviderRegime.setIdInternal(new Integer(1));
-        infoServiceProviderRegime.setProviderRegimeType(ProviderRegimeType.getEnum(ProviderRegimeType.CUMULATIVE_TYPE));
+        infoServiceProviderRegime.setProviderRegimeType(ProviderRegimeType
+                .getEnum(ProviderRegimeType.CUMULATIVE_TYPE));
         infoServiceProviderRegime.setInfoTeacher(infoTeacher);
 
         InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
@@ -81,37 +73,30 @@ public class EditTeacherInformationTest extends ServiceNeedsAuthenticationTestCa
         infoWeeklyOcupation.setManagement(new Integer(4));
         infoWeeklyOcupation.setOther(new Integer(5));
         infoWeeklyOcupation.setInfoTeacher(infoTeacher);
-        
+
         Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testSuccessfull()
-    {
+    public void testSuccessfull() {
 
-        try
-        {
+        try {
             Boolean result = null;
 
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args);
 
-            result =
-                (Boolean) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    getNameOfServiceToBeTested(),
-                    getAuthorizeArguments());
+            result = (Boolean) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), getAuthorizeArguments());
 
             assertTrue(result.booleanValue());
             // verifica as alteracoes da base de dados
             compareDataSetUsingExceptedDataSetTablesAndColumns(getExpectedDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Editing a teacher Information " + ex);
         }
     }

@@ -36,8 +36,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceTeachersTest extends
-        TestCaseReadServices {
+public class TeacherAdministrationSiteComponentServiceTeachersTest extends TestCaseReadServices {
 
     /**
      * @param testName
@@ -65,8 +64,8 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends
      */
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args = { new Integer(26), new InfoSiteCommon(),
-                new InfoSiteTeachers(), null, null, new String("user") };
+        Object[] args = { new Integer(26), new InfoSiteCommon(), new InfoSiteTeachers(), null, null,
+                new String("user") };
         return args;
     }
 
@@ -82,33 +81,28 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends
 
         try {
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
 
             sp.iniciarTransaccao();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, new Integer(26));
-            infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, new Integer(26));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
             sections = persistentSection.readBySite(site);
 
-            teachersList = sp.getIPersistentProfessorship()
-                    .readByExecutionCourse(executionCourse);
+            teachersList = sp.getIPersistentProfessorship().readByExecutionCourse(executionCourse);
 
-            responsibleTeachers = persistentResponsibleFor
-                    .readByExecutionCourse(executionCourse);
+            responsibleTeachers = persistentResponsibleFor.readByExecutionCourse(executionCourse);
 
             teacher = persistentTeacher.readTeacherByUsername("user");
-            responsibleFor = persistentResponsibleFor
-                    .readByTeacherAndExecutionCourse(teacher, executionCourse);
+            responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher,
+                    executionCourse);
 
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
@@ -120,8 +114,7 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends
         ListIterator iter = sections.listIterator();
 
         while (iter.hasNext()) {
-            InfoSection infoSection = Cloner
-                    .copyISection2InfoSection((ISection) iter.next());
+            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
@@ -130,11 +123,9 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends
         if (teachersList != null) {
             Iterator teachersIterator = teachersList.iterator();
             while (teachersIterator.hasNext()) {
-                IProfessorship professorship = (IProfessorship) teachersIterator
-                        .next();
+                IProfessorship professorship = (IProfessorship) teachersIterator.next();
                 ITeacher iTeacher = professorship.getTeacher();
-                InfoTeacher infoTeacher = Cloner
-                        .copyITeacher2InfoTeacher(iTeacher);
+                InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(iTeacher);
                 infoTeachers.add(infoTeacher);
             }
 
@@ -143,17 +134,14 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends
             if (responsibleTeachers != null) {
                 Iterator iter2 = responsibleTeachers.iterator();
                 while (iter2.hasNext()) {
-                    IResponsibleFor responsible = (IResponsibleFor) iter2
-                            .next();
+                    IResponsibleFor responsible = (IResponsibleFor) iter2.next();
                     ITeacher iTeacher = responsible.getTeacher();
-                    InfoTeacher infoTeacher = Cloner
-                            .copyITeacher2InfoTeacher(iTeacher);
+                    InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(iTeacher);
                     infoResponsibleTeachers.add(infoTeacher);
                 }
 
                 if (teacher != null) {
-                    if (responsibleTeachers != null
-                            && !responsibleTeachers.isEmpty()
+                    if (responsibleTeachers != null && !responsibleTeachers.isEmpty()
                             && responsibleTeachers.contains(responsibleFor)) {
                         isResponsible = true;
                     }
@@ -172,8 +160,8 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
-                infoSiteCommon, infoSiteTeachers);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(infoSiteCommon,
+                infoSiteTeachers);
 
         return siteView;
     }

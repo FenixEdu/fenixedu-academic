@@ -5,6 +5,7 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -33,6 +34,7 @@ import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoAula;
@@ -41,470 +43,491 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Tânia Pousão
  */
-public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAction
-{
+public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAction {
 
-	public ActionForward showSummaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response)
-	{
-		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer executionCourseId = getObjectCode(request);
-		request.setAttribute("objectCode", executionCourseId);
+        Integer executionCourseId = getObjectCode(request);
+        request.setAttribute("objectCode", executionCourseId);
 
-		Integer lessonType = null;
-		if (request.getParameter("bySummaryType") != null && request.getParameter("bySummaryType").length() > 0)
-		{
-			lessonType = new Integer(request.getParameter("bySummaryType"));
-		}
+        Integer lessonType = null;
+        if (request.getParameter("bySummaryType") != null
+                && request.getParameter("bySummaryType").length() > 0) {
+            lessonType = new Integer(request.getParameter("bySummaryType"));
+        }
 
-		Integer shiftId = null;
-		if (request.getParameter("byShift") != null && request.getParameter("byShift").length() > 0)
-		{
-			shiftId = new Integer(request.getParameter("byShift"));
-		}
+        Integer shiftId = null;
+        if (request.getParameter("byShift") != null && request.getParameter("byShift").length() > 0) {
+            shiftId = new Integer(request.getParameter("byShift"));
+        }
 
-		Integer professorShiftId = null;
-		if (request.getParameter("byTeacher") != null && request.getParameter("byTeacher").length() > 0)
-		{
-			professorShiftId = new Integer(request.getParameter("byTeacher"));
-		}
+        Integer professorShiftId = null;
+        if (request.getParameter("byTeacher") != null && request.getParameter("byTeacher").length() > 0) {
+            professorShiftId = new Integer(request.getParameter("byTeacher"));
+        }
 
-		Object[] args = {executionCourseId, lessonType, shiftId, professorShiftId};
-		SiteView siteView = null;
-		try
-		{
-			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaries", args);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			ActionErrors errors = new ActionErrors();
-			errors.add("error", new ActionError("error.summary.impossible.show"));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
+        Object[] args = { executionCourseId, lessonType, shiftId, professorShiftId };
+        SiteView siteView = null;
+        try {
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaries", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            ActionErrors errors = new ActionErrors();
+            errors.add("error", new ActionError("error.summary.impossible.show"));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
 
-		try
-		{
-			selectChoices(request, ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent()), lessonType);
+        try {
+            selectChoices(request, ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
+                    .getComponent()), lessonType);
 
-			Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent()).getInfoSummaries(),
-				Collections.reverseOrder());
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			ActionErrors errors = new ActionErrors();
-			errors.add("error", new ActionError("error.summary.impossible.show"));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
-		request.setAttribute("siteView", siteView);
-		return mapping.findForward("showSummaries");
-	}
+            Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent())
+                    .getInfoSummaries(), Collections.reverseOrder());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ActionErrors errors = new ActionErrors();
+            errors.add("error", new ActionError("error.summary.impossible.show"));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
+        request.setAttribute("siteView", siteView);
+        return mapping.findForward("showSummaries");
+    }
 
-	private void selectChoices(HttpServletRequest request, InfoSiteSummaries summaries, Integer lessonType)
-	{
-		if (lessonType != null && lessonType.intValue() != 0)
-		{
-			final TipoAula lessonTypeSelect = new TipoAula(lessonType.intValue());
-			List infoShiftsOnlyType = (List) CollectionUtils.select(summaries.getInfoShifts(), new Predicate()
-			{
+    private void selectChoices(HttpServletRequest request, InfoSiteSummaries summaries,
+            Integer lessonType) {
+        if (lessonType != null && lessonType.intValue() != 0) {
+            final TipoAula lessonTypeSelect = new TipoAula(lessonType.intValue());
+            List infoShiftsOnlyType = (List) CollectionUtils.select(summaries.getInfoShifts(),
+                    new Predicate() {
 
-				public boolean evaluate(Object arg0)
-				{
-					return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
-				}
-			});
+                        public boolean evaluate(Object arg0) {
+                            return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
+                        }
+                    });
 
-			summaries.setInfoShifts(infoShiftsOnlyType);
-		}
-	}
+            summaries.setInfoShifts(infoShiftsOnlyType);
+        }
+    }
 
-	public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response)
-	{
-		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer objectCode = getObjectCode(request);
-		request.setAttribute("objectCode", objectCode);
+        Integer objectCode = getObjectCode(request);
+        request.setAttribute("objectCode", objectCode);
 
-		Object args[] = {objectCode, userView.getUtilizador()/* userLogged */};
-		SiteView siteView = null;
-		try
-		{
-			siteView = (SiteView) ServiceManagerServiceFactory.executeService(userView, "PrepareInsertSummary", args);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			ActionErrors errors = new ActionErrors();
-			errors.add("error", new ActionError("error.summary.impossible.insert"));
-			saveErrors(request, errors);
-			return showSummaries(mapping, form, request, response);
-		}
-		if (siteView == null)
-		{
-			ActionErrors errors = new ActionErrors();
-			errors.add("error", new ActionError("error.summary.impossible.insert"));
-			saveErrors(request, errors);
-			return showSummaries(mapping, form, request, response);
-		}
-		request.setAttribute("siteView", siteView);
+        boolean loggedIsResponsible = false;
+        List responsibleTeachers = null;
+        Object argsReadResponsibleTeachers[] = { objectCode };
+        try {
+            responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadTeachersByExecutionCourseResponsibility", argsReadResponsibleTeachers);
+            for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
+                InfoTeacher infoTeacher = (InfoTeacher) iter.next();
+                if (infoTeacher.getInfoPerson().getUsername().equals(userView.getUtilizador()))
+                    loggedIsResponsible = true;
+                break;
+            }
 
-		try
-		{
-			choosenShift(request, ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts());
-			choosenLesson(request);
-			preSelectTeacherLogged(request, form, (InfoSiteSummaries) siteView.getComponent());
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			return showSummaries(mapping, form, request, response);
-		}
+            request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
 
-		return mapping.findForward("insertSummary");
-	}
+            if (!loggedIsResponsible) {
+                InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadTeacherByUsername", new Object[] { userView.getUtilizador() });
 
-	private void choosenShift(HttpServletRequest request, List infoShifts)
-	{
-		if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0)
-		{
-			if (infoShifts != null && infoShifts.size() > 0)
-			{
-				ListIterator iterator = infoShifts.listIterator();
-				while (iterator.hasNext())
-				{
-					InfoShift infoShift = (InfoShift) iterator.next();
-					if (infoShift.getIdInternal().equals(new Integer(request.getParameter("shift"))))
-					{
-						InfoSummary infoSummaryToInsert = new InfoSummary();
-						infoSummaryToInsert.setInfoShift(infoShift);
-						request.setAttribute("summaryToInsert", infoSummaryToInsert);
+                InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceManagerServiceFactory
+                        .executeService(userView, "ReadProfessorshipByTeacherIDandExecutionCourseID",
+                                new Object[] { infoTeacher.getIdInternal(), objectCode });
 
-						return;
-					}
-				}
-			}
-		}
+                request.setAttribute("loggedTeacherProfessorship", infoProfessorship.getIdInternal());
+            }
 
-		if (infoShifts != null && infoShifts.size() > 0)
-		{
-			InfoSummary infoSummaryToInsert = new InfoSummary();
-			infoSummaryToInsert.setInfoShift((InfoShift) infoShifts.get(0));
-			request.setAttribute("summaryToInsert", infoSummaryToInsert);
-			request.setAttribute("shift", ((InfoShift) infoShifts.get(0)).getIdInternal());
-		}
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+            ActionErrors errors = new ActionErrors();
+            errors.add("error", new ActionError("Can't find course's responsible teacher"));
+            saveErrors(request, errors);
+            return showSummaries(mapping, form, request, response);
+        }
 
-	private void choosenLesson(HttpServletRequest request)
-	{
-		if (request.getParameter("forHidden") != null && request.getParameter("forHidden").length() > 0)
-		{
-			request.setAttribute("forHidden", request.getParameter("forHidden"));
-		} else
-		{
-			if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0)
-			{
-				if (!request.getParameter("lesson").equals("0"))
-				{
-					request.setAttribute("forHidden", "true");
-				} else
-				{
-					request.setAttribute("forHidden", "false");
+        Object args[] = { objectCode, userView.getUtilizador() /* userLogged */};
+        SiteView siteView = null;
+        try {
+            siteView = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    "PrepareInsertSummary", args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ActionErrors errors = new ActionErrors();
+            errors.add("error", new ActionError("error.summary.impossible.insert"));
+            saveErrors(request, errors);
+            return showSummaries(mapping, form, request, response);
+        }
+        if (siteView == null) {
+            ActionErrors errors = new ActionErrors();
+            errors.add("error", new ActionError("error.summary.impossible.insert"));
+            saveErrors(request, errors);
+            return showSummaries(mapping, form, request, response);
+        }
+        request.setAttribute("siteView", siteView);
 
-				}
-			}
-		}
-	}
+        try {
+            choosenShift(request, ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts());
+            choosenLesson(request);
+            preSelectTeacherLogged(request, form, (InfoSiteSummaries) siteView.getComponent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return showSummaries(mapping, form, request, response);
+        }
 
-	private void preSelectTeacherLogged(HttpServletRequest request, ActionForm form, InfoSiteSummaries summaries)
-	{
-		if (request.getParameter("teacher") == null || request.getParameter("teacher").length() == 0)
-		{
-			if (summaries.getTeacherId() != null)
-			{
-				DynaActionForm insertSummaryForm = (DynaActionForm) form;
+        return mapping.findForward("insertSummary");
+    }
 
-				insertSummaryForm.set("teacher", summaries.getTeacherId().toString());
-			}
-		}
-	}
+    private void choosenShift(HttpServletRequest request, List infoShifts) {
+        if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
+            if (infoShifts != null && infoShifts.size() > 0) {
+                ListIterator iterator = infoShifts.listIterator();
+                while (iterator.hasNext()) {
+                    InfoShift infoShift = (InfoShift) iterator.next();
+                    if (infoShift.getIdInternal().equals(new Integer(request.getParameter("shift")))) {
+                        InfoSummary infoSummaryToInsert = new InfoSummary();
+                        infoSummaryToInsert.setInfoShift(infoShift);
+                        request.setAttribute("summaryToInsert", infoSummaryToInsert);
 
-	public ActionForward insertSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response)
-	{
-		try
-		{
-			HttpSession session = request.getSession(false);
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+                        return;
+                    }
+                }
+            }
+        }
 
-			Integer executionCourseId = getObjectCode(request);
-			request.setAttribute("objectCode", executionCourseId);
+        if (infoShifts != null && infoShifts.size() > 0) {
+            InfoSummary infoSummaryToInsert = new InfoSummary();
+            infoSummaryToInsert.setInfoShift((InfoShift) infoShifts.get(0));
+            request.setAttribute("summaryToInsert", infoSummaryToInsert);
+            request.setAttribute("shift", ((InfoShift) infoShifts.get(0)).getIdInternal());
+        }
+    }
 
-			InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
+    private void choosenLesson(HttpServletRequest request) {
+        if (request.getParameter("forHidden") != null && request.getParameter("forHidden").length() > 0) {
+            request.setAttribute("forHidden", request.getParameter("forHidden"));
+        } else {
+            if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0) {
+                if (!request.getParameter("lesson").equals("0")) {
+                    request.setAttribute("forHidden", "true");
+                } else {
+                    request.setAttribute("forHidden", "false");
 
-			Object[] args = {executionCourseId, infoSummaryToInsert};
-			ServiceUtils.executeService(userView, "InsertSummary", args);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.insertSummary", new ActionError((e.getMessage())));
-			actionErrors.add("error.insertSummary", new ActionError(("error.summary.impossible.insert")));
-			saveErrors(request, actionErrors);
-			return prepareInsertSummary(mapping, form, request, response);
-		}
-		return showSummaries(mapping, form, request, response);
-	}
+                }
+            }
+        }
+    }
 
-	private InfoSummary buildSummaryToInsert(HttpServletRequest request)
-	{
-		InfoSummary infoSummary = new InfoSummary();
+    private void preSelectTeacherLogged(HttpServletRequest request, ActionForm form,
+            InfoSiteSummaries summaries) {
+        if (request.getParameter("teacher") == null || request.getParameter("teacher").length() == 0) {
+            if (summaries.getTeacherId() != null) {
+                DynaActionForm insertSummaryForm = (DynaActionForm) form;
 
-		if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0)
-		{
-			InfoShift infoShift = new InfoShift();
-			infoShift.setIdInternal(new Integer(request.getParameter("shift")));
-			infoSummary.setInfoShift(infoShift);
-		}
+                insertSummaryForm.set("teacher", summaries.getTeacherId().toString());
+            }
+        }
+    }
 
-		//Summary's date
-		String summaryDateString = request.getParameter("summaryDateInput");
-		String[] dateTokens = summaryDateString.split("/");
-		Calendar summaryDate = Calendar.getInstance();
-		summaryDate.set(Calendar.DAY_OF_MONTH, (new Integer(dateTokens[0])).intValue());
-		summaryDate.set(Calendar.MONTH, (new Integer(dateTokens[1])).intValue() - 1);
-		summaryDate.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
-		infoSummary.setSummaryDate(summaryDate);
+    public ActionForward insertSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession(false);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		//Summary's number of attended student
-		if (request.getParameter("studentsNumber") != null && request.getParameter("studentsNumber").length() > 0)
-		{
-			infoSummary.setStudentsNumber(new Integer(request.getParameter("studentsNumber")));
-		}
+            Integer executionCourseId = getObjectCode(request);
+            request.setAttribute("objectCode", executionCourseId);
 
-		//lesson extra or not
-		if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0)
-		{
-			Integer lessonId = new Integer(request.getParameter("lesson"));
-			//extra lesson
-			if (lessonId.equals(new Integer(0)))
-			{
-				infoSummary.setIsExtraLesson(Boolean.TRUE);
+            InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
 
-				//Summary's hour
-				String summaryHourString = request.getParameter("summaryHourInput");
-				String[] hourTokens = summaryHourString.split(":");
-				Calendar summaryHour = Calendar.getInstance();
-				summaryHour.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
-				summaryHour.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
-				infoSummary.setSummaryHour(summaryHour);
+            Object[] args = { executionCourseId, infoSummaryToInsert };
+            ServiceUtils.executeService(userView, "InsertSummary", args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.insertSummary", new ActionError((e.getMessage())));
+            actionErrors
+                    .add("error.insertSummary", new ActionError(("error.summary.impossible.insert")));
+            saveErrors(request, actionErrors);
+            return prepareInsertSummary(mapping, form, request, response);
+        }
+        return showSummaries(mapping, form, request, response);
+    }
 
-				if (request.getParameter("room") != null && request.getParameter("room").length() > 0)
-				{
-					//lesson's room
-					InfoRoom infoRoom = new InfoRoom();
-					infoRoom.setIdInternal(new Integer(request.getParameter("room")));
-					infoSummary.setInfoRoom(infoRoom);
-				}
-			} else if (lessonId.intValue() >= 0)
-			{
-				infoSummary.setIsExtraLesson(Boolean.FALSE);
+    private InfoSummary buildSummaryToInsert(HttpServletRequest request) {
+        InfoSummary infoSummary = new InfoSummary();
 
-				infoSummary.setLessonIdSelected(lessonId);
-			}
-		}
+        if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
+            InfoShift infoShift = new InfoShift();
+            infoShift.setIdInternal(new Integer(request.getParameter("shift")));
+            infoSummary.setInfoShift(infoShift);
+        }
 
-		if (request.getParameter("teacher") != null && request.getParameter("teacher").length() > 0)
-		{
-			Integer teacherId = new Integer(request.getParameter("teacher"));
-			if (teacherId.equals(new Integer(0))) //school's teacher
-			{
-				InfoTeacher infoTeacher = new InfoTeacher();
-				infoTeacher.setTeacherNumber(new Integer(request.getParameter("teacherNumber")));
-				infoSummary.setInfoTeacher(infoTeacher);
-			} else if (teacherId.equals(new Integer(-1))) //external teacher
-			{
-				infoSummary.setTeacherName(request.getParameter("teacherName"));
-			} else
-			{ //teacher belong to course
-				InfoProfessorship infoProfessorship = new InfoProfessorship();
-				infoProfessorship.setIdInternal(teacherId);
-				infoSummary.setInfoProfessorship(infoProfessorship);
-			}
-		}
+        //Summary's date
+        String summaryDateString = request.getParameter("summaryDateInput");
+        String[] dateTokens = summaryDateString.split("/");
+        Calendar summaryDate = Calendar.getInstance();
+        summaryDate.set(Calendar.DAY_OF_MONTH, (new Integer(dateTokens[0])).intValue());
+        summaryDate.set(Calendar.MONTH, (new Integer(dateTokens[1])).intValue() - 1);
+        summaryDate.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
+        infoSummary.setSummaryDate(summaryDate);
 
-		infoSummary.setTitle(request.getParameter("title"));
-		infoSummary.setSummaryText(request.getParameter("summaryText"));
+        //Summary's number of attended student
+        if (request.getParameter("studentsNumber") != null
+                && request.getParameter("studentsNumber").length() > 0) {
+            infoSummary.setStudentsNumber(new Integer(request.getParameter("studentsNumber")));
+        }
 
-		return infoSummary;
-	}
+        //lesson extra or not
+        if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0) {
+            Integer lessonId = new Integer(request.getParameter("lesson"));
+            //extra lesson
+            if (lessonId.equals(new Integer(0))) {
+                infoSummary.setIsExtraLesson(Boolean.TRUE);
 
-	public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response)
-	{
-		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+                //Summary's hour
+                String summaryHourString = request.getParameter("summaryHourInput");
+                String[] hourTokens = summaryHourString.split(":");
+                Calendar summaryHour = Calendar.getInstance();
+                summaryHour.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
+                summaryHour.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
+                infoSummary.setSummaryHour(summaryHour);
 
-		String summaryIdString = request.getParameter("summaryCode");
-		Integer summaryId = new Integer(summaryIdString);
+                if (request.getParameter("room") != null && request.getParameter("room").length() > 0) {
+                    //lesson's room
+                    InfoRoom infoRoom = new InfoRoom();
+                    infoRoom.setIdInternal(new Integer(request.getParameter("room")));
+                    infoSummary.setInfoRoom(infoRoom);
+                }
+            } else if (lessonId.intValue() >= 0) {
+                infoSummary.setIsExtraLesson(Boolean.FALSE);
 
-		Integer executionCourseId = getObjectCode(request);
-		request.setAttribute("objectCode", executionCourseId);
+                infoSummary.setLessonIdSelected(lessonId);
+            }
+        }
 
-		Object[] args = {executionCourseId, summaryId};
-		SiteView siteView = null;
-		try
-		{
-			siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
-		} catch (FenixServiceException e)
-		{
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.editSummary", new ActionError("error.summary.impossible.preedit"));
-			actionErrors.add("error.editSummary", new ActionError(e.getMessage()));
-			saveErrors(request, actionErrors);
-			return showSummaries(mapping, form, request, response);
-		}
-		if (siteView == null)
-		{
-			ActionErrors errors = new ActionErrors();
-			errors.add("error", new ActionError("error.summary.impossible.edit"));
-			saveErrors(request, errors);
-			return showSummaries(mapping, form, request, response);
-		}
+        if (request.getParameter("teacher") != null && request.getParameter("teacher").length() > 0) {
+            Integer teacherId = new Integer(request.getParameter("teacher"));
+            if (teacherId.equals(new Integer(0))) //school's teacher
+            {
+                InfoTeacher infoTeacher = new InfoTeacher();
+                infoTeacher.setTeacherNumber(new Integer(request.getParameter("teacherNumber")));
+                infoSummary.setInfoTeacher(infoTeacher);
+            } else if (teacherId.equals(new Integer(-1))) //external teacher
+            {
+                infoSummary.setTeacherName(request.getParameter("teacherName"));
+            } else { //teacher belong to course
+                InfoProfessorship infoProfessorship = new InfoProfessorship();
+                infoProfessorship.setIdInternal(teacherId);
+                infoSummary.setInfoProfessorship(infoProfessorship);
+            }
+        }
 
-		try
-		{
-			shiftChanged(request, siteView);
-			choosenLesson(request, (InfoSiteSummary) siteView.getComponent());
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			return showSummaries(mapping, form, request, response);
-		}
+        infoSummary.setTitle(request.getParameter("title"));
+        infoSummary.setSummaryText(request.getParameter("summaryText"));
 
-		request.setAttribute("siteView", siteView);
+        return infoSummary;
+    }
 
-		return mapping.findForward("editSummary");
-	}
+    public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-	private void shiftChanged(HttpServletRequest request, SiteView siteView)
-	{
-		if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0)
-		{
-			List infoShifts = ((InfoSiteSummary) siteView.getComponent()).getInfoShifts();
-			ListIterator iterator = infoShifts.listIterator();
-			while (iterator.hasNext())
-			{
-				InfoShift infoShift = (InfoShift) iterator.next();
-				if (infoShift.getIdInternal().equals(new Integer(request.getParameter("shift"))))
-				{
-					((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setInfoShift(infoShift);						
-				}
-			}
-		}	 
-	}
-	
-	private void choosenLesson(HttpServletRequest request, InfoSiteSummary siteSummary)
-	{		
-		if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0)
-		{
-			if (!request.getParameter("lesson").equals("0"))
-			{ 	
-			    //normal lesson
-				request.setAttribute("forHidden", "true");
-				siteSummary.getInfoSummary().setIsExtraLesson(Boolean.FALSE);
-				siteSummary.getInfoSummary().setLessonIdSelected(new Integer(request.getParameter("lesson")));
-			} else
-			{ 	
-			    //extra lesson
-				request.setAttribute("forHidden", "false");
-				siteSummary.getInfoSummary().setIsExtraLesson(Boolean.TRUE);
-				siteSummary.getInfoSummary().setLessonIdSelected(new Integer(0));
-			}
-		} else {
-			if (siteSummary.getInfoSummary().getIsExtraLesson().equals(Boolean.TRUE))
-			{
-				request.setAttribute("forHidden", "false");
-			} else if (siteSummary.getInfoSummary().getIsExtraLesson().equals(Boolean.FALSE))
-			{
-				request.setAttribute("forHidden", "true");
-			}			
-		}
-	}
+        String summaryIdString = request.getParameter("summaryCode");
+        Integer summaryId = new Integer(summaryIdString);
 
-	public ActionForward editSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response)
-	{
-		try
-		{
-			HttpSession session = request.getSession(false);
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        Integer executionCourseId = getObjectCode(request);
+        request.setAttribute("objectCode", executionCourseId);
 
-			String summaryIdString = request.getParameter("summaryCode");
-			Integer summaryId = new Integer(summaryIdString);
+        Object[] args = { executionCourseId, summaryId, userView.getUtilizador() };
+        SiteView siteView = null;
+        try {
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
 
-			Integer executionCourseId = getObjectCode(request);
-			request.setAttribute("objectCode", executionCourseId);
+            boolean loggedIsResponsible = false;
+            List responsibleTeachers = null;
+            Object argsReadResponsibleTeachers[] = { executionCourseId };
+            responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadTeachersByExecutionCourseResponsibility", argsReadResponsibleTeachers);
+            for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
+                InfoTeacher infoTeacher = (InfoTeacher) iter.next();
+                if (infoTeacher.getInfoPerson().getUsername().equals(userView.getUtilizador()))
+                    loggedIsResponsible = true;
+                break;
+            }
 
-			InfoSummary infoSummaryToEdit = buildSummaryToInsert(request);
-			infoSummaryToEdit.setIdInternal(summaryId);
+            request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
 
-			Object[] args = {executionCourseId, infoSummaryToEdit};
+            if (!loggedIsResponsible) {
+                InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadTeacherByUsername", new Object[] { userView.getUtilizador() });
 
-			ServiceUtils.executeService(userView, "EditSummary", args);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.editSummary", new ActionError(e.getMessage()));
-			actionErrors.add("error.editSummary", new ActionError("error.summary.impossible.edit"));
-			saveErrors(request, actionErrors);
-			return prepareEditSummary(mapping, form, request, response);//mudei
-		}
+                InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceManagerServiceFactory
+                        .executeService(userView, "ReadProfessorshipByTeacherIDandExecutionCourseID",
+                                new Object[] { infoTeacher.getIdInternal(), executionCourseId });
 
-		return showSummaries(mapping, form, request, response);
-	}
+                request.setAttribute("loggedTeacherProfessorship", infoProfessorship.getIdInternal());
+            } else {
+                DynaActionForm summaryForm = (DynaActionForm) form;
+                if ((((InfoSiteSummary) siteView.getComponent())).getInfoSummary().getInfoTeacher() != null) {
+                    summaryForm.set("teacherNumber", (((InfoSiteSummary) siteView.getComponent()))
+                            .getInfoSummary().getInfoTeacher().getTeacherNumber().toString());
+                    summaryForm.set("teacher", "0");
+                } else if ((((InfoSiteSummary) siteView.getComponent())).getInfoSummary()
+                        .getInfoProfessorship() != null) {
 
-	public ActionForward deleteSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-		HttpServletResponse response)
-	{
-		try
-		{
-			HttpSession session = request.getSession(false);
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+                    summaryForm.set("teacher", (((InfoSiteSummary) siteView.getComponent()))
+                            .getInfoSummary().getInfoProfessorship().getIdInternal().toString());
+                } else {
+                    summaryForm.set("teacher", "-1");
+                    summaryForm.set("teacherName", (((InfoSiteSummary) siteView.getComponent()))
+                            .getInfoSummary().getTeacherName());
+                }
+            }
 
-			String summaryIdString = request.getParameter("summaryCode");
-			Integer summaryId = new Integer(summaryIdString);
+        } catch (FenixServiceException e) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.editSummary", new ActionError("error.summary.impossible.preedit"));
+            actionErrors.add("error.editSummary", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+            return showSummaries(mapping, form, request, response);
+        }
+        if (siteView == null) {
+            ActionErrors errors = new ActionErrors();
+            errors.add("error", new ActionError("error.summary.impossible.edit"));
+            saveErrors(request, errors);
+            return showSummaries(mapping, form, request, response);
+        }
 
-			Integer executionCourseId = getObjectCode(request);
-			request.setAttribute("objectCode", executionCourseId);
+        try {
+            shiftChanged(request, siteView);
+            choosenLesson(request, (InfoSiteSummary) siteView.getComponent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return showSummaries(mapping, form, request, response);
+        }
 
-			Object[] args = {executionCourseId, summaryId};
-			ServiceUtils.executeService(userView, "DeleteSummary", args);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.deleteSummary", new ActionError("error.summary.impossible.delete"));
-			saveErrors(request, actionErrors);
-		}
-		return showSummaries(mapping, form, request, response);
-	}
+        request.setAttribute("siteView", siteView);
 
-	private Integer getObjectCode(HttpServletRequest request)
-	{
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null)
-		{
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		if (objectCodeString != null && objectCodeString.length() > 0)
-		{
-			objectCode = new Integer(objectCodeString);
-		}
-		return objectCode;
-	}
+        return mapping.findForward("editSummary");
+    }
+
+    private void shiftChanged(HttpServletRequest request, SiteView siteView) {
+        if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0) {
+            List infoShifts = ((InfoSiteSummary) siteView.getComponent()).getInfoShifts();
+            ListIterator iterator = infoShifts.listIterator();
+            while (iterator.hasNext()) {
+                InfoShift infoShift = (InfoShift) iterator.next();
+                if (infoShift.getIdInternal().equals(new Integer(request.getParameter("shift")))) {
+                    ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setInfoShift(infoShift);
+                }
+            }
+        }
+    }
+
+    private void choosenLesson(HttpServletRequest request, InfoSiteSummary siteSummary) {
+        if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0) {
+            if (!request.getParameter("lesson").equals("0")) {
+                //normal lesson
+                request.setAttribute("forHidden", "true");
+                siteSummary.getInfoSummary().setIsExtraLesson(Boolean.FALSE);
+                siteSummary.getInfoSummary().setLessonIdSelected(
+                        new Integer(request.getParameter("lesson")));
+            } else {
+                //extra lesson
+                request.setAttribute("forHidden", "false");
+                siteSummary.getInfoSummary().setIsExtraLesson(Boolean.TRUE);
+                siteSummary.getInfoSummary().setLessonIdSelected(new Integer(0));
+            }
+        } else {
+            if (siteSummary.getInfoSummary().getIsExtraLesson().equals(Boolean.TRUE)) {
+                request.setAttribute("forHidden", "false");
+            } else if (siteSummary.getInfoSummary().getIsExtraLesson().equals(Boolean.FALSE)) {
+                request.setAttribute("forHidden", "true");
+            }
+        }
+    }
+
+    public ActionForward editSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession(false);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+            String summaryIdString = request.getParameter("summaryCode");
+            Integer summaryId = new Integer(summaryIdString);
+
+            Integer executionCourseId = getObjectCode(request);
+            request.setAttribute("objectCode", executionCourseId);
+
+            InfoSummary infoSummaryToEdit = buildSummaryToInsert(request);
+            infoSummaryToEdit.setIdInternal(summaryId);
+
+            Object[] args = { executionCourseId, infoSummaryToEdit };
+
+            ServiceUtils.executeService(userView, "EditSummary", args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ActionErrors actionErrors = new ActionErrors();
+            if (e.getMessage() == null && e instanceof NotAuthorizedException) {
+                actionErrors.add("error.editSummary", new ActionError("error.summary.not.authorized"));
+            } else {
+                actionErrors.add("error.editSummary", new ActionError(e.getMessage()));
+            }
+            actionErrors.add("error.editSummary", new ActionError("error.summary.impossible.edit"));
+            saveErrors(request, actionErrors);
+            return prepareEditSummary(mapping, form, request, response);//mudei
+        }
+
+        return showSummaries(mapping, form, request, response);
+    }
+
+    public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession(false);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+            String summaryIdString = request.getParameter("summaryCode");
+            Integer summaryId = new Integer(summaryIdString);
+
+            Integer executionCourseId = getObjectCode(request);
+            request.setAttribute("objectCode", executionCourseId);
+
+            Object[] args = { executionCourseId, summaryId };
+            ServiceUtils.executeService(userView, "DeleteSummary", args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ActionErrors actionErrors = new ActionErrors();
+            if (e instanceof NotAuthorizedException) {
+                actionErrors.add("error.editSummary", new ActionError("error.summary.not.authorized"));
+            }
+            actionErrors.add("error.deleteSummary", new ActionError("error.summary.impossible.delete"));
+            saveErrors(request, actionErrors);
+        }
+        return showSummaries(mapping, form, request, response);
+    }
+
+    private Integer getObjectCode(HttpServletRequest request) {
+        Integer objectCode = null;
+        String objectCodeString = request.getParameter("objectCode");
+        if (objectCodeString == null) {
+            objectCodeString = (String) request.getAttribute("objectCode");
+        }
+        if (objectCodeString != null && objectCodeString.length() > 0) {
+            objectCode = new Integer(objectCodeString);
+        }
+        return objectCode;
+    }
 }

@@ -25,45 +25,37 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServices
-{
+public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServices {
 
     private InfoExecutionCourse infoExecutionCourse = null;
 
-    public LerAulasDeDisciplinaExecucaoServicosTest(java.lang.String testName)
-    {
+    public LerAulasDeDisciplinaExecucaoServicosTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(LerAulasDeDisciplinaExecucaoServicosTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "LerAulasDeDisciplinaExecucao";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
         ligarSuportePersistente(true);
 
@@ -72,8 +64,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
         return argsLerAulas;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         ligarSuportePersistente(false);
 
@@ -82,28 +73,23 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
         return argsLerAulas;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 6;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         return null;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 
-    private void ligarSuportePersistente(boolean existing)
-    {
+    private void ligarSuportePersistente(boolean existing) {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -116,36 +102,21 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
             IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
             IExecutionCourse ide = null;
 
-            if (existing)
-            {
+            if (existing) {
                 ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
-            }
-            else
-            {
-                ide =
-                    new ExecutionCourse(
-                        "NOME",
-                        "SIGLA",
-                        new Double(1.5),
-                        new Double(1.5),
-                        new Double(1.5),
-                        new Double(1.5),
-                        iep);
+            } else {
+                ide = new ExecutionCourse("NOME", "SIGLA", new Double(1.5), new Double(1.5), new Double(
+                        1.5), new Double(1.5), iep);
             }
 
             this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(ide);
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");

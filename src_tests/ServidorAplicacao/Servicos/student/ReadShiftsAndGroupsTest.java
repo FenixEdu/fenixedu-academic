@@ -81,11 +81,9 @@ public class ReadShiftsAndGroupsTest extends TestCaseReadServices {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(
-                    Turno.class, new Integer(30));
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            new Integer(10));
+            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, new Integer(30));
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, new Integer(10));
 
             infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
             infoSiteShift.setNrOfGroups(new Integer(9));
@@ -96,12 +94,10 @@ public class ReadShiftsAndGroupsTest extends TestCaseReadServices {
                     .copyIStudentGroup2InfoStudentGroup(studentGroup));
             infoSiteStudentGroupList.add(infoSiteStudentGroup);
 
-            infoSiteGroupsByShift
-                    .setInfoSiteStudentGroupsList(infoSiteStudentGroupList);
+            infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupList);
             infoSiteGroupsByShiftList.add(infoSiteGroupsByShift);
 
-            infoSiteShiftsAndGroups
-                    .setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
+            infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
 
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {

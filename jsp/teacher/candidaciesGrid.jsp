@@ -392,16 +392,16 @@
 
 										%>
 									</td>
-									<bean:size id="selectedCasesSize" name="candidacy" property="cases"/>
+										<bean:size id="selectedCasesSize" name="candidacy" property="cases"/>
 									<logic:iterate indexId="index" name="candidacy" property="cases" id="caseStudy" type="DataBeans.Seminaries.InfoCaseStudy">
 										<td  class="listClasses" title="<bean:write name="caseStudy" property="name"/>">
-											<html:link page="/showCandidacies.do"
+										<html:link page="/showCandidacies.do"
 														paramId="<%="case" + (index.intValue()+1) +"ID"%>"
 														paramName="caseStudy"
 														paramProperty="idInternal">
 												<bean:write name="caseStudy" property="code"/>
 											</html:link>
-										</td>
+										</td> 
 									</logic:iterate>
 
 									<%
@@ -409,7 +409,7 @@
 									{
 										out.print("<td class=\"listClasses\">N/A</td>");
 									}
-									%>
+									%> 
 
 								</tr>
 							</logic:iterate>

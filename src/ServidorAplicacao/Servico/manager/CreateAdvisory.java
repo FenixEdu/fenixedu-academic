@@ -4,10 +4,10 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoAdvisory;
 import DataBeans.util.Cloner;
 import Dominio.IAdvisory;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -15,51 +15,28 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AdvisoryRecipients;
 
 /**
- * @author Luis Crus
+ * @author Luis Cruz
  */
-public class CreateAdvisory implements IServico {
+public class CreateAdvisory implements IService {
 
-	private static CreateAdvisory _servico = new CreateAdvisory();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static CreateAdvisory getService() {
-		return _servico;
-	}
+    public Boolean run(InfoAdvisory infoAdvisory, AdvisoryRecipients advisoryRecipients)
+            throws FenixServiceException {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private CreateAdvisory() {
-	}
+        Boolean result = new Boolean(false);
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "CreateAdvisory";
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-	public Boolean run(
-		InfoAdvisory infoAdvisory,
-		AdvisoryRecipients advisoryRecipients)
-		throws FenixServiceException {
+            IAdvisory advisory = Cloner.copyInfoAdvisory2IAdvisory(infoAdvisory);
 
-		Boolean result = new Boolean(false);
+            sp.getIPersistentAdvisory().write(advisory, advisoryRecipients);
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            result = new Boolean(true);
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex.getMessage());
+        }
 
-			IAdvisory advisory = Cloner.copyInfoAdvisory2IAdvisory(infoAdvisory);
-			
-			sp.getIPersistentAdvisory().write(advisory, advisoryRecipients);
-
-			result = new Boolean(true);
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex.getMessage());
-		}
-
-		return result;
-	}
+        return result;
+    }
 
 }

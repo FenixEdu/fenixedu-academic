@@ -15,8 +15,7 @@ import Util.TipoCurso;
  * @author dcs-rjao 25/Mar/2003
  */
 
-public interface IPersistentCurricularCourse extends IPersistentObject
-{
+public interface IPersistentCurricularCourse extends IPersistentObject {
 
     /**
      * @deprecated

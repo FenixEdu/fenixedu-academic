@@ -72,6 +72,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     protected List notNeedToEnrollCurricularCourses;
 
+    protected List enrollmentReports;
+
     public StudentCurricularPlan() {
         ojbConcreteClass = getClass().getName();
     }
@@ -285,13 +287,14 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     public List getAllEnrollments() {
 
-        IStudentCurricularPlan pastStudentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(getStudent()
-                .getStudentCurricularPlans(), new Predicate() {
-            public boolean evaluate(Object obj) {
-                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
-                return studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST_OBJ);
-            }
-        });
+        IStudentCurricularPlan pastStudentCurricularPlan = (IStudentCurricularPlan) CollectionUtils
+                .find(getStudent().getStudentCurricularPlans(), new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
+                        return studentCurricularPlan.getCurrentState().equals(
+                                StudentCurricularPlanState.PAST_OBJ);
+                    }
+                });
 
         List allEnrollments = new ArrayList();
 
@@ -301,7 +304,13 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         allEnrollments.addAll(getEnrolments());
 
-        return allEnrollments;
+        return (List) CollectionUtils.select(allEnrollments, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IEnrollment enrollment = (IEnrollment) arg0;
+                return !enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE);
+            }
+        });
     }
 
     public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod) {
@@ -344,7 +353,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         int size = getDegreeCurricularPlan().getCurricularCourses().size();
         for (int i = 0; i < size; i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) getDegreeCurricularPlan().getCurricularCourses().get(i);
+            ICurricularCourse curricularCourse = (ICurricularCourse) getDegreeCurricularPlan()
+                    .getCurricularCourses().get(i);
             if (isCurricularCourseApproved(curricularCourse)) {
                 counter++;
             }
@@ -377,9 +387,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         int size = result.size();
         for (int i = 0; i < size; i++) {
             ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) result.get(i);
-            ICurricularCourse equivalentCurricularCourse = getCurricularCourseInCurricularCourseEquivalences(curricularCourseDoneByStudent);
-            if ((equivalentCurricularCourse != null)
-                    && (areTheseCurricularCoursesTheSame(curricularCourse, equivalentCurricularCourse))) {
+            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
+            if (curricularCourseEquivalences.contains(curricularCourse)) {
                 return true;
             }
         }
@@ -392,10 +401,10 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         size = studentNotNeedToEnrollCourses.size();
         for (int i = 0; i < size; i++) {
-            ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) studentNotNeedToEnrollCourses.get(i);
-            ICurricularCourse equivalentCurricularCourse = getCurricularCourseInCurricularCourseEquivalences(curricularCourseDoneByStudent);
-            if ((equivalentCurricularCourse != null)
-                    && (areTheseCurricularCoursesTheSame(curricularCourse, equivalentCurricularCourse))) {
+            ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) studentNotNeedToEnrollCourses
+                    .get(i);
+            List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
+            if (curricularCourseEquivalences.contains(curricularCourse)) {
                 return true;
             }
         }
@@ -417,6 +426,21 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return result.contains(curricularCourse);
     }
 
+    public boolean isCurricularCourseEnrolledInExecutionPeriod(ICurricularCourse curricularCourse,
+            IExecutionPeriod executionPeriod) {
+
+        List studentEnrolledEnrollments = getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
+
+        List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer() {
+            public Object transform(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return enrollment.getCurricularCourse();
+            }
+        });
+
+        return result.contains(curricularCourse);
+    }
+
     public Integer getCurricularCourseAcumulatedEnrollments(ICurricularCourse curricularCourse) {
 
         String key = curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
@@ -427,32 +451,30 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             curricularCourseAcumulatedEnrolments = new Integer(0);
         }
 
-        if (curricularCourseAcumulatedEnrolments.intValue() >= curricularCourse.getMinimumValueForAcumulatedEnrollments()
-                .intValue()) {
-            curricularCourseAcumulatedEnrolments = curricularCourse.getMaximumValueForAcumulatedEnrollments();
+        if (curricularCourseAcumulatedEnrolments.intValue() >= curricularCourse
+                .getMinimumValueForAcumulatedEnrollments().intValue()) {
+            curricularCourseAcumulatedEnrolments = curricularCourse
+                    .getMaximumValueForAcumulatedEnrollments();
         }
 
         if (curricularCourseAcumulatedEnrolments.intValue() == 0) {
-            curricularCourseAcumulatedEnrolments = curricularCourse.getMinimumValueForAcumulatedEnrollments();
+            curricularCourseAcumulatedEnrolments = curricularCourse
+                    .getMinimumValueForAcumulatedEnrollments();
         }
 
         return curricularCourseAcumulatedEnrolments;
     }
 
-    //    public List getAllStudentEnrolledEnrollments() {
-    //        return
-    // initAcumulatedEnrollments(getStudentEnrollmentsWithEnrolledState());
-    //    }
-
     public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final IExecutionPeriod executionPeriod) {
 
-        return initAcumulatedEnrollments((List) CollectionUtils.select(getStudentEnrollmentsWithEnrolledState(), new Predicate() {
+        return initAcumulatedEnrollments((List) CollectionUtils.select(
+                getStudentEnrollmentsWithEnrolledState(), new Predicate() {
 
-            public boolean evaluate(Object arg0) {
+                    public boolean evaluate(Object arg0) {
 
-                return ((IEnrollment) arg0).getExecutionPeriod().equals(executionPeriod);
-            }
-        }));
+                        return ((IEnrollment) arg0).getExecutionPeriod().equals(executionPeriod);
+                    }
+                }));
     }
 
     public List getStudentTemporarilyEnrolledEnrollments() {
@@ -460,31 +482,34 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IEnrollment enrollment = (IEnrollment) obj;
-                return (enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) && enrollment.getCondition().equals(
-                        EnrollmentCondition.TEMPORARY));
+                return (enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) && enrollment
+                        .getCondition().equals(EnrollmentCondition.TEMPORARY));
             }
         }));
     }
 
-    public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(ICurricularCourse curricularCourse,
-            IExecutionPeriod currentExecutionPeriod) {
-
-        if (isCurricularCourseApproved(curricularCourse)) {
-            return CurricularCourseEnrollmentType.NOT_ALLOWED;
-        }
+    public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
+            ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
 
         if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
             return CurricularCourseEnrollmentType.NOT_ALLOWED;
         }
 
+        //        if (!hasActiveScopeInGivenSemester(curricularCourse,
+        // currentExecutionPeriod))
+        // {
+        //            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        //        }
+
         List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod);
 
-        List result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
-            public Object transform(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
-                return enrollment.getCurricularCourse();
-            }
-        });
+        List result = (List) CollectionUtils.collect(
+                enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
+                    public Object transform(Object obj) {
+                        IEnrollment enrollment = (IEnrollment) obj;
+                        return enrollment.getCurricularCourse();
+                    }
+                });
 
         if (result.contains(curricularCourse)) {
             return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -493,18 +518,68 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
                 .getPreviousExecutionPeriod());
 
-        result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
-            public Object transform(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
-                return enrollment.getCurricularCourse();
-            }
-        });
+        result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod,
+                new Transformer() {
+                    public Object transform(Object obj) {
+                        IEnrollment enrollment = (IEnrollment) obj;
+                        return enrollment.getCurricularCourse();
+                    }
+                });
 
         if (result.contains(curricularCourse)) {
             return CurricularCourseEnrollmentType.TEMPORARY;
         }
 
+        if (isCurricularCourseApproved(curricularCourse)) {
+            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        }
+
         return CurricularCourseEnrollmentType.DEFINITIVE;
+    }
+
+    protected boolean hasActiveScopeInGivenSemester(ICurricularCourse curricularCourse,
+            IExecutionPeriod currentExecutionPeriod) {
+
+        boolean result = true;
+        List curricularCoursesFromCommonBranches = new ArrayList();
+        List commonAreas = degreeCurricularPlan.getCommonAreas();
+        int commonAreasSize = commonAreas.size();
+
+        for (int i = 0; i < commonAreasSize; i++) {
+            IBranch area = (IBranch) commonAreas.get(i);
+            curricularCoursesFromCommonBranches.addAll(degreeCurricularPlan
+                    .getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
+        }
+        if (!curricularCoursesFromCommonBranches.contains(curricularCourse)) {
+
+            if (this.getBranch() != null && this.getSecundaryBranch() != null) {
+                if (!curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(currentExecutionPeriod
+                        .getSemester(), this.getBranch())
+                        && !curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(
+                                currentExecutionPeriod.getSemester(), this.getSecundaryBranch())) {
+                    result = false;
+                }
+            } else if (getBranch() != null && getSecundaryBranch() == null) {
+                if (!curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(currentExecutionPeriod
+                        .getSemester(), this.getBranch())) {
+                    result = false;
+                }
+            } else if (getBranch() == null && getSecundaryBranch() != null) {
+                if (!curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(currentExecutionPeriod
+                        .getSemester(), this.getSecundaryBranch())) {
+                    result = false;
+                }
+            } else if (getBranch() == null) {
+                if (!curricularCourse
+                        .hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
+                    result = false;
+                }
+            }
+        } else {
+            result = curricularCourse
+                    .hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester());
+        }
+        return result;
     }
 
     /*
@@ -513,8 +588,9 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
      * @see Dominio.IStudentCurricularPlan#areNewAreasCompatible(Dominio.IBranch,
      *      Dominio.IBranch)
      */
-    public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea) throws ExcepcaoPersistencia,
-            BothAreasAreTheSameServiceException, InvalidArgumentsServiceException {
+    public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
+            throws ExcepcaoPersistencia, BothAreasAreTheSameServiceException,
+            InvalidArgumentsServiceException {
         return true;
     }
 
@@ -528,6 +604,57 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             return false;
         }
         return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#getCreditsInSecundaryArea()
+     */
+    public Integer getCreditsInSecundaryArea() {
+        return new Integer(0);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#setCreditsInSecundaryArea(java.lang.Integer)
+     */
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
+        // do nothing
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#getCreditsInSpecializationArea()
+     */
+    public Integer getCreditsInSpecializationArea() {
+        return new Integer(0);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#setCreditsInSpecializationArea(java.lang.Integer)
+     */
+    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
+        //do nothing
+    }
+
+    /**
+     * @return Returns the enrollmentReports.
+     */
+    public List getEnrollmentReports() {
+        return enrollmentReports;
+    }
+
+    /**
+     * @param enrollmentReports
+     *            The enrollmentReports to set.
+     */
+    public void setEnrollmentReports(List enrollmentReports) {
+        this.enrollmentReports = enrollmentReports;
     }
 
     // -------------------------------------------------------------
@@ -548,14 +675,13 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
                 return curricularCourse.getCurricularCourseUniqueKeyForEnrollment();
             }
         });
-
         setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
     }
 
-    protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(ICurricularCourse curricularCourse,
-            IExecutionPeriod currentExecutionPeriod) {
-        return new CurricularCourse2Enroll(curricularCourse, getCurricularCourseEnrollmentType(curricularCourse,
-                currentExecutionPeriod), new Boolean(false));
+    protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
+            ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
+        return new CurricularCourse2Enroll(curricularCourse, getCurricularCourseEnrollmentType(
+                curricularCourse, currentExecutionPeriod), new Boolean(false));
     }
 
     protected List initAcumulatedEnrollments(List elements) {
@@ -567,12 +693,15 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             for (int i = 0; i < size; i++) {
                 try {
                     IEnrollment enrollment = (IEnrollment) elements.get(i);
-                    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment.getCurricularCourse()));
+                    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment
+                            .getCurricularCourse()));
                     result.add(enrollment);
                 } catch (ClassCastException e) {
-                    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements.get(i);
-                    curricularCourse2Enroll.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll
-                            .getCurricularCourse()));
+                    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements
+                            .get(i);
+                    curricularCourse2Enroll
+                            .setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll
+                                    .getCurricularCourse()));
                     result.add(curricularCourse2Enroll);
                 }
             }
@@ -583,41 +712,46 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     }
 
-    protected ICurricularCourse getCurricularCourseInCurricularCourseEquivalences(final ICurricularCourse curricularCourse) {
+    protected List getCurricularCoursesInCurricularCourseEquivalences(
+            final ICurricularCourse curricularCourse) {
 
         List curricularCourseEquivalences = getDegreeCurricularPlan().getCurricularCourseEquivalences();
 
-        ICurricularCourseEquivalence curricularCourseEquivalenceFound = (ICurricularCourseEquivalence) CollectionUtils.find(
-                curricularCourseEquivalences, new Predicate() {
-                    public boolean evaluate(Object obj) {
-                        ICurricularCourseEquivalence curricularCourseEquivalence = (ICurricularCourseEquivalence) obj;
-                        return areTheseCurricularCoursesTheSame(curricularCourseEquivalence.getOldCurricularCourse(),
-                                curricularCourse);
-                    }
-                });
+        List result = (List) CollectionUtils.select(curricularCourseEquivalences, new Predicate() {
+            public boolean evaluate(Object obj) {
+                ICurricularCourseEquivalence curricularCourseEquivalence = (ICurricularCourseEquivalence) obj;
+                return curricularCourseEquivalence.getOldCurricularCourse().equals(curricularCourse)
+                        || areTheseCurricularCoursesTheSame(curricularCourseEquivalence
+                                .getOldCurricularCourse(), curricularCourse);
+            }
+        });
 
-        if (curricularCourseEquivalenceFound != null) {
-            return curricularCourseEquivalenceFound.getEquivalentCurricularCourse();
-        }
-
-        return null;
+        return (List) CollectionUtils.collect(result, new Transformer() {
+            public Object transform(Object obj) {
+                ICurricularCourseEquivalence curricularCourseEquivalence = (ICurricularCourseEquivalence) obj;
+                return curricularCourseEquivalence.getEquivalentCurricularCourse();
+            }
+        });
     }
 
-    protected boolean areTheseCurricularCoursesTheSame(ICurricularCourse curricularCourse1, ICurricularCourse curricularCourse2) {
+    protected boolean areTheseCurricularCoursesTheSame(ICurricularCourse curricularCourse1,
+            ICurricularCourse curricularCourse2) {
 
         return curricularCourse1.getCurricularCourseUniqueKeyForEnrollment().equals(
                 curricularCourse2.getCurricularCourseUniqueKeyForEnrollment());
     }
 
-    protected boolean isThisCurricularCoursesInTheList(final ICurricularCourse curricularCourse, List curricularCourses) {
+    protected boolean isThisCurricularCoursesInTheList(final ICurricularCourse curricularCourse,
+            List curricularCourses) {
 
-        ICurricularCourse curricularCourseFound = (ICurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {
-            public boolean evaluate(Object obj) {
-                ICurricularCourse curricularCourseToCompare = (ICurricularCourse) obj;
-                return curricularCourseToCompare.getCurricularCourseUniqueKeyForEnrollment().equals(
-                        curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
-            }
-        });
+        ICurricularCourse curricularCourseFound = (ICurricularCourse) CollectionUtils.find(
+                curricularCourses, new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        ICurricularCourse curricularCourseToCompare = (ICurricularCourse) obj;
+                        return curricularCourseToCompare.getCurricularCourseUniqueKeyForEnrollment()
+                                .equals(curricularCourse.getCurricularCourseUniqueKeyForEnrollment());
+                    }
+                });
 
         return (curricularCourseFound != null);
     }
@@ -637,7 +771,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IEnrollment enrollment = (IEnrollment) obj;
-                return enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED);
+                return enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED)
+                        && !enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE);
             }
         });
     }
@@ -684,21 +819,23 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         for (int i = 0; i < commonAreasSize; i++) {
             IBranch area = (IBranch) commonAreas.get(i);
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area,
+                    AreaType.BASE_OBJ));
         }
 
         if (getBranch() != null) {
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(), AreaType.SPECIALIZATION_OBJ));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getBranch(),
+                    AreaType.SPECIALIZATION_OBJ));
         }
 
         if (getSecundaryBranch() != null) {
-            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(getSecundaryBranch(),
-                    AreaType.SECONDARY_OBJ));
+            curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
+                    getSecundaryBranch(), AreaType.SECONDARY_OBJ));
         }
 
         curricularCourses.addAll(degreeCurricularPlan.getTFCs());
 
-        curricularCourses.addAll(degreeCurricularPlan.getSpecialListOfCurricularCourses());
+        //        curricularCourses.addAll(degreeCurricularPlan.getSpecialListOfCurricularCourses());
 
         List result = new ArrayList();
         int curricularCoursesSize = curricularCourses.size();
@@ -713,7 +850,10 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         List elementsToRemove = (List) CollectionUtils.select(result, new Predicate() {
             public boolean evaluate(Object obj) {
                 CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
-                return curricularCourse2Enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.NOT_ALLOWED);
+                return curricularCourse2Enroll.getEnrollmentType().equals(
+                        CurricularCourseEnrollmentType.NOT_ALLOWED)
+                        || !curricularCourse2Enroll.getCurricularCourse().getEnrollmentAllowed()
+                                .booleanValue();
             }
         });
 
@@ -722,88 +862,82 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#getCreditsInSecundaryArea()
-     */
-    public Integer getCreditsInSecundaryArea() {
-        return new Integer(0);
-    }
+    protected void markOptionalCurricularCourses(List curricularCourses, List result) {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#setCreditsInSecundaryArea(java.lang.Integer)
-     */
-    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
-        // do nothing
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#getCreditsInSpecializationArea()
-     */
-    public Integer getCreditsInSpecializationArea() {
-        return new Integer(0);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#setCreditsInSpecializationArea(java.lang.Integer)
-     */
-    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
-        //do nothing
-    }
-
-    private void markOptionalCurricularCourses(List curricularCourses, List result) {
-
-        List allOptionalCurricularCourseGroups = getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
+        List allOptionalCurricularCourseGroups = getDegreeCurricularPlan()
+                .getAllOptionalCurricularCourseGroups();
 
         List curricularCoursesToRemove = new ArrayList();
         List curricularCoursesToKeep = new ArrayList();
 
         int size = allOptionalCurricularCourseGroups.size();
         for (int i = 0; i < size; i++) {
+
             ICurricularCourseGroup optionalCurricularCourseGroup = (ICurricularCourseGroup) allOptionalCurricularCourseGroups
                     .get(i);
 
-            if ((getBranch() != null && !optionalCurricularCourseGroup.getBranch().equals(getBranch())) &&
-                (getSecundaryBranch() != null && !optionalCurricularCourseGroup.getBranch().equals(getSecundaryBranch())) &&
-                (getBranch() == null && !optionalCurricularCourseGroup.getBranch().getBranchType().equals(BranchType.COMMON_BRANCH))
-                ) {
-                curricularCoursesToRemove.addAll(optionalCurricularCourseGroup.getCurricularCourses());
-            } else {
-                int count = 0;
-
-                int size2 = optionalCurricularCourseGroup.getCurricularCourses().size();
-                for (int j = 0; j < size2; j++) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) optionalCurricularCourseGroup.getCurricularCourses()
-                            .get(j);
-                    if (isCurricularCourseEnrolled(curricularCourse) || isCurricularCourseApproved(curricularCourse)) {
-                        count++;
-                    }
+            if (getBranch() != null && getSecundaryBranch() != null) {
+                if (optionalCurricularCourseGroup.getBranch().equals(getBranch())
+                        || optionalCurricularCourseGroup.getBranch().equals(getSecundaryBranch())) {
+                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup);
                 }
-
-                if (count >= optionalCurricularCourseGroup.getMaximumNumberOfOptionalCourses().intValue()) {
-                    curricularCoursesToRemove.addAll(optionalCurricularCourseGroup.getCurricularCourses());
-                } else {
-                    curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
+            } else if (getBranch() != null && getSecundaryBranch() == null) {
+                if (optionalCurricularCourseGroup.getBranch().equals(getBranch())) {
+                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup);
+                }
+            } else if (getBranch() == null && getSecundaryBranch() != null) {
+                if (optionalCurricularCourseGroup.getBranch().equals(getSecundaryBranch())) {
+                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup);
+                }
+            } else if (getBranch() == null) {
+                if (optionalCurricularCourseGroup.getBranch().getBranchType().equals(
+                        BranchType.COMMON_BRANCH)) {
+                    selectOptionaCoursesToBeRemoved(curricularCoursesToRemove, curricularCoursesToKeep,
+                            optionalCurricularCourseGroup);
                 }
             }
+
         }
 
         size = result.size();
         for (int i = 0; i < size; i++) {
             CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) result.get(i);
 
-            if (curricularCoursesToRemove.contains(curricularCourse2Enroll.getCurricularCourse())) {
+            if (curricularCoursesToRemove.contains(curricularCourse2Enroll.getCurricularCourse())
+                    && !curricularCoursesToKeep.contains(curricularCourse2Enroll.getCurricularCourse())) {
                 curricularCourse2Enroll.setEnrollmentType(CurricularCourseEnrollmentType.NOT_ALLOWED);
             } else if (curricularCoursesToKeep.contains(curricularCourse2Enroll.getCurricularCourse())) {
                 curricularCourse2Enroll.setOptionalCurricularCourse(new Boolean(true));
             }
+        }
+    }
+
+    /**
+     * @param curricularCoursesToRemove
+     * @param curricularCoursesToKeep
+     * @param optionalCurricularCourseGroup
+     */
+    protected void selectOptionaCoursesToBeRemoved(List curricularCoursesToRemove,
+            List curricularCoursesToKeep, ICurricularCourseGroup optionalCurricularCourseGroup) {
+        int count = 0;
+
+        int size2 = optionalCurricularCourseGroup.getCurricularCourses().size();
+        for (int j = 0; j < size2; j++) {
+            ICurricularCourse curricularCourse = (ICurricularCourse) optionalCurricularCourseGroup
+                    .getCurricularCourses().get(j);
+            if (isCurricularCourseEnrolled(curricularCourse)
+                    || isCurricularCourseApproved(curricularCourse)) {
+                count++;
+            }
+        }
+
+        if (count >= optionalCurricularCourseGroup.getMaximumNumberOfOptionalCourses().intValue()) {
+            curricularCoursesToRemove.addAll(optionalCurricularCourseGroup.getCurricularCourses());
+        } else {
+            curricularCoursesToKeep.addAll(optionalCurricularCourseGroup.getCurricularCourses());
         }
     }
 

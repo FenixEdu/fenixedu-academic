@@ -16,7 +16,7 @@
 	<table>
 		<tr>
 			<td style="text-align:right">
-				<bean:message key="property.context.degree"/>
+				<bean:message key="label.manager.degree"/>
 				:
 			</td>
 			<td>
@@ -28,7 +28,7 @@
 		</tr>
 		<tr>
 			<td style="text-align:right">
-				<bean:message key="property.context.curricular.year"/>
+				<bean:message key="label.manager.executionCourseManagement.curricularYear"/>
 				:
 			</td>
 			<td>

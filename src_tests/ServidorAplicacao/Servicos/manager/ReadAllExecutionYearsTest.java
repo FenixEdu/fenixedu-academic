@@ -8,19 +8,19 @@ package ServidorAplicacao.Servicos.manager;
  */
 
 public class ReadAllExecutionYearsTest extends TestCaseManagerReadServices {
-	    
-	/**
-	 * @param testName
-	 */
-	 public ReadAllExecutionYearsTest(String testName) {
-		super(testName);
-	 }
 
-	 protected String getNameOfServiceToBeTested() {
-		return "ReadExecutionYears";
-	 }
+    /**
+     * @param testName
+     */
+    public ReadAllExecutionYearsTest(String testName) {
+        super(testName);
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 4;
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadExecutionYears";
+    }
+
+    protected int getNumberOfItemsToRetrieve() {
+        return 4;
+    }
 }

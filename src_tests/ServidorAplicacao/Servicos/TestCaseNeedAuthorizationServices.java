@@ -9,43 +9,52 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 abstract public class TestCaseNeedAuthorizationServices extends TestCaseServicos {
 
-	public TestCaseNeedAuthorizationServices(String testName) {
-		super(testName);
-	}
-	
-	protected void setUp() {
-		super.setUp();
-	}
+    public TestCaseNeedAuthorizationServices(String testName) {
+        super(testName);
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	public void testUnauthorizedExecutionOfService() {
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-		Object serviceArguments[] = { null };
+    public void testUnauthorizedExecutionOfService() {
 
-		Object result = null;
+        Object serviceArguments[] = { null };
 
-		if(needsAuthorization()) {
-			try {
-				result = ServiceManagerServiceFactory.executeService(_userView2, getNameOfServiceToBeTested(), serviceArguments);
-				System.out.println("testUnauthorizedExecutionOfService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
-				fail(this.getClass().getName() + " : testUnauthorizedExecutionOfService - Service Name: " + getNameOfServiceToBeTested());
-			} catch (Exception ex) {
-				assertNull(this.getClass().getName() + " : testUnauthorizedExecutionOfService", result);
-				System.out.println("testUnauthorizedExecutionOfService was SUCCESSFULY runned by class: " + this.getClass().getName());
-			}
-		}
-	}
-	
-	/**
-	 * This method must return a String with the name of the service to be tested.
-	 */
-	protected abstract String getNameOfServiceToBeTested();
+        Object result = null;
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected abstract boolean needsAuthorization();
+        if (needsAuthorization()) {
+            try {
+                result = ServiceManagerServiceFactory.executeService(_userView2,
+                        getNameOfServiceToBeTested(), serviceArguments);
+                System.out
+                        .println("testUnauthorizedExecutionOfService was UNSUCCESSFULY runned by class: "
+                                + this.getClass().getName());
+                fail(this.getClass().getName()
+                        + " : testUnauthorizedExecutionOfService - Service Name: "
+                        + getNameOfServiceToBeTested());
+            } catch (Exception ex) {
+                assertNull(this.getClass().getName() + " : testUnauthorizedExecutionOfService", result);
+                System.out
+                        .println("testUnauthorizedExecutionOfService was SUCCESSFULY runned by class: "
+                                + this.getClass().getName());
+            }
+        }
+    }
+
+    /**
+     * This method must return a String with the name of the service to be
+     * tested.
+     */
+    protected abstract String getNameOfServiceToBeTested();
+
+    /**
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected abstract boolean needsAuthorization();
 }

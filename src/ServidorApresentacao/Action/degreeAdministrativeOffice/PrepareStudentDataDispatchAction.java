@@ -22,51 +22,55 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class PrepareStudentDataDispatchAction extends DispatchAction {
 
-	protected boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request) throws Exception {
+    protected boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request)
+            throws Exception {
 
-		boolean result = false;
+        boolean result = false;
 
-		DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
-		HttpSession session = request.getSession();
+        DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
+        HttpSession session = request.getSession();
 
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer degreeType = null;
-		Integer studentNumber = null;
-		try {
-			degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
-			studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
-		} catch (NumberFormatException e) {
-			degreeType = (Integer) request.getAttribute("degreeType");
-			studentNumber = (Integer) request.getAttribute("studentNumber");
-			getStudentByNumberAndDegreeTypeForm.set("degreeType", degreeType.toString());
-			getStudentByNumberAndDegreeTypeForm.set("studentNumber", studentNumber.toString());
-		}
+        Integer degreeType = null;
+        Integer studentNumber = null;
+        try {
+            degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
+            studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm
+                    .get("studentNumber"));
+        } catch (NumberFormatException e) {
+            degreeType = (Integer) request.getAttribute("degreeType");
+            studentNumber = (Integer) request.getAttribute("studentNumber");
+            getStudentByNumberAndDegreeTypeForm.set("degreeType", degreeType.toString());
+            getStudentByNumberAndDegreeTypeForm.set("studentNumber", studentNumber.toString());
+        }
 
-		InfoStudent infoStudent = null;
+        InfoStudent infoStudent = null;
 
-		Object args[] = { degreeType, studentNumber };
-		try {
-			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByNumberAndDegreeType", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        Object args[] = { degreeType, studentNumber };
+        try {
+            infoStudent = (InfoStudent) ServiceUtils.executeService(userView,
+                    "GetStudentByNumberAndDegreeType", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		if(infoStudent == null) {
-			this.setNoStudentError(studentNumber, request);
-			result = false;
-		} else {
-			request.setAttribute(SessionConstants.STUDENT, infoStudent);
-			result = true;
-		}
-		
-		return result;
-	}
+        if (infoStudent == null) {
+            this.setNoStudentError(studentNumber, request);
+            result = false;
+        } else {
+            request.setAttribute(SessionConstants.STUDENT, infoStudent);
+            result = true;
+        }
 
-	protected void setNoStudentError(Integer studentNumber, HttpServletRequest request) {
-		ActionErrors actionErrors = new ActionErrors();
-		ActionError actionError = new ActionError("error.no.student.in.database", studentNumber.toString());
-		actionErrors.add("error.no.student.in.database", actionError);
-		saveErrors(request, actionErrors);
-	}
+        return result;
+    }
+
+    protected void setNoStudentError(Integer studentNumber, HttpServletRequest request) {
+        ActionErrors actionErrors = new ActionErrors();
+        ActionError actionError = new ActionError("error.no.student.in.database", studentNumber
+                .toString());
+        actionErrors.add("error.no.student.in.database", actionError);
+        saveErrors(request, actionErrors);
+    }
 }

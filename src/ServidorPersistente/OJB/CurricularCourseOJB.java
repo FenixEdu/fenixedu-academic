@@ -23,18 +23,16 @@ import Util.TipoCurso;
  * 25/Mar/2003
  */
 
-public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCurricularCourse
-{
+public class CurricularCourseOJB extends PersistentObjectOJB implements IPersistentCurricularCourse {
 
-    public CurricularCourseOJB()
-    {}
+    public CurricularCourseOJB() {
+    }
 
     /**
-	 * @deprecated
-	 */
+     * @deprecated
+     */
     public ICurricularCourse readCurricularCourseByNameAndCode(String name, String code)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("name", name);
         crit.addEqualTo("code", code);
@@ -43,11 +41,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
-        Integer degreeCurricularPlanId,
-        String name,
-        String code)
-        throws ExcepcaoPersistencia
-    {
+            Integer degreeCurricularPlanId, String name, String code) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("name", name);
         crit.addEqualTo("code", code);
@@ -56,23 +50,18 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 
     }
 
-    
-
-    public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
-    {
+    public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
 
         super.delete(curricularCourse);
 
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         return queryList(CurricularCourse.class, crit);
     }
 
-    public List readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia
-    {
+    public List readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
         return queryList(CurricularCourse.class, crit);
@@ -80,23 +69,19 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     public List readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeCurricularPlan.name", degreeCurricularPlan.getName());
         crit.addEqualTo("degreeCurricularPlan.degree.nome", degreeCurricularPlan.getDegree().getNome());
-        crit.addEqualTo(
-            "degreeCurricularPlan.degree.sigla",
-            degreeCurricularPlan.getDegree().getSigla());
+        crit
+                .addEqualTo("degreeCurricularPlan.degree.sigla", degreeCurricularPlan.getDegree()
+                        .getSigla());
         return queryList(CurricularCourse.class, crit);
 
     }
 
     public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(
-        IDegreeCurricularPlan degreeCurricularPlan,
-        Boolean basic)
-        throws ExcepcaoPersistencia
-    {
+            IDegreeCurricularPlan degreeCurricularPlan, Boolean basic) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
@@ -104,8 +89,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
         return queryList(CurricularCourse.class, criteria);
     }
 
-    public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia
-    {
+    public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("scopes.branch.name", branch.getName());
         criteria.addEqualTo("scopes.branch.code", branch.getCode());
@@ -113,8 +97,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 
     }
 
-    public List readAllCurricularCoursesBySemester(Integer semester) throws ExcepcaoPersistencia
-    {
+    public List readAllCurricularCoursesBySemester(Integer semester) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("scopes.curricularSemester.semester", semester);
         return queryList(CurricularCourse.class, criteria);
@@ -122,15 +105,14 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYear(java.lang.Integer,
-	 *      java.lang.Integer)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYear(java.lang.Integer,
+     *      java.lang.Integer)
+     */
 
     public List readCurricularCoursesBySemesterAndYear(Integer semester, Integer year)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("scopes.curricularSemester.semester", semester);
         criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
@@ -139,18 +121,14 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAnBranch(java.lang.Integer,
-	 *      java.lang.Integer, Dominio.IBranch)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAnBranch(java.lang.Integer,
+     *      java.lang.Integer, Dominio.IBranch)
+     */
 
-    public List readCurricularCoursesBySemesterAndYearAndBranch(
-        Integer semester,
-        Integer year,
-        IBranch branch)
-        throws ExcepcaoPersistencia
-    {
+    public List readCurricularCoursesBySemesterAndYearAndBranch(Integer semester, Integer year,
+            IBranch branch) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("scopes.curricularSemester.semester", semester);
@@ -162,17 +140,13 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(java.lang.Integer,
-	 *      java.lang.Integer, Dominio.IBranch)
-	 */
-    public List readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(
-        Integer semester,
-        Integer year,
-        IBranch branch)
-        throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentCurricularCourse#readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(java.lang.Integer,
+     *      java.lang.Integer, Dominio.IBranch)
+     */
+    public List readCurricularCoursesBySemesterAndYearAndBranchAndNoBranch(Integer semester,
+            Integer year, IBranch branch) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("scopes.curricularSemester.semester", semester);
         criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
@@ -189,11 +163,8 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 
     }
 
-    public List readbyCourseCodeAndDegreeCurricularPlan(
-        String curricularCourseCode,
-        IDegreeCurricularPlan degreeCurricularPlan)
-        throws ExcepcaoPersistencia
-    {
+    public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode,
+            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("code", curricularCourseCode);
@@ -202,12 +173,9 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
         return queryList(CurricularCourse.class, criteria);
     }
 
-    public List readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(
-        String courseCode,
-        TipoCurso degreeType,
-        DegreeCurricularPlanState degreeCurricularPlanState)
-        throws ExcepcaoPersistencia
-    {
+    public List readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(String courseCode,
+            TipoCurso degreeType, DegreeCurricularPlanState degreeCurricularPlanState)
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("code", courseCode);
@@ -217,11 +185,8 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
         return queryList(CurricularCourse.class, criteria);
     }
 
-    public List readbyCourseNameAndDegreeCurricularPlan(
-        String curricularCourseName,
-        IDegreeCurricularPlan degreeCurricularPlan)
-        throws ExcepcaoPersistencia
-    {
+    public List readbyCourseNameAndDegreeCurricularPlan(String curricularCourseName,
+            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", curricularCourseName);
@@ -230,8 +195,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
         return queryList(CurricularCourse.class, criteria);
     }
 
-    public List readByScientificArea(IScientificArea scientificArea) throws ExcepcaoPersistencia
-    {
+    public List readByScientificArea(IScientificArea scientificArea) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("scientificArea.idInternal", scientificArea.getIdInternal());
 
@@ -239,11 +203,8 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     public List readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(
-        IDegreeCurricularPlan degreeCurricularPlan,
-        IBranch branch,
-        Integer semester)
-        throws ExcepcaoPersistencia
-    {
+            IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, Integer semester)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
         criteria.addEqualTo("scopes.branch.idInternal", branch.getIdInternal());
@@ -252,21 +213,15 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     public List readCurricularCoursesByDegreeCurricularPlanAndMandatoryAttribute(
-        IDegreeCurricularPlan degreeCurricularPlan,
-        Boolean mandatory)
-        throws ExcepcaoPersistencia
-    {
+            IDegreeCurricularPlan degreeCurricularPlan, Boolean mandatory) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
         criteria.addEqualTo("mandatory", mandatory);
         return queryList(CurricularCourse.class, criteria);
     }
 
-    public List readAllByDegreeCurricularPlanAndType(
-        IDegreeCurricularPlan degreeCurricularPlan,
-        CurricularCourseType curricularCourseType)
-        throws ExcepcaoPersistencia
-    {
+    public List readAllByDegreeCurricularPlanAndType(IDegreeCurricularPlan degreeCurricularPlan,
+            CurricularCourseType curricularCourseType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
         criteria.addEqualTo("type", curricularCourseType);
@@ -274,43 +229,34 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndExecutionYear(Dominio.ICurso,
-	 *      Dominio.IExecutionYear)
-	 */
-    public List readExecutedCurricularCoursesByDegreeAndExecutionYear(
-        ICurso curso,
-        IExecutionYear executionYear)
-        throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndExecutionYear(Dominio.ICurso,
+     *      Dominio.IExecutionYear)
+     */
+    public List readExecutedCurricularCoursesByDegreeAndExecutionYear(ICurso curso,
+            IExecutionYear executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", curso.getIdInternal());
         criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE_OBJ);
-        criteria.addEqualTo(
-            "associatedExecutionCourses.executionPeriod.executionYear.idInternal",
-            executionYear.getIdInternal());
+        criteria.addEqualTo("associatedExecutionCourses.executionPeriod.executionYear.idInternal",
+                executionYear.getIdInternal());
         return queryList(CurricularCourse.class, criteria, true);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(Dominio.ICurso,
-	 *      java.lang.Integer, Dominio.IExecutionYear)
-	 */
-    public List readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(
-        ICurso curso,
-        Integer year,
-        IExecutionYear executionYear)
-        throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentCurricularCourse#readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(Dominio.ICurso,
+     *      java.lang.Integer, Dominio.IExecutionYear)
+     */
+    public List readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(ICurso curso, Integer year,
+            IExecutionYear executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", curso.getIdInternal());
         criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE_OBJ);
-        criteria.addEqualTo(
-            "associatedExecutionCourses.executionPeriod.executionYear.idInternal",
-            executionYear.getIdInternal());
+        criteria.addEqualTo("associatedExecutionCourses.executionPeriod.executionYear.idInternal",
+                executionYear.getIdInternal());
         criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);
         return queryList(CurricularCourse.class, criteria, true);
     }

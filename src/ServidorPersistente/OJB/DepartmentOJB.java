@@ -18,18 +18,12 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPersistentEmployee;
 
-public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartment
-{
+public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDepartment {
 
-    public DepartmentOJB()
-    {
+    public DepartmentOJB() {
     }
 
-   
-
-    
-    public IDepartment lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia
-    {
+    public IDepartment lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
@@ -37,37 +31,31 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 
     }
 
-    public IDepartment lerDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia
-    {
+    public IDepartment lerDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("sigla", sigla);
         return (IDepartment) queryObject(Department.class, crit);
-       
+
     }
 
-   
-
-    public List readAllDepartments() throws ExcepcaoPersistencia
-    {
+    public List readAllDepartments() throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         return queryList(Department.class, crit);
     }
 
-    public void apagarDepartamento(IDepartment disciplina) throws ExcepcaoPersistencia
-    {
+    public void apagarDepartamento(IDepartment disciplina) throws ExcepcaoPersistencia {
         super.delete(disciplina);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentDepartment#readByTeacher(Dominio.ITeacher)
-	 */
-    public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentDepartment#readByTeacher(Dominio.ITeacher)
+     */
+    public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 
         // TODO: Remove this call after refactoring teacher...
-		// teacher.getEmployee();
+        // teacher.getEmployee();
         EmployeeHistoric employeeHistoric = getEmployee(teacher);
 
         ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
@@ -76,37 +64,32 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 
         String code = workingCC.getCode();
 
-        if (code != null && !(code.equals("")))
-        {
+        if (code != null && !(code.equals(""))) {
             Criteria workingCCCriteria = new Criteria();
             workingCCCriteria.addLike("code", code.substring(0, 2) + "%");
             departmentList = queryList(Department.class, workingCCCriteria);
         }
         IDepartment department;
-        if (departmentList.size() != 1)
-        {
+        if (departmentList.size() != 1) {
             Criteria criteria = new Criteria();
             criteria.addEqualTo("code", code);
             department = (IDepartment) queryObject(Department.class, criteria);
-        }
-        else
-        {
+        } else {
             department = (IDepartment) departmentList.get(0);
         }
         return department;
     }
 
     /**
-	 * @param teacher
-	 * @return
-	 */
-    private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+     * @param teacher
+     * @return
+     */
+    private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
         IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
 
         IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
-        employee.setHistoricList(
-            employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal().intValue()));
+        employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
+                .intValue()));
 
         employee.fillEmployeeHistoric();
 

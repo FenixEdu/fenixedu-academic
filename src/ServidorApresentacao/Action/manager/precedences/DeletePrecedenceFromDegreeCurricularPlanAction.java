@@ -22,8 +22,8 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class DeletePrecedenceFromDegreeCurricularPlanAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -31,20 +31,21 @@ public class DeletePrecedenceFromDegreeCurricularPlanAction extends FenixAction 
         Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
         Integer precedenceID = new Integer(request.getParameter("precedenceId"));
 
-        Object args1[] = {precedenceID};
-        Object args2[] = {degreeCurricularPlanID};
-        
+        Object args1[] = { precedenceID };
+        Object args2[] = { degreeCurricularPlanID };
+
         try {
-			ServiceUtils.executeService(userView, "DeletePrecedenceFromDegreeCurricularPlan", args1);
-			Map result = (Map) ServiceUtils.executeService(userView, "ReadPrecedencesFromDegreeCurricularPlan", args2);
-			request.setAttribute("precedences", result);
+            ServiceUtils.executeService(userView, "DeletePrecedenceFromDegreeCurricularPlan", args1);
+            Map result = (Map) ServiceUtils.executeService(userView,
+                    "ReadPrecedencesFromDegreeCurricularPlan", args2);
+            request.setAttribute("precedences", result);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-		request.setAttribute("degreeId", degreeID);
-		request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
+        request.setAttribute("degreeId", degreeID);
+        request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanID);
 
-		return mapping.findForward("showPrecedences");
+        return mapping.findForward("showPrecedences");
     }
 }

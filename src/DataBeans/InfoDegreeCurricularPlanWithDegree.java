@@ -11,8 +11,7 @@ import Dominio.IDegreeCurricularPlan;
  * @author João Mota
  *  
  */
-public class InfoDegreeCurricularPlanWithDegree extends
-        InfoDegreeCurricularPlan {
+public class InfoDegreeCurricularPlanWithDegree extends InfoDegreeCurricularPlan {
 
     public void copyFromDomain(IDegreeCurricularPlan plan) {
         super.copyFromDomain(plan);
@@ -25,8 +24,7 @@ public class InfoDegreeCurricularPlanWithDegree extends
      * @param plan
      * @return
      */
-    public static InfoDegreeCurricularPlan newInfoFromDomain(
-            IDegreeCurricularPlan plan) {
+    public static InfoDegreeCurricularPlan newInfoFromDomain(IDegreeCurricularPlan plan) {
         InfoDegreeCurricularPlanWithDegree infoDegreeCurricularPlan = null;
         if (plan != null) {
             infoDegreeCurricularPlan = new InfoDegreeCurricularPlanWithDegree();
@@ -34,21 +32,24 @@ public class InfoDegreeCurricularPlanWithDegree extends
         }
         return infoDegreeCurricularPlan;
     }
-    
-    
-    public void copyToDomain(InfoDegreeCurricularPlan infoDegreeCurricularPlan, IDegreeCurricularPlan degreeCurricularPlan) {
+
+    public void copyToDomain(InfoDegreeCurricularPlan infoDegreeCurricularPlan,
+            IDegreeCurricularPlan degreeCurricularPlan) {
         super.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
-        degreeCurricularPlan.setDegree(InfoDegree.newDomainFromInfo(infoDegreeCurricularPlan.getInfoDegree()));
-        
+        degreeCurricularPlan.setDegree(InfoDegree.newDomainFromInfo(infoDegreeCurricularPlan
+                .getInfoDegree()));
+
     }
-    
-    public static IDegreeCurricularPlan newDomainFromInfo(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+
+    public static IDegreeCurricularPlan newDomainFromInfo(
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
         IDegreeCurricularPlan degreeCurricularPlan = null;
-        if(infoDegreeCurricularPlan != null) {
+        if (infoDegreeCurricularPlan != null) {
             degreeCurricularPlan = new DegreeCurricularPlan();
             InfoDegreeCurricularPlanWithDegree infoDegreeCurricularPlanWithDegree = new InfoDegreeCurricularPlanWithDegree();
-            infoDegreeCurricularPlanWithDegree.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
-        }        
+            infoDegreeCurricularPlanWithDegree.copyToDomain(infoDegreeCurricularPlan,
+                    degreeCurricularPlan);
+        }
         return degreeCurricularPlan;
     }
 }

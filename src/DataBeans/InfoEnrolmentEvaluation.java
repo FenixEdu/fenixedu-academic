@@ -11,41 +11,44 @@ import Util.EnrolmentEvaluationType;
  * 
  * 22/Abr/2003
  */
-public class InfoEnrolmentEvaluation extends InfoObject
-{
+public class InfoEnrolmentEvaluation extends InfoObject {
     private String grade;
+
     private EnrolmentEvaluationType enrolmentEvaluationType;
+
     private Date examDate;
+
     private Date gradeAvailableDate;
+
     private String observation;
+
     private Date when;
+
     private EnrolmentEvaluationState state;
+
     private InfoEnrolment infoEnrolment;
+
     private InfoPerson infoPersonResponsibleForGrade;
+
     private InfoPerson infoEmployee;
 
-    public InfoEnrolmentEvaluation()
-    {
+    public InfoEnrolmentEvaluation() {
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
 
-        if (obj instanceof InfoEnrolmentEvaluation)
-        {
+        if (obj instanceof InfoEnrolmentEvaluation) {
             InfoEnrolmentEvaluation InfoEnrolmentEvaluation = (InfoEnrolmentEvaluation) obj;
 
-            resultado =
-                this.getInfoEnrolment().equals(InfoEnrolmentEvaluation.getInfoEnrolment())
+            resultado = this.getInfoEnrolment().equals(InfoEnrolmentEvaluation.getInfoEnrolment())
                     && this.getEnrolmentEvaluationType().equals(
-                        InfoEnrolmentEvaluation.getEnrolmentEvaluationType());
+                            InfoEnrolmentEvaluation.getEnrolmentEvaluationType());
         }
         return resultado;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "grade = " + this.grade + "; ";
         result += "evaluationType = " + this.enrolmentEvaluationType + "; ";
@@ -59,143 +62,124 @@ public class InfoEnrolmentEvaluation extends InfoObject
         return result;
     }
 
-    public EnrolmentEvaluationType getEnrolmentEvaluationType()
-    {
+    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
         return enrolmentEvaluationType;
     }
 
-    public Date getExamDate()
-    {
+    public Date getExamDate() {
         return examDate;
     }
 
-    public String getGrade()
-    {
+    public String getGrade() {
         return grade;
     }
 
-    public Date getGradeAvailableDate()
-    {
+    public Date getGradeAvailableDate() {
         return gradeAvailableDate;
     }
 
-    public EnrolmentEvaluationState getState()
-    {
+    public EnrolmentEvaluationState getState() {
         return state;
     }
 
-    public void setEnrolmentEvaluationType(EnrolmentEvaluationType type)
-    {
+    public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
         enrolmentEvaluationType = type;
     }
 
-    public void setExamDate(Date date)
-    {
+    public void setExamDate(Date date) {
         examDate = date;
     }
 
-    public void setGrade(String string)
-    {
+    public void setGrade(String string) {
         grade = string;
     }
 
-    public void setGradeAvailableDate(Date date)
-    {
+    public void setGradeAvailableDate(Date date) {
         gradeAvailableDate = date;
     }
 
-    public void setState(EnrolmentEvaluationState state)
-    {
+    public void setState(EnrolmentEvaluationState state) {
         this.state = state;
     }
 
-    public InfoEnrolment getInfoEnrolment()
-    {
+    public InfoEnrolment getInfoEnrolment() {
         return infoEnrolment;
     }
 
-    public void setInfoEnrolment(InfoEnrolment enrolment)
-    {
+    public void setInfoEnrolment(InfoEnrolment enrolment) {
         infoEnrolment = enrolment;
     }
 
-    public InfoPerson getInfoPersonResponsibleForGrade()
-    {
+    public InfoPerson getInfoPersonResponsibleForGrade() {
         return infoPersonResponsibleForGrade;
     }
 
-    public void setInfoPersonResponsibleForGrade(InfoPerson person)
-    {
+    public void setInfoPersonResponsibleForGrade(InfoPerson person) {
         infoPersonResponsibleForGrade = person;
     }
 
     /**
-	 * @return
-	 */
-    public String getObservation()
-    {
+     * @return
+     */
+    public String getObservation() {
         return observation;
     }
 
     /**
-	 * @param string
-	 */
-    public void setObservation(String string)
-    {
+     * @param string
+     */
+    public void setObservation(String string) {
         observation = string;
     }
 
     /**
-	 * @return
-	 */
-    public InfoPerson getInfoEmployee()
-    {
+     * @return
+     */
+    public InfoPerson getInfoEmployee() {
         return infoEmployee;
     }
 
     /**
-	 * @param person
-	 */
-    public void setInfoEmployee(InfoPerson person)
-    {
+     * @param person
+     */
+    public void setInfoEmployee(InfoPerson person) {
         infoEmployee = person;
     }
 
     /**
-	 * @return
-	 */
-    public Date getWhen()
-    {
+     * @return
+     */
+    public Date getWhen() {
         return when;
     }
 
     /**
-	 * @param date
-	 */
-    public void setWhen(Date date)
-    {
+     * @param date
+     */
+    public void setWhen(Date date) {
         when = date;
     }
-    
-	public void copyFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
-		super.copyFromDomain(enrolmentEvaluation);
-		if(enrolmentEvaluation != null) {
-			setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
-			setState(enrolmentEvaluation.getEnrolmentEvaluationState());
-			setGrade(enrolmentEvaluation.getGrade());
-			setExamDate(enrolmentEvaluation.getExamDate());
-			setGradeAvailableDate(enrolmentEvaluation.getGradeAvailableDate());
-			setObservation(enrolmentEvaluation.getObservation());
-		}
-	}
-	
-	public static InfoEnrolmentEvaluation newInfoFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
-		InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
-		if(enrolmentEvaluation != null) {
-			infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-			infoEnrolmentEvaluation.copyFromDomain(enrolmentEvaluation);
-		}
-		
-		return infoEnrolmentEvaluation;
-	}
+
+    public void copyFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+        super.copyFromDomain(enrolmentEvaluation);
+        if (enrolmentEvaluation != null) {
+            setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
+            setState(enrolmentEvaluation.getEnrolmentEvaluationState());
+            setGrade(enrolmentEvaluation.getGrade());
+            setExamDate(enrolmentEvaluation.getExamDate());
+            setGradeAvailableDate(enrolmentEvaluation.getGradeAvailableDate());
+            setObservation(enrolmentEvaluation.getObservation());
+            setWhen(enrolmentEvaluation.getWhen());
+        }
+    }
+
+    public static InfoEnrolmentEvaluation newInfoFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+        InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
+        if (enrolmentEvaluation != null) {
+            infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+            infoEnrolmentEvaluation.copyFromDomain(enrolmentEvaluation);
+        }
+
+        return infoEnrolmentEvaluation;
+    }
 }

@@ -52,39 +52,33 @@ public class UnEnrollStudentInGroup implements IServico {
         return "UnEnrollStudentInGroup";
     }
 
-    public Boolean run(String userName, Integer studentGroupCode)
-            throws FenixServiceException {
+    public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentStudentGroup persistentStudentGroup = persistentSuport
                     .getIPersistentStudentGroup();
             IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
                     .getIPersistentStudentGroupAttend();
-            IPersistentStudent persistentStudent = persistentSuport
-                    .getIPersistentStudent();
-            IFrequentaPersistente persistentAttend = persistentSuport
-                    .getIFrequentaPersistente();
+            IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
+            IFrequentaPersistente persistentAttend = persistentSuport.getIFrequentaPersistente();
 
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException();
             }
-            IExecutionCourse executionCourse = studentGroup
-                    .getGroupProperties().getExecutionCourse();
+            IExecutionCourse executionCourse = studentGroup.getGroupProperties().getExecutionCourse();
             IStudent student = persistentStudent.readByUsername(userName);
-            IFrequenta attend = persistentAttend
-                    .readByAlunoAndDisciplinaExecucao(student, executionCourse);
+            IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
+                    executionCourse);
 
-            IGroupProperties groupProperties = studentGroup
-                    .getGroupProperties();
+            IGroupProperties groupProperties = studentGroup.getGroupProperties();
 
-            IStudentGroupAttend studentGroupAttendToDelete = persistentStudentGroupAttend
-                    .readBy(studentGroup, attend);
+            IStudentGroupAttend studentGroupAttendToDelete = persistentStudentGroupAttend.readBy(
+                    studentGroup, attend);
 
             if (studentGroupAttendToDelete == null)
                 throw new InvalidArgumentsServiceException();
@@ -94,8 +88,8 @@ public class UnEnrollStudentInGroup implements IServico {
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                     .getGroupEnrolmentStrategyInstance(groupProperties);
 
-            boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(
-                    studentGroupAttendToDelete, studentGroup);
+            boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(studentGroupAttendToDelete,
+                    studentGroup);
 
             persistentStudentGroupAttend.delete(studentGroupAttendToDelete);
 

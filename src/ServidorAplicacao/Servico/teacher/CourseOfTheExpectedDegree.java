@@ -27,8 +27,7 @@ public class CourseOfTheExpectedDegree implements IServico {
         return "CourseOfTheExpectedDegree";
     }
 
-    public Boolean run(Integer curricularCourseCode, String degreeCode)
-            throws FenixServiceException {
+    public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException {
         boolean result = false;
 
         try {
@@ -47,8 +46,8 @@ public class CourseOfTheExpectedDegree implements IServico {
      * @param argumentos
      * @return
      */
-    private boolean CurricularCourseDegree(Integer curricularCourseCode,
-            String degreeCode) throws FenixServiceException {
+    private boolean CurricularCourseDegree(Integer curricularCourseCode, String degreeCode)
+            throws FenixServiceException {
         boolean result = false;
 
         ICurricularCourse curricularCourse = null;
@@ -58,11 +57,10 @@ public class CourseOfTheExpectedDegree implements IServico {
         try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-            curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode);
+            curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                    CurricularCourse.class, curricularCourseCode);
 
             degree = curricularCourse.getDegreeCurricularPlan().getDegree();
 
@@ -77,8 +75,7 @@ public class CourseOfTheExpectedDegree implements IServico {
      * @param argumentos
      * @return
      */
-    private boolean CurricularCourseNotBasic(Integer curricularCourseCode)
-            throws FenixServiceException {
+    private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws FenixServiceException {
         boolean result = false;
         ICurricularCourse curricularCourse = null;
 
@@ -86,10 +83,9 @@ public class CourseOfTheExpectedDegree implements IServico {
         try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
-            curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode);
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                    CurricularCourse.class, curricularCourseCode);
             result = curricularCourse.getBasic().equals(Boolean.FALSE);
         } catch (Exception e) {
             throw new FenixServiceException(e);

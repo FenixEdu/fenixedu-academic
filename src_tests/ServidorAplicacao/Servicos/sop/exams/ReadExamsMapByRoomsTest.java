@@ -20,31 +20,26 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public class ReadExamsMapByRoomsTest extends ServiceTestCase
-{
+public class ReadExamsMapByRoomsTest extends ServiceTestCase {
 
     /**
      * @param name
      */
-    public ReadExamsMapByRoomsTest(java.lang.String testName)
-    {
+    public ReadExamsMapByRoomsTest(java.lang.String testName) {
         super(testName);
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExamsMapByRooms";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/sop/testReadExamsMapByRoomsDataset.xml";
     }
 
-    private Calendar createStartSeason1()
-    {
+    private Calendar createStartSeason1() {
         Calendar startSeason1 = Calendar.getInstance();
         startSeason1.set(Calendar.YEAR, 2004);
         startSeason1.set(Calendar.MONTH, Calendar.JANUARY);
@@ -57,8 +52,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase
         return startSeason1;
     }
 
-    private Calendar createEndSeason2()
-    {
+    private Calendar createEndSeason2() {
         Calendar endSeason2 = Calendar.getInstance();
         endSeason2.set(Calendar.YEAR, 2004);
         endSeason2.set(Calendar.MONTH, Calendar.FEBRUARY);
@@ -71,20 +65,17 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase
         return endSeason2;
     }
 
-    public void testSuccessfullReadExamsMapByRooms()
-    {
+    public void testSuccessfullReadExamsMapByRooms() {
         ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
 
         ISuportePersistente sp;
         List infoRoomExamMapList = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            InfoExecutionPeriod infoExecutionPeriod =
-                ReadExecutionPeriod.getService().run(new Integer(80));
+            InfoExecutionPeriod infoExecutionPeriod = (new ReadExecutionPeriod()).run(new Integer(80));
 
             List infoRooms = new ArrayList();
             infoRooms.add(LerSala.getService().run(new RoomKey("GA1")));
@@ -110,27 +101,22 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase
             assertEquals(endSeason2, infoRoom.getEndSeason2());
 
             assertEquals(infoRoom.getExams().size(), 1);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("testSuccessfullReadExamsMapByRooms - Exception " + ex);
         }
     }
 
-    public void testSuccessfullReadExamsMapByRoomsWithNotAllRoomsWithExam()
-    {
+    public void testSuccessfullReadExamsMapByRoomsWithNotAllRoomsWithExam() {
         ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
 
         ISuportePersistente sp;
         List infoRoomExamMapList = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            InfoExecutionPeriod infoExecutionPeriod =
-                ReadExecutionPeriod.getService().run(new Integer(80));
+            InfoExecutionPeriod infoExecutionPeriod = (new ReadExecutionPeriod()).run(new Integer(80));
 
             List infoRooms = new ArrayList();
             infoRooms.add(LerSala.getService().run(new RoomKey("GA1")));
@@ -159,27 +145,22 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase
             assertEquals(infoRoom1.getExams().size(), 1);
 
             assertTrue(infoRoom2.getExams().isEmpty());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("testSuccessfullReadExamsMapByRoomsWithNotAllRoomsWithExam - Exception " + ex);
         }
     }
 
-    public void testSuccessfullReadExamsMapByRoomsWithoutRooms()
-    {
+    public void testSuccessfullReadExamsMapByRoomsWithoutRooms() {
         ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
 
         ISuportePersistente sp;
         List infoRoomExamMapList = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            InfoExecutionPeriod infoExecutionPeriod =
-                ReadExecutionPeriod.getService().run(new Integer(80));
+            InfoExecutionPeriod infoExecutionPeriod = (new ReadExecutionPeriod()).run(new Integer(80));
 
             List infoRooms = new ArrayList();
 
@@ -190,21 +171,17 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase
 
             assertNotNull(infoRoomExamMapList);
             assertTrue(infoRoomExamMapList.isEmpty());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("testSuccessfullReadExamsMapByRoomsWithoutRooms - Exception " + ex);
         }
     }
 
-    public void testUnsuccessfullReadExamsMapByRoomsUnexistentExecutionPeriod()
-    {
+    public void testUnsuccessfullReadExamsMapByRoomsUnexistentExecutionPeriod() {
         ReadExamsMapByRooms service = ReadExamsMapByRooms.getService();
 
         ISuportePersistente sp;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -213,9 +190,7 @@ public class ReadExamsMapByRoomsTest extends ServiceTestCase
             service.run(null, infoRooms);
 
             fail("testUnsuccessfullReadExamsMapByRoomsUnexistentExecutionPeriod");
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
         }
     }

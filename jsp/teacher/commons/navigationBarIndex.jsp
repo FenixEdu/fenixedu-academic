@@ -36,4 +36,9 @@
   		<bean:message key="link.manage.publications"/>
   	</html:link>  
   </li>
+  <li>
+  	<html:link href="<%= request.getContextPath() + "/teacher/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare" %>">
+  		<bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES" />
+  	</html:link>  
+  </li>
 </ul>

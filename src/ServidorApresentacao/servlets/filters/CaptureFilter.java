@@ -30,6 +30,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class CaptureFilter implements Filter {
 
     ServletContext servletContext;
+
     FilterConfig filterConfig;
 
     String filename;
@@ -50,8 +51,8 @@ public class CaptureFilter implements Filter {
         this.filename = null;
     }
 
-    public void doFilter(ServletRequest req, ServletResponse res,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+            ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
@@ -59,8 +60,8 @@ public class CaptureFilter implements Filter {
         String queryString = constructQueryString(request);
         StringBuffer id = new StringBuffer(request.getRequestURI());
         if (queryString != null) {
-        	id.append("?");
-        	id.append(queryString);
+            id.append("?");
+            id.append(queryString);
         }
         // optionally append i18n sensitivity
         String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
@@ -81,64 +82,64 @@ public class CaptureFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-	private String getUsername(HttpServletRequest request) {
+    private String getUsername(HttpServletRequest request) {
         IUserView userView = SessionUtils.getUserView(request);
         if (userView != null) {
-        	return userView.getUtilizador();
+            return userView.getUtilizador();
         }
 
         return null;
-	}
+    }
 
-	private String constructQueryString(HttpServletRequest request) {
-		StringBuffer queryString = new StringBuffer();
-		
-		String requestQueryString = request.getQueryString();
-		if (requestQueryString != null) {
-			queryString.append(requestQueryString);
-		}
+    private String constructQueryString(HttpServletRequest request) {
+        StringBuffer queryString = new StringBuffer();
 
-		Enumeration parameterNames = request.getParameterNames();
-		if (parameterNames != null) {
-			while(parameterNames.hasMoreElements()) {
-				String parameterName = (String) parameterNames.nextElement();
-				String[] parameterValues = request.getParameterValues(parameterName);
-				for (int i = 0; i < parameterValues.length; i++) {
-					String parameterValue = parameterValues[i];
-					if (queryString.length() != 0) {
-						queryString.append("&");
-					}
-					queryString.append(parameterName);
-					queryString.append("=");
-					queryString.append(parameterValue);					
-				}
-			}
-		}
+        String requestQueryString = request.getQueryString();
+        if (requestQueryString != null) {
+            queryString.append(requestQueryString);
+        }
 
-		if (queryString.length() != 0) {
-			return queryString.toString();
-		} 
-			return null;
-		
-	}
+        Enumeration parameterNames = request.getParameterNames();
+        if (parameterNames != null) {
+            while (parameterNames.hasMoreElements()) {
+                String parameterName = (String) parameterNames.nextElement();
+                String[] parameterValues = request.getParameterValues(parameterName);
+                for (int i = 0; i < parameterValues.length; i++) {
+                    String parameterValue = parameterValues[i];
+                    if (queryString.length() != 0) {
+                        queryString.append("&");
+                    }
+                    queryString.append(parameterName);
+                    queryString.append("=");
+                    queryString.append(parameterValue);
+                }
+            }
+        }
 
-	private void storeRequest(String username, StringBuffer requestString) {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(username);
-		buffer.append(' ');
-		buffer.append(requestString);
-		buffer.append('\n');
+        if (queryString.length() != 0) {
+            return queryString.toString();
+        }
+        return null;
 
-		try {
-	        synchronized (fileWriterSynch) {
-	            FileWriter fileWriter = new FileWriter(filename, true);
-	            fileWriter.write(buffer.toString());
-	            fileWriter.close();
-	        }
-		} catch (IOException e) {
-			System.out.println("Unable to store request.");
-			e.printStackTrace();
-		}
-	}
+    }
+
+    private void storeRequest(String username, StringBuffer requestString) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(username);
+        buffer.append(' ');
+        buffer.append(requestString);
+        buffer.append('\n');
+
+        try {
+            synchronized (fileWriterSynch) {
+                FileWriter fileWriter = new FileWriter(filename, true);
+                fileWriter.write(buffer.toString());
+                fileWriter.close();
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to store request.");
+            e.printStackTrace();
+        }
+    }
 
 }

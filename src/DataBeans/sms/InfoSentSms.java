@@ -6,142 +6,129 @@ package DataBeans.sms;
 
 import java.util.Date;
 
-import Util.SmsDeliveryType;
-
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
 import Dominio.sms.ISentSms;
+import Util.SmsDeliveryType;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class InfoSentSms extends InfoObject
-{
+public class InfoSentSms extends InfoObject {
 
-	protected Integer destinationNumber;
-	protected Date sendDate;
-	protected Date deliveryDate;
-	protected SmsDeliveryType deliveryType;
+    protected Integer destinationNumber;
 
-	protected InfoPerson person;
+    protected Date sendDate;
 
-	/**
-	 *  
-	 */
-	public InfoSentSms()
-	{
-		super();
-	}
+    protected Date deliveryDate;
 
-	/**
-	 * @param idInternal
-	 */
-	public InfoSentSms(Integer idInternal)
-	{
-		super(idInternal);
-	}
+    protected SmsDeliveryType deliveryType;
 
-	/**
-	 * @return Returns the deliveryDate.
-	 */
-	public Date getDeliveryDate()
-	{
-		return deliveryDate;
-	}
+    protected InfoPerson person;
 
-	/**
-	 * @param deliveryDate
-	 *            The deliveryDate to set.
-	 */
-	public void setDeliveryDate(Date deliveryDate)
-	{
-		this.deliveryDate = deliveryDate;
-	}
+    /**
+     *  
+     */
+    public InfoSentSms() {
+        super();
+    }
 
-	/**
-	 * @return Returns the deliveryType.
-	 */
-	public SmsDeliveryType getDeliveryType()
-	{
-		return deliveryType;
-	}
+    /**
+     * @param idInternal
+     */
+    public InfoSentSms(Integer idInternal) {
+        super(idInternal);
+    }
 
-	/**
-	 * @param deliveryType
-	 *            The deliveryType to set.
-	 */
-	public void setDeliveryType(SmsDeliveryType deliveryType)
-	{
-		this.deliveryType = deliveryType;
-	}
+    /**
+     * @return Returns the deliveryDate.
+     */
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
 
-	/**
-	 * @return Returns the destinationNumber.
-	 */
-	public Integer getDestinationNumber()
-	{
-		return destinationNumber;
-	}
+    /**
+     * @param deliveryDate
+     *            The deliveryDate to set.
+     */
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
 
-	/**
-	 * @param destinationNumber
-	 *            The destinationNumber to set.
-	 */
-	public void setDestinationNumber(Integer destinationNumber)
-	{
-		this.destinationNumber = destinationNumber;
-	}
+    /**
+     * @return Returns the deliveryType.
+     */
+    public SmsDeliveryType getDeliveryType() {
+        return deliveryType;
+    }
 
-	/**
-	 * @return Returns the person.
-	 */
-	public InfoPerson getPerson()
-	{
-		return person;
-	}
+    /**
+     * @param deliveryType
+     *            The deliveryType to set.
+     */
+    public void setDeliveryType(SmsDeliveryType deliveryType) {
+        this.deliveryType = deliveryType;
+    }
 
-	/**
-	 * @param person
-	 *            The person to set.
-	 */
-	public void setPerson(InfoPerson person)
-	{
-		this.person = person;
-	}
+    /**
+     * @return Returns the destinationNumber.
+     */
+    public Integer getDestinationNumber() {
+        return destinationNumber;
+    }
 
-	/**
-	 * @return Returns the sendDate.
-	 */
-	public Date getSendDate()
-	{
-		return sendDate;
-	}
+    /**
+     * @param destinationNumber
+     *            The destinationNumber to set.
+     */
+    public void setDestinationNumber(Integer destinationNumber) {
+        this.destinationNumber = destinationNumber;
+    }
 
-	/**
-	 * @param sendDate
-	 *            The sendDate to set.
-	 */
-	public void setSendDate(Date sendDate)
-	{
-		this.sendDate = sendDate;
-	}
+    /**
+     * @return Returns the person.
+     */
+    public InfoPerson getPerson() {
+        return person;
+    }
 
-	public static InfoSentSms copyFromDomain(ISentSms sentSms)
-	{
-		InfoSentSms infoSentSms = null;
-		if (sentSms != null)
-		{
-			infoSentSms = new InfoSentSms();
-			infoSentSms.setIdInternal(sentSms.getIdInternal());
-			infoSentSms.setDestinationNumber(sentSms.getDestinationNumber());
-			infoSentSms.setSendDate(sentSms.getSendDate());
-			infoSentSms.setDeliveryDate(sentSms.getDeliveryDate());
-			infoSentSms.setDeliveryType(sentSms.getDeliveryType());
-		}
+    /**
+     * @param person
+     *            The person to set.
+     */
+    public void setPerson(InfoPerson person) {
+        this.person = person;
+    }
 
-		return infoSentSms;
-	}
+    /**
+     * @return Returns the sendDate.
+     */
+    public Date getSendDate() {
+        return sendDate;
+    }
+
+    /**
+     * @param sendDate
+     *            The sendDate to set.
+     */
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
+    }
+
+    public static InfoSentSms copyFromDomain(ISentSms sentSms) {
+        InfoSentSms infoSentSms = null;
+        if (sentSms != null) {
+            infoSentSms = new InfoSentSms();
+            infoSentSms.setIdInternal(sentSms.getIdInternal());
+            infoSentSms.setDestinationNumber(sentSms.getDestinationNumber());
+            infoSentSms.setSendDate(sentSms.getSendDate());
+            infoSentSms.setDeliveryDate(sentSms.getDeliveryDate());
+            infoSentSms.setDeliveryType(sentSms.getDeliveryType());
+        }
+
+        return infoSentSms;
+    }
 
 }

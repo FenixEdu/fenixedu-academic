@@ -10,8 +10,9 @@
 app.name=ciapl
 application=extranet
 
-index.html.link=publico/index.do?method=prepare&amp;page=0
+index.html.link=publico/index.html
 login.page=https://fenix.ist.utl.pt/privado
+institution.url=http://www.ist.utl.pt
 #
 #
 #------------------------------------------------------------------------------
@@ -106,6 +107,8 @@ slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-
 #   ftp.IST.server.user: 
 #   ftp.IST.server.pass: 
 #   ftp.IST.server.address: 
+#	ftp.IST.scp.command:
+#	ftp.IST.scp.args:
 #   ftp.degree.grades.server.user: 
 #   ftp.degree.grades.server.pass: 
 #   ftp.degree.grades.server.address: 
@@ -113,6 +116,8 @@ slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-
 ftp.IST.server.user=ciist
 ftp.IST.server.pass=desenvolvimento
 ftp.IST.server.address=saladd2.ist.utl.pt
+ftp.IST.scp.command=command
+ftp.IST.scp.args=args
 
 ftp.degree.grades.server.user=user
 ftp.degree.grades.server.pass=pass
@@ -175,7 +180,18 @@ sms.delivery.password=
 #
 #
 #------------------------------------------------------------------------------
-# Validation/Verification Configuratio
+# Auto Task Configuration
+#------------------------------------------------------------------------------
+#
+#   gratuity.situation.creator.task.hour: Hour at which the task will be
+#                                         launched to create the gratuity
+#                                         situations. set to -1 to deactivate.
+#
+gratuity.situation.creator.task.hour=-1
+#
+#
+#------------------------------------------------------------------------------
+# Validation/Verification Configuration
 #------------------------------------------------------------------------------
 #
 #   validation.doctype: path to struts validation dtd file.
@@ -197,7 +213,7 @@ enrollment.faq.url=http://fenix-ashes.ist.utl.pt:8080/confluence/display/FAQ/FAQ
 #
 #
 #------------------------------------------------------------------------------
-# Logging Configuratio
+# Logging Configuration
 #------------------------------------------------------------------------------
 #
 #   log.profile.dir: name of dir where profiling log will be stored
@@ -212,7 +228,7 @@ log.image.directory=/home/marvin/workspace/fenix_head/build/standalone/ciapl/ima
 #
 #
 #------------------------------------------------------------------------------
-# Testing Configuratio
+# Testing Configuration
 #------------------------------------------------------------------------------
 #
 #   request.capture.filename: file to which user requests will be stored for

@@ -34,162 +34,130 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author David Santos
  */
 
-public class CurriculumDispatchAction extends DispatchAction
-{
+public class CurriculumDispatchAction extends DispatchAction {
 
-	public ActionForward getCurriculum(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward getCurriculum(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		String studentCurricularPlanID = request.getParameter("studentCPID");
-		if (studentCurricularPlanID == null)
-		{
-			studentCurricularPlanID = (String) request.getAttribute("studentCPID");
-		}
+        String studentCurricularPlanID = request.getParameter("studentCPID");
+        if (studentCurricularPlanID == null) {
+            studentCurricularPlanID = (String) request.getAttribute("studentCPID");
+        }
 
-		Integer executionDegreeId = getExecutionDegree(request);
-		List result = null;
-		try
-		{
-			Object args[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID)};
-			result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurriculum", args);
-		} catch (NotAuthorizedException e)
-		{
-			return mapping.findForward("NotAuthorized");
-		}
+        Integer executionDegreeId = getExecutionDegree(request);
+        List result = null;
+        try {
+            Object args[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID) };
+            result = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentCurriculum", args);
+        } catch (NotAuthorizedException e) {
+            return mapping.findForward("NotAuthorized");
+        }
 
-		BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
-		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(courseName);
-		chainComparator.addComparator(executionYear);
+        BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
+        BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(courseName);
+        chainComparator.addComparator(executionYear);
 
-		Collections.sort(result, chainComparator);
+        Collections.sort(result, chainComparator);
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		try
-		{
-			Object args[] = { Integer.valueOf(studentCurricularPlanID)};
-			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlan", args);
-		} catch (ExistingServiceException e)
-		{
-			throw new ExistingActionException(e);
-		}
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+        try {
+            Object args[] = { Integer.valueOf(studentCurricularPlanID) };
+            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadStudentCurricularPlan", args);
+        } catch (ExistingServiceException e) {
+            throw new ExistingActionException(e);
+        }
 
-		request.setAttribute(SessionConstants.CURRICULUM, result);
-		request.setAttribute(SessionConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+        request.setAttribute(SessionConstants.CURRICULUM, result);
+        request.setAttribute(SessionConstants.STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
 
-		return mapping.findForward("ShowStudentCurriculum");
-	}
+        return mapping.findForward("ShowStudentCurriculum");
+    }
 
-	public ActionForward getStudentCP(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		String studentNumber = getStudent(request);
-		List infoStudents = null;
+        String studentNumber = getStudent(request);
+        List infoStudents = null;
 
-		if (studentNumber == null)
-		{
-			try
-			{
-				Object args1[] = { userView.getUtilizador()};
-				InfoPerson infoPerson =
-					(InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername", args1);
+        if (studentNumber == null) {
+            try {
+                Object args1[] = { userView.getUtilizador() };
+                InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadPersonByUsername", args1);
 
-				Object args2[] = { infoPerson };
-				infoStudents = (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsByPerson", args2);
-			} catch (FenixServiceException e)
-			{
-				throw new FenixActionException(e);
-			}
-		} else
-		{
-			try
-			{
-				Object args[] = { Integer.valueOf(studentNumber)};
-				InfoStudent infoStudent =
-					(InfoStudent) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadStudentByNumberAndAllDegreeTypes",
-						args);
-				infoStudents = new ArrayList();
-				infoStudents.add(infoStudent);
-			} catch (FenixServiceException e)
-			{
-				throw new FenixActionException(e);
-			}
+                Object args2[] = { infoPerson };
+                infoStudents = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadStudentsByPerson", args2);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
+        } else {
+            try {
+                Object args[] = { Integer.valueOf(studentNumber) };
+                InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadStudentByNumberAndAllDegreeTypes", args);
+                infoStudents = new ArrayList();
+                infoStudents.add(infoStudent);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
 
-		}
+        }
 
-		List result = new ArrayList();
-		if (infoStudents != null)
-		{
-			Iterator iterator = infoStudents.iterator();
-			while (iterator.hasNext())
-			{
-				InfoStudent infoStudent = (InfoStudent) iterator.next();
-				try
-				{
-					Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType()};
-					List resultTemp =
-						(ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlans", args);
-					result.addAll(resultTemp);
-				} catch (NonExistingServiceException e)
-				{
-				}
-			}
-		}
+        List result = new ArrayList();
+        if (infoStudents != null) {
+            Iterator iterator = infoStudents.iterator();
+            while (iterator.hasNext()) {
+                InfoStudent infoStudent = (InfoStudent) iterator.next();
+                try {
+                    Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType() };
+                    List resultTemp = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                            "ReadStudentCurricularPlans", args);
+                    result.addAll(resultTemp);
+                } catch (NonExistingServiceException e) {
+                }
+            }
+        }
 
-		getExecutionDegree(request);
+        getExecutionDegree(request);
 
-		request.setAttribute("studentCPs", result);
+        request.setAttribute("studentCPs", result);
 
-		return mapping.findForward("ShowStudentCurricularPlans");
-	}
+        return mapping.findForward("ShowStudentCurricularPlans");
+    }
 
-	private String getStudent(HttpServletRequest request)
-	{
-		String studentNumber = request.getParameter("studentNumber");
-		if (studentNumber == null)
-		{
-			studentNumber = (String) request.getAttribute("studentNumber");
-		}
-		return studentNumber;
-	}
+    private String getStudent(HttpServletRequest request) {
+        String studentNumber = request.getParameter("studentNumber");
+        if (studentNumber == null) {
+            studentNumber = (String) request.getAttribute("studentNumber");
+        }
+        return studentNumber;
+    }
 
-	private Integer getExecutionDegree(HttpServletRequest request)
-	{
-		Integer executionDegreeId = null;
+    private Integer getExecutionDegree(HttpServletRequest request) {
+        Integer executionDegreeId = null;
 
-		String executionDegreeIdString = request.getParameter("executionDegreeId");
-		if (executionDegreeIdString == null)
-		{
-			executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
-		}
-		if (executionDegreeIdString != null)
-		{
-			executionDegreeId = Integer.valueOf(executionDegreeIdString);
-		}
-		request.setAttribute("executionDegreeId", executionDegreeId);
+        String executionDegreeIdString = request.getParameter("executionDegreeId");
+        if (executionDegreeIdString == null) {
+            executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
+        }
+        if (executionDegreeIdString != null) {
+            executionDegreeId = Integer.valueOf(executionDegreeIdString);
+        }
+        request.setAttribute("executionDegreeId", executionDegreeId);
 
-		return executionDegreeId;
-	}
+        return executionDegreeId;
+    }
 
 }

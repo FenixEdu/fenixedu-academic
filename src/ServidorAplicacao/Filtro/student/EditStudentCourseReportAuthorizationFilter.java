@@ -35,8 +35,7 @@ import Util.RoleType;
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
  *  
  */
-public class EditStudentCourseReportAuthorizationFilter extends
-        DomainObjectAuthorizationFilter {
+public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
     /*
      * (non-Javadoc)
@@ -59,47 +58,36 @@ public class EditStudentCourseReportAuthorizationFilter extends
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IPersistentStudentCourseReport persistentStudentCourseReport = sp
                     .getIPersistentStudentCourseReport();
-            IPersistentDelegate persistentDelegate = sp
-                    .getIPersistentDelegate();
-            IPersistentExecutionYear persistentExecutionYear = sp
-                    .getIPersistentExecutionYear();
+            IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-            IStudent student = persistentStudent.readByUsername(id
-                    .getUtilizador());
+            IStudent student = persistentStudent.readByUsername(id.getUtilizador());
             IDelegate delegate = persistentDelegate.readByStudent(student);
             IStudentCourseReport studentCourseReport = (IStudentCourseReport) persistentStudentCourseReport
                     .readByOID(StudentCourseReport.class, objectId);
-            ICurricularCourse curricularCourse = studentCourseReport
-                    .getCurricularCourse();
+            ICurricularCourse curricularCourse = studentCourseReport.getCurricularCourse();
             List scopes = curricularCourse.getScopes();
-            List years = (List) CollectionUtils.collect(scopes,
-                    new Transformer() {
-                        public Object transform(Object arg0) {
-                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                            return curricularCourseScope
-                                    .getCurricularSemester()
-                                    .getCurricularYear().getYear();
-                        }
-                    });
+            List years = (List) CollectionUtils.collect(scopes, new Transformer() {
+                public Object transform(Object arg0) {
+                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                    return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
+                }
+            });
             years = removeDuplicates(years);
-            IExecutionYear executionYear = persistentExecutionYear
-                    .readCurrentExecutionYear();
+            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
             Iterator iter = years.iterator();
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
-                List delegates = persistentDelegate
-                        .readByDegreeAndExecutionYearAndYearType(
-                                curricularCourse.getDegreeCurricularPlan()
-                                        .getDegree(), executionYear,
-                                DelegateYearType.getEnum(year.intValue()));
+                List delegates = persistentDelegate.readByDegreeAndExecutionYearAndYearType(
+                        curricularCourse.getDegreeCurricularPlan().getDegree(), executionYear,
+                        DelegateYearType.getEnum(year.intValue()));
 
                 if (delegates.contains(delegate))
                     return true;
             }
             return false;
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): "
-                    + e.getMessage());
+            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());

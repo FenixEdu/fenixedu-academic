@@ -19,32 +19,28 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DeleteTest implements IService {
 
-	public DeleteTest() {
-	}
+    public DeleteTest() {
+    }
 
-	public boolean run(Integer executionCourseId, Integer testId)
-			throws FenixServiceException {
+    public boolean run(Integer executionCourseId, Integer testId) throws FenixServiceException {
 
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB
-					.getInstance();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentTest persistentTest = persistentSuport
-					.getIPersistentTest();
-			ITest test = (ITest) persistentTest.readByOID(Test.class, testId,
-					true);
-			if (test == null)
-				throw new FenixServiceException();
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+            ITest test = (ITest) persistentTest.readByOID(Test.class, testId, true);
+            if (test == null)
+                throw new FenixServiceException();
 
-			IPersistentTestQuestion persistentTestQuestion = persistentSuport
-					.getIPersistentTestQuestion();
-			persistentTestQuestion.deleteByTest(test);
-			persistentTest.delete(test);
+            IPersistentTestQuestion persistentTestQuestion = persistentSuport
+                    .getIPersistentTestQuestion();
+            persistentTestQuestion.deleteByTest(test);
+            persistentTest.delete(test);
 
-			return true;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            return true;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

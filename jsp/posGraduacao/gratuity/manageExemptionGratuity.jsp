@@ -33,9 +33,8 @@
 </table>
 <p />
 
-<html:form action="/manageExemptionGratuity" >
+<html:form action="/manageExemptionGratuityLA" >
 <html:hidden property="page" value="1" />
-<html:hidden property="method" value="insertExemptionGratuity" />
 <html:hidden property="studentCurricularPlanID" value="<%=pageContext.findAttribute("studentCurricularPlanID").toString()%>" />
 <html:hidden property="executionYear"  value="<%=pageContext.findAttribute("executionYear").toString()%>" />
 <logic:present name="gratuitySituationID">
@@ -114,26 +113,16 @@
 	</tr>			
 	<tr><td  colspan="2" ><br /><br /><br /></td></tr>
 	<tr>
-		<td colspan="2" valign='middle' align="center">	
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />		
-			<html:submit styleClass="inputbutton">
-				<bean:message key="button.masterDegree.gratuity.submit" />
+		<td valign='middle' align="right">	
+			<html:submit property="method" styleClass="inputbutton">
+				<bean:message key="button.masterDegree.gratuity.give" />
 			</html:submit>				
-			</html:form>
-		
-			<html:form action="/manageExemptionGratuity" >
-				<html:hidden property="method" value="removeExemptionGratuity" />
-				<html:hidden property="studentCurricularPlanID" value="<%=pageContext.findAttribute("studentCurricularPlanID").toString()%>" />
-				<html:hidden property="executionYear"  value="<%=pageContext.findAttribute("executionYear").toString()%>" />
-				<logic:present name="gratuitySituationID">
-					<html:hidden property="gratuitySituationID" value="<%= ""+request.getAttribute("gratuitySituationID")%>" />
-				</logic:present>
-				<bean:define id="onclick">
-					return confirm('<bean:message key="message.confirm.delete.gratuitySituation"/>')
-				</bean:define>	
-				<html:submit styleClass="inputbutton" onclick='<%= onclick.toString() %>'>
-					<bean:message key="button.masterDegree.gratuity.removeExemption" />
-				</html:submit>
+			
+		</td>
+		<td valign='middle' align="left">
+			<html:submit property="method" styleClass="inputbutton">
+				<bean:message key="button.masterDegree.gratuity.remove" />
+			</html:submit>				
 		</td>
 	</tr>
 </table>

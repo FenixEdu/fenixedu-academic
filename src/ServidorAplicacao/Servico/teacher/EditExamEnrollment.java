@@ -29,9 +29,8 @@ public class EditExamEnrollment implements IService {
     public EditExamEnrollment() {
     }
 
-    public Boolean run(Integer executionCourseCode, Integer examCode,
-            Calendar beginDate, Calendar endDate, Calendar beginTime,
-            Calendar endTime) throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer examCode, Calendar beginDate,
+            Calendar endDate, Calendar beginTime, Calendar endTime) throws FenixServiceException {
 
         Boolean result = new Boolean(false);
 
@@ -39,21 +38,16 @@ public class EditExamEnrollment implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
 
-            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode,
-                    true);
+            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode, true);
             if (exam == null) {
                 throw new InvalidArgumentsServiceException();
             }
 
-            if ((exam.getEnrollmentBeginDay() == null || exam
-                    .getEnrollmentBeginTime() == null)
-                    || (!equalDates(beginDate, beginTime, exam
-                            .getEnrollmentBeginDay(), exam
+            if ((exam.getEnrollmentBeginDay() == null || exam.getEnrollmentBeginTime() == null)
+                    || (!equalDates(beginDate, beginTime, exam.getEnrollmentBeginDay(), exam
                             .getEnrollmentBeginTime()))) {
-                if (!verifyDates(Calendar.getInstance(),
-                        Calendar.getInstance(), beginDate, beginTime)) {
-                    throw new InvalidTimeIntervalServiceException(
-                            "error.beginDate.sooner.today");
+                if (!verifyDates(Calendar.getInstance(), Calendar.getInstance(), beginDate, beginTime)) {
+                    throw new InvalidTimeIntervalServiceException("error.beginDate.sooner.today");
                 }
             }
 
@@ -63,17 +57,14 @@ public class EditExamEnrollment implements IService {
             exam.setEnrollmentBeginTime(beginTime);
             exam.setEnrollmentEndTime(endTime);
 
-            if (!verifyDates(exam.getEnrollmentBeginDay(), exam
-                    .getEnrollmentBeginTime(), exam.getEnrollmentEndDay(), exam
-                    .getEnrollmentEndTime())) {
-                throw new InvalidTimeIntervalServiceException(
-                        "error.endDate.sooner.beginDate");
+            if (!verifyDates(exam.getEnrollmentBeginDay(), exam.getEnrollmentBeginTime(), exam
+                    .getEnrollmentEndDay(), exam.getEnrollmentEndTime())) {
+                throw new InvalidTimeIntervalServiceException("error.endDate.sooner.beginDate");
             }
 
-            if (!verifyDates(exam.getEnrollmentEndDay(), exam
-                    .getEnrollmentEndTime(), exam.getDay(), exam.getBeginning())) {
-                throw new InvalidTimeIntervalServiceException(
-                        "error.examDate.sooner.endDate");
+            if (!verifyDates(exam.getEnrollmentEndDay(), exam.getEnrollmentEndTime(), exam.getDay(),
+                    exam.getBeginning())) {
+                throw new InvalidTimeIntervalServiceException("error.examDate.sooner.endDate");
             }
 
             result = new Boolean(true);
@@ -85,8 +76,7 @@ public class EditExamEnrollment implements IService {
         return result;
     }
 
-    private boolean verifyDates(Calendar beginDay, Calendar beginTime,
-            Calendar endDay, Calendar endTime) {
+    private boolean verifyDates(Calendar beginDay, Calendar beginTime, Calendar endDay, Calendar endTime) {
         Calendar begin = Calendar.getInstance();
         begin.set(Calendar.YEAR, beginDay.get(Calendar.YEAR));
         begin.set(Calendar.MONTH, beginDay.get(Calendar.MONTH));
@@ -106,8 +96,7 @@ public class EditExamEnrollment implements IService {
         return begin.getTimeInMillis() < end.getTimeInMillis();
     }
 
-    private boolean equalDates(Calendar beginDay, Calendar beginTime,
-            Calendar endDay, Calendar endTime) {
+    private boolean equalDates(Calendar beginDay, Calendar beginTime, Calendar endDay, Calendar endTime) {
         Calendar begin = Calendar.getInstance();
         begin.set(Calendar.YEAR, beginDay.get(Calendar.YEAR));
         begin.set(Calendar.MONTH, beginDay.get(Calendar.MONTH));

@@ -6,7 +6,6 @@ import java.util.List;
  * @author David Santos in Jun 9, 2004
  */
 
-public interface IEnrollmentRule
-{
-	public List apply(List curricularCoursesToBeEnrolledIn);
+public interface IEnrollmentRule {
+    public List apply(List curricularCoursesToBeEnrolledIn);
 }

@@ -53,7 +53,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
                     Integer roomOid = new Integer(Integer.parseInt(roomOidString));
                     try {
                         infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
-                                new Object[] {roomOid});
+                                new Object[] { roomOid });
                     } catch (FenixServiceException e) {
                         throw new FenixActionException();
                     }
@@ -67,18 +67,21 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
             request.setAttribute(SessionConstants.ROOM, infoRoom);
             request.setAttribute(SessionConstants.ROOM_OID, infoRoom.getIdInternal());
 
-            //            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+            //            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod)
+            // request
             //                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
             //            Integer executionPeriodId=null;
             //            try
             //            {
-            //                executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+            //                executionPeriodId = new
+            // Integer(request.getParameter("executionPeriodId"));
             //            }
             //            catch (NumberFormatException e3)
             //            {
-            //                // ignore                
+            //                // ignore
             //            }
-            //            Object argsReadLessons[] = {infoExecutionPeriod, infoRoom,executionPeriodId};
+            //            Object argsReadLessons[] = {infoExecutionPeriod,
+            // infoRoom,executionPeriodId};
             ArrayList weeks = new ArrayList();
 
             try {
@@ -121,21 +124,23 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
                 today = (Calendar) weeks.get(indexWeek.intValue());
             }
 
-            Object argsReadLessonsAndExams[] = {infoRoom, today};
+            Object argsReadLessonsAndExams[] = { infoRoom, today };
 
             try {
-                /*                List lessons;
-                 lessons = (List) ServiceUtils.executeService(null,
-                 "LerAulasDeSalaEmSemestre", argsReadLessons);*/
+                /*
+                 * List lessons; lessons = (List)
+                 * ServiceUtils.executeService(null, "LerAulasDeSalaEmSemestre",
+                 * argsReadLessons);
+                 */
 
                 List showOccupations = (List) ServiceUtils.executeService(userView,
                         "ReadLessonsAndExamsInWeekAndRoom", argsReadLessonsAndExams);
 
-                /*                if (lessons != null)
-                 {
-                 request.setAttribute(SessionConstants.LESSON_LIST_ATT,
-                 lessons);
-                 }*/
+                /*
+                 * if (lessons != null) {
+                 * request.setAttribute(SessionConstants.LESSON_LIST_ATT,
+                 * lessons); }
+                 */
                 if (showOccupations != null) {
                     request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);
                 }
@@ -147,32 +152,22 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
             // Escolha de periodo execucao
             //            Object argsReadExecutionPeriods[] = {};
             //            ArrayList executionPeriods;
-            /*            try
-             {
-             executionPeriods = (ArrayList) ServiceManagerServiceFactory
-             .executeService(userView,
-             "ReadNotClosedExecutionPeriods",
-             argsReadExecutionPeriods);
-             }
-             catch (FenixServiceException e1)
-             {
-             throw new FenixActionException();
-             }
+            /*
+             * try { executionPeriods = (ArrayList) ServiceManagerServiceFactory
+             * .executeService(userView, "ReadNotClosedExecutionPeriods",
+             * argsReadExecutionPeriods); } catch (FenixServiceException e1) {
+             * throw new FenixActionException(); }
              */
-            /*            ArrayList executionPeriodsLabelValueList = new ArrayList();
-             for (int i = 0; i < executionPeriods.size(); i++)
-             {
-             infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods
-             .get(i);
-             executionPeriodsLabelValueList.add(new LabelValueBean(
-             infoExecutionPeriod.getName()
-             + " - "
-             + infoExecutionPeriod.getInfoExecutionYear()
-             .getYear(), "" + i));
-             }
-
-             request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
-             executionPeriodsLabelValueList);
+            /*
+             * ArrayList executionPeriodsLabelValueList = new ArrayList(); for
+             * (int i = 0; i < executionPeriods.size(); i++) {
+             * infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods
+             * .get(i); executionPeriodsLabelValueList.add(new LabelValueBean(
+             * infoExecutionPeriod.getName() + " - " +
+             * infoExecutionPeriod.getInfoExecutionYear() .getYear(), "" + i)); }
+             * 
+             * request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
+             * executionPeriodsLabelValueList);
              *///--------------------
             return mapping.findForward("Sucess");
 

@@ -10,30 +10,30 @@ import Dominio.ITeacher;
 import Dominio.teacher.IServiceProviderRegime;
 import Dominio.teacher.ServiceProviderRegime;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class ServiceProviderRegimeOJB extends ObjectFenixOJB implements IPersistentServiceProviderRegime
-{
+public class ServiceProviderRegimeOJB extends PersistentObjectOJB implements
+        IPersistentServiceProviderRegime {
 
     /**
-     * 
+     *  
      */
-    public ServiceProviderRegimeOJB()
-    {
+    public ServiceProviderRegimeOJB() {
         super();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorPersistente.teacher.IPersistentServiceProviderRegime#readByTeacher(Dominio.ITeacher)
      */
-    public IServiceProviderRegime readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+    public IServiceProviderRegime readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
         return (IServiceProviderRegime) queryObject(ServiceProviderRegime.class, criteria);

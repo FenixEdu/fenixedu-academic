@@ -20,60 +20,51 @@ import ServidorPersistente.IPersistentMasterDegreeProofVersion;
 import Util.State;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public class MasterDegreeProofVersionOJB
-	extends ObjectFenixOJB
-	implements IPersistentMasterDegreeProofVersion
-{
+public class MasterDegreeProofVersionOJB extends PersistentObjectOJB implements
+        IPersistentMasterDegreeProofVersion {
 
-	/** Creates a new instance of MasterDegreeProofVersionOJB */
-	public MasterDegreeProofVersionOJB()
-	{
-	}
+    /** Creates a new instance of MasterDegreeProofVersionOJB */
+    public MasterDegreeProofVersionOJB() {
+    }
 
-	public IMasterDegreeProofVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
+    public IMasterDegreeProofVersion readActiveByMasterDegreeThesis(
+            IMasterDegreeThesis masterDegreeThesis) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
 
-		criteria.addEqualTo("masterDegreeThesis.idInternal", masterDegreeThesis.getIdInternal());
-		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeProofVersion storedMasterDegreeProofVersion =
-			(IMasterDegreeProofVersion) queryObject(MasterDegreeThesisDataVersion.class, criteria);
+        criteria.addEqualTo("masterDegreeThesis.idInternal", masterDegreeThesis.getIdInternal());
+        criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
+        IMasterDegreeProofVersion storedMasterDegreeProofVersion = (IMasterDegreeProofVersion) queryObject(
+                MasterDegreeThesisDataVersion.class, criteria);
 
-		return storedMasterDegreeProofVersion;
-	}
+        return storedMasterDegreeProofVersion;
+    }
 
-	public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
+    public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(
+            IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
 
-		criteria.addEqualTo(
-			"masterDegreeThesis.studentCurricularPlan.idInternal",
-			studentCurricularPlan.getIdInternal());
-		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeProofVersion storedMasterDegreeProofVersion =
-			(IMasterDegreeProofVersion) queryObject(MasterDegreeProofVersion.class, criteria);
+        criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlan
+                .getIdInternal());
+        criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
+        IMasterDegreeProofVersion storedMasterDegreeProofVersion = (IMasterDegreeProofVersion) queryObject(
+                MasterDegreeProofVersion.class, criteria);
 
-		return storedMasterDegreeProofVersion;
-	}
+        return storedMasterDegreeProofVersion;
+    }
 
-	public List readNotActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
+    public List readNotActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
 
-		criteria.addEqualTo(
-			"masterDegreeThesis.studentCurricularPlan.idInternal",
-			studentCurricularPlan.getIdInternal());
-		criteria.addNotEqualTo("currentState", new Integer(State.ACTIVE));
-		List result = queryList(MasterDegreeProofVersion.class, criteria, "lastModification",false);
+        criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlan
+                .getIdInternal());
+        criteria.addNotEqualTo("currentState", new Integer(State.ACTIVE));
+        List result = queryList(MasterDegreeProofVersion.class, criteria, "lastModification", false);
 
-		return result;
-	}
+        return result;
+    }
 }

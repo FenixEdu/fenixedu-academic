@@ -25,28 +25,23 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * To change this generated comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class ReadBibliographicReferenceTest extends TestCaseReadServices
-{
+public class ReadBibliographicReferenceTest extends TestCaseReadServices {
 
-    public ReadBibliographicReferenceTest(String testName)
-    {
+    public ReadBibliographicReferenceTest(String testName) {
         super(testName);
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadBibliographicReference";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         ISuportePersistente sp = null;
         IExecutionYear executionYear = null;
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -57,18 +52,15 @@ public class ReadBibliographicReferenceTest extends TestCaseReadServices
             executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
             IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
-            executionCourse =
-                idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
+            executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",
+                    executionPeriod);
 
-            InfoExecutionCourse infoExecutionCourse =
-                (InfoExecutionCourse) Cloner.get(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             Object[] testArgs = { infoExecutionCourse, null };
 
             sp.confirmarTransaccao();
             return testArgs;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
             e.printStackTrace();
         }
@@ -76,17 +68,15 @@ public class ReadBibliographicReferenceTest extends TestCaseReadServices
         return null;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 3;
     }
-    protected Object getObjectToCompare()
-    {
+
+    protected Object getObjectToCompare() {
         return null;
     }
 }

@@ -29,16 +29,10 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class DeleteExecutionCoursesAction extends FenixAction
-{
+public class DeleteExecutionCoursesAction extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm deleteForm = (DynaActionForm) form;
@@ -49,25 +43,19 @@ public class DeleteExecutionCoursesAction extends FenixAction
 
         List errorCodes = new ArrayList();
 
-        try
-        {
+        try {
             errorCodes = (List) ServiceUtils.executeService(userView, "DeleteExecutionCourses", args);
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
-        if (!errorCodes.isEmpty())
-        {
+        if (!errorCodes.isEmpty()) {
             ActionErrors actionErrors = new ActionErrors();
             Iterator codesIter = errorCodes.iterator();
             ActionError error = null;
-            while (codesIter.hasNext())
-            {
-                error =
-                    new ActionError(
-                        "errors.invalid.delete.not.empty.execution.course",
-                        codesIter.next());
+            while (codesIter.hasNext()) {
+                error = new ActionError("errors.invalid.delete.not.empty.execution.course", codesIter
+                        .next());
                 actionErrors.add("errors.invalid.delete.not.empty.execution.course", error);
             }
             saveErrors(request, actionErrors);

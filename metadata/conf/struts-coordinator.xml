@@ -15,6 +15,7 @@
             <form-property name="shiftCode" type="java.lang.Integer" />
             <form-property name="objectCode" type="java.lang.Integer" />
             <form-property name="method" type="java.lang.String" />
+			<form-property name="viewPhoto" type="java.lang.String" />
         </form-bean>
 
 		<form-bean name="removeCoordinators"
@@ -149,8 +150,10 @@
 		<form-property name="secondaryArea" type="java.lang.Integer"/>
 		<form-property name="enrolledCurricularCoursesBefore" type="java.lang.Integer[]"/>
 		<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
-		<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
+		<form-property name="unenrolledCurricularCourses" type="java.lang.String[]"/>
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
+		<form-property name="isOptional" type="java.lang.String"/>
+		<form-property name="courseType" type="java.lang.String"/>
 	</form-bean>
 
 	<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -235,6 +238,17 @@
 			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
 			<form-property name="alteredField" type="java.lang.String" />
 			<form-property name="status" type="java.lang.String" />
+		</form-bean>
+
+		<!-- STUDENTS GRATUITY LIST -->		
+		<form-bean name="studentsGratuityListForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="executionYear" type="java.lang.String"/>
+            <form-property name="specialization" type="java.lang.String"/>
+            <form-property name="degree" type="java.lang.String"/>
+            <form-property name="situation" type="java.lang.String" />
 		</form-bean>
 
     </form-beans>
@@ -375,6 +389,18 @@
 	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/>
 	  </action>
 
+		<!-- Action for the Coordinator to List the Students Gratuity Situation -->
+		<action path="/studentsGratuityList"
+			type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
+			parameter="method"
+			name="studentsGratuityListForm"
+			scope="request"
+			input="/studentsGratuityList.do?method=prepareChooseDegree&amp;page=0"
+		>
+			<forward name="choose" path="/studentsGratuityList.do?method=chooseExecutionYear&amp;page=0" />
+			<forward name="chooseStudentsGratuityList" path="chooseStudentsGratuityList"/>
+			<forward name="studentsGratuityList" path="studentsGratuityList" />
+		</action>
 
         <!-- Prepare the Candidates Approval Process -->
         <action path="/prepareCandidateApproval"

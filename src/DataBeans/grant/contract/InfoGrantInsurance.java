@@ -16,7 +16,8 @@ import Util.CalendarUtil;
  */
 public class InfoGrantInsurance extends InfoObject {
 
-    //This is the value of a day of an insurance. It's static for all contracts.
+    //This is the value of a day of an insurance. It's static for all
+    // contracts.
     private static final double dayValueOfInsurance = 63.35;
 
     private Date dateEndInsurance;

@@ -20,25 +20,22 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes
  */
 public class EditTest implements IService {
-	
-	public EditTest() {
-	}
 
-	public boolean run(Integer executionCourseId, Integer testId, String title,
-			String information) throws FenixServiceException {
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB
-					.getInstance();
-			IPersistentTest persistentTest = persistentSuport
-					.getIPersistentTest();
-			ITest test = (ITest) persistentTest.readByOID(Test.class, testId,
-					true);
-			test.setTitle(title);
-			test.setInformation(information);
-			test.setLastModifiedDate(Calendar.getInstance().getTime());
-			return true;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+    public EditTest() {
+    }
+
+    public boolean run(Integer executionCourseId, Integer testId, String title, String information)
+            throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+            ITest test = (ITest) persistentTest.readByOID(Test.class, testId, true);
+            test.setTitle(title);
+            test.setInformation(information);
+            test.setLastModifiedDate(Calendar.getInstance().getTime());
+            return true;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

@@ -14,25 +14,40 @@ import java.util.List;
  */
 public interface ICursoExecucao extends Serializable, IDomainObject {
 
-	IExecutionYear getExecutionYear();
-	IDegreeCurricularPlan getCurricularPlan();
-	List getCoordinatorsList();
-	Boolean getTemporaryExamMap();
-	ICampus getCampus();
+    IExecutionYear getExecutionYear();
 
-	void setCurricularPlan(IDegreeCurricularPlan curricularPlan);
-	void setExecutionYear(IExecutionYear newExecutionYear);
-	void setCoordinatorsList(List coordinatorsList);
-	void setTemporaryExamMap(Boolean bool);
-	void setCampus(ICampus campus);
-	
-	// added by amsg 4 Jun 2004
-	IPeriod getPeriodLessonsFirstSemester();
-	IPeriod getPeriodExamsFirstSemester();
-	IPeriod getPeriodLessonsSecondSemester();
-	IPeriod getPeriodExamsSecondSemester();
-	void setPeriodLessonsFirstSemester(IPeriod p);
-	void setPeriodExamsFirstSemester(IPeriod p);
-	void setPeriodLessonsSecondSemester(IPeriod p);
-	void setPeriodExamsSecondSemester(IPeriod p);
+    IDegreeCurricularPlan getCurricularPlan();
+
+    List getCoordinatorsList();
+
+    Boolean getTemporaryExamMap();
+
+    ICampus getCampus();
+
+    void setCurricularPlan(IDegreeCurricularPlan curricularPlan);
+
+    void setExecutionYear(IExecutionYear newExecutionYear);
+
+    void setCoordinatorsList(List coordinatorsList);
+
+    void setTemporaryExamMap(Boolean bool);
+
+    void setCampus(ICampus campus);
+
+    // added by amsg 4 Jun 2004
+    IPeriod getPeriodLessonsFirstSemester();
+
+    IPeriod getPeriodExamsFirstSemester();
+
+    IPeriod getPeriodLessonsSecondSemester();
+
+    IPeriod getPeriodExamsSecondSemester();
+
+    void setPeriodLessonsFirstSemester(IPeriod p);
+
+    void setPeriodExamsFirstSemester(IPeriod p);
+
+    void setPeriodLessonsSecondSemester(IPeriod p);
+
+    void setPeriodExamsSecondSemester(IPeriod p);
 }

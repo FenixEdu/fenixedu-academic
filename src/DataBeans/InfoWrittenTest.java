@@ -6,9 +6,8 @@ package DataBeans;
 
 /**
  * @author Luis&Nuno
- *
+ *  
  */
-public class InfoWrittenTest extends InfoWrittenEvaluation
-{
+public class InfoWrittenTest extends InfoWrittenEvaluation {
 
 }

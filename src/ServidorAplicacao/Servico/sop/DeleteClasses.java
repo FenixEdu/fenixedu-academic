@@ -6,9 +6,9 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 import java.util.List;
 
 import Dominio.ITurma;
@@ -22,57 +22,56 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class DeleteClasses implements IServico {
 
-	private static DeleteClasses _servico = new DeleteClasses();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static DeleteClasses getService() {
-		return _servico;
-	}
+    private static DeleteClasses _servico = new DeleteClasses();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private DeleteClasses() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static DeleteClasses getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "DeleteClasses";
-	}
+    /**
+     * The actor of this class.
+     */
+    private DeleteClasses() {
+    }
 
-	public Object run(List classOIDs) throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "DeleteClasses";
+    }
 
-		boolean result = false;
+    public Object run(List classOIDs) throws FenixServiceException {
 
-		try {
+        boolean result = false;
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try {
 
-			for (int j = 0; j < classOIDs.size(); j++) {
-				ITurma schoolClass =
-					(ITurma) sp.getITurmaPersistente().readByOID(
-						Turma.class,
-						(Integer) classOIDs.get(j));
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-				for (int i = 0; i < schoolClass.getAssociatedShifts().size(); i++) {
-					ITurno shift = (ITurno) schoolClass.getAssociatedShifts().get(i);
-					sp.getITurnoPersistente().simpleLockWrite(shift);
-					shift.getAssociatedClasses().remove(schoolClass);
-				}
+            for (int j = 0; j < classOIDs.size(); j++) {
+                ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+                        (Integer) classOIDs.get(j));
 
-				sp.getITurmaPersistente().delete(schoolClass);
-			}
+                for (int i = 0; i < schoolClass.getAssociatedShifts().size(); i++) {
+                    ITurno shift = (ITurno) schoolClass.getAssociatedShifts().get(i);
+                    sp.getITurnoPersistente().simpleLockWrite(shift);
+                    shift.getAssociatedClasses().remove(schoolClass);
+                }
 
-			result = true;
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException("Error deleting class");
-		}
+                sp.getITurmaPersistente().delete(schoolClass);
+            }
 
-	return new Boolean(result);
+            result = true;
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException("Error deleting class");
+        }
 
-}
+        return new Boolean(result);
+
+    }
 
 }

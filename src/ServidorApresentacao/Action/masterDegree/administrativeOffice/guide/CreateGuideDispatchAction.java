@@ -57,189 +57,162 @@ import framework.factory.ServiceManagerServiceFactory;
 
 public class CreateGuideDispatchAction extends DispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
         DynaActionForm createGuideForm = (DynaActionForm) form;
 
         if (session != null) {
-            IUserView userView = (IUserView) session
-                    .getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             // Create the Degree Type List
-            ArrayList specializations = Specialization.toArrayList();
-            request.setAttribute(SessionConstants.SPECIALIZATIONS,
-                    specializations);
+            List specializations = Specialization.toArrayList();
+            request.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
 
             // Transport chosen Execution Degree
-            String executionDegreeIDParam = getFromRequest(
-                    SessionConstants.EXECUTION_DEGREE_OID, request);
+            String executionDegreeIDParam = getFromRequest(SessionConstants.EXECUTION_DEGREE_OID,
+                    request);
             Integer executionDegreeID = Integer.valueOf(executionDegreeIDParam);
             createGuideForm.set("executionDegreeID", executionDegreeID);
-            request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID,
-                    executionDegreeID);
+            request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
             InfoExecutionDegree infoExecutionDegree = null;
             try {
-                Object[] readExecutionDegreeArgs = { executionDegreeID};
-                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadExecutionDegreeByOID",
-                                readExecutionDegreeArgs);
+                Object[] readExecutionDegreeArgs = { executionDegreeID };
+                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadExecutionDegreeByOID", readExecutionDegreeArgs);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
 
             }
             if (infoExecutionDegree != null) {
-                request.setAttribute(SessionConstants.EXECUTION_DEGREE,
-                        infoExecutionDegree);
+                request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
             }
 
             session.removeAttribute(SessionConstants.PRINT_PASSWORD);
             session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
             //Contributor
-            String unexistinngContributor = getFromRequest(
-                    SessionConstants.UNEXISTING_CONTRIBUTOR, request);
-            if (unexistinngContributor != null
-                    && unexistinngContributor.length() > 0) {
-                request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
-                        Boolean.TRUE.toString());
+            String unexistinngContributor = getFromRequest(SessionConstants.UNEXISTING_CONTRIBUTOR,
+                    request);
+            if (unexistinngContributor != null && unexistinngContributor.length() > 0) {
+                request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
             }
 
             //Although the chosen contributor doen't exists in the Database,
             //all contributors in Database are show
             List result = null;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadAllContributors", null);
+                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadAllContributors", null);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
             }
 
-            ArrayList contributorList = new ArrayList();
+            List contributorList = new ArrayList();
             Iterator iterator = result.iterator();
             while (iterator.hasNext()) {
-                InfoContributor infoContributor = (InfoContributor) iterator
-                        .next();
-                contributorList.add(new LabelValueBean(infoContributor
-                        .getContributorName(), infoContributor
-                        .getContributorNumber().toString()));
+                InfoContributor infoContributor = (InfoContributor) iterator.next();
+                contributorList.add(new LabelValueBean(infoContributor.getContributorName(),
+                        infoContributor.getContributorNumber().toString()));
             }
-            request.setAttribute(SessionConstants.CONTRIBUTOR_LIST,
-                    contributorList);
+            request.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
 
-            request.setAttribute(SessionConstants.GUIDE_REQUESTER_LIST,
-                    GuideRequester.toArrayList());
+            request.setAttribute(SessionConstants.GUIDE_REQUESTER_LIST, GuideRequester.toArrayList());
 
             return mapping.findForward("PrepareSuccess");
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
 
     }
 
-    public ActionForward requesterChosen(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+    public ActionForward requesterChosen(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
 
         if (session != null) {
             //session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
-            IUserView userView = (IUserView) session
-                    .getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             DynaActionForm createGuideForm = (DynaActionForm) form;
 
             // Get the Information
-            Integer executionDegreeID = (Integer) createGuideForm
-                    .get("executionDegreeID");
+            Integer executionDegreeID = (Integer) createGuideForm.get("executionDegreeID");
 
             //requester
-            String graduationType = (String) createGuideForm
-                    .get("graduationType");
+            String graduationType = (String) createGuideForm.get("graduationType");
             String numberString = (String) createGuideForm.get("number");
             Integer number = new Integer(numberString);
             String requesterType = (String) createGuideForm.get("requester");
 
             //contributor
-            String contributorNumberString = (String) createGuideForm
-                    .get("contributorNumber");
-            String contributorList = (String) createGuideForm
-                    .get("contributorList");
+            String contributorNumberString = (String) createGuideForm.get("contributorNumber");
+            String contributorList = (String) createGuideForm.get("contributorList");
 
             Integer contributorNumber = null;
             Integer contributorNumberFromList = null;
 
-            if ((contributorNumberString != null)
-                    && (contributorNumberString.length() > 0))
-                    contributorNumber = new Integer(contributorNumberString);
+            if ((contributorNumberString != null) && (contributorNumberString.length() > 0))
+                contributorNumber = new Integer(contributorNumberString);
 
             if ((contributorList != null) && (contributorList.length() > 0))
-                    contributorNumberFromList = new Integer(contributorList);
+                contributorNumberFromList = new Integer(contributorList);
 
             InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
             try {
-                Object args[] = { executionDegreeID};
-                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadExecutionDegreeByOID",
-                                args);
+                Object args[] = { executionDegreeID };
+                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                        userView, "ReadExecutionDegreeByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
                 throw new FenixActionException(e);
             }
 
             List types = new ArrayList();
-            types.add(DocumentType.INSURANCE_TYPE);
+            //types.add(DocumentType.INSURANCE_TYPE);
             types.add(DocumentType.CERTIFICATE_TYPE);
             types.add(DocumentType.ENROLMENT_TYPE);
             types.add(DocumentType.EMOLUMENT_TYPE);
             types.add(DocumentType.FINE_TYPE);
             types.add(DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
             types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT_TYPE);
-            types
-                    .add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
-            types.add(DocumentType.GRATUITY_TYPE);
-            Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types};
+            types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
+            //types.add(DocumentType.GRATUITY_TYPE);
+            Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
             List studentGuideList = null;
             try {
-                studentGuideList = (List) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadCertificateList",
-                                argsAux);
+                studentGuideList = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadCertificateList", argsAux);
 
             } catch (NonExistingServiceException e) {
                 e.printStackTrace();
-                throw new NonExistingActionException(
-                        "A lista de guias para estudantes", e);
+                throw new NonExistingActionException("A lista de guias para estudantes", e);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
                 throw new FenixActionException(e);
             }
-            session.setAttribute(SessionConstants.CERTIFICATE_LIST,
-                    studentGuideList);
+            session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
 
-            String contributorName = (String) createGuideForm
-                    .get("contributorName");
-            String contributorAddress = (String) createGuideForm
-                    .get("contributorAddress");
+            String contributorName = (String) createGuideForm.get("contributorName");
+            String contributorAddress = (String) createGuideForm.get("contributorAddress");
 
             Integer contributorNumberToRead = null;
             if (contributorNumber != null)
-                    contributorNumberToRead = contributorNumber;
+                contributorNumberToRead = contributorNumber;
             if (contributorNumberFromList != null)
-                    contributorNumberToRead = contributorNumberFromList;
+                contributorNumberToRead = contributorNumberFromList;
 
             InfoGuide infoGuide = null;
             try {
-                Object args[] = { graduationType, infoExecutionDegree, number,
-                        requesterType, contributorNumberToRead,
-                        contributorName, contributorAddress};
+                Object args[] = { graduationType, infoExecutionDegree, number, requesterType,
+                        contributorNumberToRead, contributorName, contributorAddress };
 
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory
-                        .executeService(userView, "PrepareCreateGuide", args);
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                        "PrepareCreateGuide", args);
             } catch (ExistingServiceException e) {
                 e.printStackTrace();
                 throw new ExistingActionException("O Contribuinte", e);
@@ -247,16 +220,13 @@ public class CreateGuideDispatchAction extends DispatchAction {
                 e.printStackTrace();
                 throw new NoActiveStudentCurricularPlanActionException(e);
             } catch (NonExistingContributorServiceException e) {
-                request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
-                        Boolean.TRUE.toString());
-                request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID,
-                        executionDegreeID);
+                request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
+                request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
                 return mapping.getInputForward();
             } catch (NonExistingServiceException e) {
                 e.printStackTrace();
-                ActionError actionError = new ActionError(
-                        "error.nonExisting.requester");
+                ActionError actionError = new ActionError("error.nonExisting.requester");
                 ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("Unknown", actionError);
                 saveErrors(request, actionErrors);
@@ -267,24 +237,18 @@ public class CreateGuideDispatchAction extends DispatchAction {
             }
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
 
-            request.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType
-                    .toArrayList());
+            request.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
 
-            ArrayList guideSituations = new ArrayList();
-            guideSituations.add(new LabelValueBean(
-                    SituationOfGuide.NON_PAYED_STRING,
+            List guideSituations = new ArrayList();
+            guideSituations.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING,
                     SituationOfGuide.NON_PAYED_STRING));
-            guideSituations.add(new LabelValueBean(
-                    SituationOfGuide.PAYED_STRING,
+            guideSituations.add(new LabelValueBean(SituationOfGuide.PAYED_STRING,
                     SituationOfGuide.PAYED_STRING));
-            request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST,
-                    guideSituations);
+            request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
 
             request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
             request.setAttribute("graduationType", graduationType);
-            request
-                    .setAttribute(SessionConstants.REQUESTER_TYPE,
-                            requesterType);
+            request.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
 
             if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
                 session.removeAttribute(SessionConstants.REQUESTER_TYPE);
@@ -301,26 +265,23 @@ public class CreateGuideDispatchAction extends DispatchAction {
             }
 
             throw new FenixActionException("Unknown requester type!");
-        } 
-            throw new FenixActionException();
+        }
+        throw new FenixActionException();
     }
 
-    public ActionForward create(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
         if (!isTokenValid(request)) {
             return mapping.findForward("BackError");
-        } 
-            generateToken(request);
-            saveToken(request);
-        
+        }
+        generateToken(request);
+        saveToken(request);
 
         DynaActionForm createGuideForm = (DynaActionForm) form;
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String password = null;
 
@@ -331,22 +292,22 @@ public class CreateGuideDispatchAction extends DispatchAction {
         String othersRemarks = (String) createGuideForm.get("othersRemarks");
         String othersPriceString = (String) createGuideForm.get("othersPrice");
         String remarks = (String) createGuideForm.get("remarks");
-        String guideSituationString = (String) createGuideForm
-                .get("guideSituation");
+        String guideSituationString = (String) createGuideForm.get("guideSituation");
         String paymentType = (String) createGuideForm.get("paymentType");
 
         String graduationType = (String) request.getAttribute("graduationType");
         if (graduationType == null)
-                graduationType = request.getParameter("graduationType");
+            graduationType = request.getParameter("graduationType");
         request.setAttribute("graduationType", graduationType);
 
         Double othersPrice = null;
 
         try {
-            if ((othersPriceString != null)
-                    && (othersPriceString.length() != 0)) {
+            if ((othersPriceString != null) && (othersPriceString.length() != 0)) {
                 othersPrice = new Double(othersPriceString);
-                if (othersPrice.floatValue() < 0) { throw new NumberFormatException(); }
+                if (othersPrice.floatValue() < 0) {
+                    throw new NumberFormatException();
+                }
             }
         } catch (NumberFormatException e) {
             throw new InvalidInformationInFormActionException(new Throwable());
@@ -359,26 +320,23 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
         if ((guideSituationString.equals(SituationOfGuide.PAYED_STRING))
                 && (paymentType.equals(PaymentType.DEFAULT_STRING))) {
-            ActionError actionError = new ActionError(
-                    "error.paymentTypeRequired");
+            ActionError actionError = new ActionError("error.paymentTypeRequired");
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("Unknown", actionError);
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
         }
 
-        SituationOfGuide situationOfGuide = new SituationOfGuide(
-                guideSituationString);
-        InfoGuide infoGuide = (InfoGuide) session
-                .getAttribute(SessionConstants.GUIDE);
+        SituationOfGuide situationOfGuide = new SituationOfGuide(guideSituationString);
+        InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 
         InfoGuide newInfoGuide = null;
 
         try {
-            Object args[] = { infoGuide, othersRemarks, othersPrice, remarks,
-                    situationOfGuide, paymentType};
-            newInfoGuide = (InfoGuide) ServiceManagerServiceFactory
-                    .executeService(userView, "CreateGuide", args);
+            Object args[] = { infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide,
+                    paymentType };
+            newInfoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                    "CreateGuide", args);
         } catch (InvalidSituationServiceException e) {
             Object object = new Object();
             object = "Anulada";
@@ -386,20 +344,17 @@ public class CreateGuideDispatchAction extends DispatchAction {
         } catch (NonExistingContributorServiceException e) {
             //session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
             // Boolean.TRUE);
-            request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR,
-                    Boolean.TRUE.toString());
+            request.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE.toString());
             return mapping.getInputForward();
         }
 
         // Check if it's necessary to create a password for the candidate And to
         // change his situation
-        String requesterType = (String) request
-                .getAttribute(SessionConstants.REQUESTER_TYPE);
+        String requesterType = (String) request.getAttribute(SessionConstants.REQUESTER_TYPE);
         if (requesterType == null)
-                requesterType = request
-                        .getParameter(SessionConstants.REQUESTER_TYPE);
+            requesterType = request.getParameter(SessionConstants.REQUESTER_TYPE);
         if (requesterType == null)
-                requesterType = (String) createGuideForm.get("requester");
+            requesterType = (String) createGuideForm.get("requester");
 
         // We need to check if the Guide has been payed
         if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
@@ -410,9 +365,9 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
                 try {
                     Object args[] = { newInfoGuide.getInfoExecutionDegree(),
-                            newInfoGuide.getInfoPerson()};
-                    ServiceManagerServiceFactory.executeService(userView,
-                            "CreateCandidateSituation", args);
+                            newInfoGuide.getInfoPerson() };
+                    ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation",
+                            args);
                 } catch (FenixServiceException e) {
                     throw new FenixActionException();
                 }
@@ -420,18 +375,15 @@ public class CreateGuideDispatchAction extends DispatchAction {
                 if ((newInfoGuide.getInfoPerson().getPassword() == null)
                         || (newInfoGuide.getInfoPerson().getPassword().length() == 0)) {
                     // Generate the password
-                    password = RandomStringGenerator
-                            .getRandomStringGenerator(8);
+                    password = RandomStringGenerator.getRandomStringGenerator(8);
                     newInfoGuide.getInfoPerson().setPassword(password);
 
                     // Write the Person
-                   
+
                     try {
-                        Object args[] = {
-                                newInfoGuide.getInfoPerson().getIdInternal(),
-                                password};
-                        ServiceManagerServiceFactory.executeService(userView,
-                                "ChangePersonPassword", args);
+                        Object args[] = { newInfoGuide.getInfoPerson().getIdInternal(), password };
+                        ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword",
+                                args);
                     } catch (FenixServiceException e) {
                         throw new FenixActionException();
                     }
@@ -439,24 +391,20 @@ public class CreateGuideDispatchAction extends DispatchAction {
                     // Put variable in Session to Inform that it's necessary to
                     // print the password
 
-                    session.setAttribute(SessionConstants.PRINT_PASSWORD,
-                            Boolean.TRUE);
+                    session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
 
                 } else {
-                    session.setAttribute(SessionConstants.PRINT_INFORMATION,
-                            Boolean.TRUE);
+                    session.setAttribute(SessionConstants.PRINT_INFORMATION, Boolean.TRUE);
                 }
             }
         }
         session.removeAttribute(SessionConstants.GUIDE);
         session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
 
-        if (request
-                .getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
+        if (request.getParameter(SessionConstants.REQUESTER_NUMBER) != null) {
             Integer numberRequester = new Integer(request
                     .getParameter(SessionConstants.REQUESTER_NUMBER));
-            request.setAttribute(SessionConstants.REQUESTER_NUMBER,
-                    numberRequester);
+            request.setAttribute(SessionConstants.REQUESTER_NUMBER, numberRequester);
         }
         return mapping.findForward("CreateSuccess");
 

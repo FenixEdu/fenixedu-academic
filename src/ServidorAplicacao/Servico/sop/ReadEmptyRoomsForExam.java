@@ -20,52 +20,49 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Luis Cruz & Sara Ribeiro
  */
 public class ReadEmptyRoomsForExam implements IServico {
-	private static ReadEmptyRoomsForExam serviceInstance =
-		new ReadEmptyRoomsForExam();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadEmptyRoomsForExam getService() {
-		return serviceInstance;
-	}
+    private static ReadEmptyRoomsForExam serviceInstance = new ReadEmptyRoomsForExam();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadEmptyRoomsForExam() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadEmptyRoomsForExam getService() {
+        return serviceInstance;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadEmptyRoomsForExam";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadEmptyRoomsForExam() {
+    }
 
-	public List run(InfoExam infoExam) throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ReadEmptyRoomsForExam";
+    }
 
-		List availableInfoRooms = null;
+    public List run(InfoExam infoExam) throws FenixServiceException {
 
-		Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
-			public Object transform(Object input) {
-				return Cloner.copyRoom2InfoRoom((ISala) input);
-			}
-		};
+        List availableInfoRooms = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ISalaPersistente persistentRoom = sp.getISalaPersistente();
-			IExam exam = Cloner.copyInfoExam2IExam(infoExam);
-			List availableRooms = persistentRoom.readAvailableRooms(exam);
-			availableInfoRooms =
-				(List) CollectionUtils.collect(
-					availableRooms,
-					TRANSFORM_TO_INFOROOM);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+        Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
+            public Object transform(Object input) {
+                return Cloner.copyRoom2InfoRoom((ISala) input);
+            }
+        };
 
-		return availableInfoRooms;
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISalaPersistente persistentRoom = sp.getISalaPersistente();
+            IExam exam = Cloner.copyInfoExam2IExam(infoExam);
+            List availableRooms = persistentRoom.readAvailableRooms(exam);
+            availableInfoRooms = (List) CollectionUtils.collect(availableRooms, TRANSFORM_TO_INFOROOM);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+        return availableInfoRooms;
+    }
 
 }

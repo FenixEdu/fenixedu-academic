@@ -26,61 +26,44 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class ViewRoomForExamsFormAction extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession();
-		request.removeAttribute(SessionConstants.INFO_SECTION);
-		if (session != null) {
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession();
+        request.removeAttribute(SessionConstants.INFO_SECTION);
+        if (session != null) {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String roomId = (String) request.getAttribute("roomId");
+            String roomId = (String) request.getAttribute("roomId");
 
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) this
-					.servlet
-					.getServletContext()
-					.getAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) this.servlet
+                    .getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-			Object argsReadRoom[] = { new Integer(roomId) };
+            Object argsReadRoom[] = { new Integer(roomId) };
 
-			InfoRoom infoRoom = null;
-			try {
-				infoRoom =
-					(InfoRoom) ServiceUtils.executeService(
-						null,
-						"ReadRoomByOID",
-						argsReadRoom);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException();
-			}
+            InfoRoom infoRoom = null;
+            try {
+                infoRoom = (InfoRoom) ServiceUtils.executeService(null, "ReadRoomByOID", argsReadRoom);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException();
+            }
 
-			Object[] args =
-				{ infoRoom, infoExecutionPeriod };
-			InfoRoomExamsMap infoExamsMap;
-			try {
-				infoExamsMap =
-					(InfoRoomExamsMap) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadRoomExamsMap",
-						args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException(e);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
-			request.setAttribute("publico.infoRoom", infoRoom);
+            Object[] args = { infoRoom, infoExecutionPeriod };
+            InfoRoomExamsMap infoExamsMap;
+            try {
+                infoExamsMap = (InfoRoomExamsMap) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadRoomExamsMap", args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException(e);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
+            request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+            request.setAttribute("publico.infoRoom", infoRoom);
 
-			return mapping.findForward("Sucess");
-		} 
-			throw new FenixActionException();
-		
+            return mapping.findForward("Sucess");
+        }
+        throw new FenixActionException();
 
-	}
+    }
 }

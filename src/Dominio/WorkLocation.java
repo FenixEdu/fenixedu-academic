@@ -8,33 +8,28 @@ package Dominio;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class WorkLocation extends DomainObject implements IWorkLocation
-{
+public class WorkLocation extends DomainObject implements IWorkLocation {
     private String name;
 
     /**
-	 * @return Returns the name.
-	 */
-    public String getName()
-    {
+     * @return Returns the name.
+     */
+    public String getName() {
         return name;
     }
 
     /**
-	 * @param name
-	 *            The name to set.
-	 */
-    public void setName(String name)
-    {
+     * @param name
+     *            The name to set.
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean result = false;
 
-        if (obj instanceof IWorkLocation)
-        {
+        if (obj instanceof IWorkLocation) {
             IWorkLocation workLocation = (IWorkLocation) obj;
             result = this.name.equals(workLocation.getName());
         }

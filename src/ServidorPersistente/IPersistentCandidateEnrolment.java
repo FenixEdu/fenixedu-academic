@@ -10,8 +10,7 @@ import Dominio.IMasterDegreeCandidate;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public interface IPersistentCandidateEnrolment extends IPersistentObject
-{
+public interface IPersistentCandidateEnrolment extends IPersistentObject {
 
     /**
      * @param candidateEnrolment
@@ -21,8 +20,7 @@ public interface IPersistentCandidateEnrolment extends IPersistentObject
 
     /**
      * @param masterDegreeCandidate
-     * @return 
-     * @throws
+     * @return @throws
      *         ExcepcaoPersistencia
      */
     public List readByMDCandidate(IMasterDegreeCandidate masterDegreeCandidate)

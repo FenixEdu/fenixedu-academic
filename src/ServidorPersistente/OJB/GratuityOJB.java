@@ -16,16 +16,13 @@ import Util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GratuityOJB extends ObjectFenixOJB implements IPersistentGratuity
-{
+public class GratuityOJB extends PersistentObjectOJB implements IPersistentGratuity {
 
-    public GratuityOJB()
-    {
+    public GratuityOJB() {
     }
 
     public List readByStudentCurricularPlanID(Integer studentCurricularPlanID)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("keyStudentCurricularPlan", studentCurricularPlanID);
         return queryList(Gratuity.class, crit);
@@ -33,8 +30,7 @@ public class GratuityOJB extends ObjectFenixOJB implements IPersistentGratuity
     }
 
     public IGratuity readByStudentCurricularPlanIDAndState(Integer studentCurricularPlanID, State state)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("keyStudentCurricularPlan", studentCurricularPlanID);
         crit.addEqualTo("state", state);

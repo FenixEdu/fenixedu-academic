@@ -16,30 +16,32 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class ReadOtherTypeCreditLineByOidService extends ReadDomainObjectService
-{
+public class ReadOtherTypeCreditLineByOidService extends ReadDomainObjectService {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return OtherTypeCreditLine.class;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentOtherTypeCreditLine();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
         return Cloner.copyIOtherTypeCreditLine2InfoOtherCreditLine((IOtherTypeCreditLine) domainObject);
     }
 

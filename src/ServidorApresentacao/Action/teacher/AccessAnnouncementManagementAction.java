@@ -23,32 +23,34 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class AccessAnnouncementManagementAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form,  
-		HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		HttpSession session = request.getSession(false);
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object args[] = new Object[1];
-		args[0] = infoSite;
-		
-		List announcements = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAnnouncements", args);
-		//remove old announcement list
-		session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-		//put new announcement list
-		Collections.sort(announcements);
-		session.setAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST, announcements);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-		session.removeAttribute("insertAnnouncementForm");
+        Object args[] = new Object[1];
+        args[0] = infoSite;
 
+        List announcements = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadAnnouncements", args);
+        //remove old announcement list
+        session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
+        //put new announcement list
+        Collections.sort(announcements);
+        session.setAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST, announcements);
 
-		if (!(announcements.isEmpty())){
-			return mapping.findForward("AnnouncementManagement");}
-		
-		    session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-			return mapping.findForward("EditAnnouncement");} 
-	
+        session.removeAttribute("insertAnnouncementForm");
+
+        if (!(announcements.isEmpty())) {
+            return mapping.findForward("AnnouncementManagement");
+        }
+
+        session.removeAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
+        return mapping.findForward("EditAnnouncement");
+    }
+
 }

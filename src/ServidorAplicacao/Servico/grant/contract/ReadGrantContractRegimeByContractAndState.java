@@ -48,7 +48,7 @@ public class ReadGrantContractRegimeByContractAndState implements IService {
         if (contractRegimes == null)
             return new ArrayList();
 
-        ArrayList infoContractRegimeList = (ArrayList) CollectionUtils.collect(contractRegimes,
+        List infoContractRegimeList = (ArrayList) CollectionUtils.collect(contractRegimes,
                 new Transformer() {
                     public Object transform(Object input) {
                         IGrantContractRegime grantContractRegime = (IGrantContractRegime) input;

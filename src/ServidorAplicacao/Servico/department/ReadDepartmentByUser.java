@@ -20,28 +20,24 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jpvl
  */
-public class ReadDepartmentByUser implements IService
-{
-    public ReadDepartmentByUser()
-    {
+public class ReadDepartmentByUser implements IService {
+    public ReadDepartmentByUser() {
     }
 
-    public InfoDepartment run(String username) throws FenixServiceException
-    {
+    public InfoDepartment run(String username) throws FenixServiceException {
         InfoDepartment infoDepartment = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
             IPessoa person = personDAO.lerPessoaPorUsername(username);
             List departmentList = person.getManageableDepartmentCredits();
-            
-            infoDepartment = Cloner.copyIDepartment2InfoDepartment((IDepartment) departmentList.get(0));
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            
+            if (departmentList != null && !departmentList.isEmpty()) {
+                infoDepartment = Cloner.copyIDepartment2InfoDepartment((IDepartment) departmentList
+                        .get(0));
+            }
+        } catch (ExcepcaoPersistencia e) {
+
             throw new FenixServiceException("Problems on database!", e);
         }
         return infoDepartment;

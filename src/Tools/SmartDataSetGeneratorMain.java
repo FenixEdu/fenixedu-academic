@@ -1,4 +1,5 @@
 package Tools;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,59 +10,42 @@ import java.sql.SQLException;
  */
 
 /**
- * @author Shezad Anavarali (sana@mega.ist.utl.pt) 
+ * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class SmartDataSetGeneratorMain
-{
+public class SmartDataSetGeneratorMain {
 
     /**
-	 *  
-	 */
-    public SmartDataSetGeneratorMain()
-    {
+     *  
+     */
+    public SmartDataSetGeneratorMain() {
         super();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SmartDataSetGenerator dataSetGen = null;
 
-        try
-        {
-            if (args.length > 0)
-            {
+        try {
+            if (args.length > 0) {
                 String filePath = args[0];
                 filePath = filePath.replaceAll("\\", "/");
                 dataSetGen = new SmartDataSetGenerator(filePath);
-            }
-            else
-            {
+            } else {
                 dataSetGen = new SmartDataSetGenerator();
             }
 
             dataSetGen.writeDataSet();
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             System.out.println("Configuration file not found.Wrong Format");
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             System.out.println("Configuration file not found.");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (SQLException e)
-        {
-            
+        } catch (SQLException e) {
+
             e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            
+        } catch (Exception e) {
+
             e.printStackTrace();
         }
     }

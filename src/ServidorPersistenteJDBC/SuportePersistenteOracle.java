@@ -10,81 +10,85 @@ import ServidorPersistenteJDBC.Relacional.UtilRelacionalOracle;
 import constants.assiduousness.Constants;
 
 /**
- *
- * @author  Nanda & Tânia
+ * 
+ * @author Nanda & Tânia
  */
 public class SuportePersistenteOracle {
-  private static SuportePersistenteOracle _instance = null;
-  
-  private SuportePersistenteOracle(String filename) {
-    UtilRelacionalOracle.inicializarBaseDados(filename);
-  }
+    private static SuportePersistenteOracle _instance = null;
 
-  /**
-   * 
-   *@deprecated
-   */
-  public void apagarDados() {
-//    try {
-//      iniciarTransaccao();
-//      try {
-//        UtilRelacionalOracle.limparTabelas();
-//      } catch (Exception e) {
-//        cancelarTransaccao();
-//      }
-//      confirmarTransaccao();
-//    } catch (Exception e) {
-//      System.out.println("SuportePersistenteOracle.apagarDados: " + e.toString());
-//    }
-  }
-  
-  public int ultimoIdGerado() {
-    int ultimoIdGerado = 0;
-    try {
-      ultimoIdGerado = UtilRelacionalOracle.ultimoIdGerado();
-    } catch (Exception e) {
-      System.out.println("SuportePersistenteOracle.ultimoIdGerado: " + e.toString());
+    private SuportePersistenteOracle(String filename) {
+        UtilRelacionalOracle.inicializarBaseDados(filename);
     }
-    return ultimoIdGerado;
-  }
-  
-  public void iniciarTransaccao() throws Exception {
-    UtilRelacionalOracle.iniciarTransaccao();
-  }
-  
-  public void confirmarTransaccao() throws Exception {
-    UtilRelacionalOracle.confirmarTransaccao();
-  }
-  
-  public void cancelarTransaccao() throws Exception {
-    UtilRelacionalOracle.cancelarTransaccao();
-  }
-  
-  public static synchronized SuportePersistenteOracle getInstance() {    
-    if (_instance == null) {
-      _instance = new SuportePersistenteOracle(Constants.CONFIG_SERVIDORPERSISTENTE_ORACLE);
+
+    /**
+     * 
+     * @deprecated
+     */
+    public void apagarDados() {
+        //    try {
+        //      iniciarTransaccao();
+        //      try {
+        //        UtilRelacionalOracle.limparTabelas();
+        //      } catch (Exception e) {
+        //        cancelarTransaccao();
+        //      }
+        //      confirmarTransaccao();
+        //    } catch (Exception e) {
+        //      System.out.println("SuportePersistenteOracle.apagarDados: " +
+        // e.toString());
+        //    }
     }
-    return _instance;
-  }
-  
-  public IFuncionarioPersistente iFuncionarioPersistente() {
-	  return new FuncionarioRelacionalOracle();
-	}
-	
-  public IMarcacaoPontoPersistente iMarcacaoPontoPersistente() {
-    return new MarcacaoPontoRelacionalOracle();
-  }
-	public IRegularizacaoMarcacaoPontoPersistente iRegularizacaoMarcacaoPontoPersistente() {
-		return new RegularizacaoMarcacaoPontoRelacionalOracle();
-	}
-	
-	public IHorarioPersistente iHorarioPersistente() {
-		return new HorarioRelacionalOracle();
-	}
-  public ICartaoPersistente iCartaoPersistente() {
-    return new CartaoRelacionalOracle();
-  }
-	public IJustificacaoPersistente iJustificacaoPersistente() {
-		return new JustificacaoRelacionalOracle();
-	}
+
+    public int ultimoIdGerado() {
+        int ultimoIdGerado = 0;
+        try {
+            ultimoIdGerado = UtilRelacionalOracle.ultimoIdGerado();
+        } catch (Exception e) {
+            System.out.println("SuportePersistenteOracle.ultimoIdGerado: " + e.toString());
+        }
+        return ultimoIdGerado;
+    }
+
+    public void iniciarTransaccao() throws Exception {
+        UtilRelacionalOracle.iniciarTransaccao();
+    }
+
+    public void confirmarTransaccao() throws Exception {
+        UtilRelacionalOracle.confirmarTransaccao();
+    }
+
+    public void cancelarTransaccao() throws Exception {
+        UtilRelacionalOracle.cancelarTransaccao();
+    }
+
+    public static synchronized SuportePersistenteOracle getInstance() {
+        if (_instance == null) {
+            _instance = new SuportePersistenteOracle(Constants.CONFIG_SERVIDORPERSISTENTE_ORACLE);
+        }
+        return _instance;
+    }
+
+    public IFuncionarioPersistente iFuncionarioPersistente() {
+        return new FuncionarioRelacionalOracle();
+    }
+
+    public IMarcacaoPontoPersistente iMarcacaoPontoPersistente() {
+        return new MarcacaoPontoRelacionalOracle();
+    }
+
+    public IRegularizacaoMarcacaoPontoPersistente iRegularizacaoMarcacaoPontoPersistente() {
+        return new RegularizacaoMarcacaoPontoRelacionalOracle();
+    }
+
+    public IHorarioPersistente iHorarioPersistente() {
+        return new HorarioRelacionalOracle();
+    }
+
+    public ICartaoPersistente iCartaoPersistente() {
+        return new CartaoRelacionalOracle();
+    }
+
+    public IJustificacaoPersistente iJustificacaoPersistente() {
+        return new JustificacaoRelacionalOracle();
+    }
 }

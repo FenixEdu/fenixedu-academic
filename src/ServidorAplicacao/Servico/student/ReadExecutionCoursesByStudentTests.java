@@ -22,48 +22,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadExecutionCoursesByStudentTests implements IServico
-{
+public class ReadExecutionCoursesByStudentTests implements IServico {
 
-	private static ReadExecutionCoursesByStudentTests service = new ReadExecutionCoursesByStudentTests();
+    private static ReadExecutionCoursesByStudentTests service = new ReadExecutionCoursesByStudentTests();
 
-	public static ReadExecutionCoursesByStudentTests getService()
-	{
-		return service;
-	}
+    public static ReadExecutionCoursesByStudentTests getService() {
+        return service;
+    }
 
-	public String getNome()
-	{
-		return "ReadExecutionCoursesByStudentTests";
-	}
+    public String getNome() {
+        return "ReadExecutionCoursesByStudentTests";
+    }
 
-	public Object run(String userName) throws FenixServiceException
-	{
-		List result = new ArrayList();
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+    public Object run(String userName) throws FenixServiceException {
+        List result = new ArrayList();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
 
-			List attendList =
-				persistentSuport.getIFrequentaPersistente().readByStudentNumber(student.getNumber());
+            List attendList = persistentSuport.getIFrequentaPersistente().readByStudentNumber(
+                    student.getNumber());
 
-			Iterator it = attendList.iterator();
-			while (it.hasNext())
-			{
-				IFrequenta attend = (Frequenta) it.next();
-				IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-				if (persistentSuport
-					.getIPersistentStudentTestQuestion()
-					.countStudentTestByStudentAndExecutionCourse(executionCourse, student)
-					!= 0)
-					result.add(Cloner.get(executionCourse));
-			}
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-		return result;
-	}
+            Iterator it = attendList.iterator();
+            while (it.hasNext()) {
+                IFrequenta attend = (Frequenta) it.next();
+                IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+                if (persistentSuport.getIPersistentStudentTestQuestion()
+                        .countStudentTestByStudentAndExecutionCourse(executionCourse, student) != 0)
+                    result.add(Cloner.get(executionCourse));
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return result;
+    }
 }

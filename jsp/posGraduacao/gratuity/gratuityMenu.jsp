@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+
 <ul>
     <li><html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" /></html:link></li>
     <li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>
@@ -10,8 +11,11 @@
     <p><b><bean:message key="link.masterDegree.administrativeOffice.gratuity" /></b></p>
 <ul>
 	<blockquote>
-	    <li><html:link page="/readStudent.do?method=prepareReadStudent&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></html:link></li>
+	    <li><html:link page="/studentSituation.do?method=chooseStudent&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.studentSituation" /></html:link></li>
+	    <li><html:link page="/readStudent.do?method=prepareReadStudent&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertExemption" /></html:link></li>		
 	    <li><html:link page="/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear"><bean:message key="link.masterDegree.administrativeOffice.gratuity.insertGratuity"/></html:link></li>
+		<li><html:link page="/editInsuranceValue.do?method=chooseExecutionYear"><bean:message key="link.masterDegree.administrativeOffice.gratuity.defineInsuranceValue"/></html:link></li>
+	    <li><html:link page="/fixSibsPaymentFileEntries.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.gratuity.fixConflicts"/></html:link></li>
 	    <li><html:link page="/studentsGratuityList.do?method=chooseExecutionYear&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></html:link></li>
 	</blockquote>
 </ul>

@@ -59,6 +59,23 @@
 				<arg0 key="label.student.number" resource="true"/>
 			</field>
 		</form>
-
+		
+		<!-- =================== Print registration declaration =================== -->
+		<form name="studentNumberForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>
+		
+		<!-- =================== Generate enrollment declaration =================== -->
+		<!--<form name="studentsNumbersBetweenForm">
+			<field property="firstStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+			<field property="lastStStudentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>-->
+		
 	</formset>
 </form-validation>

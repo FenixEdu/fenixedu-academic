@@ -42,16 +42,15 @@ public class DeleteSection implements IServico {
             throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             ISite site = null;
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
             site = persistentSite.readByExecutionCourse(executionCourse);
-            ISection sectionToDelete = (ISection) persistentSection.readByOID(
-                    Section.class, sectionCode);
+            ISection sectionToDelete = (ISection) persistentSection
+                    .readByOID(Section.class, sectionCode);
             if (sectionToDelete == null) {
                 throw new FenixServiceException("non existing section");
             }
@@ -71,16 +70,14 @@ public class DeleteSection implements IServico {
             sp.confirmarTransaccao();
 
             sp.iniciarTransaccao();
-            List sectionsReordered = persistentSection.readBySiteAndSection(
-                    site, superiorSection);
+            List sectionsReordered = persistentSection.readBySiteAndSection(site, superiorSection);
             Iterator iterSections = sectionsReordered.iterator();
             while (iterSections.hasNext()) {
                 ISection section = (ISection) iterSections.next();
                 Integer sectionOrder = section.getSectionOrder();
                 if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
                     persistentSection.simpleLockWrite(section);
-                    section.setSectionOrder(new Integer(
-                            sectionOrder.intValue() - 1));
+                    section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
                 }
             }
             return new Boolean(true);

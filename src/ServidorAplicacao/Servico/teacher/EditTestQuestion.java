@@ -23,29 +23,25 @@ import Util.tests.CorrectionFormula;
 /**
  * @author Susana Fernandes
  */
-public class EditTestQuestion implements IService
-{
+public class EditTestQuestion implements IService {
 
-    public EditTestQuestion()
-    {
+    public EditTestQuestion() {
     }
 
     public boolean run(Integer executionCourseId, Integer testId, Integer testQuestionId,
             Integer questionOrder, Double questionValue, CorrectionFormula formula)
-            throws FenixServiceException
-    {
-        try
-        {
+            throws FenixServiceException {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentTestQuestion persistentTestQuestion = persistentSuport
                     .getIPersistentTestQuestion();
-            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(TestQuestion.class, testQuestionId, true);
+            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(
+                    TestQuestion.class, testQuestionId, true);
             if (testQuestion == null)
                 throw new InvalidArgumentsServiceException();
             testQuestion.setTestQuestionValue(questionValue);
             testQuestion.setCorrectionFormula(formula);
-            if (!questionOrder.equals(new Integer(-2)))
-            {
+            if (!questionOrder.equals(new Integer(-2))) {
                 IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
                 ITest test = (ITest) persistentTest.readByOID(Test.class, testId, false);
                 List testQuestionList = persistentTestQuestion.readByTest(test);
@@ -55,33 +51,26 @@ public class EditTestQuestion implements IService
 
                 Iterator it = testQuestionList.iterator();
                 Integer questionOrderOld = testQuestion.getTestQuestionOrder();
-                if (questionOrder.compareTo(questionOrderOld) < 0)
-                {
+                if (questionOrder.compareTo(questionOrderOld) < 0) {
                     questionOrder = new Integer(questionOrder.intValue() + 1);
-                    while (it.hasNext())
-                    {
+                    while (it.hasNext()) {
                         ITestQuestion testQuestionIt = (ITestQuestion) it.next();
                         Integer questionOrderIt = testQuestionIt.getTestQuestionOrder();
 
                         if (questionOrderIt.compareTo(questionOrder) >= 0
-                                && questionOrderIt.compareTo(questionOrderOld) < 0)
-                        {
+                                && questionOrderIt.compareTo(questionOrderOld) < 0) {
                             persistentTestQuestion.lockWrite(testQuestionIt);
                             testQuestionIt.setTestQuestionOrder(new Integer(
                                     questionOrderIt.intValue() + 1));
                         }
                     }
-                }
-                else if (questionOrder.compareTo(questionOrderOld) > 0)
-                {
-                    while (it.hasNext())
-                    {
+                } else if (questionOrder.compareTo(questionOrderOld) > 0) {
+                    while (it.hasNext()) {
                         ITestQuestion testQuestionIt = (ITestQuestion) it.next();
                         Integer questionOrderIt = testQuestionIt.getTestQuestionOrder();
 
                         if (questionOrderIt.compareTo(questionOrder) <= 0
-                                && questionOrderIt.compareTo(questionOrderOld) > 0)
-                        {
+                                && questionOrderIt.compareTo(questionOrderOld) > 0) {
                             persistentTestQuestion.lockWrite(testQuestionIt);
                             testQuestionIt.setTestQuestionOrder(new Integer(
                                     questionOrderIt.intValue() - 1));
@@ -91,9 +80,7 @@ public class EditTestQuestion implements IService
                 testQuestion.setTestQuestionOrder(questionOrder);
             }
             return true;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

@@ -18,89 +18,71 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class ReadMetadatasTest extends ServiceNeedsAuthenticationTestCase
-{
+public class ReadMetadatasTest extends ServiceNeedsAuthenticationTestCase {
 
-	public ReadMetadatasTest(String testName)
-	{
-		super(testName);
-	}
+    public ReadMetadatasTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testReadMetadatasTestDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testReadMetadatasTestDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadMetadatas";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadMetadatas";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "D2543", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "D2543", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "L48283", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser()
-	{
+    protected String[] getNotAuthenticatedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "L48283", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer executionCourseId = new Integer(34882);
-		String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
+    protected Object[] getAuthorizeArguments() {
+        Integer executionCourseId = new Integer(34882);
+        String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
 
-		Object[] args = { executionCourseId, path };
-		return args;
+        Object[] args = { executionCourseId, path };
+        return args;
 
-	}
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testSuccessfull()
-	{
+    public void testSuccessfull() {
 
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
-			SiteView siteView =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
+        try {
+            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            Object[] args = getAuthorizeArguments();
+            SiteView siteView = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
-			InfoSiteMetadatas bodyComponent = (InfoSiteMetadatas) siteView.getComponent();
+            InfoSiteMetadatas bodyComponent = (InfoSiteMetadatas) siteView.getComponent();
 
-			InfoExecutionCourse infoExecutionCourse = bodyComponent.getExecutionCourse();
-			assertEquals(infoExecutionCourse.getIdInternal(), args[0]);
-			List infoMetadatasList = bodyComponent.getInfoMetadatas();
-			assertEquals(infoMetadatasList.size(), 68);
+            InfoExecutionCourse infoExecutionCourse = bodyComponent.getExecutionCourse();
+            assertEquals(infoExecutionCourse.getIdInternal(), args[0]);
+            List infoMetadatasList = bodyComponent.getInfoMetadatas();
+            assertEquals(infoMetadatasList.size(), 68);
 
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("Read Metadatas " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("Read Metadatas " + ex);
-		}
-	}
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+        } catch (FenixServiceException ex) {
+            fail("Read Metadatas " + ex);
+        } catch (Exception ex) {
+            fail("Read Metadatas " + ex);
+        }
+    }
 }

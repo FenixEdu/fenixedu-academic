@@ -4,99 +4,96 @@
  */
 package Dominio;
 
-
-
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
 public class ExamExecutionCourse extends EvaluationExecutionCourse implements IExamExecutionCourse {
 
-	protected IExam exam;
-	protected IExecutionCourse executionCourse;
+    protected IExam exam;
 
-	private Integer keyExam;
-	private Integer keyExecutionCourse;
+    protected IExecutionCourse executionCourse;
 
-	public ExamExecutionCourse() {}
-	
-	public ExamExecutionCourse(IExam exam, IExecutionCourse executionCourse) {
-		this.setExam(exam);
-		this.setExecutionCourse(executionCourse);
-	}
+    private Integer keyExam;
 
-	public boolean equals(Object obj) {
-		if (obj instanceof ExamExecutionCourse) {
-			ExamExecutionCourse examObj = (ExamExecutionCourse) obj;
-			return this.getExam().equals(examObj.getExam())
-				   && this.getExecutionCourse().equals(examObj.getExecutionCourse());
-		}
+    private Integer keyExecutionCourse;
 
-		return false;
-	}
+    public ExamExecutionCourse() {
+    }
 
-	public String toString() {
-		return "[EXAM_EXECUTIONCOURSE:"
-			+ " exam= '"               + this.getExam()             + "'"
-			+ " execution_course= '"   + this.getExecutionCourse()  + "'"
-			+ "]";
-	}
+    public ExamExecutionCourse(IExam exam, IExecutionCourse executionCourse) {
+        this.setExam(exam);
+        this.setExecutionCourse(executionCourse);
+    }
 
+    public boolean equals(Object obj) {
+        if (obj instanceof ExamExecutionCourse) {
+            ExamExecutionCourse examObj = (ExamExecutionCourse) obj;
+            return this.getExam().equals(examObj.getExam())
+                    && this.getExecutionCourse().equals(examObj.getExecutionCourse());
+        }
 
+        return false;
+    }
 
-	/**
-	 * @return
-	 */
-	public IExam getExam() {
-		return exam;
-	}
+    public String toString() {
+        return "[EXAM_EXECUTIONCOURSE:" + " exam= '" + this.getExam() + "'" + " execution_course= '"
+                + this.getExecutionCourse() + "'" + "]";
+    }
 
-	/**
-	 * @return
-	 */
-	public IExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    /**
+     * @return
+     */
+    public IExam getExam() {
+        return exam;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyExam() {
-		return keyExam;
-	}
+    /**
+     * @return
+     */
+    public IExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyExam() {
+        return keyExam;
+    }
 
-	/**
-	 * @param exam
-	 */
-	public void setExam(IExam exam) {
-		this.exam = exam;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyExecutionCourse() {
+        return keyExecutionCourse;
+    }
 
-	/**
-	 * @param execucao
-	 */
-	public void setExecutionCourse(IExecutionCourse execucao) {
-		executionCourse = execucao;
-	}
+    /**
+     * @param exam
+     */
+    public void setExam(IExam exam) {
+        this.exam = exam;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyExam(Integer integer) {
-		keyExam = integer;
-	}
+    /**
+     * @param execucao
+     */
+    public void setExecutionCourse(IExecutionCourse execucao) {
+        executionCourse = execucao;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyExecutionCourse(Integer integer) {
-		keyExecutionCourse = integer;
-	}
+    /**
+     * @param integer
+     */
+    public void setKeyExam(Integer integer) {
+        keyExam = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyExecutionCourse(Integer integer) {
+        keyExecutionCourse = integer;
+    }
 
 }

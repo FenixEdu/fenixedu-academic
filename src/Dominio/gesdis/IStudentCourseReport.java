@@ -16,17 +16,25 @@ import Dominio.IDomainObject;
  * @author Sergio Montelobo
  *  
  */
-public interface IStudentCourseReport extends IDomainObject
-{
+public interface IStudentCourseReport extends IDomainObject {
 
     public String getStudentReport();
+
     public void setStudentReport(String delegateReport);
+
     public String getStrongPoints();
+
     public void setStrongPoints(String strongPoints);
+
     public String getWeakPoints();
+
     public void setWeakPoints(String weakPoints);
+
     public ICurricularCourse getCurricularCourse();
+
     public void setCurricularCourse(ICurricularCourse curricularCourse);
+
     public Date getLastModificationDate();
+
     public void setLastModificationDate(Date lastModificationDate);
 }

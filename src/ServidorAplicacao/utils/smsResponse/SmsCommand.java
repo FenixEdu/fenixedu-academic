@@ -124,7 +124,7 @@ public class SmsCommand {
             String keyword = keywords[i];
 
             int indexOfReservedWord = expressionString.indexOf("${" + keyword + ":");
-            
+
             if (indexOfReservedWord != -1) {
                 throw new SmsCommandConfigurationException("In expression " + expressionString + " => "
                         + keyword + " cannot be used as a variable name because its a reserved keyword");
@@ -359,54 +359,50 @@ public class SmsCommand {
                     .executeService(userView, this.serviceName, args);
 
             if ((result != null) && (this.replyToSender == true)) {
-            	
-            	ISmsDTO smsDTO = null;
-            	StringBuffer responseMessage = new StringBuffer();
-            		
-            	if (!(result instanceof Collection))
-            	{	
-            		smsDTO = (ISmsDTO) result;
-            		responseMessage.append(smsDTO.toSmsText());
-            		
-            	}
-            	else
-            	{
-            		List resultList = (List) result;
-            		Iterator it = resultList.iterator();
-            		
-            		while (it.hasNext())
-            		{
-            			smsDTO = (ISmsDTO) it.next();
-            			responseMessage.append(smsDTO.toSmsText());
-            		}
-            		
-            	}
-            	
-            	List responseMessagesList = SmsUtil.getInstance().splitMessage(responseMessage, SmsCommandExpressionConstants.MAX_SMS_SIZE);
-            	
-            	Iterator responseIterator = responseMessagesList.iterator();
-            	String smsMessage;
-            	
-            	//send the SMS
-            	while(responseIterator.hasNext()){
-            	
-            		smsMessage = (String) responseIterator.next();
-            		System.out.println(smsMessage);
-            		try
-					{
-						SmsUtil.getInstance().sendSmsWithoutDeliveryReports(new Integer(senderMsisdn), smsMessage);
-					}
-					catch (FenixUtilException e1)
-					{
-						e1.printStackTrace();
-					}
-					
-					// billing model should be inserted here
-					// (depends of who is going to charge the response sms money?
-					// Fenix or Mobile Operator?)
-            		
-            	}
-            	        
+
+                ISmsDTO smsDTO = null;
+                StringBuffer responseMessage = new StringBuffer();
+
+                if (!(result instanceof Collection)) {
+                    smsDTO = (ISmsDTO) result;
+                    responseMessage.append(smsDTO.toSmsText());
+
+                } else {
+                    List resultList = (List) result;
+                    Iterator it = resultList.iterator();
+
+                    while (it.hasNext()) {
+                        smsDTO = (ISmsDTO) it.next();
+                        responseMessage.append(smsDTO.toSmsText());
+                    }
+
+                }
+
+                List responseMessagesList = SmsUtil.getInstance().splitMessage(responseMessage,
+                        SmsCommandExpressionConstants.MAX_SMS_SIZE);
+
+                Iterator responseIterator = responseMessagesList.iterator();
+                String smsMessage;
+
+                //send the SMS
+                while (responseIterator.hasNext()) {
+
+                    smsMessage = (String) responseIterator.next();
+                    System.out.println(smsMessage);
+                    try {
+                        SmsUtil.getInstance().sendSmsWithoutDeliveryReports(new Integer(senderMsisdn),
+                                smsMessage);
+                    } catch (FenixUtilException e1) {
+                        e1.printStackTrace();
+                    }
+
+                    // billing model should be inserted here
+                    // (depends of who is going to charge the response sms
+                    // money?
+                    // Fenix or Mobile Operator?)
+
+                }
+
             }
 
         } catch (FenixServiceException e) {
@@ -421,8 +417,7 @@ public class SmsCommand {
 
     }
 
-
-	private Object[] computeServiceArgs(String senderMsisdn, Matcher matcher) {
+    private Object[] computeServiceArgs(String senderMsisdn, Matcher matcher) {
         Object[] args = new Object[this.serviceArgs.length];
 
         for (int i = 0; i < this.serviceArgs.length; i++) {

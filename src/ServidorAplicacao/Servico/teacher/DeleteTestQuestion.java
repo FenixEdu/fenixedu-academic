@@ -28,60 +28,51 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DeleteTestQuestion implements IService {
 
-	public DeleteTestQuestion() {
-	}
+    public DeleteTestQuestion() {
+    }
 
-	public boolean run(Integer executionCourseId, Integer testId,
-			Integer questionId) throws FenixServiceException {
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB
-					.getInstance();
+    public boolean run(Integer executionCourseId, Integer testId, Integer questionId)
+            throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentTest persistentTest = persistentSuport
-					.getIPersistentTest();
-			ITest test = (ITest) persistentTest.readByOID(Test.class, testId,
-					true);
-			if (test == null)
-				throw new InvalidArgumentsServiceException();
-			IPersistentQuestion persistentQuestion = persistentSuport
-					.getIPersistentQuestion();
-			IQuestion question = (IQuestion) persistentQuestion.readByOID(
-					Question.class, questionId);
-			if (question == null)
-				throw new InvalidArgumentsServiceException();
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+            ITest test = (ITest) persistentTest.readByOID(Test.class, testId, true);
+            if (test == null)
+                throw new InvalidArgumentsServiceException();
+            IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
+            IQuestion question = (IQuestion) persistentQuestion.readByOID(Question.class, questionId);
+            if (question == null)
+                throw new InvalidArgumentsServiceException();
 
-			IPersistentTestQuestion persistentTestQuestion = persistentSuport
-					.getIPersistentTestQuestion();
-			List testQuestionList = persistentTestQuestion.readByTest(test);
+            IPersistentTestQuestion persistentTestQuestion = persistentSuport
+                    .getIPersistentTestQuestion();
+            List testQuestionList = persistentTestQuestion.readByTest(test);
 
-			ITestQuestion testQuestion = persistentTestQuestion
-					.readByTestAndQuestion(test, question);
-			if (testQuestion == null)
-				throw new InvalidArgumentsServiceException();
+            ITestQuestion testQuestion = persistentTestQuestion.readByTestAndQuestion(test, question);
+            if (testQuestion == null)
+                throw new InvalidArgumentsServiceException();
 
-			Integer questionOrder = testQuestion.getTestQuestionOrder();
-			if (testQuestionList != null) {
-				Iterator it = testQuestionList.iterator();
-				while (it.hasNext()) {
-					ITestQuestion iterTestQuestion = (ITestQuestion) it.next();
-					Integer iterQuestionOrder = iterTestQuestion
-							.getTestQuestionOrder();
+            Integer questionOrder = testQuestion.getTestQuestionOrder();
+            if (testQuestionList != null) {
+                Iterator it = testQuestionList.iterator();
+                while (it.hasNext()) {
+                    ITestQuestion iterTestQuestion = (ITestQuestion) it.next();
+                    Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
 
-					if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
-						persistentTestQuestion
-								.simpleLockWrite(iterTestQuestion);
-						iterTestQuestion.setTestQuestionOrder(new Integer(
-								iterQuestionOrder.intValue() - 1));
-					}
-				}
-			}
-			persistentTestQuestion.delete(testQuestion);
-			test.setNumberOfQuestions(new Integer(test.getNumberOfQuestions()
-					.intValue() - 1));
-			test.setLastModifiedDate(Calendar.getInstance().getTime());
-			return true;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+                    if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
+                        persistentTestQuestion.simpleLockWrite(iterTestQuestion);
+                        iterTestQuestion.setTestQuestionOrder(new Integer(
+                                iterQuestionOrder.intValue() - 1));
+                    }
+                }
+            }
+            persistentTestQuestion.delete(testQuestion);
+            test.setNumberOfQuestions(new Integer(test.getNumberOfQuestions().intValue() - 1));
+            test.setLastModifiedDate(Calendar.getInstance().getTime());
+            return true;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

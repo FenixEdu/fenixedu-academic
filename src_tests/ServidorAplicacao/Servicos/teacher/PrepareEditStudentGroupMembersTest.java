@@ -6,52 +6,52 @@ import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class PrepareEditStudentGroupMembersTest extends TestCaseReadServices {
-	
-	public PrepareEditStudentGroupMembersTest(java.lang.String testName) {
-		super(testName);
-	}
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public PrepareEditStudentGroupMembersTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(PrepareEditStudentGroupMembersTest.class);
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(PrepareEditStudentGroupMembersTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "PrepareEditStudentGroupMembers";
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Object[] result = {new Integer(26), new Integer(1)};
-		return result;
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "PrepareEditStudentGroupMembers";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] result = {new Integer(25), new Integer(6)};
-		return result;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        Object[] result = { new Integer(26), new Integer(1) };
+        return result;
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 4;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] result = { new Integer(25), new Integer(6) };
+        return result;
+    }
 
-	protected Object getObjectToCompare() {
-		return null;
-	}
+    protected int getNumberOfItemsToRetrieve() {
+        return 4;
+    }
+
+    protected Object getObjectToCompare() {
+        return null;
+    }
 
 }

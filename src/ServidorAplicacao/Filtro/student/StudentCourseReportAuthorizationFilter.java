@@ -34,8 +34,7 @@ import Util.RoleType;
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
  *  
  */
-public class StudentCourseReportAuthorizationFilter extends
-        DomainObjectAuthorizationFilter {
+public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
     /*
      * (non-Javadoc)
@@ -56,24 +55,17 @@ public class StudentCourseReportAuthorizationFilter extends
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentDelegate persistentDelegate = sp
-                    .getIPersistentDelegate();
-            IPersistentExecutionYear persistentExecutionYear = sp
-                    .getIPersistentExecutionYear();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-            IStudent student = persistentStudent.readByUsername(id
-                    .getUtilizador());
+            IStudent student = persistentStudent.readByUsername(id.getUtilizador());
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, objectId);
 
-            IExecutionYear executionYear = persistentExecutionYear
-                    .readCurrentExecutionYear();
-            List degreeDelegates = persistentDelegate
-                    .readDegreeDelegateByDegreeAndExecutionYear(
-                            curricularCourse.getDegreeCurricularPlan()
-                                    .getDegree(), executionYear);
+            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+            List degreeDelegates = persistentDelegate.readDegreeDelegateByDegreeAndExecutionYear(
+                    curricularCourse.getDegreeCurricularPlan().getDegree(), executionYear);
 
             IDelegate delegate = persistentDelegate.readByStudent(student);
             // if it's a degree delegate then it's allowed
@@ -81,32 +73,26 @@ public class StudentCourseReportAuthorizationFilter extends
                 return true;
 
             List scopes = curricularCourse.getScopes();
-            List years = (List) CollectionUtils.collect(scopes,
-                    new Transformer() {
-                        public Object transform(Object arg0) {
-                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                            return curricularCourseScope
-                                    .getCurricularSemester()
-                                    .getCurricularYear().getYear();
-                        }
-                    });
+            List years = (List) CollectionUtils.collect(scopes, new Transformer() {
+                public Object transform(Object arg0) {
+                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                    return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
+                }
+            });
             years = removeDuplicates(years);
             Iterator iter = years.iterator();
             while (iter.hasNext()) {
                 Integer year = (Integer) iter.next();
-                List delegates = persistentDelegate
-                        .readByDegreeAndExecutionYearAndYearType(
-                                curricularCourse.getDegreeCurricularPlan()
-                                        .getDegree(), executionYear,
-                                DelegateYearType.getEnum(year.intValue()));
+                List delegates = persistentDelegate.readByDegreeAndExecutionYearAndYearType(
+                        curricularCourse.getDegreeCurricularPlan().getDegree(), executionYear,
+                        DelegateYearType.getEnum(year.intValue()));
 
                 if (delegates.contains(delegate))
                     return true;
             }
             return false;
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): "
-                    + e.getMessage());
+            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());

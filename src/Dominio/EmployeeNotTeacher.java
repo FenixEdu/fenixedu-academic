@@ -6,44 +6,41 @@ package Dominio;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class EmployeeNotTeacher extends DomainObject implements IEmployeeNotTeacher
-{
-	private IEmployee employee;
-	private Integer keyEmployee;
-	/**
-	 * @return Returns the keyEmployee.
-	 */
-	public Integer getKeyEmployee()
-	{
-		return keyEmployee;
-	}
+public class EmployeeNotTeacher extends DomainObject implements IEmployeeNotTeacher {
+    private IEmployee employee;
 
-	/**
-	 * @param keyEmployee The keyEmployee to set.
-	 */
-	public void setKeyEmployee(Integer keyEmployee)
-	{
-		this.keyEmployee = keyEmployee;
-	}
+    private Integer keyEmployee;
 
-	/**
-	 * @return Returns the employee.
-	 */
-	public IEmployee getEmployee()
-	{
-		return employee;
-	}
+    /**
+     * @return Returns the keyEmployee.
+     */
+    public Integer getKeyEmployee() {
+        return keyEmployee;
+    }
 
-	/**
-	 * @param employee The employee to set.
-	 */
-	public void setEmployee(IEmployee employee)
-	{
-		this.employee = employee;
-	}
+    /**
+     * @param keyEmployee
+     *            The keyEmployee to set.
+     */
+    public void setKeyEmployee(Integer keyEmployee) {
+        this.keyEmployee = keyEmployee;
+    }
 
+    /**
+     * @return Returns the employee.
+     */
+    public IEmployee getEmployee() {
+        return employee;
+    }
 
+    /**
+     * @param employee
+     *            The employee to set.
+     */
+    public void setEmployee(IEmployee employee) {
+        this.employee = employee;
+    }
 
 }

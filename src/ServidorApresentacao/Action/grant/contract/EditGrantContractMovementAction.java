@@ -45,7 +45,7 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
         }
 
         if (loaddb != null && loaddb.equals(new Integer(1))) //load contents
-                                                             // from database
+        // from database
         {
             if (idGrantMovement != null) //Editing a grant contract movement
             {

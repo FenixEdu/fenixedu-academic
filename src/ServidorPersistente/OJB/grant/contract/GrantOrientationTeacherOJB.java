@@ -9,14 +9,14 @@ import Dominio.grant.contract.GrantOrientationTeacher;
 import Dominio.grant.contract.IGrantContract;
 import Dominio.grant.contract.IGrantOrientationTeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
 
 /**
  * @author Barbosa
  * @author Pica
  */
-public class GrantOrientationTeacherOJB extends ObjectFenixOJB implements
+public class GrantOrientationTeacherOJB extends PersistentObjectOJB implements
         IPersistentGrantOrientationTeacher {
 
     public GrantOrientationTeacherOJB() {

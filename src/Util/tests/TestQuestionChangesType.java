@@ -13,8 +13,7 @@ import Util.FenixUtil;
 /**
  * @author Susana Fernandes
  */
-public class TestQuestionChangesType extends FenixUtil
-{
+public class TestQuestionChangesType extends FenixUtil {
     public static final int CHANGE_VARIATION = 1;
 
     public static final int CHANGE_EXERCISE = 2;
@@ -40,23 +39,19 @@ public class TestQuestionChangesType extends FenixUtil
         this.type = getTypeCode(typeString);
     }
 
-    public Integer getType()
-    {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type)
-    {
+    public void setType(int type) {
         this.type = new Integer(type);
     }
 
-    public void setType(Integer type)
-    {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public List getAllTypes()
-    {
+    public List getAllTypes() {
         List result = new ArrayList();
         result
                 .add(new LabelValueBean(CHANGE_VARIATION_STRING, new Integer(CHANGE_VARIATION)
@@ -65,23 +60,19 @@ public class TestQuestionChangesType extends FenixUtil
         return result;
     }
 
-    public Integer getTypeCode(String typeName)
-    {
+    public Integer getTypeCode(String typeName) {
         if (typeName.equals(CHANGE_VARIATION_STRING))
             return new Integer(CHANGE_VARIATION);
-        else
-            if (typeName.equals(CHANGE_EXERCISE_STRING))
-                return new Integer(CHANGE_EXERCISE);
+        else if (typeName.equals(CHANGE_EXERCISE_STRING))
+            return new Integer(CHANGE_EXERCISE);
         return null;
     }
 
-    public String getTypeString()
-    {
+    public String getTypeString() {
         if (type.intValue() == CHANGE_VARIATION)
             return new String(CHANGE_VARIATION_STRING);
-        else
-            if (type.intValue() == CHANGE_EXERCISE)
-                return new String(CHANGE_EXERCISE_STRING);
+        else if (type.intValue() == CHANGE_EXERCISE)
+            return new String(CHANGE_EXERCISE_STRING);
         return null;
     }
 

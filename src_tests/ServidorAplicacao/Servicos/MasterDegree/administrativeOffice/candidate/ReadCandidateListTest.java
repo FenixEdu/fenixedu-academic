@@ -1,4 +1,3 @@
-
 /*
  * CriarSalaServicosTest.java
  * JUnit based test
@@ -9,8 +8,8 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.candidate;
 
 /**
- *
- * @author Nuno Nunes & Joana Mota 
+ * 
+ * @author Nuno Nunes & Joana Mota
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -20,57 +19,57 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadCandidateListTest extends TestCaseReadServices {
-  
-  public ReadCandidateListTest(java.lang.String testName) {
-	super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-	junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-	TestSuite suite = new TestSuite(ReadCandidateListTest.class);
-        
-	return suite;
-  }
-    
-  protected void setUp() {
-	super.setUp();
-  }
-    
-  protected void tearDown() {
-	super.tearDown();
-  }
 
-  protected String getNameOfServiceToBeTested() {
-	  return "ReadCandidateList";
-  }
+    public ReadCandidateListTest(java.lang.String testName) {
+        super(testName);
+    }
 
-  protected int getNumberOfItemsToRetrieve(){
-	  return 2;
-  }
-  protected Object getObjectToCompare(){
-	  return null;
-  }
-	
-  protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	  return null;
-  }
-	
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadCandidateListTest.class);
 
-  protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-	ISuportePersistente sp = null;
-	try {
-		sp = SuportePersistenteOJB.getInstance();
-		sp.iniciarTransaccao();
-        //TODO: delete all no longer exists
-		//sp.getIPersistentMasterDegreeCandidate().deleteAll();
-		sp.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia excepcao) {
-	  fail("Exception when setUp");
-	}
-	return null;
-  }
+        return suite;
+    }
+
+    protected void setUp() {
+        super.setUp();
+    }
+
+    protected void tearDown() {
+        super.tearDown();
+    }
+
+    protected String getNameOfServiceToBeTested() {
+        return "ReadCandidateList";
+    }
+
+    protected int getNumberOfItemsToRetrieve() {
+        return 2;
+    }
+
+    protected Object getObjectToCompare() {
+        return null;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+        return null;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        ISuportePersistente sp = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+            //TODO: delete all no longer exists
+            //sp.getIPersistentMasterDegreeCandidate().deleteAll();
+            sp.confirmarTransaccao();
+        } catch (ExcepcaoPersistencia excepcao) {
+            fail("Exception when setUp");
+        }
+        return null;
+    }
 }

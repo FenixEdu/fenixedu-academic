@@ -11,32 +11,33 @@ import DataBeans.InfoDegreeCurricularPlan;
  */
 
 public class ReadDegreeCurricularPlanTest extends TestCaseManagerReadServices {
-	    
-	/**
-	 * @param testName
-	 */
-	 public ReadDegreeCurricularPlanTest(String testName) {
-		super(testName);
-	 }
 
-	 protected String getNameOfServiceToBeTested() {
-		return "ReadDegreeCurricularPlan";
-	 }
-       
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Object[] args = { new Integer(100) };
-		return args;
-	}	
+    /**
+     * @param testName
+     */
+    public ReadDegreeCurricularPlanTest(String testName) {
+        super(testName);
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(1) };
-		return args;
-	}
-        	 
-	protected Object getObjectToCompare() {
-		
-		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
-		
-		return new InfoDegreeCurricularPlan("plano1", infoDegree);
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadDegreeCurricularPlan";
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        Object[] args = { new Integer(100) };
+        return args;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] args = { new Integer(1) };
+        return args;
+    }
+
+    protected Object getObjectToCompare() {
+
+        InfoDegree infoDegree = new InfoDegree("LEIC",
+                "Licenciatura de Engenharia Informatica e de Computadores");
+
+        return new InfoDegreeCurricularPlan("plano1", infoDegree);
+    }
 }

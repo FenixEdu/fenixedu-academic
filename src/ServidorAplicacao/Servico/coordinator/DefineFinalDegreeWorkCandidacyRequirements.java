@@ -17,25 +17,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class DefineFinalDegreeWorkCandidacyRequirements implements IService
-{
+public class DefineFinalDegreeWorkCandidacyRequirements implements IService {
 
-    public DefineFinalDegreeWorkCandidacyRequirements()
-    {
+    public DefineFinalDegreeWorkCandidacyRequirements() {
         super();
     }
 
     public void run(Integer executionDegreeOID, Integer minimumNumberOfCompletedCourses,
             Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
-            Integer maximumNumberOfProposalCandidaciesPerGroup)
-            throws FenixServiceException
-    {
+            Integer maximumNumberOfProposalCandidaciesPerGroup) throws FenixServiceException {
 
-        if (executionDegreeOID != null)
-        {
+        if (executionDegreeOID != null) {
 
-            try
-            {
+            try {
                 ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
                 IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                         .getIPersistentFinalDegreeWork();
@@ -43,13 +37,11 @@ public class DefineFinalDegreeWorkCandidacyRequirements implements IService
                 ICursoExecucao cursoExecucao = (ICursoExecucao) persistentFinalDegreeWork.readByOID(
                         CursoExecucao.class, executionDegreeOID);
 
-                if (cursoExecucao != null)
-                {
+                if (cursoExecucao != null) {
                     IScheduleing scheduleing = persistentFinalDegreeWork
                             .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
-                    if (scheduleing == null)
-                    {
+                    if (scheduleing == null) {
                         scheduleing = new Scheduleing();
                         scheduleing.setCurrentProposalNumber(new Integer(1));
                     }
@@ -59,11 +51,10 @@ public class DefineFinalDegreeWorkCandidacyRequirements implements IService
                     scheduleing.setMinimumNumberOfCompletedCourses(minimumNumberOfCompletedCourses);
                     scheduleing.setMinimumNumberOfStudents(minimumNumberOfStudents);
                     scheduleing.setMaximumNumberOfStudents(maximumNumberOfStudents);
-                    scheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
+                    scheduleing
+                            .setMaximumNumberOfProposalCandidaciesPerGroup(maximumNumberOfProposalCandidaciesPerGroup);
                 }
-            }
-            catch (ExcepcaoPersistencia e)
-            {
+            } catch (ExcepcaoPersistencia e) {
                 throw new FenixServiceException(e);
             }
 

@@ -13,20 +13,21 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
  */
 public class ShiftPercentageExceededException extends FenixServiceException {
 
-	private List shiftWithErrors;
+    private List shiftWithErrors;
 
-	/**
-	 * @param shiftWithErrors List of InfoShifts...
-	 */
-	public ShiftPercentageExceededException(List shiftWithErrors) {
-		this.shiftWithErrors = shiftWithErrors;
-	}
+    /**
+     * @param shiftWithErrors
+     *            List of InfoShifts...
+     */
+    public ShiftPercentageExceededException(List shiftWithErrors) {
+        this.shiftWithErrors = shiftWithErrors;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getShiftWithErrors() {
-		return shiftWithErrors;
-	}
+    /**
+     * @return
+     */
+    public List getShiftWithErrors() {
+        return shiftWithErrors;
+    }
 
 }

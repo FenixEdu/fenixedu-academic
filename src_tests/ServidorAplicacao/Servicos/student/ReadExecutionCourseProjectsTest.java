@@ -70,19 +70,15 @@ public class ReadExecutionCourseProjectsTest extends TestCaseReadServices {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            IGroupProperties groupProperties1 = (IGroupProperties) sp
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, new Integer(3));
-            IGroupProperties groupProperties2 = (IGroupProperties) sp
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, new Integer(5));
+            IGroupProperties groupProperties1 = (IGroupProperties) sp.getIPersistentGroupProperties()
+                    .readByOID(GroupProperties.class, new Integer(3));
+            IGroupProperties groupProperties2 = (IGroupProperties) sp.getIPersistentGroupProperties()
+                    .readByOID(GroupProperties.class, new Integer(5));
             List infoAllGroupProperties = new ArrayList();
             infoAllGroupProperties
-                    .add(Cloner
-                            .copyIGroupProperties2InfoGroupProperties(groupProperties1));
+                    .add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties1));
             infoAllGroupProperties
-                    .add(Cloner
-                            .copyIGroupProperties2InfoGroupProperties(groupProperties2));
+                    .add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties2));
 
             infoSiteProjects.setInfoGroupPropertiesList(infoAllGroupProperties);
             sp.confirmarTransaccao();

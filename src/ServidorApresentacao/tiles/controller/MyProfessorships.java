@@ -24,36 +24,27 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class MyProfessorships extends ControllerSupport
-{
+public class MyProfessorships extends ControllerSupport {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.tiles.Controller#perform(org.apache.struts.tiles.ComponentContext,
-	 *      javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse,
-	 *      javax.servlet.ServletContext)
-	 */
-    public void perform(
-        ComponentContext tileContext,
-        HttpServletRequest request,
-        HttpServletResponse response,
-        ServletContext servletContext)
-        throws ServletException, IOException
-    {
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.tiles.Controller#perform(org.apache.struts.tiles.ComponentContext,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse,
+     *      javax.servlet.ServletContext)
+     */
+    public void perform(ComponentContext tileContext, HttpServletRequest request,
+            HttpServletResponse response, ServletContext servletContext) throws ServletException,
+            IOException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        
         List professorShipList = new ArrayList();
-        try
-        {
-			Object[] args = { userView };    
+        try {
+            Object[] args = { userView };
             professorShipList = (List) ServiceUtils.executeService(userView, "ReadProfessorships", args);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
         }
         tileContext.putAttribute("professorshipList", professorShipList);

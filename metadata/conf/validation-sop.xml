@@ -39,6 +39,15 @@
 		</field>
 	</form>
 
+	<form name="changShiftOfStudents">
+		<field property="oldShiftId" depends="required, integer" page="1">
+			<arg0 key="property.old.shift"/>
+		</field>
+		<field property="newShiftId" depends="required, integer" page="1">
+			<arg0 key="property.new.shift"/>
+		</field>
+	</form>
+
 	<!-- Validation for exam context form -->
 	<form name="examForm">
 		<field property="day" depends="required, integer" page="1">
@@ -976,6 +985,18 @@
 			<arg0 key="property.minute.end"/>
 		</field>
 	</form>
+
+
+	<!-- ==================== View Curricular Course Historic ================== -->
+	<form name="executionYearDegreeCurricularPlanForm">
+		<field property="executionYearID" depends="required" page="1">
+			<arg0 key="message.error.curriculumHistoric.executionYear" bundle="CURRICULUM_HISTORIC_RESOURCES" resource="true"/>
+		</field>
+		<field property="degreeCurricularPlanID" depends="required" page="2">
+			<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" bundle="CURRICULUM_HISTORIC_RESOURCES" resource="true"/>
+		</field>
+	</form>
+	
 
   </formset>
 </form-validation>

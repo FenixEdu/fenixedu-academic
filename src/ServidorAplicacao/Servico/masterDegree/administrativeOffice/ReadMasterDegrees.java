@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -23,78 +23,42 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadMasterDegrees implements IServico
-{
+public class ReadMasterDegrees implements IService {
 
-    private static ReadMasterDegrees servico = new ReadMasterDegrees();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadMasterDegrees getService()
-    {
-        return servico;
-    }
-
-    /**
-	 * The actor of this class.
-	 */
-    private ReadMasterDegrees()
-    {
-    }
-
-    /**
-	 * Returns The Service Name
-	 */
-
-    public final String getNome()
-    {
-        return "ReadMasterDegrees";
-    }
-
-    public ArrayList run(String executionYearString) throws FenixServiceException
-    {
+    public List run(String executionYearString) throws FenixServiceException {
 
         ISuportePersistente sp = null;
         List result = new ArrayList();
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
 
             // Get the Actual Execution Year
             IExecutionYear executionYear = null;
-            if (executionYearString != null)
-            {
-                executionYear =
-                    sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
-            }
-            else
-            {
+            if (executionYearString != null) {
+                executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+                        executionYearString);
+            } else {
                 IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
                 executionYear = executionYearDAO.readCurrentExecutionYear();
             }
 
             // Read the degrees
-            result = sp.getICursoExecucaoPersistente().readMasterDegrees(executionYear.getYear());
-            if (result == null || result.size() == 0)
-            {
+            result = sp.getIPersistentExecutionDegree().readMasterDegrees(executionYear.getYear());
+            if (result == null || result.size() == 0) {
                 throw new NonExistingServiceException();
             }
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
-        ArrayList degrees = new ArrayList();
+        List degrees = new ArrayList();
         Iterator iterator = result.iterator();
-        while (iterator.hasNext())
-        {
-            InfoExecutionDegree infoExecutionDegree =
-                (InfoExecutionDegree) Cloner.get((ICursoExecucao) iterator.next());
+        while (iterator.hasNext()) {
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+                    .get((ICursoExecucao) iterator.next());
             degrees.add(infoExecutionDegree);
         }
 

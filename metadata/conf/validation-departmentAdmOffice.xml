@@ -197,6 +197,16 @@
     	</form>
 		<!-- ================================================================ -->    	
 		
+	<!-- ==================== View Curricular Course Historic ================== -->
+		<form name="executionYearDegreeCurricularPlanForm">
+			<field property="executionYearID" depends="required" page="1">
+				<arg0 key="message.error.curriculumHistoric.executionYear" bundle="CURRICULUM_HISTORIC_RESOURCES" resource="true"/>
+			</field>
+			<field property="degreeCurricularPlanID" depends="required" page="2">
+				<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" bundle="CURRICULUM_HISTORIC_RESOURCES" resource="true"/>
+			</field>
+		</form>
+	
     </formset>
 </form-validation>
 

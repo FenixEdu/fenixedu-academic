@@ -13,76 +13,76 @@ import Util.NumberUtils;
 
 public class InfoShiftGroupStatistics extends InfoObject {
 
-	private List shiftsInGroup;
-	public InfoShiftGroupStatistics() {
-		this.shiftsInGroup = new ArrayList();
-	}	
+    private List shiftsInGroup;
 
-	
-	
-	/**
-	 * @return
-	 */
-	public List getShiftsInGroup() {
-		return shiftsInGroup;
-	}
+    public InfoShiftGroupStatistics() {
+        this.shiftsInGroup = new ArrayList();
+    }
 
+    /**
+     * @return
+     */
+    public List getShiftsInGroup() {
+        return shiftsInGroup;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getTotalCapacity() {
-		Integer totalCapacity = new Integer(0);
+    /**
+     * @return
+     */
+    public Integer getTotalCapacity() {
+        Integer totalCapacity = new Integer(0);
 
-		Iterator iterator = this.shiftsInGroup.iterator();
-		while(iterator.hasNext()) {
-			InfoShift infoShift = (InfoShift) iterator.next();
-			totalCapacity = new Integer(totalCapacity.intValue() + infoShift.getLotacao().intValue());
-		}
-		
-		return totalCapacity;
-	}
+        Iterator iterator = this.shiftsInGroup.iterator();
+        while (iterator.hasNext()) {
+            InfoShift infoShift = (InfoShift) iterator.next();
+            totalCapacity = new Integer(totalCapacity.intValue() + infoShift.getLotacao().intValue());
+        }
 
-	/**
-	 * @return
-	 */
-	public Double getTotalPercentage() {
-		Double totalPercentage = null;
-		Integer totalCapacity = new Integer(0);
-		Integer students = new Integer(0);
+        return totalCapacity;
+    }
 
-		Iterator iterator = this.shiftsInGroup.iterator();
-		while(iterator.hasNext()) {
-			InfoShift infoShift = (InfoShift) iterator.next();
-			totalCapacity = new Integer(totalCapacity.intValue() + infoShift.getLotacao().intValue());
-			students = new Integer(students.intValue() + infoShift.getOcupation().intValue());
-		}
+    /**
+     * @return
+     */
+    public Double getTotalPercentage() {
+        Double totalPercentage = null;
+        Integer totalCapacity = new Integer(0);
+        Integer students = new Integer(0);
 
-		totalPercentage = NumberUtils.formatNumber(new Double(students.floatValue() * 100 / totalCapacity.floatValue()), 1);
+        Iterator iterator = this.shiftsInGroup.iterator();
+        while (iterator.hasNext()) {
+            InfoShift infoShift = (InfoShift) iterator.next();
+            totalCapacity = new Integer(totalCapacity.intValue() + infoShift.getLotacao().intValue());
+            students = new Integer(students.intValue() + infoShift.getOcupation().intValue());
+        }
 
-		return totalPercentage;
-	}
+        totalPercentage = NumberUtils.formatNumber(new Double(students.floatValue() * 100
+                / totalCapacity.floatValue()), 1);
 
-	/**
-	 * @param shiftsInGroup
-	 */
-	public void setShiftsInGroup(List shiftsInGroup) {
-		this.shiftsInGroup = shiftsInGroup;
-	}
+        return totalPercentage;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getTotalNumberOfStudents() {
-		Integer totalNumberOfStudents = new Integer(0);
+    /**
+     * @param shiftsInGroup
+     */
+    public void setShiftsInGroup(List shiftsInGroup) {
+        this.shiftsInGroup = shiftsInGroup;
+    }
 
-		Iterator iterator = this.shiftsInGroup.iterator();
-		while(iterator.hasNext()) {
-			InfoShift infoShift = (InfoShift) iterator.next();
-			totalNumberOfStudents = new Integer(totalNumberOfStudents.intValue() + infoShift.getOcupation().intValue());
-		}
-		
-		return totalNumberOfStudents;
-	}
+    /**
+     * @return
+     */
+    public Integer getTotalNumberOfStudents() {
+        Integer totalNumberOfStudents = new Integer(0);
+
+        Iterator iterator = this.shiftsInGroup.iterator();
+        while (iterator.hasNext()) {
+            InfoShift infoShift = (InfoShift) iterator.next();
+            totalNumberOfStudents = new Integer(totalNumberOfStudents.intValue()
+                    + infoShift.getOcupation().intValue());
+        }
+
+        return totalNumberOfStudents;
+    }
 
 }

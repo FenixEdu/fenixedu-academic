@@ -9,30 +9,34 @@ import java.util.Date;
 /**
  * @author jpvl
  */
-public interface IEnrolmentPeriod extends IDomainObject{
+public interface IEnrolmentPeriod extends IDomainObject {
 
-	/**
-	 * @param degreeCurricularPlan
-	 */
-	void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
-	IDegreeCurricularPlan getDegreeCurricularPlan();
-	
-	/**
-	 * @param executionPeriod
-	 */
-	void setExecutionPeriod(IExecutionPeriod executionPeriod);
-	IExecutionPeriod getExecutionPeriod();
+    /**
+     * @param degreeCurricularPlan
+     */
+    void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
 
-	/**
-	 * @param startDate
-	 */
-	void setStartDate(Date startDate);
-	Date getStartDate();
-	/**
-	 * @param endDate
-	 */
-	void setEndDate(Date endDate);
-	Date getEndDate();
-	
+    IDegreeCurricularPlan getDegreeCurricularPlan();
+
+    /**
+     * @param executionPeriod
+     */
+    void setExecutionPeriod(IExecutionPeriod executionPeriod);
+
+    IExecutionPeriod getExecutionPeriod();
+
+    /**
+     * @param startDate
+     */
+    void setStartDate(Date startDate);
+
+    Date getStartDate();
+
+    /**
+     * @param endDate
+     */
+    void setEndDate(Date endDate);
+
+    Date getEndDate();
 
 }

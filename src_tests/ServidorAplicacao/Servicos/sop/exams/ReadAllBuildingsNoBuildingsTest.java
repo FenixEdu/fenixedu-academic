@@ -14,62 +14,47 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public class ReadAllBuildingsNoBuildingsTest extends ServiceTestCase
-{
+public class ReadAllBuildingsNoBuildingsTest extends ServiceTestCase {
 
     /**
      * @param name
      */
-    public ReadAllBuildingsNoBuildingsTest(java.lang.String testName)
-    {
+    public ReadAllBuildingsNoBuildingsTest(java.lang.String testName) {
         super(testName);
     }
 
-
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadAllBuildings";
     }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets_templates/servicos/sop/testEmptyExamsV4.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets_templates/servicos/sop/testEmptyExamsV4.xml";
+    }
 
-	// test successfull create exam 
-	public void testSuccessfullReadNoBuildings()
-	{
-		ReadAllBuildings service = ReadAllBuildings.getService();
+    // test successfull create exam
+    public void testSuccessfullReadNoBuildings() {
+        ReadAllBuildings service = ReadAllBuildings.getService();
 
-		ISuportePersistente sp;
+        ISuportePersistente sp;
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			List buildingNames = service.run();
+            List buildingNames = service.run();
 
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			assertEquals(buildingNames.size(), 0);
-		}
-		catch (FenixServiceException ex)
-		{
-			//sp.cancelarTransaccao();
-			fail("testSuccessfullReadNoBuildings - Fenix Service Exception " + ex);
-		}
-		catch (Exception ex)
-		{
-			//sp.cancelarTransaccao();			
-			fail("testestSuccessfullReadNoBuildingsException " + ex);
-		}
-	}
-
-
-
- 
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            assertEquals(buildingNames.size(), 0);
+        } catch (FenixServiceException ex) {
+            //sp.cancelarTransaccao();
+            fail("testSuccessfullReadNoBuildings - Fenix Service Exception " + ex);
+        } catch (Exception ex) {
+            //sp.cancelarTransaccao();
+            fail("testestSuccessfullReadNoBuildingsException " + ex);
+        }
+    }
 
 }

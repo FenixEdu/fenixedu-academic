@@ -1,16 +1,17 @@
 /*
  * 
  * Created on 27 of March de 2003
- *
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
+ * 
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
  */
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.student;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +25,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
@@ -38,16 +37,11 @@ import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
+import framework.factory.ServiceManagerServiceFactory;
 
-public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.base.FenixAction
-{
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.base.FenixAction {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         //		Clear the Session
         session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
@@ -60,25 +54,22 @@ public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.
         session.removeAttribute(SessionConstants.EXPIRATION_YEARS_KEY);
         session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
 
-        if (session != null)
-        {
+        if (session != null) {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             Integer studentNumber = new Integer(getFromRequest("studentNumber", request));
-            //String  graduationType = getFromRequest("graduationType", request);
+            //String graduationType = getFromRequest("graduationType",
+            // request);
 
             InfoStudent infoStudent = null;
-            Object args[] = { studentNumber, new TipoCurso(TipoCurso.MESTRADO)};
-            try
-            {
-                infoStudent =
-                    (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndType", args);
-            } catch (FenixServiceException e)
-            {
+            Object args[] = { studentNumber, new TipoCurso(TipoCurso.MESTRADO) };
+            try {
+                infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadStudentByNumberAndType", args);
+            } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
 
-            if (infoStudent == null)
-            {
+            if (infoStudent == null) {
                 ActionErrors errors = new ActionErrors();
                 errors.add("nonExisting", new ActionError("error.exception.noStudents"));
                 saveErrors(request, errors);
@@ -95,26 +86,23 @@ public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.
             //			Get List of available Countries
             Object result = null;
             result = ServiceManagerServiceFactory.executeService(userView, "ReadAllCountries", null);
-            ArrayList country = (ArrayList) result;
+            List country = (ArrayList) result;
 
             //			Build List of Countries for the Form
             Iterator iterador = country.iterator();
 
-            ArrayList nationalityList = new ArrayList();
-            while (iterador.hasNext())
-            {
+            List nationalityList = new ArrayList();
+            while (iterador.hasNext()) {
                 InfoCountry countryTemp = (InfoCountry) iterador.next();
-                nationalityList.add(
-                    new LabelValueBean(countryTemp.getNationality(), countryTemp.getNationality()));
+                nationalityList.add(new LabelValueBean(countryTemp.getNationality(), countryTemp
+                        .getNationality()));
             }
 
             session.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-            session.setAttribute(
-                SessionConstants.MARITAL_STATUS_LIST_KEY,
-                new EstadoCivil().toArrayList());
-            session.setAttribute(
-                SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-                TipoDocumentoIdentificacao.toArrayList());
+            session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil()
+                    .toArrayList());
+            session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
+                    TipoDocumentoIdentificacao.toArrayList());
             session.setAttribute(SessionConstants.SEX_LIST_KEY, new Sexo().toArrayList());
             session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
@@ -122,92 +110,71 @@ public class ReadPersonInfoOfStudentsAction extends ServidorApresentacao.Action.
             session.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
 
             return mapping.findForward("Success");
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
-    private String getFromRequest(String parameter, HttpServletRequest request)
-    {
+    private String getFromRequest(String parameter, HttpServletRequest request) {
         String parameterString = request.getParameter(parameter);
-        if (parameterString == null)
-        {
+        if (parameterString == null) {
             parameterString = (String) request.getAttribute(parameter);
         }
         return parameterString;
     }
 
-    private void populateForm(DynaActionForm changeApplicationInfoForm, InfoPerson infoPerson)
-    {
-        changeApplicationInfoForm.set(
-            "identificationDocumentNumber",
-            infoPerson.getNumeroDocumentoIdentificacao());
-        changeApplicationInfoForm.set(
-            "identificationDocumentType",
-            infoPerson.getTipoDocumentoIdentificacao().toString());
-        changeApplicationInfoForm.set(
-            "identificationDocumentIssuePlace",
-            infoPerson.getLocalEmissaoDocumentoIdentificacao());
+    private void populateForm(DynaActionForm changeApplicationInfoForm, InfoPerson infoPerson) {
+        changeApplicationInfoForm.set("identificationDocumentNumber", infoPerson
+                .getNumeroDocumentoIdentificacao());
+        changeApplicationInfoForm.set("identificationDocumentType", infoPerson
+                .getTipoDocumentoIdentificacao().toString());
+        changeApplicationInfoForm.set("identificationDocumentIssuePlace", infoPerson
+                .getLocalEmissaoDocumentoIdentificacao());
         changeApplicationInfoForm.set("name", infoPerson.getNome());
 
         Calendar birthDate = Calendar.getInstance();
-        if (infoPerson.getNascimento() == null)
-        {
+        if (infoPerson.getNascimento() == null) {
             changeApplicationInfoForm.set("birthDay", Data.OPTION_DEFAULT);
             changeApplicationInfoForm.set("birthMonth", Data.OPTION_DEFAULT);
             changeApplicationInfoForm.set("birthYear", Data.OPTION_DEFAULT);
-        } else
-        {
+        } else {
             birthDate.setTime(infoPerson.getNascimento());
-            changeApplicationInfoForm.set(
-                "birthDay",
-                new Integer(birthDate.get(Calendar.DAY_OF_MONTH)).toString());
-            changeApplicationInfoForm.set(
-                "birthMonth",
-                new Integer(birthDate.get(Calendar.MONTH)).toString());
-            changeApplicationInfoForm.set(
-                "birthYear",
-                new Integer(birthDate.get(Calendar.YEAR)).toString());
+            changeApplicationInfoForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH))
+                    .toString());
+            changeApplicationInfoForm.set("birthMonth", new Integer(birthDate.get(Calendar.MONTH))
+                    .toString());
+            changeApplicationInfoForm.set("birthYear", new Integer(birthDate.get(Calendar.YEAR))
+                    .toString());
         }
 
         Calendar identificationDocumentIssueDate = Calendar.getInstance();
-        if (infoPerson.getDataEmissaoDocumentoIdentificacao() == null)
-        {
+        if (infoPerson.getDataEmissaoDocumentoIdentificacao() == null) {
             changeApplicationInfoForm.set("idIssueDateDay", Data.OPTION_DEFAULT);
             changeApplicationInfoForm.set("idIssueDateMonth", Data.OPTION_DEFAULT);
             changeApplicationInfoForm.set("idIssueDateYear", Data.OPTION_DEFAULT);
-        } else
-        {
+        } else {
             identificationDocumentIssueDate.setTime(infoPerson.getDataEmissaoDocumentoIdentificacao());
-            changeApplicationInfoForm.set(
-                "idIssueDateDay",
-                new Integer(identificationDocumentIssueDate.get(Calendar.DAY_OF_MONTH)).toString());
-            changeApplicationInfoForm.set(
-                "idIssueDateMonth",
-                new Integer(identificationDocumentIssueDate.get(Calendar.MONTH)).toString());
-            changeApplicationInfoForm.set(
-                "idIssueDateYear",
-                new Integer(identificationDocumentIssueDate.get(Calendar.YEAR)).toString());
+            changeApplicationInfoForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate
+                    .get(Calendar.DAY_OF_MONTH)).toString());
+            changeApplicationInfoForm.set("idIssueDateMonth", new Integer(
+                    identificationDocumentIssueDate.get(Calendar.MONTH)).toString());
+            changeApplicationInfoForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate
+                    .get(Calendar.YEAR)).toString());
         }
 
         Calendar identificationDocumentExpirationDate = Calendar.getInstance();
-        if (infoPerson.getDataValidadeDocumentoIdentificacao() == null)
-        {
+        if (infoPerson.getDataValidadeDocumentoIdentificacao() == null) {
             changeApplicationInfoForm.set("idExpirationDateDay", Data.OPTION_DEFAULT);
             changeApplicationInfoForm.set("idExpirationDateMonth", Data.OPTION_DEFAULT);
             changeApplicationInfoForm.set("idExpirationDateYear", Data.OPTION_DEFAULT);
-        } else
-        {
-            identificationDocumentExpirationDate.setTime(
-                infoPerson.getDataValidadeDocumentoIdentificacao());
-            changeApplicationInfoForm.set(
-                "idExpirationDateDay",
-                new Integer(identificationDocumentExpirationDate.get(Calendar.DAY_OF_MONTH)).toString());
-            changeApplicationInfoForm.set(
-                "idExpirationDateMonth",
-                new Integer(identificationDocumentExpirationDate.get(Calendar.MONTH)).toString());
-            changeApplicationInfoForm.set(
-                "idExpirationDateYear",
-                new Integer(identificationDocumentExpirationDate.get(Calendar.YEAR)).toString());
+        } else {
+            identificationDocumentExpirationDate.setTime(infoPerson
+                    .getDataValidadeDocumentoIdentificacao());
+            changeApplicationInfoForm.set("idExpirationDateDay", new Integer(
+                    identificationDocumentExpirationDate.get(Calendar.DAY_OF_MONTH)).toString());
+            changeApplicationInfoForm.set("idExpirationDateMonth", new Integer(
+                    identificationDocumentExpirationDate.get(Calendar.MONTH)).toString());
+            changeApplicationInfoForm.set("idExpirationDateYear", new Integer(
+                    identificationDocumentExpirationDate.get(Calendar.YEAR)).toString());
         }
 
         changeApplicationInfoForm.set("fatherName", infoPerson.getNomePai());

@@ -19,43 +19,37 @@ import ServidorPersistente.teacher.IPersistentExternalActivity;
  * @author Sergio Montelobo
  *  
  */
-public class EditExternalActivity extends EditDomainObjectService
-{
+public class EditExternalActivity extends EditDomainObjectService {
 
     private static EditExternalActivity service = new EditExternalActivity();
 
-    public static EditExternalActivity getService()
-    {
+    public static EditExternalActivity getService() {
         return service;
     }
 
     /**
-	 *  
-	 */
-    private EditExternalActivity()
-    {
+     *  
+     */
+    private EditExternalActivity() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "EditExternalActivity";
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
         return persistentExternalActivity;
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject)
-    {
-        IExternalActivity externalActivity =
-            Cloner.copyInfoExternalActivity2IExternalActivity((InfoExternalActivity) infoObject);
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        IExternalActivity externalActivity = Cloner
+                .copyInfoExternalActivity2IExternalActivity((InfoExternalActivity) infoObject);
         return externalActivity;
     }
 }

@@ -515,7 +515,7 @@ public class ContextUtils {
         try {
             executionDegreeList = (List) ServiceUtils.executeService(userView,
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
- 
+
         } catch (FenixServiceException e) {
 
             e.printStackTrace();
@@ -560,7 +560,7 @@ public class ContextUtils {
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         Object argsReadExecutionPeriods[] = {};
-        ArrayList executionPeriods;
+        List executionPeriods;
         try {
             executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
                     "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
@@ -572,7 +572,7 @@ public class ContextUtils {
             chainComparator.addComparator(new BeanComparator("semester"));
             Collections.sort(executionPeriods, chainComparator);
 
-            ArrayList executionPeriodsLabelValueList = new ArrayList();
+            List executionPeriodsLabelValueList = new ArrayList();
             for (int i = 0; i < executionPeriods.size(); i++) {
                 InfoExecutionPeriod infoExecutionPeriod2 = (InfoExecutionPeriod) executionPeriods.get(i);
                 executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod2.getName()
@@ -623,7 +623,7 @@ public class ContextUtils {
     }
 
     public static List getLabelListOfCurricularYears() {
-        ArrayList labelListOfCurricularYears = new ArrayList();
+        List labelListOfCurricularYears = new ArrayList();
         labelListOfCurricularYears.add(new LabelValueBean("escolher", ""));
         labelListOfCurricularYears.add(new LabelValueBean("1 º", "1"));
         labelListOfCurricularYears.add(new LabelValueBean("2 º", "2"));
@@ -634,7 +634,7 @@ public class ContextUtils {
     }
 
     public static List getLabelListOfOptionalCurricularYears() {
-        ArrayList labelListOfCurricularYears = new ArrayList();
+        List labelListOfCurricularYears = new ArrayList();
         labelListOfCurricularYears.add(new LabelValueBean("todos", ""));
         labelListOfCurricularYears.add(new LabelValueBean("1 º", "1"));
         labelListOfCurricularYears.add(new LabelValueBean("2 º", "2"));
@@ -671,12 +671,12 @@ public class ContextUtils {
         }
     }
 
-    /****************************************************************************************************
+    /***************************************************************************
      * Novos metodos para os exames
      */
 
-    public static ArrayList createCurricularYearList() {
-        ArrayList anosCurriculares = new ArrayList();
+    public static List createCurricularYearList() {
+        List anosCurriculares = new ArrayList();
 
         anosCurriculares.add(new LabelValueBean("1 º", "1"));
         anosCurriculares.add(new LabelValueBean("2 º", "2"));
@@ -687,7 +687,7 @@ public class ContextUtils {
         return anosCurriculares;
     }
 
-    public static ArrayList createExecutionDegreeList(HttpServletRequest request)
+    public static List createExecutionDegreeList(HttpServletRequest request)
             throws FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -700,7 +700,7 @@ public class ContextUtils {
         List executionDegreeList = (List) ServiceUtils.executeService(userView,
                 "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
-        ArrayList licenciaturas = new ArrayList();
+        List licenciaturas = new ArrayList();
 
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 

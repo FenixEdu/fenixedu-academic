@@ -11,7 +11,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.ICurricularCourse;
 import Dominio.gesdis.CourseHistoric;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.gesdis.IPersistentCourseHistoric;
 
 /**
@@ -19,24 +19,22 @@ import ServidorPersistente.gesdis.IPersistentCourseHistoric;
  * @author Sergio Montelobo
  *  
  */
-public class CourseHistoricOJB extends ObjectFenixOJB implements IPersistentCourseHistoric
-{
+public class CourseHistoricOJB extends PersistentObjectOJB implements IPersistentCourseHistoric {
 
     /**
-	 *  
-	 */
-    public CourseHistoricOJB()
-    {
+     *  
+     */
+    public CourseHistoricOJB() {
         super();
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
-	 */
-    public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
+     */
+    public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester)
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());

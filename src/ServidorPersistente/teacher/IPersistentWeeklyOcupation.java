@@ -12,9 +12,8 @@ import ServidorPersistente.IPersistentObject;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public interface IPersistentWeeklyOcupation extends IPersistentObject
-{
+public interface IPersistentWeeklyOcupation extends IPersistentObject {
     public IWeeklyOcupation readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

@@ -14,22 +14,19 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class PrepareCandidateApprovalDispatchAction extends DispatchAction {
 
-  public ActionForward chooseExecutionDegree(ActionMapping mapping, ActionForm form,
-								HttpServletRequest request,
-								HttpServletResponse response)
-	  throws Exception {
+    public ActionForward chooseExecutionDegree(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        HttpSession session = request.getSession(false);
 
-	
-	  HttpSession session = request.getSession(false);
-	
- 	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
- 
-	  request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
-	  request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
- 	  
-	  
-	  return mapping.findForward("ExecutionDegreeChosen");
-  }
-   
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+                .getAttribute(SessionConstants.MASTER_DEGREE);
+
+        request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+                .getSigla());
+        request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
+
+        return mapping.findForward("ExecutionDegreeChosen");
+    }
+
 }

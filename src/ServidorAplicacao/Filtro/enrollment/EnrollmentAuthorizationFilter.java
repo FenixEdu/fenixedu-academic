@@ -22,9 +22,9 @@ import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTutor;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -34,8 +34,7 @@ import Util.TipoCurso;
  * @author João Mota
  *  
  */
-public class EnrollmentAuthorizationFilter extends
-        AuthorizationByManyRolesFilter {
+public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
     /*
      * (non-Javadoc)
@@ -85,7 +84,7 @@ public class EnrollmentAuthorizationFilter extends
                 if (student == null) {
                     return "noAuthorization";
                 }
-                if(student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)){
+                if (student.getPayedTuition() == null || student.getPayedTuition().equals(Boolean.FALSE)) {
                     return "noAuthorization";
                 }
                 if (!curriculumOwner(student, id)) {
@@ -94,13 +93,19 @@ public class EnrollmentAuthorizationFilter extends
                 ITutor tutor = verifyStudentWithTutor(student, sp);
                 if (tutor != null) {
                     return new String("error.enrollment.student.withTutor+"
-                            + tutor.getTeacher().getTeacherNumber().toString()
-                            + "+" + tutor.getTeacher().getPerson().getNome());
+                            + tutor.getTeacher().getTeacherNumber().toString() + "+"
+                            + tutor.getTeacher().getPerson().getNome());
                 }
+
+                //TEMPORARY!!!
+                //                if(student.getSpecialSeason() == null ||
+                // !student.getSpecialSeason().booleanValue()) {
+                //                    return "noAuthorization";
+                //                }
+
             } else {
 
-                if (roles.contains(RoleType.COORDINATOR)
-                        && arguments[0] != null) {
+                if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
                     ITeacher teacher = readTeacher(id, sp);
                     if (teacher == null) {
                         return "noAuthorization";
@@ -158,9 +163,8 @@ public class EnrollmentAuthorizationFilter extends
      * @param sp
      * @return
      */
-    protected boolean insideEnrollmentPeriod(
-            IStudentCurricularPlan studentCurricularPlan, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    protected boolean insideEnrollmentPeriod(IStudentCurricularPlan studentCurricularPlan,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
         try {
             ShowAvailableCurricularCoursesWithoutEnrollmentPeriod
                     .getEnrolmentPeriod(studentCurricularPlan);
@@ -170,28 +174,25 @@ public class EnrollmentAuthorizationFilter extends
         return true;
     }
 
-    protected IStudentCurricularPlan readStudentCurricularPlan(
-            Object[] arguments, ISuportePersistente sp)
+    protected IStudentCurricularPlan readStudentCurricularPlan(Object[] arguments, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
 
         IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
         if (arguments[1] != null) {
 
-            studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
-                    .readByOID(StudentCurricularPlan.class,
-                            (Integer) arguments[1]);
+            studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
+                    StudentCurricularPlan.class, (Integer) arguments[1]);
         } else {
             studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType(
-                            (Integer) arguments[2], TipoCurso.LICENCIATURA_OBJ);
+                    .readActiveByStudentNumberAndDegreeType((Integer) arguments[2],
+                            TipoCurso.LICENCIATURA_OBJ);
         }
         return studentCurricularPlan;
     }
 
-    protected IStudent readStudent(IUserView id, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    protected IStudent readStudent(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
         return persistentStudent.readByUsername(id.getUtilizador());
@@ -199,8 +200,7 @@ public class EnrollmentAuthorizationFilter extends
 
     protected IStudent readStudent(Object[] arguments, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(
-                arguments, sp);
+        IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
         if (studentCurricularPlan == null) {
             return null;
         }
@@ -220,8 +220,8 @@ public class EnrollmentAuthorizationFilter extends
      * @param sp
      * @return
      */
-    protected ITutor verifyStudentWithTutor(IStudent student,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected ITutor verifyStudentWithTutor(IStudent student, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
         IPersistentTutor persistentTutor = sp.getIPersistentTutor();
 
         ITutor tutor = persistentTutor.readTeachersByStudent(student);
@@ -229,8 +229,7 @@ public class EnrollmentAuthorizationFilter extends
         return tutor;
     }
 
-    protected ITeacher readTeacher(IUserView id, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    protected ITeacher readTeacher(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
         return persistentTeacher.readTeacherByUsername(id.getUtilizador());
@@ -242,29 +241,25 @@ public class EnrollmentAuthorizationFilter extends
      * @param sp
      * @return
      */
-    protected boolean verifyStudentTutor(ITeacher teacher, IStudent student,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected boolean verifyStudentTutor(ITeacher teacher, IStudent student, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
         IPersistentTutor persistentTutor = sp.getIPersistentTutor();
 
-        ITutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher,
-                student);
+        ITutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
 
         return (tutor != null);
     }
 
-    protected boolean verifyCoordinator(ITeacher teacher, Object[] arguments,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected boolean verifyCoordinator(ITeacher teacher, Object[] arguments, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
 
-        IPersistentCoordinator persistentCoordinator = sp
-                .getIPersistentCoordinator();
-        ICoordinator coordinator = persistentCoordinator
-                .readCoordinatorByTeacherAndExecutionDegreeId(teacher,
-                        (Integer) arguments[0]);
+        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegreeId(
+                teacher, (Integer) arguments[0]);
         if (coordinator == null) {
             return false;
         }
-        IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(
-                arguments, sp);
+        IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
         if (studentCurricularPlan == null) {
             return false;
         }

@@ -9,102 +9,98 @@ package DataBeans;
 import java.util.List;
 
 /**
- *
- * @author  Luis Cruz & Sara Ribeiro
+ * 
+ * @author Luis Cruz & Sara Ribeiro
  */
 
 public class InfoViewExamByDayAndShift extends InfoObject {
 
-	protected InfoExam infoExam;
-	protected List infoExecutionCourses;
-	protected List infoDegrees;
-	protected Integer numberStudentesAttendingCourse;
+    protected InfoExam infoExam;
 
-	public InfoViewExamByDayAndShift() {
-	}
+    protected List infoExecutionCourses;
 
-	public InfoViewExamByDayAndShift(
-		InfoExam infoExam,
-		List infoExecutionCourses,
-		List infoDegrees,
-		Integer numberStudentesAttendingCourse) {
-		this.setInfoExam(infoExam);
-		this.setInfoExecutionCourses(infoExecutionCourses);
-		this.setInfoDegrees(infoDegrees);
-		this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
-	}
+    protected List infoDegrees;
 
-	public boolean equals(Object obj) {
-		if (obj instanceof InfoViewExamByDayAndShift) {
-			InfoViewExamByDayAndShift examObj = (InfoViewExamByDayAndShift) obj;
-			return this.getInfoExam().getSeason().equals(examObj.getInfoExam().getSeason());
-		}
+    protected Integer numberStudentesAttendingCourse;
 
-		return false;
-	}
+    public InfoViewExamByDayAndShift() {
+    }
 
-	public String toString() {
-		return "[INFOVIEWEXAMBYDAYANDSHIFT:"
-			+ " exam= '"
-			+ this.getInfoExam()
-			+ "'"
-			+ "]";
-	}
+    public InfoViewExamByDayAndShift(InfoExam infoExam, List infoExecutionCourses, List infoDegrees,
+            Integer numberStudentesAttendingCourse) {
+        this.setInfoExam(infoExam);
+        this.setInfoExecutionCourses(infoExecutionCourses);
+        this.setInfoDegrees(infoDegrees);
+        this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoExam getInfoExam() {
-		return infoExam;
-	}
+    public boolean equals(Object obj) {
+        if (obj instanceof InfoViewExamByDayAndShift) {
+            InfoViewExamByDayAndShift examObj = (InfoViewExamByDayAndShift) obj;
+            return this.getInfoExam().getSeason().equals(examObj.getInfoExam().getSeason());
+        }
 
-	/**
-	 * @param exam
-	 */
-	public void setInfoExam(InfoExam exam) {
-		infoExam = exam;
-	}
+        return false;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoDegrees() {
-		return infoDegrees;
-	}
+    public String toString() {
+        return "[INFOVIEWEXAMBYDAYANDSHIFT:" + " exam= '" + this.getInfoExam() + "'" + "]";
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoDegrees(List list) {
-		infoDegrees = list;
-	}
+    /**
+     * @return
+     */
+    public InfoExam getInfoExam() {
+        return infoExam;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getNumberStudentesAttendingCourse() {
-		return numberStudentesAttendingCourse;
-	}
+    /**
+     * @param exam
+     */
+    public void setInfoExam(InfoExam exam) {
+        infoExam = exam;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setNumberStudentesAttendingCourse(Integer integer) {
-		numberStudentesAttendingCourse = integer;
-	}
+    /**
+     * @return
+     */
+    public List getInfoDegrees() {
+        return infoDegrees;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoExecutionCourses() {
-		return infoExecutionCourses;
-	}
+    /**
+     * @param list
+     */
+    public void setInfoDegrees(List list) {
+        infoDegrees = list;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoExecutionCourses(List list) {
-		infoExecutionCourses = list;
-	}
+    /**
+     * @return
+     */
+    public Integer getNumberStudentesAttendingCourse() {
+        return numberStudentesAttendingCourse;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setNumberStudentesAttendingCourse(Integer integer) {
+        numberStudentesAttendingCourse = integer;
+    }
+
+    /**
+     * @return
+     */
+    public List getInfoExecutionCourses() {
+        return infoExecutionCourses;
+    }
+
+    /**
+     * @param list
+     */
+    public void setInfoExecutionCourses(List list) {
+        infoExecutionCourses = list;
+    }
 
 }

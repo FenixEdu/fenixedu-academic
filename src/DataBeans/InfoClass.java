@@ -23,8 +23,7 @@ public class InfoClass extends InfoObject {
     public InfoClass() {
     }
 
-    public InfoClass(String name, Integer anoCurricular,
-            InfoExecutionDegree infoExecutionDegree,
+    public InfoClass(String name, Integer anoCurricular, InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod) {
         setNome(name);
         setAnoCurricular(anoCurricular);
@@ -53,10 +52,8 @@ public class InfoClass extends InfoObject {
         if (obj instanceof InfoClass) {
             InfoClass infoTurma = (InfoClass) obj;
             resultado = getNome().equals(infoTurma.getNome())
-                    && getInfoExecutionPeriod().equals(
-                            infoTurma.getInfoExecutionPeriod())
-                    && getInfoExecutionDegree().equals(
-                            infoTurma.getInfoExecutionDegree());
+                    && getInfoExecutionPeriod().equals(infoTurma.getInfoExecutionPeriod())
+                    && getInfoExecutionDegree().equals(infoTurma.getInfoExecutionDegree());
         }
         return resultado;
     }

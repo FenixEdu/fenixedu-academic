@@ -11,65 +11,71 @@ import java.util.Date;
  */
 public class StudentTestLog extends DomainObject implements IStudentTestLog {
 
-	private IStudent student;
-	private Integer keyStudent;
-	private IDistributedTest distributedTest;
-	private Integer keyDistributedTest;
-	private Date date;
-	private String event;
+    private IStudent student;
 
-	public StudentTestLog() {
-	}
+    private Integer keyStudent;
 
-	public StudentTestLog(Integer testId) {
-		setIdInternal(testId);
-	}
+    private IDistributedTest distributedTest;
 
-	public Date getDate() {
-		return date;
-	}
-	public IDistributedTest getDistributedTest() {
-		return distributedTest;
-	}
+    private Integer keyDistributedTest;
 
-	public String getEvent() {
-		return event;
-	}
+    private Date date;
 
-	public Integer getKeyDistributedTest() {
-		return keyDistributedTest;
-	}
+    private String event;
 
-	public Integer getKeyStudent() {
-		return keyStudent;
-	}
+    public StudentTestLog() {
+    }
 
-	public IStudent getStudent() {
-		return student;
-	}
+    public StudentTestLog(Integer testId) {
+        setIdInternal(testId);
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public void setDistributedTest(IDistributedTest test) {
-		distributedTest = test;
-	}
+    public IDistributedTest getDistributedTest() {
+        return distributedTest;
+    }
 
-	public void setEvent(String string) {
-		event = string;
-	}
+    public String getEvent() {
+        return event;
+    }
 
-	public void setKeyDistributedTest(Integer integer) {
-		keyDistributedTest = integer;
-	}
+    public Integer getKeyDistributedTest() {
+        return keyDistributedTest;
+    }
 
-	public void setKeyStudent(Integer integer) {
-		keyStudent = integer;
-	}
+    public Integer getKeyStudent() {
+        return keyStudent;
+    }
 
-	public void setStudent(IStudent student) {
-		this.student = student;
-	}
+    public IStudent getStudent() {
+        return student;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setDistributedTest(IDistributedTest test) {
+        distributedTest = test;
+    }
+
+    public void setEvent(String string) {
+        event = string;
+    }
+
+    public void setKeyDistributedTest(Integer integer) {
+        keyDistributedTest = integer;
+    }
+
+    public void setKeyStudent(Integer integer) {
+        keyStudent = integer;
+    }
+
+    public void setStudent(IStudent student) {
+        this.student = student;
+    }
 
 }

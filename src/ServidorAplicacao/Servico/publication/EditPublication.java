@@ -21,63 +21,54 @@ import ServidorPersistente.publication.IPersistentPublicationType;
 
 public class EditPublication extends EditDomainObjectService {
 
-	private static EditPublication service = new EditPublication();
+    private static EditPublication service = new EditPublication();
 
-	public static EditPublication getService() {
-		return service;
-	}
+    public static EditPublication getService() {
+        return service;
+    }
 
-	/**
-	 *  
-	 */
-	private EditPublication() {
-	}
+    /**
+     *  
+     */
+    private EditPublication() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "EditPublication";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "EditPublication";
+    }
 
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-		IPersistentPublication persistentPublication =
-			sp.getIPersistentPublication();
-		return persistentPublication;
-	}
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+        IPersistentPublication persistentPublication = sp.getIPersistentPublication();
+        return persistentPublication;
+    }
 
-	protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-		ISuportePersistente persistentSuport;
-		IPublication publication = null;
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        ISuportePersistente persistentSuport;
+        IPublication publication = null;
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
 
-			Integer keyPublicationTypeId =
-				((InfoPublication) infoObject)
-            	.getKeyPublicationType();
-			
-			IPersistentPublicationType persistentPublicationType =
-				persistentSuport.getIPersistentPublicationType();
-				
-			IPublicationType publicationType =
-				(IPublicationType) persistentPublicationType.readByOID(
-					PublicationType.class,
-					keyPublicationTypeId);
+            Integer keyPublicationTypeId = ((InfoPublication) infoObject).getKeyPublicationType();
 
-			publication =
-				Cloner.copyInfoPublication2IPublication(
-					(InfoPublication) infoObject);
-			publication.setType(publicationType);
-			
-			
+            IPersistentPublicationType persistentPublicationType = persistentSuport
+                    .getIPersistentPublicationType();
 
-		} catch (ExcepcaoPersistencia e) {
+            IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+                    PublicationType.class, keyPublicationTypeId);
 
-			e.printStackTrace();
-		}
-		return publication;
+            publication = Cloner.copyInfoPublication2IPublication((InfoPublication) infoObject);
+            publication.setType(publicationType);
 
-	}
+        } catch (ExcepcaoPersistencia e) {
+
+            e.printStackTrace();
+        }
+        return publication;
+
+    }
 }

@@ -17,29 +17,24 @@ import ServidorPersistente.IPersistentWorkLocation;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class WorkLocationOJB extends ObjectFenixOJB implements IPersistentWorkLocation
-{
+public class WorkLocationOJB extends PersistentObjectOJB implements IPersistentWorkLocation {
 
     /** Creates a new instance of WorkLocationOJB */
-    public WorkLocationOJB()
-    {
+    public WorkLocationOJB() {
     }
 
-    public IWorkLocation readByName(String name) throws ExcepcaoPersistencia
-    {
+    public IWorkLocation readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
 
         return (IWorkLocation) queryObject(WorkLocation.class, criteria);
     }
 
-    public IWorkLocation readByOID(Integer oid) throws ExcepcaoPersistencia
-    {
+    public IWorkLocation readByOID(Integer oid) throws ExcepcaoPersistencia {
         return readByOID(oid);
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(WorkLocation.class, new Criteria());
     }
 }

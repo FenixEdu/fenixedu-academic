@@ -20,32 +20,27 @@ import Util.RoleType;
  * Created at 5/Set/2003, 16:22:14
  *  
  */
-public class CandidaciesAccessFilter extends Filtro
-{
-    public CandidaciesAccessFilter()
-    {
+public class CandidaciesAccessFilter extends Filtro {
+    public CandidaciesAccessFilter() {
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
-        if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(
-                        id.getRoles(), getRoleType())))
-                        || (id == null) || (id.getRoles() == null))
-        {
+        if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
+                getRoleType())))
+                || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedException();
         }
 
     }
 
-    private RoleType getRoleType()
-    {
+    private RoleType getRoleType() {
         return RoleType.SEMINARIES_COORDINATOR;
     }
 }

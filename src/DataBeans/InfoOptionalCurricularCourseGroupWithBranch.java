@@ -17,11 +17,11 @@ public class InfoOptionalCurricularCourseGroupWithBranch extends InfoOptionalCur
 
     public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
-        if (curricularCourseGroup != null) {            
-           setInfoBranch(InfoBranch.newInfoFromDomain(curricularCourseGroup.getBranch()));
+        if (curricularCourseGroup != null) {
+            setInfoBranch(InfoBranch.newInfoFromDomain(curricularCourseGroup.getBranch()));
         }
     }
-    
+
     public static InfoCurricularCourseGroup newInfoFromDomain(
             ICurricularCourseGroup curricularCourseGroup) {
         InfoCurricularCourseGroup infoCurricularCourseGroup = null;

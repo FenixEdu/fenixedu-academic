@@ -12,25 +12,23 @@ import Util.RoleType;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class RoleOJB extends ObjectFenixOJB	implements IPersistentRole {
+public class RoleOJB extends PersistentObjectOJB implements IPersistentRole {
 
-	public RoleOJB() {
-		super();
-	}
-	
+    public RoleOJB() {
+        super();
+    }
 
-	public IRole readByRoleType(RoleType roleType) throws ExcepcaoPersistencia {
+    public IRole readByRoleType(RoleType roleType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("roleType",new Integer(roleType.getValue()));
-        return (IRole) queryObject(Role.class,crit);
-		
-	}
+        crit.addEqualTo("roleType", new Integer(roleType.getValue()));
+        return (IRole) queryObject(Role.class, crit);
 
-	public List readAll() throws ExcepcaoPersistencia {
-		return queryList(Role.class, null);
-	}
+    }
+
+    public List readAll() throws ExcepcaoPersistencia {
+        return queryList(Role.class, null);
+    }
 
 }

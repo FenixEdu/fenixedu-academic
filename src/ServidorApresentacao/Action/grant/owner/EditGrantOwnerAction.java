@@ -62,7 +62,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
          */
         InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
         if (loaddb != null && loaddb.equals(new Integer(1))) //Load contents
-                                                             // from database
+        // from database
         {
             if (idInternal != null) //Comes from manageGrantOwner
             {

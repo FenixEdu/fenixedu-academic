@@ -108,17 +108,14 @@
 		</logic:iterate>
 	</logic:present>			
 	<!-- COORDINATOR END-->
-	<br />
-	<br />
-	<bean:message key="label.information.responsability.description.degree.en" />			 
-	<br />
-	<br />
 			 
 	<div class="degree_imageplacer">
 		<!-- IMAGEM REFERENTE À LICENCIATURA  width="250" height="150"-->
 	</div>
-			 
-	<div class="col_left">			 	
+	
+	<br />
+	<br /> 			 
+	<!--<div class="col_left">			 	-->
 		<logic:notEmpty name="infoDegreeInfo" property="descriptionEn" >			 	
 			<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.description.en" /> </h2>
 			<p><!-- BREVE DESCRIÇAO DA LICENCIATURA--><bean:write name="infoDegreeInfo" property="descriptionEn" filter="false" /></p>
@@ -128,7 +125,7 @@
 			<h2> <img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.objectives.en" /></h2>
 		 	   	<p><!-- OBJECTIVOS --><bean:write name="infoDegreeInfo" property="objectivesEn" filter="false" /></p>
 		</logic:notEmpty>
-	</div>
+	<!--</div>-->
 			  
 	<div class="col_right">
 		<table class="box" cellspacing="0">
@@ -151,30 +148,38 @@
 			</logic:notEmpty>
 		</table>
 	</div>
-				
+
+	<br />
+	<br /> 				
 	<logic:notEmpty name="infoDegreeInfo" property="professionalExitsEn" >
 		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.professionalExits.en" /></h2>
 		<p><!-- TEXTO - SAÍDAS PROFISSIONAIS--><bean:write name="infoDegreeInfo" property="professionalExitsEn" filter="false" /></p>  
 	</logic:notEmpty>
-			  
+	<br />
+	<br /> 			  
 	<logic:notEmpty name="infoDegreeInfo" property="historyEn" >
-		<div class="col_left">
 			<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.history.en" /></h2>
 			<p><!-- TEXTO - HISTORIAL DA LICENCIATURA --><bean:write name="infoDegreeInfo" property="historyEn" filter="false" /></p>
-		</div>
 	</logic:notEmpty>
-<logic:empty name="infoDegreeInfo" property="descriptionEn">
-<logic:empty name="infoDegreeInfo" property="objectivesEn">
-<logic:empty name="infoDegreeInfo" property="additionalInfoEn">
-<logic:empty name="infoDegreeInfo" property="linksEn">
-<logic:empty name="infoDegreeInfo" property="professionalExitsEn">
-<logic:empty name="infoDegreeInfo" property="historyEn">
-	<p><span class="error"><bean:message key="error.public.DegreeInfoNotPresent.en" /></span></p>
-</logic:empty>
-</logic:empty>
-</logic:empty>	
-</logic:empty>	
-</logic:empty>	
-</logic:empty> 
+	<logic:empty name="infoDegreeInfo" property="descriptionEn">
+	<logic:empty name="infoDegreeInfo" property="objectivesEn">
+	<logic:empty name="infoDegreeInfo" property="additionalInfoEn">
+	<logic:empty name="infoDegreeInfo" property="linksEn">
+	<logic:empty name="infoDegreeInfo" property="professionalExitsEn">
+	<logic:empty name="infoDegreeInfo" property="historyEn">
+		<p><span class="error"><bean:message key="error.public.DegreeInfoNotPresent.en" /></span></p>
+	</logic:empty>
+	</logic:empty>
+	</logic:empty>	
+	</logic:empty>	
+	</logic:empty>	
+	</logic:empty> 
+	
+	<br />
+	<br />
+	<br /> 
+	<bean:message key="label.information.responsability.information.degree.en" />					 
+	<br />
+	<br />
 </logic:present>
 

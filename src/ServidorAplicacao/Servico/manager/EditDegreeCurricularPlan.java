@@ -21,15 +21,12 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author lmac1
  */
-public class EditDegreeCurricularPlan implements IService
-{
+public class EditDegreeCurricularPlan implements IService {
 
-    public EditDegreeCurricularPlan()
-    {
+    public EditDegreeCurricularPlan() {
     }
 
-    public void run(InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException
-    {
+    public void run(InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException {
 
         ICurso degree = null;
         IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
@@ -37,22 +34,23 @@ public class EditDegreeCurricularPlan implements IService
         ICursoPersistente persistentDegree = null;
         String newName = null;
 
-        try
-        {
+        try {
 
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
             oldDegreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
                     DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal());
 
-            if (oldDegreeCP == null) { throw new NonExistingServiceException(
-                    "message.nonExistingDegreeCurricularPlan", null); }
+            if (oldDegreeCP == null) {
+                throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
+            }
             persistentDegree = persistentSuport.getICursoPersistente();
             Integer degreeId = oldDegreeCP.getDegree().getIdInternal();
             degree = persistentDegree.readByIdInternal(degreeId);
 
-            if (degree == null) { throw new NonExistingServiceException("message.nonExistingDegree",
-                    null); }
+            if (degree == null) {
+                throw new NonExistingServiceException("message.nonExistingDegree", null);
+            }
             newName = newInfoDegreeCP.getName();
 
             persistentDegreeCurricularPlan.simpleLockWrite(oldDegreeCP);
@@ -68,13 +66,9 @@ public class EditDegreeCurricularPlan implements IService
             oldDegreeCP.setMarkType(newInfoDegreeCP.getMarkType());
             oldDegreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
 
-        }
-        catch (ExistingPersistentException ex)
-        {
+        } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

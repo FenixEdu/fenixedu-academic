@@ -55,12 +55,10 @@ public class ReadCurriculumByOIdService implements IServico {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurriculum persistentCurriculum = sp
-                    .getIPersistentCurriculum();
-            ICurriculum curriculum = (ICurriculum) persistentCurriculum
-                    .readByOID(Curriculum.class, curriculumId);
-            InfoCurriculum infoCurriculum = Cloner
-                    .copyICurriculum2InfoCurriculum(curriculum);
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+            ICurriculum curriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
+                    curriculumId);
+            InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
             SiteView siteView = new SiteView(infoCurriculum);
 
             return siteView;

@@ -6,17 +6,15 @@ package Util;
 import java.io.Serializable;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 20/Fev/2004
- *
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 20/Fev/2004
+ *  
  */
-public abstract class FenixUtil implements Serializable
-{
+public abstract class FenixUtil implements Serializable {
 
     /**
-     * 
+     *  
      */
-    public FenixUtil()
-    {
+    public FenixUtil() {
     }
 
 }

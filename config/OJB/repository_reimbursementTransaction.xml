@@ -63,7 +63,7 @@
 		
 	<field-descriptor 
 	    name="keyReimbursementGuideEntry"
-	    column="KEY_GUIDE_REIMBURSEMENT_ENTRY"
+	    column="KEY_REIMBURSEMENT_GUIDE_ENTRY"
 	    jdbc-type="INTEGER"
 	/>
 	

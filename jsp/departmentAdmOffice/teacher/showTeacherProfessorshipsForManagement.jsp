@@ -47,7 +47,7 @@
 					<bean:message key="label.execution-course.name" />
 				</td>
 				<td class="listClasses-header" style="text-align:left">
-					<bean:message key="label.execution-course.degrees" />
+					<bean:message key="label.execution-course.degrees.all" />
 				</td>
 				<td class="listClasses-header">
 					<bean:message key="label.execution-period" />

@@ -16,85 +16,78 @@ import Dominio.IExecutionCourse;
  * @author Sergio Montelobo
  *  
  */
-public class CourseReport extends DomainObject implements ICourseReport
-{
+public class CourseReport extends DomainObject implements ICourseReport {
 
     private String report;
+
     private Integer keyExecutionCourse;
+
     private IExecutionCourse executionCourse;
+
     private Date lastModificationDate;
 
-    public CourseReport()
-    {}
+    public CourseReport() {
+    }
 
     /** Creates a new instance of CourseReport */
-    public CourseReport(Integer idInternal)
-    {
+    public CourseReport(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see Dominio.ICourseReport#getReport()
-	 */
-    public String getReport()
-    {
+     * (non-Javadoc)
+     * 
+     * @see Dominio.ICourseReport#getReport()
+     */
+    public String getReport() {
         return report;
     }
 
-    public Integer getKeyExecutionCourse()
-    {
+    public Integer getKeyExecutionCourse() {
         return keyExecutionCourse;
     }
 
-    public IExecutionCourse getExecutionCourse()
-    {
+    public IExecutionCourse getExecutionCourse() {
         return executionCourse;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see Dominio.ICourseReport#setReport(java.lang.String)
-	 */
-    public void setReport(String report)
-    {
+     * (non-Javadoc)
+     * 
+     * @see Dominio.ICourseReport#setReport(java.lang.String)
+     */
+    public void setReport(String report) {
         this.report = report;
     }
 
-    public void setKeyExecutionCourse(Integer keyExecutionCourse)
-    {
+    public void setKeyExecutionCourse(Integer keyExecutionCourse) {
         this.keyExecutionCourse = keyExecutionCourse;
     }
 
-    public void setExecutionCourse(IExecutionCourse executionCourse)
-    {
+    public void setExecutionCourse(IExecutionCourse executionCourse) {
         this.executionCourse = executionCourse;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[Dominio.gesdis.CourseReport ";
         result += ", report=" + getReport();
         result += ", executionCourse=" + getExecutionCourse();
         result += "]";
         return result;
     }
+
     /**
-	 * @return Returns the lastModificationDate.
-	 */
-    public Date getLastModificationDate()
-    {
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-	 * @param lastModificationDate
-	 *            The lastModificationDate to set.
-	 */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 

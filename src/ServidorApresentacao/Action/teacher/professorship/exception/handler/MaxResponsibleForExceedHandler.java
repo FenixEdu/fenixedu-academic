@@ -23,20 +23,21 @@ import ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator.M
 /**
  * @author jpvl
  */
-public class MaxResponsibleForExceedHandler extends ExceptionHandler
-{
+public class MaxResponsibleForExceedHandler extends ExceptionHandler {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.action.ExceptionHandler#execute(java.lang.Exception,
-	 *          org.apache.struts.config.ExceptionConfig, org.apache.struts.action.ActionMapping,
-	 *          org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
-	 *          javax.servlet.http.HttpServletResponse)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.ExceptionHandler#execute(java.lang.Exception,
+     *      org.apache.struts.config.ExceptionConfig,
+     *      org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
-            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response) throws ServletException
-    {
+            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException {
         MaxResponsibleForExceed maxResponsibleForExceedException = (MaxResponsibleForExceed) ex;
 
         Object args[] = new Object[2];
@@ -45,17 +46,16 @@ public class MaxResponsibleForExceedHandler extends ExceptionHandler
 
         Iterator iterator = maxResponsibleForExceedException.getInfoResponsiblefors().iterator();
         StringBuffer arg1 = new StringBuffer();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             InfoResponsibleFor infoResponsibleFor = (InfoResponsibleFor) iterator.next();
             Integer teacherNumber = infoResponsibleFor.getInfoTeacher().getTeacherNumber();
             String teacherName = infoResponsibleFor.getInfoTeacher().getInfoPerson().getNome();
             arg1
                     .append(
-                            "<a href='teacherSearchForExecutionCourseAssociation.do?method=doSearch&teacherNumber=").append(teacherNumber).append("'>").append(teacherNumber).append("</a>")
-                    .append("-").append(teacherName);
-            if (iterator.hasNext())
-            {
+                            "<a href='teacherSearchForExecutionCourseAssociation.do?method=doSearch&teacherNumber=")
+                    .append(teacherNumber).append("'>").append(teacherNumber).append("</a>").append("-")
+                    .append(teacherName);
+            if (iterator.hasNext()) {
                 arg1.append(", ");
             }
         }

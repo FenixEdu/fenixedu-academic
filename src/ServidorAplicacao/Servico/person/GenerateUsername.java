@@ -12,75 +12,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RandomStringGenerator;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GenerateUsername  {
-    
-    
-	public static String getUsername() throws NotExecutedException {
+public class GenerateUsername {
 
-		ISuportePersistente sp = null;
-        
-		// Generate Username
-		String username = RandomStringGenerator.getRandomStringGenerator(6);
+    public static String getUsername() throws NotExecutedException {
 
-		// Verify if the Username already Exists 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = null;
+
+        // Generate Username
+        String username = RandomStringGenerator.getRandomStringGenerator(6);
+
+        // Verify if the Username already Exists
+        try {
+            sp = SuportePersistenteOJB.getInstance();
             while ((sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null)
-				username = RandomStringGenerator.getRandomStringGenerator(6);
-		} catch (ExcepcaoPersistencia ex) {
-			NotExecutedException newEx = new NotExecutedException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-		return username;
-	}
+                username = RandomStringGenerator.getRandomStringGenerator(6);
+        } catch (ExcepcaoPersistencia ex) {
+            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+        return username;
+    }
 
-	public static String getCandidateUsername(IMasterDegreeCandidate newMasterDegreeCandidate) throws NotExecutedException {
-		// FIXME : temporary solution: in the future create username by name
-		ISuportePersistente sp = null;
+    public static String getCandidateUsername(IMasterDegreeCandidate newMasterDegreeCandidate)
+            throws NotExecutedException {
+        // FIXME : temporary solution: in the future create username by name
+        ISuportePersistente sp = null;
 
-		int start = 0;
-		int end = 3;
-		char buf[] = new char[end - start];
-		newMasterDegreeCandidate.getSpecialization().toString().getChars(start, end, buf, 0);
-		
-		// Generate Username
-		String username = newMasterDegreeCandidate.getCandidateNumber() + 
-							String.valueOf(buf) +
-							newMasterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla(); 
-							 
-							
+        int start = 0;
+        int end = 3;
+        char buf[] = new char[end - start];
+        newMasterDegreeCandidate.getSpecialization().toString().getChars(start, end, buf, 0);
 
-		// Verify if the Username already Exists 
-		String username2Test = username;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			int i = 1;
-			while ((sp.getIPessoaPersistente().lerPessoaPorUsername(username2Test)) != null){
-			//while ((person = sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null){	
-				username2Test = new String(username + i++);
-			}
-			
-		} catch (ExcepcaoPersistencia ex) {
-			NotExecutedException newEx = new NotExecutedException("Persistence layer error");
-			throw newEx;
-		}
-		return username2Test;
-	}
+        // Generate Username
+        String username = newMasterDegreeCandidate.getCandidateNumber()
+                + String.valueOf(buf)
+                + newMasterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree()
+                        .getSigla();
 
-	public static void main (String args[]) {
-		String s = "abcdefghij";
-		int start = 3;
-		int end = 5;
-		char buf[] = new char[end - start];
-		
-		System.out.println(buf);
-		s.getChars(start, end, buf, 0);
-		System.out.println(String.valueOf(buf));
-	}
-	
+        // Verify if the Username already Exists
+        String username2Test = username;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            int i = 1;
+            while ((sp.getIPessoaPersistente().lerPessoaPorUsername(username2Test)) != null) {
+                //while ((person =
+                // sp.getIPessoaPersistente().lerPessoaPorUsername(username)) !=
+                // null){
+                username2Test = new String(username + i++);
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            NotExecutedException newEx = new NotExecutedException("Persistence layer error");
+            throw newEx;
+        }
+        return username2Test;
+    }
+
+    public static void main(String args[]) {
+        String s = "abcdefghij";
+        int start = 3;
+        int end = 5;
+        char buf[] = new char[end - start];
+
+        System.out.println(buf);
+        s.getChars(start, end, buf, 0);
+        System.out.println(String.valueOf(buf));
+    }
 
 }

@@ -21,88 +21,69 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class EditTestTest extends ServiceNeedsAuthenticationTestCase
-{
-	public EditTestTest(String testName)
-	{
-		super(testName);
-	}
+public class EditTestTest extends ServiceNeedsAuthenticationTestCase {
+    public EditTestTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testEditTestTestDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testEditTestTestDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "EditTest";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "EditTest";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
-		String[] args =
-		{"D3673", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "D3673", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
-		String[] args =
-		{"L46730", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "L46730", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser()
-	{
-		String[] args =
-		{"L46730", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "L46730", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments()
-	{
-		//Integer executionCourseId, Integer testId, String title, String
-		// information
-		Integer executionCourseId = new Integer(34033);
-		Integer testId = new Integer(110);
-		String title = new String("new test title");
-		String info = new String("new test info");
-		Object[] args =
-		{executionCourseId, testId, title, info,};
-		return args;
-	}
+    protected Object[] getAuthorizeArguments() {
+        //Integer executionCourseId, Integer testId, String title, String
+        // information
+        Integer executionCourseId = new Integer(34033);
+        Integer testId = new Integer(110);
+        String title = new String("new test title");
+        String info = new String("new test info");
+        Object[] args = { executionCourseId, testId, title, info, };
+        return args;
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testSuccessfull()
-	{
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("idInternal", args[1]);
-			Query queryCriteria = new QueryByCriteria(Test.class, criteria);
-			ITest test = (ITest) broker.getObjectByQuery(queryCriteria);
-			broker.close();
-			//ver se os dados do teste estão correctos
-			assertEquals(test.getTitle(), args[2]);
-			assertEquals(test.getInformation(), args[3]);
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("Edit Test " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("Edit Test " + ex);
-		}
-	}
+    public void testSuccessfull() {
+        try {
+            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            Object[] args = getAuthorizeArguments();
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+            Criteria criteria = new Criteria();
+            criteria.addEqualTo("idInternal", args[1]);
+            Query queryCriteria = new QueryByCriteria(Test.class, criteria);
+            ITest test = (ITest) broker.getObjectByQuery(queryCriteria);
+            broker.close();
+            //ver se os dados do teste estão correctos
+            assertEquals(test.getTitle(), args[2]);
+            assertEquals(test.getInformation(), args[3]);
+        } catch (FenixServiceException ex) {
+            fail("Edit Test " + ex);
+        } catch (Exception ex) {
+            fail("Edit Test " + ex);
+        }
+    }
 }
 /*
  * public class EditTestTest extends TestCaseDeleteAndEditServices {

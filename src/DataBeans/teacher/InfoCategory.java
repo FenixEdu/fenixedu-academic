@@ -10,115 +10,109 @@ import Dominio.teacher.ICategory;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- * 
+ *  
  */
-public class InfoCategory extends InfoObject
-{
+public class InfoCategory extends InfoObject {
     private Boolean canBeExecutionCourseResponsible;
+
     private String code;
+
     private String longName;
 
     private String shortName;
 
-    public InfoCategory()
-    {
+    public InfoCategory() {
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof InfoCategory)
-        {
+        if (obj instanceof InfoCategory) {
             resultado = getCode().equals(((InfoCategory) obj).getCode());
         }
         return resultado;
     }
+
     /**
-	 * @return Returns the canBeExecutionCourseResponsible.
-	 */
-    public Boolean getCanBeExecutionCourseResponsible()
-    {
+     * @return Returns the canBeExecutionCourseResponsible.
+     */
+    public Boolean getCanBeExecutionCourseResponsible() {
         return this.canBeExecutionCourseResponsible;
     }
 
     /**
-	 * @return Returns the code.
-	 */
-    public String getCode()
-    {
+     * @return Returns the code.
+     */
+    public String getCode() {
         return code;
     }
 
     /**
-	 * @return Returns the longName.
-	 */
-    public String getLongName()
-    {
+     * @return Returns the longName.
+     */
+    public String getLongName() {
         return longName;
     }
 
     /**
-	 * @return Returns the shortName.
-	 */
-    public String getShortName()
-    {
+     * @return Returns the shortName.
+     */
+    public String getShortName() {
         return shortName;
     }
+
     /**
-	 * @param canBeExecutionCourseResponsible
-	 *                   The canBeExecutionCourseResponsible to set.
-	 */
-    public void setCanBeExecutionCourseResponsible(Boolean canBeExecutionCourseResponsible)
-    {
+     * @param canBeExecutionCourseResponsible
+     *            The canBeExecutionCourseResponsible to set.
+     */
+    public void setCanBeExecutionCourseResponsible(Boolean canBeExecutionCourseResponsible) {
         this.canBeExecutionCourseResponsible = canBeExecutionCourseResponsible;
     }
 
     /**
-	 * @param code
-	 *                   The code to set.
-	 */
-    public void setCode(String code)
-    {
+     * @param code
+     *            The code to set.
+     */
+    public void setCode(String code) {
         this.code = code;
     }
 
     /**
-	 * @param longName
-	 *                   The longName to set.
-	 */
-    public void setLongName(String longName)
-    {
+     * @param longName
+     *            The longName to set.
+     */
+    public void setLongName(String longName) {
         this.longName = longName;
     }
 
     /**
-	 * @param shortName
-	 *                   The shortName to set.
-	 */
-    public void setShortName(String shortName)
-    {
+     * @param shortName
+     *            The shortName to set.
+     */
+    public void setShortName(String shortName) {
         this.shortName = shortName;
     }
-        
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(ICategory category) {
         super.copyFromDomain(category);
-        if(category != null) {
+        if (category != null) {
             setCanBeExecutionCourseResponsible(category.getCanBeExecutionCourseResponsible());
             setCode(category.getCode());
             setLongName(category.getLongName());
             setShortName(category.getShortName());
-        }        
+        }
     }
-    
+
     public static InfoCategory newInfoFromDomain(ICategory category) {
         InfoCategory infoCategory = null;
-        if(category != null) {
+        if (category != null) {
             infoCategory = new InfoCategory();
             infoCategory.copyFromDomain(category);
         }
         return infoCategory;
-    }    
+    }
 }

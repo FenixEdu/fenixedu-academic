@@ -20,65 +20,55 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
-{
+public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase {
     /**
-	 * @param testName
-	 */
-    public ReadCareersTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadCareersTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testReadCareersDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadCareers";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "user", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = { "julia", "pass", getApplication()};
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = { "jccm", "pass", getApplication()};
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
-        Object[] args = { CareerType.PROFESSIONAL, userView.getUtilizador()};
+    protected Object[] getAuthorizeArguments() {
+        Object[] args = { CareerType.PROFESSIONAL, userView.getUtilizador() };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testReadAllCareersTeacherWithCareers()
-    {
-        try
-        {
+    public void testReadAllCareersTeacherWithCareers() {
+        try {
             SiteView result = null;
             CareerType careerType = null;
 
-            Object[] args = { careerType, userView.getUtilizador()};
+            Object[] args = { careerType, userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
             assertEquals(infoSiteCareers.getCareerType(), careerType);
@@ -87,25 +77,23 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             assertEquals(infoCareers.size(), 2);
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading AllCareers of a Teacher with careers" + ex);
         }
     }
 
-    public void testReadAllCareersTeacherWithoutCareers()
-    {
-        try
-        {
+    public void testReadAllCareersTeacherWithoutCareers() {
+        try {
             SiteView result = null;
             CareerType careerType = null;
 
-            String[] args = { "maria", "pass", getApplication()};
+            String[] args = { "maria", "pass", getApplication() };
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView.getUtilizador()};
+            Object[] serviceArgs = { careerType, userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
@@ -116,22 +104,20 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading the AllCareers of a Teacher without careers" + ex);
         }
     }
 
-    public void testReadAllProfessionalCareersTeacherWithCareers()
-    {
-        try
-        {
+    public void testReadAllProfessionalCareersTeacherWithCareers() {
+        try {
             SiteView result = null;
             CareerType careerType = CareerType.PROFESSIONAL;
 
-            Object[] args = { careerType, userView.getUtilizador()};
+            Object[] args = { careerType, userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
             assertEquals(infoSiteCareers.getCareerType(), careerType);
@@ -140,25 +126,23 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             assertEquals(infoCareers.size(), 1);
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading AllProfessionalCareers of a Teacher with careers" + ex);
         }
     }
 
-    public void testReadAllProfessionalCareersTeacherWithoutCareers()
-    {
-        try
-        {
+    public void testReadAllProfessionalCareersTeacherWithoutCareers() {
+        try {
             SiteView result = null;
             CareerType careerType = CareerType.PROFESSIONAL;
 
-            String[] args = { "maria", "pass", getApplication()};
+            String[] args = { "maria", "pass", getApplication() };
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView.getUtilizador()};
+            Object[] serviceArgs = { careerType, userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
@@ -169,22 +153,20 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading the AllProfessionalCareers of a Teacher without careers" + ex);
         }
     }
 
-    public void testReadAllTeachingCareersTeacherWithCareers()
-    {
-        try
-        {
+    public void testReadAllTeachingCareersTeacherWithCareers() {
+        try {
             SiteView result = null;
             CareerType careerType = CareerType.TEACHING;
 
-            Object[] args = { careerType, userView.getUtilizador()};
+            Object[] args = { careerType, userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
             assertEquals(infoSiteCareers.getCareerType(), careerType);
@@ -193,25 +175,23 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             assertEquals(infoCareers.size(), 1);
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading AllTeachingCareers of a Teacher with careers" + ex);
         }
     }
 
-    public void testReadAllTeachingCareersTeacherWithoutCareers()
-    {
-        try
-        {
+    public void testReadAllTeachingCareersTeacherWithoutCareers() {
+        try {
             SiteView result = null;
             CareerType careerType = CareerType.TEACHING;
 
-            String[] args = { "maria", "pass", getApplication()};
+            String[] args = { "maria", "pass", getApplication() };
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView.getUtilizador()};
+            Object[] serviceArgs = { careerType, userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
 
             InfoSiteCareers infoSiteCareers = (InfoSiteCareers) result.getComponent();
@@ -222,8 +202,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading the AllTeachingCareers of a Teacher without careers" + ex);
         }
     }

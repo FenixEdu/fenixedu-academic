@@ -15,126 +15,99 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
  */
-public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
-{
+public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase {
 
     protected String dataSetFilePath;
+
     protected IUserView userView = null;
+
     protected IUserView userViewNotAuthorized = null;
 
     /**
-	 * @param name
-	 */
-    public AdministrativeOfficeBaseTest(String name)
-    {
+     * @param name
+     */
+    public AdministrativeOfficeBaseTest(String name) {
         super(name);
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
         userView = this.authenticateUser(getAuthenticatedAndAuthorizedUser());
         userViewNotAuthorized = this.authenticateUser(getAuthenticatedAndNotAuthorizedUser());
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return this.dataSetFilePath;
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "f3667", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "f3667", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndNotAuthorizedUser()
-    {
-        String[] args = { "f3614", "pass", getApplication()};
+    protected String[] getAuthenticatedAndNotAuthorizedUser() {
+        String[] args = { "f3614", "pass", getApplication() };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.INTRANET;
     }
 
     /**
-	 * @param strings
-	 * @return
-	 */
-    private IUserView authenticateUser(String[] args)
-    {
+     * @param strings
+     * @return
+     */
+    private IUserView authenticateUser(String[] args) {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             sp.clearCache();
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             fail("Cache cleaning failed!" + ex);
             return null;
         }
         //SuportePersistenteOJB.resetInstance();
 
-        try
-        {
+        try {
             return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Authenticating User!" + ex);
             return null;
         }
     }
 
-    public void testNotAuthenticatedExecution()
-    {
-        try
-        {
-            ServiceManagerServiceFactory.executeService(
-                null,
-                getNameOfServiceToBeTested(),
-                getServiceArgumentsForNotAuthenticatedUser());
+    public void testNotAuthenticatedExecution() {
+        try {
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(),
+                    getServiceArgumentsForNotAuthenticatedUser());
             fail("testNotAuthenticatedExecution did not throw NotAuthorizedException");
 
-        }
-        catch (NotAuthorizedException ex)
-        {
+        } catch (NotAuthorizedException ex) {
             //ok
 
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             fail("testNotAuthenticatedExecution " + ex.getMessage());
         }
 
     }
 
-    public void testNotAuthorizedExecution()
-    {
-        try
-        {
-            ServiceManagerServiceFactory.executeService(
-                userViewNotAuthorized,
-                getNameOfServiceToBeTested(),
-                getServiceArgumentsForNotAuthorizedUser());
+    public void testNotAuthorizedExecution() {
+        try {
+            ServiceManagerServiceFactory.executeService(userViewNotAuthorized,
+                    getNameOfServiceToBeTested(), getServiceArgumentsForNotAuthorizedUser());
             fail("testNotAuthorizedExecution did not throw NotAuthorizedException");
 
-        }
-        catch (NotAuthorizedException ex)
-        {
+        } catch (NotAuthorizedException ex) {
             //ok
 
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             fail("testNotAuthenticatedExecution " + ex.getMessage());
         }
@@ -142,8 +115,10 @@ public abstract class AdministrativeOfficeBaseTest extends ServiceTestCase
     }
 
     protected abstract String getNameOfServiceToBeTested();
+
     protected abstract Object[] getServiceArgumentsForNotAuthenticatedUser()
-        throws FenixServiceException;
+            throws FenixServiceException;
+
     protected abstract Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException;
 
 }

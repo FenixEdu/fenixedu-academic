@@ -38,25 +38,7 @@
 		</h2>
 		<html:select property="executionDegreeId" onchange="this.form.page.value='2';this.form.method.value='showExecutionDegreeExecutionCourses';this.form.submit();">
 			<option></option>
-			<logic:iterate id="executionDegree" name="executionDegrees">
-				<bean:define id="executionDegreeId" name="executionDegree" property="idInternal"/>
-				<bean:define id="executionDegreeName" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>				
-				<logic:equal name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.tipoCurso" value="<%= String.valueOf(TipoCurso.LICENCIATURA) %>">
-					<html:option value="<%= executionDegreeId.toString() %>">
-						<bean:message key="label.executionDegree.degree" arg0="<%= executionDegreeName.toString() %>"/>
-					</html:option>
-				</logic:equal>
-				<logic:equal name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.tipoCurso" value="<%= String.valueOf(TipoCurso.MESTRADO) %>">
-					<html:option value="<%= executionDegreeId.toString() %>">
-						<bean:message key="label.executionDegree.masterDegree" arg0="<%= executionDegreeName.toString() %>"/>
-					</html:option>
-				</logic:equal>
-				
-			</logic:iterate>
-			
-			
-			
-
+			<html:options collection="executionDegrees" labelProperty="label" property="value"/>
 		</html:select>
 	</logic:present>
 	

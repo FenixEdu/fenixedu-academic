@@ -46,16 +46,15 @@ public class DeleteExam implements IServico {
         return "DeleteExam";
     }
 
-    public Object run(InfoViewExamByDayAndShift infoViewExam)
-            throws FenixServiceException {
+    public Object run(InfoViewExamByDayAndShift infoViewExam) throws FenixServiceException {
 
         boolean result = false;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(
-                    Exam.class, infoViewExam.getInfoExam().getIdInternal());
+            IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(Exam.class,
+                    infoViewExam.getInfoExam().getIdInternal());
             sp.getIPersistentExam().simpleLockWrite(examToDelete);
 
             sp.getIPersistentExam().delete(examToDelete);

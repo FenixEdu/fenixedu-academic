@@ -11,54 +11,59 @@ import DataBeans.InfoSection;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class SectionMenuMap {
-	private List sections;
-	private InfoSection activeSection;
-	/**
-	 * 
-	 */
-	public SectionMenuMap(List infoSections,InfoSection activeSection) {
-		setSections(infoSections);
-		setActiveSection(activeSection);
-	}
+    private List sections;
 
-	public SectionMenuMap(List infoSections){
-		setSections(infoSections);
-	}
-	/**
-	 * @return List
-	 */
-	public List getSections() {
-		return sections;
-	}
+    private InfoSection activeSection;
 
-	/**
-	 * Sets the sections.
-	 * @param sections The sections to set
-	 */
-	public void setSections(List sections) {
-		this.sections = sections;
-	}
+    /**
+     *  
+     */
+    public SectionMenuMap(List infoSections, InfoSection activeSection) {
+        setSections(infoSections);
+        setActiveSection(activeSection);
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoSection getActiveSection() {
-		return activeSection;
-	}
+    public SectionMenuMap(List infoSections) {
+        setSections(infoSections);
+    }
 
-	/**
-	 * @param section
-	 */
-	public void setActiveSection(InfoSection section) {
-		InfoSection tempSection= section;
-		while (tempSection.calculateDepth().intValue()!=0){
-			tempSection = tempSection.getSuperiorInfoSection();
-		}
-		activeSection = tempSection;
-	}
+    /**
+     * @return List
+     */
+    public List getSections() {
+        return sections;
+    }
+
+    /**
+     * Sets the sections.
+     * 
+     * @param sections
+     *            The sections to set
+     */
+    public void setSections(List sections) {
+        this.sections = sections;
+    }
+
+    /**
+     * @return
+     */
+    public InfoSection getActiveSection() {
+        return activeSection;
+    }
+
+    /**
+     * @param section
+     */
+    public void setActiveSection(InfoSection section) {
+        InfoSection tempSection = section;
+        while (tempSection.calculateDepth().intValue() != 0) {
+            tempSection = tempSection.getSuperiorInfoSection();
+        }
+        activeSection = tempSection;
+    }
 
 }

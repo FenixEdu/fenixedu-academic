@@ -4,122 +4,114 @@
  */
 package DataBeans.student;
 
-import Util.DelegateYearType;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoObject;
 import DataBeans.InfoStudent;
+import Util.DelegateYearType;
 
 /**
- * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
- * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo</a>
+ * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
+ * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
  *  
  */
-public class InfoDelegate extends InfoObject
-{
+public class InfoDelegate extends InfoObject {
     private DelegateYearType yearType;
+
     private InfoStudent infoStudent;
+
     private InfoDegree infoDegree;
+
     private InfoExecutionYear infoExecutionYear;
+
     private Boolean type;
-    
+
     /**
-	 *  
-	 */
-    public InfoDelegate()
-    {
+     *  
+     */
+    public InfoDelegate() {
         super();
     }
 
     /**
-	 * @param idInternal
-	 */
-    public InfoDelegate(Integer idInternal)
-    {
+     * @param idInternal
+     */
+    public InfoDelegate(Integer idInternal) {
         super(idInternal);
     }
 
     /**
-	 * @return Returns the infoDegree.
-	 */
-    public InfoDegree getInfoDegree()
-    {
+     * @return Returns the infoDegree.
+     */
+    public InfoDegree getInfoDegree() {
         return infoDegree;
     }
 
     /**
-	 * @param infoDegree
-	 *            The infoDegree to set.
-	 */
-    public void setInfoDegree(InfoDegree infoDegree)
-    {
+     * @param infoDegree
+     *            The infoDegree to set.
+     */
+    public void setInfoDegree(InfoDegree infoDegree) {
         this.infoDegree = infoDegree;
     }
 
     /**
-	 * @return Returns the infoExecutionYear.
-	 */
-    public InfoExecutionYear getInfoExecutionYear()
-    {
+     * @return Returns the infoExecutionYear.
+     */
+    public InfoExecutionYear getInfoExecutionYear() {
         return infoExecutionYear;
     }
 
     /**
-	 * @param infoExecutionYear
-	 *            The infoExecutionYear to set.
-	 */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear)
-    {
+     * @param infoExecutionYear
+     *            The infoExecutionYear to set.
+     */
+    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear) {
         this.infoExecutionYear = infoExecutionYear;
     }
 
     /**
-	 * @return Returns the infoStudent.
-	 */
-    public InfoStudent getInfoStudent()
-    {
+     * @return Returns the infoStudent.
+     */
+    public InfoStudent getInfoStudent() {
         return infoStudent;
     }
 
     /**
-	 * @param infoStudent
-	 *            The infoStudent to set.
-	 */
-    public void setInfoStudent(InfoStudent infoStudent)
-    {
+     * @param infoStudent
+     *            The infoStudent to set.
+     */
+    public void setInfoStudent(InfoStudent infoStudent) {
         this.infoStudent = infoStudent;
     }
 
     /**
-	 * @return Returns the type.
-	 */
-    public DelegateYearType getYearType()
-    {
+     * @return Returns the type.
+     */
+    public DelegateYearType getYearType() {
         return yearType;
     }
 
     /**
-	 * @param type
-	 *            The type to set.
-	 */
-    public void setYearType(DelegateYearType type)
-    {
+     * @param type
+     *            The type to set.
+     */
+    public void setYearType(DelegateYearType type) {
         this.yearType = type;
     }
 
     /**
      * @return Returns the type.
      */
-    public Boolean getType()
-    {
+    public Boolean getType() {
         return type;
     }
 
     /**
-     * @param type The type to set.
+     * @param type
+     *            The type to set.
      */
-    public void setType(Boolean type)
-    {
+    public void setType(Boolean type) {
         this.type = type;
     }
 

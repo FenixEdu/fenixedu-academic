@@ -22,7 +22,7 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -30,40 +30,33 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 
-public class ReadDegreeCandidatesTest extends TestCaseServicos
-{
+public class ReadDegreeCandidatesTest extends TestCaseServicos {
 
     private InfoExecutionDegree infoExecutionDegree = null;
 
-    public ReadDegreeCandidatesTest(java.lang.String testName)
-    {
+    public ReadDegreeCandidatesTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(ReadDegreeCandidatesTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    public void testReadCoordinatedDegreesList()
-    {
+    public void testReadCoordinatedDegreesList() {
         System.out.println("- Test 1 : Read Degree Candidates List");
 
         UserView userView = this.getUserViewToBeTested("nmsn", true);
@@ -71,20 +64,12 @@ public class ReadDegreeCandidatesTest extends TestCaseServicos
         Object[] args = { this.infoExecutionDegree };
 
         List degreeCandidatesList = null;
-        try
-        {
-            degreeCandidatesList =
-                (List) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "ReadDegreeCandidates",
-                    args);
-        }
-        catch (FenixServiceException ex)
-        {
+        try {
+            degreeCandidatesList = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadDegreeCandidates", args);
+        } catch (FenixServiceException ex) {
             fail("Fenix Service Exception");
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Exception");
         }
 
@@ -93,13 +78,11 @@ public class ReadDegreeCandidatesTest extends TestCaseServicos
 
     }
 
-    private void ligarSuportePersistente()
-    {
+    private void ligarSuportePersistente() {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -111,40 +94,32 @@ public class ReadDegreeCandidatesTest extends TestCaseServicos
             IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
             assertNotNull(executionYear);
 
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-                sp.getIPersistentDegreeCurricularPlan();
-            IDegreeCurricularPlan degreeCurricularPlan =
-                persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+                    .getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan
+                    .readByNameAndDegree("plano2", degree);
             assertNotNull(degreeCurricularPlan);
 
-            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             ICursoExecucao executionDegree = null;
-            executionDegree =
-                persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(
-                    degreeCurricularPlan,
-                    executionYear);
+            executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(
+                    degreeCurricularPlan, executionYear);
             assertNotNull(executionDegree);
 
             this.infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");
         }
     }
 
-    private UserView getUserViewToBeTested(String username, boolean withRole)
-    {
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
         Collection roles = new ArrayList();
         InfoRole infoRole = new InfoRole();
         if (withRole)

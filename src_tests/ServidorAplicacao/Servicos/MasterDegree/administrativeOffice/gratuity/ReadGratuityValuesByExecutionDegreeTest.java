@@ -48,9 +48,11 @@ public class ReadGratuityValuesByExecutionDegreeTest extends AdministrativeOffic
             fail("testSucessReadGratuityValues " + e.getMessage());
         }
 
-        //<GRATUITY_VALUES ID_INTERNAL='1' ANUAL_VALUE='1000' SCHOLARSHIP_VALUE='NULL'
+        //<GRATUITY_VALUES ID_INTERNAL='1' ANUAL_VALUE='1000'
+        // SCHOLARSHIP_VALUE='NULL'
         // FINAL_PROOF_VALUE='NULL'
-        //COURSE_VALUE='50' CREDIT_VALUE='NULL' PROOF_REQUEST_PAYMENT='1' START_PAYMENT='2003-01-01'
+        //COURSE_VALUE='50' CREDIT_VALUE='NULL' PROOF_REQUEST_PAYMENT='1'
+        // START_PAYMENT='2003-01-01'
         // END_PAYMENT='2003-12-31' KEY_EXECUTION_DEGREE='10' />
         assertNotNull(infoGratuityValues);
         assertEquals(infoGratuityValues.getIdInternal(), new Integer(1));

@@ -47,7 +47,7 @@
 					</td>
 					<td class="listClasses" style="text-align:left">
 						<bean:define id="publicationTypeId" name="infoPublicationDidatic" property="keyPublicationType"/>
-						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;publicationTypeId=" + publicationTypeId %>'
+						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;infoPublicationTypeId=" + publicationTypeId %>'
 							paramId="idInternal"
 							paramName="infoPublicationDidatic" 
 							paramProperty="idInternal">
@@ -82,7 +82,7 @@
 					</td>
 					<td class="listClasses" style="text-align:left">
 						<bean:define id="publicationTypeId" name="infoPublicationCientific" property="keyPublicationType"/>
-						<html:link page='<%= "/publicationCientific.do?method=prepareEdit&amp;typePublication=Cientific&amp;page=0&amp;publicationTypeId=" + publicationTypeId %>'
+						<html:link page='<%= "/publicationCientific.do?method=prepareEdit&amp;typePublication=Cientific&amp;page=0&amp;infoPublicationTypeId=" + publicationTypeId %>'
 							paramId="idInternal"
 							 paramName="infoPublicationCientific" 
 							paramProperty="idInternal">

@@ -11,34 +11,29 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
  * @author Ana e Ricardo
  *
  */
-public class ReadAvailableRoomsForExamTest extends ServiceTestCase
-{
+public class ReadAvailableRoomsForExamTest extends ServiceTestCase {
 
     /**
      * @param name
      */
-    public ReadAvailableRoomsForExamTest(java.lang.String testName)
-    {
+    public ReadAvailableRoomsForExamTest(java.lang.String testName) {
         super(testName);
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadAvailableRoomsForExam";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servicos.sop.exams.ServiceNeedsAuthenticationTestCase#getDataSetFilePath()
      */
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/sop/testReadAvailableRoomsForExamsV4Dataset.xml";
     }
 
-
-
-    protected Calendar createStartTime()
-    {
+    protected Calendar createStartTime() {
         Calendar examStartTime = Calendar.getInstance();
 
         examStartTime.set(Calendar.HOUR_OF_DAY, 10);
@@ -49,8 +44,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
         return examStartTime;
     }
 
-    protected Calendar createEndTime()
-    {
+    protected Calendar createEndTime() {
         Calendar examEndTime = Calendar.getInstance();
 
         examEndTime.set(Calendar.HOUR_OF_DAY, 11);
@@ -63,8 +57,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 
 /*
     // no rooms
-    public void testUnexistingRooms()
-    {
+    public void testUnexistingRooms() {
 		Calendar examDate = Calendar.getInstance();
 		examDate.set(Calendar.YEAR, 2004);
 		examDate.set(Calendar.MONTH, Calendar.FEBRUARY);
@@ -77,8 +70,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -88,12 +80,9 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
             assertEquals(availableRooms.size(), 0);
         }
 
-        catch (FenixServiceException ex)
-        {
+        catch (FenixServiceException ex) {
             fail("testUnexistingRooms - Fenix Service Exception" + ex);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             //sp.cancelarTransaccao();			
             fail("testUnexistingRooms - Exception (not fenix service) " + ex);
         }
@@ -102,8 +91,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 
 
 	// 4 rooms
-	public void testSuccessfulReadAvailableRoomsSamePeriod()
-	{
+    public void testSuccessfulReadAvailableRoomsSamePeriod() {
 		Calendar examDate = Calendar.getInstance();
 		examDate.set(Calendar.YEAR, 2004);
 		examDate.set(Calendar.MONTH, Calendar.JANUARY);
@@ -116,8 +104,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 
 		ISuportePersistente sp = null;
 
-		try
-		{
+        try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 
@@ -127,8 +114,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 			assertEquals(4, availableRooms.size());
 			Iterator iter = availableRooms.iterator();
 			List readRoomsNames = new ArrayList();
-			while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 InfoRoom room = (InfoRoom) iter.next();
                 readRoomsNames.add(room.getNome());
             }
@@ -140,12 +126,9 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 			assertEquals(expectedRoomsNames, readRoomsNames);
 		}
 
-		catch (FenixServiceException ex)
-		{
+        catch (FenixServiceException ex) {
 			fail("testSuccessfulReadAvailableRoomsSamePeriod - Fenix Service Exception" + ex);
-		}
-		catch (Exception ex)
-		{
+        } catch (Exception ex) {
 			//sp.cancelarTransaccao();			
 			fail("testSuccessfulReadAvailableRoomsSamePeriod - Exception (not fenix service) " + ex);
 		}
@@ -153,8 +136,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 	}
 	
 	// all rooms
-	public void testSuccessfulReadAvailableRoomsPeriodAfter()
-	{
+    public void testSuccessfulReadAvailableRoomsPeriodAfter() {
 		Calendar examDate = Calendar.getInstance();
 		examDate.set(Calendar.YEAR, 2004);
 		examDate.set(Calendar.MONTH, Calendar.FEBRUARY);
@@ -167,8 +149,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 
 		ISuportePersistente sp = null;
 
-		try
-		{
+        try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 
@@ -178,8 +159,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 			assertEquals(9, availableRooms.size());
 			Iterator iter = availableRooms.iterator();
 			List readRoomsNames = new ArrayList();
-			while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 InfoRoom room = (InfoRoom) iter.next();
                 readRoomsNames.add(room.getNome());
             }
@@ -196,12 +176,9 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 			assertEquals(expectedRoomsNames, readRoomsNames);
 		}
 
-		catch (FenixServiceException ex)
-		{
+        catch (FenixServiceException ex) {
 			fail("testSuccessfulReadAvailableRoomsPeriodAfter - Fenix Service Exception" + ex);
-		}
-		catch (Exception ex)
-		{
+        } catch (Exception ex) {
 			//sp.cancelarTransaccao();			
 			fail("testSuccessfulReadAvailableRoomsPeriodAfter - Exception (not fenix service) " + ex);
 		}
@@ -209,8 +186,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 	}
 	
 	// all rooms
-	public void testSuccessfulReadAvailableRoomsPeriodBefore()
-	{
+    public void testSuccessfulReadAvailableRoomsPeriodBefore() {
 		Calendar examDate = Calendar.getInstance();
 		examDate.set(Calendar.YEAR, 2004);
 		examDate.set(Calendar.MONTH, Calendar.FEBRUARY);
@@ -223,8 +199,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 
 		ISuportePersistente sp = null;
 
-		try
-		{
+        try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 
@@ -234,8 +209,7 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 			assertEquals(9, availableRooms.size());
 			Iterator iter = availableRooms.iterator();
 			List readRoomsNames = new ArrayList();
-			while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 InfoRoom room = (InfoRoom) iter.next();
                 readRoomsNames.add(room.getNome());
             }
@@ -252,12 +226,9 @@ public class ReadAvailableRoomsForExamTest extends ServiceTestCase
 			assertEquals(expectedRoomsNames, readRoomsNames);
 		}
 
-		catch (FenixServiceException ex)
-		{
+        catch (FenixServiceException ex) {
 			fail("testSuccessfulReadAvailableRoomsPeriodBefore - Fenix Service Exception" + ex);
-		}
-		catch (Exception ex)
-		{
+        } catch (Exception ex) {
 			//sp.cancelarTransaccao();			
 			fail("testSuccessfulReadAvailableRoomsPeriodBefore - Exception (not fenix service) " + ex);
 		}

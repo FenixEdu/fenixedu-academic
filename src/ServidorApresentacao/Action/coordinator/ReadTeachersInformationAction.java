@@ -23,29 +23,24 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Sergio Montelobo
  *  
  */
-public class ReadTeachersInformationAction extends FenixAction
-{
+public class ReadTeachersInformationAction extends FenixAction {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-	 *      org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
-        Object[] args = { executionDegreeId, Boolean.FALSE };
-        List infoSiteTeachersInformation =
-            (List) ServiceUtils.executeService(userView, "ReadTeachersInformation", args);
+        Object[] args = { executionDegreeId, Boolean.FALSE, null };
+        List infoSiteTeachersInformation = (List) ServiceUtils.executeService(userView,
+                "ReadTeachersInformation", args);
         request.setAttribute("infoSiteTeachersInformation", infoSiteTeachersInformation);
 
         return mapping.findForward("show");

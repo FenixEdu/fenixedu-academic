@@ -13,80 +13,79 @@ import Util.RoleType;
  * @author jorge
  */
 public class UserView implements IUserView, Serializable {
-	private String utilizador;
-	private Collection roles;
-	private ICandidateView candidateView;
+    private String utilizador;
 
-	private String fullName;
+    private Collection roles;
 
-	public UserView(String utilizador, Collection roles) {
-		setUtilizador(utilizador);
-		this.roles = roles;
-	}
+    private ICandidateView candidateView;
 
+    private String fullName;
 
-	public boolean hasRoleType(RoleType roleType){
-		Iterator iterator = this.roles.iterator();
-		while (iterator.hasNext()) {
-			if (((InfoRole) iterator.next()).getRoleType().equals(roleType))
-				return true;
-		}
-		return false;
-	}
+    public UserView(String utilizador, Collection roles) {
+        setUtilizador(utilizador);
+        this.roles = roles;
+    }
 
-	public String getUtilizador() {
-		return utilizador;
-	}
+    public boolean hasRoleType(RoleType roleType) {
+        Iterator iterator = this.roles.iterator();
+        while (iterator.hasNext()) {
+            if (((InfoRole) iterator.next()).getRoleType().equals(roleType))
+                return true;
+        }
+        return false;
+    }
 
+    public String getUtilizador() {
+        return utilizador;
+    }
 
-	public void setUtilizador(String utilizador) {
-		this.utilizador = utilizador;
-	}
+    public void setUtilizador(String utilizador) {
+        this.utilizador = utilizador;
+    }
 
+    /**
+     * @return Collection
+     */
+    public Collection getRoles() {
+        return roles;
+    }
 
-	
+    /**
+     * Sets the roles.
+     * 
+     * @param roles
+     *            The roles to set
+     */
+    public void setRoles(Collection roles) {
+        this.roles = roles;
+    }
 
-	/**
-	 * @return Collection
-	 */
-	public Collection getRoles() {
-		return roles;
-	}
+    /**
+     * @return
+     */
+    public ICandidateView getCandidateView() {
+        return candidateView;
+    }
 
-	/**
-	 * Sets the roles.
-	 * @param roles The roles to set
-	 */
-	public void setRoles(Collection roles) {
-		this.roles = roles;
-	}
+    /**
+     * @param view
+     */
+    public void setCandidateView(ICandidateView view) {
+        candidateView = view;
+    }
 
-	/**
-	 * @return
-	 */
-	public ICandidateView getCandidateView() {
-		return candidateView;
-	}
+    /**
+     * @return
+     */
+    public String getFullName() {
+        return fullName;
+    }
 
-	/**
-	 * @param view
-	 */
-	public void setCandidateView(ICandidateView view) {
-		candidateView = view;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getFullName() {
-		return fullName;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setFullName(String string) {
-		fullName = string;
-	}
+    /**
+     * @param string
+     */
+    public void setFullName(String string) {
+        fullName = string;
+    }
 
 }

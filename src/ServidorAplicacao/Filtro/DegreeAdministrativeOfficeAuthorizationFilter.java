@@ -8,43 +8,41 @@ import Util.RoleType;
 
 /**
  * @author David Santos
- *
+ *  
  */
 
-public class DegreeAdministrativeOfficeAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class DegreeAdministrativeOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public final static DegreeAdministrativeOfficeAuthorizationFilter instance =
-        new DegreeAdministrativeOfficeAuthorizationFilter();
+    public final static DegreeAdministrativeOfficeAuthorizationFilter instance = new DegreeAdministrativeOfficeAuthorizationFilter();
 
     /**
      * The singleton access method of this class.
-     *
+     * 
      * @return Returns the instance of this class responsible for the
-     * authorization access to services.
-     **/
-    public static Filtro getInstance()
-    {
+     *         authorization access to services.
+     */
+    public static Filtro getInstance() {
         return instance;
     }
 
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.DEGREE_ADMINISTRATIVE_OFFICE;
     }
 
-    /* (non-Javadoc)
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+            Exception {
         IUserView userView = (IUserView) request.getRequester();
-        if (!AuthorizationUtils
-                        .containsRole(userView.getRoles(), RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
-        {
+        if (!AuthorizationUtils.containsRole(userView.getRoles(),
+                RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
             super.execute(request, response);
         }
-        
+
     }
 
 }

@@ -1,118 +1,125 @@
 package Dominio;
 
 /**
- * @author Fernanda Quitério
- * 23/09/2003
- * 
+ * @author Fernanda Quitério 23/09/2003
+ *  
  */
 public class WebSite extends DomainObject implements IWebSite {
 
-	private String name;
-	private String mail;
-	private String style;
-	private String ojbConcreteClass;
+    private String name;
 
-	public WebSite() {
-		this.mail = "";
-		this.style = "";
-		this.ojbConcreteClass = this.getClass().getName();
-	}
-	public WebSite(Integer idInternal) {
-		this.mail = "";
-		this.style = "";
-		setIdInternal(idInternal);
-	}
+    private String mail;
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object arg0) {
-		boolean result = false;
+    private String style;
 
-		if (arg0 instanceof IWebSite) {
-			IWebSite webSite = (IWebSite) arg0;
+    private String ojbConcreteClass;
 
-			if (((webSite.getName() == null && this.getName() == null)
-				|| (webSite.getName() != null && this.getName() != null && webSite.getName().equals(this.getName())))
-				&& ((webSite.getMail() == null && this.getMail() == null)
-					|| (webSite.getMail() != null && this.getMail() != null && webSite.getMail().equals(this.getMail())))
-				&& ((webSite.getStyle() == null && this.getStyle() == null)
-					|| (webSite.getStyle() != null && this.getStyle() != null && webSite.getStyle().equals(this.getStyle())))) {
-				result = true;
-			}
-		}
-		return result;
-	}
+    public WebSite() {
+        this.mail = "";
+        this.style = "";
+        this.ojbConcreteClass = this.getClass().getName();
+    }
 
-	/**
-		 * @see java.lang.Object#toString()
-		 */
-	public String toString() {
-		String result = "[WEBSITE";
-		result += ", codInt=" + getIdInternal();
-		result += ", name=" + getName();
-		result += ", mail =" + getMail();
-		result += ", style=" + getStyle();
-		result += ", ojbConcreteClass=" + getOjbConcreteClass();
-		result += "]";
-		return result;
-	}
+    public WebSite(Integer idInternal) {
+        this.mail = "";
+        this.style = "";
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getOjbConcreteClass() {
-		return ojbConcreteClass;
-	}
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object arg0) {
+        boolean result = false;
 
-	/**
-	 * @param string
-	 */
-	public void setOjbConcreteClass(String string) {
-		ojbConcreteClass = string;
-	}
+        if (arg0 instanceof IWebSite) {
+            IWebSite webSite = (IWebSite) arg0;
 
-	/**
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
+            if (((webSite.getName() == null && this.getName() == null) || (webSite.getName() != null
+                    && this.getName() != null && webSite.getName().equals(this.getName())))
+                    && ((webSite.getMail() == null && this.getMail() == null) || (webSite.getMail() != null
+                            && this.getMail() != null && webSite.getMail().equals(this.getMail())))
+                    && ((webSite.getStyle() == null && this.getStyle() == null) || (webSite.getStyle() != null
+                            && this.getStyle() != null && webSite.getStyle().equals(this.getStyle())))) {
+                result = true;
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[WEBSITE";
+        result += ", codInt=" + getIdInternal();
+        result += ", name=" + getName();
+        result += ", mail =" + getMail();
+        result += ", style=" + getStyle();
+        result += ", ojbConcreteClass=" + getOjbConcreteClass();
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getMail() {
-		return mail;
-	}
+    /**
+     * @return String
+     */
+    public String getOjbConcreteClass() {
+        return ojbConcreteClass;
+    }
 
-	/**
-	 * Sets the mail.
-	 * @param mail The mail to set
-	 */
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+    /**
+     * @param string
+     */
+    public void setOjbConcreteClass(String string) {
+        ojbConcreteClass = string;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getStyle() {
-		return style;
-	}
+    /**
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Sets the style.
-	 * @param style The style to set
-	 */
-	public void setStyle(String style) {
-		this.style = style;
-	}
+    /**
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return String
+     */
+    public String getMail() {
+        return mail;
+    }
+
+    /**
+     * Sets the mail.
+     * 
+     * @param mail
+     *            The mail to set
+     */
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    /**
+     * @return String
+     */
+    public String getStyle() {
+        return style;
+    }
+
+    /**
+     * Sets the style.
+     * 
+     * @param style
+     *            The style to set
+     */
+    public void setStyle(String style) {
+        this.style = style;
+    }
 }

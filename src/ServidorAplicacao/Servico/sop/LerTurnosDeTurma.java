@@ -8,13 +8,14 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o LerTurnosDeTurma
- *
+ * 
  * @author tfc130
- **/
+ */
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
@@ -26,89 +27,66 @@ import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turma;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurnosDeTurma implements IServico {
+public class LerTurnosDeTurma implements IService {
 
-	private static LerTurnosDeTurma _servico = new LerTurnosDeTurma();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static LerTurnosDeTurma getService() {
-		return _servico;
-	}
+    public Object run(String className, InfoExecutionDegree infoExecutionDegree,
+            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private LerTurnosDeTurma() {
-	}
+        List infoShiftAndLessons = new ArrayList();
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "LerTurnosDeTurma";
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-	public Object run(
-		String className,
-		InfoExecutionDegree infoExecutionDegree,
-		InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
-		
-		List infoShiftAndLessons = new ArrayList();
+            ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            ICursoExecucao executionDegree = Cloner
+                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
-			ITurmaTurnoPersistente classShiftDAO =
-				sp.getITurmaTurnoPersistente();
+            ITurma group = new Turma();
 
-			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+            group.setExecutionDegree(executionDegree);
+            group.setExecutionPeriod(executionPeriod);
+            group.setNome(className);
 
-			ITurma group = new Turma();
+            List shiftList = classShiftDAO.readByClass(group);
 
-			group.setExecutionDegree(executionDegree);
-			group.setExecutionPeriod(executionPeriod);
-			group.setNome(className);
+            Iterator iterator = shiftList.iterator();
+            //			infoTurnos = new ArrayList();
 
-			List shiftList = classShiftDAO.readByClass(group);
+            while (iterator.hasNext()) {
+                ITurno turno = (ITurno) iterator.next();
+                InfoShift infoTurno = (InfoShift) Cloner.get(turno);
 
-			Iterator iterator = shiftList.iterator();
-//			infoTurnos = new ArrayList();
+                List aulas = turno.getAssociatedLessons();
+                Iterator itLessons = aulas.iterator();
 
-			while (iterator.hasNext()) {
-				ITurno turno = (ITurno) iterator.next();
-				InfoShift infoTurno =  (InfoShift) Cloner.get(turno);
-				
-				List aulas = turno.getAssociatedLessons();
-				Iterator itLessons = aulas.iterator();
-				
-				List infoLessons = new ArrayList();
-				InfoLesson infoLesson;
-					
-				while(itLessons.hasNext()){
-					 infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());					
-					
-					 infoLesson.setInfoShift(infoTurno);
-					 infoLessons.add(infoLesson);
-				}
-				
-				infoTurno.setInfoLessons(infoLessons);
-				infoShiftAndLessons.add(infoTurno);
+                List infoLessons = new ArrayList();
+                InfoLesson infoLesson;
 
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
-		return infoShiftAndLessons;
+                while (itLessons.hasNext()) {
+                    infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
 
-	}
+                    infoLesson.setInfoShift(infoTurno);
+                    infoLessons.add(infoLesson);
+                }
+
+                infoTurno.setInfoLessons(infoLessons);
+                infoShiftAndLessons.add(infoTurno);
+
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+        return infoShiftAndLessons;
+
+    }
 
 }

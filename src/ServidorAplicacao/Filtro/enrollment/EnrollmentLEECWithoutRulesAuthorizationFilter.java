@@ -17,7 +17,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -27,124 +27,104 @@ import Util.TipoCurso;
  * @author Tânia Pousão
  *  
  */
-public class EnrollmentLEECWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter
-{
-	private static String DEGREE_LEEC_CODE = new String("LEEC");
-	private static TipoCurso DEGREE_TYPE = TipoCurso.LICENCIATURA_OBJ;
+public class EnrollmentLEECWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
+    private static String DEGREE_LEEC_CODE = new String("LEEC");
 
-	protected Collection getNeededRoles()
-	{
-		List roles = new ArrayList();
+    private static TipoCurso DEGREE_TYPE = TipoCurso.LICENCIATURA_OBJ;
 
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
+    protected Collection getNeededRoles() {
+        List roles = new ArrayList();
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-		roles.add(infoRole);
-		return roles;
-	}
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-	protected String hasPrevilege(IUserView id, Object[] arguments)
-	{
-		try
-		{
-			ISuportePersistente sp = null;
-			sp = SuportePersistenteOJB.getInstance();
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+        roles.add(infoRole);
+        return roles;
+    }
 
-			//verify if the degree type is LICENCIATURA_OBJ
-			if (!verifyDegreeTypeIsNonMaster(arguments))
-			{
-				return new String("error.degree.type");
-			}
+    protected String hasPrevilege(IUserView id, Object[] arguments) {
+        try {
+            ISuportePersistente sp = null;
+            sp = SuportePersistenteOJB.getInstance();
 
-			//verify if the student to enroll is a non master degree student
-			if (!verifyStudentNonMasterDegree(arguments, sp))
-			{
-				return new String("error.student.degree.nonMaster");
-			}
+            //verify if the degree type is LICENCIATURA_OBJ
+            if (!verifyDegreeTypeIsNonMaster(arguments)) {
+                return new String("error.degree.type");
+            }
 
-			//verify if the student to enroll is a LEEC degree student
-			if (!verifyStudentLEEC(arguments, sp))
-			{
-				return new String("error.student.degree.nonMaster");
-			}
+            //verify if the student to enroll is a non master degree student
+            if (!verifyStudentNonMasterDegree(arguments, sp)) {
+                return new String("error.student.degree.nonMaster");
+            }
 
-			return null;
-		}
-		catch (Exception exception)
-		{
-			exception.printStackTrace();
-			return "noAuthorization";
-		}
-	}
+            //verify if the student to enroll is a LEEC degree student
+            if (!verifyStudentLEEC(arguments, sp)) {
+                return new String("error.student.degree.nonMaster");
+            }
 
-	private boolean verifyDegreeTypeIsNonMaster(Object[] arguments)
-	{
-		boolean isNonMaster = false;
+            return null;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return "noAuthorization";
+        }
+    }
 
-		if (arguments != null && arguments[1] != null)
-		{
-			isNonMaster = DEGREE_TYPE.equals(arguments[1]);
-		}
+    private boolean verifyDegreeTypeIsNonMaster(Object[] arguments) {
+        boolean isNonMaster = false;
 
-		return isNonMaster;
-	}
+        if (arguments != null && arguments[1] != null) {
+            isNonMaster = DEGREE_TYPE.equals(arguments[1]);
+        }
 
-	private boolean verifyStudentNonMasterDegree(Object[] arguments, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		boolean isNonMaster = false;
+        return isNonMaster;
+    }
 
-		if (arguments != null && arguments[0] != null)
-		{
-			Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
-			if (studentNumber != null)
-			{
-				IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-				IStudent student =
-					persistentStudent.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
-				if (student != null)
-				{
-					isNonMaster = true; //non master student
-				}
-			}
-		}
+    private boolean verifyStudentNonMasterDegree(Object[] arguments, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
+        boolean isNonMaster = false;
 
-		return isNonMaster;
-	}
+        if (arguments != null && arguments[0] != null) {
+            Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
+            if (studentNumber != null) {
+                IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+                IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                        DEGREE_TYPE);
+                if (student != null) {
+                    isNonMaster = true; //non master student
+                }
+            }
+        }
 
-	//with student number and degree type
-	private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		boolean isLEEC = false;
+        return isNonMaster;
+    }
 
-		if (arguments != null && arguments[0] != null)
-		{
-			Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
-			if (studentNumber != null)
-			{
-				IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
-					sp.getIStudentCurricularPlanPersistente();
+    //with student number and degree type
+    private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
+        boolean isLEEC = false;
 
-				IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-				studentCurricularPlan =
-					persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
-						studentNumber,
-						DEGREE_TYPE);
-				if (studentCurricularPlan != null
-					&& studentCurricularPlan.getDegreeCurricularPlan() != null
-					&& studentCurricularPlan.getDegreeCurricularPlan().getDegree() != null)
-				{
-					String degreeCode =
-						studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla();
-					isLEEC = DEGREE_LEEC_CODE.equals(degreeCode);
-				}
-			}
-		}
+        if (arguments != null && arguments[0] != null) {
+            Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
+            if (studentNumber != null) {
+                IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+                        .getIStudentCurricularPlanPersistente();
 
-		return isLEEC;
-	}
+                IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+                studentCurricularPlan = persistentStudentCurricularPlan
+                        .readActiveByStudentNumberAndDegreeType(studentNumber, DEGREE_TYPE);
+                if (studentCurricularPlan != null
+                        && studentCurricularPlan.getDegreeCurricularPlan() != null
+                        && studentCurricularPlan.getDegreeCurricularPlan().getDegree() != null) {
+                    String degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+                            .getSigla();
+                    isLEEC = DEGREE_LEEC_CODE.equals(degreeCode);
+                }
+            }
+        }
+
+        return isLEEC;
+    }
 }

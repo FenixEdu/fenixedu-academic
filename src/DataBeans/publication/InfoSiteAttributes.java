@@ -15,39 +15,41 @@ import DataBeans.ISiteComponent;
  */
 public class InfoSiteAttributes extends DataTranferObject implements ISiteComponent {
 
-	private List infoRequiredAttributes;
-	private List infoNonRequiredAttributes;
+    private List infoRequiredAttributes;
 
-	public InfoSiteAttributes() {
-	}
+    private List infoNonRequiredAttributes;
 
+    public InfoSiteAttributes() {
+    }
 
-	/**
-	 * @return Returns the infoNonRequiredAttributes.
-	 */
-	public List getInfoNonRequiredAttributes() {
-		return infoNonRequiredAttributes;
-	}
+    /**
+     * @return Returns the infoNonRequiredAttributes.
+     */
+    public List getInfoNonRequiredAttributes() {
+        return infoNonRequiredAttributes;
+    }
 
-	/**
-	 * @return Returns the infoRequiredAttributes.
-	 */
-	public List getInfoRequiredAttributes() {
-		return infoRequiredAttributes;
-	}
+    /**
+     * @return Returns the infoRequiredAttributes.
+     */
+    public List getInfoRequiredAttributes() {
+        return infoRequiredAttributes;
+    }
 
-	/**
-	 * @param infoNonRequiredAttributes The infoNonRequiredAttributes to set.
-	 */
-	public void setInfoNonRequiredAttributes(List infoNonRequiredAttributes) {
-		this.infoNonRequiredAttributes = infoNonRequiredAttributes;
-	}
+    /**
+     * @param infoNonRequiredAttributes
+     *            The infoNonRequiredAttributes to set.
+     */
+    public void setInfoNonRequiredAttributes(List infoNonRequiredAttributes) {
+        this.infoNonRequiredAttributes = infoNonRequiredAttributes;
+    }
 
-	/**
-	 * @param infoRequiredAttributes The infoRequiredAttributes to set.
-	 */
-	public void setInfoRequiredAttributes(List infoRequiredAttributes) {
-		this.infoRequiredAttributes = infoRequiredAttributes;
-	}
+    /**
+     * @param infoRequiredAttributes
+     *            The infoRequiredAttributes to set.
+     */
+    public void setInfoRequiredAttributes(List infoRequiredAttributes) {
+        this.infoRequiredAttributes = infoRequiredAttributes;
+    }
 
 }

@@ -23,8 +23,8 @@ public class ChangePersonUsernameService implements IService {
     public ChangePersonUsernameService() {
     }
 
-    public void run(String newUsername, Integer personId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(String newUsername, Integer personId) throws FenixServiceException,
+            ExcepcaoPersistencia {
         ISuportePersistente sp = null;
         IPessoaPersistente pessoaPersistente = null;
 
@@ -33,8 +33,7 @@ public class ChangePersonUsernameService implements IService {
             sp = SuportePersistenteOJB.getInstance();
             pessoaPersistente = sp.getIPessoaPersistente();
 
-            person = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,
-                    personId);
+            person = (IPessoa) pessoaPersistente.readByOID(Pessoa.class, personId);
 
             if (person == null || newUsername == null) {
                 throw new FenixServiceException();

@@ -41,7 +41,6 @@
 	</td></tr></table>
 </logic:equal>
 
-<bean:define id="indexOption" value="0"/>
 <bean:define id="cardinality" name="iquestion" property="questionType.cardinalityType.type"/>
 <bean:define id="questionType" name="iquestion" property="questionType.type"/>
 <bean:define id="imageLabel" value="false"/>
@@ -57,7 +56,8 @@
 </logic:equal>
 
 <logic:equal name="showOptions" value="true">
-<logic:iterate id="optionBody" name="iquestion" property="options" indexId="optionBodyIndex">
+<logic:iterate id="questionOption" name="iquestion" property="options" indexId="indexOption">
+<logic:iterate id="optionBody" name="questionOption" property="optionContent" indexId="optionBodyIndex">
 	<bean:define id="optionLabel" name="optionBody" property="label"/>
 	<% if (((String)optionLabel).startsWith("image/")){ %>
 		<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
@@ -70,7 +70,6 @@
 		<bean:write name="optionBody" property="value"/>
 		<br/>
 	<% } else if (((String)optionLabel).equals("response_label")){ %>
-		<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
 		<%	if(((Integer)questionType).intValue()==1 ){ %> <%-- QuestionType.LID--%>
 			<logic:equal name="optionBodyIndex" value="0">
 				</td></tr></table><table><tr><td>
@@ -82,7 +81,7 @@
 				<td>
 			<% }else if(((Integer)cardinality).intValue()==2){ %> <%-- Cardinality.MULTIPLE--%>
 				</td></tr><tr>
-				<td><html:multibox property="option" value="<%= indexOption.toString() %>" disabled="true"></html:multibox></td>
+				<td><html:multibox property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"></html:multibox></td>
 				<td>
 				
 			<%}%>
@@ -134,6 +133,7 @@
 		<bean:write name="optionBody" property="value"/>
 	<% } %>
 </logic:iterate>
+</logic:iterate>
 </logic:equal>	
 </td></tr>
 </table>
@@ -144,7 +144,6 @@
 
 <logic:notEmpty name="iquestion" property="responseProcessingInstructions">
 	<logic:iterate id="rp" name="iquestion" property="responseProcessingInstructions" indexId="rpIndex">
-	<bean:define id="indexOption" value="0"/>
 	<bean:define id="imageLabel" value="false"/>
 	<bean:define id="index" value="<%=firstOptionImage.toString()%>"/>
 	<tr>
@@ -159,7 +158,8 @@
 	<td>
 		<%if(((Integer)questionType).intValue()==1 ){ %> <%-- QuestionType.LID--%>
 			<table><tr><td>
-			<logic:iterate id="optionBody" name="iquestion" property="options">
+			<logic:iterate id="questionOption" name="iquestion" property="options" indexId="indexOption">
+			<logic:iterate id="optionBody" name="questionOption" property="optionContent">
 			<bean:define id="optionLabel" name="optionBody" property="label"/>
 			<%if (((String)optionLabel).startsWith("image/")){ %>
 				<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
@@ -171,21 +171,20 @@
 				</logic:equal>
 				<bean:write name="optionBody" property="value"/>
 				<br/>
-			<%} else if (((String)optionLabel).equals("response_label")){ %>				
-				<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
+			<%} else if (((String)optionLabel).equals("response_label")){ %>
 				</td></tr><tr>
 				<bean:define id="button" value="true"/>
 				<%if(((Integer)cardinality).intValue()==1 ){ %> <%-- Cardinality.SINGLE--%>
 					<logic:iterate id="correctResponse" name="rp" property="responseConditions">
 						<bean:define id="button" value="true"/>
 						<logic:notEmpty name="correctResponse">
-							<logic:equal name="correctResponse" property="response" value="<%= (new Integer(Integer.parseInt(indexOption))).toString() %>">
+							<logic:equal name="correctResponse" property="response" value="<%= new Integer(indexOption.intValue()+1).toString() %>">
 								<td><img src="<%= request.getContextPath() %>/images/radioButtonUnselected.gif" alt="" /></td>
 								<bean:define id="button" value="false"/>
 							</logic:equal>
 						</logic:notEmpty>
 						<logic:equal name="button" value="true">
-							<td><html:radio property="option" value="<%= indexOption.toString() %>" disabled="true"/></td>
+							<td><html:radio property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"/></td>
 						</logic:equal>
 					</logic:iterate>
 				<%}else if(((Integer)cardinality).intValue()==2){ %> <%-- Cardinality.MULTIPLE--%>
@@ -194,7 +193,7 @@
 						<logic:notEmpty name="correctResponse">
 							<bean:define id="condition" name="correctResponse" property="condition"/>
 								<%if(((Integer)condition).intValue() ==1){%>
-									<logic:equal name="correctResponse" property="response" value="<%= (new Integer(Integer.parseInt(indexOption))).toString() %>">
+									<logic:equal name="correctResponse" property="response" value="<%= new Integer(indexOption.intValue()+1).toString() %>">
 										<td><img src="<%= request.getContextPath() %>/images/checkButtonUnselected.gif" alt="" /></td>
 										<bean:define id="button" value="false"/>
 									</logic:equal>
@@ -202,7 +201,7 @@
 						</logic:notEmpty>
 					</logic:iterate>
 					<logic:equal name="button" value="true">
-						<td><html:multibox property="option" value="<%= indexOption.toString() %>" disabled="true"/></td>
+						<td><html:multibox property="option" value="<%= new Integer(indexOption.intValue()+1).toString() %>" disabled="true"/></td>
 					</logic:equal>
 				<%}%>
 			
@@ -217,6 +216,7 @@
 			<% } else {%>
 				<bean:write name="optionBody" property="value"/>
 			<% } %>
+			</logic:iterate>
 			</logic:iterate>
 			</td></tr></table>
 		<%}else{ %><%-- QuestionType.STR or QuestionType.NUM--%>

@@ -10,13 +10,19 @@ public class ResponseLID extends Response {
         super();
     }
 
+    public ResponseLID(String[] op) {
+        super();
+        setResponse(op);
+    }
+
     public String[] getResponse() {
         return response;
     }
 
     public void setResponse(String[] op) {
         response = op;
-        if (op.length != 0) super.setResponsed();
+        if (op != null && op.length != 0)
+            super.setResponsed();
     }
 
     public Boolean[] getIsCorrect() {

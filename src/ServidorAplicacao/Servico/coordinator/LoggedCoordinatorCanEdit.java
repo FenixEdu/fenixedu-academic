@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servico.coordinator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
@@ -7,13 +8,12 @@ import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -22,37 +22,17 @@ import Util.PeriodState;
 /**
  * @author Fernanda Quitério 19/Nov/2003
  */
-public class LoggedCoordinatorCanEdit implements IServico {
+public class LoggedCoordinatorCanEdit implements IService {
 
-    private static LoggedCoordinatorCanEdit service = new LoggedCoordinatorCanEdit();
-
-    public static LoggedCoordinatorCanEdit getService() {
-
-        return service;
-    }
-
-    private LoggedCoordinatorCanEdit() {
-
-    }
-
-    public final String getNome() {
-
-        return "LoggedCoordinatorCanEdit";
-    }
-
-    public Boolean run(Integer executionDegreeCode,
-            Integer curricularCourseCode, String username)
+    public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
             throws FenixServiceException {
         Boolean result = new Boolean(false);
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentCoordinator persistentCoordinator = sp
-                    .getIPersistentCoordinator();
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
             if (executionDegreeCode == null) {
                 throw new FenixServiceException("nullExecutionDegreeCode");
@@ -64,11 +44,10 @@ public class LoggedCoordinatorCanEdit implements IServico {
                 throw new FenixServiceException("nullUsername");
             }
 
-            ITeacher teacher = persistentTeacher
-                    .readTeacherByUsername(username);
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, executionDegreeCode);
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                    CursoExecucao.class, executionDegreeCode);
 
             IExecutionYear executionYear = executionDegree.getExecutionYear();
 
@@ -79,9 +58,8 @@ public class LoggedCoordinatorCanEdit implements IServico {
                 throw new NonExistingServiceException();
             }
 
-            ICoordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherAndExecutionDegree(teacher,
-                            executionDegree);
+            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(
+                    teacher, executionDegree);
 
             // if user is coordinator and is the current coordinator and
             // curricular course is not basic

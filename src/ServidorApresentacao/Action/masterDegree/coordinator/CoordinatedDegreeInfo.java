@@ -33,15 +33,13 @@ import framework.factory.ServiceManagerServiceFactory;
 
 public class CoordinatedDegreeInfo extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
             IUserView userView = SessionUtils.getUserView(request);
-            List degreeList = (List) session
-                    .getAttribute(SessionConstants.MASTER_DEGREE_LIST);
+            List degreeList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_LIST);
 
             Integer choosenDegreePosition = findChosenDegreePosition(request);
 
@@ -49,24 +47,22 @@ public class CoordinatedDegreeInfo extends FenixAction {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) degreeList
                     .get(choosenDegreePosition.intValue());
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-            session.setAttribute(SessionConstants.MASTER_DEGREE,
-                    infoExecutionDegree);
+            session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
 
             List result = null;
             Object argsTemp[] = { infoExecutionDegree };
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(
-                        userView, "ReadDegreeCandidates", argsTemp);
+                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadDegreeCandidates", argsTemp);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
 
-            session.setAttribute(
-                    SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT,
-                    new Integer(result.size()));
+            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, new Integer(result
+                    .size()));
             return mapping.findForward("Success");
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
     /**
@@ -76,11 +72,9 @@ public class CoordinatedDegreeInfo extends FenixAction {
     private Integer findChosenDegreePosition(HttpServletRequest request) {
         Integer choosenDegreePosition = null;
         if (request.getParameter("degree") != null) {
-            choosenDegreePosition = Integer.valueOf(request
-                    .getParameter("degree"));
+            choosenDegreePosition = Integer.valueOf(request.getParameter("degree"));
         } else {
-            choosenDegreePosition = Integer.valueOf((String) request
-                    .getAttribute("degree"));
+            choosenDegreePosition = Integer.valueOf((String) request.getAttribute("degree"));
         }
         return choosenDegreePosition;
     }

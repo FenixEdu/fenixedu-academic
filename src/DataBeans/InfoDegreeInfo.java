@@ -61,12 +61,10 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
     public InfoDegreeInfo() {
     }
 
-    public InfoDegreeInfo(InfoDegree infoDegree, String objectives,
-            String history, String professionalExits, String additionalInfo,
-            String links, String testIngression, Integer driftsInitial,
-            Integer driftsFirst, Integer driftsSecond, String classifications,
-            Double markMin, Double markMax, Double markAverage,
-            Timestamp lastModificationDate) {
+    public InfoDegreeInfo(InfoDegree infoDegree, String objectives, String history,
+            String professionalExits, String additionalInfo, String links, String testIngression,
+            Integer driftsInitial, Integer driftsFirst, Integer driftsSecond, String classifications,
+            Double markMin, Double markMax, Double markAverage, Timestamp lastModificationDate) {
         this.infoDegree = infoDegree;
         this.objectives = objectives;
         this.history = history;

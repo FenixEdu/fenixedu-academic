@@ -32,27 +32,20 @@ public class InfoCurricularCourseScope extends InfoObject {
         boolean resultado = false;
         if (obj instanceof InfoCurricularCourseScope) {
             InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) obj;
-            resultado = (((getInfoBranch() == null && infoCurricularCourseScope
-                    .getInfoBranch() == null) || (getInfoBranch() != null
-                    && infoCurricularCourseScope.getInfoBranch() != null && getInfoBranch()
-                    .equals(infoCurricularCourseScope.getInfoBranch())))
+            resultado = (((getInfoBranch() == null && infoCurricularCourseScope.getInfoBranch() == null) || (getInfoBranch() != null
+                    && infoCurricularCourseScope.getInfoBranch() != null && getInfoBranch().equals(
+                    infoCurricularCourseScope.getInfoBranch())))
                     && ((getInfoCurricularCourse() == null && infoCurricularCourseScope
                             .getInfoCurricularCourse() == null) || (getInfoCurricularCourse() != null
-                            && infoCurricularCourseScope
-                                    .getInfoCurricularCourse() != null && getInfoCurricularCourse()
-                            .equals(
-                                    infoCurricularCourseScope
-                                            .getInfoCurricularCourse())))
+                            && infoCurricularCourseScope.getInfoCurricularCourse() != null && getInfoCurricularCourse()
+                            .equals(infoCurricularCourseScope.getInfoCurricularCourse())))
                     && ((getInfoCurricularSemester() == null && infoCurricularCourseScope
                             .getInfoCurricularSemester() == null) || (getInfoCurricularSemester() != null
-                            && infoCurricularCourseScope
-                                    .getInfoCurricularSemester() != null && getInfoCurricularSemester()
-                            .equals(
-                                    infoCurricularCourseScope
-                                            .getInfoCurricularSemester()))) && ((getEndDate() == null && infoCurricularCourseScope
+                            && infoCurricularCourseScope.getInfoCurricularSemester() != null && getInfoCurricularSemester()
+                            .equals(infoCurricularCourseScope.getInfoCurricularSemester()))) && ((getEndDate() == null && infoCurricularCourseScope
                     .getEndDate() == null) || (getEndDate() != null
-                    && infoCurricularCourseScope.getEndDate() != null && getEndDate()
-                    .equals(infoCurricularCourseScope.getEndDate()))));
+                    && infoCurricularCourseScope.getEndDate() != null && getEndDate().equals(
+                    infoCurricularCourseScope.getEndDate()))));
         }
         return resultado;
     }
@@ -131,8 +124,7 @@ public class InfoCurricularCourseScope extends InfoObject {
      * @param infoCurricularCourse
      *            The infoCurricularCourse to set.
      */
-    public void setInfoCurricularCourse(
-            InfoCurricularCourse infoCurricularCourse) {
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
         this.infoCurricularCourse = infoCurricularCourse;
     }
 
@@ -147,8 +139,7 @@ public class InfoCurricularCourseScope extends InfoObject {
      * @param infoCurricularSemester
      *            The infoCurricularSemester to set.
      */
-    public void setInfoCurricularSemester(
-            InfoCurricularSemester infoCurricularSemester) {
+    public void setInfoCurricularSemester(InfoCurricularSemester infoCurricularSemester) {
         this.infoCurricularSemester = infoCurricularSemester;
     }
 

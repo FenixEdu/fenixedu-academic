@@ -20,6 +20,8 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
 
     public static final int NOT_ALLOWED_TYPE = 3;
 
+    public static final int VALIDATED_TYPE = 4;
+
     public static final CurricularCourseEnrollmentType TEMPORARY = new CurricularCourseEnrollmentType(
             "curricularCourseEnrollmentType.temporary", CurricularCourseEnrollmentType.TEMPORARY_TYPE);
 
@@ -29,18 +31,19 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
     public static final CurricularCourseEnrollmentType NOT_ALLOWED = new CurricularCourseEnrollmentType(
             "curricularCourseEnrollmentType.notAllowed", CurricularCourseEnrollmentType.NOT_ALLOWED_TYPE);
 
+    public static final CurricularCourseEnrollmentType VALIDATED = new CurricularCourseEnrollmentType(
+            "curricularCourseEnrollmentType.validated", CurricularCourseEnrollmentType.VALIDATED_TYPE);
+
     private CurricularCourseEnrollmentType(String name, int value) {
         super(name, value);
     }
 
     public static CurricularCourseEnrollmentType getEnum(String state) {
-        return (CurricularCourseEnrollmentType) getEnum(
-                CurricularCourseEnrollmentType.class, state);
+        return (CurricularCourseEnrollmentType) getEnum(CurricularCourseEnrollmentType.class, state);
     }
 
     public static CurricularCourseEnrollmentType getEnum(int state) {
-        return (CurricularCourseEnrollmentType) getEnum(
-                CurricularCourseEnrollmentType.class, state);
+        return (CurricularCourseEnrollmentType) getEnum(CurricularCourseEnrollmentType.class, state);
     }
 
     public static Map getEnumMap() {
@@ -55,8 +58,7 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
         return iterator(CurricularCourseEnrollmentType.class);
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "Curricular Course Enrollment Type:\n";
         result += "\n  - Curricular Course Enrollment Type : " + this.getName();
 
@@ -67,22 +69,22 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
 
         int myType = this.getValue();
         int othersType = other.getValue();
-        
-        if ( (myType == NOT_ALLOWED_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+
+        if ((myType == NOT_ALLOWED_TYPE) && (othersType == NOT_ALLOWED_TYPE)) {
             return NOT_ALLOWED;
-        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+        } else if ((myType == NOT_ALLOWED_TYPE) && (othersType == TEMPORARY_TYPE)) {
             return NOT_ALLOWED;
-        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+        } else if ((myType == NOT_ALLOWED_TYPE) && (othersType == DEFINITIVE_TYPE)) {
             return NOT_ALLOWED;
-        } else if ( (myType == TEMPORARY_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+        } else if ((myType == TEMPORARY_TYPE) && (othersType == NOT_ALLOWED_TYPE)) {
             return NOT_ALLOWED;
-        } else if ( (myType == TEMPORARY_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+        } else if ((myType == TEMPORARY_TYPE) && (othersType == TEMPORARY_TYPE)) {
             return TEMPORARY;
-        } else if ( (myType == TEMPORARY_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+        } else if ((myType == TEMPORARY_TYPE) && (othersType == DEFINITIVE_TYPE)) {
             return TEMPORARY;
-        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+        } else if ((myType == DEFINITIVE_TYPE) && (othersType == NOT_ALLOWED_TYPE)) {
             return NOT_ALLOWED;
-        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+        } else if ((myType == DEFINITIVE_TYPE) && (othersType == TEMPORARY_TYPE)) {
             return TEMPORARY;
         } else {
             return DEFINITIVE;
@@ -94,21 +96,21 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
         int myType = this.getValue();
         int othersType = other.getValue();
 
-        if ( (myType == NOT_ALLOWED_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+        if ((myType == NOT_ALLOWED_TYPE) && (othersType == NOT_ALLOWED_TYPE)) {
             return NOT_ALLOWED;
-        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+        } else if ((myType == NOT_ALLOWED_TYPE) && (othersType == TEMPORARY_TYPE)) {
             return TEMPORARY;
-        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+        } else if ((myType == NOT_ALLOWED_TYPE) && (othersType == DEFINITIVE_TYPE)) {
             return DEFINITIVE;
-        } else if ( (myType == TEMPORARY_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+        } else if ((myType == TEMPORARY_TYPE) && (othersType == NOT_ALLOWED_TYPE)) {
             return TEMPORARY;
-        } else if ( (myType == TEMPORARY_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+        } else if ((myType == TEMPORARY_TYPE) && (othersType == TEMPORARY_TYPE)) {
             return TEMPORARY;
-        } else if ( (myType == TEMPORARY_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+        } else if ((myType == TEMPORARY_TYPE) && (othersType == DEFINITIVE_TYPE)) {
             return DEFINITIVE;
-        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+        } else if ((myType == DEFINITIVE_TYPE) && (othersType == NOT_ALLOWED_TYPE)) {
             return DEFINITIVE;
-        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+        } else if ((myType == DEFINITIVE_TYPE) && (othersType == TEMPORARY_TYPE)) {
             return DEFINITIVE;
         } else {
             return DEFINITIVE;

@@ -51,22 +51,20 @@ public class VerifyStudentGroupAtributes implements IServico {
         return "VerifyStudentGroupAtributes";
     }
 
-    private boolean checkGroupStudentEnrolment(Integer studentGroupCode,
-            String username) throws FenixServiceException {
+    private boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username)
+            throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            IGroupProperties groupProperties = studentGroup
-                    .getGroupProperties();
+            IGroupProperties groupProperties = studentGroup.getGroupProperties();
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
@@ -76,8 +74,8 @@ public class VerifyStudentGroupAtributes implements IServico {
             if (result)
                 throw new InvalidSituationServiceException();
 
-            result = strategy.checkPossibleToEnrolInExistingGroup(
-                    groupProperties, studentGroup, studentGroup.getShift());
+            result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup,
+                    studentGroup.getShift());
             if (!result)
                 throw new InvalidArgumentsServiceException();
 
@@ -87,19 +85,17 @@ public class VerifyStudentGroupAtributes implements IServico {
         return true;
     }
 
-    private boolean checkGroupEnrolment(Integer groupPropertiesCode,
-            Integer shiftCode, String username) throws FenixServiceException {
+    private boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
+            throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IGroupProperties groupProperties = (IGroupProperties) sp
-                    .getIPersistentStudentGroup().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+            IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentStudentGroup()
+                    .readByOID(GroupProperties.class, groupPropertiesCode);
 
-            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(
-                    Turno.class, shiftCode);
+            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, shiftCode);
 
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
@@ -122,34 +118,30 @@ public class VerifyStudentGroupAtributes implements IServico {
         return true;
     }
 
-    private boolean checkUnEnrollStudentInGroup(Integer studentGroupCode,
-            String username) throws FenixServiceException {
+    private boolean checkUnEnrollStudentInGroup(Integer studentGroupCode, String username)
+            throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            IGroupProperties groupProperties = studentGroup
-                    .getGroupProperties();
+            IGroupProperties groupProperties = studentGroup.getGroupProperties();
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                     .getGroupEnrolmentStrategyInstance(groupProperties);
 
-            result = strategy.checkNotEnroledInGroup(groupProperties,
-                    studentGroup, username);
+            result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
             if (result)
                 throw new InvalidSituationServiceException();
 
-            result = strategy.checkNumberOfGroupElements(groupProperties,
-                    studentGroup);
+            result = strategy.checkNumberOfGroupElements(groupProperties, studentGroup);
             if (!result)
                 throw new InvalidArgumentsServiceException();
 
@@ -159,29 +151,26 @@ public class VerifyStudentGroupAtributes implements IServico {
         return true;
     }
 
-    private boolean checkEditStudentGroupShift(Integer studentGroupCode,
-            String username) throws FenixServiceException {
+    private boolean checkEditStudentGroupShift(Integer studentGroupCode, String username)
+            throws FenixServiceException {
 
         boolean result = false;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new FenixServiceException();
             }
-            IGroupProperties groupProperties = studentGroup
-                    .getGroupProperties();
+            IGroupProperties groupProperties = studentGroup.getGroupProperties();
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                     .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
                     .getGroupEnrolmentStrategyInstance(groupProperties);
 
-            result = strategy.checkNotEnroledInGroup(groupProperties,
-                    studentGroup, username);
+            result = strategy.checkNotEnroledInGroup(groupProperties, studentGroup, username);
             if (result)
                 throw new InvalidSituationServiceException();
 
@@ -195,9 +184,8 @@ public class VerifyStudentGroupAtributes implements IServico {
      * Executes the service.
      */
 
-    public boolean run(Integer groupPropertiesCode, Integer shiftCode,
-            Integer studentGroupCode, String username, Integer option)
-            throws FenixServiceException {
+    public boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer studentGroupCode,
+            String username, Integer option) throws FenixServiceException {
 
         boolean result = false;
 
@@ -208,8 +196,7 @@ public class VerifyStudentGroupAtributes implements IServico {
             return result;
 
         case 2:
-            result = checkGroupEnrolment(groupPropertiesCode, shiftCode,
-                    username);
+            result = checkGroupEnrolment(groupPropertiesCode, shiftCode, username);
             return result;
 
         case 3:

@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
@@ -18,23 +19,22 @@ import ServidorApresentacao.Action.utils.ContextUtils;
  */
 public abstract class FenixContextAction extends FenixAction {
 
-	/**
-	 * Tests if the session is valid
-	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
-	 * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm, HttpServletRequest, HttpServletResponse)
-	 */
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    /**
+     * Tests if the session is valid
+     * 
+     * @see SessionUtils#validSessionVerification(HttpServletRequest,
+     *      ActionMapping)
+     * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm,
+     *      HttpServletRequest, HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
 
-		ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
+        ContextUtils.prepareChangeExecutionDegreeAndCurricularYear(request);
 
-		return super.execute(mapping, actionForm, request, response);		
-	}
+        return super.execute(mapping, actionForm, request, response);
+    }
 
 }

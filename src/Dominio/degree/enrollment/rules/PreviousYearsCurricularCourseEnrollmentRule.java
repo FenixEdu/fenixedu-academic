@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Util.enrollment.CurricularCourseEnrollmentType;
-
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author David Santos in Jun 23, 2004
@@ -20,7 +19,9 @@ import Dominio.degree.enrollment.CurricularCourse2Enroll;
 public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentRule {
 
     private IExecutionPeriod executionPeriod;
+
     private IBranch studentBranch;
+
     private int degreeDuration;
 
     public PreviousYearsCurricularCourseEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
@@ -37,16 +38,16 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
         boolean canPassToNextYear = true;
 
         for (int i = 1; (i <= this.degreeDuration) && canPassToNextYear; i++) {
-        
+
             List curricularCourses = (List) map.get(new Integer(i));
 
             if ((curricularCourses != null) && (!curricularCourses.isEmpty())) {
-            
+
                 int size = curricularCourses.size();
                 int counter = 0;
 
                 for (int j = 0; j < size; j++) {
-                
+
                     CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) curricularCourses
                             .get(j);
                     if (curricularCourse2Enroll.getEnrollmentType().equals(
@@ -58,7 +59,7 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
                 if (counter == size) {
                     canPassToNextYear = true;
                 } else {
-                    
+
                     canPassToNextYear = false;
 
                     for (int j = (i + 1); j <= this.degreeDuration; j++) {
@@ -111,11 +112,11 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 
     private void putCurricularCourseInHashMap(Map map, int i,
             CurricularCourse2Enroll curricularCourse2Enroll) {
-        
+
         Integer key = new Integer(i);
 
         List curricularCoursesList = (List) map.get(key);
-        
+
         if (curricularCoursesList == null) {
             curricularCoursesList = new ArrayList();
             curricularCoursesList.add(curricularCourse2Enroll);

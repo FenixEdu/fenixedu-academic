@@ -42,8 +42,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
         setInfoPerson(infoPerson);
     }
 
-    public InfoTeacher(Integer teacherNumber,
-            List professorShipsExecutionCourses,
+    public InfoTeacher(Integer teacherNumber, List professorShipsExecutionCourses,
             List responsibleForExecutionCourses, InfoPerson infoPerson) {
         setTeacherNumber(teacherNumber);
         setProfessorShipsExecutionCourses(professorShipsExecutionCourses);
@@ -78,8 +77,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
      * @param professorShipsExecutionCourses
      *            The professorShipsExecutionCourses to set
      */
-    public void setProfessorShipsExecutionCourses(
-            List professorShipsExecutionCourses) {
+    public void setProfessorShipsExecutionCourses(List professorShipsExecutionCourses) {
         this.professorShipsExecutionCourses = professorShipsExecutionCourses;
     }
 
@@ -89,8 +87,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
      * @param responsibleForExecutionCourses
      *            The responsibleForExecutionCourses to set
      */
-    public void setResponsibleForExecutionCourses(
-            List responsibleForExecutionCourses) {
+    public void setResponsibleForExecutionCourses(List responsibleForExecutionCourses) {
         this.responsibleForExecutionCourses = responsibleForExecutionCourses;
     }
 
@@ -143,8 +140,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
             InfoTeacher infoTeacher = (InfoTeacher) obj;
 
             result = ((infoTeacher != null)
-                    && (getTeacherNumber().equals(infoTeacher
-                            .getTeacherNumber())) && (getInfoPerson()
+                    && (getTeacherNumber().equals(infoTeacher.getTeacherNumber())) && (getInfoPerson()
                     .equals(infoTeacher.getInfoPerson())));
         }
         return result;
@@ -178,26 +174,23 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
         }
         return infoTeacher;
     }
-    
-    public void copyToDomain(InfoTeacher infoTeacher,ITeacher teacher)
-    {
-        super.copyToDomain(infoTeacher,teacher);
+
+    public void copyToDomain(InfoTeacher infoTeacher, ITeacher teacher) {
+        super.copyToDomain(infoTeacher, teacher);
         teacher.setTeacherNumber(infoTeacher.getTeacherNumber());
     }
-    
-    public static ITeacher newDomainFromInfo(InfoTeacher infoTeacher)
-    {
+
+    public static ITeacher newDomainFromInfo(InfoTeacher infoTeacher) {
         ITeacher teacher = null;
-        if(infoTeacher != null)
-        {
+        if (infoTeacher != null) {
             teacher = new Teacher();
-            infoTeacher.copyToDomain(infoTeacher,teacher);
+            infoTeacher.copyToDomain(infoTeacher, teacher);
         }
         return teacher;
     }
-    
+
     public String toSmsText() {
-        
+
         return "Nome: " + this.infoPerson.getNome() + " Numero: " + this.teacherNumber;
     }
 }

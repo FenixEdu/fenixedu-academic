@@ -8,25 +8,26 @@ package ServidorAplicacao.Servicos;
 
 import framework.factory.ServiceManagerServiceFactory;
 
-
 /**
-  * @author Luis Cruz & Sara Ribeiro
-  * 
- **/
+ * @author Luis Cruz & Sara Ribeiro
+ *  
+ */
 public abstract class TestCaseRequeiersAuthorizationServices extends TestCaseServices {
 
-	public TestCaseRequeiersAuthorizationServices(String testName) {
-		super(testName);
-	}
+    public TestCaseRequeiersAuthorizationServices(String testName) {
+        super(testName);
+    }
 
-	public void testUnauthorizedExecutionOfService() {
-		result = null;
-		try {
-			result = ServiceManagerServiceFactory.executeService(userViewNotAuthorized, getNameOfServiceToBeTested(), args);
-			fail("Service was run with unauthorized user view.");
-		} catch (Exception ex) {
-			assertNull("Execution of Service with unauthorized user view returned a result: " + result, result);
-		}
-	}
+    public void testUnauthorizedExecutionOfService() {
+        result = null;
+        try {
+            result = ServiceManagerServiceFactory.executeService(userViewNotAuthorized,
+                    getNameOfServiceToBeTested(), args);
+            fail("Service was run with unauthorized user view.");
+        } catch (Exception ex) {
+            assertNull("Execution of Service with unauthorized user view returned a result: " + result,
+                    result);
+        }
+    }
 
 }

@@ -13,7 +13,11 @@
 	<span class="error"><html:errors/></span>
 	<br />
 	<p align="center">
-		<span class="error">ATENÇÃO: A INSCRIÇÃO EM TURNOS/TURMAS NÃO SUBSTITUI A INSCRIÇÃO EM DISCIPLINAS EFECTUADA NA <a href="http://secreta.ist.utl.pt/secretaria/" target="_blank">SECRETARIA</a>.</span>
+		<span class="error">
+			<bean:message key="message.warning.student.enrolmentClasses" />
+			&nbsp;<html:link page="<%= "/warningFirst.do" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" />
+			</html:link>
+		</span>
 	</p>
 	<p align="left">
 		<h2 class="redtxt" style="text-align:center">
@@ -114,7 +118,7 @@
 		</html:submit>
 	</logic:notEqual>	
 	<html:submit property="method" styleClass="inputbutton" style="width:35%">
-		<bean:message key="button.exit.enrollment"/>
+		<bean:message key="button.exit.shift.enrollment"/>
 	</html:submit>		
 	
 	</logic:present>

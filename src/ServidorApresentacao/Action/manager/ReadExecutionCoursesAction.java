@@ -26,76 +26,60 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author lmac1
  */
-public class ReadExecutionCoursesAction extends FenixAction
-{
+public class ReadExecutionCoursesAction extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
-		List executionCourses = null;
-		Object args[] = { executionPeriodId };
-		try
-		{
-			executionCourses =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadExecutionCoursesByExecutionPeriod",
-					args);
+        Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
+        List executionCourses = null;
+        Object args[] = { executionPeriodId };
+        try {
+            executionCourses = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionCoursesByExecutionPeriod", args);
 
-			if (executionCourses != null && executionCourses.size() > 0)
-			{
-				Collections.sort(executionCourses, new BeanComparator("nome"));
-				InfoExecutionPeriod infoExecutionPeriod =
-					((InfoExecutionCourse) executionCourses.get(0)).getInfoExecutionPeriod();
+            if (executionCourses != null && executionCourses.size() > 0) {
+                Collections.sort(executionCourses, new BeanComparator("nome"));
+                InfoExecutionPeriod infoExecutionPeriod = ((InfoExecutionCourse) executionCourses.get(0))
+                        .getInfoExecutionPeriod();
 
-				String executionPeriodNameAndYear =
-					new String(
-						infoExecutionPeriod.getName()
-							+ "-"
-							+ infoExecutionPeriod.getInfoExecutionYear().getYear());
-				request.setAttribute("executionPeriodNameAndYear", executionPeriodNameAndYear);
-			}
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("infoExecutionCoursesList", executionCourses);
+                String executionPeriodNameAndYear = new String(infoExecutionPeriod.getName() + "-"
+                        + infoExecutionPeriod.getInfoExecutionYear().getYear());
+                request.setAttribute("executionPeriodNameAndYear", executionPeriodNameAndYear);
+            }
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("infoExecutionCoursesList", executionCourses);
 
-		//		InfoExecutionPeriod infoExecutionPeriod = null;
-		//		
-		//		try
-		//		{
-		//			infoExecutionPeriod =
-		//				(InfoExecutionPeriod) ServiceUtils.executeService(
-		//					userView,
-		//					"ReadExecutionPeriodForExecutionCourseAssociation",
-		//					args);
-		//
-		//		}
-		//		catch (NonExistingServiceException e)
-		//		{
-		//			throw new NonExistingActionException(
-		//				e.getMessage(),
-		//				mapping.findForward("readAvailableExecutionPeriods"));
-		//		}
-		//		catch (FenixServiceException fenixServiceException)
-		//		{
-		//			throw new FenixActionException(fenixServiceException);
-		//		}
-		//		String ExecutionPeriodNameAndYear =
-		//			new String(
-		//				infoExecutionPeriod.getName()
-		//					+ "-"
-		//					+ infoExecutionPeriod.getInfoExecutionYear().getYear());
+        //		InfoExecutionPeriod infoExecutionPeriod = null;
+        //		
+        //		try
+        //		{
+        //			infoExecutionPeriod =
+        //				(InfoExecutionPeriod) ServiceUtils.executeService(
+        //					userView,
+        //					"ReadExecutionPeriodForExecutionCourseAssociation",
+        //					args);
+        //
+        //		}
+        //		catch (NonExistingServiceException e)
+        //		{
+        //			throw new NonExistingActionException(
+        //				e.getMessage(),
+        //				mapping.findForward("readAvailableExecutionPeriods"));
+        //		}
+        //		catch (FenixServiceException fenixServiceException)
+        //		{
+        //			throw new FenixActionException(fenixServiceException);
+        //		}
+        //		String ExecutionPeriodNameAndYear =
+        //			new String(
+        //				infoExecutionPeriod.getName()
+        //					+ "-"
+        //					+ infoExecutionPeriod.getInfoExecutionYear().getYear());
 
-		return mapping.findForward("readExecutionCourses");
-	}
+        return mapping.findForward("readExecutionCourses");
+    }
 }

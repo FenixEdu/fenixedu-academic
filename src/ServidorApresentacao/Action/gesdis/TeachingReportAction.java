@@ -33,38 +33,30 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
-public class TeachingReportAction extends DispatchAction
-{
-    private String getReadService()
-    {
+public class TeachingReportAction extends DispatchAction {
+    private String getReadService() {
         return "ReadCourseInformation";
     }
 
-    private String getReadHistoricService()
-    {
+    private String getReadHistoricService() {
         return "ReadCourseHistoric";
     }
 
-    private String getEditService()
-    {
+    private String getEditService() {
         return "EditCourseInformation";
     }
 
     /**
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return forward to the action mapping configuration called successfull-edit
-	 * @throws Exception
-	 */
-    public ActionForward edit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @return forward to the action mapping configuration called
+     *         successfull-edit
+     * @throws Exception
+     */
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
         Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport };
         ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
@@ -72,15 +64,14 @@ public class TeachingReportAction extends DispatchAction
     }
 
     /**
-	 * This method creates an InfoServiceProviderRegime using the form properties.
-	 * 
-	 * @param form
-	 * @return InfoServiceProviderRegime created
-	 */
-    protected InfoCourseReport getInfoCourseReportFromForm(ActionForm form) throws FenixActionException
-    {
-        try
-        {
+     * This method creates an InfoServiceProviderRegime using the form
+     * properties.
+     * 
+     * @param form
+     * @return InfoServiceProviderRegime created
+     */
+    protected InfoCourseReport getInfoCourseReportFromForm(ActionForm form) throws FenixActionException {
+        try {
             DynaActionForm dynaForm = (DynaActionForm) form;
             InfoCourseReport infoCourseReport = new InfoCourseReport();
             BeanUtils.copyProperties(infoCourseReport, dynaForm);
@@ -102,80 +93,61 @@ public class TeachingReportAction extends DispatchAction
             infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
 
             return infoCourseReport;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new FenixActionException(e.getMessage());
         }
     }
 
     /**
-	 * Tests if errors are presented.
-	 * 
-	 * @param request
-	 * @return
-	 */
-    private boolean hasErrors(HttpServletRequest request)
-    {
+     * Tests if errors are presented.
+     * 
+     * @param request
+     * @return
+     */
+    private boolean hasErrors(HttpServletRequest request) {
 
         return request.getAttribute(Globals.ERROR_KEY) != null;
     }
 
     /**
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 */
-    protected void populateFormFromInfoCourseReport(
-        ActionMapping mapping,
-        InfoCourseReport infoCourseReport,
-        ActionForm form,
-        HttpServletRequest request)
-    {
-        try
-        {
+     * @param mapping
+     * @param form
+     * @param request
+     */
+    protected void populateFormFromInfoCourseReport(ActionMapping mapping,
+            InfoCourseReport infoCourseReport, ActionForm form, HttpServletRequest request) {
+        try {
             DynaActionForm dynaForm = (DynaActionForm) form;
             BeanUtils.copyProperties(form, infoCourseReport);
 
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
             dynaForm.set("executionCourseId", infoExecutionCourse.getIdInternal());
-            dynaForm.set(
-                "executionPeriodId",
-                infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
-            dynaForm.set(
-                "executionYearId",
-                infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getIdInternal());
-        } catch (Exception e)
-        {
+            dynaForm.set("executionPeriodId", infoExecutionCourse.getInfoExecutionPeriod()
+                    .getIdInternal());
+            dynaForm.set("executionYearId", infoExecutionCourse.getInfoExecutionPeriod()
+                    .getInfoExecutionYear().getIdInternal());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return forward to the action mapping configuration called show-form
-	 * @throws Exception
-	 */
-    public ActionForward prepareEdit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @return forward to the action mapping configuration called show-form
+     * @throws Exception
+     */
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         SiteView siteView = readSiteView(mapping, form, request);
         List infoCoursesHistoric = readCoursesHistoric(mapping, form, request);
-        if (!hasErrors(request) && siteView != null)
-        {
-            InfoSiteCourseInformation infoSiteCourseInformation =
-                (InfoSiteCourseInformation) siteView.getComponent();
-            populateFormFromInfoCourseReport(
-                mapping,
-                infoSiteCourseInformation.getInfoCourseReport(),
-                form,
-                request);
+        if (!hasErrors(request) && siteView != null) {
+            InfoSiteCourseInformation infoSiteCourseInformation = (InfoSiteCourseInformation) siteView
+                    .getComponent();
+            populateFormFromInfoCourseReport(mapping, infoSiteCourseInformation.getInfoCourseReport(),
+                    form, request);
         }
         setSiteViewToRequest(request, siteView, mapping);
         setInfoCoursesHistoric(request, infoCoursesHistoric, mapping);
@@ -183,20 +155,16 @@ public class TeachingReportAction extends DispatchAction
     }
 
     /**
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return forward to the action mapping configuration called successfull-read
-	 * @throws Exception
-	 */
-    public ActionForward read(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @param mapping
+     * @param form
+     * @param request
+     * @param response
+     * @return forward to the action mapping configuration called
+     *         successfull-read
+     * @throws Exception
+     */
+    public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         SiteView siteView = readSiteView(mapping, form, request);
         setSiteViewToRequest(request, siteView, mapping);
         List infoCoursesHistoric = readCoursesHistoric(mapping, form, request);
@@ -205,63 +173,55 @@ public class TeachingReportAction extends DispatchAction
     }
 
     /**
-	 * @param request
-	 * @param infoCoursesHistoric
-	 * @param mapping
-	 */
+     * @param request
+     * @param infoCoursesHistoric
+     * @param mapping
+     */
     private void setInfoCoursesHistoric(HttpServletRequest request, List list, ActionMapping mapping)
-        throws Exception
-    {
-        if (list != null)
-        {
+            throws Exception {
+        if (list != null) {
             request.setAttribute("infoCoursesHistoric", list);
         }
     }
 
     /**
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @return
-	 */
+     * @param mapping
+     * @param form
+     * @param request
+     * @return
+     */
     private List readCoursesHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request)
-        throws Exception
-    {
+            throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         String executionCourseId = request.getParameter("executionCourseId");
 
-        Object[] args = { new Integer(executionCourseId)};
+        Object[] args = { new Integer(executionCourseId) };
         return (List) ServiceUtils.executeService(userView, getReadHistoricService(), args);
     }
 
     /**
-	 * Reads the infoCourseReport using de read service associated to the action
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @return
-	 */
+     * Reads the infoCourseReport using de read service associated to the action
+     * 
+     * @param mapping
+     * @param form
+     * @return
+     */
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
-        throws FenixServiceException
-    {
+            throws FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
         String executionCourseId = request.getParameter("executionCourseId");
 
-        Object[] args = { new Integer(executionCourseId)};
+        Object[] args = { new Integer(executionCourseId) };
         return (SiteView) ServiceUtils.executeService(userView, getReadService(), args);
     }
 
     /**
-	 * @param request
-	 * @param infoCourseReport
-	 */
-    private void setSiteViewToRequest(
-        HttpServletRequest request,
-        SiteView siteView,
-        ActionMapping mapping)
-    {
-        if (siteView != null)
-        {
+     * @param request
+     * @param infoCourseReport
+     */
+    private void setSiteViewToRequest(HttpServletRequest request, SiteView siteView,
+            ActionMapping mapping) {
+        if (siteView != null) {
             request.setAttribute("siteView", siteView);
         }
     }

@@ -4,10 +4,10 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.contributor;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoContributor;
 import DataBeans.util.Cloner;
 import Dominio.IContributor;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -15,52 +15,29 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadContributor implements IServico {
+public class ReadContributor implements IService {
 
-	private static ReadContributor servico = new ReadContributor();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadContributor getService() {
-		return servico;
-	}
+    public InfoContributor run(Integer contributorNumber) throws FenixServiceException {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadContributor() { 
-	}
+        ISuportePersistente sp = null;
+        IContributor contributor = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-	/**
-	 * Returns The Service Name */
+            // Read the contributor
 
-	public final String getNome() {
-		return "ReadContributor";
-	}
+            contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-	public InfoContributor run(Integer contributorNumber) throws FenixServiceException {
+        if (contributor == null)
+            throw new ExcepcaoInexistente("Unknown Contributor !!");
 
-		ISuportePersistente sp = null;
-		IContributor contributor = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-		
-			// Read the contributor
-			
-			contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);		
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-		
-		if (contributor == null) 
-			throw new ExcepcaoInexistente("Unknown Contributor !!");
-		
-		return Cloner.copyIContributor2InfoContributor(contributor);		
-	}
+        return Cloner.copyIContributor2InfoContributor(contributor);
+    }
 }

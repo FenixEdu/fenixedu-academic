@@ -13,44 +13,50 @@ import Util.FenixValuedEnum;
  */
 public class TransactionType extends FenixValuedEnum {
 
-    public static final int FULL_PAYMENT_TYPE = 1;
+    public static final int GRATUITY_FULL_PAYMENT_TYPE = 1;
 
-    public static final int FIRST_PHASE_PAYMENT_TYPE = 2;
+    public static final int GRATUITY_FIRST_PHASE_PAYMENT_TYPE = 2;
 
-    public static final int SECOND_PHASE_PAYMENT_TYPE = 3;
+    public static final int GRATUITY_SECOND_PHASE_PAYMENT_TYPE = 3;
 
-    public static final int THIRD_PHASE_PAYMENT_TYPE = 4;
+    public static final int GRATUITY_THIRD_PHASE_PAYMENT_TYPE = 4;
 
-    public static final int FOURTH_PHASE_PAYMENT_TYPE = 5;
+    public static final int GRATUITY_FOURTH_PHASE_PAYMENT_TYPE = 5;
 
-    public static final int FIFTH_PHASE_PAYMENT_TYPE = 6;
+    public static final int GRATUITY_FIFTH_PHASE_PAYMENT_TYPE = 6;
 
-    public static final int ADHOC_PAYMENT_TYPE = 7;
+    public static final int GRATUITY_ADHOC_PAYMENT_TYPE = 7;
 
     public static final int USER_SENT_SMS_PAYMENT_TYPE = 8;
 
     public static final int SYSTEM_SENT_SMS_TO_USER_PAYMENT_TYPE = 9;
 
-    public static final TransactionType FULL_PAYMENT = new TransactionType(
-            "fullPayment", TransactionType.FULL_PAYMENT_TYPE);
+    public static final int GRATUITY_REIMBURSEMENT_TYPE = 10;
 
-    public static final TransactionType FIRST_PHASE_PAYMENT = new TransactionType(
-            "firstPhasePayment", TransactionType.FIRST_PHASE_PAYMENT_TYPE);
+    public static final int INSURANCE_PAYMENT_TYPE = 11;
 
-    public static final TransactionType SECOND_PHASE_PAYMENT = new TransactionType(
-            "secondPhasePayment", TransactionType.SECOND_PHASE_PAYMENT_TYPE);
+    public static final int INSURANCE_REIMBURSEMENT_TYPE = 12;
 
-    public static final TransactionType THIRD_PHASE_PAYMENT = new TransactionType(
-            "thirdPhasePayment", TransactionType.THIRD_PHASE_PAYMENT_TYPE);
+    public static final TransactionType GRATUITY_FULL_PAYMENT = new TransactionType(
+            "gratuityFullPayment", TransactionType.GRATUITY_FULL_PAYMENT_TYPE);
 
-    public static final TransactionType FOURTH_PHASE_PAYMENT = new TransactionType(
-            "fourthPhasePayment", TransactionType.FOURTH_PHASE_PAYMENT_TYPE);
+    public static final TransactionType GRATUITY_FIRST_PHASE_PAYMENT = new TransactionType(
+            "gratuityFirstPhasePayment", TransactionType.GRATUITY_FIRST_PHASE_PAYMENT_TYPE);
 
-    public static final TransactionType FIFTH_PHASE_PAYMENT = new TransactionType(
-            "fifthPhasePayment", TransactionType.FIFTH_PHASE_PAYMENT_TYPE);
+    public static final TransactionType GRATUITY_SECOND_PHASE_PAYMENT = new TransactionType(
+            "gratuitySecondPhasePayment", TransactionType.GRATUITY_SECOND_PHASE_PAYMENT_TYPE);
 
-    public static final TransactionType ADHOC_PAYMENT = new TransactionType(
-            "adhocPayment", TransactionType.ADHOC_PAYMENT_TYPE);
+    public static final TransactionType GRATUITY_THIRD_PHASE_PAYMENT = new TransactionType(
+            "gratuityThirdPhasePayment", TransactionType.GRATUITY_THIRD_PHASE_PAYMENT_TYPE);
+
+    public static final TransactionType GRATUITY_FOURTH_PHASE_PAYMENT = new TransactionType(
+            "gratuityFourthPhasePayment", TransactionType.GRATUITY_FOURTH_PHASE_PAYMENT_TYPE);
+
+    public static final TransactionType GRATUITY_FIFTH_PHASE_PAYMENT = new TransactionType(
+            "gratuityFifthPhasePayment", TransactionType.GRATUITY_FIFTH_PHASE_PAYMENT_TYPE);
+
+    public static final TransactionType GRATUITY_ADHOC_PAYMENT = new TransactionType(
+            "gratuityAdhocPayment", TransactionType.GRATUITY_ADHOC_PAYMENT_TYPE);
 
     public static final TransactionType USER_SENT_SMS_PAYMENT = new TransactionType(
             "userSentSmsPayment", TransactionType.USER_SENT_SMS_PAYMENT_TYPE);
@@ -58,16 +64,25 @@ public class TransactionType extends FenixValuedEnum {
     public static final TransactionType SYSTEM_SENT_SMS_TO_USER_PAYMENT = new TransactionType(
             "systemSentSmsToUserPayment", TransactionType.SYSTEM_SENT_SMS_TO_USER_PAYMENT_TYPE);
 
+    public static final TransactionType GRATUITY_REIMBURSEMENT = new TransactionType(
+            "gratuityReimbursement", TransactionType.GRATUITY_REIMBURSEMENT_TYPE);
+
+    public static final TransactionType INSURANCE_PAYMENT = new TransactionType("insurancePaymentType",
+            TransactionType.INSURANCE_PAYMENT_TYPE);
+
+    public static final TransactionType INSURANCE_REIMBURSEMENT = new TransactionType(
+            "insuranceReimbursementType", TransactionType.INSURANCE_REIMBURSEMENT_TYPE);
+
     public TransactionType(String name, int value) {
         super(name, value);
     }
 
-    public static TransactionType getEnum(String SmsTransactionType) {
-        return (TransactionType) getEnum(TransactionType.class, SmsTransactionType);
+    public static TransactionType getEnum(String transactionType) {
+        return (TransactionType) getEnum(TransactionType.class, transactionType);
     }
 
-    public static TransactionType getEnum(int SmsTransactionType) {
-        return (TransactionType) getEnum(TransactionType.class, SmsTransactionType);
+    public static TransactionType getEnum(int transactionType) {
+        return (TransactionType) getEnum(TransactionType.class, transactionType);
     }
 
     public static Map getEnumMap() {
@@ -83,9 +98,9 @@ public class TransactionType extends FenixValuedEnum {
     }
 
     public String toString() {
-        String smsTransactionTypeString = "\nSms Transaction Type String : " + this.getName();
-        smsTransactionTypeString += "\nSms Transaction Type String(value): " + this.getValue();
-        return smsTransactionTypeString;
+        String transactionTypeString = "\nTransaction Type String : " + this.getName();
+        transactionTypeString += "\nTransaction Type String(value): " + this.getValue();
+        return transactionTypeString;
     }
 
 }

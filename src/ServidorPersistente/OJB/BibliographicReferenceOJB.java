@@ -1,7 +1,9 @@
 package ServidorPersistente.OJB;
 
 import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
+
 import Dominio.BibliographicReference;
 import Dominio.IBibliographicReference;
 import Dominio.IExecutionCourse;
@@ -12,18 +14,15 @@ import ServidorPersistente.IPersistentBibliographicReference;
  * @author EP 15
  * @author João Mota
  */
-public class BibliographicReferenceOJB extends ObjectFenixOJB implements
-        IPersistentBibliographicReference
-{
+public class BibliographicReferenceOJB extends PersistentObjectOJB implements
+        IPersistentBibliographicReference {
 
-    public void delete(IBibliographicReference bibliographicReference) throws ExcepcaoPersistencia
-    {
+    public void delete(IBibliographicReference bibliographicReference) throws ExcepcaoPersistencia {
         super.delete(bibliographicReference);
     }
 
     public IBibliographicReference readBibliographicReference(IExecutionCourse executionCourse,
-            String title, String authors, String reference, String year) throws ExcepcaoPersistencia
-    {
+            String title, String authors, String reference, String year) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
@@ -39,8 +38,7 @@ public class BibliographicReferenceOJB extends ObjectFenixOJB implements
 
     }
 
-    public List readBibliographicReference(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
-    {
+    public List readBibliographicReference(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("executionCourse.idInternal", executionCourse.getIdInternal());
         List result = queryList(BibliographicReference.class, crit);

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<h2>Consulta de Corpo Docente de Disciplina</h2>
+<h2><bean:message key="label.teachers.search"/></h2>
 <logic:present name="detailedProfessorShipsListofLists">
     <table width="90%" class="tab_altrow" >
     <tr>

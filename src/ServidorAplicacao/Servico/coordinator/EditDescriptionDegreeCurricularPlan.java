@@ -1,10 +1,10 @@
 package ServidorAplicacao.Servico.coordinator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.DegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlan;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -17,24 +17,10 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Tânia Pousão Created on 17/Nov/2003
  */
-public class EditDescriptionDegreeCurricularPlan implements IServico {
-
-    private static EditDescriptionDegreeCurricularPlan service = new EditDescriptionDegreeCurricularPlan();
-
-    public static EditDescriptionDegreeCurricularPlan getService() {
-        return service;
-    }
-
-    private EditDescriptionDegreeCurricularPlan() {
-    }
-
-    public final String getNome() {
-        return "EditDescriptionDegreeCurricularPlan";
-    }
+public class EditDescriptionDegreeCurricularPlan implements IService {
 
     public InfoDegreeCurricularPlan run(Integer infoExecutionDegreeId,
-            InfoDegreeCurricularPlan newInfoDegreeCP)
-            throws FenixServiceException {
+            InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException {
         if (infoExecutionDegreeId == null || newInfoDegreeCP == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
@@ -43,17 +29,13 @@ public class EditDescriptionDegreeCurricularPlan implements IServico {
         IDegreeCurricularPlan degreeCP = null;
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            persistentDegreeCurricularPlan = persistentSuport
-                    .getIPersistentDegreeCurricularPlan();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 
-            degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOID(DegreeCurricularPlan.class, newInfoDegreeCP
-                            .getIdInternal(), true);
+            degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+                    DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal(), true);
             if (degreeCP == null) {
-                throw new NonExistingServiceException(
-                        "message.nonExistingDegreeCurricularPlan", null);
+                throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
             }
 
             degreeCP.setDescription(newInfoDegreeCP.getDescription());

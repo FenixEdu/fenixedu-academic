@@ -24,33 +24,23 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ReadDegreesAction extends FenixAction {
 
-		public ActionForward execute(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-				IUserView userView = SessionUtils.getUserView(request);
-		
-			try {		
-		        	List degrees = null;
-					
-					degrees = (List) ServiceUtils.executeService(
-								userView,
-								"ReadDegrees",
-								null);
-		
-				Collections.sort(
-				degrees,
-				new ComparatorByNameForInfoDegree());
-			
-					request.setAttribute("degreesList", degrees);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			return mapping.findForward("readDegrees");
-		}
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+        IUserView userView = SessionUtils.getUserView(request);
+
+        try {
+            List degrees = null;
+
+            degrees = (List) ServiceUtils.executeService(userView, "ReadDegrees", null);
+
+            Collections.sort(degrees, new ComparatorByNameForInfoDegree());
+
+            request.setAttribute("degreesList", degrees);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        return mapping.findForward("readDegrees");
+    }
 
 }
-
 

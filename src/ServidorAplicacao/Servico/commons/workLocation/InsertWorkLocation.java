@@ -13,46 +13,39 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class InsertWorkLocation implements IService
-{
+public class InsertWorkLocation implements IService {
 
     private static InsertWorkLocation service = new InsertWorkLocation();
 
     /**
-	 * The singleton access method of this class.
-	 */
-    public static InsertWorkLocation getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static InsertWorkLocation getService() {
         return service;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private InsertWorkLocation()
-    {
+     * The actor of this class.
+     */
+    private InsertWorkLocation() {
     }
 
-    public void run(String workLocationName) throws FenixServiceException
-    {
-        try
-        {
+    public void run(String workLocationName) throws FenixServiceException {
+        try {
             IWorkLocation workLocation = new WorkLocation();
             workLocation.setName(workLocationName);
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IWorkLocation storedWorkLocation =
-                sp.getIPersistentWorkLocation().readByName(workLocationName);
+            IWorkLocation storedWorkLocation = sp.getIPersistentWorkLocation().readByName(
+                    workLocationName);
 
-            if (storedWorkLocation != null)
-            {
-                throw new ExistingServiceException("error.exception.commons.workLocation.workLocationAlreadyExists");
+            if (storedWorkLocation != null) {
+                throw new ExistingServiceException(
+                        "error.exception.commons.workLocation.workLocationAlreadyExists");
             }
 
             sp.getIPersistentWorkLocation().simpleLockWrite(workLocation);
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;

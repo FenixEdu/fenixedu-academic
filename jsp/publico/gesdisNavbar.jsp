@@ -24,7 +24,7 @@
 	</html:link>
 </li>
 <li>
-	<html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>">
+	<html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
 				<bean:message key="link.evaluationMethod"/>
 	</html:link>
 </li>
@@ -39,9 +39,10 @@
 <logic:iterate id="curricularCourse" name="curricularCourses">
 	<bean:define id="curricularCourseId" name="curricularCourse" property="idInternal" />
 	<bean:define id="degreeID" name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.idInternal" />
+	<bean:define id="degreeCurricularPlanID" name="curricularCourse" property="infoDegreeCurricularPlan.idInternal" />
  	<dd>
  	<%--<html:link page="<%= "/viewSite.do?method=curricularCourse&amp;objectCode=" + pageContext.findAttribute("objectCode")  +"&amp;ccCode=" +  pageContext.findAttribute("curricularCourseId")+ "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>">--%>
-	<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID")%>" > 	
+	<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  pageContext.getAttribute("degreeID") %>"> 	
 				<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>-<bean:write name="curricularCourse" property="name"/>
 	</html:link></dd>
 </logic:iterate>
@@ -57,7 +58,7 @@
 <li><html:link page="<%= "/viewSite.do" + "?method=evaluation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
 		<bean:message key="link.evaluation"/>
 </html:link></li>
-<li><html:link page="<%= "/viewSite.do" + "?method=viewExecutionCourseProjects&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>">
+<li><html:link page="<%= "/viewSite.do" + "?method=viewExecutionCourseProjects&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
 		<bean:message key="link.groups"/>
 </html:link></li>
 
@@ -70,7 +71,7 @@
 	<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="infoSection" />
 	</logic:present>
 	<logic:notPresent name="infoSection" >
-	<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" />
+	<app:generateSectionMenu name="sections" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" /> 
 	</logic:notPresent>		
 </logic:notEmpty>	
 </div>

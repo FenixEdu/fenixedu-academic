@@ -80,6 +80,10 @@ public class ReadAllContractsByGrantOwner implements IService {
                     List grantContractRegimeActual = persistentGrantContractRegime
                             .readGrantContractRegimeByGrantContractAndState(infoGrantContract
                                     .getIdInternal(), new Integer(1));
+                    if (grantContractRegimeActual.isEmpty()) {
+                        throw new FenixServiceException(
+                                "Grant Contract has no Grant Contract Regime (actual) Associated");
+                    }
                     IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeActual
                             .get(0);
                     infoGrantContract.setActive(new Boolean(grantContractRegime

@@ -1,4 +1,3 @@
-
 /*
  * CriarSalaServicosTest.java
  * JUnit based test
@@ -9,8 +8,8 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.contributor;
 
 /**
- *
- * @author Nuno Nunes & Joana Mota 
+ * 
+ * @author Nuno Nunes & Joana Mota
  */
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,116 +29,112 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 
 public class EditContributorServiceTest extends TestCaseServicos {
-	
-	public EditContributorServiceTest(java.lang.String testName) {
-		super(testName);
-	}
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public EditContributorServiceTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(EditContributorServiceTest.class);
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(EditContributorServiceTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	public void testEditContributor() {
-		System.out.println("- Test 1 : Edit Contributor");
-		
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
+    public void testEditContributor() {
+        System.out.println("- Test 1 : Edit Contributor");
 
-		InfoContributor infoContributor = new InfoContributor();
-		infoContributor.setContributorNumber(new Integer(123));
-		infoContributor.setContributorName("nome do Nuno");
-		infoContributor.setContributorAddress("Rua do Nuno");
-		
-		Object[] args = {infoContributor, new Integer(1), "nome do Nuno1", "Rua do Nuno1"};
-	
-	 
-		 try {
-			 ServiceManagerServiceFactory.executeService(userView, "EditContributor", args);
-		 } catch (FenixServiceException ex) {
-			fail("Fenix Service Exception");
-		 } catch (Exception ex) {
-			fail("Exception");
-		 }
-		 
-		 // Check the edition
-		 try {
-		 	SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		 	IContributor contributor = SuportePersistenteOJB.getInstance().getIPersistentContributor().readByContributorNumber(new Integer(1));
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		 	
-		 	assertNotNull(contributor);
-			assertEquals(contributor.getContributorAddress(), "Rua do Nuno1");
-			assertEquals(contributor.getContributorName(), "nome do Nuno1");
-			assertEquals(contributor.getContributorNumber(), new Integer(1));
-		 } catch (Exception e){
-		 	fail("Error reading Existing");
-		 }
-		
-	}
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
 
-	public void testEditNonExistingContributor() {
-		System.out.println("- Test 2 : Edit Non Existing Contributor");
+        InfoContributor infoContributor = new InfoContributor();
+        infoContributor.setContributorNumber(new Integer(123));
+        infoContributor.setContributorName("nome do Nuno");
+        infoContributor.setContributorAddress("Rua do Nuno");
 
-		UserView userView = this.getUserViewToBeTested("jccm", true);
+        Object[] args = { infoContributor, new Integer(1), "nome do Nuno1", "Rua do Nuno1" };
 
-		
-		InfoContributor infoContributor = new InfoContributor();
-		infoContributor.setContributorNumber(new Integer(13));
-		infoContributor.setContributorName("Nome13");
-		infoContributor.setContributorAddress("Morada13");
-		
-		Object[] args = {infoContributor , new Integer(13),"Nome1","Morada1"};
-	
-		 
-		 try {
-			 ServiceManagerServiceFactory.executeService(userView, "EditContributor", args);
-		 } catch (NonExistingContributorServiceException ex) {
-			// All is OK
-		 } catch (Exception ex) {
-			fail("Exception");
-		 }
-	}
-	
-	public void testEditContributorWithoutRole() {
-		System.out.println("- Test 3 : Edit Contributor without Role");
-	        
-		UserView userView = this.getUserViewToBeTested("nmsn", false);
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "EditContributor", args);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception");
+        } catch (Exception ex) {
+            fail("Exception");
+        }
 
-	
-		 try {
-			 ServiceManagerServiceFactory.executeService(userView, "EditContributor", null);
-		 } catch (FenixServiceException ex) {
-			 // All is OK
-		 } catch (Exception ex) {
-			fail("Error Reading without Role");
-		 }
+        // Check the edition
+        try {
+            SuportePersistenteOJB.getInstance().iniciarTransaccao();
+            IContributor contributor = SuportePersistenteOJB.getInstance().getIPersistentContributor()
+                    .readByContributorNumber(new Integer(1));
+            SuportePersistenteOJB.getInstance().confirmarTransaccao();
 
-     }
+            assertNotNull(contributor);
+            assertEquals(contributor.getContributorAddress(), "Rua do Nuno1");
+            assertEquals(contributor.getContributorName(), "nome do Nuno1");
+            assertEquals(contributor.getContributorNumber(), new Integer(1));
+        } catch (Exception e) {
+            fail("Error reading Existing");
+        }
 
+    }
 
-	private UserView getUserViewToBeTested(String username, boolean withRole) {
-		Collection roles = new ArrayList();
-		InfoRole infoRole = new InfoRole();
-		if (withRole) infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		else infoRole.setRoleType(RoleType.PERSON);
-		roles.add(infoRole);
-		UserView userView = new UserView(username, roles);
-		return userView;
-	}
+    public void testEditNonExistingContributor() {
+        System.out.println("- Test 2 : Edit Non Existing Contributor");
 
+        UserView userView = this.getUserViewToBeTested("jccm", true);
+
+        InfoContributor infoContributor = new InfoContributor();
+        infoContributor.setContributorNumber(new Integer(13));
+        infoContributor.setContributorName("Nome13");
+        infoContributor.setContributorAddress("Morada13");
+
+        Object[] args = { infoContributor, new Integer(13), "Nome1", "Morada1" };
+
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "EditContributor", args);
+        } catch (NonExistingContributorServiceException ex) {
+            // All is OK
+        } catch (Exception ex) {
+            fail("Exception");
+        }
+    }
+
+    public void testEditContributorWithoutRole() {
+        System.out.println("- Test 3 : Edit Contributor without Role");
+
+        UserView userView = this.getUserViewToBeTested("nmsn", false);
+
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "EditContributor", null);
+        } catch (FenixServiceException ex) {
+            // All is OK
+        } catch (Exception ex) {
+            fail("Error Reading without Role");
+        }
+
+    }
+
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
+        Collection roles = new ArrayList();
+        InfoRole infoRole = new InfoRole();
+        if (withRole)
+            infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        else
+            infoRole.setRoleType(RoleType.PERSON);
+        roles.add(infoRole);
+        UserView userView = new UserView(username, roles);
+        return userView;
+    }
 
 }

@@ -21,20 +21,27 @@ import Util.TipoAula;
  * 21/Jul/2003 fenix-head ServidorPersistente.OJB
  *  
  */
-public interface IPersistentSummary extends IPersistentObject
-{
-	public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-	public List readByExecutionCourseShifts(IExecutionCourse executionCourse)
-					throws ExcepcaoPersistencia;
-	public List readByExecutionCourseAndType(IExecutionCourse executionCourse, TipoAula summaryType)
-					throws ExcepcaoPersistencia;
-	public List readByExecutionCourseShiftsAndTypeLesson(IExecutionCourse executionCourse,
-					TipoAula summaryType) throws ExcepcaoPersistencia;
-	public List readByShift(IExecutionCourse executionCourse, ITurno shift) throws ExcepcaoPersistencia;
-	public List readByTeacher(IExecutionCourse executionCourse, ITeacher teacher)
-					throws ExcepcaoPersistencia;
-	public List readByOtherTeachers(IExecutionCourse executionCourse)
-	throws ExcepcaoPersistencia;
-	public ISummary readSummaryByUnique(ITurno shift, Calendar summaryDate, Calendar summaryHour)  throws ExcepcaoPersistencia; 
-	public abstract void delete(ISummary summary) throws ExcepcaoPersistencia;
+public interface IPersistentSummary extends IPersistentObject {
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+
+    public List readByExecutionCourseShifts(IExecutionCourse executionCourse)
+            throws ExcepcaoPersistencia;
+
+    public List readByExecutionCourseAndType(IExecutionCourse executionCourse, TipoAula summaryType)
+            throws ExcepcaoPersistencia;
+
+    public List readByExecutionCourseShiftsAndTypeLesson(IExecutionCourse executionCourse,
+            TipoAula summaryType) throws ExcepcaoPersistencia;
+
+    public List readByShift(IExecutionCourse executionCourse, ITurno shift) throws ExcepcaoPersistencia;
+
+    public List readByTeacher(IExecutionCourse executionCourse, ITeacher teacher)
+            throws ExcepcaoPersistencia;
+
+    public List readByOtherTeachers(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+
+    public ISummary readSummaryByUnique(ITurno shift, Calendar summaryDate, Calendar summaryHour)
+            throws ExcepcaoPersistencia;
+
+    public abstract void delete(ISummary summary) throws ExcepcaoPersistencia;
 }

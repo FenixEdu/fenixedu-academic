@@ -13,88 +13,73 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase
-{
+public class DeleteCareerTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
-	 *  
-	 */
-    public DeleteCareerTest(String testName)
-    {
+     *  
+     */
+    public DeleteCareerTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testDeleteCareerDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "DeleteCareer";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "julia", "pass", getApplication()};
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "jccm", "pass", getApplication()};
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
 
-        Object[] args = { new Integer(1)};
+        Object[] args = { new Integer(1) };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testDeleteProfessionalCareer()
-    {
+    public void testDeleteProfessionalCareer() {
 
-        try
-        {
-            Object[] args = { new Integer(1)};
+        try {
+            Object[] args = { new Integer(1) };
 
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-            
+
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteProfessionalCareerDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Deleting the ProfessionalCareer of a Teacher " + ex);
         }
     }
 
-    public void testDeleteTeachingCareer()
-    {
+    public void testDeleteTeachingCareer() {
 
-        try
-        {
-            Object[] args = { new Integer(2)};
+        try {
+            Object[] args = { new Integer(2) };
 
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-            
+
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedDeleteTeachingCareerDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Deleting the ProfessionalCareer of a Teacher " + ex);
         }
     }

@@ -26,22 +26,20 @@ public class InfoGuideWithGuideEntries extends InfoGuide {
     public void copyFromDomain(IGuide guide) {
         super.copyFromDomain(guide);
         if (guide != null) {
-            setInfoGuideEntries(copyIGuideEntry2InfoGuide(guide
-                    .getGuideEntries()));
+            setInfoGuideEntries(copyIGuideEntry2InfoGuide(guide.getGuideEntries()));
         }
     }
 
     private List copyIGuideEntry2InfoGuide(List guideEntries) {
         List infoGuideEntryList = null;
 
-        infoGuideEntryList = (List) CollectionUtils.collect(guideEntries,
-                new Transformer() {
+        infoGuideEntryList = (List) CollectionUtils.collect(guideEntries, new Transformer() {
 
-                    public Object transform(Object arg0) {
-                        IGuideEntry guideEntry = (IGuideEntry) arg0;
-                        return InfoGuideEntry.newInfoFromDomain(guideEntry);
-                    }
-                });
+            public Object transform(Object arg0) {
+                IGuideEntry guideEntry = (IGuideEntry) arg0;
+                return InfoGuideEntry.newInfoFromDomain(guideEntry);
+            }
+        });
 
         return infoGuideEntryList;
     }

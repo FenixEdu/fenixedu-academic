@@ -47,25 +47,25 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         try {
             Profiler.getInstance();
             Profiler.resetInstance();
-            
+
             sp = SuportePersistenteOJB.getInstance();
-            
+
             teachers = doSearch(searchParameters, sp);
-            
+
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             final IExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters,
                     executionPeriodDAO);
-            
+
             InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
                     .newInfoFromDomain(executionPeriod);
-            
+
             List list = new ArrayList();
             for (int i = 0; i < teachers.size(); i++) {
                 ITeacher teacher = (ITeacher) teachers.get(i);
                 TeacherCreditsDetailsDTO details = new TeacherCreditsDetailsDTO();
                 InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
                 if (teacher.getCategory() != null) {
-                    details.setCategory(InfoCategory.newInfoFromDomain(teacher.getCategory()));    
+                    details.setCategory(InfoCategory.newInfoFromDomain(teacher.getCategory()));
                 }
                 details.setTeacherId(teacher.getIdInternal());
                 details.setTeacherName(teacher.getPerson().getNome());

@@ -17,25 +17,23 @@ import Dominio.finalDegreeWork.IScheduleing;
 
 public interface IPersistentFinalDegreeWork extends IPersistentObject {
 
-	public List readFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
-		throws ExcepcaoPersistencia;
+    public List readFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
+            throws ExcepcaoPersistencia;
 
-	public IScheduleing readFinalDegreeWorkScheduleing(Integer executionDegreeOID)
-		throws ExcepcaoPersistencia;
+    public IScheduleing readFinalDegreeWorkScheduleing(Integer executionDegreeOID)
+            throws ExcepcaoPersistencia;
 
-	public List readFinalDegreeWorkProposalsByTeacher(Integer teacherOID)
-		throws ExcepcaoPersistencia;
+    public List readFinalDegreeWorkProposalsByTeacher(Integer teacherOID) throws ExcepcaoPersistencia;
 
-	public List readAprovedFinalDegreeWorkProposals(Integer executionDegreeOID)
-		throws ExcepcaoPersistencia;
+    public List readAprovedFinalDegreeWorkProposals(Integer executionDegreeOID)
+            throws ExcepcaoPersistencia;
 
-	public List readPublishedFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
-		throws ExcepcaoPersistencia;
+    public List readPublishedFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
+            throws ExcepcaoPersistencia;
 
-	public IGroup readFinalDegreeWorkGroupByUsername(String username)
-		throws ExcepcaoPersistencia;
+    public IGroup readFinalDegreeWorkGroupByUsername(String username) throws ExcepcaoPersistencia;
 
     public IProposal readFinalDegreeWorkAttributedToGroupByTeacher(Integer groupOid)
-    	throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 
 }

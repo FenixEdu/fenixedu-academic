@@ -14,16 +14,14 @@ import Dominio.ITeacher;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 
 /**
  * @author jpvl
  */
-public class TeacherDegreeFinalProjectStudentOJB
-    extends ObjectFenixOJB
-    implements IPersistentTeacherDegreeFinalProjectStudent
-{
+public class TeacherDegreeFinalProjectStudentOJB extends PersistentObjectOJB implements
+        IPersistentTeacherDegreeFinalProjectStudent {
 
     /*
      * (non-Javadoc)
@@ -31,8 +29,7 @@ public class TeacherDegreeFinalProjectStudentOJB
      * @see ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent#readByTeacher(Dominio.ITeacher)
      */
     public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
@@ -44,22 +41,18 @@ public class TeacherDegreeFinalProjectStudentOJB
      * 
      * @see ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent#readByUnique(Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent)
      */
-    public ITeacherDegreeFinalProjectStudent readByUnique(ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent)
-        throws ExcepcaoPersistencia
-    {
+    public ITeacherDegreeFinalProjectStudent readByUnique(
+            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "teacher.idInternal",
-            teacherDegreeFinalProjectStudent.getTeacher().getIdInternal());
-        criteria.addEqualTo(
-            "executionPeriod.idInternal",
-            teacherDegreeFinalProjectStudent.getExecutionPeriod().getIdInternal());
-        criteria.addEqualTo(
-            "student.idInternal",
-            teacherDegreeFinalProjectStudent.getStudent().getIdInternal());
-        return (ITeacherDegreeFinalProjectStudent) queryObject(
-            TeacherDegreeFinalProjectStudent.class,
-            criteria);
+        criteria.addEqualTo("teacher.idInternal", teacherDegreeFinalProjectStudent.getTeacher()
+                .getIdInternal());
+        criteria.addEqualTo("executionPeriod.idInternal", teacherDegreeFinalProjectStudent
+                .getExecutionPeriod().getIdInternal());
+        criteria.addEqualTo("student.idInternal", teacherDegreeFinalProjectStudent.getStudent()
+                .getIdInternal());
+        return (ITeacherDegreeFinalProjectStudent) queryObject(TeacherDegreeFinalProjectStudent.class,
+                criteria);
 
     }
 
@@ -70,8 +63,7 @@ public class TeacherDegreeFinalProjectStudentOJB
      *      Dominio.IExecutionPeriod)
      */
     public List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.idInternal", student.getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
@@ -83,8 +75,7 @@ public class TeacherDegreeFinalProjectStudentOJB
      * 
      * @see ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent#readByExecutionPeriod(Dominio.IExecutionPeriod)
      */
-    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
-    {
+    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         return queryList(TeacherDegreeFinalProjectStudent.class, criteria);

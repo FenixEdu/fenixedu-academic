@@ -5,46 +5,43 @@
  */
 package DataBeans;
 
-
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class InfoSiteCurricularCourse extends DataTranferObject implements ISiteComponent {
 
-	private InfoCurriculum infoCurriculum;
-	private InfoCurricularCourse infoCurricularCourse;
-	
+    private InfoCurriculum infoCurriculum;
 
-	/**
-	 * @return
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    private InfoCurricularCourse infoCurricularCourse;
 
-	/**
-	 * @param infoCurricularCourse
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    /**
+     * @return
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoCurriculum getInfoCurriculum() {
-		return infoCurriculum;
-	}
+    /**
+     * @param infoCurricularCourse
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
-	/**
-	 * @param infoCurriculum
-	 */
-	public void setInfoCurriculum(InfoCurriculum infoCurriculum) {
-		this.infoCurriculum = infoCurriculum;
-	}
+    /**
+     * @return
+     */
+    public InfoCurriculum getInfoCurriculum() {
+        return infoCurriculum;
+    }
 
-	
+    /**
+     * @param infoCurriculum
+     */
+    public void setInfoCurriculum(InfoCurriculum infoCurriculum) {
+        this.infoCurriculum = infoCurriculum;
+    }
 
 }

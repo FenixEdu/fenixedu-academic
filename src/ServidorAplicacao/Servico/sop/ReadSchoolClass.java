@@ -46,14 +46,14 @@ public class ReadSchoolClass implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
-            ITurma schoolClass = (ITurma) persistentSchoolClass.readByOID(
-                    Turma.class, infoSchoolClass.getIdInternal());
+            ITurma schoolClass = (ITurma) persistentSchoolClass.readByOID(Turma.class, infoSchoolClass
+                    .getIdInternal());
             if (schoolClass != null) {
                 result = Cloner.copyClass2InfoClass(schoolClass);
             }
 
         } catch (ExcepcaoPersistencia ex) {
-           throw new FenixServiceException(ex);
+            throw new FenixServiceException(ex);
         }
         return result;
     }

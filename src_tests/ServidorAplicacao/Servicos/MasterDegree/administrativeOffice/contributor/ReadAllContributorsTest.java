@@ -1,4 +1,3 @@
-
 /*
  * CriarSalaServicosTest.java
  * JUnit based test
@@ -9,8 +8,8 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.contributor;
 
 /**
- *
- * @author Nuno Nunes & Joana Mota 
+ * 
+ * @author Nuno Nunes & Joana Mota
  */
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,58 +26,59 @@ import ServidorAplicacao.Servicos.TestCaseServicos;
 import Util.RoleType;
 
 public class ReadAllContributorsTest extends TestCaseServicos {
-	
-	public ReadAllContributorsTest(java.lang.String testName) {
-		super(testName);
-	}
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public ReadAllContributorsTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(ReadAllContributorsTest.class);
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadAllContributorsTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	public void testReadAllContributors() {
-		System.out.println("- Test 1 : Read All Contributors");
-		
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
+    public void testReadAllContributors() {
+        System.out.println("- Test 1 : Read All Contributors");
 
-		List result = null;
-	 
-		 try {
-			 result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllContributors", null);
-		 } catch (FenixServiceException ex) {
-			fail("Fenix Service Exception");
-		 } catch (Exception ex) {
-			fail("Exception");
-		 }
-		 
-		 assertEquals(result.size(), 2);
-		
-	}
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
 
-	private UserView getUserViewToBeTested(String username, boolean withRole) {
-		Collection roles = new ArrayList();
-		InfoRole infoRole = new InfoRole();
-		if (withRole) infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		else infoRole.setRoleType(RoleType.PERSON);
-		roles.add(infoRole);
-		UserView userView = new UserView(username, roles);
-		return userView;
-	}
+        List result = null;
 
+        try {
+            result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllContributors",
+                    null);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception");
+        } catch (Exception ex) {
+            fail("Exception");
+        }
+
+        assertEquals(result.size(), 2);
+
+    }
+
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
+        Collection roles = new ArrayList();
+        InfoRole infoRole = new InfoRole();
+        if (withRole)
+            infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        else
+            infoRole.setRoleType(RoleType.PERSON);
+        roles.add(infoRole);
+        UserView userView = new UserView(username, roles);
+        return userView;
+    }
 
 }

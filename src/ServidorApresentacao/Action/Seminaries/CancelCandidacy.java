@@ -21,43 +21,31 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 25/Ago/2003, 14:36:59
- * 
+ *  
  */
-public class CancelCandidacy extends FenixAction
-{
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+public class CancelCandidacy extends FenixAction {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
         HttpSession session = this.getSession(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String candidacyIDString = request.getParameter("objectCode");
         Integer candidacyID;
         if (candidacyIDString == null)
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
-        try
-        {
+        try {
             candidacyID = new Integer(candidacyIDString);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));
         }
         ActionForward destiny = null;
-        try
-        {
+        try {
             Object[] argsReadSeminary = { candidacyID };
-			ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "Seminaries.DeleteCandidacy",
+            ServiceManagerServiceFactory.executeService(userView, "Seminaries.DeleteCandidacy",
                     argsReadSeminary);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new FenixActionException();
         }
 

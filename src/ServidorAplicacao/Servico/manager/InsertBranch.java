@@ -23,19 +23,15 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * @author lmac1
  */
 
-public class InsertBranch implements IService
-{
+public class InsertBranch implements IService {
 
-    public InsertBranch()
-    {
+    public InsertBranch() {
     }
 
-    public void run(InfoBranch infoBranch) throws FenixServiceException
-    {
+    public void run(InfoBranch infoBranch) throws FenixServiceException {
 
         String code = null;
-        try
-        {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
@@ -58,13 +54,9 @@ public class InsertBranch implements IService
             branch.setName(name);
             branch.setDegreeCurricularPlan(degreeCurricularPlan);
 
-        }
-        catch (ExistingPersistentException existingException)
-        {
+        } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException();
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

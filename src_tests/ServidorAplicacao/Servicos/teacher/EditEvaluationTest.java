@@ -13,63 +13,53 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Ricardo Rodrigues
  *  
  */
-public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
-{
+public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
-	 * @param testName
-	 */
-    public EditEvaluationTest(String testName)
-    {
+     * @param testName
+     */
+    public EditEvaluationTest(String testName) {
         super(testName);
     }
 
     /**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "EditEvaluation";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testEditEvaluationMethodDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath()
-    {
+    protected String getExpectedDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testExpectedEditEvaluationMethodDataSet.xml";
     }
 
-    protected String getExpectedNewCurriculumDataSetFilePath()
-    {
+    protected String getExpectedNewCurriculumDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testExpectedNewCurriculumEvaluatioMethodDataSet.xml";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "julia", "pass", getApplication()};
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "fiado", "pass", getApplication()};
+        String[] args = { "fiado", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
 
         Integer executionCourseCode = new Integer(24);
         Integer curricularCourseCode = new Integer(14);
@@ -83,8 +73,7 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
         return args;
     }
 
-    protected Object[] getTestEvaluationMethodSuccessfullArguments()
-    {
+    protected Object[] getTestEvaluationMethodSuccessfullArguments() {
 
         Integer executionCourseCode = new Integer(24);
         Integer curricularCourseCode = new Integer(14);
@@ -98,8 +87,7 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
         return args;
     }
 
-    protected Object[] getTestEvaluationMethodUnsuccessfullArguments()
-    {
+    protected Object[] getTestEvaluationMethodUnsuccessfullArguments() {
 
         Integer executionCourseCode = new Integer(24);
         Integer curricularCourseCode = new Integer(123);
@@ -112,8 +100,7 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
         return args;
     }
 
-    protected Object[] getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments()
-    {
+    protected Object[] getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments() {
 
         Integer executionCourseCode = new Integer(26);
         Integer curricularCourseCode = new Integer(16);
@@ -126,77 +113,64 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testEditEvaluationMethod()
-    {
+    public void testEditEvaluationMethod() {
 
-        try
-        {
+        try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args);
 
-            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
 
             // verificar as alteracoes da bd
             compareDataSet(getExpectedDataSetFilePath());
 
-        } catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("EditEvaluationTest" + ex);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("EditEvaluationTest error on compareDataSet" + ex);
         }
     }
 
-    public void testEditEvaluationMethodWithNoCurriculum()
-    {
+    public void testEditEvaluationMethodWithNoCurriculum() {
 
         System.out.println("Starting: testSuccessfullEditEvaluationMethodWithNoCurriculum");
-        try
-        {
+        try {
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args);
 
-            ServiceManagerServiceFactory.executeService(
-                userView,
-                getNameOfServiceToBeTested(),
-                getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
 
             // verificar as alteracoes da bd
             compareDataSet(getExpectedNewCurriculumDataSetFilePath());
 
             System.out.println("Finished: testSuccessfullEditEvaluationMethodWithNoCurriculum");
-        } catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("EditEvaluationTest" + ex);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("EditEvaluationTest error on compareDataSet" + ex);
         }
     }
 
-    public void testEvaluationMethodNotBelongsExecutionCourse()
-    {
+    public void testEvaluationMethodNotBelongsExecutionCourse() {
 
         Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
 
-        try
-        {
-            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArguments);
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    serviceArguments);
             fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
-        } catch (NotAuthorizedException ex)
-        {
+        } catch (NotAuthorizedException ex) {
 
-            System.out.println(
-                "testEvaluationMethodNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
-                    + getNameOfServiceToBeTested());
-        } catch (Exception ex)
-        {
+            System.out
+                    .println("testEvaluationMethodNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (Exception ex) {
             fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
         }
     }

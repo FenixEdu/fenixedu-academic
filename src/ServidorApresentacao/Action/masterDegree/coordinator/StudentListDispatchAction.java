@@ -1,4 +1,3 @@
-
 package ServidorApresentacao.Action.masterDegree.coordinator;
 
 import java.util.Collections;
@@ -14,8 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
@@ -26,6 +23,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -33,98 +31,102 @@ import Util.TipoCurso;
  */
 
 public class StudentListDispatchAction extends DispatchAction {
-	
-	public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form,
-												HttpServletRequest request,
-												HttpServletResponse response)
-		throws Exception {
 
-		HttpSession session = request.getSession(false);
+    public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		if (session != null) {
+        HttpSession session = request.getSession(false);
 
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-	
-			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+        if (session != null) {
 
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-			infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan(); 
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			Integer id = infoDegreeCurricularPlan.getIdInternal();
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+                    .getAttribute(SessionConstants.MASTER_DEGREE);
 
-			List result = null;
-	
-			try {
-				Object args[] = { id , TipoCurso.MESTRADO_OBJ };
-				result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsFromDegreeCurricularPlan", args);
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+            infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
 
-			} catch (NotAuthorizedException e) {
-				return mapping.findForward("NotAuthorized");
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException("error.exception.noStudents", "");
-			}
+            Integer id = infoDegreeCurricularPlan.getIdInternal();
 
-			BeanComparator numberComparator = new BeanComparator("infoStudent.number");
-			Collections.sort(result, numberComparator);
+            List result = null;
 
-			request.setAttribute(SessionConstants.STUDENT_LIST, result);
-			
-			InfoExecutionDegree infoExecutionDegreeForRequest = null;
-			try {
-				Object args[] = { id };
-				infoExecutionDegreeForRequest = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByDCPID", args);
-			} catch (NonExistingServiceException e) {
-				
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}	
-			
-			if (infoExecutionDegreeForRequest != null){
-				request.setAttribute("infoExecutionDegree", infoExecutionDegreeForRequest);
-			}
-			
-			
-			return mapping.findForward("PrepareSuccess");
-		} 
-		  throw new Exception();   
-  }
-  
-  public ActionForward getCurricularCourses(ActionMapping mapping, ActionForm form,
-											  HttpServletRequest request,
-											  HttpServletResponse response)
-	  throws Exception {
+            try {
+                Object args[] = { id, TipoCurso.MESTRADO_OBJ };
+                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadStudentsFromDegreeCurricularPlan", args);
 
-	  HttpSession session = request.getSession(false);
-	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            } catch (NotAuthorizedException e) {
+                return mapping.findForward("NotAuthorized");
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException("error.exception.noStudents", "");
+            }
 
-	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+            BeanComparator numberComparator = new BeanComparator("infoStudent.number");
+            Collections.sort(result, numberComparator);
 
-	  Object args[] = { infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree.getInfoDegreeCurricularPlan().getName() };
-	  List result = null;
+            request.setAttribute(SessionConstants.STUDENT_LIST, result);
 
-	  try {
+            InfoExecutionDegree infoExecutionDegreeForRequest = null;
+            try {
+                Object args[] = { id };
+                infoExecutionDegreeForRequest = (InfoExecutionDegree) ServiceManagerServiceFactory
+                        .executeService(userView, "ReadExecutionDegreeByDCPID", args);
+            } catch (NonExistingServiceException e) {
 
-	  result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCoursesByDegree", args);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
 
-	  } catch (NonExistingServiceException e) 
-	  {
-		  throw new NonExistingActionException("error.exception.noStudents", "");
-	  }catch (FenixServiceException e) 
-	  {
-		  throw new FenixActionException();
-	  }
+            if (infoExecutionDegreeForRequest != null) {
+                request.setAttribute("infoExecutionDegree", infoExecutionDegreeForRequest);
+            }
 
-	  BeanComparator nameComparator = new BeanComparator("name");
-      Collections.sort(result, nameComparator);
+            String value = (String) request.getParameter("viewPhoto");
+            if (value != null && value.equals("true")) {
+                request.setAttribute("viewPhoto", Boolean.TRUE);
+            } else {
+                request.setAttribute("viewPhoto", Boolean.FALSE);
+            }
 
+            return mapping.findForward("PrepareSuccess");
+        }
+        throw new Exception();
+    }
 
+    public ActionForward getCurricularCourses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-	  request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
-	  request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+                .getAttribute(SessionConstants.MASTER_DEGREE);
 
-	  request.setAttribute("curricularCourses", result);
-	  
-	  return mapping.findForward("ShowCourseList");
-	}
+        Object args[] = { infoExecutionDegree.getInfoExecutionYear().getYear(),
+                infoExecutionDegree.getInfoDegreeCurricularPlan().getName() };
+        List result = null;
+
+        try {
+
+            result = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadCurricularCoursesByDegree", args);
+
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("error.exception.noStudents", "");
+        } catch (FenixServiceException e) {
+            throw new FenixActionException();
+        }
+
+        BeanComparator nameComparator = new BeanComparator("name");
+        Collections.sort(result, nameComparator);
+
+        request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
+        request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+                .getNome());
+
+        request.setAttribute("curricularCourses", result);
+
+        return mapping.findForward("ShowCourseList");
+    }
 }

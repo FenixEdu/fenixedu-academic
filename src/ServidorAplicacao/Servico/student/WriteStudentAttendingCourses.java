@@ -34,8 +34,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @version 1.0
  */
 public class WriteStudentAttendingCourses implements IService {
-    public class AlreadyEnroledInGroupServiceException extends
-            FenixServiceException {
+    public class AlreadyEnroledInGroupServiceException extends FenixServiceException {
     }
 
     public class AlreadyEnroledServiceException extends FenixServiceException {
@@ -66,10 +65,8 @@ public class WriteStudentAttendingCourses implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IFrequentaPersistente persistentAttend = sp
-                    .getIFrequentaPersistente();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
             if (infoStudent == null) {
                 return new Boolean(false);
@@ -78,13 +75,11 @@ public class WriteStudentAttendingCourses implements IService {
                 infoExecutionCourseIds = new ArrayList();
             }
 
-            IStudent student = persistentStudent
-                    .readStudentByNumberAndDegreeType(infoStudent.getNumber(),
-                            infoStudent.getDegreeType());
+            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(infoStudent
+                    .getNumber(), infoStudent.getDegreeType());
 
             //Read every course the student attends to:
-            List attends = persistentAttend.readByStudentNumber(student
-                    .getNumber());
+            List attends = persistentAttend.readByStudentNumber(student.getNumber());
 
             List attendingCourses = getExecutionCoursesFromAttends(attends);
 
@@ -99,18 +94,18 @@ public class WriteStudentAttendingCourses implements IService {
                 if (executionCourse == null) {
 
                     throw new FenixServiceException("nullExecutionCourseId");
-                } 
-                    wantedAttendingCourses.add(executionCourse);
-                
+                }
+                wantedAttendingCourses.add(executionCourse);
+
             }
 
             //Delete all courses the student is currently attending to that
             // he/she doesn't want to:
             //attendings to remove :
-            List attendsToRemove = (List) CollectionUtils.subtract(
-                    attendingCourses, wantedAttendingCourses);
-            List attendingCoursesToAdd = (List) CollectionUtils.subtract(
-                    wantedAttendingCourses, attendingCourses);
+            List attendsToRemove = (List) CollectionUtils.subtract(attendingCourses,
+                    wantedAttendingCourses);
+            List attendingCoursesToAdd = (List) CollectionUtils.subtract(wantedAttendingCourses,
+                    attendingCourses);
             if (attendsToRemove != null && !attendsToRemove.isEmpty()) {
                 deleteAttends(attendsToRemove, student, sp, persistentAttend);
             }
@@ -120,9 +115,8 @@ public class WriteStudentAttendingCourses implements IService {
             while (i.hasNext()) {
                 IExecutionCourse executionCourse = (IExecutionCourse) i.next();
 
-                IFrequenta attendsEntry = persistentAttend
-                        .readByAlunoAndDisciplinaExecucao(student,
-                                executionCourse);
+                IFrequenta attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
+                        executionCourse);
                 if (attendsEntry == null) {
                     attendsEntry = new Frequenta();
                     persistentAttend.simpleLockWrite(attendsEntry);
@@ -151,24 +145,18 @@ public class WriteStudentAttendingCourses implements IService {
         return executionCourses;
     }
 
-    private void deleteAttends(List attendingCoursesToRemove, IStudent student,
-            ISuportePersistente sp, IFrequentaPersistente persistentAttends)
-            throws FenixServiceException {
+    private void deleteAttends(List attendingCoursesToRemove, IStudent student, ISuportePersistente sp,
+            IFrequentaPersistente persistentAttends) throws FenixServiceException {
         try {
-            ITurnoAlunoPersistente persistentShiftStudent = sp
-                    .getITurnoAlunoPersistente();
-            IPersistentStudentGroupAttend studentGroupAttendDAO = sp
-                    .getIPersistentStudentGroupAttend();
+            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+            IPersistentStudentGroupAttend studentGroupAttendDAO = sp.getIPersistentStudentGroupAttend();
 
             Iterator iterator = attendingCoursesToRemove.iterator();
             while (iterator.hasNext()) {
-                IExecutionCourse executionCourse = (IExecutionCourse) iterator
-                        .next();
-                IFrequenta attend = persistentAttends
-                        .readByAlunoAndDisciplinaExecucao(student,
-                                executionCourse);
-                IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO
-                        .readBy(attend);
+                IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
+                IFrequenta attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
+                        executionCourse);
+                IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
 
                 if (studentGroupAttend != null) {
                     throw new AlreadyEnroledInGroupServiceException();
@@ -181,14 +169,12 @@ public class WriteStudentAttendingCourses implements IService {
 
                     //NOTE: attends that are linked to enrollments are not
                     // deleted
-                    List shiftAttendsToDelete = persistentShiftStudent
-                            .readByStudentAndExecutionCourse(student,
-                                    executionCourse);
+                    List shiftAttendsToDelete = persistentShiftStudent.readByStudentAndExecutionCourse(
+                            student, executionCourse);
                     if (shiftAttendsToDelete != null) {
                         Iterator iter = shiftAttendsToDelete.iterator();
                         while (iter.hasNext()) {
-                            persistentShiftStudent.delete((ITurnoAluno) iter
-                                    .next());
+                            persistentShiftStudent.delete((ITurnoAluno) iter.next());
                         }
                     }
                     persistentAttends.delete(attend);

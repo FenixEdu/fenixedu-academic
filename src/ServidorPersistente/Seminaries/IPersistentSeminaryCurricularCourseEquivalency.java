@@ -13,13 +13,13 @@ import ServidorPersistente.IPersistentObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 4/Ago/2003, 13:12:10
- * 
+ *  
  */
-public interface IPersistentSeminaryCurricularCourseEquivalency extends IPersistentObject
-{
+public interface IPersistentSeminaryCurricularCourseEquivalency extends IPersistentObject {
     public List readAll() throws ExcepcaoPersistencia;
+
     public void delete(ICourseEquivalency courseEquivalency) throws ExcepcaoPersistencia;
 }

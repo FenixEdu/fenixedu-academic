@@ -6,7 +6,7 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class EditWorkLocationTest extends ServiceTestCase {
@@ -35,17 +35,15 @@ public class EditWorkLocationTest extends ServiceTestCase {
         return "EditWorkLocation";
     }
 
-    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
-            throws FenixServiceException {
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException {
 
-        Object args[] = { new Integer(21), "Some name"};
+        Object args[] = { new Integer(21), "Some name" };
 
         return args;
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser()
-            throws FenixServiceException {
-        Object args[] = { new Integer(21), "Some name"};
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+        Object args[] = { new Integer(21), "Some name" };
 
         return args;
     }
@@ -53,10 +51,9 @@ public class EditWorkLocationTest extends ServiceTestCase {
     public void testSuccessfullEdit() {
         try {
 
-            Object[] args = { new Integer(21), "Some cool name"};
+            Object[] args = { new Integer(21), "Some cool name" };
 
-            ServiceManagerServiceFactory.executeService(null,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/commons/workLocation/testExpectedEditWorkLocationSucessfullEditingDataSet.xml");
 
@@ -71,10 +68,9 @@ public class EditWorkLocationTest extends ServiceTestCase {
     public void testChangeToExistingWorkLocation() {
         try {
 
-            Object[] args = { new Integer(21), "INSTITUTO DE TELECOMUNICAÇÕES"};
+            Object[] args = { new Integer(21), "INSTITUTO DE TELECOMUNICAÇÕES" };
 
-            ServiceManagerServiceFactory.executeService(null,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
 
             fail("testChangeToExistingWorkLocation did not throw ExistingServiceException");
 

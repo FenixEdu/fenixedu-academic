@@ -17,33 +17,31 @@ import ServidorPersistente.middleware.Utils.LessonTypeUtils;
  */
 public class TransformerMigrationShift2Shift implements Transformer {
 
-	/* (non-Javadoc)
-	 * @see org.apache.commons.collections.Transformer#transform(java.lang.Object)
-	 */
-	public Object transform(Object obj) {
-		ITurno shift = null;
-		if (obj != null) {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.commons.collections.Transformer#transform(java.lang.Object)
+     */
+    public Object transform(Object obj) {
+        ITurno shift = null;
+        if (obj != null) {
 
-			MigrationShift migrationShift = (MigrationShift) obj;
+            MigrationShift migrationShift = (MigrationShift) obj;
 
-			if (migrationShift.getShift() == null) {
-				shift = new Turno();
-				TransformerMigrationExecutionCourse2ExecutionCourse transf =
-					new TransformerMigrationExecutionCourse2ExecutionCourse();
-				shift.setNome(migrationShift.getShiftName());
-				shift.setLotacao(migrationShift.getCapacity());
-				shift.setTipo(
-					LessonTypeUtils.convertLessonType(
-						migrationShift.getType()));
-				IExecutionCourse executionCourse =
-					(IExecutionCourse) transf.transform(
-						migrationShift.getMigrationExecutionCourse());
-				shift.setDisciplinaExecucao(executionCourse);
-				migrationShift.setShift(shift);
-			} else {
-				shift = migrationShift.getShift();
-			}
-		}
-		return shift;
-	}
+            if (migrationShift.getShift() == null) {
+                shift = new Turno();
+                TransformerMigrationExecutionCourse2ExecutionCourse transf = new TransformerMigrationExecutionCourse2ExecutionCourse();
+                shift.setNome(migrationShift.getShiftName());
+                shift.setLotacao(migrationShift.getCapacity());
+                shift.setTipo(LessonTypeUtils.convertLessonType(migrationShift.getType()));
+                IExecutionCourse executionCourse = (IExecutionCourse) transf.transform(migrationShift
+                        .getMigrationExecutionCourse());
+                shift.setDisciplinaExecucao(executionCourse);
+                migrationShift.setShift(shift);
+            } else {
+                shift = migrationShift.getShift();
+            }
+        }
+        return shift;
+    }
 }

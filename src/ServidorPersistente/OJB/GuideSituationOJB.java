@@ -15,15 +15,12 @@ import Util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GuideSituationOJB extends ObjectFenixOJB implements IPersistentGuideSituation
-{
+public class GuideSituationOJB extends PersistentObjectOJB implements IPersistentGuideSituation {
 
-    public GuideSituationOJB()
-    {
+    public GuideSituationOJB() {
     }
 
-    public List readByGuide(IGuide guide) throws ExcepcaoPersistencia
-    {
+    public List readByGuide(IGuide guide) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("guide.number", guide.getNumber());
         crit.addEqualTo("guide.year", guide.getYear());
@@ -31,8 +28,7 @@ public class GuideSituationOJB extends ObjectFenixOJB implements IPersistentGuid
 
     }
 
-    public IGuideSituation readGuideActiveSituation(IGuide guide) throws ExcepcaoPersistencia
-    {
+    public IGuideSituation readGuideActiveSituation(IGuide guide) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("guide.number", guide.getNumber());
         crit.addEqualTo("guide.year", guide.getYear());
@@ -41,8 +37,7 @@ public class GuideSituationOJB extends ObjectFenixOJB implements IPersistentGuid
     }
 
     public IGuideSituation readByGuideAndSituation(IGuide guide, SituationOfGuide situationOfGuide)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("guide.number", guide.getNumber());
         crit.addEqualTo("guide.year", guide.getYear());

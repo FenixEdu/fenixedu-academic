@@ -10,26 +10,22 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentWebSite;
 
 /**
- * @author  Fernanda Quitério
- * 23/09/2003
- * 
+ * @author Fernanda Quitério 23/09/2003
+ *  
  */
-public class WebSiteOJB extends ObjectFenixOJB implements IPersistentWebSite {
+public class WebSiteOJB extends PersistentObjectOJB implements IPersistentWebSite {
 
-	/** Creates a new instance of SitioOJB */
-	public WebSiteOJB() {
-	}
-	
-	public List readAll() throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		return queryList(WebSite.class,crit);
-	}
+    /** Creates a new instance of SitioOJB */
+    public WebSiteOJB() {
+    }
 
-	
+    public List readAll() throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        return queryList(WebSite.class, crit);
+    }
 
-	public void delete(IWebSite site) throws ExcepcaoPersistencia {
-		super.delete(site);
-	}
+    public void delete(IWebSite site) throws ExcepcaoPersistencia {
+        super.delete(site);
+    }
 
-	
 }

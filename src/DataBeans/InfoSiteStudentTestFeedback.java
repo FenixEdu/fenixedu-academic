@@ -8,14 +8,15 @@ import java.util.List;
 /**
  * @author Susana Fernandes
  */
-public class InfoSiteStudentTestFeedback extends DataTranferObject implements
-        ISiteComponent {
+public class InfoSiteStudentTestFeedback extends DataTranferObject implements ISiteComponent {
 
     private Integer responseNumber;
 
     private Integer notResponseNumber;
 
     private List errors;
+
+    private List infoStudentTestQuestionList;
 
     public InfoSiteStudentTestFeedback() {
     }
@@ -42,5 +43,13 @@ public class InfoSiteStudentTestFeedback extends DataTranferObject implements
 
     public void setResponseNumber(Integer responseNumber) {
         this.responseNumber = responseNumber;
+    }
+
+    public List getInfoStudentTestQuestionList() {
+        return infoStudentTestQuestionList;
+    }
+
+    public void setInfoStudentTestQuestionList(List infoStudentTestQuestionList) {
+        this.infoStudentTestQuestionList = infoStudentTestQuestionList;
     }
 }

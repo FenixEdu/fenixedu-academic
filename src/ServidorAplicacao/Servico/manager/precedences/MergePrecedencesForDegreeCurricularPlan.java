@@ -27,13 +27,15 @@ public class MergePrecedencesForDegreeCurricularPlan implements IService {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-            
-            IPrecedence firstPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class, firstPrecedenceID);
-            IPrecedence secondPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class, secondPrecedenceID);
+
+            IPrecedence firstPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
+                    firstPrecedenceID);
+            IPrecedence secondPrecedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
+                    secondPrecedenceID);
 
             List restrictions = secondPrecedence.getRestrictions();
             int size = restrictions.size();
-            
+
             for (int i = 0; i < size; i++) {
                 IRestriction restriction = (IRestriction) restrictions.get(i);
                 precedenceDAO.simpleLockWrite(restriction);

@@ -123,8 +123,12 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 
             InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
                     "ReadDepartmentByUser", args);
-            request.setAttribute("isDepartmentManager", Boolean.valueOf(userDepartment
-                    .equals(teacherDepartment)));
+            if (userDepartment != null) {
+                request.setAttribute("isDepartmentManager", Boolean.valueOf(userDepartment
+                        .equals(teacherDepartment)));
+            } else {
+                request.setAttribute("isDepartmentManager", Boolean.FALSE);
+            }
         } else {
             request.setAttribute("isDepartmentManager", Boolean.FALSE);
         }

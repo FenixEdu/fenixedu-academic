@@ -22,8 +22,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class ReadTeacherOtherTypeCreditLinesAction extends Action
-{
+public class ReadTeacherOtherTypeCreditLinesAction extends Action {
 
     /*
      * (non-Javadoc)
@@ -33,23 +32,15 @@ public class ReadTeacherOtherTypeCreditLinesAction extends Action
      *      javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer executionPeriodId = (Integer) dynaForm.get("executionPeriodId");
         Object args[] = { infoTeacher.getIdInternal(), executionPeriodId };
-        TeacherOtherTypeCreditLineDTO dto =
-            (TeacherOtherTypeCreditLineDTO) ServiceUtils.executeService(
-                userView,
-                "ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService",
-                args);
+        TeacherOtherTypeCreditLineDTO dto = (TeacherOtherTypeCreditLineDTO) ServiceUtils.executeService(
+                userView, "ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService", args);
         request.setAttribute("dto", dto);
         return mapping.findForward("successfull-read");
     }

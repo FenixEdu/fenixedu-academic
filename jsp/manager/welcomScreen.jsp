@@ -1,1 +1,1 @@
-Bem vindo &agrave p&aacutegina de Ger&ecircncia
+Bem vindo &agrave; p&aacute;gina de Ger&ecirc;ncia

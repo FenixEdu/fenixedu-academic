@@ -8,24 +8,24 @@ import Dominio.credits.event.CreditsEvent;
 /**
  * @author jpvl
  */
-public class ManagementPositionCreditLine extends DatePeriodBaseCreditLine implements IManagementPositionCreditLine
-{
+public class ManagementPositionCreditLine extends DatePeriodBaseCreditLine implements
+        IManagementPositionCreditLine {
     private String position;
+
     private Double credits;
-    
+
     /**
      * @return Returns the position.
      */
-    public String getPosition()
-    {
+    public String getPosition() {
         return position;
     }
 
     /**
-     * @param position The position to set.
+     * @param position
+     *            The position to set.
      */
-    public void setPosition(String position)
-    {
+    public void setPosition(String position) {
         this.position = position;
     }
 
@@ -35,14 +35,18 @@ public class ManagementPositionCreditLine extends DatePeriodBaseCreditLine imple
     public Double getCredits() {
         return credits;
     }
+
     /**
-     * @param credits The credits to set.
+     * @param credits
+     *            The credits to set.
      */
     public void setCredits(Double credits) {
         this.credits = credits;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see Dominio.credits.CreditLine#getCreditEventGenerated()
      */
     protected CreditsEvent getCreditEventGenerated() {

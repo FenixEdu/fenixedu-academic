@@ -1,63 +1,62 @@
 package Util;
 
-
-
 /**
  * @author dcs-rjao
- *
+ * 
  * 19/Mar/2003
  */
 
 public class EnrolmentEquivalenceType extends FenixUtil {
 
-	public static final int EQUIVALENT_COURSE = 1;
-	
-	public static final EnrolmentEquivalenceType EQUIVALENT_COURSE_OBJ = new EnrolmentEquivalenceType(EnrolmentEquivalenceType.EQUIVALENT_COURSE);
+    public static final int EQUIVALENT_COURSE = 1;
 
-	private Integer type;
+    public static final EnrolmentEquivalenceType EQUIVALENT_COURSE_OBJ = new EnrolmentEquivalenceType(
+            EnrolmentEquivalenceType.EQUIVALENT_COURSE);
 
-	public EnrolmentEquivalenceType() {
-	}
+    private Integer type;
 
-	public EnrolmentEquivalenceType(int type) {
-		this.type = new Integer(type);
-	}
+    public EnrolmentEquivalenceType() {
+    }
 
-	public EnrolmentEquivalenceType(Integer type) {
-		this.type = type;
-	}
+    public EnrolmentEquivalenceType(int type) {
+        this.type = new Integer(type);
+    }
 
-	public Integer getEquivalenceType() {
-		return this.type;
-	}
+    public EnrolmentEquivalenceType(Integer type) {
+        this.type = type;
+    }
 
-	public void setEquivalenceType(Integer type) {
-		this.type = type;
-	}
+    public Integer getEquivalenceType() {
+        return this.type;
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof EnrolmentEquivalenceType) {
-			EnrolmentEquivalenceType ds = (EnrolmentEquivalenceType) obj;
-			resultado = this.getEquivalenceType().equals(ds.getEquivalenceType());
-		}
-		return resultado;
-	}
+    public void setEquivalenceType(Integer type) {
+        this.type = type;
+    }
 
-	public String toString() {
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof EnrolmentEquivalenceType) {
+            EnrolmentEquivalenceType ds = (EnrolmentEquivalenceType) obj;
+            resultado = this.getEquivalenceType().equals(ds.getEquivalenceType());
+        }
+        return resultado;
+    }
 
-		int value = this.type.intValue();
-		String valueS = null;
+    public String toString() {
 
-		switch (value) {
-			case EQUIVALENT_COURSE :
-				valueS = "EQUIVALENT_COURSE";
-				break;
-			default:
-				break;
-		}
+        int value = this.type.intValue();
+        String valueS = null;
 
-		return "[" + this.getClass().getName() + ": " + valueS + "]";
-	}
+        switch (value) {
+        case EQUIVALENT_COURSE:
+            valueS = "EQUIVALENT_COURSE";
+            break;
+        default:
+            break;
+        }
+
+        return "[" + this.getClass().getName() + ": " + valueS + "]";
+    }
 
 }

@@ -9,7 +9,7 @@ import ServidorAplicacao.Servico.coordinator.ReadDegreeCurricularPlanBaseService
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -42,14 +42,13 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode extends
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             if (executionDegreeCode == null) {
                 throw new FenixServiceException("nullDegree");
             }
 
-            executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, executionDegreeCode);
+            executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(CursoExecucao.class,
+                    executionDegreeCode);
 
             if (executionDegree == null) {
                 throw new NonExistingServiceException();
@@ -58,8 +57,7 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode extends
 
             throw new FenixServiceException("Problems on database!");
         }
-        IDegreeCurricularPlan degreeCurricularPlan = executionDegree
-                .getCurricularPlan();
+        IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
         return super.readActiveCurricularCourseScopes(degreeCurricularPlan, sp);
 
     }

@@ -18,33 +18,25 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author João Mota
  */
-public class ReadNotClosedPublicExecutionPeriods implements IService
-{
+public class ReadNotClosedPublicExecutionPeriods implements IService {
 
-    public List run() throws FenixServiceException
-    {
+    public List run() throws FenixServiceException {
 
         List result = new ArrayList();
-        try
-        {
+        List executionPeriods = new ArrayList();
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod executionPeriodDAO = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-            List executionPeriods = executionPeriodDAO
-                    .readNotClosedPublicExecutionPeriods();
+            executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriods();
 
-            if (executionPeriods != null)
-            {
-                for (int i = 0; i < executionPeriods.size(); i++)
-                {
-                    result.add(Cloner.get((IExecutionPeriod) executionPeriods
-                            .get(i)));
+            if (executionPeriods != null) {
+                for (int i = 0; i < executionPeriods.size(); i++) {
+                    result.add(Cloner.get((IExecutionPeriod) executionPeriods.get(i)));
                 }
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
+
             throw new FenixServiceException(ex);
         }
 

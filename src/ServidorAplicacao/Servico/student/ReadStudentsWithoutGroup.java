@@ -63,8 +63,7 @@ public class ReadStudentsWithoutGroup implements IServico {
      * Executes the service.
      */
 
-    public ISiteComponent run(Integer groupPropertiesCode, String username)
-            throws FenixServiceException {
+    public ISiteComponent run(Integer groupPropertiesCode, String username) throws FenixServiceException {
 
         List frequentas = new ArrayList();
         IStudent userStudent = null;
@@ -74,24 +73,20 @@ public class ReadStudentsWithoutGroup implements IServico {
 
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = ps.getIPersistentStudent();
-            IFrequentaPersistente persistentAttend = ps
-                    .getIFrequentaPersistente();
-            IPersistentStudentGroup persistentStudentGroup = ps
-                    .getIPersistentStudentGroup();
+            IFrequentaPersistente persistentAttend = ps.getIFrequentaPersistente();
+            IPersistentStudentGroup persistentStudentGroup = ps.getIPersistentStudentGroup();
             IPersistentStudentGroupAttend persistentStudentGroupAttend = ps
                     .getIPersistentStudentGroupAttend();
 
-            IGroupProperties groupProperties = (IGroupProperties) ps
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+            IGroupProperties groupProperties = (IGroupProperties) ps.getIPersistentGroupProperties()
+                    .readByOID(GroupProperties.class, groupPropertiesCode);
 
             List allStudentGroup = new ArrayList();
             allStudentGroup = persistentStudentGroup
                     .readAllStudentGroupByGroupProperties(groupProperties);
             Integer groupNumber = new Integer(1);
             if (allStudentGroup.size() != 0) {
-                Collections.sort(allStudentGroup, new BeanComparator(
-                        "groupNumber"));
+                Collections.sort(allStudentGroup, new BeanComparator("groupNumber"));
                 Integer lastGroupNumber = ((IStudentGroup) allStudentGroup
                         .get(allStudentGroup.size() - 1)).getGroupNumber();
                 groupNumber = new Integer(lastGroupNumber.intValue() + 1);
@@ -99,21 +94,18 @@ public class ReadStudentsWithoutGroup implements IServico {
             }
 
             IStudentGroup newStudentGroup = persistentStudentGroup
-                    .readStudentGroupByGroupPropertiesAndGroupNumber(
-                            groupProperties, groupNumber);
+                    .readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties, groupNumber);
 
             if (newStudentGroup != null)
                 throw new FenixServiceException();
 
             infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
 
-            if (groupProperties.getEnrolmentPolicy().equals(
-                    new EnrolmentGroupPolicyType(2))) {
+            if (groupProperties.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(2))) {
                 return infoSiteStudentsWithoutGroup;
             }
 
-            frequentas = persistentAttend.readByExecutionCourse(groupProperties
-                    .getExecutionCourse());
+            frequentas = persistentAttend.readByExecutionCourse(groupProperties.getExecutionCourse());
 
             List allStudentsGroups = persistentStudentGroup
                     .readAllStudentGroupByGroupProperties(groupProperties);
@@ -140,8 +132,7 @@ public class ReadStudentsWithoutGroup implements IServico {
             while (iterStudent.hasNext()) {
                 student = ((IFrequenta) iterStudent.next()).getAluno();
                 if (!student.equals(userStudent))
-                    infoStudentList.add(Cloner
-                            .copyIStudent2InfoStudent(student));
+                    infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
             }
 
             infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);

@@ -15,7 +15,7 @@
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId" />
 
 <html:form action="/makeSimplePrecedence.do">
-	<html:hidden property="page" value="0" />
+	<html:hidden property="page" value="1" />
 	<html:hidden property="method" value="insertRestriction" />
 	<html:hidden property="className" value="<%= request.getAttribute("className").toString() %>" />	
 	<html:hidden property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />

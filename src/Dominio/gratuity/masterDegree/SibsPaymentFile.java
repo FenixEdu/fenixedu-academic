@@ -8,8 +8,8 @@ import java.util.List;
 import Dominio.DomainObject;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
- * 		   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
  */
 public class SibsPaymentFile extends DomainObject implements ISibsPaymentFile {
 
@@ -36,7 +36,8 @@ public class SibsPaymentFile extends DomainObject implements ISibsPaymentFile {
     }
 
     /**
-     * @param sibsFileEntries The sibsFileEntries to set.
+     * @param sibsFileEntries
+     *            The sibsFileEntries to set.
      */
     public void setSibsPaymentFileEntries(List sibsPaymentFileEntries) {
         this.sibsPaymentFileEntries = sibsPaymentFileEntries;
@@ -50,7 +51,8 @@ public class SibsPaymentFile extends DomainObject implements ISibsPaymentFile {
     }
 
     /**
-     * @param filename The filename to set.
+     * @param filename
+     *            The filename to set.
      */
     public void setFilename(String filename) {
         this.filename = filename;
@@ -61,8 +63,7 @@ public class SibsPaymentFile extends DomainObject implements ISibsPaymentFile {
 
         if ((obj instanceof ISibsPaymentFile)) {
             ISibsPaymentFile sibsFile = (ISibsPaymentFile) obj;
-            if ((sibsFile.getFilename() != null)
-                    && (this.filename.equals(sibsFile.getFilename()))) {
+            if ((sibsFile.getFilename() != null) && (this.filename.equals(sibsFile.getFilename()))) {
                 result = true;
             }
         }

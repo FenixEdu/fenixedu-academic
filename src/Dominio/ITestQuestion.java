@@ -8,8 +8,7 @@ import Util.tests.CorrectionFormula;
 /**
  * @author Susana Fernandes
  */
-public interface ITestQuestion extends IDomainObject
-{
+public interface ITestQuestion extends IDomainObject {
 
     public abstract Integer getKeyQuestion();
 

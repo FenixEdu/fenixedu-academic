@@ -72,7 +72,33 @@
           <tr>
             <td width="30%"><bean:message key="label.person.email" /></td>
             <td class="greytxt"><bean:write name="personalInfo" property="email"/></td>
-          </tr>                  
+          </tr>         
+          <!-- CellPhone -->
+          <tr>
+            <td width="30%"><bean:message key="label.person.mobilePhone" /></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="telemovel"/></td>
+          </tr> 
+          <!-- Address -->
+          <tr>
+            <td width="30%"><bean:message key="label.person.address" /></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="morada"/></td>
+          </tr>     
+          <!-- Area Code -->
+          <tr>
+            <td width="30%"><bean:message key="label.person.postCode" /></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="codigoPostal"/></td>
+          </tr>
+          <!-- Area of Area Code -->
+          <tr>
+            <td width="30%"><bean:message key="label.person.areaOfPostCode" /></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="localidadeCodigoPostal"/></td>
+          </tr>
+          <!-- Area -->
+          <tr>
+            <td width="30%"><bean:message key="label.person.place" /></td>
+            <td class="greytxt"><bean:write name="personalInfo" property="localidade"/></td>
+          </tr>
+               
     	</table>
     	<br />
 	<br />

@@ -20,6 +20,7 @@ public class Period extends DomainObject implements IPeriod {
     protected Calendar endDate;
 
     protected List roomOccupations;
+
     protected IPeriod nextPeriod;
 
     private Integer keyPeriod;
@@ -67,8 +68,7 @@ public class Period extends DomainObject implements IPeriod {
     public boolean equals(Object obj) {
         if (obj instanceof IPeriod) {
             IPeriod periodObj = (IPeriod) obj;
-            if (startDate.equals(periodObj.getStartDate())
-                    && endDate.equals(periodObj.getEndDate())) {
+            if (startDate.equals(periodObj.getStartDate()) && endDate.equals(periodObj.getEndDate())) {
                 return true;
             }
 

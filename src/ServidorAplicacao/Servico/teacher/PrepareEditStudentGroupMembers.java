@@ -19,8 +19,8 @@ import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
@@ -59,8 +59,7 @@ public class PrepareEditStudentGroupMembers implements IServico {
      * Executes the service.
      */
 
-    public List run(Integer executionCourseCode, Integer studentGroupCode)
-            throws FenixServiceException {
+    public List run(Integer executionCourseCode, Integer studentGroupCode) throws FenixServiceException {
 
         IFrequentaPersistente persistentAttend = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
@@ -75,21 +74,17 @@ public class PrepareEditStudentGroupMembers implements IServico {
             persistentExecutionCourse = ps.getIPersistentExecutionCourse();
             persistentAttend = ps.getIFrequentaPersistente();
             persistentStudentGroup = ps.getIPersistentStudentGroup();
-            persistentStudentGroupAttend = ps
-                    .getIPersistentStudentGroupAttend();
+            persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
-            IStudentGroup studentGroup = (IStudentGroup) ps
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            studentGroupCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
+            IStudentGroup studentGroup = (IStudentGroup) ps.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, studentGroupCode);
 
-            frequentas = persistentAttend
-                    .readByExecutionCourse(executionCourse);
+            frequentas = persistentAttend.readByExecutionCourse(executionCourse);
 
             List allStudentsGroups = persistentStudentGroup
-                    .readAllStudentGroupByGroupProperties(studentGroup
-                            .getGroupProperties());
+                    .readAllStudentGroupByGroupProperties(studentGroup.getGroupProperties());
 
             List allStudentGroupAttend = null;
 
@@ -103,8 +98,7 @@ public class PrepareEditStudentGroupMembers implements IServico {
                 IFrequenta frequenta = null;
                 while (iterator2.hasNext()) {
 
-                    frequenta = ((IStudentGroupAttend) iterator2.next())
-                            .getAttend();
+                    frequenta = ((IStudentGroupAttend) iterator2.next()).getAttend();
                     if (frequentas.contains(frequenta)) {
                         frequentas.remove(frequenta);
                     }

@@ -17,22 +17,21 @@ import ServidorApresentacao.Action.sop.utils.Util;
  */
 public class ConsultRoomsForExamDA extends FenixDispatchAction {
 
-	/**
-	 * Prepares the information for the form used to search salas.
-	 **/
-	public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
-					 HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-			
-	  //HttpSession sessao = getSession(request);
+    /**
+     * Prepares the information for the form used to search salas.
+     */
+    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	  List edificios = Util.readExistingBuldings("*", null);
-	  List tipos = Util.readTypesOfRooms("*", null);
+        //HttpSession sessao = getSession(request);
 
-	  request.setAttribute("publico.buildings", edificios);
-	  request.setAttribute("publico.types", tipos);
-  
-	  return mapping.findForward("Search Rooms");
-	}
+        List edificios = Util.readExistingBuldings("*", null);
+        List tipos = Util.readTypesOfRooms("*", null);
+
+        request.setAttribute("publico.buildings", edificios);
+        request.setAttribute("publico.types", tipos);
+
+        return mapping.findForward("Search Rooms");
+    }
 
 }

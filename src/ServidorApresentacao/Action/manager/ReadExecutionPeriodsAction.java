@@ -27,46 +27,36 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  * @author Fernanda Quitério 17/Dez/2003
  */
-public class ReadExecutionPeriodsAction extends FenixAction
-{
+public class ReadExecutionPeriodsAction extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		try
-		{
-			List infoExecutionPeriods =
-				(List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+        try {
+            List infoExecutionPeriods = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionPeriods", null);
 
-			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
-			{
+            if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
-//				Collections.sort(infoExecutionPeriods, new ExecutionPeriodComparator());
-				ComparatorChain comparator = new ComparatorChain();
-				comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-				comparator.addComparator(new BeanComparator("name"), true);
-				Collections.sort(infoExecutionPeriods, comparator);
-				
-				if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
-				{
-					request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-				}
+                //				Collections.sort(infoExecutionPeriods, new
+                // ExecutionPeriodComparator());
+                ComparatorChain comparator = new ComparatorChain();
+                comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+                comparator.addComparator(new BeanComparator("name"), true);
+                Collections.sort(infoExecutionPeriods, comparator);
 
-			}
-		}
-		catch (FenixServiceException ex)
-		{
-			throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
-		}
+                if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+                    request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
+                }
 
-		return mapping.findForward("readExecutionPeriods");
+            }
+        } catch (FenixServiceException ex) {
+            throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
+        }
 
-	}
+        return mapping.findForward("readExecutionPeriods");
+
+    }
 }

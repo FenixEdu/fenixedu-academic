@@ -26,8 +26,7 @@ public class InfoStudentGroupAttend extends InfoObject {
     /**
      * Construtor
      */
-    public InfoStudentGroupAttend(InfoStudentGroup infoStudentGroup,
-            InfoFrequenta infoAttend) {
+    public InfoStudentGroupAttend(InfoStudentGroup infoStudentGroup, InfoFrequenta infoAttend) {
 
         this.infoStudentGroup = infoStudentGroup;
         this.infoAttend = infoAttend;
@@ -40,10 +39,8 @@ public class InfoStudentGroupAttend extends InfoObject {
         boolean result = false;
         if (arg0 instanceof InfoStudentGroupAttend) {
             result = (getInfoStudentGroup()
-                    .equals(((InfoStudentGroupAttend) arg0)
-                            .getInfoStudentGroup()))
-                    && (getInfoAttend().equals(((InfoStudentGroupAttend) arg0)
-                            .getInfoAttend()));
+                    .equals(((InfoStudentGroupAttend) arg0).getInfoStudentGroup()))
+                    && (getInfoAttend().equals(((InfoStudentGroupAttend) arg0).getInfoAttend()));
         }
         return result;
     }
@@ -99,12 +96,12 @@ public class InfoStudentGroupAttend extends InfoObject {
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IStudentGroupAttend studentGroupAttend) {
-        super.copyFromDomain(studentGroupAttend);       
+        super.copyFromDomain(studentGroupAttend);
     }
-    
+
     public static InfoStudentGroupAttend newInfoFromDomain(IStudentGroupAttend studentGroupAttend) {
         InfoStudentGroupAttend infoStudentGroupAttend = null;
-        if(studentGroupAttend != null) {
+        if (studentGroupAttend != null) {
             infoStudentGroupAttend = new InfoStudentGroupAttend();
             infoStudentGroupAttend.copyFromDomain(studentGroupAttend);
         }

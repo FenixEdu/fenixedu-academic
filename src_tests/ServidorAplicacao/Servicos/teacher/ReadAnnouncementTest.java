@@ -21,8 +21,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * NOTA: TODO... os pré filtros ainda não verificam se um anúncio pertence à
  * disciplina. Devido a isso alguns dos testes seguintes podem falhar.
  */
-public class ReadAnnouncementTest extends
-        AnnouncementBelongsToExecutionCourseTest {
+public class ReadAnnouncementTest extends AnnouncementBelongsToExecutionCourseTest {
 
     /**
      * @param testName
@@ -85,8 +84,8 @@ public class ReadAnnouncementTest extends
         Integer announcementCode = new Integer(1);
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, announcementCode, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode,
+                announcementCode, obj2 };
         return args;
     }
 
@@ -103,8 +102,8 @@ public class ReadAnnouncementTest extends
         // pertence à disciplina
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, announcementCode, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode,
+                announcementCode, obj2 };
         return args;
     }
 
@@ -120,8 +119,8 @@ public class ReadAnnouncementTest extends
             InfoAnnouncement bodyComponent = new InfoAnnouncement();
             Integer announcementCode = new Integer(1);
             Object obj2 = null;
-            Object[] argserv = { infoExecutionCourseCode, commonComponent,
-                    bodyComponent, infoSiteCode, announcementCode, obj2 };
+            Object[] argserv = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode,
+                    announcementCode, obj2 };
 
             //Utilizador Válido
             String[] args = getAuthenticatedAndAuthorizedUser();
@@ -129,8 +128,8 @@ public class ReadAnnouncementTest extends
 
             //Execução do serviço
             SiteView siteView = null;
-            siteView = (SiteView) ServiceManagerServiceFactory.executeService(
-                    id, getNameOfServiceToBeTested(), argserv);
+            siteView = (SiteView) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), argserv);
 
             //Leu alguma coisa?
             if (siteView == null) {
@@ -149,8 +148,8 @@ public class ReadAnnouncementTest extends
                 //Ler o anúncio da base de dados.
                 ISuportePersistente sp = SuportePersistenteOJB.getInstance();
                 sp.iniciarTransaccao();
-                iAnnouncement = (IAnnouncement) sp.getIPersistentAnnouncement()
-                        .readByOID(Announcement.class, announcementCode);
+                iAnnouncement = (IAnnouncement) sp.getIPersistentAnnouncement().readByOID(
+                        Announcement.class, announcementCode);
                 sp.confirmarTransaccao();
 
                 //Se o anúncio não existir..?!?!?!
@@ -160,14 +159,10 @@ public class ReadAnnouncementTest extends
 
                 //Verificar se o anúncio esta correcto
                 assertEquals(iAnnouncement.getTitle(), info.getTitle());
-                assertEquals(iAnnouncement.getInformation(), info
-                        .getInformation());
-                assertEquals(info.getLastModifiedDate(), iAnnouncement
-                        .getLastModifiedDate());
-                assertEquals(info.getIdInternal(), iAnnouncement
-                        .getIdInternal());
-                assertEquals(iAnnouncement.getCreationDate(), info
-                        .getCreationDate());
+                assertEquals(iAnnouncement.getInformation(), info.getInformation());
+                assertEquals(info.getLastModifiedDate(), iAnnouncement.getLastModifiedDate());
+                assertEquals(info.getIdInternal(), iAnnouncement.getIdInternal());
+                assertEquals(iAnnouncement.getCreationDate(), info.getCreationDate());
 
             } catch (ExcepcaoPersistencia e) {
                 fail("Reading an Announcement for a Site " + e);
@@ -176,9 +171,8 @@ public class ReadAnnouncementTest extends
             //Verificar se a base de dados foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
 
-            System.out
-                    .println("ReadAnnouncementTest was SUCCESSFULY runned by service: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("ReadAnnouncementTest was SUCCESSFULY runned by service: "
+                    + getNameOfServiceToBeTested());
 
         } catch (FenixServiceException e) {
             fail("Reading an Announcement for a Site " + e);
@@ -199,16 +193,15 @@ public class ReadAnnouncementTest extends
             InfoAnnouncement bodyComponent = new InfoAnnouncement();
             Integer announcementCode = new Integer(121312);
             Object obj2 = null;
-            Object[] argserv = { infoExecutionCourseCode, commonComponent,
-                    bodyComponent, infoSiteCode, announcementCode, obj2 };
+            Object[] argserv = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode,
+                    announcementCode, obj2 };
 
             //Utilizador válido
             String[] args = getAuthenticatedAndAuthorizedUser();
             IUserView id = authenticateUser(args);
 
             //Execução do serviço
-            ServiceManagerServiceFactory.executeService(id,
-                    getNameOfServiceToBeTested(), argserv);
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), argserv);
 
             fail("Reading an Announcement for a Site ");
         } catch (NotAuthorizedException e) {
@@ -218,9 +211,8 @@ public class ReadAnnouncementTest extends
              */
             //Verificar se a base de dados foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
-            System.out
-                    .println("ReadAnnouncementTest was SUCCESSFULY runned by service: "
-                            + getNameOfServiceToBeTested());
+            System.out.println("ReadAnnouncementTest was SUCCESSFULY runned by service: "
+                    + getNameOfServiceToBeTested());
         } catch (FenixServiceException e) {
             fail("Reading an Announcement for a Site " + e);
         } catch (Exception e) {

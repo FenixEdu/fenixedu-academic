@@ -33,9 +33,8 @@ public class EditTeacherInstitutionWorkingTimeAuthorization extends
 
         ITeacher teacher;
         try {
-            teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
-                    infoTeacherInstitutionWorkTime.getInfoTeacher()
-                            .getIdInternal());
+            teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacherInstitutionWorkTime
+                    .getInfoTeacher().getIdInternal());
         } catch (ExcepcaoPersistencia e) {
             return null;
         }

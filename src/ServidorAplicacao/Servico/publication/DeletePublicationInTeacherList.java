@@ -22,20 +22,20 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DeletePublicationInTeacherList implements IService {
 
-	public DeletePublicationInTeacherList() {
-	}
+    public DeletePublicationInTeacherList() {
+    }
 
-	public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+    public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia {
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-		ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherId);
-		persistentTeacher.simpleLockWrite(teacher);
-		CollectionUtils.filter(teacher.getTeacherPublications(), new Predicate() {
-			public boolean evaluate(Object arg0) {
-				IPublication publication = (IPublication) arg0;
-				return !publication.getIdInternal().equals(publicationId);
-			}
-		});
-	}
+        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherId);
+        persistentTeacher.simpleLockWrite(teacher);
+        CollectionUtils.filter(teacher.getTeacherPublications(), new Predicate() {
+            public boolean evaluate(Object arg0) {
+                IPublication publication = (IPublication) arg0;
+                return !publication.getIdInternal().equals(publicationId);
+            }
+        });
+    }
 }

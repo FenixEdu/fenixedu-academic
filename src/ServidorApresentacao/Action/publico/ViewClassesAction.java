@@ -28,9 +28,8 @@ public class ViewClassesAction extends FenixContextAction {
      *      javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e) {
@@ -41,30 +40,23 @@ public class ViewClassesAction extends FenixContextAction {
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         String degreeInitials = (String) request.getAttribute("degreeInitials");
-        String nameDegreeCurricularPlan = (String) request
-                .getAttribute("nameDegreeCurricularPlan");
+        String nameDegreeCurricularPlan = (String) request.getAttribute("nameDegreeCurricularPlan");
         Integer curricularYear = (Integer) request.getAttribute("curYear");
 
         ISiteComponent component = new InfoSiteClasses();
         SiteView siteView = null;
-        Object[] args = { component,
-                infoExecutionPeriod.getInfoExecutionYear().getYear(),
-				infoExecutionPeriod.getName(),
-				degreeInitials,
-				nameDegreeCurricularPlan,
-				null,
-				curricularYear,null };
+        Object[] args = { component, infoExecutionPeriod.getInfoExecutionYear().getYear(),
+                infoExecutionPeriod.getName(), degreeInitials, nameDegreeCurricularPlan, null,
+                curricularYear, null };
         try {
-            siteView = (SiteView) ServiceUtils.executeService(null,
-                    "ClassSiteComponentService", args);
+            siteView = (SiteView) ServiceUtils.executeService(null, "ClassSiteComponentService", args);
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }
 
         request.setAttribute("siteView", siteView);
         request.setAttribute("degreeInitials", degreeInitials);
-        request.setAttribute("nameDegreeCurricularPlan",
-                nameDegreeCurricularPlan);
+        request.setAttribute("nameDegreeCurricularPlan", nameDegreeCurricularPlan);
         return mapping.findForward("Sucess");
 
     }

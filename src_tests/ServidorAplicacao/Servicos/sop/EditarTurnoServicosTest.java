@@ -28,45 +28,37 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices
-{
+public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 
     private InfoShift infoShift = null;
 
-    public EditarTurnoServicosTest(java.lang.String testName)
-    {
+    public EditarTurnoServicosTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(EditarTurnoServicosTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "EditarTurno";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
         this.ligarSuportePersistente(true);
 
@@ -82,8 +74,7 @@ public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices
         return argsEditarTurno;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         this.ligarSuportePersistente(false);
 
@@ -99,13 +90,11 @@ public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices
         return argsEditarTurno;
     }
 
-    private void ligarSuportePersistente(boolean existing)
-    {
+    private void ligarSuportePersistente(boolean existing) {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -121,12 +110,9 @@ public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices
             ITurnoPersistente itp = sp.getITurnoPersistente();
             ITurno it = null;
 
-            if (existing)
-            {
+            if (existing) {
                 it = itp.readByNameAndExecutionCourse("turno1", ide);
-            }
-            else
-            {
+            } else {
                 it = new Turno("turnoXPTO", new TipoAula(TipoAula.TEORICA), new Integer(100), ide);
             }
 
@@ -134,15 +120,10 @@ public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");

@@ -36,7 +36,7 @@ public class InfoEnrolment extends InfoObject {
     private Integer accumulatedWeight;
 
     private EnrollmentCondition condition;
-    
+
     private String enrollmentTypeResourceKey;
 
     public InfoEnrolment() {
@@ -74,7 +74,7 @@ public class InfoEnrolment extends InfoObject {
     public void setEnrollmentTypeResourceKey(String enrolmentTypeResourceKey) {
         this.enrollmentTypeResourceKey = enrolmentTypeResourceKey;
     }
-    
+
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoEnrolment) {

@@ -15,8 +15,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -26,30 +24,23 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * This is the Action to display all the master degrees.
- * 
+ *  
  */
-public class MasterDegreeListingDispatchAction extends DispatchAction
-{
+public class MasterDegreeListingDispatchAction extends DispatchAction {
 
-    public ActionForward chooseDegreeFromList(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
 
             session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
 
@@ -60,73 +51,59 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
             Object args[] = { degreeType };
 
             List result = null;
-            try
-            {
-                result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllMasterDegrees", args);
-            } catch (NonExistingServiceException e)
-            {
+            try {
+                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadAllMasterDegrees", args);
+            } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O Curso de Mestrado", e);
             }
 
             request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
 
             return mapping.findForward("DisplayMasterDegreeList");
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
-    public ActionForward chooseMasterDegree(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward chooseMasterDegree(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             //Get the Chosen Master Degree
             Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-            if (masterDegreeID == null)
-            {
+            if (masterDegreeID == null) {
                 masterDegreeID = (Integer) request.getAttribute("degreeID");
             }
 
             Object args[] = { masterDegreeID };
             List result = null;
 
-            try
-            {
+            try {
 
-                result =
-                    (List) ServiceManagerServiceFactory.executeService(userView, "ReadCPlanFromChosenMasterDegree", args);
+                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadCPlanFromChosenMasterDegree", args);
 
-            } catch (NonExistingServiceException e)
-            {
+            } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O plano curricular ", e);
             }
 
             request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
 
             return mapping.findForward("MasterDegreeReady");
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
-    
-    public ActionForward prepareList(
-            ActionMapping mapping,
-            ActionForm form,
-            HttpServletRequest request,
-            HttpServletResponse response)
-            throws Exception
-    {
-        return  getStudentsFromDCP(mapping, form, request, response);
+
+    public ActionForward prepareList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return getStudentsFromDCP(mapping, form, request, response);
     }
+
     /**
      * 
      * @param mapping
@@ -136,13 +113,8 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
      * @return The Student's from a Degree Curricular Plan
      * @throws Exception
      */
-    public ActionForward getStudentsFromDCP(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward getStudentsFromDCP(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -153,16 +125,13 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
 
         List result = null;
 
-        try
-        {
+        try {
             Object args[] = { degreeCurricularPlanID, TipoCurso.MESTRADO_OBJ };
-            result =
-                (List) ServiceManagerServiceFactory.executeService(userView, "ReadStudentsFromDegreeCurricularPlan", args);
-        } catch (NotAuthorizedException e)
-        {
+            result = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentsFromDegreeCurricularPlan", args);
+        } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
-        } catch (NonExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
             Integer degreeID = new Integer(request.getParameter("degreeID"));
             request.setAttribute("degreeID", degreeID);
 
@@ -178,24 +147,17 @@ public class MasterDegreeListingDispatchAction extends DispatchAction
         request.setAttribute(SessionConstants.STUDENT_LIST, result);
 
         InfoExecutionDegree infoExecutionDegree = null;
-        try
-        {
+        try {
             Object args[] = { degreeCurricularPlanID };
-            infoExecutionDegree =
-                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "ReadExecutionDegreeByDCPID",
-                    args);
-        } catch (NonExistingServiceException e)
-        {
+            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadExecutionDegreeByDCPID", args);
+        } catch (NonExistingServiceException e) {
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        if (infoExecutionDegree != null)
-        {
+        if (infoExecutionDegree != null) {
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
         }
 

@@ -1,4 +1,3 @@
-
 package ServidorApresentacao.validator.form;
 
 import javax.servlet.ServletContext;
@@ -17,75 +16,64 @@ import org.apache.struts.validator.Resources;
  */
 public class GreaterThen {
 
-	public static boolean validateFloat(
-		Object bean,
-		ValidatorAction va,
-		Field field,
-		ActionErrors errors,
-		HttpServletRequest request,
-		ServletContext application) {
+    public static boolean validateFloat(Object bean, ValidatorAction va, Field field,
+            ActionErrors errors, HttpServletRequest request, ServletContext application) {
 
-		String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
-		String lowerValueString = field.getVarValue("value");
-		
-		if ((inputString == null) || (inputString.length() == 0)){
-			return true;
-		}
-		Double input = null;
-		Double lowerValue = null;
-	
-		try {
-			input = new Double(inputString);
-			lowerValue = new Double(lowerValueString);
-		} catch (NumberFormatException e) {
-			errors.add(field.getKey(), Resources.getActionError(request, va, field));
-			return false;
-		}
-		
-		if (!GenericValidator.isBlankOrNull(inputString)) {
-			if (input.floatValue() <= lowerValue.floatValue()){
-				errors.add(field.getKey(), Resources.getActionError(request, va, field));				
-			}
-			return false;
-		}
+        String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String lowerValueString = field.getVarValue("value");
 
-		return true;
-	}
-	
-	public static boolean validateFloat0(
-			Object bean,
-			ValidatorAction va,
-			Field field,
-			ActionErrors errors,
-			HttpServletRequest request,
-			ServletContext application) {
+        if ((inputString == null) || (inputString.length() == 0)) {
+            return true;
+        }
+        Double input = null;
+        Double lowerValue = null;
 
-			String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
-			String lowerValueString = field.getVarValue("value");
-		
-			if ((inputString == null) || (inputString.length() == 0)){
-				return true;
-			}
-			Double input = null;
-			Double lowerValue = null;
-	
-			try {
-				input = new Double(inputString);
-				lowerValue = new Double(lowerValueString);
-			} catch (NumberFormatException e) {
-				errors.add(field.getKey(), Resources.getActionError(request, va, field));
-				return false;
-			}
-		
-			if (!GenericValidator.isBlankOrNull(inputString)) {
-				if (input.floatValue() < lowerValue.floatValue()){
-					errors.add(field.getKey(), Resources.getActionError(request, va, field));				
-				}
-				return false;
-			}
+        try {
+            input = new Double(inputString);
+            lowerValue = new Double(lowerValueString);
+        } catch (NumberFormatException e) {
+            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            return false;
+        }
 
-			return true;
-		}
+        if (!GenericValidator.isBlankOrNull(inputString)) {
+            if (input.floatValue() <= lowerValue.floatValue()) {
+                errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            }
+            return false;
+        }
 
+        return true;
+    }
+
+    public static boolean validateFloat0(Object bean, ValidatorAction va, Field field,
+            ActionErrors errors, HttpServletRequest request, ServletContext application) {
+
+        String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+        String lowerValueString = field.getVarValue("value");
+
+        if ((inputString == null) || (inputString.length() == 0)) {
+            return true;
+        }
+        Double input = null;
+        Double lowerValue = null;
+
+        try {
+            input = new Double(inputString);
+            lowerValue = new Double(lowerValueString);
+        } catch (NumberFormatException e) {
+            errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            return false;
+        }
+
+        if (!GenericValidator.isBlankOrNull(inputString)) {
+            if (input.floatValue() < lowerValue.floatValue()) {
+                errors.add(field.getKey(), Resources.getActionError(request, va, field));
+            }
+            return false;
+        }
+
+        return true;
+    }
 
 }

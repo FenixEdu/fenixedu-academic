@@ -1,9 +1,9 @@
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegree;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -14,51 +14,29 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadDegree implements IServico {
+public class ReadDegree implements IService {
 
-  private static ReadDegree service = new ReadDegree();
+    /**
+     * Executes the service. Returns the current infodegree.
+     */
+    public InfoDegree run(Integer idInternal) throws FenixServiceException {
+        ISuportePersistente sp;
+        InfoDegree infoDegree = null;
+        ICurso degree = null;
 
-  /**
-   * The singleton access method of this class.
-   */
-  public static ReadDegree getService() {
-	return service;
-  }
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            degree = sp.getICursoPersistente().readByIdInternal(idInternal);
 
-  /**
-   * The constructor of this class.
-   */
-  private ReadDegree() { }
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
 
-  /**
-   * Service name
-   */
-  public final String getNome() {
-	return "ReadDegree";
-  }
+        if (degree == null) {
+            throw new NonExistingServiceException();
+        }
 
-  /**
-   * Executes the service. Returns the current infodegree.
-   */
-  public InfoDegree run(Integer idInternal) throws FenixServiceException {
-	ISuportePersistente sp;
-	InfoDegree infoDegree = null;
-	ICurso degree = null;
-	
-	try {
-			sp = SuportePersistenteOJB.getInstance();
-			degree = sp.getICursoPersistente().readByIdInternal(idInternal);
-			
-	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-		throw new FenixServiceException(excepcaoPersistencia);
-	}
-   
-       
-	if(degree == null) {
-		throw new NonExistingServiceException();
-	}
-
-	infoDegree = Cloner.copyIDegree2InfoDegree(degree); 
-	return infoDegree;
-  }
+        infoDegree = Cloner.copyIDegree2InfoDegree(degree);
+        return infoDegree;
+    }
 }

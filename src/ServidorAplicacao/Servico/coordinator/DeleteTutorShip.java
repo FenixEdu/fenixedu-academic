@@ -25,8 +25,8 @@ public class DeleteTutorShip implements IService {
     public DeleteTutorShip() {
     }
 
-    public Object run(Integer executionDegreeId, Integer tutorNumber,
-            List tutorIds2Delete) throws FenixServiceException {
+    public Object run(Integer executionDegreeId, Integer tutorNumber, List tutorIds2Delete)
+            throws FenixServiceException {
 
         if (tutorNumber == null) {
             throw new FenixServiceException("error.tutor.impossibleOperation");
@@ -43,8 +43,7 @@ public class DeleteTutorShip implements IService {
                 ListIterator iterator = tutorIds2Delete.listIterator();
                 while (iterator.hasNext()) {
                     Integer tutorId = (Integer) iterator.next();
-                    ITutor tutor = (ITutor) persistentTutor.readByOID(
-                            Tutor.class, tutorId);
+                    ITutor tutor = (ITutor) persistentTutor.readByOID(Tutor.class, tutorId);
                     if (tutor != null) {
                         persistentTutor.deleteByOID(Tutor.class, tutorId);
                     }

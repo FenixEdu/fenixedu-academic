@@ -7,13 +7,15 @@ package Dominio;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public interface IResponsibleFor extends IDomainObject {
-	public ITeacher getTeacher();
-	public IExecutionCourse getExecutionCourse();
+    public ITeacher getTeacher();
 
-	public void setTeacher(ITeacher teacher);
-	public void setExecutionCourse(IExecutionCourse executionCourse);
+    public IExecutionCourse getExecutionCourse();
+
+    public void setTeacher(ITeacher teacher);
+
+    public void setExecutionCourse(IExecutionCourse executionCourse);
 }

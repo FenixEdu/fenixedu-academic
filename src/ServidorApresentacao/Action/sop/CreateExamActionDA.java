@@ -1,7 +1,7 @@
 package ServidorApresentacao.Action.sop;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,94 +25,89 @@ import Util.Season;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class CreateExamActionDA extends FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+public class CreateExamActionDA extends
+        FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	public ActionForward prepare(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-			SessionUtils.getExecutionCourses(request);
+        SessionUtils.getExecutionCourses(request);
 
-			String nextPage = request.getParameter("nextPage");
-			request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+        String nextPage = request.getParameter("nextPage");
+        request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
-			ArrayList horas = Util.getExamShifts();
-			request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+        List horas = Util.getExamShifts();
+        request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
-			ArrayList daysOfMonth = Util.getDaysOfMonth();
-			request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
+        List daysOfMonth = Util.getDaysOfMonth();
+        request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
-			ArrayList monthsOfYear = Util.getMonthsOfYear();
-			request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
+        List monthsOfYear = Util.getMonthsOfYear();
+        request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
-			ArrayList examSeasons = Util.getExamSeasons();
-			request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+        List examSeasons = Util.getExamSeasons();
+        request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
-			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
-			chooseDayAndShiftForm.set("year", null);
-			chooseDayAndShiftForm.set("month", null);
-			chooseDayAndShiftForm.set("day", null);
-			chooseDayAndShiftForm.set("beginning", null);
-			chooseDayAndShiftForm.set("end", null);
-			chooseDayAndShiftForm.set("season", null);
+        DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
+        chooseDayAndShiftForm.set("year", null);
+        chooseDayAndShiftForm.set("month", null);
+        chooseDayAndShiftForm.set("day", null);
+        chooseDayAndShiftForm.set("beginning", null);
+        chooseDayAndShiftForm.set("end", null);
+        chooseDayAndShiftForm.set("season", null);
 
-			return mapping.findForward("showCreateForm");
-	}
+        return mapping.findForward("showCreateForm");
+    }
 
-	public ActionForward create(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-			IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
+        DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
 
-			Season season = new Season(new Integer((String) chooseDayAndShiftForm.get("season")));
-			Calendar examDate = Calendar.getInstance();
-			Calendar examTime = Calendar.getInstance();
-			InfoExecutionCourse executionCourse = (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
+        Season season = new Season(new Integer((String) chooseDayAndShiftForm.get("season")));
+        Calendar examDate = Calendar.getInstance();
+        Calendar examTime = Calendar.getInstance();
+        InfoExecutionCourse executionCourse = (InfoExecutionCourse) request
+                .getAttribute(SessionConstants.EXECUTION_COURSE);
 
-			Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
-			Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
-			Integer year = new Integer((String) chooseDayAndShiftForm.get("year"));
-			Integer beginning = null;
-			try {
-				beginning = new Integer((String) chooseDayAndShiftForm.get("beginning"));
-				examTime.set(Calendar.HOUR_OF_DAY, beginning.intValue());
-				examTime.set(Calendar.MINUTE, 0);
-				examTime.set(Calendar.SECOND, 0);
-			} catch(NumberFormatException ex) {
-				// No problem, it isn't requiered.
-			}
+        Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
+        Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
+        Integer year = new Integer((String) chooseDayAndShiftForm.get("year"));
+        Integer beginning = null;
+        try {
+            beginning = new Integer((String) chooseDayAndShiftForm.get("beginning"));
+            examTime.set(Calendar.HOUR_OF_DAY, beginning.intValue());
+            examTime.set(Calendar.MINUTE, 0);
+            examTime.set(Calendar.SECOND, 0);
+        } catch (NumberFormatException ex) {
+            // No problem, it isn't requiered.
+        }
 
-			examDate.set(Calendar.YEAR, year.intValue());
-			examDate.set(Calendar.MONTH, month.intValue());
-			examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
+        examDate.set(Calendar.YEAR, year.intValue());
+        examDate.set(Calendar.MONTH, month.intValue());
+        examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 
-			// Create an exam with season, examDateAndTime and executionCourse
-			Object argsCreateExam[] = { examDate, examTime, season, executionCourse};
-			try {
-				ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
-			} catch (ExistingServiceException ex) {
-				throw new ExistingActionException("O exame", ex);
-			}
+        // Create an exam with season, examDateAndTime and executionCourse
+        Object argsCreateExam[] = { examDate, examTime, season, executionCourse };
+        try {
+            ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
+        } catch (ExistingServiceException ex) {
+            throw new ExistingActionException("O exame", ex);
+        }
 
-			String nextPage = request.getParameter("nextPage");
-			//request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
-			//String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
+        String nextPage = request.getParameter("nextPage");
+        //request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+        //String nextPage = (String)
+        // request.getAttribute(SessionConstants.NEXT_PAGE);
 
-			if (nextPage != null) {
-				//System.out.println("returning to next page forward");
-				return mapping.findForward(nextPage);
-			} 
-				return mapping.findForward("Sucess");
-			
-	}
+        if (nextPage != null) {
+            //System.out.println("returning to next page forward");
+            return mapping.findForward(nextPage);
+        }
+        return mapping.findForward("Sucess");
+
+    }
 
 }

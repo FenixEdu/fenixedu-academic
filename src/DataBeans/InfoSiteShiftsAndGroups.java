@@ -9,59 +9,56 @@ import java.util.ListIterator;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteComponent {
 
-	private List infoSiteGroupsByShiftList;
-	
-	/**
-	* @return
-	*/
-	public List getInfoSiteGroupsByShiftList() {
-		return infoSiteGroupsByShiftList;
-	}
+    private List infoSiteGroupsByShiftList;
 
-	/**
-	 * @param list
-	 */
-	public void setInfoSiteGroupsByShiftList(List infoSiteGroupsByShiftList) {
-		this.infoSiteGroupsByShiftList = infoSiteGroupsByShiftList;
-	}
-	
-	public boolean equals(Object objectToCompare) {
-			boolean result = true;
-			
-			if(objectToCompare instanceof InfoSiteShiftsAndGroups)
-				result = true;
-				
-			if (((InfoSiteShiftsAndGroups) objectToCompare).getInfoSiteGroupsByShiftList() == null
-				&& this.getInfoSiteGroupsByShiftList() == null) {
-				return true;
-			}
+    /**
+     * @return
+     */
+    public List getInfoSiteGroupsByShiftList() {
+        return infoSiteGroupsByShiftList;
+    }
 
-			if (((InfoSiteShiftsAndGroups) objectToCompare).getInfoSiteGroupsByShiftList() == null
-				|| this.getInfoSiteGroupsByShiftList() == null
-				|| ((InfoSiteShiftsAndGroups) objectToCompare).getInfoSiteGroupsByShiftList().size()
-					!= this.getInfoSiteGroupsByShiftList().size()) {
+    /**
+     * @param list
+     */
+    public void setInfoSiteGroupsByShiftList(List infoSiteGroupsByShiftList) {
+        this.infoSiteGroupsByShiftList = infoSiteGroupsByShiftList;
+    }
 
-				return false;
-			}
+    public boolean equals(Object objectToCompare) {
+        boolean result = true;
 
-			
-			ListIterator iter1 =
-				((InfoSiteShiftsAndGroups) objectToCompare)
-					.getInfoSiteGroupsByShiftList()
-					.listIterator();
-			ListIterator iter2 = this.getInfoSiteGroupsByShiftList().listIterator();
-			while (result && iter1.hasNext()) {
-				InfoSiteGroupsByShift infoSiteGroupsByShift1 = (InfoSiteGroupsByShift) iter1.next();
-				InfoSiteGroupsByShift infoSiteGroupsByShift2 = (InfoSiteGroupsByShift) iter2.next();
-				
-				if (!infoSiteGroupsByShift1.equals(infoSiteGroupsByShift2)) {
-					result = false;
-				}
-			}
-			return result;
-		}
+        if (objectToCompare instanceof InfoSiteShiftsAndGroups)
+            result = true;
+
+        if (((InfoSiteShiftsAndGroups) objectToCompare).getInfoSiteGroupsByShiftList() == null
+                && this.getInfoSiteGroupsByShiftList() == null) {
+            return true;
+        }
+
+        if (((InfoSiteShiftsAndGroups) objectToCompare).getInfoSiteGroupsByShiftList() == null
+                || this.getInfoSiteGroupsByShiftList() == null
+                || ((InfoSiteShiftsAndGroups) objectToCompare).getInfoSiteGroupsByShiftList().size() != this
+                        .getInfoSiteGroupsByShiftList().size()) {
+
+            return false;
+        }
+
+        ListIterator iter1 = ((InfoSiteShiftsAndGroups) objectToCompare).getInfoSiteGroupsByShiftList()
+                .listIterator();
+        ListIterator iter2 = this.getInfoSiteGroupsByShiftList().listIterator();
+        while (result && iter1.hasNext()) {
+            InfoSiteGroupsByShift infoSiteGroupsByShift1 = (InfoSiteGroupsByShift) iter1.next();
+            InfoSiteGroupsByShift infoSiteGroupsByShift2 = (InfoSiteGroupsByShift) iter2.next();
+
+            if (!infoSiteGroupsByShift1.equals(infoSiteGroupsByShift2)) {
+                result = false;
+            }
+        }
+        return result;
+    }
 }

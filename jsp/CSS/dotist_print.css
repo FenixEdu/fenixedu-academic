@@ -307,6 +307,35 @@ table#ects {
 	color: #000;
 	}
 
+/************************************
+  School Registration - Declaration
+*************************************/
+
+body.registration {
+	font: 11pt "Courier New", Courier, monospace;
+	color: #000;
+	text-align: justify;
+	}
+	
+table.registration {	
+	font: 11pt Courier;
+	text-align: justify;
+	}
+	
+h2.registration	{
+	font: 15pt Courier;
+	color: #000;
+	}	
+	
+h3.registration	{
+	font: 13pt Courier;
+	color: #000;
+	}
+	
+.break-before {
+	page-break-before:always;
+	}		
+	
 /*****************************************************************
 	for hidden misc elements
 ******************************************************************/

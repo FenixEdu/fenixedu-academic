@@ -26,36 +26,36 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadPersonsNotAuthors implements IServico {
 
-	/**
-	 *  
-	 */
-	public ReadPersonsNotAuthors() {
+    /**
+     *  
+     */
+    public ReadPersonsNotAuthors() {
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadPersonsNotAuthors";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadPersonsNotAuthors";
+    }
 
-	public List run(String nameString, IUserView userView) throws FenixServiceException {
-		List persons = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			persons = persistentPerson.findPersonByName(nameString);
-			persons.remove(person);
-			
-			return persons;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+    public List run(String nameString, IUserView userView) throws FenixServiceException {
+        List persons = new ArrayList();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            persons = persistentPerson.findPersonByName(nameString);
+            persons.remove(person);
 
-	}
+            return persons;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

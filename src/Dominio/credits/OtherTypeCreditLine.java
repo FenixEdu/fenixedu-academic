@@ -9,31 +9,30 @@ import Dominio.credits.event.CreditsEvent;
 /**
  * @author jpvl
  */
-public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditLine
-{
+public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditLine {
     private IExecutionPeriod executionPeriod;
+
     private String reason;
+
     private Double credits;
+
     private Integer keyExecutionPeriod;
 
-    public OtherTypeCreditLine()
-    {
+    public OtherTypeCreditLine() {
         super();
     }
-    
+
     /**
      * @param id
      */
-    public OtherTypeCreditLine(Integer idInternal)
-    {
+    public OtherTypeCreditLine(Integer idInternal) {
         super(idInternal);
     }
 
     /**
      * @return Returns the executionPeriod.
      */
-    public IExecutionPeriod getExecutionPeriod()
-    {
+    public IExecutionPeriod getExecutionPeriod() {
         return executionPeriod;
     }
 
@@ -41,16 +40,14 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
      * @param executionPeriod
      *            The executionPeriod to set.
      */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod)
-    {
+    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
     }
 
     /**
      * @return Returns the reason.
      */
-    public String getReason()
-    {
+    public String getReason() {
         return reason;
     }
 
@@ -58,51 +55,52 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
      * @param reason
      *            The reason to set.
      */
-    public void setReason(String reason)
-    {
+    public void setReason(String reason) {
         this.reason = reason;
     }
 
     /**
      * @return Returns the credits.
      */
-    public Double getCredits()
-    {
+    public Double getCredits() {
         return credits;
     }
 
     /**
-     * @param credits The credits to set.
+     * @param credits
+     *            The credits to set.
      */
-    public void setCredits(Double credits)
-    {
+    public void setCredits(Double credits) {
         this.credits = credits;
     }
 
     /**
      * @return Returns the keyExecutionPeriod.
      */
-    public Integer getKeyExecutionPeriod()
-    {
+    public Integer getKeyExecutionPeriod() {
         return keyExecutionPeriod;
     }
 
     /**
-     * @param keyExecutionPeriod The keyExecutionPeriod to set.
+     * @param keyExecutionPeriod
+     *            The keyExecutionPeriod to set.
      */
-    public void setKeyExecutionPeriod(Integer keyExecutionPeriod)
-    {
+    public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
         this.keyExecutionPeriod = keyExecutionPeriod;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see Dominio.credits.CreditLine#getCreditEventGenerated()
      */
     protected CreditsEvent getCreditEventGenerated() {
         return CreditsEvent.OTHER_CREDIT;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see Dominio.credits.event.ICreditsEventOriginator#belongsToExecutionPeriod(Dominio.IExecutionPeriod)
      */
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {

@@ -13,15 +13,13 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class DeleteTeacherDegreeFinalProjectStudentByOID extends DeleteDomainObjectService
-{
+public class DeleteTeacherDegreeFinalProjectStudentByOID extends DeleteDomainObjectService {
     /*
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return TeacherDegreeFinalProjectStudent.class;
     }
 
@@ -30,8 +28,7 @@ public class DeleteTeacherDegreeFinalProjectStudentByOID extends DeleteDomainObj
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
     }
 }

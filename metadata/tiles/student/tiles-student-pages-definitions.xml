@@ -101,7 +101,7 @@
 	
 	<!-- END OF GROUPS DEFINITIONS -->
 
-	<!--  ******************* LEEC Enrollment ******************** -->
+	<!--  *******************  Enrollment ******************** -->
 	<definition name="df.page.prepareEnrollmentChooseAreas" extends="definition.student.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseAreas.jsp"/>
 	</definition>

@@ -23,22 +23,18 @@ import Util.RoleType;
  * @author Barbosa
  * @author Pica
  */
-public class ReadQualificationsAuthorizationFilter extends Filtro
-{
+public class ReadQualificationsAuthorizationFilter extends Filtro {
 
-    public ReadQualificationsAuthorizationFilter()
-    {
+    public ReadQualificationsAuthorizationFilter() {
     }
 
     //Role Type of teacher
-    protected RoleType getRoleTypeTeacher()
-    {
+    protected RoleType getRoleTypeTeacher() {
         return RoleType.TEACHER;
     }
 
     //Role Type of Grant Owner Manager
-    protected RoleType getRoleTypeGrantOwnerManager()
-    {
+    protected RoleType getRoleTypeGrantOwnerManager() {
         return RoleType.GRANT_OWNER_MANAGER;
     }
 
@@ -46,17 +42,14 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
-        try
-        {
+        try {
             //Verify if needed fields are null
-            if ((id == null) || (id.getRoles() == null))
-            {
+            if ((id == null) || (id.getRoles() == null)) {
                 throw new NotAuthorizedException();
             }
 
@@ -67,20 +60,17 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
             boolean valid = false;
 
             if ((AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
-                            && isGrantOwner((String) arguments[0]))
-            {
+                    && isGrantOwner((String) arguments[0])) {
                 valid = true;
             }
 
-            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
-            {
+            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())) {
                 valid = true;
             }
 
-            if (!valid) throw new NotAuthorizedException();
-        }
-        catch (RuntimeException e)
-        {
+            if (!valid)
+                throw new NotAuthorizedException();
+        } catch (RuntimeException e) {
             throw new NotAuthorizedException();
         }
     }
@@ -91,10 +81,8 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
      * @param arguments
      * @return true or false
      */
-    private boolean isGrantOwner(String user)
-    {
-        try
-        {
+    private boolean isGrantOwner(String user) {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
             IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
@@ -104,14 +92,10 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
             IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(person.getIdInternal());
 
             return grantOwner != null;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();
             return false;

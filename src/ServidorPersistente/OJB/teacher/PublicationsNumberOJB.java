@@ -12,7 +12,7 @@ import Dominio.ITeacher;
 import Dominio.teacher.IPublicationsNumber;
 import Dominio.teacher.PublicationsNumber;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import Util.PublicationType;
 
@@ -21,28 +21,23 @@ import Util.PublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class PublicationsNumberOJB extends ObjectFenixOJB implements IPersistentPublicationsNumber
-{
+public class PublicationsNumberOJB extends PersistentObjectOJB implements IPersistentPublicationsNumber {
 
     /**
-	 *  
-	 */
-    public PublicationsNumberOJB()
-    {
+     *  
+     */
+    public PublicationsNumberOJB() {
         super();
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.teacher.IPersistentPublicationsNumber#readByTeacherAndPublicationType(Dominio.ITeacher,
-	 *      Util.PublicationType)
-	 */
-    public IPublicationsNumber readByTeacherAndPublicationType(
-        ITeacher teacher,
-        PublicationType publicationType)
-        throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.teacher.IPersistentPublicationsNumber#readByTeacherAndPublicationType(Dominio.ITeacher,
+     *      Util.PublicationType)
+     */
+    public IPublicationsNumber readByTeacherAndPublicationType(ITeacher teacher,
+            PublicationType publicationType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
         criteria.addEqualTo("publicationType", new Integer(publicationType.getValue()));
@@ -50,12 +45,11 @@ public class PublicationsNumberOJB extends ObjectFenixOJB implements IPersistent
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.teacher.IPersistentPublicationsNumber#readAllByTeacher(Dominio.ITeacher)
-	 */
-    public List readAllByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.teacher.IPersistentPublicationsNumber#readAllByTeacher(Dominio.ITeacher)
+     */
+    public List readAllByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
         return queryList(PublicationsNumber.class, criteria);

@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.assiduousness;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
@@ -15,23 +15,23 @@ import constants.assiduousness.Constants;
  */
 public class ServicoSeguroPessoasGestaoAssiduidade extends ServicoSeguro {
 
-	ArrayList _listaPessoas = null;
-	
-	public ServicoSeguroPessoasGestaoAssiduidade(ServicoAutorizacao servicoAutorizacaoLer) {
-		super(servicoAutorizacaoLer);
-	}
+    List _listaPessoas = null;
 
-	public void execute() throws NotExecuteException {
-		IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-		
-		_listaPessoas = iPessoaPersistente.lerPessoasPorCargo(Constants.GESTAO_ASSIDUIDADE);
-		
-		if((_listaPessoas == null) || (_listaPessoas != null && _listaPessoas.size() == 0)) {
-			throw new NotExecuteException("error.gestaoAssiduidade.naoExiste");
-		}
-	}
+    public ServicoSeguroPessoasGestaoAssiduidade(ServicoAutorizacao servicoAutorizacaoLer) {
+        super(servicoAutorizacaoLer);
+    }
 
-	public ArrayList getListaPessoas(){
-		return _listaPessoas;
-	}
+    public void execute() throws NotExecuteException {
+        IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
+
+        _listaPessoas = iPessoaPersistente.lerPessoasPorCargo(Constants.GESTAO_ASSIDUIDADE);
+
+        if ((_listaPessoas == null) || (_listaPessoas != null && _listaPessoas.size() == 0)) {
+            throw new NotExecuteException("error.gestaoAssiduidade.naoExiste");
+        }
+    }
+
+    public List getListaPessoas() {
+        return _listaPessoas;
+    }
 }

@@ -33,267 +33,234 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Fernanda Quitério 23/Dez/2003
  *  
  */
-public class EditExecutionCourseManageCurricularCoursesDispatchAction extends FenixDispatchAction
-{
+public class EditExecutionCourseManageCurricularCoursesDispatchAction extends FenixDispatchAction {
 
-	public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-	{
+    public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer executionCourseId = new Integer(getAndSetStringToRequest(request, "executionCourseId"));
-		Integer curricularCourseId = new Integer(getAndSetStringToRequest(request, "curricularCourseId"));
+        Integer executionCourseId = new Integer(getAndSetStringToRequest(request, "executionCourseId"));
+        Integer curricularCourseId = new Integer(getAndSetStringToRequest(request, "curricularCourseId"));
 
-		separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
+        separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
-		String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-		if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-				|| executionCoursesNotLinked.equals(Boolean.FALSE.toString()))
-		{
-			separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-		}
+        String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
+                || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
+            separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
+        }
 
-		Object[] args = {executionCourseId, curricularCourseId};
-		try
-		{
-			ServiceUtils.executeService(userView, "DissociateCurricularCourseByExecutionCourseId", args);
-		} catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        Object[] args = { executionCourseId, curricularCourseId };
+        try {
+            ServiceUtils.executeService(userView, "DissociateCurricularCourseByExecutionCourseId", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward("editExecutionCourse");
-	}
+        return mapping.findForward("editExecutionCourse");
+    }
 
-	public ActionForward prepareAssociateCurricularCourseChooseDegreeCurricularPlan(
-			ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException
-	{
+    public ActionForward prepareAssociateCurricularCourseChooseDegreeCurricularPlan(
+            ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		getAndSetStringToRequest(request, "executionCourseId");
-		getAndSetStringToRequest(request, "executionCourseName");
-		
-		Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId",
-				"executionPeriodName");
+        getAndSetStringToRequest(request, "executionCourseId");
+        getAndSetStringToRequest(request, "executionCourseName");
 
-		String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-		if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-				|| executionCoursesNotLinked.equals(Boolean.FALSE.toString()))
-		{
-			separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-			getAndSetStringToRequest(request, "curYear");
-		}
+        Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId",
+                "executionPeriodName");
 
-		Object args[] = {executionPeriodId};
-		List executionDegreeList = null;
-		try
-		{
-			executionDegreeList = (List) ServiceUtils.executeService(userView,
-					"ReadExecutionDegreesByExecutionPeriodId", args);
-		} catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
+                || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
+            separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
+            getAndSetStringToRequest(request, "curYear");
+        }
 
-		ArrayList courses = new ArrayList();
-		courses.add(new LabelValueBean("escolher", ""));
+        Object args[] = { executionPeriodId };
+        List executionDegreeList = null;
+        try {
+            executionDegreeList = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionDegreesByExecutionPeriodId", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+        List courses = new ArrayList();
+        courses.add(new LabelValueBean("escolher", ""));
 
-		buildExecutionDegreeLabelValueBean(executionDegreeList, courses);
+        Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
-		request.setAttribute(SessionConstants.DEGREES, courses);
+        buildExecutionDegreeLabelValueBean(executionDegreeList, courses);
 
-		return mapping.findForward("prepareAssociateCurricularCourseChooseDegreeCurricularPlan");
-	}
+        request.setAttribute(SessionConstants.DEGREES, courses);
 
-	private void buildExecutionDegreeLabelValueBean(List executionDegreeList, ArrayList courses)
-	{
+        return mapping.findForward("prepareAssociateCurricularCourseChooseDegreeCurricularPlan");
+    }
 
-		Iterator iterator = executionDegreeList.iterator();
-		while (iterator.hasNext())
-		{
-			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+    private void buildExecutionDegreeLabelValueBean(List executionDegreeList, List courses) {
 
-			name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-					.toString()
-					+ " em " + name;
+        Iterator iterator = executionDegreeList.iterator();
+        while (iterator.hasNext()) {
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-			name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-					+ infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
-			courses.add(new LabelValueBean(name, name + "~"
-					+ infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
-		}
-	}
+            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
+                    .toString()
+                    + " em " + name;
 
-	private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree)
-	{
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
+            courses.add(new LabelValueBean(name, name + "~"
+                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().toString()));
+        }
+    }
 
-		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-		Iterator iterator = executionDegreeList.iterator();
+    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
 
-		while (iterator.hasNext())
-		{
-			InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-					&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
-				return true;
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+        Iterator iterator = executionDegreeList.iterator();
 
-		}
-		return false;
-	}
+        while (iterator.hasNext()) {
+            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+                return true;
 
-	public ActionForward prepareAssociateCurricularCourse(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-	{
+        }
+        return false;
+    }
 
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward prepareAssociateCurricularCourse(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		getAndSetStringToRequest(request, "executionCourseId");
-		getAndSetStringToRequest(request, "executionCourseName");
-		separateLabel(form, request, "executionPeriod", "executionPeriodId",
-				"executionPeriodName");
+        IUserView userView = SessionUtils.getUserView(request);
 
-		String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
-		if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
-				|| executionCoursesNotLinked.equals(Boolean.FALSE.toString()))
-		{
-			separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
-			getAndSetStringToRequest(request, "curYear");
-		}
+        getAndSetStringToRequest(request, "executionCourseId");
+        getAndSetStringToRequest(request, "executionCourseName");
+        separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
 
-		Integer degreeCurricularPlanId = separateLabel(form, request, "degreeCurricularPlan",
-				"degreeCurricularPlanId", "degreeCurricularPlanName");
+        String executionCoursesNotLinked = getAndSetStringToRequest(request, "executionCoursesNotLinked");
+        if (executionCoursesNotLinked == null || executionCoursesNotLinked.equals("null")
+                || executionCoursesNotLinked.equals(Boolean.FALSE.toString())) {
+            separateLabel(form, request, "executionDegree", "executionDegreeId", "executionDegreeName");
+            getAndSetStringToRequest(request, "curYear");
+        }
 
-		Object args[] = {degreeCurricularPlanId};
+        Integer degreeCurricularPlanId = separateLabel(form, request, "degreeCurricularPlan",
+                "degreeCurricularPlanId", "degreeCurricularPlanName");
 
-		List infoCurricularCourses;
-		try
-		{
-			infoCurricularCourses = (List) ServiceUtils.executeService(userView,
-					"ReadCurricularCoursesByDegreeCurricularPlan", args);
-		} catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
-		Collections.sort(infoCurricularCourses, new BeanComparator("name"));
+        Object args[] = { degreeCurricularPlanId };
 
-		request.setAttribute("infoCurricularCourses", infoCurricularCourses);
+        List infoCurricularCourses;
+        try {
+            infoCurricularCourses = (List) ServiceUtils.executeService(userView,
+                    "ReadCurricularCoursesByDegreeCurricularPlan", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        Collections.sort(infoCurricularCourses, new BeanComparator("name"));
 
-		return mapping.findForward("associateCurricularCourse");
-	}
+        request.setAttribute("infoCurricularCourses", infoCurricularCourses);
 
-	public ActionForward associateCurricularCourses(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-	{
+        return mapping.findForward("associateCurricularCourse");
+    }
 
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward associateCurricularCourses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		DynaActionForm executionCourseForm = (DynaValidatorForm) form;
-		getAndSetStringToRequest(request, "executionPeriodId");
-		getAndSetStringToRequest(request, "executionPeriodName");
-		String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer curricularCoursesListSize = (Integer) executionCourseForm
-				.get("curricularCoursesListSize");
+        DynaActionForm executionCourseForm = (DynaValidatorForm) form;
+        getAndSetStringToRequest(request, "executionPeriodId");
+        getAndSetStringToRequest(request, "executionPeriodName");
+        String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
 
-		List curricularCourseIds = getInformationToDissociate(request, curricularCoursesListSize,
-				"curricularCourse", "idInternal", "chosen");
+        Integer curricularCoursesListSize = (Integer) executionCourseForm
+                .get("curricularCoursesListSize");
 
-		Object args[] = {Integer.valueOf(executionCourseId), curricularCourseIds};
-		try
-		{
-			ServiceUtils.executeService(userView, "AssociateCurricularCoursesToExecutionCourse", args);
-		} catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
-		return mapping.findForward("editExecutionCourse");
-	}
+        List curricularCourseIds = getInformationToDissociate(request, curricularCoursesListSize,
+                "curricularCourse", "idInternal", "chosen");
 
-	private List getInformationToDissociate(HttpServletRequest request,
-			Integer curricularCoursesListSize, String what, String property, String formProperty)
-	{
+        Object args[] = { Integer.valueOf(executionCourseId), curricularCourseIds };
+        try {
+            ServiceUtils.executeService(userView, "AssociateCurricularCoursesToExecutionCourse", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        return mapping.findForward("editExecutionCourse");
+    }
 
-		List informationToDeleteList = new ArrayList();
-		for (int i = 0; i < curricularCoursesListSize.intValue(); i++)
-		{
-			Integer informationToDelete = dataToDelete(request, i, what, property, formProperty);
-			if (informationToDelete != null)
-			{
-				informationToDeleteList.add(informationToDelete);
-			}
-		}
-		return informationToDeleteList;
-	}
+    private List getInformationToDissociate(HttpServletRequest request,
+            Integer curricularCoursesListSize, String what, String property, String formProperty) {
 
-	private Integer dataToDelete(HttpServletRequest request, int index, String what, String property,
-			String formProperty)
-	{
+        List informationToDeleteList = new ArrayList();
+        for (int i = 0; i < curricularCoursesListSize.intValue(); i++) {
+            Integer informationToDelete = dataToDelete(request, i, what, property, formProperty);
+            if (informationToDelete != null) {
+                informationToDeleteList.add(informationToDelete);
+            }
+        }
+        return informationToDeleteList;
+    }
 
-		Integer itemToDelete = null;
-		String checkbox = request.getParameter(what + "[" + index + "]." + formProperty);
-		String toDelete = null;
-		if (checkbox != null
-				&& (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true")))
-		{
-			toDelete = request.getParameter(what + "[" + index + "]." + property);
-		}
-		if (toDelete != null)
-		{
-			itemToDelete = new Integer(toDelete);
-		}
-		return itemToDelete;
-	}
+    private Integer dataToDelete(HttpServletRequest request, int index, String what, String property,
+            String formProperty) {
 
-	private Integer separateLabel(ActionForm form, HttpServletRequest request, String property,
-			String id, String name)
-	{
+        Integer itemToDelete = null;
+        String checkbox = request.getParameter(what + "[" + index + "]." + formProperty);
+        String toDelete = null;
+        if (checkbox != null
+                && (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true"))) {
+            toDelete = request.getParameter(what + "[" + index + "]." + property);
+        }
+        if (toDelete != null) {
+            itemToDelete = new Integer(toDelete);
+        }
+        return itemToDelete;
+    }
 
-		DynaActionForm executionCourseForm = (DynaActionForm) form;
+    private Integer separateLabel(ActionForm form, HttpServletRequest request, String property,
+            String id, String name) {
 
-		// the value returned to action is a string name~idInternal
-		String object = (String) executionCourseForm.get(property);
-		if (object == null || object.length() <= 0)
-		{
-			object = (String) request.getAttribute(property);
-			if (object == null)
-			{
-				object = request.getParameter(property);
-			}
-		}
+        DynaActionForm executionCourseForm = (DynaActionForm) form;
 
-		Integer objectId = null;
-		String objectName = null;
-		if (object != null && object.length() > 0 && object.indexOf("~") > 0)
-		{
-			executionCourseForm.set(property, object);
-			request.setAttribute(property, object);
+        // the value returned to action is a string name~idInternal
+        String object = (String) executionCourseForm.get(property);
+        if (object == null || object.length() <= 0) {
+            object = (String) request.getAttribute(property);
+            if (object == null) {
+                object = request.getParameter(property);
+            }
+        }
 
-			objectId = Integer.valueOf(StringUtils.substringAfter(object, "~"));
-			request.setAttribute(id, objectId);
+        Integer objectId = null;
+        String objectName = null;
+        if (object != null && object.length() > 0 && object.indexOf("~") > 0) {
+            executionCourseForm.set(property, object);
+            request.setAttribute(property, object);
 
-			objectName = object.substring(0, object.indexOf("~"));
-			request.setAttribute(name, objectName);
-		}
+            objectId = Integer.valueOf(StringUtils.substringAfter(object, "~"));
+            request.setAttribute(id, objectId);
 
-		return objectId;
-	}
+            objectName = object.substring(0, object.indexOf("~"));
+            request.setAttribute(name, objectName);
+        }
 
-	private String getAndSetStringToRequest(HttpServletRequest request, String name)
-	{
+        return objectId;
+    }
 
-		String parameter = request.getParameter(name);
-		if (parameter == null)
-		{
-			parameter = (String) request.getAttribute(name);
-		}
-		request.setAttribute(name, parameter);
-		return parameter;
-	}
+    private String getAndSetStringToRequest(HttpServletRequest request, String name) {
+
+        String parameter = request.getParameter(name);
+        if (parameter == null) {
+            parameter = (String) request.getAttribute(name);
+        }
+        request.setAttribute(name, parameter);
+        return parameter;
+    }
 
 }

@@ -22,12 +22,15 @@ response.setDateHeader ("Expires", 0);
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
 	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.idInternal"/>
+	<bean:define id="student" name="testQuestion" property="student"/>
+	<bean:define id="studentCode" name="student" property="number"/>
 	
 	<html:form action="/studentTests">
 	<html:hidden property="method" value="doTest"/>
 	
 	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
+	<html:hidden property="studentCode" value="<%= studentCode.toString() %>"/>
 	
 		<h2><bean:write name="distributedTest" property="title"/></h2>
 		<b><bean:write name="distributedTest" property="testInformation"/></b>

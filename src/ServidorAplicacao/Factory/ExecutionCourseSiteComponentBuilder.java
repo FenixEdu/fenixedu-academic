@@ -32,6 +32,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseWithExecutionPeriod;
 import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
+import DataBeans.InfoLessonWithInfoRoomAndInfoExecutionCourse;
 import DataBeans.InfoProfessorshipWithAll;
 import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoSection;
@@ -109,8 +110,8 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, ISite site,
-            ISiteComponent commonComponent, Integer sectionIndex,
-            Integer curricularCourseId) throws FenixServiceException {
+            ISiteComponent commonComponent, Integer sectionIndex, Integer curricularCourseId)
+            throws FenixServiceException {
 
         if (component instanceof InfoSiteCommon) {
             return getInfoSiteCommon((InfoSiteCommon) component, site);
@@ -118,14 +119,11 @@ public class ExecutionCourseSiteComponentBuilder {
             return getInfoSiteFirstPage((InfoSiteFirstPage) component, site);
 
         } else if (component instanceof InfoSiteAnnouncement) {
-            return getInfoSiteAnnouncement((InfoSiteAnnouncement) component,
-                    site);
+            return getInfoSiteAnnouncement((InfoSiteAnnouncement) component, site);
         } else if (component instanceof InfoEvaluationMethod) {
-            return getInfoEvaluationMethod((InfoEvaluationMethod) component,
-                    site);
+            return getInfoEvaluationMethod((InfoEvaluationMethod) component, site);
         } else if (component instanceof InfoSiteBibliography) {
-            return getInfoSiteBibliography((InfoSiteBibliography) component,
-                    site);
+            return getInfoSiteBibliography((InfoSiteBibliography) component, site);
         } else if (component instanceof InfoSiteAssociatedCurricularCourses) {
             return getInfoSiteAssociatedCurricularCourses(
                     (InfoSiteAssociatedCurricularCourses) component, site);
@@ -150,142 +148,114 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteSummaries(InfoSiteSummaries component,
-            ISite site) throws FenixServiceException {
+    private ISiteComponent getInfoSiteSummaries(InfoSiteSummaries component, ISite site)
+            throws FenixServiceException {
         try {
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             //execution courses's lesson types for display to filter summary
             List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
             //execution courses's shifts for display to filter summary
-            ITurnoPersistente persistentShift = persistentSuport
-                    .getITurnoPersistente();
-            List shifts = persistentShift
-                    .readByExecutionCourse(executionCourse);
+            ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
+            List shifts = persistentShift.readByExecutionCourse(executionCourse);
             List infoShifts = new ArrayList();
             if (shifts != null && shifts.size() > 0) {
-                infoShifts = (List) CollectionUtils.collect(shifts,
-                        new Transformer() {
+                infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
-                            public Object transform(Object arg0) {
-                                ITurno turno = (ITurno) arg0;
-                                return InfoShiftWithInfoExecutionCourseAndCollections
-                                        .newInfoFromDomain(turno);
-                            }
-                        });
+                    public Object transform(Object arg0) {
+                        ITurno turno = (ITurno) arg0;
+                        return InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(turno);
+                    }
+                });
             }
 
             //execution courses's professorships for display to filter summary
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
-            List professorships = persistentProfessorship
-                    .readByExecutionCourse(executionCourse);
+            List professorships = persistentProfessorship.readByExecutionCourse(executionCourse);
             List infoProfessorships = new ArrayList();
             if (professorships != null && professorships.size() > 0) {
-                infoProfessorships = (List) CollectionUtils.collect(
-                        professorships, new Transformer() {
+                infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
 
-                            public Object transform(Object arg0) {
-                                IProfessorship professorship = (IProfessorship) arg0;
-                                return InfoProfessorshipWithAll
-                                        .newInfoFromDomain(professorship);
-                            }
+                    public Object transform(Object arg0) {
+                        IProfessorship professorship = (IProfessorship) arg0;
+                        return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
+                    }
 
-                        });
+                });
             }
 
-            IPersistentSummary persistentSummary = persistentSuport
-                    .getIPersistentSummary();
+            IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
             List summaries = null;
-            if (component.getLessonType() != null
-                    && component.getLessonType().intValue() > 0) {
+            if (component.getLessonType() != null && component.getLessonType().intValue() > 0) {
                 List summariesBySummaryType = persistentSummary
-                        .readByExecutionCourseShiftsAndTypeLesson(
-                                executionCourse, new TipoAula(component
-                                        .getLessonType()));
+                        .readByExecutionCourseShiftsAndTypeLesson(executionCourse, new TipoAula(
+                                component.getLessonType()));
 
                 //read summary also by execution course key
                 //and add to the last list
                 List summariesByExecutionCourseBySummaryType = persistentSummary
-                        .readByExecutionCourseAndType(executionCourse,
-                                new TipoAula(component.getLessonType()));
+                        .readByExecutionCourseAndType(executionCourse, new TipoAula(component
+                                .getLessonType()));
 
-                summaries = allSummaries(summariesBySummaryType,
-                        summariesByExecutionCourseBySummaryType);
+                summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
             }
 
-            if (component.getShiftId() != null
-                    && component.getShiftId().intValue() > 0) {
-                ITurno shiftSelected = (ITurno) persistentShift.readByOID(
-                        Turno.class, component.getShiftId());
+            if (component.getShiftId() != null && component.getShiftId().intValue() > 0) {
+                ITurno shiftSelected = (ITurno) persistentShift.readByOID(Turno.class, component
+                        .getShiftId());
                 if (shiftSelected == null) {
                     throw new FenixServiceException("no.shift");
                 }
 
-                List summariesByShift = persistentSummary.readByShift(
-                        executionCourse, shiftSelected);
+                List summariesByShift = persistentSummary.readByShift(executionCourse, shiftSelected);
 
-                List summariesByExecutionCourseByShift = findLesson(
-                        persistentSummary, executionCourse, shiftSelected);
+                List summariesByExecutionCourseByShift = findLesson(persistentSummary, executionCourse,
+                        shiftSelected);
 
                 if (summaries != null) {
-                    summaries = (List) CollectionUtils.intersection(summaries,
-                            allSummaries(summariesByShift,
-                                    summariesByExecutionCourseByShift));
+                    summaries = (List) CollectionUtils.intersection(summaries, allSummaries(
+                            summariesByShift, summariesByExecutionCourseByShift));
                 } else {
-                    summaries = allSummaries(summariesByShift,
-                            summariesByExecutionCourseByShift);
+                    summaries = allSummaries(summariesByShift, summariesByExecutionCourseByShift);
                 }
             }
 
-            if (component.getTeacherId() != null
-                    && component.getTeacherId().intValue() > 0) {
+            if (component.getTeacherId() != null && component.getTeacherId().intValue() > 0) {
                 IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship
-                        .readByOID(Professorship.class, component
-                                .getTeacherId());
+                        .readByOID(Professorship.class, component.getTeacherId());
 
-                if (professorshipSelected == null
-                        || professorshipSelected.getTeacher() == null) {
+                if (professorshipSelected == null || professorshipSelected.getTeacher() == null) {
                     throw new FenixServiceException("no.shift");
                 }
 
-                List summariesByProfessorship = persistentSummary
-                        .readByTeacher(executionCourse, professorshipSelected
-                                .getTeacher());
+                List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse,
+                        professorshipSelected.getTeacher());
 
                 if (summaries != null) {
-                    summaries = (List) CollectionUtils.intersection(summaries,
-                            summariesByProfessorship);
+                    summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
                 } else {
                     summaries = summariesByProfessorship;
                 }
             }
 
-            if (component.getTeacherId() != null
-                    && component.getTeacherId().equals(new Integer(-1))) {
-                List summariesByTeacher = persistentSummary
-                        .readByOtherTeachers(executionCourse);
+            if (component.getTeacherId() != null && component.getTeacherId().equals(new Integer(-1))) {
+                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse);
 
                 if (summaries != null) {
-                    summaries = (List) CollectionUtils.intersection(summaries,
-                            summariesByTeacher);
+                    summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
                 } else {
                     summaries = summariesByTeacher;
                 }
             }
 
-            if ((component.getLessonType() == null || component.getLessonType()
-                    .intValue() == 0)
-                    && (component.getShiftId() == null || component
-                            .getShiftId().intValue() == 0)
-                    && (component.getTeacherId() == null || component
-                            .getTeacherId().intValue() == 0)) {
-                summaries = persistentSummary
-                        .readByExecutionCourseShifts(executionCourse);
+            if ((component.getLessonType() == null || component.getLessonType().intValue() == 0)
+                    && (component.getShiftId() == null || component.getShiftId().intValue() == 0)
+                    && (component.getTeacherId() == null || component.getTeacherId().intValue() == 0)) {
+                summaries = persistentSummary.readByExecutionCourseShifts(executionCourse);
                 List summariesByExecutionCourse = persistentSummary
                         .readByExecutionCourse(executionCourse);
 
@@ -296,8 +266,7 @@ public class ExecutionCourseSiteComponentBuilder {
             Iterator iter = summaries.iterator();
             while (iter.hasNext()) {
                 ISummary summary = (ISummary) iter.next();
-                InfoSummary infoSummary = InfoSummaryWithAll
-                        .newInfoFromDomain(summary);
+                InfoSummary infoSummary = InfoSummaryWithAll.newInfoFromDomain(summary);
                 result.add(infoSummary);
             }
 
@@ -308,18 +277,14 @@ public class ExecutionCourseSiteComponentBuilder {
 
             component.setLessonTypes(lessonTypes);
             List infoShiftsOnlyType = infoShifts;
-            if (component.getLessonType() != null
-                    && component.getLessonType().intValue() != 0) {
-                final TipoAula lessonTypeSelect = new TipoAula(component
-                        .getLessonType().intValue());
-                infoShiftsOnlyType = (List) CollectionUtils.select(infoShifts,
-                        new Predicate() {
+            if (component.getLessonType() != null && component.getLessonType().intValue() != 0) {
+                final TipoAula lessonTypeSelect = new TipoAula(component.getLessonType().intValue());
+                infoShiftsOnlyType = (List) CollectionUtils.select(infoShifts, new Predicate() {
 
-                            public boolean evaluate(Object arg0) {
-                                return ((InfoShift) arg0).getTipo().equals(
-                                        lessonTypeSelect);
-                            }
-                        });
+                    public boolean evaluate(Object arg0) {
+                        return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
+                    }
+                });
             }
             component.setInfoShifts(infoShiftsOnlyType);
             component.setInfoProfessorships(infoProfessorships);
@@ -346,84 +311,67 @@ public class ExecutionCourseSiteComponentBuilder {
                 && executionCourse.getPraticalHours().intValue() > 0) {
             lessonTypes.add(new TipoAula(2));
         }
-        if (executionCourse.getLabHours() != null
-                && executionCourse.getLabHours().intValue() > 0) {
+        if (executionCourse.getLabHours() != null && executionCourse.getLabHours().intValue() > 0) {
             lessonTypes.add(new TipoAula(4));
         }
 
         return lessonTypes;
     }
 
-    private List findLesson(IPersistentSummary persistentSummary,
-            IExecutionCourse executionCourse, ITurno shift)
-            throws ExcepcaoPersistencia {
+    private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
+            ITurno shift) throws ExcepcaoPersistencia {
 
-        List summariesByExecutionCourse = persistentSummary
-                .readByExecutionCourse(executionCourse);
+        List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse);
 
         //copy the list
         List summariesByShift = new ArrayList();
         summariesByShift.addAll(summariesByExecutionCourse);
 
-        if (summariesByExecutionCourse != null
-                && summariesByExecutionCourse.size() > 0) {
+        if (summariesByExecutionCourse != null && summariesByExecutionCourse.size() > 0) {
             ListIterator iterator = summariesByExecutionCourse.listIterator();
             while (iterator.hasNext()) {
                 ISummary summary = (ISummary) iterator.next();
 
                 Calendar dateAndHourSummary = Calendar.getInstance();
-                dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summary
-                        .getSummaryDate().get(Calendar.DAY_OF_MONTH));
-                dateAndHourSummary.set(Calendar.MONTH, summary.getSummaryDate()
-                        .get(Calendar.MONTH));
-                dateAndHourSummary.set(Calendar.YEAR, summary.getSummaryDate()
-                        .get(Calendar.YEAR));
-                dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summary
-                        .getSummaryHour().get(Calendar.HOUR_OF_DAY));
-                dateAndHourSummary.set(Calendar.MINUTE, summary
-                        .getSummaryHour().get(Calendar.MINUTE));
+                dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summary.getSummaryDate().get(
+                        Calendar.DAY_OF_MONTH));
+                dateAndHourSummary.set(Calendar.MONTH, summary.getSummaryDate().get(Calendar.MONTH));
+                dateAndHourSummary.set(Calendar.YEAR, summary.getSummaryDate().get(Calendar.YEAR));
+                dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summary.getSummaryHour().get(
+                        Calendar.HOUR_OF_DAY));
+                dateAndHourSummary.set(Calendar.MINUTE, summary.getSummaryHour().get(Calendar.MINUTE));
                 dateAndHourSummary.set(Calendar.SECOND, 00);
 
                 Calendar beginLesson = Calendar.getInstance();
-                beginLesson.set(Calendar.DAY_OF_MONTH, summary.getSummaryDate()
-                        .get(Calendar.DAY_OF_MONTH));
-                beginLesson.set(Calendar.MONTH, summary.getSummaryDate().get(
-                        Calendar.MONTH));
-                beginLesson.set(Calendar.YEAR, summary.getSummaryDate().get(
-                        Calendar.YEAR));
+                beginLesson.set(Calendar.DAY_OF_MONTH, summary.getSummaryDate().get(
+                        Calendar.DAY_OF_MONTH));
+                beginLesson.set(Calendar.MONTH, summary.getSummaryDate().get(Calendar.MONTH));
+                beginLesson.set(Calendar.YEAR, summary.getSummaryDate().get(Calendar.YEAR));
 
                 Calendar endLesson = Calendar.getInstance();
-                endLesson.set(Calendar.DAY_OF_MONTH, summary.getSummaryDate()
-                        .get(Calendar.DAY_OF_MONTH));
-                endLesson.set(Calendar.MONTH, summary.getSummaryDate().get(
-                        Calendar.MONTH));
-                endLesson.set(Calendar.YEAR, summary.getSummaryDate().get(
-                        Calendar.YEAR));
+                endLesson
+                        .set(Calendar.DAY_OF_MONTH, summary.getSummaryDate().get(Calendar.DAY_OF_MONTH));
+                endLesson.set(Calendar.MONTH, summary.getSummaryDate().get(Calendar.MONTH));
+                endLesson.set(Calendar.YEAR, summary.getSummaryDate().get(Calendar.YEAR));
 
                 boolean removeSummary = true;
-                if (shift.getAssociatedLessons() != null
-                        && shift.getAssociatedLessons().size() > 0) {
-                    ListIterator iterLesson = shift.getAssociatedLessons()
-                            .listIterator();
+                if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
+                    ListIterator iterLesson = shift.getAssociatedLessons().listIterator();
                     while (iterLesson.hasNext()) {
                         IAula lesson = (IAula) iterLesson.next();
 
-                        beginLesson.set(Calendar.HOUR_OF_DAY, lesson
-                                .getInicio().get(Calendar.HOUR_OF_DAY));
-                        beginLesson.set(Calendar.MINUTE, lesson.getInicio()
-                                .get(Calendar.MINUTE));
+                        beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
+                                Calendar.HOUR_OF_DAY));
+                        beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
                         beginLesson.set(Calendar.SECOND, 00);
 
-                        endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim()
-                                .get(Calendar.HOUR_OF_DAY));
-                        endLesson.set(Calendar.MINUTE, lesson.getFim().get(
-                                Calendar.MINUTE));
+                        endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
+                        endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
                         endLesson.set(Calendar.SECOND, 00);
 
                         if (summary.getSummaryType().equals(shift.getTipo())
-                                && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson
-                                        .getDiaSemana().getDiaSemana()
-                                        .intValue()
+                                && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
+                                        .getDiaSemana().intValue()
                                 && !beginLesson.after(dateAndHourSummary)
                                 && endLesson.after(dateAndHourSummary)) {
                             removeSummary = false;
@@ -450,18 +398,14 @@ public class ExecutionCourseSiteComponentBuilder {
             return summariesByExecutionCourse;
         }
 
-        if (summariesByExecutionCourse == null
-                || summariesByExecutionCourse.size() <= 0) {
+        if (summariesByExecutionCourse == null || summariesByExecutionCourse.size() <= 0) {
             return summaries;
         }
 
-        List intersection = (List) CollectionUtils.intersection(summaries,
-                summariesByExecutionCourse);
+        List intersection = (List) CollectionUtils.intersection(summaries, summariesByExecutionCourse);
 
-        allSummaries.addAll(CollectionUtils
-                .disjunction(summaries, intersection));
-        allSummaries.addAll(CollectionUtils.disjunction(
-                summariesByExecutionCourse, intersection));
+        allSummaries.addAll(CollectionUtils.disjunction(summaries, intersection));
+        allSummaries.addAll(CollectionUtils.disjunction(summariesByExecutionCourse, intersection));
         allSummaries.addAll(intersection);
 
         if (allSummaries == null) {
@@ -475,8 +419,7 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component,
-            ISite site) {
+    private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
         IExecutionCourse executionCourse = site.getExecutionCourse();
         List evaluations = executionCourse.getAssociatedEvaluations();
         List infoEvaluations = new ArrayList();
@@ -495,8 +438,8 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteCommon(InfoSiteCommon component,
-            ISite site) throws FenixServiceException {
+    private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, ISite site)
+            throws FenixServiceException {
 
         ISuportePersistente sp;
         List allSections = null;
@@ -514,9 +457,7 @@ public class ExecutionCourseSiteComponentBuilder {
             infoSectionsList = new ArrayList(allSections.size());
 
             while (iterator.hasNext()) {
-                infoSectionsList
-                        .add(copyISection2InfoSection((ISection) iterator
-                                .next()));
+                infoSectionsList.add(copyISection2InfoSection((ISection) iterator.next()));
             }
             Collections.sort(infoSectionsList);
 
@@ -534,8 +475,8 @@ public class ExecutionCourseSiteComponentBuilder {
         component.setMail(site.getMail());
         component.setSections(infoSectionsList);
         InfoExecutionCourse executionCourse;
-        executionCourse = InfoExecutionCourseWithExecutionPeriod
-                .newInfoFromDomain(site.getExecutionCourse());
+        executionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(site
+                .getExecutionCourse());
         component.setExecutionCourse(executionCourse);
         return component;
     }
@@ -545,12 +486,10 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteSection(InfoSiteSection component,
-            ISite site, InfoSiteCommon commonComponent, Integer sectionIndex)
-            throws FenixServiceException {
+    private ISiteComponent getInfoSiteSection(InfoSiteSection component, ISite site,
+            InfoSiteCommon commonComponent, Integer sectionIndex) throws FenixServiceException {
         List sections = commonComponent.getSections();
-        InfoSection infoSection = (InfoSection) sections.get(sectionIndex
-                .intValue());
+        InfoSection infoSection = (InfoSection) sections.get(sectionIndex.intValue());
         component.setSection(infoSection);
         List itemsList = null;
         try {
@@ -569,8 +508,7 @@ public class ExecutionCourseSiteComponentBuilder {
             IItem item = (IItem) iter.next();
             InfoItem infoItem = InfoItem.newInfoFromDomain(item);
             try {
-                infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item
-                        .getSlideName()));
+                infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item.getSlideName()));
             } catch (SlideException e1) {
                 //the item does not have a folder associated
             }
@@ -587,15 +525,14 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteShifts(InfoSiteShifts component,
-            ISite site) throws FenixServiceException {
+    private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, ISite site)
+            throws FenixServiceException {
         List shiftsWithAssociatedClassesAndLessons = new ArrayList();
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(
-                    disciplinaExecucao);
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao);
 
             if (shifts == null || shifts.isEmpty()) {
 
@@ -604,36 +541,29 @@ public class ExecutionCourseSiteComponentBuilder {
                 for (int i = 0; i < shifts.size(); i++) {
                     ITurno shift = (ITurno) shifts.get(i);
                     InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
-                            InfoShiftWithInfoExecutionCourseAndCollections
-                                    .newInfoFromDomain(shift), null, null);
+                            InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(shift),
+                            null, null);
 
-        
-                    //List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
-					List lessons = shift.getAssociatedLessons();
+                    //List lessons =
+                    // sp.getITurnoAulaPersistente().readByShift(shift);
+                    List lessons = shift.getAssociatedLessons();
                     List infoLessons = new ArrayList();
-                    List classesShifts = sp.getITurmaTurnoPersistente()
-                            .readClassesWithShift(shift);
+                    List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
                     List infoClasses = new ArrayList();
 
                     for (int j = 0; j < lessons.size(); j++)
-          {
-                    	InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-                    	InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)); 
-                        infoLesson.setInfoShift(infoShift);
-                        infoLessons.add(infoLesson);
-                    }
+                        infoLessons.add(InfoLessonWithInfoRoomAndInfoExecutionCourse
+                                .newInfoFromDomain((IAula) lessons.get(j)));
+
                     shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
 
                     for (int j = 0; j < classesShifts.size(); j++)
                         infoClasses.add(InfoClassWithInfoExecutionDegree
-                                .newInfoFromDomain(((ITurmaTurno) classesShifts
-                                        .get(j)).getTurma()));
+                                .newInfoFromDomain(((ITurmaTurno) classesShifts.get(j)).getTurma()));
 
-                    shiftWithAssociatedClassesAndLessons
-                            .setInfoClasses(infoClasses);
+                    shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
 
-                    shiftsWithAssociatedClassesAndLessons
-                            .add(shiftWithAssociatedClassesAndLessons);
+                    shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
                 }
             }
 
@@ -641,10 +571,9 @@ public class ExecutionCourseSiteComponentBuilder {
             throw new FenixServiceException(e);
         }
         component.setShifts(shiftsWithAssociatedClassesAndLessons);
-        component.setInfoExecutionPeriodName(site.getExecutionCourse()
-                .getExecutionPeriod().getName());
-        component.setInfoExecutionYearName(site.getExecutionCourse()
-                .getExecutionPeriod().getExecutionYear().getYear());
+        component.setInfoExecutionPeriodName(site.getExecutionCourse().getExecutionPeriod().getName());
+        component.setInfoExecutionYearName(site.getExecutionCourse().getExecutionPeriod()
+                .getExecutionYear().getYear());
         return component;
     }
 
@@ -653,37 +582,38 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component,
-            ISite site) throws FenixServiceException {
-        ArrayList infoLessonList = null;
-        
+    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ISite site)
+            throws FenixServiceException {
+        List infoLessonList = null;
+
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-//                 List aulas = sp.getIAulaPersistente().readByExecutionCourse(executionCourse);
-			List aulas = new ArrayList();
+            //                 List aulas =
+            // sp.getIAulaPersistente().readByExecutionCourse(executionCourse);
+            List aulas = new ArrayList();
 
-			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
-			for (int i=0; i < shifts.size(); i++)
-            {                
-             	ITurno shift = (ITurno) shifts.get(i);
-             	List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
-             	
-             	aulas.addAll(aulasTemp);  
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+            for (int i = 0; i < shifts.size(); i++) {
+                ITurno shift = (ITurno) shifts.get(i);
+                List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
+
+                aulas.addAll(aulasTemp);
             }
-			
+
             Iterator iterator = aulas.iterator();
             infoLessonList = new ArrayList();
             while (iterator.hasNext()) {
                 IAula elem = (IAula) iterator.next();
-//                InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoExecutionCourse
-//                        .newInfoFromDomain(elem);
+                //                InfoLesson infoLesson =
+                // InfoLessonWithInfoRoomAndInfoExecutionCourse
+                //                        .newInfoFromDomain(elem);
                 InfoLesson infoLesson = copyILesson2InfoLesson(elem);
-                
+
                 infoLessonList.add(infoLesson);
-                                
+
             }
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
@@ -701,17 +631,19 @@ public class ExecutionCourseSiteComponentBuilder {
             infoLesson.setFim(lesson.getFim());
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
-            //infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));  
-            
-            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+            //infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
+
+            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
+                    .getRoomOccupation());
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-            
-			ITurno shift = lesson.getShift();
-			InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-			infoLesson.setInfoShift(infoShift);
+
+            ITurno shift = lesson.getShift();
+            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+            infoLesson.setInfoShift(infoShift);
         }
         return infoLesson;
     }
+
     /**
      * @param courses
      * @param site
@@ -734,8 +666,7 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteBibliography(
-            InfoSiteBibliography component, ISite site)
+    private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, ISite site)
             throws FenixServiceException {
         List references = null;
         List infoBibRefs = null;
@@ -747,14 +678,12 @@ public class ExecutionCourseSiteComponentBuilder {
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            references = persistentBibliographicReference
-                    .readBibliographicReference(executionCourse);
+            references = persistentBibliographicReference.readBibliographicReference(executionCourse);
 
             Iterator iterator = references.iterator();
             infoBibRefs = new ArrayList();
             while (iterator.hasNext()) {
-                IBibliographicReference bibRef = (IBibliographicReference) iterator
-                        .next();
+                IBibliographicReference bibRef = (IBibliographicReference) iterator.next();
 
                 InfoBibliographicReference infoBibRef = copyFromDomain(bibRef);
                 infoBibRefs.add(infoBibRef);
@@ -775,16 +704,14 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoEvaluationMethod(
-            InfoEvaluationMethod component, ISite site)
+    private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ISite site)
             throws FenixServiceException {
         try {
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IPersistentEvaluationMethod persistentEvaluationMethod = sp
-                    .getIPersistentEvaluationMethod();
+            IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod = persistentEvaluationMethod
                     .readByIdExecutionCourse(executionCourse);
             if (evaluationMethod != null) {
@@ -801,25 +728,31 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component,
-            ISite site) throws FenixServiceException {
+    private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site)
+            throws FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            InfoAnnouncement infoAnnouncement = readLastAnnouncement(
-                    persistentSupport, executionCourse);
+            InfoAnnouncement infoAnnouncement = readLastAnnouncement(persistentSupport, executionCourse);
 
-            List responsibleInfoTeachersList = readResponsibleTeachers(
-                    persistentSupport, executionCourse);
+            List infoAnnouncements = readLastFiveAnnouncements(persistentSupport, executionCourse);
 
-            List lecturingInfoTeachersList = readLecturingTeachers(
-                    persistentSupport, executionCourse);
+            List responsibleInfoTeachersList = readResponsibleTeachers(persistentSupport,
+                    executionCourse);
+
+            List lecturingInfoTeachersList = readLecturingTeachers(persistentSupport, executionCourse);
 
             //set all the required information to the component
+
+            if (!infoAnnouncements.isEmpty()) {
+                infoAnnouncements.remove(0);
+            }
+
             component.setLastAnnouncement(infoAnnouncement);
+            component.setLastFiveAnnouncements(infoAnnouncements);
+
             component.setAlternativeSite(site.getAlternativeSite());
             component.setInitialStatement(site.getInitialStatement());
             component.setIntroduction(site.getIntroduction());
@@ -840,29 +773,62 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    private InfoSiteAnnouncement getInfoSiteAnnouncement(
-            InfoSiteAnnouncement component, ISite site)
+    /**
+     * @param persistentSupport
+     * @param executionCourse
+     * @return
+     */
+    private List readLastFiveAnnouncements(ISuportePersistente persistentSupport,
+            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+
+        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
+        List announcementsList = persistentSupport.getIPersistentAnnouncement().readAnnouncementsBySite(
+                site);
+
+        List infoAnnouncementsList = new ArrayList();
+
+        if (announcementsList != null && announcementsList.isEmpty() == false) {
+            Iterator iterAnnouncements = announcementsList.iterator();
+            while (iterAnnouncements.hasNext()) {
+                IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
+                infoAnnouncementsList.add(copyFromDomain(announcement));
+            }
+        }
+
+        Collections.sort(infoAnnouncementsList, new ComparatorChain(new BeanComparator(
+                "lastModifiedDate"), true));
+
+        List lastFiveInfoAnnouncements = new ArrayList();
+        Iterator iterAnnouncements = infoAnnouncementsList.iterator();
+
+        int aux = 0;
+        while (iterAnnouncements.hasNext() && aux < 5) {
+            lastFiveInfoAnnouncements.add(iterAnnouncements.next());
+            aux++;
+        }
+
+        return lastFiveInfoAnnouncements;
+    }
+
+    private InfoSiteAnnouncement getInfoSiteAnnouncement(InfoSiteAnnouncement component, ISite site)
             throws FenixServiceException {
         try {
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            List announcementsList = sp.getIPersistentAnnouncement()
-                    .readAnnouncementsBySite(site);
+            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site);
             List infoAnnouncementsList = new ArrayList();
 
-            if (announcementsList != null
-                    && announcementsList.isEmpty() == false) {
+            if (announcementsList != null && announcementsList.isEmpty() == false) {
                 Iterator iterAnnouncements = announcementsList.iterator();
                 while (iterAnnouncements.hasNext()) {
-                    IAnnouncement announcement = (IAnnouncement) iterAnnouncements
-                            .next();
+                    IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
                     infoAnnouncementsList.add(copyFromDomain(announcement));
                 }
             }
 
-            Collections.sort(infoAnnouncementsList, new ComparatorChain(
-                    new BeanComparator("lastModifiedDate"), true));
+            Collections.sort(infoAnnouncementsList, new ComparatorChain(new BeanComparator(
+                    "lastModifiedDate"), true));
             component.setAnnouncements(infoAnnouncementsList);
             return component;
         } catch (ExcepcaoPersistencia e) {
@@ -875,8 +841,7 @@ public class ExecutionCourseSiteComponentBuilder {
         List domainLecturingTeachersList = null;
         IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        domainLecturingTeachersList = persistentProfessorship
-                .readByExecutionCourse(executionCourse);
+        domainLecturingTeachersList = persistentProfessorship.readByExecutionCourse(executionCourse);
 
         List lecturingInfoTeachersList = new ArrayList();
         if (domainLecturingTeachersList != null) {
@@ -885,8 +850,7 @@ public class ExecutionCourseSiteComponentBuilder {
             while (iter.hasNext()) {
                 IProfessorship professorship = (IProfessorship) iter.next();
                 ITeacher teacher = professorship.getTeacher();
-                InfoTeacher infoTeacher = InfoTeacherWithPerson
-                        .newInfoFromDomain(teacher);
+                InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
                 lecturingInfoTeachersList.add(infoTeacher);
             }
         }
@@ -899,8 +863,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         IPersistentResponsibleFor persistentResponsibleFor = persistentSupport
                 .getIPersistentResponsibleFor();
-        responsibleDomainTeachersList = persistentResponsibleFor
-                .readByExecutionCourse(executionCourse);
+        responsibleDomainTeachersList = persistentResponsibleFor.readByExecutionCourse(executionCourse);
 
         List responsibleInfoTeachersList = new ArrayList();
         if (responsibleDomainTeachersList != null) {
@@ -908,8 +871,7 @@ public class ExecutionCourseSiteComponentBuilder {
             while (iter.hasNext()) {
                 IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
                 ITeacher teacher = responsibleFor.getTeacher();
-                InfoTeacher infoTeacher = InfoTeacherWithPerson
-                        .newInfoFromDomain(teacher);
+                InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
                 responsibleInfoTeachersList.add(infoTeacher);
             }
 
@@ -917,13 +879,11 @@ public class ExecutionCourseSiteComponentBuilder {
         return responsibleInfoTeachersList;
     }
 
-    private InfoAnnouncement readLastAnnouncement(
-            ISuportePersistente persistentSupport,
+    private InfoAnnouncement readLastAnnouncement(ISuportePersistente persistentSupport,
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        ISite site = persistentSupport.getIPersistentSite()
-                .readByExecutionCourse(executionCourse);
-        IAnnouncement announcement = persistentSupport
-                .getIPersistentAnnouncement().readLastAnnouncementForSite(site);
+        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
+        IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement()
+                .readLastAnnouncementForSite(site);
         InfoAnnouncement infoAnnouncement = null;
         if (announcement != null) {
             infoAnnouncement = copyFromDomain(announcement);
@@ -935,8 +895,7 @@ public class ExecutionCourseSiteComponentBuilder {
         List infoCurricularCourseScopeList;
         List infoCurricularCourseList = new ArrayList();
         if (executionCourse.getAssociatedCurricularCourses() != null)
-            for (int i = 0; i < executionCourse
-                    .getAssociatedCurricularCourses().size(); i++) {
+            for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
                         .getAssociatedCurricularCourses().get(i);
                 InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
@@ -945,12 +904,10 @@ public class ExecutionCourseSiteComponentBuilder {
                     ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
                             .getScopes().get(j);
                     InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
-                    infoCurricularCourseScopeList
-                            .add(infoCurricularCourseScope);
+                    infoCurricularCourseScopeList.add(infoCurricularCourseScope);
                 }
 
-                infoCurricularCourse
-                        .setInfoScopes(infoCurricularCourseScopeList);
+                infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
                 infoCurricularCourseList.add(infoCurricularCourse);
 
             }
@@ -968,8 +925,7 @@ public class ExecutionCourseSiteComponentBuilder {
             infoSection.setIdInternal(section.getIdInternal());
             infoSection.setName(section.getName());
             infoSection.setSectionOrder(section.getSectionOrder());
-            infoSection.setSuperiorInfoSection(copyISection2InfoSection(section
-                    .getSuperiorSection()));
+            infoSection.setSuperiorInfoSection(copyISection2InfoSection(section.getSuperiorSection()));
             infoSection.setInfoSite(copyISite2InfoSite(section.getSite()));
         }
         return infoSection;
@@ -989,9 +945,8 @@ public class ExecutionCourseSiteComponentBuilder {
             infoSite.setIntroduction(site.getIntroduction());
             infoSite.setMail(site.getMail());
             infoSite.setStyle(site.getStyle());
-            infoSite
-                    .setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-                            .newInfoFromDomain(site.getExecutionCourse()));
+            infoSite.setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
+                    .newInfoFromDomain(site.getExecutionCourse()));
         }
         return infoSite;
     }
@@ -1007,8 +962,7 @@ public class ExecutionCourseSiteComponentBuilder {
             infoAnnouncement.setIdInternal(announcement.getIdInternal());
             infoAnnouncement.setCreationDate(announcement.getCreationDate());
             infoAnnouncement.setInformation(announcement.getInformation());
-            infoAnnouncement.setLastModifiedDate(announcement
-                    .getLastModifiedDate());
+            infoAnnouncement.setLastModifiedDate(announcement.getLastModifiedDate());
             infoAnnouncement.setTitle(announcement.getTitle());
         }
         return infoAnnouncement;
@@ -1018,17 +972,13 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param evaluationMethod
      * @return
      */
-    private InfoEvaluationMethod copyFromDomain(
-            IEvaluationMethod evaluationMethod) {
+    private InfoEvaluationMethod copyFromDomain(IEvaluationMethod evaluationMethod) {
         InfoEvaluationMethod infoEvaluationMethod = null;
         if (evaluationMethod != null) {
             infoEvaluationMethod = new InfoEvaluationMethod();
-            infoEvaluationMethod
-                    .setIdInternal(evaluationMethod.getIdInternal());
-            infoEvaluationMethod.setEvaluationElements(evaluationMethod
-                    .getEvaluationElements());
-            infoEvaluationMethod.setEvaluationElementsEn(evaluationMethod
-                    .getEvaluationElementsEn());
+            infoEvaluationMethod.setIdInternal(evaluationMethod.getIdInternal());
+            infoEvaluationMethod.setEvaluationElements(evaluationMethod.getEvaluationElements());
+            infoEvaluationMethod.setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
         }
         return infoEvaluationMethod;
     }
@@ -1037,8 +987,7 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param bibRef
      * @return
      */
-    private InfoBibliographicReference copyFromDomain(
-            IBibliographicReference bibRef) {
+    private InfoBibliographicReference copyFromDomain(IBibliographicReference bibRef) {
         InfoBibliographicReference infoBibliographicReference = null;
         if (bibRef != null) {
             infoBibliographicReference = new InfoBibliographicReference();
@@ -1057,17 +1006,13 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param curricularCourseScope
      * @return
      */
-    private InfoCurricularCourseScope copyFromDomain(
-            ICurricularCourseScope curricularCourseScope) {
+    private InfoCurricularCourseScope copyFromDomain(ICurricularCourseScope curricularCourseScope) {
         InfoCurricularCourseScope infoCurricularCourseScope = null;
         if (curricularCourseScope != null) {
             infoCurricularCourseScope = new InfoCurricularCourseScope();
-            infoCurricularCourseScope.setIdInternal(curricularCourseScope
-                    .getIdInternal());
-            infoCurricularCourseScope.setBeginDate(curricularCourseScope
-                    .getBeginDate());
-            infoCurricularCourseScope.setEndDate(curricularCourseScope
-                    .getEndDate());
+            infoCurricularCourseScope.setIdInternal(curricularCourseScope.getIdInternal());
+            infoCurricularCourseScope.setBeginDate(curricularCourseScope.getBeginDate());
+            infoCurricularCourseScope.setEndDate(curricularCourseScope.getEndDate());
 
         }
         return infoCurricularCourseScope;
@@ -1077,43 +1022,31 @@ public class ExecutionCourseSiteComponentBuilder {
      * @param curricularCourse
      * @return
      */
-    private InfoCurricularCourse copyFromDomain(
-            ICurricularCourse curricularCourse) {
+    private InfoCurricularCourse copyFromDomain(ICurricularCourse curricularCourse) {
         InfoCurricularCourse infoCurricularCourse = null;
         if (curricularCourse != null) {
             infoCurricularCourse = new InfoCurricularCourse();
-            infoCurricularCourse
-                    .setIdInternal(curricularCourse.getIdInternal());
+            infoCurricularCourse.setIdInternal(curricularCourse.getIdInternal());
             infoCurricularCourse.setBasic(curricularCourse.getBasic());
             infoCurricularCourse.setCode(curricularCourse.getCode());
             infoCurricularCourse.setCredits(curricularCourse.getCredits());
-            infoCurricularCourse.setEctsCredits(curricularCourse
-                    .getEctsCredits());
-            infoCurricularCourse.setEnrollmentWeigth(curricularCourse
-                    .getEnrollmentWeigth());
+            infoCurricularCourse.setEctsCredits(curricularCourse.getEctsCredits());
+            infoCurricularCourse.setEnrollmentWeigth(curricularCourse.getEnrollmentWeigth());
             infoCurricularCourse.setLabHours(curricularCourse.getLabHours());
             infoCurricularCourse.setMandatory(curricularCourse.getMandatory());
-            infoCurricularCourse.setMandatoryEnrollment(curricularCourse
-                    .getMandatoryEnrollment());
-            infoCurricularCourse
-                    .setMaximumValueForAcumulatedEnrollments(curricularCourse
-                            .getMaximumValueForAcumulatedEnrollments());
-            infoCurricularCourse
-                    .setMinimumValueForAcumulatedEnrollments(curricularCourse
-                            .getMinimumValueForAcumulatedEnrollments());
+            infoCurricularCourse.setMandatoryEnrollment(curricularCourse.getMandatoryEnrollment());
+            infoCurricularCourse.setMaximumValueForAcumulatedEnrollments(curricularCourse
+                    .getMaximumValueForAcumulatedEnrollments());
+            infoCurricularCourse.setMinimumValueForAcumulatedEnrollments(curricularCourse
+                    .getMinimumValueForAcumulatedEnrollments());
             infoCurricularCourse.setName(curricularCourse.getName());
-            infoCurricularCourse.setPraticalHours(curricularCourse
-                    .getPraticalHours());
-            infoCurricularCourse.setTheoPratHours(curricularCourse
-                    .getTheoPratHours());
-            infoCurricularCourse.setTheoreticalHours(curricularCourse
-                    .getTheoreticalHours());
+            infoCurricularCourse.setPraticalHours(curricularCourse.getPraticalHours());
+            infoCurricularCourse.setTheoPratHours(curricularCourse.getTheoPratHours());
+            infoCurricularCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
             infoCurricularCourse.setType(curricularCourse.getType());
             infoCurricularCourse.setWeigth(curricularCourse.getWeigth());
-            infoCurricularCourse
-                    .setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
-                            .newInfoFromDomain(curricularCourse
-                                    .getDegreeCurricularPlan()));
+            infoCurricularCourse.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
+                    .newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()));
         }
         return infoCurricularCourse;
     }

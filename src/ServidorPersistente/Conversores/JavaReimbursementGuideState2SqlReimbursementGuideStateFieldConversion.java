@@ -10,8 +10,8 @@ import Util.ReimbursementGuideState;
  *  
  */
 
-public class JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion
-        implements FieldConversion {
+public class JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion implements
+        FieldConversion {
 
     public Object javaToSql(Object source) {
         if (source instanceof ReimbursementGuideState) {

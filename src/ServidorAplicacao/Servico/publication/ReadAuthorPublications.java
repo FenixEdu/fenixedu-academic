@@ -34,111 +34,101 @@ import constants.publication.PublicationConstants;
  *  
  */
 public class ReadAuthorPublications implements IServico {
-	public ReadAuthorPublications() {
-	}
+    public ReadAuthorPublications() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadAuthorPublications";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadAuthorPublications";
+    }
 
-	/**
-	 * Executes the service.
-	 */
-	public SiteView run(String user) throws FenixServiceException {
-		try {
-			InfoSitePublications infoSitePublications =
-				new InfoSitePublications();
+    /**
+     * Executes the service.
+     */
+    public SiteView run(String user) throws FenixServiceException {
+        try {
+            InfoSitePublications infoSitePublications = new InfoSitePublications();
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-			infoSitePublications.setInfoTeacher(infoTeacher);
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            infoSitePublications.setInfoTeacher(infoTeacher);
 
-			List infoPublications = getInfoPublications(sp, teacher);
+            List infoPublications = getInfoPublications(sp, teacher);
 
-			List infoPublicationsDidactic =
-				getInfoPublicationsType(infoPublications, PublicationConstants.DIDATIC);
+            List infoPublicationsDidactic = getInfoPublicationsType(infoPublications,
+                    PublicationConstants.DIDATIC);
 
-			List infoPublicationsCientific =
-				getInfoPublicationsType(infoPublications, PublicationConstants.CIENTIFIC);
+            List infoPublicationsCientific = getInfoPublicationsType(infoPublications,
+                    PublicationConstants.CIENTIFIC);
 
-			infoSitePublications.setInfoDidaticPublications(
-				infoPublicationsDidactic);
+            infoSitePublications.setInfoDidaticPublications(infoPublicationsDidactic);
 
-			infoSitePublications.setInfoCientificPublications(
-				infoPublicationsCientific);
+            infoSitePublications.setInfoCientificPublications(infoPublicationsCientific);
 
-			return new SiteView(infoSitePublications);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            return new SiteView(infoSitePublications);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
-	private List getInfoPublications(ISuportePersistente sp, ITeacher teacher)
-		throws ExcepcaoPersistencia {
+    private List getInfoPublications(ISuportePersistente sp, ITeacher teacher)
+            throws ExcepcaoPersistencia {
 
-		IPessoa pessoa = teacher.getPerson();
-		Integer keyPerson = pessoa.getIdInternal();
+        IPessoa pessoa = teacher.getPerson();
+        Integer keyPerson = pessoa.getIdInternal();
 
-		IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-		Author author = persistentAuthor.readAuthorByKeyPerson(keyPerson);
+        IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+        Author author = persistentAuthor.readAuthorByKeyPerson(keyPerson);
 
-		List authorPublications = new ArrayList();
-		List infoAuthorPublications = new ArrayList();
+        List authorPublications = new ArrayList();
+        List infoAuthorPublications = new ArrayList();
 
-		if (author == null) {
-			Author newAuthor = new Author();
-			newAuthor.setKeyPerson(keyPerson);
-			newAuthor.setPerson(pessoa);
-			persistentAuthor.lockWrite(newAuthor);
+        if (author == null) {
+            Author newAuthor = new Author();
+            newAuthor.setKeyPerson(keyPerson);
+            newAuthor.setPerson(pessoa);
+            persistentAuthor.lockWrite(newAuthor);
 
-		} else {
-			authorPublications = author.getAuthorPublications();
-		}
+        } else {
+            authorPublications = author.getAuthorPublications();
+        }
 
-		if (authorPublications != null || authorPublications.size() != PublicationConstants.ZERO_VALUE) {
-			infoAuthorPublications =
-				(
-					List) CollectionUtils
-						.collect(authorPublications, new Transformer() {
-				public Object transform(Object o) {
-					IPublication publication = (IPublication) o;
-					IPublication publication2 = publication;
-					publication2.setPublicationString(publication.toString());
-					return Cloner.copyIPublication2InfoPublication(
-						publication2);
-				}
-			});
-		}
+        if (authorPublications != null || authorPublications.size() != PublicationConstants.ZERO_VALUE) {
+            infoAuthorPublications = (List) CollectionUtils.collect(authorPublications,
+                    new Transformer() {
+                        public Object transform(Object o) {
+                            IPublication publication = (IPublication) o;
+                            IPublication publication2 = publication;
+                            publication2.setPublicationString(publication.toString());
+                            return Cloner.copyIPublication2InfoPublication(publication2);
+                        }
+                    });
+        }
 
-		return infoAuthorPublications;
-	}
+        return infoAuthorPublications;
+    }
 
-	List getInfoPublicationsType(
-		List infoPublications,
-		Integer typePublication) {
+    List getInfoPublicationsType(List infoPublications, Integer typePublication) {
 
-		List newInfoPublications = new ArrayList();
+        List newInfoPublications = new ArrayList();
 
-		if (infoPublications != null || infoPublications.size() != PublicationConstants.ZERO_VALUE) {
-			Iterator iterator = infoPublications.iterator();
-			while (iterator.hasNext()) {
-				InfoPublication infoPublication =
-					(InfoPublication) iterator.next();
-				if (infoPublication.getDidatic().intValue()
-					== typePublication.intValue()) {
-					newInfoPublications.add(infoPublication);
-				}
-			}
-		}
-		return newInfoPublications;
-	}
+        if (infoPublications != null || infoPublications.size() != PublicationConstants.ZERO_VALUE) {
+            Iterator iterator = infoPublications.iterator();
+            while (iterator.hasNext()) {
+                InfoPublication infoPublication = (InfoPublication) iterator.next();
+                if (infoPublication.getDidatic().intValue() == typePublication.intValue()) {
+                    newInfoPublications.add(infoPublication);
+                }
+            }
+        }
+        return newInfoPublications;
+    }
 
 }

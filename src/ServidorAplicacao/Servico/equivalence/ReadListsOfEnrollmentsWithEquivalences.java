@@ -13,7 +13,7 @@ import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -22,113 +22,109 @@ import Util.TipoCurso;
  * @author David Santos in May 12, 2004
  */
 
-public class ReadListsOfEnrollmentsWithEquivalences extends EnrollmentEquivalenceServiceUtils implements IService
-{
-	public ReadListsOfEnrollmentsWithEquivalences()
-	{
-	}
+public class ReadListsOfEnrollmentsWithEquivalences extends EnrollmentEquivalenceServiceUtils implements
+        IService {
+    public ReadListsOfEnrollmentsWithEquivalences() {
+    }
 
-	public InfoEquivalenceContext run(Integer studentNumber, TipoCurso degreeType, Integer fromStudentCurricularPlanID)
-		throws FenixServiceException
-	{
-		List args = new ArrayList();
-		args.add(0, fromStudentCurricularPlanID);
-		args.add(1, studentNumber);
-		args.add(2, degreeType);
-		
-		return (InfoEquivalenceContext) convertDataOutput(execute(convertDataInput(args)));
-	}
+    public InfoEquivalenceContext run(Integer studentNumber, TipoCurso degreeType,
+            Integer fromStudentCurricularPlanID) throws FenixServiceException {
+        List args = new ArrayList();
+        args.add(0, fromStudentCurricularPlanID);
+        args.add(1, studentNumber);
+        args.add(2, degreeType);
 
-	/**
-	 * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
-	 * This method converts this service DataBeans input objects to their respective Domain objects.
-	 * These Domain objects are to be used by the service's logic.
-	 */
-	protected Object convertDataInput(Object object)
-	{
-		return object;
-	}
+        return (InfoEquivalenceContext) convertDataOutput(execute(convertDataInput(args)));
+    }
 
-	/**
-	 * @param List
-	 * @return InfoEquivalenceContext
-	 * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
-	 * This method converts this service output Domain objects to their respective DataBeans.
-	 * These DataBeans are the result of executing this service logic and are to be passed on to the uper layer of the architecture.
-	 */
-	protected Object convertDataOutput(Object object)
-	{
-		List elements = (List) object;
-		
-		List enrollmentsFromEquivalences = (List) elements.get(0);
-		IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) elements.get(1);
+    /**
+     * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
+     *      This method converts this service DataBeans input objects to their
+     *      respective Domain objects. These Domain objects are to be used by
+     *      the service's logic.
+     */
+    protected Object convertDataInput(Object object) {
+        return object;
+    }
 
-		InfoEquivalenceContext infoEquivalenceContext = new InfoEquivalenceContext();
+    /**
+     * @param List
+     * @return InfoEquivalenceContext
+     * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
+     *      This method converts this service output Domain objects to their
+     *      respective DataBeans. These DataBeans are the result of executing
+     *      this service logic and are to be passed on to the uper layer of the
+     *      architecture.
+     */
+    protected Object convertDataOutput(Object object) {
+        List elements = (List) object;
 
-		infoEquivalenceContext
-			.setInfoEnrollmentsFromEquivalences(cloneEnrolmentsToInfoEnrolments(
-				enrollmentsFromEquivalences));
+        List enrollmentsFromEquivalences = (List) elements.get(0);
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) elements.get(1);
 
-		//CLONER
-		//infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
-		//	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-		infoEquivalenceContext
+        InfoEquivalenceContext infoEquivalenceContext = new InfoEquivalenceContext();
+
+        infoEquivalenceContext
+                .setInfoEnrollmentsFromEquivalences(cloneEnrolmentsToInfoEnrolments(enrollmentsFromEquivalences));
+
+        //CLONER
+        //infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
+        //	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+        infoEquivalenceContext
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                         .newInfoFromDomain(studentCurricularPlan));
 
-		return infoEquivalenceContext;
-	}
+        return infoEquivalenceContext;
+    }
 
-	/**
-	 * @param List
-	 * @return List
-	 * @throws FenixServiceException
-	 * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
-	 * This method implements the buisiness logic of this service.
-	 */
-	protected Object execute(Object object) throws FenixServiceException
-	{
-		List input = (List) object;
-		
-		Integer fromStudentCurricularPlanID = (Integer) input.get(0);
-		Integer studentNumber = (Integer) input.get(1);
-		TipoCurso degreeType = (TipoCurso) input.get(2);
-		
-		List output = new ArrayList();
+    /**
+     * @param List
+     * @return List
+     * @throws FenixServiceException
+     * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
+     *      This method implements the buisiness logic of this service.
+     */
+    protected Object execute(Object object) throws FenixServiceException {
+        List input = (List) object;
 
-		try
-		{
-			ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-			IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistenceDAO.getIStudentCurricularPlanPersistente();
-			IPersistentEnrolmentEquivalence enrollmentEquivalenceDAO = persistenceDAO.getIPersistentEnrolmentEquivalence();
+        Integer fromStudentCurricularPlanID = (Integer) input.get(0);
+        Integer studentNumber = (Integer) input.get(1);
+        TipoCurso degreeType = (TipoCurso) input.get(2);
 
-			IStudentCurricularPlan fromStudentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(
-				StudentCurricularPlan.class, fromStudentCurricularPlanID);
+        List output = new ArrayList();
 
-			List studentEnrollments = fromStudentCurricularPlan.getEnrolments();
+        try {
+            ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistenceDAO
+                    .getIStudentCurricularPlanPersistente();
+            IPersistentEnrolmentEquivalence enrollmentEquivalenceDAO = persistenceDAO
+                    .getIPersistentEnrolmentEquivalence();
 
-			List enrollmentsFromEquivalences = new ArrayList();
+            IStudentCurricularPlan fromStudentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO
+                    .readByOID(StudentCurricularPlan.class, fromStudentCurricularPlanID);
 
-			for (int i = 0; i < studentEnrollments.size(); i++)
-			{
-				IEnrollment enrollment = (IEnrollment) studentEnrollments.get(i);
-				
-				IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO.readByEnrolment(enrollment);
-				if (enrollmentEquivalence != null)
-				{
-					enrollmentsFromEquivalences.add(enrollment);
-				}
-			}
+            List studentEnrollments = fromStudentCurricularPlan.getEnrolments();
 
-			output.add(0, enrollmentsFromEquivalences);
-			output.add(1, getActiveStudentCurricularPlan(studentNumber, degreeType));
+            List enrollmentsFromEquivalences = new ArrayList();
 
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
+            for (int i = 0; i < studentEnrollments.size(); i++) {
+                IEnrollment enrollment = (IEnrollment) studentEnrollments.get(i);
 
-		return output;
-	}
+                IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO
+                        .readByEnrolment(enrollment);
+                if (enrollmentEquivalence != null) {
+                    enrollmentsFromEquivalences.add(enrollment);
+                }
+            }
+
+            output.add(0, enrollmentsFromEquivalences);
+            output.add(1, getActiveStudentCurricularPlan(studentNumber, degreeType));
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+        return output;
+    }
 
 }

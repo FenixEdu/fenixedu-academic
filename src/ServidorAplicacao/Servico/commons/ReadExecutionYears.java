@@ -6,57 +6,40 @@ import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadExecutionYears implements IServico {
-	private static ReadExecutionYears service = new ReadExecutionYears();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadExecutionYears getService() {
-	  return service;
-	}
+public class ReadExecutionYears implements IService {
 
-	/**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadExecutionYears";
-	}
-	
-	public ArrayList run() throws FenixServiceException {
-                        
-	  ArrayList result = new ArrayList();
-	  try {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-		
-		List executionYears = executionYearDAO.readAllExecutionYear();
-		
-		
-		Iterator iterator = executionYears.iterator();
-		while(iterator.hasNext()){
-			String year = ((IExecutionYear) iterator.next()).getYear();
-			result.add(new LabelValueBean(year, year));
-		}
+    public List run() throws FenixServiceException {
 
-	  } catch (ExcepcaoPersistencia ex) {
-	  	throw new FenixServiceException(ex);
-	  }
-    
-	  return result;
-	}
+        List result = new ArrayList();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+
+            List executionYears = executionYearDAO.readAllExecutionYear();
+
+            Iterator iterator = executionYears.iterator();
+            while (iterator.hasNext()) {
+                String year = ((IExecutionYear) iterator.next()).getYear();
+                result.add(new LabelValueBean(year, year));
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+
+        return result;
+    }
 
 }

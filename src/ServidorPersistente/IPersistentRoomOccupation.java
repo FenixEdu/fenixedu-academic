@@ -11,14 +11,14 @@ import Dominio.IRoomOccupation;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public interface IPersistentRoomOccupation extends IPersistentObject{
-	//public List readBy(Sala room) throws ExcepcaoPersistencia;
-	public List readAll() throws ExcepcaoPersistencia;
+public interface IPersistentRoomOccupation extends IPersistentObject {
+    //public List readBy(Sala room) throws ExcepcaoPersistencia;
+    public List readAll() throws ExcepcaoPersistencia;
 
-	public void delete(IRoomOccupation roomOccupation) throws ExcepcaoPersistencia;
+    public void delete(IRoomOccupation roomOccupation) throws ExcepcaoPersistencia;
 
-	public List readByPeriod(IPeriod period) throws ExcepcaoPersistencia;
-	//public void deleteAll() throws ExcepcaoPersistencia;
+    public List readByPeriod(IPeriod period) throws ExcepcaoPersistencia;
+    //public void deleteAll() throws ExcepcaoPersistencia;
 }

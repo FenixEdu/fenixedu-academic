@@ -21,33 +21,31 @@ import Util.FinalDegreeWorkProposalStatus;
  */
 public class PublishAprovedFinalDegreeWorkProposals implements IService {
 
-	public PublishAprovedFinalDegreeWorkProposals() {
-		super();
-	}
+    public PublishAprovedFinalDegreeWorkProposals() {
+        super();
+    }
 
-	public void run(Integer executionDegreeOID) throws FenixServiceException {
-		if (executionDegreeOID != null) {
-			try {
-				ISuportePersistente persistentSupport = SuportePersistenteOJB
-						.getInstance();
-				IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-						.getIPersistentFinalDegreeWork();
+    public void run(Integer executionDegreeOID) throws FenixServiceException {
+        if (executionDegreeOID != null) {
+            try {
+                ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+                IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                        .getIPersistentFinalDegreeWork();
 
-				List aprovedFinalDegreeWorkProposals = persistentFinalDegreeWork
-						.readAprovedFinalDegreeWorkProposals(executionDegreeOID);
-				if (aprovedFinalDegreeWorkProposals != null && !aprovedFinalDegreeWorkProposals.isEmpty())
-				{
-					for (int i = 0; i < aprovedFinalDegreeWorkProposals.size(); i++)
-					{
-						IProposal proposal = (IProposal) aprovedFinalDegreeWorkProposals.get(i);
-						persistentFinalDegreeWork.simpleLockWrite(proposal);
-						proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
-					}
-				}
-			} catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
-		}
-	}
+                List aprovedFinalDegreeWorkProposals = persistentFinalDegreeWork
+                        .readAprovedFinalDegreeWorkProposals(executionDegreeOID);
+                if (aprovedFinalDegreeWorkProposals != null
+                        && !aprovedFinalDegreeWorkProposals.isEmpty()) {
+                    for (int i = 0; i < aprovedFinalDegreeWorkProposals.size(); i++) {
+                        IProposal proposal = (IProposal) aprovedFinalDegreeWorkProposals.get(i);
+                        persistentFinalDegreeWork.simpleLockWrite(proposal);
+                        proposal.setStatus(FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
+                    }
+                }
+            } catch (ExcepcaoPersistencia e) {
+                throw new FenixServiceException(e);
+            }
+        }
+    }
 
 }

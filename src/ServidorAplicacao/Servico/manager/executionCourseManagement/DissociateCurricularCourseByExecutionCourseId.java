@@ -32,10 +32,8 @@ public class DissociateCurricularCourseByExecutionCourseId implements IService {
         try {
             //List executionCourseList = null;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionCourseDAO = sp
-                    .getIPersistentExecutionCourse();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
             if (executionCourseId == null) {
                 throw new FenixServiceException("nullExecutionCourseId");
@@ -44,8 +42,8 @@ public class DissociateCurricularCourseByExecutionCourseId implements IService {
                 throw new FenixServiceException("nullCurricularCourseId");
             }
 
-            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO
-                    .readByOID(ExecutionCourse.class, executionCourseId, true);
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+                    ExecutionCourse.class, executionCourseId, true);
             if (executionCourse == null) {
                 throw new NonExistingServiceException("noExecutionCourse");
             }
@@ -56,18 +54,14 @@ public class DissociateCurricularCourseByExecutionCourseId implements IService {
                 throw new NonExistingServiceException("noCurricularCourse");
             }
 
-            List curricularCourses = executionCourse
-                    .getAssociatedCurricularCourses();
-            List executionCourses = curricularCourse
-                    .getAssociatedExecutionCourses();
+            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+            List executionCourses = curricularCourse.getAssociatedExecutionCourses();
 
             if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
                 executionCourses.remove(executionCourse);
                 curricularCourses.remove(curricularCourse);
-                executionCourse
-                        .setAssociatedCurricularCourses(curricularCourses);
-                curricularCourse
-                        .setAssociatedExecutionCourses(executionCourses);
+                executionCourse.setAssociatedCurricularCourses(curricularCourses);
+                curricularCourse.setAssociatedExecutionCourses(executionCourses);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 
 import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
@@ -68,20 +69,15 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     private Integer enrollmentWeigth;
 
     private Boolean mandatoryEnrollment;
-    
+
     private Boolean enrollmentAllowed;
 
     public CurricularCourse() {
     }
 
-//    public boolean equals(Object obj) {
-//        if (getIdInternal() != null && obj != null && obj instanceof ICurricularCourse) {
-//            ICurricularCourse curricularCourse = (ICurricularCourse) obj;
-//            return getIdInternal().equals(curricularCourse.getIdInternal());
-//        } else {
-//            return false;
-//        }
-//    }
+    public CurricularCourse(Integer idInternal) {
+        super(idInternal);
+    }
 
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
@@ -383,7 +379,12 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
                         });
 
                 if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
+                    //                    if (curricularCourseScopesFound.size() == 1) {
+                    //                        curricularYearToReturn =
+                    // getCurricularYearWithLowerYear(this.getScopes());
+                    //                    } else {
                     curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound);
+                    //                    }
                 } else {
                     notFoundInSemester = true;
                 }
@@ -400,8 +401,11 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     }
 
     public String getCurricularCourseUniqueKeyForEnrollment() {
-        return this.getCode() + this.getName() + this.getDegreeCurricularPlan().getDegree().getNome()
-                + this.getDegreeCurricularPlan().getDegree().getTipoCurso();
+        return StringUtils.lowerCase(this.getCode() + this.getName() /*
+                                                                      * +
+                                                                      * this.getDegreeCurricularPlan().getDegree().getNome()
+                                                                      */
+                + this.getDegreeCurricularPlan().getDegree().getTipoCurso());
     }
 
     public boolean hasActiveScopeInGivenSemester(final Integer semester) {
@@ -412,6 +416,22 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
                 return (curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope
                         .isActive().booleanValue());
+            }
+        });
+
+        return !result.isEmpty();
+    }
+
+    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester,
+            final IBranch branch) {
+        List scopes = this.getScopes();
+
+        List result = (List) CollectionUtils.select(scopes, new Predicate() {
+            public boolean evaluate(Object obj) {
+                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
+                return (curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                        && curricularCourseScope.isActive().booleanValue() && curricularCourseScope
+                        .getBranch().equals(branch));
             }
         });
 
@@ -432,7 +452,8 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) listOfScopes.get(i);
             actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
 
-            if (maxCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()) {
+            if (maxCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()
+                    && curricularCourseScope.isActive().booleanValue()) {
 
                 maxCurricularYear = actualCurricularYear;
             }
@@ -450,8 +471,10 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     public Boolean getEnrollmentAllowed() {
         return enrollmentAllowed;
     }
+
     /**
-     * @param enrollmentAllowed The enrollmentAllowed to set.
+     * @param enrollmentAllowed
+     *            The enrollmentAllowed to set.
      */
     public void setEnrollmentAllowed(Boolean enrollmentAllowed) {
         this.enrollmentAllowed = enrollmentAllowed;

@@ -30,22 +30,18 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
         super();
     }
 
-    public boolean run(Integer groupOID, String username)
-            throws ExcepcaoPersistencia, FenixServiceException {
-        ISuportePersistente persistentSupport = SuportePersistenteOJB
-                .getInstance();
+    public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
+            FenixServiceException {
+        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentStudent persistentStudent = persistentSupport
-                .getIPersistentStudent();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         //        IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
         // persistentSupport
         //                .getIStudentCurricularPlanPersistente();
-        IPersistentEnrollment persistentEnrolment = persistentSupport
-                .getIPersistentEnrolment();
+        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(
-                Group.class, groupOID);
+        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
         IStudent student = persistentStudent.readByUsername(username);
         if (group == null
                 || student == null
@@ -54,28 +50,24 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
                         new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(student)) != null) {
             return false;
         }
-        IScheduleing scheduleing = persistentFinalDegreeWork
-                .readFinalDegreeWorkScheduleing(group.getExecutionDegree()
-                        .getIdInternal());
+        IScheduleing scheduleing = persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(group
+                .getExecutionDegree().getIdInternal());
 
-        if (scheduleing == null
-                || scheduleing.getMaximumNumberOfStudents() == null) {
+        if (scheduleing == null || scheduleing.getMaximumNumberOfStudents() == null) {
             throw new MaximumNumberOfStudentsUndefinedException();
         } else if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
             throw new MinimumNumberOfCompletedCoursesUndefinedException();
-        } else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group
-                .getGroupStudents().size()) {
-            throw new MaximumNumberOfStudentsReachedException(scheduleing
-                    .getMaximumNumberOfStudents().toString());
+        } else if (scheduleing.getMaximumNumberOfStudents().intValue() <= group.getGroupStudents()
+                .size()) {
+            throw new MaximumNumberOfStudentsReachedException(scheduleing.getMaximumNumberOfStudents()
+                    .toString());
         } else {
             int numberOfCompletedCourses = persistentEnrolment
                     .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
 
-            if (numberOfCompletedCourses < scheduleing
-                    .getMinimumNumberOfCompletedCourses().intValue()) {
-                throw new MinimumNumberOfCompletedCoursesNotReachedException(
-                        scheduleing.getMinimumNumberOfCompletedCourses()
-                                .toString());
+            if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
+                throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing
+                        .getMinimumNumberOfCompletedCourses().toString());
             }
         }
 
@@ -87,8 +79,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
 
     }
 
-    public class MaximumNumberOfStudentsUndefinedException extends
-            FenixServiceException {
+    public class MaximumNumberOfStudentsUndefinedException extends FenixServiceException {
 
         public MaximumNumberOfStudentsUndefinedException() {
             super();
@@ -106,14 +97,12 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
             super(cause);
         }
 
-        public MaximumNumberOfStudentsUndefinedException(String message,
-                Throwable cause) {
+        public MaximumNumberOfStudentsUndefinedException(String message, Throwable cause) {
             super(message, cause);
         }
     }
 
-    public class MaximumNumberOfStudentsReachedException extends
-            FenixServiceException {
+    public class MaximumNumberOfStudentsReachedException extends FenixServiceException {
 
         public MaximumNumberOfStudentsReachedException() {
             super();
@@ -131,14 +120,12 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
             super(cause);
         }
 
-        public MaximumNumberOfStudentsReachedException(String message,
-                Throwable cause) {
+        public MaximumNumberOfStudentsReachedException(String message, Throwable cause) {
             super(message, cause);
         }
     }
 
-    public class MinimumNumberOfCompletedCoursesUndefinedException extends
-            FenixServiceException {
+    public class MinimumNumberOfCompletedCoursesUndefinedException extends FenixServiceException {
 
         public MinimumNumberOfCompletedCoursesUndefinedException() {
             super();
@@ -156,14 +143,12 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
             super(cause);
         }
 
-        public MinimumNumberOfCompletedCoursesUndefinedException(
-                String message, Throwable cause) {
+        public MinimumNumberOfCompletedCoursesUndefinedException(String message, Throwable cause) {
             super(message, cause);
         }
     }
 
-    public class MinimumNumberOfCompletedCoursesNotReachedException extends
-            FenixServiceException {
+    public class MinimumNumberOfCompletedCoursesNotReachedException extends FenixServiceException {
 
         public MinimumNumberOfCompletedCoursesNotReachedException() {
             super();
@@ -177,13 +162,11 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
             super(s);
         }
 
-        public MinimumNumberOfCompletedCoursesNotReachedException(
-                Throwable cause) {
+        public MinimumNumberOfCompletedCoursesNotReachedException(Throwable cause) {
             super(cause);
         }
 
-        public MinimumNumberOfCompletedCoursesNotReachedException(
-                String message, Throwable cause) {
+        public MinimumNumberOfCompletedCoursesNotReachedException(String message, Throwable cause) {
             super(message, cause);
         }
     }
@@ -194,8 +177,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
 
         public boolean evaluate(Object arg0) {
             IGroupStudent groupStudent = (IGroupStudent) arg0;
-            return student.getIdInternal().equals(
-                    groupStudent.getStudent().getIdInternal());
+            return student.getIdInternal().equals(groupStudent.getStudent().getIdInternal());
         }
 
         public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(IStudent student) {

@@ -78,8 +78,7 @@ public class SmsCommandManager {
                     serviceArgs = serviceArgsExpression.split(",");
                 }
 
-                String authenticationType = smsCommandElement
-                        .getAttributeValue("authenticationType");
+                String authenticationType = smsCommandElement.getAttributeValue("authenticationType");
 
                 SmsCommand smsCommand = new SmsCommand(expression, replyToSender, serviceName,
                         serviceArgs, authenticationType);

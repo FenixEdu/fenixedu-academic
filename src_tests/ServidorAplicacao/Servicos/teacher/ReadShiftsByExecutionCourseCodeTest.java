@@ -65,16 +65,13 @@ public class ReadShiftsByExecutionCourseCodeTest extends TestCaseReadServices {
             sp.iniciarTransaccao();
 
             ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
-            ITurno turno19 = (ITurno) turnoPersistente.readByOID(Turno.class,
-                    new Integer(19));
+            ITurno turno19 = (ITurno) turnoPersistente.readByOID(Turno.class, new Integer(19));
             assertNotNull("turno19 null", turno19);
 
-            ITurno turno20 = (ITurno) turnoPersistente.readByOID(Turno.class,
-                    new Integer(20));
+            ITurno turno20 = (ITurno) turnoPersistente.readByOID(Turno.class, new Integer(20));
             assertNotNull("turno20 null", turno20);
 
-            ITurno turno21 = (ITurno) turnoPersistente.readByOID(Turno.class,
-                    new Integer(21));
+            ITurno turno21 = (ITurno) turnoPersistente.readByOID(Turno.class, new Integer(21));
             assertNotNull("turno21 null", turno21);
 
             sp.confirmarTransaccao();
@@ -88,8 +85,7 @@ public class ReadShiftsByExecutionCourseCodeTest extends TestCaseReadServices {
             List infoLessons = new ArrayList();
             InfoLesson infoLesson;
             while (itLessons.hasNext()) {
-                infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons
-                        .next());
+                infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
                 infoLessons.add(infoLesson);
             }
             infoTurno19.setInfoLessons(infoLessons);
@@ -98,8 +94,7 @@ public class ReadShiftsByExecutionCourseCodeTest extends TestCaseReadServices {
             itLessons = lessons.iterator();
             infoLessons = new ArrayList();
             while (itLessons.hasNext()) {
-                infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons
-                        .next());
+                infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
                 infoLessons.add(infoLesson);
             }
             infoTurno20.setInfoLessons(infoLessons);
@@ -108,8 +103,7 @@ public class ReadShiftsByExecutionCourseCodeTest extends TestCaseReadServices {
             itLessons = lessons.iterator();
             infoLessons = new ArrayList();
             while (itLessons.hasNext()) {
-                infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons
-                        .next());
+                infoLesson = Cloner.copyILesson2InfoLesson((IAula) itLessons.next());
                 infoLessons.add(infoLesson);
             }
             infoTurno21.setInfoLessons(infoLessons);

@@ -32,12 +32,11 @@ import Dominio.degree.enrollment.CurricularCourse2Enroll;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.CurricularCourseType;
 import Util.TipoCurso;
 import Util.enrollment.CurricularCourseEnrollmentType;
 
@@ -60,7 +59,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
 
             if (infoStudent == null || infoStudent.getNumber() == null) {
@@ -74,7 +73,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
             }
 
             //Execution Degree
-            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
                     CursoExecucao.class, executionDegreeID);
             if (executionDegree == null) {
@@ -84,7 +83,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
             //Degree Curricular Plan
             IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
 
-            if (degreeCurricularPlan == null && degreeCurricularPlan.getCurricularCourses() == null) {
+            if (degreeCurricularPlan == null || degreeCurricularPlan.getCurricularCourses() == null) {
                 throw new FenixServiceException("error.degree.noData");
             }
 
@@ -95,8 +94,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
             final List curricularYearsListFinal = verifyYears(curricularYearsList);
             final List curricularSemestersListFinal = verifySemesters(curricularSemestersList);
 
-            curricularCoursesFromDegreeCurricularPlan = filterOptionalCourses(degreeCurricularPlan
-                    .getCurricularCourses());
+            curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
             curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
                     curricularCoursesFromDegreeCurricularPlan, new Predicate() {
                         public boolean evaluate(Object arg0) {
@@ -229,22 +227,6 @@ public class ReadCurricularCoursesToEnroll implements IService {
     }
 
     /**
-     * @param curricularCourses
-     * @return List
-     * @author David Santos
-     */
-    private List filterOptionalCourses(List curricularCourses) {
-        List result = (List) CollectionUtils.select(curricularCourses, new Predicate() {
-            public boolean evaluate(Object arg0) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                return !curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
-            }
-        });
-
-        return result;
-    }
-
-    /**
      * @param studentNumber
      * @return IStudent
      * @throws ExcepcaoPersistencia
@@ -264,7 +246,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
     protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-        IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                 .getIStudentCurricularPlanPersistente();
 
         return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student

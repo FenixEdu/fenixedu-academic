@@ -37,15 +37,12 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
         try {
-            if ((id == null)
-                    || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(),
-                            getRoleType())
+            if ((id == null) || (id.getRoles() == null)
+                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                     || !attendsExamExecutionCourse(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }
@@ -70,13 +67,12 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
                 infoExam = (InfoExam) argumentos[1];
                 exam = Cloner.copyInfoExam2IExam(infoExam);
             } else {
-                exam = (IExam) persistentExam.readByOID(Exam.class,
-                        (Integer) argumentos[1]);
+                exam = (IExam) persistentExam.readByOID(Exam.class, (Integer) argumentos[1]);
             }
 
             String username = (String) argumentos[0];
-            return persistentExam.isExamOfExecutionCourseTheStudentAttends(exam
-                    .getIdInternal(), username);
+            return persistentExam.isExamOfExecutionCourseTheStudentAttends(exam.getIdInternal(),
+                    username);
         } catch (Exception ex) {
             return false;
         }

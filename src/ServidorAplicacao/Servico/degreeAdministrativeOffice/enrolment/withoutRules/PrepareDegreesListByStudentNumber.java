@@ -22,9 +22,9 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -41,8 +41,8 @@ public class PrepareDegreesListByStudentNumber implements IService {
 
     }
 
-    public Object run(InfoStudent infoStudent, TipoCurso degreeType,
-            Integer executionDegreeId, InfoExecutionYear infoExecutionYear)
+    public Object run(InfoStudent infoStudent, TipoCurso degreeType, Integer executionDegreeId,
+            InfoExecutionYear infoExecutionYear)
     //Integer studentNumber, Integer executionDegreeIdChosen)
             throws FenixServiceException {
         List result = null;
@@ -51,10 +51,8 @@ public class PrepareDegreesListByStudentNumber implements IService {
         try {
             //read execution degrees by execution year and degree type
             ReadExecutionDegreesByExecutionYearAndDegreeType service = new ReadExecutionDegreesByExecutionYearAndDegreeType();
-            List infoExecutionsDegreesList = service.run(infoExecutionYear,
-                    degreeType);
-            if (infoExecutionsDegreesList == null
-                    || infoExecutionsDegreesList.size() <= 0) {
+            List infoExecutionsDegreesList = service.run(infoExecutionYear, degreeType);
+            if (infoExecutionsDegreesList == null || infoExecutionsDegreesList.size() <= 0) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
 
@@ -65,9 +63,8 @@ public class PrepareDegreesListByStudentNumber implements IService {
 
             sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent
-                    .readStudentByNumberAndDegreeType(infoStudent.getNumber(),
-                            degreeType);
+            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(infoStudent
+                    .getNumber(), degreeType);
             if (student == null) {
                 throw new FenixServiceException("errors.impossible.operation");
             }
@@ -75,8 +72,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
             //select the first execution degree or the execution degree of the
             // student logged
             InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(sp,
-                    infoExecutionsDegreesList, executionDegreeId, student,
-                    degreeType);
+                    infoExecutionsDegreesList, executionDegreeId, student, degreeType);
 
             //it is return a list where the first element is the degree
             // pre-select and the tail is all degrees
@@ -95,51 +91,45 @@ public class PrepareDegreesListByStudentNumber implements IService {
     }
 
     private InfoExecutionDegree selectExecutionDegree(ISuportePersistente sp,
-            List infoExecutionDegreeList, Integer executionDegreeIdChosen,
-            IStudent student, TipoCurso degreeType) throws ExcepcaoPersistencia {
+            List infoExecutionDegreeList, Integer executionDegreeIdChosen, IStudent student,
+            TipoCurso degreeType) throws ExcepcaoPersistencia {
         InfoExecutionDegree infoExecutionDegree = null;
 
         //read the execution degree chosen
         if (executionDegreeIdChosen != null) {
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, executionDegreeIdChosen);
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                    CursoExecucao.class, executionDegreeIdChosen);
             if (executionDegree != null) {
                 return (InfoExecutionDegree) Cloner.get(executionDegree);
             }
         }
 
         //read the execution degree belongs to student
-        IStudentCurricularPlanPersistente persistentCurricularPlan = sp
+        IPersistentStudentCurricularPlan persistentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
         IStudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(student.getNumber(),
-                        degreeType);
+                .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
         //execution degree isn't find, then it is chosen the list's first
-        if (studentCurricularPlan == null
-                || studentCurricularPlan.getDegreeCurricularPlan() == null
+        if (studentCurricularPlan == null || studentCurricularPlan.getDegreeCurricularPlan() == null
                 || studentCurricularPlan.getDegreeCurricularPlan().getDegree() == null
-                || studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                        .getNome() == null) {
+                || studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome() == null) {
             return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
         }
 
-        final Integer degreeCode = studentCurricularPlan
-                .getDegreeCurricularPlan().getDegree().getIdInternal();
-        List infoExecutionDegreeListWithDegreeCode = (List) CollectionUtils
-                .select(infoExecutionDegreeList, new Predicate() {
+        final Integer degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+                .getIdInternal();
+        List infoExecutionDegreeListWithDegreeCode = (List) CollectionUtils.select(
+                infoExecutionDegreeList, new Predicate() {
                     public boolean evaluate(Object input) {
                         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
-                        return infoExecutionDegree
-                                .getInfoDegreeCurricularPlan().getInfoDegree()
+                        return infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
                                 .getIdInternal().equals(degreeCode);
                     }
                 });
         if (!infoExecutionDegreeListWithDegreeCode.isEmpty()) {
-            infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeListWithDegreeCode
-                    .get(0);
+            infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeListWithDegreeCode.get(0);
         } else {
             return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
         }

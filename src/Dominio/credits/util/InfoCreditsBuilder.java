@@ -28,24 +28,26 @@ public abstract class InfoCreditsBuilder {
         calculateDegreeFinalProjectStudents(teacher, executionPeriod, infoCredits);
         calculeInstitutionWorkingTime(teacher, executionPeriod, infoCredits);
         calculateOtherCreditLine(teacher, executionPeriod, infoCredits);
-        
+
         List list = teacher.getManagementPositions();
-        
-        boolean exists = CollectionUtils.exists(list, new Predicate(){
+
+        boolean exists = CollectionUtils.exists(list, new Predicate() {
 
             public boolean evaluate(Object input) {
                 IDatePeriodBasedCreditLine creditLine = (IDatePeriodBasedCreditLine) input;
                 return creditLine.belongsTo(executionPeriod);
-            }});
+            }
+        });
         infoCredits.setContainsManagementPositions(new Boolean(exists));
-        
+
         list = teacher.getServiceExemptionSituations();
-        exists = CollectionUtils.exists(list, new Predicate(){
+        exists = CollectionUtils.exists(list, new Predicate() {
 
             public boolean evaluate(Object input) {
                 IDatePeriodBasedCreditLine creditLine = (IDatePeriodBasedCreditLine) input;
                 return creditLine.belongsTo(executionPeriod);
-            }});
+            }
+        });
         infoCredits.setContainsServiceExemptionsSituations(new Boolean(exists));
         return infoCredits;
     }
@@ -55,7 +57,8 @@ public abstract class InfoCreditsBuilder {
      * @param executionPeriod
      * @param infoCredits
      */
-    private static void calculateOtherCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod, InfoCredits infoCredits) {
+    private static void calculateOtherCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod,
+            InfoCredits infoCredits) {
         double credits = 0;
         List list = teacher.getOtherTypeCreditLines();
         for (int i = 0; i < list.size(); i++) {
@@ -128,9 +131,9 @@ public abstract class InfoCreditsBuilder {
                     }
                 } else {
                     if (professorship.getHours() != null) {
-                        masterDegreeCredits += professorship.getHours().doubleValue();    
+                        masterDegreeCredits += professorship.getHours().doubleValue();
                     }
-                    
+
                 }
                 List supportLessons = professorship.getSupportLessons();
                 for (int j = 0; j < supportLessons.size(); j++) {
@@ -143,8 +146,8 @@ public abstract class InfoCreditsBuilder {
         infoCredits.setLessons(round(degreeCredits));
         infoCredits.setMasterDegreeCredits(round(masterDegreeCredits));
     }
-    
-    private static Double round(double n){
+
+    private static Double round(double n) {
         long rounded = Math.round(n * 100);
         return new Double(rounded / 100.0);
     }

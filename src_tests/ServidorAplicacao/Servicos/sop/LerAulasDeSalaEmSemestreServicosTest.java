@@ -24,46 +24,39 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoSala;
 
-public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices
-{
+public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices {
 
     private InfoExecutionPeriod infoExecutionPeriod = null;
+
     private InfoRoom infoRoom = null;
 
-    public LerAulasDeSalaEmSemestreServicosTest(java.lang.String testName)
-    {
+    public LerAulasDeSalaEmSemestreServicosTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(LerAulasDeSalaEmSemestreServicosTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "LerAulasDeSalaEmSemestre";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
         this.ligarSuportePersistente(true);
 
@@ -72,8 +65,7 @@ public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices
         return argsLerAulas;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         this.ligarSuportePersistente(false);
 
@@ -82,28 +74,23 @@ public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices
         return argsLerAulas;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 21;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         return null;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 
-    private void ligarSuportePersistente(boolean existing)
-    {
+    private void ligarSuportePersistente(boolean existing) {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -113,26 +100,13 @@ public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices
             IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-            if (existing)
-            {
-                this.infoRoom =
-                    new InfoRoom(
-                        new String("Ga1"),
-                        new String("Pavilhilhão Central"),
-                        new Integer(0),
-                        new TipoSala(TipoSala.ANFITEATRO),
-                        new Integer(100),
+            if (existing) {
+                this.infoRoom = new InfoRoom(new String("Ga1"), new String("Pavilhilhão Central"),
+                        new Integer(0), new TipoSala(TipoSala.ANFITEATRO), new Integer(100),
                         new Integer(50));
-            }
-            else
-            {
-                this.infoRoom =
-                    new InfoRoom(
-                        new String("Ga4"),
-                        new String("Pavilhilhão Central"),
-                        new Integer(1),
-                        new TipoSala(TipoSala.ANFITEATRO),
-                        new Integer(100),
+            } else {
+                this.infoRoom = new InfoRoom(new String("Ga4"), new String("Pavilhilhão Central"),
+                        new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(100),
                         new Integer(50));
             }
 
@@ -140,15 +114,10 @@ public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");

@@ -5,98 +5,101 @@
 package Dominio;
 
 /**
- *Dominio
- * @author João Mota
- *27/Out/2003
- *
+ * Dominio
+ * 
+ * @author João Mota 27/Out/2003
+ *  
  */
 public class Coordinator extends DomainObject implements ICoordinator {
 
-	private ITeacher teacher;
-	private ICursoExecucao executionDegree;
-	private Boolean responsible;
+    private ITeacher teacher;
 
-	private Integer keyTeacher;
-	private Integer keyExecutionDegree;
+    private ICursoExecucao executionDegree;
 
-	/**
-	 * @param integer
-	 */
-	public Coordinator(Integer integer) {
-		setIdInternal(integer);
-	}
+    private Boolean responsible;
 
-	public Coordinator() {
-	}
+    private Integer keyTeacher;
 
-	/**
-	 * @return
-	 */
-	public ICursoExecucao getExecutionDegree() {
-		return executionDegree;
-	}
+    private Integer keyExecutionDegree;
 
-	/**
-	 * @param executionDegree
-	 */
-	public void setExecutionDegree(ICursoExecucao executionDegree) {
-		this.executionDegree = executionDegree;
-	}
+    /**
+     * @param integer
+     */
+    public Coordinator(Integer integer) {
+        setIdInternal(integer);
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyExecutionDegree() {
-		return keyExecutionDegree;
-	}
+    public Coordinator() {
+    }
 
-	/**
-	 * @param keyExecutionCourse
-	 */
-	public void setKeyExecutionDegree(Integer keyExecutionDegree) {
-		this.keyExecutionDegree = keyExecutionDegree;
-	}
+    /**
+     * @return
+     */
+    public ICursoExecucao getExecutionDegree() {
+        return executionDegree;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyTeacher() {
-		return keyTeacher;
-	}
+    /**
+     * @param executionDegree
+     */
+    public void setExecutionDegree(ICursoExecucao executionDegree) {
+        this.executionDegree = executionDegree;
+    }
 
-	/**
-	 * @param keyTeacher
-	 */
-	public void setKeyTeacher(Integer keyTeacher) {
-		this.keyTeacher = keyTeacher;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyExecutionDegree() {
+        return keyExecutionDegree;
+    }
 
-	/**
-	 * @return
-	 */
-	public Boolean getResponsible() {
-		return responsible;
-	}
+    /**
+     * @param keyExecutionCourse
+     */
+    public void setKeyExecutionDegree(Integer keyExecutionDegree) {
+        this.keyExecutionDegree = keyExecutionDegree;
+    }
 
-	/**
-	 * @param responsible
-	 */
-	public void setResponsible(Boolean responsible) {
-		this.responsible = responsible;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyTeacher() {
+        return keyTeacher;
+    }
 
-	/**
-	 * @return
-	 */
-	public ITeacher getTeacher() {
-		return teacher;
-	}
+    /**
+     * @param keyTeacher
+     */
+    public void setKeyTeacher(Integer keyTeacher) {
+        this.keyTeacher = keyTeacher;
+    }
 
-	/**
-	 * @param teacher
-	 */
-	public void setTeacher(ITeacher teacher) {
-		this.teacher = teacher;
-	}
+    /**
+     * @return
+     */
+    public Boolean getResponsible() {
+        return responsible;
+    }
+
+    /**
+     * @param responsible
+     */
+    public void setResponsible(Boolean responsible) {
+        this.responsible = responsible;
+    }
+
+    /**
+     * @return
+     */
+    public ITeacher getTeacher() {
+        return teacher;
+    }
+
+    /**
+     * @param teacher
+     */
+    public void setTeacher(ITeacher teacher) {
+        this.teacher = teacher;
+    }
 
 }

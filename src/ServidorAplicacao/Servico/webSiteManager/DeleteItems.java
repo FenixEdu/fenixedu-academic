@@ -36,21 +36,18 @@ public class DeleteItems implements IServico {
 
     //infoItem with an infoSection
 
-    public boolean run(Integer sectionCode, List itemsToDelete)
-            throws FenixServiceException {
+    public boolean run(Integer sectionCode, List itemsToDelete) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentWebSiteItem persistentWebSiteItem = persistentSuport
-                    .getIPersistentWebSiteItem();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
 
             Iterator iterItemsCode = itemsToDelete.iterator();
             while (iterItemsCode.hasNext()) {
                 Integer itemCode = (Integer) iterItemsCode.next();
 
-                IWebSiteItem webSiteItemAux = (IWebSiteItem) persistentWebSiteItem
-                        .readByOID(WebSiteItem.class, itemCode, true);
+                IWebSiteItem webSiteItemAux = (IWebSiteItem) persistentWebSiteItem.readByOID(
+                        WebSiteItem.class, itemCode, true);
                 if (webSiteItemAux != null) {
                     persistentWebSiteItem.delete(webSiteItemAux);
                 }

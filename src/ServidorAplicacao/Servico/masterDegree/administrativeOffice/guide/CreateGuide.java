@@ -35,19 +35,16 @@ import Util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class CreateGuide implements IService
-{
+public class CreateGuide implements IService {
 
     /**
      * The actor of this class.
      */
-    public CreateGuide()
-    {
+    public CreateGuide() {
     }
 
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
-            SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException
-    {
+            SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException {
 
         ISuportePersistente sp = null;
         IContributor contributor = null;
@@ -60,8 +57,7 @@ public class CreateGuide implements IService
             throw new InvalidSituationServiceException();
 
         InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-        if ((othersPrice != null) && (othersPrice.floatValue() > 0))
-        {
+        if ((othersPrice != null) && (othersPrice.floatValue() > 0)) {
             infoGuideEntry.setDescription(othersRemarks);
             infoGuideEntry.setPrice(othersPrice);
             infoGuideEntry.setInfoGuide(infoGuide);
@@ -80,13 +76,10 @@ public class CreateGuide implements IService
         // Get the Guide Number
 
         Integer guideNumber = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             guideNumber = sp.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
@@ -107,18 +100,16 @@ public class CreateGuide implements IService
         guide = Cloner.copyInfoGuide2IGuide(infoGuide);
         //      FIXME: Remove the : guide.setGuideEntries(null); WHY????
         guide.setGuideEntries(null);
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.getIPersistentGuide().simpleLockWrite(guide);
-            if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))
-            {
+            if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
                 guide.setPaymentType(new PaymentType(paymentType));
                 guide.setPaymentDate(calendar.getTime());
             }
 
             // Get the Execution Degree
-            ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente()
+            ICursoExecucao executionDegree = sp.getIPersistentExecutionDegree()
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
                                     .getInfoDegree().getSigla(),
@@ -140,8 +131,7 @@ public class CreateGuide implements IService
             // Write the new Entries of the Guide
             Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
             List guideEntries = new ArrayList();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 IGuideEntry guideEntry = Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator
                         .next());
                 sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
@@ -157,9 +147,7 @@ public class CreateGuide implements IService
             guide.setGuideSituations(new ArrayList());
 
             guide.getGuideSituations().add(guideSituation);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
             throw newEx;
         }

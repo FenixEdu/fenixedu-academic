@@ -23,39 +23,29 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * 
- *	@author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- *	@author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
- * 
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
+ *  
  */
-public class ViewSmsDeliveryReportsAction extends FenixAction
-{
+public class ViewSmsDeliveryReportsAction extends FenixAction {
 
-	public ActionForward execute(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-	throws FenixActionException
-	{
-		
-		IUserView userView = SessionUtils.getUserView(request);
-		
-		List infoSentSmsList = null;
-		
-		Object args[] = { userView };
-		
-		try
-		{
-			infoSentSmsList = (List) ServiceUtils.executeService(userView, "ReadSentSmsByPerson", args);
-			request.setAttribute(SessionConstants.LIST_SMS_DELIVERY_REPORTS, infoSentSmsList);
-		}
-		catch (FenixServiceException e)
-		{
-		}		
-		
-		return mapping.findForward("start");
-		
-	}
-	
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+
+        IUserView userView = SessionUtils.getUserView(request);
+
+        List infoSentSmsList = null;
+
+        Object args[] = { userView };
+
+        try {
+            infoSentSmsList = (List) ServiceUtils.executeService(userView, "ReadSentSmsByPerson", args);
+            request.setAttribute(SessionConstants.LIST_SMS_DELIVERY_REPORTS, infoSentSmsList);
+        } catch (FenixServiceException e) {
+        }
+
+        return mapping.findForward("start");
+
+    }
 
 }

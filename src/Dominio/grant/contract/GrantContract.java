@@ -31,7 +31,9 @@ public class GrantContract extends DomainObject implements IGrantContract {
 
     private Integer keyGrantType;
 
-    private List contractRegimes; //Used for querys (See GrantOwnerOJB or GrantContractOJB class)
+    private List contractRegimes; //Used for querys (See GrantOwnerOJB or
+
+    // GrantContractOJB class)
 
     /**
      * Constructor
@@ -150,14 +152,17 @@ public class GrantContract extends DomainObject implements IGrantContract {
     public void setDateAcceptTerm(Date dateAcceptTerm) {
         this.dateAcceptTerm = dateAcceptTerm;
     }
+
     /**
      * @return Returns the contractRegimes.
      */
     public List getContractRegimes() {
         return contractRegimes;
     }
+
     /**
-     * @param contractRegimes The contractRegimes to set.
+     * @param contractRegimes
+     *            The contractRegimes to set.
      */
     public void setContractRegimes(List contractRegimes) {
         this.contractRegimes = contractRegimes;

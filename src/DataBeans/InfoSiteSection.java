@@ -11,82 +11,82 @@ import java.util.ListIterator;
 /**
  * @author João Mota
  * @author Fernanda Quitério
- * 
+ *  
  */
 public class InfoSiteSection extends DataTranferObject implements ISiteComponent {
 
-private InfoSection section;
-private List items;
+    private InfoSection section;
 
-/**
- * @see java.lang.Object#toString()
- */
-public String toString() {
-	String result = "[INFOSITESECTION";
-	result += " section=" + getSection();
-	result += ", items=" + getItems();
-	result += "]";
-	return result;
-}
+    private List items;
 
-public boolean equals(Object objectToCompare) {
-	boolean result = false;
-	if (objectToCompare instanceof InfoSiteSection
-		&& (((((InfoSiteSection) objectToCompare).getSection() != null
-			&& this.getSection() != null
-			&& ((InfoSiteSection) objectToCompare).getSection().equals(this.getSection()))
-			|| ((InfoSiteSection) objectToCompare).getSection() == null
-			&& this.getSection() == null))) {
-		result = true;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[INFOSITESECTION";
+        result += " section=" + getSection();
+        result += ", items=" + getItems();
+        result += "]";
+        return result;
+    }
 
-	if (((InfoSiteSection) objectToCompare).getItems() == null && this.getItems() == null && result == true) {
-		return true;
-	}
-	if (((InfoSiteSection) objectToCompare).getItems() == null
-		|| this.getItems() == null
-		|| ((InfoSiteSection) objectToCompare).getItems().size() != this.getItems().size()) {
+    public boolean equals(Object objectToCompare) {
+        boolean result = false;
+        if (objectToCompare instanceof InfoSiteSection
+                && (((((InfoSiteSection) objectToCompare).getSection() != null
+                        && this.getSection() != null && ((InfoSiteSection) objectToCompare).getSection()
+                        .equals(this.getSection())) || ((InfoSiteSection) objectToCompare).getSection() == null
+                        && this.getSection() == null))) {
+            result = true;
+        }
 
-		return false;
-	}
-	ListIterator iter1 = ((InfoSiteSection) objectToCompare).getItems().listIterator();
-	ListIterator iter2 = this.getItems().listIterator();
-	while (result && iter1.hasNext()) {
-		InfoItem infoItem1 = (InfoItem) iter1.next();
-		InfoItem infoItem2 = (InfoItem) iter2.next();
-		if (!infoItem1.equals(infoItem2)) {
-			result = false;
-		}
-	}
-	return result;
-}
+        if (((InfoSiteSection) objectToCompare).getItems() == null && this.getItems() == null
+                && result == true) {
+            return true;
+        }
+        if (((InfoSiteSection) objectToCompare).getItems() == null || this.getItems() == null
+                || ((InfoSiteSection) objectToCompare).getItems().size() != this.getItems().size()) {
 
-/**
- * @return
- */
-public List getItems() {
-	return items;
-}
+            return false;
+        }
+        ListIterator iter1 = ((InfoSiteSection) objectToCompare).getItems().listIterator();
+        ListIterator iter2 = this.getItems().listIterator();
+        while (result && iter1.hasNext()) {
+            InfoItem infoItem1 = (InfoItem) iter1.next();
+            InfoItem infoItem2 = (InfoItem) iter2.next();
+            if (!infoItem1.equals(infoItem2)) {
+                result = false;
+            }
+        }
+        return result;
+    }
 
-/**
- * @return
- */
-public InfoSection getSection() {
-	return section;
-}
+    /**
+     * @return
+     */
+    public List getItems() {
+        return items;
+    }
 
-/**
- * @param list
- */
-public void setItems(List list) {
-	items = list;
-}
+    /**
+     * @return
+     */
+    public InfoSection getSection() {
+        return section;
+    }
 
-/**
- * @param section
- */
-public void setSection(InfoSection section) {
-	this.section = section;
-}
+    /**
+     * @param list
+     */
+    public void setItems(List list) {
+        items = list;
+    }
+
+    /**
+     * @param section
+     */
+    public void setSection(InfoSection section) {
+        this.section = section;
+    }
 
 }

@@ -8,7 +8,7 @@
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
+ * 
  * @author tfc130
  */
 import junit.framework.Test;
@@ -20,60 +20,56 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerSalasServicosTest extends TestCaseReadServices {
     public LerSalasServicosTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(LerSalasServicosTest.class);
-        
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
+        super(testName);
+    }
 
-  protected String getNameOfServiceToBeTested() {
-	  return "LerSalas";
-  }
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-  protected int getNumberOfItemsToRetrieve(){
-	  return 3;
-  }
-  protected Object getObjectToCompare(){
-	  return null;
-  }
-	
-  protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    public static Test suite() {
+        TestSuite suite = new TestSuite(LerSalasServicosTest.class);
 
-	  return null;
-  }
-	
+        return suite;
+    }
 
-  protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-	ISuportePersistente sp = null;
-	try {
-		sp = SuportePersistenteOJB.getInstance();
-		sp.iniciarTransaccao();
-		//sp.getISalaPersistente().deleteAll(); method deleted - too dangerous
-		sp.confirmarTransaccao();
-	} catch (ExcepcaoPersistencia excepcao) {
-	  fail("Exception when setUp");
-	}
-	return null;
-  }
+    protected void setUp() {
+        super.setUp();
+    }
 
+    protected void tearDown() {
+        super.tearDown();
+    }
 
+    protected String getNameOfServiceToBeTested() {
+        return "LerSalas";
+    }
 
-  
+    protected int getNumberOfItemsToRetrieve() {
+        return 3;
+    }
 
-      
+    protected Object getObjectToCompare() {
+        return null;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+        return null;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        ISuportePersistente sp = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+            //sp.getISalaPersistente().deleteAll(); method deleted - too
+            // dangerous
+            sp.confirmarTransaccao();
+        } catch (ExcepcaoPersistencia excepcao) {
+            fail("Exception when setUp");
+        }
+        return null;
+    }
+
 }

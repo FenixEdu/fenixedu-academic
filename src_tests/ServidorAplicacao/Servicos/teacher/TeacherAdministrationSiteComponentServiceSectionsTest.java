@@ -31,8 +31,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceSectionsTest extends
-        TestCaseReadServices {
+public class TeacherAdministrationSiteComponentServiceSectionsTest extends TestCaseReadServices {
 
     /**
      * @param testName
@@ -60,8 +59,8 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends
      */
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args = { new Integer(27), new InfoSiteCommon(),
-                new InfoSiteSections(), null, new Integer(4), null };
+        Object[] args = { new Integer(27), new InfoSiteCommon(), new InfoSiteSections(), null,
+                new Integer(4), null };
         return args;
     }
 
@@ -77,15 +76,13 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, new Integer(27));
-            infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, new Integer(27));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
@@ -93,8 +90,7 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends
 
             allSectionsList = persistentSection.readBySite(site);
 
-            iSection = (ISection) persistentSection.readByOID(Section.class,
-                    new Integer(4));
+            iSection = (ISection) persistentSection.readByOID(Section.class, new Integer(4));
 
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
@@ -106,8 +102,7 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends
         ListIterator iter = sections.listIterator();
 
         while (iter.hasNext()) {
-            InfoSection infoSection = Cloner
-                    .copyISection2InfoSection((ISection) iter.next());
+            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
@@ -120,20 +115,16 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends
                     ISection section = (ISection) iterSections.next();
                     if ((section.getSuperiorSection() == null)
                             && !section.getName().equals(iSection.getName())) {
-                        infoSectionsList.add(Cloner
-                                .copyISection2InfoSection(section));
+                        infoSectionsList.add(Cloner.copyISection2InfoSection(section));
                     }
                 }
             } else {
                 while (iterSections.hasNext()) {
                     ISection section = (ISection) iterSections.next();
-                    if ((section.getSuperiorSection() != null && section
-                            .getSuperiorSection().getIdInternal().equals(
-                                    iSection.getSuperiorSection()
-                                            .getIdInternal()))
+                    if ((section.getSuperiorSection() != null && section.getSuperiorSection()
+                            .getIdInternal().equals(iSection.getSuperiorSection().getIdInternal()))
                             && !section.getName().equals(iSection.getName())) {
-                        infoSectionsList.add(Cloner
-                                .copyISection2InfoSection(section));
+                        infoSectionsList.add(Cloner.copyISection2InfoSection(section));
                     }
                 }
             }
@@ -153,8 +144,8 @@ public class TeacherAdministrationSiteComponentServiceSectionsTest extends
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
-                infoSiteCommon, infoSiteSections);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(infoSiteCommon,
+                infoSiteSections);
 
         return siteView;
     }

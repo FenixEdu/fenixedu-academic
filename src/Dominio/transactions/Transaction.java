@@ -2,23 +2,139 @@ package Dominio.transactions;
 
 import java.sql.Timestamp;
 
-import Util.PaymentType;
 import Dominio.DomainObject;
+import Dominio.IPersonAccount;
 import Dominio.IPessoa;
+import Util.PaymentType;
+import Util.transactions.TransactionType;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public abstract class Transaction extends DomainObject {
-    private IPessoa responsible; /* can be a student,employee or teacher */
+public abstract class Transaction extends DomainObject implements ITransaction {
 
     private Double value;
 
     private Timestamp transactionDate;
 
     private String remarks;
+
+    private PaymentType paymentType;
+
+    private TransactionType transactionType;
+
+    private Boolean wasInternalBalance;
+
+    private Integer keyResponsiblePerson;
+
+    private IPessoa responsiblePerson;
+
+    private Integer keyPersonAccount;
+
+    private IPersonAccount personAccount;
+
+    public Transaction() {
+    }
+
+    /**
+     * @param value
+     * @param transactionDate
+     * @param remarks
+     * @param paymentType
+     * @param transactionType
+     * @param wasInternalBalance
+     * @param responsiblePerson
+     * @param personAccount
+     */
+    protected Transaction(Double value, Timestamp transactionDate, String remarks,
+            PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
+            IPessoa responsiblePerson, IPersonAccount personAccount) {
+        this.value = value;
+        this.transactionDate = transactionDate;
+        this.remarks = remarks;
+        this.paymentType = paymentType;
+        this.transactionType = transactionType;
+        this.wasInternalBalance = wasInternalBalance;
+        this.responsiblePerson = responsiblePerson;
+        this.personAccount = personAccount;
+    }
+
+    /**
+     * @return Returns the keyPersonAccount.
+     */
+    public Integer getKeyPersonAccount() {
+        return keyPersonAccount;
+    }
+
+    /**
+     * @param keyPersonAccount
+     *            The keyPersonAccount to set.
+     */
+    public void setKeyPersonAccount(Integer keyPersonAccount) {
+        this.keyPersonAccount = keyPersonAccount;
+    }
+
+    /**
+     * @return Returns the personAccount.
+     */
+    public IPersonAccount getPersonAccount() {
+        return personAccount;
+    }
+
+    /**
+     * @param personAccount
+     *            The personAccount to set.
+     */
+    public void setPersonAccount(IPersonAccount personAccount) {
+        this.personAccount = personAccount;
+    }
+
+    /**
+     * @return Returns the keyResponsiblePerson.
+     */
+    public Integer getKeyResponsiblePerson() {
+        return keyResponsiblePerson;
+    }
+
+    /**
+     * @param keyResponsiblePerson
+     *            The keyResponsiblePerson to set.
+     */
+    public void setKeyResponsiblePerson(Integer keyResponsiblePerson) {
+        this.keyResponsiblePerson = keyResponsiblePerson;
+    }
+
+    /**
+     * @return Returns the responsiblePerson.
+     */
+    public IPessoa getResponsiblePerson() {
+        return responsiblePerson;
+    }
+
+    /**
+     * @param responsiblePerson
+     *            The responsiblePerson to set.
+     */
+    public void setResponsiblePerson(IPessoa responsiblePerson) {
+        this.responsiblePerson = responsiblePerson;
+    }
+
+    /**
+     * @return Returns the wasInternalBalance.
+     */
+    public Boolean getWasInternalBalance() {
+        return wasInternalBalance;
+    }
+
+    /**
+     * @param wasInternalBalance
+     *            The wasInternalBalance to set.
+     */
+    public void setWasInternalBalance(Boolean wasInternalBalance) {
+        this.wasInternalBalance = wasInternalBalance;
+    }
 
     /**
      * @return Returns the remarks.
@@ -65,8 +181,6 @@ public abstract class Transaction extends DomainObject {
         this.value = value;
     }
 
-    private PaymentType paymentType;
-
     /**
      * @return Returns the paymentType.
      */
@@ -81,10 +195,19 @@ public abstract class Transaction extends DomainObject {
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
-    public IPessoa getResponsible() {
-        return responsible;
+
+    /**
+     * @return Returns the transactionType.
+     */
+    public TransactionType getTransactionType() {
+        return transactionType;
     }
-    public void setResponsible(IPessoa responsible) {
-        this.responsible = responsible;
+
+    /**
+     * @param transactionType
+     *            The transactionType to set.
+     */
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
 }

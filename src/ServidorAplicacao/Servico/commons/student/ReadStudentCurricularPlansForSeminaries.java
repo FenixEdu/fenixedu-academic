@@ -1,10 +1,8 @@
-
 /**
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
+ *  
  */
 
 package ServidorAplicacao.Servico.commons.student;
@@ -24,97 +22,50 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadStudentCurricularPlansForSeminaries implements IService
-{
-
-   
+public class ReadStudentCurricularPlansForSeminaries implements IService {
 
     /**
      * The actor of this class.
-     **/
-    public ReadStudentCurricularPlansForSeminaries()
-    {
+     */
+    public ReadStudentCurricularPlansForSeminaries() {
     }
 
-  
-
-    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException
-    {
+    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
         ISuportePersistente sp = null;
 
         List studentCurricularPlans = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
 
-            studentCurricularPlans =
-                sp.getIStudentCurricularPlanPersistente().readByUsername(userView.getUtilizador());
+            studentCurricularPlans = sp.getIStudentCurricularPlanPersistente().readByUsername(
+                    userView.getUtilizador());
 
-        } catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
-        if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0))
-        {
+        if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {
             throw new NonExistingServiceException();
         }
 
         Iterator iterator = studentCurricularPlans.iterator();
         List result = new ArrayList();
 
-        // FIXME: There's a problem with data of the Graduation Students
-        //        For now only Master Degree Students can view their Curriculum 
-
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
-            
-            //CLONER
-            //result.add(
-            //          Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
-            result.add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree.newInfoFromDomain(studentCurricularPlan));
+
+            result.add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
+                    .newInfoFromDomain(studentCurricularPlan));
         }
 
-        if ((result.size() == 0))
-        {
+        if ((result.size() == 0)) {
             throw new NonExistingServiceException();
         }
 
         return result;
     }
 
-    //  public List run(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoInexistente, FenixServiceException {
-    //      ISuportePersistente sp = null;
-    //        
-    //      List studentCurricularPlans = null;
-    //         
-    //      try {
-    //          sp = SuportePersistenteOJB.getInstance();
-    //            
-    //          studentCurricularPlans = (List) sp.getIStudentCurricularPlanPersistente().readByStudentNumberAndDegreeType(studentNumber, degreeType);
-    //          
-    //      } catch (ExcepcaoPersistencia ex) {
-    //          FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-    //          newEx.fillInStackTrace();
-    //          throw newEx;
-    //      } 
-    //
-    //      if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)){
-    //          throw new NonExistingServiceException();
-    //      }
-    //      
-    //      Iterator iterator = studentCurricularPlans.iterator();
-    //      List result = new ArrayList();
-    //      
-    //      while(iterator.hasNext()){
-    //          IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
-    //          result.add(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan)); 
-    //      }
-    //
-    //      return result;
-    //  }
 }

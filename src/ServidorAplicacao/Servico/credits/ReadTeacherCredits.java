@@ -46,9 +46,10 @@ public class ReadTeacherCredits implements IService {
             do {
                 InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = new InfoExecutionPeriodWithInfoExecutionYear();
                 infoExecutionPeriod.copyFromDomain(executionPeriod);
-                
+
                 InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
-                InfoCreditsWithTeacherAndExecutionPeriod infoCreditsWrapper = new InfoCreditsWithTeacherAndExecutionPeriod(infoCredits);
+                InfoCreditsWithTeacherAndExecutionPeriod infoCreditsWrapper = new InfoCreditsWithTeacherAndExecutionPeriod(
+                        infoCredits);
                 infoCreditsWrapper.setInfoExecutionPeriod(infoExecutionPeriod);
                 infoCreditsWrapper.setInfoTeacher(infoTeacher);
                 list.add(infoCreditsWrapper);

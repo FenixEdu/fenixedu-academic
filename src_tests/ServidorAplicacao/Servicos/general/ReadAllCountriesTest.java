@@ -11,11 +11,10 @@
  */
 
 /**
- *
- * Autores : 
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
+ *  
  */
 
 package ServidorAplicacao.Servicos.general;
@@ -25,53 +24,52 @@ import junit.framework.TestSuite;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 public class ReadAllCountriesTest extends TestCaseReadServices {
-    
+
     public ReadAllCountriesTest(java.lang.String testName) {
         super(testName);
     }
-    
+
     public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         TestSuite suite = new TestSuite(ReadAllCountriesTest.class);
-        
+
         return suite;
     }
-    
+
     protected void setUp() {
         super.setUp();
     }
-    
+
     protected void tearDown() {
         super.tearDown();
     }
-    
-    
-	protected String getNameOfServiceToBeTested() {
-		return "ReadAllCountries";
-	}
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected String getNameOfServiceToBeTested() {
+        return "ReadAllCountries";
+    }
 
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+        return null;
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 2;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
-	protected Object getObjectToCompare() {
-		return null;
-	}
+    protected int getNumberOfItemsToRetrieve() {
+        return 2;
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}    
+    protected Object getObjectToCompare() {
+        return null;
+    }
+
+    protected boolean needsAuthorization() {
+        return true;
+    }
 }
 

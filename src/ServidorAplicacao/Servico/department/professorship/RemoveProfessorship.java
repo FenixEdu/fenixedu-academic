@@ -9,14 +9,14 @@ import ServidorAplicacao.Servico.teacher.DeleteTeacher;
 /**
  * @author jpvl
  */
-public class RemoveProfessorship extends DeleteTeacher
-{
+public class RemoveProfessorship extends DeleteTeacher {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.teacher.DeleteTeacher#canDeleteResponsibleFor()
      */
-    protected boolean canDeleteResponsibleFor()
-    {
+    protected boolean canDeleteResponsibleFor() {
         return true;
     }
 }

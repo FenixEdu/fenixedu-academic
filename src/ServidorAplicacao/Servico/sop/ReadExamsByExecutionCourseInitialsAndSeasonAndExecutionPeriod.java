@@ -7,9 +7,9 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
-  * @author Luis Cruz & Sara Ribeiro
-  * 
- **/
+ * @author Luis Cruz & Sara Ribeiro
+ *  
+ */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +18,8 @@ import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -27,99 +27,73 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.Season;
 
-public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod
-	implements IServico {
+public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod implements IServico {
 
-	private static ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod _servico =
-		new ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod getService() {
-		return _servico;
-	}
+    private static ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod _servico = new ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod() {
+    }
 
-	public InfoViewExamByDayAndShift run(
-		String executionCourseInitials,
-		Season season,
-		InfoExecutionPeriod infoExecutionPeriod) {
-		InfoViewExamByDayAndShift infoViewExamByDayAndShift =
-			new InfoViewExamByDayAndShift();
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod";
+    }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season,
+            InfoExecutionPeriod infoExecutionPeriod) {
+        InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionPeriod);
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IExecutionCourse executionCourse =
-				sp
-					.getIPersistentExecutionCourse()
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-						executionCourseInitials,
-						executionPeriod);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-			for (int i = 0;
-				i < executionCourse.getAssociatedExams().size();
-				i++) {
-				IExam exam =
-					(IExam) executionCourse.getAssociatedExams().get(i);
-				if (exam.getSeason().equals(season)) {
-					infoViewExamByDayAndShift.setInfoExam(
-						Cloner.copyIExam2InfoExam(exam));
+            IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse()
+                    .readByExecutionCourseInitialsAndExecutionPeriod(executionCourseInitials,
+                            executionPeriod);
 
-					List infoExecutionCourses = new ArrayList();
-					List infoDegrees = new ArrayList();
-					for (int j = 0;
-						j < exam.getAssociatedExecutionCourses().size();
-						j++) {
-						IExecutionCourse tempExecutionCourse =
-							(IExecutionCourse) exam
-								.getAssociatedExecutionCourses()
-								.get(
-								j);
-						infoExecutionCourses.add(
-							Cloner.get(
-								tempExecutionCourse));
+            for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
+                IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+                if (exam.getSeason().equals(season)) {
+                    infoViewExamByDayAndShift.setInfoExam(Cloner.copyIExam2InfoExam(exam));
 
-						// prepare degrees associated with exam
-						List tempAssociatedCurricularCourses =
-							executionCourse.getAssociatedCurricularCourses();
-						for (int k = 0;
-							k < tempAssociatedCurricularCourses.size();
-							k++) {
-							ICurso tempDegree =
-								(
-									(ICurricularCourse) tempAssociatedCurricularCourses
-									.get(k))
-									.getDegreeCurricularPlan()
-									.getDegree();
-							infoDegrees.add(
-								Cloner.copyIDegree2InfoDegree(tempDegree));
-						}
-					}
-					infoViewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);
-					infoViewExamByDayAndShift.setInfoDegrees(infoDegrees);
-				}
-			}
+                    List infoExecutionCourses = new ArrayList();
+                    List infoDegrees = new ArrayList();
+                    for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
+                        IExecutionCourse tempExecutionCourse = (IExecutionCourse) exam
+                                .getAssociatedExecutionCourses().get(j);
+                        infoExecutionCourses.add(Cloner.get(tempExecutionCourse));
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return infoViewExamByDayAndShift;
-	}
+                        // prepare degrees associated with exam
+                        List tempAssociatedCurricularCourses = executionCourse
+                                .getAssociatedCurricularCourses();
+                        for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
+                            ICurso tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses
+                                    .get(k)).getDegreeCurricularPlan().getDegree();
+                            infoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
+                        }
+                    }
+                    infoViewExamByDayAndShift.setInfoExecutionCourses(infoExecutionCourses);
+                    infoViewExamByDayAndShift.setInfoDegrees(infoDegrees);
+                }
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+        return infoViewExamByDayAndShift;
+    }
 }

@@ -24,82 +24,65 @@ import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public class ReadExecutionCoursewithAssociatedCurricularCourses implements IServico
-{
-    private static ReadExecutionCoursewithAssociatedCurricularCourses service =
-        new ReadExecutionCoursewithAssociatedCurricularCourses();
+public class ReadExecutionCoursewithAssociatedCurricularCourses implements IServico {
+    private static ReadExecutionCoursewithAssociatedCurricularCourses service = new ReadExecutionCoursewithAssociatedCurricularCourses();
+
     /**
      * The singleton access method of this class.
-     **/
-    public static ReadExecutionCoursewithAssociatedCurricularCourses getService()
-    {
+     */
+    public static ReadExecutionCoursewithAssociatedCurricularCourses getService() {
         return service;
     }
 
     /**
      * @see ServidorAplicacao.IServico#getNome()
      */
-    public String getNome()
-    {
+    public String getNome() {
         return "ReadExecutionCoursewithAssociatedCurricularCourses";
     }
 
-    public InfoExecutionCourse run(Integer oid) throws FenixServiceException
-    {
+    public InfoExecutionCourse run(Integer oid) throws FenixServiceException {
 
         InfoExecutionCourse result = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse executionDegreeDAO = sp.getIPersistentExecutionCourse();
-            final IExecutionCourse executionCourse =
-                (IExecutionCourse) executionDegreeDAO.readByOID(ExecutionCourse.class, oid);
-            if (executionCourse != null)
-            {
+            final IExecutionCourse executionCourse = (IExecutionCourse) executionDegreeDAO.readByOID(
+                    ExecutionCourse.class, oid);
+            if (executionCourse != null) {
                 result = (InfoExecutionCourse) Cloner.get(executionCourse);
-            }
-            else
-            {
+            } else {
                 throw new FenixServiceException("Unexisting Execution Course");
             }
 
             result.setAssociatedInfoCurricularCourses(new ArrayList());
             Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
-                InfoCurricularCourse infoCurricularCourse =
-                    Cloner.copyCurricularCourse2InfoCurricularCourseWithCurricularCourseScopes(
-                        curricularCourse);
-                CollectionUtils.filter(infoCurricularCourse.getInfoScopes(), new Predicate()
-                {
+                InfoCurricularCourse infoCurricularCourse = Cloner
+                        .copyCurricularCourse2InfoCurricularCourseWithCurricularCourseScopes(curricularCourse);
+                CollectionUtils.filter(infoCurricularCourse.getInfoScopes(), new Predicate() {
 
-                    public boolean evaluate(Object arg0)
-                    {
+                    public boolean evaluate(Object arg0) {
                         InfoCurricularCourseScope scope = (InfoCurricularCourseScope) arg0;
                         return scope.getInfoCurricularSemester().getSemester().equals(
-                            executionCourse.getExecutionPeriod().getSemester());
+                                executionCourse.getExecutionPeriod().getSemester());
                     }
                 });
-                if (infoCurricularCourse.getInfoScopes().size() > 0)
-                {
+                if (infoCurricularCourse.getInfoScopes().size() > 0) {
                     result.getAssociatedInfoCurricularCourses().add(infoCurricularCourse);
                 }
             }
-            if (result.getAssociatedInfoCurricularCourses().isEmpty())
-            {
+            if (result.getAssociatedInfoCurricularCourses().isEmpty()) {
                 result.setAssociatedInfoCurricularCourses(null);
             }
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 

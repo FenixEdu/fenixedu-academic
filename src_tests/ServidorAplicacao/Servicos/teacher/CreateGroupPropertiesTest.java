@@ -23,103 +23,115 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 
-	ISuportePersistente persistentSupport = null;
-	IPersistentExecutionYear persistentExecutionYear = null;
-	IPersistentExecutionPeriod persistentExecutionPeriod = null;
-	IPersistentExecutionCourse persistentExecutionCourse = null;
+    ISuportePersistente persistentSupport = null;
 
-	IExecutionCourse executionCourse = null;
+    IPersistentExecutionYear persistentExecutionYear = null;
 
-	/**
-	 * @param testName
-	 */
-	public CreateGroupPropertiesTest(String testName) {
-		super(testName);
-	}
+    IPersistentExecutionPeriod persistentExecutionPeriod = null;
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "CreateGroupProperties";
-	}
+    IPersistentExecutionCourse persistentExecutionCourse = null;
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		try {
-		
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentSupport.iniciarTransaccao();
-			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+    IExecutionCourse executionCourse = null;
 
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
-			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII", executionPeriod);
-			persistentSupport.confirmarTransaccao();
+    /**
+     * @param testName
+     */
+    public CreateGroupPropertiesTest(String testName) {
+        super(testName);
+    }
 
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "CreateGroupProperties";
+    }
 
-		IGroupProperties groupProperties = new GroupProperties(executionCourse, "projecto A");
-		Object[] args = { executionCourse.getIdInternal(), Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties)};
-		return args;
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        try {
 
-	}
+            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport.iniciarTransaccao();
+            persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+            persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+            persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+            IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                    "2º Semestre", executionYear);
+            executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod(
+                    "TFCII", executionPeriod);
+            persistentSupport.confirmarTransaccao();
 
-		try {
-			
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentSupport.iniciarTransaccao();
-			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("failed setting up the test data");
+        }
 
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
-			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII", executionPeriod);
-			
-			persistentSupport.confirmarTransaccao();
+        IGroupProperties groupProperties = new GroupProperties(executionCourse, "projecto A");
+        Object[] args = { executionCourse.getIdInternal(),
+                Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties) };
+        return args;
 
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
+    }
 
-		IGroupProperties groupProperties = new GroupProperties(executionCourse, "newName");
-		
-		InfoGroupProperties infoGroupProperties = Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
-		
-		Object[] args = { new Integer(25), infoGroupProperties };
-		
-		return args;
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-	}
+        try {
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return true;
-	}
+            persistentSupport = SuportePersistenteOJB.getInstance();
+            persistentSupport.iniciarTransaccao();
+            persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+            persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+            persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+            IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                    "2º Semestre", executionYear);
+            executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod(
+                    "TFCII", executionPeriod);
+
+            persistentSupport.confirmarTransaccao();
+
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("failed setting up the test data");
+        }
+
+        IGroupProperties groupProperties = new GroupProperties(executionCourse, "newName");
+
+        InfoGroupProperties infoGroupProperties = Cloner
+                .copyIGroupProperties2InfoGroupProperties(groupProperties);
+
+        Object[] args = { new Integer(25), infoGroupProperties };
+
+        return args;
+
+    }
+
+    /**
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
+        return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
 }

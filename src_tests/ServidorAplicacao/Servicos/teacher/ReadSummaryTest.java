@@ -88,16 +88,13 @@ public class ReadSummaryTest extends SummaryBelongsExecutionCourseTest {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-            newSummary = (ISummary) persistentSummary.readByOID(Summary.class,
-                    new Integer(261));
+            newSummary = (ISummary) persistentSummary.readByOID(Summary.class, new Integer(261));
             sp.confirmarTransaccao();
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(
-                    userView, getNameOfServiceToBeTested(),
-                    getAuthorizeArguments());
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), getAuthorizeArguments());
 
-            InfoSiteSummary infoSiteSummary = (InfoSiteSummary) result
-                    .getComponent();
+            InfoSiteSummary infoSiteSummary = (InfoSiteSummary) result.getComponent();
             InfoSummary infoSummary = infoSiteSummary.getInfoSummary();
             ISummary oldSummary = Cloner.copyInfoSummary2ISummary(infoSummary);
 

@@ -36,22 +36,10 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear implements IService
-{
+public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear implements IService {
 
-    /**
-	 * The actor of this class.
-	 */
-    public ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear()
-    {
-    }
-
-    public Object run(
-        InfoExecutionPeriod infoExecutionPeriod,
-        InfoExecutionDegree infoExecutionDegree,
-        InfoCurricularYear infoCurricularYear)
-        throws FenixServiceException
-    {
+    public Object run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
+            InfoCurricularYear infoCurricularYear) throws FenixServiceException {
 
         //		Calendar serviceStartTime;
         //		Calendar serviceEndTime;
@@ -64,31 +52,22 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
         List infoShifts = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IExecutionPeriod executionPeriod =
-                (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(
-                    ExecutionPeriod.class,
-                    infoExecutionPeriod.getIdInternal());
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
+                    .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-            ICursoExecucao executionDegree =
-                (ICursoExecucao) sp.getICursoExecucaoPersistente().readByOID(
-                    CursoExecucao.class,
-                    infoExecutionDegree.getIdInternal());
+            ICursoExecucao executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree()
+                    .readByOID(CursoExecucao.class, infoExecutionDegree.getIdInternal());
 
-            ICurricularYear curricularYear =
-                (ICurricularYear) sp.getIPersistentCurricularYear().readByOID(
-                    CurricularYear.class,
-                    infoCurricularYear.getIdInternal());
+            ICurricularYear curricularYear = (ICurricularYear) sp.getIPersistentCurricularYear()
+                    .readByOID(CurricularYear.class, infoCurricularYear.getIdInternal());
 
             //			queryStartTime = Calendar.getInstance();
-            List shifts =
-                sp.getITurnoPersistente().readByExecutionPeriodAndExecutionDegreeAndCurricularYear(
-                    executionPeriod,
-                    executionDegree,
-                    curricularYear);
+            List shifts = sp.getITurnoPersistente()
+                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYear(executionPeriod,
+                            executionDegree, curricularYear);
             //			queryEndTime = Calendar.getInstance();
 
             //			transformerStartTime = Calendar.getInstance();
@@ -117,8 +96,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             // It takes about 1seconds for an average list of shifts.
             // Could still make it faster... but this is probably fast enough.
             infoShifts = new ArrayList();
-            for (int i = 0; i < shifts.size(); i++)
-            {
+            for (int i = 0; i < shifts.size(); i++) {
                 ITurno shift = (ITurno) shifts.get(i);
                 //Cloner.copyShift2InfoShift((ITurno) shifts.get(i));
                 InfoShift infoShift = new InfoShift();
@@ -131,24 +109,24 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
                 infoShift.setTipo(shift.getTipo());
 
                 infoShift.setInfoLessons(new ArrayList());
-                InfoExecutionCourse infoExecutionCourse =
-                    (InfoExecutionCourse) Cloner.get(((ITurno) shifts.get(i)).getDisciplinaExecucao());
+                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+                        .get(((ITurno) shifts.get(i)).getDisciplinaExecucao());
                 infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-                for (int j = 0; j < ((ITurno) shifts.get(i)).getAssociatedLessons().size(); j++)
-                {
+                for (int j = 0; j < ((ITurno) shifts.get(i)).getAssociatedLessons().size(); j++) {
                     IAula lesson = (IAula) ((ITurno) shifts.get(i)).getAssociatedLessons().get(j);
                     InfoLesson infoLesson = new InfoLesson();
                     InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
-					InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
-					
+                    InfoRoomOccupation infoRoomOccupation = Cloner
+                            .copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+
                     infoLesson.setDiaSemana(lesson.getDiaSemana());
                     infoLesson.setFim(lesson.getFim());
                     infoLesson.setIdInternal(lesson.getIdInternal());
                     infoLesson.setInicio(lesson.getInicio());
                     infoLesson.setTipo(lesson.getTipo());
                     infoLesson.setInfoSala(infoRoom);
-					infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-					                    
+                    infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+
                     infoLesson.setInfoShift(infoShift);
                     //infoLesson.setInfoDisciplinaExecucao(infoExecutionCourse);
 
@@ -159,9 +137,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             }
 
             //			transformerEndTime = Calendar.getInstance();
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
         //		serviceEndTime = Calendar.getInstance();

@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Servico.exceptions;
 
 /**
@@ -10,21 +9,21 @@ public class NoActiveStudentCurricularPlanServiceException extends FenixServiceE
 
     public NoActiveStudentCurricularPlanServiceException() {
     }
-    
-	public NoActiveStudentCurricularPlanServiceException(Throwable cause) {
-		super(cause);
-	}
 
-	public NoActiveStudentCurricularPlanServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	public String toString() {
-				String result = "[NoActiveStudentCurricularPlanServiceException\n";
-				result += "message" +this.getMessage()+ "\n";
-				result += "cause" +this.getCause()+ "\n";
-				result += "]";
-				return result;
-			}
+    public NoActiveStudentCurricularPlanServiceException(Throwable cause) {
+        super(cause);
+    }
 
+    public NoActiveStudentCurricularPlanServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public String toString() {
+        String result = "[NoActiveStudentCurricularPlanServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

@@ -47,8 +47,7 @@ public class LerAulasDeTurma implements IService {
             ITurma group = null;
             if (infoClass.getIdInternal() != null) {
 
-                group = (ITurma) persistentDomainClass.readByOID(Turma.class,
-                        infoClass.getIdInternal());
+                group = (ITurma) persistentDomainClass.readByOID(Turma.class, infoClass.getIdInternal());
             } else {
                 group = Cloner.copyInfoClass2Class(infoClass);
             }
@@ -65,15 +64,15 @@ public class LerAulasDeTurma implements IService {
                 Iterator lessonIterator = lessonList.iterator();
                 while (lessonIterator.hasNext()) {
                     IAula elem = (IAula) lessonIterator.next();
-                    //IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
+                    //IAula lesson = (IAula)
+                    // sp.getIAulaPersistente().readByOID(
                     //        Aula.class, elem.getIdInternal());
                     //InfoLesson infoLesson =
                     // Cloner.copyILesson2InfoLesson(elem);
-                    InfoLesson infoLesson = Cloner
-                            .copyILesson2InfoLesson(elem);
+                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
 
-					InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-					infoLesson.setInfoShift(infoShift);
+                    InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                    infoLesson.setInfoShift(infoShift);
 
                     if (infoLesson != null) {
                         infoLessonList.add(infoLesson);

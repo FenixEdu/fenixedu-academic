@@ -14,11 +14,10 @@ import ServidorPersistente.IPersistentObject;
  * @author Sergio Montelobo
  *  
  */
-public interface IPersistentCourseReport extends IPersistentObject
-{
+public interface IPersistentCourseReport extends IPersistentObject {
 
     public ICourseReport readCourseReportByExecutionCourse(IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 
     public void delete(ICourseReport courseReport) throws ExcepcaoPersistencia;
 }

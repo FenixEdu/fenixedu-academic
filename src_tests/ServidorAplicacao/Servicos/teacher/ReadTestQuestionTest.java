@@ -32,54 +32,46 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class ReadTestQuestionTest extends TestCaseReadServices
-{
+public class ReadTestQuestionTest extends TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public ReadTestQuestionTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadTestQuestionTest(String testName) {
         super(testName);
 
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadTestQuestion";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
-        Object[] args = { new Integer(26), new Integer(4), new Integer(1)};
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] args = { new Integer(26), new Integer(4), new Integer(1) };
         return args;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         InfoSiteTestQuestion bodyComponent = new InfoSiteTestQuestion();
         InfoQuestion infoQuestion = null;
         InfoExecutionCourse infoExecutionCourse = null;
         InfoTestQuestion infoTestQuestion = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, new Integer(26));
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, new Integer(26));
             assertNotNull("executionCourse null", executionCourse);
 
             IPersistentTest persistentTest = sp.getIPersistentTest();
@@ -87,11 +79,13 @@ public class ReadTestQuestionTest extends TestCaseReadServices
             assertNotNull("test null", test);
 
             IPersistentQuestion persistentQuestion = sp.getIPersistentQuestion();
-            IQuestion question = (IQuestion) persistentQuestion.readByOID(Question.class, new Integer(1));
+            IQuestion question = (IQuestion) persistentQuestion
+                    .readByOID(Question.class, new Integer(1));
             assertNotNull("Question null", question);
 
             IPersistentTestQuestion persistentTestQuestion = sp.getIPersistentTestQuestion();
-            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(TestQuestion.class, new Integer(8));
+            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(
+                    TestQuestion.class, new Integer(8));
             assertNotNull("TestQuestion null", testQuestion);
 
             sp.confirmarTransaccao();
@@ -99,19 +93,14 @@ public class ReadTestQuestionTest extends TestCaseReadServices
 
             infoQuestion = InfoQuestion.newInfoFromDomain(question);
             ParseQuestion parse = new ParseQuestion();
-            try
-            {
+            try {
                 infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, "");
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 fail("exception: ExcepcaoPersistencia ");
             }
             infoTestQuestion = InfoTestQuestion.newInfoFromDomain(testQuestion);
             infoTestQuestion.setQuestion(infoQuestion);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             fail("exception: ExcepcaoPersistencia ");
         }
 
@@ -122,8 +111,7 @@ public class ReadTestQuestionTest extends TestCaseReadServices
         return siteView;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 }

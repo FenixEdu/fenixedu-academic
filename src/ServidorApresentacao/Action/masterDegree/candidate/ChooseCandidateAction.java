@@ -1,14 +1,13 @@
 /*
  * 
  * Created on 27 of March de 2003
- *
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
+ *  
  */
- 
+
 package ServidorApresentacao.Action.masterDegree.candidate;
 
 import java.util.List;
@@ -26,27 +25,25 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class ChooseCandidateAction extends ServidorApresentacao.Action.base.FenixAction {
 
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                                HttpServletRequest request,
-                                HttpServletResponse response)
-      throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-	
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            List candidateList = (List) session
+                    .getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
 
-	HttpSession session = request.getSession(false);
-	if (session != null) {
-      List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-			
-	  Integer choosenCandidatePosition = Integer.valueOf(request.getParameter("candidate"));
-			
-	  // Put the selected Candidate in Session
-	  InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) candidateList.get(choosenCandidatePosition.intValue());
-		
-	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+            Integer choosenCandidatePosition = Integer.valueOf(request.getParameter("candidate"));
 
-      return mapping.findForward("Success");
-    } 
-      throw new Exception();   
-  }
+            // Put the selected Candidate in Session
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) candidateList
+                    .get(choosenCandidatePosition.intValue());
+
+            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+
+            return mapping.findForward("Success");
+        }
+        throw new Exception();
+    }
 
 }

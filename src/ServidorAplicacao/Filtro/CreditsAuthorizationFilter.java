@@ -38,8 +38,7 @@ public class CreditsAuthorizationFilter extends Filtro {
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView requester = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
@@ -49,32 +48,27 @@ public class CreditsAuthorizationFilter extends Filtro {
         // ATTENTION: ifs order matters...
         if (AuthorizationUtils.containsRole(roles, RoleType.CREDITS_MANAGER)) {
             authorizedRequester = true;
-        } else if (AuthorizationUtils.containsRole(roles,
-                RoleType.DEPARTMENT_CREDITS_MANAGER)) {
+        } else if (AuthorizationUtils.containsRole(roles, RoleType.DEPARTMENT_CREDITS_MANAGER)) {
             ITeacher teacherToEdit = readTeacher(arguments[0], sp);
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester
-                    .getUtilizador());
+            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
 
-            List departmentsWithAccessGranted = requesterPerson
-                    .getManageableDepartmentCredits();
-            IPersistentDepartment departmentDAO = sp
-                    .getIDepartamentoPersistente();
+            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
             IDepartment department = departmentDAO.readByTeacher(teacherToEdit);
-            authorizedRequester = departmentsWithAccessGranted
-                    .contains(department);
+            authorizedRequester = departmentsWithAccessGranted.contains(department);
 
         } else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER)) {
             ITeacher teacherToEdit = readTeacher(arguments[0], sp);
-            authorizedRequester = teacherToEdit.getPerson().getUsername()
-                    .equals(requester.getUtilizador());
+            authorizedRequester = teacherToEdit.getPerson().getUsername().equals(
+                    requester.getUtilizador());
 
         }
 
         if (!authorizedRequester) {
-            throw new NotAuthorizedFilterException(" -----------> User = "
-                    + requester.getUtilizador() + "ACCESS NOT GRANTED!");
+            throw new NotAuthorizedFilterException(" -----------> User = " + requester.getUtilizador()
+                    + "ACCESS NOT GRANTED!");
         }
 
     }
@@ -84,15 +78,13 @@ public class CreditsAuthorizationFilter extends Filtro {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private ITeacher readTeacher(Object object, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    private ITeacher readTeacher(Object object, ISuportePersistente sp) throws ExcepcaoPersistencia {
         Integer teacherOID = null;
         if (object instanceof InfoTeacher) {
             teacherOID = ((InfoTeacher) object).getIdInternal();
         } else if (object instanceof Integer) {
             teacherOID = (Integer) object;
         }
-        return (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class,
-                teacherOID);
+        return (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class, teacherOID);
     }
 }

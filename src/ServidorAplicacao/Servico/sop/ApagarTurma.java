@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Serviço ApagarTurma.
- *
+ * 
  * @author tfc130
- **/
+ */
 import DataBeans.InfoClass;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
@@ -24,68 +24,62 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ApagarTurma implements IServico {
 
-	private static ApagarTurma _servico = new ApagarTurma();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ApagarTurma getService() {
-		return _servico;
-	}
+    private static ApagarTurma _servico = new ApagarTurma();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ApagarTurma() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ApagarTurma getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ApagarTurma";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ApagarTurma() {
+    }
 
-	public Object run(InfoClass infoClass) {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ApagarTurma";
+    }
 
-		ITurma turma = null;
-		boolean result = false;
+    public Object run(InfoClass infoClass) {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoClass.getInfoExecutionPeriod());
-			ICursoExecucao executionDegree =
-				Cloner.copyInfoExecutionDegree2ExecutionDegree(
-					infoClass.getInfoExecutionDegree());
+        ITurma turma = null;
+        boolean result = false;
 
-			turma =
-				sp
-					.getITurmaPersistente()
-					.readByNameAndExecutionDegreeAndExecutionPeriod(
-					infoClass.getNome(),
-					executionDegree,
-					executionPeriod);
-			try {
-				if (turma != null) {
-					for (int i = 0; i < turma.getAssociatedShifts().size(); i++) {
-						ITurno shift = (ITurno) turma.getAssociatedShifts().get(i);
-						sp.getITurnoPersistente().simpleLockWrite(shift);
-						shift.getAssociatedClasses().remove(turma);
-					}
-				    
-					sp.getITurmaPersistente().delete(turma);
-					result = true;
-				}
-			} catch (ExcepcaoPersistencia ex1) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex1);
-			}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
+                    .getInfoExecutionPeriod());
+            ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
+                    .getInfoExecutionDegree());
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
+            turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
+                    infoClass.getNome(), executionDegree, executionPeriod);
+            try {
+                if (turma != null) {
+                    for (int i = 0; i < turma.getAssociatedShifts().size(); i++) {
+                        ITurno shift = (ITurno) turma.getAssociatedShifts().get(i);
+                        sp.getITurnoPersistente().simpleLockWrite(shift);
+                        shift.getAssociatedClasses().remove(turma);
+                    }
 
-		return new Boolean(result);
-	}
+                    sp.getITurmaPersistente().delete(turma);
+                    result = true;
+                }
+            } catch (ExcepcaoPersistencia ex1) {
+                throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex1);
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+
+        return new Boolean(result);
+    }
 
 }

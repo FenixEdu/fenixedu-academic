@@ -1,11 +1,11 @@
 package ServidorAplicacao.Servico.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.TeacherAdministrationSiteView;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -19,60 +19,34 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class TeacherAdministrationSiteComponentService implements IServico {
+public class TeacherAdministrationSiteComponentService implements IService {
 
-    private static TeacherAdministrationSiteComponentService _servico = new TeacherAdministrationSiteComponentService();
-
-    /**
-     * The actor of this class.
-     */
-
-    private TeacherAdministrationSiteComponentService() {
+    public TeacherAdministrationSiteComponentService() {
 
     }
 
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "TeacherAdministrationSiteComponentService";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadExecutionCourse
-     */
-    public static TeacherAdministrationSiteComponentService getService() {
-        return _servico;
-    }
-
-    public Object run(Integer infoExecutionCourseCode,
-            ISiteComponent commonComponent, ISiteComponent bodyComponent,
-            Integer infoSiteCode, Object obj1, Object obj2)
+    public Object run(Integer infoExecutionCourseCode, ISiteComponent commonComponent,
+            ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2)
             throws FenixServiceException {
         TeacherAdministrationSiteView siteView = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();            
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
-            
+
             ISite site = null;
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
             site = persistentSite.readByExecutionCourse(executionCourse);
 
             TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
                     .getInstance();
-            commonComponent = componentBuilder.getComponent(commonComponent,
-                    site, null, null, null);
-            bodyComponent = componentBuilder.getComponent(bodyComponent, site,
-                    commonComponent, obj1, obj2);
+            commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
+            bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, obj1,
+                    obj2);
 
-            siteView = new TeacherAdministrationSiteView(commonComponent,
-                    bodyComponent);
+            siteView = new TeacherAdministrationSiteView(commonComponent, bodyComponent);
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

@@ -23,259 +23,235 @@ import ServidorAplicacao.utils.exceptions.FenixUtilException;
 import ServidorAplicacao.utils.exceptions.SmsSendUtilException;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class SmsUtil
-{
-	private static SmsUtil _instance = null;
+public class SmsUtil {
+    private static SmsUtil _instance = null;
 
-	private String host;
-	private int port;
-	private String uri;
-	private String protocol;
-	private String username;
-	private String password;
-	private int monthlySmsLimit;
-	private String deliveryUsername;
-	private String deliveryPassword;
-	private String deliveryHost;
-	private int deliveryPort;
-	private String deliveryUri;
-	private String deliveryProtocol;
+    private String host;
 
-	public static synchronized SmsUtil getInstance()
-	{
-		if (_instance == null)
-		{
-			_instance = new SmsUtil();
-		}
+    private int port;
 
-		return _instance;
-	}
+    private String uri;
 
-	/**
-	 * Default constructor (reads "/SMSCofiguration.properties")
-	 */
-	private SmsUtil()
-	{
+    private String protocol;
 
-		Properties properties = new Properties();
+    private String username;
 
-		InputStream inputStream = getClass().getResourceAsStream("/SMSConfiguration.properties");
-		try
-		{
-			properties.load(inputStream);
-		}
-		catch (IOException e1)
-		{
-			e1.printStackTrace();
-		}
+    private String password;
 
-		this.host = properties.getProperty("host");
-		this.uri = properties.getProperty("host.uri");
-		this.port = (new Integer(properties.getProperty("host.port"))).intValue();
-		this.protocol = properties.getProperty("protocol");
-		this.username = properties.getProperty("username").trim();
-		this.password = properties.getProperty("password").trim();
-		this.monthlySmsLimit = (new Integer(properties.getProperty("monthlySmsLimit"))).intValue();
-		this.deliveryUsername = properties.getProperty("deliveryUsername").trim();
-		this.deliveryPassword = properties.getProperty("deliveryPassword").trim();
-		this.deliveryHost = properties.getProperty("deliveryHost");
-		this.deliveryPort = (new Integer(properties.getProperty("deliveryHost.port"))).intValue();
-		this.deliveryUri = properties.getProperty("deliveryHost.uri");
-		this.deliveryProtocol = properties.getProperty("deliveryProtocol");
+    private int monthlySmsLimit;
 
-	}
+    private String deliveryUsername;
 
-	/**
-	 * 
-	 * Send a Sms with delivery report support (The gateway will update da SentSms with Id=smsId)
-	 * 
-	 * @param destinationPhoneNumber
-	 * @param message
-	 * @param smsId
-	 * @throws FenixUtilException
-	 */
-	public void sendSms(Integer destinationPhoneNumber, String message, Integer smsId)
-		throws FenixUtilException
-	{
+    private String deliveryPassword;
 
-		HttpClient client = new HttpClient();
-		client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
-		HttpMethod httpMethod = new GetMethod(this.uri);
+    private String deliveryHost;
 
-		NameValuePair deliveryUsername = new NameValuePair("deliveryUsername", this.deliveryUsername);
-		NameValuePair deliveryPassword = new NameValuePair("deliveryPassword", this.deliveryPassword);
-		NameValuePair deliveryMethod = new NameValuePair("method", "updateDeliveryReport");
-		NameValuePair deliverySmsId = new NameValuePair("smsId", smsId.toString());
+    private int deliveryPort;
 
-		String deliveryQuery =
-			EncodingUtil.formUrlEncode(
-				new NameValuePair[] {
-					deliveryUsername,
-					deliveryPassword,
-					deliverySmsId,
-					deliveryMethod },
-				"8859_1")
-				+ "&deliveryType=%d";
+    private String deliveryUri;
 
-		URL url = null;
-		try
-		{
-			url = new URL(this.deliveryProtocol, this.deliveryHost, this.deliveryPort, this.deliveryUri);
-		}
-		catch (MalformedURLException e2)
-		{
-			throw new SmsSendUtilException();
-		}
+    private String deliveryProtocol;
 
-		String deliveryUrl = url.toExternalForm() + "?" + deliveryQuery;
+    public static synchronized SmsUtil getInstance() {
+        if (_instance == null) {
+            _instance = new SmsUtil();
+        }
 
-		NameValuePair username = new NameValuePair("username", this.username);
-		NameValuePair password = new NameValuePair("password", this.password);
-		NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
-		NameValuePair text = new NameValuePair("text", message);
-		NameValuePair dlrmaks = new NameValuePair("dlrmask", "31");
-		NameValuePair dlrurl = new NameValuePair("dlrurl", deliveryUrl);
+        return _instance;
+    }
 
-		String query =
-			EncodingUtil.formUrlEncode(
-				new NameValuePair[] { username, password, to, text, dlrmaks, dlrurl },
-				"8859_1");
+    /**
+     * Default constructor (reads "/SMSCofiguration.properties")
+     */
+    private SmsUtil() {
 
-		httpMethod.setQueryString(query);
+        Properties properties = new Properties();
 
-		try
-		{
-			client.executeMethod(httpMethod);
+        InputStream inputStream = getClass().getResourceAsStream("/SMSConfiguration.properties");
+        try {
+            properties.load(inputStream);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
 
-			String result = httpMethod.getResponseBodyAsString();
-			System.err.println(result);
+        this.host = properties.getProperty("host");
+        this.uri = properties.getProperty("host.uri");
+        this.port = (new Integer(properties.getProperty("host.port"))).intValue();
+        this.protocol = properties.getProperty("protocol");
+        this.username = properties.getProperty("username").trim();
+        this.password = properties.getProperty("password").trim();
+        this.monthlySmsLimit = (new Integer(properties.getProperty("monthlySmsLimit"))).intValue();
+        this.deliveryUsername = properties.getProperty("deliveryUsername").trim();
+        this.deliveryPassword = properties.getProperty("deliveryPassword").trim();
+        this.deliveryHost = properties.getProperty("deliveryHost");
+        this.deliveryPort = (new Integer(properties.getProperty("deliveryHost.port"))).intValue();
+        this.deliveryUri = properties.getProperty("deliveryHost.uri");
+        this.deliveryProtocol = properties.getProperty("deliveryProtocol");
 
-			httpMethod.releaseConnection();
+    }
 
-			if (result.equals("Sent.") == false)
-			{
-				throw new SmsSendUtilException();
-			}
+    /**
+     * 
+     * Send a Sms with delivery report support (The gateway will update da
+     * SentSms with Id=smsId)
+     * 
+     * @param destinationPhoneNumber
+     * @param message
+     * @param smsId
+     * @throws FenixUtilException
+     */
+    public void sendSms(Integer destinationPhoneNumber, String message, Integer smsId)
+            throws FenixUtilException {
 
-		}
-		catch (HttpException e)
-		{
-			throw new SmsSendUtilException();
-		}
-		catch (IOException e)
-		{
-			throw new SmsSendUtilException();
-		}
+        HttpClient client = new HttpClient();
+        client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
+        HttpMethod httpMethod = new GetMethod(this.uri);
 
-	}
+        NameValuePair deliveryUsername = new NameValuePair("deliveryUsername", this.deliveryUsername);
+        NameValuePair deliveryPassword = new NameValuePair("deliveryPassword", this.deliveryPassword);
+        NameValuePair deliveryMethod = new NameValuePair("method", "updateDeliveryReport");
+        NameValuePair deliverySmsId = new NameValuePair("smsId", smsId.toString());
 
-	/**
-	 * 
-	 * Send a Sms without delivery report support
-	 * 
-	 * @param destinationPhoneNumber
-	 * @param message
-	 * @param smsId
-	 * @throws FenixUtilException
-	 */
-	public void sendSmsWithoutDeliveryReports(Integer destinationPhoneNumber, String message)
-		throws FenixUtilException
-	{
+        String deliveryQuery = EncodingUtil.formUrlEncode(new NameValuePair[] { deliveryUsername,
+                deliveryPassword, deliverySmsId, deliveryMethod }, "8859_1")
+                + "&deliveryType=%d";
 
-		HttpClient client = new HttpClient();
-		client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
-		HttpMethod httpMethod = new GetMethod(this.uri);
+        URL url = null;
+        try {
+            url = new URL(this.deliveryProtocol, this.deliveryHost, this.deliveryPort, this.deliveryUri);
+        } catch (MalformedURLException e2) {
+            throw new SmsSendUtilException();
+        }
 
-		NameValuePair username = new NameValuePair("username", this.username);
-		NameValuePair password = new NameValuePair("password", this.password);
-		NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
-		NameValuePair text = new NameValuePair("text", message);
+        String deliveryUrl = url.toExternalForm() + "?" + deliveryQuery;
 
-		String query =
-			EncodingUtil.formUrlEncode(new NameValuePair[] { username, password, to, text }, "8859_1");
+        NameValuePair username = new NameValuePair("username", this.username);
+        NameValuePair password = new NameValuePair("password", this.password);
+        NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
+        NameValuePair text = new NameValuePair("text", message);
+        NameValuePair dlrmaks = new NameValuePair("dlrmask", "31");
+        NameValuePair dlrurl = new NameValuePair("dlrurl", deliveryUrl);
 
-		httpMethod.setQueryString(query);
+        String query = EncodingUtil.formUrlEncode(new NameValuePair[] { username, password, to, text,
+                dlrmaks, dlrurl }, "8859_1");
 
-		try
-		{
-			 client.executeMethod(httpMethod);
+        httpMethod.setQueryString(query);
 
-			String result = httpMethod.getResponseBodyAsString();
-			System.err.println(result);
+        try {
+            client.executeMethod(httpMethod);
 
-			httpMethod.releaseConnection();
+            String result = httpMethod.getResponseBodyAsString();
+            System.err.println(result);
 
-			if (result.equals("Sent.") == false)
-			{
-				throw new SmsSendUtilException();
-			}
+            httpMethod.releaseConnection();
 
-		}
-		catch (HttpException e)
-		{
-			throw new SmsSendUtilException();
-		}
-		catch (IOException e)
-		{
-			throw new SmsSendUtilException();
-		}
+            if (result.equals("Sent.") == false) {
+                throw new SmsSendUtilException();
+            }
 
-	}
-	
-	/**
-	 * 
-	 * @param responseMessage
-	 * @param responseLenght
-	 * @return
-	 */
-	public List splitMessage(StringBuffer message, int messageLenght)
-	{		
-		List responseMessagesList = new ArrayList();
-		while(message.length() > messageLenght){
-			
-			responseMessagesList.add(message.substring(0, messageLenght));
-			message.delete(0, messageLenght);
-			
-		}
-		responseMessagesList.add(message.toString());
-		
-		return responseMessagesList;
-	}
+        } catch (HttpException e) {
+            throw new SmsSendUtilException();
+        } catch (IOException e) {
+            throw new SmsSendUtilException();
+        }
 
-	/**
-	 * @return Returns the monthlySmsLimit.
-	 */
-	public int getMonthlySmsLimit()
-	{
-		return monthlySmsLimit;
-	}
+    }
 
-	/**
-	 * @return Returns the host.
-	 */
-	public String getHost()
-	{
-		return host;
-	}
+    /**
+     * 
+     * Send a Sms without delivery report support
+     * 
+     * @param destinationPhoneNumber
+     * @param message
+     * @param smsId
+     * @throws FenixUtilException
+     */
+    public void sendSmsWithoutDeliveryReports(Integer destinationPhoneNumber, String message)
+            throws FenixUtilException {
 
-	/**
-	 * @return Returns the deliveryPassword.
-	 */
-	public String getDeliveryPassword()
-	{
-		return deliveryPassword;
-	}
+        HttpClient client = new HttpClient();
+        client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
+        HttpMethod httpMethod = new GetMethod(this.uri);
 
-	/**
-	 * @return Returns the deliveryUsername.
-	 */
-	public String getDeliveryUsername()
-	{
-		return deliveryUsername;
-	}
+        NameValuePair username = new NameValuePair("username", this.username);
+        NameValuePair password = new NameValuePair("password", this.password);
+        NameValuePair to = new NameValuePair("to", destinationPhoneNumber.toString());
+        NameValuePair text = new NameValuePair("text", message);
+
+        String query = EncodingUtil.formUrlEncode(new NameValuePair[] { username, password, to, text },
+                "8859_1");
+
+        httpMethod.setQueryString(query);
+
+        try {
+            client.executeMethod(httpMethod);
+
+            String result = httpMethod.getResponseBodyAsString();
+            System.err.println(result);
+
+            httpMethod.releaseConnection();
+
+            if (result.equals("Sent.") == false) {
+                throw new SmsSendUtilException();
+            }
+
+        } catch (HttpException e) {
+            throw new SmsSendUtilException();
+        } catch (IOException e) {
+            throw new SmsSendUtilException();
+        }
+
+    }
+
+    /**
+     * 
+     * @param responseMessage
+     * @param responseLenght
+     * @return
+     */
+    public List splitMessage(StringBuffer message, int messageLenght) {
+        List responseMessagesList = new ArrayList();
+        while (message.length() > messageLenght) {
+
+            responseMessagesList.add(message.substring(0, messageLenght));
+            message.delete(0, messageLenght);
+
+        }
+        responseMessagesList.add(message.toString());
+
+        return responseMessagesList;
+    }
+
+    /**
+     * @return Returns the monthlySmsLimit.
+     */
+    public int getMonthlySmsLimit() {
+        return monthlySmsLimit;
+    }
+
+    /**
+     * @return Returns the host.
+     */
+    public String getHost() {
+        return host;
+    }
+
+    /**
+     * @return Returns the deliveryPassword.
+     */
+    public String getDeliveryPassword() {
+        return deliveryPassword;
+    }
+
+    /**
+     * @return Returns the deliveryUsername.
+     */
+    public String getDeliveryUsername() {
+        return deliveryUsername;
+    }
 
 }

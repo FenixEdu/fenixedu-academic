@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
@@ -40,27 +41,20 @@ import Util.Comparador;
 import Util.FormataCalendar;
 
 /**
- *
- * @author  Fernanda Quitério & Tania Pousão
+ * 
+ * @author Fernanda Quitério & Tania Pousão
  */
-public final class ConsultarFuncionarioEscolhaAction extends Action
-{
+public final class ConsultarFuncionarioEscolhaAction extends Action {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws IOException, ServletException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
 
         Locale locale = getLocale(request);
         MessageResources messages = getResources(request);
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
 
-        if (isCancelled(request))
-        {
+        if (isCancelled(request)) {
             if (mapping.getAttribute() != null)
                 session.removeAttribute(mapping.getAttribute());
             return (mapping.findForward("PortalGestaoAssiduidadeAction"));
@@ -68,83 +62,64 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
 
         ConsultarFuncionarioMostrarForm formEscolha = (ConsultarFuncionarioMostrarForm) form;
         Integer numMecanografico = (Integer) session.getAttribute("numMecanografico");
-        System.out.println(
-            "CONSULTA DE ASSIDUIDADE: "
-                + formEscolha.getEscolha()
-                + " funcionario "
-                + numMecanografico
-                + " mes "
-                + formEscolha.getMesInicioEscolha());
+        System.out.println("CONSULTA DE ASSIDUIDADE: " + formEscolha.getEscolha() + " funcionario "
+                + numMecanografico + " mes " + formEscolha.getMesInicioEscolha());
 
-        if (formEscolha.getEscolha().equals("consultar.marcacao"))
-        {
-            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Marcacoes de Ponto «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+        if (formEscolha.getEscolha().equals("consultar.marcacao")) {
+            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+            // Marcacoes de Ponto
+            // «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
 
-            ArrayList listaFuncionarios = new ArrayList();
+            List listaFuncionarios = new ArrayList();
             listaFuncionarios.add(numMecanografico);
 
-            ArrayList listaEstados = new ArrayList();
+            List listaEstados = new ArrayList();
             listaEstados.add(new String("valida"));
             listaEstados.add(new String("regularizada"));
             listaEstados.add(new String("cartaoFuncionarioInvalido"));
             listaEstados.add(new String("cartaoSubstitutoInvalido"));
 
             ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-            ServicoSeguroConstruirEscolhasMarcacoesPonto servicoSeguroConstruirEscolhasMarcacoesPonto =
-                new ServicoSeguroConstruirEscolhasMarcacoesPonto(
-                    servicoAutorizacaoLer,
-                    listaFuncionarios,
-                    null
-            /*listaCartoes*/
-            , formEscolha.getDataInicioEscolha(), formEscolha.getDataFimEscolha());
-            try
-            {
+            ServicoSeguroConstruirEscolhasMarcacoesPonto servicoSeguroConstruirEscolhasMarcacoesPonto = new ServicoSeguroConstruirEscolhasMarcacoesPonto(
+                    servicoAutorizacaoLer, listaFuncionarios, null
+                    /* listaCartoes */
+                    , formEscolha.getDataInicioEscolha(), formEscolha.getDataFimEscolha());
+            try {
                 Executor.getInstance().doIt(servicoSeguroConstruirEscolhasMarcacoesPonto);
-            } catch (NotExecuteException nee)
-            {
+            } catch (NotExecuteException nee) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-            } catch (PersistenceException pe)
-            {
+            } catch (PersistenceException pe) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-            } finally
-            {
-                if (!errors.isEmpty())
-                {
+            } finally {
+                if (!errors.isEmpty()) {
                     saveErrors(request, errors);
                     return (new ActionForward(mapping.getInput()));
                 }
             }
 
-            ServicoSeguroConsultarMarcacaoPonto servicoSeguroConsultarMarcacaoPonto =
-                new ServicoSeguroConsultarMarcacaoPonto(
-                    servicoAutorizacaoLer,
-                    servicoSeguroConstruirEscolhasMarcacoesPonto.getListaFuncionarios(),
-                    servicoSeguroConstruirEscolhasMarcacoesPonto.getListaCartoes(),
-                    listaEstados,
-                    formEscolha.getDataInicioEscolha(),
+            ServicoSeguroConsultarMarcacaoPonto servicoSeguroConsultarMarcacaoPonto = new ServicoSeguroConsultarMarcacaoPonto(
+                    servicoAutorizacaoLer, servicoSeguroConstruirEscolhasMarcacoesPonto
+                            .getListaFuncionarios(), servicoSeguroConstruirEscolhasMarcacoesPonto
+                            .getListaCartoes(), listaEstados, formEscolha.getDataInicioEscolha(),
                     formEscolha.getDataFimEscolha());
-            try
-            {
+            try {
                 Executor.getInstance().doIt(servicoSeguroConsultarMarcacaoPonto);
-            } catch (NotExecuteException nee)
-            {
+            } catch (NotExecuteException nee) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-            } catch (PersistenceException pe)
-            {
+            } catch (PersistenceException pe) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-            } finally
-            {
-                if (!errors.isEmpty())
-                {
+            } finally {
+                if (!errors.isEmpty()) {
                     saveErrors(request, errors);
                     return (new ActionForward(mapping.getInput()));
                 }
             }
-            ArrayList listaMarcacoesPonto = servicoSeguroConsultarMarcacaoPonto.getListaMarcacoesPonto();
+            List listaMarcacoesPonto = servicoSeguroConsultarMarcacaoPonto.getListaMarcacoesPonto();
 
-            // ordena as marcacoes de ponto por ordem decrescente porque a tabela e apresentada ao contrario no jsp
-            Comparador comparador =
-                new Comparador(new String("MarcacaoPonto"), new String("decrescente"));
+            // ordena as marcacoes de ponto por ordem decrescente porque a
+            // tabela e apresentada ao contrario no jsp
+            Comparador comparador = new Comparador(new String("MarcacaoPonto"),
+                    new String("decrescente"));
             Object[] arrayMarcacoesPonto = listaMarcacoesPonto.toArray();
             Arrays.sort(arrayMarcacoesPonto, comparador);
 
@@ -154,40 +129,36 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
                 listaMarcacoesPonto.add(arrayMarcacoesPonto[i]);
 
             // criacao da tabela de marcacoes para mostrar no jsp
-            ArrayList listaMarcacoesPontoBody = new ArrayList();
+            List listaMarcacoesPontoBody = new ArrayList();
             ListIterator iterListaMarcacoesPonto = listaMarcacoesPonto.listIterator();
             MarcacaoPonto marcacaoPonto = null;
             Calendar calendario = Calendar.getInstance();
             calendario.setLenient(false);
 
-            while (iterListaMarcacoesPonto.hasNext())
-            {
+            while (iterListaMarcacoesPonto.hasNext()) {
                 marcacaoPonto = (MarcacaoPonto) iterListaMarcacoesPonto.next();
 
-                if (marcacaoPonto.getSiglaUnidade() == null || marcacaoPonto.getSiglaUnidade().length() == 0)
-                {
+                if (marcacaoPonto.getSiglaUnidade() == null
+                        || marcacaoPonto.getSiglaUnidade().length() == 0) {
                     listaMarcacoesPontoBody.add(0, "&nbsp;");
-                } else
-                {
+                } else {
                     listaMarcacoesPontoBody.add(0, marcacaoPonto.getSiglaUnidade());
                 }
                 listaMarcacoesPontoBody.add(1, String.valueOf(marcacaoPonto.getNumFuncionario()));
                 listaMarcacoesPontoBody.add(2, String.valueOf(marcacaoPonto.getNumCartao()));
 
                 calendario.setTimeInMillis(marcacaoPonto.getData().getTime());
-                if (marcacaoPonto.getEstado().equals("regularizada"))
-                {
-                    listaMarcacoesPontoBody.add(
-                        3,
-                        "<b>" + FormataCalendar.dataHoras(calendario) + "</b>");
-                } else
-                {
+                if (marcacaoPonto.getEstado().equals("regularizada")) {
+                    listaMarcacoesPontoBody.add(3, "<b>" + FormataCalendar.dataHoras(calendario)
+                            + "</b>");
+                } else {
                     listaMarcacoesPontoBody.add(3, FormataCalendar.dataHoras(calendario));
                 }
-                //listaMarcacoesPontoBody.add(4, messages.getMessage(marcacaoPonto.getEstado()));
+                //listaMarcacoesPontoBody.add(4,
+                // messages.getMessage(marcacaoPonto.getEstado()));
             }
-            ArrayList listagem = new ArrayList();
-            ArrayList listaHeaders = new ArrayList();
+            List listagem = new ArrayList();
+            List listaHeaders = new ArrayList();
 
             listaHeaders.add(messages.getMessage("prompt.unidade"));
             listaHeaders.add(messages.getMessage("prompt.funcionario"));
@@ -204,88 +175,73 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
 
             return (mapping.findForward("MostrarListaAction"));
 
-        } else if (formEscolha.getEscolha().equals("consultar.justificacoes"))
-        {
-            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Justificacoes ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+        } else if (formEscolha.getEscolha().equals("consultar.justificacoes")) {
+            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+            // Justificacoes
+            // ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
 
             ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-            ServicoSeguroConsultarJustificacoes servicoSeguroConsultarJustificacoes =
-                new ServicoSeguroConsultarJustificacoes(
-                    servicoAutorizacaoLer,
-                    numMecanografico.intValue(),
-                    formEscolha.getDataInicioEscolha(),
-                    formEscolha.getDataFimEscolha());
-            try
-            {
+            ServicoSeguroConsultarJustificacoes servicoSeguroConsultarJustificacoes = new ServicoSeguroConsultarJustificacoes(
+                    servicoAutorizacaoLer, numMecanografico.intValue(), formEscolha
+                            .getDataInicioEscolha(), formEscolha.getDataFimEscolha());
+            try {
                 Executor.getInstance().doIt(servicoSeguroConsultarJustificacoes);
-            } catch (NotExecuteException nee)
-            {
+            } catch (NotExecuteException nee) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-            } catch (PersistenceException pe)
-            {
+            } catch (PersistenceException pe) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-            } finally
-            {
-                if (!errors.isEmpty())
-                {
+            } finally {
+                if (!errors.isEmpty()) {
                     saveErrors(request, errors);
                     return (new ActionForward(mapping.getInput()));
                 }
             }
-            ArrayList listaJustificacoes = servicoSeguroConsultarJustificacoes.getListaJustificacoes();
+            List listaJustificacoes = servicoSeguroConsultarJustificacoes.getListaJustificacoes();
 
-            // ordena as justificacoes por decrescente porque a tabela e apresentada ao contrario no jsp
+            // ordena as justificacoes por decrescente porque a tabela e
+            // apresentada ao contrario no jsp
             Comparador comparador = new Comparador(new String("Justificacao"), new String("crescente"));
             Collections.sort(listaJustificacoes, comparador);
 
-            ServicoSeguroBuscarParamJustificacoes servicoSeguroBuscarParamJustificacoes =
-                new ServicoSeguroBuscarParamJustificacoes(servicoAutorizacaoLer, listaJustificacoes);
-            try
-            {
+            ServicoSeguroBuscarParamJustificacoes servicoSeguroBuscarParamJustificacoes = new ServicoSeguroBuscarParamJustificacoes(
+                    servicoAutorizacaoLer, listaJustificacoes);
+            try {
                 Executor.getInstance().doIt(servicoSeguroBuscarParamJustificacoes);
-            } catch (NotExecuteException nee)
-            {
+            } catch (NotExecuteException nee) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-            } catch (PersistenceException pe)
-            {
+            } catch (PersistenceException pe) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-            } finally
-            {
-                if (!errors.isEmpty())
-                {
+            } finally {
+                if (!errors.isEmpty()) {
                     saveErrors(request, errors);
                     return (new ActionForward(mapping.getInput()));
                 }
             }
-            ArrayList listaParamJustificacoes =
-                servicoSeguroBuscarParamJustificacoes.getListaJustificacoes();
+            List listaParamJustificacoes = servicoSeguroBuscarParamJustificacoes.getListaJustificacoes();
 
             // criacao da tabela de justificacoes para mostrar no jsp
-            ArrayList listaJustificacoesBody = new ArrayList();
-            ArrayList listaBody = new ArrayList();
+            List listaJustificacoesBody = new ArrayList();
+            List listaBody = new ArrayList();
             ListIterator iterListaParamJustificacoes = listaParamJustificacoes.listIterator();
             Justificacao justificacao = null;
             ParamJustificacao paramJustificacao = null;
 
-            while (iterListaParamJustificacoes.hasNext())
-            {
+            while (iterListaParamJustificacoes.hasNext()) {
                 paramJustificacao = (ParamJustificacao) iterListaParamJustificacoes.next();
-                justificacao =
-                    (Justificacao) listaJustificacoes.get(iterListaParamJustificacoes.previousIndex());
+                justificacao = (Justificacao) listaJustificacoes.get(iterListaParamJustificacoes
+                        .previousIndex());
 
                 listaJustificacoesBody.add(0, numMecanografico.toString());
-                IStrategyJustificacoes strategyJustificacoes =
-                    SuporteStrategyJustificacoes.getInstance().callStrategy(paramJustificacao.getTipo());
-                strategyJustificacoes.setListaJustificacoesBody(
-                    paramJustificacao,
-                    justificacao,
-                    listaJustificacoesBody);
+                IStrategyJustificacoes strategyJustificacoes = SuporteStrategyJustificacoes
+                        .getInstance().callStrategy(paramJustificacao.getTipo());
+                strategyJustificacoes.setListaJustificacoesBody(paramJustificacao, justificacao,
+                        listaJustificacoesBody);
 
                 listaBody.addAll(listaJustificacoesBody);
                 listaJustificacoesBody.clear();
             }
-            ArrayList listagem = new ArrayList();
-            ArrayList listaHeaders = new ArrayList();
+            List listagem = new ArrayList();
+            List listaHeaders = new ArrayList();
 
             listaHeaders.add(messages.getMessage("prompt.funcionario"));
             listaHeaders.add(messages.getMessage("prompt.sigla"));
@@ -305,36 +261,28 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
 
             return (mapping.findForward("MostrarListaAction"));
 
-        } else if (formEscolha.getEscolha().equals("consultar.verbete"))
-        {
-            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Verbete «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+        } else if (formEscolha.getEscolha().equals("consultar.verbete")) {
+            //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+            // Verbete
+            // «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
             //			//ATENCAO: Servico acede à BD Oracle para ler as marcacoes ponto
             ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-            ServicoSeguroConsultarVerbete servicoSeguroConsultarVerbete =
-                new ServicoSeguroConsultarVerbete(
-                    servicoAutorizacaoLer,
-                    numMecanografico,
-                    formEscolha.getDataInicioEscolha(),
-                    formEscolha.getDataFimEscolha(),
-                    locale);
+            ServicoSeguroConsultarVerbete servicoSeguroConsultarVerbete = new ServicoSeguroConsultarVerbete(
+                    servicoAutorizacaoLer, numMecanografico, formEscolha.getDataInicioEscolha(),
+                    formEscolha.getDataFimEscolha(), locale);
 
             //			try {
             //				SuportePersistenteOracle.getInstance().iniciarTransaccao();
 
-            try
-            {
+            try {
                 Executor.getInstance().doIt(servicoSeguroConsultarVerbete);
-            } catch (NotExecuteException nee)
-            {
+            } catch (NotExecuteException nee) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-            } catch (PersistenceException pe)
-            {
+            } catch (PersistenceException pe) {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-            } finally
-            {
+            } finally {
                 //					SuportePersistenteOracle.getInstance().cancelarTransaccao();
-                if (!errors.isEmpty())
-                {
+                if (!errors.isEmpty()) {
                     saveErrors(request, errors);
                     return (new ActionForward(mapping.getInput()));
                 }
@@ -348,7 +296,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             //				}
             //			}
 
-            ArrayList listaHeaders = new ArrayList();
+            List listaHeaders = new ArrayList();
             listaHeaders.add(messages.getMessage("prompt.data"));
             listaHeaders.add(messages.getMessage("prompt.sigla"));
             listaHeaders.add(messages.getMessage("prompt.saldoHN"));
@@ -356,14 +304,14 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             listaHeaders.add(messages.getMessage("prompt.justificacao"));
             listaHeaders.add(messages.getMessage("consultar.marcacao"));
 
-            ArrayList listaHeadersResumo = new ArrayList();
+            List listaHeadersResumo = new ArrayList();
             listaHeadersResumo.add(messages.getMessage("prompt.saldoHN"));
             listaHeadersResumo.add(messages.getMessage("prompt.saldoPF"));
             listaHeadersResumo.add(messages.getMessage("prompt.saldoNocturno"));
             listaHeadersResumo.add(messages.getMessage("DSC"));
             listaHeadersResumo.add(messages.getMessage("DS"));
 
-            ArrayList listaHeadersTrabExtra = new ArrayList();
+            List listaHeadersTrabExtra = new ArrayList();
             listaHeadersTrabExtra.add(messages.getMessage("prompt.primeiroEscalao"));
             listaHeadersTrabExtra.add(messages.getMessage("prompt.segundoEscalao"));
             listaHeadersTrabExtra.add(messages.getMessage("prompt.depoisSegundoEscalao"));
@@ -371,8 +319,8 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             listaHeadersTrabExtra.add(messages.getMessage("prompt.segundoEscalao"));
             listaHeadersTrabExtra.add(messages.getMessage("prompt.depoisSegundoEscalao"));
 
-            ArrayList listaSaldos = servicoSeguroConsultarVerbete.getListaSaldos();
-            ArrayList listaResumo = new ArrayList();
+            List listaSaldos = servicoSeguroConsultarVerbete.getListaSaldos();
+            List listaResumo = new ArrayList();
             Calendar calendario = Calendar.getInstance();
             calendario.setLenient(false);
 
@@ -397,7 +345,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             calendario.setTimeInMillis(((Long) listaSaldos.get(6)).longValue());
             listaResumo.add(4, FormataCalendar.horasSaldo(calendario));
 
-            ArrayList listaTrabExtra = new ArrayList();
+            List listaTrabExtra = new ArrayList();
 
             // saldo primeiro escalao diurno
             calendario.clear();
@@ -424,7 +372,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             calendario.setTimeInMillis(((Long) listaSaldos.get(10)).longValue());
             listaTrabExtra.add(5, FormataCalendar.horasSaldo(calendario));
 
-            ArrayList listagem = new ArrayList();
+            List listagem = new ArrayList();
             listagem.add(listaHeaders);
             listagem.add(servicoSeguroConsultarVerbete.getVerbete());
             listagem.add(listaHeadersResumo);

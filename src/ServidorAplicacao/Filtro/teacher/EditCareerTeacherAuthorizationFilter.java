@@ -23,18 +23,15 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter
-{
+public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthorizationFilter {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-	 *      DataBeans.InfoObject)
-	 */
-    protected boolean verifyCondition(IUserView id, InfoObject infoOject)
-    {
-        try
-        {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
+     *      DataBeans.InfoObject)
+     */
+    protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
+        try {
             InfoCareer infoCareer = (InfoCareer) infoOject;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentCareer persistentCareer = sp.getIPersistentCareer();
@@ -42,22 +39,19 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthor
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            boolean isNew =
-                (infoCareer.getIdInternal() == null)
+            boolean isNew = (infoCareer.getIdInternal() == null)
                     || (infoCareer.getIdInternal().equals(new Integer(0)));
             if (isNew)
                 return true;
 
-            ICareer career =
-                (ICareer) persistentCareer.readByOID(Career.class, infoCareer.getIdInternal());
+            ICareer career = (ICareer) persistentCareer.readByOID(Career.class, infoCareer
+                    .getIdInternal());
 
             return career.getTeacher().equals(teacher);
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();
             return false;
@@ -65,12 +59,11 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthor
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.EditDomainObjectAuthorizationFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.EditDomainObjectAuthorizationFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 }

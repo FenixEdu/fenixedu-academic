@@ -9,7 +9,7 @@ import fileSuport.INode;
  * Created on 11/Fev/2003
  * 
  * @author João Mota
- * @author jpvl 
+ * @author jpvl
  *  
  */
 public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
@@ -29,7 +29,7 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
     private Date endDate;
 
     private IExecutionPeriod previousExecutionPeriod;
-    
+
     private Integer keyPreviousExecutionPeriod;
 
     /**
@@ -125,8 +125,7 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
         if (obj instanceof IExecutionPeriod) {
             IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
             return getName().equals(executionPeriod.getName())
-                    && getExecutionYear().equals(
-                            executionPeriod.getExecutionYear());
+                    && getExecutionYear().equals(executionPeriod.getExecutionYear());
         }
         return super.equals(obj);
     }
@@ -173,8 +172,7 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
      * @see fileSuport.INode#getSlideName()
      */
     public String getSlideName() {
-        String result = getParentNode().getSlideName() + "/EP"
-                + getIdInternal();
+        String result = getParentNode().getSlideName() + "/EP" + getIdInternal();
         return result;
     }
 
@@ -227,18 +225,20 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
      * @param previousExecutionPeriod
      *            The previousExecutionPeriod to set.
      */
-    public void setPreviousExecutionPeriod(
-            IExecutionPeriod previousExecutionPeriod) {
+    public void setPreviousExecutionPeriod(IExecutionPeriod previousExecutionPeriod) {
         this.previousExecutionPeriod = previousExecutionPeriod;
     }
+
     /**
      * @return Returns the keyPreviousExecutionPeriod.
      */
     public Integer getKeyPreviousExecutionPeriod() {
         return keyPreviousExecutionPeriod;
     }
+
     /**
-     * @param keyPreviousExecutionPeriod The keyPreviousExecutionPeriod to set.
+     * @param keyPreviousExecutionPeriod
+     *            The keyPreviousExecutionPeriod to set.
      */
     public void setKeyPreviousExecutionPeriod(Integer keyPreviousExecutionPeriod) {
         this.keyPreviousExecutionPeriod = keyPreviousExecutionPeriod;

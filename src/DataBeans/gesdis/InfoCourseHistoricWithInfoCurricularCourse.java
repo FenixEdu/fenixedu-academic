@@ -12,21 +12,23 @@ import Dominio.gesdis.ICourseHistoric;
  * @author Sergio Montelobo
  *  
  */
-public class InfoCourseHistoricWithInfoCurricularCourse extends InfoCourseHistoric
-{
-    /* (non-Javadoc)
+public class InfoCourseHistoricWithInfoCurricularCourse extends InfoCourseHistoric {
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(ICourseHistoric courseHistoric) {
         super.copyFromDomain(courseHistoric);
-        if(courseHistoric != null) {
-            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(courseHistoric.getCurricularCourse()));
-        }        
+        if (courseHistoric != null) {
+            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(courseHistoric
+                    .getCurricularCourse()));
+        }
     }
-    
+
     public static InfoCourseHistoric newInfoFromDomain(ICourseHistoric courseHistoric) {
         InfoCourseHistoricWithInfoCurricularCourse infoCourseHistoric = null;
-        if(courseHistoric != null) {
+        if (courseHistoric != null) {
             infoCourseHistoric = new InfoCourseHistoricWithInfoCurricularCourse();
             infoCourseHistoric.copyFromDomain(courseHistoric);
         }

@@ -5,47 +5,21 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  * @author EP 15
  */
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
-import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadExecutionCourseSite implements IServico {
-
-    private static ReadExecutionCourseSite service = new ReadExecutionCourseSite();
-
-    /**
-     * The singleton access method of this class.
-     */
-
-    public static ReadExecutionCourseSite getService() {
-
-        return service;
-
-    }
-
-    /**
-     * The ctor of this class.
-     */
-
-    private ReadExecutionCourseSite() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-
-    public final String getNome() {
-        return "ReadExecutionCourseSite";
-    }
+public class ReadExecutionCourseSite implements IService {
 
     /**
      * Executes the service. Returns the current collection of sitios names.
@@ -54,8 +28,7 @@ public class ReadExecutionCourseSite implements IServico {
      *             is there is none sitio.
      */
 
-    public InfoSite run(InfoExecutionCourse infoExecutionCourse)
-            throws FenixServiceException {
+    public InfoSite run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 
         try {
             ISite site = null;
@@ -63,14 +36,11 @@ public class ReadExecutionCourseSite implements IServico {
             ISuportePersistente sp;
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionCourseDAO = sp
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO
-                    .readByOID(ExecutionCourse.class, infoExecutionCourse
-                            .getIdInternal());
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+                    ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-            site = sp.getIPersistentSite().readByExecutionCourse(
-                    executionCourse);
+            site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
 
             InfoSite infoSite = null;
 

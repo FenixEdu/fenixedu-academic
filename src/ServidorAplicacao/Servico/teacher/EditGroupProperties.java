@@ -36,22 +36,18 @@ public class EditGroupProperties implements IService {
     public EditGroupProperties() {
     }
 
-    private boolean checkIfAlreadyExists(
-            InfoGroupProperties infoGroupProperties,
+    private boolean checkIfAlreadyExists(InfoGroupProperties infoGroupProperties,
             IGroupProperties groupProperties) throws FenixServiceException {
 
         IGroupProperties existingGroupProperties = null;
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            IPersistentGroupProperties persistentGroupProperties = ps
-                    .getIPersistentGroupProperties();
-            if (!infoGroupProperties.getName()
-                    .equals(groupProperties.getName())) {
+            IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
+            if (!infoGroupProperties.getName().equals(groupProperties.getName())) {
                 persistentGroupProperties = ps.getIPersistentGroupProperties();
                 existingGroupProperties = persistentGroupProperties
-                        .readGroupPropertiesByExecutionCourseAndName(
-                                groupProperties.getExecutionCourse(),
-                                infoGroupProperties.getName());
+                        .readGroupPropertiesByExecutionCourseAndName(groupProperties
+                                .getExecutionCourse(), infoGroupProperties.getName());
                 if (existingGroupProperties != null)
                     throw new ExistingServiceException();
             }
@@ -62,8 +58,7 @@ public class EditGroupProperties implements IService {
         return true;
     }
 
-    private List checkIfIsPossibleToEdit(
-            InfoGroupProperties infoGroupProperties,
+    private List checkIfIsPossibleToEdit(InfoGroupProperties infoGroupProperties,
             IGroupProperties groupProperties) throws FenixServiceException {
 
         IPersistentStudentGroup persistentStudentGroup = null;
@@ -73,13 +68,11 @@ public class EditGroupProperties implements IService {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
             persistentStudentGroup = ps.getIPersistentStudentGroup();
-            persistentStudentGroupAttend = ps
-                    .getIPersistentStudentGroupAttend();
+            persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
             List allStudentsGroup = persistentStudentGroup
                     .readAllStudentGroupByGroupProperties(groupProperties);
 
-            Integer groupMaximumNumber = infoGroupProperties
-                    .getGroupMaximumNumber();
+            Integer groupMaximumNumber = infoGroupProperties.getGroupMaximumNumber();
             Integer maximumCapacity = infoGroupProperties.getMaximumCapacity();
             Integer minimumCapacity = infoGroupProperties.getMinimumCapacity();
 
@@ -101,10 +94,8 @@ public class EditGroupProperties implements IService {
                 while (iterator2.hasNext()) {
                     shift = (ITurno) iterator2.next();
                     studentGroupsList = persistentStudentGroup
-                            .readAllStudentGroupByGroupPropertiesAndShift(
-                                    groupProperties, shift);
-                    if (studentGroupsList.size() > groupMaximumNumber
-                            .intValue()) {
+                            .readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
+                    if (studentGroupsList.size() > groupMaximumNumber.intValue()) {
                         if (!errors.contains(new Integer(-1)))
                             errors.add(new Integer(-1));
                     }
@@ -124,8 +115,7 @@ public class EditGroupProperties implements IService {
                 allStudents = new ArrayList();
 
                 IStudentGroup studentGroup = (IStudentGroup) iterGroups.next();
-                allStudents = persistentStudentGroupAttend
-                        .readAllByStudentGroup(studentGroup);
+                allStudents = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
                 size = new Integer(allStudents.size());
                 if (maximumCapacity != null) {
 
@@ -160,45 +150,31 @@ public class EditGroupProperties implements IService {
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
-            IPersistentGroupProperties persistentGroupProperties = ps
-                    .getIPersistentGroupProperties();
-            IPersistentExecutionCourse persistentExecutionCourse = ps
-                    .getIPersistentExecutionCourse();
+            IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
+            IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
 
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
-                    .readByOID(GroupProperties.class, infoGroupProperties
-                            .getIdInternal());
+            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                    GroupProperties.class, infoGroupProperties.getIdInternal());
 
             if (checkIfAlreadyExists(infoGroupProperties, groupProperties)) {
-                result = checkIfIsPossibleToEdit(infoGroupProperties,
-                        groupProperties);
+                result = checkIfIsPossibleToEdit(infoGroupProperties, groupProperties);
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
                         .readByOID(ExecutionCourse.class, objectCode);
 
                 persistentGroupProperties.simpleLockWrite(groupProperties);
-                groupProperties.setEnrolmentBeginDay(infoGroupProperties
-                        .getEnrolmentBeginDay());
-                groupProperties.setEnrolmentEndDay(infoGroupProperties
-                        .getEnrolmentEndDay());
-                groupProperties.setEnrolmentPolicy(infoGroupProperties
-                        .getEnrolmentPolicy());
+                groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
+                groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
+                groupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
                 groupProperties.setExecutionCourse(executionCourse);
-                groupProperties.setGroupMaximumNumber(infoGroupProperties
-                        .getGroupMaximumNumber());
-                groupProperties.setIdealCapacity(infoGroupProperties
-                        .getIdealCapacity());
-                groupProperties.setIdInternal(infoGroupProperties
-                        .getIdInternal());
-                groupProperties.setMaximumCapacity(infoGroupProperties
-                        .getMaximumCapacity());
-                groupProperties.setMinimumCapacity(infoGroupProperties
-                        .getMinimumCapacity());
+                groupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
+                groupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
+                groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
+                groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
+                groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
 
                 groupProperties.setName(infoGroupProperties.getName());
-                groupProperties.setProjectDescription(infoGroupProperties
-                        .getProjectDescription());
-                groupProperties
-                        .setShiftType(infoGroupProperties.getShiftType());
+                groupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
+                groupProperties.setShiftType(infoGroupProperties.getShiftType());
 
             }
         } catch (ExcepcaoPersistencia e) {

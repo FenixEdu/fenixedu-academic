@@ -12,16 +12,17 @@ import Dominio.ITeacher;
 /**
  * @author jpvl
  */
-public interface ITeacherDegreeFinalProjectStudent extends IDomainObject
-{
+public interface ITeacherDegreeFinalProjectStudent extends IDomainObject {
 
     public abstract IExecutionPeriod getExecutionPeriod();
+
     public Double getPercentage();
 
     /**
      * @return Returns the student.
      */
     public abstract IStudent getStudent();
+
     /**
      * @return Returns the teacher.
      */
@@ -32,6 +33,7 @@ public interface ITeacherDegreeFinalProjectStudent extends IDomainObject
      *            The executionPeriod to set.
      */
     public abstract void setExecutionPeriod(IExecutionPeriod executionPeriod);
+
     public void setPercentage(Double percentage);
 
     /**
@@ -39,6 +41,7 @@ public interface ITeacherDegreeFinalProjectStudent extends IDomainObject
      *            The student to set.
      */
     public abstract void setStudent(IStudent student);
+
     /**
      * @param teacher
      *            The teacher to set.

@@ -256,17 +256,15 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
         List result = new ArrayList();
 
-        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
-                executionPeriod));
         result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
+                executionPeriod));
 
         return result;
     }
-
-   
 
     public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
 
@@ -356,8 +354,6 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         });
     }
 
-    
-
     public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, IBranch area) {
 
         List finalCurricularCourses = new ArrayList();
@@ -379,7 +375,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
                 return curricularYear1.getYear().intValue() - curricularYear2.getYear().intValue();
             }
         });
-        
+
         ICurricularCourse cc = null;
         ICurricularYear curricularYear = null;
         for (int iter = 0; iter < curricularCourses.size(); iter++) {
@@ -420,7 +416,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
             IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                     .getIPersistentCurricularCourseGroup();
 
-            groups = curricularCourseGroupDAO.readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(this);
+            groups = curricularCourseGroupDAO
+                    .readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(this);
 
         } catch (ExcepcaoPersistencia e) {
             throw new RuntimeException(e);
@@ -428,7 +425,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
         return groups;
     }
-    
+
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
     // -------------------------------------------------------------

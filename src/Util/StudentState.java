@@ -3,8 +3,7 @@ package Util;
 /**
  * @author dcs-rjao 25/Mar/2003
  */
-public class StudentState extends FenixUtil
-{
+public class StudentState extends FenixUtil {
 
     public static final int BASE = 1;
 
@@ -21,17 +20,14 @@ public class StudentState extends FenixUtil
     private Integer state;
 
     /** Creates a new instance of StudentState */
-    public StudentState()
-    {
+    public StudentState() {
     }
 
-    public StudentState(int state)
-    {
+    public StudentState(int state) {
         this.state = new Integer(state);
     }
 
-    public StudentState(Integer state)
-    {
+    public StudentState(Integer state) {
         this.state = state;
     }
 
@@ -40,8 +36,7 @@ public class StudentState extends FenixUtil
      * 
      * @return Value of property state.
      */
-    public java.lang.Integer getState()
-    {
+    public java.lang.Integer getState() {
         return state;
     }
 
@@ -51,51 +46,46 @@ public class StudentState extends FenixUtil
      * @param state
      *            New value of property state.
      */
-    public void setState(Integer state)
-    {
+    public void setState(Integer state) {
         this.state = state;
     }
 
-    public boolean equals(Object o)
-    {
-        if (o instanceof StudentState)
-        {
+    public boolean equals(Object o) {
+        if (o instanceof StudentState) {
             StudentState aux = (StudentState) o;
             return this.state.equals(aux.getState());
         }
-       
-            return false;
-        
+
+        return false;
+
     }
 
-    public String toString()
-    {
+    public String toString() {
 
         int value = this.state.intValue();
         String valueS = null;
 
-        switch (value)
-        {
-            case BASE:
-                valueS = "BASE";
-                break;
-            case INSCRITO:
-                valueS = "INSCRITO";
-                break;
-            case PRESCRITO:
-                valueS = "PRESCRITO";
-                break;
-            case INTERRUPCAO:
-                valueS = "INTERRUPCAO";
-                break;
-            case AUSENTE:
-                valueS = "AUSENTE";
-                break;
-            case LICENCIADO:
-                valueS = "LICENCIADO";
-                break;
-            default:
-                break;
+        switch (value) {
+        case BASE:
+            valueS = "BASE";
+            break;
+        case INSCRITO:
+            valueS = "INSCRITO";
+            break;
+        case PRESCRITO:
+            valueS = "PRESCRITO";
+            break;
+        case INTERRUPCAO:
+            valueS = "INTERRUPCAO";
+            break;
+        case AUSENTE:
+            valueS = "AUSENTE";
+            break;
+        case LICENCIADO:
+            valueS = "LICENCIADO";
+            break;
+        default:
+            break;
         }
 
         return "[" + this.getClass().getName() + ": " + valueS + "]";

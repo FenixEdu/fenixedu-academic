@@ -2,6 +2,7 @@
  * Created on 13/Nov/2003
  *  
  */
+
 package Dominio.reimbursementGuide;
 
 import java.util.Calendar;
@@ -12,191 +13,174 @@ import Util.ReimbursementGuideState;
 import Util.State;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 13/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 13/Nov/2003
  *  
  */
-public class ReimbursementGuideSituation extends DomainObject implements IReimbursementGuideSituation
-{
+public class ReimbursementGuideSituation extends DomainObject implements IReimbursementGuideSituation {
 
-	protected State state;
-	protected IReimbursementGuide reimbursementGuide;
-	protected String remarks;
-	protected IEmployee employee;
-	protected Calendar modificationDate;
-	protected Calendar officialDate;
-	protected ReimbursementGuideState reimbursementGuideState;
+    protected State state;
 
-	private Integer keyReimbursementGuide;
-	private Integer keyEmployee;
+    protected IReimbursementGuide reimbursementGuide;
 
-	/**
-	 *  
-	 */
-	public ReimbursementGuideSituation()
-	{
-	}
+    protected String remarks;
 
-	/**
-	 * @return
-	 */
-	public IEmployee getEmployee()
-	{
-		return employee;
-	}
+    protected IEmployee employee;
 
-	/**
-	 * @param employee
-	 */
-	public void setEmployee(IEmployee employee)
-	{
-		this.employee = employee;
-	}
+    protected Calendar modificationDate;
 
-	/**
-	 * @return
-	 */
-	public Calendar getModificationDate()
-	{
-		return modificationDate;
-	}
+    protected Calendar officialDate;
 
-	/**
-	 * @param modificationDate
-	 */
-	public void setModificationDate(Calendar modificationDate)
-	{
-		this.modificationDate = modificationDate;
-	}
+    protected ReimbursementGuideState reimbursementGuideState;
 
-	/**
-	 * @return
-	 */
-	public IReimbursementGuide getReimbursementGuide()
-	{
-		return reimbursementGuide;
-	}
+    private Integer keyReimbursementGuide;
 
-	/**
-	 * @param reimbursementGuide
-	 */
-	public void setReimbursementGuide(IReimbursementGuide reimbursementGuide)
-	{
-		this.reimbursementGuide = reimbursementGuide;
-	}
+    private Integer keyEmployee;
 
-	/**
-	 * @return
-	 */
-	public ReimbursementGuideState getReimbursementGuideState()
-	{
-		return reimbursementGuideState;
-	}
+    /**
+     *  
+     */
+    public ReimbursementGuideSituation() {
+    }
 
-	/**
-	 * @param reimbursementGuideState
-	 */
-	public void setReimbursementGuideState(ReimbursementGuideState reimbursementGuideState)
-	{
-		this.reimbursementGuideState = reimbursementGuideState;
-	}
+    /**
+     * @return
+     */
+    public IEmployee getEmployee() {
+        return employee;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks()
-	{
-		return remarks;
-	}
+    /**
+     * @param employee
+     */
+    public void setEmployee(IEmployee employee) {
+        this.employee = employee;
+    }
 
-	/**
-	 * @param remarks
-	 */
-	public void setRemarks(String remarks)
-	{
-		this.remarks = remarks;
-	}
+    /**
+     * @return
+     */
+    public Calendar getModificationDate() {
+        return modificationDate;
+    }
 
-	/**
-	 * @return
-	 */
-	public State getState()
-	{
-		return state;
-	}
+    /**
+     * @param modificationDate
+     */
+    public void setModificationDate(Calendar modificationDate) {
+        this.modificationDate = modificationDate;
+    }
 
-	/**
-	 * @param state
-	 */
-	public void setState(State state)
-	{
-		this.state = state;
-	}
+    /**
+     * @return
+     */
+    public IReimbursementGuide getReimbursementGuide() {
+        return reimbursementGuide;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyEmployee()
-	{
-		return keyEmployee;
-	}
+    /**
+     * @param reimbursementGuide
+     */
+    public void setReimbursementGuide(IReimbursementGuide reimbursementGuide) {
+        this.reimbursementGuide = reimbursementGuide;
+    }
 
-	/**
-	 * @param keyEmployee
-	 */
-	public void setKeyEmployee(Integer keyEmployee)
-	{
-		this.keyEmployee = keyEmployee;
-	}
+    /**
+     * @return
+     */
+    public ReimbursementGuideState getReimbursementGuideState() {
+        return reimbursementGuideState;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyReimbursementGuide()
-	{
-		return keyReimbursementGuide;
-	}
+    /**
+     * @param reimbursementGuideState
+     */
+    public void setReimbursementGuideState(ReimbursementGuideState reimbursementGuideState) {
+        this.reimbursementGuideState = reimbursementGuideState;
+    }
 
-	/**
-	 * @param keyReimbursementGuide
-	 */
-	public void setKeyReimbursementGuide(Integer keyReimbursementGuide)
-	{
-		this.keyReimbursementGuide = keyReimbursementGuide;
-	}
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
 
-	/**
-	 * @return Returns the officialDate.
-	 */
-	public Calendar getOfficialDate()
-	{
-		return officialDate;
-	}
+    /**
+     * @param remarks
+     */
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
-	/**
-	 * @param officialDate
-	 *            The officialDate to set.
-	 */
-	public void setOfficialDate(Calendar officialDate)
-	{
-		this.officialDate = officialDate;
-	}
+    /**
+     * @return
+     */
+    public State getState() {
+        return state;
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof IReimbursementGuideSituation)
-		{
-			IReimbursementGuideSituation reimbursementGuideSituation =
-				(IReimbursementGuideSituation) obj;
+    /**
+     * @param state
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
 
-			if ((this.getIdInternal() == null && reimbursementGuideSituation.getIdInternal() == null)
-				|| (this.getIdInternal().equals(reimbursementGuideSituation.getIdInternal())))
-			{
-				result = true;
-			}
-		}
+    /**
+     * @return
+     */
+    public Integer getKeyEmployee() {
+        return keyEmployee;
+    }
 
-		return result;
-	}
+    /**
+     * @param keyEmployee
+     */
+    public void setKeyEmployee(Integer keyEmployee) {
+        this.keyEmployee = keyEmployee;
+    }
+
+    /**
+     * @return
+     */
+    public Integer getKeyReimbursementGuide() {
+        return keyReimbursementGuide;
+    }
+
+    /**
+     * @param keyReimbursementGuide
+     */
+    public void setKeyReimbursementGuide(Integer keyReimbursementGuide) {
+        this.keyReimbursementGuide = keyReimbursementGuide;
+    }
+
+    /**
+     * @return Returns the officialDate.
+     */
+    public Calendar getOfficialDate() {
+        return officialDate;
+    }
+
+    /**
+     * @param officialDate
+     *            The officialDate to set.
+     */
+    public void setOfficialDate(Calendar officialDate) {
+        this.officialDate = officialDate;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IReimbursementGuideSituation) {
+            IReimbursementGuideSituation reimbursementGuideSituation = (IReimbursementGuideSituation) obj;
+
+            if ((this.getIdInternal() == null && reimbursementGuideSituation.getIdInternal() == null)
+                    || (this.getIdInternal().equals(reimbursementGuideSituation.getIdInternal()))) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
 
 }

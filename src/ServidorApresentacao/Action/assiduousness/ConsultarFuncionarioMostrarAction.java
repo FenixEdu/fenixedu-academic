@@ -27,75 +27,72 @@ import ServidorApresentacao.formbeans.assiduousness.ConsultarFuncionarioMostrarF
 import constants.assiduousness.Constants;
 
 /**
- *
- * @author  Fernanda Quitério & Tania Pousão
+ * 
+ * @author Fernanda Quitério & Tania Pousão
  */
 public final class ConsultarFuncionarioMostrarAction extends Action {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
 
-		ActionErrors errors = new ActionErrors();
-		HttpSession session = request.getSession();
+        ActionErrors errors = new ActionErrors();
+        HttpSession session = request.getSession();
 
-		Pessoa pessoa = (Pessoa) session.getAttribute(Constants.USER_KEY);
+        Pessoa pessoa = (Pessoa) session.getAttribute(Constants.USER_KEY);
 
-		ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
-		ServicoSeguroLerFuncionario servicoSeguroLerFuncionario =
-			new ServicoSeguroLerFuncionario(servicoAutorizacaoLer, pessoa.getIdInternal().intValue());
+        ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
+        ServicoSeguroLerFuncionario servicoSeguroLerFuncionario = new ServicoSeguroLerFuncionario(
+                servicoAutorizacaoLer, pessoa.getIdInternal().intValue());
 
-		try {
-			Executor.getInstance().doIt(servicoSeguroLerFuncionario);
+        try {
+            Executor.getInstance().doIt(servicoSeguroLerFuncionario);
 
-		} catch (NotExecuteException nee) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-		} catch (PersistenceException pe) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-		} finally {
-			if (!errors.isEmpty()) {
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
-		}
+        } catch (NotExecuteException nee) {
+            errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+        } catch (PersistenceException pe) {
+            errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+        } finally {
+            if (!errors.isEmpty()) {
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
+        }
 
-		Funcionario funcionario = servicoSeguroLerFuncionario.getFuncionario();
+        Funcionario funcionario = servicoSeguroLerFuncionario.getFuncionario();
 
-		ServicoSeguroConsultarFuncionario servicoSeguroConsultarFuncionario =
-			new ServicoSeguroConsultarFuncionario(servicoAutorizacaoLer, funcionario.getNumeroMecanografico());
+        ServicoSeguroConsultarFuncionario servicoSeguroConsultarFuncionario = new ServicoSeguroConsultarFuncionario(
+                servicoAutorizacaoLer, funcionario.getNumeroMecanografico());
 
-		try {
+        try {
 
-			/* funcionario a consultar */
-			Executor.getInstance().doIt(servicoSeguroConsultarFuncionario);
+            /* funcionario a consultar */
+            Executor.getInstance().doIt(servicoSeguroConsultarFuncionario);
 
-		} catch (NotExecuteException nee) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-		} catch (PersistenceException pe) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-		} finally {
-			if (!errors.isEmpty()) {
-				saveErrors(request, errors);
+        } catch (NotExecuteException nee) {
+            errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+        } catch (PersistenceException pe) {
+            errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+        } finally {
+            if (!errors.isEmpty()) {
+                saveErrors(request, errors);
 
-				return mapping.getInputForward();
-			}
-		}
+                return mapping.getInputForward();
+            }
+        }
 
-		session.setAttribute("numMecanografico", new Integer(funcionario.getNumeroMecanografico()));
-		session.setAttribute("pessoa", servicoSeguroConsultarFuncionario.getPessoa());
-		session.setAttribute("centroCusto", servicoSeguroConsultarFuncionario.getCentroCusto());
+        session.setAttribute("numMecanografico", new Integer(funcionario.getNumeroMecanografico()));
+        session.setAttribute("pessoa", servicoSeguroConsultarFuncionario.getPessoa());
+        session.setAttribute("centroCusto", servicoSeguroConsultarFuncionario.getCentroCusto());
 
-		ConsultarFuncionarioMostrarForm funcNaoDocenteForm = (ConsultarFuncionarioMostrarForm) form;
-		funcNaoDocenteForm.setForm(
-			(Date) session.getAttribute(Constants.INICIO_CONSULTA),
-			(Date) session.getAttribute(Constants.FIM_CONSULTA),
-			servicoSeguroConsultarFuncionario.getPessoa(),
-			servicoSeguroConsultarFuncionario.getFuncionario(),
-			servicoSeguroConsultarFuncionario.getStatusAssiduidade(),
-			servicoSeguroConsultarFuncionario.getCentroCusto(),
-			servicoSeguroConsultarFuncionario.getFuncNaoDocente(),
-			servicoSeguroConsultarFuncionario.getRotacaoHorario(),
-			servicoSeguroConsultarFuncionario.getListaRegimesRotacao());
+        ConsultarFuncionarioMostrarForm funcNaoDocenteForm = (ConsultarFuncionarioMostrarForm) form;
+        funcNaoDocenteForm.setForm((Date) session.getAttribute(Constants.INICIO_CONSULTA),
+                (Date) session.getAttribute(Constants.FIM_CONSULTA), servicoSeguroConsultarFuncionario
+                        .getPessoa(), servicoSeguroConsultarFuncionario.getFuncionario(),
+                servicoSeguroConsultarFuncionario.getStatusAssiduidade(),
+                servicoSeguroConsultarFuncionario.getCentroCusto(), servicoSeguroConsultarFuncionario
+                        .getFuncNaoDocente(), servicoSeguroConsultarFuncionario.getRotacaoHorario(),
+                servicoSeguroConsultarFuncionario.getListaRegimesRotacao());
 
-		return (mapping.findForward("ConsultarFuncionarioMostrar"));
-	}
+        return (mapping.findForward("ConsultarFuncionarioMostrar"));
+    }
 }

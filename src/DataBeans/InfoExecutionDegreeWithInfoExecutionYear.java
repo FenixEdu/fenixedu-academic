@@ -10,14 +10,12 @@ import Dominio.ICursoExecucao;
  * @author João Mota
  *  
  */
-public class InfoExecutionDegreeWithInfoExecutionYear extends
-        InfoExecutionDegree {
+public class InfoExecutionDegreeWithInfoExecutionYear extends InfoExecutionDegree {
 
     public void copyFromDomain(ICursoExecucao executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
-            setInfoExecutionYear(InfoExecutionYear
-                    .newInfoFromDomain(executionDegree.getExecutionYear()));
+            setInfoExecutionYear(InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear()));
         }
     }
 
@@ -25,8 +23,7 @@ public class InfoExecutionDegreeWithInfoExecutionYear extends
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree newInfoFromDomain(
-            ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
         InfoExecutionDegreeWithInfoExecutionYear infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegreeWithInfoExecutionYear();

@@ -30,46 +30,42 @@ import ServidorPersistente.publication.IPersistentAuthor;
  */
 public class InsertNewAuthorsAsPersons implements IServico {
 
-	/**
-	 *  
-	 */
-	public InsertNewAuthorsAsPersons() {
-	}
+    /**
+     *  
+     */
+    public InsertNewAuthorsAsPersons() {
+    }
 
-	public String getNome() {
-		return "InsertNewAuthorsAsPersons";
-	}
+    public String getNome() {
+        return "InsertNewAuthorsAsPersons";
+    }
 
-	public List run(List idsInternalPersons) throws FenixServiceException {
-		List authors = new ArrayList();
-		try {
-			Iterator iterator = idsInternalPersons.iterator();
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+    public List run(List idsInternalPersons) throws FenixServiceException {
+        List authors = new ArrayList();
+        try {
+            Iterator iterator = idsInternalPersons.iterator();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
-			while (iterator.hasNext()) {
-				Integer idInternal = (Integer) iterator.next();
-				IPessoa person =
-					(IPessoa) persistentPerson.readByOID(
-						Pessoa.class,
-						idInternal);
-				IAuthor newAuthor = new Author();
-				IAuthor newAuthor1 =
-					persistentAuthor.readAuthorByKeyPerson(idInternal);
-				if (newAuthor1 == null) {
-					newAuthor.setKeyPerson(idInternal);
-					newAuthor.setPerson(person);
-					persistentAuthor.lockWrite(newAuthor);
-					authors.add(newAuthor);
-				} else {
-					authors.add(newAuthor1);
-				}
-			}
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return authors;
+            while (iterator.hasNext()) {
+                Integer idInternal = (Integer) iterator.next();
+                IPessoa person = (IPessoa) persistentPerson.readByOID(Pessoa.class, idInternal);
+                IAuthor newAuthor = new Author();
+                IAuthor newAuthor1 = persistentAuthor.readAuthorByKeyPerson(idInternal);
+                if (newAuthor1 == null) {
+                    newAuthor.setKeyPerson(idInternal);
+                    newAuthor.setPerson(person);
+                    persistentAuthor.lockWrite(newAuthor);
+                    authors.add(newAuthor);
+                } else {
+                    authors.add(newAuthor1);
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return authors;
 
-	}
+    }
 }

@@ -92,100 +92,70 @@ public class ReadCourseInformation implements IService {
     /**
      * Executes the service.
      */
-    public TeacherAdministrationSiteView run(Integer executionCourseId)
-            throws FenixServiceException {
+    public TeacherAdministrationSiteView run(Integer executionCourseId) throws FenixServiceException {
         try {
             TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView();
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseId);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
 
             InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 
-            //CLONER
-            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse)
-            // Cloner
-            //.get(executionCourse);
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);
 
-            infoSiteCourseInformation
-                    .setInfoExecutionCourse(infoExecutionCourse);
+            infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
-            IPersistentEvaluationMethod persistentEvaluationMethod = sp
-                    .getIPersistentEvaluationMethod();
+            IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod = persistentEvaluationMethod
                     .readByExecutionCourse(executionCourse);
             if (evaluationMethod == null) {
                 InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
-                infoEvaluationMethod
-                        .setInfoExecutionCourse(infoExecutionCourse);
-                infoSiteCourseInformation
-                        .setInfoEvaluationMethod(infoEvaluationMethod);
+                infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
+                infoSiteCourseInformation.setInfoEvaluationMethod(infoEvaluationMethod);
 
             } else {
-                //CLONER
-                //infoSiteCourseInformation
-                //.setInfoEvaluationMethod(Cloner
-                //.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
-                infoSiteCourseInformation
-                        .setInfoEvaluationMethod(InfoEvaluationMethod
-                                .newInfoFromDomain(evaluationMethod));
+
+                infoSiteCourseInformation.setInfoEvaluationMethod(InfoEvaluationMethod
+                        .newInfoFromDomain(evaluationMethod));
             }
 
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
-            List responsiblesFor = persistentResponsibleFor
-                    .readByExecutionCourse(executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
 
-            List infoResponsibleTeachers = getInfoResponsibleTeachers(
-                    responsiblesFor, sp);
-            infoSiteCourseInformation
-                    .setInfoResponsibleTeachers(infoResponsibleTeachers);
+            List infoResponsibleTeachers = getInfoResponsibleTeachers(responsiblesFor, sp);
+            infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
 
-            List curricularCourses = executionCourse
-                    .getAssociatedCurricularCourses();
-            List infoCurricularCourses = getInfoCurricularCourses(
-                    curricularCourses, sp);
-            infoSiteCourseInformation
-                    .setInfoCurricularCourses(infoCurricularCourses);
+            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+            List infoCurricularCourses = getInfoCurricularCourses(curricularCourses, sp);
+            infoSiteCourseInformation.setInfoCurricularCourses(infoCurricularCourses);
 
             List infoCurriculums = getInfoCurriculums(curricularCourses, sp);
             infoSiteCourseInformation.setInfoCurriculums(infoCurriculums);
 
-            List infoLecturingTeachers = getInfoLecturingTeachers(
-                    executionCourse, sp);
-            infoSiteCourseInformation
-                    .setInfoLecturingTeachers(infoLecturingTeachers);
+            List infoLecturingTeachers = getInfoLecturingTeachers(executionCourse, sp);
+            infoSiteCourseInformation.setInfoLecturingTeachers(infoLecturingTeachers);
 
-            List infoBibliographicReferences = getInfoBibliographicReferences(
-                    executionCourse, sp);
-            infoSiteCourseInformation
-                    .setInfoBibliographicReferences(infoBibliographicReferences);
+            List infoBibliographicReferences = getInfoBibliographicReferences(executionCourse, sp);
+            infoSiteCourseInformation.setInfoBibliographicReferences(infoBibliographicReferences);
 
             List infoDepartments = getInfoDepartments(responsiblesFor, sp);
             infoSiteCourseInformation.setInfoDepartments(infoDepartments);
 
             List infoLessons = getInfoLessons(executionCourse, sp);
-            infoSiteCourseInformation
-                    .setInfoLessons(getFilteredInfoLessons(infoLessons));
-            infoSiteCourseInformation
-                    .setNumberOfTheoLessons(getNumberOfLessons(infoLessons,
-                            TipoAula.TEORICA, sp));
-            infoSiteCourseInformation
-                    .setNumberOfPratLessons(getNumberOfLessons(infoLessons,
-                            TipoAula.PRATICA, sp));
-            infoSiteCourseInformation
-                    .setNumberOfTheoPratLessons(getNumberOfLessons(infoLessons,
-                            TipoAula.TEORICO_PRATICA, sp));
-            infoSiteCourseInformation.setNumberOfLabLessons(getNumberOfLessons(
-                    infoLessons, TipoAula.LABORATORIAL, sp));
-            IPersistentCourseReport persistentCourseReport = sp
-                    .getIPersistentCourseReport();
+            infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
+            infoSiteCourseInformation.setNumberOfTheoLessons(getNumberOfLessons(infoLessons,
+                    TipoAula.TEORICA, sp));
+            infoSiteCourseInformation.setNumberOfPratLessons(getNumberOfLessons(infoLessons,
+                    TipoAula.PRATICA, sp));
+            infoSiteCourseInformation.setNumberOfTheoPratLessons(getNumberOfLessons(infoLessons,
+                    TipoAula.TEORICO_PRATICA, sp));
+            infoSiteCourseInformation.setNumberOfLabLessons(getNumberOfLessons(infoLessons,
+                    TipoAula.LABORATORIAL, sp));
+            IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
             ICourseReport courseReport = persistentCourseReport
                     .readCourseReportByExecutionCourse(executionCourse);
 
@@ -201,10 +171,9 @@ public class ReadCourseInformation implements IService {
                         .newInfoFromDomain(courseReport));
             }
 
-            List infoSiteEvaluationInformations = getInfoSiteEvaluationInformation(
-                    executionCourse.getExecutionPeriod(), curricularCourses, sp);
-            infoSiteCourseInformation
-                    .setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
+            List infoSiteEvaluationInformations = getInfoSiteEvaluationInformation(executionCourse
+                    .getExecutionPeriod(), curricularCourses, sp);
+            infoSiteCourseInformation.setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
             ISite site = persistentSite.readByExecutionCourse(executionCourse);
@@ -213,8 +182,7 @@ public class ReadCourseInformation implements IService {
             ISiteComponent commonComponent = new InfoSiteCommon();
             TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
                     .getInstance();
-            commonComponent = componentBuilder.getComponent(commonComponent,
-                    site, null, null, null);
+            commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
             siteView.setCommonComponent(commonComponent);
 
             return siteView;
@@ -240,43 +208,31 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationInformation(
-            IExecutionPeriod executionPeriod, List curricularCourses,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private List getInfoSiteEvaluationInformation(IExecutionPeriod executionPeriod,
+            List curricularCourses, ISuportePersistente sp) throws ExcepcaoPersistencia {
         List infoSiteEvalutationInformations = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter
-                    .next();
+            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
             List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
-            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled
-                    .size()));
+            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
-            //CLONER
-            //InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod)
-            // Cloner
-            //.get(executionPeriod);
+
             InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
                     .newInfoFromDomain(executionPeriod);
-            infoSiteEvaluationStatistics
-                    .setInfoExecutionPeriod(infoExecutionPeriod);
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
 
             InfoSiteEvaluationInformation infoSiteEvaluationInformation = new InfoSiteEvaluationInformation();
-            infoSiteEvaluationInformation
-                    .setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
-            //CLONER
-            //InfoCurricularCourse infoCurricularCourse = Cloner
-            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+            infoSiteEvaluationInformation.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
+
+            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
-            infoSiteEvaluationInformation
-                    .setInfoCurricularCourse(infoCurricularCourse);
-            infoSiteEvaluationInformation
-                    .setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(
-                            executionPeriod.getSemester(), curricularCourse, sp));
+            infoSiteEvaluationInformation.setInfoCurricularCourse(infoCurricularCourse);
+            infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(
+                    executionPeriod.getSemester(), curricularCourse, sp));
             infoSiteEvalutationInformations.add(infoSiteEvaluationInformation);
         }
         return infoSiteEvalutationInformations;
@@ -288,9 +244,8 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationsHistory(Integer semester,
-            ICurricularCourse curricularCourse, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    private List getInfoSiteEvaluationsHistory(Integer semester, ICurricularCourse curricularCourse,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
         List infoSiteEvaluationsHistory = new ArrayList();
         List executionPeriods = (List) CollectionUtils.collect(curricularCourse
                 .getAssociatedExecutionCourses(), new Transformer() {
@@ -302,14 +257,12 @@ public class ReadCourseInformation implements IService {
         });
         // filter the executionPeriods by semester
         final Integer historySemester = semester;
-        executionPeriods = (List) CollectionUtils.select(executionPeriods,
-                new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
-                        return executionPeriod.getSemester().equals(
-                                historySemester);
-                    }
-                });
+        executionPeriods = (List) CollectionUtils.select(executionPeriods, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
+                return executionPeriod.getSemester().equals(historySemester);
+            }
+        });
         Collections.sort(executionPeriods, new Comparator() {
             public int compare(Object o1, Object o2) {
                 IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
@@ -326,12 +279,10 @@ public class ReadCourseInformation implements IService {
             //infoSiteEvaluationStatistics
             //.setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
             //.get(executionPeriod));
-            infoSiteEvaluationStatistics
-                    .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                            .newInfoFromDomain(executionPeriod));
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+                    .newInfoFromDomain(executionPeriod));
             List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
-            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled
-                    .size()));
+            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
             infoSiteEvaluationsHistory.add(infoSiteEvaluationStatistics);
@@ -382,13 +333,11 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getEnrolled(IExecutionPeriod executionPeriod,
-            ICurricularCourse curricularCourse, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    private List getEnrolled(IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-        List enrolments = persistentEnrolment
-                .readByCurricularCourseAndExecutionPeriod(curricularCourse,
-                        executionPeriod);
+        List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse,
+                executionPeriod);
         return enrolments;
     }
 
@@ -399,16 +348,14 @@ public class ReadCourseInformation implements IService {
      */
     private List getInfoDepartments(List responsiblesFor, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IPersistentDepartment persistentDepartment = sp
-                .getIDepartamentoPersistente();
+        IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
         List infoDepartments = new ArrayList();
         responsiblesFor = removeDuplicates(responsiblesFor);
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
             ResponsibleFor responsibleFor = (ResponsibleFor) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
-            IDepartment department = persistentDepartment
-                    .readByTeacher(teacher);
+            IDepartment department = persistentDepartment.readByTeacher(teacher);
             //CLONER
             //infoDepartments.add(Cloner
             //.copyIDepartment2InfoDepartment(department));
@@ -422,22 +369,21 @@ public class ReadCourseInformation implements IService {
      * @param i
      * @return
      */
-    private Integer getNumberOfLessons(List infoLessons, int lessonType,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private Integer getNumberOfLessons(List infoLessons, int lessonType, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
 
         final int lessonTypeForPredicate = lessonType;
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
         IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-        List lessonsOfType = (List) CollectionUtils.select(infoLessons,
-                new Predicate() {
+        List lessonsOfType = (List) CollectionUtils.select(infoLessons, new Predicate() {
 
-                    public boolean evaluate(Object arg0) {
-                        if (((InfoLesson) arg0).getTipo().getTipo().intValue() == lessonTypeForPredicate) {
-                            return true;
-                        }
-                        return false;
-                    }
-                });
+            public boolean evaluate(Object arg0) {
+                if (((InfoLesson) arg0).getTipo().getTipo().intValue() == lessonTypeForPredicate) {
+                    return true;
+                }
+                return false;
+            }
+        });
         if (lessonsOfType != null && !lessonsOfType.isEmpty()) {
 
             Iterator iter = lessonsOfType.iterator();
@@ -448,8 +394,8 @@ public class ReadCourseInformation implements IService {
                 List shifts;
 
                 InfoLesson infoLesson = (InfoLesson) iter.next();
-                IAula lesson = (IAula) persistentLesson.readByOID(Aula.class,
-                        infoLesson.getIdInternal());
+                IAula lesson = (IAula) persistentLesson
+                        .readByOID(Aula.class, infoLesson.getIdInternal());
 
                 shifts = persistentShift.readByLesson(lesson);
 
@@ -481,23 +427,19 @@ public class ReadCourseInformation implements IService {
      */
     private List getFilteredInfoLessons(List infoLessons) {
         List filteredInfoLessons = new ArrayList();
-        InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons,
-                new TipoAula(TipoAula.TEORICA));
+        InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.TEORICA));
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(
-                TipoAula.PRATICA));
+        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.PRATICA));
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(
-                TipoAula.LABORATORIAL));
+        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.LABORATORIAL));
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(
-                TipoAula.TEORICO_PRATICA));
+        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.TEORICO_PRATICA));
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
         return filteredInfoLessons;
@@ -509,16 +451,14 @@ public class ReadCourseInformation implements IService {
      * @param infoLessons
      * @return
      */
-    private InfoLesson getFilteredInfoLessonByType(List infoLessons,
-            TipoAula type) {
+    private InfoLesson getFilteredInfoLessonByType(List infoLessons, TipoAula type) {
         final TipoAula lessonType = type;
-        InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons,
-                new Predicate() {
-                    public boolean evaluate(Object o) {
-                        InfoLesson infoLesson = (InfoLesson) o;
-                        return infoLesson.getTipo().equals(lessonType);
-                    }
-                });
+        InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate() {
+            public boolean evaluate(Object o) {
+                InfoLesson infoLesson = (InfoLesson) o;
+                return infoLesson.getTipo().equals(lessonType);
+            }
+        });
         return infoLesson;
     }
 
@@ -527,8 +467,7 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoBibliographicReferences(
-            IExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoBibliographicReferences(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentBibliographicReference persistentBibliographicReference = sp
                 .getIPersistentBibliographicReference();
@@ -538,8 +477,7 @@ public class ReadCourseInformation implements IService {
         List infoBibliographicReferences = new ArrayList();
         Iterator iter = bibliographicReferences.iterator();
         while (iter.hasNext()) {
-            IBibliographicReference bibliographicReference = (IBibliographicReference) iter
-                    .next();
+            IBibliographicReference bibliographicReference = (IBibliographicReference) iter.next();
             //CLONER
             //infoBibliographicReferences
             //.add(Cloner
@@ -556,12 +494,10 @@ public class ReadCourseInformation implements IService {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private List getInfoLecturingTeachers(IExecutionCourse executionCourse,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = sp
-                .getIPersistentProfessorship();
-        List professorShips = persistentProfessorship
-                .readByExecutionCourse(executionCourse);
+    private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse);
 
         List infoLecturingTeachers = new ArrayList();
         Iterator iter = professorShips.iterator();
@@ -569,8 +505,7 @@ public class ReadCourseInformation implements IService {
             IProfessorship professorship = (IProfessorship) iter.next();
             ITeacher teacher = professorship.getTeacher();
             //infoLecturingTeachers.add(Cloner.copyITeacher2InfoTeacher(teacher));
-            infoLecturingTeachers.add(InfoTeacherWithPersonAndCategory
-                    .newInfoFromDomain(teacher));
+            infoLecturingTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
         return infoLecturingTeachers;
     }
@@ -581,16 +516,14 @@ public class ReadCourseInformation implements IService {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private List getInfoCurriculums(List curricularCourses,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = sp
-                .getIPersistentCurriculum();
+    private List getInfoCurriculums(List curricularCourses, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
+        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
         List infoCurriculums = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter
-                    .next();
+            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
             //CLONER
             //InfoCurricularCourse infoCurricularCourse = Cloner
             //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
@@ -622,18 +555,14 @@ public class ReadCourseInformation implements IService {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private List getInfoResponsibleTeachers(List responsiblesFor,
-            ISuportePersistente sp) {
+    private List getInfoResponsibleTeachers(List responsiblesFor, ISuportePersistente sp) {
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
             ResponsibleFor responsibleFor = (ResponsibleFor) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
-            //CLONER
-            //infoResponsibleTeachers.add(Cloner
-            //.copyITeacher2InfoTeacher(teacher));
-            infoResponsibleTeachers.add(InfoTeacherWithPersonAndCategory
-                    .newInfoFromDomain(teacher));
+
+            infoResponsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
         return infoResponsibleTeachers;
     }
@@ -643,19 +572,14 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoCurricularCourses(List curricularCourses,
-            ISuportePersistente sp) {
+    private List getInfoCurricularCourses(List curricularCourses, ISuportePersistente sp) {
         List infoCurricularCourses = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter
-                    .next();
+            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
 
             List curricularCourseScopes = curricularCourse.getScopes();
             List infoScopes = getInfoScopes(curricularCourseScopes, sp);
-            //CLONER
-            //InfoCurricularCourse infoCurricularCourse = Cloner
-            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
             infoCurricularCourse.setInfoScopes(infoScopes);
@@ -673,8 +597,7 @@ public class ReadCourseInformation implements IService {
         List infoScopes = new ArrayList();
         Iterator iter = scopes.iterator();
         while (iter.hasNext()) {
-            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iter
-                    .next();
+            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iter.next();
             //CLONER
             //InfoCurricularCourseScope infoCurricularCourseScope = Cloner
             //.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
@@ -692,32 +615,30 @@ public class ReadCourseInformation implements IService {
      *         ExcepcaoPersistencia
      */
     private List getInfoLessons(IExecutionCourse executionCourse, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         //IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-        //List lessons = persistentLesson.readByExecutionCourse(executionCourse);
-		List lessons = new ArrayList();
-			
-		List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
-		for (int i=0; i < shifts.size(); i++)
-		{                
-			ITurno shift = (ITurno) shifts.get(i);
-			List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
-             	
-			lessons.addAll(aulasTemp);  
-		}
-		
+        //List lessons =
+        // persistentLesson.readByExecutionCourse(executionCourse);
+        List lessons = new ArrayList();
+
+        List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+        for (int i = 0; i < shifts.size(); i++) {
+            ITurno shift = (ITurno) shifts.get(i);
+            List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
+
+            lessons.addAll(aulasTemp);
+        }
+
         List infoLessons = new ArrayList();
         Iterator iter = lessons.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             IAula lesson = (IAula) iter.next();
-            
+
             InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
             ITurno shift = lesson.getShift();
             InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
             infoLesson.setInfoShift(infoShift);
-            
+
             infoLessons.add(infoLesson);
         }
         return infoLessons;

@@ -12,59 +12,64 @@ import DataBeans.InfoObject;
 
 /**
  * @author TJBF & PFON
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * 
+ * To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Generation - Code and Comments
  */
 public class InfoPublicationType extends InfoObject {
-	
-	private String publicationType;
-	private List attributes;
-	private List subtypes;
 
+    private String publicationType;
 
-	public InfoPublicationType() {
-		super();
-	}
-	
+    private List attributes;
+
+    private List subtypes;
+
+    public InfoPublicationType() {
+        super();
+    }
+
     /**
      * @return Returns the attributes.
      */
-    public List getAttributes()
-    {
+    public List getAttributes() {
         return attributes;
     }
+
     /**
-     * @param attributes The attributes to set.
+     * @param attributes
+     *            The attributes to set.
      */
-    public void setAttributes(List attributes)
-    {
+    public void setAttributes(List attributes) {
         this.attributes = attributes;
     }
+
     /**
      * @return Returns the publicationType.
      */
-    public String getPublicationType()
-    {
+    public String getPublicationType() {
         return publicationType;
     }
+
     /**
-     * @param publicationType The publicationType to set.
+     * @param publicationType
+     *            The publicationType to set.
      */
-    public void setPublicationType(String publicationType)
-    {
+    public void setPublicationType(String publicationType) {
         this.publicationType = publicationType;
     }
-	/**
-	 * @return Returns the subtypes.
-	 */
-	public List getSubtypes() {
-		return subtypes;
-	}
-	/**
-	 * @param subtypes The subtypes to set.
-	 */
-	public void setSubtypes(List subtypes) {
-		this.subtypes = subtypes;
-	}
+
+    /**
+     * @return Returns the subtypes.
+     */
+    public List getSubtypes() {
+        return subtypes;
+    }
+
+    /**
+     * @param subtypes
+     *            The subtypes to set.
+     */
+    public void setSubtypes(List subtypes) {
+        this.subtypes = subtypes;
+    }
 }

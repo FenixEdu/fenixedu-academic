@@ -30,14 +30,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends
-        TestCaseReadServices {
+public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends TestCaseReadServices {
 
     /**
      * @param testName
      */
-    public TeacherAdministrationSiteComponentServiceAnnouncementsTest(
-            String testName) {
+    public TeacherAdministrationSiteComponentServiceAnnouncementsTest(String testName) {
         super(testName);
     }
 
@@ -60,8 +58,8 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends
      */
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args = { new Integer(26), new InfoSiteCommon(),
-                new InfoSiteAnnouncement(), null, null, null };
+        Object[] args = { new Integer(26), new InfoSiteCommon(), new InfoSiteAnnouncement(), null, null,
+                null };
         return args;
     }
 
@@ -76,22 +74,19 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, new Integer(26));
-            infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, new Integer(26));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
             sections = persistentSection.readBySite(site);
 
-            announcementsList = sp.getIPersistentAnnouncement()
-                    .readAnnouncementsBySite(site);
+            announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site);
 
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
@@ -103,8 +98,7 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends
         ListIterator iter = sections.listIterator();
 
         while (iter.hasNext()) {
-            InfoSection infoSection = Cloner
-                    .copyISection2InfoSection((ISection) iter.next());
+            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
@@ -113,10 +107,8 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends
         if (announcementsList != null && announcementsList.isEmpty() == false) {
             Iterator iterAnnouncements = announcementsList.iterator();
             while (iterAnnouncements.hasNext()) {
-                IAnnouncement announcement = (IAnnouncement) iterAnnouncements
-                        .next();
-                infoAnnouncementsList.add(Cloner
-                        .copyIAnnouncement2InfoAnnouncement(announcement));
+                IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
+                infoAnnouncementsList.add(Cloner.copyIAnnouncement2InfoAnnouncement(announcement));
             }
         }
         InfoSiteAnnouncement infoSiteAnnouncement = new InfoSiteAnnouncement();
@@ -130,8 +122,8 @@ public class TeacherAdministrationSiteComponentServiceAnnouncementsTest extends
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
-                infoSiteCommon, infoSiteAnnouncement);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(infoSiteCommon,
+                infoSiteAnnouncement);
 
         return siteView;
     }

@@ -25,21 +25,16 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jpvl
  */
-public class ReadEmptyRoomsService implements IService
-{
-	//SERVICO NAO USADO
+public class ReadEmptyRoomsService implements IService {
+    //SERVICO NAO USADO
 
-    public ReadEmptyRoomsService()
-    {
+    public ReadEmptyRoomsService() {
     }
 
-    public Object run(InfoRoom infoRoom, InfoLesson infoLesson,
-            InfoExecutionPeriod infoExecutionPeriod)
-            throws FenixServiceException
-    {
+    public Object run(InfoRoom infoRoom, InfoLesson infoLesson, InfoExecutionPeriod infoExecutionPeriod)
+            throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
@@ -47,10 +42,12 @@ public class ReadEmptyRoomsService implements IService
 
             // Check is time interval is valid
 
-            if (!validTimeInterval(infoLesson)) { throw new InvalidTimeInterval(); }
+            if (!validTimeInterval(infoLesson)) {
+                throw new InvalidTimeInterval();
+            }
 
             // Read all Rooms with a capacity
-            List roomList = roomDAO.readSalas(null, null, null, null, 
+            List roomList = roomDAO.readSalas(null, null, null, null,
             //					infoRoom.getCapacidadeNormal()
                     null, null);
 
@@ -58,23 +55,17 @@ public class ReadEmptyRoomsService implements IService
 
             List infoRoomList = new ArrayList();
 
-            while (roomListIterator.hasNext())
-            {
+            while (roomListIterator.hasNext()) {
                 ISala element = (ISala) roomListIterator.next();
-                try
-                {
-                    InfoRoom infoRoomElement = Cloner
-                            .copyRoom2InfoRoom(element);
+                try {
+                    InfoRoom infoRoomElement = Cloner.copyRoom2InfoRoom(element);
                     infoRoomList.add(infoRoomElement);
-                }
-                catch (IllegalArgumentException e)
-                {
+                } catch (IllegalArgumentException e) {
                     // ignored
                 }
             }
             // remove predicate
-            infoRoomList = (List) CollectionUtils.select(infoRoomList,
-                    new RoomLessonPredicate());
+            infoRoomList = (List) CollectionUtils.select(infoRoomList, new RoomLessonPredicate());
 
             IAula lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 
@@ -82,60 +73,45 @@ public class ReadEmptyRoomsService implements IService
                     .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
             //List lessonList = lessonDAO.readLessonsInPeriod(lesson);
-            List lessonList = lessonDAO.readLessonsInBroadPeriodInAnyRoom(
-                    lesson, executionPeriod);
+            List lessonList = lessonDAO.readLessonsInBroadPeriodInAnyRoom(lesson, executionPeriod);
 
             Iterator lessonIterator = lessonList.iterator();
 
             /* remove lesson's rooms from room list */
-            while (lessonIterator.hasNext())
-            {
+            while (lessonIterator.hasNext()) {
                 IAula lessonAux = (IAula) lessonIterator.next();
-                InfoLesson infoLessonAux = Cloner
-                        .copyILesson2InfoLesson(lessonAux);
+                InfoLesson infoLessonAux = Cloner.copyILesson2InfoLesson(lessonAux);
                 if (infoLesson.getIdInternal() != null
-                        && !infoLesson.getIdInternal().equals(
-                                infoLessonAux.getIdInternal()))
-                {
+                        && !infoLesson.getIdInternal().equals(infoLessonAux.getIdInternal())) {
                     infoRoomList.remove(infoLessonAux.getInfoSala());
-                }
-                else if (infoLesson.getIdInternal() == null)
-                {
+                } else if (infoLesson.getIdInternal() == null) {
                     infoRoomList.remove(infoLessonAux.getInfoSala());
                 }
             }
             return infoRoomList;
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }
 
-    private class RoomLessonPredicate implements Predicate
-    {
-        public RoomLessonPredicate()
-        {
+    private class RoomLessonPredicate implements Predicate {
+        public RoomLessonPredicate() {
         }
 
         /**
          * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
          */
-        public boolean evaluate(Object listElement)
-        {
+        public boolean evaluate(Object listElement) {
             InfoRoom infoRoom = (InfoRoom) listElement;
             return !infoRoom.getNome().endsWith(".");
         }
     }
 
-    private boolean validTimeInterval(InfoLesson lesson)
-    {
+    private boolean validTimeInterval(InfoLesson lesson) {
         boolean result = true;
 
-        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime()
-                .getTime())
-        {
+        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime()) {
             result = false;
         }
 
@@ -144,14 +120,12 @@ public class ReadEmptyRoomsService implements IService
 
     /**
      */
-    public class InvalidTimeInterval extends FenixServiceException
-    {
+    public class InvalidTimeInterval extends FenixServiceException {
 
         /**
-         * 
+         *  
          */
-        InvalidTimeInterval()
-        {
+        InvalidTimeInterval() {
             super();
         }
 

@@ -56,16 +56,14 @@ public class ReadExecutionCourseProjects implements IServico {
         return "teacher.ReadExecutionCourseProjects";
     }
 
-    public ISiteComponent run(Integer executionCourseCode)
-            throws FenixServiceException {
+    public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
 
         InfoSiteProjects infoSiteProjects = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IExecutionCourse executionCourse = (IExecutionCourse) sp
-                    .getIPersistentExecutionCourse().readByOID(
-                            ExecutionCourse.class, executionCourseCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                    .readByOID(ExecutionCourse.class, executionCourseCode);
 
             List executionCourseProjects = sp.getIPersistentGroupProperties()
                     .readAllGroupPropertiesByExecutionCourse(executionCourse);
@@ -77,8 +75,7 @@ public class ReadExecutionCourseProjects implements IServico {
                 Iterator iterator = executionCourseProjects.iterator();
 
                 while (iterator.hasNext()) {
-                    IGroupProperties groupProperties = (IGroupProperties) iterator
-                            .next();
+                    IGroupProperties groupProperties = (IGroupProperties) iterator.next();
                     //CLONER
                     //infoGroupPropertiesList
                     //.add(Cloner
@@ -89,13 +86,11 @@ public class ReadExecutionCourseProjects implements IServico {
                     infoGroupPropertiesList.add(infoGroupProperties);
                 }
 
-                infoSiteProjects
-                        .setInfoGroupPropertiesList(infoGroupPropertiesList);
+                infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
-            throw new FenixServiceException(
-                    "error.impossibleReadExecutionCourseProjects");
+            throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
         }
         return infoSiteProjects;
     }

@@ -15,40 +15,41 @@ import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 
 /**
- * @author  Barbosa
- * @author  Pica
+ * @author Barbosa
+ * @author Pica
  *  
  */
-public class ReadPerson extends ReadDomainObjectService implements IService
-{
+public class ReadPerson extends ReadDomainObjectService implements IService {
     /**
      * The constructor of this class.
      */
-    public ReadPerson()
-    {
+    public ReadPerson() {
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPessoaPersistente();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
         return InfoPersonWithInfoCountry.newInfoFromDomain((IPessoa) domainObject);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return Pessoa.class;
     }
 }

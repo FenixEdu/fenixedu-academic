@@ -73,6 +73,11 @@
 				<form-property name="maxIncrementNac" type="java.lang.String" />
 				<form-property name="minIncrementNac" type="java.lang.String" />
 				<form-property name="weight" type="java.lang.String" />		            
+
+				<form-property name="enrollmentWeigth" type="java.lang.String"/>
+				<form-property name="mandatoryEnrollment" type="java.lang.String"/>
+				<form-property name="enrollmentAllowed" type="java.lang.String"/>
+
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -150,6 +155,8 @@
 				<form-property name="name" type="java.lang.String" />       
 				<form-property name="code" type="java.lang.String" />
 				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="degreeId" type="java.lang.Integer" />
+				<form-property name="degreeCurricularPlanId" type="java.lang.Integer" />				
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -314,6 +321,29 @@
     		<form-property name="logDirName" type="java.lang.String"/>
 	    </form-bean>
         
+	    <form-bean name="faqSectionForm"
+    			type="org.apache.struts.validator.DynaValidatorForm"
+	    		dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/> 
+			<form-property name="parentSectionId" type="java.lang.String"/>
+    		<form-property name="sectionName" type="java.lang.String"/>
+	    </form-bean>
+	    <form-bean name="faqForm"
+    			type="org.apache.struts.validator.DynaValidatorForm"
+	    		dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/> 
+			<form-property name="parentSectionId" type="java.lang.String"/>
+			<form-property name="question" type="java.lang.String"/>
+			<form-property name="answer" type="java.lang.String"/>
+	    </form-bean>
+	    <form-bean name="glossaryForm"
+    			type="org.apache.struts.validator.DynaValidatorForm"
+	    		dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/> 
+			<form-property name="term" type="java.lang.String"/>
+			<form-property name="definition" type="java.lang.String"/>
+	    </form-bean>
+
        <!--   CURRICULAR COURSE GROUPS FORMS --> 
         <form-bean name="curricularCourseGroupForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
@@ -356,6 +386,14 @@
 			<form-property name="degreeId" type="java.lang.Integer"/>
 			<form-property name="degreeCurricularPlanId" type="java.lang.Integer"/>
 		</form-bean>
+
+		<form-bean name="generateNewPasswordsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+			<form-property name="fromNumber" type="java.lang.String"/>
+			<form-property name="toNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer"/>
+	  	</form-bean>
 
     </form-beans>
     
@@ -845,6 +883,7 @@
        <forward name="manageBranches" path="df.page.manage-branches"/>
        <forward name="insertBranch" path="df.page.insert-branch"/>
        <forward name="editBranch" path="df.page.edit-branch"/>
+	   <forward name="deleteBranchConfirmation" path="df.page.delete-branch-confirmation"/>
 	</action>
     
     <!--Action for reading teachers of an execution course  -->
@@ -1021,6 +1060,37 @@
               >
           <forward name="Manage" path="df.page.manage-cache"/>
           <forward name="CacheCleared" path="/manageCache.do?method=prepare"/>
+      </action>
+
+	<!-- ========== FAQ MANIPULATION ========== -->
+      <action path="/manageFAQs"
+		      input="/manageFAQs.do?method=prepare&amp;page=0"
+              type="ServidorApresentacao.Action.manager.ManageFAQDA"
+              parameter="method"
+			  name="faqForm"
+			  scope="request"
+              >
+          <forward name="Manage" path="df.page.manage-faq"/>
+      </action>
+      <action path="/manageFAQSections"
+		      input="/manageFAQs.do?method=prepare&amp;page=0"
+              type="ServidorApresentacao.Action.manager.ManageFAQDA"
+              parameter="method"
+			  name="faqSectionForm"
+			  scope="request"
+              >
+          <forward name="Manage" path="/manageFAQs.do?method=prepare&amp;page=0"/>
+      </action>
+
+	<!-- ========== Glossary MANIPULATION ========== -->
+      <action path="/manageGlossary"
+		      input="/manageGlossary.do?method=prepare"
+              type="ServidorApresentacao.Action.manager.ManageGlossaryDA"
+              parameter="method"
+			  name="glossaryForm"
+ 			  scope="request"
+              >
+          <forward name="Manage" path="df.page.manage-glossary"/>
       </action>
 
 	<!-- ========== SERVICE MONITORING MANIPULATION ========== -->
@@ -1370,7 +1440,17 @@
 		scope="request"
 	>		
         <forward path="viewCurricularCourses" name="viewCurricularCourses"/>                      
+     </action>
         
+	 <action path="/generateNewStudentsPasswords"
+			parameter="method"
+			validate="true"
+			input="/generateNewStudentsPasswords.do?method=prepareGeneratePasswords&amp;page=0"
+			name="generateNewPasswordsForm"
+			type="ServidorApresentacao.Action.manager.personManagement.GenerateNewStudentsPasswordsAction"
+			scope="request">
+		<forward name="prepare" path="/password/generateNewStudentsPassword.jsp"/>
+		<forward name="success" path="/password/severalNewPasswordsTemplate.jsp"/>
      </action>
         
 	</action-mappings>

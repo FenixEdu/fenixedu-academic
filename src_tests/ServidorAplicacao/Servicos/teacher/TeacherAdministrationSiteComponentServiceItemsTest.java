@@ -32,8 +32,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  *  
  */
-public class TeacherAdministrationSiteComponentServiceItemsTest extends
-        TestCaseReadServices {
+public class TeacherAdministrationSiteComponentServiceItemsTest extends TestCaseReadServices {
 
     /**
      * @param testName
@@ -61,8 +60,8 @@ public class TeacherAdministrationSiteComponentServiceItemsTest extends
      */
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-        Object[] args = { new Integer(24), new InfoSiteCommon(),
-                new InfoSiteItems(), null, new Integer(2), null };
+        Object[] args = { new Integer(24), new InfoSiteCommon(), new InfoSiteItems(), null,
+                new Integer(2), null };
         return args;
     }
 
@@ -78,26 +77,22 @@ public class TeacherAdministrationSiteComponentServiceItemsTest extends
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             IPersistentItem persistentItem = sp.getIPersistentItem();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, new Integer(24));
-            infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    .get(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, new Integer(24));
+            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
             sections = persistentSection.readBySite(site);
 
-            iItem = (IItem) persistentItem
-                    .readByOID(Item.class, new Integer(2));
+            iItem = (IItem) persistentItem.readByOID(Item.class, new Integer(2));
 
-            allItemsList = persistentItem.readAllItemsBySection(iItem
-                    .getSection());
+            allItemsList = persistentItem.readAllItemsBySection(iItem.getSection());
 
             sp.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
@@ -109,8 +104,7 @@ public class TeacherAdministrationSiteComponentServiceItemsTest extends
         ListIterator iter = sections.listIterator();
 
         while (iter.hasNext()) {
-            InfoSection infoSection = Cloner
-                    .copyISection2InfoSection((ISection) iter.next());
+            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
             infoSections.add(infoSection);
         }
 
@@ -137,8 +131,8 @@ public class TeacherAdministrationSiteComponentServiceItemsTest extends
         infoSiteCommon.setSections(infoSections);
         infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
-                infoSiteCommon, infoSiteItems);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(infoSiteCommon,
+                infoSiteItems);
 
         return siteView;
     }

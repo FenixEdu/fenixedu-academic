@@ -84,6 +84,14 @@
         <form-property name="lotacao" type="java.lang.Integer"/>
       </form-bean>
 
+      <form-bean name="changShiftOfStudents"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="oldShiftId" type="java.lang.String"/>
+		<form-property name="newShiftId" type="java.lang.String"/>
+      </form-bean>
+
       <!-- Dynamic-FormBean for lesson manipulation -->
       <form-bean name="manageLessonForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -455,6 +463,12 @@
         <form-property name="page" type="java.lang.Integer"/>
       </form-bean>
       
+		<!-- ==================== View Curricular Course Historic ================== -->
+		<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionYearID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>		
       
     </form-beans>
 
@@ -1318,6 +1332,21 @@
     	<forward name="ViewStudentsEnroled" path="/viewStudentsEnroledInShift.jsp"/>
 	</action>
 
+	<action path="/manageShiftStudents"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageShiftDA"
+            name="changShiftOfStudents"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+		<exception type="ServidorAplicacao.Servico.sop.ChangeStudentsShift$UnableToTransferStudentsException"
+				   key="message.unable.to.transfer.students"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+    	<forward name="Continue" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
 	<action path="/manageLesson"
 			input="/manageLesson.do?method=findInput&amp;page=0"
             type="ServidorApresentacao.Action.sop.ManageLessonDA"
@@ -1644,6 +1673,26 @@
     	<forward name="choose" path="df.page.examSearchByDate"/>
     	<forward name="show" path="df.page.showExamsByDate"/>
    	</action>    
+ 
+	<!-- ==================== View Curricular Course Historic ================== -->
+       	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
+       		name="executionYearDegreeCurricularPlanForm"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		validate="true"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		scope="request"
+       		parameter="method">
+       		<forward name="chooseExecutionYear" path="view-degree-curricular-plan-execution-year"/>
+			<forward name="showActiveCurricularCourses" path="show-active-curricular-scopes"/>
+       	</action>
+
+		<action path="/showCurriculumHistoric"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		scope="request"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		parameter="method">
+       		<forward name="show-report" path="view-curriculum-historic"/>
+       	</action>
  
     </action-mappings>     
 

@@ -12,49 +12,43 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import Util.Mes;
 import constants.publication.PublicationConstants;
 
-
 /**
- * @author TJBF	
+ * @author TJBF
  * @author PFON
  *  
  */
-public class ReadPublicationMonths implements IServico
-{
+public class ReadPublicationMonths implements IServico {
     private static ReadPublicationMonths service = new ReadPublicationMonths();
 
     /**
-	 *  
-	 */
-    private ReadPublicationMonths()
-    {
+     *  
+     */
+    private ReadPublicationMonths() {
 
     }
 
-    public static ReadPublicationMonths getService()
-    {
+    public static ReadPublicationMonths getService() {
 
         return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadPublicationMonths";
     }
 
-    public List run(String user, int publicationTypeId) throws FenixServiceException
-    {
-       List MonthList = new ArrayList();
-       int i = PublicationConstants.MONTHS_INIT;
-       while(i < PublicationConstants.MONTHS_LIMIT){
-       	Mes mes = new Mes(i);
-       	MonthList.add(mes.toString());
-       	i++;
-       }
-       return MonthList;
+    public List run(String user, int publicationTypeId) throws FenixServiceException {
+        List MonthList = new ArrayList();
+        int i = PublicationConstants.MONTHS_INIT;
+        while (i < PublicationConstants.MONTHS_LIMIT) {
+            Mes mes = new Mes(i);
+            MonthList.add(mes.toString());
+            i++;
+        }
+        return MonthList;
     }
 }

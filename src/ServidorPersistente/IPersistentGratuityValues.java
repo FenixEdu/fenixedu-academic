@@ -9,9 +9,9 @@ import Dominio.IGratuityValues;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public interface IPersistentGratuityValues extends IPersistentObject
-{
-	public IGratuityValues readGratuityValuesByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+public interface IPersistentGratuityValues extends IPersistentObject {
+    public IGratuityValues readGratuityValuesByExecutionDegree(ICursoExecucao executionDegree)
+            throws ExcepcaoPersistencia;
 }

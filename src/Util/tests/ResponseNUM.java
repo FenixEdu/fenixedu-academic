@@ -10,13 +10,20 @@ public class ResponseNUM extends Response {
         super();
     }
 
+    public ResponseNUM(String op) {
+        super();
+        setResponse(op);
+    }
+
     public String getResponse() {
         return response;
     }
 
     public void setResponse(String op) {
-        response = op.replace(',', '.');
-        if (op.length() != 0) super.setResponsed();
+        if (op != null && op.length() != 0) {
+            response = op.replace(',', '.');
+            super.setResponsed();
+        }
     }
 
     public Boolean getIsCorrect() {

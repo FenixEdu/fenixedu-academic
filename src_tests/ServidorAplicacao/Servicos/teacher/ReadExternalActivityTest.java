@@ -14,73 +14,62 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class ReadExternalActivityTest extends ServiceNeedsAuthenticationTestCase
-{
+public class ReadExternalActivityTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
-	 * @param testName
-	 */
-    public ReadExternalActivityTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadExternalActivityTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testReadExternalActivityDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExternalActivity";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "julia", "pass", getApplication()};
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "jccm", "pass", getApplication()};
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
-        Object[] args = { new Integer(1)};
+    protected Object[] getAuthorizeArguments() {
+        Object[] args = { new Integer(1) };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testSucessfull()
-    {
-        try
-        {
+    public void testSucessfull() {
+        try {
             InfoExternalActivity result = null;
-            Object[] args = { new Integer(1)};
+            Object[] args = { new Integer(1) };
 
-            result = (InfoExternalActivity) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            result = (InfoExternalActivity) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
             assertTrue(result.getIdInternal().equals(args[0]));
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading a ExternalActivity of a Teacher" + ex);
         }
     }

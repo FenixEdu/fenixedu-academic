@@ -60,18 +60,16 @@ public class SetBasicCurricularCoursesService implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                     .getIPersistentDegreeCurricularPlan();
 
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanId);
+                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
             List basicCurricularCourses = persistentCurricularCourse
-                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(
-                            degreeCurricularPlan, new Boolean(true));
+                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan,
+                            new Boolean(true));
 
             Iterator itBCCourses = basicCurricularCourses.iterator();
             ICurricularCourse basicCourse;
@@ -88,8 +86,7 @@ public class SetBasicCurricularCoursesService implements IServico {
             while (itId.hasNext()) {
 
                 ICurricularCourse curricularCourseBasic = (ICurricularCourse) persistentCurricularCourse
-                        .readByOID(CurricularCourse.class, (Integer) itId
-                                .next(), true);
+                        .readByOID(CurricularCourse.class, (Integer) itId.next(), true);
                 curricularCourseBasic.setBasic(new Boolean(true));
 
             }

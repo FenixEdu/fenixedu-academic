@@ -33,38 +33,42 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadAvailableClassesForShift implements IService {
 
-    public List run(Integer shiftOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer shiftOID) throws FenixServiceException {
 
         List infoClasses = null;
+        try {
 
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-        ITurno shift = (ITurno) shiftDAO.readByOID(Turno.class, shiftOID);
+            ITurno shift = (ITurno) shiftDAO.readByOID(Turno.class, shiftOID);
 
-        List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
-        List scopes = new ArrayList();
-        for (int i = 0; i < curricularCourses.size(); i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
-            scopes.addAll(curricularCourse.getScopes());
-        }
-
-        IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-
-        ITurmaPersistente classDAO = sp.getITurmaPersistente();
-        List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod());
-
-        infoClasses = new ArrayList();
-        Iterator iter = classes.iterator();
-        while (iter.hasNext()) {
-            ITurma classImpl = (ITurma) iter.next();
-            if (!shift.getAssociatedClasses().contains(classImpl) && containsScope(scopes, classImpl)) {
-                InfoClass infoClass = Cloner.copyClass2InfoClass(classImpl);
-                infoClasses.add(infoClass);
+            List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
+            List scopes = new ArrayList();
+            for (int i = 0; i < curricularCourses.size(); i++) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
+                scopes.addAll(curricularCourse.getScopes());
             }
-        }
 
+            IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+
+            ITurmaPersistente classDAO = sp.getITurmaPersistente();
+            List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod());
+
+            infoClasses = new ArrayList();
+            Iterator iter = classes.iterator();
+            while (iter.hasNext()) {
+                ITurma classImpl = (ITurma) iter.next();
+                if (!shift.getAssociatedClasses().contains(classImpl)
+                        && containsScope(scopes, classImpl)) {
+                    InfoClass infoClass = Cloner.copyClass2InfoClass(classImpl);
+                    infoClasses.add(infoClass);
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
         return infoClasses;
     }
 
@@ -76,7 +80,7 @@ public class ReadAvailableClassesForShift implements IService {
     private boolean containsScope(List scopes, ITurma classImpl) {
         for (int i = 0; i < scopes.size(); i++) {
             ICurricularCourseScope scope = (ICurricularCourseScope) scopes.get(i);
-            
+
             if (scope.getCurricularCourse().getDegreeCurricularPlan().equals(
                     classImpl.getExecutionDegree().getCurricularPlan())
                     && scope.getCurricularSemester().getCurricularYear().getYear().equals(

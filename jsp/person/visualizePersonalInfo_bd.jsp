@@ -4,7 +4,18 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="Util.Data" %>
 <%@ page import="java.util.Date" %>
- <h2><bean:message key="label.person.title.personalConsult" /></h2>
+ 
+ <table width="100%">
+ 	<tr valign="bottom">
+ 		<td><h2><bean:message key="label.person.title.personalConsult" /></h2></td>
+ 		<td align="right">
+ 			<logic:present name="personalInfo">
+ 				<bean:define id="personID" name="personalInfo" property="idInternal"/>
+ 				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+ 			</logic:present>
+ 		</td>
+ 	</tr>
+ </table>
  <br />
         <logic:present name="personalInfo">
 		<table width="100%" cellpadding="0" cellspacing="0">

@@ -9,6 +9,10 @@
 	<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
 </html:messages>
 <span class="error">
+	Após uma fase de testes com sucesso, o serviço de envio de SMS encontra-se indisponível até ser celebrado um acordo com as operadoras.
+</span><br/>
+
+<span class="error">
 	<html:errors/>
 </span><br/>
 	

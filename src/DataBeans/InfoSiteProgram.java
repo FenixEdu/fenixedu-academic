@@ -10,58 +10,59 @@ import java.util.List;
 /**
  * @author jmota
  * @author Fernanda Quitério
- * 
+ *  
  */
 public class InfoSiteProgram extends DataTranferObject implements ISiteComponent {
-	private InfoCurricularCourse infoCurricularCourse;
-	private List infoCurricularCourses;
-	private List infoCurriculums;
-	
-	public int getSize(){
-		return infoCurriculums.size();
-	}
+    private InfoCurricularCourse infoCurricularCourse;
 
-	/**
-	 * @return
-	 */
-	public List getInfoCurricularCourses() {
-		return infoCurricularCourses;
-	}
+    private List infoCurricularCourses;
 
-	/**
-	 * @param infoCurricularCourses
-	 */
-	public void setInfoCurricularCourses(List infoCurricularCourses) {
-		this.infoCurricularCourses = infoCurricularCourses;
-	}
+    private List infoCurriculums;
 
-	/**
-	 * @return
-	 */
-	public List getInfoCurriculums() {
-		return infoCurriculums;
-	}
+    public int getSize() {
+        return infoCurriculums.size();
+    }
 
-	/**
-	 * @param infoCurriculums
-	 */
-	public void setInfoCurriculums(List infoCurriculums) {
-		this.infoCurriculums = infoCurriculums;
-	}
+    /**
+     * @return
+     */
+    public List getInfoCurricularCourses() {
+        return infoCurricularCourses;
+    }
 
-	
-	/**
-	 * @return
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
+    /**
+     * @param infoCurricularCourses
+     */
+    public void setInfoCurricularCourses(List infoCurricularCourses) {
+        this.infoCurricularCourses = infoCurricularCourses;
+    }
 
-	/**
-	 * @param course
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse course) {
-		infoCurricularCourse = course;
-	}
+    /**
+     * @return
+     */
+    public List getInfoCurriculums() {
+        return infoCurriculums;
+    }
+
+    /**
+     * @param infoCurriculums
+     */
+    public void setInfoCurriculums(List infoCurriculums) {
+        this.infoCurriculums = infoCurriculums;
+    }
+
+    /**
+     * @return
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
+
+    /**
+     * @param course
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse course) {
+        infoCurricularCourse = course;
+    }
 
 }

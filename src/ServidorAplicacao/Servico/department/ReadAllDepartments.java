@@ -19,34 +19,27 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  */
-public class ReadAllDepartments implements IService
-{
-    public ReadAllDepartments()
-    {
+public class ReadAllDepartments implements IService {
+    public ReadAllDepartments() {
     }
 
-    public List run() throws FenixServiceException
-    {
+    public List run() throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
             List departments = departmentDAO.readAllDepartments();
             Iterator iter = departments.iterator();
             List infoDepartments = new ArrayList();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 IDepartment department = (IDepartment) iter.next();
                 InfoDepartment infoDepartment = Cloner.copyIDepartment2InfoDepartment(department);
                 infoDepartments.add(infoDepartment);
             }
             return infoDepartments;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

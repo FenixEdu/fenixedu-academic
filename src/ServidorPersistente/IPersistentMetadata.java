@@ -20,22 +20,19 @@ public interface IPersistentMetadata extends IPersistentObject {
     public abstract List readByExecutionCourse(IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;
 
-    public abstract List readByExecutionCourseAndVisibility(
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-
-    public abstract List readByExecutionCourseAndVisibilityAndOrder(
-            IExecutionCourse executionCourse, String order, String asc)
+    public abstract List readByExecutionCourseAndVisibility(IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;
 
-    public abstract List readByExecutionCourseAndNotTest(
-            IExecutionCourse executionCourse, ITest test, String order,
-            String asc) throws ExcepcaoPersistencia;
+    public abstract List readByExecutionCourseAndVisibilityAndOrder(IExecutionCourse executionCourse,
+            String order, String asc) throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourseAndNotDistributedTest(
-            IDistributedTest distributedTest) throws ExcepcaoPersistencia;
+    public abstract List readByExecutionCourseAndNotTest(IExecutionCourse executionCourse, ITest test,
+            String order, String asc) throws ExcepcaoPersistencia;
 
-    public abstract int getNumberOfQuestions(IMetadata metadata)
+    public List readByExecutionCourseAndNotDistributedTest(IDistributedTest distributedTest)
             throws ExcepcaoPersistencia;
+
+    public abstract int getNumberOfQuestions(IMetadata metadata) throws ExcepcaoPersistencia;
 
     public abstract int countByExecutionCourse(IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;

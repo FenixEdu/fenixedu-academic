@@ -17,8 +17,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.Specialization;
 
-public class JavaSpecialization2SqlSpecializationFieldConversion implements
-        FieldConversion {
+public class JavaSpecialization2SqlSpecializationFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)

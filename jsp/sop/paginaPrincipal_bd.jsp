@@ -1,4 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <p><img height="36" src="<%= request.getContextPath() %>/images/intranetSOP.gif" width="239" /></p>
 
   A aplica&ccedil;&atilde;o online SOP, exclusivamente dispon&iacute;vel para
@@ -41,3 +42,14 @@ e alterar aulas).</p>
   </tr>
 </table>
 <p>Este m&oacute;dulo visa uma gest&atilde;o eficiente da calendariza&ccedil;&atilde;o dos <strong>exames</strong>.</p>
+<br />
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    </td>
+    <td class="infoop">
+		<strong><html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare"><bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></html:link></strong></li>
+    </td>
+  </tr>
+</table>
+<p><bean:message key="message.info.sop" bundle="CURRICULUM_HISTORIC_RESOURCES"/></html:link></p>

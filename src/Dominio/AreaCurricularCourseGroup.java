@@ -52,7 +52,7 @@ public class AreaCurricularCourseGroup extends CurricularCourseGroup implements 
     }
 
     public String toString() {
-        return "minimumCredits[" + super.getMinimumValue() + "] maximumCredits[" + super.getMaximumValue() + "] branch["
-                + branch.getName() + "]";
+        return "minimumCredits[" + super.getMinimumValue() + "] maximumCredits["
+                + super.getMaximumValue() + "] branch[" + branch.getName() + "]";
     }
 }

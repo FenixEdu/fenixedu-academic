@@ -8,24 +8,26 @@ import Dominio.ICurricularSemester;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class InfoCurricularSemesterWithInfoCurricularYear extends
-        InfoCurricularSemester {
+public class InfoCurricularSemesterWithInfoCurricularYear extends InfoCurricularSemester {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoCurricularSemester#copyFromDomain(Dominio.ICurricularSemester)
      */
     public void copyFromDomain(ICurricularSemester curricularSemester) {
         super.copyFromDomain(curricularSemester);
-        if(curricularSemester != null) {
-            setInfoCurricularYear(InfoCurricularYear.newInfoFromDomain(curricularSemester.getCurricularYear()));
+        if (curricularSemester != null) {
+            setInfoCurricularYear(InfoCurricularYear.newInfoFromDomain(curricularSemester
+                    .getCurricularYear()));
         }
     }
-    
+
     public static InfoCurricularSemester newInfoFromDomain(ICurricularSemester curricularSemester) {
         InfoCurricularSemesterWithInfoCurricularYear infoCurricularSemester = null;
-        if(curricularSemester != null) {
+        if (curricularSemester != null) {
             infoCurricularSemester = new InfoCurricularSemesterWithInfoCurricularYear();
             infoCurricularSemester.copyFromDomain(curricularSemester);
         }

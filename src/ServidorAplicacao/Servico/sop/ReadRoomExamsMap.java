@@ -31,35 +31,31 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadRoomExamsMap implements IServico
-{
+public class ReadRoomExamsMap implements IServico {
 
     private static ReadRoomExamsMap servico = new ReadRoomExamsMap();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadRoomExamsMap getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadRoomExamsMap getService() {
         return servico;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadRoomExamsMap()
-    {
+     * The actor of this class.
+     */
+    private ReadRoomExamsMap() {
     }
 
     /**
-	 * Devolve o nome do servico
-	 */
-    public String getNome()
-    {
+     * Devolve o nome do servico
+     */
+    public String getNome() {
         return "ReadRoomExamsMap";
     }
 
-    public InfoRoomExamsMap run(InfoRoom infoRoom, InfoExecutionPeriod infoExecutionPeriod)
-    {
+    public InfoRoomExamsMap run(InfoRoom infoRoom, InfoExecutionPeriod infoExecutionPeriod) {
 
         // Object to be returned
         InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
@@ -90,32 +86,26 @@ public class ReadRoomExamsMap implements IServico
         infoExamsMap.setEndSeason2(endSeason2);
 
         // Translate to execute following queries
-        IExecutionPeriod executionPeriod =
-            Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        IExecutionPeriod executionPeriod = Cloner
+                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
         ISala room = Cloner.copyInfoRoom2Room(infoRoom);
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             List exams = sp.getIPersistentExam().readBy(room, executionPeriod);
             infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 
         return infoExamsMap;
     }
 
-    private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer()
-    {
-        public Object transform(Object exam)
-        {
+    private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
+        public Object transform(Object exam) {
             InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
-            infoExam.setInfoExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(
-                    (IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
+            infoExam.setInfoExecutionCourse((InfoExecutionCourse) Cloner
+                    .get((IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }
     };

@@ -29,16 +29,14 @@ public class UpdateSmsDeliveryReport implements IService {
     public UpdateSmsDeliveryReport() {
     }
 
-    public void run(Integer smsId, SmsDeliveryType smsDeliveryType)
-            throws FenixServiceException {
+    public void run(Integer smsId, SmsDeliveryType smsDeliveryType) throws FenixServiceException {
 
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
             IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
             //read sentSms Object
-            ISentSms sentSms = (ISentSms) persistentSentSms.readByOID(
-                    SentSms.class, smsId, true);
+            ISentSms sentSms = (ISentSms) persistentSentSms.readByOID(SentSms.class, smsId, true);
 
             if (sentSms == null) {
                 throw new FenixServiceException();

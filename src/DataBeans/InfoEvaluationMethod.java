@@ -27,8 +27,8 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         setInfoExecutionCourse(infoExecutionCourse);
     }
 
-    public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse,
-            String evaluationElements, String evaluationElementsEn) {
+    public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse, String evaluationElements,
+            String evaluationElementsEn) {
         setInfoExecutionCourse(infoExecutionCourse);
         setEvaluationElements(evaluationElements);
         setEvaluationElementsEn(evaluationElementsEn);
@@ -103,8 +103,7 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoEvaluationMethod newInfoFromDomain(
-            IEvaluationMethod evaluationMethod) {
+    public static InfoEvaluationMethod newInfoFromDomain(IEvaluationMethod evaluationMethod) {
         InfoEvaluationMethod infoEvaluationMethod = null;
         if (evaluationMethod != null) {
             infoEvaluationMethod = new InfoEvaluationMethod();

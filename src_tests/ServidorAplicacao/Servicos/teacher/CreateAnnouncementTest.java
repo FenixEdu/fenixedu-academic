@@ -8,108 +8,96 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
- * @author  Barbosa
- * @author  Pica
- * 
+ * @author Barbosa
+ * @author Pica
+ *  
  */
-public class CreateAnnouncementTest
-	extends ServiceNeedsAuthenticationTestCase {
+public class CreateAnnouncementTest extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	 * @param testName
-	 */
-	public CreateAnnouncementTest(String testName) {
-		super(testName);
-	}
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+    /**
+     * @param testName
+     */
+    public CreateAnnouncementTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testCreateAnnouncementDataSet.xml";
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testCreateAnnouncementExpectedDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testCreateAnnouncementDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "CreateAnnouncement";
-	}
+    protected String getExpectedDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testCreateAnnouncementExpectedDataSet.xml";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "CreateAnnouncement";
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
-		String[] args = { "nmsn", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser() {
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "nmsn", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments() {
-		Integer infoExecutionCourseCode = new Integer(24);
-		String newAnnouncementTitle = "Anuncio Teste SUCESSO";
-		String newAnnouncementInformation = "Sucesso Sucesso";
-		Object[] args =
-			{
-				infoExecutionCourseCode,
-				newAnnouncementTitle,
-				newAnnouncementInformation };
-		return args;
-	}
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-	public void testCreateAnnouncementSuccessful() {
-		try {
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView id = authenticateUser(args);
-			Object[] args2 = getAuthorizeArguments();
+    protected Object[] getAuthorizeArguments() {
+        Integer infoExecutionCourseCode = new Integer(24);
+        String newAnnouncementTitle = "Anuncio Teste SUCESSO";
+        String newAnnouncementInformation = "Sucesso Sucesso";
+        Object[] args = { infoExecutionCourseCode, newAnnouncementTitle, newAnnouncementInformation };
+        return args;
+    }
 
-			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
+    public void testCreateAnnouncementSuccessful() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArguments();
 
-			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-			System.out.println(
-				"CreateAnnouncementSuccessfulTest was SUCCESSFULY runned by service: "
-					+ this.getClass().getName());
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args2);
 
-		} catch (FenixServiceException e) {
-			fail("Creating a new Announcement for a Site " + e);
-		} catch (Exception e) {
-			fail("Creating a new Announcement for a Site " + e);
-		}
-	}
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+            System.out.println("CreateAnnouncementSuccessfulTest was SUCCESSFULY runned by service: "
+                    + this.getClass().getName());
 
-	public void testCreateExistingAnnouncement() {
-		Integer infoExecutionCourseCode = new Integer(24);
-		String newAnnouncementTitle = "announcement1deTFCI";
-		String newAnnouncementInformation = "information1";
-		Object[] args =
-			{
-				infoExecutionCourseCode,
-				newAnnouncementTitle,
-				newAnnouncementInformation };
-		try {
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-			System.out.println(
-				"testCreateExistingAnnouncement was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testCreateExistingAnnouncement");
+        } catch (FenixServiceException e) {
+            fail("Creating a new Announcement for a Site " + e);
+        } catch (Exception e) {
+            fail("Creating a new Announcement for a Site " + e);
+        }
+    }
 
-		} catch (ExistingServiceException e) {
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			System.out.println(
-				"testCreateExistingAnnouncement was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (Exception ex) {
-			System.out.println(
-				"testCreateExistingAnnouncement was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testCreateExistingAnnouncement");
-		}
-	}
+    public void testCreateExistingAnnouncement() {
+        Integer infoExecutionCourseCode = new Integer(24);
+        String newAnnouncementTitle = "announcement1deTFCI";
+        String newAnnouncementInformation = "information1";
+        Object[] args = { infoExecutionCourseCode, newAnnouncementTitle, newAnnouncementInformation };
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            System.out.println("testCreateExistingAnnouncement was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testCreateExistingAnnouncement");
+
+        } catch (ExistingServiceException e) {
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out.println("testCreateExistingAnnouncement was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (Exception ex) {
+            System.out.println("testCreateExistingAnnouncement was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testCreateExistingAnnouncement");
+        }
+    }
 }

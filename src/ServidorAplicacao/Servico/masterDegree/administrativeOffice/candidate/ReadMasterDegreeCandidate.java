@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -17,7 +18,6 @@ import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -26,108 +26,94 @@ import Util.Specialization;
 import Util.State;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadMasterDegreeCandidate implements IServico {
+public class ReadMasterDegreeCandidate implements IService {
 
-	private static ReadMasterDegreeCandidate servico = new ReadMasterDegreeCandidate();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadMasterDegreeCandidate getService() {
-		return servico;
-	}
+    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree,
+            Integer candidateNumber, Specialization degreeType) throws FenixServiceException {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadMasterDegreeCandidate() { 
-	}
+        ISuportePersistente sp = null;
+        IMasterDegreeCandidate masterDegreeCandidate = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-	/**
-	 * Returns The Service Name */
+            ICursoExecucao executionDegree = Cloner
+                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
-	public final String getNome() {
-		return "ReadMasterDegreeCandidate";
-	}
+            // Read the candidates
 
-	public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, Integer candidateNumber, Specialization degreeType) throws FenixServiceException {
-		
-		ISuportePersistente sp = null;
-		IMasterDegreeCandidate masterDegreeCandidate = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-			
-			// Read the candidates
-			
-			masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readByNumberAndExecutionDegreeAndSpecialization(candidateNumber, executionDegree, degreeType);
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-		
-		if (masterDegreeCandidate == null)
-			return null;	
-		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
-		List situations = new ArrayList();
-		while(iterator.hasNext()){
-			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator.next()); 
-			situations.add(infoCandidateSituation);
-			
-			// Check if this is the Active Situation
-			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
-				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-		}
-		infoMasterDegreeCandidate.setSituationList(situations);
+            masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                    .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber, executionDegree,
+                            degreeType);
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-		return infoMasterDegreeCandidate;
-	}
-	
-	
-	
-	
-	public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) throws FenixServiceException {
-		
-		ISuportePersistente sp = null;
-		IMasterDegreeCandidate masterDegreeCandidate = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-			IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
-			
-			// Read the candidates
-			
-			masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPerson(executionDegree, person);
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-		
-		if (masterDegreeCandidate == null)
-			return null;	
-		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
-		List situations = new ArrayList();
-		while(iterator.hasNext()){
-			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator.next()); 
-			situations.add(infoCandidateSituation);
-			
-			// Check if this is the Active Situation
-			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
-				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-		}
-		infoMasterDegreeCandidate.setSituationList(situations);
+        if (masterDegreeCandidate == null)
+            return null;
+        Iterator iterator = masterDegreeCandidate.getSituations().iterator();
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
+                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+        List situations = new ArrayList();
+        while (iterator.hasNext()) {
+            InfoCandidateSituation infoCandidateSituation = Cloner
+                    .copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator
+                            .next());
+            situations.add(infoCandidateSituation);
 
-		return infoMasterDegreeCandidate;
-	}
+            // Check if this is the Active Situation
+            if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+                infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+        }
+        infoMasterDegreeCandidate.setSituationList(situations);
 
-	
+        return infoMasterDegreeCandidate;
+    }
+
+    public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson)
+            throws FenixServiceException {
+
+        ISuportePersistente sp = null;
+        IMasterDegreeCandidate masterDegreeCandidate = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+
+            ICursoExecucao executionDegree = Cloner
+                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+            IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
+
+            // Read the candidates
+
+            masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                    .readByExecutionDegreeAndPerson(executionDegree, person);
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+
+        if (masterDegreeCandidate == null)
+            return null;
+        Iterator iterator = masterDegreeCandidate.getSituations().iterator();
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
+                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+        List situations = new ArrayList();
+        while (iterator.hasNext()) {
+            InfoCandidateSituation infoCandidateSituation = Cloner
+                    .copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator
+                            .next());
+            situations.add(infoCandidateSituation);
+
+            // Check if this is the Active Situation
+            if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+                infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+        }
+        infoMasterDegreeCandidate.setSituationList(situations);
+
+        return infoMasterDegreeCandidate;
+    }
+
 }

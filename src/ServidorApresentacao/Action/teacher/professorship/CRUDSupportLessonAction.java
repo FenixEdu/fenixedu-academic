@@ -28,28 +28,20 @@ import Util.DiaSemana;
 /**
  * @author jpvl
  */
-public class CRUDSupportLessonAction extends CRUDActionByOID
-{
+public class CRUDSupportLessonAction extends CRUDActionByOID {
 
     /**
-	 * @param string
-	 * @return
-	 */
-    private DiaSemana getWeekDay(String weekday)
-    {
+     * @param string
+     * @return
+     */
+    private DiaSemana getWeekDay(String weekday) {
         int weekDayInt = 0;
-        try
-        {
+        try {
             weekDayInt = Integer.parseInt(weekday);
-        }
-        catch (NumberFormatException e)
-        {
-            if (weekday.equalsIgnoreCase("S"))
-            {
+        } catch (NumberFormatException e) {
+            if (weekday.equalsIgnoreCase("S")) {
                 weekDayInt = DiaSemana.SABADO;
-            }
-            else if (weekday.equalsIgnoreCase("D"))
-            {
+            } else if (weekday.equalsIgnoreCase("D")) {
                 weekDayInt = DiaSemana.DOMINGO;
             }
         }
@@ -57,69 +49,58 @@ public class CRUDSupportLessonAction extends CRUDActionByOID
     }
 
     /**
-	 * @param semana
-	 * @return
-	 */
-    private String getWeekDayString(DiaSemana weekday)
-    {
-        switch (weekday.getDiaSemana().intValue())
-        {
-            case DiaSemana.DOMINGO :
-                return "D";
-            case DiaSemana.SEGUNDA_FEIRA :
-                return "2";
-            case DiaSemana.TERCA_FEIRA :
-                return "3";
-            case DiaSemana.QUARTA_FEIRA :
-                return "4";
-            case DiaSemana.QUINTA_FEIRA :
-                return "5";
-            case DiaSemana.SEXTA_FEIRA :
-                return "6";
-            case DiaSemana.SABADO :
-                return "S";
-            default :
-                return "";
+     * @param semana
+     * @return
+     */
+    private String getWeekDayString(DiaSemana weekday) {
+        switch (weekday.getDiaSemana().intValue()) {
+        case DiaSemana.DOMINGO:
+            return "D";
+        case DiaSemana.SEGUNDA_FEIRA:
+            return "2";
+        case DiaSemana.TERCA_FEIRA:
+            return "3";
+        case DiaSemana.QUARTA_FEIRA:
+            return "4";
+        case DiaSemana.QUINTA_FEIRA:
+            return "5";
+        case DiaSemana.SEXTA_FEIRA:
+            return "6";
+        case DiaSemana.SABADO:
+            return "S";
+        default:
+            return "";
         }
 
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateFormFromInfoObject(org.apache.struts.action.ActionMapping,
-	 *          DataBeans.InfoObject, org.apache.struts.action.ActionForm,
-	 *          javax.servlet.http.HttpServletRequest)
-	 */
-    protected void populateFormFromInfoObject(
-        ActionMapping mapping,
-        InfoObject infoObject,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixActionException
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateFormFromInfoObject(org.apache.struts.action.ActionMapping,
+     *      DataBeans.InfoObject, org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest)
+     */
+    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
+            ActionForm form, HttpServletRequest request) throws FenixActionException {
         InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
         DynaActionForm supportLessonForm = (DynaActionForm) form;
 
         supportLessonForm.set("idInternal", infoSupportLesson.getIdInternal());
-        supportLessonForm.set(
-            "infoProfessorshipId",
-            infoSupportLesson.getInfoProfessorship().getIdInternal());
+        supportLessonForm.set("infoProfessorshipId", infoSupportLesson.getInfoProfessorship()
+                .getIdInternal());
         supportLessonForm.set("weekDay", getWeekDayString(infoSupportLesson.getWeekDay()));
         Date startTime = infoSupportLesson.getStartTime();
         Date endTime = infoSupportLesson.getEndTime();
 
-        if (startTime != null || endTime != null)
-        {
+        if (startTime != null || endTime != null) {
             Calendar time = Calendar.getInstance();
-            if (startTime != null)
-            {
+            if (startTime != null) {
                 time.setTime(startTime);
                 supportLessonForm.set("startTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
                 supportLessonForm.set("startTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
             }
-            if (endTime != null)
-            {
+            if (endTime != null) {
                 time.setTime(endTime);
                 supportLessonForm.set("endTimeHour", String.valueOf(time.get(Calendar.HOUR_OF_DAY)));
                 supportLessonForm.set("endTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
@@ -129,20 +110,19 @@ public class CRUDSupportLessonAction extends CRUDActionByOID
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
-	 *          ServidorApresentacao.mapping.framework.CRUDMapping)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
+     *      ServidorApresentacao.mapping.framework.CRUDMapping)
+     */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-        throws FenixActionException
-    {
+            throws FenixActionException {
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
 
         infoSupportLesson.setIdInternal((Integer) supportLessonForm.get("idInternal"));
-        InfoProfessorship infoProfessorship =
-            new InfoProfessorship((Integer) supportLessonForm.get("infoProfessorshipId"));
+        InfoProfessorship infoProfessorship = new InfoProfessorship((Integer) supportLessonForm
+                .get("infoProfessorshipId"));
 
         infoSupportLesson.setInfoProfessorship(infoProfessorship);
 
@@ -151,16 +131,12 @@ public class CRUDSupportLessonAction extends CRUDActionByOID
 
         Calendar calendar = Calendar.getInstance();
 
-        setHoursAndMinutes(
-            calendar,
-            Integer.valueOf((String) supportLessonForm.get("startTimeHour")),
-            Integer.valueOf((String) supportLessonForm.get("startTimeMinutes")));
+        setHoursAndMinutes(calendar, Integer.valueOf((String) supportLessonForm.get("startTimeHour")),
+                Integer.valueOf((String) supportLessonForm.get("startTimeMinutes")));
         infoSupportLesson.setStartTime(new Date(calendar.getTimeInMillis()));
 
-        setHoursAndMinutes(
-            calendar,
-            Integer.valueOf((String) supportLessonForm.get("endTimeHour")),
-            Integer.valueOf((String) supportLessonForm.get("endTimeMinutes")));
+        setHoursAndMinutes(calendar, Integer.valueOf((String) supportLessonForm.get("endTimeHour")),
+                Integer.valueOf((String) supportLessonForm.get("endTimeMinutes")));
         infoSupportLesson.setEndTime(new Date(calendar.getTimeInMillis()));
 
         infoSupportLesson.setPlace((String) supportLessonForm.get("place"));
@@ -169,36 +145,28 @@ public class CRUDSupportLessonAction extends CRUDActionByOID
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorApresentacao.Action.framework.CRUDActionByOID#prepareFormConstants(org.apache.struts.action.ActionMapping,
-	 *          org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest)
-	 */
-    protected void prepareFormConstants(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixServiceException
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#prepareFormConstants(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest)
+     */
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request) throws FenixServiceException {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm supportLessonForm = (DynaActionForm) form;
 
         Integer professorshipId = (Integer) supportLessonForm.get("infoProfessorshipId");
 
-        InfoProfessorship infoProfessorship =
-            (InfoProfessorship) ServiceUtils.executeService(
-                userView,
-                "ReadProfessorshipByOID",
-                new Object[] { professorshipId });
+        InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceUtils.executeService(userView,
+                "ReadProfessorshipByOID", new Object[] { professorshipId });
         request.setAttribute("infoProfessorship", infoProfessorship);
     }
 
-	
-	private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes)
-	{
-		calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
-		calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);		
-	}
+    private void setHoursAndMinutes(Calendar calendar, Integer hour, Integer minutes) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour != null ? hour.intValue() : 0);
+        calendar.set(Calendar.MINUTE, minutes != null ? minutes.intValue() : 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+    }
 }

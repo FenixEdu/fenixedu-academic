@@ -1,9 +1,9 @@
 package ServidorAplicacao.Servico.commons;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionPeriod;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
@@ -14,38 +14,17 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  * @author jpvl
  */
-public class ReadCurrentExecutionPeriod implements IServico
-{
-    private static ReadCurrentExecutionPeriod service = new ReadCurrentExecutionPeriod();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadCurrentExecutionPeriod getService()
-    {
-        return service;
-    }
+public class ReadCurrentExecutionPeriod implements IService {
 
-    /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadCurrentExecutionPeriod";
-    }
-
-    public InfoExecutionPeriod run()
-    {
+    public InfoExecutionPeriod run() {
 
         InfoExecutionPeriod infoExecutionPeriod = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
             infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new RuntimeException(ex);
         }
 

@@ -9,109 +9,112 @@ import java.util.Calendar;
 
 /**
  * @author João Mota
- *
- * 23/Jul/2003
- * fenix-head
- * Dominio
  * 
+ * 23/Jul/2003 fenix-head Dominio
+ *  
  */
 public class DegreeObjectives extends DomainObject implements IDegreeObjectives {
 
-	private String generalObjectives;
-	private String operacionalObjectives;
-	private ICurso degree;
-	private Integer keyDegree;
-	private Calendar startingDate;
-	private Calendar endDate;
+    private String generalObjectives;
 
-	/**
-	 * @return
-	 */
-	public Calendar getEndDate() {
-		return endDate;
-	}
+    private String operacionalObjectives;
 
-	/**
-	 * @param endDate
-	 */
-	public void setEndDate(Calendar endDate) {
-		this.endDate = endDate;
-	}
+    private ICurso degree;
 
-	/**
-	 * @return
-	 */
-	public Calendar getStartingDate() {
-		return startingDate;
-	}
+    private Integer keyDegree;
 
-	/**
-	 * @param startingDate
-	 */
-	public void setStartingDate(Calendar startingDate) {
-		this.startingDate = startingDate;
-	}
+    private Calendar startingDate;
 
-	/**
-	 * 
-	 */
-	public DegreeObjectives() {
-	}
+    private Calendar endDate;
 
-	/**
-	 * @return
-	 */
-	public ICurso getDegree() {
-		return degree;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEndDate() {
+        return endDate;
+    }
 
-	/**
-	 * @param degree
-	 */
-	public void setDegree(ICurso degree) {
-		this.degree = degree;
-	}
+    /**
+     * @param endDate
+     */
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyDegree() {
-		return keyDegree;
-	}
+    /**
+     * @return
+     */
+    public Calendar getStartingDate() {
+        return startingDate;
+    }
 
-	/**
-	 * @param degreeKey
-	 */
-	public void setKeyDegree(Integer degreeKey) {
-		this.keyDegree = degreeKey;
-	}
+    /**
+     * @param startingDate
+     */
+    public void setStartingDate(Calendar startingDate) {
+        this.startingDate = startingDate;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getGeneralObjectives() {
-		return generalObjectives;
-	}
+    /**
+     *  
+     */
+    public DegreeObjectives() {
+    }
 
-	/**
-	 * @param generalObjectives
-	 */
-	public void setGeneralObjectives(String generalObjectives) {
-		this.generalObjectives = generalObjectives;
-	}
+    /**
+     * @return
+     */
+    public ICurso getDegree() {
+        return degree;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getOperacionalObjectives() {
-		return operacionalObjectives;
-	}
+    /**
+     * @param degree
+     */
+    public void setDegree(ICurso degree) {
+        this.degree = degree;
+    }
 
-	/**
-	 * @param operacionalObjectives
-	 */
-	public void setOperacionalObjectives(String operacionalObjectives) {
-		this.operacionalObjectives = operacionalObjectives;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyDegree() {
+        return keyDegree;
+    }
+
+    /**
+     * @param degreeKey
+     */
+    public void setKeyDegree(Integer degreeKey) {
+        this.keyDegree = degreeKey;
+    }
+
+    /**
+     * @return
+     */
+    public String getGeneralObjectives() {
+        return generalObjectives;
+    }
+
+    /**
+     * @param generalObjectives
+     */
+    public void setGeneralObjectives(String generalObjectives) {
+        this.generalObjectives = generalObjectives;
+    }
+
+    /**
+     * @return
+     */
+    public String getOperacionalObjectives() {
+        return operacionalObjectives;
+    }
+
+    /**
+     * @param operacionalObjectives
+     */
+    public void setOperacionalObjectives(String operacionalObjectives) {
+        this.operacionalObjectives = operacionalObjectives;
+    }
 
 }

@@ -17,7 +17,7 @@ public class NameUtils extends FenixUtil {
         if (name != null) {
             String tempNome = name.trim();
             if (tempNome.lastIndexOf(" ") == -1) //There is no space in the
-                                                 // name
+            // name
             {
                 if (tempNome.length() == 0) //The name is empty
                 {
@@ -28,8 +28,7 @@ public class NameUtils extends FenixUtil {
 
             }
 
-            return tempNome.substring(tempNome.lastIndexOf(" "), tempNome
-                    .length());
+            return tempNome.substring(tempNome.lastIndexOf(" "), tempNome.length());
 
         }
         return "";
@@ -42,7 +41,7 @@ public class NameUtils extends FenixUtil {
         if (name != null) {
             String tempNome = name.trim();
             if (tempNome.lastIndexOf(" ") == -1) //There is no space in the
-                                                 // name
+            // name
             {
                 if (tempNome.length() == 0) //The name is empty
                 {

@@ -30,88 +30,79 @@ import constants.publication.PublicationConstants;
  *  
  */
 public class ReadPublications implements IServico {
-	private static ReadPublications service = new ReadPublications();
+    private static ReadPublications service = new ReadPublications();
 
-	/**
-	 *  
-	 */
-	private ReadPublications() {
+    /**
+     *  
+     */
+    private ReadPublications() {
 
-	}
+    }
 
-	public static ReadPublications getService() {
+    public static ReadPublications getService() {
 
-		return service;
-	}
+        return service;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadPublications";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadPublications";
+    }
 
-	public SiteView run(String user, String publicationType)
-		throws FenixServiceException {
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
+    public SiteView run(String user, String publicationType) throws FenixServiceException {
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentTeacher persistentTeacher =
-				persistentSuport.getIPersistentTeacher();
-			ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
-			Integer typePublication = new Integer(0);
+            Integer typePublication = new Integer(0);
 
-			if (publicationType.equalsIgnoreCase(PublicationConstants.DIDATIC_STRING)) {
-				typePublication = PublicationConstants.DIDATIC;
-			}
+            if (publicationType.equalsIgnoreCase(PublicationConstants.DIDATIC_STRING)) {
+                typePublication = PublicationConstants.DIDATIC;
+            }
 
-			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
-			List publications = teacher.getTeacherPublications();
-			List newPublications = new ArrayList();
-			List result = new ArrayList();
+            List publications = teacher.getTeacherPublications();
+            List newPublications = new ArrayList();
+            List result = new ArrayList();
 
-			if ((publications != null) || (publications.size() != PublicationConstants.ZERO_VALUE)) {
-				Iterator iterator = publications.iterator();
-				while (iterator.hasNext()) {
-					IPublication publication = (IPublication) iterator.next();
-					if (publication.getDidatic().intValue()
-						== typePublication.intValue()) {
-						newPublications.add(publication);
-					}
-				}
+            if ((publications != null) || (publications.size() != PublicationConstants.ZERO_VALUE)) {
+                Iterator iterator = publications.iterator();
+                while (iterator.hasNext()) {
+                    IPublication publication = (IPublication) iterator.next();
+                    if (publication.getDidatic().intValue() == typePublication.intValue()) {
+                        newPublications.add(publication);
+                    }
+                }
 
-				result =
-					(
-						List) CollectionUtils
-							.collect(newPublications, new Transformer() {
-					public Object transform(Object o) {
-						IPublication publication = (IPublication) o;
-						IPublication publication2 = publication;
-						publication2.setPublicationString(
-							publication.toString());
-						return Cloner.copyIPublication2InfoPublication(
-							publication2);
-					}
-				});
-			}
+                result = (List) CollectionUtils.collect(newPublications, new Transformer() {
+                    public Object transform(Object o) {
+                        IPublication publication = (IPublication) o;
+                        IPublication publication2 = publication;
+                        publication2.setPublicationString(publication.toString());
+                        return Cloner.copyIPublication2InfoPublication(publication2);
+                    }
+                });
+            }
 
-			InfoSitePublications bodyComponent = new InfoSitePublications();
-			if (typePublication.intValue() == PublicationConstants.CIENTIFIC.intValue()) {
-				bodyComponent.setInfoCientificPublications(result);
-			} else {
-				bodyComponent.setInfoDidaticPublications(result);
-			}
-			bodyComponent.setInfoTeacher(infoTeacher);
+            InfoSitePublications bodyComponent = new InfoSitePublications();
+            if (typePublication.intValue() == PublicationConstants.CIENTIFIC.intValue()) {
+                bodyComponent.setInfoCientificPublications(result);
+            } else {
+                bodyComponent.setInfoDidaticPublications(result);
+            }
+            bodyComponent.setInfoTeacher(infoTeacher);
 
-			SiteView siteView = new SiteView(bodyComponent);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            SiteView siteView = new SiteView(bodyComponent);
+            return siteView;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

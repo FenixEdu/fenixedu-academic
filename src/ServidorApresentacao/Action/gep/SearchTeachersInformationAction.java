@@ -16,11 +16,14 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.framework.SearchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.mapping.framework.SearchActionMapping;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Leonor Almeida
@@ -32,7 +35,8 @@ public class SearchTeachersInformationAction extends SearchAction {
      * (non-Javadoc)
      * 
      * @see ServidorApresentacao.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
-     *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
+     *      javax.servlet.http.HttpServletRequest,
+     *      org.apache.struts.action.ActionForm)
      */
     protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request,
             ActionForm form) throws Exception {
@@ -49,6 +53,8 @@ public class SearchTeachersInformationAction extends SearchAction {
         String basic = request.getParameter("basic");
         if (basic != null && basic.length() > 0)
             request.setAttribute("basic", basic);
+
+        request.setAttribute("executionYear", request.getParameter("executionYear"));
     }
 
     /*
@@ -72,25 +78,44 @@ public class SearchTeachersInformationAction extends SearchAction {
             basic = Boolean.FALSE;
         }
 
-        return new Object[] { executionDegreeId, basic };
+        String executionYear = request.getParameter("executionYear");
+
+        return new Object[] { executionDegreeId, basic, executionYear };
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see ServidorApresentacao.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
-     *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
+     *      javax.servlet.http.HttpServletRequest,
+     *      org.apache.struts.action.ActionForm)
      */
     protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
             ActionForm form) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
-                "ReadCurrentExecutionYear", new Object[] {});
+        String executionYear = request.getParameter("executionYear");
 
-        Object[] args = { infoExecutionYear, TipoCurso.LICENCIATURA_OBJ };
+        InfoExecutionYear infoExecutionYear = null;
+        try {
+            if (executionYear != null) {
+                Object[] args = { executionYear };
+
+                infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(
+                        null, "ReadExecutionYear", args);
+            } else {
+                infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
+                        "ReadCurrentExecutionYear", new Object[] {});
+            }
+        } catch (FenixServiceException e) {
+            throw new FenixActionException();
+        }
+
+        request.setAttribute("executionYear", infoExecutionYear.getYear());
+
+        Object[] argsExecutionDegrees = { infoExecutionYear, TipoCurso.LICENCIATURA_OBJ };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(userView,
-                "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
+                "ReadExecutionDegreesByExecutionYearAndDegreeType", argsExecutionDegrees);
         Collections.sort(infoExecutionDegrees, new Comparator() {
             public int compare(Object o1, Object o2) {
                 InfoExecutionDegree infoExecutionDegree1 = (InfoExecutionDegree) o1;
@@ -102,8 +127,9 @@ public class SearchTeachersInformationAction extends SearchAction {
             }
         });
 
-        infoExecutionDegrees = buildLabelValueBeans(infoExecutionDegrees);
+        infoExecutionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(infoExecutionDegrees);
 
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
+        request.setAttribute("showNextSelects", "true");
     }
 }

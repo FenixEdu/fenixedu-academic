@@ -26,16 +26,10 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class DeleteDegreesAction extends FenixAction
-{
+public class DeleteDegreesAction extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm deleteDegreesForm = (DynaActionForm) form;
@@ -46,21 +40,17 @@ public class DeleteDegreesAction extends FenixAction
 
         List errorNames = new ArrayList();
 
-        try
-        {
+        try {
             errorNames = (List) ServiceUtils.executeService(userView, "DeleteDegrees", args);
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
-        if (!errorNames.isEmpty())
-        {
+        if (!errorNames.isEmpty()) {
             ActionErrors actionErrors = new ActionErrors();
             Iterator namesIter = errorNames.iterator();
             ActionError error = null;
-            while (namesIter.hasNext())
-            {
+            while (namesIter.hasNext()) {
                 // CRIO UM ACTION ERROR PARA CADA DEGREE
                 error = new ActionError("errors.invalid.delete.not.empty.degree", namesIter.next());
                 actionErrors.add("errors.invalid.delete.not.empty.degree", error);

@@ -24,8 +24,7 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
 /**
  * @author jpvl
  */
-public class CRUDOtherTypeCreditLineAction extends CRUDActionByOID
-{
+public class CRUDOtherTypeCreditLineAction extends CRUDActionByOID {
 
     /*
      * (non-Javadoc)
@@ -34,23 +33,16 @@ public class CRUDOtherTypeCreditLineAction extends CRUDActionByOID
      *      DataBeans.InfoObject, org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
-    protected void populateFormFromInfoObject(
-        ActionMapping mapping,
-        InfoObject infoObject,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixActionException
-    {
+    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
+            ActionForm form, HttpServletRequest request) throws FenixActionException {
         DynaActionForm otherTypeCreditLineForm = (DynaActionForm) form;
         InfoOtherTypeCreditLine infoOtherTypeCreditLine = (InfoOtherTypeCreditLine) infoObject;
 
         otherTypeCreditLineForm.set("idInternal", infoOtherTypeCreditLine.getIdInternal());
-        otherTypeCreditLineForm.set(
-            "executionPeriodId",
-            infoOtherTypeCreditLine.getInfoExecutionPeriod().getIdInternal());
-        otherTypeCreditLineForm.set(
-            "teacherId",
-            infoOtherTypeCreditLine.getInfoTeacher().getIdInternal());
+        otherTypeCreditLineForm.set("executionPeriodId", infoOtherTypeCreditLine
+                .getInfoExecutionPeriod().getIdInternal());
+        otherTypeCreditLineForm.set("teacherId", infoOtherTypeCreditLine.getInfoTeacher()
+                .getIdInternal());
         otherTypeCreditLineForm.set("reason", infoOtherTypeCreditLine.getReason());
         otherTypeCreditLineForm.set("credits", infoOtherTypeCreditLine.getCredits().toString());
     }
@@ -62,8 +54,7 @@ public class CRUDOtherTypeCreditLineAction extends CRUDActionByOID
      *      ServidorApresentacao.mapping.framework.CRUDMapping)
      */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-        throws FenixActionException
-    {
+            throws FenixActionException {
         DynaActionForm otherTypeCreditLineForm = (DynaActionForm) form;
         InfoOtherTypeCreditLine infoOtherTypeCreditLine = new InfoOtherTypeCreditLine();
 
@@ -89,12 +80,8 @@ public class CRUDOtherTypeCreditLineAction extends CRUDActionByOID
      *      org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
-    protected void prepareFormConstants(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixServiceException
-    {
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request) throws FenixServiceException {
         DynaActionForm otherTypeCreditLineForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);
@@ -102,17 +89,14 @@ public class CRUDOtherTypeCreditLineAction extends CRUDActionByOID
         Integer teacherId = (Integer) otherTypeCreditLineForm.get("teacherId");
         Object args[] = { executionPeriodId };
 
-        InfoExecutionPeriod infoExecutionPeriod =
-            (InfoExecutionPeriod) ServiceUtils.executeService(
-                userView,
-                "ReadExecutionPeriodByOID",
-                args);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
+                userView, "ReadExecutionPeriodByOID", args);
 
         request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
 
         args[0] = teacherId;
-        InfoTeacher infoTeacher =
-            (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByOID", args);
+        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+                "ReadTeacherByOID", args);
         request.setAttribute("infoTeacher", infoTeacher);
     }
 

@@ -14,84 +14,72 @@ import DataBeans.InfoExecutionCourse;
  * 
  * @author jpvl
  */
-public class ExecutionCourseShiftEnrollmentDetails extends DataTranferObject
-{
+public class ExecutionCourseShiftEnrollmentDetails extends DataTranferObject {
 
-	private InfoExecutionCourse infoExecutionCourse;
+    private InfoExecutionCourse infoExecutionCourse;
 
-	/**
-	 * @see ShiftEnrollmentDetails
-	 */
-	private List shiftEnrollmentDetailsList;
+    /**
+     * @see ShiftEnrollmentDetails
+     */
+    private List shiftEnrollmentDetailsList;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object obj)
-	{
-		boolean resultado = false;
-		if (obj instanceof ExecutionCourseShiftEnrollmentDetails)
-		{
-			ExecutionCourseShiftEnrollmentDetails details = (ExecutionCourseShiftEnrollmentDetails) obj;
-			resultado = getInfoExecutionCourse().equals(details.getInfoExecutionCourse());
-		}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof ExecutionCourseShiftEnrollmentDetails) {
+            ExecutionCourseShiftEnrollmentDetails details = (ExecutionCourseShiftEnrollmentDetails) obj;
+            resultado = getInfoExecutionCourse().equals(details.getInfoExecutionCourse());
+        }
 
-		return resultado;
-	}
+        return resultado;
+    }
 
-	/**
-	 * @return Returns the infoExecutionCourse.
-	 */
-	public InfoExecutionCourse getInfoExecutionCourse()
-	{
-		return infoExecutionCourse;
-	}
+    /**
+     * @return Returns the infoExecutionCourse.
+     */
+    public InfoExecutionCourse getInfoExecutionCourse() {
+        return infoExecutionCourse;
+    }
 
-	/**
-	 * @return Returns the shiftDetailsEnrollmentList.
-	 */
-	public List getShiftEnrollmentDetailsList()
-	{
-		return shiftEnrollmentDetailsList;
-	}
+    /**
+     * @return Returns the shiftDetailsEnrollmentList.
+     */
+    public List getShiftEnrollmentDetailsList() {
+        return shiftEnrollmentDetailsList;
+    }
 
-	/**
-	 * @param infoExecutionCourse
-	 *            The infoExecutionCourse to set.
-	 */
-	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse)
-	{
-		this.infoExecutionCourse = infoExecutionCourse;
-	}
+    /**
+     * @param infoExecutionCourse
+     *            The infoExecutionCourse to set.
+     */
+    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+        this.infoExecutionCourse = infoExecutionCourse;
+    }
 
-	/**
-	 * @param shiftDetailsEnrollmentList
-	 *            The shiftDetailsEnrollmentList to set.
-	 */
-	public void setShiftEnrollmentDetailsList(List shiftDetailsEnrollmentList)
-	{
-		this.shiftEnrollmentDetailsList = shiftDetailsEnrollmentList;
-	}
+    /**
+     * @param shiftDetailsEnrollmentList
+     *            The shiftDetailsEnrollmentList to set.
+     */
+    public void setShiftEnrollmentDetailsList(List shiftDetailsEnrollmentList) {
+        this.shiftEnrollmentDetailsList = shiftDetailsEnrollmentList;
+    }
 
-	/**
-	 * @param shiftEnrollmentDetails2
-	 */
-	public void addShiftEnrollmentDetails(ShiftEnrollmentDetails shiftEnrollmentDetails)
-	{
-		if (this.shiftEnrollmentDetailsList == null)
-		{
-			this.shiftEnrollmentDetailsList = new ArrayList();
-			this.shiftEnrollmentDetailsList.add(shiftEnrollmentDetails);
-		}
-		else
-		{
-			if (!this.shiftEnrollmentDetailsList.contains(shiftEnrollmentDetails))
-			{
-				this.shiftEnrollmentDetailsList.add(shiftEnrollmentDetails);
-			}
-		}
-	}
+    /**
+     * @param shiftEnrollmentDetails2
+     */
+    public void addShiftEnrollmentDetails(ShiftEnrollmentDetails shiftEnrollmentDetails) {
+        if (this.shiftEnrollmentDetailsList == null) {
+            this.shiftEnrollmentDetailsList = new ArrayList();
+            this.shiftEnrollmentDetailsList.add(shiftEnrollmentDetails);
+        } else {
+            if (!this.shiftEnrollmentDetailsList.contains(shiftEnrollmentDetails)) {
+                this.shiftEnrollmentDetailsList.add(shiftEnrollmentDetails);
+            }
+        }
+    }
 
 }

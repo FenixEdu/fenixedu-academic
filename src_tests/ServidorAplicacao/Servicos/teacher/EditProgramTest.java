@@ -8,170 +8,172 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
- * @author Nuno Correia 
+ * @author Nuno Correia
  * @author Ricardo Rodrigues
- * 
+ *  
  */
 public class EditProgramTest extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	 * @param testName
-	 */
-	public EditProgramTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public EditProgramTest(String testName) {
+        super(testName);
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "EditProgram";
-	}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "EditProgram";
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testEditProgramDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testEditProgramDataSet.xml";
+    }
 
-	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedEditProgramDataSet.xml";
-	}
+    protected String getExpectedDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testExpectedEditProgramDataSet.xml";
+    }
 
-	protected String getExpectedNewCurriculumDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testExpectedNewCurriculumProgramDataSet.xml";
-	}
+    protected String getExpectedNewCurriculumDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testExpectedNewCurriculumProgramDataSet.xml";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser() {
+    protected String[] getNotAuthenticatedUser() {
 
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments() {
+    protected Object[] getAuthorizeArguments() {
 
-		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(14);
+        Integer executionCourseCode = new Integer(24);
+        Integer curricularCourseCode = new Integer(14);
 
-		String programPT = "Program in Portuguese";
-		String programEN = "Program in English";
+        String programPT = "Program in Portuguese";
+        String programEN = "Program in English";
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setProgram(programPT);
-		infoCurriculum.setProgramEn(programEN);
+        infoCurriculum.setIdInternal(curricularCourseCode);
+        infoCurriculum.setProgram(programPT);
+        infoCurriculum.setProgramEn(programEN);
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getTestProgramSuccessfullArguments() {
+    protected Object[] getTestProgramSuccessfullArguments() {
 
-		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(14);
+        Integer executionCourseCode = new Integer(24);
+        Integer curricularCourseCode = new Integer(14);
 
-		String programPT = "Program in Portuguese";
-		String programEN = "Program in English";
+        String programPT = "Program in Portuguese";
+        String programEN = "Program in English";
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setProgram(programPT);
-		infoCurriculum.setProgramEn(programEN);
+        infoCurriculum.setIdInternal(curricularCourseCode);
+        infoCurriculum.setProgram(programPT);
+        infoCurriculum.setProgramEn(programEN);
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getTestProgramUnsuccessfullArguments() {
+    protected Object[] getTestProgramUnsuccessfullArguments() {
 
-		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(123);
+        Integer executionCourseCode = new Integer(24);
+        Integer curricularCourseCode = new Integer(123);
 
-		String programPT = "Program in Portuguese";
-		String programEN = "Program in English";
+        String programPT = "Program in Portuguese";
+        String programEN = "Program in English";
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setProgram(programPT);
-		infoCurriculum.setProgramEn(programEN);
+        infoCurriculum.setIdInternal(curricularCourseCode);
+        infoCurriculum.setProgram(programPT);
+        infoCurriculum.setProgramEn(programEN);
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
-		return args;
-	}
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+        return args;
+    }
 
-	protected Object[] getTestProgramCurricularCourseWithNoCurriculumArguments() {
+    protected Object[] getTestProgramCurricularCourseWithNoCurriculumArguments() {
 
-		Integer executionCourseCode = new Integer(26);
-		Integer curricularCourseCode = new Integer(16);
+        Integer executionCourseCode = new Integer(26);
+        Integer curricularCourseCode = new Integer(16);
 
-		String programPT = "Program in Portuguese";
-		String programEN = "Program in English";
+        String programPT = "Program in Portuguese";
+        String programEN = "Program in English";
 
-		InfoCurriculum infoCurriculum = new InfoCurriculum();
+        InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setProgram(programPT);
-		infoCurriculum.setProgramEn(programEN);
+        infoCurriculum.setIdInternal(curricularCourseCode);
+        infoCurriculum.setProgram(programPT);
+        infoCurriculum.setProgramEn(programEN);
 
-		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
-		return args;
-	}
+        Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
+        return args;
+    }
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testSuccessfullEditProgram() {
+    public void testSuccessfullEditProgram() {
 
-		try {
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
 
-			// verificar as alteracoes da bd
-			compareDataSet(getExpectedDataSetFilePath());
+            // verificar as alteracoes da bd
+            compareDataSet(getExpectedDataSetFilePath());
 
-		} catch (FenixServiceException ex) {
-			fail("testSuccessfullEditProgram" + ex);
-		} catch (Exception ex) {
-			fail("testSuccessfullEditProgram error on compareDataSet" + ex);
-		}
-	}
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullEditProgram" + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullEditProgram error on compareDataSet" + ex);
+        }
+    }
 
-	public void testSuccessfullEditProgramWithNoCurriculum() {
+    public void testSuccessfullEditProgramWithNoCurriculum() {
 
-		System.out.println("Starting: testSuccessfullEditProgramWithNoCurriculum");
-		try {
-			String[] args = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args);
+        System.out.println("Starting: testSuccessfullEditProgramWithNoCurriculum");
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args);
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), getTestProgramCurricularCourseWithNoCurriculumArguments());
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    getTestProgramCurricularCourseWithNoCurriculumArguments());
 
-			// verificar as alteracoes da bd
-			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
+            // verificar as alteracoes da bd
+            compareDataSet(getExpectedNewCurriculumDataSetFilePath());
 
-			System.out.println("Finished: testSuccessfullEditProgramWithNoCurriculum");
-		} catch (FenixServiceException ex) {
-			fail("EditProgramTest" + ex);
-		} catch (Exception ex) {
-			fail("EditProgramTest error on compareDataSet" + ex);
-		}
-	}
+            System.out.println("Finished: testSuccessfullEditProgramWithNoCurriculum");
+        } catch (FenixServiceException ex) {
+            fail("EditProgramTest" + ex);
+        } catch (Exception ex) {
+            fail("EditProgramTest error on compareDataSet" + ex);
+        }
+    }
 
 }

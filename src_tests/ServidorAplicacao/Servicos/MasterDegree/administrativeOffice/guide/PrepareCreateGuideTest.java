@@ -27,45 +27,38 @@ import Util.Specialization;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class PrepareCreateGuideTest extends TestCaseServicos
-{
+public class PrepareCreateGuideTest extends TestCaseServicos {
 
-    public PrepareCreateGuideTest(java.lang.String testName)
-    {
+    public PrepareCreateGuideTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(PrepareCreateGuideTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
 
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
-    public void testPrepareCreateGuide()
-    {
+
+    public void testPrepareCreateGuide() {
         System.out.println("- Test 1 : Prepare Create Guide");
         SuportePersistenteOJB sp = null;
         UserView userView = this.getUserViewToBeTested("nmsn", true);
 
         InfoExecutionDegree infoExecutionDegree = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -75,52 +68,33 @@ public class PrepareCreateGuideTest extends TestCaseServicos
             ICurso degree = sp.getICursoPersistente().readBySigla("MEEC");
             assertNotNull(degree);
 
-            IDegreeCurricularPlan degreeCurricularPlan =
-                sp.getIPersistentDegreeCurricularPlan().readByNameAndDegree("plano2", degree);
+            IDegreeCurricularPlan degreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan()
+                    .readByNameAndDegree("plano2", degree);
             assertNotNull(degreeCurricularPlan);
 
-            ICursoExecucao executionDegree =
-                sp.getICursoExecucaoPersistente().readByDegreeCurricularPlanAndExecutionYear(
-                    degreeCurricularPlan,
-                    executionYear);
+            ICursoExecucao executionDegree = sp.getIPersistentExecutionDegree()
+                    .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
             assertNotNull(executionDegree);
 
             infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 
             sp.confirmarTransaccao();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("Error !");
 
         }
 
-        Object[] args =
-            {
-                Specialization.MESTRADO_STRING,
-                infoExecutionDegree,
-                new Integer(1),
-                GuideRequester.CANDIDATE_STRING,
-                new Integer(123),
-                null,
-                null };
+        Object[] args = { Specialization.MESTRADO_STRING, infoExecutionDegree, new Integer(1),
+                GuideRequester.CANDIDATE_STRING, new Integer(123), null, null };
 
         InfoGuide infoGuide = null;
 
-        try
-        {
-            infoGuide =
-                (InfoGuide) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "PrepareCreateGuide",
-                    args);
-        }
-        catch (FenixServiceException ex)
-        {
+        try {
+            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                    "PrepareCreateGuide", args);
+        } catch (FenixServiceException ex) {
             fail("Fenix Service Exception");
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Exception");
         }
 
@@ -131,8 +105,7 @@ public class PrepareCreateGuideTest extends TestCaseServicos
 
     }
 
-    private UserView getUserViewToBeTested(String username, boolean withRole)
-    {
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
         Collection roles = new ArrayList();
         InfoRole infoRole = new InfoRole();
         if (withRole)

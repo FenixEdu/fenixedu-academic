@@ -15,84 +15,50 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * 
- * @author :
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
 
-public class CreateMasterDegreeThesisDispatchAction extends DispatchAction
-{
+public class CreateMasterDegreeThesisDispatchAction extends DispatchAction {
 
-	public ActionForward getStudentForCreateMasterDegreeThesis(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
-		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+    public ActionForward getStudentForCreateMasterDegreeThesis(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
+        boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		if (isSuccess)
-		{
-			return mapping.findForward("start");
-		} 
-			throw new NonExistingActionException(
-				"error.exception.masterDegree.nonExistentStudent",
-				mapping.findForward("error"));
+        if (isSuccess) {
+            return mapping.findForward("start");
+        }
+        throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping
+                .findForward("error"));
 
-		
+    }
 
-	}
+    public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-	public ActionForward reloadForm(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
+        try {
+            operations.getTeachersByNumbers(form, request, "guidersNumbers",
+                    SessionConstants.GUIDERS_LIST, actionErrors);
+            operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+                    SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+                    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs",
+                    SessionConstants.EXTERNAL_GUIDERS_LIST, actionErrors);
 
-		try
-		{
-			operations.getTeachersByNumbers(
-				form,
-				request,
-				"guidersNumbers",
-				SessionConstants.GUIDERS_LIST,
-				actionErrors);
-			operations.getTeachersByNumbers(
-				form,
-				request,
-				"assistentGuidersNumbers",
-				SessionConstants.ASSISTENT_GUIDERS_LIST,
-				actionErrors);
-			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-			operations.getExternalPersonsByIDs(
-				form,
-				request,
-				"externalAssistentGuidersIDs",
-				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
-				actionErrors);
-			operations.getExternalPersonsByIDs(
-				form,
-				request,
-				"externalGuidersIDs",
-				SessionConstants.EXTERNAL_GUIDERS_LIST,
-				actionErrors);
+        } catch (Exception e1) {
+            throw new FenixActionException(e1);
+        }
 
-		} catch (Exception e1)
-		{
-			throw new FenixActionException(e1);
-		}
+        return mapping.findForward("start");
 
-		return mapping.findForward("start");
-
-	}
+    }
 
 }

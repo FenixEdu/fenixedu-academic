@@ -53,6 +53,19 @@
 </strong></p>
 
 <br />
+<strong>Gestão de Suport</strong>
+<p><strong>&raquo;
+	<html:link page="/manageGlossary.do?method=prepare">
+		Gestão de Glossário
+	</html:link>
+</strong></p>
+<p><strong>&raquo;
+	<html:link page="/manageFAQs.do?method=prepare">
+		Gestão de FAQ's
+	</html:link>
+</strong></p>
+
+<br />
 <strong>Gestão do Sistema</strong>
 <p><strong>&raquo; 
 

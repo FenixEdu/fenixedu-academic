@@ -33,39 +33,35 @@ import ServidorApresentacao.Action.utils.ContextUtils;
 /**
  * @author Ana e Ricardo
  */
-public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction
-{
+public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 
-    /* (non-Javadoc)
-     * @see org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse, java.lang.String)
      */
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        InfoExecutionPeriod infoExecutionPeriod =
-            (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         /* Criar o bean de anos curriculares */
-        ArrayList anosCurriculares = createCurricularYearList();
+        List anosCurriculares = createCurricularYearList();
         request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, anosCurriculares);
 
-        /* Cria o form bean com as licenciaturas em execucao.*/
-        Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear()};
+        /* Cria o form bean com as licenciaturas em execucao. */
+        Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-        List executionDegreeList =
-            (List) ServiceUtils.executeService(
-                userView,
-                "ReadExecutionDegreesByExecutionYear",
-                argsLerLicenciaturas);
+        List executionDegreeList = (List) ServiceUtils.executeService(userView,
+                "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
-        ArrayList licenciaturas = new ArrayList();
+        List licenciaturas = new ArrayList();
 
         licenciaturas.add(new LabelValueBean("", ""));
 
@@ -73,23 +69,16 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction
 
         Iterator iterator = executionDegreeList.iterator();
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
             String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            name =
-                infoExecutionDegree
-                    .getInfoDegreeCurricularPlan()
-                    .getInfoDegree()
-                    .getTipoCurso()
+            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
                     .toString()
-                    + " em "
-                    + name;
+                    + " em " + name;
 
-            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
-                ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
-                : "";
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
+                    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
             licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
         }
@@ -99,13 +88,8 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction
         return mapping.findForward("chooseDegreeAndYearContext");
     }
 
-    public ActionForward choose(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         DynaValidatorForm chooseDegreeAndYearForm = (DynaValidatorForm) form;
 
@@ -124,15 +108,15 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction
 
     /**
      * Method createCurricularYearList.
+     * 
      * @param mapping
      * @param form
      * @param request
      * @param response
      */
-    private ArrayList createCurricularYearList()
-    {
+    private List createCurricularYearList() {
 
-        ArrayList anosCurriculares = new ArrayList();
+        List anosCurriculares = new ArrayList();
 
         anosCurriculares.add(new LabelValueBean("", ""));
         anosCurriculares.add(new LabelValueBean("1 º", "1"));
@@ -144,18 +128,14 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction
         return anosCurriculares;
     }
 
-    private boolean duplicateInfoDegree(
-        List executionDegreeList,
-        InfoExecutionDegree infoExecutionDegree)
-    {
+    private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
         InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
         Iterator iterator = executionDegreeList.iterator();
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
             if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+                    && !(infoExecutionDegree.equals(infoExecutionDegree2)))
                 return true;
 
         }

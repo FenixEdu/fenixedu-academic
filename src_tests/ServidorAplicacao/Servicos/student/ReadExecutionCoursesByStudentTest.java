@@ -52,17 +52,13 @@ public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IExecutionCourse disciplinaExecucao25 = new ExecutionCourse(
-                    new Integer(25));
-            IExecutionCourse disciplinaExecucao26 = new ExecutionCourse(
-                    new Integer(26));
+            IExecutionCourse disciplinaExecucao25 = new ExecutionCourse(new Integer(25));
+            IExecutionCourse disciplinaExecucao26 = new ExecutionCourse(new Integer(26));
 
-            disciplinaExecucao25 = (IExecutionCourse) sp
-                    .getIPersistentExecutionCourse().readByOID(
-                            ExecutionCourse.class, new Integer(25));
-            disciplinaExecucao26 = (IExecutionCourse) sp
-                    .getIPersistentExecutionCourse().readByOID(
-                            ExecutionCourse.class, new Integer(26));
+            disciplinaExecucao25 = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
+                    ExecutionCourse.class, new Integer(25));
+            disciplinaExecucao26 = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
+                    ExecutionCourse.class, new Integer(26));
 
             sp.confirmarTransaccao();
 

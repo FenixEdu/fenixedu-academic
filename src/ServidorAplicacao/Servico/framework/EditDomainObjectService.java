@@ -37,8 +37,7 @@ public abstract class EditDomainObjectService implements IService {
      * @param existingDomainObject
      * @return
      */
-    private boolean canCreate(IDomainObject objectToEdit,
-            IDomainObject existingDomainObject) {
+    private boolean canCreate(IDomainObject objectToEdit, IDomainObject existingDomainObject) {
         /*
          * Not new and exist on database and object ids are equal OR is a new
          * object and doesn't exist on database OR is not new and doesn't exist
@@ -46,9 +45,8 @@ public abstract class EditDomainObjectService implements IService {
          */
 
         return (!isNew(objectToEdit)
-                && ((existingDomainObject != null) && (objectToEdit
-                        .getIdInternal().equals(existingDomainObject
-                        .getIdInternal())))
+                && ((existingDomainObject != null) && (objectToEdit.getIdInternal()
+                        .equals(existingDomainObject.getIdInternal())))
                 || ((existingDomainObject == null) && isNew(objectToEdit)) || ((!isNew(objectToEdit) && (existingDomainObject == null))));
     }
 
@@ -68,9 +66,8 @@ public abstract class EditDomainObjectService implements IService {
      * @param infoObject
      * @param sp
      */
-    protected void doAfterLock(IDomainObject domainObjectLocked,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
+    protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
+            ISuportePersistente sp) throws FenixServiceException {
     }
 
     /**
@@ -80,17 +77,16 @@ public abstract class EditDomainObjectService implements IService {
      * @param infoObject
      * @param sp
      */
-    protected void doBeforeLock(IDomainObject domainObjectToLock,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
+    protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
+            ISuportePersistente sp) throws FenixServiceException {
     }
 
     /**
      * @param newDomainObject
      * @param sp
      */
-    private void fillAssociatedObjects(IDomainObject newDomainObject,
-            IPersistentObject po, IDomainObject objectToEdit) throws FenixServiceException {
+    private void fillAssociatedObjects(IDomainObject newDomainObject, IPersistentObject po,
+            IDomainObject objectToEdit) throws FenixServiceException {
         try {
             Map propertiesMap = PropertyUtils.describe(objectToEdit);
             Iterator iterator = propertiesMap.entrySet().iterator();
@@ -98,12 +94,10 @@ public abstract class EditDomainObjectService implements IService {
                 Map.Entry entry = (Map.Entry) iterator.next();
                 Object value = entry.getValue();
 
-                if ((value != null)
-                        && (Beans.isInstanceOf(value, IDomainObject.class))) {
-                    IDomainObject o = po
-                            .readByOID(value.getClass(), ((IDomainObject) value).getIdInternal(), false);
-                    PropertyUtils.setProperty(newDomainObject, entry.getKey()
-                            .toString(), o);
+                if ((value != null) && (Beans.isInstanceOf(value, IDomainObject.class))) {
+                    IDomainObject o = po.readByOID(value.getClass(), ((IDomainObject) value)
+                            .getIdInternal(), false);
+                    PropertyUtils.setProperty(newDomainObject, entry.getKey().toString(), o);
                 }
             }
         } catch (Exception e) {
@@ -115,8 +109,8 @@ public abstract class EditDomainObjectService implements IService {
      * @param sp
      * @return
      */
-    protected abstract IPersistentObject getIPersistentObject(
-            ISuportePersistente sp) throws ExcepcaoPersistencia;
+    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
+            throws ExcepcaoPersistencia;
 
     /**
      * Checks if the internalId of the object is null or 0
@@ -139,8 +133,8 @@ public abstract class EditDomainObjectService implements IService {
      * @return By default returns null. When there is no unique in domainObject
      *         the object that we want to create never exists.
      */
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject,
-            ISuportePersistente sp) throws FenixServiceException, ExcepcaoPersistencia {
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+            throws FenixServiceException, ExcepcaoPersistencia {
         return null;
     }
 
@@ -154,19 +148,17 @@ public abstract class EditDomainObjectService implements IService {
      * 
      * TODO Remove objectId from method signature.
      */
-    public void run(Integer objectId, InfoObject infoObject)
-            throws FenixServiceException {
+    public void run(Integer objectId, InfoObject infoObject) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = getIPersistentObject(sp);
             IDomainObject objectToEdit = clone2DomainObject(infoObject);
 
-            IDomainObject objectFromDatabase = getObjectFromDatabase(
-                    objectToEdit, sp);
-            if (!canCreate(objectToEdit, objectFromDatabase)) { throw new ExistingServiceException(
-                    "The object already exists"); }
-            IDomainObject domainObject = getObjectToLock(objectToEdit,
-                    objectFromDatabase);
+            IDomainObject objectFromDatabase = getObjectFromDatabase(objectToEdit, sp);
+            if (!canCreate(objectToEdit, objectFromDatabase)) {
+                throw new ExistingServiceException("The object already exists");
+            }
+            IDomainObject domainObject = getObjectToLock(objectToEdit, objectFromDatabase);
 
             doBeforeLock(domainObject, infoObject, sp);
 
@@ -183,28 +175,27 @@ public abstract class EditDomainObjectService implements IService {
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         } catch (Exception e) {
-            if (e instanceof FenixServiceException) { throw (FenixServiceException) e; }
+            if (e instanceof FenixServiceException) {
+                throw (FenixServiceException) e;
+            }
             throw new FenixServiceException(e);
         }
     }
 
-    private IDomainObject getObjectToLock(IDomainObject objectToEdit,
-            IDomainObject objectFromDatabase) throws InstantiationException,
-            IllegalAccessException {
+    private IDomainObject getObjectToLock(IDomainObject objectToEdit, IDomainObject objectFromDatabase)
+            throws InstantiationException, IllegalAccessException {
         IDomainObject domainObject = null;
 
         if (isNew(objectToEdit)) {
-            domainObject = (IDomainObject) objectToEdit.getClass()
-                    .newInstance();
+            domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
         } else {
             domainObject = objectFromDatabase;
         }
         return domainObject;
     }
 
-    private IDomainObject getObjectFromDatabase(IDomainObject objectToEdit,
-            ISuportePersistente sp) throws ExcepcaoPersistencia,
-            FenixServiceException, NonExistingServiceException {
+    private IDomainObject getObjectFromDatabase(IDomainObject objectToEdit, ISuportePersistente sp)
+            throws ExcepcaoPersistencia, FenixServiceException, NonExistingServiceException {
         IDomainObject objectFromDatabase = readObjectByUnique(objectToEdit, sp);
 
         // if the editing means alter unique keys or the there is no unique
@@ -213,8 +204,9 @@ public abstract class EditDomainObjectService implements IService {
             objectFromDatabase = getIPersistentObject(sp).readByOID(objectToEdit.getClass(),
                     objectToEdit.getIdInternal(), false);
             // if the object still null then the object doesn't exist.
-            if (objectFromDatabase == null) { throw new NonExistingServiceException(
-                    "Object doesn't exist!"); }
+            if (objectFromDatabase == null) {
+                throw new NonExistingServiceException("Object doesn't exist!");
+            }
         }
         return objectFromDatabase;
     }

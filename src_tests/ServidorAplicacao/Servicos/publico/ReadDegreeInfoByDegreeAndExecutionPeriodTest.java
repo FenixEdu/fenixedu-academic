@@ -9,32 +9,25 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 /**
  * @author Tânia Pousão Create on 11/Nov/2003
  */
-public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCase
-{
-    public ReadDegreeInfoByDegreeAndExecutionPeriodTest(String name)
-    {
+public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCase {
+    public ReadDegreeInfoByDegreeAndExecutionPeriodTest(String name) {
         super(name);
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/coordinator/testDataSetDegreeSite.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadDegreeInfoByDegreeAndExecutionPeriod";
     }
 
-    public void testSuccessfull()
-    {
-        try
-        {
+    public void testSuccessfull() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(10);
             Integer infoExecutionPeriodCode = new Integer(3);
@@ -43,19 +36,16 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
-            try
-            {
-                infoDegreeInfo =
-                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            try {
+                infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
+                        getNameOfServiceToBeTested(), args);
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
             //Returned anything?
-            if (infoDegreeInfo == null)
-            {
+            if (infoDegreeInfo == null) {
                 fail("Reading a Degree Info.");
             }
 
@@ -75,20 +65,17 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
             assertEquals(new Double(12.0), infoDegreeInfo.getMarkAverage());
             assertEquals(new Integer(10), infoDegreeInfo.getInfoDegree().getIdInternal());
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfull");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfull");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testSuccessfullWithMoreThanOneDegreeInfo()
-    {
-        try
-        {
+    public void testSuccessfullWithMoreThanOneDegreeInfo() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(100);
             Integer infoExecutionPeriodCode = new Integer(3);
@@ -97,19 +84,16 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
-            try
-            {
-                infoDegreeInfo =
-                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            try {
+                infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
+                        getNameOfServiceToBeTested(), args);
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
             //Returned anything?
-            if (infoDegreeInfo == null)
-            {
+            if (infoDegreeInfo == null) {
                 fail("Reading a Degree Info.");
             }
 
@@ -129,255 +113,201 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
             assertEquals(new Double(10.0), infoDegreeInfo.getMarkAverage());
             assertEquals(new Integer(100), infoDegreeInfo.getInfoDegree().getIdInternal());
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithMoreThanOneDegreeInfo");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithMoreThanOneDegreeInfo");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testSuccessfullWithDegreeInfoLastYear()
-    {
-        try
-        {
+    public void testSuccessfullWithDegreeInfoLastYear() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(2002);
             Integer infoExecutionPeriodCode = new Integer(3);
 
             Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+            } catch (FenixServiceException e) {
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 21);
-                if (!msg.equals(new String("impossibleDegreeSite")))
-                {
+                if (!msg.equals(new String("impossibleDegreeSite"))) {
                     e.printStackTrace();
                     fail("Reading a degree information");
                 }
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithDegreeInfoLastYear");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithDegreeInfoLastYear");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNULLArg1()
-    {
-        try
-        {
+    public void testNULLArg1() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(10);
             Integer infoExecutionPeriodCode = null;
 
             Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+            } catch (FenixServiceException e) {
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 21);
-                if (!msg.equals(new String("impossibleDegreeSite")))
-                {
+                if (!msg.equals(new String("impossibleDegreeSite"))) {
                     e.printStackTrace();
                     fail("Reading a degree information");
                 }
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNULLArg1");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNULLArg1");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNULLArg2()
-    {
-        try
-        {
+    public void testNULLArg2() {
+        try {
             //Service Argument
             Integer infoDegreeCode = null;
             Integer infoExecutionPeriodCode = new Integer(3);
 
             Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+            } catch (FenixServiceException e) {
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 21);
-                if (!msg.equals(new String("impossibleDegreeSite")))
-                {
+                if (!msg.equals(new String("impossibleDegreeSite"))) {
                     e.printStackTrace();
                     fail("Reading a degree information");
                 }
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNULLArg2");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNULLArg2");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNoExecutionPeriod()
-    {
-        try
-        {
+    public void testNoExecutionPeriod() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(10);
             Integer infoExecutionPeriodCode = new Integer(1000);
 
             Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionPeriod");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionPeriod");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNoExecutionYear()
-    {
-        try
-        {
+    public void testNoExecutionYear() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(10);
             Integer infoExecutionPeriodCode = new Integer(5);
 
             Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+            } catch (FenixServiceException e) {
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 21);
-                if (!msg.equals(new String("impossibleDegreeSite")))
-                {
+                if (!msg.equals(new String("impossibleDegreeSite"))) {
                     e.printStackTrace();
                     fail("Reading a degree information");
                 }
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionYear");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionYear");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNoDegree()
-    {
-        try
-        {
+    public void testNoDegree() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(99);
             Integer infoExecutionPeriodCode = new Integer(3);
 
             Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+            } catch (FenixServiceException e) {
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 21);
-                if (!msg.equals(new String("impossibleDegreeSite")))
-                {
+                if (!msg.equals(new String("impossibleDegreeSite"))) {
                     e.printStackTrace();
                     fail("Reading a degree information");
                 }
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegree");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegree");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNoDegreeInfo()
-    {
-        try
-        {
+    public void testNoDegreeInfo() {
+        try {
             //Service Argument
             Integer infoDegreeCode = new Integer(1000);
             Integer infoExecutionPeriodCode = new Integer(3);
 
             Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+            } catch (FenixServiceException e) {
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 21);
-                if (!msg.equals(new String("impossibleDegreeSite")))
-                {
+                if (!msg.equals(new String("impossibleDegreeSite"))) {
                     e.printStackTrace();
                     fail("Reading a degree information");
                 }
             }
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeInfo");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeInfo");
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }

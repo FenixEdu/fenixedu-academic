@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourseGroup;
 import DataBeans.InfoCurricularCourseGroupWithInfoBranch;
 import Dominio.CurricularCourseGroup;
@@ -13,7 +14,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota

@@ -22,174 +22,154 @@ import org.apache.struts.util.ResponseUtils;
 /**
  * @author Fernanda Quitério & Tania Pousão
  */
-public class OptionsTag extends TagSupport
-{
+public class OptionsTag extends TagSupport {
 
     /**
-	 * The message resources for this package.
-	 */
-    protected static MessageResources messages =
-        MessageResources.getMessageResources("org.apache.struts.taglib.html.LocalStrings");
+     * The message resources for this package.
+     */
+    protected static MessageResources messages = MessageResources
+            .getMessageResources("org.apache.struts.taglib.html.LocalStrings");
 
     /**
-	 * The name of the collection containing beans that have properties to provide both the values and
-	 * the labels (identified by the <code>property</code> and <code>labelProperty</code>
-	 * attributes).
-	 */
+     * The name of the collection containing beans that have properties to
+     * provide both the values and the labels (identified by the
+     * <code>property</code> and <code>labelProperty</code> attributes).
+     */
     protected String collection = null;
 
-    public String getCollection()
-    {
+    public String getCollection() {
         return (this.collection);
     }
 
-    public void setCollection(String collection)
-    {
+    public void setCollection(String collection) {
         this.collection = collection;
     }
 
     /**
-	 * The name of the bean containing the labels collection.
-	 */
+     * The name of the bean containing the labels collection.
+     */
     protected String labelName = null;
 
-    public String getLabelName()
-    {
+    public String getLabelName() {
         return labelName;
     }
 
-    public void setLabelName(String labelName)
-    {
+    public void setLabelName(String labelName) {
         this.labelName = labelName;
     }
 
     /**
-	 * The bean property containing the labels collection.
-	 */
+     * The bean property containing the labels collection.
+     */
     protected String labelProperty = null;
 
-    public String getLabelProperty()
-    {
+    public String getLabelProperty() {
         return labelProperty;
     }
 
-    public void setLabelProperty(String labelProperty)
-    {
+    public void setLabelProperty(String labelProperty) {
         this.labelProperty = labelProperty;
     }
 
     /**
-	 * The name of the bean containing the values collection.
-	 */
+     * The name of the bean containing the values collection.
+     */
     protected String name = null;
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
     /**
-	 * The name of the property to use to build the values collection.
-	 */
+     * The name of the property to use to build the values collection.
+     */
     protected String property = null;
 
-    public String getProperty()
-    {
+    public String getProperty() {
         return property;
     }
 
-    public void setProperty(String property)
-    {
+    public void setProperty(String property) {
         this.property = property;
     }
 
     /**
-	 * The style associated with this tag.
-	 */
+     * The style associated with this tag.
+     */
     private String style = null;
 
-    public String getStyle()
-    {
+    public String getStyle() {
         return style;
     }
 
-    public void setStyle(String style)
-    {
+    public void setStyle(String style) {
         this.style = style;
     }
 
     /**
-	 * The named style class associated with this tag.
-	 */
+     * The named style class associated with this tag.
+     */
     private String styleClass = null;
 
-    public String getStyleClass()
-    {
+    public String getStyleClass() {
         return styleClass;
     }
 
-    public void setStyleClass(String styleClass)
-    {
+    public void setStyleClass(String styleClass) {
         this.styleClass = styleClass;
     }
 
     /* Acrescentado por Fernanda Quitério & Tania Pousão */
     /**
-	 * The servlet context attribute key for our resources.
-	 */
+     * The servlet context attribute key for our resources.
+     */
     protected String bundle = Globals.MESSAGES_KEY;
 
-    public String getBundle()
-    {
+    public String getBundle() {
         return (this.bundle);
     }
 
-    public void setBundle(String bundle)
-    {
+    public void setBundle(String bundle) {
         this.bundle = bundle;
     }
 
     /**
-	 * The session scope key under which our Locale is stored.
-	 */
+     * The session scope key under which our Locale is stored.
+     */
     protected String localeKey = Globals.LOCALE_KEY;
 
-    public String getLocale()
-    {
+    public String getLocale() {
         return (this.localeKey);
     }
 
-    public void setLocale(String localeKey)
-    {
+    public void setLocale(String localeKey) {
         this.localeKey = localeKey;
     }
+
     /* até aqui */
 
     /**
-	 * Process the start of this tag.
-	 * 
-	 * @exception JspException
-	 *                        if a JSP exception has occurred
-	 */
+     * Process the start of this tag.
+     * 
+     * @exception JspException
+     *                if a JSP exception has occurred
+     */
 
-    public int doStartTag() throws JspException
-    {
+    public int doStartTag() throws JspException {
         return SKIP_BODY;
     }
 
     /**
-	 * Process the end of this tag.
-	 * 
-	 * @exception JspException
-	 *                        if a JSP exception has occurred
-	 */
-    public int doEndTag() throws JspException
-    {
+     * Process the end of this tag.
+     * 
+     * @exception JspException
+     *                if a JSP exception has occurred
+     */
+    public int doEndTag() throws JspException {
 
         // Acquire the select tag we are associated with
         SelectTag selectTag = (SelectTag) pageContext.getAttribute(Constants.SELECT_KEY);
@@ -198,60 +178,44 @@ public class OptionsTag extends TagSupport
         StringBuffer sb = new StringBuffer();
 
         // If a collection was specified, use that mode to render options
-        if (collection != null)
-        {
+        if (collection != null) {
             Iterator collIterator = getIterator(collection, null);
-            while (collIterator.hasNext())
-            {
+            while (collIterator.hasNext()) {
 
                 Object bean = collIterator.next();
                 Object value = null;
                 Object label = null;
 
-                try
-                {
+                try {
                     value = PropertyUtils.getProperty(bean, property);
                     if (value == null)
                         value = "";
-                }
-                catch (IllegalAccessException e)
-                {
+                } catch (IllegalAccessException e) {
                     throw new JspException(messages.getMessage("getter.access", property, collection));
-                }
-                catch (InvocationTargetException e)
-                {
+                } catch (InvocationTargetException e) {
                     Throwable t = e.getTargetException();
                     throw new JspException(messages.getMessage("getter.result", property, t.toString()));
-                }
-                catch (NoSuchMethodException e)
-                {
+                } catch (NoSuchMethodException e) {
                     throw new JspException(messages.getMessage("getter.method", property, collection));
                 }
 
-                try
-                {
+                try {
                     if (labelProperty != null)
                         label = PropertyUtils.getProperty(bean, labelProperty);
                     else
                         label = value;
                     if (label == null)
                         label = "";
-                }
-                catch (IllegalAccessException e)
-                {
-                    throw new JspException(
-                        messages.getMessage("getter.access", labelProperty, collection));
-                }
-                catch (InvocationTargetException e)
-                {
+                } catch (IllegalAccessException e) {
+                    throw new JspException(messages.getMessage("getter.access", labelProperty,
+                            collection));
+                } catch (InvocationTargetException e) {
                     Throwable t = e.getTargetException();
-                    throw new JspException(
-                        messages.getMessage("getter.result", labelProperty, t.toString()));
-                }
-                catch (NoSuchMethodException e)
-                {
-                    throw new JspException(
-                        messages.getMessage("getter.method", labelProperty, collection));
+                    throw new JspException(messages.getMessage("getter.result", labelProperty, t
+                            .toString()));
+                } catch (NoSuchMethodException e) {
+                    throw new JspException(messages.getMessage("getter.method", labelProperty,
+                            collection));
                 }
 
                 String stringValue = value.toString();
@@ -262,8 +226,7 @@ public class OptionsTag extends TagSupport
         }
 
         // Otherwise, use the separate iterators mode to render options
-        else
-        {
+        else {
 
             // Construct iterators for the values and labels collections
             Iterator valuesIterator = getIterator(name, property);
@@ -274,8 +237,7 @@ public class OptionsTag extends TagSupport
                 labelsIterator = getIterator(labelName, labelProperty);
 
             // Render the options tags for each element of the values coll.
-            while (valuesIterator.hasNext())
-            {
+            while (valuesIterator.hasNext()) {
                 String value = valuesIterator.next().toString();
                 String label = value;
                 if (labelsIterator.hasNext())
@@ -293,10 +255,9 @@ public class OptionsTag extends TagSupport
     }
 
     /**
-	 * Release any acquired resources.
-	 */
-    public void release()
-    {
+     * Release any acquired resources.
+     */
+    public void release() {
 
         super.release();
         collection = null;
@@ -312,34 +273,32 @@ public class OptionsTag extends TagSupport
     // ------------------------------------------------------ Protected Methods
 
     /**
-	 * Add an option element to the specified StringBuffer based on the specified parameters.
-	 * 
-	 * @param sb
-	 *                   StringBuffer accumulating our results
-	 * @param value
-	 *                   Value to be returned to the server for this option
-	 * @param label
-	 *                   Value to be shown to the user for this option
-	 * @param matched
-	 *                   Should this value be marked as selected?
-	 */
+     * Add an option element to the specified StringBuffer based on the
+     * specified parameters.
+     * 
+     * @param sb
+     *            StringBuffer accumulating our results
+     * @param value
+     *            Value to be returned to the server for this option
+     * @param label
+     *            Value to be shown to the user for this option
+     * @param matched
+     *            Should this value be marked as selected?
+     */
     protected void addOption(StringBuffer sb, String value, String label, boolean matched)
-        throws JspException
-    {
+            throws JspException {
 
         sb.append("<option value=\"");
         sb.append(value);
         sb.append("\"");
         if (matched)
             sb.append(" selected=\"selected\"");
-        if (style != null)
-        {
+        if (style != null) {
             sb.append(" style=\"");
             sb.append(style);
             sb.append("\"");
         }
-        if (styleClass != null)
-        {
+        if (styleClass != null) {
             sb.append(" class=\"");
             sb.append(styleClass);
             sb.append("\"");
@@ -354,8 +313,7 @@ public class OptionsTag extends TagSupport
         // Retrieve the message string we are looking for
         String message = RequestUtils.message(pageContext, this.bundle, this.localeKey, key, null);
 
-        if (message == null)
-        {
+        if (message == null) {
             JspException e = new JspException(messages.getMessage("message.message", key));
             RequestUtils.saveException(pageContext, e);
             throw e;
@@ -369,18 +327,18 @@ public class OptionsTag extends TagSupport
     }
 
     /**
-	 * Return an iterator for the option labels or values, based on our configured properties.
-	 * 
-	 * @param name
-	 *                   Name of the bean attribute (if any)
-	 * @param property
-	 *                   Name of the bean property (if any)
-	 * 
-	 * @exception JspException
-	 *                        if an error occurs
-	 */
-    protected Iterator getIterator(String name, String property) throws JspException
-    {
+     * Return an iterator for the option labels or values, based on our
+     * configured properties.
+     * 
+     * @param name
+     *            Name of the bean attribute (if any)
+     * @param property
+     *            Name of the bean property (if any)
+     * 
+     * @exception JspException
+     *                if an error occurs
+     */
+    protected Iterator getIterator(String name, String property) throws JspException {
 
         // Identify the bean containing our collection
         String beanName = name;
@@ -392,25 +350,17 @@ public class OptionsTag extends TagSupport
 
         // Identify the collection itself
         Object collection = bean;
-        if (property != null)
-        {
-            try
-            {
+        if (property != null) {
+            try {
                 collection = PropertyUtils.getProperty(bean, property);
                 if (collection == null)
                     throw new JspException(messages.getMessage("getter.property", property));
-            }
-            catch (IllegalAccessException e)
-            {
+            } catch (IllegalAccessException e) {
                 throw new JspException(messages.getMessage("getter.access", property, name));
-            }
-            catch (InvocationTargetException e)
-            {
+            } catch (InvocationTargetException e) {
                 Throwable t = e.getTargetException();
                 throw new JspException(messages.getMessage("getter.result", property, t.toString()));
-            }
-            catch (NoSuchMethodException e)
-            {
+            } catch (NoSuchMethodException e) {
                 throw new JspException(messages.getMessage("getter.method", property, name));
             }
         }
@@ -424,11 +374,9 @@ public class OptionsTag extends TagSupport
             return ((Iterator) collection);
         else if (collection instanceof Map)
             return (((Map) collection).entrySet().iterator());
-        else if (collection instanceof Enumeration)
-        {
+        else if (collection instanceof Enumeration) {
             return (IteratorUtils.asIterator((Enumeration) collection));
-        }
-        else
+        } else
             throw new JspException(messages.getMessage("optionsTag.iterator", collection.toString()));
 
     }

@@ -32,18 +32,15 @@ public class EditAnnouncementService implements IService {
     public EditAnnouncementService() {
     }
 
-    private void checkIfAnnouncementExists(String oldAnnouncementTitle,
-            Timestamp date, String announcementTitle, ISite announcementSite)
-            throws FenixServiceException {
+    private void checkIfAnnouncementExists(String oldAnnouncementTitle, Timestamp date,
+            String announcementTitle, ISite announcementSite) throws FenixServiceException {
         IAnnouncement announcement = null;
         if (!oldAnnouncementTitle.equals(announcementTitle)) {
             try {
-                announcement = persistentAnnouncement
-                        .readAnnouncementByTitleAndCreationDateAndSite(
-                                announcementTitle, date, announcementSite);
+                announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(
+                        announcementTitle, date, announcementSite);
             } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-                throw new FenixServiceException(excepcaoPersistencia
-                        .getMessage());
+                throw new FenixServiceException(excepcaoPersistencia.getMessage());
             }
 
             if (announcement != null) {
@@ -55,24 +52,21 @@ public class EditAnnouncementService implements IService {
     /**
      * Executes the service.
      */
-    public boolean run(Integer infoExecutionCourseCode,
-            Integer announcementCode, String announcementNewTitle,
-            String announcementNewInformation) throws FenixServiceException {
+    public boolean run(Integer infoExecutionCourseCode, Integer announcementCode,
+            String announcementNewTitle, String announcementNewInformation) throws FenixServiceException {
 
         ISite site = null;
         Timestamp date = null;
         IAnnouncement iAnnouncement = null;
         try {
             persistentSupport = SuportePersistenteOJB.getInstance();
-           
-          
-            persistentAnnouncement = persistentSupport
-                    .getIPersistentAnnouncement();
+
+            persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 
             // read announcement
 
-            iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(
-                    Announcement.class, announcementCode, true);
+            iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(Announcement.class,
+                    announcementCode, true);
             if (iAnnouncement == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -83,14 +77,12 @@ public class EditAnnouncementService implements IService {
             // read executionCourse and site
             site = iAnnouncement.getSite();
 
-            checkIfAnnouncementExists(announcementOldTitle, date,
-                    announcementNewTitle, site);
+            checkIfAnnouncementExists(announcementOldTitle, date, announcementNewTitle, site);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
 
-        Timestamp lastModificationDate = new Timestamp(new Date(System
-                .currentTimeMillis()).getTime());
+        Timestamp lastModificationDate = new Timestamp(new Date(System.currentTimeMillis()).getTime());
         iAnnouncement.setTitle(announcementNewTitle);
         iAnnouncement.setLastModifiedDate(lastModificationDate);
         iAnnouncement.setInformation(announcementNewInformation);

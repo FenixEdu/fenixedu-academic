@@ -72,9 +72,8 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            IStudentGroup studentGroup = (IStudentGroup) sp
-                    .getIPersistentStudentGroup().readByOID(StudentGroup.class,
-                            new Integer(8));
+            IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+                    StudentGroup.class, new Integer(8));
 
             InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
             infoSiteStudentInformation.setName("Nome da Pessoa");
@@ -84,8 +83,7 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 
             List infoSiteStudentInformationList = new ArrayList();
             infoSiteStudentInformationList.add(infoSiteStudentInformation);
-            infoSiteStudentGroup
-                    .setInfoSiteStudentInformationList(infoSiteStudentInformationList);
+            infoSiteStudentGroup.setInfoSiteStudentInformationList(infoSiteStudentInformationList);
             infoSiteStudentGroup.setInfoStudentGroup(Cloner
                     .copyIStudentGroup2InfoStudentGroup(studentGroup));
             infoSiteStudentGroup.setNrOfElements(new Integer(3));

@@ -35,13 +35,12 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && !hasPrivilege(id,
-                        argumentos)) || (id == null) || (id.getRoles() == null)) {
+                || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
+                || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -68,8 +67,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments)
-            throws ExcepcaoPersistencia {
+    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
 
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
@@ -92,12 +90,11 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
 
                 Integer candidateID = (Integer) arguments[0];
 
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(
-                        id.getUtilizador());
+                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
                 IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                        .getIPersistentMasterDegreeCandidate().readByOID(
-                                MasterDegreeCandidate.class, candidateID);
+                        .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+                                candidateID);
 
                 if (masterDegreeCandidate == null) {
                     return false;

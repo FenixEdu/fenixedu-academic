@@ -12,8 +12,7 @@ import Util.EnrolmentEvaluationType;
  * @author Ângela
  */
 
-public interface IPersistentEnrolmentEvaluation extends IPersistentObject
-{
+public interface IPersistentEnrolmentEvaluation extends IPersistentObject {
 
     public void delete(IEnrolmentEvaluation enrolmentEvaluation) throws ExcepcaoPersistencia;
 

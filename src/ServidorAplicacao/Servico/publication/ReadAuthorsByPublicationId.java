@@ -27,50 +27,46 @@ import ServidorPersistente.publication.IPersistentPublication;
  */
 public class ReadAuthorsByPublicationId implements IServico {
 
-	/**
-	 *  
-	 */
-	public ReadAuthorsByPublicationId() {
+    /**
+     *  
+     */
+    public ReadAuthorsByPublicationId() {
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
 
-		return "ReadAuthorsByPublicationId";
-	}
+        return "ReadAuthorsByPublicationId";
+    }
 
-	public List run(Integer publicationId, IUserView userView)
-		throws FenixServiceException {
+    public List run(Integer publicationId, IUserView userView) throws FenixServiceException {
 
-		List authors = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentPublication persitentPublication =
-				sp.getIPersistentPublication();
-			//IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			//IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-			//IPessoa person =
-			//	persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			//IAuthor author =
-			//	persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
+        List authors = new ArrayList();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentPublication persitentPublication = sp.getIPersistentPublication();
+            //IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            //IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+            //IPessoa person =
+            //	persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+            //IAuthor author =
+            //	persistentAuthor.readAuthorByKeyPerson(person.getIdInternal());
 
-			IPublication publication =
-				(IPublication) persitentPublication.readByOID(
-					Publication.class,
-					publicationId);
+            IPublication publication = (IPublication) persitentPublication.readByOID(Publication.class,
+                    publicationId);
 
-			authors = publication.getPublicationAuthors();
+            authors = publication.getPublicationAuthors();
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-		return authors;
-	}
+        return authors;
+    }
 
 }

@@ -9,8 +9,7 @@ import Dominio.IEnrolmentEquivalence;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public interface IPersistentEnrolmentEquivalence extends IPersistentObject
-{
+public interface IPersistentEnrolmentEquivalence extends IPersistentObject {
 
     public void delete(IEnrolmentEquivalence enrolment) throws ExcepcaoPersistencia;
 

@@ -17,13 +17,11 @@ public class InfoProfessorshipWithAll extends InfoProfessorship {
         if (professorship != null) {
             setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(professorship.getExecutionCourse()));
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(professorship
-                    .getTeacher()));
+            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(professorship.getTeacher()));
         }
     }
 
-    public static InfoProfessorship newInfoFromDomain(
-            IProfessorship professorship) {
+    public static InfoProfessorship newInfoFromDomain(IProfessorship professorship) {
         InfoProfessorshipWithAll infoProfessorship = null;
         if (professorship != null) {
             infoProfessorship = new InfoProfessorshipWithAll();

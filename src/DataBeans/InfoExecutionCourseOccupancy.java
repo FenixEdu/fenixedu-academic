@@ -9,65 +9,65 @@ import java.util.List;
 
 public class InfoExecutionCourseOccupancy extends InfoObject {
 
-	private InfoExecutionCourse infoExecutionCourse;
-	
-	// Note: This will always be null when putting to request.
-	//       The ShiftsInGroups will contain all the information arranjed
-	private List infoShifts;
-	private List shiftsInGroups;
-	
-	
-	public InfoExecutionCourseOccupancy() {}	
+    private InfoExecutionCourse infoExecutionCourse;
 
-	/**
-	 * @return
-	 */
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
-	}
+    // Note: This will always be null when putting to request.
+    //       The ShiftsInGroups will contain all the information arranjed
+    private List infoShifts;
 
-	/**
-	 * @param infoExecutionCourse
-	 */
-	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
-		this.infoExecutionCourse = infoExecutionCourse;
-	}
+    private List shiftsInGroups;
 
-	/**
-	 * @return
-	 */
-	public List getInfoShifts() {
-		return infoShifts;
-	}
+    public InfoExecutionCourseOccupancy() {
+    }
 
-	/**
-	 * @param infoShifts
-	 */
-	public void setInfoShifts(List infoShifts) {
-		this.infoShifts = infoShifts;
-	}
+    /**
+     * @return
+     */
+    public InfoExecutionCourse getInfoExecutionCourse() {
+        return infoExecutionCourse;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getShiftsInGroups() {
-		return shiftsInGroups;
-	}
+    /**
+     * @param infoExecutionCourse
+     */
+    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+        this.infoExecutionCourse = infoExecutionCourse;
+    }
 
-	/**
-	 * @param shiftsInGroups
-	 */
-	public void setShiftsInGroups(List shiftsInGroups) {
-		this.shiftsInGroups = shiftsInGroups;
-	}
-    
-    public String toString()
-    {
-        String result="[InfoExecutionCourseOccupancy ";
-        result+="infoExecutionCourse" + this.infoExecutionCourse +";";
-        result+="infoShifts" + this.infoShifts +";";
-        result+="shiftsInGroups" + this.shiftsInGroups +"]";        
-        return result;   
+    /**
+     * @return
+     */
+    public List getInfoShifts() {
+        return infoShifts;
+    }
+
+    /**
+     * @param infoShifts
+     */
+    public void setInfoShifts(List infoShifts) {
+        this.infoShifts = infoShifts;
+    }
+
+    /**
+     * @return
+     */
+    public List getShiftsInGroups() {
+        return shiftsInGroups;
+    }
+
+    /**
+     * @param shiftsInGroups
+     */
+    public void setShiftsInGroups(List shiftsInGroups) {
+        this.shiftsInGroups = shiftsInGroups;
+    }
+
+    public String toString() {
+        String result = "[InfoExecutionCourseOccupancy ";
+        result += "infoExecutionCourse" + this.infoExecutionCourse + ";";
+        result += "infoShifts" + this.infoShifts + ";";
+        result += "shiftsInGroups" + this.shiftsInGroups + "]";
+        return result;
     }
 
 }

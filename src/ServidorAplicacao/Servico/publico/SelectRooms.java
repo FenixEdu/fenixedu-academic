@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.publico;
 
 /**
  * Service SelectRooms.
- *
+ * 
  * @author tfc130
- **/
+ */
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,58 +24,59 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class SelectRooms implements IServico {
-	private static SelectRooms _servico = new SelectRooms();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static SelectRooms getService() {
-	  return _servico;
-	}
+    private static SelectRooms _servico = new SelectRooms();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private SelectRooms() { }
+    /**
+     * The singleton access method of this class.
+     */
+    public static SelectRooms getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-	  return "SelectRooms";
-	}
+    /**
+     * The actor of this class.
+     */
+    private SelectRooms() {
+    }
 
-	/**
-	 * The run method of this Service class.
-	 **/
-	public Object run(InfoRoom infoRoom) {
-	  List salas = null;
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "SelectRooms";
+    }
 
-	  try {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		Integer tipo = infoRoom.getTipo() != null ? infoRoom.getTipo().getTipo() : null;
+    /**
+     * The run method of this Service class.
+     */
+    public Object run(InfoRoom infoRoom) {
+        List salas = null;
 
-		salas = sp.getISalaPersistente().readSalas(infoRoom.getNome(), infoRoom.getEdificio(),
-						   infoRoom.getPiso(), tipo,
-						   infoRoom.getCapacidadeNormal(),
-						   infoRoom.getCapacidadeExame());
-	  } catch (ExcepcaoPersistencia ex) {
-		ex.printStackTrace();
-		return null;
-	  }
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            Integer tipo = infoRoom.getTipo() != null ? infoRoom.getTipo().getTipo() : null;
 
-	  if (salas == null)
-		return new ArrayList();
+            salas = sp.getISalaPersistente().readSalas(infoRoom.getNome(), infoRoom.getEdificio(),
+                    infoRoom.getPiso(), tipo, infoRoom.getCapacidadeNormal(),
+                    infoRoom.getCapacidadeExame());
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
-	  Iterator iter = salas.iterator();
-	  ArrayList salasView = new ArrayList();
-	  ISala sala;
+        if (salas == null)
+            return new ArrayList();
 
-	  while (iter.hasNext()) {
-		sala = (ISala)iter.next();
-		salasView.add(Cloner.copyRoom2InfoRoom(sala));
-	  }
+        Iterator iter = salas.iterator();
+        List salasView = new ArrayList();
+        ISala sala;
 
-	  return salasView;
-	}
- 
+        while (iter.hasNext()) {
+            sala = (ISala) iter.next();
+            salasView.add(Cloner.copyRoom2InfoRoom(sala));
+        }
+
+        return salasView;
+    }
+
 }

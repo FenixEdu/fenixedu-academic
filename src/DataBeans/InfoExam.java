@@ -15,9 +15,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import Dominio.IExam;
+import Util.DiaSemana;
 import Util.EvaluationType;
 import Util.Season;
-import Util.DiaSemana;
 
 public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
 
@@ -40,8 +40,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     public InfoExam() {
     }
 
-    public InfoExam(Calendar day, Calendar beginning, Calendar end,
-            Season season) {
+    public InfoExam(Calendar day, Calendar beginning, Calendar end, Season season) {
         this.setDay(day);
         this.setBeginning(beginning);
         this.setEnd(end);
@@ -50,9 +49,8 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     public String toString() {
-        return "[INFOEXAM:" + " day= '" + this.getDay() + "'" + " beginning= '"
-                + this.getBeginning() + "'" + " end= '" + this.getEnd() + "'"
-                + " season= '" + this.getSeason() + "'" + "";
+        return "[INFOEXAM:" + " day= '" + this.getDay() + "'" + " beginning= '" + this.getBeginning()
+                + "'" + " end= '" + this.getEnd() + "'" + " season= '" + this.getSeason() + "'" + "";
     }
 
     /**
@@ -88,8 +86,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
      * @return
      */
     public List getAssociatedRooms() {
-        return (List) CollectionUtils.collect(super
-                .getAssociatedRoomOccupation(), new Transformer() {
+        return (List) CollectionUtils.collect(super.getAssociatedRoomOccupation(), new Transformer() {
 
             public Object transform(Object arg0) {
                 InfoRoomOccupation roomOccupation = (InfoRoomOccupation) arg0;
@@ -128,8 +125,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         if (getBeginning() == null) {
             return "00:00";
         }
-        String result = format(String.valueOf(getBeginning().get(
-                Calendar.HOUR_OF_DAY)));
+        String result = format(String.valueOf(getBeginning().get(Calendar.HOUR_OF_DAY)));
         result += ":";
         result += format(String.valueOf(getBeginning().get(Calendar.MINUTE)));
         return result;
@@ -139,8 +135,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         if (getEnd() == null) {
             return "00:00";
         }
-        String result = format(String.valueOf(getEnd()
-                .get(Calendar.HOUR_OF_DAY)));
+        String result = format(String.valueOf(getEnd().get(Calendar.HOUR_OF_DAY)));
         result += ":";
         result += format(String.valueOf(getEnd().get(Calendar.MINUTE)));
         return result;
@@ -220,16 +215,11 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
             return false;
         }
         Calendar enrollmentEnd = Calendar.getInstance();
-        enrollmentEnd.set(Calendar.DAY_OF_MONTH, getEnrollmentEndDay().get(
-                Calendar.DAY_OF_MONTH));
-        enrollmentEnd.set(Calendar.MONTH, getEnrollmentEndDay().get(
-                Calendar.MONTH));
-        enrollmentEnd.set(Calendar.YEAR, getEnrollmentEndDay().get(
-                Calendar.YEAR));
-        enrollmentEnd.set(Calendar.HOUR_OF_DAY, getEnrollmentEndTime().get(
-                Calendar.HOUR_OF_DAY));
-        enrollmentEnd.set(Calendar.MINUTE, getEnrollmentEndTime().get(
-                Calendar.MINUTE));
+        enrollmentEnd.set(Calendar.DAY_OF_MONTH, getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
+        enrollmentEnd.set(Calendar.MONTH, getEnrollmentEndDay().get(Calendar.MONTH));
+        enrollmentEnd.set(Calendar.YEAR, getEnrollmentEndDay().get(Calendar.YEAR));
+        enrollmentEnd.set(Calendar.HOUR_OF_DAY, getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
+        enrollmentEnd.set(Calendar.MINUTE, getEnrollmentEndTime().get(Calendar.MINUTE));
         Calendar now = Calendar.getInstance();
         if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
             return true;
@@ -244,24 +234,21 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
             InfoExam infoExam = (InfoExam) obj;
             result = getIdInternal().equals(infoExam.getIdInternal())
                     && getDate().equals(infoExam.getDate())
-                    && getEnrollmentBeginDayFormatted().equals(
-                            infoExam.getEnrollmentBeginDayFormatted())
+                    && getEnrollmentBeginDayFormatted()
+                            .equals(infoExam.getEnrollmentBeginDayFormatted())
                     && getEnrollmentBeginTimeFormatted().equals(
                             infoExam.getEnrollmentBeginTimeFormatted())
-                    && getEnrollmentEndDayFormatted().equals(
-                            infoExam.getEnrollmentEndDayFormatted())
-                    && getEnrollmentEndTimeFormatted().equals(
-                            infoExam.getEnrollmentEndTimeFormatted());
+                    && getEnrollmentEndDayFormatted().equals(infoExam.getEnrollmentEndDayFormatted())
+                    && getEnrollmentEndTimeFormatted().equals(infoExam.getEnrollmentEndTimeFormatted());
         }
         return result;
     }
 
-    public DiaSemana getDiaSemana() 
-    {
+    public DiaSemana getDiaSemana() {
         Calendar day = this.getDay();
         return new DiaSemana(day.get(Calendar.DAY_OF_WEEK));
     }
-    
+
     /**
      * @return Returns the infoExecutionCourses.
      */

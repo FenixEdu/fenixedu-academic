@@ -6,45 +6,40 @@
 package ServidorPersistente.Conversores;
 
 /**
- *
- * @author  Tânia Pousão
+ * 
+ * @author Tânia Pousão
  */
 import java.sql.Timestamp;
 import java.util.Calendar;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class Calendar2DateTimeFieldConversion implements FieldConversion
-{
+public class Calendar2DateTimeFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)
      */
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof Calendar)
-        {
+    public Object javaToSql(Object source) {
+        if (source instanceof Calendar) {
             return new Timestamp(((Calendar) source).getTimeInMillis());
         }
-       
-         	return source;   
-        
+
+        return source;
+
     }
 
     /*
      * @see FieldConversion#sqlToJava(Object)
      */
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Timestamp)
-        {
+    public Object sqlToJava(Object source) {
+        if (source instanceof Timestamp) {
             Calendar res = Calendar.getInstance();
-            res.setTimeInMillis( ((Timestamp) source).getTime());
+            res.setTimeInMillis(((Timestamp) source).getTime());
             return res;
         }
-        
-         	return source;   
-        
+
+        return source;
+
     }
 
 }

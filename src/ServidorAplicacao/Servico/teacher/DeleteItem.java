@@ -33,16 +33,12 @@ public class DeleteItem implements IServico {
         return "DeleteItem";
     }
 
-    public Boolean run(Integer infoExecutionCourseCode, Integer itemCode)
-            throws FenixServiceException {
+    public Boolean run(Integer infoExecutionCourseCode, Integer itemCode) throws FenixServiceException {
         try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentItem persistentItem = persistentSuport
-                    .getIPersistentItem();
-            IItem deletedItem = (IItem) persistentItem.readByOID(Item.class,
-                    itemCode);
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
+            IItem deletedItem = (IItem) persistentItem.readByOID(Item.class, itemCode);
             if (deletedItem == null) {
                 return new Boolean(true);
             }
@@ -60,8 +56,7 @@ public class DeleteItem implements IServico {
             persistentSuport.confirmarTransaccao();
             persistentSuport.iniciarTransaccao();
             List itemsList = null;
-            itemsList = persistentItem.readAllItemsBySection(deletedItem
-                    .getSection());
+            itemsList = persistentItem.readAllItemsBySection(deletedItem.getSection());
             Iterator iterItems = itemsList.iterator();
             while (iterItems.hasNext()) {
                 IItem item = (IItem) iterItems.next();

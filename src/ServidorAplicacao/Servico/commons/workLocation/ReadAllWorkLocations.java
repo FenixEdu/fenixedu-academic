@@ -14,38 +14,31 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ReadAllWorkLocations implements IService
-{
+public class ReadAllWorkLocations implements IService {
 
     private static ReadAllWorkLocations service = new ReadAllWorkLocations();
 
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadAllWorkLocations getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadAllWorkLocations getService() {
         return service;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadAllWorkLocations()
-    {
+     * The actor of this class.
+     */
+    private ReadAllWorkLocations() {
     }
 
-    public Object run() throws FenixServiceException
-    {
+    public Object run() throws FenixServiceException {
         List infoWorkLocations = new ArrayList();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             List workLocations = sp.getIPersistentWorkLocation().readAll();
             infoWorkLocations = Cloner.copyListIWorkLocation2ListInfoWorkLocation(workLocations);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;

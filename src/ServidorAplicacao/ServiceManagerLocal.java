@@ -1,9 +1,12 @@
 package ServidorAplicacao;
 
-import javax.ejb.EJBLocalObject;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.logging.SystemInfo;
 import java.util.HashMap;
+
+import javax.ejb.EJBLocalObject;
+
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.logging.SystemInfo;
 
 /**
  * The business interface for the service manager seassion bean. *
@@ -11,8 +14,7 @@ import java.util.HashMap;
  * @author José Pedro Pereira
  * @version
  */
-public interface ServiceManagerLocal extends EJBLocalObject,
-        IServiceManagerWrapper {
+public interface ServiceManagerLocal extends EJBLocalObject, IServiceManagerWrapper {
 
     /**
      * Executes a given service.
@@ -33,8 +35,8 @@ public interface ServiceManagerLocal extends EJBLocalObject,
     public Object execute(IUserView id, String service, Object argumentos[])
             throws FenixServiceException;
 
-    public Object execute(IUserView id, String service, String methods,
-            Object argumentos[]) throws FenixServiceException;
+    public Object execute(IUserView id, String service, String methods, Object argumentos[])
+            throws FenixServiceException;
 
     public HashMap getMapServicesToWatch(IUserView id);
 

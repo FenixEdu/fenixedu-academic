@@ -7,60 +7,64 @@ package Dominio;
 /**
  * @author jpvl
  */
-public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject implements IEquivalentEnrolmentForEnrolmentEquivalence {
-	private IEnrolmentEquivalence enrolmentEquivalence;
-	private IEnrollment equivalentEnrolment;
+public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject implements
+        IEquivalentEnrolmentForEnrolmentEquivalence {
+    private IEnrolmentEquivalence enrolmentEquivalence;
 
-	private Integer enrolmentEquivalenceKey;
-	private Integer equivalentEnrolmentKey;
+    private IEnrollment equivalentEnrolment;
 
-	/**
-	 * 
-	 */
-	public EquivalentEnrolmentForEnrolmentEquivalence() {
-	}
+    private Integer enrolmentEquivalenceKey;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
+    private Integer equivalentEnrolmentKey;
 
-		if (obj instanceof IEquivalentEnrolmentForEnrolmentEquivalence) {
-			IEquivalentEnrolmentForEnrolmentEquivalence equivalence = (IEquivalentEnrolmentForEnrolmentEquivalence) obj;
+    /**
+     *  
+     */
+    public EquivalentEnrolmentForEnrolmentEquivalence() {
+    }
 
-			resultado = (this.getEnrolmentEquivalence().equals(equivalence.getEnrolmentEquivalence())) && (this.getEquivalentEnrolment().equals(equivalence.getEquivalentEnrolment()));
-		}
-		return resultado;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
 
-	public IEnrolmentEquivalence getEnrolmentEquivalence() {
-		return enrolmentEquivalence;
-	}
+        if (obj instanceof IEquivalentEnrolmentForEnrolmentEquivalence) {
+            IEquivalentEnrolmentForEnrolmentEquivalence equivalence = (IEquivalentEnrolmentForEnrolmentEquivalence) obj;
 
-	public Integer getEnrolmentEquivalenceKey() {
-		return enrolmentEquivalenceKey;
-	}
+            resultado = (this.getEnrolmentEquivalence().equals(equivalence.getEnrolmentEquivalence()))
+                    && (this.getEquivalentEnrolment().equals(equivalence.getEquivalentEnrolment()));
+        }
+        return resultado;
+    }
 
-	public IEnrollment getEquivalentEnrolment() {
-		return equivalentEnrolment;
-	}
+    public IEnrolmentEquivalence getEnrolmentEquivalence() {
+        return enrolmentEquivalence;
+    }
 
-	public Integer getEquivalentEnrolmentKey() {
-		return equivalentEnrolmentKey;
-	}
+    public Integer getEnrolmentEquivalenceKey() {
+        return enrolmentEquivalenceKey;
+    }
 
-	public void setEnrolmentEquivalence(IEnrolmentEquivalence equivalence) {
-		enrolmentEquivalence = equivalence;
-	}
+    public IEnrollment getEquivalentEnrolment() {
+        return equivalentEnrolment;
+    }
 
-	public void setEnrolmentEquivalenceKey(Integer integer) {
-		enrolmentEquivalenceKey = integer;
-	}
+    public Integer getEquivalentEnrolmentKey() {
+        return equivalentEnrolmentKey;
+    }
 
-	public void setEquivalentEnrolment(IEnrollment enrolment) {
-		equivalentEnrolment = enrolment;
-	}
+    public void setEnrolmentEquivalence(IEnrolmentEquivalence equivalence) {
+        enrolmentEquivalence = equivalence;
+    }
 
-	public void setEquivalentEnrolmentKey(Integer integer) {
-		equivalentEnrolmentKey = integer;
-	}
+    public void setEnrolmentEquivalenceKey(Integer integer) {
+        enrolmentEquivalenceKey = integer;
+    }
+
+    public void setEquivalentEnrolment(IEnrollment enrolment) {
+        equivalentEnrolment = enrolment;
+    }
+
+    public void setEquivalentEnrolmentKey(Integer integer) {
+        equivalentEnrolmentKey = integer;
+    }
 
 }

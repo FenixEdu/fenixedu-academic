@@ -1,25 +1,22 @@
 package Dominio.precedences;
 
-import Util.enrollment.CurricularCourseEnrollmentType;
 import Dominio.ICurricularCourse;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author David Santos in Jun 9, 2004
  */
 
 public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends
-	RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse implements IRestrictionByCurricularCourse
-{
-	public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse()
-	{
-		super();
-	}
+        RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse implements IRestrictionByCurricularCourse {
+    public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
+        super();
+    }
 
-	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
-	{
-		ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
-		CurricularCourseEnrollmentType result1 = null;
-		CurricularCourseEnrollmentType result2 = null;
+    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
+        ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
+        CurricularCourseEnrollmentType result1 = null;
+        CurricularCourseEnrollmentType result2 = null;
 
         if (precedenceContext.getStudentCurricularPlan().isCurricularCourseEnrolled(curricularCourse)) {
             result1 = CurricularCourseEnrollmentType.DEFINITIVE;
@@ -28,7 +25,7 @@ public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse exten
         }
 
         result2 = super.evaluate(precedenceContext);
-        
+
         return result1.or(result2);
-	}
+    }
 }

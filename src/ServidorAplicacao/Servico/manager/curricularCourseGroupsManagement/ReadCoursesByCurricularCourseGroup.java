@@ -6,6 +6,8 @@ package ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,8 +54,18 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
             List infoCurricularCourses = tranformToListOfInfoCurricularCourses(courses);
 
             List coursesToAdd = getCoursesToAdd(curricularCourseGroup);
+            if (courses != null) {
+                coursesToAdd.removeAll(courses);
+            }
             List infoCurricularCoursesToAdd = tranformToListOfInfoCurricularCourses(coursesToAdd);
+            Collections.sort(infoCurricularCoursesToAdd, new Comparator() {
 
+                public int compare(Object o1, Object o2) {
+
+                    return ((InfoCurricularCourse) o1).getName().compareTo(
+                            ((InfoCurricularCourse) o2).getName());
+                }
+            });
             InfoCurricularCourseGroupWithCoursesToAdd composite = new InfoCurricularCourseGroupWithCoursesToAdd();
             composite.setInfoCurricularCourseGroup(InfoCurricularCourseGroup
                     .newInfoFromDomain(curricularCourseGroup));
@@ -71,7 +83,7 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
      */
     private List tranformToListOfInfoCurricularCourses(List courses) {
         if (courses == null) {
-            return null;
+            return new ArrayList();
         }
         return (List) CollectionUtils.collect(courses, new Transformer() {
 
@@ -108,9 +120,11 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
      * @param curricularCourse2
      * @return
      */
-    private boolean containsScope(ICurricularCourseGroup curricularCourseGroup, ICurricularCourse curricularCourse2) {
+    private boolean containsScope(ICurricularCourseGroup curricularCourseGroup,
+            ICurricularCourse curricularCourse2) {
 
-        if (curricularCourseGroup.getCurricularCourses() == null || curricularCourseGroup.getCurricularCourses().isEmpty()) {
+        if (curricularCourseGroup.getCurricularCourses() == null
+                || curricularCourseGroup.getCurricularCourses().isEmpty()) {
             return true;
         }
 
@@ -118,7 +132,8 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
         boolean result = true;
         while (iter.hasNext() && result) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-            result = haveCommonCurricularSemester(curricularCourse2.getScopes(), curricularCourse.getScopes());
+            result = haveCommonCurricularSemester(curricularCourse2.getScopes(), curricularCourse
+                    .getScopes());
         }
 
         return result;

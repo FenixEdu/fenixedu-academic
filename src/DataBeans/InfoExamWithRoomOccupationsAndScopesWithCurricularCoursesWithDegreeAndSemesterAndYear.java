@@ -14,9 +14,10 @@ import Dominio.IExam;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear extends InfoExamWithRoomOccupations {
+public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
+        extends InfoExamWithRoomOccupations {
 
     public void copyFromDomain(IExam exam) {
         super.copyFromDomain(exam);
@@ -36,20 +37,21 @@ public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegree
                 new Transformer() {
 
                     public Object transform(Object arg0) {
-                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear.newInfoFromDomain((ICurricularCourseScope) arg0);
-                    }            
+                        return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear
+                                .newInfoFromDomain((ICurricularCourseScope) arg0);
+                    }
                 });
 
         return associatedInfoCCScopes;
     }
-    
+
     public static InfoExam newInfoFromDomain(IExam exam) {
         InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear infoExam = null;
-        if(exam != null) {
+        if (exam != null) {
             infoExam = new InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear();
             infoExam.copyFromDomain(exam);
         }
-        
+
         return infoExam;
     }
 }

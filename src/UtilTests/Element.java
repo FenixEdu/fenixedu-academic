@@ -10,60 +10,60 @@ import org.xml.sax.Attributes;
  * @author Susana Fernandes
  */
 public class Element {
-	String uri;
-	String localName;
-	String qName;
-	String value = null;
-	Attributes attributes;
+    String uri;
 
-	public Element(
-		String uri,
-		String localName,
-		String qName,
-		Attributes attributes) {
-		this.uri = uri;
-		this.localName = localName;
-		this.qName = qName;
-		this.attributes = attributes;
-	}
+    String localName;
 
-	public Attributes getAttributes() {
-		return attributes;
-	}
+    String qName;
 
-	public String getLocalName() {
-		return localName;
-	}
+    String value = null;
 
-	public String getQName() {
-		return qName;
-	}
+    Attributes attributes;
 
-	public String getUri() {
-		return uri;
-	}
+    public Element(String uri, String localName, String qName, Attributes attributes) {
+        this.uri = uri;
+        this.localName = localName;
+        this.qName = qName;
+        this.attributes = attributes;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public Attributes getAttributes() {
+        return attributes;
+    }
 
-	public void setAttributes(Attributes attributes) {
-		this.attributes = attributes;
-	}
+    public String getLocalName() {
+        return localName;
+    }
 
-	public void setLocalName(String string) {
-		localName = string;
-	}
+    public String getQName() {
+        return qName;
+    }
 
-	public void setQName(String string) {
-		qName = string;
-	}
+    public String getUri() {
+        return uri;
+    }
 
-	public void setUri(String string) {
-		uri = string;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(String string) {
-		value = string;
-	}
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
+
+    public void setLocalName(String string) {
+        localName = string;
+    }
+
+    public void setQName(String string) {
+        qName = string;
+    }
+
+    public void setUri(String string) {
+        uri = string;
+    }
+
+    public void setValue(String string) {
+        value = string;
+    }
 }

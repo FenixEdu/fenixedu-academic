@@ -110,13 +110,11 @@
 	         element-class-ref="Dominio.CandidateSituation"
     		 collection-class="org.apache.ojb.odmg.collections.DListImpl"
 	         refresh="true"
-	         auto-retrieve="true">
+			proxy="true">
            <inverse-foreignkey field-ref="candidateKey"/>
+	         <!--auto-retrieve="true"-->
          </collection-descriptor>
 
-   		<attribute
-     	attribute-name="cacheable"
-     	attribute-value="false" />
      	
 	</class-descriptor>
 
@@ -182,10 +180,10 @@
           <foreignkey field-ref="candidateKey"/>
       </reference-descriptor>
 		
-	<attribute
+ <!--     	<attribute
      	attribute-name="cacheable"
      	attribute-value="false" />
-     	
+     --> 
 	</class-descriptor>
           
 <!-- End of Definitions for class CANDIDATE_SITUATION -->
@@ -1513,14 +1511,14 @@
         primarykey="true"
         autoincrement="true"
    	/>
-   <!--	<field-descriptor
-   		name="payedValue"
-   		column="PAYED_VALUE"
-   		jdbc-type="DOUBLE"   		
-   	/> -->
-   	<field-descriptor
+  <field-descriptor
    		name="remainingValue"
    		column="REMAINING_VALUE"
+   		jdbc-type="DOUBLE"   		
+   	/>
+   	<field-descriptor
+   		name="totalValue"
+   		column="TOTAL_VALUE"
    		jdbc-type="DOUBLE"   		
    	/>
    	<field-descriptor
@@ -1590,16 +1588,16 @@
     >
         <foreignkey field-ref="keyStudentCurricularPlan"/>
     </reference-descriptor>   
-	<!--<collection-descriptor
+	<collection-descriptor
 		name="transactionList"
-		element-class-ref="Dominio.Transaction"
+		element-class-ref="Dominio.transactions.GratuityTransaction"
 		refresh="true"
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
 		proxy="true">
 		<inverse-foreignkey field-ref="keyGratuitySituation"/>
-	 </collection-descriptor>-->         	
+	 </collection-descriptor>
 </class-descriptor>
 <!-- End of definitions for class GratuitySituation -->
 <!-- Definitions for class PaymentPhase -->

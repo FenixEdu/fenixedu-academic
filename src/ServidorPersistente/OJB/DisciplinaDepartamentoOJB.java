@@ -14,17 +14,14 @@ import Dominio.IDisciplinaDepartamento;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 
-public class DisciplinaDepartamentoOJB extends ObjectFenixOJB implements
-        IDisciplinaDepartamentoPersistente
-{
+public class DisciplinaDepartamentoOJB extends PersistentObjectOJB implements
+        IDisciplinaDepartamentoPersistente {
 
-    public DisciplinaDepartamentoOJB()
-    {
+    public DisciplinaDepartamentoOJB() {
     }
 
     public IDisciplinaDepartamento lerDisciplinaDepartamentoPorNomeESigla(String nome, String sigla)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
         crit.addEqualTo("sigla", sigla);
@@ -33,33 +30,28 @@ public class DisciplinaDepartamentoOJB extends ObjectFenixOJB implements
     }
 
     public void apagarDisciplinaDepartamentoPorNomeESigla(String nome, String sigla)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
         crit.addEqualTo("sigla", sigla);
         List result = queryList(DisciplinaDepartamento.class, crit);
-        if (result != null)
-        {
+        if (result != null) {
 
             ListIterator iterator = result.listIterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 super.delete(iterator.next());
             }
         }
 
     }
 
-    public List lerTodasAsDisciplinasDepartamento() throws ExcepcaoPersistencia
-    {
+    public List lerTodasAsDisciplinasDepartamento() throws ExcepcaoPersistencia {
         return queryList(DisciplinaDepartamento.class, new Criteria());
     }
 
     public void apagarDisciplinaDepartamento(IDisciplinaDepartamento disciplina)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         super.delete(disciplina);
     }
 

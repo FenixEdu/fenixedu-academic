@@ -129,7 +129,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
         try {
             IUserView userView = SessionUtils.getUserView(request);
             //Read the grant owner
-            Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false) };
+            Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false), null };
             List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
                     argsGrantOwner);
             if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
@@ -193,7 +193,8 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
         try {
             IUserView userView = SessionUtils.getUserView(request);
             //Read the original grant owner
-            Object[] argsOriginalGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false) };
+            Object[] argsOriginalGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false),
+                    null };
             List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
                     argsOriginalGrantOwner);
             if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
@@ -204,7 +205,8 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
             InfoGrantOwner originalGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 
             //Read the new grant owner
-            Object[] argsNewGrantOwner = { null, null, null, newGrantOwnerNumber, new Boolean(false) };
+            Object[] argsNewGrantOwner = { null, null, null, newGrantOwnerNumber, new Boolean(false),
+                    null };
             infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
                     argsNewGrantOwner);
             if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {

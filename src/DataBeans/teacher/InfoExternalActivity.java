@@ -14,93 +14,88 @@ import Dominio.teacher.IExternalActivity;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- * 
+ *  
  */
-public class InfoExternalActivity extends InfoObject implements ISiteComponent
-{
+public class InfoExternalActivity extends InfoObject implements ISiteComponent {
 
     private InfoTeacher infoTeacher;
+
     private String activity;
+
     private Date lastModificationDate;
 
-    public InfoExternalActivity()
-    {
+    public InfoExternalActivity() {
     }
 
     /**
-	 * @return Returns the activity.
-	 */
-    public String getActivity()
-    {
+     * @return Returns the activity.
+     */
+    public String getActivity() {
         return activity;
     }
 
     /**
-	 * @param activity
-	 *            The activity to set.
-	 */
-    public void setActivity(String activity)
-    {
+     * @param activity
+     *            The activity to set.
+     */
+    public void setActivity(String activity) {
         this.activity = activity;
     }
 
     /**
-	 * @return Returns the infoTeacher.
-	 */
-    public InfoTeacher getInfoTeacher()
-    {
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
         return infoTeacher;
     }
 
     /**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-    public void setInfoTeacher(InfoTeacher infoTeacher)
-    {
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof InfoExternalActivity)
-        {
+        if (obj instanceof InfoExternalActivity) {
             resultado = getInfoTeacher().equals(((InfoExternalActivity) obj).getInfoTeacher());
         }
         return resultado;
     }
+
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
-    
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IExternalActivity externalActivity) {
         super.copyFromDomain(externalActivity);
-        if(externalActivity != null) {
+        if (externalActivity != null) {
             setActivity(externalActivity.getActivity());
             setLastModificationDate(externalActivity.getLastModificationDate());
         }
     }
-    
+
     public static InfoExternalActivity newInfoFromDomain(IExternalActivity externalActivity) {
         InfoExternalActivity infoExternalActivity = null;
-        if(externalActivity != null) {
+        if (externalActivity != null) {
             infoExternalActivity = new InfoExternalActivity();
             infoExternalActivity.copyFromDomain(externalActivity);
         }

@@ -18,7 +18,7 @@ import Dominio.Pessoa;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -42,8 +42,8 @@ public class CreateCandidateSituation implements IService {
 
     // FIXME: Should this receive the new Situation ?
 
-    public void run(InfoExecutionDegree infoExecutionDegree,
-            InfoPerson infoPerson) throws FenixServiceException {
+    public void run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson)
+            throws FenixServiceException {
 
         IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 
@@ -52,65 +52,51 @@ public class CreateCandidateSituation implements IService {
         try {
             sp = SuportePersistenteOJB.getInstance();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             ICursoExecucao executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
             if (infoExecutionDegree.getIdInternal() != null) {
-                executionDegree = (ICursoExecucao) persistentExecutionDegree
-                        .readByOID(CursoExecucao.class, infoExecutionDegree
-                                .getIdInternal());
+                executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                        CursoExecucao.class, infoExecutionDegree.getIdInternal());
             }
 
             IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
             if (infoPerson.getIdInternal() != null) {
-                person = (IPessoa) persistentPerson.readByOID(Pessoa.class,
-                        infoPerson.getIdInternal());
+                person = (IPessoa) persistentPerson.readByOID(Pessoa.class, infoPerson.getIdInternal());
             }
 
             masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
                     .readByExecutionDegreeAndPerson(executionDegree, person);
             if (masterDegreeCandidate == null) {
-                throw new ExcepcaoInexistente(
-                        "Unknown Master Degree Candidate !!");
+                throw new ExcepcaoInexistente("Unknown Master Degree Candidate !!");
             }
-            sp.getIPersistentMasterDegreeCandidate()
-                    .writeMasterDegreeCandidate(masterDegreeCandidate);
-            Iterator iterator = masterDegreeCandidate.getSituations()
-                    .iterator();
+            sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
+            Iterator iterator = masterDegreeCandidate.getSituations().iterator();
             while (iterator.hasNext()) {
-                ICandidateSituation candidateSituation = (ICandidateSituation) iterator
-                        .next();
-                if (candidateSituation.getValidation().equals(
-                        new State(State.ACTIVE))) {
+                ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next();
+                if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
 
                     ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp
-                            .getIPersistentCandidateSituation().readByOID(
-                                    CandidateSituation.class,
+                            .getIPersistentCandidateSituation().readByOID(CandidateSituation.class,
                                     candidateSituation.getIdInternal(), true);
-                    candidateSituationFromBD.setValidation(new State(
-                            State.INACTIVE));
+                    candidateSituationFromBD.setValidation(new State(State.INACTIVE));
                 }
             }
 
             // Create the New Candidate Situation
             ICandidateSituation candidateSituation = new CandidateSituation();
-            sp.getIPersistentCandidateSituation().simpleLockWrite(
-                    candidateSituation);
-            sp.getIPersistentCandidateSituation().simpleLockWrite(
-                    candidateSituation);
+            sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
+            sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
             Calendar calendar = Calendar.getInstance();
             candidateSituation.setDate(calendar.getTime());
-            candidateSituation.setSituation(new SituationName(
-                    SituationName.PENDENTE_STRING));
+            candidateSituation.setSituation(new SituationName(SituationName.PENDENTE_STRING));
             candidateSituation.setValidation(new State(State.ACTIVE));
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 
         } catch (ExistingPersistentException ex) {
             // The situation Already Exists ... Something wrong ?
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error", ex);
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
             throw newEx;
         }
     }

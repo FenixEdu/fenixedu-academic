@@ -265,6 +265,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             setMarkType(plan.getMarkType());
             setDescription(plan.getDescription());
             setDescriptionEn(plan.getDescriptionEn());
+            setNeededCredits(plan.getNeededCredits());
         }
     }
 
@@ -292,12 +293,13 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
         degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
     }
-    
-    public static IDegreeCurricularPlan newDomainFromInfo(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+
+    public static IDegreeCurricularPlan newDomainFromInfo(
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
         IDegreeCurricularPlan degreeCurricularPlan = null;
-        if(infoDegreeCurricularPlan != null) {
+        if (infoDegreeCurricularPlan != null) {
             degreeCurricularPlan = new DegreeCurricularPlan();
-            infoDegreeCurricularPlan.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);            
+            infoDegreeCurricularPlan.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
         }
         return degreeCurricularPlan;
     }

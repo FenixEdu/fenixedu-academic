@@ -6,18 +6,27 @@
 <bean:define id="infoEnrollments" name="infoEnrollments" scope="request"/>
 <bean:define id="infoClass" name="infoClass" scope="request"/>
 
-<html:form action="/viewEnrollments?method=start">
+<html:form action="<%= "/viewEnrollments?method=declarations&amp;degreeName="+ request.getAttribute("degreeName")%>">
+ <strong>Página 5 de 6</strong>
 <p align="center"><span class="error"><html:errors/></span></p>
 <p align="center">
-<p align="center">O aluno está inscrito em...<br/></p>
+	<logic:present name="studentRegistered" scope="request">
+		<p align="center"><span class="error"><%= request.getAttribute("studentRegistered") %></span></p>
+	</logic:present>
+	<logic:notPresent name="studentRegistered" scope="request">
+		<p align="center"><b><font color="red"><bean:message key="label.register.success" /></font></b></p>
+	</logic:notPresent>
+</p>
+<br/></br/>
+<p align="center"><b><bean:message key="label.enrollments" /></b><br/></p>
 
-	<table border="0" cellpadding="0" cellspacing="0" align="center">
+	<table border="0" cellpadding="5" cellspacing="0" align="center">
 		<tr>
 		  	<td class="listClasses-header">
-		  		<bean:message key="label.curricular.course.name" />
+		  		<bean:message key="label.curricular.course.name" bundle="DEFAULT"/>
 		  	</td>
 		  	<td class="listClasses-header">
-		  		<bean:message key="label.class" />
+		  		<bean:message key="label.class" bundle="DEFAULT" />
 		  	</td>
 		</tr>
 	  	

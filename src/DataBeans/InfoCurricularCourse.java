@@ -16,8 +16,7 @@ import Util.CurricularCourseType;
 /**
  * @author tfc130
  */
-public class InfoCurricularCourse extends InfoObject implements Comparable,
-        ISiteComponent {
+public class InfoCurricularCourse extends InfoObject implements Comparable, ISiteComponent {
 
     private String name;
 
@@ -65,6 +64,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
 
     private Boolean mandatoryEnrollment;
 
+    private Boolean enrollmentAllowed;
+
     /**
      * @return
      */
@@ -98,8 +99,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         boolean resultado = false;
         if (obj instanceof InfoCurricularCourse) {
             InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) obj;
-            resultado = (getName().equals(infoCurricularCourse.getName()) && getCode()
-                    .equals(infoCurricularCourse.getCode()));
+            resultado = (getName().equals(infoCurricularCourse.getName()) && getCode().equals(
+                    infoCurricularCourse.getCode()));
         }
 
         return resultado;
@@ -114,10 +115,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         result += ", theoPratHours =" + this.theoPratHours;
         result += ", praticalHours =" + this.praticalHours;
         result += ", labHours =" + this.labHours;
-        result += ", maximumValueForAcumulatedEnrollments ="
-                + this.maximumValueForAcumulatedEnrollments;
-        result += ", minimumValueForAcumulatedEnrollments ="
-                + this.minimumValueForAcumulatedEnrollments;
+        result += ", maximumValueForAcumulatedEnrollments =" + this.maximumValueForAcumulatedEnrollments;
+        result += ", minimumValueForAcumulatedEnrollments =" + this.minimumValueForAcumulatedEnrollments;
         result += ", credits =" + this.credits;
         result += ", ectsCredits =" + this.ectsCredits;
         result += ", enrollmentWeigth =" + this.enrollmentWeigth;
@@ -273,8 +272,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
      * @param infoDegreeCurricularPlan
      *            The infoDegreeCurricularPlan to set
      */
-    public void setInfoDegreeCurricularPlan(
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
         this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
     }
 
@@ -320,8 +318,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         return mandatory;
     }
 
-    public void setCurricularCourseExecutionScope(
-            CurricularCourseExecutionScope scope) {
+    public void setCurricularCourseExecutionScope(CurricularCourseExecutionScope scope) {
         curricularCourseExecutionScope = scope;
     }
 
@@ -333,16 +330,15 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         return mandatory.booleanValue();
     }
 
-    public InfoCurricularCourseScope getInfoCurricularCourseScope(
-            InfoBranch infoBranch, Integer semester) {
+    public InfoCurricularCourseScope getInfoCurricularCourseScope(InfoBranch infoBranch, Integer semester) {
         InfoCurricularCourseScope infoCurricularCourseScope = null;
         Iterator iterator = this.getInfoScopes().iterator();
         while (iterator.hasNext()) {
             InfoCurricularCourseScope infoCurricularCourseScope2 = (InfoCurricularCourseScope) iterator
                     .next();
             if (infoCurricularCourseScope2.getInfoBranch().equals(infoBranch)
-                    && infoCurricularCourseScope2.getInfoCurricularSemester()
-                            .getSemester().equals(semester)) {
+                    && infoCurricularCourseScope2.getInfoCurricularSemester().getSemester().equals(
+                            semester)) {
                 infoCurricularCourseScope = infoCurricularCourseScope2;
                 break;
             }
@@ -367,7 +363,9 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         int result = 0;
         if (getMinScope() < ((InfoCurricularCourse) arg0).getMinScope()) {
             result = -1;
-        } else if (getMinScope() > ((InfoCurricularCourse) arg0).getMinScope()) { return 1; }
+        } else if (getMinScope() > ((InfoCurricularCourse) arg0).getMinScope()) {
+            return 1;
+        }
         return result;
     }
 
@@ -376,13 +374,12 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         List scopes = getInfoScopes();
         Iterator iter = scopes.iterator();
         while (iter.hasNext()) {
-            InfoCurricularCourseScope infoScope = (InfoCurricularCourseScope) iter
-                    .next();
+            InfoCurricularCourseScope infoScope = (InfoCurricularCourseScope) iter.next();
             if (minScope == 0
-                    || minScope > infoScope.getInfoCurricularSemester()
-                            .getInfoCurricularYear().getYear().intValue()) {
-                minScope = infoScope.getInfoCurricularSemester()
-                        .getInfoCurricularYear().getYear().intValue();
+                    || minScope > infoScope.getInfoCurricularSemester().getInfoCurricularYear()
+                            .getYear().intValue()) {
+                minScope = infoScope.getInfoCurricularSemester().getInfoCurricularYear().getYear()
+                        .intValue();
             }
         }
 
@@ -393,8 +390,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         return infoAssociatedExecutionCourses;
     }
 
-    public void setInfoAssociatedExecutionCourses(
-            List infoAssociatedExecutionCourses) {
+    public void setInfoAssociatedExecutionCourses(List infoAssociatedExecutionCourses) {
         this.infoAssociatedExecutionCourses = infoAssociatedExecutionCourses;
     }
 
@@ -469,8 +465,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
      * @param maximumValueForAcumulatedEnrollments
      *            The maximumValueForAcumulatedEnrollments to set.
      */
-    public void setMaximumValueForAcumulatedEnrollments(
-            Integer maximumValueForAcumulatedEnrollments) {
+    public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments) {
         this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
     }
 
@@ -485,8 +480,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
      * @param minimumValueForAcumulatedEnrollments
      *            The minimumValueForAcumulatedEnrollments to set.
      */
-    public void setMinimumValueForAcumulatedEnrollments(
-            Integer minimumValueForAcumulatedEnrollments) {
+    public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments) {
         this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
     }
 
@@ -520,6 +514,14 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
         this.mandatoryEnrollment = mandatoryEnrollment;
     }
 
+    public Boolean getEnrollmentAllowed() {
+        return enrollmentAllowed;
+    }
+
+    public void setEnrollmentAllowed(Boolean enrollmentAllowed) {
+        this.enrollmentAllowed = enrollmentAllowed;
+    }
+
     public void copyFromDomain(ICurricularCourse curricularCourse) {
         super.copyFromDomain(curricularCourse);
         if (curricularCourse != null) {
@@ -541,11 +543,12 @@ public class InfoCurricularCourse extends InfoObject implements Comparable,
             setTheoreticalHours(curricularCourse.getTheoreticalHours());
             setType(curricularCourse.getType());
             setWeigth(curricularCourse.getWeigth());
+            setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse
+                    .getDegreeCurricularPlan()));
         }
     }
 
-    public static InfoCurricularCourse newInfoFromDomain(
-            ICurricularCourse curricularCourse) {
+    public static InfoCurricularCourse newInfoFromDomain(ICurricularCourse curricularCourse) {
         InfoCurricularCourse infoCurricularCourse = null;
         if (curricularCourse != null) {
             infoCurricularCourse = new InfoCurricularCourse();

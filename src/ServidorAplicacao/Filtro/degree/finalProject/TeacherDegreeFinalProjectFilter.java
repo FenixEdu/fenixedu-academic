@@ -28,11 +28,9 @@ import Util.RoleType;
 /**
  * @author jpvl
  */
-public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter
-{
+public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
 
-    public TeacherDegreeFinalProjectFilter()
-    {
+    public TeacherDegreeFinalProjectFilter() {
     }
 
     /*
@@ -40,8 +38,7 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.DEPARTMENT_CREDITS_MANAGER;
     }
 
@@ -49,23 +46,19 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter
      * @param integer
      */
     private void verifyTeacherPermission(IUserView requester, Integer teacherNumber)
-                    throws FenixServiceException
-    {
-        try
-        {
+            throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
             ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
-            if (teacher == null)
-            {
+            if (teacher == null) {
                 throw new NonExistingServiceException("Teacher doesn't exists");
             }
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
             IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
-            if (requesterPerson == null)
-            {
+            if (requesterPerson == null) {
                 throw new NotAuthorizedException("No person with that userView");
             }
 
@@ -74,20 +67,16 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter
 
             IDepartment department = departmentDAO.readByTeacher(teacher);
 
-            if (department == null)
-            {
+            if (department == null) {
                 throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()
-                                + " doesn't have department!");
+                        + " doesn't have department!");
             }
 
-            if (!departmentsWithAccessGranted.contains(department))
-            {
+            if (!departmentsWithAccessGranted.contains(department)) {
                 throw new NotAuthorizedException("Not authorized to run the service!");
             }
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException("Problems with database!", e);
 
         }
@@ -98,11 +87,10 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
-    {
+            Exception {
         super.execute(request, response);
         verifyTeacherPermission(getRemoteUser(request), (Integer) getServiceCallArguments(request)[0]);
     }

@@ -16,7 +16,7 @@ import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupStudent;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
@@ -26,60 +26,52 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Luis Cruz
  *  
  */
-public class EstablishFinalDegreeWorkStudentGroup implements IService
-{
+public class EstablishFinalDegreeWorkStudentGroup implements IService {
 
-    public EstablishFinalDegreeWorkStudentGroup()
-    {
+    public EstablishFinalDegreeWorkStudentGroup() {
         super();
     }
 
-    public boolean run(String username, Integer executionDegreeOID)
-    	throws ExcepcaoPersistencia, FenixServiceException
-    {
+    public boolean run(String username, Integer executionDegreeOID) throws ExcepcaoPersistencia,
+            FenixServiceException {
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport.getIPersistentFinalDegreeWork();
-        ICursoExecucaoPersistente cursoExecucaoPersistente = persistentSupport.getICursoExecucaoPersistente();
+        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                .getIPersistentFinalDegreeWork();
+        IPersistentExecutionDegree cursoExecucaoPersistente = persistentSupport
+                .getIPersistentExecutionDegree();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
-        if (group == null)
-        {
+        if (group == null) {
             group = new Group();
             persistentFinalDegreeWork.simpleLockWrite(group);
             group.setGroupStudents(new ArrayList());
             IStudent student = persistentStudent.readByUsername(username);
-            if (student != null)
-            {
+            if (student != null) {
                 IGroupStudent groupStudent = new GroupStudent();
                 persistentFinalDegreeWork.simpleLockWrite(groupStudent);
                 groupStudent.setStudent(student);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
-            } else
-            {
-                throw new FenixServiceException("Error reading student to place in final degree work group.");
+            } else {
+                throw new FenixServiceException(
+                        "Error reading student to place in final degree work group.");
             }
-        } else
-        {
-            if (!group.getGroupProposals().isEmpty())
-            {
+        } else {
+            if (!group.getGroupProposals().isEmpty()) {
                 throw new GroupProposalCandidaciesExistException();
             }
-            if (group.getGroupStudents().size() > 1)
-            {
+            if (group.getGroupStudents().size() > 1) {
                 throw new GroupStudentCandidaciesExistException();
             }
-            
+
             persistentFinalDegreeWork.simpleLockWrite(group);
         }
 
         if (group.getExecutionDegree() == null
-                || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID))
-        {
-            ICursoExecucao executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOID(CursoExecucao.class,
-                    executionDegreeOID);
-            if (executionDegree != null)
-            {
+                || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID)) {
+            ICursoExecucao executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOID(
+                    CursoExecucao.class, executionDegreeOID);
+            if (executionDegree != null) {
                 group.setExecutionDegree(executionDegree);
             }
         }
@@ -87,60 +79,48 @@ public class EstablishFinalDegreeWorkStudentGroup implements IService
         return true;
     }
 
-    public class GroupStudentCandidaciesExistException extends FenixServiceException
-    {
+    public class GroupStudentCandidaciesExistException extends FenixServiceException {
 
-        public GroupStudentCandidaciesExistException()
-        {
+        public GroupStudentCandidaciesExistException() {
             super();
         }
 
-        public GroupStudentCandidaciesExistException(int errorType)
-        {
+        public GroupStudentCandidaciesExistException(int errorType) {
             super(errorType);
         }
 
-        public GroupStudentCandidaciesExistException(String s)
-        {
+        public GroupStudentCandidaciesExistException(String s) {
             super(s);
         }
 
-        public GroupStudentCandidaciesExistException(Throwable cause)
-        {
+        public GroupStudentCandidaciesExistException(Throwable cause) {
             super(cause);
         }
 
-        public GroupStudentCandidaciesExistException(String message, Throwable cause)
-        {
+        public GroupStudentCandidaciesExistException(String message, Throwable cause) {
             super(message, cause);
         }
     }
 
-    public class GroupProposalCandidaciesExistException extends FenixServiceException
-    {
+    public class GroupProposalCandidaciesExistException extends FenixServiceException {
 
-        public GroupProposalCandidaciesExistException()
-        {
+        public GroupProposalCandidaciesExistException() {
             super();
         }
 
-        public GroupProposalCandidaciesExistException(int errorType)
-        {
+        public GroupProposalCandidaciesExistException(int errorType) {
             super(errorType);
         }
 
-        public GroupProposalCandidaciesExistException(String s)
-        {
+        public GroupProposalCandidaciesExistException(String s) {
             super(s);
         }
 
-        public GroupProposalCandidaciesExistException(Throwable cause)
-        {
+        public GroupProposalCandidaciesExistException(Throwable cause) {
             super(cause);
         }
 
-        public GroupProposalCandidaciesExistException(String message, Throwable cause)
-        {
+        public GroupProposalCandidaciesExistException(String message, Throwable cause) {
             super(message, cause);
         }
     }

@@ -21,34 +21,27 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class ReadShiftByOID implements IService
-{
+public class ReadShiftByOID implements IService {
 
     /**
-	 *  
-	 */
-    public ReadShiftByOID()
-    {
+     *  
+     */
+    public ReadShiftByOID() {
 
     }
 
-    public InfoShift run(Integer oid) throws FenixServiceException
-    {
+    public InfoShift run(Integer oid) throws FenixServiceException {
 
         InfoShift result = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
             ITurno shift = (ITurno) shiftDAO.readByOID(Turno.class, oid);
 
-            if (shift != null)
-            {
+            if (shift != null) {
                 result = (InfoShift) Cloner.get(shift);
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 

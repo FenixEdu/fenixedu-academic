@@ -77,9 +77,9 @@
 					<tr>
 						<td class="listClasses-header"><bean:message key="message.manager.theoreticalHours" />
 						</td>
-						<td class="listClasses-header"><bean:message key="message.manager.praticalHours" />
-						</td>
 						<td class="listClasses-header"><bean:message key="message.manager.theoPratHours" />
+						</td>
+						<td class="listClasses-header"><bean:message key="message.manager.praticalHours" />
 						</td>
 						<td class="listClasses-header"><bean:message key="message.manager.labHours" />
 						</td>

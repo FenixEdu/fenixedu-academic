@@ -14,62 +14,48 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public class ReadAllBuildingsTest extends ServiceTestCase
-{
+public class ReadAllBuildingsTest extends ServiceTestCase {
 
     /**
      * @param name
      */
-    public ReadAllBuildingsTest(java.lang.String testName)
-    {
+    public ReadAllBuildingsTest(java.lang.String testName) {
         super(testName);
     }
 
-
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadAllBuildings";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/sop/testReadAllBuildingsExamsV4.xml";
     }
 
+    // test successfull create exam
+    public void testSuccessfullReadAllBuildings() {
+        ReadAllBuildings service = ReadAllBuildings.getService();
 
+        ISuportePersistente sp;
 
-    // test successfull create exam 
-	public void testSuccessfullReadAllBuildings()
-	{
-		ReadAllBuildings service = ReadAllBuildings.getService();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-		ISuportePersistente sp;
+            List buildingNames = service.run();
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            assertEquals(buildingNames.size(), 19);
 
-			List buildingNames = service.run();
-
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			assertEquals(buildingNames.size(), 19);
-			
-		}
-		catch (FenixServiceException ex)
-		{
-			//sp.cancelarTransaccao();
-			fail("testSuccessfullReadAllBuildings - Fenix Service Exception " + ex);
-		}
-		catch (Exception ex)
-		{
-			//sp.cancelarTransaccao();			
-			fail("testSuccessfullReadAllBuildings - Exception " + ex);
-		}
-	}
- 
+        } catch (FenixServiceException ex) {
+            //sp.cancelarTransaccao();
+            fail("testSuccessfullReadAllBuildings - Fenix Service Exception " + ex);
+        } catch (Exception ex) {
+            //sp.cancelarTransaccao();
+            fail("testSuccessfullReadAllBuildings - Exception " + ex);
+        }
+    }
 
 }

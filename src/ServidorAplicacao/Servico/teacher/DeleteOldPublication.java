@@ -16,37 +16,39 @@ import ServidorPersistente.ISuportePersistente;
  */
 public class DeleteOldPublication extends DeleteDomainObjectService {
 
-	private static DeleteOldPublication service = new DeleteOldPublication();
+    private static DeleteOldPublication service = new DeleteOldPublication();
 
-	public static DeleteOldPublication getService() {
-		return service;
-	}
-    
-	private DeleteOldPublication() {
-	}
+    public static DeleteOldPublication getService() {
+        return service;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "DeleteOldPublication";
-	}
-    
-    /* (non-Javadoc)
+    private DeleteOldPublication() {
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "DeleteOldPublication";
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return OldPublication.class;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentOldPublication();
     }
 }

@@ -18,7 +18,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -34,34 +34,29 @@ public class ReadExecutionDegreesByExecutionYearId implements IService {
 
     public List run(Integer executionYearId) throws FenixServiceException {
 
-        ArrayList infoExecutionDegreeList = null;
+        List infoExecutionDegreeList = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionYear persistentExecutionYear = sp
-                    .getIPersistentExecutionYear();
-            ICursoExecucaoPersistente executionDegreeDAO = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
             IExecutionYear executionYear = null;
             if (executionYearId == null) {
-                executionYear = persistentExecutionYear
-                        .readCurrentExecutionYear();
+                executionYear = persistentExecutionYear.readCurrentExecutionYear();
             } else {
-                executionYear = (IExecutionYear) persistentExecutionYear
-                        .readByOID(ExecutionYear.class, executionYearId);
+                executionYear = (IExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
+                        executionYearId);
             }
 
-            List executionDegrees = executionDegreeDAO
-                    .readByExecutionYear(executionYear.getYear());
+            List executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
 
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 Iterator iterator = executionDegrees.iterator();
                 infoExecutionDegreeList = new ArrayList();
 
                 while (iterator.hasNext()) {
-                    ICursoExecucao executionDegree = (ICursoExecucao) iterator
-                            .next();
+                    ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
                     infoExecutionDegreeList.add(Cloner.get(executionDegree));
                 }
             }

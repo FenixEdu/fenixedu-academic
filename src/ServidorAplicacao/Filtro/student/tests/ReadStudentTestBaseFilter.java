@@ -21,8 +21,7 @@ import Util.RoleType;
 /**
  * @author jpvl
  */
-public abstract class ReadStudentTestBaseFilter extends
-        AuthorizationByRoleFilter {
+public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilter {
 
     /*
      * (non-Javadoc)
@@ -30,18 +29,17 @@ public abstract class ReadStudentTestBaseFilter extends
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    final public void execute(ServiceRequest request, ServiceResponse response)
-            throws FilterException, Exception {
+    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+            Exception {
         super.execute(request, response);
 
         Integer testId = (Integer) request.getArguments()[1];
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-        IPersistentDistributedTest distributedTestDAO = sp
-                .getIPersistentDistributedTest();
+        IPersistentDistributedTest distributedTestDAO = sp.getIPersistentDistributedTest();
 
-        IDistributedTest distributedTest = (IDistributedTest) distributedTestDAO
-                .readByOID(DistributedTest.class, testId);
+        IDistributedTest distributedTest = (IDistributedTest) distributedTestDAO.readByOID(
+                DistributedTest.class, testId);
 
         if (distributedTest != null) {
             Calendar now = Calendar.getInstance();
@@ -62,12 +60,10 @@ public abstract class ReadStudentTestBaseFilter extends
 
     }
 
-    abstract protected boolean canReadTest(Calendar now, Calendar beginDate,
-            Calendar endDate);
+    abstract protected boolean canReadTest(Calendar now, Calendar beginDate, Calendar endDate);
 
     private void getFullCalendar(Calendar beginDate, Calendar beginHour) {
-        beginDate
-                .set(Calendar.HOUR_OF_DAY, beginHour.get(Calendar.HOUR_OF_DAY));
+        beginDate.set(Calendar.HOUR_OF_DAY, beginHour.get(Calendar.HOUR_OF_DAY));
         beginDate.set(Calendar.MINUTE, beginHour.get(Calendar.MINUTE));
         beginDate.set(Calendar.SECOND, 0);
         beginDate.set(Calendar.MILLISECOND, 0);

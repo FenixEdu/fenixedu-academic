@@ -26,46 +26,41 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadStudentsWithoutDistributedTest implements IService {
 
-	public ReadStudentsWithoutDistributedTest() {
-	}
+    public ReadStudentsWithoutDistributedTest() {
+    }
 
-	public List run(Integer executionCourseId, Integer distributedTestId)
-			throws FenixServiceException {
+    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
 
-		ISuportePersistente persistentSuport;
-		List infoStudentList = new ArrayList();
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport;
+        List infoStudentList = new ArrayList();
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-					.getIPersistentExecutionCourse().readByOID(
-							ExecutionCourse.class, executionCourseId);
-			if (executionCourse == null)
-				throw new FenixServiceException();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+                    .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null)
+                throw new FenixServiceException();
 
-			IDistributedTest distributedTest = (IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest().readByOID(
-							DistributedTest.class, distributedTestId);
-			if (distributedTest == null)
-				throw new FenixServiceException();
-			//Todos os alunos
-			List attendList = persistentSuport.getIFrequentaPersistente()
-					.readByExecutionCourse(executionCourse);
-			//alunos que tem test
-			List studentList = persistentSuport
-					.getIPersistentStudentTestQuestion()
-					.readStudentsByDistributedTest(distributedTest);
-			Iterator it = attendList.iterator();
-			while (it.hasNext()) {
-				IFrequenta attend = (Frequenta) it.next();
+            IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+                    .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+            if (distributedTest == null)
+                throw new FenixServiceException();
+            //Todos os alunos
+            List attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(
+                    executionCourse);
+            //alunos que tem test
+            List studentList = persistentSuport.getIPersistentStudentTestQuestion()
+                    .readStudentsByDistributedTest(distributedTest);
+            Iterator it = attendList.iterator();
+            while (it.hasNext()) {
+                IFrequenta attend = (Frequenta) it.next();
 
-				if (!studentList.contains(attend.getAluno()))
-					infoStudentList.add(InfoStudentWithInfoPerson
-							.newInfoFromDomain(attend.getAluno()));
-			}
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return infoStudentList;
-	}
+                if (!studentList.contains(attend.getAluno()))
+                    infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return infoStudentList;
+    }
 }

@@ -6,9 +6,9 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 import java.util.List;
 
 import DataBeans.InfoShift;
@@ -24,64 +24,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class AddClassesToShift implements IServico {
 
-	private static AddClassesToShift _servico = new AddClassesToShift();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static AddClassesToShift getService() {
-		return _servico;
-	}
+    private static AddClassesToShift _servico = new AddClassesToShift();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private AddClassesToShift() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static AddClassesToShift getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "AddClassesToShift";
-	}
+    /**
+     * The actor of this class.
+     */
+    private AddClassesToShift() {
+    }
 
-	public Boolean run(InfoShift infoShift, List classOIDs)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "AddClassesToShift";
+    }
 
-		boolean result = false;
+    public Boolean run(InfoShift infoShift, List classOIDs) throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        boolean result = false;
 
-			ITurno shift =
-				(ITurno) sp.getITurnoPersistente().readByOID(
-					Turno.class,
-					infoShift.getIdInternal());
-			sp.getITurnoPersistente().simpleLockWrite(shift);
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			for (int i = 0; i < classOIDs.size(); i++) {
-				ITurma schoolClass =
-					(ITurma) sp.getITurmaPersistente().readByOID(
-						Turma.class,
-						(Integer) classOIDs.get(i));
+            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+                    infoShift.getIdInternal());
+            sp.getITurnoPersistente().simpleLockWrite(shift);
 
-//				ITurmaTurno classShift = new TurmaTurno(schoolClass, shift);
-//				try {
-//					sp.getITurmaTurnoPersistente().lockWrite(classShift);
-//				} catch (ExistingPersistentException e) {
-//					throw new ExistingServiceException(e);
-//				}
-				shift.getAssociatedClasses().add(schoolClass);
-				sp.getITurmaPersistente().simpleLockWrite(schoolClass);
-				schoolClass.getAssociatedShifts().add(shift);
-			}
+            for (int i = 0; i < classOIDs.size(); i++) {
+                ITurma schoolClass = (ITurma) sp.getITurmaPersistente().readByOID(Turma.class,
+                        (Integer) classOIDs.get(i));
 
-			result = true;
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex.getMessage());
-		}
+                //				ITurmaTurno classShift = new TurmaTurno(schoolClass, shift);
+                //				try {
+                //					sp.getITurmaTurnoPersistente().lockWrite(classShift);
+                //				} catch (ExistingPersistentException e) {
+                //					throw new ExistingServiceException(e);
+                //				}
+                shift.getAssociatedClasses().add(schoolClass);
+                sp.getITurmaPersistente().simpleLockWrite(schoolClass);
+                schoolClass.getAssociatedShifts().add(shift);
+            }
 
-		return new Boolean(result);
-	}
+            result = true;
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex.getMessage());
+        }
+
+        return new Boolean(result);
+    }
 
 }

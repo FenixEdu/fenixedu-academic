@@ -5,15 +5,15 @@
  */
 package ServidorAplicacao.Servico.scientificCouncil;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseWithInfoDegree;
 import DataBeans.SiteView;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -23,42 +23,18 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  *  
  */
-public class ReadCurricularCourseByOIdService implements IServico {
+public class ReadCurricularCourseByOIdService implements IService {
 
-    private static ReadCurricularCourseByOIdService _servico = new ReadCurricularCourseByOIdService();
-
-    /**
-     * The actor of this class.
-     */
-
-    private ReadCurricularCourseByOIdService() {
+    public ReadCurricularCourseByOIdService() {
 
     }
 
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ReadCurricularCourseByOIdService";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadExecutionCourse
-     */
-    public static ReadCurricularCourseByOIdService getService() {
-        return _servico;
-    }
-
-    public SiteView run(Integer curricularCourseId)
-            throws FenixServiceException {
+    public SiteView run(Integer curricularCourseId) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseId);
+            IPersistentObject persistentObject = sp.getIPersistentObject();
+            ICurricularCourse curricularCourse = (ICurricularCourse) persistentObject.readByOID(
+                    CurricularCourse.class, curricularCourseId);
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);

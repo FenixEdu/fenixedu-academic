@@ -13,6 +13,7 @@
 package Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -67,28 +68,19 @@ public class TipoDocumentoIdentificacao extends FenixUtil {
     }
 
     public TipoDocumentoIdentificacao(String tipo) {
-        if (tipo
-                .equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING))
-            this.tipo = new Integer(
-                    TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+        if (tipo.equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING))
+            this.tipo = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
         if (tipo.equals(TipoDocumentoIdentificacao.PASSAPORTE_STRING))
             this.tipo = new Integer(TipoDocumentoIdentificacao.PASSAPORTE);
-        if (tipo
-                .equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING))
+        if (tipo.equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING))
             this.tipo = new Integer(
                     TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO);
-        if (tipo
-                .equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING))
-            this.tipo = new Integer(
-                    TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM);
-        if (tipo
-                .equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING))
-            this.tipo = new Integer(
-                    TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA);
-        if (tipo
-                .equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING))
-            this.tipo = new Integer(
-                    TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
+        if (tipo.equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING))
+            this.tipo = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM);
+        if (tipo.equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING))
+            this.tipo = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA);
+        if (tipo.equals(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING))
+            this.tipo = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
         if (tipo.equals(TipoDocumentoIdentificacao.OUTRO_STRING))
             this.tipo = new Integer(TipoDocumentoIdentificacao.OUTRO);
         if (tipo.equals(TipoDocumentoIdentificacao.EXTERNO_STRING))
@@ -96,81 +88,59 @@ public class TipoDocumentoIdentificacao extends FenixUtil {
 
     }
 
-    public static ArrayList toArrayList() {
-        ArrayList result = new ArrayList();
-        result
-                .add(new LabelValueBean(TipoDocumentoIdentificacao.DEFAULT,
-                        null));
-        result.add(new LabelValueBean(
-                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING,
+    public static List toArrayList() {
+        List result = new ArrayList();
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.DEFAULT, null));
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING,
                 TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING));
-        result.add(new LabelValueBean(
-                TipoDocumentoIdentificacao.PASSAPORTE_STRING,
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.PASSAPORTE_STRING,
                 TipoDocumentoIdentificacao.PASSAPORTE_STRING));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING,
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING,
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING,
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING,
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING));
+        result.add(new LabelValueBean(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING,
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING));
+        result.add(new LabelValueBean(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING,
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING));
+        result.add(new LabelValueBean(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING,
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING));
+        result.add(new LabelValueBean(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING,
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING));
         result.add(new LabelValueBean(TipoDocumentoIdentificacao.OUTRO_STRING,
                 TipoDocumentoIdentificacao.OUTRO_STRING));
-        result.add(new LabelValueBean(
-                TipoDocumentoIdentificacao.EXTERNO_STRING,
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.EXTERNO_STRING,
                 TipoDocumentoIdentificacao.EXTERNO_STRING));
 
-        return result;
+        return (ArrayList) result;
     }
 
-    public static ArrayList toIntegerArrayList() {
-        ArrayList result = new ArrayList();
-        result
-                .add(new LabelValueBean(TipoDocumentoIdentificacao.DEFAULT,
-                        null));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING,
-                        String
-                                .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE)));
-        result.add(new LabelValueBean(
-                TipoDocumentoIdentificacao.PASSAPORTE_STRING, String
-                        .valueOf(TipoDocumentoIdentificacao.PASSAPORTE)));
+    public static List toIntegerArrayList() {
+        List result = new ArrayList();
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.DEFAULT, null));
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING, String
+                .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE)));
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.PASSAPORTE_STRING, String
+                .valueOf(TipoDocumentoIdentificacao.PASSAPORTE)));
         result
                 .add(new LabelValueBean(
                         TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING,
                         String
                                 .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO)));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING,
-                        String
-                                .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM)));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING,
-                        String
-                                .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA)));
-        result
-                .add(new LabelValueBean(
-                        TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING,
-                        String
-                                .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA)));
-        result.add(new LabelValueBean(TipoDocumentoIdentificacao.OUTRO_STRING,
-                String.valueOf(TipoDocumentoIdentificacao.OUTRO)));
         result.add(new LabelValueBean(
-                TipoDocumentoIdentificacao.EXTERNO_STRING, String
-                        .valueOf(TipoDocumentoIdentificacao.EXTERNO)));
-        return result;
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING, String
+                        .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM)));
+        result.add(new LabelValueBean(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING, String
+                        .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA)));
+        result.add(new LabelValueBean(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING, String
+                        .valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA)));
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.OUTRO_STRING, String
+                .valueOf(TipoDocumentoIdentificacao.OUTRO)));
+        result.add(new LabelValueBean(TipoDocumentoIdentificacao.EXTERNO_STRING, String
+                .valueOf(TipoDocumentoIdentificacao.EXTERNO)));
+        return (ArrayList) result;
     }
 
     public boolean equals(Object o) {

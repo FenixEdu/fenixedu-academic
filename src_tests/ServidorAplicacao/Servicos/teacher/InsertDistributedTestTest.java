@@ -26,8 +26,7 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class InsertDistributedTestTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class InsertDistributedTestTest extends ServiceNeedsAuthenticationTestCase {
 
     public InsertDistributedTestTest(String testName) {
         super(testName);
@@ -80,16 +79,13 @@ public class InsertDistributedTestTest extends
         endHour.set(Calendar.SECOND, 0);
 
         TestType testType = new TestType(1);
-        CorrectionAvailability correctionAvailability = new CorrectionAvailability(
-                1);
+        CorrectionAvailability correctionAvailability = new CorrectionAvailability(1);
         Boolean imsFeedback = new Boolean(true);
         String[] selected = { new String("2516") };
         Boolean shifts = new Boolean(false);
-        String path = new String(
-                "e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
-        Object[] args = { executionCourseId, testId, info, beginDate,
-                beginHour, endDate, endHour, testType, correctionAvailability,
-                imsFeedback, selected, shifts, path };
+        String path = new String("e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
+        Object[] args = { executionCourseId, testId, info, beginDate, beginHour, endDate, endHour,
+                testType, correctionAvailability, imsFeedback, selected, shifts, path };
         return args;
     }
 
@@ -102,18 +98,14 @@ public class InsertDistributedTestTest extends
         try {
             IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
-            PersistenceBroker broker = PersistenceBrokerFactory
-                    .defaultPersistenceBroker();
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
             Criteria criteria = new Criteria();
 
-            Query queryCriteria = new QueryByCriteria(DistributedTest.class,
-                    criteria);
+            Query queryCriteria = new QueryByCriteria(DistributedTest.class, criteria);
             ((QueryByCriteria) queryCriteria).addOrderBy("idInternal", false);
-            IDistributedTest distributedTest = (IDistributedTest) broker
-                    .getObjectByQuery(queryCriteria);
+            IDistributedTest distributedTest = (IDistributedTest) broker.getObjectByQuery(queryCriteria);
             broker.close();
 
             //ver se os dados do distributed_test estão correctos
@@ -125,32 +117,28 @@ public class InsertDistributedTestTest extends
             //assertEquals(distributedTest.getTestScope().getDomainObject().getIdInternal(),
             // args[0]);
 
-            assertEquals(distributedTest.getBeginDate().get(
-                    Calendar.DAY_OF_MONTH), expectedDistributedTestBeginDate
-                    .get(Calendar.DAY_OF_MONTH));
+            assertEquals(distributedTest.getBeginDate().get(Calendar.DAY_OF_MONTH),
+                    expectedDistributedTestBeginDate.get(Calendar.DAY_OF_MONTH));
             assertEquals(distributedTest.getBeginDate().get(Calendar.MONTH),
                     expectedDistributedTestBeginDate.get(Calendar.MONTH));
             assertEquals(distributedTest.getBeginDate().get(Calendar.YEAR),
                     expectedDistributedTestBeginDate.get(Calendar.YEAR));
 
-            assertEquals(distributedTest.getBeginHour().get(
-                    Calendar.HOUR_OF_DAY), expectedDistributedTestBeginHour
-                    .get(Calendar.HOUR_OF_DAY));
+            assertEquals(distributedTest.getBeginHour().get(Calendar.HOUR_OF_DAY),
+                    expectedDistributedTestBeginHour.get(Calendar.HOUR_OF_DAY));
             assertEquals(distributedTest.getBeginHour().get(Calendar.MINUTE),
                     expectedDistributedTestBeginHour.get(Calendar.MINUTE));
             assertEquals(distributedTest.getBeginHour().get(Calendar.SECOND),
                     expectedDistributedTestBeginHour.get(Calendar.SECOND));
 
-            assertEquals(distributedTest.getEndDate()
-                    .get(Calendar.DAY_OF_MONTH), expectedDistributedTestEndDate
-                    .get(Calendar.DAY_OF_MONTH));
+            assertEquals(distributedTest.getEndDate().get(Calendar.DAY_OF_MONTH),
+                    expectedDistributedTestEndDate.get(Calendar.DAY_OF_MONTH));
             assertEquals(distributedTest.getEndDate().get(Calendar.MONTH),
                     expectedDistributedTestEndDate.get(Calendar.MONTH));
-            assertEquals(distributedTest.getEndDate().get(Calendar.YEAR),
-                    expectedDistributedTestEndDate.get(Calendar.YEAR));
+            assertEquals(distributedTest.getEndDate().get(Calendar.YEAR), expectedDistributedTestEndDate
+                    .get(Calendar.YEAR));
 
-            assertEquals(
-                    distributedTest.getEndHour().get(Calendar.HOUR_OF_DAY),
+            assertEquals(distributedTest.getEndHour().get(Calendar.HOUR_OF_DAY),
                     expectedDistributedTestEndHour.get(Calendar.HOUR_OF_DAY));
             assertEquals(distributedTest.getEndHour().get(Calendar.MINUTE),
                     expectedDistributedTestEndHour.get(Calendar.MINUTE));
@@ -163,12 +151,9 @@ public class InsertDistributedTestTest extends
 
             broker = PersistenceBrokerFactory.defaultPersistenceBroker();
             criteria = new Criteria();
-            criteria.addEqualTo("keyDistributedTest", distributedTest
-                    .getIdInternal());
-            queryCriteria = new QueryByCriteria(StudentTestQuestion.class,
-                    criteria);
-            List studentTestQuestionList = (List) broker
-                    .getCollectionByQuery(queryCriteria);
+            criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+            queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
+            List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
             broker.close();
 
             assertEquals(studentTestQuestionList.size(), 2);

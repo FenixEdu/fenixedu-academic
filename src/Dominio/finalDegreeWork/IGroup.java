@@ -11,16 +11,15 @@ import Dominio.IDomainObject;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public interface IGroup extends IDomainObject
-{
+public interface IGroup extends IDomainObject {
 
-	public ICursoExecucao getExecutionDegree();
+    public ICursoExecucao getExecutionDegree();
 
-	public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(ICursoExecucao executionDegree);
 
-	public List getGroupStudents();
+    public List getGroupStudents();
 
     public void setGroupStudents(List groupStudents);
 

@@ -1,0 +1,39 @@
+<class-descriptor
+		class="Dominio.support.FAQEntry"
+		table="FAQ_ENTRY"
+		>
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+		/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+		/>
+	<field-descriptor
+		name="keyParentSection"
+		column="KEY_PARENT_SECTION"
+		jdbc-type="INTEGER"
+		/>
+	<field-descriptor
+		name="question"
+		column="QUESTION"
+		jdbc-type="VARCHAR"
+		/>
+	<field-descriptor
+		name="answer"
+		column="ANSWER"
+		jdbc-type="VARCHAR"
+		/>
+	<reference-descriptor
+			name="parentSection"
+			class-ref="Dominio.support.FAQSection"
+			proxy="true">
+		<foreignkey field-ref="keyParentSection"/>
+	</reference-descriptor>
+</class-descriptor>

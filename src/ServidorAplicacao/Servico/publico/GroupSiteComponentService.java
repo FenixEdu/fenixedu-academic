@@ -50,13 +50,12 @@ public class GroupSiteComponentService implements IServico {
         return _servico;
     }
 
-    public Object run(ISiteComponent commonComponent,
-            ISiteComponent bodyComponent, Integer infoSiteCode,
+    public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
+            Integer infoSiteCode,
             //Integer executionCourseCode,
             //Integer sectionIndex,
             //Integer curricularCourseId,
-            Integer groupPropertiesCode, Integer code)
-            throws FenixServiceException {
+            Integer groupPropertiesCode, Integer code) throws FenixServiceException {
 
         ExecutionCourseSiteView executionCourseSiteView = null;
 
@@ -66,25 +65,20 @@ public class GroupSiteComponentService implements IServico {
             IPersistentSite persistentSite = sp.getIPersistentSite();
             ISite site = null;
             if (infoSiteCode != null) {
-                site = (ISite) persistentSite.readByOID(Site.class,
-                        infoSiteCode);
+                site = (ISite) persistentSite.readByOID(Site.class, infoSiteCode);
                 if (site == null) {
                     throw new NonExistingServiceException();
                 }
             }
-            GroupSiteComponentBuilder componentBuilder = GroupSiteComponentBuilder
-                    .getInstance();
-            bodyComponent = componentBuilder.getComponent(bodyComponent, site
-                    .getExecutionCourse().getIdInternal(), groupPropertiesCode,
-                    code);
+            GroupSiteComponentBuilder componentBuilder = GroupSiteComponentBuilder.getInstance();
+            bodyComponent = componentBuilder.getComponent(bodyComponent, site.getExecutionCourse()
+                    .getIdInternal(), groupPropertiesCode, code);
             ExecutionCourseSiteComponentBuilder componentBuilder2 = ExecutionCourseSiteComponentBuilder
                     .getInstance();
 
-            commonComponent = componentBuilder2.getComponent(commonComponent,
-                    site, null, null, null);
+            commonComponent = componentBuilder2.getComponent(commonComponent, site, null, null, null);
 
-            executionCourseSiteView = new ExecutionCourseSiteView(
-                    commonComponent, bodyComponent);
+            executionCourseSiteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

@@ -41,9 +41,18 @@
 		    	<td class="infoop"><strong><bean:write name="personalInfo" property="nome"/></strong></td>
           </tr>
 	 	</table>
-		<table width="100%">
+		<table width="100%" >
+		  <tr>	
+		  	<logic:equal name="viewPhoto" value="true">
+			  	<logic:equal name="personalInfo" property="availablePhoto" value="true">
+					<td rowspan="4" width="100">	  	    		  	  	
+	      				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+	      			</td>
+	      		</logic:equal>
+	      	</logic:equal>
+	      
 		  <!-- Role -->
-		  <tr>
+		  
 	      	<td width="30%" colspan="2">
 	      		<logic:match name="personalInfo" property="username" value="D">
 	      			<b><bean:message key="teacher.docente"/></b>
@@ -60,6 +69,7 @@
 	      		<logic:match name="personalInfo" property="username" value="B">
 	      			<b><bean:message key="grantOwner"/></b>
 	      		</logic:match> 	
+	      		&nbsp;
 	      	</td>
 	      </tr>
 		  
@@ -79,6 +89,7 @@
 						<bean:define id="eMail" name="personalInfo" property="email" />
 		    	        <html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
 					</logic:present>
+					&nbsp;
 	            </td>		         
 	          </tr>  
 	          <!-- WebPage --> 	          
@@ -89,8 +100,10 @@
 						<bean:define id="homepage" name="personalInfo" property="enderecoWeb" />
 			           	<html:link href="<%= pageContext.findAttribute("homepage").toString() %>"><bean:write name="personalInfo" property="enderecoWeb"/></html:link>
 					</logic:present>
+					&nbsp;
 	            </td>
-	          </tr>	                 
+	          </tr>
+	          
           </logic:equal>          
                     
           <logic:equal name="show" value="false">
@@ -102,6 +115,7 @@
 							<bean:define id="eMail" name="personalInfo" property="email" />
 			    	        <html:link href="<%= "mailto:" + pageContext.findAttribute("eMail").toString() %>"><bean:write name="personalInfo" property="email"/></html:link>		            
 						</logic:present>
+					</td>
 		          </tr>
 	          </logic:equal>
 	          <!-- WebPage -->
@@ -115,6 +129,12 @@
 						</logic:present>
 		            </td>
 		          </tr>
+		       </logic:equal>
+		       <logic:equal name="personalInfo" property="availableWebSite" value="false">
+		       	<tr>
+		       		<td width="30%">&nbsp;</td>
+		       		<td>&nbsp;</td>
+		       	</tr>
 	          </logic:equal>
           </logic:equal> 
     	</table>

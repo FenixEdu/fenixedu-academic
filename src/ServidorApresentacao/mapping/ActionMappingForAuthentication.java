@@ -10,20 +10,20 @@ import org.apache.struts.action.ActionMapping;
  * @author jpvl
  */
 public class ActionMappingForAuthentication extends ActionMapping {
-	private String application = "";
-	
-	/**
-	 * @return
-	 */
-	public String getApplication() {
-		return application;
-	}
+    private String application = "";
 
-	/**
-	 * @param string
-	 */
-	public void setApplication(String application) {
-		this.application = application;
-	}
+    /**
+     * @return
+     */
+    public String getApplication() {
+        return application;
+    }
+
+    /**
+     * @param string
+     */
+    public void setApplication(String application) {
+        this.application = application;
+    }
 
 }

@@ -30,37 +30,41 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ReadDegreeAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer degreeId = new Integer(request.getParameter("degreeId"));
-		Object args[] = { degreeId };
+        Integer degreeId = null;
+        if (request.getParameter("degreeId") != null) {
+            degreeId = new Integer(request.getParameter("degreeId"));
+        }
+        Object args[] = { degreeId };
 
-		
-		InfoDegree degree = null;
+        InfoDegree degree = null;
 
-		try {
-				degree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
-				
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingDegree", "", e);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        try {
+            degree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
 
-		// in case the degree really exists
-		List degreeCurricularPlans = null;
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException("message.nonExistingDegree", "", e);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		try {
-				degreeCurricularPlans = (List) ServiceUtils.executeService(userView, "ReadDegreeCurricularPlansByDegree", args);
-				
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		Collections.sort(degreeCurricularPlans);
-		request.setAttribute("infoDegree", degree);
-		request.setAttribute("curricularPlansList", degreeCurricularPlans);
-		return mapping.findForward("viewDegree");
-	}
+        // in case the degree really exists
+        List degreeCurricularPlans = null;
+
+        try {
+            degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
+                    "ReadDegreeCurricularPlansByDegree", args);
+
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        Collections.sort(degreeCurricularPlans);
+        request.setAttribute("infoDegree", degree);
+        request.setAttribute("curricularPlansList", degreeCurricularPlans);
+        return mapping.findForward("viewDegree");
+    }
 }

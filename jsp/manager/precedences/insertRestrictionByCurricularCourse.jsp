@@ -17,6 +17,9 @@
 <logic:equal name="className" value="RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse">
 	<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse"/></h3>
 </logic:equal>
+<logic:equal name="className" value="RestrictionNotEnrolledCurricularCourse">
+	<h3><bean:message key="label.manager.precedences.management"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.simple.precedence"/>&nbsp;-&nbsp;<bean:message key="label.manager.insert.restriction.restrictionNotEnrolledCurricularCourse"/></h3>
+</logic:equal>
 
 <span class="error"><html:errors/></span>
 <br />
@@ -26,7 +29,7 @@
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId" />
 
 <html:form action="/makeSimplePrecedence.do">
-	<html:hidden property="page" value="0" />
+	<html:hidden property="page" value="1" />
 	<html:hidden property="method" value="insertRestriction" />
 	<html:hidden property="className" value="<%= request.getAttribute("className").toString() %>" />	
 	<html:hidden property="degreeId" value="<%= request.getAttribute("degreeId").toString() %>" />

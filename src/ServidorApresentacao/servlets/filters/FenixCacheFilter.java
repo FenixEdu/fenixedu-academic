@@ -31,6 +31,7 @@ import com.opensymphony.oscache.web.filter.ResponseContent;
 public class FenixCacheFilter implements Filter {
 
     ServletContext servletContext;
+
     FilterConfig filterConfig;
 
     public void init(FilterConfig filterConfig) {
@@ -39,9 +40,9 @@ public class FenixCacheFilter implements Filter {
 
         int time = 300;
         try {
-        	time = Integer.parseInt(filterConfig.getInitParameter("time"));
+            time = Integer.parseInt(filterConfig.getInitParameter("time"));
         } catch (Exception e) {
-        	System.out.println("Could not get init paramter 'time', defaulting to 5min.");
+            System.out.println("Could not get init paramter 'time', defaulting to 5min.");
         }
 
         ResponseCacheOSCacheImpl.getInstance().setRefreshTimeout(time);
@@ -52,8 +53,8 @@ public class FenixCacheFilter implements Filter {
         this.filterConfig = null;
     }
 
-    public void doFilter(ServletRequest req, ServletResponse res,
-            FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+            ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
@@ -63,8 +64,8 @@ public class FenixCacheFilter implements Filter {
         String queryString = constructQueryString(request);
         StringBuffer id = new StringBuffer(request.getRequestURI());
         if (queryString != null) {
-        	id.append("?");
-        	id.append(queryString);
+            id.append("?");
+            id.append(queryString);
         }
         // optionally append i18n sensitivity
         String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
@@ -80,7 +81,7 @@ public class FenixCacheFilter implements Filter {
 
         ResponseContent respContent = ResponseCacheOSCacheImpl.getInstance().lookup(id.toString());
         if (respContent != null) {
-        	respContent.writeTo(response);
+            respContent.writeTo(response);
         } else {
             CacheHttpServletResponseWrapper cacheResponse = new CacheHttpServletResponseWrapper(response);
             chain.doFilter(request, cacheResponse);
@@ -89,41 +90,41 @@ public class FenixCacheFilter implements Filter {
             // Only cache if the response was 200
             if (cacheResponse.getStatus() == HttpServletResponse.SC_OK) {
                 //Store as the cache content the result of the response
-            	ResponseCacheOSCacheImpl.getInstance().cache(id.toString(), cacheResponse.getContent());
+                ResponseCacheOSCacheImpl.getInstance().cache(id.toString(), cacheResponse.getContent());
             }
         }
     }
 
-	private String constructQueryString(HttpServletRequest request) {
-		StringBuffer queryString = new StringBuffer();
-		
-		String requestQueryString = request.getQueryString();
-		if (requestQueryString != null) {
-			queryString.append(requestQueryString);
-		}
+    private String constructQueryString(HttpServletRequest request) {
+        StringBuffer queryString = new StringBuffer();
 
-		Enumeration parameterNames = request.getParameterNames();
-		if (parameterNames != null) {
-			while(parameterNames.hasMoreElements()) {
-				String parameterName = (String) parameterNames.nextElement();
-				String[] parameterValues = request.getParameterValues(parameterName);
-				for (int i = 0; i < parameterValues.length; i++) {
-					String parameterValue = parameterValues[i];
-					if (queryString.length() != 0) {
-						queryString.append("&");
-					}
-					queryString.append(parameterName);
-					queryString.append("=");
-					queryString.append(parameterValue);					
-				}
-			}
-		}
+        String requestQueryString = request.getQueryString();
+        if (requestQueryString != null) {
+            queryString.append(requestQueryString);
+        }
 
-		if (queryString.length() != 0) {
-			return queryString.toString();
-		} 
-			return null;
-		
-	}
+        Enumeration parameterNames = request.getParameterNames();
+        if (parameterNames != null) {
+            while (parameterNames.hasMoreElements()) {
+                String parameterName = (String) parameterNames.nextElement();
+                String[] parameterValues = request.getParameterValues(parameterName);
+                for (int i = 0; i < parameterValues.length; i++) {
+                    String parameterValue = parameterValues[i];
+                    if (queryString.length() != 0) {
+                        queryString.append("&");
+                    }
+                    queryString.append(parameterName);
+                    queryString.append("=");
+                    queryString.append(parameterValue);
+                }
+            }
+        }
+
+        if (queryString.length() != 0) {
+            return queryString.toString();
+        }
+        return null;
+
+    }
 
 }

@@ -3,108 +3,112 @@ package Dominio;
 import java.sql.Timestamp;
 
 /**
- *
- * @author  Fernanda Quitério e Tania Pousão
+ * 
+ * @author Fernanda Quitério e Tania Pousão
  */
 public class Regime {
-	private int _codigoInterno;
-	private String _sigla;
-	private String _designacao;
-	private int _quem;
-	private Timestamp _quando;
+    private int _codigoInterno;
 
-	/* Construtores */
-	public Regime() {
-		_codigoInterno = 0;
-		_sigla = null;
-		_designacao = null;
-		_quem = 0;
-		_quando = null;
-	}
+    private String _sigla;
 
-	public Regime(String designacao) {
-		_codigoInterno = 0;
-		_sigla = null;
-		_designacao = designacao;
-		_quem = 0;
-		_quando = null;
-	}
+    private String _designacao;
 
-	public Regime(String designacao, int quem, Timestamp quando) {
-		_codigoInterno = 0;
-		_sigla = null;
-		_designacao = designacao;
-		_quem = quem;
-		_quando = quando;
-	}
+    private int _quem;
 
-	public Regime(int codigoInterno, String designacao) {
-		_codigoInterno = codigoInterno;
-		_designacao = designacao;
-		_quem = 0;
-		_quando = null;
-	}
-	public Regime(int codigoInterno, String designacao, int quem, Timestamp quando) {
-		_codigoInterno = codigoInterno;
-		_sigla = null;
-		_designacao = designacao;
-		_quem = quem;
-		_quando = quando;
-	}
+    private Timestamp _quando;
 
-	/* Selectores */
-	public int getCodigoInterno() {
-		return _codigoInterno;
-	}
+    /* Construtores */
+    public Regime() {
+        _codigoInterno = 0;
+        _sigla = null;
+        _designacao = null;
+        _quem = 0;
+        _quando = null;
+    }
 
-	public String getSigla() {
-		return _sigla;
-	}
+    public Regime(String designacao) {
+        _codigoInterno = 0;
+        _sigla = null;
+        _designacao = designacao;
+        _quem = 0;
+        _quando = null;
+    }
 
-	public String getDesignacao() {
-		return _designacao;
-	}
+    public Regime(String designacao, int quem, Timestamp quando) {
+        _codigoInterno = 0;
+        _sigla = null;
+        _designacao = designacao;
+        _quem = quem;
+        _quando = quando;
+    }
 
-	public int getQuem() {
-		return _quem;
-	}
+    public Regime(int codigoInterno, String designacao) {
+        _codigoInterno = codigoInterno;
+        _designacao = designacao;
+        _quem = 0;
+        _quando = null;
+    }
 
-	public Timestamp getQuando() {
-		return _quando;
-	}
+    public Regime(int codigoInterno, String designacao, int quem, Timestamp quando) {
+        _codigoInterno = codigoInterno;
+        _sigla = null;
+        _designacao = designacao;
+        _quem = quem;
+        _quando = quando;
+    }
 
-	/* Modificadores */
-	public void setCodigoInterno(int codigoInterno) {
-		_codigoInterno = codigoInterno;
-	}
+    /* Selectores */
+    public int getCodigoInterno() {
+        return _codigoInterno;
+    }
 
-	public void setSigla(String sigla) {
-		_sigla = sigla;
-	}
+    public String getSigla() {
+        return _sigla;
+    }
 
-	public void setDesignacao(String designacao) {
-		_designacao = designacao;
-	}
+    public String getDesignacao() {
+        return _designacao;
+    }
 
-	public void setQuem(int quem) {
-		_quem = quem;
-	}
+    public int getQuem() {
+        return _quem;
+    }
 
-	public void setQuando(Timestamp quando) {
-		_quando = quando;
-	}
+    public Timestamp getQuando() {
+        return _quando;
+    }
 
-	/* teste da igualdade */
-	public boolean equals(Object obj) {
-		boolean resultado = false;
+    /* Modificadores */
+    public void setCodigoInterno(int codigoInterno) {
+        _codigoInterno = codigoInterno;
+    }
 
-		if (obj instanceof Regime) {
-			Regime regime = (Regime)obj;
+    public void setSigla(String sigla) {
+        _sigla = sigla;
+    }
 
-			resultado =
-				(this.getCodigoInterno() == regime.getCodigoInterno()
-					&& this.getDesignacao() == regime.getDesignacao());
-		}
-		return resultado;
-	}
+    public void setDesignacao(String designacao) {
+        _designacao = designacao;
+    }
+
+    public void setQuem(int quem) {
+        _quem = quem;
+    }
+
+    public void setQuando(Timestamp quando) {
+        _quando = quando;
+    }
+
+    /* teste da igualdade */
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+
+        if (obj instanceof Regime) {
+            Regime regime = (Regime) obj;
+
+            resultado = (this.getCodigoInterno() == regime.getCodigoInterno() && this.getDesignacao() == regime
+                    .getDesignacao());
+        }
+        return resultado;
+    }
 }

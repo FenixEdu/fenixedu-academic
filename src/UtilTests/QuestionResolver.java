@@ -12,22 +12,20 @@ import org.xml.sax.SAXException;
 
 /**
  * @author Susana Fernandes
- *
+ *  
  */
-public class QuestionResolver implements EntityResolver
-{
-	private String path;
-	private String xmlDocumentDtd = "WEB-INF/ims/qtiasiv1p2.dtd";
+public class QuestionResolver implements EntityResolver {
+    private String path;
 
-	public QuestionResolver(String dtdPath)
-	{
-		this.path = dtdPath;
-	}
+    private String xmlDocumentDtd = "WEB-INF/ims/qtiasiv1p2.dtd";
 
-	public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException
-	{
-		return new InputSource(new String("file:///" + path.concat(xmlDocumentDtd)));
+    public QuestionResolver(String dtdPath) {
+        this.path = dtdPath;
+    }
 
-	}
+    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+        return new InputSource(new String("file:///" + path.concat(xmlDocumentDtd)));
+
+    }
 
 }

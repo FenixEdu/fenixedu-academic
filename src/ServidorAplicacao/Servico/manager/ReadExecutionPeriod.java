@@ -3,11 +3,11 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -17,35 +17,18 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class ReadExecutionPeriod implements IServico {
-
-    private static ReadExecutionPeriod service = new ReadExecutionPeriod();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExecutionPeriod getService() {
-        return service;
-    }
+public class ReadExecutionPeriod implements IService {
 
     /**
      * The constructor of this class.
      */
-    private ReadExecutionPeriod() {
-    }
-
-    /**
-     * Service name
-     */
-    public final String getNome() {
-        return "ReadExecutionPeriodForExecutionCourseAssociation";
+    public ReadExecutionPeriod() {
     }
 
     /**
      * Executes the service. Returns the current infoExecutionPeriod.
      */
-    public InfoExecutionPeriod run(Integer executionPeriodId)
-            throws FenixServiceException {
+    public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException {
         ISuportePersistente sp;
         InfoExecutionPeriod infoExecutionPeriod = null;
         IExecutionPeriod executionPeriod = null;
@@ -53,17 +36,15 @@ public class ReadExecutionPeriod implements IServico {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            executionPeriod = (IExecutionPeriod) sp
-                    .getIPersistentExecutionPeriod().readByOID(
-                            ExecutionPeriod.class, executionPeriodId);
+            executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(
+                    ExecutionPeriod.class, executionPeriodId);
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
 
         if (executionPeriod == null) {
-            throw new NonExistingServiceException(
-                    "message.nonExistingExecutionPeriod", null);
+            throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
 
         infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);

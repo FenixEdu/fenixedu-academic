@@ -28,69 +28,59 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  */
 
-public class ReadQualifications implements IServico
-{
+public class ReadQualifications implements IServico {
 
-	private static ReadQualifications service = new ReadQualifications();
+    private static ReadQualifications service = new ReadQualifications();
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ReadQualifications getService()
-	{
-		return service;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadQualifications getService() {
+        return service;
+    }
 
-	/**
-	 * The constructor of this class.
-	 */
-	private ReadQualifications()
-	{
-	}
+    /**
+     * The constructor of this class.
+     */
+    private ReadQualifications() {
+    }
 
-	/**
-	 * The name of the service
-	 */
-	public final String getNome()
-	{
-		return "ReadQualifications";
-	}
+    /**
+     * The name of the service
+     */
+    public final String getNome() {
+        return "ReadQualifications";
+    }
 
-	/**
-	 * Executes the service
-	 */
-	public InfoSiteQualifications run(String user) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+    /**
+     * Executes the service
+     */
+    public InfoSiteQualifications run(String user) throws FenixServiceException {
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentQualification persistentQualification = sp.getIPersistentQualification();
+            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
-			IPessoa person = persistentPerson.lerPessoaPorUsername(user);
+            IPessoa person = persistentPerson.lerPessoaPorUsername(user);
             InfoPerson infoPerson = InfoPersonWithInfoCountry.newInfoFromDomain(person);
-			List qualifications = persistentQualification.readQualificationsByPerson(person);
+            List qualifications = persistentQualification.readQualificationsByPerson(person);
 
-			List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer()
-			{
-				public Object transform(Object o)
-				{
-					IQualification qualification = (IQualification) o;
-					return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
-				}
-			});
-            
+            List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
+                public Object transform(Object o) {
+                    IQualification qualification = (IQualification) o;
+                    return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
+                }
+            });
+
             InfoSiteQualifications infoSiteQualifications = new InfoSiteQualifications();
             infoSiteQualifications.setInfoQualifications(infoQualifications);
             infoSiteQualifications.setInfoPerson(infoPerson);
-            
-			return infoSiteQualifications;
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		} catch (Exception e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
-	}
+
+            return infoSiteQualifications;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
+        } catch (Exception e) {
+            throw new FenixServiceException(e.getMessage());
+        }
+    }
 }

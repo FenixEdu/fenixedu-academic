@@ -9,7 +9,7 @@ import Dominio.ICurricularCourse;
 import Dominio.gesdis.IStudentCourseReport;
 import Dominio.gesdis.StudentCourseReport;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 
 /**
@@ -17,25 +17,23 @@ import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
  * @author Sergio Montelobo
  *  
  */
-public class StudentCourseReportOJB extends ObjectFenixOJB implements IPersistentStudentCourseReport
-{
+public class StudentCourseReportOJB extends PersistentObjectOJB implements
+        IPersistentStudentCourseReport {
 
     /**
-	 *  
-	 */
-    public StudentCourseReportOJB()
-    {
+     *  
+     */
+    public StudentCourseReportOJB() {
         super();
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
+     */
     public IStudentCourseReport readByCurricularCourse(ICurricularCourse curricularCourse)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());

@@ -10,8 +10,7 @@ import Dominio.IAula;
  * @author João Mota
  *  
  */
-public class InfoLessonWithInfoExecutionCourse extends
-        InfoLesson {
+public class InfoLessonWithInfoExecutionCourse extends InfoLesson {
 
     public void copyFromDomain(IAula lesson) {
         super.copyFromDomain(lesson);

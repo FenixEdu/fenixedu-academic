@@ -4,7 +4,6 @@
 
 package Util.tests;
 
-import java.util.Iterator;
 import java.util.List;
 
 import Util.FenixUtil;
@@ -51,8 +50,8 @@ public class ResponseProcessing extends FenixUtil {
         responseProcessingId = id;
     }
 
-    public ResponseProcessing(List responseConditions, Double responseValue,
-            Integer action, List feedback, boolean fenixCorrectResponse) {
+    public ResponseProcessing(List responseConditions, Double responseValue, Integer action,
+            List feedback, boolean fenixCorrectResponse) {
         this.responseConditions = responseConditions;
         this.responseValue = responseValue;
         this.action = action;
@@ -118,7 +117,7 @@ public class ResponseProcessing extends FenixUtil {
         else if (actionString.equals(MULTIPLY_STRING))
             return new Integer(MULTIPLY);
         else if (actionString.equals(DIVIDE_STRING))
-                return new Integer(DIVIDE);
+            return new Integer(DIVIDE);
         return null;
     }
 
@@ -131,62 +130,20 @@ public class ResponseProcessing extends FenixUtil {
             return SUBTRACT_STRING;
         else if (actionCode.intValue() == MULTIPLY)
             return MULTIPLY_STRING;
-        else if (actionCode.intValue() == DIVIDE) return DIVIDE_STRING;
+        else if (actionCode.intValue() == DIVIDE)
+            return DIVIDE_STRING;
         return null;
     }
 
-    public boolean isAllCorrect(String[] studentResponse) {
-        Iterator it = getResponseConditions().iterator();
-        boolean match = false;
-        while (it.hasNext()) {
-            ResponseCondition responseCondition = (ResponseCondition) it.next();
-            match = false;
-            for (int i = 0; i < studentResponse.length; i++) {
-                if (responseCondition.isCorrect(studentResponse[i])) {
-                    match = true;
-                }
-            }
-            if (!match) return false;
-        }
-        return true;
-    }
-
-    public boolean isAllCorrect(String studentResponse) {
-        Iterator it = getResponseConditions().iterator();
-        boolean match = false;
-        while (it.hasNext()) {
-            ResponseCondition responseCondition = (ResponseCondition) it.next();
-            if (responseCondition.isCorrect(studentResponse))
-                match = true;
-            else
-                return false;
-        }
-        if (!match) return false;
-        return true;
-    }
-
-    public boolean isAllCorrect(Double studentResponse) {
-        Iterator it = getResponseConditions().iterator();
-        boolean match = false;
-        while (it.hasNext()) {
-            ResponseCondition responseCondition = (ResponseCondition) it.next();
-            if (responseCondition.isCorrect(studentResponse))
-                match = true;
-            else
-                return false;
-        }
-        if (!match) return false;
-        return true;
-    }
-
-    public boolean isThisConditionListInResponseProcessingList(List rpList,
-            boolean lidQuestion) {
+    public boolean isThisConditionListInResponseProcessingList(List rpList, boolean lidQuestion) {
         for (int i = 0; i < rpList.size(); i++) {
             if (lidQuestion) {
-                if (!hasEqualVAREQUALConditionList(((ResponseProcessing) rpList
-                        .get(i)).getResponseConditions())) return false;
-            } else if (!hasEqualConditionList(((ResponseProcessing) rpList
-                    .get(i)).getResponseConditions())) return false;
+                if (!hasEqualVAREQUALConditionList(((ResponseProcessing) rpList.get(i))
+                        .getResponseConditions()))
+                    return false;
+            } else if (!hasEqualConditionList(((ResponseProcessing) rpList.get(i))
+                    .getResponseConditions()))
+                return false;
         }
         return true;
     }
@@ -194,12 +151,13 @@ public class ResponseProcessing extends FenixUtil {
     public boolean hasEqualConditionList(List rcList) {
         for (int i = 0; i < rcList.size(); i++) {
             ResponseCondition rc = (ResponseCondition) rcList.get(i);
-            if (!hasThisCondition(responseConditions, rc)) return false;
+            if (!hasThisCondition(responseConditions, rc))
+                return false;
         }
         for (int i = 0; i < responseConditions.size(); i++) {
-            ResponseCondition rc = (ResponseCondition) responseConditions
-                    .get(i);
-            if (!hasThisCondition(rcList, rc)) return false;
+            ResponseCondition rc = (ResponseCondition) responseConditions.get(i);
+            if (!hasThisCondition(rcList, rc))
+                return false;
         }
         return true;
     }
@@ -208,14 +166,14 @@ public class ResponseProcessing extends FenixUtil {
         for (int i = 0; i < rcList.size(); i++) {
             ResponseCondition rc = (ResponseCondition) rcList.get(i);
             if (rc.getCondition().intValue() == ResponseCondition.VAREQUAL)
-                    if (!hasThisCondition(responseConditions, rc))
-                            return false;
+                if (!hasThisCondition(responseConditions, rc))
+                    return false;
         }
         for (int i = 0; i < responseConditions.size(); i++) {
-            ResponseCondition rc = (ResponseCondition) responseConditions
-                    .get(i);
+            ResponseCondition rc = (ResponseCondition) responseConditions.get(i);
             if (rc.getCondition().intValue() == ResponseCondition.VAREQUAL)
-                    if (!hasThisCondition(rcList, rc)) return false;
+                if (!hasThisCondition(rcList, rc))
+                    return false;
         }
         return true;
     }
@@ -223,7 +181,8 @@ public class ResponseProcessing extends FenixUtil {
     public boolean hasThisCondition(List rcList, ResponseCondition rc) {
         for (int i = 0; i < rcList.size(); i++) {
             ResponseCondition thisRc = (ResponseCondition) rcList.get(i);
-            if (thisRc.equals(rc)) return true;
+            if (thisRc.equals(rc))
+                return true;
         }
         return false;
     }
@@ -231,12 +190,11 @@ public class ResponseProcessing extends FenixUtil {
     public String toXML(String feedback) {
         String result = new String("<respcondition>\n<conditionvar>\n");
         for (int i = 0; i < responseConditions.size(); i++)
-            result = result.concat(((ResponseCondition) responseConditions
-                    .get(i)).toXML());
-        result = result.concat("\n</conditionvar>\n<setvar action=\""
-                + getActionString(action) + "\">" + responseValue
-                + "\n</setvar>\n");
-        if (feedback != null) result = result.concat(feedback);
+            result = result.concat(((ResponseCondition) responseConditions.get(i)).toXML());
+        result = result.concat("\n</conditionvar>\n<setvar action=\"" + getActionString(action) + "\">"
+                + responseValue + "\n</setvar>\n");
+        if (feedback != null)
+            result = result.concat(feedback);
         result = result.concat("</respcondition>\n");
 
         return result;

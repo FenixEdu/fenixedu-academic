@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
 import DataBeans.InfoCurricularCourseWithInfoDegree;
@@ -11,7 +12,6 @@ import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IExecutionCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -22,23 +22,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
-
-    private static ReadCurricularCourseScopesByExecutionCourseID service = new ReadCurricularCourseScopesByExecutionCourseID();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadCurricularCourseScopesByExecutionCourseID getService() {
-        return service;
-    }
-
-    /**
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadCurricularCourseScopesByExecutionCourseID";
-    }
+public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
 
     public List run(Integer executionCourseID) throws FenixServiceException {
 
@@ -49,41 +33,32 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
 
             // Read The ExecutionCourse
 
-            IExecutionCourse executionCourse = (IExecutionCourse) sp
-                    .getIPersistentExecutionCourse().readByOID(
-                            ExecutionCourse.class, executionCourseID);
+            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                    .readByOID(ExecutionCourse.class, executionCourseID);
 
             // For all associated Curricular Courses read the Scopes
 
             infoCurricularCourses = new ArrayList();
-            Iterator iterator = executionCourse
-                    .getAssociatedCurricularCourses().iterator();
+            Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
             while (iterator.hasNext()) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iterator
-                        .next();
+                ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
-                List curricularCourseScopes = sp
-                        .getIPersistentCurricularCourseScope()
-                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
-                                curricularCourse,
+                List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
+                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse,
                                 executionCourse.getExecutionPeriod());
 
                 //CLONER
-                //InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+                //InfoCurricularCourse infoCurricularCourse = new
+                // InfoCurricularCourse();
                 //infoCurricularCourse = Cloner
                 //        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
+                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                        .newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes(new ArrayList());
 
                 Iterator scopeIterator = curricularCourseScopes.iterator();
                 while (scopeIterator.hasNext()) {
-                    //CLONER
-                    //infoCurricularCourse
-                    //        .getInfoScopes()
-                    //        .add(
-                    //                Cloner
-                    //                        .copyICurricularCourseScope2InfoCurricularCourseScope(((ICurricularCourseScope) scopeIterator
-                    //                                .next())));
+
                     infoCurricularCourse.getInfoScopes().add(
                             InfoCurricularCourseScopeWithBranchAndSemesterAndYear
                                     .newInfoFromDomain((ICurricularCourseScope) scopeIterator.next()));

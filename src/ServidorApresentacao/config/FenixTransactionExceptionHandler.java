@@ -20,38 +20,34 @@ import org.apache.struts.config.ExceptionConfig;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**
- * This handler requires that mapping receive should have a forward name 'beginTransaction'
+ * This handler requires that mapping receive should have a forward name
+ * 'beginTransaction'
+ * 
  * @author João Luz
  */
 public class FenixTransactionExceptionHandler extends ExceptionHandler {
 
-	public ActionForward execute(
-		Exception ex,
-		ExceptionConfig ae,
-		ActionMapping mapping,
-		ActionForm formInstance,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws ServletException {
-		
-		
-		ActionForward forward = null;
-		ActionError error = null;
-		String property = null;
+    public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
+            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException {
 
-		// Figure out the error
-		if (ex instanceof FenixActionException) {
-			error = ((FenixActionException) ex).getError();
-			property = ((FenixActionException) ex).getProperty();
-		} else {
-			error = new ActionError(ae.getKey(), ex.getMessage());
-			property = error.getKey();
-		}
-		// Store the exception
-		request.setAttribute(Globals.EXCEPTION_KEY, ex);
-		super.storeException(request, property, error, forward, ae.getScope());
+        ActionForward forward = null;
+        ActionError error = null;
+        String property = null;
 
-		return mapping.findForward("beginTransaction");
-	}
+        // Figure out the error
+        if (ex instanceof FenixActionException) {
+            error = ((FenixActionException) ex).getError();
+            property = ((FenixActionException) ex).getProperty();
+        } else {
+            error = new ActionError(ae.getKey(), ex.getMessage());
+            property = error.getKey();
+        }
+        // Store the exception
+        request.setAttribute(Globals.EXCEPTION_KEY, ex);
+        super.storeException(request, property, error, forward, ae.getScope());
+
+        return mapping.findForward("beginTransaction");
+    }
 
 }

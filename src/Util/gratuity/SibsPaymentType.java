@@ -7,10 +7,9 @@ import java.util.Map;
 import Util.FenixValuedEnum;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
 public final class SibsPaymentType extends FenixValuedEnum {
 
@@ -52,8 +51,8 @@ public final class SibsPaymentType extends FenixValuedEnum {
             "sibsPaymentType.masterDegree.gratuity.second.phase",
             SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE_TYPE);
 
-    public static final SibsPaymentType INSURANCE = new SibsPaymentType(
-            "sibsPaymentType.insurance", SibsPaymentType.INSURANCE_TYPE);
+    public static final SibsPaymentType INSURANCE = new SibsPaymentType("sibsPaymentType.insurance",
+            SibsPaymentType.INSURANCE_TYPE);
 
     /**
      * @param name

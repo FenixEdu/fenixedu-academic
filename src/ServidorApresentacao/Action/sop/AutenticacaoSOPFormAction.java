@@ -7,9 +7,9 @@
 package ServidorApresentacao.Action.sop;
 
 /**
- *
+ * 
  * @author tfc130
- **/
+ */
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,42 +27,29 @@ import framework.factory.ServiceManagerServiceFactory;
 
 public class AutenticacaoSOPFormAction extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		DynaActionForm autenticacaoForm = (DynaActionForm) form;
+        DynaActionForm autenticacaoForm = (DynaActionForm) form;
 
-		Object argsAutenticacao[] =
-			{
-				autenticacaoForm.get("utilizador"),
-				autenticacaoForm.get("password")};
+        Object argsAutenticacao[] = { autenticacaoForm.get("utilizador"),
+                autenticacaoForm.get("password") };
 
-		IUserView userView = null;
-		try {
-			userView =
-				(IUserView) ServiceManagerServiceFactory.executeService(
-					null,
-					"Autenticacao",
-					argsAutenticacao);
-		} catch (Exception e) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(
-				"invalidAuthentication",
-				new ActionError("errors.invalidAuthentication"));
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
+        IUserView userView = null;
+        try {
+            userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsAutenticacao);
+        } catch (Exception e) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("invalidAuthentication", new ActionError("errors.invalidAuthentication"));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
 
-		}
+        }
 
-		// Store the UserView into the session and return
-		request.setAttribute(SessionConstants.U_VIEW, userView);
-		request.setAttribute(
-			SessionConstants.SESSION_IS_VALID,
-			new Boolean(true));
-		return mapping.findForward("SOP");
-	}
+        // Store the UserView into the session and return
+        request.setAttribute(SessionConstants.U_VIEW, userView);
+        request.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
+        return mapping.findForward("SOP");
+    }
 }

@@ -36,8 +36,8 @@ public class dbaccess {
     public void openConnection() throws Exception {
         if (_connection == null) {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection jdbcConnection = DriverManager.getConnection(this
-                    .getDbName(), this.getUsername(), this.getPassword());
+            Connection jdbcConnection = DriverManager.getConnection(this.getDbName(),
+                    this.getUsername(), this.getPassword());
             _connection = new DatabaseConnection(jdbcConnection);
         }
     }

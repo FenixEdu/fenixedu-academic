@@ -17,8 +17,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 /**
  * @author jpvl
  */
-public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractReadProfessorshipsAction
-{
+public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractReadProfessorshipsAction {
 
     /*
      * (non-Javadoc)
@@ -27,23 +26,14 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
      *      java.lang.Integer, org.apache.struts.action.DynaActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
-    List getDetailedProfessorships(
-        IUserView userView,
-        Integer teacherId,
-        DynaActionForm actionForm,
-        HttpServletRequest request)
-        throws FenixServiceException
-    {
+    List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
+            HttpServletRequest request) throws FenixServiceException {
         Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
-        executionPeriodId =
-            ((executionPeriodId == null) || (executionPeriodId.intValue() == 0))
-                ? null
+        executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null
                 : executionPeriodId;
-        List detailedInfoProfessorshipList =
-            (List) ServiceUtils.executeService(
-                userView,
-                "ReadDetailedTeacherProfessorshipsByExecutionPeriod",
-                new Object[] { teacherId, executionPeriodId });
+        List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(userView,
+                "ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] { teacherId,
+                        executionPeriodId });
         return detailedInfoProfessorshipList;
     }
 

@@ -34,87 +34,75 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
-{
+public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase {
 
     public ReadExerciseTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testReadExerciseDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExercise";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = {"D3673", "pass", getApplication()};
+        String[] args = { "D3673", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = {"L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = {"L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
         Integer executionCourseId = new Integer(34033);
         Integer metadataId = new Integer(133);
         Integer variationId = new Integer(9333);
         String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
 
-        Object[] args = {executionCourseId, metadataId, variationId, path};
+        Object[] args = { executionCourseId, metadataId, variationId, path };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments1()
-    {
+    protected Object[] getAuthorizeArguments1() {
         Integer executionCourseId = new Integer(34033);
         Integer metadataId = new Integer(133);
         Integer variationId = new Integer(-1);
         String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
 
-        Object[] args = {executionCourseId, metadataId, variationId, path};
+        Object[] args = { executionCourseId, metadataId, variationId, path };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments2()
-    {
+    protected Object[] getAuthorizeArguments2() {
         Integer executionCourseId = new Integer(34033);
         Integer metadataId = new Integer(133);
         Integer variationId = new Integer(-2);
         String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
 
-        Object[] args = {executionCourseId, metadataId, variationId, path};
+        Object[] args = { executionCourseId, metadataId, variationId, path };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testSuccessfull()
-    {
+    public void testSuccessfull() {
 
-        try
-        {
+        try {
             authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
             Object[] args1 = getAuthorizeArguments1();
@@ -124,19 +112,14 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
             execute(args1);
             execute(args2);
 
-        }
-        catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("ReadExerciseTest " + ex);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("ReadExerciseTest " + ex);
         }
     }
 
-    private void execute(Object[] args) throws FenixServiceException, Exception
-    {
+    private void execute(Object[] args) throws FenixServiceException, Exception {
         SiteView serviceSiteView = (SiteView) ServiceManagerServiceFactory.executeService(userView,
                 getNameOfServiceToBeTested(), args);
 
@@ -156,24 +139,20 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
         Iterator it = metadata.getVisibleQuestions().iterator();
         List visibleInfoQuestions = new ArrayList();
         List xmlNames = new ArrayList();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             IQuestion question = (IQuestion) it.next();
             xmlNames.add(new LabelValueBean(question.getXmlFileName(), question.getIdInternal()
                     .toString()));
-            if ((question.getIdInternal().equals(args[2])) || ((Integer)args[2]).equals(new Integer(-2)))
-            {
+            if ((question.getIdInternal().equals(args[2]))
+                    || ((Integer) args[2]).equals(new Integer(-2))) {
                 InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
                 ParseQuestion parse = new ParseQuestion();
-                try
-                {
+                try {
                     infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion,
                             (String) args[3]);
                     infoQuestion.setResponseProcessingInstructions(parse.newResponseList(infoQuestion
                             .getResponseProcessingInstructions(), infoQuestion.getOptions()));
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
 
@@ -184,8 +163,7 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
 
         InfoMetadata serviceInfoMetadata = ((InfoSiteExercise) serviceSiteView.getComponent())
                 .getInfoMetadata();
-        if (!infoMetadata.getIdInternal().equals(
-				serviceInfoMetadata.getIdInternal()))
+        if (!infoMetadata.getIdInternal().equals(serviceInfoMetadata.getIdInternal()))
             fail("ReadExerciseTest " + "InfoMetadata notEqual");
 
         InfoExecutionCourse serviceInfoExecutionCourse = ((InfoSiteExercise) serviceSiteView
@@ -193,9 +171,11 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
         if (!((InfoExecutionCourse) Cloner.get(executionCourse)).equals(serviceInfoExecutionCourse))
             fail("ReadExerciseTest " + "InfoExecutionCourse notEqual");
 
-        /*List serviceQuestionNames = ((InfoSiteExercise) serviceSiteView.getComponent())
-                .getQuestionNames();
-        if (!(serviceQuestionNames.equals(xmlNames)))
-            fail("ReadExerciseTest " + "QuestionNamesList notEqual");*/
+        /*
+         * List serviceQuestionNames = ((InfoSiteExercise)
+         * serviceSiteView.getComponent()) .getQuestionNames(); if
+         * (!(serviceQuestionNames.equals(xmlNames))) fail("ReadExerciseTest " +
+         * "QuestionNamesList notEqual");
+         */
     }
 }

@@ -10,137 +10,137 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * @author João Mota
- *
- * 31/Jul/2003
- * fenix-head
- * fileSuport
  * 
+ * 31/Jul/2003 fenix-head fileSuport
+ *  
  */
-public class FileSuportObject implements Serializable{
+public class FileSuportObject implements Serializable {
 
-	private String uri;
-	private String fileName;
-	private String contentType;
-	private byte[] content;
-	private String linkName;
-	private String rootUri;
+    private String uri;
 
-	/**
-	 * 
-	 */
-	public FileSuportObject() {
-	}
+    private String fileName;
 
-	/**
-	 * @return
-	 */
-	public String getFileName() {
-		return fileName;
-	}
+    private String contentType;
 
-	/**
-	 * @param fileName
-	 */
-	public void setFileName(String fileName) {
-		try {
-			this.fileName =
-				new String(fileName.getBytes("ISO-8859-1"), "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			this.fileName = fileName;
-		}
-	}
+    private byte[] content;
 
-	/**
-	 * @return
-	 */
-	public boolean isStored() {
-		return false;
-	}
+    private String linkName;
 
-	/**
-	 * @return
-	 */
-	public String getUri() {
-		return uri;
-	}
+    private String rootUri;
 
-	/**
-	 * @param uri
-	 */
-	public void setUri(String uri) {
-		try {
-			this.uri = new String(uri.getBytes("ISO-8859-1"), "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			this.uri = uri;
-		}
+    /**
+     *  
+     */
+    public FileSuportObject() {
+    }
 
-	}
+    /**
+     * @return
+     */
+    public String getFileName() {
+        return fileName;
+    }
 
-	/**
-	 * @return
-	 */
-	public byte[] getContent() {
-		return content;
-	}
+    /**
+     * @param fileName
+     */
+    public void setFileName(String fileName) {
+        try {
+            this.fileName = new String(fileName.getBytes("ISO-8859-1"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            this.fileName = fileName;
+        }
+    }
 
-	/**
-	 * @param content
-	 */
-	public void setContent(byte[] content) {
-		this.content = content;
-	}
+    /**
+     * @return
+     */
+    public boolean isStored() {
+        return false;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getContentType() {
-		return contentType;
-	}
+    /**
+     * @return
+     */
+    public String getUri() {
+        return uri;
+    }
 
-	/**
-	 * @param contentType
-	 */
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+    /**
+     * @param uri
+     */
+    public void setUri(String uri) {
+        try {
+            this.uri = new String(uri.getBytes("ISO-8859-1"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            this.uri = uri;
+        }
 
-	/**
-	 * @return
-	 */
-	public String getLinkName() {
-		return linkName;
-	}
+    }
 
-	/**
-	 * @param linkName
-	 */
-	public void setLinkName(String linkName) {
-		try {
-			this.linkName =
-				new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			this.linkName = linkName;
-		}
-	}
+    /**
+     * @return
+     */
+    public byte[] getContent() {
+        return content;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRootUri() {
-		return rootUri;
-	}
+    /**
+     * @param content
+     */
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
 
-	/**
-	 * @param rootUri
-	 */
-	public void setRootUri(String rootUri) {
-		try {
-			this.rootUri =
-				new String(rootUri.getBytes("ISO-8859-1"), "ISO-8859-1");
-		} catch (UnsupportedEncodingException e) {
-			this.rootUri = rootUri;
-		}
+    /**
+     * @return
+     */
+    public String getContentType() {
+        return contentType;
+    }
 
-	}
+    /**
+     * @param contentType
+     */
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    /**
+     * @return
+     */
+    public String getLinkName() {
+        return linkName;
+    }
+
+    /**
+     * @param linkName
+     */
+    public void setLinkName(String linkName) {
+        try {
+            this.linkName = new String(linkName.getBytes("ISO-8859-1"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            this.linkName = linkName;
+        }
+    }
+
+    /**
+     * @return
+     */
+    public String getRootUri() {
+        return rootUri;
+    }
+
+    /**
+     * @param rootUri
+     */
+    public void setRootUri(String rootUri) {
+        try {
+            this.rootUri = new String(rootUri.getBytes("ISO-8859-1"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            this.rootUri = rootUri;
+        }
+
+    }
 
 }

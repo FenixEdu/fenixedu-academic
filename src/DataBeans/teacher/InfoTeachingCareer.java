@@ -10,66 +10,65 @@ import Util.CareerType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class InfoTeachingCareer extends InfoCareer
-{
-	private InfoCategory infoCategory;
-	private String courseOrPosition;
-    
+public class InfoTeachingCareer extends InfoCareer {
+    private InfoCategory infoCategory;
+
+    private String courseOrPosition;
+
     /**
-     * 
+     *  
      */
-    public InfoTeachingCareer()
-    {
+    public InfoTeachingCareer() {
         setCareerType(CareerType.TEACHING);
     }
 
     /**
      * @return Returns the courseOrPosition.
      */
-    public String getCourseOrPosition()
-    {
+    public String getCourseOrPosition() {
         return courseOrPosition;
     }
 
     /**
-     * @param courseOrPosition The courseOrPosition to set.
+     * @param courseOrPosition
+     *            The courseOrPosition to set.
      */
-    public void setCourseOrPosition(String courseOrPosition)
-    {
+    public void setCourseOrPosition(String courseOrPosition) {
         this.courseOrPosition = courseOrPosition;
     }
 
     /**
      * @return Returns the infoCategory.
      */
-    public InfoCategory getInfoCategory()
-    {
+    public InfoCategory getInfoCategory() {
         return infoCategory;
     }
 
     /**
-     * @param infoCategory The infoCategory to set.
+     * @param infoCategory
+     *            The infoCategory to set.
      */
-    public void setInfoCategory(InfoCategory infoCategory)
-    {
+    public void setInfoCategory(InfoCategory infoCategory) {
         this.infoCategory = infoCategory;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.teacher.InfoCareer#copyFromDomain(Dominio.teacher.ICareer)
      */
     public void copyFromDomain(ITeachingCareer teachingCareer) {
         super.copyFromDomain(teachingCareer);
-        if(teachingCareer != null) {
+        if (teachingCareer != null) {
             setCourseOrPosition(teachingCareer.getCourseOrPosition());
         }
     }
-    
-    public static InfoTeachingCareer newInfoFromDomain (ITeachingCareer teachingCareer) {
+
+    public static InfoTeachingCareer newInfoFromDomain(ITeachingCareer teachingCareer) {
         InfoTeachingCareer infoTeachingCareer = null;
-        if(teachingCareer != null) {
+        if (teachingCareer != null) {
             infoTeachingCareer = new InfoTeachingCareer();
             infoTeachingCareer.copyFromDomain(teachingCareer);
         }

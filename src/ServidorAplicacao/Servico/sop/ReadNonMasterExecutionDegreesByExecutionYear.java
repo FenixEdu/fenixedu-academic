@@ -16,83 +16,70 @@ import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
-public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico
-{
+public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
 
-    private static ReadNonMasterExecutionDegreesByExecutionYear service =
-        new ReadNonMasterExecutionDegreesByExecutionYear();
+    private static ReadNonMasterExecutionDegreesByExecutionYear service = new ReadNonMasterExecutionDegreesByExecutionYear();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadNonMasterExecutionDegreesByExecutionYear getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadNonMasterExecutionDegreesByExecutionYear getService() {
         return service;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadNonMasterExecutionDegreesByExecutionYear()
-    {
+     * The actor of this class.
+     */
+    private ReadNonMasterExecutionDegreesByExecutionYear() {
     }
 
     /**
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
         return "ReadNonMasterExecutionDegreesByExecutionYear";
     }
 
     /**
-	 * @param infoExecutionYear
-	 *            if this parameter is null it returns the current execution
-	 *            year
-	 * @return @throws
-	 *         FenixServiceException
-	 */
-    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException
-    {
+     * @param infoExecutionYear
+     *            if this parameter is null it returns the current execution
+     *            year
+     * @return @throws
+     *         FenixServiceException
+     */
+    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
-        ArrayList infoExecutionDegreeList = null;
+        List infoExecutionDegreeList = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IExecutionYear executionYear;
-            if (infoExecutionYear == null)
-            {
+            if (infoExecutionYear == null) {
                 IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
                 executionYear = executionYearDAO.readCurrentExecutionYear();
-            }
-            else
-            {
+            } else {
                 executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
             }
 
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-            List executionDegrees =
-                executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear, new TipoCurso(1));
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+            List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
+                    new TipoCurso(1));
 
             Iterator iterator = executionDegrees.iterator();
             infoExecutionDegreeList = new ArrayList();
 
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-                infoExecutionDegreeList.add(
-                    Cloner.get(executionDegree));
+                infoExecutionDegreeList.add(Cloner.get(executionDegree));
             }
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
         return infoExecutionDegreeList;

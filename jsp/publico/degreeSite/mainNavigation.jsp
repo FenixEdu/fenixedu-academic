@@ -5,28 +5,21 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <ul class="treemenu">
-	<li><a href="http://www.ist.utl.pt/pt/informacoes/">Informação</a></li>
-  <li><a href="http://www.ist.utl.pt/pt/estrutura_interna/">Estrutura</a></li>
-  <li><a href="http://www.ist.utl.pt/html/servicos/serv.shtml">Serviços</a></li>
-  <li class="treenode"><a href="">Ensino</a>
+	<li><a href="/html/destaques/">Destaques</a></li>
+	<li><a href="/html/instituto/">Instituto</a></li>
+	<li><a href="/html/estrutura/">Estrutura</a></li>
+  	<li class="treenode"><a href="">Ensino</a>
 		<ul class="expmenu">
-			<li><html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>
+			<li><html:link page="<%= "/showDegrees.do?method=nonMaster" %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>
+<%-- &executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) --%>
 			<li><a href="http://www.ist.utl.pt/html/ensino/pos_grad.html">Pós-graduações</a></li>
 			<li><html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.master"/></html:link></li>
 			<li><a href="http://www.ist.utl.pt/html/ensino/doutoramentos.html">Doutoramentos</a></li>
 		</ul>
 	</li>
-  <li><a href="http://www.ist.utl.pt/pt/investigacao/">I &amp; D</a></li>
-</ul>
-
-<ul class="treemenu">
-	<li><a href="http://gape.ist.utl.pt/acesso/">Ingressos</a></li>
-  <li><a href="http://alumni.ist.utl.pt/">Saídas</a></li>
-</ul>
-
-<ul class="treemenu">
-	<li><a href="http://istpress.ist.utl.pt/">IST Press</a></li>
-  <li><a href="http://www.ist.utl.pt/pt/ligacao_sociedade/">Sociedade &amp; IST</a></li>
-  <li><a href="http://www.ist.utl.pt/pt/viver_ist/">Viver no IST</a></li>
-  <li><a href="http://www.utl.pt/">Universidade</a></li>
+	<li><a href="/html/id/">I &amp; D</a></li>
+	<li><a href="/html/sociedade/">Liga&ccedil;&atilde;o &agrave; Sociedade </a></li>
+	<li><a href="/html/viverist/">Viver no IST</a></li>
+	 <li><a href="http://www.ist.utl.pt/html/recursos/">Recursos</a></li> 
+	<%--	<li><html:link page="<%= "/prepareConsultRoomsNew.do?method=prepare" %>" >Recursos</html:link></li>--%>
 </ul>

@@ -9,8 +9,7 @@ import Util.PaymentType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class JavaPaymentType2SqlPaymentTypeFieldConversion implements
-        FieldConversion {
+public class JavaPaymentType2SqlPaymentTypeFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object source) {
         if (source instanceof PaymentType) {

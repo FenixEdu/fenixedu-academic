@@ -5,6 +5,7 @@ package ServidorAplicacao.Servico.manager;
 
 import java.util.Calendar;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurriculum;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
@@ -12,7 +13,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.IExecutionYear;
 import Dominio.IPessoa;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -27,54 +27,26 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class EditCurriculum implements IServico {
-
-    private static EditCurriculum service = new EditCurriculum();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static EditCurriculum getService() {
-
-        return service;
-    }
-
-    /**
-     * The constructor of this class.
-     */
-    private EditCurriculum() {
-
-    }
-
-    /**
-     * Service name
-     */
-    public final String getNome() {
-
-        return "EditCurriculum";
-    }
+public class EditCurriculum implements IService {
 
     /**
      * Executes the service.
      */
 
-    public void run(InfoCurriculum infoCurriculum, String language,
-            String username) throws FenixServiceException {
+    public void run(InfoCurriculum infoCurriculum, String language, String username)
+            throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
                     .getIPersistentCurricularCourse();
-            IPessoaPersistente persistentPerson = persistentSuport
-                    .getIPessoaPersistente();
-            IPersistentCurriculum persistentCurriculum = persistentSuport
-                    .getIPersistentCurriculum();
+            IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
+            IPersistentCurriculum persistentCurriculum = persistentSuport.getIPersistentCurriculum();
             IPersistentExecutionYear persistentExecutionYear = persistentSuport
                     .getIPersistentExecutionYear();
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, infoCurriculum
-                            .getInfoCurricularCourse().getIdInternal());
+                    .readByOID(CurricularCourse.class, infoCurriculum.getInfoCurricularCourse()
+                            .getIdInternal());
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();
             }
@@ -99,26 +71,19 @@ public class EditCurriculum implements IServico {
                 persistentCurriculum.simpleLockWrite(curriculum);
             }
 
-            IExecutionYear currentExecutionYear = persistentExecutionYear
-                    .readCurrentExecutionYear();
+            IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
 
             // modification of curriculum is made in context of an execution
             // year
-            if (!curriculum.getLastModificationDate().before(
-                    currentExecutionYear.getBeginDate())
-                    && !curriculum.getLastModificationDate().after(
-                            currentExecutionYear.getEndDate())) {
+            if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
+                    && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
                 if (language == null) {
-                    curriculum.setGeneralObjectives(infoCurriculum
-                            .getGeneralObjectives());
-                    curriculum.setOperacionalObjectives(infoCurriculum
-                            .getOperacionalObjectives());
+                    curriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
+                    curriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
                     curriculum.setProgram(infoCurriculum.getProgram());
                 } else {
-                    curriculum.setGeneralObjectivesEn(infoCurriculum
-                            .getGeneralObjectivesEn());
-                    curriculum.setOperacionalObjectivesEn(infoCurriculum
-                            .getOperacionalObjectivesEn());
+                    curriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
+                    curriculum.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
                     curriculum.setProgramEn(infoCurriculum.getProgramEn());
                 }
                 curriculum.setPersonWhoAltered(person);
@@ -131,16 +96,13 @@ public class EditCurriculum implements IServico {
 
                 newCurriculum.setCurricularCourse(curricularCourse);
                 if (language == null) {
-                    newCurriculum.setGeneralObjectives(infoCurriculum
-                            .getGeneralObjectives());
-                    newCurriculum.setOperacionalObjectives(infoCurriculum
-                            .getOperacionalObjectives());
+                    newCurriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
+                    newCurriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
                     newCurriculum.setProgram(infoCurriculum.getProgram());
                 } else {
-                    newCurriculum.setGeneralObjectivesEn(infoCurriculum
-                            .getGeneralObjectivesEn());
-                    newCurriculum.setOperacionalObjectivesEn(infoCurriculum
-                            .getOperacionalObjectivesEn());
+                    newCurriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
+                    newCurriculum
+                            .setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
                     newCurriculum.setProgramEn(infoCurriculum.getProgramEn());
                 }
                 newCurriculum.setPersonWhoAltered(person);

@@ -26,41 +26,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadDistributedTest implements IService {
 
-	public ReadDistributedTest() {
-	}
+    public ReadDistributedTest() {
+    }
 
-	public SiteView run(Integer executionCourseId, Integer distributedTestId)
-			throws FenixServiceException {
+    public SiteView run(Integer executionCourseId, Integer distributedTestId)
+            throws FenixServiceException {
 
-		ISuportePersistente persistentSuport;
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport;
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-					.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-					.readByOID(ExecutionCourse.class, executionCourseId);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
-			IDistributedTest distributedTest = (IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest().readByOID(
-							DistributedTest.class, distributedTestId);
-			if (distributedTest == null)
-				throw new InvalidArgumentsServiceException();
+            IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+                    .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+            if (distributedTest == null)
+                throw new InvalidArgumentsServiceException();
 
-			InfoDistributedTest infoDistributedTest = InfoDistributedTest
-					.newInfoFromDomain(distributedTest);
-			InfoSiteDistributedTest bodyComponent = new InfoSiteDistributedTest();
-			bodyComponent.setInfoDistributedTest(infoDistributedTest);
-			bodyComponent.setExecutionCourse(InfoExecutionCourse
-					.newInfoFromDomain(executionCourse));
-			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
-					bodyComponent);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            InfoDistributedTest infoDistributedTest = InfoDistributedTest
+                    .newInfoFromDomain(distributedTest);
+            InfoSiteDistributedTest bodyComponent = new InfoSiteDistributedTest();
+            bodyComponent.setInfoDistributedTest(infoDistributedTest);
+            bodyComponent.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+            return siteView;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

@@ -21,8 +21,8 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
      */
     public EditReimbursementGuideTest(String testName) {
         super(testName);
-        if (testName.equals("")) {
-            this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/guide/reimbursementGuide/testEditReimbursementGuideWhenActualStateIsEqualToPayedDataSet.xml";
+        if (testName.equals("testSucessfullWhenNewStateIsEqualToPayed")) {
+            this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/guide/reimbursementGuide/testEditReimbursementGuideWhenNewStateIsEqualToPayedDataSet.xml";
         } else {
             this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/guide/reimbursementGuide/testEditReimbursementGuideDataSet.xml";
         }
@@ -34,7 +34,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
 
     protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
         Object[] args = { new Integer(1), ReimbursementGuideState.PAYED,
-                Calendar.getInstance().getTime(), "Some Remarks", null};
+                Calendar.getInstance().getTime(), "Some Remarks", null };
 
         return args;
     }
@@ -43,7 +43,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             throws FenixServiceException {
         Object[] args = { new Integer(1), ReimbursementGuideState.PAYED,
                 Calendar.getInstance().getTime(), "Some Remarks",
-                userViewNotAuthorized};
+                userViewNotAuthorized };
 
         return args;
     }
@@ -56,7 +56,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             Date date = Calendar.getInstance().getTime();
 
             Object createArgs[] = { reimbursementGuideId, "approved", date, "",
-                    userView};
+                    userView };
 
             ServiceManagerServiceFactory.executeService(userView,
                     getNameOfServiceToBeTested(), createArgs);
@@ -78,7 +78,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             Date date = Calendar.getInstance().getTime();
 
             Object createArgs[] = { reimbursementGuideId, "issued", date, "",
-                    userView};
+                    userView };
 
             ServiceManagerServiceFactory.executeService(userView,
                     getNameOfServiceToBeTested(), createArgs);
@@ -103,7 +103,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             Date date = Calendar.getInstance().getTime();
 
             Object createArgs[] = { reimbursementGuideId, "payed", date, "",
-                    userView};
+                    userView };
 
             ServiceManagerServiceFactory.executeService(userView,
                     getNameOfServiceToBeTested(), createArgs);
@@ -123,7 +123,7 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
             Date date = Calendar.getInstance().getTime();
 
             Object createArgs[] = { reimbursementGuideId, "issued", date, "",
-                    userView};
+                    userView };
 
             ServiceManagerServiceFactory.executeService(userView,
                     getNameOfServiceToBeTested(), createArgs);
@@ -139,14 +139,14 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
         }
 
     }
-    
+
     public void testEditWhenActualStateIsEqualToPayed() {
         try {
             Integer reimbursementGuideId = new Integer(1);
             Date date = Calendar.getInstance().getTime();
 
             Object createArgs[] = { reimbursementGuideId, "issued", date, "",
-                    userView};
+                    userView };
 
             ServiceManagerServiceFactory.executeService(userView,
                     getNameOfServiceToBeTested(), createArgs);
@@ -162,14 +162,14 @@ public class EditReimbursementGuideTest extends AdministrativeOfficeBaseTest {
         }
 
     }
-    
+
     public void testEditWhenActualStateIsEqualToAnulled() {
         try {
             Integer reimbursementGuideId = new Integer(1);
             Date date = Calendar.getInstance().getTime();
 
             Object createArgs[] = { reimbursementGuideId, "issued", date, "",
-                    userView};
+                    userView };
 
             ServiceManagerServiceFactory.executeService(userView,
                     getNameOfServiceToBeTested(), createArgs);

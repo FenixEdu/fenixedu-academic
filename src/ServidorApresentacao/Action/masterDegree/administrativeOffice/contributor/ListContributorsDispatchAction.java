@@ -16,13 +16,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoContributor;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
@@ -32,9 +31,8 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ListContributorsDispatchAction extends DispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -62,9 +60,8 @@ public class ListContributorsDispatchAction extends DispatchAction {
 
     }
 
-    public ActionForward getContributors(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward getContributors(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -72,54 +69,46 @@ public class ListContributorsDispatchAction extends DispatchAction {
 
             DynaActionForm createCandidateForm = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session
-                    .getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             // Get the Information
 
-            String contributorNumberString = (String) createCandidateForm
-                    .get("contributorNumber");
+            String contributorNumberString = (String) createCandidateForm.get("contributorNumber");
             Integer contributorNumber = null;
-            if ((contributorNumberString != null)
-                    && (contributorNumberString.length() != 0))
+            if ((contributorNumberString != null) && (contributorNumberString.length() != 0))
                 contributorNumber = new Integer(contributorNumberString);
 
             List contributors = null;
 
             Object args[] = { contributorNumber };
             try {
-                contributors = (List) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadContributorList", args);
+                contributors = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadContributorList", args);
             } catch (Exception e) {
                 throw new Exception(e);
             }
 
             if (contributors.size() == 1) {
-                InfoContributor infoContributor = (InfoContributor) contributors
-                        .get(0);
+                InfoContributor infoContributor = (InfoContributor) contributors.get(0);
                 session.removeAttribute(SessionConstants.CONTRIBUTOR);
-                session.setAttribute(SessionConstants.CONTRIBUTOR,
-                        infoContributor);
+                session.setAttribute(SessionConstants.CONTRIBUTOR, infoContributor);
                 return mapping.findForward("ActionReady");
             }
 
             session.removeAttribute(SessionConstants.CONTRIBUTOR_LIST);
-            session.setAttribute(SessionConstants.CONTRIBUTOR_LIST,
-                    contributors);
+            session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributors);
             return mapping.findForward("ChooseContributor");
         }
         throw new Exception();
     }
 
-    public ActionForward chooseContributor(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward chooseContributor(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            List contributorList = (List) session
-                    .getAttribute(SessionConstants.CONTRIBUTOR_LIST);
+            List contributorList = (List) session.getAttribute(SessionConstants.CONTRIBUTOR_LIST);
 
             Integer choosenContributorPosition = Integer.valueOf(request
                     .getParameter("contributorPosition"));
@@ -135,9 +124,8 @@ public class ListContributorsDispatchAction extends DispatchAction {
         throw new Exception();
     }
 
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -149,12 +137,10 @@ public class ListContributorsDispatchAction extends DispatchAction {
 
             // Fill in The Form
 
-            editContributorForm.set("contributorNumber", String
-                    .valueOf(infoContributor.getContributorNumber()));
-            editContributorForm.set("contributorName", infoContributor
-                    .getContributorName());
-            editContributorForm.set("contributorAddress", infoContributor
-                    .getContributorAddress());
+            editContributorForm.set("contributorNumber", String.valueOf(infoContributor
+                    .getContributorNumber()));
+            editContributorForm.set("contributorName", infoContributor.getContributorName());
+            editContributorForm.set("contributorAddress", infoContributor.getContributorAddress());
 
             return mapping.findForward("EditReady");
 
@@ -162,41 +148,34 @@ public class ListContributorsDispatchAction extends DispatchAction {
         throw new Exception();
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
         if (session != null) {
             DynaActionForm editContributorForm = (DynaActionForm) form;
 
-            IUserView userView = (IUserView) session
-                    .getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             InfoContributor infoContributor = (InfoContributor) session
                     .getAttribute(SessionConstants.CONTRIBUTOR);
 
             // Get the Information
-            String contributorNumberString = (String) editContributorForm
-                    .get("contributorNumber");
+            String contributorNumberString = (String) editContributorForm.get("contributorNumber");
             Integer contributorNumber = new Integer(contributorNumberString);
-            String contributorName = (String) editContributorForm
-                    .get("contributorName");
-            String contributorAddress = (String) editContributorForm
-                    .get("contributorAddress");
+            String contributorName = (String) editContributorForm.get("contributorName");
+            String contributorAddress = (String) editContributorForm.get("contributorAddress");
 
-            Object args[] = { infoContributor, contributorNumber,
-                    contributorName, contributorAddress };
+            Object args[] = { infoContributor, contributorNumber, contributorName, contributorAddress };
             InfoContributor newInfoContributor = null;
             try {
-                newInfoContributor = (InfoContributor) ServiceManagerServiceFactory
-                        .executeService(userView, "EditContributor", args);
+                newInfoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(
+                        userView, "EditContributor", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException("O Contribuinte", e);
             }
 
-            session.setAttribute(SessionConstants.CONTRIBUTOR,
-                    newInfoContributor);
+            session.setAttribute(SessionConstants.CONTRIBUTOR, newInfoContributor);
             return mapping.findForward("EditSuccess");
 
         }

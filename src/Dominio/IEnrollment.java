@@ -3,8 +3,8 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
-import Util.EnrolmentEvaluationType;
 import Util.EnrollmentState;
+import Util.EnrolmentEvaluationType;
 import Util.enrollment.EnrollmentCondition;
 
 /**
@@ -36,8 +36,7 @@ public interface IEnrollment extends IDomainObject {
 
     public void setCurricularCourse(ICurricularCourse curricularCourse);
 
-    public void setStudentCurricularPlan(
-            IStudentCurricularPlan studentCurricularPlan);
+    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
 
     public void setExecutionPeriod(IExecutionPeriod executionPeriod);
 
@@ -50,5 +49,9 @@ public interface IEnrollment extends IDomainObject {
     public void setCondition(EnrollmentCondition condition);
 
     public void setAccumulatedWeight(Integer accumulatedWeight);
+
+    public String getCreatedBy();
+
+    public void setCreatedBy(String createdBy);
 
 }

@@ -1,0 +1,82 @@
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.Curriculum -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.Curriculum"
+                  table="CURRICULUM">
+    <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+    <field-descriptor
+        name="keyCurricularCourse"
+        column="KEY_CURRICULAR_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+        name="generalObjectives"
+        column="GENERAL_OBJECTIVES"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="operacionalObjectives"
+        column="OPERACIONAL_OBJECTIVES"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="program"
+        column="PROGRAM"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="generalObjectivesEn"
+        column="GENERAL_OBJECTIVES_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="operacionalObjectivesEn"
+        column="OPERACIONAL_OBJECTIVES_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+	<field-descriptor
+        name="programEn"
+        column="PROGRAM_EN"
+        jdbc-type="LONGVARCHAR"
+	/>
+    <field-descriptor
+    	name="lastModificationDate"	
+    	column="LAST_MODIFICATION_DATE"
+    	jdbc-type="DATE"    	
+    />    
+    <field-descriptor
+        name="keyPersonWhoAltered"
+        column="KEY_PERSON_WHO_ALTERED"
+        jdbc-type="INTEGER"
+	/>
+    
+    <reference-descriptor    	
+         name="curricularCourse"
+         class-ref="Dominio.CurricularCourse"
+         refresh="true"
+         proxy="true"
+    >
+	<foreignkey field-ref="keyCurricularCourse"/>
+    </reference-descriptor>
+    
+    <reference-descriptor    	
+         name="personWhoAltered"
+         class-ref="Dominio.Pessoa"
+         refresh="true"
+         proxy="true"
+    >
+	<foreignkey field-ref="keyPersonWhoAltered"/>
+    </reference-descriptor>
+</class-descriptor>

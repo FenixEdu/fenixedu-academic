@@ -4,7 +4,7 @@ public class NotExecuteException extends Exception {
 
     public NotExecuteException() {
     }
-    
+
     public NotExecuteException(String s) {
         super(s);
     }

@@ -26,22 +26,16 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author João Mota
- *
+ *  
  */
-public class ViewShiftTimeTableAction extends FenixContextAction
-{
+public class ViewShiftTimeTableAction extends FenixContextAction {
 
     /**
      * Constructor for ViewClassTimeTableAction.
      */
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         String shiftName = request.getParameter("shiftName");
 
@@ -49,18 +43,15 @@ public class ViewShiftTimeTableAction extends FenixContextAction
             return mapping.getInputForward();
         InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
 
-        Object[] args = { new ShiftKey(shiftName, infoExecutionCourse)};
+        Object[] args = { new ShiftKey(shiftName, infoExecutionCourse) };
         List lessons = (List) ServiceUtils.executeService(null, "LerAulasDeTurno", args);
 
         Object argsReadCurricularCourseListOfExecutionCourse[] = { infoExecutionCourse };
-        List infoCurricularCourses =
-            (List) ServiceManagerServiceFactory.executeService(
-                null,
+        List infoCurricularCourses = (List) ServiceManagerServiceFactory.executeService(null,
                 "ReadCurricularCourseListOfExecutionCourse",
                 argsReadCurricularCourseListOfExecutionCourse);
 
-        if (infoCurricularCourses != null && !infoCurricularCourses.isEmpty())
-        {
+        if (infoCurricularCourses != null && !infoCurricularCourses.isEmpty()) {
             request.setAttribute("publico.infoCurricularCourses", infoCurricularCourses);
         }
 

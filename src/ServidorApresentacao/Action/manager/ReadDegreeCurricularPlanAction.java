@@ -35,7 +35,10 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer degreeCurricularPlanId = null;
+        if (request.getParameter("degreeCurricularPlanId") != null) {
+            degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        }
 
         Object args[] = { degreeCurricularPlanId };
 

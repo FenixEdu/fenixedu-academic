@@ -15,32 +15,27 @@ import Util.renderer.container.RequestEntry;
 
 public class BarChart extends Chart {
 
-	public BarChart(SortedSet requestEntries, String title, String filename,
-			int numElementsToShow) {
+    public BarChart(SortedSet requestEntries, String title, String filename, int numElementsToShow) {
 
-		super(title);
+        super(title);
 
-		DefaultCategoryDataset data = new DefaultCategoryDataset();
-		Iterator iterator = requestEntries.iterator();
-		while (iterator.hasNext() && data.getColumnCount() < numElementsToShow) {
-			RequestEntry requestEntry = (RequestEntry) iterator
-					.next();
-			data.addValue(requestEntry.getAverageExecutionTime(), "Top "
-					+ numElementsToShow + " Requests", ""
-					+ (data.getColumnCount() + 1));
-		}
+        DefaultCategoryDataset data = new DefaultCategoryDataset();
+        Iterator iterator = requestEntries.iterator();
+        while (iterator.hasNext() && data.getColumnCount() < numElementsToShow) {
+            RequestEntry requestEntry = (RequestEntry) iterator.next();
+            data.addValue(requestEntry.getAverageExecutionTime(), "Top " + numElementsToShow
+                    + " Requests", "" + (data.getColumnCount() + 1));
+        }
 
-		JFreeChart chart = ChartFactory.createBarChart("Top "
-				+ numElementsToShow + " Requests", "", "Time (ms)", data,
-				PlotOrientation.VERTICAL, false, true, true);
-		setChart(chart);
+        JFreeChart chart = ChartFactory.createBarChart("Top " + numElementsToShow + " Requests", "",
+                "Time (ms)", data, PlotOrientation.VERTICAL, false, true, true);
+        setChart(chart);
 
-		CategoryPlot plot = getChart().getCategoryPlot();
-		plot.getDomainAxis().setCategoryLabelPositions(
-				CategoryLabelPositions.STANDARD);
-		plot.getRenderer().setSeriesPaint(0, Color.blue);
+        CategoryPlot plot = getChart().getCategoryPlot();
+        plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.STANDARD);
+        plot.getRenderer().setSeriesPaint(0, Color.blue);
 
-		createChart();
-		saveChart(500, 300, filename);
-	}
+        createChart();
+        saveChart(500, 300, filename);
+    }
 }

@@ -3,6 +3,20 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <logic:present role="role.department.member">
+	<strong>&raquo; <bean:message key="link.group.view.title"/></strong>
+	<br />
+	<br />
+		
+	<ul>
+		<li>
+			<html:link page="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare">
+				<bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
+	<br />
+	<br />
+
 	<logic:present role="role.department.credits.manager">
 		<strong>&raquo; <bean:message key="link.group.teacher.title"/></strong>
 		<br />

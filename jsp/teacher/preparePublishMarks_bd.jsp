@@ -33,6 +33,9 @@
 					<html:checkbox property="sendSMS"/>
 					<span class="error"><html:errors property="sendSMS"/></span>
 				</td>
+				<td>
+				<span class="error">Serviço Indisponível</span>
+				</td>
 			</tr>
 		</table>
 		<br />

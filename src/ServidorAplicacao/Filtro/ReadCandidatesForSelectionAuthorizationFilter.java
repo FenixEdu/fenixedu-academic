@@ -36,14 +36,13 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && !hasPrivilege(id,
-                        argumentos)) || (id == null) || (id.getRoles() == null)) {
+                || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
+                || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -87,9 +86,8 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = (CursoExecucao) SuportePersistenteOJB
-                    .getInstance().getICursoExecucaoPersistente().readByOID(
-                            CursoExecucao.class, executionDegreeID);
+            executionDegree = (CursoExecucao) SuportePersistenteOJB.getInstance()
+                    .getIPersistentExecutionDegree().readByOID(CursoExecucao.class, executionDegreeID);
 
         } catch (Exception e) {
             return false;
@@ -102,8 +100,8 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
-            if (executionDegree.getCurricularPlan().getDegree().getTipoCurso()
-                    .equals(TipoCurso.MESTRADO_OBJ)) {
+            if (executionDegree.getCurricularPlan().getDegree().getTipoCurso().equals(
+                    TipoCurso.MESTRADO_OBJ)) {
 
                 return true;
             }
@@ -121,19 +119,16 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
                 // ALWAYS the same
 
                 //modified by Tânia Pousão
-                List coodinatorsList = SuportePersistenteOJB.getInstance()
-                        .getIPersistentCoordinator()
+                List coodinatorsList = SuportePersistenteOJB.getInstance().getIPersistentCoordinator()
                         .readCoordinatorsByExecutionDegree(executionDegree);
                 if (coodinatorsList == null) {
                     return false;
                 }
                 ListIterator listIterator = coodinatorsList.listIterator();
                 while (listIterator.hasNext()) {
-                    ICoordinator coordinator = (ICoordinator) listIterator
-                            .next();
+                    ICoordinator coordinator = (ICoordinator) listIterator.next();
 
-                    if (id.getUtilizador().equals(
-                            coordinator.getTeacher().getPerson().getUsername())) {
+                    if (id.getUtilizador().equals(coordinator.getTeacher().getPerson().getUsername())) {
                         return true;
                     }
                 }

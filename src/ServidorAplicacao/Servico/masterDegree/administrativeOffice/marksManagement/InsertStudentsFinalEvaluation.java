@@ -29,8 +29,8 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricul
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -38,21 +38,17 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Fernanda Quitério
  */
-public class InsertStudentsFinalEvaluation implements IService
-{
+public class InsertStudentsFinalEvaluation implements IService {
 
-    public InsertStudentsFinalEvaluation()
-    {
+    public InsertStudentsFinalEvaluation() {
 
     }
 
     public List run(List evaluations, Integer teacherNumber, Date evaluationDate, IUserView userView)
-            throws FenixServiceException
-    {
+            throws FenixServiceException {
 
         List infoEvaluationsWithError = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
                     .getIPersistentEnrolmentEvaluation();
@@ -66,8 +62,7 @@ public class InsertStudentsFinalEvaluation implements IService
 
             infoEvaluationsWithError = new ArrayList();
             ListIterator iterEnrolmentEvaluations = evaluations.listIterator();
-            while (iterEnrolmentEvaluations.hasNext())
-            {
+            while (iterEnrolmentEvaluations.hasNext()) {
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) iterEnrolmentEvaluations
                         .next();
 
@@ -75,35 +70,26 @@ public class InsertStudentsFinalEvaluation implements IService
                 IEnrolmentEvaluation enrolmentEvaluationFromDb = getEnrolmentEvaluation(
                         persistentEnrolmentEvaluation, infoEnrolmentEvaluation);
                 if (infoEnrolmentEvaluation.getGrade() == null
-                        || infoEnrolmentEvaluation.getGrade().length() == 0)
-                {
+                        || infoEnrolmentEvaluation.getGrade().length() == 0) {
                     if (enrolmentEvaluationFromDb.getGrade() != null
-                            && enrolmentEvaluationFromDb.getGrade().length() > 0)
-                    {
+                            && enrolmentEvaluationFromDb.getGrade().length() > 0) {
                         // if there was a grade and now there is not we have to
                         // delete written information
                         cleanEnrolmentEvaluation(persistentEnrolmentEvaluation,
                                 enrolmentEvaluationFromDb);
                     }
-                }
-                else if (infoEnrolmentEvaluation.getGrade() != null
-                        && infoEnrolmentEvaluation.getGrade().length() > 0)
-                {
-                    if (!isValidEvaluation(infoEnrolmentEvaluation))
-                    {
+                } else if (infoEnrolmentEvaluation.getGrade() != null
+                        && infoEnrolmentEvaluation.getGrade().length() > 0) {
+                    if (!isValidEvaluation(infoEnrolmentEvaluation)) {
                         infoEvaluationsWithError.add(infoEnrolmentEvaluation);
-                    }
-                    else
-                    {
+                    } else {
                         fillEnrolmentEvaluation(evaluationDate, persistentEnrolmentEvaluation,
                                 persistentTeacher, teacherNumber, infoEnrolmentEvaluation,
                                 enrolmentEvaluationFromDb);
                     }
                 }
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
             FenixServiceException newEx = new FenixServiceException("");
             newEx.fillInStackTrace();
@@ -118,22 +104,20 @@ public class InsertStudentsFinalEvaluation implements IService
             IPersistentTeacher persistentTeacher, Integer teacherNumber,
             InfoEnrolmentEvaluation infoEnrolmentEvaluation,
             IEnrolmentEvaluation enrolmentEvaluationFromDb) throws ExcepcaoPersistencia,
-            ExistingPersistentException, NonExistingServiceException
-    {
+            ExistingPersistentException, NonExistingServiceException {
 
         //			responsible teacher
         ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-        if (teacher == null) { throw new NonExistingServiceException(); }
+        if (teacher == null) {
+            throw new NonExistingServiceException();
+        }
         Calendar calendario = Calendar.getInstance();
 
         persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationFromDb);
 
-        if (evaluationDate != null)
-        {
+        if (evaluationDate != null) {
             enrolmentEvaluationFromDb.setExamDate(evaluationDate);
-        }
-        else
-        {
+        } else {
             enrolmentEvaluationFromDb.setExamDate(calendario.getTime());
         }
         enrolmentEvaluationFromDb.setGrade(infoEnrolmentEvaluation.getGrade());
@@ -148,8 +132,7 @@ public class InsertStudentsFinalEvaluation implements IService
 
     private void cleanEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
             IEnrolmentEvaluation enrolmentEvaluationFromDb) throws ExcepcaoPersistencia,
-            ExistingPersistentException
-    {
+            ExistingPersistentException {
         persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationFromDb);
         enrolmentEvaluationFromDb.setCheckSum(null);
         enrolmentEvaluationFromDb.setExamDate(null);
@@ -161,15 +144,16 @@ public class InsertStudentsFinalEvaluation implements IService
     private IEnrolmentEvaluation getEnrolmentEvaluation(
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
             InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws ExcepcaoPersistencia,
-            FenixServiceException
-    {
-       
+            FenixServiceException {
+
         IEnrollment enrolmentToSearch = new Enrolment();
         enrolmentToSearch.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
-        List enrolmentEvaluationsForEnrolment = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolmentToSearch);
+        List enrolmentEvaluationsForEnrolment = persistentEnrolmentEvaluation
+                .readEnrolmentEvaluationByEnrolment(enrolmentToSearch);
         if (enrolmentEvaluationsForEnrolment == null || enrolmentEvaluationsForEnrolment.size() == 0) {
-        //		it will never happen!!
-        throw new FenixServiceException(); }
+            //		it will never happen!!
+            throw new FenixServiceException();
+        }
         Collections.sort(enrolmentEvaluationsForEnrolment, new BeanComparator("enrolment.idInternal"));
 
         //		we want last enrolment evaluation in case of improvement
@@ -193,50 +177,44 @@ public class InsertStudentsFinalEvaluation implements IService
     //	}
 
     private InfoEnrolmentEvaluation completeEnrolmentEvaluation(
-            InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws FenixServiceException
-    {
-        try
-        {
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
             //			Student
             IStudent student;
-            student = (IStudent) persistentStudent.readByOID(Student.class, infoEnrolmentEvaluation.getInfoEnrolment()
-                    .getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
+            student = (IStudent) persistentStudent.readByOID(Student.class, infoEnrolmentEvaluation
+                    .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
 
             infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().setInfoStudent(
                     Cloner.copyIStudent2InfoStudent(student));
 
             return infoEnrolmentEvaluation;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }
 
-    private boolean isValidEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
-    {
+    private boolean isValidEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
         IStudentCurricularPlan studentCurricularPlan = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IStudentCurricularPlanPersistente curricularPlanPersistente = sp
+            IPersistentStudentCurricularPlan curricularPlanPersistente = sp
                     .getIStudentCurricularPlanPersistente();
 
             studentCurricularPlan = curricularPlanPersistente.readActiveStudentCurricularPlan(
                     infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan()
                             .getInfoStudent().getNumber(), infoEnrolmentEvaluation.getInfoEnrolment()
                             .getInfoStudentCurricularPlan().getInfoStudent().getDegreeType());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (studentCurricularPlan == null) { return false; }
+        if (studentCurricularPlan == null) {
+            return false;
+        }
         IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
         // test marks by execution course: strategy

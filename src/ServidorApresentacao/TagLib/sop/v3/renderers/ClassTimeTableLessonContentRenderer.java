@@ -18,55 +18,51 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
      */
     public StringBuffer render(LessonSlot lessonSlot) {
         StringBuffer strBuffer = new StringBuffer();
-        //InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
+        //InfoLesson lesson =
+        // lessonSlot.getInfoLessonWrapper().getInfoLesson();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
-        if (showOccupation instanceof InfoLesson) 
-        {
+        if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
-            
+
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-           strBuffer.append("<a class='timetable' href='viewSite.do?method=firstPage&amp;objectCode=");
+            strBuffer.append("<a class='timetable' href='viewSite.do?method=firstPage&amp;objectCode=");
             strBuffer.append(infoExecutionCourse.getIdInternal()).append("&amp;executionPeriodOID=")
                     .append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
                     .append("</a>");
-           strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
+            strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
             strBuffer
                     .append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
                     .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
                             "&amp;objectCode=").append(
                             infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()).append(
                             "&amp;executionPeriodOID=").append(
-                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()).
-                            append("&amp;shift=true").append("'>")
-                    .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()).append(
+                            "&amp;shift=true").append("'>").append(
+                            lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
 
             //TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?
-            if (lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL)
-            {
+            if (lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
-        }
-        else
-        {
+        } else {
             InfoExam infoExam = (InfoExam) showOccupation;
-            for (int iterEC=0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++)
-			{
-				InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam.getAssociatedExecutionCourse().get(iterEC);
-				if(iterEC != 0)
-				{    
-				    strBuffer.append(", ");
-				}
-				strBuffer.append(infoEC.getSigla());
-				
-			}
+            for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
+                InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam
+                        .getAssociatedExecutionCourse().get(iterEC);
+                if (iterEC != 0) {
+                    strBuffer.append(", ");
+                }
+                strBuffer.append(infoEC.getSigla());
+
+            }
             strBuffer.append(" - ");
             strBuffer.append(infoExam.getSeason().getSeason());
-            strBuffer.append("ª época");            
+            strBuffer.append("ª época");
         }
-        
+
         return strBuffer;
     }
 

@@ -48,6 +48,7 @@ public class ReadPavillionsRoomsLessons implements IService {
      */
     private ReadPavillionsRoomsLessons() {
     }
+
     public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod) {
 
         final List infoViewRoomScheduleList = new ArrayList();
@@ -65,39 +66,33 @@ public class ReadPavillionsRoomsLessons implements IService {
             List rooms = roomDAO.readByPavillions(pavillions);
 
             // Read rooms classes
-			for (int i = 0; i < rooms.size(); i++) {
-				InfoViewRoomSchedule infoViewRoomSchedule =
-					new InfoViewRoomSchedule();
-				ISala room = (ISala) rooms.get(i);
-				List lessonList =
-					lessonDAO.readByRoomAndExecutionPeriod(
-						room,
-						executionPeriod);
-				Iterator iterator = lessonList.iterator();
-				List infoLessonsList = new ArrayList();
-				while (iterator.hasNext()) {
-					IAula elem = (IAula) iterator.next();
-					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);					
-					ITurno shift = elem.getShift();
-					if (shift == null)
-					{
-						continue;
-					}
-					InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-					infoLesson.setInfoShift(infoShift);
-					
-					infoLessonsList.add(infoLesson);
-				}
+            for (int i = 0; i < rooms.size(); i++) {
+                InfoViewRoomSchedule infoViewRoomSchedule = new InfoViewRoomSchedule();
+                ISala room = (ISala) rooms.get(i);
+                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+                Iterator iterator = lessonList.iterator();
+                List infoLessonsList = new ArrayList();
+                while (iterator.hasNext()) {
+                    IAula elem = (IAula) iterator.next();
+                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+                    ITurno shift = elem.getShift();
+                    if (shift == null) {
+                        continue;
+                    }
+                    InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                    infoLesson.setInfoShift(infoShift);
 
-				infoViewRoomSchedule.setInfoRoom(
-					Cloner.copyRoom2InfoRoom(room));
-				infoViewRoomSchedule.setRoomLessons(infoLessonsList);				
-				infoViewRoomScheduleList.add(infoViewRoomSchedule);
-			}
+                    infoLessonsList.add(infoLesson);
+                }
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return infoViewRoomScheduleList;
-	}
+                infoViewRoomSchedule.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
+                infoViewRoomSchedule.setRoomLessons(infoLessonsList);
+                infoViewRoomScheduleList.add(infoViewRoomSchedule);
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+        return infoViewRoomScheduleList;
+    }
 }

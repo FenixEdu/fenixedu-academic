@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.publication;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.publication.InfoPublicationType;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -25,38 +27,43 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Sergio Montelobo
  *  
  */
-public class ReadPublicationTypesAction extends FenixAction
-{
+public class ReadPublicationTypesAction extends FenixAction {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-	 *      org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
-        if ((session != null))
-        {
-            Object[] args = {userView.getUtilizador()};
-            Integer keyTeacher = new Integer( request.getParameter("infoTeacher#idInternal"));
+        if ((session != null)) {
+            Object[] args = { userView.getUtilizador() };
+            Integer keyTeacher = new Integer(request.getParameter("infoTeacher#idInternal"));
             String typePublication = request.getParameter("typePublication");
-            List infoPublicationTypes = (List) ServiceUtils.executeService(userView, "ReadPublicationTypes", args);
+            List infoPublicationTypes = (List) ServiceUtils.executeService(userView,
+                    "ReadPublicationTypes", args);
+
+            //TODO remove when database is updated
+            Iterator iterator = infoPublicationTypes.iterator();
+            while (iterator.hasNext()) {
+                InfoPublicationType infoPublicationType = (InfoPublicationType) iterator.next();
+                if (infoPublicationType.getPublicationType().equalsIgnoreCase("Ad-Hoc")) {
+                    infoPublicationTypes.remove(infoPublicationType);
+                    break;
+                }
+            }
             request.setAttribute("publicationTypesList", infoPublicationTypes);
             dynaForm.set("teacherId", keyTeacher);
-            dynaForm.set("typePublication",typePublication);
-       }
+            dynaForm.set("typePublication", typePublication);
+        }
         ActionForward actionForward = null;
 
         actionForward = mapping.findForward("show-publication-types-form");

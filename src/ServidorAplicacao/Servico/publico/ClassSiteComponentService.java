@@ -21,7 +21,7 @@ import ServidorAplicacao.Factory.PublicSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -40,50 +40,40 @@ public class ClassSiteComponentService implements IService {
     }
 
     public Object run(ISiteComponent bodyComponent, String executionYearName,
-            String executionPeriodName, String degreeInitials,
-            String nameDegreeCurricularPlan, String className,
-            Integer curricularYear, Integer classId)
-            throws FenixServiceException {
+            String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
+            String className, Integer curricularYear, Integer classId) throws FenixServiceException {
 
         SiteView siteView = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
-            IPersistentExecutionYear persistentExecutionYear = sp
-                    .getIPersistentExecutionYear();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-            ICursoExecucaoPersistente executionDegreeDAO = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
             ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
 
             IExecutionYear executionYear = persistentExecutionYear
                     .readExecutionYearByName(executionYearName);
 
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readByNameAndExecutionYear(executionPeriodName,
-                            executionYear);
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                    executionPeriodName, executionYear);
 
             ICursoExecucao executionDegree = executionDegreeDAO
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-                            degreeInitials, nameDegreeCurricularPlan,
-                            executionYear);
-            PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder
-                    .getInstance();
+                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
+                            nameDegreeCurricularPlan, executionYear);
+            PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
             ITurma domainClass;
-            if (classId == null) {			
-                domainClass = getDomainClass(className, curricularYear,
-                        executionPeriod, executionDegree, sp);
+            if (classId == null) {
+                domainClass = getDomainClass(className, curricularYear, executionPeriod,
+                        executionDegree, sp);
                 if (domainClass == null) {
-					throw new NonExistingServiceException();
+                    throw new NonExistingServiceException();
                 }
             } else {
 
-                domainClass = (ITurma) persistentSchoolClass.readByOID(
-                        Turma.class, classId);
+                domainClass = (ITurma) persistentSchoolClass.readByOID(Turma.class, classId);
             }
-            bodyComponent = componentBuilder.getComponent(bodyComponent,
-                    domainClass);
+            bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
             siteView = new SiteView(bodyComponent);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -93,36 +83,34 @@ public class ClassSiteComponentService implements IService {
     }
 
     private ITurma getDomainClass(String className, Integer curricularYear,
-            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
 
-				ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-				   ITurma domainClass = null;
-				   List domainList = new ArrayList();
-				   if (curricularYear == null && className != null ) {
-					   domainClass = persistentClass
-							   .readByNameAndExecutionDegreeAndExecutionPeriod(className,
-									   executionDegree, executionPeriod);
+        ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+        ITurma domainClass = null;
+        List domainList = new ArrayList();
+        if (curricularYear == null) {
+            domainClass = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(className,
+                    executionDegree, executionPeriod);
 
-				   } else {
-						   	if (className == null && curricularYear == null) {					
-							
-							  domainList = persistentClass
-									  .readByExecutionDegreeAndDegreeAndExecutionPeriod(
-											  executionDegree,executionDegree.getCurricularPlan()
-											  .getDegree(), executionPeriod);	
-								 
-							  if (domainList.size() != 0) {								
-							   domainClass = (ITurma) domainList.get(0);
-							  }
-				   			}else {
-							   domainClass = new Turma();
-							   domainClass.setAnoCurricular(curricularYear);
-							   domainClass.setExecutionDegree(executionDegree);
-							   domainClass.setExecutionPeriod(executionPeriod);
-		
-						   }
-				   }
-				   return domainClass;
+        } else {
+            if (className == null && curricularYear == null) {
+
+                domainList = persistentClass.readByExecutionDegreeAndDegreeAndExecutionPeriod(
+                        executionDegree, executionDegree.getCurricularPlan().getDegree(),
+                        executionPeriod);
+
+                if (domainList.size() != 0) {
+                    domainClass = (ITurma) domainList.get(0);
+                }
+            } else {
+                domainClass = new Turma();
+                domainClass.setAnoCurricular(curricularYear);
+                domainClass.setExecutionDegree(executionDegree);
+                domainClass.setExecutionPeriod(executionPeriod);
+
+            }
+        }
+        return domainClass;
     }
 }

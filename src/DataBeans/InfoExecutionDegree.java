@@ -5,10 +5,17 @@
  */
 package DataBeans;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.Predicate;
+import org.apache.struts.util.LabelValueBean;
 
 import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
+
+import commons.CollectionUtils;
 
 /**
  * @author tfc130
@@ -26,24 +33,24 @@ public class InfoExecutionDegree extends InfoObject {
 
     //added by Tânia Pousão
     private InfoCampus infoCampus;
-    
-	// added by amsg 4 Jun 2004
-	private InfoPeriod infoPeriodLessonsFirstSemester;
-	private InfoPeriod infoPeriodExamsFirstSemester;
-	private InfoPeriod infoPeriodLessonsSecondSemester;
-	private InfoPeriod infoPeriodExamsSecondSemester;
 
+    // added by amsg 4 Jun 2004
+    private InfoPeriod infoPeriodLessonsFirstSemester;
 
-    public InfoExecutionDegree()
-    {
+    private InfoPeriod infoPeriodExamsFirstSemester;
+
+    private InfoPeriod infoPeriodLessonsSecondSemester;
+
+    private InfoPeriod infoPeriodExamsSecondSemester;
+
+    public InfoExecutionDegree() {
     }
 
     /**
      * @param infoDegreeCurricularPlan
      * @param infoExecutionYear
      */
-    public InfoExecutionDegree(
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan,
+    public InfoExecutionDegree(InfoDegreeCurricularPlan infoDegreeCurricularPlan,
             InfoExecutionYear infoExecutionYear) {
         setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         setInfoExecutionYear(infoExecutionYear);
@@ -106,8 +113,7 @@ public class InfoExecutionDegree extends InfoObject {
      * @param infoDegreeCurricularPlan
      *            The infoDegreeCurricularPlan to set
      */
-    public void setInfoDegreeCurricularPlan(
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+    public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
         this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
     }
 
@@ -155,46 +161,76 @@ public class InfoExecutionDegree extends InfoObject {
         this.coordinatorsList = coordinatorsList;
     }
 
-    public InfoPeriod getInfoPeriodExamsFirstSemester()
-    {
+    public InfoPeriod getInfoPeriodExamsFirstSemester() {
         return infoPeriodExamsFirstSemester;
     }
 
-    public void setInfoPeriodExamsFirstSemester(InfoPeriod infoPeriodExamsFirstSemester)
-    {
+    public void setInfoPeriodExamsFirstSemester(InfoPeriod infoPeriodExamsFirstSemester) {
         this.infoPeriodExamsFirstSemester = infoPeriodExamsFirstSemester;
     }
 
-    public InfoPeriod getInfoPeriodExamsSecondSemester()
-    {
+    public InfoPeriod getInfoPeriodExamsSecondSemester() {
         return infoPeriodExamsSecondSemester;
     }
 
-    public void setInfoPeriodExamsSecondSemester(InfoPeriod infoPeriodExamsSecondSemester)
-    {
+    public void setInfoPeriodExamsSecondSemester(InfoPeriod infoPeriodExamsSecondSemester) {
         this.infoPeriodExamsSecondSemester = infoPeriodExamsSecondSemester;
     }
 
-    public InfoPeriod getInfoPeriodLessonsFirstSemester()
-    {
+    public InfoPeriod getInfoPeriodLessonsFirstSemester() {
         return infoPeriodLessonsFirstSemester;
     }
 
-    public void setInfoPeriodLessonsFirstSemester(InfoPeriod infoPeriodLessonsFirstSemester)
-    {
+    public void setInfoPeriodLessonsFirstSemester(InfoPeriod infoPeriodLessonsFirstSemester) {
         this.infoPeriodLessonsFirstSemester = infoPeriodLessonsFirstSemester;
     }
 
-    public InfoPeriod getInfoPeriodLessonsSecondSemester()
-    {
+    public InfoPeriod getInfoPeriodLessonsSecondSemester() {
         return infoPeriodLessonsSecondSemester;
     }
 
-    public void setInfoPeriodLessonsSecondSemester(InfoPeriod infoPeriodLessonsSecondSemester)
-    {
+    public void setInfoPeriodLessonsSecondSemester(InfoPeriod infoPeriodLessonsSecondSemester) {
         this.infoPeriodLessonsSecondSemester = infoPeriodLessonsSecondSemester;
     }
 
+    public static List buildLabelValueBeansForList(List executionDegrees) {
+        List copyExecutionDegrees = new ArrayList();
+        copyExecutionDegrees.addAll(executionDegrees);
+        List result = new ArrayList();
+        Iterator iter = executionDegrees.iterator();
+        while (iter.hasNext()) {
+            final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iter.next();
+            List equalDegrees = (List) CollectionUtils.select(copyExecutionDegrees, new Predicate() {
+                public boolean evaluate(Object arg0) {
+                    InfoExecutionDegree infoExecutionDegreeElem = (InfoExecutionDegree) arg0;
+                    if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla()
+                            .equals(
+                                    infoExecutionDegreeElem.getInfoDegreeCurricularPlan()
+                                            .getInfoDegree().getSigla())) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            if (equalDegrees.size() == 1) {
+                copyExecutionDegrees.remove(infoExecutionDegree);
+                result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan()
+                        .getInfoDegree().getTipoCurso().toString()
+                        + "  "
+                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
+                        infoExecutionDegree.getIdInternal().toString()));
+            } else {
+                result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan()
+                        .getInfoDegree().getTipoCurso().toString()
+                        + "  "
+                        + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
+                        + " - " + infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                        infoExecutionDegree.getIdInternal().toString()));
+            }
+        }
+        return result;
+
+    }
 
     public void copyFromDomain(ICursoExecucao executionDegree) {
         super.copyFromDomain(executionDegree);
@@ -207,8 +243,7 @@ public class InfoExecutionDegree extends InfoObject {
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree newInfoFromDomain(
-            ICursoExecucao executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(ICursoExecucao executionDegree) {
         InfoExecutionDegree infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegree();
@@ -216,15 +251,15 @@ public class InfoExecutionDegree extends InfoObject {
         }
         return infoExecutionDegree;
     }
-    
+
     public void copyToDomain(InfoExecutionDegree infoExecutionDegree, ICursoExecucao executionDegree) {
         super.copyToDomain(infoExecutionDegree, executionDegree);
-        executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());        
+        executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
     }
-    
+
     public static ICursoExecucao newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
         ICursoExecucao executionDegree = null;
-        if(infoExecutionDegree != null) {
+        if (infoExecutionDegree != null) {
             executionDegree = new CursoExecucao();
             infoExecutionDegree.copyToDomain(infoExecutionDegree, executionDegree);
         }

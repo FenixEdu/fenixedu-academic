@@ -9,14 +9,14 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.grant.contract.GrantSubsidy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
 
 /**
  * @author pica
  * @author barbosa
  */
-public class GrantSubsidyOJB extends ObjectFenixOJB implements IPersistentGrantSubsidy {
+public class GrantSubsidyOJB extends PersistentObjectOJB implements IPersistentGrantSubsidy {
 
     public GrantSubsidyOJB() {
     }

@@ -16,7 +16,7 @@ public class ServicoAutorizacaoCriarPessoa extends ServicoAutorizacao {
 
     public void execute() throws NotAuthorizeException {
         IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-        if(iPessoaPersistente.lerPessoa(pessoa.getUsername()) != null)
+        if (iPessoaPersistente.lerPessoa(pessoa.getUsername()) != null)
             throw new NotAuthorizeException();
     }
 

@@ -22,24 +22,20 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class EditarTurma implements IService
-{
+public class EditarTurma implements IService {
 
     /**
      * The actor of this class.
      */
-    public EditarTurma()
-    {
+    public EditarTurma() {
     }
 
-    public Object run(InfoClass oldClassView, InfoClass newClassView) throws FenixServiceException
-    {
+    public Object run(InfoClass oldClassView, InfoClass newClassView) throws FenixServiceException {
 
         ITurma turma = null;
         boolean result = false;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IExecutionPeriod executionPeriod = Cloner
@@ -54,25 +50,19 @@ public class EditarTurma implements IService
              * :FIXME: we have to change more things... to dump one year to
              * another
              */
-            if (turma != null)
-            {
+            if (turma != null) {
 
-                try
-                {
+                try {
                     sp.getITurmaPersistente().simpleLockWrite(turma);
                     turma.setNome(newClassView.getNome());
 
-                }
-                catch (ExistingPersistentException ex)
-                {
+                } catch (ExistingPersistentException ex) {
                     throw new ExistingServiceException(ex);
                 }
 
                 result = true;
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex.getMessage());
         }
 

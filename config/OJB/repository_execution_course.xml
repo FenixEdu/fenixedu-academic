@@ -1,0 +1,154 @@
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.ExecutionCourse -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.ExecutionCourse" proxy="dynamic" table="EXECUTION_COURSE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="nome"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="sigla"
+		column="CODE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="theoreticalHours"
+		column="THEORETICAL_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="praticalHours"
+		column="PRATICAL_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="theoPratHours"
+		column="THEO_PRAT_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="labHours"
+		column="LAB_HOURS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<reference-descriptor
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod" 
+			proxy="false">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+	  <field-descriptor
+		 name="comment"
+         column="COMMENT"
+        jdbc-type="LONGVARCHAR"
+	  />	
+	<collection-descriptor
+			name="associatedCurricularCourses"
+			element-class-ref="Dominio.CurricularCourse"
+  		    collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
+			auto-retrieve="true"
+			refresh="true"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedExams"
+			element-class-ref="Dominio.Exam"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			refresh="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			proxy="true"
+			>
+		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
+		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedEvaluations"
+			element-class-ref="Dominio.Evaluation"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			refresh="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			proxy="true"
+			>
+		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
+		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
+	</collection-descriptor>
+    <collection-descriptor
+			name="attendingStudents"
+			element-class-ref="Dominio.Student"
+			indirection-table="ATTEND"
+			refresh="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			proxy="true"
+			>
+		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
+		<fk-pointing-to-element-class column="KEY_STUDENT"/>
+	</collection-descriptor>
+	<collection-descriptor
+		name="attends"
+		element-class-ref="Dominio.Frequenta"
+		refresh="true"
+		auto-retrieve="true"
+		auto-update="false"
+		auto-delete="false"
+		proxy="true">
+		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
+	</collection-descriptor>
+	<collection-descriptor
+		name="executionCourseProperties"
+		element-class-ref="Dominio.classProperties.ExecutionCourseProperty"
+		refresh="true"
+		auto-retrieve="true"
+		auto-update="false"
+		auto-delete="false"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
+	</collection-descriptor>     
+	<collection-descriptor
+		name="responsibleTeachers"
+		element-class-ref="Dominio.ResponsibleFor"
+		refresh="true"
+		auto-retrieve="true"
+		auto-update="false"
+		auto-delete="false"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
+	</collection-descriptor>        
+	<collection-descriptor
+		name="professorships"
+		element-class-ref="Dominio.Professorship"
+		refresh="true"
+		auto-retrieve="true"
+		auto-update="false"
+		auto-delete="false"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
+	</collection-descriptor>
+</class-descriptor>

@@ -22,65 +22,59 @@ import framework.factory.ServiceManagerServiceFactory;
 
 public class CandidateOperationDispatchAction extends DispatchAction {
 
-  public ActionForward getCandidates(ActionMapping mapping, ActionForm form,
-								HttpServletRequest request,
-								HttpServletResponse response)
-	  throws Exception {
+    public ActionForward getCandidates(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        HttpSession session = request.getSession(false);
 
-	
-	HttpSession session = request.getSession(false);
-	
-	if (session != null) {
-	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
- 
- 	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
- 
- 	  List candidates = null;
- 	  Object args[] = {infoExecutionDegree}; 
- 
-	  try {
-		candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreeCandidates", args);
-	  } catch (FenixServiceException e) {
-		  throw new FenixActionException(e);
-	  }	  
-	  
-	  if (candidates.size() == 0)
-	  	throw new NonExistingActionException("error.exception.nonExistingCandidates","", null);
+        if (session != null) {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-	  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
- 
-	  return mapping.findForward("ViewList");
-	} 
-	  throw new Exception();  
-  }
-  
-  
-  public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
-									   HttpServletRequest request,
-									   HttpServletResponse response)
-	  throws Exception {
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+                    .getAttribute(SessionConstants.MASTER_DEGREE);
 
-	  
-	  HttpSession session = request.getSession(false);
+            List candidates = null;
+            Object args[] = { infoExecutionDegree };
 
-	  if (session != null) {
-		  List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
-			
+            try {
+                candidates = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadDegreeCandidates", args);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
 
-		  Integer choosenCandidatePosition = Integer.valueOf(request.getParameter("candidatePosition"));
-			
-			
-		  // Put the selected Candidate in Session
-		  InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) candidateList.get(choosenCandidatePosition.intValue());
-		
-		  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-		  return mapping.findForward("ActionReady");
-			
-	  } 
-		  throw new Exception();  
-  }
-	   
+            if (candidates.size() == 0)
+                throw new NonExistingActionException("error.exception.nonExistingCandidates", "", null);
+
+            session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
+            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+
+            return mapping.findForward("ViewList");
+        }
+        throw new Exception();
+    }
+
+    public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            List candidateList = (List) session
+                    .getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
+
+            Integer choosenCandidatePosition = Integer
+                    .valueOf(request.getParameter("candidatePosition"));
+
+            // Put the selected Candidate in Session
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) candidateList
+                    .get(choosenCandidatePosition.intValue());
+
+            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+            return mapping.findForward("ActionReady");
+
+        }
+        throw new Exception();
+    }
 
 }

@@ -30,51 +30,43 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
     public InsertExecutionCourseAtExecutionPeriod() {
     }
 
-    public void run(InfoExecutionCourse infoExecutionCourse)
-            throws FenixServiceException {
+    public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
         IExecutionCourse executionCourse = new ExecutionCourse();
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse existentExecutionCourse = null;
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
                     .getIPersistentExecutionPeriod();
-            executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-                    .readByOID(ExecutionPeriod.class, infoExecutionCourse
-                            .getInfoExecutionPeriod().getIdInternal());
+            executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                    ExecutionPeriod.class, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             if (executionPeriod == null) {
-                throw new NonExistingServiceException(
-                        "message.nonExistingExecutionPeriod", null);
+                throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
             }
 
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
 
             existentExecutionCourse = persistentExecutionCourse
-                    .readByExecutionCourseInitialsAndExecutionPeriod(
-                            infoExecutionCourse.getSigla(), executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
+                            executionPeriod);
 
             if (existentExecutionCourse != null) {
                 throw new ExistingPersistentException();
             }
 
-            IPersistentSite persistentSite = persistentSuport
-                    .getIPersistentSite();
+            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 
             persistentExecutionCourse.simpleLockWrite(executionCourse);
             executionCourse.setNome(infoExecutionCourse.getNome());
             executionCourse.setExecutionPeriod(executionPeriod);
             executionCourse.setSigla(infoExecutionCourse.getSigla());
             executionCourse.setLabHours(infoExecutionCourse.getLabHours());
-            executionCourse.setPraticalHours(infoExecutionCourse
-                    .getPraticalHours());
-            executionCourse.setTheoPratHours(infoExecutionCourse
-                    .getTheoPratHours());
-            executionCourse.setTheoreticalHours(infoExecutionCourse
-                    .getTheoreticalHours());
+            executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());
+            executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
+            executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
             executionCourse.setComment(infoExecutionCourse.getComment());
 
             ISite site = new Site();
@@ -82,12 +74,9 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
             site.setExecutionCourse(executionCourse);
 
         } catch (ExistingPersistentException existingException) {
-            throw new ExistingServiceException(
-                    "A disciplina execução com sigla "
-                            + existentExecutionCourse.getSigla()
-                            + " e período execução "
-                            + executionPeriod.getName() + "-"
-                            + executionPeriod.getExecutionYear().getYear(),
+            throw new ExistingServiceException("A disciplina execução com sigla "
+                    + existentExecutionCourse.getSigla() + " e período execução "
+                    + executionPeriod.getName() + "-" + executionPeriod.getExecutionYear().getYear(),
                     existingException);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

@@ -16,16 +16,14 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class ReadManagementPositionCreditLineByOidService extends ReadDomainObjectService
-{
+public class ReadManagementPositionCreditLineByOidService extends ReadDomainObjectService {
 
     /*
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return ManagementPositionCreditLine.class;
     }
 
@@ -34,8 +32,7 @@ public class ReadManagementPositionCreditLineByOidService extends ReadDomainObje
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentManagementPositionCreditLine();
     }
 
@@ -44,10 +41,9 @@ public class ReadManagementPositionCreditLineByOidService extends ReadDomainObje
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
-        return Cloner.copyIManagementPositionCreditLine2InfoManagementPositionCreditLine(
-            (IManagementPositionCreditLine) domainObject);
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return Cloner
+                .copyIManagementPositionCreditLine2InfoManagementPositionCreditLine((IManagementPositionCreditLine) domainObject);
     }
 
 }

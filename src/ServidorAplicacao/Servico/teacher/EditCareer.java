@@ -20,41 +20,35 @@ import ServidorPersistente.teacher.IPersistentCareer;
  * @author Sergio Montelobo
  *  
  */
-public class EditCareer extends EditDomainObjectService
-{
+public class EditCareer extends EditDomainObjectService {
 
     private static EditCareer service = new EditCareer();
 
-    public static EditCareer getService()
-    {
+    public static EditCareer getService() {
         return service;
     }
 
     /**
-	 *  
-	 */
-    private EditCareer()
-    {
+     *  
+     */
+    private EditCareer() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "EditCareer";
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject)
-    {
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         ICareer career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoObject);
         return career;
     }

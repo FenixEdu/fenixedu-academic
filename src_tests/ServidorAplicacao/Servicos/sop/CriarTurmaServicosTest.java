@@ -8,7 +8,7 @@
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
+ * 
  * @author tfc130
  */
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import Dominio.ITurma;
 import Dominio.Turma;
 import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -36,100 +36,100 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class CriarTurmaServicosTest extends TestCaseCreateServices {
-	
-	private InfoClass infoClass = null;
 
-	public CriarTurmaServicosTest(java.lang.String testName) {
-		super(testName);
-	}
+    private InfoClass infoClass = null;
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public CriarTurmaServicosTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(CriarTurmaServicosTest.class);
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(CriarTurmaServicosTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "CriarTurma";
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected String getNameOfServiceToBeTested() {
+        return "CriarTurma";
+    }
 
-		this. ligarSuportePersistente(false);
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		Object argsCriarTurma[] = { this.infoClass };
+        this.ligarSuportePersistente(false);
 
-		return argsCriarTurma;
-	}
+        Object argsCriarTurma[] = { this.infoClass };
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return argsCriarTurma;
+    }
 
-		this. ligarSuportePersistente(true);
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-		Object argsCriarTurma[] = { this.infoClass };
+        this.ligarSuportePersistente(true);
 
-		return argsCriarTurma;
-	}
+        Object argsCriarTurma[] = { this.infoClass };
 
-	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+        return argsCriarTurma;
+    }
 
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
-	private void ligarSuportePersistente(boolean existing) {
+    private void ligarSuportePersistente(boolean existing) {
 
-		ISuportePersistente sp = null;
+        ISuportePersistente sp = null;
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			ICursoPersistente icp = sp.getICursoPersistente();
-			ICurso ic = icp.readBySigla("LEIC");
+            ICursoPersistente icp = sp.getICursoPersistente();
+            ICurso ic = icp.readBySigla("LEIC");
 
-			IPersistentDegreeCurricularPlan ipccp = sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan ipcc = ipccp.readByNameAndDegree("plano1", ic);
+            IPersistentDegreeCurricularPlan ipccp = sp.getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan ipcc = ipccp.readByNameAndDegree("plano1", ic);
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-			ICursoExecucaoPersistente icep = sp.getICursoExecucaoPersistente();
-			ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
+            IPersistentExecutionDegree icep = sp.getIPersistentExecutionDegree();
+            ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
 
-			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
-			
-			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
-			ITurma turma = null;
-			if(existing) {
-				turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice, iep);
-			} else {
-				turma = new Turma("turma1", new Integer(1), ice, iep);
-			}
-			
-			this.infoClass = Cloner.copyClass2InfoClass(turma);
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-			sp.confirmarTransaccao();
+            ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
+            ITurma turma = null;
+            if (existing) {
+                turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice,
+                        iep);
+            } else {
+                turma = new Turma("turma1", new Integer(1), ice, iep);
+            }
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
+            this.infoClass = Cloner.copyClass2InfoClass(turma);
+
+            sp.confirmarTransaccao();
+
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 }

@@ -25,8 +25,8 @@ import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
@@ -64,8 +64,8 @@ public class PrepareCreateStudentGroup implements IServico {
      * Executes the service.
      */
 
-    public ISiteComponent run(Integer executionCourseCode,
-            Integer groupPropertiesCode) throws FenixServiceException {
+    public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
+            throws FenixServiceException {
 
         IFrequentaPersistente persistentAttend = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
@@ -83,27 +83,23 @@ public class PrepareCreateStudentGroup implements IServico {
             persistentExecutionCourse = ps.getIPersistentExecutionCourse();
             persistentAttend = ps.getIFrequentaPersistente();
             persistentStudentGroup = ps.getIPersistentStudentGroup();
-            persistentStudentGroupAttend = ps
-                    .getIPersistentStudentGroupAttend();
+            persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
-            IGroupProperties groupProperties = (IGroupProperties) ps
-                    .getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
+            IGroupProperties groupProperties = (IGroupProperties) ps.getIPersistentGroupProperties()
+                    .readByOID(GroupProperties.class, groupPropertiesCode);
 
-            frequentas = persistentAttend
-                    .readByExecutionCourse(executionCourse);
+            frequentas = persistentAttend.readByExecutionCourse(executionCourse);
 
             List allStudentsGroups = persistentStudentGroup
                     .readAllStudentGroupByGroupProperties(groupProperties);
             groupNumber = new Integer(1);
 
             if (allStudentsGroups.size() != 0) {
-                Collections.sort(allStudentsGroups, new BeanComparator(
-                        "groupNumber"));
-                Integer lastGroupNumber = ((IStudentGroup) allStudentsGroups
-                        .get(allStudentsGroups.size() - 1)).getGroupNumber();
+                Collections.sort(allStudentsGroups, new BeanComparator("groupNumber"));
+                Integer lastGroupNumber = ((IStudentGroup) allStudentsGroups.get(allStudentsGroups
+                        .size() - 1)).getGroupNumber();
                 groupNumber = new Integer(lastGroupNumber.intValue() + 1);
 
             }
@@ -118,8 +114,7 @@ public class PrepareCreateStudentGroup implements IServico {
                 Iterator iterator2 = allStudentGroupAttend.iterator();
                 IFrequenta frequenta = null;
                 while (iterator2.hasNext()) {
-                    frequenta = ((IStudentGroupAttend) iterator2.next())
-                            .getAttend();
+                    frequenta = ((IStudentGroupAttend) iterator2.next()).getAttend();
                     if (frequentas.contains(frequenta)) {
                         frequentas.remove(frequenta);
                     }
@@ -134,24 +129,19 @@ public class PrepareCreateStudentGroup implements IServico {
                 student = ((IFrequenta) iterator3.next()).getAluno();
                 InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-                infoSiteStudentInformation.setEmail(student.getPerson()
-                        .getEmail());
-                infoSiteStudentInformation.setName(student.getPerson()
-                        .getNome());
+                infoSiteStudentInformation.setEmail(student.getPerson().getEmail());
+                infoSiteStudentInformation.setName(student.getPerson().getNome());
                 infoSiteStudentInformation.setNumber(student.getNumber());
-                infoSiteStudentInformation.setUsername(student.getPerson()
-                        .getUsername());
+                infoSiteStudentInformation.setUsername(student.getPerson().getUsername());
                 infoStudentInformationList.add(infoSiteStudentInformation);
             }
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
-        Collections.sort(infoStudentInformationList, new BeanComparator(
-                "number"));
+        Collections.sort(infoStudentInformationList, new BeanComparator("number"));
 
-        infoSiteStudentGroup
-                .setInfoSiteStudentInformationList(infoStudentInformationList);
+        infoSiteStudentGroup.setInfoSiteStudentInformationList(infoStudentInformationList);
         infoSiteStudentGroup.setNrOfElements(groupNumber);
 
         return infoSiteStudentGroup;

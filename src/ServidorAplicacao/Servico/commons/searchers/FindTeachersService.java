@@ -20,65 +20,57 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class FindTeachersService extends SearchService
-{
+public class FindTeachersService extends SearchService {
 
     static private FindTeachersService serviceInstance = new FindTeachersService();
 
-    private FindTeachersService()
-    {
+    private FindTeachersService() {
 
     }
+
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.SearchService#cloneDomainObject(Dominio.IDomainObject)
-	 */
-    protected InfoObject cloneDomainObject(IDomainObject object)
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.SearchService#cloneDomainObject(Dominio.IDomainObject)
+     */
+    protected InfoObject cloneDomainObject(IDomainObject object) {
         ITeacher teacher = (ITeacher) object;
         return Cloner.copyITeacher2InfoTeacher(teacher);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.SearchService#doSearch(java.util.HashMap,
-	 *          ServidorPersistente.ISuportePersistente)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.SearchService#doSearch(java.util.HashMap,
+     *      ServidorPersistente.ISuportePersistente)
+     */
     protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         ITeacher teacher = null;
-        try
-        {
-            teacher =
-                teacherDAO.readByNumber(new Integer(searchParameters.get("teacherNumber").toString()));
-        } catch (NumberFormatException e)
-        {
+        try {
+            teacher = teacherDAO.readByNumber(new Integer(searchParameters.get("teacherNumber")
+                    .toString()));
+        } catch (NumberFormatException e) {
             //ignored
         }
         List returnList = new ArrayList();
-        if (teacher != null)
-        {
+        if (teacher != null) {
             returnList.add(teacher);
         }
         return returnList;
     }
 
-    public static FindTeachersService getService()
-    {
+    public static FindTeachersService getService() {
         return serviceInstance;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "FindTeachersService";
     }
 }

@@ -13,47 +13,41 @@ import java.util.Map;
  * @author Sergio Montelobo
  *  
  */
-public class CareerType extends FenixValuedEnum
-{
+public class CareerType extends FenixValuedEnum {
 
     public static final int PROFESSIONAL_TYPE = 1;
+
     public static final int TEACHING_TYPE = 2;
 
     public static CareerType PROFESSIONAL = new CareerType("Professional", PROFESSIONAL_TYPE);
+
     public static CareerType TEACHING = new CareerType("Teaching", TEACHING_TYPE);
 
-    public CareerType(String name, int value)
-    {
+    public CareerType(String name, int value) {
         super(name, value);
     }
 
-    public static CareerType getEnum(String careerType)
-    {
+    public static CareerType getEnum(String careerType) {
         return (CareerType) getEnum(CareerType.class, careerType);
     }
 
-    public static CareerType getEnum(int careerType)
-    {
+    public static CareerType getEnum(int careerType) {
         return (CareerType) getEnum(CareerType.class, careerType);
     }
 
-    public static Map getEnumMap()
-    {
+    public static Map getEnumMap() {
         return getEnumMap(CareerType.class);
     }
 
-    public static List getEnumList()
-    {
+    public static List getEnumList() {
         return getEnumList(CareerType.class);
     }
 
-    public static Iterator iterator()
-    {
+    public static Iterator iterator() {
         return iterator(CareerType.class);
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "Career Type :\n";
         result += "\n  - Career Type : " + this.getName();
 

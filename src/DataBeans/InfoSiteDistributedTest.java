@@ -8,35 +8,33 @@ package DataBeans;
  * @author Susana Fernandes
  */
 public class InfoSiteDistributedTest extends DataTranferObject implements ISiteComponent {
-	private InfoDistributedTest infoDistributedTest;
-	private InfoExecutionCourse executionCourse;
+    private InfoDistributedTest infoDistributedTest;
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public InfoDistributedTest getInfoDistributedTest() {
-		return infoDistributedTest;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
+    public InfoDistributedTest getInfoDistributedTest() {
+        return infoDistributedTest;
+    }
 
-	public void setInfoDistributedTest(InfoDistributedTest infoDistributedTest) {
-		this.infoDistributedTest = infoDistributedTest;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoSiteDistributedTest) {
-			InfoSiteDistributedTest infoSiteDistributedTest =
-				(InfoSiteDistributedTest) obj;
-			result =
-				getExecutionCourse().equals(
-					infoSiteDistributedTest.getExecutionCourse())
-					&& getInfoDistributedTest().equals(infoSiteDistributedTest.getInfoDistributedTest());
-		}
-		return result;
-	}
+    public void setInfoDistributedTest(InfoDistributedTest infoDistributedTest) {
+        this.infoDistributedTest = infoDistributedTest;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoSiteDistributedTest) {
+            InfoSiteDistributedTest infoSiteDistributedTest = (InfoSiteDistributedTest) obj;
+            result = getExecutionCourse().equals(infoSiteDistributedTest.getExecutionCourse())
+                    && getInfoDistributedTest().equals(infoSiteDistributedTest.getInfoDistributedTest());
+        }
+        return result;
+    }
 }

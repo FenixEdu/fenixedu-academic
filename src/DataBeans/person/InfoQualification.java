@@ -18,258 +18,239 @@ import Dominio.Qualification;
  * @author Pica
  */
 
-public class InfoQualification extends InfoObject implements ISiteComponent
-{
-	private String mark;
-	private String school;
-	private String title;
-	private String degree;
-	private InfoPerson infoPerson;
+public class InfoQualification extends InfoObject implements ISiteComponent {
+    private String mark;
 
-	private Date date;
-	private String branch;
-	private String specializationArea;
-	private String degreeRecognition;
-	private Date equivalenceDate;
-	private String equivalenceSchool;
-	private InfoCountry infoCountry;
+    private String school;
 
-	public InfoQualification()
-	{
-	}
+    private String title;
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj != null && obj instanceof InfoQualification)
-		{
-			result =
-				getSchool().equals(((InfoQualification) obj).getSchool())
-					&& getDate().equals(((InfoQualification) obj).getDate())
-					&& getInfoPerson().equals(((InfoQualification) obj).getInfoPerson());
-		}
-		return result;
-	}
+    private String degree;
 
-	/**
-	 * @return InfoPerson
-	 */
-	public InfoPerson getInfoPerson()
-	{
-		return infoPerson;
-	}
+    private InfoPerson infoPerson;
 
-	/**
-	 * @return String
-	 */
-	public String getMark()
-	{
-		return mark;
-	}
+    private Date date;
 
-	/**
-	 * @return String
-	 */
-	public String getSchool()
-	{
-		return school;
-	}
+    private String branch;
 
-	/**
-	 * @return String
-	 */
-	public String getTitle()
-	{
-		return title;
-	}
+    private String specializationArea;
 
-	/**
-	 * Sets the personInfo.
-	 * 
-	 * @param infoPerson
-	 *            The personInfo to set
-	 */
-	public void setInfoPerson(InfoPerson infoPerson)
-	{
-		this.infoPerson = infoPerson;
-	}
+    private String degreeRecognition;
 
-	/**
-	 * Sets the mark of the qualification
-	 * 
-	 * @param mark.
-	 */
-	public void setMark(String mark)
-	{
-		this.mark = mark;
-	}
+    private Date equivalenceDate;
 
-	/**
-	 * Sets the school of qualification
-	 * 
-	 * @param school;
-	 *            The school to set
-	 */
-	public void setSchool(String school)
-	{
-		this.school = school;
-	}
+    private String equivalenceSchool;
 
-	/**
-	 * Sets the title of qualification
-	 * 
-	 * @param title;
-	 *            The title to set
-	 */
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
+    private InfoCountry infoCountry;
 
-	/**
-	 * @return Returns the degree.
-	 */
-	public String getDegree()
-	{
-		return degree;
-	}
+    public InfoQualification() {
+    }
 
-	/**
-	 * @param degree
-	 *            The degree to set.
-	 */
-	public void setDegree(String degree)
-	{
-		this.degree = degree;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj != null && obj instanceof InfoQualification) {
+            result = getSchool().equals(((InfoQualification) obj).getSchool())
+                    && getDate().equals(((InfoQualification) obj).getDate())
+                    && getInfoPerson().equals(((InfoQualification) obj).getInfoPerson());
+        }
+        return result;
+    }
 
-	/**
-	 * @return Returns the branch.
-	 */
-	public String getBranch()
-	{
-		return branch;
-	}
+    /**
+     * @return InfoPerson
+     */
+    public InfoPerson getInfoPerson() {
+        return infoPerson;
+    }
 
-	/**
-	 * @param branch
-	 *            The branch to set.
-	 */
-	public void setBranch(String branch)
-	{
-		this.branch = branch;
-	}
+    /**
+     * @return String
+     */
+    public String getMark() {
+        return mark;
+    }
 
-	/**
-	 * @return Returns the degreeRecognition.
-	 */
-	public String getDegreeRecognition()
-	{
-		return degreeRecognition;
-	}
+    /**
+     * @return String
+     */
+    public String getSchool() {
+        return school;
+    }
 
-	/**
-	 * @param degreeRecognition
-	 *            The degreeRecognition to set.
-	 */
-	public void setDegreeRecognition(String degreeRecognition)
-	{
-		this.degreeRecognition = degreeRecognition;
-	}
+    /**
+     * @return String
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	/**
-	 * @return Returns the equivalenceDate.
-	 */
-	public Date getEquivalenceDate()
-	{
-		return equivalenceDate;
-	}
+    /**
+     * Sets the personInfo.
+     * 
+     * @param infoPerson
+     *            The personInfo to set
+     */
+    public void setInfoPerson(InfoPerson infoPerson) {
+        this.infoPerson = infoPerson;
+    }
 
-	/**
-	 * @param equivalenceDate
-	 *            The equivalenceDate to set.
-	 */
-	public void setEquivalenceDate(Date equivalenceDate)
-	{
-		this.equivalenceDate = equivalenceDate;
-	}
+    /**
+     * Sets the mark of the qualification
+     * 
+     * @param mark.
+     */
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
 
-	/**
-	 * @return Returns the equivalenceSchool.
-	 */
-	public String getEquivalenceSchool()
-	{
-		return equivalenceSchool;
-	}
+    /**
+     * Sets the school of qualification
+     * 
+     * @param school;
+     *            The school to set
+     */
+    public void setSchool(String school) {
+        this.school = school;
+    }
 
-	/**
-	 * @param equivalenceSchool
-	 *            The equivalenceSchool to set.
-	 */
-	public void setEquivalenceSchool(String equivalenceSchool)
-	{
-		this.equivalenceSchool = equivalenceSchool;
-	}
+    /**
+     * Sets the title of qualification
+     * 
+     * @param title;
+     *            The title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	/**
-	 * @return Returns the infoCountry.
-	 */
-	public InfoCountry getInfoCountry()
-	{
-		return infoCountry;
-	}
+    /**
+     * @return Returns the degree.
+     */
+    public String getDegree() {
+        return degree;
+    }
 
-	/**
-	 * @param infoCountry
-	 *            The infoCountry to set.
-	 */
-	public void setInfoCountry(InfoCountry infoCountry)
-	{
-		this.infoCountry = infoCountry;
-	}
+    /**
+     * @param degree
+     *            The degree to set.
+     */
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
 
-	/**
-	 * @return Returns the qualificationDate.
-	 */
-	public Date getDate()
-	{
-		return date;
-	}
+    /**
+     * @return Returns the branch.
+     */
+    public String getBranch() {
+        return branch;
+    }
 
-	/**
-	 * @param qualificationDate
-	 *            The qualificationDate to set.
-	 */
-	public void setDate(Date qualificationDate)
-	{
-		this.date = qualificationDate;
-	}
+    /**
+     * @param branch
+     *            The branch to set.
+     */
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
 
-	/**
-	 * @return Returns the specializationArea.
-	 */
-	public String getSpecializationArea()
-	{
-		return specializationArea;
-	}
+    /**
+     * @return Returns the degreeRecognition.
+     */
+    public String getDegreeRecognition() {
+        return degreeRecognition;
+    }
 
-	/**
-	 * @param specializationArea
-	 *            The specializationArea to set.
-	 */
-	public void setSpecializationArea(String specializationArea)
-	{
-		this.specializationArea = specializationArea;
-	}
+    /**
+     * @param degreeRecognition
+     *            The degreeRecognition to set.
+     */
+    public void setDegreeRecognition(String degreeRecognition) {
+        this.degreeRecognition = degreeRecognition;
+    }
 
-	
-    /* (non-Javadoc)
+    /**
+     * @return Returns the equivalenceDate.
+     */
+    public Date getEquivalenceDate() {
+        return equivalenceDate;
+    }
+
+    /**
+     * @param equivalenceDate
+     *            The equivalenceDate to set.
+     */
+    public void setEquivalenceDate(Date equivalenceDate) {
+        this.equivalenceDate = equivalenceDate;
+    }
+
+    /**
+     * @return Returns the equivalenceSchool.
+     */
+    public String getEquivalenceSchool() {
+        return equivalenceSchool;
+    }
+
+    /**
+     * @param equivalenceSchool
+     *            The equivalenceSchool to set.
+     */
+    public void setEquivalenceSchool(String equivalenceSchool) {
+        this.equivalenceSchool = equivalenceSchool;
+    }
+
+    /**
+     * @return Returns the infoCountry.
+     */
+    public InfoCountry getInfoCountry() {
+        return infoCountry;
+    }
+
+    /**
+     * @param infoCountry
+     *            The infoCountry to set.
+     */
+    public void setInfoCountry(InfoCountry infoCountry) {
+        this.infoCountry = infoCountry;
+    }
+
+    /**
+     * @return Returns the qualificationDate.
+     */
+    public Date getDate() {
+        return date;
+    }
+
+    /**
+     * @param qualificationDate
+     *            The qualificationDate to set.
+     */
+    public void setDate(Date qualificationDate) {
+        this.date = qualificationDate;
+    }
+
+    /**
+     * @return Returns the specializationArea.
+     */
+    public String getSpecializationArea() {
+        return specializationArea;
+    }
+
+    /**
+     * @param specializationArea
+     *            The specializationArea to set.
+     */
+    public void setSpecializationArea(String specializationArea) {
+        this.specializationArea = specializationArea;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
-    public void copyFromDomain(IQualification qualification) 
-    {
+    public void copyFromDomain(IQualification qualification) {
         super.copyFromDomain(qualification);
-        if(qualification != null) {
+        if (qualification != null) {
             setTitle(qualification.getTitle());
             setDate(qualification.getDate());
             setMark(qualification.getMark());
@@ -283,18 +264,17 @@ public class InfoQualification extends InfoObject implements ISiteComponent
             setEquivalenceSchool(qualification.getEquivalenceSchool());
         }
     }
-    
+
     public static InfoQualification newInfoFromDomain(IQualification qualification) {
         InfoQualification infoQualification = null;
-        if(qualification != null) {
+        if (qualification != null) {
             infoQualification = new InfoQualification();
             infoQualification.copyFromDomain(qualification);
         }
         return infoQualification;
     }
-    
-    public void copyToDomain(InfoQualification infoQualification, IQualification qualification) 
-    {
+
+    public void copyToDomain(InfoQualification infoQualification, IQualification qualification) {
         super.copyToDomain(infoQualification, qualification);
 
         qualification.setTitle(infoQualification.getTitle());
@@ -310,8 +290,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent
         qualification.setEquivalenceSchool(infoQualification.getEquivalenceSchool());
     }
 
-    public static IQualification newDomainFromInfo(InfoQualification infoQualification) 
-    {
+    public static IQualification newDomainFromInfo(InfoQualification infoQualification) {
         IQualification qualification = null;
         if (infoQualification != null) {
             qualification = new Qualification();

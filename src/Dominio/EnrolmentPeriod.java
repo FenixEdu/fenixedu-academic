@@ -9,102 +9,123 @@ import java.util.Date;
 /**
  * @author jpvl
  */
-public class EnrolmentPeriod extends DomainObject implements IEnrolmentPeriod {
-	private Integer keyDegreeCurricularPlan;
-	private Integer keyExecutionPeriod;
-	
-	private IDegreeCurricularPlan degreeCurricularPlan;
-	private IExecutionPeriod executionPeriod;
-	private Date startDate;
-	private Date endDate;
+public abstract class EnrolmentPeriod extends DomainObject implements IEnrolmentPeriod {
 
-	
-	public EnrolmentPeriod(){
-		
-	}
-	
-	/* (non-Javadoc)
-	 * @see Dominio.IEnrolmentPeriod#setDegreeCurricularPlan(Dominio.IDegreeCurricularPlan)
-	 */
-	public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-		this.degreeCurricularPlan = degreeCurricularPlan;
-	}
+    protected String ojbConcreteClass;
 
-	/* (non-Javadoc)
-	 * @see Dominio.IEnrolmentPeriod#setExecutionPeriod(Dominio.IExecutionPeriod)
-	 */
-	public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-		this.executionPeriod = executionPeriod;
-	}
+    private Integer keyDegreeCurricularPlan;
 
-	/* (non-Javadoc)
-	 * @see Dominio.IEnrolmentPeriod#setStartDate(java.util.Date)
-	 */
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    private Integer keyExecutionPeriod;
 
-	/* (non-Javadoc)
-	 * @see Dominio.IEnrolmentPeriod#setEndDate(java.util.Date)
-	 */
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;		
-	}
+    private IDegreeCurricularPlan degreeCurricularPlan;
 
-	/**
-	 * @return
-	 */
-	public IDegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
+    private IExecutionPeriod executionPeriod;
 
-	/**
-	 * @return
-	 */
-	public Date getEndDate() {
-		return endDate;
-	}
+    private Date startDate;
 
-	/**
-	 * @return
-	 */
-	public IExecutionPeriod getExecutionPeriod() {
-		return executionPeriod;
-	}
+    private Date endDate;
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyDegreeCurricularPlan() {
-		return keyDegreeCurricularPlan;
-	}
+    public EnrolmentPeriod() {
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyExecutionPeriod() {
-		return keyExecutionPeriod;
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getStartDate() {
-		return startDate;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IEnrolmentPeriodInCurricularCourses#setDegreeCurricularPlan(Dominio.IDegreeCurricularPlan)
+     */
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyDegreeCurricularPlan(Integer integer) {
-		keyDegreeCurricularPlan = integer;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IEnrolmentPeriodInCurricularCourses#setExecutionPeriod(Dominio.IExecutionPeriod)
+     */
+    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+        this.executionPeriod = executionPeriod;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyExecutionPeriod(Integer integer) {
-		keyExecutionPeriod = integer;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IEnrolmentPeriodInCurricularCourses#setStartDate(java.util.Date)
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IEnrolmentPeriodInCurricularCourses#setEndDate(java.util.Date)
+     */
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    /**
+     * @return
+     */
+    public IDegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
+
+    /**
+     * @return
+     */
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * @return
+     */
+    public IExecutionPeriod getExecutionPeriod() {
+        return executionPeriod;
+    }
+
+    /**
+     * @return
+     */
+    public Integer getKeyDegreeCurricularPlan() {
+        return keyDegreeCurricularPlan;
+    }
+
+    /**
+     * @return
+     */
+    public Integer getKeyExecutionPeriod() {
+        return keyExecutionPeriod;
+    }
+
+    /**
+     * @return
+     */
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyDegreeCurricularPlan(Integer integer) {
+        keyDegreeCurricularPlan = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyExecutionPeriod(Integer integer) {
+        keyExecutionPeriod = integer;
+    }
+
+    public String getOjbConcreteClass() {
+        return ojbConcreteClass;
+    }
+
+    public void setOjbConcreteClass(String ojbConcreteClass) {
+        this.ojbConcreteClass = ojbConcreteClass;
+    }
 }

@@ -43,14 +43,11 @@ public class ReadStudentTimeTable implements IService {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = persistentStudent.readByUsername(username);
-            ITurnoAlunoPersistente persistentShiftStudent = sp
-                    .getITurnoAlunoPersistente();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readActualExecutionPeriod();
-            List studentShifts = persistentShiftStudent
-                    .readByStudentAndExecutionPeriod(student, executionPeriod);
+            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
+                    executionPeriod);
 
             List lessons = new ArrayList();
             Iterator shiftIter = studentShifts.iterator();
@@ -65,9 +62,9 @@ public class ReadStudentTimeTable implements IService {
             while (iter.hasNext()) {
                 IAula lesson = (IAula) iter.next();
                 InfoLesson infolesson = copyILesson2InfoLesson(lesson);
-				ITurno shift = lesson.getShift();
-				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-				infolesson.setInfoShift(infoShift);				
+                ITurno shift = lesson.getShift();
+                InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                infolesson.setInfoShift(infoShift);
                 infoLessons.add(infolesson);
             }
 
@@ -89,7 +86,8 @@ public class ReadStudentTimeTable implements IService {
             infoLesson.setTipo(lesson.getTipo());
             infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
 
-            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson.getRoomOccupation());
+            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
+                    .getRoomOccupation());
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
         }
         return infoLesson;

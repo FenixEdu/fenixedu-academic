@@ -9,33 +9,24 @@ import Dominio.IDomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 29/Jul/2003, 14:19:43
- * 
+ *  
  */
-public interface ICaseStudyChoice extends IDomainObject
-{
-	public abstract Integer getOrder();
+public interface ICaseStudyChoice extends IDomainObject {
+    public abstract Integer getOrder();
 
     /**
-	 * @param integer
-	 */
-	public abstract void setOrder(Integer integer);
-	/**
-	 * @return
-	 */
-	public abstract Integer getCandidacyIdInternal();
-	/**
-	 * @return
-	 */
-	public abstract Integer getCaseStudyIdInternal();
-	/**
-	 * @param integer
-	 */
-	public abstract void setCandidacyIdInternal(Integer integer);
-	/**
-	 * @param integer
-	 */
-	public abstract void setCaseStudyIdInternal(Integer integer);
+     * @param integer
+     */
+    public abstract void setOrder(Integer integer);
+
+    public ICandidacy getCandidacy();
+
+    public void setCandidacy(ICandidacy candidacy);
+
+    public ICaseStudy getCaseStudy();
+
+    public void setCaseStudy(ICaseStudy caseStudy);
 }

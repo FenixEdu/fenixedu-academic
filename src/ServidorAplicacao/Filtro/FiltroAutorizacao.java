@@ -1,8 +1,8 @@
 package ServidorAplicacao.Filtro;
 
 /**
- * This class is responsible for verifying if a given user has the
- * authorization to run a service with certain attributes.
+ * This class is responsible for verifying if a given user has the authorization
+ * to run a service with certain attributes.
  * 
  * @author Joao Pereira
  * @version
@@ -14,24 +14,20 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorAplicacao.Servico.UserView;
 
-public class FiltroAutorizacao extends Filtro
-{
+public class FiltroAutorizacao extends Filtro {
 
-    public FiltroAutorizacao()
-    {
+    public FiltroAutorizacao() {
     }
 
     /*
      * (non-Javadoc)
      * 
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView requester = getRemoteUser(request);
-        if (requester == null || !(requester instanceof UserView))
-        {
+        if (requester == null || !(requester instanceof UserView)) {
             throw new NotAuthorizedFilterException("Invalid user ID");
         }
 

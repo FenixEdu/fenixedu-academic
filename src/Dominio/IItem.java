@@ -9,20 +9,28 @@ package Dominio;
 import fileSuport.INode;
 
 /**
- *
- * @author  ars
+ * 
+ * @author ars
  */
-public interface IItem extends IDomainObject,INode {
-	public String getName();
-	public ISection getSection();
-	public Integer getItemOrder();
-	public String getInformation();
-	public Boolean getUrgent();
+public interface IItem extends IDomainObject, INode {
+    public String getName();
 
-	public void setName(String name);
-	public void setSection(ISection section);
-	public void setItemOrder(Integer order);
-	public void setInformation(String information);
-	public void setUrgent(Boolean urgent);
+    public ISection getSection();
+
+    public Integer getItemOrder();
+
+    public String getInformation();
+
+    public Boolean getUrgent();
+
+    public void setName(String name);
+
+    public void setSection(ISection section);
+
+    public void setItemOrder(Integer order);
+
+    public void setInformation(String information);
+
+    public void setUrgent(Boolean urgent);
 
 }

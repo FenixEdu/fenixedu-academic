@@ -29,16 +29,10 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class DeleteDegreeCurricularPlansAction extends FenixAction
-{
+public class DeleteDegreeCurricularPlansAction extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm deleteForm = (DynaActionForm) form;
@@ -49,26 +43,20 @@ public class DeleteDegreeCurricularPlansAction extends FenixAction
 
         List errorNames = new ArrayList();
 
-        try
-        {
-            errorNames =
-                (List) ServiceUtils.executeService(userView, "DeleteDegreeCurricularPlans", args);
-        } catch (FenixServiceException fenixServiceException)
-        {
+        try {
+            errorNames = (List) ServiceUtils.executeService(userView, "DeleteDegreeCurricularPlans",
+                    args);
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException);
         }
 
-        if (!errorNames.isEmpty())
-        {
+        if (!errorNames.isEmpty()) {
             ActionErrors actionErrors = new ActionErrors();
             Iterator namesIter = errorNames.iterator();
             ActionError error = null;
-            while (namesIter.hasNext())
-            {
+            while (namesIter.hasNext()) {
                 // Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
-                error =
-                    new ActionError(
-                        "errors.invalid.delete.not.empty.degree.curricular.plan",
+                error = new ActionError("errors.invalid.delete.not.empty.degree.curricular.plan",
                         namesIter.next());
                 actionErrors.add("errors.invalid.delete.not.empty.degree.curricular.plan", error);
             }

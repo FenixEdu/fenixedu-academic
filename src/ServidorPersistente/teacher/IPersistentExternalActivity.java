@@ -13,9 +13,8 @@ import ServidorPersistente.IPersistentObject;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public interface IPersistentExternalActivity extends IPersistentObject
-{
+public interface IPersistentExternalActivity extends IPersistentObject {
     public List readAllByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

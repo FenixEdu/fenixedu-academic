@@ -43,17 +43,17 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser() {
-        String[] args = { "D3673", "pass", getApplication()};
+        String[] args = { "D3673", "pass", getApplication() };
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
     protected String[] getNotAuthenticatedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
@@ -66,9 +66,9 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
 
         String questionText = new String("questionText");
         String secondQuestionText = null;
-        String[] options = new String[] { "op1", "op2", "op3"};
-        String[] correctOptions = new String[] { "1", "2"};
-        String[] shuffle = new String[] { "1", "2", "3"};
+        String[] options = new String[] { "op1", "op2", "op3" };
+        String[] correctOptions = new String[] { "1", "2" };
+        String[] shuffle = new String[] { "1", "2", "3" };
 
         InfoQuestion infoQuestion = getLIDInfoQuestion(correctOptions);
 
@@ -76,14 +76,12 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
         String wrongFeedbackText = new String("");
         Boolean breakLineBeforeResponseBox = new Boolean(false);
         Boolean breakLineAfterResponseBox = new Boolean(false);
-        String path = new String(
-                "e:\\eclipse-m8\\workspace\\fenix-head\\build\\standalone\\ciapl\\");
+        String path = new String("e:\\eclipse-m8\\workspace\\fenix-head\\build\\standalone\\ciapl\\");
 
-        Object[] args = { executionCourseId, metadataId, null, null, null,
-                null, null, null, null, infoQuestion, questionText,
-                secondQuestionText, options, correctOptions, shuffle,
-                correctFeedbackText, wrongFeedbackText,
-                breakLineBeforeResponseBox, breakLineAfterResponseBox, path};
+        Object[] args = { executionCourseId, metadataId, null, null, null, null, null, null, null,
+                infoQuestion, questionText, secondQuestionText, options, correctOptions, shuffle,
+                correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
+                breakLineAfterResponseBox, path };
         return args;
     }
 
@@ -95,8 +93,7 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
         Integer metadataId = null;
         String author = new String("author");
         String description = new String("description");
-        QuestionDifficultyType difficulty = new QuestionDifficultyType(
-                QuestionDifficultyType.EASY);
+        QuestionDifficultyType difficulty = new QuestionDifficultyType(QuestionDifficultyType.EASY);
         String mainSubject = new String("Matéria Principal");
         String secondarySubject = new String("Matéria Secundária");
         Calendar learningTime = Calendar.getInstance();
@@ -105,9 +102,9 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
         learningTime.set(Calendar.SECOND, 0);
         String level = new String("1");
         //QUESTION
-        String[] options = new String[] { "op1", "op2", "op3"};
-        String[] correctOptions = new String[] { "1", "2"};
-        String[] shuffle = new String[] { "1", "2", "3"};
+        String[] options = new String[] { "op1", "op2", "op3" };
+        String[] correctOptions = new String[] { "1", "2" };
+        String[] shuffle = new String[] { "1", "2", "3" };
 
         InfoQuestion infoQuestion = getLIDInfoQuestion(correctOptions);
         String questionText = new String("questionText");
@@ -117,15 +114,12 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
         String wrongFeedbackText = new String("");
         Boolean breakLineBeforeResponseBox = null;
         Boolean breakLineAfterResponseBox = null;
-        String path = new String(
-                "e:\\eclipse-m8\\workspace\\fenix-head\\build\\standalone\\ciapl\\");
+        String path = new String("e:\\eclipse-m8\\workspace\\fenix-head\\build\\standalone\\ciapl\\");
 
-        Object[] args = { executionCourseId, metadataId, author, description,
-                difficulty, mainSubject, secondarySubject, learningTime, level,
-                infoQuestion, questionText, secondQuestionText, options,
-                correctOptions, shuffle, correctFeedbackText,
-                wrongFeedbackText, breakLineBeforeResponseBox,
-                breakLineAfterResponseBox, path};
+        Object[] args = { executionCourseId, metadataId, author, description, difficulty, mainSubject,
+                secondarySubject, learningTime, level, infoQuestion, questionText, secondQuestionText,
+                options, correctOptions, shuffle, correctFeedbackText, wrongFeedbackText,
+                breakLineBeforeResponseBox, breakLineAfterResponseBox, path };
         return args;
     }
 
@@ -140,12 +134,10 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
 
             System.out.println("Test args 4 new Variation");
             Object[] args = getAuthorizeArguments();
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             System.out.println("Test args 4 new Exercise");
             args = getArguments4NewExercise();
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             System.out.println("Compare");
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 
@@ -163,8 +155,7 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
         RenderChoise render = new RenderChoise();
         render.setShuffle("YES");
         questionType.setRender(render);
-        CardinalityType cardinalityType = new CardinalityType(
-                CardinalityType.MULTIPLE);
+        CardinalityType cardinalityType = new CardinalityType(CardinalityType.MULTIPLE);
         questionType.setCardinalityType(cardinalityType);
 
         Integer optionNumber = new Integer(3);
@@ -178,14 +169,12 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
             correctResponse = correctOptions[i];
 
             ResponseCondition responseCondition = new ResponseCondition(
-                    ResponseCondition.VAREQUAL_XML_STRING, correctResponse,
-                    new String("1"));
+                    ResponseCondition.VAREQUAL_XML_STRING, correctResponse, new String("1"));
             responseConditionList.add(responseCondition);
         }
         if (responseConditionList != null && responseConditionList.size() != 0) {
-            ResponseProcessing responseProcessing = new ResponseProcessing(
-                    responseConditionList, new Double(2), new Integer(
-                            ResponseProcessing.SET), null, true);
+            ResponseProcessing responseProcessing = new ResponseProcessing(responseConditionList,
+                    new Double(2), new Integer(ResponseProcessing.SET), null, true);
             responseProcessingInstructionsList.add(responseProcessing);
         }
 
@@ -193,8 +182,7 @@ public class CreateExerciseTest extends ServiceNeedsAuthenticationTestCase {
         infoQuestion.setQuestionType(questionType);
         infoQuestion.setQuestionValue(new Double(2));
 
-        infoQuestion
-                .setResponseProcessingInstructions(responseProcessingInstructionsList);
+        infoQuestion.setResponseProcessingInstructions(responseProcessingInstructionsList);
 
         return infoQuestion;
     }

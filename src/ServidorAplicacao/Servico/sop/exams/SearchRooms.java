@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop.exams;
 
 /**
  * Service CreateExamNew
- *
+ * 
  * @author Ana e Ricardo
- **/
+ */
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,60 +25,46 @@ import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class SearchRooms implements IServico
-{
+public class SearchRooms implements IServico {
 
     private static SearchRooms _servico = new SearchRooms();
+
     /**
      * The singleton access method of this class.
-     **/
-    public static SearchRooms getService()
-    {
+     */
+    public static SearchRooms getService() {
         return _servico;
     }
 
     /**
      * The actor of this class.
-     **/
-    private SearchRooms()
-    {
+     */
+    private SearchRooms() {
     }
 
     /**
      * Devolve o nome do servico
-     **/
-    public final String getNome()
-    {
+     */
+    public final String getNome() {
         return "SearchRooms";
     }
 
-    public List run(
-        String name,
-        String building,
-        Integer floor,
-        Integer type,
-        Integer normal,
-        Integer exam)
-        throws FenixServiceException
-    {
-        try
-        {
+    public List run(String name, String building, Integer floor, Integer type, Integer normal,
+            Integer exam) throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ISalaPersistente salaDAO = sp.getISalaPersistente();
 
-            List rooms = salaDAO.readSalas(name,building,floor,type,normal,exam);
-			List infoRooms = new ArrayList();
+            List rooms = salaDAO.readSalas(name, building, floor, type, normal, exam);
+            List infoRooms = new ArrayList();
             Iterator iter = rooms.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 ISala room = (ISala) iter.next();
                 infoRooms.add(Cloner.copyRoom2InfoRoom(room));
             }
 
             return infoRooms;
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex.getMessage());
         }
     }

@@ -40,6 +40,12 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
 
     private List executionCourseProperties;
 
+    private List attends;
+
+    private List responsibleTeachers;
+
+    private List professorships;
+
     public ExecutionCourse() {
     }
 
@@ -340,6 +346,51 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
      */
     public void setExecutionCourseProperties(List executionCourseProperties) {
         this.executionCourseProperties = executionCourseProperties;
+    }
+
+    /**
+     * @return Returns the attends.
+     */
+    public List getAttends() {
+        return attends;
+    }
+
+    /**
+     * @param attends
+     *            The attends to set.
+     */
+    public void setAttends(List attends) {
+        this.attends = attends;
+    }
+
+    /**
+     * @return Returns the responsibleTeachers.
+     */
+    public List getResponsibleTeachers() {
+        return responsibleTeachers;
+    }
+
+    /**
+     * @param responsibleTeachers
+     *            The responsibleTeachers to set.
+     */
+    public void setResponsibleTeachers(List responsibleTeachers) {
+        this.responsibleTeachers = responsibleTeachers;
+    }
+
+    /**
+     * @return Returns the professorships.
+     */
+    public List getProfessorships() {
+        return professorships;
+    }
+
+    /**
+     * @param professorships
+     *            The professorships to set.
+     */
+    public void setProfessorships(List professorships) {
+        this.professorships = professorships;
     }
 
     /*

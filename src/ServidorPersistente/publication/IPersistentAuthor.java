@@ -14,12 +14,9 @@ import ServidorPersistente.IPersistentObject;
  * @author TJBF & PFON
  *  
  */
-public interface IPersistentAuthor extends IPersistentObject
-{
+public interface IPersistentAuthor extends IPersistentObject {
 
-    Author readAuthorByKeyPerson(Integer keyPerson)
-        throws ExcepcaoPersistencia;
-    
-    List  readAuthorsBySubName(String stringSubName)
-		throws ExcepcaoPersistencia;
+    Author readAuthorByKeyPerson(Integer keyPerson) throws ExcepcaoPersistencia;
+
+    List readAuthorsBySubName(String stringSubName) throws ExcepcaoPersistencia;
 }

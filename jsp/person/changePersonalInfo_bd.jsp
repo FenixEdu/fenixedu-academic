@@ -268,6 +268,15 @@
             	&nbsp;<bean:message key="label.person.availableWebSite" />
 	        	<html:checkbox property="availableWebSite" value="true"/></td>
           </tr>
+          <!-- Photo -->
+          <tr valign="top">
+          	<td><bean:message key="label.person.photo" /></td>
+            <td>
+	            <bean:define id="personID" name="personalInfo" property="idInternal"/>
+ 				<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+ 				&nbsp;<bean:message key="label.person.availablePhoto" />
+	        	<html:checkbox property="availablePhoto" value="true"/></td>
+          </tr>
    	</table>
 <br /><br />
 <html:submit property="Alterar" styleClass="inputbutton">Alterar Dados</html:submit>

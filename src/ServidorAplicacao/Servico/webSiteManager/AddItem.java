@@ -22,55 +22,59 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Fernanda Quitério
- * 25/09/2003
- * 
+ * @author Fernanda Quitério 25/09/2003
+ *  
  */
-public class AddItem extends ManageWebSiteItem implements IService{
+public class AddItem extends ManageWebSiteItem implements IService {
 
-	public AddItem() {
+    public AddItem() {
 
-	}
+    }
 
-	//infoItem with an infoSection
+    //infoItem with an infoSection
 
-	public InfoWebSite run(Integer sectionCode, InfoWebSiteItem infoWebSiteItem, String user) throws FenixServiceException {
+    public InfoWebSite run(Integer sectionCode, InfoWebSiteItem infoWebSiteItem, String user)
+            throws FenixServiceException {
 
-		List infoWebSiteSections = new ArrayList();
-		InfoWebSiteSection infoWebSiteSection = null;
+        List infoWebSiteSections = new ArrayList();
+        InfoWebSiteSection infoWebSiteSection = null;
 
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentWebSiteSection persistentWebSiteSection = persistentSuport.getIPersistentWebSiteSection();
-			IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
-			IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
-			
-			IWebSiteSection webSiteSection;
-			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class, sectionCode);
-			infoWebSiteSection = Cloner.copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
+                    .getIPersistentWebSiteSection();
+            IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
+            IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
 
-			checkData(infoWebSiteItem, webSiteSection);
-			
-			IWebSiteItem webSiteItem = new WebSiteItem();
-			persistentWebSiteItem.simpleLockWrite(webSiteItem);
+            IWebSiteSection webSiteSection;
+            webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+                    sectionCode);
+            infoWebSiteSection = Cloner.copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
 
-			fillWebSiteItemForDB(infoWebSiteItem, user, persistentPerson, persistentWebSiteSection, webSiteSection, webSiteItem);
+            checkData(infoWebSiteItem, webSiteSection);
 
-			List webSiteSections = persistentWebSiteSection.readByWebSite(webSiteSection.getWebSite());
-			Iterator iterSections = webSiteSections.iterator();
-			while (iterSections.hasNext()) {
-				WebSiteSection section = (WebSiteSection) iterSections.next();
+            IWebSiteItem webSiteItem = new WebSiteItem();
+            persistentWebSiteItem.simpleLockWrite(webSiteItem);
 
-				InfoWebSiteSection infoWebSiteSection2 = Cloner.copyIWebSiteSection2InfoWebSiteSection(section);
+            fillWebSiteItemForDB(infoWebSiteItem, user, persistentPerson, persistentWebSiteSection,
+                    webSiteSection, webSiteItem);
 
-				infoWebSiteSections.add(infoWebSiteSection2);
-			}
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-		InfoWebSite infoWebSite = infoWebSiteSection.getInfoWebSite();
-		infoWebSite.setSections(infoWebSiteSections);
+            List webSiteSections = persistentWebSiteSection.readByWebSite(webSiteSection.getWebSite());
+            Iterator iterSections = webSiteSections.iterator();
+            while (iterSections.hasNext()) {
+                WebSiteSection section = (WebSiteSection) iterSections.next();
 
-		return infoWebSite;
-	}
+                InfoWebSiteSection infoWebSiteSection2 = Cloner
+                        .copyIWebSiteSection2InfoWebSiteSection(section);
+
+                infoWebSiteSections.add(infoWebSiteSection2);
+            }
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+        InfoWebSite infoWebSite = infoWebSiteSection.getInfoWebSite();
+        infoWebSite.setSections(infoWebSiteSections);
+
+        return infoWebSite;
+    }
 }

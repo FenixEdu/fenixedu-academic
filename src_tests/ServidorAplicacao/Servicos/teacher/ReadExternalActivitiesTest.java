@@ -19,103 +19,90 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class ReadExternalActivitiesTest extends ServiceNeedsAuthenticationTestCase
-{
+public class ReadExternalActivitiesTest extends ServiceNeedsAuthenticationTestCase {
     /**
-	 * @param testName
-	 */
-    public ReadExternalActivitiesTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadExternalActivitiesTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testReadExternalActivitiesDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExternalActivities";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "julia", "pass", getApplication()};
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "jccm", "pass", getApplication()};
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
-        Object[] args = { userView.getUtilizador()};
+    protected Object[] getAuthorizeArguments() {
+        Object[] args = { userView.getUtilizador() };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testReadAllWithExternalActivities()
-    {
-        try
-        {
+    public void testReadAllWithExternalActivities() {
+        try {
             SiteView result = null;
 
-            Object[] args = { userView.getUtilizador()};
+            Object[] args = { userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
-            InfoSiteExternalActivities infoSiteActivities =
-                (InfoSiteExternalActivities) result.getComponent();
+            InfoSiteExternalActivities infoSiteActivities = (InfoSiteExternalActivities) result
+                    .getComponent();
 
             List infoExternalActivities = infoSiteActivities.getInfoExternalActivities();
             assertEquals(infoExternalActivities.size(), 2);
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading all external activities of a Teacher with external activities " + ex);
         }
     }
 
-    public void testReadAllWithoutExternalActivities()
-    {
-        try
-        {
+    public void testReadAllWithoutExternalActivities() {
+        try {
             SiteView result = null;
 
-            String[] args = { "maria", "pass", getApplication()};
+            String[] args = { "maria", "pass", getApplication() };
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { userView.getUtilizador()};
+            Object[] serviceArgs = { userView.getUtilizador() };
 
-            result = (SiteView) ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), serviceArgs);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), serviceArgs);
 
-            InfoSiteExternalActivities infoSiteActivities =
-                (InfoSiteExternalActivities) result.getComponent();
+            InfoSiteExternalActivities infoSiteActivities = (InfoSiteExternalActivities) result
+                    .getComponent();
 
             List infoExternalActivities = infoSiteActivities.getInfoExternalActivities();
             assertTrue(infoExternalActivities.isEmpty());
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Reading all external activities of a Teacher without external activities " + ex);
         }
     }

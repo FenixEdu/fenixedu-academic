@@ -136,14 +136,12 @@ public class Horario {
         this.quando = null;
     }
 
-    public Horario(int codigoInterno, int chaveHorarioTipo,
-            int chaveFuncionario, String sigla, String modalidade,
-            float duracaoSemanal, Timestamp inicioPF1, Timestamp fimPF1,
-            Timestamp inicioPF2, Timestamp fimPF2, Timestamp inicioHN1,
-            Timestamp fimHN1, Timestamp inicioHN2, Timestamp fimHN2,
-            Timestamp inicioExpediente, Timestamp fimExpediente,
-            Date dataCumprir, Date dataInicio, Date dataFim, int numDias,
-            int posicao, int quem, Timestamp quando) {
+    public Horario(int codigoInterno, int chaveHorarioTipo, int chaveFuncionario, String sigla,
+            String modalidade, float duracaoSemanal, Timestamp inicioPF1, Timestamp fimPF1,
+            Timestamp inicioPF2, Timestamp fimPF2, Timestamp inicioHN1, Timestamp fimHN1,
+            Timestamp inicioHN2, Timestamp fimHN2, Timestamp inicioExpediente, Timestamp fimExpediente,
+            Date dataCumprir, Date dataInicio, Date dataFim, int numDias, int posicao, int quem,
+            Timestamp quando) {
 
         this.codigoInterno = codigoInterno;
         this.chaveHorarioTipo = chaveHorarioTipo;
@@ -176,15 +174,12 @@ public class Horario {
         this.quando = quando;
     }
 
-    public Horario(int codigoInterno, int chaveHorarioTipo,
-            int chaveFuncionario, String sigla, String modalidade,
-            float duracaoSemanal, Timestamp inicioPF1, Timestamp fimPF1,
-            Timestamp inicioPF2, Timestamp fimPF2, Timestamp inicioHN1,
-            Timestamp fimHN1, Timestamp inicioHN2, Timestamp fimHN2,
-            Timestamp inicioRefeicao, Timestamp fimRefeicao,
-            Time descontoObrigatorioRefeicao, Time descontoMinimo,
-            Timestamp inicioExpediente, Timestamp fimExpediente,
-            Date dataCumprir, Date dataInicio, Date dataFim, int numDias,
+    public Horario(int codigoInterno, int chaveHorarioTipo, int chaveFuncionario, String sigla,
+            String modalidade, float duracaoSemanal, Timestamp inicioPF1, Timestamp fimPF1,
+            Timestamp inicioPF2, Timestamp fimPF2, Timestamp inicioHN1, Timestamp fimHN1,
+            Timestamp inicioHN2, Timestamp fimHN2, Timestamp inicioRefeicao, Timestamp fimRefeicao,
+            Time descontoObrigatorioRefeicao, Time descontoMinimo, Timestamp inicioExpediente,
+            Timestamp fimExpediente, Date dataCumprir, Date dataInicio, Date dataFim, int numDias,
             int posicao, Time trabalhoConsecutivo, int quem, Timestamp quando) {
 
         this.codigoInterno = codigoInterno;
@@ -222,8 +217,8 @@ public class Horario {
      * Construtores auxiliares para a leitura das rotacoes do horario na BD
      * Oracle
      */
-    public Horario(int chaveHorarioTipo, String sigla, String modalidade,
-            float duracaoSemanal, Date dataInicio, int numDias, int posicao) {
+    public Horario(int chaveHorarioTipo, String sigla, String modalidade, float duracaoSemanal,
+            Date dataInicio, int numDias, int posicao) {
 
         this.codigoInterno = 0;
         this.chaveHorarioTipo = chaveHorarioTipo;
@@ -256,8 +251,8 @@ public class Horario {
     }
 
     /* Construtor auxiliar para a leitura das rotacoes do horario na BD Oracle */
-    public Horario(int chaveHorarioTipo, int chaveFuncionario, Date dataInicio,
-            Date dataFim, int numDias, int posicao) {
+    public Horario(int chaveHorarioTipo, int chaveFuncionario, Date dataInicio, Date dataFim,
+            int numDias, int posicao) {
 
         this.codigoInterno = 0;
         this.chaveHorarioTipo = chaveHorarioTipo;
@@ -289,8 +284,8 @@ public class Horario {
         this.quando = null;
     }
 
-    public Horario(int chaveHorarioTipo, int chaveFuncionario, Date dataInicio,
-            Date dataFim, int numDias, int posicao, int quem, Timestamp quando) {
+    public Horario(int chaveHorarioTipo, int chaveFuncionario, Date dataInicio, Date dataFim,
+            int numDias, int posicao, int quem, Timestamp quando) {
 
         this.codigoInterno = 0;
         this.chaveHorarioTipo = chaveHorarioTipo;
@@ -863,10 +858,8 @@ public class Horario {
             Horario horario = (Horario) obj;
 
             resultado = ((this.getCodigoInterno() == horario.getCodigoInterno())
-                    && (this.getChaveHorarioTipo() == horario
-                            .getChaveHorarioTipo())
-                    && (this.getChaveFuncionario() == horario
-                            .getChaveFuncionario())
+                    && (this.getChaveHorarioTipo() == horario.getChaveHorarioTipo())
+                    && (this.getChaveFuncionario() == horario.getChaveFuncionario())
                     && (this.getSigla() == horario.getSigla())
                     && (this.getModalidade() == horario.getModalidade())
                     && (this.getDuracaoSemanal() == horario.getDuracaoSemanal())
@@ -882,37 +875,28 @@ public class Horario {
                     && (this.getFimRefeicao() == horario.getFimRefeicao())
                     && (this.getDescontoObrigatorioRefeicao() == horario
                             .getDescontoObrigatorioRefeicao())
-                    && (this.getIntervaloMinimoRefeicao() == horario
-                            .getIntervaloMinimoRefeicao())
-                    && (this.getInicioExpediente() == horario
-                            .getInicioExpediente())
+                    && (this.getIntervaloMinimoRefeicao() == horario.getIntervaloMinimoRefeicao())
+                    && (this.getInicioExpediente() == horario.getInicioExpediente())
                     && (this.getFimExpediente() == horario.getFimExpediente())
                     && (this.getDataInicio() == horario.getDataInicio())
                     && (this.getDataFim() == horario.getDataFim())
                     && (this.getNumDias() == horario.getNumDias())
                     && (this.getPosicao() == horario.getPosicao())
-                    && (this.getTrabalhoConsecutivo().equals(horario
-                            .getTrabalhoConsecutivo()))
-                    && (this.getQuem() == horario.getQuem()) && (this
-                    .getQuando() == horario.getQuando()));
+                    && (this.getTrabalhoConsecutivo().equals(horario.getTrabalhoConsecutivo()))
+                    && (this.getQuem() == horario.getQuem()) && (this.getQuando() == horario.getQuando()));
         }
         return resultado;
     }
 
     public Object clone() {
-        return new Horario(this.codigoInterno, this.chaveHorarioTipo,
-                this.chaveFuncionario, this.getSigla(), this.getModalidade(),
-                this.getDuracaoSemanal(), this.getInicioPF1(),
-                this.getFimPF1(), this.getInicioPF2(), this.getFimPF2(), this
-                        .getInicioHN1(), this.getFimHN1(), this.getInicioHN2(),
-                this.getFimHN2(), this.getInicioRefeicao(), this
-                        .getFimRefeicao(), this
-                        .getDescontoObrigatorioRefeicao(), this
-                        .getIntervaloMinimoRefeicao(), this
-                        .getInicioExpediente(), this.getFimExpediente(), this
-                        .getDataCumprir(), this.getDataInicio(), this
-                        .getDataFim(), this.getNumDias(), this.getPosicao(),
-                this.getTrabalhoConsecutivo(), this.getQuem(), this.getQuando());
+        return new Horario(this.codigoInterno, this.chaveHorarioTipo, this.chaveFuncionario, this
+                .getSigla(), this.getModalidade(), this.getDuracaoSemanal(), this.getInicioPF1(), this
+                .getFimPF1(), this.getInicioPF2(), this.getFimPF2(), this.getInicioHN1(), this
+                .getFimHN1(), this.getInicioHN2(), this.getFimHN2(), this.getInicioRefeicao(), this
+                .getFimRefeicao(), this.getDescontoObrigatorioRefeicao(), this
+                .getIntervaloMinimoRefeicao(), this.getInicioExpediente(), this.getFimExpediente(), this
+                .getDataCumprir(), this.getDataInicio(), this.getDataFim(), this.getNumDias(), this
+                .getPosicao(), this.getTrabalhoConsecutivo(), this.getQuem(), this.getQuando());
     }
 
     public void transforma(HorarioTipo horarioTipo) {
@@ -929,10 +913,8 @@ public class Horario {
         this.setFimHN2(horarioTipo.getFimHN2());
         this.setInicioRefeicao(horarioTipo.getInicioRefeicao());
         this.setFimRefeicao(horarioTipo.getFimRefeicao());
-        this.setDescontoObrigatorioRefeicao(horarioTipo
-                .getDescontoObrigatorioRefeicao());
-        this.setIntervaloMinimoRefeicao(horarioTipo
-                .getIntervaloMinimoRefeicao());
+        this.setDescontoObrigatorioRefeicao(horarioTipo.getDescontoObrigatorioRefeicao());
+        this.setIntervaloMinimoRefeicao(horarioTipo.getIntervaloMinimoRefeicao());
         this.setInicioExpediente(horarioTipo.getInicioExpediente());
         this.setFimExpediente(horarioTipo.getFimExpediente());
         this.setTrabalhoConsecutivo(horarioTipo.getTrabalhoConsecutivo());
@@ -956,11 +938,9 @@ public class Horario {
             //é um horario tipo
             return this.getSigla();
         }
-        ResourceBundle bundle = ResourceBundle.getBundle(
-                "ApplicationResources", locale);
+        ResourceBundle bundle = ResourceBundle.getBundle("ApplicationResources", locale);
         if ((this.getSigla() != null)
-                && (this.getSigla().equals(Constants.DS)
-                        || this.getSigla().equals(Constants.DSC) || this
+                && (this.getSigla().equals(Constants.DS) || this.getSigla().equals(Constants.DSC) || this
                         .getSigla().equals(Constants.FERIADO))) {
             //é um horário de descanso
             return bundle.getString(this.getSigla());

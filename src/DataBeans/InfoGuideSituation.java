@@ -6,30 +6,26 @@ import Util.SituationOfGuide;
 import Util.State;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) 
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoGuideSituation extends InfoObject
-{
+public class InfoGuideSituation extends InfoObject {
 
     protected String remarks;
+
     protected SituationOfGuide situation;
+
     protected Date date;
+
     protected State state;
 
     protected InfoGuide infoGuide;
 
-    public InfoGuideSituation()
-    {
+    public InfoGuideSituation() {
     }
 
-    public InfoGuideSituation(
-        String remarks,
-        SituationOfGuide situationOfGuide,
-        Date date,
-        State state,
-        InfoGuide infoGuide)
-    {
+    public InfoGuideSituation(String remarks, SituationOfGuide situationOfGuide, Date date, State state,
+            InfoGuide infoGuide) {
         this.remarks = remarks;
         this.situation = situationOfGuide;
         this.date = date;
@@ -37,23 +33,19 @@ public class InfoGuideSituation extends InfoObject
         this.infoGuide = infoGuide;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof InfoGuideSituation)
-        {
+        if (obj instanceof InfoGuideSituation) {
             InfoGuideSituation infoGuideSituation = (InfoGuideSituation) obj;
 
-            resultado =
-                getInfoGuide().equals(infoGuideSituation.getInfoGuide())
+            resultado = getInfoGuide().equals(infoGuideSituation.getInfoGuide())
                     && getSituation().equals(infoGuideSituation.getSituation());
         }
 
         return resultado;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[GUIDE SITUATION";
         result += ", remarks=" + remarks;
         result += ", guide=" + infoGuide;
@@ -65,82 +57,72 @@ public class InfoGuideSituation extends InfoObject
     }
 
     /**
-	 * @return
-	 */
-    public Date getDate()
-    {
+     * @return
+     */
+    public Date getDate() {
         return date;
     }
 
     /**
-	 * @return
-	 */
-    public InfoGuide getInfoGuide()
-    {
+     * @return
+     */
+    public InfoGuide getInfoGuide() {
         return infoGuide;
     }
 
     /**
-	 * @return
-	 */
-    public String getRemarks()
-    {
+     * @return
+     */
+    public String getRemarks() {
         return remarks;
     }
 
     /**
-	 * @return
-	 */
-    public SituationOfGuide getSituation()
-    {
+     * @return
+     */
+    public SituationOfGuide getSituation() {
         return situation;
     }
 
     /**
-	 * @return
-	 */
-    public State getState()
-    {
+     * @return
+     */
+    public State getState() {
         return state;
     }
 
     /**
-	 * @param date
-	 */
-    public void setDate(Date date)
-    {
+     * @param date
+     */
+    public void setDate(Date date) {
         this.date = date;
     }
 
     /**
-	 * @param guide
-	 */
-    public void setInfoGuide(InfoGuide guide)
-    {
+     * @param guide
+     */
+    public void setInfoGuide(InfoGuide guide) {
         infoGuide = guide;
     }
 
     /**
-	 * @param string
-	 */
-    public void setRemarks(String string)
-    {
+     * @param string
+     */
+    public void setRemarks(String string) {
         remarks = string;
     }
 
     /**
-	 * @param guide
-	 */
-    public void setSituation(SituationOfGuide guide)
-    {
+     * @param guide
+     */
+    public void setSituation(SituationOfGuide guide) {
         situation = guide;
     }
 
     /**
-	 * @param state
-	 */
-    public void setState(State state)
-    {
+     * @param state
+     */
+    public void setState(State state) {
         this.state = state;
     }
 

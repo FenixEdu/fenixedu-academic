@@ -22,73 +22,58 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 /**
  * @author João Mota
  */
-public class FenixErrorExceptionHandler extends ExceptionHandler
-{
+public class FenixErrorExceptionHandler extends ExceptionHandler {
 
     /**
-	 *  
-	 */
-    public FenixErrorExceptionHandler()
-    {
+     *  
+     */
+    public FenixErrorExceptionHandler() {
         super();
     }
 
     /**
-	 * Handle the exception. Return the <code>ActionForward</code> instance
-	 * (if any) returned by the called <code>ExceptionHandler</code>.
-	 * 
-	 * @param ex
-	 *            The exception to handle
-	 * @param ae
-	 *            The ExceptionConfig corresponding to the exception
-	 * @param mapping
-	 *            The ActionMapping we are processing
-	 * @param formInstance
-	 *            The ActionForm we are processing
-	 * @param request
-	 *            The servlet request we are processing
-	 * @param response
-	 *            The servlet response we are creating
-	 * 
-	 * @exception ServletException
-	 *                if a servlet exception occurs
-	 * 
-	 * @since Struts 1.1
-	 */
-    public ActionForward execute(
-        Exception ex,
-        ExceptionConfig ae,
-        ActionMapping mapping,
-        ActionForm formInstance,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws ServletException
-    {
+     * Handle the exception. Return the <code>ActionForward</code> instance
+     * (if any) returned by the called <code>ExceptionHandler</code>.
+     * 
+     * @param ex
+     *            The exception to handle
+     * @param ae
+     *            The ExceptionConfig corresponding to the exception
+     * @param mapping
+     *            The ActionMapping we are processing
+     * @param formInstance
+     *            The ActionForm we are processing
+     * @param request
+     *            The servlet request we are processing
+     * @param response
+     *            The servlet response we are creating
+     * 
+     * @exception ServletException
+     *                if a servlet exception occurs
+     * 
+     * @since Struts 1.1
+     */
+    public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
+            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException {
 
         ActionError error = null;
         String property = null;
 
         // Figure out the error
         ActionForward forward = mapping.getInputForward();
-        if (ex instanceof FenixActionException)
-        {
+        if (ex instanceof FenixActionException) {
             FenixActionException fenixActionException = (FenixActionException) ex;
             error = ((FenixActionException) ex).getError();
             property = ((FenixActionException) ex).getProperty();
-            forward =
-                fenixActionException.getActionForward() != null
-                    ? fenixActionException.getActionForward()
-                    : mapping.getInputForward();
-        }
-        else if(ex instanceof EmptyRequiredFieldServiceException)
-        {
-        	System.out.println(ex.getMessage());
-        	error = new ActionError(ex.getMessage());
+            forward = fenixActionException.getActionForward() != null ? fenixActionException
+                    .getActionForward() : mapping.getInputForward();
+        } else if (ex instanceof EmptyRequiredFieldServiceException) {
+            System.out.println(ex.getMessage());
+            error = new ActionError(ex.getMessage());
             property = error.getKey();
-        }
-        else
-        {
-            error = new ActionError(ae.getKey(),ex.getMessage());
+        } else {
+            error = new ActionError(ae.getKey(), ex.getMessage());
             property = error.getKey();
         }
         //ex.printStackTrace(System.out);

@@ -25,14 +25,13 @@ public class InfoStudent extends InfoObject {
     protected TipoCurso degreeType;
 
     private InfoStudentKind infoStudentKind;
-    
+
     private Boolean payedTuition;
 
     public InfoStudent() {
     }
 
-    public InfoStudent(Integer numero, StudentState estado, InfoPerson pessoa,
-            TipoCurso degreeType) {
+    public InfoStudent(Integer numero, StudentState estado, InfoPerson pessoa, TipoCurso degreeType) {
         setNumber(numero);
         setState(estado);
         setInfoPerson(pessoa);
@@ -70,20 +69,25 @@ public class InfoStudent extends InfoObject {
     public void setDegreeType(TipoCurso degreeType) {
         this.degreeType = degreeType;
     }
+
     public InfoStudentKind getInfoStudentKind() {
         return infoStudentKind;
     }
+
     public void setInfoStudentKind(InfoStudentKind info) {
         infoStudentKind = info;
     }
+
     /**
      * @return Returns the payedTuition.
      */
     public Boolean getPayedTuition() {
         return payedTuition;
     }
+
     /**
-     * @param payedTuition The payedTuition to set.
+     * @param payedTuition
+     *            The payedTuition to set.
      */
     public void setPayedTuition(Boolean payedTuition) {
         this.payedTuition = payedTuition;
@@ -104,7 +108,8 @@ public class InfoStudent extends InfoObject {
         result += ", numero=" + number;
         result += ", degreeType=" + degreeType;
         result += ", estado=" + state;
-        if (infoPerson != null) result += ", pessoa" + infoPerson.toString();
+        if (infoPerson != null)
+            result += ", pessoa" + infoPerson.toString();
         result += "]";
         return result;
     }
@@ -119,12 +124,12 @@ public class InfoStudent extends InfoObject {
             setPayedTuition(student.getPayedTuition());
         }
     }
-    
+
     public static InfoStudent newInfoFromDomain(IStudent student) {
         InfoStudent infoStudent = null;
-        if(student != null) {
-           infoStudent = new InfoStudent();
-           infoStudent.copyFromDomain(student);
+        if (student != null) {
+            infoStudent = new InfoStudent();
+            infoStudent.copyFromDomain(student);
         }
         return infoStudent;
     }

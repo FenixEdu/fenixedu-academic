@@ -14,6 +14,7 @@
 package Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -58,13 +59,10 @@ public class State extends FenixUtil {
 
     }
 
-    public ArrayList toArrayList() {
-        ArrayList result = new ArrayList();
-        result
-                .add(new LabelValueBean(State.ACTIVE_STRING,
-                        State.ACTIVE_STRING));
-        result.add(new LabelValueBean(State.INACTIVE_STRING,
-                State.INACTIVE_STRING));
+    public List toArrayList() {
+        List result = new ArrayList();
+        result.add(new LabelValueBean(State.ACTIVE_STRING, State.ACTIVE_STRING));
+        result.add(new LabelValueBean(State.INACTIVE_STRING, State.INACTIVE_STRING));
         return result;
     }
 

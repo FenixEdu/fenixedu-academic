@@ -19,8 +19,8 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -60,8 +60,8 @@ public class DeleteStudentGroupMembers implements IServico {
      * Executes the service.
      */
 
-    public boolean run(Integer executionCourseCode, Integer studentGroupCode,
-            List studentUsernames) throws FenixServiceException {
+    public boolean run(Integer executionCourseCode, Integer studentGroupCode, List studentUsernames)
+            throws FenixServiceException {
 
         IPersistentExecutionCourse persistentExecutionCourse = null;
         IPersistentStudentGroup persistentStudentGroup = null;
@@ -71,22 +71,18 @@ public class DeleteStudentGroupMembers implements IServico {
 
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-            persistentExecutionCourse = persistentSupport
-                    .getIPersistentExecutionCourse();
+            persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             persistentAttend = persistentSupport.getIFrequentaPersistente();
             persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentStudentGroup = persistentSupport
-                    .getIPersistentStudentGroup();
-            persistentStudentGroupAttend = persistentSupport
-                    .getIPersistentStudentGroupAttend();
+            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
+            persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new ExistingServiceException();
@@ -94,15 +90,13 @@ public class DeleteStudentGroupMembers implements IServico {
             Iterator iterator = studentUsernames.iterator();
 
             while (iterator.hasNext()) {
-                IStudent student = persistentStudent.readByUsername(iterator
-                        .next().toString());
+                IStudent student = persistentStudent.readByUsername(iterator.next().toString());
 
-                IFrequenta attend = persistentAttend
-                        .readByAlunoAndDisciplinaExecucao(student,
-                                executionCourse);
+                IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,
+                        executionCourse);
 
-                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
-                        .readBy(studentGroup, attend);
+                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(
+                        studentGroup, attend);
                 if (oldStudentGroupAttend != null) {
                     persistentStudentGroupAttend.delete(oldStudentGroupAttend);
                 } else {

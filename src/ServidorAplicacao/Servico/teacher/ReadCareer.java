@@ -21,57 +21,50 @@ import ServidorPersistente.teacher.IPersistentCareer;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareer extends ReadDomainObjectService
-{
+public class ReadCareer extends ReadDomainObjectService {
     private static ReadCareer service = new ReadCareer();
 
-    public static ReadCareer getService()
-    {
+    public static ReadCareer getService() {
         return service;
     }
 
-    public ReadCareer()
-    {
+    public ReadCareer() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadCareer";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-	 */
-    protected Class getDomainObjectClass()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
+     */
+    protected Class getDomainObjectClass() {
         return Career.class;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-	 */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
+     */
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
         InfoCareer infoCareer = Cloner.copyICareer2InfoCareer((ICareer) domainObject);
         return infoCareer;
     }

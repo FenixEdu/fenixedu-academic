@@ -5,8 +5,8 @@
 package ServidorAplicacao.Servico.teacher;
 
 import java.util.Calendar;
-import java.util.ListIterator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoSummary;
 import Dominio.IAula;
 import Dominio.IProfessorship;
@@ -18,8 +18,8 @@ import Dominio.Professorship;
 import Dominio.Sala;
 import Dominio.Summary;
 import Dominio.Turno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.utils.summary.SummaryUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentSummary;
@@ -34,14 +34,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes modified by Tânia Pousão 5/Abr/2004 21/Jul/2003
  *         fenix-head ServidorAplicacao.Servico.teacher
  */
-public class InsertSummary implements IServico {
-
-    private static InsertSummary service = new InsertSummary();
-
-    public static InsertSummary getService() {
-
-        return service;
-    }
+public class InsertSummary implements IService {
 
     /**
      *  
@@ -58,31 +51,25 @@ public class InsertSummary implements IServico {
         return "InsertSummary";
     }
 
-    public Boolean run(Integer executionCourseId, InfoSummary infoSummary)
-            throws FenixServiceException {
+    public Boolean run(Integer executionCourseId, InfoSummary infoSummary) throws FenixServiceException {
 
         try {
             if (infoSummary == null || infoSummary.getInfoShift() == null
                     || infoSummary.getInfoShift().getIdInternal() == null
-                    || infoSummary.getIsExtraLesson() == null
-                    || infoSummary.getSummaryDate() == null) {
-                throw new FenixServiceException(
-                        "error.summary.impossible.insert");
+                    || infoSummary.getIsExtraLesson() == null || infoSummary.getSummaryDate() == null) {
+                throw new FenixServiceException("error.summary.impossible.insert");
             }
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentSummary persistentSummary = persistentSuport
-                    .getIPersistentSummary();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
             ISummary summary = new Summary();
             persistentSummary.simpleLockWrite(summary);
 
             //Shift
-            ITurnoPersistente persistentShift = persistentSuport
-                    .getITurnoPersistente();
+            ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
 
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
-                    infoSummary.getInfoShift().getIdInternal());
+            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, infoSummary.getInfoShift()
+                    .getIdInternal());
             if (shift == null) {
                 throw new FenixServiceException("error.summary.no.shift");
             }
@@ -94,18 +81,17 @@ public class InsertSummary implements IServico {
 
                 if (infoSummary.getInfoRoom() != null
                         && infoSummary.getInfoRoom().getIdInternal() != null) {
-                    ISalaPersistente persistentRoom = persistentSuport
-                            .getISalaPersistente();
+                    ISalaPersistente persistentRoom = persistentSuport.getISalaPersistente();
 
-                    ISala room = (ISala) persistentRoom.readByOID(Sala.class,
-                            infoSummary.getInfoRoom().getIdInternal());
+                    ISala room = (ISala) persistentRoom.readByOID(Sala.class, infoSummary.getInfoRoom()
+                            .getIdInternal());
 
                     summary.setRoom(room);
                 }
             } else {
                 summary.setIsExtraLesson(Boolean.FALSE);
 
-                IAula lesson = findlesson(shift, infoSummary);
+                IAula lesson = SummaryUtils.findlesson(shift, infoSummary);
 
                 //room
                 summary.setRoom(lesson.getSala());//not necessary
@@ -113,11 +99,9 @@ public class InsertSummary implements IServico {
                 //validate da summary's date
                 infoSummary.setSummaryHour(lesson.getInicio());//not necessary
 
-                if (!verifyValidDateSummary(shift,
-                        infoSummary.getSummaryDate(), infoSummary
-                                .getSummaryHour())) {
-                    throw new FenixServiceException(
-                            "error.summary.invalid.date");
+                if (!SummaryUtils.verifyValidDateSummary(lesson, infoSummary.getSummaryDate(),
+                        infoSummary.getSummaryHour())) {
+                    throw new FenixServiceException("error.summary.invalid.date");
                 }
             }
 
@@ -126,8 +110,8 @@ public class InsertSummary implements IServico {
 
             //after verify summary date and hour
             //and before continue check if this summary exists
-            if (persistentSummary.readSummaryByUnique(shift, infoSummary
-                    .getSummaryDate(), infoSummary.getSummaryHour()) != null) {
+            if (persistentSummary.readSummaryByUnique(shift, infoSummary.getSummaryDate(), infoSummary
+                    .getSummaryHour()) != null) {
                 throw new FenixServiceException("error.summary.already.exists");
             }
 
@@ -138,9 +122,8 @@ public class InsertSummary implements IServico {
                 IPersistentProfessorship persistentProfessorship = persistentSuport
                         .getIPersistentProfessorship();
 
-                IProfessorship professorship = (IProfessorship) persistentProfessorship
-                        .readByOID(Professorship.class, infoSummary
-                                .getInfoProfessorship().getIdInternal());
+                IProfessorship professorship = (IProfessorship) persistentProfessorship.readByOID(
+                        Professorship.class, infoSummary.getInfoProfessorship().getIdInternal());
                 if (professorship == null) {
                     throw new FenixServiceException("error.summary.no.teacher");
                 }
@@ -148,11 +131,10 @@ public class InsertSummary implements IServico {
                 summary.setProfessorship(professorship);
             } else if (infoSummary.getInfoTeacher() != null
                     && infoSummary.getInfoTeacher().getTeacherNumber() != null) {
-                IPersistentTeacher persistentTeacher = persistentSuport
-                        .getIPersistentTeacher();
+                IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
 
-                ITeacher teacher = persistentTeacher.readByNumber(infoSummary
-                        .getInfoTeacher().getTeacherNumber());
+                ITeacher teacher = persistentTeacher.readByNumber(infoSummary.getInfoTeacher()
+                        .getTeacherNumber());
                 if (teacher == null) {
                     throw new FenixServiceException("error.summary.no.teacher");
                 }
@@ -175,86 +157,4 @@ public class InsertSummary implements IServico {
         }
     }
 
-    /**
-     * @param shift
-     * @param infoSummary
-     * @return
-     */
-    private IAula findlesson(ITurno shift, InfoSummary infoSummary) {
-        if (shift.getAssociatedLessons() != null
-                && shift.getAssociatedLessons().size() > 0) {
-            ListIterator iterator = shift.getAssociatedLessons().listIterator();
-            while (iterator.hasNext()) {
-                IAula lesson = (IAula) iterator.next();
-                if (lesson.getIdInternal().equals(
-                        infoSummary.getLessonIdSelected())) {
-                    return lesson;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param shift
-     * @param summaryDate
-     * @param summaryHour
-     * @return
-     */
-    private boolean verifyValidDateSummary(ITurno shift, Calendar summaryDate,
-            Calendar summaryHour) {
-        Calendar dateAndHourSummary = Calendar.getInstance();
-        dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate
-                .get(Calendar.DAY_OF_MONTH));
-        dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-        dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-        dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour
-                .get(Calendar.HOUR_OF_DAY));
-        dateAndHourSummary.set(Calendar.MINUTE, summaryHour
-                .get(Calendar.MINUTE));
-        dateAndHourSummary.set(Calendar.SECOND, 00);
-
-        Calendar beginLesson = Calendar.getInstance();
-        beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate
-                .get(Calendar.DAY_OF_MONTH));
-        beginLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-        beginLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-
-        Calendar endLesson = Calendar.getInstance();
-        endLesson.set(Calendar.DAY_OF_MONTH, summaryDate
-                .get(Calendar.DAY_OF_MONTH));
-        endLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
-        endLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-
-        if (shift.getAssociatedLessons() != null
-                && shift.getAssociatedLessons().size() > 0) {
-            ListIterator listIterator = shift.getAssociatedLessons()
-                    .listIterator();
-            while (listIterator.hasNext()) {
-                IAula lesson = (IAula) listIterator.next();
-
-                beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
-                        Calendar.HOUR_OF_DAY));
-                beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(
-                        Calendar.MINUTE));
-                beginLesson.set(Calendar.SECOND, 00);
-
-                endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(
-                        Calendar.HOUR_OF_DAY));
-                endLesson.set(Calendar.MINUTE, lesson.getFim().get(
-                        Calendar.MINUTE));
-                endLesson.set(Calendar.SECOND, 00);
-
-                if (dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson
-                        .getDiaSemana().getDiaSemana().intValue()
-                        && !beginLesson.after(dateAndHourSummary)
-                        && !endLesson.before(dateAndHourSummary)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 }

@@ -34,6 +34,12 @@
 	    jdbc-type="INTEGER"
 	/>
 	
+	<field-descriptor 
+	     name="endDate"
+	     column="END_DATE"
+         jdbc-type="DATE"
+	 />
+	
 	<reference-descriptor
        	name="executionYear"
        	class-ref="Dominio.ExecutionYear"

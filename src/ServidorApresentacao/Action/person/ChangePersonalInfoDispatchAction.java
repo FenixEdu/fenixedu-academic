@@ -29,21 +29,18 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import framework.factory.ServiceManagerServiceFactory;
 
 public class ChangePersonalInfoDispatchAction extends DispatchAction {
-    public ActionForward change(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         // Clear the Session
         session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
         session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
-        session
-                .removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
+        session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
         session.removeAttribute(SessionConstants.SEX_LIST_KEY);
         session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
         session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
@@ -53,53 +50,51 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 
         // Create Dates
         InfoPerson infoPerson = new InfoPerson();
-        infoPerson.setTelemovel((String) changePersonalInformationForm
-                .get("mobilePhone"));
-        infoPerson.setWorkPhone((String) changePersonalInformationForm
-                .get("workPhone"));
-        infoPerson
-                .setEmail((String) changePersonalInformationForm.get("email"));
+        infoPerson.setTelemovel((String) changePersonalInformationForm.get("mobilePhone"));
+        infoPerson.setWorkPhone((String) changePersonalInformationForm.get("workPhone"));
+        infoPerson.setEmail((String) changePersonalInformationForm.get("email"));
         if (changePersonalInformationForm.get("availableEmail") != null
-                && changePersonalInformationForm.get("availableEmail").equals(
-                        "true")) {
+                && changePersonalInformationForm.get("availableEmail").equals("true")) {
             infoPerson.setAvailableEmail(Boolean.TRUE);
         } else {
             infoPerson.setAvailableEmail(Boolean.FALSE);
         }
-        infoPerson.setEnderecoWeb((String) changePersonalInformationForm
-                .get("webSite"));
+        infoPerson.setEnderecoWeb((String) changePersonalInformationForm.get("webSite"));
         if (changePersonalInformationForm.get("availableWebSite") != null
-                && changePersonalInformationForm.get("availableWebSite")
-                        .equals("true")) {
+                && changePersonalInformationForm.get("availableWebSite").equals("true")) {
             infoPerson.setAvailableWebSite(Boolean.TRUE);
         } else {
             infoPerson.setAvailableWebSite(Boolean.FALSE);
         }
-        
-        Object changeArgs[] = { userView, infoPerson};
-        
-        userView = (IUserView) ServiceManagerServiceFactory.executeService(
-                userView, "ChangePersonalInfo", changeArgs);
-        
+        if (changePersonalInformationForm.get("availablePhoto") != null
+                && changePersonalInformationForm.get("availablePhoto").equals("true")) {
+            infoPerson.setAvailablePhoto(Boolean.TRUE);
+        } else {
+            infoPerson.setAvailablePhoto(Boolean.FALSE);
+        }
+
+        Object changeArgs[] = { userView, infoPerson };
+
+        userView = (IUserView) ServiceManagerServiceFactory.executeService(userView,
+                "ChangePersonalInfo", changeArgs);
+
         session.setAttribute(SessionConstants.U_VIEW, userView);
         return mapping.findForward("Success");
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
 
-        IUserView userView = (IUserView) session
-                .getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object changeArgs[] = { userView };
         Object result = null;
         try {
-            result = ServiceManagerServiceFactory.executeService(userView,
-                    "ReadPersonByUsername", changeArgs);
+            result = ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername",
+                    changeArgs);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -108,12 +103,11 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
         changePersonalInfoForm.set("mobilePhone", infoPerson.getTelemovel());
         changePersonalInfoForm.set("workPhone", infoPerson.getWorkPhone());
         changePersonalInfoForm.set("email", infoPerson.getEmail());
-        changePersonalInfoForm.set("availableEmail", infoPerson
-                .getAvailableEmail().toString());
+        changePersonalInfoForm.set("availableEmail", infoPerson.getAvailableEmail().toString());
 
         changePersonalInfoForm.set("webSite", infoPerson.getEnderecoWeb());
-        changePersonalInfoForm.set("availableWebSite", infoPerson
-                .getAvailableWebSite().toString());
+        changePersonalInfoForm.set("availableWebSite", infoPerson.getAvailableWebSite().toString());
+        changePersonalInfoForm.set("availablePhoto", infoPerson.getAvailablePhoto().toString());
         session.setAttribute(SessionConstants.PERSONAL_INFO_KEY, infoPerson);
         return mapping.findForward("prepareReady");
     }

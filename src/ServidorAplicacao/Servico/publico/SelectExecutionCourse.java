@@ -3,10 +3,11 @@ package ServidorAplicacao.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -19,75 +20,78 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author João Mota
  */
-public class SelectExecutionCourse implements IServico
-{
+public class SelectExecutionCourse implements IServico {
 
     private static SelectExecutionCourse _servico = new SelectExecutionCourse();
 
     /**
-	 * The actor of this class.
-	 */
+     * The actor of this class.
+     */
 
-    private SelectExecutionCourse()
-    {
+    private SelectExecutionCourse() {
 
     }
 
     /**
-	 * Returns Service Name
-	 */
-    public String getNome()
-    {
+     * Returns Service Name
+     */
+    public String getNome() {
         return "SelectExecutionCourse";
     }
 
     /**
-	 * Returns the _servico.
-	 * 
-	 * @return SelectExecutionCourse
-	 */
-    public static SelectExecutionCourse getService()
-    {
+     * Returns the _servico.
+     * 
+     * @return SelectExecutionCourse
+     */
+    public static SelectExecutionCourse getService() {
         return _servico;
     }
 
-    public Object run(
-        InfoExecutionDegree infoExecutionDegree,
-        InfoExecutionPeriod infoExecutionPeriod,
-        Integer curricularYear)
-    {
+    public Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+            Integer curricularYear) {
 
         List infoExecutionCourseList = new ArrayList();
 
-        try
-        {
+        try {
             List executionCourseList = null;
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            ICursoExecucao executionDegree =
-                Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IExecutionPeriod executionPeriod =
-                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            //CLONER
+            //ICursoExecucao executionDegree = Cloner
+            //        .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+            //IExecutionPeriod executionPeriod = Cloner
+            //        .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-            executionCourseList =
-                executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                    curricularYear,
-                    executionPeriod,
-                    executionDegree);
+            ICursoExecucao executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
+            if (executionDegree != null) {
+                executionDegree.setCurricularPlan(InfoDegreeCurricularPlan
+                        .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
+                executionDegree.getCurricularPlan().setDegree(
+                        InfoDegree.newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()
+                                .getInfoDegree()));
+            }
+            IExecutionPeriod executionPeriod = InfoExecutionPeriod
+                    .newDomainFromInfo(infoExecutionPeriod);
 
-            for (int i = 0; i < executionCourseList.size(); i++)
-            {
-                IExecutionCourse aux = (IExecutionCourse) executionCourseList.get(i);
-                InfoExecutionCourse infoExecutionCourse =
-                    (InfoExecutionCourse) Cloner.get(aux);
+            executionCourseList = executionCourseDAO
+                    .readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
+                            executionPeriod, executionDegree);
+
+            for (int i = 0; i < executionCourseList.size(); i++) {
+                IExecutionCourse executionCourse = (IExecutionCourse) executionCourseList.get(i);
+
+                //CLONER
+                //InfoExecutionCourse infoExecutionCourse =
+                // (InfoExecutionCourse) Cloner.get(executionCourse);
+                InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                        .newInfoFromDomain(executionCourse);
                 infoExecutionCourseList.add(infoExecutionCourse);
             }
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
 
             e.printStackTrace();
         }

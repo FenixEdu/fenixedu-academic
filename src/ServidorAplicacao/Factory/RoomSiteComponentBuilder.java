@@ -37,176 +37,149 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class RoomSiteComponentBuilder {
 
-	private static RoomSiteComponentBuilder instance = null;
+    private static RoomSiteComponentBuilder instance = null;
 
-	public RoomSiteComponentBuilder() {
-	}
+    public RoomSiteComponentBuilder() {
+    }
 
-	public static RoomSiteComponentBuilder getInstance() {
-		if (instance == null) {
-			instance = new RoomSiteComponentBuilder();
-		}
-		return instance;
-	}
+    public static RoomSiteComponentBuilder getInstance() {
+        if (instance == null) {
+            instance = new RoomSiteComponentBuilder();
+        }
+        return instance;
+    }
 
-	public ISiteComponent getComponent(
-		ISiteComponent component,
-		Calendar day,
-		ISala room)
-		throws FenixServiceException {
+    public ISiteComponent getComponent(ISiteComponent component, Calendar day, ISala room)
+            throws FenixServiceException {
 
-		if (component instanceof InfoSiteRoomTimeTable) {
-			return getInfoSiteRoomTimeTable(
-				(InfoSiteRoomTimeTable) component,
-				day,
-				room);
-		}
+        if (component instanceof InfoSiteRoomTimeTable) {
+            return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room);
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	/* TODO (rspl): alterar as aulas a ler e o dia da semana */
-	private ISiteComponent getInfoSiteRoomTimeTable(
-		InfoSiteRoomTimeTable component,
-		Calendar day,
-		ISala room)
-		throws FenixServiceException {
-		
-			List infoShowOccupations = new ArrayList();
-/*
-			try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    /* TODO (rspl): alterar as aulas a ler e o dia da semana */
+    private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
+            ISala room) throws FenixServiceException {
 
-				//adicionar as aulas
-				IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-				IPersistentExam examDAO = sp.getIPersistentExam();
-				List lessonList =
-					lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+        List infoShowOccupations = new ArrayList();
+        /*
+         * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+         * 
+         * //adicionar as aulas IAulaPersistente lessonDAO =
+         * sp.getIAulaPersistente(); IPersistentExam examDAO =
+         * sp.getIPersistentExam(); List lessonList =
+         * lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+         * 
+         * Iterator iterator = lessonList.iterator();
+         * 
+         * while (iterator.hasNext()) { IAula elem = (IAula) iterator.next();
+         * InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem); ITurno
+         * shift = elem.getShift(); if(shift == null) { continue; } InfoShift
+         * infoShift = Cloner.copyShift2InfoShift(shift);
+         * infoLesson.setInfoShift(infoShift);
+         * 
+         * infoShowOccupations.add(infoLesson); }
+         * 
+         * //adicionar os exames Calendar week = Calendar.getInstance();
+         * 
+         * List examList = examDAO.readByRoomAndWeek(room, week); iterator =
+         * examList.iterator();
+         * 
+         * while (iterator.hasNext()) { IExam elem = (IExam) iterator.next();
+         * InfoExam infoExam = Cloner.copyIExam2InfoExam(elem);
+         * 
+         * infoShowOccupations.add(infoExam); } } catch (ExcepcaoPersistencia
+         * ex) { ex.printStackTrace(); }
+         */
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+            IPersistentExam examDAO = sp.getIPersistentExam();
 
-				Iterator iterator = lessonList.iterator();
-				
-				while (iterator.hasNext()) {
-					IAula elem = (IAula) iterator.next();
-					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-					ITurno shift = elem.getShift();
-					if(shift == null)
-					{					    
-					    continue;
-				}
-					InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-					infoLesson.setInfoShift(infoShift);
-					
-					infoShowOccupations.add(infoLesson);
-				}
-				
-	            //adicionar os exames
-				Calendar week = Calendar.getInstance();
-				
-	            List examList = examDAO.readByRoomAndWeek(room, week);
-	            iterator = examList.iterator();
-	            
-	            while (iterator.hasNext())
-	            {
-	                IExam elem = (IExam) iterator.next();
-	                InfoExam infoExam = Cloner.copyIExam2InfoExam(elem);
-	                
-	                infoShowOccupations.add(infoExam);
-	            }
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
-			} catch (ExcepcaoPersistencia ex) {
-				ex.printStackTrace();
-			}
-*/
-	        try {
-	            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-	            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-	            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-	            IPersistentExam examDAO = sp.getIPersistentExam();
+            Calendar startDay = Calendar.getInstance();
+            startDay.setTimeInMillis(day.getTimeInMillis());
+            startDay.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
+            Calendar endDay = Calendar.getInstance();
+            endDay.setTimeInMillis(startDay.getTimeInMillis());
+            endDay.add(Calendar.DATE, 6);
+            Period weekPeriod = new Period(day, endDay);
 
-	            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            Period lessonsPeriod = calculateLessonsSeason(executionPeriod);
+            if (lessonsPeriod.intersectPeriods(weekPeriod)) {
+                //adicionar as aulas
+                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+                Iterator iterator = lessonList.iterator();
 
-	            Calendar startDay = Calendar.getInstance();
-	            startDay.setTimeInMillis(day.getTimeInMillis());
-	            startDay.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
-	            Calendar endDay = Calendar.getInstance();
-	            endDay.setTimeInMillis(startDay.getTimeInMillis());
-	            endDay.add(Calendar.DATE, 6);
-	            Period weekPeriod = new Period(day, endDay);
+                while (iterator.hasNext()) {
+                    IAula aula = (IAula) iterator.next();
+                    IRoomOccupation roomOccupation = aula.getRoomOccupation();
+                    IPeriod period = roomOccupation.getPeriod();
+                    if (period.intersectPeriods(weekPeriod)) {
 
-	            Period lessonsPeriod = calculateLessonsSeason(executionPeriod);
-	            if (lessonsPeriod.intersectPeriods(weekPeriod)) {
-	                //adicionar as aulas
-	                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
-	                Iterator iterator = lessonList.iterator();
+                        boolean add = true;
+                        if ((roomOccupation.getFrequency().intValue() == RoomOccupation.QUINZENAL)
+                                && (!RoomOccupation.periodQuinzenalContainsWeekPeriod(period,
+                                        roomOccupation.getWeekOfQuinzenalStart().intValue(),
+                                        roomOccupation.getDayOfWeek(), weekPeriod))) {
+                            add = false;
+                        }
+                        if (roomOccupation.getFrequency().intValue() == RoomOccupation.SEMANAL) {
+                            Calendar dayOfLesson = Calendar.getInstance();
+                            dayOfLesson.setTimeInMillis(day.getTimeInMillis());
+                            dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana()
+                                    .intValue()
+                                    - Calendar.MONDAY);
+                            if (!period.intersectPeriods(new Period(dayOfLesson, dayOfLesson))) {
+                                add = false;
+                            }
+                        }
+                        if (add) {
+                            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(aula);
+                            ITurno shift = aula.getShift();
+                            if (shift == null) {
+                                continue;
+                            }
+                            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                            infoLesson.setInfoShift(infoShift);
 
-	                while (iterator.hasNext()) {
-	                    IAula aula = (IAula) iterator.next();
-	                    IRoomOccupation roomOccupation = aula.getRoomOccupation();
-	                    IPeriod period = roomOccupation.getPeriod();
-	                    if (period.intersectPeriods(weekPeriod)) {
+                            infoShowOccupations.add(infoLesson);
+                        }
+                    }
+                }
+            }
 
-	                        boolean add = true;
-	                        if ((roomOccupation.getFrequency().intValue() == RoomOccupation.QUINZENAL)
-	                                && (!RoomOccupation.periodQuinzenalContainsWeekPeriod(period,
-	                                        roomOccupation.getWeekOfQuinzenalStart().intValue(),
-	                                        roomOccupation.getDayOfWeek(), weekPeriod))) {
-	                            add = false;
-	                        }
-	                        if (roomOccupation.getFrequency().intValue() == RoomOccupation.SEMANAL) {
-	                            Calendar dayOfLesson = Calendar.getInstance();
-	                            dayOfLesson.setTimeInMillis(day.getTimeInMillis());
-	                            dayOfLesson.add(Calendar.DATE, roomOccupation.getDayOfWeek().getDiaSemana()
-	                                    .intValue()
-	                                    - Calendar.MONDAY);
-	                            if (!period.intersectPeriods(new Period(dayOfLesson, dayOfLesson))) {
-	                                add = false;
-	                            }
-	                        }
-	                        if (add) {
-	                            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(aula);
-	                            ITurno shift = aula.getShift();
-	                            if (shift == null) {
-	                                continue;
-	                            }
-	                            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-	                            infoLesson.setInfoShift(infoShift);
+            //adicionar os exames
+            List examList = examDAO.readByRoomAndWeek(room, day);
+            Iterator iteratorExams = examList.iterator();
 
-	                            infoShowOccupations.add(infoLesson);
-	                        }
-	                    }
-	                }
-	            }
+            while (iteratorExams.hasNext()) {
+                IExam elem = (IExam) iteratorExams.next();
+                InfoExam infoExam = Cloner.copyIExam2InfoExam(elem);
 
-	            //adicionar os exames            
-	            List examList = examDAO.readByRoomAndWeek(room, day);
-	            Iterator iteratorExams = examList.iterator();
+                infoShowOccupations.add(infoExam);
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-	            while (iteratorExams.hasNext()) {
-	                IExam elem = (IExam) iteratorExams.next();
-	                InfoExam infoExam = Cloner.copyIExam2InfoExam(elem);
+        component.setInfoShowOccupation(infoShowOccupations);
+        component.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
 
-	                infoShowOccupations.add(infoExam);
-	            }
-	        } catch (ExcepcaoPersistencia ex) {
-	            ex.printStackTrace();
-	        } catch (Exception ex) {
-	            ex.printStackTrace();
-	        }
-
-
-
-		component.setInfoShowOccupation(infoShowOccupations);
-		component.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
-		
-		
-		return component;
-	}
+        return component;
+    }
 
     private Period calculateLessonsSeason(IExecutionPeriod executionPeriod) throws Exception {
         try {
@@ -214,7 +187,7 @@ public class RoomSiteComponentBuilder {
 
             int semester = executionPeriod.getSemester().intValue();
 
-            List executionDegreesList = sp.getICursoExecucaoPersistente().readByExecutionYear(
+            List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
             ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesList.get(0);
 
@@ -226,7 +199,7 @@ public class RoomSiteComponentBuilder {
             } else {
                 startSeason1 = executionDegree.getPeriodLessonsSecondSemester().getStartDate();
                 endSeason2 = executionDegree.getPeriodLessonsSecondSemester().getEndDateOfComposite();
-}
+            }
             for (int i = 1; i < executionDegreesList.size(); i++) {
                 executionDegree = (ICursoExecucao) executionDegreesList.get(i);
                 Calendar startLessons;

@@ -21,35 +21,23 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Fernanda Quitério 7/Fev/2004
  *  
  */
-public class StudentCurricularCoursesEnrollmentDispatchAction extends DispatchAction
-{
+public class StudentCurricularCoursesEnrollmentDispatchAction extends DispatchAction {
 
-	public ActionForward prepareEnrollment(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward prepareEnrollment(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
 
-		InfoStudent infoStudent = new InfoStudent();
-		Object[] args = { userView.getUtilizador()};
-		try
-		{
-			infoStudent =
-				(InfoStudent) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadStudentByUsername",
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
-		enrollmentForm.set("studentNumber", infoStudent.getNumber().toString());
+        InfoStudent infoStudent = new InfoStudent();
+        Object[] args = { userView.getUtilizador() };
+        try {
+            infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentByUsername", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        enrollmentForm.set("studentNumber", infoStudent.getNumber().toString());
 
-		return mapping.findForward("curricularCoursesEnrollment");
-	}
+        return mapping.findForward("curricularCoursesEnrollment");
+    }
 }

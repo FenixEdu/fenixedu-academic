@@ -5,6 +5,9 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <h2><bean:message key="link.shift.enrolment" /></h2>
 <span class="error"><html:errors/></span>
+<div class="infoselected" width="75%">
+A Reserva de Turmas do 1º Ano só será disponibilizada após 15 de Setembro.
+</div>
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <html:form action="/enrollStudentInShifts" >
 	<html:hidden property="studentId"/>
@@ -41,7 +44,7 @@
 											<bean:message key="label.vacancies" />:&nbsp;<bean:write name="shiftEnrollmentDetails" property="vacancies"/>
 										</td>
 										<td  class="listClasses-header" style="text-align:right">
-											<bean:message key="label.enroll" />?
+											<bean:message key="label.shift.enroll" />?
 											<!-- Radio button -->
 											<bean:define id="shiftKey">
 												shiftMap(<bean:write name="executionCourseDetails" property="infoExecutionCourse.idInternal"/>-<bean:write name="shiftEnrollmentDetails" property="infoShift.tipo"/>)							
@@ -79,8 +82,8 @@
 		<table>
 			<tr>
 				<td>
-						<html:submit styleClass="inputbutton">
-							<bean:message key="button.enroll"/>
+					<html:submit styleClass="inputbutton">
+						<bean:message key="label.shift.enroll"/>
 						</html:submit>
 					</html:form>
 				</td>

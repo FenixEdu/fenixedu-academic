@@ -511,6 +511,7 @@
 <!ATTLIST response_grp  %I_Rcardinality;
                          %I_Ident;
                          %I_Rtiming; >
+                         
 <!ELEMENT response_label (#PCDATA | qticomment | material | material_ref | flow_mat)*>
 
 <!ATTLIST response_label  rshuffle     (Yes | No )  'Yes'
@@ -520,10 +521,15 @@
                            %I_Ident;
                            match_group CDATA  #IMPLIED
                            match_max   CDATA  #IMPLIED >
+                           
 <!ELEMENT flow_label (flow_label | response_label)+>
 
 <!ATTLIST flow_label  %I_Class; >
-<!ELEMENT response_na ANY>
+
+<!ELEMENT response_na (#PCDATA | qticomment | material | material_ref | flow_mat)*>
+<!ATTLIST response_na  rshuffle     (Yes | No )  'No'
+                           labelrefid  CDATA  #IMPLIED
+                           %I_Ident; >                           
 
 <!ELEMENT render_choice ((material | material_ref | response_label | flow_label)* , response_na?)>
 

@@ -78,8 +78,8 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                 ITutor tutor = verifyStudentWithTutor(student, sp);
                 if (tutor != null) {
                     return new String("error.enrollment.student.withTutor+"
-                            + tutor.getTeacher().getTeacherNumber().toString()
-                            + "+" + tutor.getTeacher().getPerson().getNome());
+                            + tutor.getTeacher().getTeacherNumber().toString() + "+"
+                            + tutor.getTeacher().getPerson().getNome());
                 }
             } else {
                 //verify if the student to enroll is a LEEC degree student
@@ -88,8 +88,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                 }
 
                 //verify if the coodinator is of the LEEC degree
-                if (roles.contains(RoleType.COORDINATOR)
-                        && arguments[0] != null) {
+                if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
                     ITeacher teacher = readTeacher(id, sp);
                     if (teacher == null) {
                         return "noAuthorization";
@@ -114,28 +113,20 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                                 + student.getNumber().toString());
                     }
 
-                } else if (roles
-                        .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-                        || roles
-                                .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                    IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(
-                            arguments, sp);
+                } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                        || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+                    IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments,
+                            sp);
 
                     if (studentCurricularPlan.getStudent() == null) {
                         return "noAuthorization";
                     }
                     if (insideEnrollmentPeriod(studentCurricularPlan, sp)) {
-                        ITutor tutor = verifyStudentWithTutor(
-                                studentCurricularPlan.getStudent(), sp);
+                        ITutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent(), sp);
                         if (tutor != null) {
-                            return new String(
-                                    "error.enrollment.student.withTutor+"
-                                            + tutor.getTeacher()
-                                                    .getTeacherNumber()
-                                                    .toString()
-                                            + "+"
-                                            + tutor.getTeacher().getPerson()
-                                                    .getNome());
+                            return new String("error.enrollment.student.withTutor+"
+                                    + tutor.getTeacher().getTeacherNumber().toString() + "+"
+                                    + tutor.getTeacher().getPerson().getNome());
                         }
                     }
                     return null;
@@ -152,8 +143,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
     private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(
-                arguments, sp);
+        IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
         if (studentCurricularPlan == null) {
             return false;
         }
@@ -161,21 +151,18 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         String degreeCode = null;
         if (studentCurricularPlan.getDegreeCurricularPlan() != null
                 && studentCurricularPlan.getDegreeCurricularPlan().getDegree() != null) {
-            degreeCode = studentCurricularPlan.getDegreeCurricularPlan()
-                    .getDegree().getSigla();
+            degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla();
         }
 
         return DEGREE_LEEC_CODE.equals(degreeCode);
     }
 
-    private boolean verifyCoordinatorLEEC(ITeacher teacher, Object[] arguments,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private boolean verifyCoordinatorLEEC(ITeacher teacher, Object[] arguments, ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
 
-        IPersistentCoordinator persistentCoordinator = sp
-                .getIPersistentCoordinator();
-        ICoordinator coordinator = persistentCoordinator
-                .readCoordinatorByTeacherAndExecutionDegreeId(teacher,
-                        (Integer) arguments[0]);
+        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegreeId(
+                teacher, (Integer) arguments[0]);
         if (coordinator == null) {
             return false;
         }
@@ -183,10 +170,8 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         String degreeCode = null;
         if (coordinator.getExecutionDegree() != null
                 && coordinator.getExecutionDegree().getCurricularPlan() != null
-                && coordinator.getExecutionDegree().getCurricularPlan()
-                        .getDegree() != null) {
-            degreeCode = coordinator.getExecutionDegree().getCurricularPlan()
-                    .getDegree().getSigla();
+                && coordinator.getExecutionDegree().getCurricularPlan().getDegree() != null) {
+            degreeCode = coordinator.getExecutionDegree().getCurricularPlan().getDegree().getSigla();
         }
 
         return DEGREE_LEEC_CODE.equals(degreeCode);

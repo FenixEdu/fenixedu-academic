@@ -56,6 +56,12 @@
 		</td>
 		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.weight" />
 		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.enrollmentWeigth"/>
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.mandatoryEnrollment"/>
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.enrollmentAllowed"/>
+		</td>
 	</tr>
 	<tr>
 		<td class="listClasses">
@@ -84,6 +90,15 @@
 		</td>
 		<td class="listClasses">
 			<bean:write name="infoCurricularCourse" property="weigth"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="enrollmentWeigth"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="mandatoryEnrollment"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="enrollmentAllowed"/>
 		</td>
 </table>
 <br>

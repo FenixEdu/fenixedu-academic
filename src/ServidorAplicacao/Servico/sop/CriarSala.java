@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Serviço CriarSala.
- *
+ * 
  * @author tfc130
- **/
+ */
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoRoom;
 import Dominio.ISala;
@@ -23,62 +23,50 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarSala implements IService {
 
-	
+    /**
+     * The actor of this class.
+     */
+    public CriarSala() {
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	public CriarSala() {
-	}
+    public Object run(InfoRoom infoSala) throws FenixServiceException {
 
-	
+        ISala sala = null;
+        boolean result = false;
 
-	public Object run(InfoRoom infoSala) throws FenixServiceException {
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            sala = new Sala(infoSala.getNome(), infoSala.getEdificio(), infoSala.getPiso(), infoSala
+                    .getTipo(), infoSala.getCapacidadeNormal(), infoSala.getCapacidadeExame());
+            try {
+                sp.getISalaPersistente().simpleLockWrite(sala);
+                result = true;
+            } catch (ExistingPersistentException ex) {
+                throw new ExistingRoomServiceException(ex);
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex.getMessage());
+        }
 
-		ISala sala = null;
-		boolean result = false;
+        return new Boolean(result);
+    }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			sala =
-				new Sala(
-					infoSala.getNome(),
-					infoSala.getEdificio(),
-					infoSala.getPiso(),
-					infoSala.getTipo(),
-					infoSala.getCapacidadeNormal(),
-					infoSala.getCapacidadeExame());
-			try {
-				sp.getISalaPersistente().simpleLockWrite(sala);
-				result = true;
-			} catch (ExistingPersistentException ex) {
-				throw new ExistingRoomServiceException(ex);
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex.getMessage());
-		}
+    public class ExistingRoomServiceException extends FenixServiceException {
 
-		return new Boolean(result);
-	}
+        /**
+         *  
+         */
+        private ExistingRoomServiceException() {
+            super();
+        }
 
+        /**
+         * @param cause
+         */
+        ExistingRoomServiceException(Throwable cause) {
+            super(cause);
+        }
 
-
-	public class ExistingRoomServiceException extends FenixServiceException {
-
-		/**
-		 * 
-		 */
-		private ExistingRoomServiceException() {
-			super();
-		}
-
-		/**
-		 * @param cause
-		 */
-		ExistingRoomServiceException(Throwable cause) {
-			super(cause);
-		}
-
-	}
+    }
 
 }

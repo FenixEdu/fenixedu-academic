@@ -9,25 +9,23 @@ import Dominio.IStudentCurricularPlan;
  * @author David Santos in Jun 9, 2004
  */
 
-public class PrecedenceContext
-{
-	private List curricularCourses2Enroll;
-	private IExecutionPeriod executionPeriod;
-	private IStudentCurricularPlan studentCurricularPlan;
+public class PrecedenceContext {
+    private List curricularCourses2Enroll;
 
-	public PrecedenceContext()
-	{
-	}
+    private IExecutionPeriod executionPeriod;
 
-	public IExecutionPeriod getExecutionPeriod()
-	{
-		return executionPeriod;
-	}
+    private IStudentCurricularPlan studentCurricularPlan;
 
-	public void setExecutionPeriod(IExecutionPeriod executionPeriod)
-	{
-		this.executionPeriod = executionPeriod;
-	}
+    public PrecedenceContext() {
+    }
+
+    public IExecutionPeriod getExecutionPeriod() {
+        return executionPeriod;
+    }
+
+    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+        this.executionPeriod = executionPeriod;
+    }
 
     public List getCurricularCourses2Enroll() {
         return curricularCourses2Enroll;
@@ -36,14 +34,12 @@ public class PrecedenceContext
     public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
         this.curricularCourses2Enroll = curricularCourses2Enroll;
     }
-	
-	public IStudentCurricularPlan getStudentCurricularPlan()
-	{
-		return studentCurricularPlan;
-	}
 
-	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-	{
-		this.studentCurricularPlan = studentCurricularPlan;
-	}
+    public IStudentCurricularPlan getStudentCurricularPlan() {
+        return studentCurricularPlan;
+    }
+
+    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+        this.studentCurricularPlan = studentCurricularPlan;
+    }
 }

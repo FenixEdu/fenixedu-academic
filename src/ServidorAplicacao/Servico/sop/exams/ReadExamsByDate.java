@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.sop.exams;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,40 +29,35 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoSala;
 
-public class ReadExamsByDate implements IServico
-{
+public class ReadExamsByDate implements IServico {
 
     private static ReadExamsByDate _servico = new ReadExamsByDate();
+
     /**
      * The singleton access method of this class.
      */
-    public static ReadExamsByDate getService()
-    {
+    public static ReadExamsByDate getService() {
         return _servico;
     }
 
     /**
      * The actor of this class.
      */
-    private ReadExamsByDate()
-    {
+    private ReadExamsByDate() {
     }
 
     /**
      * Devolve o nome do servico
      */
-    public final String getNome()
-    {
+    public final String getNome() {
         return "ReadExamsByDate";
     }
 
-    public InfoViewExam run(Calendar day, Calendar beginning, Calendar end)
-    {
+    public InfoViewExam run(Calendar day, Calendar beginning, Calendar end) {
         InfoViewExam infoViewExam = new InfoViewExam();
-        ArrayList infoViewExams = new ArrayList();
+        List infoViewExams = new ArrayList();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
@@ -83,33 +78,31 @@ public class ReadExamsByDate implements IServico
             //    - degrees associated with exam
             //    - number of students attending course (potentially attending
             // exam)
-            for (int i = 0; i < exams.size(); i++)
-            {
+            for (int i = 0; i < exams.size(); i++) {
                 // prepare exam info
                 tempExam = (IExam) exams.get(i);
                 tempInfoExam = Cloner.copyIExam2InfoExam(tempExam);
                 tempInfoDegrees = new ArrayList();
                 tempInfoExecutionCourses = new ArrayList();
                 // int totalNumberStudentsForExam = 0;
-                IExecutionPeriod executionPeriod =
-                    ((IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(0))
-                        .getExecutionPeriod();
+                IExecutionPeriod executionPeriod = ((IExecutionCourse) tempExam
+                        .getAssociatedExecutionCourses().get(0)).getExecutionPeriod();
 
-                if (tempExam.getAssociatedExecutionCourses() != null)
-                {
-                    for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++)
-                    {
-                        IExecutionCourse executionCourse =
-                            (IExecutionCourse) tempExam.getAssociatedExecutionCourses().get(k);
+                if (tempExam.getAssociatedExecutionCourses() != null) {
+                    for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++) {
+                        IExecutionCourse executionCourse = (IExecutionCourse) tempExam
+                                .getAssociatedExecutionCourses().get(k);
                         tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 
                         // prepare degrees associated with exam
                         //                        tempAssociatedCurricularCourses =
                         //                            executionCourse.getAssociatedCurricularCourses();
-                        //                        for (int j = 0; j < tempAssociatedCurricularCourses.size(); j++)
+                        //                        for (int j = 0; j <
+                        // tempAssociatedCurricularCourses.size(); j++)
                         //                        {
                         //                            tempDegree =
-                        //                                ((ICurricularCourse) tempAssociatedCurricularCourses.get(j))
+                        //                                ((ICurricularCourse)
+                        // tempAssociatedCurricularCourses.get(j))
                         //                                    .getDegreeCurricularPlan()
                         //                                    .getDegree();
                         //                            tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
@@ -120,23 +113,22 @@ public class ReadExamsByDate implements IServico
                         //                        numberStudentesAttendingCourse =
                         //                            sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(
                         //                                executionCourse);
-                        //                        totalNumberStudents += numberStudentesAttendingCourse.intValue();
-                        //                        totalNumberStudentsForExam += numberStudentesAttendingCourse.intValue();
+                        //                        totalNumberStudents +=
+                        // numberStudentesAttendingCourse.intValue();
+                        //                        totalNumberStudentsForExam +=
+                        // numberStudentesAttendingCourse.intValue();
                     }
                 }
                 int numberOfStudentsForExam = 0;
                 List curricularCourseIDs = new ArrayList();
-                for (int j = 0; j < tempExam.getAssociatedCurricularCourseScope().size(); j++)
-                {
-                    ICurricularCourseScope scope =
-                        (ICurricularCourseScope) tempExam.getAssociatedCurricularCourseScope().get(j);
-                    if (!curricularCourseIDs.contains(scope.getCurricularCourse().getIdInternal()))
-                    {
+                for (int j = 0; j < tempExam.getAssociatedCurricularCourseScope().size(); j++) {
+                    ICurricularCourseScope scope = (ICurricularCourseScope) tempExam
+                            .getAssociatedCurricularCourseScope().get(j);
+                    if (!curricularCourseIDs.contains(scope.getCurricularCourse().getIdInternal())) {
                         curricularCourseIDs.add(scope.getCurricularCourse().getIdInternal());
-                        List enroledStudents =
-                            persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
-                                scope.getCurricularCourse(),
-                                executionPeriod);
+                        List enroledStudents = persistentEnrolment
+                                .readByCurricularCourseAndExecutionPeriod(scope.getCurricularCourse(),
+                                        executionPeriod);
                         numberOfStudentsForExam += enroledStudents.size();
 
                         tempDegree = scope.getCurricularCourse().getDegreeCurricularPlan().getDegree();
@@ -147,12 +139,8 @@ public class ReadExamsByDate implements IServico
                 totalNumberStudents += numberOfStudentsForExam;
 
                 // add exam and degree info to result list
-                infoViewExams.add(
-                    new InfoViewExamByDayAndShift(
-                        tempInfoExam,
-                        tempInfoExecutionCourses,
-                        tempInfoDegrees,
-                        new Integer(numberOfStudentsForExam)));
+                infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoExecutionCourses,
+                        tempInfoDegrees, new Integer(numberOfStudentsForExam)));
 
             }
 
@@ -162,21 +150,17 @@ public class ReadExamsByDate implements IServico
             // TODO : This can be done more efficiently.
             List rooms = sp.getISalaPersistente().readAll();
             int totalExamCapacity = 0;
-            for (int i = 0; i < rooms.size(); i++)
-            {
+            for (int i = 0; i < rooms.size(); i++) {
                 ISala room = (ISala) rooms.get(i);
-                if (!room.getTipo().equals(new TipoSala(TipoSala.LABORATORIO)))
-                {
+                if (!room.getTipo().equals(new TipoSala(TipoSala.LABORATORIO))) {
                     totalExamCapacity += room.getCapacidadeExame().intValue();
                 }
             }
 
-            infoViewExam.setAvailableRoomOccupation(
-                new Integer(totalExamCapacity - totalNumberStudents));
+            infoViewExam
+                    .setAvailableRoomOccupation(new Integer(totalExamCapacity - totalNumberStudents));
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 

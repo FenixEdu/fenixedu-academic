@@ -4,143 +4,153 @@ import java.util.List;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 19/Mar/2003
  */
 
 public class CurricularSemester extends DomainObject implements ICurricularSemester {
 
-//	private Integer internalID;
-	private Integer curricularYearKey;
-	private Integer semester;
+    //	private Integer internalID;
+    private Integer curricularYearKey;
 
-	private ICurricularYear curricularYear;
+    private Integer semester;
 
-	//	private List associatedCurricularCourses;
-	private List scopes;
+    private ICurricularYear curricularYear;
 
-	public CurricularSemester() {
-		setSemester(null);
-		setIdInternal(null);
-		//		setAssociatedCurricularCourses(null);
-		setCurricularYearKey(null);
-		setCurricularYear(null);
-		setScopes(null);
-	}
+    //	private List associatedCurricularCourses;
+    private List scopes;
 
-	public CurricularSemester(Integer semester, ICurricularYear curricularYear) {
-		this();
-		setSemester(semester);
-		setCurricularYear(curricularYear);
-	}
+    public CurricularSemester() {
+        setSemester(null);
+        setIdInternal(null);
+        //		setAssociatedCurricularCourses(null);
+        setCurricularYearKey(null);
+        setCurricularYear(null);
+        setScopes(null);
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof ICurricularSemester) {
-			ICurricularSemester curricularSemester = (ICurricularSemester) obj;
-			resultado =
-				(this.getSemester().equals(curricularSemester.getSemester())
-					&& (this.getCurricularYear().equals(curricularSemester.getCurricularYear())));
-		}
-		return resultado;
-	}
+    public CurricularSemester(Integer semester, ICurricularYear curricularYear) {
+        this();
+        setSemester(semester);
+        setCurricularYear(curricularYear);
+    }
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.getIdInternal() + "; ";
-		result += "semester = " + this.getSemester() + "; ";
-		result += "curricularYear = " + this.getCurricularYear() + "]\n";
-		return result;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof ICurricularSemester) {
+            ICurricularSemester curricularSemester = (ICurricularSemester) obj;
+            resultado = (this.getSemester().equals(curricularSemester.getSemester()) && (this
+                    .getCurricularYear().equals(curricularSemester.getCurricularYear())));
+        }
+        return resultado;
+    }
 
-//	/**
-//	 * @return Integer
-//	 */
-//	public Integer getIdInternal() {
-//		return internalID;
-//	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + this.getIdInternal() + "; ";
+        result += "semester = " + this.getSemester() + "; ";
+        result += "curricularYear = " + this.getCurricularYear() + "]\n";
+        return result;
+    }
 
-//	/**
-//	 * Sets the internalID.
-//	 * @param internalID The internalID to set
-//	 */
-//	public void setInternalID(Integer internalID) {
-//		this.internalID = internalID;
-//	}
+    //	/**
+    //	 * @return Integer
+    //	 */
+    //	public Integer getIdInternal() {
+    //		return internalID;
+    //	}
 
-	//	/**
-	//	 * @return List
-	//	 */
-	//	public List getAssociatedCurricularCourses() {
-	//		return associatedCurricularCourses;
-	//	}
-	//
-	//	/**
-	//	 * Sets the associatedCurricularCourses.
-	//	 * @param associatedCurricularCourses The associatedCurricularCourses to set
-	//	 */
-	//	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
-	//		this.associatedCurricularCourses = associatedCurricularCourses;
-	//	}
+    //	/**
+    //	 * Sets the internalID.
+    //	 * @param internalID The internalID to set
+    //	 */
+    //	public void setInternalID(Integer internalID) {
+    //		this.internalID = internalID;
+    //	}
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getSemester() {
-		return semester;
-	}
+    //	/**
+    //	 * @return List
+    //	 */
+    //	public List getAssociatedCurricularCourses() {
+    //		return associatedCurricularCourses;
+    //	}
+    //
+    //	/**
+    //	 * Sets the associatedCurricularCourses.
+    //	 * @param associatedCurricularCourses The associatedCurricularCourses to
+    // set
+    //	 */
+    //	public void setAssociatedCurricularCourses(List
+    // associatedCurricularCourses) {
+    //		this.associatedCurricularCourses = associatedCurricularCourses;
+    //	}
 
-	/**
-	 * Sets the semester.
-	 * @param semester The semester to set
-	 */
-	public void setSemester(Integer semester) {
-		this.semester = semester;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getSemester() {
+        return semester;
+    }
 
-	/**
-	 * @return ICurricularYear
-	 */
-	public ICurricularYear getCurricularYear() {
-		return curricularYear;
-	}
+    /**
+     * Sets the semester.
+     * 
+     * @param semester
+     *            The semester to set
+     */
+    public void setSemester(Integer semester) {
+        this.semester = semester;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getCurricularYearKey() {
-		return curricularYearKey;
-	}
+    /**
+     * @return ICurricularYear
+     */
+    public ICurricularYear getCurricularYear() {
+        return curricularYear;
+    }
 
-	/**
-	 * Sets the curricularYear.
-	 * @param curricularYear The curricularYear to set
-	 */
-	public void setCurricularYear(ICurricularYear curricularYear) {
-		this.curricularYear = curricularYear;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getCurricularYearKey() {
+        return curricularYearKey;
+    }
 
-	/**
-	 * Sets the curricularYearKey.
-	 * @param curricularYearKey The curricularYearKey to set
-	 */
-	public void setCurricularYearKey(Integer curricularYearKey) {
-		this.curricularYearKey = curricularYearKey;
-	}
+    /**
+     * Sets the curricularYear.
+     * 
+     * @param curricularYear
+     *            The curricularYear to set
+     */
+    public void setCurricularYear(ICurricularYear curricularYear) {
+        this.curricularYear = curricularYear;
+    }
 
-	/**
-		* @return List
-		*/
-	public List getScopes() {
-		return scopes;
-	}
+    /**
+     * Sets the curricularYearKey.
+     * 
+     * @param curricularYearKey
+     *            The curricularYearKey to set
+     */
+    public void setCurricularYearKey(Integer curricularYearKey) {
+        this.curricularYearKey = curricularYearKey;
+    }
 
-	/**
-	 * Sets the scopes.
-	 * @param scopes The scopes to set
-	 */
-	public void setScopes(List scopes) {
-		this.scopes = scopes;
-	}
+    /**
+     * @return List
+     */
+    public List getScopes() {
+        return scopes;
+    }
+
+    /**
+     * Sets the scopes.
+     * 
+     * @param scopes
+     *            The scopes to set
+     */
+    public void setScopes(List scopes) {
+        this.scopes = scopes;
+    }
 
 }

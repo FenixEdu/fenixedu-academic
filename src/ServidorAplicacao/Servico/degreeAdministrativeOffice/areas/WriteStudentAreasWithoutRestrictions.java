@@ -11,7 +11,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -31,7 +31,7 @@ public class WriteStudentAreasWithoutRestrictions implements IService {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-            IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
+            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                     .getIStudentCurricularPlanPersistente();
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO

@@ -19,61 +19,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  */
 
-public class EditQualification extends EditDomainObjectService
-{
+public class EditQualification extends EditDomainObjectService {
 
-    public EditQualification()
-    {
+    public EditQualification() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
         return persistentSuport.getIPersistentQualification();
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
-	 */
-    protected IDomainObject clone2DomainObject(InfoObject infoObject)
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
+     */
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         return InfoQualificationWithPersonAndCountry.newDomainFromInfo((InfoQualification) infoObject);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "EditQualification";
     }
 
-//	 Qualification UNIQUE was drop (by PICA). At this point all qualifications are valid!
-//    /**
-//	 * This method invokes a persistent method to read an IDomainObject from database
-//	 * 
-//	 * @param domainObject
-//	 * @return
-//	 */
-//    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-//        throws ExcepcaoPersistencia
-//    {
-//        IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-//        IQualification oldQualification = (IQualification) domainObject;
-//        IQualification newQualification =
-//            persistentQualification.readByDateAndSchoolAndPerson(
-//                oldQualification.getDate(),
-//                oldQualification.getSchool(),
-//                oldQualification.getPerson());
-//        return newQualification;
-//    }
+    //	 Qualification UNIQUE was drop (by PICA). At this point all qualifications
+    // are valid!
+    //    /**
+    //	 * This method invokes a persistent method to read an IDomainObject from
+    // database
+    //	 *
+    //	 * @param domainObject
+    //	 * @return
+    //	 */
+    //    protected IDomainObject readObjectByUnique(IDomainObject domainObject,
+    // ISuportePersistente sp)
+    //        throws ExcepcaoPersistencia
+    //    {
+    //        IPersistentQualification persistentQualification =
+    // sp.getIPersistentQualification();
+    //        IQualification oldQualification = (IQualification) domainObject;
+    //        IQualification newQualification =
+    //            persistentQualification.readByDateAndSchoolAndPerson(
+    //                oldQualification.getDate(),
+    //                oldQualification.getSchool(),
+    //                oldQualification.getPerson());
+    //        return newQualification;
+    //    }
 }

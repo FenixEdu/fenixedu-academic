@@ -27,19 +27,16 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author Luis Cruz
  */
-public class FinalDegreeWorkAttributionDA extends FenixDispatchAction
-{
+public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object[] args = {userView.getUtilizador()};
+        Object[] args = { userView.getUtilizador() };
         InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(userView,
                 "ReadFinalDegreeWorkStudentGroupByUsername", args);
-        if (infoGroup != null && infoGroup.getGroupProposals() != null)
-        {
+        if (infoGroup != null && infoGroup.getGroupProposals() != null) {
             Collections.sort(infoGroup.getGroupProposals(), new BeanComparator("orderOfPreference"));
 
             request.setAttribute("infoGroup", infoGroup);
@@ -49,27 +46,24 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction
             InfoGroupProposal infoGroupProposal = (InfoGroupProposal) CollectionUtils.find(infoGroup
                     .getGroupProposals(), new PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(
                     infoGroup.getIdInternal()));
-            if (infoGroupProposal != null)
-            {
+            if (infoGroupProposal != null) {
                 finalDegreeWorkAttributionForm.set("attributedByTeacher", infoGroupProposal
                         .getFinalDegreeWorkProposal().getIdInternal().toString());
             }
 
             String confirmAttributions[] = new String[infoGroup.getGroupStudents().size()];
-            for (int i = 0; i < infoGroup.getGroupStudents().size(); i++)
-            {
+            for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
                 InfoGroupStudent infoGroupStudent = (InfoGroupStudent) infoGroup.getGroupStudents().get(
                         i);
                 if (infoGroupStudent != null
-                        && infoGroupStudent.getFinalDegreeWorkProposalConfirmation() != null)
-                {
+                        && infoGroupStudent.getFinalDegreeWorkProposalConfirmation() != null) {
                     confirmAttributions[i] = infoGroupStudent.getFinalDegreeWorkProposalConfirmation()
                             .getIdInternal().toString();
                     confirmAttributions[i] += infoGroupStudent.getStudent().getIdInternal();
                 }
             }
             finalDegreeWorkAttributionForm.set("confirmAttributions", confirmAttributions);
-            
+
             request.setAttribute("finalDegreeWorkAttributionForm", finalDegreeWorkAttributionForm);
         }
 
@@ -77,8 +71,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction
     }
 
     public ActionForward confirmAttribution(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
 
         String selectedGroupProposalOID = (String) finalDegreeWorkAttributionForm
@@ -86,30 +79,26 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals(""))
-        {
-            Object args[] = {userView.getUtilizador(), new Integer(selectedGroupProposalOID)};
+        if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
+            Object args[] = { userView.getUtilizador(), new Integer(selectedGroupProposalOID) };
             ServiceUtils.executeService(userView, "ConfirmAttributionOfFinalDegreeWork", args);
         }
 
         return mapping.findForward("prepareShowFinalDegreeWorkList");
     }
 
-    private class PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER implements Predicate
-    {
+    private class PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER implements Predicate {
 
         Integer groupID = null;
 
-        public boolean evaluate(Object arg0)
-        {
+        public boolean evaluate(Object arg0) {
             InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
             return (infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher() != null)
                     && (groupID.equals(infoGroupProposal.getFinalDegreeWorkProposal()
                             .getGroupAttributedByTeacher().getIdInternal()));
         }
 
-        public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(Integer groupID)
-        {
+        public PREDICATE_FIND_PROPOSAL_ATTRIBUTED_TO_GROUP_BY_TEACHER(Integer groupID) {
             super();
             this.groupID = groupID;
         }

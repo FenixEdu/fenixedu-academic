@@ -7,7 +7,7 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class ReadAllWorkLocationsTest extends ServiceTestCase {
@@ -44,23 +44,20 @@ public class ReadAllWorkLocationsTest extends ServiceTestCase {
 
             Object[] args = {};
 
-            List workLocationList = (List) ServiceManagerServiceFactory
-                    .executeService(null, getNameOfServiceToBeTested(), args);
+            List workLocationList = (List) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), args);
             assertNotNull(workLocationList);
             assertTrue(workLocationList.size() == 2);
 
             // check the first Work Location
-            InfoWorkLocation infoWorkLocation = (InfoWorkLocation) workLocationList
-                    .get(0);
+            InfoWorkLocation infoWorkLocation = (InfoWorkLocation) workLocationList.get(0);
             assertEquals(infoWorkLocation.getIdInternal(), new Integer(21));
-            assertEquals(infoWorkLocation.getName(),
-                    "DEC - Faculdade de Ciências e Tecnologia /UNL");
+            assertEquals(infoWorkLocation.getName(), "DEC - Faculdade de Ciências e Tecnologia /UNL");
 
             // check the second Work Location
             infoWorkLocation = (InfoWorkLocation) workLocationList.get(1);
             assertEquals(infoWorkLocation.getIdInternal(), new Integer(22));
-            assertEquals(infoWorkLocation.getName(),
-                    "INSTITUTO DE TELECOMUNICAÇÕES");
+            assertEquals(infoWorkLocation.getName(), "INSTITUTO DE TELECOMUNICAÇÕES");
 
             //ok
 
@@ -76,8 +73,8 @@ public class ReadAllWorkLocationsTest extends ServiceTestCase {
 
             Object[] args = {};
 
-            List infoWorkLocationList = (List) ServiceManagerServiceFactory
-                    .executeService(null, getNameOfServiceToBeTested(), args);
+            List infoWorkLocationList = (List) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), args);
 
             assertNotNull(infoWorkLocationList);
             assertTrue(infoWorkLocationList.isEmpty());

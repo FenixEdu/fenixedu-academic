@@ -129,6 +129,13 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
+    <!--<collection-descriptor
+			name="enrollmentReports"
+			element-class-ref="Dominio.enrollmentReport.EnrollmentReport"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
+	</collection-descriptor>-->
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -270,6 +277,13 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
+ <!--   <collection-descriptor
+			name="enrollmentReports"
+			element-class-ref="Dominio.enrollmentReport.EnrollmentReport"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
+	</collection-descriptor> -->
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -362,6 +376,17 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
+	<field-descriptor
+		name="secundaryBranchKey"
+		column="KEY_SECUNDARY_BRANCH"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+			name="secundaryBranch"
+			class-ref="Dominio.Branch"
+			proxy="true">
+		<foreignkey field-ref="secundaryBranchKey"/>
+	</reference-descriptor>
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
@@ -400,4 +425,11 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
+  <!--  <collection-descriptor
+			name="enrollmentReports"
+			element-class-ref="Dominio.enrollmentReport.EnrollmentReport"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyStudentCurricularPlan"/>
+	</collection-descriptor>-->
 </class-descriptor>

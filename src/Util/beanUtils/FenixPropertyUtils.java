@@ -18,9 +18,8 @@ import Dominio.IDomainObject;
  */
 public class FenixPropertyUtils extends PropertyUtils {
 
-    public static void copyProperties(Object dest, Object orig)
-            throws IllegalAccessException, InvocationTargetException,
-            NoSuchMethodException {
+    public static void copyProperties(Object dest, Object orig) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException {
 
         if (dest == null) {
             throw new IllegalArgumentException("No destination bean specified");
@@ -51,8 +50,8 @@ public class FenixPropertyUtils extends PropertyUtils {
     }
 
     public static boolean canBeCopied(String name) {
-        if (name == null || name.equals("idInternal")
-                || name.equals("ackOptLock") || name.startsWith("key")) {
+        if (name == null || name.equals("idInternal") || name.equals("ackOptLock")
+                || name.startsWith("key")) {
             return false;
         }
         return true;

@@ -9,69 +9,66 @@ import java.util.Properties;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public class SystemInfo implements Serializable
-{
+public class SystemInfo implements Serializable {
 
-	private Integer availableProcessors;
-	private Long freeMemory;
-	private Long maxMemory;
-	private Long totalMemory;
-	private Properties properties;
-	
-	/**
-	 * 
-	 */
-	public SystemInfo()
-	{
-		super();
-		Runtime rt = Runtime.getRuntime();
-		this.availableProcessors = new Integer(rt.availableProcessors());
-		this.freeMemory = new Long(rt.freeMemory());
-		this.maxMemory = new Long(rt.maxMemory());
-		this.totalMemory = new Long(rt.totalMemory());
-		this.properties = System.getProperties();
-	}
+    private Integer availableProcessors;
 
-	/**
-	 * @return Returns the availableProcessors.
-	 */
-	public Integer getAvailableProcessors()
-	{
-		return availableProcessors;
-	}
+    private Long freeMemory;
 
-	/**
-	 * @return Returns the freeMemory.
-	 */
-	public Long getFreeMemory()
-	{
-		return freeMemory;
-	}
+    private Long maxMemory;
 
-	/**
-	 * @return Returns the maxMemory.
-	 */
-	public Long getMaxMemory()
-	{
-		return maxMemory;
-	}
+    private Long totalMemory;
 
-	/**
-	 * @return Returns the totalMemory.
-	 */
-	public Long getTotalMemory()
-	{
-		return totalMemory;
-	}
+    private Properties properties;
 
-	/**
-	 * @return Returns the properties.
-	 */
-	public Properties getProperties()
-	{
-		return properties;
-	}
+    /**
+     *  
+     */
+    public SystemInfo() {
+        super();
+        Runtime rt = Runtime.getRuntime();
+        this.availableProcessors = new Integer(rt.availableProcessors());
+        this.freeMemory = new Long(rt.freeMemory());
+        this.maxMemory = new Long(rt.maxMemory());
+        this.totalMemory = new Long(rt.totalMemory());
+        this.properties = System.getProperties();
+    }
+
+    /**
+     * @return Returns the availableProcessors.
+     */
+    public Integer getAvailableProcessors() {
+        return availableProcessors;
+    }
+
+    /**
+     * @return Returns the freeMemory.
+     */
+    public Long getFreeMemory() {
+        return freeMemory;
+    }
+
+    /**
+     * @return Returns the maxMemory.
+     */
+    public Long getMaxMemory() {
+        return maxMemory;
+    }
+
+    /**
+     * @return Returns the totalMemory.
+     */
+    public Long getTotalMemory() {
+        return totalMemory;
+    }
+
+    /**
+     * @return Returns the properties.
+     */
+    public Properties getProperties() {
+        return properties;
+    }
 
 }

@@ -100,7 +100,17 @@
           <!-- Nacionalidade -->
           <tr>
             <td width="30%"><bean:message key="label.person.country" /></td>
-            <td class="greytxt"><bean:write name="infoPerson" property="infoPais.nationality"/></td>
+			<bean:define id="nationality" name="infoPerson" property="infoPais.nationality" type="java.lang.String"/>
+            <td class="greytxt">
+				<%
+					if(nationality.startsWith("PORTUGUESA")){
+				%>
+					<bean:message key="label.person.portugueseNationality" />
+				<% }else{ %>
+					<bean:write name="infoPerson" property="infoPais.nationality"/>
+				<% } %>
+				
+			</td>
           </tr>   
           <!-- Freguesia de Naturalidade -->
           <tr>

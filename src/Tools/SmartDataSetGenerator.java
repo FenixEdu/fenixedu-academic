@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -37,8 +38,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
  *         (naat@mega.ist.utl.pt) Description: Generates datasets using
  *         reachability graphs
  */
-public class SmartDataSetGenerator
-{
+public class SmartDataSetGenerator {
 
     //constants
     private static final String DB_PASS_PROPERTY = "db.pass";
@@ -68,7 +68,7 @@ public class SmartDataSetGenerator
     //attributes
     private Properties props;
 
-    private ArrayList propertiesToIgnore;
+    private List propertiesToIgnore;
 
     private Connection connection;
 
@@ -78,9 +78,9 @@ public class SmartDataSetGenerator
 
     private Properties fkConventionsProps;
 
-    private ArrayList conventions;
+    private List conventions;
 
-    private ArrayList manyToManyTables;
+    private List manyToManyTables;
 
     private HashMap manyToManyTablesValidReferences;
 
@@ -90,9 +90,8 @@ public class SmartDataSetGenerator
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public SmartDataSetGenerator(String configFilename)
-            throws NullPointerException, FileNotFoundException, IOException
-    {
+    public SmartDataSetGenerator(String configFilename) throws NullPointerException,
+            FileNotFoundException, IOException {
         this.props = new Properties();
         this.props.load(new FileInputStream(configFilename));
         addPropertiesToIgnore();
@@ -111,9 +110,8 @@ public class SmartDataSetGenerator
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public SmartDataSetGenerator(String configFilename, String filePath)
-            throws NullPointerException, FileNotFoundException, IOException
-    {
+    public SmartDataSetGenerator(String configFilename, String filePath) throws NullPointerException,
+            FileNotFoundException, IOException {
         this.props = new Properties();
         this.props.load(new FileInputStream(configFilename));
         this.props.put("destination.dataset", filePath);
@@ -131,11 +129,9 @@ public class SmartDataSetGenerator
      * @throws IOException
      * @throws NullPointerException
      */
-    public SmartDataSetGenerator() throws IOException, NullPointerException
-    {
+    public SmartDataSetGenerator() throws IOException, NullPointerException {
         this.props = new Properties();
-        this.props.load(SmartDataSetGenerator.class
-                .getResourceAsStream(DATASET_CONFIG));
+        this.props.load(SmartDataSetGenerator.class.getResourceAsStream(DATASET_CONFIG));
         addPropertiesToIgnore();
         this.processedTables = new HashMap();
         this.fkConventionsProps = new Properties();
@@ -146,8 +142,7 @@ public class SmartDataSetGenerator
 
     }
 
-    private void addPropertiesToIgnore()
-    {
+    private void addPropertiesToIgnore() {
         propertiesToIgnore = new ArrayList();
         propertiesToIgnore.add(DB_DRIVER_PROPERTY);
         propertiesToIgnore.add(DB_URL_PROPERTY);
@@ -156,9 +151,7 @@ public class SmartDataSetGenerator
         propertiesToIgnore.add(DESTINATION_DATASET_PROPERTY);
     }
 
-    private void connectAndPrepareMetadata() throws ClassNotFoundException,
-            SQLException
-    {
+    private void connectAndPrepareMetadata() throws ClassNotFoundException, SQLException {
         String driver = this.props.getProperty(DB_DRIVER_PROPERTY);
         String url = this.props.getProperty(DB_URL_PROPERTY);
         String user = this.props.getProperty(DB_USER_PROPERTY);
@@ -170,19 +163,14 @@ public class SmartDataSetGenerator
 
     }
 
-    public void prepareDataSetInfo()
-    {
+    public void prepareDataSetInfo() {
         String tableNameInProcess = "";
-        try
-        {
-            String mainTableName = this.props
-                    .getProperty(MAIN_TABLE_NAME_PROPERTY);
-            String mainTableColumns = this.props
-                    .getProperty(MAIN_TABLE_COLUMNS_PROPERTY);
-            String mainTableWhereCondition = this.props
-                    .getProperty(MAIN_TABLE_WHERE_CONDITION_PROPERTY);
-            String sqlInst = "SELECT " + mainTableColumns + " FROM "
-                    + mainTableName + " WHERE " + mainTableWhereCondition;
+        try {
+            String mainTableName = this.props.getProperty(MAIN_TABLE_NAME_PROPERTY);
+            String mainTableColumns = this.props.getProperty(MAIN_TABLE_COLUMNS_PROPERTY);
+            String mainTableWhereCondition = this.props.getProperty(MAIN_TABLE_WHERE_CONDITION_PROPERTY);
+            String sqlInst = "SELECT " + mainTableColumns + " FROM " + mainTableName + " WHERE "
+                    + mainTableWhereCondition;
 
             Statement stmt = this.connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(sqlInst);
@@ -190,68 +178,52 @@ public class SmartDataSetGenerator
             ResultSetMetaData resultMetadata = resultSet.getMetaData();
 
             String mainTablePrimaryKey = readTablePrimaryKey(mainTableName);
-            TableInfo mainTableInfo = new TableInfo(mainTableName,
-                    mainTablePrimaryKey, mainTableColumns);
+            TableInfo mainTableInfo = new TableInfo(mainTableName, mainTablePrimaryKey, mainTableColumns);
 
-            while (resultSet.next())
-            {
-                mainTableInfo.addIdToSelect(new Integer(resultSet
-                        .getInt(mainTablePrimaryKey)));
+            while (resultSet.next()) {
+                mainTableInfo.addIdToSelect(new Integer(resultSet.getInt(mainTablePrimaryKey)));
             }
 
-            ArrayList tablesToProcess = new ArrayList();
+            List tablesToProcess = new ArrayList();
             tablesToProcess.add(mainTableInfo);
 
             int totalTables = 1;
-            for (int tableCounter = 0; tableCounter < totalTables; tableCounter++)
-            {
+            for (int tableCounter = 0; tableCounter < totalTables; tableCounter++) {
                 //System.out.println(tableCounter);
-                TableInfo tableInfo = (TableInfo) tablesToProcess
-                        .get(tableCounter);
+                TableInfo tableInfo = (TableInfo) tablesToProcess.get(tableCounter);
                 tableNameInProcess = tableInfo.getTableName();
 
-                TableInfo processedTableInfo = (TableInfo) this.processedTables
-                        .get(tableInfo.getTableName());
-                if (processedTableInfo == null)
-                {
+                TableInfo processedTableInfo = (TableInfo) this.processedTables.get(tableInfo
+                        .getTableName());
+                if (processedTableInfo == null) {
                     processedTableInfo = tableInfo;
                 }
 
                 resultSet = stmt.executeQuery(tableInfo.toSql());
                 resultMetadata = resultSet.getMetaData();
-                HashMap foreignKeyTableNameMap = preprocessForeingKeys(
-                        tableInfo.getTableName(), resultMetadata);
+                HashMap foreignKeyTableNameMap = preprocessForeingKeys(tableInfo.getTableName(),
+                        resultMetadata);
 
                 boolean hasRows = false;
-                while (resultSet.next())
-                {
+                while (resultSet.next()) {
                     hasRows = true;
-                    int primaryKeyValue = resultSet.getInt(tableInfo
-                            .getPrimaryKey());
-                    processedTableInfo.addIdToSelect(new Integer(
-                            primaryKeyValue));
+                    int primaryKeyValue = resultSet.getInt(tableInfo.getPrimaryKey());
+                    processedTableInfo.addIdToSelect(new Integer(primaryKeyValue));
 
-                    for (int i = 1; i <= resultMetadata.getColumnCount(); i++)
-                    {
+                    for (int i = 1; i <= resultMetadata.getColumnCount(); i++) {
                         //process foreign keys
                         String columnName = resultMetadata.getColumnName(i);
 
-                        if (foreignKeyTableNameMap.containsKey(columnName))
-                        {
-                            String fkTableName = (String) foreignKeyTableNameMap
-                                    .get(columnName);
+                        if (foreignKeyTableNameMap.containsKey(columnName)) {
+                            String fkTableName = (String) foreignKeyTableNameMap.get(columnName);
                             String fkTablePrimaryKey = readTablePrimaryKey(fkTableName);
 
-                            ArrayList idsToSelect = new ArrayList();
-                            idsToSelect.add(new Integer(resultSet
-                                    .getInt(columnName)));
-                            TableInfo tableInfoToProcess = new TableInfo(
-                                    (String) foreignKeyTableNameMap
-                                            .get(columnName),
-                                    fkTablePrimaryKey, "*", idsToSelect);
+                            List idsToSelect = new ArrayList();
+                            idsToSelect.add(new Integer(resultSet.getInt(columnName)));
+                            TableInfo tableInfoToProcess = new TableInfo((String) foreignKeyTableNameMap
+                                    .get(columnName), fkTablePrimaryKey, "*", idsToSelect);
 
-                            if (tablesToProcess.contains(tableInfoToProcess) == false)
-                            {
+                            if (tablesToProcess.contains(tableInfoToProcess) == false) {
                                 tablesToProcess.add(tableInfoToProcess);
                                 totalTables++;
                             }
@@ -259,15 +231,12 @@ public class SmartDataSetGenerator
 
                     }
 
-                    for (Iterator iter = this.manyToManyTables.iterator(); iter
-                            .hasNext(); )
-                    {
+                    for (Iterator iter = this.manyToManyTables.iterator(); iter.hasNext();) {
                         //process many-to-many associations
                         String manyToManyTableName = (String) iter.next();
-                        ArrayList validReferences = (ArrayList) this.manyToManyTablesValidReferences
+                        List validReferences = (ArrayList) this.manyToManyTablesValidReferences
                                 .get(manyToManyTableName);
-                        if (validReferences.contains(tableInfo.getTableName()) == false)
-                        {
+                        if (validReferences.contains(tableInfo.getTableName()) == false) {
                             //this table has already been processed by other
                             // table reference
                             //and the other table is the responsible for this
@@ -276,32 +245,22 @@ public class SmartDataSetGenerator
                         }
 
                         String manyToManyTablePrimaryKey = readTablePrimaryKey(manyToManyTableName);
-                        Statement stmtManyToMany = this.connection
-                                .createStatement();
-                        String sqlQuery = "SELECT * FROM "
-                                + manyToManyTableName + " WHERE "
+                        Statement stmtManyToMany = this.connection.createStatement();
+                        String sqlQuery = "SELECT * FROM " + manyToManyTableName + " WHERE "
                                 + manyToManyTablePrimaryKey + " IS NULL";
-                        ResultSet manyToManyResultSet = stmtManyToMany
-                                .executeQuery(sqlQuery);
-                        ResultSetMetaData manyToManyTableMetadata = manyToManyResultSet
-                                .getMetaData();
-                        HashMap manyToManyTableFkMap = preprocessForeingKeys(
-                                manyToManyTableName, manyToManyTableMetadata);
-                        Collection fkMapTableNames = manyToManyTableFkMap
-                                .values();
-                        if (fkMapTableNames.contains(tableInfo.getTableName()))
-                        {
+                        ResultSet manyToManyResultSet = stmtManyToMany.executeQuery(sqlQuery);
+                        ResultSetMetaData manyToManyTableMetadata = manyToManyResultSet.getMetaData();
+                        HashMap manyToManyTableFkMap = preprocessForeingKeys(manyToManyTableName,
+                                manyToManyTableMetadata);
+                        Collection fkMapTableNames = manyToManyTableFkMap.values();
+                        if (fkMapTableNames.contains(tableInfo.getTableName())) {
                             Set keys = manyToManyTableFkMap.keySet();
                             Iterator fkNamesInterator = keys.iterator();
                             String fkName = null;
-                            while (fkNamesInterator.hasNext())
-                            {
+                            while (fkNamesInterator.hasNext()) {
                                 fkName = (String) fkNamesInterator.next();
-                                String fkTableName = (String) manyToManyTableFkMap
-                                        .get(fkName);
-                                if (fkTableName
-                                        .equals(tableInfo.getTableName()))
-                                {
+                                String fkTableName = (String) manyToManyTableFkMap.get(fkName);
+                                if (fkTableName.equals(tableInfo.getTableName())) {
                                     //we found the fk name thats references in
                                     // process table
                                     break;
@@ -309,31 +268,24 @@ public class SmartDataSetGenerator
 
                             }
 
-                            sqlQuery = "SELECT * FROM " + manyToManyTableName
-                                    + " WHERE " + fkName + " = "
-                                    + primaryKeyValue;
+                            sqlQuery = "SELECT * FROM " + manyToManyTableName + " WHERE " + fkName
+                                    + " = " + primaryKeyValue;
 
-                            manyToManyResultSet = stmtManyToMany
-                                    .executeQuery(sqlQuery);
+                            manyToManyResultSet = stmtManyToMany.executeQuery(sqlQuery);
 
-                            ArrayList idsToSelectInManyToMany = new ArrayList();
-                            while (manyToManyResultSet.next())
-                            {
+                            List idsToSelectInManyToMany = new ArrayList();
+                            while (manyToManyResultSet.next()) {
                                 int manyToManyTablePkValue = manyToManyResultSet
                                         .getInt(manyToManyTablePrimaryKey);
-                                idsToSelectInManyToMany.add(new Integer(
-                                        manyToManyTablePkValue));
+                                idsToSelectInManyToMany.add(new Integer(manyToManyTablePkValue));
                             }
 
-                            if (idsToSelectInManyToMany.isEmpty() == false)
-                            {
+                            if (idsToSelectInManyToMany.isEmpty() == false) {
                                 //we have rows in many to many table that must
                                 // be processed
-                                TableInfo manyToManyTableInfo = new TableInfo(
-                                        manyToManyTableName,
+                                TableInfo manyToManyTableInfo = new TableInfo(manyToManyTableName,
                                         manyToManyTablePrimaryKey, "*");
-                                manyToManyTableInfo
-                                        .setIdsToSelect(idsToSelectInManyToMany);
+                                manyToManyTableInfo.setIdsToSelect(idsToSelectInManyToMany);
                                 tablesToProcess.add(manyToManyTableInfo);
                                 totalTables++;
 
@@ -343,83 +295,61 @@ public class SmartDataSetGenerator
 
                     }
                 }
-                if (hasRows)
-                {
-                    this.processedTables.put(tableInfo.getTableName(),
-                            processedTableInfo);
+                if (hasRows) {
+                    this.processedTables.put(tableInfo.getTableName(), processedTableInfo);
                 }
 
             }
-        }
-        catch (SQLException e)
-        {
-            System.out.println("Tip: Correct table " + tableNameInProcess
-                    + " foreign key conventions");
+        } catch (SQLException e) {
+            System.out.println("Tip: Correct table " + tableNameInProcess + " foreign key conventions");
             e.printStackTrace();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         /*
-         * finally { if (this.connection != null) try {
-         * this.connection.close(); } catch (SQLException e2) {
-         * e2.printStackTrace(); }
+         * finally { if (this.connection != null) try { this.connection.close(); }
+         * catch (SQLException e2) { e2.printStackTrace(); }
          */
     }
 
-    private String readTablePrimaryKey(String tableName) throws SQLException
-    {
-        ResultSet primaryKeyResultSet = this.databaseMetaData.getPrimaryKeys(
-                "", "", tableName);
+    private String readTablePrimaryKey(String tableName) throws SQLException {
+        ResultSet primaryKeyResultSet = this.databaseMetaData.getPrimaryKeys("", "", tableName);
         primaryKeyResultSet.next(); //move to information row
-        String mainTablePrimaryKey = primaryKeyResultSet
-                .getString("COLUMN_NAME");
+        String mainTablePrimaryKey = primaryKeyResultSet.getString("COLUMN_NAME");
         return mainTablePrimaryKey;
     }
 
     /**
      * @param tableName
      * @param resultMetadata
-     * @return HashMap contaning pairs <KEY_NAME>=<TABLE_NAME>
+     * @return HashMap contaning pairs <KEY_NAME>= <TABLE_NAME>
      * @throws SQLException
      */
 
-    private HashMap preprocessForeingKeys(String nameOfTable,
-            ResultSetMetaData resultMetadata) throws SQLException
-    {
+    private HashMap preprocessForeingKeys(String nameOfTable, ResultSetMetaData resultMetadata)
+            throws SQLException {
         HashMap tableFkCorrections = readTableFkCorrections(nameOfTable);
         HashMap foreignKeyTableMap = new HashMap();
         //check fields to see if they match the fk conventions
-        for (int i = 1; i <= resultMetadata.getColumnCount(); i++)
-        {
+        for (int i = 1; i <= resultMetadata.getColumnCount(); i++) {
             String columnName = resultMetadata.getColumnName(i);
-            if (tableFkCorrections.containsKey(columnName))
-            {
-                foreignKeyTableMap.put(columnName, tableFkCorrections
-                        .get(columnName));
-            }
-            else
-            {
+            if (tableFkCorrections.containsKey(columnName)) {
+                foreignKeyTableMap.put(columnName, tableFkCorrections.get(columnName));
+            } else {
                 Iterator conventionsIterator = this.conventions.iterator();
-                while (conventionsIterator.hasNext())
-                {
+                while (conventionsIterator.hasNext()) {
                     String convention = (String) conventionsIterator.next();
                     int conventionStartIndex = columnName.indexOf(convention);
-                    if (conventionStartIndex != -1)
-                    { //we have a FK
-                        if (conventionStartIndex == 0)
-                        {
+                    if (conventionStartIndex != -1) { //we have a FK
+                        if (conventionStartIndex == 0) {
                             //prefix convention
-                            String tableName = columnName.substring(convention
-                                    .length(), columnName.length());
+                            String tableName = columnName.substring(convention.length(), columnName
+                                    .length());
                             foreignKeyTableMap.put(columnName, tableName);
-                        }
-                        else
-                        {
+                        } else {
                             //suffix convention
-                            String tableName = columnName.substring(0,
-                                    columnName.length() - convention.length());
+                            String tableName = columnName.substring(0, columnName.length()
+                                    - convention.length());
                             foreignKeyTableMap.put(columnName, tableName);
                         }
                     }
@@ -430,41 +360,30 @@ public class SmartDataSetGenerator
         return foreignKeyTableMap;
     }
 
-    private void readManyToManyTablesNamesAndValidReferences()
-    {
+    private void readManyToManyTablesNamesAndValidReferences() {
         this.manyToManyTables = new ArrayList();
         this.manyToManyTablesValidReferences = new HashMap();
-        String manyToManyTablesPropertyValue = this.props
-                .getProperty(MANY_TO_MANY_TABLES_PROPERTY);
-        StringTokenizer tokenizer = new StringTokenizer(
-                manyToManyTablesPropertyValue, ",");
-        while (tokenizer.hasMoreElements())
-        {
+        String manyToManyTablesPropertyValue = this.props.getProperty(MANY_TO_MANY_TABLES_PROPERTY);
+        StringTokenizer tokenizer = new StringTokenizer(manyToManyTablesPropertyValue, ",");
+        while (tokenizer.hasMoreElements()) {
             String tableName = tokenizer.nextToken().trim();
             this.manyToManyTables.add(tableName);
-            String strValidReferences = this.props.getProperty(tableName
-                    + ".validReferences");
+            String strValidReferences = this.props.getProperty(tableName + ".validReferences");
             StringTokenizer st = new StringTokenizer(strValidReferences, ",");
-            ArrayList validReferences = new ArrayList();
-            while (st.hasMoreElements())
-            {
+            List validReferences = new ArrayList();
+            while (st.hasMoreElements()) {
                 validReferences.add(st.nextToken().trim());
             }
-            this.manyToManyTablesValidReferences
-                    .put(tableName, validReferences);
+            this.manyToManyTablesValidReferences.put(tableName, validReferences);
         }
     }
 
-    private void readConventions()
-    {
+    private void readConventions() {
         //read conventions
-        String conventionsCommaSeparated = this.fkConventionsProps
-                .getProperty(CONVENTIONS_PROPERTY);
-        StringTokenizer conventionsTokenizer = new StringTokenizer(
-                conventionsCommaSeparated, ",");
+        String conventionsCommaSeparated = this.fkConventionsProps.getProperty(CONVENTIONS_PROPERTY);
+        StringTokenizer conventionsTokenizer = new StringTokenizer(conventionsCommaSeparated, ",");
         this.conventions = new ArrayList();
-        while (conventionsTokenizer.hasMoreElements())
-        {
+        while (conventionsTokenizer.hasMoreElements()) {
             this.conventions.add(conventionsTokenizer.nextToken().trim());
         }
 
@@ -477,20 +396,15 @@ public class SmartDataSetGenerator
      * @param nameOfTable
      * @return
      */
-    private HashMap readTableFkCorrections(String nameOfTable)
-    {
+    private HashMap readTableFkCorrections(String nameOfTable) {
         //read table FK corrections
         HashMap tableFkCorrectionsMap = new HashMap();
-        String tableCorrections = fkConventionsProps.getProperty(nameOfTable
-                + ".corrections");
-        if (tableCorrections != null)
-        {
-            StringTokenizer tokenizerTableCorrections = new StringTokenizer(
-                    tableCorrections, ",");
-            while (tokenizerTableCorrections.hasMoreElements())
-            {
-                StringTokenizer tokenizerEqual = new StringTokenizer(
-                        tokenizerTableCorrections.nextToken().trim(), "=");
+        String tableCorrections = fkConventionsProps.getProperty(nameOfTable + ".corrections");
+        if (tableCorrections != null) {
+            StringTokenizer tokenizerTableCorrections = new StringTokenizer(tableCorrections, ",");
+            while (tokenizerTableCorrections.hasMoreElements()) {
+                StringTokenizer tokenizerEqual = new StringTokenizer(tokenizerTableCorrections
+                        .nextToken().trim(), "=");
                 String fkName = tokenizerEqual.nextToken().trim();
                 String fkTableName = tokenizerEqual.nextToken().trim();
                 tableFkCorrectionsMap.put(fkName, fkTableName);
@@ -500,62 +414,46 @@ public class SmartDataSetGenerator
         return tableFkCorrectionsMap;
     }
 
-    private IDatabaseConnection getConnectionForDataSet() throws Exception
-    {
+    private IDatabaseConnection getConnectionForDataSet() throws Exception {
         return new DatabaseConnection(this.connection);
     }
 
-    public void writeDataSet() throws Exception, SQLException
-    {
+    public void writeDataSet() throws Exception, SQLException {
         connectAndPrepareMetadata();
         prepareDataSetInfo();
         IDataSet dataset = null;
         IDatabaseConnection con = null;
 
-        try
-        {
+        try {
             con = getConnectionForDataSet();
             QueryDataSet queryDataset = new QueryDataSet(con);
             Vector tablesNames = new Vector(this.processedTables.keySet());
             Collections.sort(tablesNames);
 
             Iterator iter = tablesNames.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 String tableName = (String) iter.next();
-                TableInfo tableInfo = (TableInfo) this.processedTables
-                        .get(tableName);
-                queryDataset.addTable(tableInfo.getTableName(), tableInfo
-                        .toSql());
+                TableInfo tableInfo = (TableInfo) this.processedTables.get(tableName);
+                queryDataset.addTable(tableInfo.getTableName(), tableInfo.toSql());
             }
             dataset = queryDataset;
-            String destinationDataSetPath = this.props
-                    .getProperty(DESTINATION_DATASET_PROPERTY);
+            String destinationDataSetPath = this.props.getProperty(DESTINATION_DATASET_PROPERTY);
             destinationDataSetPath.replaceAll("\\\\", "/");
-            FileWriter fileWriter = new FileWriter(new File(
-                    destinationDataSetPath));
+            FileWriter fileWriter = new FileWriter(new File(destinationDataSetPath));
             FlatXmlDataSet.write(dataset, fileWriter, "ISO-8859-1");
             fileWriter.close();
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            if (con != null) try
-            {
-                con.close();
-            }
-            catch (SQLException e2)
-            {
-                e2.printStackTrace();
-            }
+        } finally {
+            if (con != null)
+                try {
+                    con.close();
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
 
         }
     }

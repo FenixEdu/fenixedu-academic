@@ -7,6 +7,7 @@ package ServidorAplicacao.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Coordinator;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
@@ -14,14 +15,13 @@ import Dominio.ICursoExecucao;
 import Dominio.IPessoa;
 import Dominio.IRole;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCoordinator;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
@@ -33,22 +33,9 @@ import Util.RoleType;
  * @author João Mota 30/Oct/2003
  *  
  */
-public class AddCoordinator implements IServico {
-    private static AddCoordinator service = new AddCoordinator();
+public class AddCoordinator implements IService {
 
-    public static AddCoordinator getService() {
-        return service;
-    }
-
-    private AddCoordinator() {
-    }
-
-    public final String getNome() {
-        return "AddCoordinator";
-    }
-
-    public Boolean run(Integer executionDegreeId, Integer teacherNumber)
-            throws FenixServiceException {
+    public Boolean run(Integer executionDegreeId, Integer teacherNumber) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -56,20 +43,16 @@ public class AddCoordinator implements IServico {
             if (teacher == null) {
                 throw new NonExistingServiceException();
             }
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
-            ICursoExecucao executionDegree = new CursoExecucao(
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+            ICursoExecucao executionDegree = new CursoExecucao(executionDegreeId);
+            executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(CursoExecucao.class,
                     executionDegreeId);
-            executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, executionDegreeId);
             if (executionDegree == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            IPersistentCoordinator persistentCoordinator = sp
-                    .getIPersistentCoordinator();
-            ICoordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherAndExecutionDegree(teacher,
-                            executionDegree);
+            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(
+                    teacher, executionDegree);
             if (coordinator == null) {
                 coordinator = new Coordinator();
                 persistentCoordinator.simpleLockWrite(coordinator);
@@ -79,16 +62,13 @@ public class AddCoordinator implements IServico {
                 //verify if the teacher already was coordinator
                 List executionDegreesTeacherList = persistentCoordinator
                         .readExecutionDegreesByTeacher(teacher);
-                if (executionDegreesTeacherList == null
-                        || executionDegreesTeacherList.size() <= 0) {
+                if (executionDegreesTeacherList == null || executionDegreesTeacherList.size() <= 0) {
                     //Role Coordinator
                     IPersistentRole persistentRole = sp.getIPersistentRole();
-                    IRole role = persistentRole
-                            .readByRoleType(RoleType.COORDINATOR);
+                    IRole role = persistentRole.readByRoleType(RoleType.COORDINATOR);
 
                     IPessoa person = teacher.getPerson();
-                    IPessoaPersistente persistentPerson = sp
-                            .getIPessoaPersistente();
+                    IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
                     persistentPerson.simpleLockWrite(person);
 
                     if (person.getPersonRoles() == null) {

@@ -3,7 +3,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for Dominio.InquiryAnswer -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.student.SchoolRegistrationInquiryAnswer" table="INQUIRY_ANSWER">
+<class-descriptor class="Dominio.student.PersonalDataUseInquiryAnswers" table="PERSONAL_DATA_USE_INQUIRY_ANSWERS">
   <field-descriptor
     name="idInternal"
     column="ID_INTERNAL"
@@ -66,5 +66,50 @@
   </reference-descriptor>
 </class-descriptor>
 
+<class-descriptor class="Dominio.student.ResidenceCandidacies" table="RESIDENCE_CANDIDACIES">
+	<field-descriptor
+    	name="idInternal"
+    	column="ID_INTERNAL"
+    	jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+  	/>
+  	<field-descriptor
+    	name="keyStudent"
+    	column="KEY_STUDENT"
+   	 	jdbc-type="INTEGER"
+ 	/>
+  	<field-descriptor
+    	name="dislocated"
+    	column="DISLOCATED"
+   	 	jdbc-type="BIT"
+ 	/>
+  	<field-descriptor
+    	name="observations"
+    	column="OBSERVATIONS"
+   	 	jdbc-type="VARCHAR"
+ 	/>
+
+	<field-descriptor
+		name="creationDate"
+		column="CREATION_DATE"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+
+	<field-descriptor
+	    name="ackOptLock"
+	    column="ACK_OPT_LOCK"
+	    jdbc-type="INTEGER"
+		locking="true"
+	  />
+
+	<reference-descriptor
+		name="student"
+		class-ref="Dominio.Student"
+		proxy="false">
+		<foreignkey field-ref="keyStudent"/>
+	  </reference-descriptor>
+</class-descriptor>
 
 

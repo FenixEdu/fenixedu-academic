@@ -20,8 +20,7 @@ public class SiteView extends DataTranferObject {
             SiteView siteView = (SiteView) arg0;
             if (getComponent() == null && siteView.getComponent() == null) {
                 result = true;
-            } else if (getComponent() != null
-                    && getComponent().equals(siteView.getComponent())) {
+            } else if (getComponent() != null && getComponent().equals(siteView.getComponent())) {
                 result = true;
             }
         }

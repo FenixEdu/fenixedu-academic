@@ -58,35 +58,30 @@ public class EditTeacherInformation implements IService {
      * Executes the service.
      */
     public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime,
-            InfoWeeklyOcupation infoWeeklyOcupation, List infoOrientations,
-            List infoPublicationsNumbers) throws FenixServiceException {
+            InfoWeeklyOcupation infoWeeklyOcupation, List infoOrientations, List infoPublicationsNumbers)
+            throws FenixServiceException {
         try {
             Date date = Calendar.getInstance().getTime();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
                     .getIPersistentServiceProviderRegime();
-            Integer serviceProviderRegimeId = infoServiceProviderRegime
-                    .getIdInternal();
+            Integer serviceProviderRegimeId = infoServiceProviderRegime.getIdInternal();
             IServiceProviderRegime serviceProviderRegimeToLock = (IServiceProviderRegime) persistentServiceProviderRegime
-                    .readByOID(ServiceProviderRegime.class,
-                            serviceProviderRegimeId, true);
+                    .readByOID(ServiceProviderRegime.class, serviceProviderRegimeId, true);
             IServiceProviderRegime newServiceProviderRegime = Cloner
                     .copyInfoServiceProviderRegime2IServiceProviderRegime(infoServiceProviderRegime);
 
             if (serviceProviderRegimeToLock == null) {
                 serviceProviderRegimeToLock = new ServiceProviderRegime();
-                persistentServiceProviderRegime
-                        .simpleLockWrite(serviceProviderRegimeToLock);
+                persistentServiceProviderRegime.simpleLockWrite(serviceProviderRegimeToLock);
             }
             Integer ackOptLock = serviceProviderRegimeToLock.getAckOptLock();
-            PropertyUtils.copyProperties(serviceProviderRegimeToLock,
-                    newServiceProviderRegime);
+            PropertyUtils.copyProperties(serviceProviderRegimeToLock, newServiceProviderRegime);
             serviceProviderRegimeToLock.setAckOptLock(ackOptLock);
             serviceProviderRegimeToLock.setLastModificationDate(date);
 
-            IPersistentWeeklyOcupation persistentWeeklyOcupation = sp
-                    .getIPersistentWeeklyOcupation();
+            IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
             Integer weeklyOcupationId = infoWeeklyOcupation.getIdInternal();
             IWeeklyOcupation weeklyOcupationToLock = (IWeeklyOcupation) persistentWeeklyOcupation
                     .readByOID(WeeklyOcupation.class, weeklyOcupationId, true);
@@ -95,26 +90,22 @@ public class EditTeacherInformation implements IService {
 
             if (weeklyOcupationToLock == null) {
                 weeklyOcupationToLock = new WeeklyOcupation();
-                persistentWeeklyOcupation
-                        .simpleLockWrite(weeklyOcupationToLock);
+                persistentWeeklyOcupation.simpleLockWrite(weeklyOcupationToLock);
             }
             ackOptLock = weeklyOcupationToLock.getAckOptLock();
-            PropertyUtils.copyProperties(weeklyOcupationToLock,
-                    newWeeklyOcupation);
+            PropertyUtils.copyProperties(weeklyOcupationToLock, newWeeklyOcupation);
             weeklyOcupationToLock.setAckOptLock(ackOptLock);
             weeklyOcupationToLock.setLastModificationDate(date);
 
-            IPersistentOrientation persistentOrientation = sp
-                    .getIPersistentOrientation();
+            IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
             Iterator iter = infoOrientations.iterator();
             while (iter.hasNext()) {
                 InfoOrientation infoOrientation = (InfoOrientation) iter.next();
                 Integer orientationId = infoOrientation.getIdInternal();
-                IOrientation orientationToLock = (IOrientation) persistentOrientation
-                        .readByOID(Orientation.class, orientationId, true);
+                IOrientation orientationToLock = (IOrientation) persistentOrientation.readByOID(
+                        Orientation.class, orientationId, true);
 
-                IOrientation newOrientation = Cloner
-                        .copyInfoOrientation2IOrientation(infoOrientation);
+                IOrientation newOrientation = Cloner.copyInfoOrientation2IOrientation(infoOrientation);
 
                 if (orientationToLock == null) {
                     orientationToLock = new Orientation();
@@ -130,24 +121,19 @@ public class EditTeacherInformation implements IService {
                     .getIPersistentPublicationsNumber();
             iter = infoPublicationsNumbers.iterator();
             while (iter.hasNext()) {
-                InfoPublicationsNumber infoPublicationsNumber = (InfoPublicationsNumber) iter
-                        .next();
-                Integer publicationsNumberId = infoPublicationsNumber
-                        .getIdInternal();
+                InfoPublicationsNumber infoPublicationsNumber = (InfoPublicationsNumber) iter.next();
+                Integer publicationsNumberId = infoPublicationsNumber.getIdInternal();
                 IPublicationsNumber publicationsNumberToLock = (IPublicationsNumber) persistentPublicationsNumber
-                        .readByOID(PublicationsNumber.class,
-                                publicationsNumberId, true);
+                        .readByOID(PublicationsNumber.class, publicationsNumberId, true);
                 IPublicationsNumber newPublicationsNumber = Cloner
                         .copyInfoPublicationsNumber2IPublicationsNumber(infoPublicationsNumber);
 
                 if (publicationsNumberToLock == null) {
                     publicationsNumberToLock = new PublicationsNumber();
-                    persistentPublicationsNumber
-                            .simpleLockWrite(publicationsNumberToLock);
+                    persistentPublicationsNumber.simpleLockWrite(publicationsNumberToLock);
                 }
                 ackOptLock = publicationsNumberToLock.getAckOptLock();
-                PropertyUtils.copyProperties(publicationsNumberToLock,
-                        newPublicationsNumber);
+                PropertyUtils.copyProperties(publicationsNumberToLock, newPublicationsNumber);
                 publicationsNumberToLock.setAckOptLock(ackOptLock);
                 publicationsNumberToLock.setLastModificationDate(date);
             }

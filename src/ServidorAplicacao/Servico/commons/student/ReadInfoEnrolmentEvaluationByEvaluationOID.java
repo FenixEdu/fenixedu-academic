@@ -7,10 +7,10 @@
 
 package ServidorAplicacao.Servico.commons.student;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
 import Dominio.Enrolment;
 import Dominio.IEnrollment;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -19,29 +19,12 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import framework.factory.ServiceManagerServiceFactory;
 
-public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico {
-
-    private static ReadInfoEnrolmentEvaluationByEvaluationOID servico = new ReadInfoEnrolmentEvaluationByEvaluationOID();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadInfoEnrolmentEvaluationByEvaluationOID getService() {
-        return servico;
-    }
+public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IService {
 
     /**
      * The actor of this class.
      */
-    private ReadInfoEnrolmentEvaluationByEvaluationOID() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ReadInfoEnrolmentEvaluationByEvaluationOID";
+    public ReadInfoEnrolmentEvaluationByEvaluationOID() {
     }
 
     public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID)
@@ -52,8 +35,8 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            enrolment = (IEnrollment) sp.getIPersistentEnrolment().readByOID(
-                    Enrolment.class, enrolmentOID);
+            enrolment = (IEnrollment) sp.getIPersistentEnrolment().readByOID(Enrolment.class,
+                    enrolmentOID);
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
@@ -63,8 +46,8 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico {
 
         try {
             Object args[] = { enrolment };
-            enrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
-                    .executeService(userView, "GetEnrolmentGrade", args);
+            enrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(
+                    userView, "GetEnrolmentGrade", args);
         } catch (FenixServiceException e) {
             throw new FenixServiceException(e);
         }

@@ -48,57 +48,47 @@ import Util.TipoCurso;
 /**
  * @author Luis Cruz
  */
-public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
-{
+public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletResponse response) throws FenixActionException {
         IUserView userView = SessionUtils.getUserView(request);
 
         HttpSession session = request.getSession(false);
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
 
-        Object args[] = {infoExecutionDegree.getIdInternal()};
+        Object args[] = { infoExecutionDegree.getIdInternal() };
         List finalDegreeWorkProposalHeaders = null;
-        try
-        {
+        try {
             finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(userView,
                     "ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", args);
 
-            if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty())
-            {
+            if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty()) {
                 Collections.sort(finalDegreeWorkProposalHeaders, new BeanComparator("proposalNumber"));
 
                 request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
             }
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        try
-        {
+        try {
             InfoScheduleing infoScheduleing = (InfoScheduleing) ServiceUtils.executeService(userView,
                     "ReadFinalDegreeWorkProposalSubmisionPeriod", args);
 
-            if (infoScheduleing != null)
-            {
+            if (infoScheduleing != null) {
                 SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
                 SimpleDateFormat dateFormatHour = new SimpleDateFormat("HH:mm");
 
                 DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
-                if (infoScheduleing.getStartOfProposalPeriod() != null)
-                {
+                if (infoScheduleing.getStartOfProposalPeriod() != null) {
                     finalDegreeWorkScheduleingForm.set("startOfProposalPeriodDate", dateFormatDate
                             .format(infoScheduleing.getStartOfProposalPeriod()));
                     finalDegreeWorkScheduleingForm.set("startOfProposalPeriodHour", dateFormatHour
                             .format(infoScheduleing.getStartOfProposalPeriod()));
                 }
-                if (infoScheduleing.getEndOfProposalPeriod() != null)
-                {
+                if (infoScheduleing.getEndOfProposalPeriod() != null) {
                     finalDegreeWorkScheduleingForm.set("endOfProposalPeriodDate", dateFormatDate
                             .format(infoScheduleing.getEndOfProposalPeriod()));
                     finalDegreeWorkScheduleingForm.set("endOfProposalPeriodHour", dateFormatHour
@@ -107,23 +97,19 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
 
                 List attributedByTeacherList = new ArrayList();
                 List attributionsList = new ArrayList();
-                if (finalDegreeWorkProposalHeaders != null)
-                {
-                    for (int i = 0; i < finalDegreeWorkProposalHeaders.size(); i++)
-                    {
+                if (finalDegreeWorkProposalHeaders != null) {
+                    for (int i = 0; i < finalDegreeWorkProposalHeaders.size(); i++) {
                         FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = (FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeaders
                                 .get(i);
                         InfoGroup infoGroup = finalDegreeWorkProposalHeader
                                 .getGroupAttributedByTeacher();
-                        if (infoGroup != null)
-                        {
+                        if (infoGroup != null) {
                             attributedByTeacherList.add(finalDegreeWorkProposalHeader.getIdInternal()
                                     .toString()
                                     + infoGroup.getIdInternal().toString());
                         }
                         infoGroup = finalDegreeWorkProposalHeader.getGroupAttributed();
-                        if (infoGroup != null)
-                        {
+                        if (infoGroup != null) {
                             attributionsList.add(finalDegreeWorkProposalHeader.getIdInternal()
                                     .toString()
                                     + infoGroup.getIdInternal().toString());
@@ -131,13 +117,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                     }
 
                     String[] attributedByTeacher = new String[attributedByTeacherList.size()];
-                    for (int i = 0; i < attributedByTeacherList.size(); i++)
-                    {
+                    for (int i = 0; i < attributedByTeacherList.size(); i++) {
                         attributedByTeacher[i] = (String) attributedByTeacherList.get(i);
                     }
                     String[] attributions = new String[attributionsList.size()];
-                    for (int i = 0; i < attributionsList.size(); i++)
-                    {
+                    for (int i = 0; i < attributionsList.size(); i++) {
                         attributions[i] = (String) attributionsList.get(i);
                     }
 
@@ -150,23 +134,18 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                 fbc.setName("finalDegreeWorkCandidacyPeriod");
                 DynaActionFormClass dafc = DynaActionFormClass.createDynaActionFormClass(fbc);
                 DynaActionForm finalDegreeWorkCandidacyPeriodForm;
-                try
-                {
+                try {
                     finalDegreeWorkCandidacyPeriodForm = (DynaActionForm) dafc.newInstance();
-                }
-                catch (Exception e1)
-                {
+                } catch (Exception e1) {
                     throw new FenixActionException(e1);
                 }
-                if (infoScheduleing.getStartOfCandidacyPeriod() != null)
-                {
+                if (infoScheduleing.getStartOfCandidacyPeriod() != null) {
                     finalDegreeWorkCandidacyPeriodForm.set("startOfCandidacyPeriodDate", dateFormatDate
                             .format(infoScheduleing.getStartOfCandidacyPeriod()));
                     finalDegreeWorkCandidacyPeriodForm.set("startOfCandidacyPeriodHour", dateFormatHour
                             .format(infoScheduleing.getStartOfCandidacyPeriod()));
                 }
-                if (infoScheduleing.getEndOfCandidacyPeriod() != null)
-                {
+                if (infoScheduleing.getEndOfCandidacyPeriod() != null) {
                     finalDegreeWorkCandidacyPeriodForm.set("endOfCandidacyPeriodDate", dateFormatDate
                             .format(infoScheduleing.getEndOfCandidacyPeriod()));
                     finalDegreeWorkCandidacyPeriodForm.set("endOfCandidacyPeriodHour", dateFormatHour
@@ -180,31 +159,24 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                 fbc2.setName("finalDegreeWorkCandidacyRequirements");
                 DynaActionFormClass dafc2 = DynaActionFormClass.createDynaActionFormClass(fbc2);
                 DynaActionForm finalDegreeWorkCandidacyRequirementsForm;
-                try
-                {
+                try {
                     finalDegreeWorkCandidacyRequirementsForm = (DynaActionForm) dafc2.newInstance();
-                }
-                catch (Exception e1)
-                {
+                } catch (Exception e1) {
                     throw new FenixActionException(e1);
                 }
-                if (infoScheduleing.getMinimumNumberOfCompletedCourses() != null)
-                {
+                if (infoScheduleing.getMinimumNumberOfCompletedCourses() != null) {
                     finalDegreeWorkCandidacyRequirementsForm.set("minimumNumberOfCompletedCourses",
                             infoScheduleing.getMinimumNumberOfCompletedCourses().toString());
                 }
-                if (infoScheduleing.getMinimumNumberOfStudents() != null)
-                {
+                if (infoScheduleing.getMinimumNumberOfStudents() != null) {
                     finalDegreeWorkCandidacyRequirementsForm.set("minimumNumberOfStudents",
                             infoScheduleing.getMinimumNumberOfStudents().toString());
                 }
-                if (infoScheduleing.getMaximumNumberOfStudents() != null)
-                {
+                if (infoScheduleing.getMaximumNumberOfStudents() != null) {
                     finalDegreeWorkCandidacyRequirementsForm.set("maximumNumberOfStudents",
                             infoScheduleing.getMaximumNumberOfStudents().toString());
                 }
-                if (infoScheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() != null)
-                {
+                if (infoScheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() != null) {
                     finalDegreeWorkCandidacyRequirementsForm.set(
                             "maximumNumberOfProposalCandidaciesPerGroup", infoScheduleing
                                     .getMaximumNumberOfProposalCandidaciesPerGroup().toString());
@@ -213,9 +185,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                 request.setAttribute("finalDegreeWorkCandidacyRequirements",
                         finalDegreeWorkCandidacyRequirementsForm);
             }
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -223,44 +193,36 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null
-                && StringUtils.isNumeric(finalDegreeWorkProposalOIDString))
-        {
+                && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object args[] = {new Integer(finalDegreeWorkProposalOIDString)};
-            try
-            {
+            Object args[] = { new Integer(finalDegreeWorkProposalOIDString) };
+            try {
                 InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(userView,
                         "ReadFinalDegreeWorkProposal", args);
 
-                if (infoProposal != null)
-                {
+                if (infoProposal != null) {
                     DynaActionForm finalWorkForm = (DynaActionForm) form;
 
-                    if (infoProposal.getIdInternal() != null)
-                    {
+                    if (infoProposal.getIdInternal() != null) {
                         finalWorkForm.set("idInternal", infoProposal.getIdInternal().toString());
                     }
                     finalWorkForm.set("title", infoProposal.getTitle());
-                    if (infoProposal.getOrientatorsCreditsPercentage() != null)
-                    {
+                    if (infoProposal.getOrientatorsCreditsPercentage() != null) {
                         finalWorkForm.set("responsibleCreditsPercentage", infoProposal
                                 .getOrientatorsCreditsPercentage().toString());
                     }
-                    if (infoProposal.getCoorientatorsCreditsPercentage() != null)
-                    {
+                    if (infoProposal.getCoorientatorsCreditsPercentage() != null) {
                         finalWorkForm.set("coResponsibleCreditsPercentage", infoProposal
                                 .getCoorientatorsCreditsPercentage().toString());
                     }
                     finalWorkForm.set("companionName", infoProposal.getCompanionName());
                     finalWorkForm.set("companionMail", infoProposal.getCompanionMail());
-                    if (infoProposal.getCompanionPhone() != null)
-                    {
+                    if (infoProposal.getCompanionPhone() != null) {
                         finalWorkForm.set("companionPhone", infoProposal.getCompanionPhone().toString());
                     }
                     finalWorkForm.set("framing", infoProposal.getFraming());
@@ -269,34 +231,26 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                     finalWorkForm.set("requirements", infoProposal.getRequirements());
                     finalWorkForm.set("deliverable", infoProposal.getDeliverable());
                     finalWorkForm.set("url", infoProposal.getUrl());
-                    if (infoProposal.getMaximumNumberOfGroupElements() != null)
-                    {
+                    if (infoProposal.getMaximumNumberOfGroupElements() != null) {
                         finalWorkForm.set("maximumNumberOfGroupElements", infoProposal
                                 .getMaximumNumberOfGroupElements().toString());
                     }
-                    if (infoProposal.getMinimumNumberOfGroupElements() != null)
-                    {
+                    if (infoProposal.getMinimumNumberOfGroupElements() != null) {
                         finalWorkForm.set("minimumNumberOfGroupElements", infoProposal
                                 .getMinimumNumberOfGroupElements().toString());
                     }
                     if (infoProposal.getDegreeType() != null
-                            && infoProposal.getDegreeType().getTipoCurso() != null)
-                    {
+                            && infoProposal.getDegreeType().getTipoCurso() != null) {
                         finalWorkForm.set("degreeType", infoProposal.getDegreeType().getTipoCurso()
                                 .toString());
                     }
                     finalWorkForm.set("observations", infoProposal.getObservations());
                     finalWorkForm.set("location", infoProposal.getLocation());
 
-					finalWorkForm.set(
-						"companyAdress",
-						infoProposal.getCompanyAdress());
-					finalWorkForm.set(
-						"companyName",
-						infoProposal.getCompanyName());
+                    finalWorkForm.set("companyAdress", infoProposal.getCompanyAdress());
+                    finalWorkForm.set("companyName", infoProposal.getCompanyName());
                     if (infoProposal.getOrientator() != null
-                            && infoProposal.getOrientator().getIdInternal() != null)
-                    {
+                            && infoProposal.getOrientator().getIdInternal() != null) {
                         finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getIdInternal()
                                 .toString());
                         finalWorkForm.set("responsableTeacherNumber", infoProposal.getOrientator()
@@ -305,8 +259,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                                 .getInfoPerson().getNome());
                     }
                     if (infoProposal.getCoorientator() != null
-                            && infoProposal.getCoorientator().getIdInternal() != null)
-                    {
+                            && infoProposal.getCoorientator().getIdInternal() != null) {
                         finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator()
                                 .getIdInternal().toString());
                         finalWorkForm.set("coResponsableTeacherNumber", infoProposal.getCoorientator()
@@ -315,27 +268,21 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                                 .getInfoPerson().getNome());
                     }
                     if (infoProposal.getExecutionDegree() != null
-                            && infoProposal.getExecutionDegree().getIdInternal() != null)
-                    {
+                            && infoProposal.getExecutionDegree().getIdInternal() != null) {
                         finalWorkForm.set("degree", infoProposal.getExecutionDegree().getIdInternal()
                                 .toString());
                     }
-                    if (infoProposal.getStatus() != null && infoProposal.getStatus().getStatus() != null)
-                    {
+                    if (infoProposal.getStatus() != null && infoProposal.getStatus().getStatus() != null) {
                         finalWorkForm.set("status", infoProposal.getStatus().getStatus().toString());
                     }
 
-                    if (infoProposal.getBranches() != null && infoProposal.getBranches().size() > 0)
-                    {
+                    if (infoProposal.getBranches() != null && infoProposal.getBranches().size() > 0) {
                         String[] branchList = new String[infoProposal.getBranches().size()];
-                        for (int i = 0; i < infoProposal.getBranches().size(); i++)
-                        {
+                        for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                             InfoBranch infoBranch = ((InfoBranch) infoProposal.getBranches().get(i));
-                            if (infoBranch != null && infoBranch.getIdInternal() != null)
-                            {
+                            if (infoBranch != null && infoBranch.getIdInternal() != null) {
                                 String brachOIDString = infoBranch.getIdInternal().toString();
-                                if (brachOIDString != null && StringUtils.isNumeric(brachOIDString))
-                                {
+                                if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
                                     branchList[i] = brachOIDString;
                                 }
                             }
@@ -354,9 +301,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                     request.setAttribute("finalDegreeWorkProposalStatusList",
                             FinalDegreeWorkProposalStatus.getLabelValueList());
                 }
-            }
-            catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
         }
@@ -365,8 +310,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward createNewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         IUserView userView = SessionUtils.getUserView(request);
 
         HttpSession session = request.getSession(false);
@@ -389,8 +333,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward setFinalDegreeProposalPeriod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
@@ -411,13 +354,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
 
         Date startOfProposalPeriod = null;
         Date endOfProposalPeriod = null;
-        try
-        {
+        try {
 
             startOfProposalPeriod = dateFormat.parse(startOfProposalPeriodString);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalDegreeWorkProposal.setProposalPeriod.validator.start",
                     new ActionError("finalDegreeWorkProposal.setProposalPeriod.validator.start"));
@@ -425,12 +365,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
             return mapping.getInputForward();
         }
 
-        try
-        {
+        try {
             endOfProposalPeriod = dateFormat.parse(endOfProposalPeriodString);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.numberOfGroupElements", new ActionError(
                     "finalWorkInformationForm.numberOfGroupElements"));
@@ -444,13 +381,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
 
-        Object args[] = {infoExecutionDegree.getIdInternal(), startOfProposalPeriod, endOfProposalPeriod};
-        try
-        {
+        Object args[] = { infoExecutionDegree.getIdInternal(), startOfProposalPeriod,
+                endOfProposalPeriod };
+        try {
             ServiceUtils.executeService(userView, "DefineFinalDegreeWorkProposalSubmisionPeriod", args);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -459,8 +394,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward setFinalDegreeCandidacyPeriod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
@@ -481,13 +415,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
 
         Date startOfCandidacyPeriod = null;
         Date endOfCandidacyPeriod = null;
-        try
-        {
+        try {
 
             startOfCandidacyPeriod = dateFormat.parse(startOfCandidacyPeriodString);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalDegreeWorkCandidacy.setCandidacyPeriod.validator.start",
                     new ActionError("finalDegreeWorkCandidacy.setCandidacyPeriod.validator.start"));
@@ -495,12 +426,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
             return mapping.getInputForward();
         }
 
-        try
-        {
+        try {
             endOfCandidacyPeriod = dateFormat.parse(endOfCandidacyPeriodString);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.numberOfGroupElements", new ActionError(
                     "finalWorkInformationForm.numberOfGroupElements"));
@@ -514,14 +442,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
 
-        Object args[] = {infoExecutionDegree.getIdInternal(), startOfCandidacyPeriod,
-                endOfCandidacyPeriod};
-        try
-        {
+        Object args[] = { infoExecutionDegree.getIdInternal(), startOfCandidacyPeriod,
+                endOfCandidacyPeriod };
+        try {
             ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacySubmisionPeriod", args);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -532,8 +457,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletResponse response) throws FenixActionException {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
 
         String idInternal = (String) finalWorkForm.get("idInternal");
@@ -565,8 +489,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
 
         Integer min = new Integer(minimumNumberOfGroupElements);
         Integer max = new Integer(maximumNumberOfGroupElements);
-        if ((min.intValue() > max.intValue()) || (min.intValue() <= 0))
-        {
+        if ((min.intValue() > max.intValue()) || (min.intValue() <= 0)) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.numberGroupElements.invalidInterval",
                     new ActionError("finalWorkInformationForm.numberGroupElements.invalidInterval"));
@@ -578,8 +501,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         Integer coorientatorCreditsPercentage = new Integer(coResponsibleCreditsPercentage);
         if ((orientatorCreditsPercentage.intValue() < 0)
                 || (coorientatorCreditsPercentage.intValue() < 0)
-                || (orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100))
-        {
+                || (orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100)) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("finalWorkInformationForm.invalidCreditsPercentageDistribuition",
                     new ActionError("finalWorkInformationForm.invalidCreditsPercentageDistribuition"));
@@ -588,8 +510,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         }
 
         InfoProposal infoFinalWorkProposal = new InfoProposal();
-        if (idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal))
-        {
+        if (idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
             infoFinalWorkProposal.setIdInternal(new Integer(idInternal));
         }
         infoFinalWorkProposal.setTitle(title);
@@ -611,15 +532,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
 
         infoFinalWorkProposal.setOrientator(new InfoTeacher());
         infoFinalWorkProposal.getOrientator().setIdInternal(new Integer(orientatorOID));
-        if (coorientatorOID != null && !coorientatorOID.equals(""))
-        {
+        if (coorientatorOID != null && !coorientatorOID.equals("")) {
             infoFinalWorkProposal.setCoorientator(new InfoTeacher());
             infoFinalWorkProposal.getCoorientator().setIdInternal(new Integer(coorientatorOID));
-        }
-        else
-        {
-            if (coorientatorCreditsPercentage.intValue() != 0)
-            {
+        } else {
+            if (coorientatorCreditsPercentage.intValue() != 0) {
                 ActionErrors actionErrors = new ActionErrors();
                 actionErrors
                         .add(
@@ -633,8 +550,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
             infoFinalWorkProposal.setCompanionName(companionName);
             infoFinalWorkProposal.setCompanionMail(companionMail);
             if (companionPhone != null && !companionPhone.equals("")
-                    && StringUtils.isNumeric(companionPhone))
-            {
+                    && StringUtils.isNumeric(companionPhone)) {
                 infoFinalWorkProposal.setCompanionPhone(new Integer(companionPhone));
             }
             infoFinalWorkProposal.setCompanyAdress(companyAdress);
@@ -643,14 +559,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         infoFinalWorkProposal.setExecutionDegree(new InfoExecutionDegree());
         infoFinalWorkProposal.getExecutionDegree().setIdInternal(new Integer(degree));
 
-        if (branchList != null && branchList.length > 0)
-        {
+        if (branchList != null && branchList.length > 0) {
             infoFinalWorkProposal.setBranches(new ArrayList());
-            for (int i = 0; i < branchList.length; i++)
-            {
+            for (int i = 0; i < branchList.length; i++) {
                 String brachOIDString = branchList[i];
-                if (brachOIDString != null && StringUtils.isNumeric(brachOIDString))
-                {
+                if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
                     InfoBranch infoBranch = new InfoBranch();
                     infoBranch.setIdInternal(new Integer(brachOIDString));
                     infoFinalWorkProposal.getBranches().add(infoBranch);
@@ -658,19 +571,15 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
             }
         }
 
-        if (status != null && !status.equals("") && StringUtils.isNumeric(status))
-        {
+        if (status != null && !status.equals("") && StringUtils.isNumeric(status)) {
             infoFinalWorkProposal.setStatus(new FinalDegreeWorkProposalStatus(new Integer(status)));
         }
 
-        try
-        {
+        try {
             IUserView userView = SessionUtils.getUserView(request);
-            Object argsProposal[] = {infoFinalWorkProposal};
+            Object argsProposal[] = { infoFinalWorkProposal };
             ServiceUtils.executeService(userView, "SubmitFinalWorkProposal", argsProposal);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -678,32 +587,24 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward showTeacherName(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String alteredField = (String) finalWorkForm.get("alteredField");
         String number = null;
 
-        if (alteredField.equals("orientator"))
-        {
+        if (alteredField.equals("orientator")) {
             number = (String) finalWorkForm.get("responsableTeacherNumber");
-        }
-        else if (alteredField.equals("coorientator"))
-        {
+        } else if (alteredField.equals("coorientator")) {
             number = (String) finalWorkForm.get("coResponsableTeacherNumber");
         }
 
-        if (number == null || number.equals(""))
-        {
-            if (alteredField.equals("orientator"))
-            {
+        if (number == null || number.equals("")) {
+            if (alteredField.equals("orientator")) {
                 finalWorkForm.set("orientatorOID", "");
                 finalWorkForm.set("responsableTeacherName", "");
-            }
-            else if (alteredField.equals("coorientator"))
-            {
+            } else if (alteredField.equals("coorientator")) {
                 finalWorkForm.set("coorientatorOID", "");
                 finalWorkForm.set("coResponsableTeacherName", "");
             }
@@ -711,14 +612,12 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
             return prepareFinalWorkInformation(mapping, form, request, response);
         }
 
-        Object[] args = {new Integer(number)};
+        Object[] args = { new Integer(number) };
         InfoTeacher infoTeacher;
-        try
-        {
+        try {
             infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber",
                     args);
-            if (infoTeacher == null)
-            {
+            if (infoTeacher == null) {
                 ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
                         "finalWorkInformationForm.unexistingTeacher"));
@@ -726,22 +625,16 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
                 System.out.println("Returning from show teacher to input.");
                 return mapping.getInputForward();
             }
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
-        if (alteredField.equals("orientator"))
-        {
+        if (alteredField.equals("orientator")) {
             finalWorkForm.set("orientatorOID", infoTeacher.getIdInternal().toString());
             finalWorkForm.set("responsableTeacherName", infoTeacher.getIdInternal().toString());
             request.setAttribute("orientator", infoTeacher);
-        }
-        else
-        {
-            if (alteredField.equals("coorientator"))
-            {
+        } else {
+            if (alteredField.equals("coorientator")) {
                 finalWorkForm.set("coorientatorOID", infoTeacher.getIdInternal().toString());
                 finalWorkForm.set("coResponsableTeacherName", infoTeacher.getIdInternal().toString());
                 finalWorkForm.set("companionName", "");
@@ -759,8 +652,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -819,8 +711,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward coorientatorVisibility(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String alteredField = (String) finalWorkForm.get("alteredField");
         String companionName = (String) finalWorkForm.get("companionName");
@@ -830,18 +721,14 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         String companyName = (String) finalWorkForm.get("companyName");
 
         if (alteredField.equals("companion") && companionName.equals("") && companionMail.equals("")
-                && companionPhone.equals("") && companyAdress.equals("") && companyName.equals(""))
-        {
+                && companionPhone.equals("") && companyAdress.equals("") && companyName.equals("")) {
             finalWorkForm.set("coorientatorOID", "");
             finalWorkForm.set("coResponsableTeacherName", "");
             finalWorkForm.set("alteredField", "");
-        }
-        else
-        {
+        } else {
             if (alteredField.equals("companion") || !companionName.equals("")
                     || !companionMail.equals("") || !companionPhone.equals("")
-                    || !companyAdress.equals("") || !companyName.equals(""))
-            {
+                    || !companyAdress.equals("") || !companyName.equals("")) {
                 finalWorkForm.set("alteredField", "companion");
             }
 
@@ -851,21 +738,17 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward publishAprovedProposals(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         IUserView userView = SessionUtils.getUserView(request);
         HttpSession session = request.getSession(false);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
 
-        Object args[] = {infoExecutionDegree.getIdInternal()};
-        try
-        {
+        Object args[] = { infoExecutionDegree.getIdInternal() };
+        try {
             ServiceUtils.executeService(userView, "PublishAprovedFinalDegreeWorkProposals", args);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -873,23 +756,20 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward aproveSelectedProposalsStatus(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         return changeSelectedProposalsStatus(mapping, form, request, response,
                 FinalDegreeWorkProposalStatus.APPROVED_STATUS);
     }
 
     public ActionForward publishSelectedProposals(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         return changeSelectedProposalsStatus(mapping, form, request, response,
                 FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
     }
 
     public ActionForward changeSelectedProposalsStatus(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response,
-            FinalDegreeWorkProposalStatus status) throws FenixActionException
-    {
+            FinalDegreeWorkProposalStatus status) throws FenixActionException {
         IUserView userView = SessionUtils.getUserView(request);
         HttpSession session = request.getSession(false);
 
@@ -899,24 +779,18 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String[] selectedProposals = (String[]) finalWorkForm.get("selectedProposals");
 
-        if (selectedProposals != null && selectedProposals.length > 0)
-        {
+        if (selectedProposals != null && selectedProposals.length > 0) {
             List selectedProposalOIDs = new ArrayList();
-            for (int i = 0; i < selectedProposals.length; i++)
-            {
-                if (selectedProposals[i] != null && StringUtils.isNumeric(selectedProposals[i]))
-                {
+            for (int i = 0; i < selectedProposals.length; i++) {
+                if (selectedProposals[i] != null && StringUtils.isNumeric(selectedProposals[i])) {
                     selectedProposalOIDs.add(new Integer(selectedProposals[i]));
                 }
             }
 
-            Object args[] = {infoExecutionDegree.getIdInternal(), selectedProposalOIDs, status};
-            try
-            {
+            Object args[] = { infoExecutionDegree.getIdInternal(), selectedProposalOIDs, status };
+            try {
                 ServiceUtils.executeService(userView, "ChangeStatusOfFinalDegreeWorkProposals", args);
-            }
-            catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
         }
@@ -925,8 +799,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward setFinalDegreeCandidacyRequirements(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
@@ -941,27 +814,23 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
 
         Integer minimumNumberOfCompletedCourses = null;
         if (minimumNumberOfCompletedCoursesString != null
-                && !minimumNumberOfCompletedCoursesString.equals(""))
-        {
+                && !minimumNumberOfCompletedCoursesString.equals("")) {
             minimumNumberOfCompletedCourses = new Integer(minimumNumberOfCompletedCoursesString);
         }
 
         Integer minimumNumberOfStudents = null;
-        if (minimumNumberOfStudentsString != null && !minimumNumberOfStudentsString.equals(""))
-        {
+        if (minimumNumberOfStudentsString != null && !minimumNumberOfStudentsString.equals("")) {
             minimumNumberOfStudents = new Integer(minimumNumberOfStudentsString);
         }
 
         Integer maximumNumberOfStudents = null;
-        if (maximumNumberOfStudentsString != null && !maximumNumberOfStudentsString.equals(""))
-        {
+        if (maximumNumberOfStudentsString != null && !maximumNumberOfStudentsString.equals("")) {
             maximumNumberOfStudents = new Integer(maximumNumberOfStudentsString);
         }
 
         Integer maximumNumberOfProposalCandidaciesPerGroup = null;
         if (maximumNumberOfProposalCandidaciesPerGroupString != null
-                && !maximumNumberOfProposalCandidaciesPerGroupString.equals(""))
-        {
+                && !maximumNumberOfProposalCandidaciesPerGroupString.equals("")) {
             maximumNumberOfProposalCandidaciesPerGroup = new Integer(
                     maximumNumberOfProposalCandidaciesPerGroupString);
         }
@@ -972,9 +841,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
 
-        Object args[] = {infoExecutionDegree.getIdInternal(), minimumNumberOfCompletedCourses,
+        Object args[] = { infoExecutionDegree.getIdInternal(), minimumNumberOfCompletedCourses,
                 minimumNumberOfStudents, maximumNumberOfStudents,
-                maximumNumberOfProposalCandidaciesPerGroup};
+                maximumNumberOfProposalCandidaciesPerGroup };
         ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacyRequirements", args);
 
         ActionMessages messages = new ActionMessages();
@@ -985,19 +854,17 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward attributeGroupProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException
-    {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         DynaActionForm finalDegreeWorkScheduleingForm = (DynaActionForm) form;
 
         String selectedGroupProposal = (String) finalDegreeWorkScheduleingForm
                 .get("selectedGroupProposal");
 
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("")
-                && StringUtils.isNumeric(selectedGroupProposal))
-        {
+                && StringUtils.isNumeric(selectedGroupProposal)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object args[] = {new Integer(selectedGroupProposal)};
+            Object args[] = { new Integer(selectedGroupProposal) };
             ServiceUtils.executeService(userView, "AttributeFinalDegreeWork", args);
         }
 
@@ -1005,10 +872,9 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction
     }
 
     public ActionForward getStudentCP(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-    {
+            HttpServletRequest request, HttpServletResponse response) {
         String studentNumber = request.getParameter("studentNumber");
-        
+
         request.setAttribute("studentNumber", studentNumber);
 
         return mapping.findForward("show-student-curricular-plan");

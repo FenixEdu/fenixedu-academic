@@ -26,8 +26,7 @@ public class InfoCurricularSemester extends InfoObject {
         setInfoCurricularYear(null);
     }
 
-    public InfoCurricularSemester(Integer semester,
-            InfoCurricularYear curricularYear) {
+    public InfoCurricularSemester(Integer semester, InfoCurricularYear curricularYear) {
         this();
         setSemester(semester);
         setInfoCurricularYear(curricularYear);
@@ -37,10 +36,8 @@ public class InfoCurricularSemester extends InfoObject {
         boolean resultado = false;
         if (obj instanceof InfoCurricularSemester) {
             InfoCurricularSemester infoCurricularSemester = (InfoCurricularSemester) obj;
-            resultado = (this.getSemester().equals(
-                    infoCurricularSemester.getSemester()) && (this
-                    .getInfoCurricularYear().equals(infoCurricularSemester
-                    .getInfoCurricularYear())));
+            resultado = (this.getSemester().equals(infoCurricularSemester.getSemester()) && (this
+                    .getInfoCurricularYear().equals(infoCurricularSemester.getInfoCurricularYear())));
         }
         return resultado;
     }
@@ -128,8 +125,7 @@ public class InfoCurricularSemester extends InfoObject {
         }
     }
 
-    public static InfoCurricularSemester newInfoFromDomain(
-            ICurricularSemester curricularSemester) {
+    public static InfoCurricularSemester newInfoFromDomain(ICurricularSemester curricularSemester) {
         InfoCurricularSemester infoCurricularSemester = null;
         if (curricularSemester != null) {
             infoCurricularSemester = new InfoCurricularSemester();

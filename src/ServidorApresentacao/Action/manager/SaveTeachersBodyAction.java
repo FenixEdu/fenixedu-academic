@@ -28,16 +28,10 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class SaveTeachersBodyAction extends FenixAction
-{
+public class SaveTeachersBodyAction extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
@@ -51,20 +45,14 @@ public class SaveTeachersBodyAction extends FenixAction
         Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
         Boolean result;
 
-        try
-        {
+        try {
             result = (Boolean) ServiceUtils.executeService(userView, "SaveTeachersBody", args);
 
-        }
-        catch (NonExistingServiceException e)
-        {
-            throw new NonExistingActionException(
-                e.getMessage(),
-                mapping.findForward("readCurricularCourse"));
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException(e.getMessage(), mapping
+                    .findForward("readCurricularCourse"));
 
-        }
-        catch (FenixServiceException fenixServiceException)
-        {
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 

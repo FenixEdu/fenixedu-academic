@@ -125,17 +125,15 @@ public abstract class InfoCareer extends InfoObject implements ISiteComponent {
             setLastModificationDate(career.getLastModificationDate());
         }
     }
-    
+
     public static InfoCareer newInfoFromDomain(ICareer career) {
         InfoCareer infoCareer = null;
-        if(career != null) {
-            if (career instanceof IProfessionalCareer)
-            {
+        if (career != null) {
+            if (career instanceof IProfessionalCareer) {
                 infoCareer = InfoProfessionalCareer.newInfoFromDomain((IProfessionalCareer) career);
-            }
-            else if (career instanceof ITeachingCareer)            
-            {
-                infoCareer = InfoTeachingCareerWithInfoCategory.newInfoFromDomain((ITeachingCareer) career);
+            } else if (career instanceof ITeachingCareer) {
+                infoCareer = InfoTeachingCareerWithInfoCategory
+                        .newInfoFromDomain((ITeachingCareer) career);
             }
         }
         return infoCareer;

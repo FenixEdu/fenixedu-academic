@@ -6,9 +6,11 @@ package Dominio;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import org.apache.commons.lang.time.DateFormatUtils;
-import Util.DiaSemana;
+
 import Util.CalendarUtil;
+import Util.DiaSemana;
 
 /**
  * @author Ana e Ricardo
@@ -63,7 +65,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
 
     public boolean equals(Object obj) {
         if (obj instanceof IRoomOccupation) {
-            IRoomOccupation roomOccupationObj = (IRoomOccupation) obj;            
+            IRoomOccupation roomOccupationObj = (IRoomOccupation) obj;
             if ((startTime.get(Calendar.HOUR_OF_DAY) == roomOccupationObj.getStartTime().get(
                     Calendar.HOUR_OF_DAY))
                     && (startTime.get(Calendar.MINUTE) == roomOccupationObj.getStartTime().get(
@@ -86,11 +88,11 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
     public String toString() {
         String result = "[ROOM OCCUPATION";
         result += ", codInt=" + getIdInternal();
-         result += ", startTime=" + DateFormatUtils.format(startTime.getTime(), "HH:mm");
+        result += ", startTime=" + DateFormatUtils.format(startTime.getTime(), "HH:mm");
         result += ", endTime=" + DateFormatUtils.format(endTime.getTime(), "HH:mm");
         result += ", dayOfWeek=" + dayOfWeek;
         result += ", periodId=" + period.getIdInternal();
-       result += ", period=" + DateFormatUtils.format(period.getStartDate().getTime(), "yyyy-MM-dd");
+        result += ", period=" + DateFormatUtils.format(period.getStartDate().getTime(), "yyyy-MM-dd");
         result += ", room=" + room.getNome();
         result += "]";
         return result;
@@ -217,7 +219,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
                                     this.period.getStartDate());
                         }
                         return true;
-                        
+
                     }
                     if (this.frequency.intValue() == SEMANAL) {
                         if (frequency.intValue() == QUINZENAL) {
@@ -269,7 +271,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
                                     this.period);
                         }
                         return true;
-                        
+
                     }
                     if (this.frequency.intValue() == QUINZENAL) {
                         if (frequency.intValue() == QUINZENAL) {
@@ -317,23 +319,15 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
     public static boolean periodQuinzenalContainsDay(IPeriod period, int startWeek, DiaSemana weekDay,
             Calendar date) {
         /*
-         Calendar periodDate = Calendar.getInstance();
-         periodDate.setTimeInMillis(period.getStartDate().getTimeInMillis());
-         periodDate.add(Calendar.DATE, weekDay.getDiaSemana().intValue()
-         - periodDate.get(Calendar.DAY_OF_WEEK));
-         if (startWeek == 2) {
-         periodDate.add(Calendar.DATE, 7);
-         }
-         while (periodDate.before(period.getEndDate())) {
-         if (CalendarUtil.equalDates(periodDate, date)) {
-         return true;
-         }
-         if (periodDate.after(date)) {
-         return false;
-         }
-         periodDate.add(Calendar.DATE, 14);
-         }
-         return false;
+         * Calendar periodDate = Calendar.getInstance();
+         * periodDate.setTimeInMillis(period.getStartDate().getTimeInMillis());
+         * periodDate.add(Calendar.DATE, weekDay.getDiaSemana().intValue() -
+         * periodDate.get(Calendar.DAY_OF_WEEK)); if (startWeek == 2) {
+         * periodDate.add(Calendar.DATE, 7); } while
+         * (periodDate.before(period.getEndDate())) { if
+         * (CalendarUtil.equalDates(periodDate, date)) { return true; } if
+         * (periodDate.after(date)) { return false; }
+         * periodDate.add(Calendar.DATE, 14); } return false;
          */
         ArrayList list = quinzenalDatesInPeriod(period, startWeek, weekDay);
         for (int i = 0; i < list.size(); i++) {
@@ -351,51 +345,32 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
     public static boolean periodQuinzenalContainsWeekPeriod(IPeriod periodQuinzenal, int startWeek,
             DiaSemana weekDay, IPeriod period) {
 
-        /*        
-         Calendar startInterception = Calendar.getInstance();
-         startInterception.setTimeInMillis(periodQuinzenal.getStartDate().getTimeInMillis());
-         Calendar endInterception = Calendar.getInstance();
-         endInterception.setTimeInMillis(periodQuinzenal.getEndDate().getTimeInMillis());
-         boolean quinzenalBefore = false;
-         if (startInterception.before(period.getStartDate())) {
-         startInterception.setTimeInMillis(period.getStartDate().getTimeInMillis());
-         quinzenalBefore = true;
-         }
-         if (endInterception.after(period.getEndDate())) {
-         endInterception.setTimeInMillis(period.getEndDate().getTimeInMillis());
-         }
-         if (!quinzenalBefore) {
-         startInterception.add(Calendar.DATE, weekDay.getDiaSemana().intValue()
-         - startInterception.get(Calendar.DAY_OF_WEEK));
-         if (startWeek == 2) {
-         startInterception.add(Calendar.DATE, 7);
-         }
-         if (startInterception.before(endInterception)) {
-         return true;
-         } else {
-         return false;
-         }
-
-         } else {
-         Calendar quinzenalDate = Calendar.getInstance();
-         quinzenalDate.setTimeInMillis(periodQuinzenal.getStartDate().getTimeInMillis());
-         quinzenalDate.add(Calendar.DATE, weekDay.getDiaSemana().intValue()
-         - quinzenalDate.get(Calendar.DAY_OF_WEEK));
-         if (startWeek == 2) {
-         quinzenalDate.add(Calendar.DATE, 7);
-         }
-         while (true) {
-         if (quinzenalDate.after(startInterception)) {
-         break;
-         }
-         quinzenalDate.add(Calendar.DATE, 14);
-         }
-         if (quinzenalDate.before(endInterception)) {
-         return true;
-         } else {
-         return false;
-         }
-         }
+        /*
+         * Calendar startInterception = Calendar.getInstance();
+         * startInterception.setTimeInMillis(periodQuinzenal.getStartDate().getTimeInMillis());
+         * Calendar endInterception = Calendar.getInstance();
+         * endInterception.setTimeInMillis(periodQuinzenal.getEndDate().getTimeInMillis());
+         * boolean quinzenalBefore = false; if
+         * (startInterception.before(period.getStartDate())) {
+         * startInterception.setTimeInMillis(period.getStartDate().getTimeInMillis());
+         * quinzenalBefore = true; } if
+         * (endInterception.after(period.getEndDate())) {
+         * endInterception.setTimeInMillis(period.getEndDate().getTimeInMillis()); }
+         * if (!quinzenalBefore) { startInterception.add(Calendar.DATE,
+         * weekDay.getDiaSemana().intValue() -
+         * startInterception.get(Calendar.DAY_OF_WEEK)); if (startWeek == 2) {
+         * startInterception.add(Calendar.DATE, 7); } if
+         * (startInterception.before(endInterception)) { return true; } else {
+         * return false; } } else { Calendar quinzenalDate =
+         * Calendar.getInstance();
+         * quinzenalDate.setTimeInMillis(periodQuinzenal.getStartDate().getTimeInMillis());
+         * quinzenalDate.add(Calendar.DATE, weekDay.getDiaSemana().intValue() -
+         * quinzenalDate.get(Calendar.DAY_OF_WEEK)); if (startWeek == 2) {
+         * quinzenalDate.add(Calendar.DATE, 7); } while (true) { if
+         * (quinzenalDate.after(startInterception)) { break; }
+         * quinzenalDate.add(Calendar.DATE, 14); } if
+         * (quinzenalDate.before(endInterception)) { return true; } else {
+         * return false; } }
          */
         ArrayList listWeekly = weeklyDatesInPeriod(period, weekDay);
         ArrayList listQuinzenal = quinzenalDatesInPeriod(periodQuinzenal, startWeek, weekDay);
@@ -417,32 +392,24 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
 
     public static boolean periodQuinzenalContainsQuinzenalPeriod(IPeriod period1, int startWeek1,
             DiaSemana weekDay, IPeriod period2, int startWeek2) {
-        /*        
-         Calendar quinzenalDate1 = Calendar.getInstance();
-         quinzenalDate1.setTimeInMillis(period1.getStartDate().getTimeInMillis());
-         quinzenalDate1.add(Calendar.DATE, weekDay.getDiaSemana().intValue()
-         - quinzenalDate1.get(Calendar.DAY_OF_WEEK));
-         if (startWeek1 == 2) {
-         quinzenalDate1.add(Calendar.DATE, 7);
-         }
-
-         Calendar quinzenalDate2 = Calendar.getInstance();
-         quinzenalDate2.setTimeInMillis(period2.getStartDate().getTimeInMillis());
-         quinzenalDate2.add(Calendar.DATE, weekDay.getDiaSemana().intValue()
-         - quinzenalDate2.get(Calendar.DAY_OF_WEEK));
-         if (startWeek2 == 2) {
-         quinzenalDate2.add(Calendar.DATE, 7);
-         }
-         int week1 = quinzenalDate1.get(Calendar.WEEK_OF_YEAR);
-         int week2 = quinzenalDate2.get(Calendar.WEEK_OF_YEAR);
-         if (week1 % 2 != week2 % 2) {
-         return false;
-         }
-         if (quinzenalDate1.after(quinzenalDate2)) {
-         return periodQuinzenalContainsDay(period2, startWeek2, weekDay, quinzenalDate1);
-         } else {
-         return periodQuinzenalContainsDay(period1, startWeek1, weekDay, quinzenalDate2);
-         }
+        /*
+         * Calendar quinzenalDate1 = Calendar.getInstance();
+         * quinzenalDate1.setTimeInMillis(period1.getStartDate().getTimeInMillis());
+         * quinzenalDate1.add(Calendar.DATE, weekDay.getDiaSemana().intValue() -
+         * quinzenalDate1.get(Calendar.DAY_OF_WEEK)); if (startWeek1 == 2) {
+         * quinzenalDate1.add(Calendar.DATE, 7); }
+         * 
+         * Calendar quinzenalDate2 = Calendar.getInstance();
+         * quinzenalDate2.setTimeInMillis(period2.getStartDate().getTimeInMillis());
+         * quinzenalDate2.add(Calendar.DATE, weekDay.getDiaSemana().intValue() -
+         * quinzenalDate2.get(Calendar.DAY_OF_WEEK)); if (startWeek2 == 2) {
+         * quinzenalDate2.add(Calendar.DATE, 7); } int week1 =
+         * quinzenalDate1.get(Calendar.WEEK_OF_YEAR); int week2 =
+         * quinzenalDate2.get(Calendar.WEEK_OF_YEAR); if (week1 % 2 != week2 %
+         * 2) { return false; } if (quinzenalDate1.after(quinzenalDate2)) {
+         * return periodQuinzenalContainsDay(period2, startWeek2, weekDay,
+         * quinzenalDate1); } else { return periodQuinzenalContainsDay(period1,
+         * startWeek1, weekDay, quinzenalDate2); }
          */
         ArrayList list1 = quinzenalDatesInPeriod(period1, startWeek1, weekDay);
         ArrayList list2 = quinzenalDatesInPeriod(period2, startWeek2, weekDay);
@@ -531,7 +498,7 @@ public class RoomOccupation extends DomainObject implements IRoomOccupation {
                 list.add(dateToAdd);
                 date.add(Calendar.DATE, 7);
             }
-            
+
         }
         return list;
     }

@@ -43,44 +43,31 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author Tânia Pousão
  *  
  */
-public class MarksListAction extends DispatchAction
-{
+public class MarksListAction extends DispatchAction {
 
-    public ActionForward loadFile(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        Object[] args =
-            { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
+        Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null,
+                evaluationCode, null };
 
-        try
-        {
-            TeacherAdministrationSiteView siteView =
-                (TeacherAdministrationSiteView)ServiceUtils.executeService(
-                    userView,
-                    "TeacherAdministrationSiteComponentService",
-                    args);
+        try {
+            TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
+                    .executeService(userView, "TeacherAdministrationSiteComponentService", args);
 
             request.setAttribute("siteView", siteView);
-            request.setAttribute(
-                "objectCode",
-                ((InfoSiteCommon)siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-        }
-        catch (FenixServiceException e)
-        {
+            request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
+                    .getExecutionCourse().getIdInternal());
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -91,19 +78,14 @@ public class MarksListAction extends DispatchAction
     }
 
     /**
-	 * @author Tânia Pousão
-	 *  
-	 */
-    public ActionForward loadMarksOnline(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @author Tânia Pousão
+     *  
+     */
+    public ActionForward loadMarksOnline(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
@@ -113,21 +95,15 @@ public class MarksListAction extends DispatchAction
 
         TeacherAdministrationSiteView siteView = null;
 
-        try
-        {
-            siteView =
-                (TeacherAdministrationSiteView)ServiceUtils.executeService(
-                    userView,
-                    "ReadStudentsAndMarksByEvaluation",
-                    args);
-        }
-        catch (FenixServiceException e)
-        {
+        try {
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+                    "ReadStudentsAndMarksByEvaluation", args);
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());
         }
 
-        InfoSiteMarks infoSiteMarks = (InfoSiteMarks)siteView.getComponent();
+        InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
         Collections.sort(infoSiteMarks.getInfoAttends(), new BeanComparator("aluno.number"));
 
         request.setAttribute("siteView", siteView);
@@ -138,16 +114,11 @@ public class MarksListAction extends DispatchAction
     }
 
     /**
-	 * @author Fernanda Quitério
-	 *  
-	 */
-    public ActionForward preparePublishMarks(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @author Fernanda Quitério
+     *  
+     */
+    public ActionForward preparePublishMarks(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
@@ -155,27 +126,15 @@ public class MarksListAction extends DispatchAction
         Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
-        Object[] args =
-            {
-                infoExecutionCourseCode,
-                commonComponent,
-                new InfoEvaluation(),
-                null,
-                evaluationCode,
-                null };
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        Object[] args = { infoExecutionCourseCode, commonComponent, new InfoEvaluation(), null,
+                evaluationCode, null };
         TeacherAdministrationSiteView siteView = null;
-        try
-        {
-            siteView =
-                (TeacherAdministrationSiteView)ServiceUtils.executeService(
-                    userView,
-                    "TeacherAdministrationSiteComponentService",
-                    args);
+        try {
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+                    "TeacherAdministrationSiteComponentService", args);
 
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -187,41 +146,32 @@ public class MarksListAction extends DispatchAction
     }
 
     /**
-	 * @author Fernanda Quitério
-	 *  
-	 */
-    public ActionForward publishMarks(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @author Fernanda Quitério
+     *  
+     */
+    public ActionForward publishMarks(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
         Integer objectCode = getFromRequest("objectCode", request);
 
-        DynaValidatorForm publishForm = (DynaValidatorForm)form;
-        String publishmentMessage = (String)publishForm.get("publishmentMessage");
-        Boolean sendSMS = (Boolean)publishForm.get("sendSMS");
+        DynaValidatorForm publishForm = (DynaValidatorForm) form;
+        String publishmentMessage = (String) publishForm.get("publishmentMessage");
+        Boolean sendSMS = (Boolean) publishForm.get("sendSMS");
 
         String announcementTitle = null;
-        if (publishmentMessage != null && publishmentMessage.length() > 0)
-        {
+        if (publishmentMessage != null && publishmentMessage.length() > 0) {
             MessageResources messages = getResources(request);
             announcementTitle = messages.getMessage("message.publishment");
         }
 
         Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
-        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
-        try
-        {
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        try {
             ServiceUtils.executeService(userView, "PublishMarks", args);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());
         }
@@ -232,19 +182,14 @@ public class MarksListAction extends DispatchAction
     }
 
     /**
-	 * @author Tânia Pousão
-	 *  
-	 */
-    public ActionForward prepareSubmitMarks(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @author Tânia Pousão
+     *  
+     */
+    public ActionForward prepareSubmitMarks(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
@@ -254,16 +199,10 @@ public class MarksListAction extends DispatchAction
         Object[] args = { executionCourseCode, evaluationCode, userView };
 
         InfoSiteSubmitMarks infoSiteSubmitMarks = null;
-        try
-        {
-            infoSiteSubmitMarks =
-                (InfoSiteSubmitMarks)ServiceUtils.executeService(
-                    userView,
-                    "ValidateSubmitMarks",
-                    args);
-        }
-        catch (FenixServiceException exception)
-        {
+        try {
+            infoSiteSubmitMarks = (InfoSiteSubmitMarks) ServiceUtils.executeService(userView,
+                    "ValidateSubmitMarks", args);
+        } catch (FenixServiceException exception) {
             //exception.printStackTrace();
 
             actionErrors.add("impossibleSubmit", new ActionError(exception.getMessage()));
@@ -272,8 +211,7 @@ public class MarksListAction extends DispatchAction
             return mapping.findForward("impossibleSubmitMarks");
         }
         actionErrors = sendErrors(infoSiteSubmitMarks);
-        if (actionErrors.size() > 0)
-        {
+        if (actionErrors.size() > 0) {
             saveErrors(request, actionErrors);
             return mapping.findForward("impossibleSubmitMarks");
         }
@@ -282,46 +220,37 @@ public class MarksListAction extends DispatchAction
         Object[] argsReadEvaluations = { executionCourseCode };
 
         List infoEvaluationsList;
-        try
-        {
-            infoEvaluationsList =
-                (List)ServiceUtils.executeService(userView, "ReadEvaluations", argsReadEvaluations);
-        }
-        catch (FenixServiceException e)
-        {
+        try {
+            infoEvaluationsList = (List) ServiceUtils.executeService(userView, "ReadEvaluations",
+                    argsReadEvaluations);
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         Date evaluationDate = lastDateEvaluation(infoEvaluationsList);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
 
-        Object[] args2 =
-            { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
+        Object[] args2 = { executionCourseCode, commonComponent, new InfoEvaluation(), null,
+                evaluationCode, null };
 
         TeacherAdministrationSiteView siteView = null;
-        try
-        {
-            siteView =
-                (TeacherAdministrationSiteView)ServiceUtils.executeService(
-                    userView,
-                    "TeacherAdministrationSiteComponentService",
-                    args2);
+        try {
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+                    "TeacherAdministrationSiteComponentService", args2);
 
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
         Calendar calendar = Calendar.getInstance();
 
-        //fill date with last evaluation date or now if evalaution date is after now
-        if (evaluationDate != null && evaluationDate.before(calendar.getTime()))
-        {
+        //fill date with last evaluation date or now if evalaution date is
+        // after now
+        if (evaluationDate != null && evaluationDate.before(calendar.getTime())) {
             calendar.setTime(evaluationDate);
         }
 
-        DynaValidatorForm dateAvaliationForm = (DynaValidatorForm)form;
+        DynaValidatorForm dateAvaliationForm = (DynaValidatorForm) form;
         dateAvaliationForm.set("day", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
         dateAvaliationForm.set("month", new Integer(calendar.get(Calendar.MONTH) + 1));
         dateAvaliationForm.set("year", new Integer(calendar.get(Calendar.YEAR)));
@@ -333,19 +262,16 @@ public class MarksListAction extends DispatchAction
         return mapping.findForward("prepareSubmitMarks");
     }
 
-    private Date lastDateEvaluation(List infoEvaluationsList)
-    {
-        List infoEvaluationsListWithoutFinal =
-            (List)CollectionUtils.select(infoEvaluationsList, new Predicate()
-        {
-            public boolean evaluate(Object input)
-            {
-                    //for now returns only exams
-    if (input instanceof InfoExam)
-                    return true;
-                return false;
-            }
-        });
+    private Date lastDateEvaluation(List infoEvaluationsList) {
+        List infoEvaluationsListWithoutFinal = (List) CollectionUtils.select(infoEvaluationsList,
+                new Predicate() {
+                    public boolean evaluate(Object input) {
+                        //for now returns only exams
+                        if (input instanceof InfoExam)
+                            return true;
+                        return false;
+                    }
+                });
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("day.time"));
@@ -353,11 +279,9 @@ public class MarksListAction extends DispatchAction
 
         Collections.sort(infoEvaluationsListWithoutFinal, comparatorChain);
 
-        if ( infoEvaluationsListWithoutFinal.size()!=0 && infoEvaluationsListWithoutFinal.get(infoEvaluationsListWithoutFinal.size() - 1)
-            instanceof InfoExam)
-        {
-            InfoExam lastEvaluation =
-                (InfoExam) (infoEvaluationsListWithoutFinal
+        if (infoEvaluationsListWithoutFinal.size() != 0
+                && infoEvaluationsListWithoutFinal.get(infoEvaluationsListWithoutFinal.size() - 1) instanceof InfoExam) {
+            InfoExam lastEvaluation = (InfoExam) (infoEvaluationsListWithoutFinal
                     .get(infoEvaluationsListWithoutFinal.size() - 1));
             return lastEvaluation.getDay().getTime();
         }
@@ -365,57 +289,40 @@ public class MarksListAction extends DispatchAction
     }
 
     /**
-	 * @author Tânia Pousão
-	 *  
-	 */
-    public ActionForward submitMarks(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * @author Tânia Pousão
+     *  
+     */
+    public ActionForward submitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
         Integer objectCode = getFromRequest("objectCode", request);
 
-        DynaValidatorForm dateForm = (DynaValidatorForm)form;
-        Integer yearEvaluationDate = (Integer)dateForm.get("year");
-        Integer monthEvaluationDate = (Integer)dateForm.get("month");
-        Integer dayEvaluationDate = (Integer)dateForm.get("day");
+        DynaValidatorForm dateForm = (DynaValidatorForm) form;
+        Integer yearEvaluationDate = (Integer) dateForm.get("year");
+        Integer monthEvaluationDate = (Integer) dateForm.get("month");
+        Integer dayEvaluationDate = (Integer) dateForm.get("day");
         Date evaluationDate = null;
-        if (yearEvaluationDate != null
-            && monthEvaluationDate != null
-            && dayEvaluationDate != null
-            && yearEvaluationDate.intValue() > 0
-            && monthEvaluationDate.intValue() > 0
-            && dayEvaluationDate.intValue() > 0)
-        {
+        if (yearEvaluationDate != null && monthEvaluationDate != null && dayEvaluationDate != null
+                && yearEvaluationDate.intValue() > 0 && monthEvaluationDate.intValue() > 0
+                && dayEvaluationDate.intValue() > 0) {
             Calendar evaluationCalendar = Calendar.getInstance();
-            evaluationCalendar.set(
-                yearEvaluationDate.intValue(),
-                monthEvaluationDate.intValue() - 1,
-                dayEvaluationDate.intValue());
+            evaluationCalendar.set(yearEvaluationDate.intValue(), monthEvaluationDate.intValue() - 1,
+                    dayEvaluationDate.intValue());
             evaluationDate = evaluationCalendar.getTime();
         }
 
         Object[] args = { objectCode, evaluationCode, evaluationDate, userView };
 
         TeacherAdministrationSiteView administrationSiteView = null;
-        try
-        {
-            administrationSiteView =
-                (TeacherAdministrationSiteView)ServiceUtils.executeService(
-                    userView,
-                    "SubmitMarks",
-                    args);
-        }
-        catch (FenixServiceException exception)
-        {
+        try {
+            administrationSiteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
+                    userView, "SubmitMarks", args);
+        } catch (FenixServiceException exception) {
             System.out.println("exception no action");
             exception.printStackTrace();
 
@@ -426,108 +333,84 @@ public class MarksListAction extends DispatchAction
             return mapping.findForward("impossibleSubmitMarks");
         }
 
-        InfoSiteSubmitMarks infoSiteSubmitMarks = (InfoSiteSubmitMarks) administrationSiteView.getComponent();
-        
+        InfoSiteSubmitMarks infoSiteSubmitMarks = (InfoSiteSubmitMarks) administrationSiteView
+                .getComponent();
+
         request.setAttribute("siteView", administrationSiteView);
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("evaluationCode", evaluationCode);
-        
+
         if (infoSiteSubmitMarks.getNotEnrolmented() != null
-            && !(infoSiteSubmitMarks.getNotEnrolmented().isEmpty()))
-        {
+                && !(infoSiteSubmitMarks.getNotEnrolmented().isEmpty())) {
             Iterator iter = infoSiteSubmitMarks.getNotEnrolmented().iterator();
-            while (iter.hasNext())
-            {
-                InfoFrequenta infoFrequenta = (InfoFrequenta)iter.next();
-                actionErrors.add(
-                    "notEnrolled",
-                    new ActionError("errors.notEnrolled", infoFrequenta.getAluno().getNumber().toString()));
+            while (iter.hasNext()) {
+                InfoFrequenta infoFrequenta = (InfoFrequenta) iter.next();
+                actionErrors.add("notEnrolled", new ActionError("errors.notEnrolled", infoFrequenta
+                        .getAluno().getNumber().toString()));
             }
         }
-        
-		if (infoSiteSubmitMarks.getMestrado() != null
-            && !(infoSiteSubmitMarks.getMestrado().isEmpty()))
-        {
+
+        if (infoSiteSubmitMarks.getMestrado() != null && !(infoSiteSubmitMarks.getMestrado().isEmpty())) {
 
             Iterator iter = infoSiteSubmitMarks.getMestrado().iterator();
-            while (iter.hasNext())
-            {
-                InfoFrequenta infoFrequenta = (InfoFrequenta)iter.next();
-                actionErrors.add(
-                    "mestrado",
-                    new ActionError("errors.mestrado", infoFrequenta.getAluno().getNumber().toString()));
+            while (iter.hasNext()) {
+                InfoFrequenta infoFrequenta = (InfoFrequenta) iter.next();
+                actionErrors.add("mestrado", new ActionError("errors.mestrado", infoFrequenta.getAluno()
+                        .getNumber().toString()));
             }
         }
 
-        if(!actionErrors.isEmpty())
-        {
-			saveErrors(request, actionErrors); 
+        if (!actionErrors.isEmpty()) {
+            saveErrors(request, actionErrors);
         }
 
         return mapping.findForward("submitMarksOK");
     }
 
-    private ActionErrors sendErrors(InfoSiteSubmitMarks infoSiteSubmitMarks)
-    {
+    private ActionErrors sendErrors(InfoSiteSubmitMarks infoSiteSubmitMarks) {
         ActionErrors actionErrors = new ActionErrors();
 
+        if ((infoSiteSubmitMarks.getNotEnrolmented() != null && infoSiteSubmitMarks.getNotEnrolmented()
+                .size() > 0)
+                || (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null && infoSiteSubmitMarks
+                        .getErrorsMarkNotPublished().size() > 0)) {
 
-            if ((infoSiteSubmitMarks.getNotEnrolmented() != null
-                && infoSiteSubmitMarks.getNotEnrolmented().size() > 0)
-                || (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null
-                    && infoSiteSubmitMarks.getErrorsMarkNotPublished().size() > 0))
-            {
-
-                if (infoSiteSubmitMarks.getNotEnrolmented() != null
-                    && infoSiteSubmitMarks.getNotEnrolmented().size() > 0)
-                {
-                    //list with errors Student Not Enrolmented
-                    ListIterator iterator = infoSiteSubmitMarks.getNotEnrolmented().listIterator();
-                    while (iterator.hasNext())
-                    {
-                        InfoMark infoMark = (InfoMark)iterator.next();
-                        actionErrors.add(
-                            "errorsNotEnrolmented",
-                            new ActionError(
-                                "errors.submitMarks.notEnrolmented",
-                                String.valueOf(
-                                    (infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
-                    }
-                }
-
-                if (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null
-                    && infoSiteSubmitMarks.getErrorsMarkNotPublished().size() > 0)
-                {
-                    //list with errors Mark Not Published
-                    ListIterator iterator =
-                        infoSiteSubmitMarks.getErrorsMarkNotPublished().listIterator();
-                    while (iterator.hasNext())
-                    {
-                        InfoMark infoMark = (InfoMark)iterator.next();
-                        actionErrors.add(
-                            "markNotPublished",
-                            new ActionError(
-                                "errors.submitMarks.markNotPublished",
-                                String.valueOf(infoMark.getPublishedMark()),
-                                String.valueOf(
-                                    (infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
-                    }
+            if (infoSiteSubmitMarks.getNotEnrolmented() != null
+                    && infoSiteSubmitMarks.getNotEnrolmented().size() > 0) {
+                //list with errors Student Not Enrolmented
+                ListIterator iterator = infoSiteSubmitMarks.getNotEnrolmented().listIterator();
+                while (iterator.hasNext()) {
+                    InfoMark infoMark = (InfoMark) iterator.next();
+                    actionErrors.add("errorsNotEnrolmented", new ActionError(
+                            "errors.submitMarks.notEnrolmented", String.valueOf((infoMark
+                                    .getInfoFrequenta().getAluno().getNumber()).intValue())));
                 }
             }
+
+            if (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null
+                    && infoSiteSubmitMarks.getErrorsMarkNotPublished().size() > 0) {
+                //list with errors Mark Not Published
+                ListIterator iterator = infoSiteSubmitMarks.getErrorsMarkNotPublished().listIterator();
+                while (iterator.hasNext()) {
+                    InfoMark infoMark = (InfoMark) iterator.next();
+                    actionErrors.add("markNotPublished", new ActionError(
+                            "errors.submitMarks.markNotPublished", String.valueOf(infoMark
+                                    .getPublishedMark()), String.valueOf((infoMark.getInfoFrequenta()
+                                    .getAluno().getNumber()).intValue())));
+                }
+            }
+        }
 
         return actionErrors;
     }
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request)
-    {
+    private Integer getFromRequest(String parameter, HttpServletRequest request) {
         Integer parameterCode = null;
         String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null)
-        {
+        if (parameterCodeString == null) {
             parameterCodeString = request.getAttribute(parameter).toString();
         }
-        if (parameterCodeString != null)
-        {
+        if (parameterCodeString != null) {
             parameterCode = new Integer(parameterCodeString);
         }
         return parameterCode;

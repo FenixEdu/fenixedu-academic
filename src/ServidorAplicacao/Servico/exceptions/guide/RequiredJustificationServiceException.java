@@ -7,60 +7,53 @@ package ServidorAplicacao.Servico.exceptions.guide;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class RequiredJustificationServiceException extends FenixServiceException
-{
+public class RequiredJustificationServiceException extends FenixServiceException {
 
-	/**
-	 *  
-	 */
-	public RequiredJustificationServiceException()
-	{
-		super();
-	}
+    /**
+     *  
+     */
+    public RequiredJustificationServiceException() {
+        super();
+    }
 
-	/**
-	 * @param errorType
-	 */
-	public RequiredJustificationServiceException(int errorType)
-	{
-		super(errorType);
-	}
+    /**
+     * @param errorType
+     */
+    public RequiredJustificationServiceException(int errorType) {
+        super(errorType);
+    }
 
-	/**
-	 * @param s
-	 */
-	public RequiredJustificationServiceException(String s)
-	{
-		super(s);
-	}
+    /**
+     * @param s
+     */
+    public RequiredJustificationServiceException(String s) {
+        super(s);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public RequiredJustificationServiceException(Throwable cause)
-	{
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public RequiredJustificationServiceException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public RequiredJustificationServiceException(String message, Throwable cause)
-	{
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public RequiredJustificationServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public String toString()
-	{
-		String result = "[RequiredJustificationServiceException\n";
-		result += "message" + this.getMessage() + "\n";
-		result += "cause" + this.getCause() + "\n";
-		result += "]";
-		return result;
-	}
+    public String toString() {
+        String result = "[RequiredJustificationServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

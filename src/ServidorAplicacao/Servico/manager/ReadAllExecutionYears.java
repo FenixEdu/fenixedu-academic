@@ -19,31 +19,25 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadAllExecutionYears implements IService
-{
+public class ReadAllExecutionYears implements IService {
 
     /**
-	 * The constructor of this class.
-	 */
-    public ReadAllExecutionYears()
-    {
+     * The constructor of this class.
+     */
+    public ReadAllExecutionYears() {
     }
 
     /**
-	 * Executes the service. Returns the current collection of infoTeachers.
-	 */
-    public List run() throws FenixServiceException
-    {
+     * Executes the service. Returns the current collection of infoTeachers.
+     */
+    public List run() throws FenixServiceException {
         ISuportePersistente sp;
         List allExecutionYears = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             allExecutionYears = sp.getIPersistentExecutionYear().readAllExecutionYear();
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
 

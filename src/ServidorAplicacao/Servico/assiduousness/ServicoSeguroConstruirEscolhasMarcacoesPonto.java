@@ -2,6 +2,7 @@ package ServidorAplicacao.Servico.assiduousness;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 import Dominio.Funcionario;
@@ -13,96 +14,98 @@ import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
 /**
- *
- * @author  Fernanda Quitério & Tania Pousão
+ * 
+ * @author Fernanda Quitério & Tania Pousão
  */
 public class ServicoSeguroConstruirEscolhasMarcacoesPonto extends ServicoSeguro {
-	private ArrayList _listaFuncionarios = null;
-	private ArrayList _listaCartoes = null;
+    private List _listaFuncionarios = null;
 
-	private Timestamp _dataInicio;
-	private Timestamp _dataFim;
+    private List _listaCartoes = null;
 
-	public ServicoSeguroConstruirEscolhasMarcacoesPonto(
-		ServicoAutorizacao servicoAutorizacaoLer,
-		ArrayList listaFuncionarios,
-		ArrayList listaCartoes,
-		Timestamp dataInicio,
-		Timestamp dataFim) {
-		super(servicoAutorizacaoLer);
-		_listaFuncionarios = listaFuncionarios;
-		_listaCartoes = listaCartoes;
-		_dataInicio = dataInicio;
-		_dataFim = dataFim;
-	}
+    private Timestamp _dataInicio;
 
-	public void execute() throws NotExecuteException {		
+    private Timestamp _dataFim;
 
-		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
-		ICartaoPersistente iCartaoPersistente = SuportePersistente.getInstance().iCartaoPersistente();
+    public ServicoSeguroConstruirEscolhasMarcacoesPonto(ServicoAutorizacao servicoAutorizacaoLer,
+            List listaFuncionarios, List listaCartoes, Timestamp dataInicio, Timestamp dataFim) {
+        super(servicoAutorizacaoLer);
+        _listaFuncionarios = listaFuncionarios;
+        _listaCartoes = listaCartoes;
+        _dataInicio = dataInicio;
+        _dataFim = dataFim;
+    }
 
-		Funcionario funcionario = null;
-		Integer numMecanografico = null;
-		ArrayList listaCartoesFuncionarios = null;
+    public void execute() throws NotExecuteException {
 
-		if (_listaFuncionarios != null && _listaCartoes == null) {
-			_listaCartoes = new ArrayList();
-			_listaCartoes = (ArrayList) _listaFuncionarios.clone();
+        IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance()
+                .iFuncionarioPersistente();
+        ICartaoPersistente iCartaoPersistente = SuportePersistente.getInstance().iCartaoPersistente();
 
-			ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
-			while (iterListaFuncionarios.hasNext()) {
-				numMecanografico = (Integer) iterListaFuncionarios.next();
-				if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numMecanografico.intValue())) == null) {
-					throw new NotExecuteException("error.funcionario.naoExiste");
-				}
+        Funcionario funcionario = null;
+        Integer numMecanografico = null;
+        List listaCartoesFuncionarios = null;
 
-				listaCartoesFuncionarios =
-					iCartaoPersistente.lerCartoesFuncionarioComValidade(funcionario.getCodigoInterno(), _dataInicio, _dataFim);
-				if (listaCartoesFuncionarios != null) {
-					ListIterator iterListaCartoesFuncionarios = listaCartoesFuncionarios.listIterator();
-					Integer numCartao = null;
-					while (iterListaCartoesFuncionarios.hasNext()) {
-						numCartao = (Integer) iterListaCartoesFuncionarios.next();
-						if (!_listaCartoes.contains(numCartao)) {
-							_listaCartoes.add(numCartao);
-						}
-					}
-				}
-			}
-		} else if (_listaFuncionarios != null && _listaCartoes != null) {
-			ArrayList listaCartoesConsultar = new ArrayList();
+        if (_listaFuncionarios != null && _listaCartoes == null) {
+            _listaCartoes = new ArrayList();
+            _listaCartoes = (List) ((ArrayList) _listaFuncionarios).clone();
 
-			ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
-			while (iterListaFuncionarios.hasNext()) {
-				numMecanografico = (Integer) iterListaFuncionarios.next();
-				if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numMecanografico.intValue())) == null) {
-					throw new NotExecuteException("error.funcionario.naoExiste");
-				}
-				listaCartoesFuncionarios =
-					iCartaoPersistente.lerCartoesFuncionarioComValidade(funcionario.getCodigoInterno(), _dataInicio, _dataFim);
-				if (listaCartoesFuncionarios != null) {
-					ListIterator iterListaCartoesFuncionarios = listaCartoesFuncionarios.listIterator();
-					Integer numCartao = null;
+            ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
+            while (iterListaFuncionarios.hasNext()) {
+                numMecanografico = (Integer) iterListaFuncionarios.next();
+                if ((funcionario = iFuncionarioPersistente
+                        .lerFuncionarioSemHistoricoPorNumMecanografico(numMecanografico.intValue())) == null) {
+                    throw new NotExecuteException("error.funcionario.naoExiste");
+                }
 
-					while (iterListaCartoesFuncionarios.hasNext()) {
-						numCartao = (Integer) iterListaCartoesFuncionarios.next();
-						/* interseccao das lista */
-						if (_listaCartoes.contains(numCartao)
-							&& listaCartoesFuncionarios.contains(numCartao)
-							&& (!listaCartoesConsultar.contains(numCartao))) {
-							listaCartoesConsultar.add(numCartao);
-						}
-					}
-				}
-			}
-			_listaCartoes = listaCartoesConsultar;
-		}
-	}
+                listaCartoesFuncionarios = iCartaoPersistente.lerCartoesFuncionarioComValidade(
+                        funcionario.getCodigoInterno(), _dataInicio, _dataFim);
+                if (listaCartoesFuncionarios != null) {
+                    ListIterator iterListaCartoesFuncionarios = listaCartoesFuncionarios.listIterator();
+                    Integer numCartao = null;
+                    while (iterListaCartoesFuncionarios.hasNext()) {
+                        numCartao = (Integer) iterListaCartoesFuncionarios.next();
+                        if (!_listaCartoes.contains(numCartao)) {
+                            _listaCartoes.add(numCartao);
+                        }
+                    }
+                }
+            }
+        } else if (_listaFuncionarios != null && _listaCartoes != null) {
+            List listaCartoesConsultar = new ArrayList();
 
-	public ArrayList getListaFuncionarios() {
-		return _listaFuncionarios;
-	}
-	public ArrayList getListaCartoes() {
-		return _listaCartoes;
-	}
+            ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
+            while (iterListaFuncionarios.hasNext()) {
+                numMecanografico = (Integer) iterListaFuncionarios.next();
+                if ((funcionario = iFuncionarioPersistente
+                        .lerFuncionarioSemHistoricoPorNumMecanografico(numMecanografico.intValue())) == null) {
+                    throw new NotExecuteException("error.funcionario.naoExiste");
+                }
+                listaCartoesFuncionarios = iCartaoPersistente.lerCartoesFuncionarioComValidade(
+                        funcionario.getCodigoInterno(), _dataInicio, _dataFim);
+                if (listaCartoesFuncionarios != null) {
+                    ListIterator iterListaCartoesFuncionarios = listaCartoesFuncionarios.listIterator();
+                    Integer numCartao = null;
+
+                    while (iterListaCartoesFuncionarios.hasNext()) {
+                        numCartao = (Integer) iterListaCartoesFuncionarios.next();
+                        /* interseccao das lista */
+                        if (_listaCartoes.contains(numCartao)
+                                && listaCartoesFuncionarios.contains(numCartao)
+                                && (!listaCartoesConsultar.contains(numCartao))) {
+                            listaCartoesConsultar.add(numCartao);
+                        }
+                    }
+                }
+            }
+            _listaCartoes = listaCartoesConsultar;
+        }
+    }
+
+    public List getListaFuncionarios() {
+        return _listaFuncionarios;
+    }
+
+    public List getListaCartoes() {
+        return _listaCartoes;
+    }
 }

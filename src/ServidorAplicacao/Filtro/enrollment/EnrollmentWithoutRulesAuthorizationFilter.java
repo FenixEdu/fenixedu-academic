@@ -24,88 +24,97 @@ import Util.TipoCurso;
  * @author Tânia Pousão
  *  
  */
-public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter
-{
-	
-	private static TipoCurso DEGREE_TYPE = TipoCurso.LICENCIATURA_OBJ;
+public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
-	protected Collection getNeededRoles()
-	{
-		List roles = new ArrayList();
+    private static TipoCurso DEGREE_TYPE = TipoCurso.LICENCIATURA_OBJ;
 
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
+    private static TipoCurso MASTER_DEGREE_TYPE = TipoCurso.MESTRADO_OBJ;
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-		roles.add(infoRole);
-		return roles;
-	}
+    protected Collection getNeededRoles() {
+        List roles = new ArrayList();
 
-	protected String hasPrevilege(IUserView id, Object[] arguments)
-	{
-		try
-		{
-			ISuportePersistente sp = null;
-			sp = SuportePersistenteOJB.getInstance();
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-			//verify if the degree type is LICENCIATURA_OBJ
-			if (!verifyDegreeTypeIsNonMaster(arguments))
-			{
-				return new String("error.degree.type");
-			}
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+        roles.add(infoRole);
 
-			//verify if the student to enroll is a non master degree student
-			if (!verifyStudentNonMasterDegree(arguments, sp))
-			{
-				return new String("error.student.degree.nonMaster");
-			}
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-			
+        return roles;
+    }
 
-			return null;
-		}
-		catch (Exception exception)
-		{
-			return "noAuthorization";
-		}
-	}
+    protected String hasPrevilege(IUserView id, Object[] arguments) {
+        try {
+            ISuportePersistente sp = null;
+            sp = SuportePersistenteOJB.getInstance();
 
-	private boolean verifyDegreeTypeIsNonMaster(Object[] arguments)
-	{
-		boolean isNonMaster = false;
+            List roles = getRoleList((List) id.getRoles());
 
-		if (arguments != null && arguments[1] != null)
-		{
-			isNonMaster = DEGREE_TYPE.equals(arguments[1]);
-		}
+            if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 
-		return isNonMaster;
-	}
+                //verify if the degree type is MASTER_DEGREE_OBJ
+                if (!verifyDegreeType(arguments, MASTER_DEGREE_TYPE)) {
+                    return new String("error.masterDegree.type");
+                }
+                //verify if the student to enroll is a master degree student
+                if (!verifyStudentType(arguments, sp, MASTER_DEGREE_TYPE)) {
+                    return new String("error.student.degree.master");
+                }
+            }
 
-	private boolean verifyStudentNonMasterDegree(Object[] arguments, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		boolean isNonMaster = false;
+            if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                    || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+                //verify if the degree type is LICENCIATURA_OBJ
+                if (!verifyDegreeType(arguments, DEGREE_TYPE)) {
+                    return new String("error.degree.type");
+                }
 
-		if (arguments != null && arguments[0] != null)
-		{
-			Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
-			if (studentNumber != null)
-			{
-				IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-				IStudent student =
-					persistentStudent.readStudentByNumberAndDegreeType(studentNumber, DEGREE_TYPE);
-				if (student != null)
-				{
-					isNonMaster = true; //non master student
-				}
-			}
-		}
+                //verify if the student to enroll is a non master degree
+                // student
+                if (!verifyStudentType(arguments, sp, DEGREE_TYPE)) {
+                    return new String("error.student.degree.nonMaster");
+                }
+            }
 
-		return isNonMaster;
-	}
+            return null;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return "noAuthorization";
+        }
+    }
 
-	
+    private boolean verifyDegreeType(Object[] arguments, TipoCurso degreeType) {
+        boolean isEqual = false;
+
+        if (arguments != null && arguments[1] != null) {
+            isEqual = degreeType.equals(arguments[1]);
+        }
+
+        return isEqual;
+    }
+
+    private boolean verifyStudentType(Object[] arguments, ISuportePersistente sp, TipoCurso degreeType)
+            throws ExcepcaoPersistencia {
+        boolean isRightType = false;
+
+        if (arguments != null && arguments[0] != null) {
+            Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
+            if (studentNumber != null) {
+                IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+                IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                        degreeType);
+                if (student != null) {
+                    isRightType = true; // right student curricular plan
+                }
+            }
+        }
+
+        return isRightType;
+    }
+
 }

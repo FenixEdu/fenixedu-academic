@@ -40,22 +40,19 @@ public class EditBibliographicReference implements IServico {
     /**
      * Executes the service.
      */
-    public boolean run(Integer infoExecutionCourseCode,
-            Integer bibliographicReferenceCode, String newTitle,
-            String newAuthors, String newReference, String newYear,
-            Boolean optional) throws FenixServiceException {
+    public boolean run(Integer infoExecutionCourseCode, Integer bibliographicReferenceCode,
+            String newTitle, String newAuthors, String newReference, String newYear, Boolean optional)
+            throws FenixServiceException {
 
         IBibliographicReference ibibliographicReference = null;
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
             IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
                     .getIPersistentBibliographicReference();
 
             ibibliographicReference = (IBibliographicReference) persistentBibliographicReference
-                    .readByOID(BibliographicReference.class,
-                            bibliographicReferenceCode, true);
+                    .readByOID(BibliographicReference.class, bibliographicReferenceCode, true);
 
             if (ibibliographicReference == null) {
                 throw new InvalidArgumentsServiceException();

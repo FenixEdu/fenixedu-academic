@@ -10,34 +10,32 @@ import Dominio.ITeacher;
 import Dominio.teacher.IWeeklyOcupation;
 import Dominio.teacher.WeeklyOcupation;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class WeeklyOcupationOJB extends ObjectFenixOJB implements IPersistentWeeklyOcupation
-{
+public class WeeklyOcupationOJB extends PersistentObjectOJB implements IPersistentWeeklyOcupation {
 
     /**
-     * 
+     *  
      */
-    public WeeklyOcupationOJB()
-    {
+    public WeeklyOcupationOJB() {
         super();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorPersistente.teacher.IPersistentWeeklyOcupation#readByTeacher(Dominio.ITeacher)
      */
-    public IWeeklyOcupation readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+    public IWeeklyOcupation readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
         return (IWeeklyOcupation) queryObject(WeeklyOcupation.class, criteria);
     }
-
 
 }

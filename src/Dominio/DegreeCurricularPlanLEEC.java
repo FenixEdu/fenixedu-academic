@@ -3,6 +3,9 @@ package Dominio;
 import java.util.ArrayList;
 import java.util.List;
 
+import Dominio.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
+import Dominio.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
+import Dominio.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import Dominio.degree.enrollment.rules.SpecificLEECEnrollmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
@@ -10,26 +13,30 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 
-
 /**
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements IDegreeCurricularPlan
-{
-	public DegreeCurricularPlanLEEC()
-	{
-		ojbConcreteClass = getClass().getName();
-	}
+public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements IDegreeCurricularPlan {
+    public DegreeCurricularPlanLEEC() {
+        ojbConcreteClass = getClass().getName();
+    }
 
-    public List getListOfEnrollmentRules(
-            IStudentCurricularPlan studentCurricularPlan,
+    public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan,
             IExecutionPeriod executionPeriod) {
-        
-        List result = super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod);
-        
+
+        //        List result = super.getListOfEnrollmentRules(studentCurricularPlan,
+        // executionPeriod);
+
+        List result = new ArrayList();
+
+        result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
+        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
+                executionPeriod));
+        result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
+
         result.add(new SpecificLEECEnrollmentRule(studentCurricularPlan, executionPeriod));
-        
+
         return result;
     }
 
@@ -52,10 +59,8 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
                 List courses = curricularCourseGroup.getCurricularCourses();
 
                 int coursesSize = courses.size();
-
                 for (int j = 0; j < coursesSize; j++) {
                     ICurricularCourse curricularCourse = (ICurricularCourse) courses.get(j);
-
                     if (!curricularCourses.contains(curricularCourse)) {
                         curricularCourses.add(curricularCourse);
                     }
@@ -68,7 +73,7 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
 
         return curricularCourses;
     }
-    
+
     public List getSecundaryAreas() {
         return getSpecializationAreas();
     }

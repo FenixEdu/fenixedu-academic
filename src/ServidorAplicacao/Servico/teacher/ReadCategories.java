@@ -23,49 +23,40 @@ import ServidorPersistente.teacher.IPersistentCategory;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCategories implements IServico
-{
+public class ReadCategories implements IServico {
     private static ReadCategories service = new ReadCategories();
 
-    public static ReadCategories getService()
-    {
+    public static ReadCategories getService() {
         return service;
     }
 
-    public ReadCategories()
-    {
+    public ReadCategories() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadCategories";
     }
 
-    public List run() throws FenixServiceException
-    {
-        try
-        {
+    public List run() throws FenixServiceException {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentCategory persistentCategory = persistentSuport.getIPersistentCategory();
             List categories = persistentCategory.readAll();
 
-            List result = (List) CollectionUtils.collect(categories, new Transformer()
-            {
-                public Object transform(Object input)
-                {
+            List result = (List) CollectionUtils.collect(categories, new Transformer() {
+                public Object transform(Object input) {
                     ICategory category = (ICategory) input;
                     return Cloner.copyICategory2InfoCategory(category);
                 }
             });
             return result;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

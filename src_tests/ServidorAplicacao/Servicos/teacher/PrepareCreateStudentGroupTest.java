@@ -9,57 +9,57 @@ import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class PrepareCreateStudentGroupTest extends TestCaseReadServices {
-	
-	public PrepareCreateStudentGroupTest(java.lang.String testName) {
-		super(testName);
-	}
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public PrepareCreateStudentGroupTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(PrepareCreateStudentGroupTest.class);
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(PrepareCreateStudentGroupTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "PrepareCreateStudentGroup";
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-	
-		return null;
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "PrepareCreateStudentGroup";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] result = {new Integer(26), new Integer(1)};
-		return result;
-		
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 0;
-	}
+        return null;
+    }
 
-	protected Object getObjectToCompare() {
-		InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-		infoSiteStudentGroup.setInfoSiteStudentInformationList(new ArrayList());
-		infoSiteStudentGroup.setNrOfElements(new Integer(1));
-		return infoSiteStudentGroup;
-		
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] result = { new Integer(26), new Integer(1) };
+        return result;
+
+    }
+
+    protected int getNumberOfItemsToRetrieve() {
+        return 0;
+    }
+
+    protected Object getObjectToCompare() {
+        InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+        infoSiteStudentGroup.setInfoSiteStudentInformationList(new ArrayList());
+        infoSiteStudentGroup.setNrOfElements(new Integer(1));
+        return infoSiteStudentGroup;
+
+    }
 
 }

@@ -9,120 +9,123 @@ package DataBeans;
 import Dominio.IMark;
 
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 
-public class InfoMark extends InfoObject{
-	protected String mark;
-	protected String publishedMark;
-	private InfoEvaluation infoEvaluation;
-	private InfoFrequenta infoFrequenta;
+public class InfoMark extends InfoObject {
+    protected String mark;
 
-	public InfoMark() {
-	}
+    protected String publishedMark;
 
-	public InfoMark(String mark, String publishedMark, InfoFrequenta frequenta, InfoEvaluation evaluation) {
-		setInfoFrequenta(frequenta);
-		setInfoEvaluation(evaluation);
-		setPublishedMark(mark);
-		setPublishedMark(publishedMark);
-	}
+    private InfoEvaluation infoEvaluation;
 
-	//  public boolean equals(Object obj) {
-	//    boolean resultado = false;
-	//    if (obj instanceof InfoMark) {
-	//      InfoMark infoMark = (InfoMark)obj;
-	//      resultado = getMark().equals(infoMark.getPublishedMark());
-	//    }
-	//    return resultado;
-	//  }
+    private InfoFrequenta infoFrequenta;
 
-	public String toString() {
-		String result = "[InfoStudent";
-		result += ", mark=" + mark;
-		result += ", published mark=" + publishedMark;
+    public InfoMark() {
+    }
 
-		if (infoEvaluation != null)
-			result += ", exam" + infoEvaluation.toString();
-		result += "]";
-		if (infoFrequenta != null)
-			result += ", exam" + infoFrequenta.toString();
-		result += "]";
-		return result;
-	}
+    public InfoMark(String mark, String publishedMark, InfoFrequenta frequenta, InfoEvaluation evaluation) {
+        setInfoFrequenta(frequenta);
+        setInfoEvaluation(evaluation);
+        setPublishedMark(mark);
+        setPublishedMark(publishedMark);
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoEvaluation getInfoEvaluation() {
-		return infoEvaluation;
-	}
+    //  public boolean equals(Object obj) {
+    //    boolean resultado = false;
+    //    if (obj instanceof InfoMark) {
+    //      InfoMark infoMark = (InfoMark)obj;
+    //      resultado = getMark().equals(infoMark.getPublishedMark());
+    //    }
+    //    return resultado;
+    //  }
 
-	/**
-	 * @return
-	 */
-	public InfoFrequenta getInfoFrequenta() {
-		return infoFrequenta;
-	}
+    public String toString() {
+        String result = "[InfoStudent";
+        result += ", mark=" + mark;
+        result += ", published mark=" + publishedMark;
 
-	/**
-	 * @return
-	 */
-	public String getMark() {
-		return mark;
-	}
+        if (infoEvaluation != null)
+            result += ", exam" + infoEvaluation.toString();
+        result += "]";
+        if (infoFrequenta != null)
+            result += ", exam" + infoFrequenta.toString();
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getPublishedMark() {
-		return publishedMark;
-	}
+    /**
+     * @return
+     */
+    public InfoEvaluation getInfoEvaluation() {
+        return infoEvaluation;
+    }
 
-	/**
-	 * @param exam
-	 */
-	public void setInfoEvaluation(InfoEvaluation evaluation) {
-		infoEvaluation = evaluation;
-	}
+    /**
+     * @return
+     */
+    public InfoFrequenta getInfoFrequenta() {
+        return infoFrequenta;
+    }
 
-	/**
-	 * @param frequenta
-	 */
-	public void setInfoFrequenta(InfoFrequenta frequenta) {
-		infoFrequenta = frequenta;
-	}
+    /**
+     * @return
+     */
+    public String getMark() {
+        return mark;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setMark(String string) {
-		mark = string;
-	}
+    /**
+     * @return
+     */
+    public String getPublishedMark() {
+        return publishedMark;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setPublishedMark(String string) {
-		publishedMark = string;
-	}
+    /**
+     * @param exam
+     */
+    public void setInfoEvaluation(InfoEvaluation evaluation) {
+        infoEvaluation = evaluation;
+    }
 
-	public void copyFromDomain(IMark mark) {
-		super.copyFromDomain(mark);
-		if(mark != null) {
-			setMark(mark.getMark());
-			setPublishedMark(mark.getPublishedMark());
-		}
-	}
-	
-	public static InfoMark newInfoFromDomain(IMark mark) {
-		InfoMark infoMark = null;
-		if(mark != null) {
-			infoMark = new InfoMark();
-			infoMark.copyFromDomain(mark);
-		}
-		
-		return infoMark;
-	}
+    /**
+     * @param frequenta
+     */
+    public void setInfoFrequenta(InfoFrequenta frequenta) {
+        infoFrequenta = frequenta;
+    }
+
+    /**
+     * @param string
+     */
+    public void setMark(String string) {
+        mark = string;
+    }
+
+    /**
+     * @param string
+     */
+    public void setPublishedMark(String string) {
+        publishedMark = string;
+    }
+
+    public void copyFromDomain(IMark mark) {
+        super.copyFromDomain(mark);
+        if (mark != null) {
+            setMark(mark.getMark());
+            setPublishedMark(mark.getPublishedMark());
+        }
+    }
+
+    public static InfoMark newInfoFromDomain(IMark mark) {
+        InfoMark infoMark = null;
+        if (mark != null) {
+            infoMark = new InfoMark();
+            infoMark.copyFromDomain(mark);
+        }
+
+        return infoMark;
+    }
 }

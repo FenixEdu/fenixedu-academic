@@ -20,23 +20,27 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class RemoveProfessorshipAction extends Action
-{
+public class RemoveProfessorshipAction extends Action {
 
-    /* (non-Javadoc)
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
      */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
         DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
-        
+
         Integer teacherId = Integer.valueOf((String) teacherExecutionCourseForm.get("teacherId"));
-		Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
-		
-		IUserView userView = SessionUtils.getUserView(request);
-		Object[] arguments = {executionCourseId, teacherId};
-		ServiceUtils.executeService(userView, "RemoveProfessorshipByDepartment", arguments);
+        Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm
+                .get("executionCourseId"));
+
+        IUserView userView = SessionUtils.getUserView(request);
+        Object[] arguments = { executionCourseId, teacherId };
+        ServiceUtils.executeService(userView, "RemoveProfessorshipByDepartment", arguments);
         return mapping.findForward("successfull-delete");
     }
 }

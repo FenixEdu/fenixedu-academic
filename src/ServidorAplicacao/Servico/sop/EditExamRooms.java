@@ -37,19 +37,17 @@ public class EditExamRooms implements IService {
     public EditExamRooms() {
     }
 
-    public InfoExam run(InfoExam infoExam, final List roomsForExam)
-            throws FenixServiceException {
+    public InfoExam run(InfoExam infoExam, final List roomsForExam) throws FenixServiceException {
 
         ServiceSetUp();
 
         List finalRoomList = new ArrayList();
-        CollectionUtils.collect(roomsForExam, TRANSFORM_ROOMID_TO_ROOM,
-                finalRoomList);
+        CollectionUtils.collect(roomsForExam, TRANSFORM_ROOMID_TO_ROOM, finalRoomList);
 
         try {
 
-            final Exam exam = (Exam) persistentRoom.readByOID(Exam.class,
-                    infoExam.getIdInternal(), true);
+            final Exam exam = (Exam) persistentRoom
+                    .readByOID(Exam.class, infoExam.getIdInternal(), true);
             if (exam == null) {
                 throw new NonExistingServiceException();
             }

@@ -10,8 +10,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.GratuityState;
 
-public class JavaGratuityState2SQLGratuityStateFieldConversion implements
-        FieldConversion {
+public class JavaGratuityState2SQLGratuityStateFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)
@@ -40,8 +39,7 @@ public class JavaGratuityState2SQLGratuityStateFieldConversion implements
                         + ": Illegal Gratuity State!(" + source + ")");
             }
         } else {
-            throw new IllegalArgumentException("Illegal Gratuity State!("
-                    + source + ")");
+            throw new IllegalArgumentException("Illegal Gratuity State!(" + source + ")");
         }
         return gratuityState;
     }

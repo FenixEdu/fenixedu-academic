@@ -9,61 +9,53 @@ package Dominio;
  * @author Susana Fernandes
  */
 
-public class DistributedTestAdvisory extends DomainObject implements IDistributedTestAdvisory
-{
+public class DistributedTestAdvisory extends DomainObject implements IDistributedTestAdvisory {
 
-	private IDistributedTest distributedTest;
-	private Integer keyDistributedTest;
-	private IAdvisory advisory;
-	private Integer keyAdvisory;
+    private IDistributedTest distributedTest;
 
-	public DistributedTestAdvisory()
-	{
-	}
+    private Integer keyDistributedTest;
 
-	public DistributedTestAdvisory(Integer distributedTestId)
-	{
-		setIdInternal(distributedTestId);
-	}
+    private IAdvisory advisory;
 
-	public IAdvisory getAdvisory()
-	{
-		return advisory;
-	}
+    private Integer keyAdvisory;
 
-	public void setAdvisory(IAdvisory advisory)
-	{
-		this.advisory = advisory;
-	}
+    public DistributedTestAdvisory() {
+    }
 
-	public IDistributedTest getDistributedTest()
-	{
-		return distributedTest;
-	}
+    public DistributedTestAdvisory(Integer distributedTestId) {
+        setIdInternal(distributedTestId);
+    }
 
-	public void setDistributedTest(IDistributedTest distributedTest)
-	{
-		this.distributedTest = distributedTest;
-	}
+    public IAdvisory getAdvisory() {
+        return advisory;
+    }
 
-	public Integer getKeyAdvisory()
-	{
-		return keyAdvisory;
-	}
+    public void setAdvisory(IAdvisory advisory) {
+        this.advisory = advisory;
+    }
 
-	public void setKeyAdvisory(Integer keyAdvisory)
-	{
-		this.keyAdvisory = keyAdvisory;
-	}
+    public IDistributedTest getDistributedTest() {
+        return distributedTest;
+    }
 
-	public Integer getKeyDistributedTest()
-	{
-		return keyDistributedTest;
-	}
+    public void setDistributedTest(IDistributedTest distributedTest) {
+        this.distributedTest = distributedTest;
+    }
 
-	public void setKeyDistributedTest(Integer keyDistributedTest)
-	{
-		this.keyDistributedTest = keyDistributedTest;
-	}
+    public Integer getKeyAdvisory() {
+        return keyAdvisory;
+    }
+
+    public void setKeyAdvisory(Integer keyAdvisory) {
+        this.keyAdvisory = keyAdvisory;
+    }
+
+    public Integer getKeyDistributedTest() {
+        return keyDistributedTest;
+    }
+
+    public void setKeyDistributedTest(Integer keyDistributedTest) {
+        this.keyDistributedTest = keyDistributedTest;
+    }
 
 }

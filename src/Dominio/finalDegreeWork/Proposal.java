@@ -18,545 +18,588 @@ import Util.TipoCurso;
  */
 public class Proposal extends DomainObject implements IProposal {
 
-	private Integer proposalNumber;
-	private Integer keyExecutionDegree;
-	private ICursoExecucao executionDegree;
-	private String title;
-	private Integer keyOrientator;
-	private ITeacher orientator;
-	private Integer keyCoorientator;
-	private ITeacher coorientator;
-	private String companionName;
-	private String companionMail;
-	private Integer companionPhone;
-	private Integer orientatorsCreditsPercentage;
-	private Integer coorientatorsCreditsPercentage;
-	private String framing;
-	private String objectives;
-	private String description;
-	private String requirements;
-	private String deliverable;
-	private String url;
-	private Integer minimumNumberOfGroupElements;
-	private Integer maximumNumberOfGroupElements;
-	private String location;
-	private TipoCurso degreeType;
-	private String observations;
-	private String companyName;
-	private String companyAdress;
-	private List branches;
-	private FinalDegreeWorkProposalStatus status;
-	private List groupProposals;
-	private Integer keyGroupAttributedByTeacher;
-	private IGroup groupAttributedByTeacher;
-	private Integer keyGroupAttributed;
-	private IGroup groupAttributed;
+    private Integer proposalNumber;
 
-	/* Construtores */
-	public Proposal() {
-		super();
-	}
+    private Integer keyExecutionDegree;
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof IProposal) {
-			IProposal proposal = (IProposal) obj;
+    private ICursoExecucao executionDegree;
 
-			result = getIdInternal().equals(proposal.getIdInternal());
-		}
-		return result;
-	}
+    private String title;
 
-	public String toString() {
-		String result = "[Proposal";
-		result += ", idInternal=" + getIdInternal();
-		result += ", title=" + getTitle();
-		result += ", degreeCurricularPlan=" + getExecutionDegree();
-		result += "]";
-		return result;
-	}
+    private Integer keyOrientator;
 
-	/**
-	 * @return Returns the companyName.
-	 */
-	public String getCompanyName() {
-		return companyName;
-	}
+    private ITeacher orientator;
 
-	/**
-	 * @param companyName
-	 *            The companyName to set.
-	 */
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+    private Integer keyCoorientator;
 
-	/**
-	 * @return Returns the coorientator.
-	 */
-	public ITeacher getCoorientator() {
-		return coorientator;
-	}
+    private ITeacher coorientator;
 
-	/**
-	 * @param coorientator
-	 *            The coorientator to set.
-	 */
-	public void setCoorientator(ITeacher coorientator) {
-		this.coorientator = coorientator;
-	}
+    private String companionName;
 
-	/**
-	 * @return Returns the coorientatorsCreditsPercentage.
-	 */
-	public Integer getCoorientatorsCreditsPercentage() {
-		return coorientatorsCreditsPercentage;
-	}
+    private String companionMail;
 
-	/**
-	 * @param coorientatorsCreditsPercentage
-	 *            The coorientatorsCreditsPercentage to set.
-	 */
-	public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage) {
-		this.coorientatorsCreditsPercentage = coorientatorsCreditsPercentage;
-	}
+    private Integer companionPhone;
 
-	/**
-	 * @return Returns the degreeCurricularPlan.
-	 */
-	public ICursoExecucao getExecutionDegree() {
-		return executionDegree;
-	}
+    private Integer orientatorsCreditsPercentage;
 
-	/**
-	 * @param degreeCurricularPlan
-	 *            The degreeCurricularPlan to set.
-	 */
-	public void setExecutionDegree(ICursoExecucao executionDegree) {
-		this.executionDegree = executionDegree;
-	}
+    private Integer coorientatorsCreditsPercentage;
 
-	/**
-	 * @return Returns the degreeType.
-	 */
-	public TipoCurso getDegreeType() {
-		return degreeType;
-	}
+    private String framing;
 
-	/**
-	 * @param degreeType
-	 *            The degreeType to set.
-	 */
-	public void setDegreeType(TipoCurso degreeType) {
-		this.degreeType = degreeType;
-	}
+    private String objectives;
 
-	/**
-	 * @return Returns the description.
-	 */
-	public String getDescription() {
-		return description;
-	}
+    private String description;
 
-	/**
-	 * @param description
-	 *            The description to set.
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    private String requirements;
 
-	/**
-	 * @return Returns the keyCoorientator.
-	 */
-	public Integer getKeyCoorientator() {
-		return keyCoorientator;
-	}
+    private String deliverable;
 
-	/**
-	 * @param keyCoorientator
-	 *            The keyCoorientator to set.
-	 */
-	public void setKeyCoorientator(Integer keyCoorientator) {
-		this.keyCoorientator = keyCoorientator;
-	}
+    private String url;
 
-	/**
-	 * @return Returns the keyDegreeCurricularPlan.
-	 */
-	public Integer getKeyExecutionDegree() {
-		return keyExecutionDegree;
-	}
+    private Integer minimumNumberOfGroupElements;
 
-	/**
-	 * @param keyDegreeCurricularPlan
-	 *            The keyDegreeCurricularPlan to set.
-	 */
-	public void setKeyExecutionDegree(Integer keyExecutionDegree) {
-		this.keyExecutionDegree = keyExecutionDegree;
-	}
+    private Integer maximumNumberOfGroupElements;
 
-	/**
-	 * @return Returns the keyOrientator.
-	 */
-	public Integer getKeyOrientator() {
-		return keyOrientator;
-	}
+    private String location;
 
-	/**
-	 * @param keyOrientator
-	 *            The keyOrientator to set.
-	 */
-	public void setKeyOrientator(Integer keyOrientator) {
-		this.keyOrientator = keyOrientator;
-	}
+    private TipoCurso degreeType;
 
-	/**
-	 * @return Returns the objectives.
-	 */
-	public String getObjectives() {
-		return objectives;
-	}
+    private String observations;
 
-	/**
-	 * @param objectives
-	 *            The objectives to set.
-	 */
-	public void setObjectives(String objectives) {
-		this.objectives = objectives;
-	}
+    private String companyName;
 
-	/**
-	 * @return Returns the observations.
-	 */
-	public String getObservations() {
-		return observations;
-	}
+    private String companyAdress;
 
-	/**
-	 * @param observations
-	 *            The observations to set.
-	 */
-	public void setObservations(String observations) {
-		this.observations = observations;
-	}
+    private List branches;
 
-	/**
-	 * @return Returns the orientator.
-	 */
-	public ITeacher getOrientator() {
-		return orientator;
-	}
+    private FinalDegreeWorkProposalStatus status;
 
-	/**
-	 * @param orientator
-	 *            The orientator to set.
-	 */
-	public void setOrientator(ITeacher orientator) {
-		this.orientator = orientator;
-	}
+    private List groupProposals;
 
-	/**
-	 * @return Returns the orientatorsCreditsPercentage.
-	 */
-	public Integer getOrientatorsCreditsPercentage() {
-		return orientatorsCreditsPercentage;
-	}
+    private Integer keyGroupAttributedByTeacher;
 
-	/**
-	 * @param orientatorsCreditsPercentage
-	 *            The orientatorsCreditsPercentage to set.
-	 */
-	public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage) {
-		this.orientatorsCreditsPercentage = orientatorsCreditsPercentage;
-	}
+    private IGroup groupAttributedByTeacher;
 
-	/**
-	 * @return Returns the requirements.
-	 */
-	public String getRequirements() {
-		return requirements;
-	}
+    private Integer keyGroupAttributed;
 
-	/**
-	 * @param requirements
-	 *            The requirements to set.
-	 */
-	public void setRequirements(String requirements) {
-		this.requirements = requirements;
-	}
+    private IGroup groupAttributed;
 
-	/**
-	 * @return Returns the title.
-	 */
-	public String getTitle() {
-		return title;
-	}
+    /* Construtores */
+    public Proposal() {
+        super();
+    }
 
-	/**
-	 * @param title
-	 *            The title to set.
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IProposal) {
+            IProposal proposal = (IProposal) obj;
 
-	/**
-	 * @return Returns the url.
-	 */
-	public String getUrl() {
-		return url;
-	}
+            result = getIdInternal().equals(proposal.getIdInternal());
+        }
+        return result;
+    }
 
-	/**
-	 * @param url
-	 *            The url to set.
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String toString() {
+        String result = "[Proposal";
+        result += ", idInternal=" + getIdInternal();
+        result += ", title=" + getTitle();
+        result += ", degreeCurricularPlan=" + getExecutionDegree();
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return Returns the deliverable.
-	 */
-	public String getDeliverable() {
-		return deliverable;
-	}
+    /**
+     * @return Returns the companyName.
+     */
+    public String getCompanyName() {
+        return companyName;
+    }
 
-	/**
-	 * @param deliverable
-	 *            The deliverable to set.
-	 */
-	public void setDeliverable(String deliverable) {
-		this.deliverable = deliverable;
-	}
+    /**
+     * @param companyName
+     *            The companyName to set.
+     */
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
-	/**
-	 * @return Returns the framing.
-	 */
-	public String getFraming() {
-		return framing;
-	}
+    /**
+     * @return Returns the coorientator.
+     */
+    public ITeacher getCoorientator() {
+        return coorientator;
+    }
 
-	/**
-	 * @param framing
-	 *            The framing to set.
-	 */
-	public void setFraming(String framing) {
-		this.framing = framing;
-	}
+    /**
+     * @param coorientator
+     *            The coorientator to set.
+     */
+    public void setCoorientator(ITeacher coorientator) {
+        this.coorientator = coorientator;
+    }
 
-	/**
-	 * @return Returns the location.
-	 */
-	public String getLocation() {
-		return location;
-	}
+    /**
+     * @return Returns the coorientatorsCreditsPercentage.
+     */
+    public Integer getCoorientatorsCreditsPercentage() {
+        return coorientatorsCreditsPercentage;
+    }
 
-	/**
-	 * @param location
-	 *            The location to set.
-	 */
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    /**
+     * @param coorientatorsCreditsPercentage
+     *            The coorientatorsCreditsPercentage to set.
+     */
+    public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage) {
+        this.coorientatorsCreditsPercentage = coorientatorsCreditsPercentage;
+    }
 
-	/**
-	 * @return Returns the maximumNumberOfGroupElements.
-	 */
-	public Integer getMaximumNumberOfGroupElements() {
-		return maximumNumberOfGroupElements;
-	}
+    /**
+     * @return Returns the degreeCurricularPlan.
+     */
+    public ICursoExecucao getExecutionDegree() {
+        return executionDegree;
+    }
 
-	/**
-	 * @param maximumNumberOfGroupElements
-	 *            The maximumNumberOfGroupElements to set.
-	 */
-	public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements) {
-		this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
-	}
+    /**
+     * @param degreeCurricularPlan
+     *            The degreeCurricularPlan to set.
+     */
+    public void setExecutionDegree(ICursoExecucao executionDegree) {
+        this.executionDegree = executionDegree;
+    }
 
-	/**
-	 * @return Returns the minimumNumberOfGroupElements.
-	 */
-	public Integer getMinimumNumberOfGroupElements() {
-		return minimumNumberOfGroupElements;
-	}
+    /**
+     * @return Returns the degreeType.
+     */
+    public TipoCurso getDegreeType() {
+        return degreeType;
+    }
 
-	/**
-	 * @param minimumNumberOfGroupElements
-	 *            The minimumNumberOfGroupElements to set.
-	 */
-	public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements) {
-		this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
-	}
+    /**
+     * @param degreeType
+     *            The degreeType to set.
+     */
+    public void setDegreeType(TipoCurso degreeType) {
+        this.degreeType = degreeType;
+    }
 
-	/**
-	 * @return Returns the companionMail.
-	 */
-	public String getCompanionMail() {
-		return companionMail;
-	}
-	/**
-	 * @param companionMail
-	 *            The companionMail to set.
-	 */
-	public void setCompanionMail(String companionMail) {
-		this.companionMail = companionMail;
-	}
-	/**
-	 * @return Returns the companionName.
-	 */
-	public String getCompanionName() {
-		return companionName;
-	}
-	/**
-	 * @param companionName
-	 *            The companionName to set.
-	 */
-	public void setCompanionName(String companionName) {
-		this.companionName = companionName;
-	}
-	/**
-	 * @return Returns the companionPhone.
-	 */
-	public Integer getCompanionPhone() {
-		return companionPhone;
-	}
-	/**
-	 * @param companionPhone
-	 *            The companionPhone to set.
-	 */
-	public void setCompanionPhone(Integer companionPhone) {
-		this.companionPhone = companionPhone;
-	}
-	/**
-	 * @return Returns the companyAdress.
-	 */
-	public String getCompanyAdress() {
-		return companyAdress;
-	}
-	/**
-	 * @param companyAdress
-	 *            The companyAdress to set.
-	 */
-	public void setCompanyAdress(String companyAdress) {
-		this.companyAdress = companyAdress;
-	}
-	/**
-	 * @return Returns the branches.
-	 */
-	public List getBranches() {
-		return branches;
-	}
+    /**
+     * @return Returns the description.
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @param branches
-	 *            The branches to set.
-	 */
-	public void setBranches(List branches) {
-		this.branches = branches;
-	}
+    /**
+     * @param description
+     *            The description to set.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * @return Returns the proposalNumber.
-	 */
-	public Integer getProposalNumber()
-	{
-		return proposalNumber;
-	}
+    /**
+     * @return Returns the keyCoorientator.
+     */
+    public Integer getKeyCoorientator() {
+        return keyCoorientator;
+    }
 
-	/**
-	 * @param proposalNumber
-	 *            The proposalNumber to set.
-	 */
-	public void setProposalNumber(Integer proposalNumber)
-	{
-		this.proposalNumber = proposalNumber;
-	}
+    /**
+     * @param keyCoorientator
+     *            The keyCoorientator to set.
+     */
+    public void setKeyCoorientator(Integer keyCoorientator) {
+        this.keyCoorientator = keyCoorientator;
+    }
 
-	/**
-	 * @return Returns the status.
-	 */
-	public FinalDegreeWorkProposalStatus getStatus() {
-		return status;
-	}
+    /**
+     * @return Returns the keyDegreeCurricularPlan.
+     */
+    public Integer getKeyExecutionDegree() {
+        return keyExecutionDegree;
+    }
 
-	/**
-	 * @param status The status to set.
-	 */
-	public void setStatus(FinalDegreeWorkProposalStatus status) {
-		this.status = status;
-	}
+    /**
+     * @param keyDegreeCurricularPlan
+     *            The keyDegreeCurricularPlan to set.
+     */
+    public void setKeyExecutionDegree(Integer keyExecutionDegree) {
+        this.keyExecutionDegree = keyExecutionDegree;
+    }
+
+    /**
+     * @return Returns the keyOrientator.
+     */
+    public Integer getKeyOrientator() {
+        return keyOrientator;
+    }
+
+    /**
+     * @param keyOrientator
+     *            The keyOrientator to set.
+     */
+    public void setKeyOrientator(Integer keyOrientator) {
+        this.keyOrientator = keyOrientator;
+    }
+
+    /**
+     * @return Returns the objectives.
+     */
+    public String getObjectives() {
+        return objectives;
+    }
+
+    /**
+     * @param objectives
+     *            The objectives to set.
+     */
+    public void setObjectives(String objectives) {
+        this.objectives = objectives;
+    }
+
+    /**
+     * @return Returns the observations.
+     */
+    public String getObservations() {
+        return observations;
+    }
+
+    /**
+     * @param observations
+     *            The observations to set.
+     */
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+    /**
+     * @return Returns the orientator.
+     */
+    public ITeacher getOrientator() {
+        return orientator;
+    }
+
+    /**
+     * @param orientator
+     *            The orientator to set.
+     */
+    public void setOrientator(ITeacher orientator) {
+        this.orientator = orientator;
+    }
+
+    /**
+     * @return Returns the orientatorsCreditsPercentage.
+     */
+    public Integer getOrientatorsCreditsPercentage() {
+        return orientatorsCreditsPercentage;
+    }
+
+    /**
+     * @param orientatorsCreditsPercentage
+     *            The orientatorsCreditsPercentage to set.
+     */
+    public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage) {
+        this.orientatorsCreditsPercentage = orientatorsCreditsPercentage;
+    }
+
+    /**
+     * @return Returns the requirements.
+     */
+    public String getRequirements() {
+        return requirements;
+    }
+
+    /**
+     * @param requirements
+     *            The requirements to set.
+     */
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
+
+    /**
+     * @return Returns the title.
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title
+     *            The title to set.
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return Returns the url.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url
+     *            The url to set.
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * @return Returns the deliverable.
+     */
+    public String getDeliverable() {
+        return deliverable;
+    }
+
+    /**
+     * @param deliverable
+     *            The deliverable to set.
+     */
+    public void setDeliverable(String deliverable) {
+        this.deliverable = deliverable;
+    }
+
+    /**
+     * @return Returns the framing.
+     */
+    public String getFraming() {
+        return framing;
+    }
+
+    /**
+     * @param framing
+     *            The framing to set.
+     */
+    public void setFraming(String framing) {
+        this.framing = framing;
+    }
+
+    /**
+     * @return Returns the location.
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location
+     *            The location to set.
+     */
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    /**
+     * @return Returns the maximumNumberOfGroupElements.
+     */
+    public Integer getMaximumNumberOfGroupElements() {
+        return maximumNumberOfGroupElements;
+    }
+
+    /**
+     * @param maximumNumberOfGroupElements
+     *            The maximumNumberOfGroupElements to set.
+     */
+    public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements) {
+        this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
+    }
+
+    /**
+     * @return Returns the minimumNumberOfGroupElements.
+     */
+    public Integer getMinimumNumberOfGroupElements() {
+        return minimumNumberOfGroupElements;
+    }
+
+    /**
+     * @param minimumNumberOfGroupElements
+     *            The minimumNumberOfGroupElements to set.
+     */
+    public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements) {
+        this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
+    }
+
+    /**
+     * @return Returns the companionMail.
+     */
+    public String getCompanionMail() {
+        return companionMail;
+    }
+
+    /**
+     * @param companionMail
+     *            The companionMail to set.
+     */
+    public void setCompanionMail(String companionMail) {
+        this.companionMail = companionMail;
+    }
+
+    /**
+     * @return Returns the companionName.
+     */
+    public String getCompanionName() {
+        return companionName;
+    }
+
+    /**
+     * @param companionName
+     *            The companionName to set.
+     */
+    public void setCompanionName(String companionName) {
+        this.companionName = companionName;
+    }
+
+    /**
+     * @return Returns the companionPhone.
+     */
+    public Integer getCompanionPhone() {
+        return companionPhone;
+    }
+
+    /**
+     * @param companionPhone
+     *            The companionPhone to set.
+     */
+    public void setCompanionPhone(Integer companionPhone) {
+        this.companionPhone = companionPhone;
+    }
+
+    /**
+     * @return Returns the companyAdress.
+     */
+    public String getCompanyAdress() {
+        return companyAdress;
+    }
+
+    /**
+     * @param companyAdress
+     *            The companyAdress to set.
+     */
+    public void setCompanyAdress(String companyAdress) {
+        this.companyAdress = companyAdress;
+    }
+
+    /**
+     * @return Returns the branches.
+     */
+    public List getBranches() {
+        return branches;
+    }
+
+    /**
+     * @param branches
+     *            The branches to set.
+     */
+    public void setBranches(List branches) {
+        this.branches = branches;
+    }
+
+    /**
+     * @return Returns the proposalNumber.
+     */
+    public Integer getProposalNumber() {
+        return proposalNumber;
+    }
+
+    /**
+     * @param proposalNumber
+     *            The proposalNumber to set.
+     */
+    public void setProposalNumber(Integer proposalNumber) {
+        this.proposalNumber = proposalNumber;
+    }
+
+    /**
+     * @return Returns the status.
+     */
+    public FinalDegreeWorkProposalStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     *            The status to set.
+     */
+    public void setStatus(FinalDegreeWorkProposalStatus status) {
+        this.status = status;
+    }
 
     /**
      * @return Returns the groupProposals.
      */
-    public List getGroupProposals()
-    {
+    public List getGroupProposals() {
         return groupProposals;
     }
+
     /**
-     * @param groupProposals The groupProposals to set.
+     * @param groupProposals
+     *            The groupProposals to set.
      */
-    public void setGroupProposals(List groupProposals)
-    {
+    public void setGroupProposals(List groupProposals) {
         this.groupProposals = groupProposals;
     }
+
     /**
      * @return Returns the groupAttributedByTeacher.
      */
-    public IGroup getGroupAttributedByTeacher()
-    {
+    public IGroup getGroupAttributedByTeacher() {
         return groupAttributedByTeacher;
     }
+
     /**
-     * @param groupAttributedByTeacher The groupAttributedByTeacher to set.
+     * @param groupAttributedByTeacher
+     *            The groupAttributedByTeacher to set.
      */
-    public void setGroupAttributedByTeacher(IGroup groupAttributedByTeacher)
-    {
+    public void setGroupAttributedByTeacher(IGroup groupAttributedByTeacher) {
         this.groupAttributedByTeacher = groupAttributedByTeacher;
     }
+
     /**
      * @return Returns the keyGroupAttributedByTeacher.
      */
-    public Integer getKeyGroupAttributedByTeacher()
-    {
+    public Integer getKeyGroupAttributedByTeacher() {
         return keyGroupAttributedByTeacher;
     }
+
     /**
-     * @param keyGroupAttributedByTeacher The keyGroupAttributedByTeacher to set.
+     * @param keyGroupAttributedByTeacher
+     *            The keyGroupAttributedByTeacher to set.
      */
-    public void setKeyGroupAttributedByTeacher(Integer keyGroupAttributedByTeacher)
-    {
+    public void setKeyGroupAttributedByTeacher(Integer keyGroupAttributedByTeacher) {
         this.keyGroupAttributedByTeacher = keyGroupAttributedByTeacher;
     }
+
     /**
      * @return Returns the groupAttributed.
      */
-    public IGroup getGroupAttributed()
-    {
+    public IGroup getGroupAttributed() {
         return groupAttributed;
     }
+
     /**
-     * @param groupAttributed The groupAttributed to set.
+     * @param groupAttributed
+     *            The groupAttributed to set.
      */
-    public void setGroupAttributed(IGroup groupAttributed)
-    {
+    public void setGroupAttributed(IGroup groupAttributed) {
         this.groupAttributed = groupAttributed;
     }
+
     /**
      * @return Returns the keyGroupAttributed.
      */
-    public Integer getKeyGroupAttributed()
-    {
+    public Integer getKeyGroupAttributed() {
         return keyGroupAttributed;
     }
+
     /**
-     * @param keyGroupAttributed The keyGroupAttributed to set.
+     * @param keyGroupAttributed
+     *            The keyGroupAttributed to set.
      */
-    public void setKeyGroupAttributed(Integer keyGroupAttributed)
-    {
+    public void setKeyGroupAttributed(Integer keyGroupAttributed) {
         this.keyGroupAttributed = keyGroupAttributed;
     }
 }

@@ -23,15 +23,16 @@ public class InfoRestrictionByNumberOfCurricularCourses extends InfoRestriction 
         this.setNumberOfCurricularCourses(restriction.getNumberOfCurricularCourses());
     }
 
-    public static InfoRestrictionByNumberOfCurricularCourses newInfoFromDomain(IRestrictionByNumberOfCurricularCourses restriction) {
+    public static InfoRestrictionByNumberOfCurricularCourses newInfoFromDomain(
+            IRestrictionByNumberOfCurricularCourses restriction) {
 
         InfoRestrictionByNumberOfCurricularCourses infoRestriction = null;
-        
+
         if (restriction != null) {
             infoRestriction = new InfoRestrictionByNumberOfCurricularCourses();
             infoRestriction.copyFromDomain(restriction);
         }
-        
+
         return infoRestriction;
     }
 

@@ -6,142 +6,127 @@ package Dominio.sms;
 
 import java.util.Date;
 
-import Util.SmsDeliveryType;
-
 import Dominio.DomainObject;
 import Dominio.IPessoa;
+import Util.SmsDeliveryType;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class SentSms extends DomainObject implements ISentSms
-{
-	private Integer keyPerson;
+public class SentSms extends DomainObject implements ISentSms {
+    private Integer keyPerson;
 
-	protected Integer destinationNumber;
-	protected Date sendDate;
-	protected Date deliveryDate;
-	protected SmsDeliveryType deliveryType;
+    protected Integer destinationNumber;
 
-	protected IPessoa person;
+    protected Date sendDate;
 
-	public SentSms()
-	{
-		super();
-	}
+    protected Date deliveryDate;
 
-	/**
-	 * @param idInternal
-	 */
-	public SentSms(Integer idInternal)
-	{
-		super(idInternal);
-	}
+    protected SmsDeliveryType deliveryType;
 
-	/**
-	 * @return Returns the deliveryDate.
-	 */
-	public Date getDeliveryDate()
-	{
-		return deliveryDate;
-	}
+    protected IPessoa person;
 
-	/**
-	 * @param deliveryDate
-	 *            The deliveryDate to set.
-	 */
-	public void setDeliveryDate(Date deliveryDate)
-	{
-		this.deliveryDate = deliveryDate;
-	}
+    public SentSms() {
+        super();
+    }
 
-	/**
-	 * @return Returns the deliveryType.
-	 */
-	public SmsDeliveryType getDeliveryType()
-	{
-		return deliveryType;
-	}
+    /**
+     * @param idInternal
+     */
+    public SentSms(Integer idInternal) {
+        super(idInternal);
+    }
 
-	/**
-	 * @param deliveryType
-	 *            The deliveryType to set.
-	 */
-	public void setDeliveryType(SmsDeliveryType deliveryType)
-	{
-		this.deliveryType = deliveryType;
-	}
+    /**
+     * @return Returns the deliveryDate.
+     */
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
 
-	/**
-	 * @return Returns the destinationNumber.
-	 */
-	public Integer getDestinationNumber()
-	{
-		return destinationNumber;
-	}
+    /**
+     * @param deliveryDate
+     *            The deliveryDate to set.
+     */
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
 
-	/**
-	 * @param destinationNumber
-	 *            The destinationNumber to set.
-	 */
-	public void setDestinationNumber(Integer destinationNumber)
-	{
-		this.destinationNumber = destinationNumber;
-	}
+    /**
+     * @return Returns the deliveryType.
+     */
+    public SmsDeliveryType getDeliveryType() {
+        return deliveryType;
+    }
 
-	/**
-	 * @return Returns the keyPerson.
-	 */
-	public Integer getKeyPerson()
-	{
-		return keyPerson;
-	}
+    /**
+     * @param deliveryType
+     *            The deliveryType to set.
+     */
+    public void setDeliveryType(SmsDeliveryType deliveryType) {
+        this.deliveryType = deliveryType;
+    }
 
-	/**
-	 * @param keyPerson
-	 *            The keyPerson to set.
-	 */
-	public void setKeyPerson(Integer keyPerson)
-	{
-		this.keyPerson = keyPerson;
-	}
+    /**
+     * @return Returns the destinationNumber.
+     */
+    public Integer getDestinationNumber() {
+        return destinationNumber;
+    }
 
-	/**
-	 * @return Returns the person.
-	 */
-	public IPessoa getPerson()
-	{
-		return person;
-	}
+    /**
+     * @param destinationNumber
+     *            The destinationNumber to set.
+     */
+    public void setDestinationNumber(Integer destinationNumber) {
+        this.destinationNumber = destinationNumber;
+    }
 
-	/**
-	 * @param person
-	 *            The person to set.
-	 */
-	public void setPerson(IPessoa person)
-	{
-		this.person = person;
-	}
+    /**
+     * @return Returns the keyPerson.
+     */
+    public Integer getKeyPerson() {
+        return keyPerson;
+    }
 
-	/**
-	 * @return Returns the sendDate.
-	 */
-	public Date getSendDate()
-	{
-		return sendDate;
-	}
+    /**
+     * @param keyPerson
+     *            The keyPerson to set.
+     */
+    public void setKeyPerson(Integer keyPerson) {
+        this.keyPerson = keyPerson;
+    }
 
-	/**
-	 * @param sendDate
-	 *            The sendDate to set.
-	 */
-	public void setSendDate(Date sendDate)
-	{
-		this.sendDate = sendDate;
-	}
-	
+    /**
+     * @return Returns the person.
+     */
+    public IPessoa getPerson() {
+        return person;
+    }
 
+    /**
+     * @param person
+     *            The person to set.
+     */
+    public void setPerson(IPessoa person) {
+        this.person = person;
+    }
+
+    /**
+     * @return Returns the sendDate.
+     */
+    public Date getSendDate() {
+        return sendDate;
+    }
+
+    /**
+     * @param sendDate
+     *            The sendDate to set.
+     */
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
+    }
 
 }

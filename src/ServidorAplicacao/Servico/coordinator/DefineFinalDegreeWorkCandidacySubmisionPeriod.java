@@ -23,52 +23,43 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DefineFinalDegreeWorkCandidacySubmisionPeriod implements IService {
 
-	public DefineFinalDegreeWorkCandidacySubmisionPeriod() {
-		super();
-	}
+    public DefineFinalDegreeWorkCandidacySubmisionPeriod() {
+        super();
+    }
 
-	public void run(
-		Integer executionDegreeOID,
-		Date startOfCandidacyPeriod,
-		Date endOfCandidacyPeriod)
-		throws FenixServiceException {
+    public void run(Integer executionDegreeOID, Date startOfCandidacyPeriod, Date endOfCandidacyPeriod)
+            throws FenixServiceException {
 
-		if (executionDegreeOID != null
-			&& startOfCandidacyPeriod != null
-			&& endOfCandidacyPeriod != null) {
+        if (executionDegreeOID != null && startOfCandidacyPeriod != null && endOfCandidacyPeriod != null) {
 
-			try {
-				ISuportePersistente persistentSupport =
-					SuportePersistenteOJB.getInstance();
-				IPersistentFinalDegreeWork persistentFinalDegreeWork =
-					persistentSupport.getIPersistentFinalDegreeWork();
+            try {
+                ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+                IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                        .getIPersistentFinalDegreeWork();
 
-				ICursoExecucao cursoExecucao =
-					(ICursoExecucao) persistentFinalDegreeWork.readByOID(
-						CursoExecucao.class,
-						executionDegreeOID);
+                ICursoExecucao cursoExecucao = (ICursoExecucao) persistentFinalDegreeWork.readByOID(
+                        CursoExecucao.class, executionDegreeOID);
 
-				if (cursoExecucao != null) {
-					IScheduleing scheduleing =
-						persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(
-                    	executionDegreeOID);
+                if (cursoExecucao != null) {
+                    IScheduleing scheduleing = persistentFinalDegreeWork
+                            .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
-					if (scheduleing == null) {
-						scheduleing = new Scheduleing();
-						scheduleing.setCurrentProposalNumber(new Integer(1));
-					}
+                    if (scheduleing == null) {
+                        scheduleing = new Scheduleing();
+                        scheduleing.setCurrentProposalNumber(new Integer(1));
+                    }
 
-					persistentFinalDegreeWork.simpleLockWrite(scheduleing);
-					scheduleing.setExecutionDegree(cursoExecucao);
-					scheduleing.setStartOfCandidacyPeriod(startOfCandidacyPeriod);
-					scheduleing.setEndOfCandidacyPeriod(endOfCandidacyPeriod);
-				}
-			} catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
+                    persistentFinalDegreeWork.simpleLockWrite(scheduleing);
+                    scheduleing.setExecutionDegree(cursoExecucao);
+                    scheduleing.setStartOfCandidacyPeriod(startOfCandidacyPeriod);
+                    scheduleing.setEndOfCandidacyPeriod(endOfCandidacyPeriod);
+                }
+            } catch (ExcepcaoPersistencia e) {
+                throw new FenixServiceException(e);
+            }
 
-		}
+        }
 
-	}
+    }
 
 }

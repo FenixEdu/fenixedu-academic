@@ -1,4 +1,5 @@
 package ServidorApresentacao.Action.sop;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,8 +10,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -18,70 +17,59 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
+
 /**
  * @author tfc130
  */
-public class EditarTurnoFormAction extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		
-		super.execute(mapping, form, request, response);
-			
-		DynaActionForm editarTurnoForm = (DynaActionForm) form;
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+public class EditarTurnoFormAction extends
+        FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-//			ArrayList infoTurnos =
-//				(ArrayList) session.getAttribute(
-//					"infoTurnosDeDisciplinaExecucao");
+        super.execute(mapping, form, request, response);
 
-			Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+        DynaActionForm editarTurnoForm = (DynaActionForm) form;
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			//InfoShift infoTurnoAntigo =
-			//	(InfoShift) request.getAttribute("infoTurno");
+            //			List infoTurnos =
+            //				(ArrayList) session.getAttribute(
+            //					"infoTurnosDeDisciplinaExecucao");
 
-			Object args[] = { shiftOID };
-			InfoShift infoTurnoAntigo = (InfoShift) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadShiftByOID",
-					args);
+            Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
 
+            //InfoShift infoTurnoAntigo =
+            //	(InfoShift) request.getAttribute("infoTurno");
 
-			InfoShift infoTurnoNovo =
-				new InfoShift(
-					(String) editarTurnoForm.get("nome"),
-					infoTurnoAntigo.getTipo(),
-					(Integer) editarTurnoForm.get("lotacao"),
-					infoTurnoAntigo.getInfoDisciplinaExecucao());
+            Object args[] = { shiftOID };
+            InfoShift infoTurnoAntigo = (InfoShift) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadShiftByOID", args);
 
-			Object argsEditarTurno[] = { infoTurnoAntigo, infoTurnoNovo };
+            InfoShift infoTurnoNovo = new InfoShift((String) editarTurnoForm.get("nome"),
+                    infoTurnoAntigo.getTipo(), (Integer) editarTurnoForm.get("lotacao"), infoTurnoAntigo
+                            .getInfoDisciplinaExecucao());
 
-			ActionErrors actionErrors = null;
-			try {
-					ServiceManagerServiceFactory.executeService(
-						userView,
-						"EditarTurno",
-						argsEditarTurno);
-			} catch (ExistingServiceException e) {
+            Object argsEditarTurno[] = { infoTurnoAntigo, infoTurnoNovo };
 
-				throw new ExistingActionException("O Turno", e);
+            ActionErrors actionErrors = null;
+            try {
+                ServiceManagerServiceFactory.executeService(userView, "EditarTurno", argsEditarTurno);
+            } catch (ExistingServiceException e) {
 
-			}
+                throw new ExistingActionException("O Turno", e);
 
-			if (actionErrors == null) {
+            }
 
-				return (mapping.findForward("Guardar"));
-			} 
-				return mapping.getInputForward();
-			
-		} 
-			throw new FenixActionException();
-		
-	}
+            if (actionErrors == null) {
+
+                return (mapping.findForward("Guardar"));
+            }
+            return mapping.getInputForward();
+
+        }
+        throw new FenixActionException();
+
+    }
 }

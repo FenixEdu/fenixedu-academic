@@ -60,7 +60,10 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
-        /* Needed service and creation of bean of InfoExecutionYears for use in jsp */
+        /*
+         * Needed service and creation of bean of InfoExecutionYears for use in
+         * jsp
+         */
         List infoExecutionYearList = null;
         List infoCampusList;
         try {
@@ -113,8 +116,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
     private void fillPeriodInForm(DynaActionForm dynaForm, InfoPeriod infoPeriod, String string) {
         InfoPeriod infoPeriodAux = infoPeriod;
         ArrayList periodsList = new ArrayList();
-        while (infoPeriodAux != null)
-        {
+        while (infoPeriodAux != null) {
             periodsList.add(infoPeriodAux);
             infoPeriodAux = infoPeriodAux.getNextPeriod();
         }
@@ -125,8 +127,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
         String[] endDay = new String[size];
         String[] endMonth = new String[size];
         String[] endYear = new String[size];
-        for (int i = 0; i < size; i++){
-            InfoPeriod period = (InfoPeriod) periodsList.get(i); 
+        for (int i = 0; i < size; i++) {
+            InfoPeriod period = (InfoPeriod) periodsList.get(i);
             startDay[i] = new Integer(period.getStartDate().get(Calendar.DAY_OF_MONTH)).toString();
             startMonth[i] = new Integer(period.getStartDate().get(Calendar.MONTH) + 1).toString();
             startYear[i] = new Integer(period.getStartDate().get(Calendar.YEAR)).toString();
@@ -152,7 +154,8 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String executionYearString = (String) dynaForm.get("executionYearId");
-        //String coordinatorNumberString = (String) dynaForm.get("coordinatorNumber");
+        //String coordinatorNumberString = (String)
+        // dynaForm.get("coordinatorNumber");
         String campusIdString = (String) dynaForm.get("campusId");
         String tempExamMapString = (String) dynaForm.get("tempExamMap");
 
@@ -421,8 +424,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
     public ActionForward addLine(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        
-        
+
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
@@ -452,7 +454,10 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         List infoExecutionYearList = null;
         List infoCampusList = null;
-        /* Needed service and creation of bean of InfoExecutionYears for use in jsp */
+        /*
+         * Needed service and creation of bean of InfoExecutionYears for use in
+         * jsp
+         */
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(userView,
                     "ReadAllExecutionYears", null);
@@ -512,7 +517,10 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         List infoExecutionYearList = null;
         List infoCampusList = null;
-        /* Needed service and creation of bean of InfoExecutionYears for use in jsp */
+        /*
+         * Needed service and creation of bean of InfoExecutionYears for use in
+         * jsp
+         */
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(userView,
                     "ReadAllExecutionYears", null);

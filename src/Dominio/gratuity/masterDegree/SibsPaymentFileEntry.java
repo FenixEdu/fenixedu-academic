@@ -10,11 +10,10 @@ import Util.gratuity.SibsPaymentStatus;
 import Util.gratuity.SibsPaymentType;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
- * 		   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
  */
-public class SibsPaymentFileEntry extends DomainObject implements
-        ISibsPaymentFileEntry {
+public class SibsPaymentFileEntry extends DomainObject implements ISibsPaymentFileEntry {
 
     private Integer keySibsPaymentFile;
 
@@ -45,9 +44,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
      * @param sibsPaymentFile
      * @param sibsPaymentStatusType
      */
-    public SibsPaymentFileEntry(Integer year, Integer studentNumber,
-            SibsPaymentType paymentType, Timestamp transactionDate,
-            Double payedValue, ISibsPaymentFile sibsPaymentFile,
+    public SibsPaymentFileEntry(Integer year, Integer studentNumber, SibsPaymentType paymentType,
+            Timestamp transactionDate, Double payedValue, ISibsPaymentFile sibsPaymentFile,
             SibsPaymentStatus paymentStatus) {
         this.year = year;
         this.studentNumber = studentNumber;
@@ -66,7 +64,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param keySibsFile The keySibsFile to set.
+     * @param keySibsFile
+     *            The keySibsFile to set.
      */
     public void setKeySibsPaymentFile(Integer keySibsPaymentFile) {
         this.keySibsPaymentFile = keySibsPaymentFile;
@@ -80,7 +79,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param paymentType The paymentType to set.
+     * @param paymentType
+     *            The paymentType to set.
      */
     public void setPaymentType(SibsPaymentType paymentType) {
         this.paymentType = paymentType;
@@ -94,7 +94,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param sibsFile The sibsFile to set.
+     * @param sibsFile
+     *            The sibsFile to set.
      */
     public void setSibsPaymentFile(ISibsPaymentFile sibsPaymentFile) {
         this.sibsPaymentFile = sibsPaymentFile;
@@ -108,7 +109,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param studentNumber The studentNumber to set.
+     * @param studentNumber
+     *            The studentNumber to set.
      */
     public void setStudentNumber(Integer studentNumber) {
         this.studentNumber = studentNumber;
@@ -122,7 +124,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param transactionDate The transactionDate to set.
+     * @param transactionDate
+     *            The transactionDate to set.
      */
     public void setTransactionDate(Timestamp transactionDate) {
         this.transactionDate = transactionDate;
@@ -136,7 +139,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param payedValue The payedValue to set.
+     * @param payedValue
+     *            The payedValue to set.
      */
     public void setPayedValue(Double payedValue) {
         this.payedValue = payedValue;
@@ -150,7 +154,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param year The year to set.
+     * @param year
+     *            The year to set.
      */
     public void setYear(Integer year) {
         this.year = year;
@@ -164,7 +169,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
     }
 
     /**
-     * @param paymentStatus The paymentStatus to set.
+     * @param paymentStatus
+     *            The paymentStatus to set.
      */
     public void setPaymentStatus(SibsPaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
@@ -175,10 +181,8 @@ public class SibsPaymentFileEntry extends DomainObject implements
 
         if ((obj instanceof ISibsPaymentFileEntry)) {
             ISibsPaymentFileEntry sibsFileEntry = (ISibsPaymentFileEntry) obj;
-            if ((this.getIdInternal() != null)
-                    && (sibsFileEntry.getIdInternal() != null)
-                    && (this.getIdInternal().equals(sibsFileEntry
-                            .getIdInternal()))) {
+            if ((this.getIdInternal() != null) && (sibsFileEntry.getIdInternal() != null)
+                    && (this.getIdInternal().equals(sibsFileEntry.getIdInternal()))) {
 
                 result = true;
             }
@@ -194,11 +198,9 @@ public class SibsPaymentFileEntry extends DomainObject implements
         result += "payedValue = " + this.payedValue + "; \n";
         result += "paymentType = " + this.paymentType + "; \n";
         result += "paymentStatus = " + this.paymentStatus + "; \n";
-        result += "sibsPaymentFile = " + this.sibsPaymentFile.toString()
-                + "; \n";
+        result += "sibsPaymentFile = " + this.sibsPaymentFile.toString() + "; \n";
         result += "studentNumber = " + this.studentNumber + "; \n";
-        result += "transactionDate = " + this.transactionDate.toString()
-                + "; \n";
+        result += "transactionDate = " + this.transactionDate.toString() + "; \n";
         result += "year = " + this.year + "; \n";
         result += "] \n";
 

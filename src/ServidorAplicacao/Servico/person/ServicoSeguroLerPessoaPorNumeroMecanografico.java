@@ -11,29 +11,33 @@ import ServidorPersistenteJDBC.SuportePersistente;
 
 /**
  * @author Fernanda & Tânia
- *
+ *  
  */
 public class ServicoSeguroLerPessoaPorNumeroMecanografico extends ServicoSeguro {
-	private Pessoa pessoa = null;
-	private int numeroMecanografico;
+    private Pessoa pessoa = null;
 
-	public ServicoSeguroLerPessoaPorNumeroMecanografico(ServicoAutorizacao servicoAutorizacao, int numeroMecanografico) {
-		super(servicoAutorizacao);
-		this.numeroMecanografico = numeroMecanografico;
-	}
+    private int numeroMecanografico;
 
-	public void execute() throws NotExecuteException {
-		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
-		Funcionario funcionario = null;
-		if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numeroMecanografico)) == null)
-			throw new NotExecuteException();
+    public ServicoSeguroLerPessoaPorNumeroMecanografico(ServicoAutorizacao servicoAutorizacao,
+            int numeroMecanografico) {
+        super(servicoAutorizacao);
+        this.numeroMecanografico = numeroMecanografico;
+    }
 
-		IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-		if ((pessoa = iPessoaPersistente.lerPessoa(funcionario.getChavePessoa())) == null)
-			throw new NotExecuteException();
-	}
+    public void execute() throws NotExecuteException {
+        IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance()
+                .iFuncionarioPersistente();
+        Funcionario funcionario = null;
+        if ((funcionario = iFuncionarioPersistente
+                .lerFuncionarioSemHistoricoPorNumMecanografico(numeroMecanografico)) == null)
+            throw new NotExecuteException();
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
+        IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
+        if ((pessoa = iPessoaPersistente.lerPessoa(funcionario.getChavePessoa())) == null)
+            throw new NotExecuteException();
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
 }

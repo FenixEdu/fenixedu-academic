@@ -45,7 +45,27 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
-	
+	<filter>
+        <name>DepartmentCreditsManagerAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.credits.DepartmentCreditsManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+	<filter>
+        <name>DepartmentMemberAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.DepartmentMemberAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
+	<filter>
+        <name>EmployeeAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.EmployeeAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
     <filter>
         <name>StudentAuthorization</name>
         <implementationClass>ServidorAplicacao.Filtro.StudentAuthorizationFilter</implementationClass>
@@ -682,5 +702,17 @@
         <implementationClass>ServidorAplicacao.Filtro.OperatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>    
+    </filter>
+    <filter>
+    	<name>FirstTimeStudentAuthorization</name>
+    	<implementationClass>ServidorAplicacao.Filtro.student.FirstTimeStudentAuthorizationFilter</implementationClass>
+    	<description/>
+    	<isTransactional>false</isTransactional>
+    </filter>     
+    <filter>
+    	<name>ClassEnrollmentAuthorizationFilter</name>
+    	<implementationClass>ServidorAplicacao.Filtro.enrollment.ClassEnrollmentAuthorizationFilter</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>
+    </filter>
 </filterDefinitions>

@@ -12,14 +12,12 @@ import Util.FenixUtil;
 /**
  * @author jpvl
  */
-public class TimePeriod extends FenixUtil
-{
+public class TimePeriod extends FenixUtil {
     private long start;
 
     private long end;
 
-    public TimePeriod( long start, long end )
-    {
+    public TimePeriod(long start, long end) {
         this.start = start;
         this.end = end;
     }
@@ -27,18 +25,15 @@ public class TimePeriod extends FenixUtil
     /**
      *  
      */
-    public TimePeriod( Date start, Date end )
-    {
+    public TimePeriod(Date start, Date end) {
         this(start.getTime(), end.getTime());
     }
 
-    public TimePeriod( Calendar start, Calendar end )
-    {
+    public TimePeriod(Calendar start, Calendar end) {
         this(start.getTimeInMillis(), end.getTimeInMillis());
     }
 
-    public Double hours()
-    {
+    public Double hours() {
         Calendar endCalendar = Calendar.getInstance();
 
         endCalendar.setTimeInMillis(this.end);
@@ -48,12 +43,13 @@ public class TimePeriod extends FenixUtil
 
         int endMinutes = endCalendar.get(Calendar.MINUTE);
         int startMinutes = startCalendar.get(Calendar.MINUTE);
-       
+
         endCalendar.roll(Calendar.HOUR_OF_DAY, -(startCalendar.get(Calendar.HOUR_OF_DAY)));
         endCalendar.roll(Calendar.MINUTE, -(startCalendar.get(Calendar.MINUTE)));
-        
+
         int minutes = endCalendar.get(Calendar.MINUTE);
-        int hours = endMinutes < startMinutes ? endCalendar.get(Calendar.HOUR_OF_DAY) - 1 : endCalendar.get(Calendar.HOUR_OF_DAY);
+        int hours = endMinutes < startMinutes ? endCalendar.get(Calendar.HOUR_OF_DAY) - 1 : endCalendar
+                .get(Calendar.HOUR_OF_DAY);
 
         double minutesInHours = minutes / 60.0;
 

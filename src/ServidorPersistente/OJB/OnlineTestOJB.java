@@ -13,26 +13,22 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentOnlineTest;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public class OnlineTestOJB extends ObjectFenixOJB implements IPersistentOnlineTest
-{
+public class OnlineTestOJB extends PersistentObjectOJB implements IPersistentOnlineTest {
 
-	public OnlineTestOJB()
-	{
-	}
+    public OnlineTestOJB() {
+    }
 
-	public Object readByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-		return queryObject(OnlineTest.class, criteria);
-	}
+    public Object readByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+        return queryObject(OnlineTest.class, criteria);
+    }
 
-	public void delete(IOnlineTest onlineTest) throws ExcepcaoPersistencia
-	{
-		super.delete(onlineTest);
-	}
+    public void delete(IOnlineTest onlineTest) throws ExcepcaoPersistencia {
+        super.delete(onlineTest);
+    }
 }

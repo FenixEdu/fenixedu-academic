@@ -10,51 +10,44 @@ import java.util.List;
  * @author Susana Fernandes
  */
 public class InfoSiteDistributedTests extends DataTranferObject implements ISiteComponent {
-	private List infoDistributedTests;
-	private InfoExecutionCourse executionCourse;
+    private List infoDistributedTests;
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public List getInfoDistributedTests() {
-		return infoDistributedTests;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
+    public List getInfoDistributedTests() {
+        return infoDistributedTests;
+    }
 
-	public void setInfoDistributedTests(List list) {
-		infoDistributedTests = list;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoSiteDistributedTests) {
-			InfoSiteDistributedTests infoSiteDistributedTests =
-				(InfoSiteDistributedTests) obj;
-			if (getExecutionCourse() != null) {
-				result =
-					getExecutionCourse().equals(
-						infoSiteDistributedTests.getExecutionCourse())
-						&& getInfoDistributedTests().containsAll(
-							infoSiteDistributedTests.getInfoDistributedTests())
-						&& infoSiteDistributedTests
-							.getInfoDistributedTests()
-							.containsAll(
-							getInfoDistributedTests());
+    public void setInfoDistributedTests(List list) {
+        infoDistributedTests = list;
+    }
 
-			} else {
-				result =
-					getInfoDistributedTests().containsAll(
-						infoSiteDistributedTests.getInfoDistributedTests())
-						&& infoSiteDistributedTests
-							.getInfoDistributedTests()
-							.containsAll(
-							getInfoDistributedTests());
-			}
-		}
-		return result;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoSiteDistributedTests) {
+            InfoSiteDistributedTests infoSiteDistributedTests = (InfoSiteDistributedTests) obj;
+            if (getExecutionCourse() != null) {
+                result = getExecutionCourse().equals(infoSiteDistributedTests.getExecutionCourse())
+                        && getInfoDistributedTests().containsAll(
+                                infoSiteDistributedTests.getInfoDistributedTests())
+                        && infoSiteDistributedTests.getInfoDistributedTests().containsAll(
+                                getInfoDistributedTests());
+
+            } else {
+                result = getInfoDistributedTests().containsAll(
+                        infoSiteDistributedTests.getInfoDistributedTests())
+                        && infoSiteDistributedTests.getInfoDistributedTests().containsAll(
+                                getInfoDistributedTests());
+            }
+        }
+        return result;
+    }
 }

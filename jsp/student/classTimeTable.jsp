@@ -19,6 +19,6 @@
 <div align="center"><h2>Turma <bean:write name="infoSchoolClass" property="nome"/></h2></div>
 </logic:present>
 <bean:define id="infoLessons" name="infoLessons"/>
-<div align="center"><app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div> 
+<div align="center"><app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="<%= request.getContextPath() %>"/></div> 
 </body>
 </html:html>

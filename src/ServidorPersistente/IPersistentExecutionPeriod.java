@@ -9,72 +9,67 @@ import Dominio.IExecutionYear;
 /**
  * Created on 11/Fev/2003
  * 
- * @author João Mota 
- * Package ServidorPersistente
+ * @author João Mota Package ServidorPersistente
  *  
  */
-public interface IPersistentExecutionPeriod extends IPersistentObject
-{
+public interface IPersistentExecutionPeriod extends IPersistentObject {
 
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia;
 
     /**
-	 * @return ArrayList
-	 * @throws ExcepcaoPersistencia
-	 */
+     * @return ArrayList
+     * @throws ExcepcaoPersistencia
+     */
     public List readAllExecutionPeriod() throws ExcepcaoPersistencia;
 
-   
     /**
-	 * @param executionPeriod
-	 * @return boolean
-	 */
+     * @param executionPeriod
+     * @return boolean
+     */
     public boolean delete(IExecutionPeriod executionPeriod);
 
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia;
 
     /**
-	 * Method readByNameAndExecutionYear.
-	 * 
-	 * @param string
-	 * @param iExecutionYear
-	 * @return IExecutionPeriod
-	 */
-    public IExecutionPeriod readByNameAndExecutionYear(
-        String executionPeriodName,
-        IExecutionYear executionYear)
-        throws ExcepcaoPersistencia;
+     * Method readByNameAndExecutionYear.
+     * 
+     * @param string
+     * @param iExecutionYear
+     * @return IExecutionPeriod
+     */
+    public IExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
+            IExecutionYear executionYear) throws ExcepcaoPersistencia;
 
     /**
-	 * @param string
-	 * @param year
-	 * @return
-	 */
+     * @param string
+     * @param year
+     * @return
+     */
     public IExecutionPeriod readBySemesterAndExecutionYear(Integer semester, IExecutionYear year)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 
     /**
-	 * @param workingArea
-	 * @param executionPeriodToExportDataFrom
-	 */
-/*    public void transferData(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia;
-*/
+     * @param workingArea
+     * @param executionPeriodToExportDataFrom
+     */
+    /*
+     * public void transferData( IExecutionPeriod executionPeriodToImportDataTo,
+     * IExecutionPeriod executionPeriodToExportDataFrom) throws
+     * ExcepcaoPersistencia;
+     */
     public List readPublic() throws ExcepcaoPersistencia;
 
     /**
-	 * @param executionYear
-	 * @return @throws
-	 *         ExcepcaoPersistencia
-	 */
+     * @param executionYear
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
     public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia;
 
     /**
-	 * @return
-	 */
+     * @return
+     */
     public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia;
-    
+
     public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia;
 }

@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.manager.curricularCourseGroupsManagement;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourseGroup;
 import Dominio.ICurricularCourseGroup;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -12,7 +13,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
@@ -31,13 +31,15 @@ public class DeleteCurricularCourseGroup implements IService {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
                     .getIPersistentCurricularCourseGroup();
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup.readByOID(CurricularCourseGroup.class, groupId);
-            if (curricularCourseGroup.getCurricularCourses()==null ||curricularCourseGroup.getCurricularCourses().isEmpty()){
+            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
+                    .readByOID(CurricularCourseGroup.class, groupId);
+            if (curricularCourseGroup.getCurricularCourses() == null
+                    || curricularCourseGroup.getCurricularCourses().isEmpty()) {
                 persistentCurricularCourseGroup.deleteByOID(CurricularCourseGroup.class, groupId);
-            }else {
+            } else {
                 throw new InvalidArgumentsServiceException();
             }
-            
+
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

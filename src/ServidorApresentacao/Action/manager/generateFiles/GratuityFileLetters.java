@@ -18,217 +18,169 @@ import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
  * @author Tânia Pousão
  *  
  */
-public class GratuityFileLetters extends GratuityFile
-{
-	public static final String SEPARATOR = ";";
-	public static final String NOTHING = "-";
+public class GratuityFileLetters extends GratuityFile {
+    public static final String SEPARATOR = ";";
 
-	public static File buildFile(List infoGratuitySituations) throws Exception
-	{
-		if (infoGratuitySituations == null)
-		{
-			return null;
-		}
+    public static final String NOTHING = "-";
 
-		String fileName = null;
-		File file = null;
-		BufferedWriter writer = null;
+    public static File buildFile(List infoGratuitySituations) throws Exception {
+        if (infoGratuitySituations == null) {
+            return null;
+        }
 
-		String fileNameErrors = null;
-		File fileErrors = null;
-		BufferedWriter writerErrors = null;
-		try
-		{
-			//build the file's name with the first element
-			fileName = nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
-			file = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
-			writer = new BufferedWriter(new FileWriter(file));
+        String fileName = null;
+        File file = null;
+        BufferedWriter writer = null;
 
-			//errors if student hasn´t address or nothing to pay
-			fileNameErrors = "erros_" + nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
-			fileErrors =
-				new File(System.getProperty("java.io.tmpdir") + File.separator + fileNameErrors);
-			writerErrors = new BufferedWriter(new FileWriter(fileErrors));
+        String fileNameErrors = null;
+        File fileErrors = null;
+        BufferedWriter writerErrors = null;
+        try {
+            //build the file's name with the first element
+            fileName = nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
+            file = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
+            writer = new BufferedWriter(new FileWriter(file));
 
-			writeHeader(writer);
+            //errors if student hasn´t address or nothing to pay
+            fileNameErrors = "erros_" + nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
+            fileErrors = new File(System.getProperty("java.io.tmpdir") + File.separator + fileNameErrors);
+            writerErrors = new BufferedWriter(new FileWriter(fileErrors));
 
-			Iterator iterator = infoGratuitySituations.listIterator();
-			while (iterator.hasNext())
-			{
-				InfoGratuitySituation infoGratuitySituation = (InfoGratuitySituation) iterator.next();
+            writeHeader(writer);
 
-				if (valid(infoGratuitySituation, writerErrors))
-				{
-					writeLine(writer, infoGratuitySituation);
-				}
-			}
+            Iterator iterator = infoGratuitySituations.listIterator();
+            while (iterator.hasNext()) {
+                InfoGratuitySituation infoGratuitySituation = (InfoGratuitySituation) iterator.next();
 
-			writer.close();
-			writerErrors.close();
+                if (valid(infoGratuitySituation, writerErrors)) {
+                    writeLine(writer, infoGratuitySituation);
+                }
+            }
 
-			return file;
-		}
-		catch (Exception exception)
-		{
-			exception.printStackTrace();
-			throw new Exception();
-		}
-	}
+            writer.close();
+            writerErrors.close();
 
-	private static String nameFile(InfoGratuitySituation infoGratuitySituation)
-	{
-		StringBuffer fileName = new StringBuffer();
+            return file;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new Exception();
+        }
+    }
 
-		String year =
-			infoGratuitySituation
-				.getInfoGratuityValues()
-				.getInfoExecutionDegree()
-				.getInfoExecutionYear()
-				.getYear()
-				.replace('/', '-');
-		fileName.append("cartasPropinas");
-		fileName.append(year);
-		fileName.append(".txt");
+    private static String nameFile(InfoGratuitySituation infoGratuitySituation) {
+        StringBuffer fileName = new StringBuffer();
 
-		return fileName.toString();
-	}
+        String year = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree()
+                .getInfoExecutionYear().getYear().replace('/', '-');
+        fileName.append("cartasPropinas");
+        fileName.append(year);
+        fileName.append(".txt");
 
-	/**
-	 * Creates a header that describes all column in file like <name column>;...; <name column>
-	 * 
-	 * @param writer
-	 */
-	private static void writeHeader(BufferedWriter writer) throws IOException
-	{
-		StringBuffer header = new StringBuffer();
-		header.append("NOME");
-		header.append(SEPARATOR);
-		header.append("MORADA");
-		header.append(SEPARATOR);
-		header.append("LOCALIDADE");
-		header.append(SEPARATOR);
-		header.append("CODIGO_POSTAL");
-		header.append(SEPARATOR);
-		header.append("LOCALIDADE_CODIGO_POSTAL");
-		header.append(SEPARATOR);
-		header.append("REFERÊNCIA_PAGAMENTO");
-		header.append(SEPARATOR);
-		header.append("MESTRADO");
-		header.append(SEPARATOR);
-		header.append("PROPINA");
-		header.append(SEPARATOR);
-		header.append("SEGURO");
-		header.append(SEPARATOR);
-		header.append("TOTAL");
+        return fileName.toString();
+    }
 
-		writer.write(header.toString());
-		writer.newLine();
-	}
+    /**
+     * Creates a header that describes all column in file like <name
+     * column>;...; <name column>
+     * 
+     * @param writer
+     */
+    private static void writeHeader(BufferedWriter writer) throws IOException {
+        StringBuffer header = new StringBuffer();
+        header.append("NOME");
+        header.append(SEPARATOR);
+        header.append("MORADA");
+        header.append(SEPARATOR);
+        header.append("LOCALIDADE");
+        header.append(SEPARATOR);
+        header.append("CODIGO_POSTAL");
+        header.append(SEPARATOR);
+        header.append("LOCALIDADE_CODIGO_POSTAL");
+        header.append(SEPARATOR);
+        header.append("REFERÊNCIA_PAGAMENTO");
+        header.append(SEPARATOR);
+        header.append("MESTRADO");
+        header.append(SEPARATOR);
+        header.append("PROPINA");
+        header.append(SEPARATOR);
+        header.append("SEGURO");
+        header.append(SEPARATOR);
+        header.append("TOTAL");
 
-	/**
-	 * Creates a line with student's data separate by tab
-	 * 
-	 * @param writer
-	 * @param infoGratuitySituation
-	 */
-	private static void writeLine(BufferedWriter writer, InfoGratuitySituation infoGratuitySituation)
-		throws IOException
-	{
-		StringBuffer line = new StringBuffer();
-		//student´s name
-		line.append(
-			infoGratuitySituation
-				.getInfoStudentCurricularPlan()
-				.getInfoStudent()
-				.getInfoPerson()
-				.getNome());
-		line.append("\t");
-		//student´s address
-		line.append(
-			infoGratuitySituation
-				.getInfoStudentCurricularPlan()
-				.getInfoStudent()
-				.getInfoPerson()
-				.getMorada());
-		line.append("\t");
-		//address's area
-		line.append(
-			infoGratuitySituation
-				.getInfoStudentCurricularPlan()
-				.getInfoStudent()
-				.getInfoPerson()
-				.getLocalidade());
-		line.append("\t");
-		//address's area code
-		line.append(
-			infoGratuitySituation
-				.getInfoStudentCurricularPlan()
-				.getInfoStudent()
-				.getInfoPerson()
-				.getCodigoPostal());
-		line.append("\t");
-		//address's area code's area
-		line.append(
-			infoGratuitySituation
-				.getInfoStudentCurricularPlan()
-				.getInfoStudent()
-				.getInfoPerson()
-				.getLocalidadeCodigoPostal());
-		line.append("\t");
-		//payment's reference
-		line.append(buildPaymentReference(infoGratuitySituation));
-		line.append("\t");
-		//degree's name
-		line.append(
-			infoGratuitySituation
-				.getInfoStudentCurricularPlan()
-				.getInfoDegreeCurricularPlan()
-				.getInfoDegree()
-				.getNome());
-		line.append("\t");
-		//gratuity value
-		double totalValue = infoGratuitySituation.getRemainingValue().doubleValue();
-		if (totalValue > 0)
-		{
-			line.append(infoGratuitySituation.getRemainingValue());
-		}
-		else
-		{
-			//nothig to payed
-			line.append(NOTHING);
-			totalValue = 0;
-		}
-		line.append("\t");
-		//first verify if the student already payed the insurance
-		//and if the student not payed add to the total value
-		//after the insurance value is appended to the line
+        writer.write(header.toString());
+        writer.newLine();
+    }
 
-		if (infoGratuitySituation.getInsurancePayed().equals(SessionConstants.NOT_PAYED_INSURANCE))
-		{
-			//insurance not payed
-			line.append(INSURANCE);
+    /**
+     * Creates a line with student's data separate by tab
+     * 
+     * @param writer
+     * @param infoGratuitySituation
+     */
+    private static void writeLine(BufferedWriter writer, InfoGratuitySituation infoGratuitySituation)
+            throws IOException {
+        StringBuffer line = new StringBuffer();
+        //student´s name
+        line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent()
+                .getInfoPerson().getNome());
+        line.append("\t");
+        //student´s address
+        line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent()
+                .getInfoPerson().getMorada());
+        line.append("\t");
+        //address's area
+        line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent()
+                .getInfoPerson().getLocalidade());
+        line.append("\t");
+        //address's area code
+        line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent()
+                .getInfoPerson().getCodigoPostal());
+        line.append("\t");
+        //address's area code's area
+        line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent()
+                .getInfoPerson().getLocalidadeCodigoPostal());
+        line.append("\t");
+        //payment's reference
+        line.append(buildPaymentReference(infoGratuitySituation));
+        line.append("\t");
+        //degree's name
+        line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan()
+                .getInfoDegree().getNome());
+        line.append("\t");
+        //gratuity value
+        double totalValue = infoGratuitySituation.getRemainingValue().doubleValue();
+        if (totalValue > 0) {
+            line.append(infoGratuitySituation.getRemainingValue());
+        } else {
+            //nothig to payed
+            line.append(NOTHING);
+            totalValue = 0;
+        }
+        line.append("\t");
+        //first verify if the student already payed the insurance
+        //and if the student not payed add to the total value
+        //after the insurance value is appended to the line
 
-			totalValue = totalValue + INSURANCE;
-		}
-		else
-		{
-			//insurance payed
-			line.append(NOTHING);
-		}
-		line.append("\t");
-		//total value
-		if (totalValue > 0)
-		{
-			line.append(totalValue);
-		}
-		else
-		{
-			//nothig to payed
-			line.append(NOTHING);
-		}
+        if (infoGratuitySituation.getInsurancePayed().equals(SessionConstants.NOT_PAYED_INSURANCE)) {
+            //insurance not payed
+            line.append(INSURANCE);
 
-		//write the line
-		writer.write(line.toString());
-		writer.newLine();
-	}
+            totalValue = totalValue + INSURANCE;
+        } else {
+            //insurance payed
+            line.append(NOTHING);
+        }
+        line.append("\t");
+        //total value
+        if (totalValue > 0) {
+            line.append(totalValue);
+        } else {
+            //nothig to payed
+            line.append(NOTHING);
+        }
+
+        //write the line
+        writer.write(line.toString());
+        writer.newLine();
+    }
 }

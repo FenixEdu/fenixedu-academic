@@ -14,17 +14,16 @@ import Dominio.IDegreeCurricularPlan;
  */
 public interface IPersistentPrecedence extends IPersistentObject {
 
+    /**
+     * @param plan
+     * @return
+     */
+    List readByDegreeCurricularPlan(IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
 
-	/**
-	 * @param plan
-	 * @return
-	 */
-	List readByDegreeCurricularPlan(IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
-
-	/**
-	 * @param curricularCourse
-	 * @return
-	 */
-	List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
+    /**
+     * @param curricularCourse
+     * @return
+     */
+    List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 
 }

@@ -144,6 +144,5 @@ public class InfoAdvisory extends InfoObject {
         }
         return infoAdvisory;
     }
-    
-    
+
 }

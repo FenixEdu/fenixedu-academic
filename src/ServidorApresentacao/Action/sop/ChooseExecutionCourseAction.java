@@ -28,59 +28,50 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author jpvl
- *
  * 
+ *  
  */
-public class ChooseExecutionCourseAction
-	extends FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
+public class ChooseExecutionCourseAction extends
+        FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		super.execute(mapping, form, request, response);
+        super.execute(mapping, form, request, response);
 
-		//HttpSession session = request.getSession(false);
+        //HttpSession session = request.getSession(false);
 
-		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
+        DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		List infoCourseList = SessionUtils.getExecutionCourses(request);
+        List infoCourseList = SessionUtils.getExecutionCourses(request);
 
-		String courseInitials = (String) chooseCourseForm.get("courseInitials");
-		Integer page = (Integer) chooseCourseForm.get("page");
+        String courseInitials = (String) chooseCourseForm.get("courseInitials");
+        Integer page = (Integer) chooseCourseForm.get("page");
 
-		if (courseInitials != null && !courseInitials.equals("")) {
-			InfoExecutionCourse infoCourse = new InfoExecutionCourse();
+        if (courseInitials != null && !courseInitials.equals("")) {
+            InfoExecutionCourse infoCourse = new InfoExecutionCourse();
 
-			infoCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-			infoCourse.setSigla(courseInitials);
+            infoCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+            infoCourse.setSigla(courseInitials);
 
-			int index = infoCourseList.indexOf(infoCourse);
-			infoCourse = (InfoExecutionCourse) infoCourseList.get(index);
+            int index = infoCourseList.indexOf(infoCourse);
+            infoCourse = (InfoExecutionCourse) infoCourseList.get(index);
 
-			request.setAttribute(
-				SessionConstants.EXECUTION_COURSE,
-				infoCourse);
-			return mapping.findForward("forwardChoose");
-		} 
-			if (page != null && page.intValue() > 1)
-			{
-				request.removeAttribute(SessionConstants.EXECUTION_COURSE);
-				ActionErrors actionErrors = new ActionErrors();
-				actionErrors.add(
-						"label.choose.executionCourse",
-						new ActionError("label.choose.executionCourse"));
-				saveErrors(request, actionErrors);
-			}
-			return mapping.findForward("showForm");
-		
-	}
+            request.setAttribute(SessionConstants.EXECUTION_COURSE, infoCourse);
+            return mapping.findForward("forwardChoose");
+        }
+        if (page != null && page.intValue() > 1) {
+            request.removeAttribute(SessionConstants.EXECUTION_COURSE);
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("label.choose.executionCourse", new ActionError(
+                    "label.choose.executionCourse"));
+            saveErrors(request, actionErrors);
+        }
+        return mapping.findForward("showForm");
+
+    }
 
 }

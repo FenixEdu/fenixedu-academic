@@ -14,53 +14,43 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Ana
  */
-public class ReadExecutionPeriodsNoPeriodsTest extends ServiceTestCase
-{
-	/**
-	 * @param name
-	 */
-	public ReadExecutionPeriodsNoPeriodsTest(java.lang.String testName)
-	{
-		super(testName);
-	}
+public class ReadExecutionPeriodsNoPeriodsTest extends ServiceTestCase {
+    /**
+     * @param name
+     */
+    public ReadExecutionPeriodsNoPeriodsTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadExecutionPeriods";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadExecutionPeriods";
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets_templates/servicos/sop/testEmptyExamsV4.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets_templates/servicos/sop/testEmptyExamsV4.xml";
+    }
 
-	public void testSuccessfullReadExecutionPeriodsEmptyList()
-	{
-		ReadExecutionPeriods service = ReadExecutionPeriods.getService();
+    public void testSuccessfullReadExecutionPeriodsEmptyList() {
+        ReadExecutionPeriods service = new ReadExecutionPeriods();
 
-		ISuportePersistente sp;
+        ISuportePersistente sp;
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			List executionPeriodsList = service.run();
+            List executionPeriodsList = service.run();
 
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 
-			assertEquals(executionPeriodsList.size(), 0);
+            assertEquals(executionPeriodsList.size(), 0);
 
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("testSuccessfullReadExecutionPeriodsEmptyList" + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("testSuccessfullReadExecutionPeriodsEmptyList error on compareDataSet" + ex);
-		}
-	}
+        } catch (FenixServiceException ex) {
+            fail("testSuccessfullReadExecutionPeriodsEmptyList" + ex);
+        } catch (Exception ex) {
+            fail("testSuccessfullReadExecutionPeriodsEmptyList error on compareDataSet" + ex);
+        }
+    }
 
 }

@@ -11,11 +11,10 @@
  */
 
 /**
- *
- * Autores : 
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
+ *  
  */
 
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice;
@@ -30,51 +29,52 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 
 public class ReadMasterDegreesServiceTest extends TestCaseServicos {
-    
+
     public ReadMasterDegreesServiceTest(java.lang.String testName) {
         super(testName);
     }
-    
+
     public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         TestSuite suite = new TestSuite(ReadMasterDegreesServiceTest.class);
-        
+
         return suite;
     }
-    
+
     protected void setUp() {
         super.setUp();
-        
+
     }
-    
+
     protected void tearDown() {
         super.tearDown();
     }
+
     public void testReadMasterDegreeCandidateExisting() {
         System.out.println("- Test 1 : Read Master Degrees");
         List masterDegrees = null;
 
-		Object args[] = {"2002/2003"};
+        Object args[] = { "2002/2003" };
         try {
-            masterDegrees = (List) ServiceManagerServiceFactory.executeService(this.getUserViewToBeTested(), "ReadMasterDegrees", args);
+            masterDegrees = (List) ServiceManagerServiceFactory.executeService(this
+                    .getUserViewToBeTested(), "ReadMasterDegrees", args);
         } catch (Exception ex) {
             System.out.println("Service Not Executed: " + ex);
-        }   
-        
-        
+        }
+
         assertNotNull(masterDegrees);
         assertTrue(!masterDegrees.isEmpty());
-        assertEquals(3,masterDegrees.size());
+        assertEquals(3, masterDegrees.size());
 
-   }
-   
-   private UserView getUserViewToBeTested() {
-	   UserView userView = new UserView("nmsn", null);
-	   return userView;
-   }
-    
+    }
+
+    private UserView getUserViewToBeTested() {
+        UserView userView = new UserView("nmsn", null);
+        return userView;
+    }
+
 }
 

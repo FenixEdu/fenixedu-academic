@@ -32,13 +32,11 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
     public boolean equals(Object objectToCompare) {
         boolean result = false;
         if (objectToCompare instanceof InfoSiteCommon
-                && (((((InfoSiteCommon) objectToCompare).getTitle() != null
-                        && this.getTitle() != null && ((InfoSiteCommon) objectToCompare)
+                && (((((InfoSiteCommon) objectToCompare).getTitle() != null && this.getTitle() != null && ((InfoSiteCommon) objectToCompare)
                         .getTitle().equals(this.getTitle())) || ((InfoSiteCommon) objectToCompare)
                         .getTitle() == null
                         && this.getTitle() == null))
-                && (((((InfoSiteCommon) objectToCompare).getMail() != null
-                        && this.getMail() != null && ((InfoSiteCommon) objectToCompare)
+                && (((((InfoSiteCommon) objectToCompare).getMail() != null && this.getMail() != null && ((InfoSiteCommon) objectToCompare)
                         .getMail().equals(this.getMail())) || ((InfoSiteCommon) objectToCompare)
                         .getMail() == null
                         && this.getMail() == null))
@@ -51,19 +49,16 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
             result = true;
         }
 
-        if (((InfoSiteCommon) objectToCompare).getSections() == null
-                && this.getSections() == null && result == true) {
+        if (((InfoSiteCommon) objectToCompare).getSections() == null && this.getSections() == null
+                && result == true) {
             return true;
         }
-        if (((InfoSiteCommon) objectToCompare).getSections() == null
-                || this.getSections() == null
-                || ((InfoSiteCommon) objectToCompare).getSections().size() != this
-                        .getSections().size()) {
+        if (((InfoSiteCommon) objectToCompare).getSections() == null || this.getSections() == null
+                || ((InfoSiteCommon) objectToCompare).getSections().size() != this.getSections().size()) {
             return false;
         }
 
-        ListIterator iter1 = ((InfoSiteCommon) objectToCompare).getSections()
-                .listIterator();
+        ListIterator iter1 = ((InfoSiteCommon) objectToCompare).getSections().listIterator();
         ListIterator iter2 = this.getSections().listIterator();
         while (result && iter1.hasNext()) {
             InfoSection infoSection1 = (InfoSection) iter1.next();
@@ -91,10 +86,9 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
         if (associatedDegrees != null) {
             Iterator iter = associatedDegrees.iterator();
             while (iter.hasNext()) {
-                InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter
-                        .next();
-                InfoDegree infoDegree = infoCurricularCourse
-                        .getInfoDegreeCurricularPlan().getInfoDegree();
+                InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
+                InfoDegree infoDegree = infoCurricularCourse.getInfoDegreeCurricularPlan()
+                        .getInfoDegree();
                 if (!infoDegreeList.contains(infoDegree)) {
                     infoDegreeList.add(infoDegree);
                 }

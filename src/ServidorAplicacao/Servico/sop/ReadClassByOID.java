@@ -18,40 +18,41 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
  * 
+ *  
  */
 public class ReadClassByOID implements IServico {
 
-	private static ReadClassByOID service = new ReadClassByOID();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadClassByOID getService() {
-		return service;
-	}
+    private static ReadClassByOID service = new ReadClassByOID();
 
-	/**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadClassByOID";
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadClassByOID getService() {
+        return service;
+    }
 
-	public InfoClass run(Integer oid) throws FenixServiceException {
+    /**
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadClassByOID";
+    }
 
-		InfoClass result = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ITurmaPersistente classDAO = sp.getITurmaPersistente();
-			ITurma turma = (ITurma) classDAO.readByOID(Turma.class, oid);
-			if (turma != null) {
-				result = Cloner.copyClass2InfoClass(turma);
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+    public InfoClass run(Integer oid) throws FenixServiceException {
 
-		return result;
-	}
+        InfoClass result = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ITurmaPersistente classDAO = sp.getITurmaPersistente();
+            ITurma turma = (ITurma) classDAO.readByOID(Turma.class, oid);
+            if (turma != null) {
+                result = Cloner.copyClass2InfoClass(turma);
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+
+        return result;
+    }
 }

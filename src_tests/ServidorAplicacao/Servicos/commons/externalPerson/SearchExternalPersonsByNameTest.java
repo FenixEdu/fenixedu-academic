@@ -10,90 +10,85 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 
 /**
  * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
  */
 public class SearchExternalPersonsByNameTest extends ServiceTestCase {
 
-	private String dataSetFilePath;
-	//private IUserView userView = null;
+    private String dataSetFilePath;
 
-	/**
-	 * @param testName
-	 */
-	public SearchExternalPersonsByNameTest(String testName) {
-		super(testName);
-		this.dataSetFilePath = "etc/datasets/servicos/commons/externalPerson/testSearchExternalPersonsByNameDataSet.xml";
-	}
+    //private IUserView userView = null;
 
-	protected void setUp() {
-		super.setUp();
-	//	userView = this.authenticateUser(getAuthenticatedUser());
-	}
+    /**
+     * @param testName
+     */
+    public SearchExternalPersonsByNameTest(String testName) {
+        super(testName);
+        this.dataSetFilePath = "etc/datasets/servicos/commons/externalPerson/testSearchExternalPersonsByNameDataSet.xml";
+    }
 
-	/*
-	private IUserView authenticateUser(String[] args) {
-		SuportePersistenteOJB.resetInstance();
+    protected void setUp() {
+        super.setUp();
+        //	userView = this.authenticateUser(getAuthenticatedUser());
+    }
 
-		try {
-			return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-		}
-	}
+    /*
+     * private IUserView authenticateUser(String[] args) {
+     * SuportePersistenteOJB.resetInstance();
+     * 
+     * try { return (IUserView)
+     * ServiceManagerServiceFactory.executeService(null, "Autenticacao", args); }
+     * catch (Exception ex) { fail("Authenticating User!" + ex); return null; } }
+     * 
+     * protected String[] getAuthenticatedUser() { String[] args = { "f3667",
+     * "pass", getApplication()}; return args; }
+     * 
+     * protected String getApplication() { return Autenticacao.INTRANET; }
+     */
 
-	protected String[] getAuthenticatedUser() {
-		String[] args = { "f3667", "pass", getApplication()};
-		return args;
-	}
+    protected String getDataSetFilePath() {
+        return this.dataSetFilePath;
+    }
 
-	protected String getApplication() {
-		return Autenticacao.INTRANET;
-	}*/
+    protected String getNameOfServiceToBeTested() {
+        return "SearchExternalPersonsByName";
+    }
 
-	protected String getDataSetFilePath() {
-		return this.dataSetFilePath;
-	}
+    public void testSearchExistingExternalPersons() {
+        try {
+            String name = "externo";
+            Object[] argsSearchExternalPersons = { name };
 
-	protected String getNameOfServiceToBeTested() {
-		return "SearchExternalPersonsByName";
-	}
+            List infoExternalPersons = (List) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), argsSearchExternalPersons);
+            assertNotNull(infoExternalPersons);
+            assertEquals(infoExternalPersons.size(), 1);
+            for (Iterator iter = infoExternalPersons.iterator(); iter.hasNext();) {
+                InfoExternalPerson infoExternalPerson = (InfoExternalPerson) iter.next();
+                assertTrue(infoExternalPerson.getInfoPerson().getNome().indexOf(name) > -1);
+            }
 
-	public void testSearchExistingExternalPersons() {
-		try {
-			String name = "externo";
-			Object[] argsSearchExternalPersons = { name };
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail("testSearchExistingExternalPersons " + ex.getMessage());
+        }
 
-			List infoExternalPersons = (List) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
-			assertNotNull(infoExternalPersons);
-			assertEquals(infoExternalPersons.size(), 1);
-			for (Iterator iter = infoExternalPersons.iterator(); iter.hasNext();) {
-				InfoExternalPerson infoExternalPerson = (InfoExternalPerson) iter.next();
-				assertTrue(infoExternalPerson.getInfoPerson().getNome().indexOf(name) > -1);
-			}
+    }
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testSearchExistingExternalPersons " + ex.getMessage());
-		}
+    public void testSearchNonExistingExternalPersons() {
+        try {
+            String name = "Partial name to find";
+            Object[] argsSearchExternalPersons = { name };
 
-	}
+            List infoExternalPersons = (List) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), argsSearchExternalPersons);
+            assertNotNull(infoExternalPersons);
+            assertTrue(infoExternalPersons.isEmpty());
 
-	public void testSearchNonExistingExternalPersons() {
-		try {
-			String name = "Partial name to find";
-			Object[] argsSearchExternalPersons = { name };
-
-			List infoExternalPersons = (List) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsSearchExternalPersons);
-			assertNotNull(infoExternalPersons);
-			assertTrue(infoExternalPersons.isEmpty());
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testSearchNonExistingExternalPersons " + ex.getMessage());
-		}
-	}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail("testSearchNonExistingExternalPersons " + ex.getMessage());
+        }
+    }
 
 }

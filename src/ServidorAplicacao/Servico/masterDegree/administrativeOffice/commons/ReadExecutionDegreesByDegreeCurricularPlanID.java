@@ -23,36 +23,32 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  * 
- * @return List containing all InfoExecutionDegrees, corresponding to Degree Curricular Plan
+ * @return List containing all InfoExecutionDegrees, corresponding to Degree
+ *         Curricular Plan
  */
-public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService
-{
-    public ReadExecutionDegreesByDegreeCurricularPlanID()
-    {
+public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService {
+    public ReadExecutionDegreesByDegreeCurricularPlanID() {
 
     }
 
-    public List run(Integer degreeCurricularPlanID) throws FenixServiceException
-    {
+    public List run(Integer degreeCurricularPlanID) throws FenixServiceException {
         List infoExecutionDegreeList = null;
-        try
-        {
+        try {
             ISuportePersistente sp;
             infoExecutionDegreeList = null;
             List executionDegrees = null;
 
             sp = SuportePersistenteOJB.getInstance();
-            IDegreeCurricularPlan degreeCurricularPlan =
-                (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOID(
-                    DegreeCurricularPlan.class, degreeCurricularPlanID);
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+                            degreeCurricularPlanID);
 
-            executionDegrees =
-                sp.getICursoExecucaoPersistente().readByDegreeCurricularPlan(degreeCurricularPlan);
+            executionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
+                    degreeCurricularPlan);
 
             infoExecutionDegreeList = new ArrayList();
 
-            for (Iterator iter = executionDegrees.iterator(); iter.hasNext();)
-            {
+            for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
                 ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
                 //CLONER
                 //InfoExecutionDegree infoExecutionDegree =
@@ -64,9 +60,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService
 
             return infoExecutionDegreeList;
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;

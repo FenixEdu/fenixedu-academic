@@ -32,151 +32,113 @@ import constants.publication.PublicationConstants;
  * To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
-public class ReadPublicationsByTeacherAsAuthorAction
-	extends FenixDispatchAction {
+public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction {
 
-	public ActionForward readPublicationsAuthor(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward readPublicationsAuthor(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
+        HttpSession session = request.getSession(false);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		String typePublication =
-			request.getParameter("typePublication");
+        String typePublication = request.getParameter("typePublication");
 
-		ActionForward actionForward =
-			mapping.findForward("show-cientific-author-form");
-		//DynaActionForm dynaForm = (DynaActionForm) form;
+        ActionForward actionForward = mapping.findForward("show-cientific-author-form");
+        //DynaActionForm dynaForm = (DynaActionForm) form;
 
-		if (session != null) {
+        if (session != null) {
 
-			Object[] argsToReadPublicationsOfTeacher =
-				{ userView.getUtilizador()};
-			SiteView siteView =
-				(SiteView) ServiceUtils.executeService(
-					userView,
-					"ReadAuthorPublicationsToInsert",
-					argsToReadPublicationsOfTeacher);
+            Object[] argsToReadPublicationsOfTeacher = { userView.getUtilizador() };
+            SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
+                    "ReadAuthorPublicationsToInsert", argsToReadPublicationsOfTeacher);
 
-			InfoSitePublications infoSitePublications =
-				(InfoSitePublications) siteView.getComponent();
-			request.setAttribute("infoSitePublications", infoSitePublications);
-		}
-		if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
-			actionForward = mapping.findForward("show-didatic-author-form");
-		}
-		return actionForward;
-	}
+            InfoSitePublications infoSitePublications = (InfoSitePublications) siteView.getComponent();
+            request.setAttribute("infoSitePublications", infoSitePublications);
+        }
+        if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
+            actionForward = mapping.findForward("show-didatic-author-form");
+        }
+        return actionForward;
+    }
 
-	public ActionForward insertPublicationTeacher(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward insertPublicationTeacher(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
-		//ActionErrors errors = new ActionErrors();
+        HttpSession session = request.getSession(false);
+        IUserView userView = SessionUtils.getUserView(request);
+        //ActionErrors errors = new ActionErrors();
 
-		String typePublication =
-			request.getParameter("typePublication");
+        String typePublication = request.getParameter("typePublication");
 
-		Integer teacherId = new Integer(request.getParameter("teacherId"));
+        Integer teacherId = new Integer(request.getParameter("teacherId"));
 
-		Integer publicationId =
-			new Integer(request.getParameter("idPublication"));
+        Integer publicationId = new Integer(request.getParameter("idPublication"));
 
-		ActionForward actionForward =
-			mapping.findForward("show-cientific-Teacher-form");
-		//DynaActionForm dynaForm = (DynaActionForm) form;
-		
-		if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
-			actionForward =
-				mapping.findForward("show-didatic-Teacher-form");
-		}
-		try {
-			if (session != null) {
+        ActionForward actionForward = mapping.findForward("show-cientific-Teacher-form");
+        //DynaActionForm dynaForm = (DynaActionForm) form;
 
-				Object[] argsToInsertPublicationInTeacherSList =
-					{ teacherId, publicationId };
-				SiteView siteView =
-					(SiteView) ServiceUtils.executeService(
-						userView,
-						"InsertPublicationInTeacherList",
-						argsToInsertPublicationInTeacherSList);
+        if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
+            actionForward = mapping.findForward("show-didatic-Teacher-form");
+        }
+        try {
+            if (session != null) {
 
-				request.setAttribute("siteView", siteView);
-			}
+                Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId };
+                SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
+                        "InsertPublicationInTeacherList", argsToInsertPublicationInTeacherSList);
 
-		} catch (ExistingServiceException e) {
-			sendErrors(request, "existing", "message.publication.alreadyInserted");
-			return actionForward;
-		}
-		return actionForward;
-	}
+                request.setAttribute("siteView", siteView);
+            }
 
-	public ActionForward deletePublicationTeacher(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+        } catch (ExistingServiceException e) {
+            sendErrors(request, "existing", "message.publication.alreadyInserted");
+            return actionForward;
+        }
+        return actionForward;
+    }
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward deletePublicationTeacher(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		String typePublication =
-			request.getParameter("typePublication");
+        HttpSession session = request.getSession(false);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer teacherId = new Integer(request.getParameter("teacherId"));
+        String typePublication = request.getParameter("typePublication");
 
-		Integer publicationId =
-			new Integer(request.getParameter("idPublication"));
+        Integer teacherId = new Integer(request.getParameter("teacherId"));
 
-		ActionForward actionForward =
-			mapping.findForward("show-cientific-Teacher-form");
-		//DynaActionForm dynaForm = (DynaActionForm) form;
+        Integer publicationId = new Integer(request.getParameter("idPublication"));
 
-		if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
-			actionForward =
-				mapping.findForward("show-didatic-Teacher-form");
-		}
-		try {
-			if (session != null) {
+        ActionForward actionForward = mapping.findForward("show-cientific-Teacher-form");
+        //DynaActionForm dynaForm = (DynaActionForm) form;
 
-				Object[] argsToInsertPublicationInTeacherSList =
-					{ teacherId, publicationId };
-				SiteView siteView =
-					(SiteView) ServiceUtils.executeService(
-						userView,
-						"DeletePublicationInTeacherList",
-						argsToInsertPublicationInTeacherSList);
+        if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
+            actionForward = mapping.findForward("show-didatic-Teacher-form");
+        }
+        try {
+            if (session != null) {
 
-				request.setAttribute("siteView", siteView);
-			}
-			
-		} catch (NotExistingServiceException e) {
+                Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId };
+                SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
+                        "DeletePublicationInTeacherList", argsToInsertPublicationInTeacherSList);
 
-			if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
-				actionForward =
-					mapping.findForward("show-didatic-Teacher-form");
-			}
-			sendErrors(request, "nonExisting", "message.publication.notfound");
-			return actionForward;
-		}
-		return actionForward;
-	}
-	
-	private void sendErrors(HttpServletRequest request, String arg0, String arg1)
-	{
-		ActionErrors errors = new ActionErrors();
-		errors.add(arg0, new ActionError(arg1));
-		saveErrors(request, errors);
-	}
+                request.setAttribute("siteView", siteView);
+            }
+
+        } catch (NotExistingServiceException e) {
+
+            if (typePublication.equals(PublicationConstants.DIDATIC_STRING)) {
+                actionForward = mapping.findForward("show-didatic-Teacher-form");
+            }
+            sendErrors(request, "nonExisting", "message.publication.notfound");
+            return actionForward;
+        }
+        return actionForward;
+    }
+
+    private void sendErrors(HttpServletRequest request, String arg0, String arg1) {
+        ActionErrors errors = new ActionErrors();
+        errors.add(arg0, new ActionError(arg1));
+        saveErrors(request, errors);
+    }
 
 }

@@ -9,46 +9,46 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author Tânia Pousão 
+ * @author Tânia Pousão
  * @author Ângela
- *
+ *  
  */
 public class ReadCurricularCourseListAction extends DispatchAction {
 
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		
-		Integer objectCode = null;
-		String objectCodeString = request.getParameter("objectCode");
-		if (objectCodeString == null) {
-			objectCodeString = (String) request.getAttribute("objectCode");
-		}
-		objectCode = new Integer(objectCodeString);
+    public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+        HttpSession session = request.getSession(false);
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        Integer objectCode = null;
+        String objectCodeString = request.getParameter("objectCode");
+        if (objectCodeString == null) {
+            objectCodeString = (String) request.getAttribute("objectCode");
+        }
+        objectCode = new Integer(objectCodeString);
 
-		Object args[] = { objectCode };
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		TeacherAdministrationSiteView siteView = null;
-		try {
-			siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView, "ReadCurricularCourseListByExecutionCourseCode", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        Object args[] = { objectCode };
 
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("objectCode", objectCode);
-			
-		return mapping.findForward("success");
-	}
+        TeacherAdministrationSiteView siteView = null;
+        try {
+            siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadCurricularCourseListByExecutionCourseCode", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("objectCode", objectCode);
+
+        return mapping.findForward("success");
+    }
 }

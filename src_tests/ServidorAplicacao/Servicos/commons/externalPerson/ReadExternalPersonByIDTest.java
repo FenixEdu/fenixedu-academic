@@ -7,78 +7,63 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
- *               (naat@mega.ist.utl.pt)
+ *         (naat@mega.ist.utl.pt)
  */
-public class ReadExternalPersonByIDTest extends ServiceTestCase
-{
+public class ReadExternalPersonByIDTest extends ServiceTestCase {
 
     private String dataSetFilePath;
 
     /**
-	 * @param testName
-	 */
-    public ReadExternalPersonByIDTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadExternalPersonByIDTest(String testName) {
         super(testName);
-        this.dataSetFilePath =
-            "etc/datasets/servicos/commons/externalPerson/testReadExternalPersonByIDDataSet.xml";
+        this.dataSetFilePath = "etc/datasets/servicos/commons/externalPerson/testReadExternalPersonByIDDataSet.xml";
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return this.dataSetFilePath;
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExternalPersonByID";
     }
 
-    public void testReadExistingExternalPerson()
-    {
-        try
-        {
+    public void testReadExistingExternalPerson() {
+        try {
             Integer externalPersonID = new Integer(1);
             Object[] argsReadExternalPerson = { externalPersonID };
 
-            InfoExternalPerson infoExternalPerson =
-                (InfoExternalPerson) ServiceManagerServiceFactory.executeService(
-                    null,
-                    getNameOfServiceToBeTested(),
-                    argsReadExternalPerson);
+            InfoExternalPerson infoExternalPerson = (InfoExternalPerson) ServiceManagerServiceFactory
+                    .executeService(null, getNameOfServiceToBeTested(), argsReadExternalPerson);
             assertNotNull(infoExternalPerson);
             assertEquals(infoExternalPerson.getIdInternal(), externalPersonID);
 
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             fail("testReadExistingExternalPerson " + ex.getMessage());
         }
 
     }
 
-    public void testReadNonExistingExternalPerson()
-    {
-        try
-        {
+    public void testReadNonExistingExternalPerson() {
+        try {
             Integer externalPersonID = new Integer(145);
             Object[] argsReadExternalPerson = { externalPersonID };
 
-            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadExternalPerson);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(),
+                    argsReadExternalPerson);
 
             fail("testReadNonExistingExternalPerson did not throw NonExistingServiceException");
 
-        } catch (NonExistingServiceException ee)
-        {
+        } catch (NonExistingServiceException ee) {
             //ok
 
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             fail("testReadNonExistingExternalPerson " + ex.getMessage());
         }

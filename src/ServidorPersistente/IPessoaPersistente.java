@@ -1,6 +1,6 @@
 /*
  * IPessoaPersistente.java
- *
+ * 
  * Created on 15 de Outubro de 2002, 15:03
  */
 
@@ -23,17 +23,36 @@ public interface IPessoaPersistente extends IPersistentObject {
      * @throws InvocationTargetException
      * @deprecated
      */
-    public void escreverPessoa(IPessoa pessoa) throws ExcepcaoPersistencia, ExistingPersistentException, IllegalAccessException, InvocationTargetException;
-    public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
+    public void escreverPessoa(IPessoa pessoa) throws ExcepcaoPersistencia, ExistingPersistentException,
+            IllegalAccessException, InvocationTargetException;
+
+    public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
+            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
+
     public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia;
-   
+
     public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia;
-	public List findPersonByName(String name) throws ExcepcaoPersistencia;
-    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber, Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
-	public List findActivePersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber, Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
-    public List findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
+
+    public List findPersonByName(String name) throws ExcepcaoPersistencia;
+
+    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email,
+            String username, String documentIdNumber, Integer spanNumber, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia;
+
+    public List findActivePersonByNameAndEmailAndUsernameAndDocumentId(String name, String email,
+            String username, String documentIdNumber, Integer spanNumber, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia;
+
+    public List findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia;
+
     public Integer countAllPersonByName(String name);
-	//public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber) throws ExcepcaoPersistencia;
-    public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
+
+    //public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name,
+    // String email, String username, String documentIdNumber) throws
+    // ExcepcaoPersistencia;
+    public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
+            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
+
     public List lerTodasAsPessoas() throws ExcepcaoPersistencia;
 }

@@ -33,45 +33,36 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
     public InsertCurricularCourseScopeAtCurricularCourse() {
     }
 
-    public void run(InfoCurricularCourseScope infoCurricularCourseScope)
-            throws FenixServiceException {
+    public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException {
         IBranch branch = null;
         ICurricularSemester curricularSemester = null;
         ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSuport
                     .getIPersistentCurricularCourseScope();
             IPersistentCurricularSemester persistentCurricularSemester = persistentSuport
                     .getIPersistentCurricularSemester();
             IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
                     .getIPersistentCurricularCourse();
-            IPersistentBranch persistentBranch = persistentSuport
-                    .getIPersistentBranch();
+            IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
 
-            curricularSemester = (ICurricularSemester) persistentCurricularSemester
-                    .readByOID(CurricularSemester.class,
-                            infoCurricularCourseScope
-                                    .getInfoCurricularSemester()
-                                    .getIdInternal());
+            curricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOID(
+                    CurricularSemester.class, infoCurricularCourseScope.getInfoCurricularSemester()
+                            .getIdInternal());
             if (curricularSemester == null) {
-                throw new NonExistingServiceException(
-                        "message.non.existing.curricular.semester", null);
+                throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
             }
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class,
-                            infoCurricularCourseScope.getInfoCurricularCourse()
-                                    .getIdInternal());
+                    .readByOID(CurricularCourse.class, infoCurricularCourseScope
+                            .getInfoCurricularCourse().getIdInternal());
             if (curricularCourse == null)
-                throw new NonExistingServiceException(
-                        "message.nonExistingCurricularCourse", null);
+                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
-            branch = (IBranch) persistentBranch.readByOID(Branch.class,
-                    infoCurricularCourseScope.getInfoBranch().getIdInternal());
+            branch = (IBranch) persistentBranch.readByOID(Branch.class, infoCurricularCourseScope
+                    .getInfoBranch().getIdInternal());
             if (branch == null)
-                throw new NonExistingServiceException(
-                        "message.non.existing.branch", null);
+                throw new NonExistingServiceException("message.non.existing.branch", null);
             // check that there isn't another scope active with the
             // same
             // curricular course, branch and semester
@@ -82,21 +73,17 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
             if (curricularCourseScopeFromDB != null) {
                 throw new ExistingPersistentException();
             }
-            persistentCurricularCourseScope
-                    .simpleLockWrite(curricularCourseScope);
+            persistentCurricularCourseScope.simpleLockWrite(curricularCourseScope);
             curricularCourseScope.setBranch(branch);
             curricularCourseScope.setCurricularCourse(curricularCourse);
             curricularCourseScope.setCurricularSemester(curricularSemester);
-            curricularCourseScope.setBeginDate(infoCurricularCourseScope
-                    .getBeginDate());
+            curricularCourseScope.setBeginDate(infoCurricularCourseScope.getBeginDate());
             curricularCourseScope.setEndDate(null);
         } catch (ExistingPersistentException e) {
             //FIXME: remove use of portuguese
-            throw new ExistingServiceException("O âmbito com ramo "
-                    + branch.getCode() + ", do "
-                    + curricularSemester.getCurricularYear().getYear()
-                    + "º ano, " + curricularSemester.getSemester()
-                    + "º semestre");
+            throw new ExistingServiceException("O âmbito com ramo " + branch.getCode() + ", do "
+                    + curricularSemester.getCurricularYear().getYear() + "º ano, "
+                    + curricularSemester.getSemester() + "º semestre");
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

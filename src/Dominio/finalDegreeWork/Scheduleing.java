@@ -57,8 +57,7 @@ public class Scheduleing extends DomainObject implements IScheduleing {
             IScheduleing scheduleing = (IScheduleing) obj;
 
             if (getExecutionDegree() != null && scheduleing != null) {
-                result = getExecutionDegree().equals(
-                        scheduleing.getExecutionDegree());
+                result = getExecutionDegree().equals(scheduleing.getExecutionDegree());
             }
         }
         return result;
@@ -243,16 +242,12 @@ public class Scheduleing extends DomainObject implements IScheduleing {
      * @see Dominio.finalDegreeWork.IScheduleing#getEndOfProposalPeriod()
      */
     public Date getEndOfProposalPeriod() {
-        if (this.getEndOfProposalPeriodDate() != null
-                && this.getEndOfProposalPeriodTime() != null) {
+        if (this.getEndOfProposalPeriodDate() != null && this.getEndOfProposalPeriodTime() != null) {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(this.getEndOfProposalPeriodDate()
-                    .getTime());
+            calendar.setTimeInMillis(this.getEndOfProposalPeriodDate().getTime());
             Calendar calendarTime = Calendar.getInstance();
-            calendarTime.setTimeInMillis(this.getEndOfProposalPeriodTime()
-                    .getTime());
-            calendar.set(Calendar.HOUR_OF_DAY, calendarTime
-                    .get(Calendar.HOUR_OF_DAY));
+            calendarTime.setTimeInMillis(this.getEndOfProposalPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
             calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
             calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
             return calendar.getTime();
@@ -278,16 +273,12 @@ public class Scheduleing extends DomainObject implements IScheduleing {
      * @see Dominio.finalDegreeWork.IScheduleing#getStartOfProposalPeriod()
      */
     public Date getStartOfProposalPeriod() {
-        if (this.getStartOfProposalPeriodDate() != null
-                && this.getStartOfProposalPeriodTime() != null) {
+        if (this.getStartOfProposalPeriodDate() != null && this.getStartOfProposalPeriodTime() != null) {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(this.getStartOfProposalPeriodDate()
-                    .getTime());
+            calendar.setTimeInMillis(this.getStartOfProposalPeriodDate().getTime());
             Calendar calendarTime = Calendar.getInstance();
-            calendarTime.setTimeInMillis(this.getStartOfProposalPeriodTime()
-                    .getTime());
-            calendar.set(Calendar.HOUR_OF_DAY, calendarTime
-                    .get(Calendar.HOUR_OF_DAY));
+            calendarTime.setTimeInMillis(this.getStartOfProposalPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
             calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
             calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
             return calendar.getTime();
@@ -313,16 +304,12 @@ public class Scheduleing extends DomainObject implements IScheduleing {
      * @see Dominio.finalDegreeWork.IScheduleing#getStartOfCandidacyPeriod()
      */
     public Date getStartOfCandidacyPeriod() {
-        if (this.getStartOfCandidacyPeriodDate() != null
-                && this.getStartOfCandidacyPeriodTime() != null) {
+        if (this.getStartOfCandidacyPeriodDate() != null && this.getStartOfCandidacyPeriodTime() != null) {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(this.getStartOfCandidacyPeriodDate()
-                    .getTime());
+            calendar.setTimeInMillis(this.getStartOfCandidacyPeriodDate().getTime());
             Calendar calendarTime = Calendar.getInstance();
-            calendarTime.setTimeInMillis(this.getStartOfCandidacyPeriodTime()
-                    .getTime());
-            calendar.set(Calendar.HOUR_OF_DAY, calendarTime
-                    .get(Calendar.HOUR_OF_DAY));
+            calendarTime.setTimeInMillis(this.getStartOfCandidacyPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
             calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
             calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
             return calendar.getTime();
@@ -348,16 +335,12 @@ public class Scheduleing extends DomainObject implements IScheduleing {
      * @see Dominio.finalDegreeWork.IScheduleing#getEndOfCandidacyPeriod()
      */
     public Date getEndOfCandidacyPeriod() {
-        if (this.getEndOfCandidacyPeriodDate() != null
-                && this.getEndOfCandidacyPeriodTime() != null) {
+        if (this.getEndOfCandidacyPeriodDate() != null && this.getEndOfCandidacyPeriodTime() != null) {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(this.getEndOfCandidacyPeriodDate()
-                    .getTime());
+            calendar.setTimeInMillis(this.getEndOfCandidacyPeriodDate().getTime());
             Calendar calendarTime = Calendar.getInstance();
-            calendarTime.setTimeInMillis(this.getEndOfCandidacyPeriodTime()
-                    .getTime());
-            calendar.set(Calendar.HOUR_OF_DAY, calendarTime
-                    .get(Calendar.HOUR_OF_DAY));
+            calendarTime.setTimeInMillis(this.getEndOfCandidacyPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
             calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
             calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
             return calendar.getTime();
@@ -388,8 +371,7 @@ public class Scheduleing extends DomainObject implements IScheduleing {
      * @param minimumNumberOfCompletedCourses
      *            The minimumNumberOfCompletedCourses to set.
      */
-    public void setMinimumNumberOfCompletedCourses(
-            Integer minimumNumberOfCompletedCourses) {
+    public void setMinimumNumberOfCompletedCourses(Integer minimumNumberOfCompletedCourses) {
         this.minimumNumberOfCompletedCourses = minimumNumberOfCompletedCourses;
     }
 

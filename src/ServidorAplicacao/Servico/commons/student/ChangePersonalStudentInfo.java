@@ -25,61 +25,49 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class ChangePersonalStudentInfo implements IService
-{
+public class ChangePersonalStudentInfo implements IService {
 
     /**
      * The actor of this class.
      */
-    public ChangePersonalStudentInfo()
-    {
+    public ChangePersonalStudentInfo() {
     }
 
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoInexistente, FenixServiceException,
-            ExistingPersistentException, ExcepcaoPersistencia
-    {
+            ExistingPersistentException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         IPessoa person = null;
 
-       
-
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
-            person = (IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class, newInfoPerson.getIdInternal());
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
-                      
-            throw new FenixServiceException("Persistence layer error",ex);
+            person = (IPessoa) sp.getIPessoaPersistente().readByOID(Pessoa.class,
+                    newInfoPerson.getIdInternal());
+        } catch (ExcepcaoPersistencia ex) {
+
+            throw new FenixServiceException("Persistence layer error", ex);
         }
 
-        if (person == null) { throw new ExcepcaoInexistente("Unknown Person !!"); }
+        if (person == null) {
+            throw new ExcepcaoInexistente("Unknown Person !!");
+        }
         sp.getIPessoaPersistente().simpleLockWrite(person);
 
         // Get new Country
         ICountry nationality = null;
         if ((newInfoPerson.getInfoPais() == null)
-                || (newInfoPerson.getInfoPais().getNationality().length() == 0))
-        {
+                || (newInfoPerson.getInfoPais().getNationality().length() == 0)) {
             person.setPais(null);
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 if ((person.getPais() == null)
                         || (!newInfoPerson.getInfoPais().getNationality().equals(
-                                person.getPais().getNationality())))
-                {
+                                person.getPais().getNationality()))) {
                     nationality = sp.getIPersistentCountry().readCountryByNationality(
                             newInfoPerson.getInfoPais().getNationality());
                     person.setPais(nationality);
                 }
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 FenixServiceException newEx = new FenixServiceException("Persistence layer error");
                 newEx.fillInStackTrace();
                 throw newEx;

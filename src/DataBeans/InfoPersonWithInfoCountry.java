@@ -28,22 +28,19 @@ public class InfoPersonWithInfoCountry extends InfoPerson {
         }
         return infoPerson;
     }
-    
-    public void copyToDomain(InfoPerson infoPerson,IPessoa person)
-    {
-        super.copyToDomain(infoPerson,person);
+
+    public void copyToDomain(InfoPerson infoPerson, IPessoa person) {
+        super.copyToDomain(infoPerson, person);
         person.setPais(InfoCountry.newDomainFromInfo(infoPerson.getInfoPais()));
     }
-    
-    public static IPessoa newDomainFromInfo(InfoPerson infoPerson)
-    {
+
+    public static IPessoa newDomainFromInfo(InfoPerson infoPerson) {
         IPessoa person = null;
         InfoPersonWithInfoCountry infoPersonWithInfoCountry = null;
-        if(infoPerson != null)
-        {
+        if (infoPerson != null) {
             person = new Pessoa();
             infoPersonWithInfoCountry = new InfoPersonWithInfoCountry();
-            infoPersonWithInfoCountry.copyToDomain(infoPerson,person);
+            infoPersonWithInfoCountry.copyToDomain(infoPerson, person);
         }
         return person;
     }

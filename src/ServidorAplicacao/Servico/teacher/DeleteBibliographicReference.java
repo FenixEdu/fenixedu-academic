@@ -28,22 +28,19 @@ public class DeleteBibliographicReference implements IServico {
         return "DeleteBibliographicReference";
     }
 
-    public boolean run(Integer infoExecutionCourseCode,
-            Integer bibliographicReferenceCode) throws FenixServiceException {
+    public boolean run(Integer infoExecutionCourseCode, Integer bibliographicReferenceCode)
+            throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
             IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
                     .getIPersistentBibliographicReference();
 
             IBibliographicReference ibibliographicReference = (IBibliographicReference) persistentBibliographicReference
-                    .readByOID(BibliographicReference.class,
-                            bibliographicReferenceCode);
+                    .readByOID(BibliographicReference.class, bibliographicReferenceCode);
 
             if (ibibliographicReference != null) {
-                persistentBibliographicReference
-                        .delete(ibibliographicReference);
+                persistentBibliographicReference.delete(ibibliographicReference);
             }
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

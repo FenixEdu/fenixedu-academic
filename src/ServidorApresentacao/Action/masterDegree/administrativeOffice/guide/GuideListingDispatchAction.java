@@ -17,8 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -27,224 +25,202 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoDocumentoIdentificacao;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * This is the Action to Choose choose, visualize and edit a Guide.
- * 
+ *  
  */
 public class GuideListingDispatchAction extends DispatchAction {
 
-	public ActionForward prepareChooseYear(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepareChooseYear(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
+        if (session != null) {
 
+            DynaActionForm chooseYearForm = (DynaActionForm) form;
 
-		if (session != null) {
+            chooseYearForm.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-			DynaActionForm chooseYearForm = (DynaActionForm) form;
+            return mapping.findForward("PrepareReady");
+        }
+        throw new Exception();
 
-			chooseYearForm.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));			
-			
-			return mapping.findForward("PrepareReady");
-		  } 
-			throw new Exception();   
+    }
 
-	}
+    public ActionForward chooseYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-	public ActionForward chooseYear(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+        HttpSession session = request.getSession(false);
 
-		
-		HttpSession session = request.getSession(false);
+        if (session != null) {
 
-		if (session != null) {
-			
-			DynaActionForm chooseGuideForm = (DynaActionForm) form;
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
-			// Get the Information
-			Integer guideYear = new Integer((String) chooseGuideForm.get("year"));
+            DynaActionForm chooseGuideForm = (DynaActionForm) form;
 
-			Object args[] = { guideYear };
-	  
-			List result = null;
-			try {
-				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException("A Guia", e);
-			}
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			request.setAttribute(SessionConstants.GUIDE_LIST, result);
-		  
-			return mapping.findForward("ShowGuideList");
-		} 
-		  throw new Exception();   
-	  }
+            // Get the Information
+            Integer guideYear = new Integer((String) chooseGuideForm.get("year"));
 
+            Object args[] = { guideYear };
 
-	public ActionForward chooseGuide(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+            List result = null;
+            try {
+                result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                        args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException("A Guia", e);
+            }
 
-		
-		HttpSession session = request.getSession(false);
+            request.setAttribute(SessionConstants.GUIDE_LIST, result);
 
-		if (session != null) {
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			Integer guideYear = new Integer(request.getParameter("year"));
-			Integer guideNumber = new Integer(request.getParameter("number"));
-				
-			Object args[] = { guideNumber, guideYear };
-	  
-			List result = null;
-			try {
-				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException("A Guia", e);
-			}
+            return mapping.findForward("ShowGuideList");
+        }
+        throw new Exception();
+    }
 
-			request.setAttribute(SessionConstants.GUIDE_LIST, result);
-			request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
-			request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
-		  
-			return mapping.findForward("ShowVersionList");
-		} 
-		  throw new Exception();   
-	  }
+    public ActionForward chooseGuide(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
+        HttpSession session = request.getSession(false);
 
-	public ActionForward prepareChoosePerson(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+        if (session != null) {
 
-		
-		HttpSession session = request.getSession(false);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            Integer guideYear = new Integer(request.getParameter("year"));
+            Integer guideNumber = new Integer(request.getParameter("number"));
 
-		if (session != null) {
-			// Create the type of Identification Document
-			request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST, TipoDocumentoIdentificacao.toArrayList());  
-			
-			return mapping.findForward("PrepareSuccess");
-		  } 
-			throw new Exception();   
+            Object args[] = { guideNumber, guideYear };
 
-	}
-	
-	public ActionForward getPersonGuideList(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+            List result = null;
+            try {
+                result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                        args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException("A Guia", e);
+            }
 
-		
-		HttpSession session = request.getSession(false);
+            request.setAttribute(SessionConstants.GUIDE_LIST, result);
+            request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
+            request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
 
-		if (session != null) {
+            return mapping.findForward("ShowVersionList");
+        }
+        throw new Exception();
+    }
 
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			DynaActionForm choosePersonForm = (DynaActionForm) form;
-			
-			
-			String identificationDocumentNumber = (String) choosePersonForm.get("identificationDocumentNumber");
-			TipoDocumentoIdentificacao identificationDocumentType = new TipoDocumentoIdentificacao((String) choosePersonForm.get("identificationDocumentType"));
-			String studentNumber = (String) choosePersonForm.get("studentNumber");
-			
-			if(identificationDocumentNumber == null || identificationDocumentNumber.length() == 0) 
-			{
-				InfoStudent infoStudent = null;
-			    if(studentNumber != null && studentNumber.length() > 0) 
-			    {
-				    Object args[] = { Integer.valueOf(studentNumber) };
-					  
-					try 
-					{
-					    infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndAllDegreeTypes", args);
-					} catch (FenixServiceException e) {
-						throw new FenixActionException(e);
-					}
-			    }
-				if(infoStudent == null) {
-				    throw new NonExistingActionException("A Pessoa");
-				}
-				identificationDocumentNumber = infoStudent.getInfoPerson().getNumeroDocumentoIdentificacao();
-				identificationDocumentType = infoStudent.getInfoPerson().getTipoDocumentoIdentificacao();
-			}
-			
-			Object args[] = { identificationDocumentNumber, identificationDocumentType };
-	  
-			List result = null;
-			try 
-			{
-				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException("A Pessoa", e);
-			}
-			
-			if (result == null)
-			{
-				throw new NonExistingActionException("error.exception.noGuidesForPerson", "Guias para esta pessoa");
-			}
-			
-			request.setAttribute(SessionConstants.GUIDE_LIST, result);
+    public ActionForward prepareChoosePerson(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-			
-			return mapping.findForward("ShowGuideList");
-		  } 
-			throw new Exception();   
+        HttpSession session = request.getSession(false);
 
-	}
+        if (session != null) {
+            // Create the type of Identification Document
+            request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST,
+                    TipoDocumentoIdentificacao.toArrayList());
 
+            return mapping.findForward("PrepareSuccess");
+        }
+        throw new Exception();
 
-	public ActionForward chooseGuideByPerson(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+    }
 
-		
-		HttpSession session = request.getSession(false);
+    public ActionForward getPersonGuideList(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		if (session != null) {
+        HttpSession session = request.getSession(false);
 
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        if (session != null) {
 
-			Integer personID = Integer.valueOf(request.getParameter("personID"));
-			
-			Object args[] = { personID};
-	  
-			List result = null;
-			try {
-				result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuideByPersonID", args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException("A Pessoa", e);
-			}
-			
-			if (result == null){
-				throw new NonExistingActionException("error.exception.noGuidesForPerson", "Guias para esta pessoa");
-			}
-			
-			request.setAttribute(SessionConstants.GUIDE_LIST, result);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            DynaActionForm choosePersonForm = (DynaActionForm) form;
 
-			
-			return mapping.findForward("ShowGuideList");
-		  } 
-			throw new Exception();   
+            String identificationDocumentNumber = (String) choosePersonForm
+                    .get("identificationDocumentNumber");
+            TipoDocumentoIdentificacao identificationDocumentType = new TipoDocumentoIdentificacao(
+                    (String) choosePersonForm.get("identificationDocumentType"));
+            String studentNumber = (String) choosePersonForm.get("studentNumber");
 
-	}
+            if (identificationDocumentNumber == null || identificationDocumentNumber.length() == 0) {
+                InfoStudent infoStudent = null;
+                if (studentNumber != null && studentNumber.length() > 0) {
+                    Object args[] = { Integer.valueOf(studentNumber) };
 
-	
-	  
+                    try {
+                        infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
+                                userView, "ReadStudentByNumberAndAllDegreeTypes", args);
+                    } catch (FenixServiceException e) {
+                        throw new FenixActionException(e);
+                    }
+                }
+                if (infoStudent == null) {
+                    throw new NonExistingActionException("A Pessoa");
+                }
+                identificationDocumentNumber = infoStudent.getInfoPerson()
+                        .getNumeroDocumentoIdentificacao();
+                identificationDocumentType = infoStudent.getInfoPerson().getTipoDocumentoIdentificacao();
+            }
+
+            Object args[] = { identificationDocumentNumber, identificationDocumentType };
+
+            List result = null;
+            try {
+                result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                        args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException("A Pessoa", e);
+            }
+
+            if (result == null) {
+                throw new NonExistingActionException("error.exception.noGuidesForPerson",
+                        "Guias para esta pessoa");
+            }
+
+            request.setAttribute(SessionConstants.GUIDE_LIST, result);
+
+            return mapping.findForward("ShowGuideList");
+        }
+        throw new Exception();
+
+    }
+
+    public ActionForward chooseGuideByPerson(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+            Integer personID = Integer.valueOf(request.getParameter("personID"));
+
+            Object args[] = { personID };
+
+            List result = null;
+            try {
+                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ChooseGuideByPersonID", args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException("A Pessoa", e);
+            }
+
+            if (result == null) {
+                throw new NonExistingActionException("error.exception.noGuidesForPerson",
+                        "Guias para esta pessoa");
+            }
+
+            request.setAttribute(SessionConstants.GUIDE_LIST, result);
+
+            return mapping.findForward("ShowGuideList");
+        }
+        throw new Exception();
+
+    }
+
 }

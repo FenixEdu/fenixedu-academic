@@ -10,20 +10,19 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.publication.Attribute;
 import Dominio.publication.PublicationType;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.publication.IPersistentPublicationAttribute;
 
 /**
  * @author TJBF & PFON
  */
-public class PublicationAttributeOJB extends ObjectFenixOJB implements IPersistentPublicationAttribute
-{
+public class PublicationAttributeOJB extends PersistentObjectOJB implements
+        IPersistentPublicationAttribute {
 
     /**
-     * 
+     *  
      */
-    public PublicationAttributeOJB()
-    {
+    public PublicationAttributeOJB() {
         super();
     }
 
@@ -33,8 +32,7 @@ public class PublicationAttributeOJB extends ObjectFenixOJB implements IPersiste
      * @see ServidorPersistente.teacher.IPersistentOldPublication#readAllByTeacherAndOldPublicationType(Dominio.ITeacher,
      *      Util.OldPublicationType)
      */
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         return queryList(Attribute.class, criteria);
     }
@@ -44,8 +42,7 @@ public class PublicationAttributeOJB extends ObjectFenixOJB implements IPersiste
      * 
      * @see ServidorPersistente.teacher.IPersistentPublicationAttribute#readAllByPublicationType(Dominio.teacher.PublicationType)
      */
-    public List readAllByPublicationType(PublicationType publicationType) throws ExcepcaoPersistencia
-    {
+    public List readAllByPublicationType(PublicationType publicationType) throws ExcepcaoPersistencia {
         //Criteria criteria = new Criteria();
         //criteria.addEqualTo()
         return null;

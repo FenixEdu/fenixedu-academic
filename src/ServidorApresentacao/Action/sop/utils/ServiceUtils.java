@@ -14,17 +14,14 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author jpvl
- *
  * 
+ *  
  */
 public abstract class ServiceUtils {
 
-	public static Object executeService(
-		IUserView userView,
-		String serviceName,
-		Object[] serviceArgs)
-		throws FenixServiceException {
-		return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
-	}
+    public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
+            throws FenixServiceException {
+        return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
+    }
 
 }

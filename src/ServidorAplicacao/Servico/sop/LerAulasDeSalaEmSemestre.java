@@ -35,8 +35,7 @@ public class LerAulasDeSalaEmSemestre implements IService {
     public LerAulasDeSalaEmSemestre() {
     }
 
-    public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom,
-            Integer executionPeriodId) {
+    public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom, Integer executionPeriodId) {
         List infoAulas = null;
 
         try {
@@ -44,15 +43,11 @@ public class LerAulasDeSalaEmSemestre implements IService {
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IExecutionPeriod executionPeriod = null;
-            if (executionPeriodId != null)
-            {
-                executionPeriod =
-                    (IExecutionPeriod) persistentExecutionPeriod.readByOId(
-                        new ExecutionPeriod(executionPeriodId),
-                        false);
+            if (executionPeriodId != null) {
+                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(
+                        new ExecutionPeriod(executionPeriodId), false);
             } else {
-                executionPeriod = Cloner
-                        .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+                executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
             }
 
             ISala room = Cloner.copyInfoRoom2Room(infoRoom);
@@ -65,9 +60,8 @@ public class LerAulasDeSalaEmSemestre implements IService {
                 IAula elem = (IAula) iterator.next();
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
                 ITurno shift = elem.getShift();
-                if (shift == null)
-                {
-					continue;
+                if (shift == null) {
+                    continue;
                 }
                 InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
                 infoLesson.setInfoShift(infoShift);

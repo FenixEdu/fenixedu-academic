@@ -64,19 +64,27 @@ public abstract class CreditLine extends DomainObject implements ICreditLine, IC
         this.keyTeacher = keyTeacher;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.ojb.broker.PersistenceBrokerAware#afterDelete(org.apache.ojb.broker.PersistenceBroker)
      */
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.ojb.broker.PersistenceBrokerAware#afterInsert(org.apache.ojb.broker.PersistenceBroker)
      */
     public void afterInsert(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.ojb.broker.PersistenceBrokerAware#afterUpdate(org.apache.ojb.broker.PersistenceBroker)
      */
     public void afterUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
@@ -121,6 +129,6 @@ public abstract class CreditLine extends DomainObject implements ICreditLine, IC
         // TODO Auto-generated method stub
 
     }
-    
+
     protected abstract CreditsEvent getCreditEventGenerated();
 }

@@ -9,8 +9,7 @@ import Util.SituationOfGuide;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public interface IPersistentGuideSituation extends IPersistentObject
-{
+public interface IPersistentGuideSituation extends IPersistentObject {
 
     /**
      * @param guide

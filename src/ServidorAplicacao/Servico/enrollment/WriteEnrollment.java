@@ -10,6 +10,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
+import Dominio.EnrolmentInExtraCurricularCourse;
 import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.Frequenta;
@@ -22,6 +23,7 @@ import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
@@ -30,12 +32,12 @@ import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrollmentState;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrollmentState;
 import Util.enrollment.CurricularCourseEnrollmentType;
 import Util.enrollment.EnrollmentCondition;
 
@@ -52,11 +54,12 @@ public class WriteEnrollment implements IService {
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanID,
             Integer curricularCourseID, Integer executionPeriodID,
-            CurricularCourseEnrollmentType enrollmentType,String optionalEnrollment) throws FenixServiceException {
+            CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView)
+            throws FenixServiceException {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentEnrollment enrollmentDAO = persistentSuport.getIPersistentEnrolment();
-            IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
+            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                     .getIStudentCurricularPlanPersistente();
             IPersistentExecutionPeriod executionPeriodDAO = persistentSuport
                     .getIPersistentExecutionPeriod();
@@ -75,18 +78,21 @@ public class WriteEnrollment implements IService {
                 executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                         executionPeriodID);
             }
-          
+
             IEnrollment enrollment = enrollmentDAO
                     .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
                             studentCurricularPlan, curricularCourse, executionPeriod);
 
             if (enrollment == null) {
                 IEnrollment enrollmentToWrite;
-                if (optionalEnrollment == null || optionalEnrollment.equals("false")){
-                    
-                enrollmentToWrite = new Enrolment();
-                }else {
-                enrollmentToWrite = new EnrolmentInOptionalCurricularCourse();
+                if (enrollmentClass == null || enrollmentClass.equals(new Integer(1))
+                        || enrollmentClass.equals(new Integer(0))) {
+
+                    enrollmentToWrite = new Enrolment();
+                } else if (enrollmentClass.equals(new Integer(2))) {
+                    enrollmentToWrite = new EnrolmentInOptionalCurricularCourse();
+                } else {
+                    enrollmentToWrite = new EnrolmentInExtraCurricularCourse();
                 }
                 enrollmentDAO.simpleLockWrite(enrollmentToWrite);
                 enrollmentToWrite.setCurricularCourse(curricularCourse);
@@ -96,11 +102,21 @@ public class WriteEnrollment implements IService {
                 enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
                 enrollmentToWrite.setCreationDate(new Date());
                 enrollmentToWrite.setCondition(getEnrollmentCondition(enrollmentType));
+                enrollmentToWrite.setCreatedBy(userView.getUtilizador());
 
                 createEnrollmentEvaluation(enrollmentToWrite);
 
                 createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod,
                         enrollmentToWrite);
+            } else {
+                if (enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE)) {
+                    enrollmentDAO.simpleLockWrite(enrollment);
+                    enrollment.setCondition(getEnrollmentCondition(enrollmentType));
+                }
+                if (enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
+                    enrollmentDAO.simpleLockWrite(enrollment);
+                    enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
+                }
             }
 
         } catch (ExcepcaoPersistencia e) {
@@ -209,6 +225,10 @@ public class WriteEnrollment implements IService {
             return EnrollmentCondition.getEnum(2);
         case 2:
             return EnrollmentCondition.getEnum(1);
+        case 3:
+            return EnrollmentCondition.getEnum(3);
+        case 4:
+            return EnrollmentCondition.getEnum(4);
         default:
             return null;
         }

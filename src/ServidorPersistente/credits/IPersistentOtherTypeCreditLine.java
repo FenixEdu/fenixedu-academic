@@ -13,7 +13,7 @@ import ServidorPersistente.IPersistentObject;
 /**
  * @author jpvl
  */
-public interface IPersistentOtherTypeCreditLine extends IPersistentObject
-{
-    List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+public interface IPersistentOtherTypeCreditLine extends IPersistentObject {
+    List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia;
 }

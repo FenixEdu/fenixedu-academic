@@ -71,7 +71,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
             actionErrors.add("nonExisting", actionError);
         } catch (FenixServiceException e) {
             e.printStackTrace();
-            throw new FenixActionException(e);
+            actionErrors.add("error", new ActionError(e.getMessage()));
         }
         if (!actionErrors.isEmpty()) {
             saveErrors(request, actionErrors);

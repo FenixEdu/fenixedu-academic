@@ -1,56 +1,55 @@
 package Util;
 
-
 public class Tempo extends FenixUtil {
-  private int _hora;
-  private int _minutos;
-  private int _segundos;
+    private int _hora;
 
-  public Tempo(int hora, int minutos) {
-    _hora = hora;
-    _minutos = minutos;
-    _segundos = 0;
-  }
+    private int _minutos;
 
-  public Tempo(int hora, int minutos, int segundos) {
-    _hora = hora;
-    _minutos = minutos;
-    _segundos = segundos;
-  }
+    private int _segundos;
 
-  /* Selectores */
+    public Tempo(int hora, int minutos) {
+        _hora = hora;
+        _minutos = minutos;
+        _segundos = 0;
+    }
 
-  public int hora() {
-    return _hora;
-  }
+    public Tempo(int hora, int minutos, int segundos) {
+        _hora = hora;
+        _minutos = minutos;
+        _segundos = segundos;
+    }
 
-  public int minutos() {
-    return _minutos;
-  }
+    /* Selectores */
 
-  public int segundos() {
-    return _segundos;
-  }
+    public int hora() {
+        return _hora;
+    }
 
-  /* Modificadores */
+    public int minutos() {
+        return _minutos;
+    }
 
-  public void hora(int hora) {
-    _hora = hora;
-  }
+    public int segundos() {
+        return _segundos;
+    }
 
-  public void minutos(int minutos) {
-    _minutos = minutos;
-  }
+    /* Modificadores */
 
-  public void segundos(int segundos) {
-    _segundos = segundos;
-  }
+    public void hora(int hora) {
+        _hora = hora;
+    }
 
-  /* Comparador */
+    public void minutos(int minutos) {
+        _minutos = minutos;
+    }
 
-  public boolean equals(Object o) {
-    return o instanceof Tempo &&
-           _hora == ((Tempo)o).hora() &&
-           _minutos == ((Tempo)o).minutos();
-  }
+    public void segundos(int segundos) {
+        _segundos = segundos;
+    }
+
+    /* Comparador */
+
+    public boolean equals(Object o) {
+        return o instanceof Tempo && _hora == ((Tempo) o).hora() && _minutos == ((Tempo) o).minutos();
+    }
 }

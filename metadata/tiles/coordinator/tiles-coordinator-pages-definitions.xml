@@ -144,4 +144,10 @@
 	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.coordinator.two-column">
 		 <put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
 	</definition>
+	<definition name="chooseStudentsGratuityList" extends="definition.coordinator.two-column">
+		<put name="body" value="/posGraduacao/gratuity/chooseStudentsGratuityList.jsp"/>
+	</definition>
+	<definition name="studentsGratuityList" extends="definition.coordinator.two-column">
+		<put name="body" value="/posGraduacao/gratuity/studentsGratuityList.jsp"/>
+	</definition>
 </tiles-definitions>

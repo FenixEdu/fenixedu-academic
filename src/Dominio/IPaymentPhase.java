@@ -9,21 +9,30 @@ import java.util.List;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public interface IPaymentPhase extends IDomainObject
-{
-	public Date getStartDate();
-	public Date getEndDate();
-	public Double getValue();
-	public String getDescription();
-	public IGratuityValues getGratuityValues();	
-	public List getTransactionList();
-		
-	public void setValue(Double value);
-	public void setStartDate(Date startDate);
-	public void setEndDate(Date endDate);
-	public void setDescription(String description);
-	public void setGratuityValues(IGratuityValues gratuity);
-	public void setTransactionList(List transactionList);
+public interface IPaymentPhase extends IDomainObject {
+    public Date getStartDate();
+
+    public Date getEndDate();
+
+    public Double getValue();
+
+    public String getDescription();
+
+    public IGratuityValues getGratuityValues();
+
+    public List getTransactionList();
+
+    public void setValue(Double value);
+
+    public void setStartDate(Date startDate);
+
+    public void setEndDate(Date endDate);
+
+    public void setDescription(String description);
+
+    public void setGratuityValues(IGratuityValues gratuity);
+
+    public void setTransactionList(List transactionList);
 }

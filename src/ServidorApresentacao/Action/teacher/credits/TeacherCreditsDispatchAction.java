@@ -17,16 +17,10 @@ import org.apache.struts.actions.DispatchAction;
  * 
  * @deprecated I think this is not used anymore
  */
-public class TeacherCreditsDispatchAction extends DispatchAction
-{
+public class TeacherCreditsDispatchAction extends DispatchAction {
 
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         //		IUserView userView = SessionUtils.getUserView(request);
         //		DynaActionForm creditsForm = (DynaActionForm) form;
         //		Integer teacherOID;
@@ -68,6 +62,7 @@ public class TeacherCreditsDispatchAction extends DispatchAction
 
         return mapping.findForward("showForm");
     }
+
     /**
      * @param mapping
      * @param form
@@ -76,14 +71,8 @@ public class TeacherCreditsDispatchAction extends DispatchAction
      * @return @throws
      *         Exception
      */
-    public ActionForward processForm(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-      
+    public ActionForward processForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         return mapping.getInputForward();
     }

@@ -41,9 +41,8 @@ public class EditObjectives implements IServico {
         return "EditObjectives";
     }
 
-    public boolean run(Integer infoExecutionCourseCode,
-            Integer infoCurricularCourseCode, InfoCurriculum infoCurriculumNew,
-            String username) throws FenixServiceException {
+    public boolean run(Integer infoExecutionCourseCode, Integer infoCurricularCourseCode,
+            InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
@@ -64,8 +63,7 @@ public class EditObjectives implements IServico {
                 throw new FenixServiceException("nullCurricularCourseCode");
             }
 
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, infoCurricularCourseCode);
@@ -74,8 +72,7 @@ public class EditObjectives implements IServico {
             }
 
             //Curriculum
-            IPersistentCurriculum persistentCurriculum = sp
-                    .getIPersistentCurriculum();
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             ICurriculum curriculum = persistentCurriculum
                     .readCurriculumByCurricularCourse(curricularCourse);
 
@@ -87,28 +84,20 @@ public class EditObjectives implements IServico {
                 curriculum.setLastModificationDate(today.getTime());
             }
 
-            IPersistentExecutionYear persistentExecutionYear = sp
-                    .getIPersistentExecutionYear();
-            IExecutionYear currentExecutionYear = persistentExecutionYear
-                    .readCurrentExecutionYear();
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
             // modification of curriculum is made in context of an execution
             // year
-            if (!curriculum.getLastModificationDate().before(
-                    currentExecutionYear.getBeginDate())
-                    && !curriculum.getLastModificationDate().after(
-                            currentExecutionYear.getEndDate())) {
+            if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
+                    && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
                 persistentCurriculum.simpleLockWrite(curriculum);
 
                 // let's edit curriculum
                 curriculum.setCurricularCourse(curricularCourse);
-                curriculum.setGeneralObjectives(infoCurriculumNew
-                        .getGeneralObjectives());
-                curriculum.setGeneralObjectivesEn(infoCurriculumNew
-                        .getGeneralObjectivesEn());
-                curriculum.setOperacionalObjectives(infoCurriculumNew
-                        .getOperacionalObjectives());
-                curriculum.setOperacionalObjectivesEn(infoCurriculumNew
-                        .getOperacionalObjectivesEn());
+                curriculum.setGeneralObjectives(infoCurriculumNew.getGeneralObjectives());
+                curriculum.setGeneralObjectivesEn(infoCurriculumNew.getGeneralObjectivesEn());
+                curriculum.setOperacionalObjectives(infoCurriculumNew.getOperacionalObjectives());
+                curriculum.setOperacionalObjectivesEn(infoCurriculumNew.getOperacionalObjectivesEn());
 
                 curriculum.setPersonWhoAltered(person);
 
@@ -120,14 +109,13 @@ public class EditObjectives implements IServico {
                 persistentCurriculum.simpleLockWrite(newCurriculum);
 
                 newCurriculum.setCurricularCourse(curricularCourse);
-                newCurriculum.setGeneralObjectives(infoCurriculumNew
-                        .getGeneralObjectives());
-                newCurriculum.setOperacionalObjectives(infoCurriculumNew
-                        .getOperacionalObjectives());
-                newCurriculum.setGeneralObjectivesEn(infoCurriculumNew
-                        .getGeneralObjectivesEn());
-                newCurriculum.setOperacionalObjectivesEn(infoCurriculumNew
-                        .getOperacionalObjectivesEn());
+                newCurriculum.setGeneralObjectives(infoCurriculumNew.getGeneralObjectives());
+                newCurriculum.setOperacionalObjectives(infoCurriculumNew.getOperacionalObjectives());
+                newCurriculum.setGeneralObjectivesEn(infoCurriculumNew.getGeneralObjectivesEn());
+                newCurriculum.setOperacionalObjectivesEn(infoCurriculumNew.getOperacionalObjectivesEn());
+
+                newCurriculum.setProgram(curriculum.getProgram());
+                newCurriculum.setProgramEn(curriculum.getProgramEn());
 
                 newCurriculum.setPersonWhoAltered(person);
                 Calendar today = Calendar.getInstance();

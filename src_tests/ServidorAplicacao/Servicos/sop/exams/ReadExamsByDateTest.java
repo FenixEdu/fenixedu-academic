@@ -15,32 +15,26 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Ana e Ricardo
- *
+ *  
  */
-public class ReadExamsByDateTest extends ServiceTestCase
-{
+public class ReadExamsByDateTest extends ServiceTestCase {
 
     /**
      * @param name
      */
-    public ReadExamsByDateTest(java.lang.String testName)
-    {
+    public ReadExamsByDateTest(java.lang.String testName) {
         super(testName);
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadExamsByDate";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/sop/testReadExamsByDateDataset.xml";
     }
 
-
-    protected Calendar createExamDate()
-    {
+    protected Calendar createExamDate() {
         Calendar examDate = Calendar.getInstance();
 
         examDate.set(Calendar.YEAR, 2004);
@@ -49,9 +43,8 @@ public class ReadExamsByDateTest extends ServiceTestCase
 
         return examDate;
     }
- 
-    protected Calendar createNoExamDate()
-    {
+
+    protected Calendar createNoExamDate() {
         Calendar examDate = Calendar.getInstance();
 
         examDate.set(Calendar.YEAR, 2004);
@@ -61,8 +54,7 @@ public class ReadExamsByDateTest extends ServiceTestCase
         return examDate;
     }
 
-    protected Calendar createExamStartTime()
-    {
+    protected Calendar createExamStartTime() {
         Calendar examStartTime = Calendar.getInstance();
 
         examStartTime.set(Calendar.HOUR_OF_DAY, 10);
@@ -73,8 +65,7 @@ public class ReadExamsByDateTest extends ServiceTestCase
         return examStartTime;
     }
 
-    protected Calendar createExamEndTime()
-    {
+    protected Calendar createExamEndTime() {
         Calendar examEndTime = Calendar.getInstance();
 
         examEndTime.set(Calendar.HOUR_OF_DAY, 11);
@@ -85,170 +76,139 @@ public class ReadExamsByDateTest extends ServiceTestCase
         return examEndTime;
     }
 
-	// no exams
-	public void testSuccessfullReadExamsByDateNoExams()
-	{
-		Calendar examDate = createNoExamDate();
-		Calendar examStartTime = createExamStartTime();
-		Calendar examEndTime = createExamEndTime();
+    // no exams
+    public void testSuccessfullReadExamsByDateNoExams() {
+        Calendar examDate = createNoExamDate();
+        Calendar examStartTime = createExamStartTime();
+        Calendar examEndTime = createExamEndTime();
 
-		ReadExamsByDate service = ReadExamsByDate.getService();
+        ReadExamsByDate service = ReadExamsByDate.getService();
 
-		ISuportePersistente sp;
+        ISuportePersistente sp;
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			
-			assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 0);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			fail("testSuccessfullReadExamsByDateNoExams - persistencia");            
-		}
-		catch (Exception e)
-		{
-			fail("testSuccessfullReadExamsByDateNoExams");
-		}
-	}
- 
+            InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
 
-	// 4 exams
-	public void testSuccessfullReadExamsByDate()
-	{
-		Calendar examDate = createExamDate();
-		Calendar examStartTime = null;
-		Calendar examEndTime = null;
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 
-		ReadExamsByDate service = ReadExamsByDate.getService();
+            assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 0);
+        } catch (ExcepcaoPersistencia e) {
+            fail("testSuccessfullReadExamsByDateNoExams - persistencia");
+        } catch (Exception e) {
+            fail("testSuccessfullReadExamsByDateNoExams");
+        }
+    }
 
-		ISuportePersistente sp;
+    // 4 exams
+    public void testSuccessfullReadExamsByDate() {
+        Calendar examDate = createExamDate();
+        Calendar examStartTime = null;
+        Calendar examEndTime = null;
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        ReadExamsByDate service = ReadExamsByDate.getService();
 
-			InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			
-			assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 4);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			fail("testSuccessfullReadExamsByDate - persistencia");            
-		}
-		catch (Exception e)
-		{
-			fail("testSuccessfullReadExamsByDate");
-		}
-	}
+        ISuportePersistente sp;
 
-	// 3 exams
-	public void testSuccessfullReadExamsByDateAndStartTime()
-	{
-		Calendar examDate = createExamDate();
-		Calendar examStartTime = createExamStartTime();
-		Calendar examEndTime = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-		ReadExamsByDate service = ReadExamsByDate.getService();
+            InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
 
-		ISuportePersistente sp;
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+            assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 4);
+        } catch (ExcepcaoPersistencia e) {
+            fail("testSuccessfullReadExamsByDate - persistencia");
+        } catch (Exception e) {
+            fail("testSuccessfullReadExamsByDate");
+        }
+    }
 
-			InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			
-			assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 3);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			fail("testSuccessfullReadExamsByDateAndStartTime - persistencia");            
-		}
-		catch (Exception e)
-		{
-			fail("testSuccessfullReadExamsByDateAndStartTime");
-		}
-	}
+    // 3 exams
+    public void testSuccessfullReadExamsByDateAndStartTime() {
+        Calendar examDate = createExamDate();
+        Calendar examStartTime = createExamStartTime();
+        Calendar examEndTime = null;
 
-	// 2 exams
-	public void testSuccessfullReadExamsByDateAndEndTime()
-	{
-		Calendar examDate = createExamDate();
-		Calendar examStartTime = null;
-		Calendar examEndTime = createExamEndTime();
+        ReadExamsByDate service = ReadExamsByDate.getService();
 
-		ReadExamsByDate service = ReadExamsByDate.getService();
+        ISuportePersistente sp;
 
-		ISuportePersistente sp;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+            InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
 
-			InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			
-			assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 2);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			fail("testSuccessfullReadExamsByDateAndEndTime - persistencia");            
-		}
-		catch (Exception e)
-		{
-			fail("testSuccessfullReadExamsByDateAndEndTime");
-		}
-	}
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 
-	// 2 exams
-	public void testSuccessfullReadExamsByDateAndStartTimeAndEndTime()
-	{
-		Calendar examDate = createExamDate();
-		Calendar examStartTime = createExamStartTime();
-		Calendar examEndTime = createExamEndTime();
+            assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 3);
+        } catch (ExcepcaoPersistencia e) {
+            fail("testSuccessfullReadExamsByDateAndStartTime - persistencia");
+        } catch (Exception e) {
+            fail("testSuccessfullReadExamsByDateAndStartTime");
+        }
+    }
 
-		ReadExamsByDate service = ReadExamsByDate.getService();
+    // 2 exams
+    public void testSuccessfullReadExamsByDateAndEndTime() {
+        Calendar examDate = createExamDate();
+        Calendar examStartTime = null;
+        Calendar examEndTime = createExamEndTime();
 
-		ISuportePersistente sp;
+        ReadExamsByDate service = ReadExamsByDate.getService();
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        ISuportePersistente sp;
 
-			InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
-						
-			sp.confirmarTransaccao();
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-			
-			assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 1);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			fail("testSuccessfullReadExamsByDateAndStartTimeAndEndTime - persistencia");            
-		}
-		catch (Exception e)
-		{
-			fail("testSuccessfullReadExamsByDateAndStartTimeAndEndTime");
-		}
-	}
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+
+            InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
+
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+
+            assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 2);
+        } catch (ExcepcaoPersistencia e) {
+            fail("testSuccessfullReadExamsByDateAndEndTime - persistencia");
+        } catch (Exception e) {
+            fail("testSuccessfullReadExamsByDateAndEndTime");
+        }
+    }
+
+    // 2 exams
+    public void testSuccessfullReadExamsByDateAndStartTimeAndEndTime() {
+        Calendar examDate = createExamDate();
+        Calendar examStartTime = createExamStartTime();
+        Calendar examEndTime = createExamEndTime();
+
+        ReadExamsByDate service = ReadExamsByDate.getService();
+
+        ISuportePersistente sp;
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+
+            InfoViewExam exams = service.run(examDate, examStartTime, examEndTime);
+
+            sp.confirmarTransaccao();
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+
+            assertEquals(exams.getInfoViewExamsByDayAndShift().size(), 1);
+        } catch (ExcepcaoPersistencia e) {
+            fail("testSuccessfullReadExamsByDateAndStartTimeAndEndTime - persistencia");
+        } catch (Exception e) {
+            fail("testSuccessfullReadExamsByDateAndStartTimeAndEndTime");
+        }
+    }
 
 }

@@ -28,8 +28,7 @@ import Util.RoleType;
 /**
  * @author João Mota
  */
-public class ExecutionCourseCoordinatorAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class ExecutionCourseCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public ExecutionCourseCoordinatorAuthorizationFilter() {
 
@@ -50,16 +49,13 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
         try {
-            if ((id == null)
-                    || (id.getRoles() == null)
-                    || !AuthorizationUtils.containsRole(id.getRoles(),
-                            getRoleType())
+            if ((id == null) || (id.getRoles() == null)
+                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                     || !hasExecutionCourseInCurricularCourseList(id, arguments)) {
                 throw new NotAuthorizedFilterException();
             }
@@ -73,8 +69,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends
      * @param argumentos
      * @return
      */
-    private boolean hasExecutionCourseInCurricularCourseList(IUserView id,
-            Object[] argumentos) {
+    private boolean hasExecutionCourseInCurricularCourseList(IUserView id, Object[] argumentos) {
         boolean result = false;
         InfoExecutionCourse infoExecutionCourse = null;
         IExecutionCourse executionCourse = null;
@@ -86,40 +81,30 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends
         try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner
-                        .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class,
-                                (Integer) argumentos[0]);
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                        ExecutionCourse.class, (Integer) argumentos[0]);
             }
-            IPersistentCoordinator persistentCoordinator = sp
-                    .getIPersistentCoordinator();
+            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
-                    .getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             if (teacher != null && executionCourse != null) {
-                List executionDegrees = persistentCoordinator
-                        .readExecutionDegreesByTeacher(teacher);
+                List executionDegrees = persistentCoordinator.readExecutionDegreesByTeacher(teacher);
                 if (executionDegrees != null && !executionDegrees.isEmpty()) {
                     Iterator iter = executionDegrees.iterator();
                     while (iter.hasNext() && !result) {
-                        ICursoExecucao executionDegree = (ICursoExecucao) iter
-                                .next();
+                        ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
                         if (executionDegree.getExecutionYear().equals(
-                                executionCourse.getExecutionPeriod()
-                                        .getExecutionYear())) {
-                            if (CollectionUtils.containsAny(
-                                    executionDegree.getCurricularPlan()
-                                            .getCurricularCourses(),
-                                    executionCourse
-                                            .getAssociatedCurricularCourses())) {
+                                executionCourse.getExecutionPeriod().getExecutionYear())) {
+                            if (CollectionUtils.containsAny(executionDegree.getCurricularPlan()
+                                    .getCurricularCourses(), executionCourse
+                                    .getAssociatedCurricularCourses())) {
                                 result = true;
                             }
                         }

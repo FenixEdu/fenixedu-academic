@@ -23,135 +23,114 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentDoneTestsTest extends TestCaseReadServices
-{
+public class ReadStudentDoneTestsTest extends TestCaseReadServices {
 
-	public ReadStudentDoneTestsTest(java.lang.String testName)
-	{
-		super(testName);
-	}
+    public ReadStudentDoneTestsTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args)
-	{
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite()
-	{
-		TestSuite suite = new TestSuite(ReadStudentDoneTestsTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadStudentDoneTestsTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp()
-	{
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown()
-	{
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadStudentDoneTests";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadStudentDoneTests";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	{
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-	{
-		String userName = new String("L48283");
-		Integer executionCourseId = new Integer(34882);
-		Object[] args = { userName, executionCourseId };
-		return args;
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        String userName = new String("L48283");
+        Integer executionCourseId = new Integer(34882);
+        Object[] args = { userName, executionCourseId };
+        return args;
 
-	}
+    }
 
-	protected int getNumberOfItemsToRetrieve()
-	{
-		return 1;
-	}
+    protected int getNumberOfItemsToRetrieve() {
+        return 1;
+    }
 
-	protected Object getObjectToCompare()
-	{
-		InfoSiteDistributedTests infoSiteDistributedTests = new InfoSiteDistributedTests();
-		try
-		{
-			Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			List distributedTestList = new ArrayList();
+    protected Object getObjectToCompare() {
+        InfoSiteDistributedTests infoSiteDistributedTests = new InfoSiteDistributedTests();
+        try {
+            Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            List distributedTestList = new ArrayList();
 
-			sp.iniciarTransaccao();
+            sp.iniciarTransaccao();
 
-			IStudent student = sp.getIPersistentStudent().readByUsername((String) args[0]);
-			assertNotNull("student is null", student);
+            IStudent student = sp.getIPersistentStudent().readByUsername((String) args[0]);
+            assertNotNull("student is null", student);
 
-			distributedTestList = sp.getIPersistentDistributedTest().readByStudent(student);
+            distributedTestList = sp.getIPersistentDistributedTest().readByStudent(student);
 
-			sp.confirmarTransaccao();
+            sp.confirmarTransaccao();
 
-			Iterator it = distributedTestList.iterator();
-			List infoDistributedTestList = new ArrayList();
-			while (it.hasNext())
-			{
-				IDistributedTest distributedTest = (IDistributedTest) it.next();
-				if ((!distributedTest.getIdInternal().equals(new Integer(2)))
-					&& (!distributedTest.getIdInternal().equals(new Integer(125))))
-				infoDistributedTestList.add(copyIDistributedTest2InfoDistributedTest(distributedTest));
-			}
-			infoSiteDistributedTests.setInfoDistributedTests(infoDistributedTestList);
-		}
-		catch (Exception ex)
-		{
-			fail("ReadStudentDoneTestsTest " + ex);
-		}
-		return infoSiteDistributedTests;
-	}
+            Iterator it = distributedTestList.iterator();
+            List infoDistributedTestList = new ArrayList();
+            while (it.hasNext()) {
+                IDistributedTest distributedTest = (IDistributedTest) it.next();
+                if ((!distributedTest.getIdInternal().equals(new Integer(2)))
+                        && (!distributedTest.getIdInternal().equals(new Integer(125))))
+                    infoDistributedTestList
+                            .add(copyIDistributedTest2InfoDistributedTest(distributedTest));
+            }
+            infoSiteDistributedTests.setInfoDistributedTests(infoDistributedTestList);
+        } catch (Exception ex) {
+            fail("ReadStudentDoneTestsTest " + ex);
+        }
+        return infoSiteDistributedTests;
+    }
 
-	protected boolean needsAuthorization()
-	{
-		return true;
-	}
-	protected String[] getArgsForAuthorizedUser()
-	{
-		String argsAutenticacao3[] = { "l48283", "pass", getApplication()};
-		return argsAutenticacao3;
-	}
+    protected boolean needsAuthorization() {
+        return true;
+    }
 
-	protected String[] getArgsForNotAuthorizedUser()
-	{
-		String argsAutenticacao4[] = { "d2543", "pass", getApplication()};
-		return argsAutenticacao4;
-	}
+    protected String[] getArgsForAuthorizedUser() {
+        String argsAutenticacao3[] = { "l48283", "pass", getApplication() };
+        return argsAutenticacao3;
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/student/testReadStudentTestsToDoDataSet.xml";
-	}
+    protected String[] getArgsForNotAuthorizedUser() {
+        String argsAutenticacao4[] = { "d2543", "pass", getApplication() };
+        return argsAutenticacao4;
+    }
 
-	public String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/student/testReadStudentTestsToDoDataSet.xml";
+    }
 
-	private static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
-	{
-		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-		try
-		{
-			CopyUtils.copyProperties(infoDistributedTest, distributedTest);
-		}
-		catch (Exception e)
-		{
-			fail("ReadStudentDoneTestsTest " + "cloner");
-		}
-		return infoDistributedTest;
-	}
+    public String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
+
+    private static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(
+            IDistributedTest distributedTest) {
+        InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
+        try {
+            CopyUtils.copyProperties(infoDistributedTest, distributedTest);
+        } catch (Exception e) {
+            fail("ReadStudentDoneTestsTest " + "cloner");
+        }
+        return infoDistributedTest;
+    }
 
 }
 
@@ -221,7 +200,8 @@ public class ReadStudentDoneTestsTest extends TestCaseReadServices
 //					getNameOfServiceToBeTested(),
 //					args);
 //
-//			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+//			PersistenceBroker broker =
+// PersistenceBrokerFactory.defaultPersistenceBroker();
 //
 //			Criteria criteria = new Criteria();
 //
@@ -232,16 +212,19 @@ public class ReadStudentDoneTestsTest extends TestCaseReadServices
 //			List distributedTestList = (List) broker.getCollectionByQuery(queryCriteria);
 //			broker.close();
 //
-//			List infoDistributedTestList = infoSiteDistributedTests.getInfoDistributedTests();
+//			List infoDistributedTestList =
+// infoSiteDistributedTests.getInfoDistributedTests();
 //			assertEquals(distributedTestList.size(), infoDistributedTestList.size());
 //
-//			//InfoExecutionCourse infoExecutionCourse = infoSiteDistributedTests.getExecutionCourse();
+//			//InfoExecutionCourse infoExecutionCourse =
+// infoSiteDistributedTests.getExecutionCourse();
 //			//assertEquals(infoExecutionCourse.getIdInternal(), args[1]);
 //			int i = 0;
 //			Iterator it = infoDistributedTestList.iterator();
 //			while (it.hasNext())
 //			{
-//				InfoDistributedTest infoServiceDistributedTest = (InfoDistributedTest) it.next();
+//				InfoDistributedTest infoServiceDistributedTest = (InfoDistributedTest)
+// it.next();
 //				InfoDistributedTest infoDistributedTest =
 //					copyIDistributedTest2InfoDistributedTest(
 //						(IDistributedTest) distributedTestList.get(i));
@@ -260,7 +243,8 @@ public class ReadStudentDoneTestsTest extends TestCaseReadServices
 //		}
 //	}
 //
-//	private static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
+//	private static InfoDistributedTest
+// copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
 //	{
 //		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
 //		try

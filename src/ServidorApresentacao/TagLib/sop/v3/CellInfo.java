@@ -7,58 +7,55 @@ import DataBeans.InfoLesson;
 
 public class CellInfo {
 
-	private LinkedList lessonViewList;
-	//cuidado ao modificar os constructores, olhar para o getContent
-	/**
-	 * 
-	 * @deprecated
-	 */
-	public CellInfo(int rowSpan, int colSpan, InfoLesson lessonView) {
-	}
+    private LinkedList lessonViewList;
 
-	/**
-	 * 
-	 * @param rowSpan
-	 * @param lessonView
-	 * @deprecated
-	 */
-	public CellInfo(int rowSpan, InfoLesson lessonView) {
-		this(rowSpan, 0, lessonView);
-	}
+    //cuidado ao modificar os constructores, olhar para o getContent
+    /**
+     * 
+     * @deprecated
+     */
+    public CellInfo(int rowSpan, int colSpan, InfoLesson lessonView) {
+    }
 
-	public CellInfo() {
-		this.lessonViewList = new LinkedList();
-	}
+    /**
+     * 
+     * @param rowSpan
+     * @param lessonView
+     * @deprecated
+     */
+    public CellInfo(int rowSpan, InfoLesson lessonView) {
+        this(rowSpan, 0, lessonView);
+    }
 
-	public void addLessonView(InfoLesson lessonView) {
-		this.lessonViewList.add(lessonView);
-	}
+    public CellInfo() {
+        this.lessonViewList = new LinkedList();
+    }
 
-	public String getContent() {
-		StringBuffer buffer = new StringBuffer("");
+    public void addLessonView(InfoLesson lessonView) {
+        this.lessonViewList.add(lessonView);
+    }
 
-		if (lessonViewList.isEmpty()) {
-			buffer = buffer.append("&nbsp;");
-		} else {
-			Iterator iterator = this.lessonViewList.iterator();
-			while (iterator.hasNext()) {
+    public String getContent() {
+        StringBuffer buffer = new StringBuffer("");
 
-				InfoLesson infoLesson = (InfoLesson) iterator.next();
+        if (lessonViewList.isEmpty()) {
+            buffer = buffer.append("&nbsp;");
+        } else {
+            Iterator iterator = this.lessonViewList.iterator();
+            while (iterator.hasNext()) {
 
-				buffer =
-					buffer.append(
-						infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
-				buffer =
-					buffer.append(" (").append(
-						infoLesson.getTipo().getSiglaTipoAula());
-				buffer = buffer.append(") ");
-				buffer = buffer.append(infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
-				if (iterator.hasNext()) {
-					buffer.append("<br/>");
-				}
-			}
-		}
-		return buffer.toString();
-	}
+                InfoLesson infoLesson = (InfoLesson) iterator.next();
+
+                buffer = buffer.append(infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
+                buffer = buffer.append(" (").append(infoLesson.getTipo().getSiglaTipoAula());
+                buffer = buffer.append(") ");
+                buffer = buffer.append(infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
+                if (iterator.hasNext()) {
+                    buffer.append("<br/>");
+                }
+            }
+        }
+        return buffer.toString();
+    }
 
 }

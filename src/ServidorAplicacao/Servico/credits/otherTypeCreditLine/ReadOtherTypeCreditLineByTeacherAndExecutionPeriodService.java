@@ -33,8 +33,7 @@ import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 /**
  * @author jpvl
  */
-public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService
-        implements IService {
+public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implements IService {
 
     /**
      * @author jpvl
@@ -50,19 +49,17 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService
 
     }
 
-    public TeacherOtherTypeCreditLineDTO run(Integer teacherId,
-            Integer executionPeriodId) throws FenixServiceException {
+    public TeacherOtherTypeCreditLineDTO run(Integer teacherId, Integer executionPeriodId)
+            throws FenixServiceException {
         TeacherOtherTypeCreditLineDTO teacherOtherTypeCreditLineDTO = new TeacherOtherTypeCreditLineDTO();
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod executionPeriodDAO = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
             IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp
                     .getIPersistentOtherTypeCreditLine();
 
-            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
-                    teacherId);
+            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
             if (teacher == null) {
                 throw new TeacherNotFound();
@@ -71,37 +68,33 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService
             IExecutionPeriod executionPeriod = null;
 
             if (executionPeriodId == null || executionPeriodId.intValue() == 0) {
-                executionPeriod = executionPeriodDAO
-                        .readActualExecutionPeriod();
+                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
             } else {
-                executionPeriod = (IExecutionPeriod) executionPeriodDAO
-                        .readByOID(ExecutionPeriod.class, executionPeriodId);
+                executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+                        executionPeriodId);
             }
 
             if (executionPeriod == null) {
                 throw new ExecutionPeriodNotFound();
             }
 
-            List otherTypesList = otherTypeCreditLineDAO
-                    .readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+            List otherTypesList = otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher,
+                    executionPeriod);
 
-            List infoOtherTypesList = (List) CollectionUtils.collect(
-                    otherTypesList, new Transformer() {
+            List infoOtherTypesList = (List) CollectionUtils.collect(otherTypesList, new Transformer() {
 
-                        public Object transform(Object input) {
-                            IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
-                            InfoOtherTypeCreditLine infoOtherTypeCreditLine = Cloner
-                                    .copyIOtherTypeCreditLine2InfoOtherCreditLine(otherTypeCreditLine);
-                            return infoOtherTypeCreditLine;
-                        }
-                    });
+                public Object transform(Object input) {
+                    IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
+                    InfoOtherTypeCreditLine infoOtherTypeCreditLine = Cloner
+                            .copyIOtherTypeCreditLine2InfoOtherCreditLine(otherTypeCreditLine);
+                    return infoOtherTypeCreditLine;
+                }
+            });
 
             teacherOtherTypeCreditLineDTO.setCreditLines(infoOtherTypesList);
-            teacherOtherTypeCreditLineDTO
-                    .setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
-                            .get(executionPeriod));
-            teacherOtherTypeCreditLineDTO.setInfoTeacher(Cloner
-                    .copyITeacher2InfoTeacher(teacher));
+            teacherOtherTypeCreditLineDTO.setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
+                    .get(executionPeriod));
+            teacherOtherTypeCreditLineDTO.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
             return teacherOtherTypeCreditLineDTO;
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
@@ -134,8 +127,7 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
     protected InfoObject clone2InfoObject(IDomainObject domainObject) {
-        return Cloner
-                .copyIOtherTypeCreditLine2InfoOtherCreditLine((IOtherTypeCreditLine) domainObject);
+        return Cloner.copyIOtherTypeCreditLine2InfoOtherCreditLine((IOtherTypeCreditLine) domainObject);
     }
 
 }

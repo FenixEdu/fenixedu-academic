@@ -12,9 +12,8 @@ import ServidorPersistente.IPersistentObject;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public interface IPersistentServiceProviderRegime extends IPersistentObject
-{
+public interface IPersistentServiceProviderRegime extends IPersistentObject {
     public IServiceProviderRegime readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

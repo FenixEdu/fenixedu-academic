@@ -32,172 +32,168 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author David Santos in Apr 28, 2004
  */
 
-public class EnrollmentEquivalenceDispatchAction extends DispatchAction
-{
-	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
+    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer fromStudentCurricularPlanID = (Integer) request.getAttribute("fromStudentCurricularPlanID");
-		Integer toStudentCurricularPlanID = (Integer) request.getAttribute("toStudentCurricularPlanID");
-		String backLink = (String) request.getAttribute("backLink");
-		Integer degreeTypeCode = (Integer) request.getAttribute("degreeType");
-		String studentNumberSTR = (String) request.getAttribute("studentNumber");
+        Integer fromStudentCurricularPlanID = (Integer) request
+                .getAttribute("fromStudentCurricularPlanID");
+        Integer toStudentCurricularPlanID = (Integer) request.getAttribute("toStudentCurricularPlanID");
+        String backLink = (String) request.getAttribute("backLink");
+        Integer degreeTypeCode = (Integer) request.getAttribute("degreeType");
+        String studentNumberSTR = (String) request.getAttribute("studentNumber");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType, fromStudentCurricularPlanID,
-				toStudentCurricularPlanID);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType,
+                    fromStudentCurricularPlanID, toStudentCurricularPlanID);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		sortInfoEquivalenceContext(infoEquivalenceContext);
+        sortInfoEquivalenceContext(infoEquivalenceContext);
 
-		setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-			toStudentCurricularPlanID, infoEquivalenceContext);
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                fromStudentCurricularPlanID, toStudentCurricularPlanID, infoEquivalenceContext);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "show", backLink));
+    }
 
-	public ActionForward grades(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward grades(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         DynaActionForm makeEnrollmentEquivalenceFrom = (DynaActionForm) form;
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		ActionErrors errors = new ActionErrors();
+        ActionErrors errors = new ActionErrors();
 
         Integer degreeTypeCode = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
-        Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("fromStudentCurricularPlanID");
-        Integer toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("toStudentCurricularPlanID");
+        Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                .get("fromStudentCurricularPlanID");
+        Integer toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                .get("toStudentCurricularPlanID");
 
         List idsOfChosenEnrollmentsToGiveEquivalence = getIDsOfChosenEnrollmentsToGiveEquivalence(makeEnrollmentEquivalenceFrom);
-		List idsOfChosenCurricularCoursesToGetEquivalence =
-			getIDsOfChosenCurricularCoursesToGetEquivalence(makeEnrollmentEquivalenceFrom);
+        List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(makeEnrollmentEquivalenceFrom);
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		if (idsOfChosenEnrollmentsToGiveEquivalence.isEmpty())
-		{
-			saveAcurateError(request, errors, "grades", "from");
-			setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-				toStudentCurricularPlanID, null);
-			request.setAttribute("commingFrom", "grades");
-			return mapping.getInputForward();
-		}
+        if (idsOfChosenEnrollmentsToGiveEquivalence.isEmpty()) {
+            saveAcurateError(request, errors, "grades", "from");
+            setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                    fromStudentCurricularPlanID, toStudentCurricularPlanID, null);
+            request.setAttribute("commingFrom", "grades");
+            return mapping.getInputForward();
+        }
 
-		if (idsOfChosenCurricularCoursesToGetEquivalence.isEmpty())
-		{
-			saveAcurateError(request, errors, "grades", "to");
-			setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-				toStudentCurricularPlanID, null);
-			request.setAttribute("commingFrom", "grades");
-			return mapping.getInputForward();
-		}
+        if (idsOfChosenCurricularCoursesToGetEquivalence.isEmpty()) {
+            saveAcurateError(request, errors, "grades", "to");
+            setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                    fromStudentCurricularPlanID, toStudentCurricularPlanID, null);
+            request.setAttribute("commingFrom", "grades");
+            return mapping.getInputForward();
+        }
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runSecondService(userView, studentNumber, degreeType, idsOfChosenEnrollmentsToGiveEquivalence,
-				idsOfChosenCurricularCoursesToGetEquivalence);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runSecondService(userView, studentNumber, degreeType,
+                    idsOfChosenEnrollmentsToGiveEquivalence,
+                    idsOfChosenCurricularCoursesToGetEquivalence);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		sortInfoEquivalenceContext(infoEquivalenceContext);
+        sortInfoEquivalenceContext(infoEquivalenceContext);
 
-		setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-			toStudentCurricularPlanID, infoEquivalenceContext);
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                fromStudentCurricularPlanID, toStudentCurricularPlanID, infoEquivalenceContext);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("grades", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "grades", backLink));
+    }
 
-	public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         DynaActionForm makeEnrollmentEquivalenceFrom = (DynaActionForm) form;
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		ActionErrors errors = new ActionErrors();
+        ActionErrors errors = new ActionErrors();
 
         Integer degreeTypeCode = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
-        Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("fromStudentCurricularPlanID");
-        Integer toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("toStudentCurricularPlanID");
+        Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                .get("fromStudentCurricularPlanID");
+        Integer toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                .get("toStudentCurricularPlanID");
 
         List idsOfChosenEnrollmentsToGiveEquivalence = getIDsOfChosenEnrollmentsToGiveEquivalence(makeEnrollmentEquivalenceFrom);
-		List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(request);
+        List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(request);
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runSecondService(userView, studentNumber, degreeType, idsOfChosenEnrollmentsToGiveEquivalence,
-				idsOfChosenCurricularCoursesToGetEquivalence);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runSecondService(userView, studentNumber, degreeType,
+                    idsOfChosenEnrollmentsToGiveEquivalence,
+                    idsOfChosenCurricularCoursesToGetEquivalence);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		setChosenCurricularCourseGradesInInfoEquivalenceContext(request, infoEquivalenceContext);
+        setChosenCurricularCourseGradesInInfoEquivalenceContext(request, infoEquivalenceContext);
 
-		Object args[] = {studentNumber, degreeType, infoEquivalenceContext.getInfoStudentCurricularPlan(),
-			infoEquivalenceContext.getChosenInfoCurricularCourseGradesToGetEquivalence()};
+        Object args[] = { studentNumber, degreeType,
+                infoEquivalenceContext.getInfoStudentCurricularPlan(),
+                infoEquivalenceContext.getChosenInfoCurricularCourseGradesToGetEquivalence() };
 
-		String result = null;
-		try
-		{
-			result = (String) ServiceManagerServiceFactory.executeService(userView,
-				"ValidateCurricularCourseGradesForEnrollmentEquivalence", args);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
-		
-		if (result != null)
-		{
-			saveAcurateError(request, errors, "confirm", result);
-			setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-				toStudentCurricularPlanID, null);
-			request.setAttribute("commingFrom", "confirm");
-			request.setAttribute("idsOfChosenEnrollmentsToGiveEquivalence", idsOfChosenEnrollmentsToGiveEquivalence);
-			request.setAttribute("idsOfChosenCurricularCoursesToGetEquivalence", idsOfChosenCurricularCoursesToGetEquivalence);
-			return mapping.getInputForward();
-		}
+        String result = null;
+        try {
+            result = (String) ServiceManagerServiceFactory.executeService(userView,
+                    "ValidateCurricularCourseGradesForEnrollmentEquivalence", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		sortInfoEquivalenceContext(infoEquivalenceContext);
+        if (result != null) {
+            saveAcurateError(request, errors, "confirm", result);
+            setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                    fromStudentCurricularPlanID, toStudentCurricularPlanID, null);
+            request.setAttribute("commingFrom", "confirm");
+            request.setAttribute("idsOfChosenEnrollmentsToGiveEquivalence",
+                    idsOfChosenEnrollmentsToGiveEquivalence);
+            request.setAttribute("idsOfChosenCurricularCoursesToGetEquivalence",
+                    idsOfChosenCurricularCoursesToGetEquivalence);
+            return mapping.getInputForward();
+        }
 
-		setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-			toStudentCurricularPlanID, infoEquivalenceContext);
+        sortInfoEquivalenceContext(infoEquivalenceContext);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("confirm", backLink));
-	}
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                fromStudentCurricularPlanID, toStudentCurricularPlanID, infoEquivalenceContext);
 
-	public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "confirm", backLink));
+    }
+
+    public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         DynaActionForm makeEnrollmentEquivalenceFrom = (DynaActionForm) form;
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -205,424 +201,405 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction
         Integer degreeTypeCode = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
-        Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("fromStudentCurricularPlanID");
-        Integer toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("toStudentCurricularPlanID");
+        Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                .get("fromStudentCurricularPlanID");
+        Integer toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                .get("toStudentCurricularPlanID");
 
         List idsOfChosenEnrollmentsToGiveEquivalence = getIDsOfChosenEnrollmentsToGiveEquivalence(makeEnrollmentEquivalenceFrom);
-		List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(request);
+        List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(request);
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runSecondService(userView, studentNumber, degreeType, idsOfChosenEnrollmentsToGiveEquivalence,
-				idsOfChosenCurricularCoursesToGetEquivalence);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runSecondService(userView, studentNumber, degreeType,
+                    idsOfChosenEnrollmentsToGiveEquivalence,
+                    idsOfChosenCurricularCoursesToGetEquivalence);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		setChosenCurricularCourseGradesInInfoEquivalenceContext(request, infoEquivalenceContext);
+        setChosenCurricularCourseGradesInInfoEquivalenceContext(request, infoEquivalenceContext);
 
-		Object args[] = {studentNumber, degreeType, infoEquivalenceContext, toStudentCurricularPlanID, userView};
+        Object args[] = { studentNumber, degreeType, infoEquivalenceContext, toStudentCurricularPlanID,
+                userView };
 
-		try
-		{
-			ServiceManagerServiceFactory.executeService(userView, "WriteEnrollmentEquivalences", args);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "WriteEnrollmentEquivalences", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-			toStudentCurricularPlanID, null);
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                fromStudentCurricularPlanID, toStudentCurricularPlanID, null);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("accept", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "accept", backLink));
+    }
 
-	public ActionForward details(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward details(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String degreeTypeCode = request.getParameter("degreeType");
-		String studentNumberSTR = request.getParameter("studentNumber");
-		String backLink = request.getParameter("backLink");
-		String fromStudentCurricularPlanID = request.getParameter("fromStudentCurricularPlanID");
-		String toStudentCurricularPlanID = request.getParameter("toStudentCurricularPlanID");
-		String enrollmentID = request.getParameter("enrollmentID");
+        String studentNumberSTR = request.getParameter("studentNumber");
+        String backLink = request.getParameter("backLink");
+        String fromStudentCurricularPlanID = request.getParameter("fromStudentCurricularPlanID");
+        String toStudentCurricularPlanID = request.getParameter("toStudentCurricularPlanID");
+        String enrollmentID = request.getParameter("enrollmentID");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType, Integer
-				.valueOf(fromStudentCurricularPlanID), Integer.valueOf(toStudentCurricularPlanID));
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType, Integer
+                    .valueOf(fromStudentCurricularPlanID), Integer.valueOf(toStudentCurricularPlanID));
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		Object args[] = {studentNumber, degreeType, Integer.valueOf(enrollmentID)};
+        Object args[] = { studentNumber, degreeType, Integer.valueOf(enrollmentID) };
 
-		InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
-		try
-		{
-			infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory.executeService(userView,
-				"GetEnrollmentEvaluation", args);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
-		
-		request.setAttribute("infoEnrolmentEvaluation", infoEnrolmentEvaluation);
-		setRequestAttributes(request, Integer.valueOf(degreeTypeCode), studentNumberSTR, backLink, Integer
-			.valueOf(fromStudentCurricularPlanID), Integer.valueOf(toStudentCurricularPlanID), infoEquivalenceContext);
+        InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
+        try {
+            infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
+                    .executeService(userView, "GetEnrollmentEvaluation", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("details", backLink));
-	}
+        request.setAttribute("infoEnrolmentEvaluation", infoEnrolmentEvaluation);
+        setRequestAttributes(request, Integer.valueOf(degreeTypeCode), studentNumberSTR, backLink,
+                Integer.valueOf(fromStudentCurricularPlanID),
+                Integer.valueOf(toStudentCurricularPlanID), infoEquivalenceContext);
 
-	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		DynaActionForm makeEnrollmentEquivalenceFrom = (DynaActionForm) form;
-		
-		String forward = null;
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "details", backLink));
+    }
 
-		Integer degreeType = (Integer) request.getAttribute("degreeType");
-		String studentNumber = (String) request.getAttribute("studentNumber");
-		String backLink = (String) request.getAttribute("backLink");
-		Integer fromStudentCurricularPlanID = (Integer) request.getAttribute("fromStudentCurricularPlanID");
-		Integer toStudentCurricularPlanID = (Integer) request.getAttribute("toStudentCurricularPlanID");
-		String commingFrom = (String) request.getAttribute("commingFrom");
+    public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        DynaActionForm makeEnrollmentEquivalenceFrom = (DynaActionForm) form;
 
-		if (degreeType == null)
-		{
-			degreeType = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
-		}
+        String forward = null;
 
-		if (studentNumber == null)
-		{
-			studentNumber = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
-		}
+        Integer degreeType = (Integer) request.getAttribute("degreeType");
+        String studentNumber = (String) request.getAttribute("studentNumber");
+        String backLink = (String) request.getAttribute("backLink");
+        Integer fromStudentCurricularPlanID = (Integer) request
+                .getAttribute("fromStudentCurricularPlanID");
+        Integer toStudentCurricularPlanID = (Integer) request.getAttribute("toStudentCurricularPlanID");
+        String commingFrom = (String) request.getAttribute("commingFrom");
 
-		if (backLink == null)
-		{
-			backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
-		}
+        if (degreeType == null) {
+            degreeType = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
+        }
 
-		if (fromStudentCurricularPlanID == null)
-		{
-			fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("fromStudentCurricularPlanID");
-		}
+        if (studentNumber == null) {
+            studentNumber = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
+        }
 
-		if (toStudentCurricularPlanID == null)
-		{
-			toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom.get("toStudentCurricularPlanID");
-		}
+        if (backLink == null) {
+            backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
+        }
 
-		if (commingFrom == null)
-		{
-			commingFrom = request.getParameter("commingFrom");
-		}
+        if (fromStudentCurricularPlanID == null) {
+            fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                    .get("fromStudentCurricularPlanID");
+        }
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
+        if (toStudentCurricularPlanID == null) {
+            toStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
+                    .get("toStudentCurricularPlanID");
+        }
 
-		if (commingFrom.equals("show"))
-		{
-			forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show", backLink);
-		} else if (commingFrom.equals("grades"))
-		{
-			TipoCurso realDegreeType = new TipoCurso();
-			realDegreeType.setTipoCurso(degreeType);
-			Integer realStudentNumber = Integer.valueOf(studentNumber);
+        if (commingFrom == null) {
+            commingFrom = request.getParameter("commingFrom");
+        }
 
-			try
-			{
-				infoEquivalenceContext = runFirstService(userView, realStudentNumber, realDegreeType, fromStudentCurricularPlanID,
-					toStudentCurricularPlanID);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				throw new FenixActionException(e);
-			}
-			
-			sortInfoEquivalenceContext(infoEquivalenceContext);
+        InfoEquivalenceContext infoEquivalenceContext = null;
 
-			forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show", backLink);
-		} else if (commingFrom.equals("confirm"))
-		{
-			TipoCurso realDegreeType = new TipoCurso();
-			realDegreeType.setTipoCurso(degreeType);
-			Integer realStudentNumber = Integer.valueOf(studentNumber);
-			
-			List idsOfChosenEnrollmentsToGiveEquivalence = (List) request.getAttribute("idsOfChosenEnrollmentsToGiveEquivalence");
-			List idsOfChosenCurricularCoursesToGetEquivalence = (List) request
-				.getAttribute("idsOfChosenCurricularCoursesToGetEquivalence");
+        if (commingFrom.equals("show")) {
+            forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show",
+                    backLink);
+        } else if (commingFrom.equals("grades")) {
+            TipoCurso realDegreeType = new TipoCurso();
+            realDegreeType.setTipoCurso(degreeType);
+            Integer realStudentNumber = Integer.valueOf(studentNumber);
 
-			try
-			{
-				infoEquivalenceContext = runSecondService(userView, realStudentNumber, realDegreeType,
-					idsOfChosenEnrollmentsToGiveEquivalence, idsOfChosenCurricularCoursesToGetEquivalence);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				throw new FenixActionException(e);
-			}
-			
-			sortInfoEquivalenceContext(infoEquivalenceContext);
+            try {
+                infoEquivalenceContext = runFirstService(userView, realStudentNumber, realDegreeType,
+                        fromStudentCurricularPlanID, toStudentCurricularPlanID);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
 
-			forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("grades", backLink);
-		}
+            sortInfoEquivalenceContext(infoEquivalenceContext);
 
-		setRequestAttributes(request, degreeType, studentNumber, backLink, fromStudentCurricularPlanID,
-			toStudentCurricularPlanID, infoEquivalenceContext);
+            forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show",
+                    backLink);
+        } else if (commingFrom.equals("confirm")) {
+            TipoCurso realDegreeType = new TipoCurso();
+            realDegreeType.setTipoCurso(degreeType);
+            Integer realStudentNumber = Integer.valueOf(studentNumber);
 
-		return mapping.findForward(forward);
-	}
+            List idsOfChosenEnrollmentsToGiveEquivalence = (List) request
+                    .getAttribute("idsOfChosenEnrollmentsToGiveEquivalence");
+            List idsOfChosenCurricularCoursesToGetEquivalence = (List) request
+                    .getAttribute("idsOfChosenCurricularCoursesToGetEquivalence");
 
-	/**
-	 * @param request
-	 * @param errors
-	 * @param methodName
-	 * @param arg1
-	 */
-	private void saveAcurateError(HttpServletRequest request, ActionErrors errors, String methodName, String arg1)
-	{
-		if (methodName.equals("grades"))
-		{
-			if (arg1.equals("from"))
-			{
-				errors.add("must.select.from", new ActionError("errors.enrollment.equivalence.must.select.from"));
-			} else if (arg1.equals("to"))
-			{
-				errors.add("must.select.to", new ActionError("errors.enrollment.equivalence.must.select.to"));
-			}
-		} else if (methodName.equals("confirm"))
-		{
-			errors.add("must.select.from", new ActionError(arg1));
-		}
+            try {
+                infoEquivalenceContext = runSecondService(userView, realStudentNumber, realDegreeType,
+                        idsOfChosenEnrollmentsToGiveEquivalence,
+                        idsOfChosenCurricularCoursesToGetEquivalence);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
 
-		saveErrors(request, errors);
-	}
+            sortInfoEquivalenceContext(infoEquivalenceContext);
 
-	/**
-	 * @param infoEquivalenceContext
-	 */
-	private void sortInfoEquivalenceContext(InfoEquivalenceContext infoEquivalenceContext)
-	{
-		List infoEnrolmentsToGiveEquivalence = infoEquivalenceContext.getInfoEnrolmentsToGiveEquivalence();
-		List infoCurricularCoursesToGetEquivalence = infoEquivalenceContext.getInfoCurricularCoursesToGetEquivalence();
-		List infoEnrollmentGradesToGiveEquivalences = infoEquivalenceContext.getChosenInfoEnrollmentGradesToGiveEquivalence();
-		List infoCurricularCourseGradesToGetEquivalences = infoEquivalenceContext
-			.getChosenInfoCurricularCourseGradesToGetEquivalence();
+            forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("grades",
+                    backLink);
+        }
 
-		if ( (infoEnrolmentsToGiveEquivalence != null) && (!infoEnrolmentsToGiveEquivalence.isEmpty()) )
-		{
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-			Collections.sort(infoEnrolmentsToGiveEquivalence, comparatorChain);
-		}
+        setRequestAttributes(request, degreeType, studentNumber, backLink, fromStudentCurricularPlanID,
+                toStudentCurricularPlanID, infoEquivalenceContext);
 
-		if ( (infoCurricularCoursesToGetEquivalence != null) && (!infoCurricularCoursesToGetEquivalence.isEmpty()) )
-		{
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("name"));
-			Collections.sort(infoCurricularCoursesToGetEquivalence, comparatorChain);
-		}
+        return mapping.findForward(forward);
+    }
 
-		if ( (infoEnrollmentGradesToGiveEquivalences != null) && (!infoEnrollmentGradesToGiveEquivalences.isEmpty()) )
-		{
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("infoEnrollment.infoCurricularCourse.name"));
-			Collections.sort(infoEnrollmentGradesToGiveEquivalences, comparatorChain);
-		}
+    /**
+     * @param request
+     * @param errors
+     * @param methodName
+     * @param arg1
+     */
+    private void saveAcurateError(HttpServletRequest request, ActionErrors errors, String methodName,
+            String arg1) {
+        if (methodName.equals("grades")) {
+            if (arg1.equals("from")) {
+                errors.add("must.select.from", new ActionError(
+                        "errors.enrollment.equivalence.must.select.from"));
+            } else if (arg1.equals("to")) {
+                errors.add("must.select.to", new ActionError(
+                        "errors.enrollment.equivalence.must.select.to"));
+            }
+        } else if (methodName.equals("confirm")) {
+            errors.add("must.select.from", new ActionError(arg1));
+        }
 
-		if ( (infoCurricularCourseGradesToGetEquivalences != null) && (!infoCurricularCourseGradesToGetEquivalences.isEmpty()) )
-		{
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-			Collections.sort(infoCurricularCourseGradesToGetEquivalences, comparatorChain);
-		}
+        saveErrors(request, errors);
+    }
 
-	}
+    /**
+     * @param infoEquivalenceContext
+     */
+    private void sortInfoEquivalenceContext(InfoEquivalenceContext infoEquivalenceContext) {
+        List infoEnrolmentsToGiveEquivalence = infoEquivalenceContext
+                .getInfoEnrolmentsToGiveEquivalence();
+        List infoCurricularCoursesToGetEquivalence = infoEquivalenceContext
+                .getInfoCurricularCoursesToGetEquivalence();
+        List infoEnrollmentGradesToGiveEquivalences = infoEquivalenceContext
+                .getChosenInfoEnrollmentGradesToGiveEquivalence();
+        List infoCurricularCourseGradesToGetEquivalences = infoEquivalenceContext
+                .getChosenInfoCurricularCourseGradesToGetEquivalence();
 
-	/**
-	 * @param makeEnrollmentEquivalenceFrom
-	 * @return List
-	 */
-	private List getIDsOfChosenEnrollmentsToGiveEquivalence(DynaActionForm makeEnrollmentEquivalenceFrom)
-	{
-		Integer[] idsOfEnrollmentsToGiveEquivalence = (Integer[]) makeEnrollmentEquivalenceFrom
-			.get("curricularCoursesToGiveEquivalence");
+        if ((infoEnrolmentsToGiveEquivalence != null) && (!infoEnrolmentsToGiveEquivalence.isEmpty())) {
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
+            Collections.sort(infoEnrolmentsToGiveEquivalence, comparatorChain);
+        }
 
-		List idsOfChosenEnrollmentsToGiveEquivalence = new ArrayList();
+        if ((infoCurricularCoursesToGetEquivalence != null)
+                && (!infoCurricularCoursesToGetEquivalence.isEmpty())) {
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("name"));
+            Collections.sort(infoCurricularCoursesToGetEquivalence, comparatorChain);
+        }
 
-		if (idsOfEnrollmentsToGiveEquivalence != null)
-		{
-			for (int i = 0; i < idsOfEnrollmentsToGiveEquivalence.length; i++)
-			{
-				Integer enrollmentID = idsOfEnrollmentsToGiveEquivalence[i];
-				idsOfChosenEnrollmentsToGiveEquivalence.add(enrollmentID);
-			}
-		}
+        if ((infoEnrollmentGradesToGiveEquivalences != null)
+                && (!infoEnrollmentGradesToGiveEquivalences.isEmpty())) {
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain
+                    .addComparator(new BeanComparator("infoEnrollment.infoCurricularCourse.name"));
+            Collections.sort(infoEnrollmentGradesToGiveEquivalences, comparatorChain);
+        }
 
-		return idsOfChosenEnrollmentsToGiveEquivalence;
-	}
+        if ((infoCurricularCourseGradesToGetEquivalences != null)
+                && (!infoCurricularCourseGradesToGetEquivalences.isEmpty())) {
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
+            Collections.sort(infoCurricularCourseGradesToGetEquivalences, comparatorChain);
+        }
 
-	/**
-	 * @param makeEnrollmentEquivalenceFrom
-	 * @return List
-	 */
-	private List getIDsOfChosenCurricularCoursesToGetEquivalence(DynaActionForm makeEnrollmentEquivalenceFrom)
-	{
-		Integer[] idsOfCurricularCoursesToGetEquivalence = (Integer[]) makeEnrollmentEquivalenceFrom
-			.get("curricularCoursesToGetEquivalence");
+    }
 
-		List idsOfChosenCurricularCoursesToGetEquivalence = new ArrayList();
+    /**
+     * @param makeEnrollmentEquivalenceFrom
+     * @return List
+     */
+    private List getIDsOfChosenEnrollmentsToGiveEquivalence(DynaActionForm makeEnrollmentEquivalenceFrom) {
+        Integer[] idsOfEnrollmentsToGiveEquivalence = (Integer[]) makeEnrollmentEquivalenceFrom
+                .get("curricularCoursesToGiveEquivalence");
 
-		if (idsOfCurricularCoursesToGetEquivalence != null)
-		{
-			for (int i = 0; i < idsOfCurricularCoursesToGetEquivalence.length; i++)
-			{
-				Integer curricularCourseID = idsOfCurricularCoursesToGetEquivalence[i];
-				idsOfChosenCurricularCoursesToGetEquivalence.add(curricularCourseID);
-			}
-		}
+        List idsOfChosenEnrollmentsToGiveEquivalence = new ArrayList();
 
-		return idsOfChosenCurricularCoursesToGetEquivalence;
-	}
+        if (idsOfEnrollmentsToGiveEquivalence != null) {
+            for (int i = 0; i < idsOfEnrollmentsToGiveEquivalence.length; i++) {
+                Integer enrollmentID = idsOfEnrollmentsToGiveEquivalence[i];
+                idsOfChosenEnrollmentsToGiveEquivalence.add(enrollmentID);
+            }
+        }
 
-	/**
-	 * @param request
-	 * @return List
-	 */
-	private List getIDsOfChosenCurricularCoursesToGetEquivalence(HttpServletRequest request)
-	{
-		List idsOfChosenCurricularCoursesToGetEquivalence = new ArrayList();
+        return idsOfChosenEnrollmentsToGiveEquivalence;
+    }
 
-		Integer size = new Integer(request.getParameter("size"));
+    /**
+     * @param makeEnrollmentEquivalenceFrom
+     * @return List
+     */
+    private List getIDsOfChosenCurricularCoursesToGetEquivalence(
+            DynaActionForm makeEnrollmentEquivalenceFrom) {
+        Integer[] idsOfCurricularCoursesToGetEquivalence = (Integer[]) makeEnrollmentEquivalenceFrom
+                .get("curricularCoursesToGetEquivalence");
 
-		for (int i = 0; i < size.intValue(); i++)
-		{
-			Integer curricularCourseID = Integer.valueOf(request.getParameter("infoCurricularCourseGrade[" + i
-				+ "].curricularCourseID"));
-			
-			idsOfChosenCurricularCoursesToGetEquivalence.add(curricularCourseID);
+        List idsOfChosenCurricularCoursesToGetEquivalence = new ArrayList();
 
-		}
+        if (idsOfCurricularCoursesToGetEquivalence != null) {
+            for (int i = 0; i < idsOfCurricularCoursesToGetEquivalence.length; i++) {
+                Integer curricularCourseID = idsOfCurricularCoursesToGetEquivalence[i];
+                idsOfChosenCurricularCoursesToGetEquivalence.add(curricularCourseID);
+            }
+        }
 
-		return idsOfChosenCurricularCoursesToGetEquivalence;
-	}
+        return idsOfChosenCurricularCoursesToGetEquivalence;
+    }
 
-	/**
-	 * @param request
-	 * @param infoEquivalenceContext
-	 */
-	private void setChosenCurricularCourseGradesInInfoEquivalenceContext(HttpServletRequest request, InfoEquivalenceContext infoEquivalenceContext)
-	{
-		Integer size = new Integer(request.getParameter("size"));
+    /**
+     * @param request
+     * @return List
+     */
+    private List getIDsOfChosenCurricularCoursesToGetEquivalence(HttpServletRequest request) {
+        List idsOfChosenCurricularCoursesToGetEquivalence = new ArrayList();
 
-		for (int i = 0; i < size.intValue(); i++)
-		{
-			String grade = request.getParameter("infoCurricularCourseGrade[" + i + "].grade");
-			Integer curricularCourseID = Integer.valueOf(request.getParameter("infoCurricularCourseGrade[" + i
-				+ "].curricularCourseID"));
-			
-			for (int j = 0; j < infoEquivalenceContext.getChosenInfoCurricularCourseGradesToGetEquivalence().size(); j++)
-			{
-				InfoCurricularCourseGrade infoCurricularCourseGrade = (InfoCurricularCourseGrade) infoEquivalenceContext
-					.getChosenInfoCurricularCourseGradesToGetEquivalence().get(j);
-				
-				if (infoCurricularCourseGrade.getInfoCurricularCourse().getIdInternal().equals(curricularCourseID))
-				{
-					infoCurricularCourseGrade.setGrade(grade);
-				}
-			}
-		}
-	}
+        Integer size = new Integer(request.getParameter("size"));
 
-	/**
-	 * @param request
-	 * @param degreeType
-	 * @param studentNumber
-	 * @param backLink
-	 * @param fromStudentCurricularPlanID
-	 * @param toStudentCurricularPlanID
-	 * @param infoEquivalenceContext
-	 */
-	private void setRequestAttributes(HttpServletRequest request, Integer degreeType, String studentNumber, String backLink,
-		Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID, InfoEquivalenceContext infoEquivalenceContext)
-	{
-		request.setAttribute("degreeType", degreeType);
-		request.setAttribute("studentNumber", studentNumber);
-		request.setAttribute("backLink", backLink);
-		request.setAttribute("fromStudentCurricularPlanID", fromStudentCurricularPlanID);
-		request.setAttribute("toStudentCurricularPlanID", toStudentCurricularPlanID);
+        for (int i = 0; i < size.intValue(); i++) {
+            Integer curricularCourseID = Integer.valueOf(request
+                    .getParameter("infoCurricularCourseGrade[" + i + "].curricularCourseID"));
 
-		if (infoEquivalenceContext != null)
-		{
-			request.setAttribute("infoEquivalenceContext", infoEquivalenceContext);
-		}
-	}
+            idsOfChosenCurricularCoursesToGetEquivalence.add(curricularCourseID);
 
-	/**
-	 * @param userView
-	 * @param studentNumber
-	 * @param degreeType
-	 * @param fromStudentCurricularPlanID
-	 * @param toStudentCurricularPlanID
-	 * @return InfoEquivalenceContext
-	 * @throws FenixServiceException
-	 */
-	private InfoEquivalenceContext runFirstService(IUserView userView, Integer studentNumber, TipoCurso degreeType,
-		Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID) throws FenixServiceException
-	{
-		InfoEquivalenceContext infoEquivalenceContext = null;
+        }
 
-		Object args[] = {studentNumber, degreeType, fromStudentCurricularPlanID, toStudentCurricularPlanID};
-		infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(userView,
-			"ReadListsOfCurricularCoursesForEnrollmentEquivalence", args);
+        return idsOfChosenCurricularCoursesToGetEquivalence;
+    }
 
-		return infoEquivalenceContext;
-	}
+    /**
+     * @param request
+     * @param infoEquivalenceContext
+     */
+    private void setChosenCurricularCourseGradesInInfoEquivalenceContext(HttpServletRequest request,
+            InfoEquivalenceContext infoEquivalenceContext) {
+        Integer size = new Integer(request.getParameter("size"));
 
-	/**
-	 * @param userView
-	 * @param studentNumber
-	 * @param degreeType
-	 * @param idsOfChosenEnrollmentsToGiveEquivalence
-	 * @param idsOfChosenCurricularCoursesToGetEquivalence
-	 * @return InfoEquivalenceContext
-	 * @throws FenixServiceException
-	 */
-	private InfoEquivalenceContext runSecondService(IUserView userView, Integer studentNumber, TipoCurso degreeType,
-		List idsOfChosenEnrollmentsToGiveEquivalence, List idsOfChosenCurricularCoursesToGetEquivalence)
-		throws FenixServiceException
-	{
-		InfoEquivalenceContext infoEquivalenceContext = null;
+        for (int i = 0; i < size.intValue(); i++) {
+            String grade = request.getParameter("infoCurricularCourseGrade[" + i + "].grade");
+            Integer curricularCourseID = Integer.valueOf(request
+                    .getParameter("infoCurricularCourseGrade[" + i + "].curricularCourseID"));
 
-		Object args[] = {studentNumber, degreeType, idsOfChosenEnrollmentsToGiveEquivalence,
-			idsOfChosenCurricularCoursesToGetEquivalence};
-		infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(userView,
-			"PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence", args);
+            for (int j = 0; j < infoEquivalenceContext
+                    .getChosenInfoCurricularCourseGradesToGetEquivalence().size(); j++) {
+                InfoCurricularCourseGrade infoCurricularCourseGrade = (InfoCurricularCourseGrade) infoEquivalenceContext
+                        .getChosenInfoCurricularCourseGradesToGetEquivalence().get(j);
 
-		return infoEquivalenceContext;
-	}
+                if (infoCurricularCourseGrade.getInfoCurricularCourse().getIdInternal().equals(
+                        curricularCourseID)) {
+                    infoCurricularCourseGrade.setGrade(grade);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param request
+     * @param degreeType
+     * @param studentNumber
+     * @param backLink
+     * @param fromStudentCurricularPlanID
+     * @param toStudentCurricularPlanID
+     * @param infoEquivalenceContext
+     */
+    private void setRequestAttributes(HttpServletRequest request, Integer degreeType,
+            String studentNumber, String backLink, Integer fromStudentCurricularPlanID,
+            Integer toStudentCurricularPlanID, InfoEquivalenceContext infoEquivalenceContext) {
+        request.setAttribute("degreeType", degreeType);
+        request.setAttribute("studentNumber", studentNumber);
+        request.setAttribute("backLink", backLink);
+        request.setAttribute("fromStudentCurricularPlanID", fromStudentCurricularPlanID);
+        request.setAttribute("toStudentCurricularPlanID", toStudentCurricularPlanID);
+
+        if (infoEquivalenceContext != null) {
+            request.setAttribute("infoEquivalenceContext", infoEquivalenceContext);
+        }
+    }
+
+    /**
+     * @param userView
+     * @param studentNumber
+     * @param degreeType
+     * @param fromStudentCurricularPlanID
+     * @param toStudentCurricularPlanID
+     * @return InfoEquivalenceContext
+     * @throws FenixServiceException
+     */
+    private InfoEquivalenceContext runFirstService(IUserView userView, Integer studentNumber,
+            TipoCurso degreeType, Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID)
+            throws FenixServiceException {
+        InfoEquivalenceContext infoEquivalenceContext = null;
+
+        Object args[] = { studentNumber, degreeType, fromStudentCurricularPlanID,
+                toStudentCurricularPlanID };
+        infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(
+                userView, "ReadListsOfCurricularCoursesForEnrollmentEquivalence", args);
+
+        return infoEquivalenceContext;
+    }
+
+    /**
+     * @param userView
+     * @param studentNumber
+     * @param degreeType
+     * @param idsOfChosenEnrollmentsToGiveEquivalence
+     * @param idsOfChosenCurricularCoursesToGetEquivalence
+     * @return InfoEquivalenceContext
+     * @throws FenixServiceException
+     */
+    private InfoEquivalenceContext runSecondService(IUserView userView, Integer studentNumber,
+            TipoCurso degreeType, List idsOfChosenEnrollmentsToGiveEquivalence,
+            List idsOfChosenCurricularCoursesToGetEquivalence) throws FenixServiceException {
+        InfoEquivalenceContext infoEquivalenceContext = null;
+
+        Object args[] = { studentNumber, degreeType, idsOfChosenEnrollmentsToGiveEquivalence,
+                idsOfChosenCurricularCoursesToGetEquivalence };
+        infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(
+                userView, "PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence", args);
+
+        return infoEquivalenceContext;
+    }
 
 }

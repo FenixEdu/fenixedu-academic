@@ -12,28 +12,25 @@ import Dominio.ICurricularCourseGroup;
 
 public class InfoAreaCurricularCourseGroupWithBranch extends InfoAreaCurricularCourseGroup {
 
-
-
     public InfoAreaCurricularCourseGroupWithBranch() {
     }
 
-   
-
     public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
-        if (curricularCourseGroup != null) {            
-           setInfoBranch(InfoBranch.newInfoFromDomain(curricularCourseGroup.getBranch()));
+        if (curricularCourseGroup != null) {
+            setInfoBranch(InfoBranch.newInfoFromDomain(curricularCourseGroup.getBranch()));
         }
     }
+
     public static InfoCurricularCourseGroup newInfoFromDomain(
             ICurricularCourseGroup curricularCourseGroup) {
         InfoCurricularCourseGroup infoCurricularCourseGroup = null;
-        if(curricularCourseGroup != null) {
+        if (curricularCourseGroup != null) {
             infoCurricularCourseGroup = new InfoAreaCurricularCourseGroupWithBranch();
             infoCurricularCourseGroup.copyFromDomain(curricularCourseGroup);
         }
         return infoCurricularCourseGroup;
-       
+
     }
-    
+
 }

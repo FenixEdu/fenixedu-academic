@@ -21,47 +21,39 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectAuthorizationFilter
-{
+public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectAuthorizationFilter {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
-	 *      java.lang.Integer)
-	 */
-    protected boolean verifyCondition(IUserView id, Integer objectId)
-    {
-        try
-        {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter#domainObjectBelongsToTeacher(ServidorAplicacao.IUserView,
+     *      java.lang.Integer)
+     */
+    protected boolean verifyCondition(IUserView id, Integer objectId) {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IExternalActivity externalActivity =
-                (IExternalActivity) persistentExternalActivity.readByOID(
-                    ExternalActivity.class,
-                    objectId);
+            IExternalActivity externalActivity = (IExternalActivity) persistentExternalActivity
+                    .readByOID(ExternalActivity.class, objectId);
 
             return externalActivity.getTeacher().equals(teacher);
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
         }
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 }

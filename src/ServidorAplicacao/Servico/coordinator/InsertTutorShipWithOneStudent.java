@@ -12,7 +12,7 @@ import Dominio.ITutor;
 import Dominio.Tutor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTutor;
@@ -29,8 +29,8 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
 
     }
 
-    public Object run(Integer executionDegreeId, Integer teacherNumber,
-            Integer studentNumber) throws FenixServiceException {
+    public Object run(Integer executionDegreeId, Integer teacherNumber, Integer studentNumber)
+            throws FenixServiceException {
         if (teacherNumber == null || studentNumber == null) {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
@@ -41,51 +41,43 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
             sp = SuportePersistenteOJB.getInstance();
 
             //execution degree
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, executionDegreeId);
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                    CursoExecucao.class, executionDegreeId);
             String degreeCode = null;
-            if (executionDegree != null
-                    && executionDegree.getCurricularPlan() != null
+            if (executionDegree != null && executionDegree.getCurricularPlan() != null
                     && executionDegree.getCurricularPlan().getDegree() != null) {
-                degreeCode = executionDegree.getCurricularPlan().getDegree()
-                        .getSigla();
+                degreeCode = executionDegree.getCurricularPlan().getDegree().getSigla();
             }
 
             //teacher
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
             if (teacher == null) {
-                throw new NonExistingServiceException(
-                        "error.tutor.unExistTeacher");
+                throw new NonExistingServiceException("error.tutor.unExistTeacher");
             }
 
             //student
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent
-                    .readStudentByNumberAndDegreeType(studentNumber,
-                            TipoCurso.LICENCIATURA_OBJ);
+            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                    TipoCurso.LICENCIATURA_OBJ);
             if (student == null) {
-                throw new NonExistingServiceException(
-                        "error.tutor.unExistStudent");
+                throw new NonExistingServiceException("error.tutor.unExistStudent");
             }
 
             if (verifyStudentAlreadyTutor(student, teacher).booleanValue()) {
                 //student already with tutor...
-                throw new FenixServiceException(
-                        "error.tutor.studentAlreadyWithTutor");
+                throw new FenixServiceException("error.tutor.studentAlreadyWithTutor");
             }
 
-            if (!verifyStudentOfThisDegree(student, TipoCurso.LICENCIATURA_OBJ,
-                    degreeCode).booleanValue()) {
+            if (!verifyStudentOfThisDegree(student, TipoCurso.LICENCIATURA_OBJ, degreeCode)
+                    .booleanValue()) {
                 //student doesn't belong to this degree
                 throw new FenixServiceException("error.tutor.studentNoDegree");
             }
 
             IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-            ITutor tutor = persistentTutor.readTutorByTeacherAndStudent(
-                    teacher, student);
+            ITutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
             if (tutor == null) {
                 tutor = new Tutor();
                 tutor.setTeacher(teacher);
@@ -98,8 +90,7 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
         } catch (Exception e) {
 
             if (e.getMessage() == null) {
-                throw new FenixServiceException(
-                        "error.tutor.associateOneStudent");
+                throw new FenixServiceException("error.tutor.associateOneStudent");
             }
             throw new FenixServiceException(e.getMessage());
 

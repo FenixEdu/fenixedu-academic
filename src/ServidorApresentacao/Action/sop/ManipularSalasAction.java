@@ -29,37 +29,28 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Nuno Antão
  * @author João Pereira
- **/
+ */
 
-public class ManipularSalasAction extends FenixSelectedRoomsContextAction
-{
+public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 
     /**
-     * Executes the selected action, depending on the pressed button.
-     * The action depends on the value of the "operation" parameter.
-     * It can be prepare the information about the selected sala, to show
-     * or edit it, or delete the selected sala.
-     **/
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * Executes the selected action, depending on the pressed button. The action
+     * depends on the value of the "operation" parameter. It can be prepare the
+     * information about the selected sala, to show or edit it, or delete the
+     * selected sala.
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         String parameter = request.getParameter("operation");
 
-        if (parameter.equals("Ver Sala"))
-        {
+        if (parameter.equals("Ver Sala")) {
             return prepararVerSala(mapping, form, request, response);
         }
-        if (parameter.equals("Editar Sala"))
-        {
+        if (parameter.equals("Editar Sala")) {
             return prepararEditarSala(mapping, form, request, response);
         }
-        if (parameter.equals("Apagar Sala"))
-        {
+        if (parameter.equals("Apagar Sala")) {
             return apagarSala(mapping, form, request, response);
         }
 
@@ -67,19 +58,13 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
     }
 
     /**
-     * Prepares the right information about the selected sala so that it
-     * can be shown to the user. Places a java bean object with
-     * information about the selected sala in the attribute
-     * "salaFormBean" of the session and fowards to the mapping
-     * "VerSala".
-     **/
-    public ActionForward prepararVerSala(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * Prepares the right information about the selected sala so that it can be
+     * shown to the user. Places a java bean object with information about the
+     * selected sala in the attribute "salaFormBean" of the session and fowards
+     * to the mapping "VerSala".
+     */
+    public ActionForward prepararVerSala(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         super.execute(mapping, form, request, response);
 
         request.removeAttribute(mapping.getAttribute());
@@ -90,8 +75,6 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
 
         request.setAttribute("roomId", index.toString());
 
-        
-        
         // Reset indexForm value
         DynaActionForm selectRoomIndexForm = (DynaActionForm) form;
         selectRoomIndexForm.set("index", null);
@@ -100,18 +83,13 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
     }
 
     /**
-     * Prepares the information about the selected sala so that it can
-     * be shown to the user. Places a java bean object with information
-     * about the selected sala in the attribute "salaFormBean" of the
-     * session and forwards to the mapping "EditarSala".
-     **/
-    public ActionForward prepararEditarSala(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     * Prepares the information about the selected sala so that it can be shown
+     * to the user. Places a java bean object with information about the
+     * selected sala in the attribute "salaFormBean" of the session and forwards
+     * to the mapping "EditarSala".
+     */
+    public ActionForward prepararEditarSala(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         super.execute(mapping, form, request, response);
 
         InfoRoom salaBean = getSelectedSala(form, request);
@@ -149,28 +127,21 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
 
     /**
      * Removes the selected sala from the database used by the application.
-     **/
-    public ActionForward apagarSala(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+     */
+    public ActionForward apagarSala(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         super.execute(mapping, form, request, response);
 
         HttpSession session = getSession(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        ArrayList listaSalasBean = (ArrayList) request.getAttribute(SessionConstants.SELECTED_ROOMS);
+        List listaSalasBean = (ArrayList) request.getAttribute(SessionConstants.SELECTED_ROOMS);
         InfoRoom selectedSala = getSelectedSala(form, request);
 
-        Object argsCriarSala[] = { new RoomKey(selectedSala.getNome())};
-        try
-        {
-			ServiceManagerServiceFactory.executeService(userView, "ApagarSala", argsCriarSala);
-        } catch (NotAuthorizedServiceDeleteRoomException e)
-        {
+        Object argsCriarSala[] = { new RoomKey(selectedSala.getNome()) };
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "ApagarSala", argsCriarSala);
+        } catch (NotAuthorizedServiceDeleteRoomException e) {
             Object[] values = { "a sala", "as aulas" };
             throw new notAuthorizedActionDeleteException("errors.invalid.delete.with.objects", values);
         }
@@ -182,11 +153,9 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
         // Update selectedRooms in request
         listaSalasBean.remove(selectedSala);
         request.removeAttribute(mapping.getAttribute());
-        if (listaSalasBean.isEmpty())
-        {
+        if (listaSalasBean.isEmpty()) {
             request.removeAttribute(SessionConstants.SELECTED_ROOMS);
-        } else
-        {
+        } else {
             request.setAttribute(SessionConstants.SELECTED_ROOMS, listaSalasBean);
         }
 
@@ -195,9 +164,8 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
 
     /**
      * @returns the name of the selected sala.
-     **/
-    private InfoRoom getSelectedSala(ActionForm form, HttpServletRequest request)
-    {
+     */
+    private InfoRoom getSelectedSala(ActionForm form, HttpServletRequest request) {
 
         DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
         Integer salaSelecionada = (Integer) posicaoSalaFormBean.get("index");
@@ -205,12 +173,10 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
         List listaSalasBean = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
 
         InfoRoom sala = null;
-        if (listaSalasBean != null && !listaSalasBean.isEmpty())
-        {
+        if (listaSalasBean != null && !listaSalasBean.isEmpty()) {
             Collections.sort(listaSalasBean);
             sala = (InfoRoom) listaSalasBean.get(salaSelecionada.intValue());
-        } else
-        {
+        } else {
             System.out.println("ERROR: Missing lista de salas em request!!");
         }
         return sala;

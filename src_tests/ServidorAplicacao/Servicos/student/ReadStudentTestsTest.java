@@ -71,20 +71,16 @@ public class ReadStudentTestsTest extends TestCaseReadServices {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            IDistributedTest distributedTest = (IDistributedTest) sp
-                    .getIPersistentDistributedTest().readByOID(
-                            DistributedTest.class, new Integer(2));
+            IDistributedTest distributedTest = (IDistributedTest) sp.getIPersistentDistributedTest()
+                    .readByOID(DistributedTest.class, new Integer(2));
             sp.confirmarTransaccao();
             if (distributedTest == null)
                 fail("ReadStudentTestsTest " + "no distributedTest");
 
             List distributedTestList = new ArrayList();
-            distributedTestList
-                    .add(copyIDistributedTest2InfoDistributedTest(distributedTest));
-            infoSiteDistributedTests
-                    .setInfoDistributedTestsToDo(distributedTestList);
-            infoSiteDistributedTests
-                    .setInfoDoneDistributedTests(new ArrayList());
+            distributedTestList.add(copyIDistributedTest2InfoDistributedTest(distributedTest));
+            infoSiteDistributedTests.setInfoDistributedTestsToDo(distributedTestList);
+            infoSiteDistributedTests.setInfoDoneDistributedTests(new ArrayList());
         } catch (Exception ex) {
             fail("ReadStudentTestsTest " + ex);
         }

@@ -17,8 +17,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.SituationName;
 
-public class JavaSituationName2SqlSituationNameFieldConversion implements
-        FieldConversion {
+public class JavaSituationName2SqlSituationNameFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)

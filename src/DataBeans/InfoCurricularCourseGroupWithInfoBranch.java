@@ -7,7 +7,6 @@ package DataBeans;
 import Dominio.AreaCurricularCourseGroup;
 import Dominio.ICurricularCourseGroup;
 
-
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
@@ -28,7 +27,4 @@ public abstract class InfoCurricularCourseGroupWithInfoBranch extends InfoCurric
         return null;
     }
 
-   
-
-    
 }

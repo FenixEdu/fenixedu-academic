@@ -18,7 +18,7 @@ public class DeleteRestrictionFromDegreeCurricularPlan implements IService {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentRestriction restrictionDAO = persistentSuport.getIPersistentRestriction();
-            
+
             restrictionDAO.deleteByOID(Restriction.class, restrictionID);
 
         } catch (ExcepcaoPersistencia e) {

@@ -16,106 +16,115 @@ import Dominio.ITeacher;
  */
 public abstract class Career extends DomainObject implements ICareer {
 
-	private String ojbConcreteClass;
-	private Integer beginYear;
-	private Integer endYear;
-	private Integer keyTeacher;
-	private ITeacher teacher;
+    private String ojbConcreteClass;
+
+    private Integer beginYear;
+
+    private Integer endYear;
+
+    private Integer keyTeacher;
+
+    private ITeacher teacher;
+
     private Date lastModificationDate;
 
-	public Career() {
-		this.ojbConcreteClass = this.getClass().getName();
-	}
+    public Career() {
+        this.ojbConcreteClass = this.getClass().getName();
+    }
 
-	/** Creates a new instance of Career */
-	public Career(Integer idInternal) {
-		setIdInternal(idInternal);
-		this.ojbConcreteClass = this.getClass().getName();
-	}
+    /** Creates a new instance of Career */
+    public Career(Integer idInternal) {
+        setIdInternal(idInternal);
+        this.ojbConcreteClass = this.getClass().getName();
+    }
 
-	/**
-	 * @return Returns the beginYear.
-	 */
-	public Integer getBeginYear() {
-		return beginYear;
-	}
+    /**
+     * @return Returns the beginYear.
+     */
+    public Integer getBeginYear() {
+        return beginYear;
+    }
 
-	/**
-	 * @param beginYear
-	 *            The beginYear to set.
-	 */
-	public void setBeginYear(Integer beginYear) {
-		this.beginYear = beginYear;
-	}
+    /**
+     * @param beginYear
+     *            The beginYear to set.
+     */
+    public void setBeginYear(Integer beginYear) {
+        this.beginYear = beginYear;
+    }
 
-	/**
-	 * @return Returns the endYear.
-	 */
-	public Integer getEndYear() {
-		return endYear;
-	}
+    /**
+     * @return Returns the endYear.
+     */
+    public Integer getEndYear() {
+        return endYear;
+    }
 
-	/**
-	 * @param endYear
-	 *            The endYear to set.
-	 */
-	public void setEndYear(Integer endYear) {
-		this.endYear = endYear;
-	}
-	/**
-	 * @return Returns the ojbConcreteClass.
-	 */
-	public String getOjbConcreteClass() {
-		return ojbConcreteClass;
-	}
+    /**
+     * @param endYear
+     *            The endYear to set.
+     */
+    public void setEndYear(Integer endYear) {
+        this.endYear = endYear;
+    }
 
-	/**
-	 * @param ojbConcreteClass The ojbConcreteClass to set.
-	 */
-	public void setOjbConcreteClass(String ojbConcreteClass) {
-		this.ojbConcreteClass = ojbConcreteClass;
-	}
-	/**
-	 * @return Returns the keyTeacher.
-	 */
-	public Integer getKeyTeacher() {
-		return keyTeacher;
-	}
+    /**
+     * @return Returns the ojbConcreteClass.
+     */
+    public String getOjbConcreteClass() {
+        return ojbConcreteClass;
+    }
 
-	/**
-	 * @param keyTeacher The keyTeacher to set.
-	 */
-	public void setKeyTeacher(Integer keyTeacher) {
-		this.keyTeacher = keyTeacher;
-	}
+    /**
+     * @param ojbConcreteClass
+     *            The ojbConcreteClass to set.
+     */
+    public void setOjbConcreteClass(String ojbConcreteClass) {
+        this.ojbConcreteClass = ojbConcreteClass;
+    }
 
-	/**
-	 * @return Returns the teacher.
-	 */
-	public ITeacher getTeacher() {
-		return teacher;
-	}
+    /**
+     * @return Returns the keyTeacher.
+     */
+    public Integer getKeyTeacher() {
+        return keyTeacher;
+    }
 
-	/**
-	 * @param teacher The teacher to set.
-	 */
-	public void setTeacher(ITeacher teacher) {
-		this.teacher = teacher;
-	}
+    /**
+     * @param keyTeacher
+     *            The keyTeacher to set.
+     */
+    public void setKeyTeacher(Integer keyTeacher) {
+        this.keyTeacher = keyTeacher;
+    }
+
+    /**
+     * @return Returns the teacher.
+     */
+    public ITeacher getTeacher() {
+        return teacher;
+    }
+
+    /**
+     * @param teacher
+     *            The teacher to set.
+     */
+    public void setTeacher(ITeacher teacher) {
+        this.teacher = teacher;
+    }
 
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 

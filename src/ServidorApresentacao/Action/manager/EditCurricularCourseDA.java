@@ -28,163 +28,138 @@ import Util.CurricularCourseType;
 /**
  * @author lmac1
  */
-public class EditCurricularCourseDA extends FenixDispatchAction
-{
+public class EditCurricularCourseDA extends FenixDispatchAction {
 
-	public ActionForward prepareEdit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm dynaForm = (DynaActionForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
+        DynaActionForm dynaForm = (DynaActionForm) form;
 
-		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+        Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-		InfoCurricularCourse oldInfoCurricularCourse = null;
+        InfoCurricularCourse oldInfoCurricularCourse = null;
 
-		Object args[] = { curricularCourseId };
+        Object args[] = { curricularCourseId };
 
-		try
-		{
-			oldInfoCurricularCourse =
-				(InfoCurricularCourse) ServiceUtils.executeService(
-					userView,
-					"ReadCurricularCourse",
-					args);
-		}
-		catch (NonExistingServiceException ex)
-		{
-			throw new NonExistingActionException(
-				"message.nonExistingCurricularCourse",
-				mapping.findForward("readDegreeCP"));
-		}
-		catch (FenixServiceException fenixServiceException)
-		{
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        try {
+            oldInfoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(userView,
+                    "ReadCurricularCourse", args);
+        } catch (NonExistingServiceException ex) {
+            throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping
+                    .findForward("readDegreeCP"));
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		dynaForm.set("name", oldInfoCurricularCourse.getName());
-		dynaForm.set("code", oldInfoCurricularCourse.getCode());
+        dynaForm.set("name", oldInfoCurricularCourse.getName());
+        dynaForm.set("code", oldInfoCurricularCourse.getCode());
 
-		dynaForm.set("type", oldInfoCurricularCourse.getType().getCurricularCourseType().toString());
-		dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
-		dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
+        dynaForm.set("type", oldInfoCurricularCourse.getType().getCurricularCourseType().toString());
+        dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
+        dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
 
-		dynaForm.set("credits", oldInfoCurricularCourse.getCredits().toString());
-		dynaForm.set("ectsCredits", oldInfoCurricularCourse.getEctsCredits().toString());
-		dynaForm.set("theoreticalHours", oldInfoCurricularCourse.getTheoreticalHours().toString());
-		dynaForm.set("praticalHours", oldInfoCurricularCourse.getPraticalHours().toString());
-		dynaForm.set("theoPratHours", oldInfoCurricularCourse.getTheoPratHours().toString());
-		dynaForm.set("labHours", oldInfoCurricularCourse.getLabHours().toString());
-		dynaForm.set(
-			"maxIncrementNac",
-			oldInfoCurricularCourse.getMaximumValueForAcumulatedEnrollments().toString());
-		dynaForm.set(
-			"minIncrementNac",
-			oldInfoCurricularCourse.getMinimumValueForAcumulatedEnrollments().toString());
-		dynaForm.set("weight", oldInfoCurricularCourse.getWeigth().toString());
+        dynaForm.set("credits", oldInfoCurricularCourse.getCredits().toString());
+        dynaForm.set("ectsCredits", oldInfoCurricularCourse.getEctsCredits().toString());
+        dynaForm.set("theoreticalHours", oldInfoCurricularCourse.getTheoreticalHours().toString());
+        dynaForm.set("praticalHours", oldInfoCurricularCourse.getPraticalHours().toString());
+        dynaForm.set("theoPratHours", oldInfoCurricularCourse.getTheoPratHours().toString());
+        dynaForm.set("labHours", oldInfoCurricularCourse.getLabHours().toString());
+        dynaForm.set("maxIncrementNac", oldInfoCurricularCourse
+                .getMaximumValueForAcumulatedEnrollments().toString());
+        dynaForm.set("minIncrementNac", oldInfoCurricularCourse
+                .getMinimumValueForAcumulatedEnrollments().toString());
+        dynaForm.set("weight", oldInfoCurricularCourse.getWeigth().toString());
 
-		return mapping.findForward("editCurricularCourse");
-	}
+        dynaForm.set("mandatoryEnrollment", oldInfoCurricularCourse.getMandatoryEnrollment().toString());
+        dynaForm.set("enrollmentAllowed", oldInfoCurricularCourse.getEnrollmentAllowed().toString());
+        dynaForm.set("enrollmentWeigth", oldInfoCurricularCourse.getEnrollmentWeigth().toString());
 
-	public ActionForward edit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
+        return mapping.findForward("editCurricularCourse");
+    }
 
-		IUserView userView = SessionUtils.getUserView(request);
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		DynaActionForm dynaForm = (DynaValidatorForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer oldCurricularCourseId = new Integer(request.getParameter("curricularCourseId"));
+        DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-		InfoCurricularCourse newInfoCurricularCourse = new InfoCurricularCourse();
+        Integer oldCurricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
-		String name = (String) dynaForm.get("name");
-		String code = (String) dynaForm.get("code");
-		String typeString = (String) dynaForm.get("type");
-		String mandatoryString = (String) dynaForm.get("mandatory");
-		String basicString = (String) dynaForm.get("basic");
+        InfoCurricularCourse newInfoCurricularCourse = new InfoCurricularCourse();
 
-		newInfoCurricularCourse.setName(name);
-		newInfoCurricularCourse.setCode(code);
-		newInfoCurricularCourse.setIdInternal(oldCurricularCourseId);
+        String name = (String) dynaForm.get("name");
+        String code = (String) dynaForm.get("code");
+        String typeString = (String) dynaForm.get("type");
+        String mandatoryString = (String) dynaForm.get("mandatory");
+        String basicString = (String) dynaForm.get("basic");
 
-		CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
-		newInfoCurricularCourse.setType(type);
+        newInfoCurricularCourse.setName(name);
+        newInfoCurricularCourse.setCode(code);
+        newInfoCurricularCourse.setIdInternal(oldCurricularCourseId);
 
-		newInfoCurricularCourse.setMandatory(new Boolean(mandatoryString));
-		newInfoCurricularCourse.setBasic(new Boolean(basicString));
+        CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
+        newInfoCurricularCourse.setType(type);
 
-		String praticalHours = (String) dynaForm.get("praticalHours");
-		if (praticalHours.compareTo("") != 0)
-		{
-			newInfoCurricularCourse.setPraticalHours(new Double(praticalHours));
-		}
+        newInfoCurricularCourse.setMandatory(new Boolean(mandatoryString));
+        newInfoCurricularCourse.setBasic(new Boolean(basicString));
 
-		String theoPratHours = (String) dynaForm.get("theoPratHours");
-		if (theoPratHours.compareTo("") != 0)
-		{
-			newInfoCurricularCourse.setTheoPratHours(new Double(theoPratHours));
-		}
+        String praticalHours = (String) dynaForm.get("praticalHours");
+        if (praticalHours.compareTo("") != 0) {
+            newInfoCurricularCourse.setPraticalHours(new Double(praticalHours));
+        }
 
-		String theoreticalHours = (String) dynaForm.get("theoreticalHours");
-		if (theoreticalHours.compareTo("") != 0)
-		{
-			newInfoCurricularCourse.setTheoreticalHours(new Double(theoreticalHours));
-		}
-		String labHours = (String) dynaForm.get("labHours");
-		if (labHours.compareTo("") != 0)
-		{
-			newInfoCurricularCourse.setLabHours(new Double(labHours));
-		}
+        String theoPratHours = (String) dynaForm.get("theoPratHours");
+        if (theoPratHours.compareTo("") != 0) {
+            newInfoCurricularCourse.setTheoPratHours(new Double(theoPratHours));
+        }
 
-		newInfoCurricularCourse.setMaximumValueForAcumulatedEnrollments(
-			new Integer((String) dynaForm.get("maxIncrementNac")));
-		newInfoCurricularCourse.setMinimumValueForAcumulatedEnrollments(
-			new Integer((String) dynaForm.get("minIncrementNac")));
+        String theoreticalHours = (String) dynaForm.get("theoreticalHours");
+        if (theoreticalHours.compareTo("") != 0) {
+            newInfoCurricularCourse.setTheoreticalHours(new Double(theoreticalHours));
+        }
+        String labHours = (String) dynaForm.get("labHours");
+        if (labHours.compareTo("") != 0) {
+            newInfoCurricularCourse.setLabHours(new Double(labHours));
+        }
 
-		String credits = (String) dynaForm.get("credits");
-		if (credits.compareTo("") != 0)
-		{
-			newInfoCurricularCourse.setCredits(new Double(credits));
-		}
+        newInfoCurricularCourse.setMaximumValueForAcumulatedEnrollments(new Integer((String) dynaForm
+                .get("maxIncrementNac")));
+        newInfoCurricularCourse.setMinimumValueForAcumulatedEnrollments(new Integer((String) dynaForm
+                .get("minIncrementNac")));
 
-		String ectsCredits = (String) dynaForm.get("ectsCredits");
-		if (ectsCredits != null && ectsCredits.length() > 0)
-		{
-			newInfoCurricularCourse.setEctsCredits(new Double(ectsCredits));
-		}
-		newInfoCurricularCourse.setWeigth(new Double((String) dynaForm.get("weight")));
-		
-		Object args[] = { newInfoCurricularCourse };
+        String credits = (String) dynaForm.get("credits");
+        if (credits.compareTo("") != 0) {
+            newInfoCurricularCourse.setCredits(new Double(credits));
+        }
 
-		try
-		{
-			ServiceUtils.executeService(userView, "EditCurricularCourse", args);
-		}
-		catch (NonExistingServiceException ex)
-		{
-			throw new NonExistingActionException(
-				"message.nonExistingCurricularCourse",
-				mapping.findForward("readDegreeCP"));
-		}
-		catch (ExistingServiceException e)
-		{
-			throw new ExistingActionException("message.manager.existing.curricular.course");
-		}
-		catch (FenixServiceException fenixServiceException)
-		{
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        String ectsCredits = (String) dynaForm.get("ectsCredits");
+        if (ectsCredits != null && ectsCredits.length() > 0) {
+            newInfoCurricularCourse.setEctsCredits(new Double(ectsCredits));
+        }
+        newInfoCurricularCourse.setWeigth(new Double((String) dynaForm.get("weight")));
 
-		return mapping.findForward("readCurricularCourse");
-	}
+        newInfoCurricularCourse.setMandatoryEnrollment(new Boolean((String) dynaForm
+                .get("mandatoryEnrollment")));
+        newInfoCurricularCourse.setEnrollmentAllowed(new Boolean((String) dynaForm
+                .get("enrollmentAllowed")));
+        newInfoCurricularCourse.setEnrollmentWeigth(new Integer((String) dynaForm
+                .get("enrollmentWeigth")));
+
+        Object args[] = { newInfoCurricularCourse };
+
+        try {
+            ServiceUtils.executeService(userView, "EditCurricularCourse", args);
+        } catch (NonExistingServiceException ex) {
+            throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping
+                    .findForward("readDegreeCP"));
+        } catch (ExistingServiceException e) {
+            throw new ExistingActionException("message.manager.existing.curricular.course");
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        return mapping.findForward("readCurricularCourse");
+    }
 }

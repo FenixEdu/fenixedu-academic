@@ -12,87 +12,84 @@ import Dominio.ITeacher;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class ExternalActivity extends DomainObject implements IExternalActivity
-{
+public class ExternalActivity extends DomainObject implements IExternalActivity {
     private String activity;
+
     private ITeacher teacher;
+
     private Integer keyTeacher;
+
     private Date lastModificationDate;
 
     /**
-     * 
+     *  
      */
-    public ExternalActivity()
-    {
+    public ExternalActivity() {
     }
-    
-    public ExternalActivity(Integer idInternal)
-    {
+
+    public ExternalActivity(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
     /**
      * @return Returns the activity.
      */
-    public String getActivity()
-    {
+    public String getActivity() {
         return activity;
     }
 
     /**
-     * @param activity The activity to set.
+     * @param activity
+     *            The activity to set.
      */
-    public void setActivity(String activity)
-    {
+    public void setActivity(String activity) {
         this.activity = activity;
     }
 
     /**
      * @return Returns the teacher.
      */
-    public ITeacher getTeacher()
-    {
+    public ITeacher getTeacher() {
         return teacher;
     }
 
     /**
-     * @param teacher The teacher to set.
+     * @param teacher
+     *            The teacher to set.
      */
-    public void setTeacher(ITeacher teacher)
-    {
+    public void setTeacher(ITeacher teacher) {
         this.teacher = teacher;
     }
+
     /**
      * @return Returns the keyTeacher.
      */
-    public Integer getKeyTeacher()
-    {
+    public Integer getKeyTeacher() {
         return keyTeacher;
     }
 
     /**
-     * @param keyTeacher The keyTeacher to set.
+     * @param keyTeacher
+     *            The keyTeacher to set.
      */
-    public void setKeyTeacher(Integer keyTeacher)
-    {
+    public void setKeyTeacher(Integer keyTeacher) {
         this.keyTeacher = keyTeacher;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 

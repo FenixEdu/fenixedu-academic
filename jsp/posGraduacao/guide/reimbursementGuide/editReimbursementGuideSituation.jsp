@@ -36,7 +36,7 @@
       		<td>
 				<html:select property="situation">
 					<html:option value="">
-						<bean:message key="label.manager.executionCourseManagement.select"/>
+						<bean:message key="label.choose.one"/>
 					</html:option>						
 					<logic:iterate id="state" name="reimbursementGuideStates">
 						<bean:define id="stateName" name="state" property="name"/>

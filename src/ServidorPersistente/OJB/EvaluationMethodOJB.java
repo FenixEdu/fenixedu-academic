@@ -16,8 +16,7 @@ import ServidorPersistente.IPersistentEvaluationMethod;
 /**
  * @author João Mota
  */
-public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEvaluationMethod
-{
+public class EvaluationMethodOJB extends PersistentObjectOJB implements IPersistentEvaluationMethod {
 
     /*
      * (non-Javadoc)
@@ -25,8 +24,7 @@ public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEv
      * @see ServidorPersistente.IPersistentEvaluationMethod#readByExecutionCourse(Dominio.IDisciplinaExecucao)
      */
     public IEvaluationMethod readByExecutionCourse(IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
         crit.addEqualTo("executionCourse.executionPeriod.name", executionCourse.getExecutionPeriod()
@@ -38,8 +36,7 @@ public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEv
     }
 
     public IEvaluationMethod readByIdExecutionCourse(IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", new Integer(String.valueOf(executionCourse
                 .getIdInternal())));
@@ -51,8 +48,7 @@ public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEv
      * 
      * @see ServidorPersistente.IPersistentEvaluationMethod#readAll()
      */
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(EvaluationMethod.class, new Criteria());
     }
 
@@ -61,8 +57,7 @@ public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEv
      * 
      * @see ServidorPersistente.IPersistentEvaluationMethod#delete(Dominio.IEvaluationMethod)
      */
-    public void delete(IEvaluationMethod evaluation) throws ExcepcaoPersistencia
-    {
+    public void delete(IEvaluationMethod evaluation) throws ExcepcaoPersistencia {
         super.delete(evaluation);
         //TODO: add to the execution Course delete methods to delete all
         // evaluations, all curriculums and all sites

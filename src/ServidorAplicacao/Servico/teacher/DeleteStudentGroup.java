@@ -39,16 +39,15 @@ public class DeleteStudentGroup implements IServico {
     public Boolean run(Integer executionCourseCode, Integer studentGroupCode)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentStudentGroup persistentStudentGroup = persistentSuport
                     .getIPersistentStudentGroup();
             IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
                     .getIPersistentStudentGroupAttend();
 
-            IStudentGroup deletedStudentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
+            IStudentGroup deletedStudentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (deletedStudentGroup == null) {
                 throw new ExistingServiceException();

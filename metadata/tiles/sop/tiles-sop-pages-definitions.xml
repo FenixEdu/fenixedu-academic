@@ -70,4 +70,21 @@
 		<put name="body" value="/sop/exams/showExamsByDate.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
+	
+
+	<!-- ==================== View Curricular Course Historic ================== -->
+	<definition name="view-degree-curricular-plan-execution-year" 
+		extends="definition.sop.foto">
+		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
+	</definition>
+
+	<definition name="show-active-curricular-scopes" 
+		extends="definition.sop.foto">
+		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
+	</definition>
+
+	<definition name="view-curriculum-historic" 
+		extends="definition.sop.foto">
+		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
+	</definition>
 </tiles-definitions>

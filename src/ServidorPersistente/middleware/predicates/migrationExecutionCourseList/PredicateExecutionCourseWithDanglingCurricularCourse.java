@@ -13,22 +13,24 @@ import ServidorPersistente.middleware.MigrationExecutionCourse;
 /**
  * @author jpvl
  */
-public class PredicateExecutionCourseWithDanglingCurricularCourse
-	extends PredicateForMigrationExecutionCourseList {
+public class PredicateExecutionCourseWithDanglingCurricularCourse extends
+        PredicateForMigrationExecutionCourseList {
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.middleware.predicates.migrationExecutionCourseList.PredicateForMigrationExecutionCourseList#evaluateMigrationExecutionCourse(ServidorPersistente.middleware.MigrationExecutionCourse)
-	 */
-	public boolean evaluateMigrationExecutionCourse(MigrationExecutionCourse executionCourse) {
-		HashMap hashMap = executionCourse.getDegreeToSopCourse();
-		Iterator iterator = hashMap.keySet().iterator();
-		int number = 0;
-		while (iterator.hasNext()) {
-			String degreeInitials = (String) iterator.next();
-			List list = (List) hashMap.get(degreeInitials);
-			number += list.size();
-		}
-		return number != executionCourse.getAssociatedCurricularCourses().size();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.middleware.predicates.migrationExecutionCourseList.PredicateForMigrationExecutionCourseList#evaluateMigrationExecutionCourse(ServidorPersistente.middleware.MigrationExecutionCourse)
+     */
+    public boolean evaluateMigrationExecutionCourse(MigrationExecutionCourse executionCourse) {
+        HashMap hashMap = executionCourse.getDegreeToSopCourse();
+        Iterator iterator = hashMap.keySet().iterator();
+        int number = 0;
+        while (iterator.hasNext()) {
+            String degreeInitials = (String) iterator.next();
+            List list = (List) hashMap.get(degreeInitials);
+            number += list.size();
+        }
+        return number != executionCourse.getAssociatedCurricularCourses().size();
+    }
 
 }

@@ -17,25 +17,27 @@ public class InfoRestrictionByCurricularCourse extends InfoRestriction {
     public InfoCurricularCourse getPrecedentInfoCurricularCourse() {
         return precedentInfoCurricularCourse;
     }
-    
+
     public void setPrecedentInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
         this.precedentInfoCurricularCourse = infoCurricularCourse;
     }
 
     public void copyFromDomain(IRestrictionByCurricularCourse restriction) {
         super.copyFromDomain(restriction);
-        this.setPrecedentInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(restriction.getPrecedentCurricularCourse()));
+        this.setPrecedentInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(restriction
+                .getPrecedentCurricularCourse()));
     }
 
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(IRestrictionByCurricularCourse restriction) {
+    public static InfoRestrictionByCurricularCourse newInfoFromDomain(
+            IRestrictionByCurricularCourse restriction) {
 
         InfoRestrictionByCurricularCourse infoRestriction = null;
-        
+
         if (restriction != null) {
             infoRestriction = new InfoRestrictionByCurricularCourse();
             infoRestriction.copyFromDomain(restriction);
         }
-        
+
         return infoRestriction;
     }
 

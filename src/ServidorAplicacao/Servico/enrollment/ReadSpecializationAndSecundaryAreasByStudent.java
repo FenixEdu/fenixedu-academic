@@ -16,7 +16,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -30,50 +30,45 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService {
     }
 
     // some of these arguments may be null. they are only needed for filter
-    public InfoAreas2Choose run(Integer executionDegreeId, Integer studentCurricularPlanId, 
+    public InfoAreas2Choose run(Integer executionDegreeId, Integer studentCurricularPlanId,
             Integer studentNumber) throws FenixServiceException {
         InfoAreas2Choose infoAreas2Choose = new InfoAreas2Choose();
-       
+
         List finalSpecializationAreas = new ArrayList();
         List finalSecundaryAreas = new ArrayList();
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentStudent studentDAO = persistentSuport
-                    .getIPersistentStudent();
-            IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
+            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                     .getIStudentCurricularPlanPersistente();
 
-            IStudent student = studentDAO.readStudentByNumberAndDegreeType(
-                    studentNumber, TipoCurso.LICENCIATURA_OBJ);
+            IStudent student = studentDAO.readStudentByNumberAndDegreeType(studentNumber,
+                    TipoCurso.LICENCIATURA_OBJ);
 
             if (student == null) {
                 throw new ExistingServiceException("student");
             }
             IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanDAO
-                    .readActiveStudentCurricularPlan(student.getNumber(),
-                            student.getDegreeType());
+                    .readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
             if (studentCurricularPlan == null) {
                 throw new ExistingServiceException("studentCurricularPlan");
             }
 
-            List specializationAreas = studentCurricularPlan
-                    .getDegreeCurricularPlan().getSpecializationAreas();
-            List secundaryAreas = studentCurricularPlan
-                    .getDegreeCurricularPlan().getSecundaryAreas();
+            List specializationAreas = studentCurricularPlan.getDegreeCurricularPlan()
+                    .getSpecializationAreas();
+            List secundaryAreas = studentCurricularPlan.getDegreeCurricularPlan().getSecundaryAreas();
 
-            finalSecundaryAreas = (List) CollectionUtils.collect(
-                    secundaryAreas, new Transformer() {
+            finalSecundaryAreas = (List) CollectionUtils.collect(secundaryAreas, new Transformer() {
 
-                        public Object transform(Object arg0) {
+                public Object transform(Object arg0) {
 
-                            return InfoBranch.newInfoFromDomain((IBranch) arg0);
-                        }
-                    });
+                    return InfoBranch.newInfoFromDomain((IBranch) arg0);
+                }
+            });
 
-            finalSpecializationAreas = (List) CollectionUtils.collect(
-                    specializationAreas, new Transformer() {
+            finalSpecializationAreas = (List) CollectionUtils.collect(specializationAreas,
+                    new Transformer() {
 
                         public Object transform(Object arg0) {
 

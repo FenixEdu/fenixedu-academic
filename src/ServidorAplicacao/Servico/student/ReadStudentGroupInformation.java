@@ -56,8 +56,7 @@ public class ReadStudentGroupInformation implements IServico {
         return "ReadStudentGroupInformation";
     }
 
-    public ISiteComponent run(Integer studentGroupCode)
-            throws FenixServiceException {
+    public ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
         List studentGroupAttendInformationList = null;
@@ -66,23 +65,21 @@ public class ReadStudentGroupInformation implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup()
-                    .readByOID(StudentGroup.class, studentGroupCode);
+            studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
+                    studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidSituationServiceException();
             }
-            studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
-                    .readAllByStudentGroup(studentGroup);
+            studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(
+                    studentGroup);
 
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
-            throw new FenixServiceException(
-                    "error.impossibleReadStudentGroupInformation");
+            throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
         }
 
-        studentGroupAttendInformationList = new ArrayList(
-                studentGroupAttendList.size());
+        studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
         Iterator iter = studentGroupAttendList.iterator();
         InfoSiteStudentInformation infoSiteStudentInformation = null;
         InfoStudentGroupAttend infoStudentGroupAttend = null;
@@ -91,36 +88,32 @@ public class ReadStudentGroupInformation implements IServico {
             infoSiteStudentInformation = new InfoSiteStudentInformation();
 
             infoStudentGroupAttend = Cloner
-                    .copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter
-                            .next());
+                    .copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
 
-            infoSiteStudentInformation.setNumber(infoStudentGroupAttend
-                    .getInfoAttend().getAluno().getNumber());
+            infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno()
+                    .getNumber());
 
-            infoSiteStudentInformation.setName(infoStudentGroupAttend
-                    .getInfoAttend().getAluno().getInfoPerson().getNome());
+            infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno()
+                    .getInfoPerson().getNome());
 
-            infoSiteStudentInformation.setEmail(infoStudentGroupAttend
-                    .getInfoAttend().getAluno().getInfoPerson().getEmail());
+            infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno()
+                    .getInfoPerson().getEmail());
 
-            infoSiteStudentInformation.setUsername(infoStudentGroupAttend
-                    .getInfoAttend().getAluno().getInfoPerson().getUsername());
+            infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno()
+                    .getInfoPerson().getUsername());
 
             studentGroupAttendInformationList.add(infoSiteStudentInformation);
 
         }
 
-        Collections.sort(studentGroupAttendInformationList, new BeanComparator(
-                "number"));
+        Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+        infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
         infoSiteStudentGroup
-                .setInfoSiteStudentInformationList(studentGroupAttendInformationList);
-        infoSiteStudentGroup.setInfoStudentGroup(Cloner
-                .copyIStudentGroup2InfoStudentGroup(studentGroup));
+                .setInfoStudentGroup(Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup));
         IGroupProperties groupProperties = studentGroup.getGroupProperties();
         if (groupProperties.getMaximumCapacity() != null) {
 
-            int vagas = groupProperties.getMaximumCapacity().intValue()
-                    - studentGroupAttendList.size();
+            int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
             //if (vagas >= 0)
             infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
             //else

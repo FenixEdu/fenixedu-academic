@@ -10,8 +10,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.TipoCurso;
 
-public class JavaTipoCurso2SqlTipoCursoFieldConversion implements
-        FieldConversion {
+public class JavaTipoCurso2SqlTipoCursoFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)

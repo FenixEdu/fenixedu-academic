@@ -32,81 +32,66 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class ReadTestTest extends TestCaseReadServices
-{
+public class ReadTestTest extends TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public ReadTestTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadTestTest(String testName) {
         super(testName);
 
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadTest";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
-        Object[] args = { new Integer(26), new Integer(4)};
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] args = { new Integer(26), new Integer(4) };
         return args;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         InfoSiteTest bodyComponent = new InfoSiteTest();
         InfoExecutionCourse infoExecutionCourse = null;
         InfoTest infoTest = null;
         List result = new ArrayList();
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, new Integer(26));
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, new Integer(26));
             assertNotNull("executionCourse null", executionCourse);
             IPersistentTest persistentTest = sp.getIPersistentTest();
             ITest test = (ITest) persistentTest.readByOID(Test.class, new Integer(4));
             assertNotNull("test null", test);
             IPersistentTestQuestion persistentTestQuestion = sp.getIPersistentTestQuestion();
-            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(TestQuestion.class, new Integer(8));
+            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(
+                    TestQuestion.class, new Integer(8));
             assertNotNull("testQuestion null", testQuestion);
             sp.confirmarTransaccao();
             infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-          //  infoTest = Cloner.copyITest2InfoTest(test);
+            //  infoTest = Cloner.copyITest2InfoTest(test);
 
             ParseQuestion parse = new ParseQuestion();
             InfoTestQuestion infoTestQuestion = InfoTestQuestion.newInfoFromDomain(testQuestion);
-            try
-            {
-                infoTestQuestion.setQuestion(
-                    parse.parseQuestion(
-                        infoTestQuestion.getQuestion().getXmlFile(),
-                        infoTestQuestion.getQuestion(),
-                        ""));
-            }
-            catch (Exception e)
-            {
+            try {
+                infoTestQuestion.setQuestion(parse.parseQuestion(infoTestQuestion.getQuestion()
+                        .getXmlFile(), infoTestQuestion.getQuestion(), ""));
+            } catch (Exception e) {
                 fail("exception: ExcepcaoPersistencia ");
             }
             result.add(infoTestQuestion);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             fail("exception: ExcepcaoPersistencia ");
         }
 
@@ -117,8 +102,7 @@ public class ReadTestTest extends TestCaseReadServices
         return siteView;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 }

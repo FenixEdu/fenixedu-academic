@@ -11,10 +11,9 @@ import Util.gratuity.SibsPaymentStatus;
 import Util.gratuity.SibsPaymentType;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
 public interface ISibsPaymentFileEntry extends IDomainObject {
 
@@ -24,7 +23,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public abstract Integer getKeySibsPaymentFile();
 
     /**
-     * @param keySibsPaymentFile The keyPaymentSibsFile to set.
+     * @param keySibsPaymentFile
+     *            The keyPaymentSibsFile to set.
      */
     public abstract void setKeySibsPaymentFile(Integer keySibsPaymentFile);
 
@@ -34,7 +34,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public SibsPaymentType getPaymentType();
 
     /**
-     * @param paymentType The paymentType to set.
+     * @param paymentType
+     *            The paymentType to set.
      */
     public void setPaymentType(SibsPaymentType paymentType);
 
@@ -44,7 +45,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public abstract ISibsPaymentFile getSibsPaymentFile();
 
     /**
-     * @param sibsFile The sibsFile to set.
+     * @param sibsFile
+     *            The sibsFile to set.
      */
     public abstract void setSibsPaymentFile(ISibsPaymentFile sibsPaymentFile);
 
@@ -54,7 +56,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public abstract Integer getStudentNumber();
 
     /**
-     * @param studentNumber The studentNumber to set.
+     * @param studentNumber
+     *            The studentNumber to set.
      */
     public abstract void setStudentNumber(Integer studentNumber);
 
@@ -64,7 +67,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public abstract Timestamp getTransactionDate();
 
     /**
-     * @param transactionDate The transactionDate to set.
+     * @param transactionDate
+     *            The transactionDate to set.
      */
     public abstract void setTransactionDate(Timestamp transactionDate);
 
@@ -74,7 +78,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public abstract Double getPayedValue();
 
     /**
-     * @param value The value to set.
+     * @param value
+     *            The value to set.
      */
     public abstract void setPayedValue(Double value);
 
@@ -84,7 +89,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public abstract Integer getYear();
 
     /**
-     * @param year The year to set.
+     * @param year
+     *            The year to set.
      */
     public abstract void setYear(Integer year);
 
@@ -94,7 +100,8 @@ public interface ISibsPaymentFileEntry extends IDomainObject {
     public SibsPaymentStatus getPaymentStatus();
 
     /**
-     * @param paymentStatus The paymentStatus to set.
+     * @param paymentStatus
+     *            The paymentStatus to set.
      */
     public void setPaymentStatus(SibsPaymentStatus paymentStatus);
 

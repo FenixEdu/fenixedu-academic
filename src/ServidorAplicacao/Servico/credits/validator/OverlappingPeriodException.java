@@ -9,14 +9,12 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 /**
  * @author jpvl
  */
-public class OverlappingPeriodException extends FenixServiceException
-{
+public class OverlappingPeriodException extends FenixServiceException {
 
     /**
-	 *  
-	 */
-    public OverlappingPeriodException()
-    {
+     *  
+     */
+    public OverlappingPeriodException() {
 
     }
 }

@@ -20,41 +20,32 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *  
  */
-public class AddShiftsDA
-	extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
+public class AddShiftsDA extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	public ActionForward add(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InfoClass infoClass =
-			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+        InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-		DynaActionForm addShiftsForm = (DynaActionForm) form;
-		String[] selectedShifts = (String[]) addShiftsForm.get("selectedItems");
+        DynaActionForm addShiftsForm = (DynaActionForm) form;
+        String[] selectedShifts = (String[]) addShiftsForm.get("selectedItems");
 
-		List shiftOIDs = new ArrayList();
-		for (int i = 0; i < selectedShifts.length; i++) {
-			shiftOIDs.add(new Integer(selectedShifts[i]));
-		}
+        List shiftOIDs = new ArrayList();
+        for (int i = 0; i < selectedShifts.length; i++) {
+            shiftOIDs.add(new Integer(selectedShifts[i]));
+        }
 
-		Object args[] = { infoClass, shiftOIDs };
-		try {
-			ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"AddShiftsToClass",
-				args);
-		} catch (ExistingServiceException ex) {
-			// No probem, the user refreshed the page after adding classes
-			request.setAttribute("selectMultipleItemsForm", null);
-			return mapping.getInputForward();
-		}
+        Object args[] = { infoClass, shiftOIDs };
+        try {
+            ServiceUtils.executeService(SessionUtils.getUserView(request), "AddShiftsToClass", args);
+        } catch (ExistingServiceException ex) {
+            // No probem, the user refreshed the page after adding classes
+            request.setAttribute("selectMultipleItemsForm", null);
+            return mapping.getInputForward();
+        }
 
-		return mapping.findForward("EditClass");
-	}
+        return mapping.findForward("EditClass");
+    }
 }

@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.sop.exams;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,97 +28,69 @@ import ServidorApresentacao.Action.utils.ContextUtils;
  */
 public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAction {
 
-	public ActionForward prepare(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		HttpSession session = request.getSession(false);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession(false);
 
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+        IUserView userView = (IUserView) session.getAttribute("UserView");
 
-		InfoExecutionPeriod selectedExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		Object argsReadExecutionPeriods[] = {
-		};
-		ArrayList executionPeriods =
-			(ArrayList) ServiceUtils.executeService(
-				userView,
-				"ReadExecutionPeriods",
-				argsReadExecutionPeriods);
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-		chainComparator.addComparator(new BeanComparator("semester"));
-		Collections.sort(executionPeriods, chainComparator);
+        Object argsReadExecutionPeriods[] = {};
+        List executionPeriods = (ArrayList) ServiceUtils.executeService(userView,
+                "ReadExecutionPeriods", argsReadExecutionPeriods);
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+        chainComparator.addComparator(new BeanComparator("semester"));
+        Collections.sort(executionPeriods, chainComparator);
 
-		// if executionPeriod was previously selected,form has that
-		// value as default
-		if (selectedExecutionPeriod != null) {
-			DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
-			chooseExamsExecutionPeriodForm.set(
-				"executionPeriod",
-				new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
-		}
-		//----------------------------------------------
+        // if executionPeriod was previously selected,form has that
+        // value as default
+        if (selectedExecutionPeriod != null) {
+            DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
+            chooseExamsExecutionPeriodForm.set("executionPeriod", new Integer(executionPeriods
+                    .indexOf(selectedExecutionPeriod)));
+        }
+        //----------------------------------------------
 
-		ArrayList executionPeriodsLabelValueList = new ArrayList();
-		for (int i = 0; i < executionPeriods.size(); i++) {
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) executionPeriods.get(i);
-			executionPeriodsLabelValueList.add(
-				new LabelValueBean(
-					infoExecutionPeriod.getName()
-						+ " - "
-						+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
-					"" + i));
-		}
+        List executionPeriodsLabelValueList = new ArrayList();
+        for (int i = 0; i < executionPeriods.size(); i++) {
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
+                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i));
+        }
 
-		request.setAttribute(
-			SessionConstants.LIST_INFOEXECUTIONPERIOD,
-			executionPeriods);
+        request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
 
-		request.setAttribute(
-			SessionConstants.LABELLIST_EXECUTIONPERIOD,
-			executionPeriodsLabelValueList);
-			
-		return mapping.findForward("ManageExams");
-	}
+        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
-	public ActionForward choose(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-			
-		HttpSession session = request.getSession(false);
-		DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
+        return mapping.findForward("ManageExams");
+    }
 
-		IUserView userView = (IUserView) session.getAttribute("UserView");		
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		Object argsReadExecutionPeriods[] = { };
-		ArrayList infoExecutionPeriodList =
-			(ArrayList) ServiceUtils.executeService(
-				userView,
-				"ReadExecutionPeriods",
-				argsReadExecutionPeriods);
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
-		chainComparator.addComparator(new BeanComparator("semester"));
-		Collections.sort(infoExecutionPeriodList, chainComparator);
+        HttpSession session = request.getSession(false);
+        DynaActionForm chooseExamsExecutionPeriodForm = (DynaActionForm) form;
 
-		Integer executionPeriodOID = (Integer) chooseExamsExecutionPeriodForm.get("executionPeriod");
+        IUserView userView = (IUserView) session.getAttribute("UserView");
 
-		if (infoExecutionPeriodList != null && executionPeriodOID != null) {
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD_OID,
-				executionPeriodOID.toString());
-			ContextUtils.setExecutionPeriodContext(request);
-		}
-		
-		return mapping.findForward("ManageExams");
-	}
+        Object argsReadExecutionPeriods[] = {};
+        List infoExecutionPeriodList = (ArrayList) ServiceUtils.executeService(userView,
+                "ReadExecutionPeriods", argsReadExecutionPeriods);
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+        chainComparator.addComparator(new BeanComparator("semester"));
+        Collections.sort(infoExecutionPeriodList, chainComparator);
+
+        Integer executionPeriodOID = (Integer) chooseExamsExecutionPeriodForm.get("executionPeriod");
+
+        if (infoExecutionPeriodList != null && executionPeriodOID != null) {
+            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOID.toString());
+            ContextUtils.setExecutionPeriodContext(request);
+        }
+
+        return mapping.findForward("ManageExams");
+    }
 }

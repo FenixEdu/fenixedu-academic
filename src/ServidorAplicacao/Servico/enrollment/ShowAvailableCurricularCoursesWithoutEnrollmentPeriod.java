@@ -16,7 +16,7 @@ import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSeconda
 import DataBeans.enrollment.InfoCurricularCourse2Enroll;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import Dominio.IEnrollment;
-import Dominio.IEnrolmentPeriod;
+import Dominio.IEnrolmentPeriodInCurricularCourses;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -29,7 +29,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -157,19 +157,20 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
 
     /**
      * @param studentActiveCurricularPlan
-     * @return IEnrolmentPeriod
+     * @return IEnrollmentPeriodInCurricularCourses
      * @throws ExcepcaoPersistencia
      * @throws OutOfCurricularCourseEnrolmentPeriod
      */
-    public static IEnrolmentPeriod getEnrolmentPeriod(IStudentCurricularPlan studentActiveCurricularPlan)
-            throws ExcepcaoPersistencia, OutOfCurricularCourseEnrolmentPeriod {
+    public static IEnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
+            IStudentCurricularPlan studentActiveCurricularPlan) throws ExcepcaoPersistencia,
+            OutOfCurricularCourseEnrolmentPeriod {
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
         IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport.getIPersistentEnrolmentPeriod();
-        IEnrolmentPeriod enrolmentPeriod = enrolmentPeriodDAO
+        IEnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
                 .readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
                         .getDegreeCurricularPlan());
         if (enrolmentPeriod == null) {
-            IEnrolmentPeriod nextEnrolmentPeriod = enrolmentPeriodDAO
+            IEnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = enrolmentPeriodDAO
                     .readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
                             .getDegreeCurricularPlan());
             Date startDate = null;
@@ -203,7 +204,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
     protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-        IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                 .getIStudentCurricularPlanPersistente();
 
         return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student

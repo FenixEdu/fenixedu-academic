@@ -24,55 +24,46 @@ import Util.TipoAula;
  * @author Leonor Almeida
  * @author Sérgio Montelobo
  */
-public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase
-{
+public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
      * @param testName
      */
-    public InsertSummaryTest(String testName)
-    {
+    public InsertSummaryTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testInsertSummaryDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath()
-    {
+    protected String getExpectedDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testExpectedInsertSummaryDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "InsertSummary";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "julia", "pass", getApplication()};
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "jccm", "pass", getApplication()};
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
 
         Integer executionCourseId = new Integer(24);
 
@@ -94,16 +85,13 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testSuccessfull()
-    {
+    public void testSuccessfull() {
 
-        try
-        {
+        try {
             String[] args1 = getAuthenticatedAndAuthorizedUser();
             IUserView userView = authenticateUser(args1);
 
@@ -116,7 +104,7 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase
             Criteria criteria = new Criteria();
             //criteria.addOrderBy("lastModifiedDate", false);
             Query queryCriteria = new QueryByCriteria(Summary.class, criteria);
-            ((QueryByCriteria)queryCriteria).addOrderBy("lastModifiedDate", false);
+            ((QueryByCriteria) queryCriteria).addOrderBy("lastModifiedDate", false);
             ISummary summary = (ISummary) broker.getObjectByQuery(queryCriteria);
             broker.close();
 
@@ -125,29 +113,24 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase
             Calendar expectedSummaryHour = (Calendar) args2[2];
 
             assertEquals(summary.getExecutionCourse().getIdInternal(), args2[0]);
-            assertEquals(
-                summary.getSummaryDate().get(Calendar.DAY_OF_MONTH),
-                expectedSummaryDate.get(Calendar.DAY_OF_MONTH));
-            assertEquals(
-                summary.getSummaryDate().get(Calendar.MONTH),
-                expectedSummaryDate.get(Calendar.MONTH));
-            assertEquals(
-                summary.getSummaryDate().get(Calendar.YEAR),
-                expectedSummaryDate.get(Calendar.YEAR));
-            assertEquals(
-                summary.getSummaryHour().get(Calendar.HOUR_OF_DAY),
-                expectedSummaryHour.get(Calendar.HOUR_OF_DAY));
-            assertEquals(
-                summary.getSummaryHour().get(Calendar.MINUTE),
-                expectedSummaryHour.get(Calendar.MINUTE));
-            assertEquals(
-                summary.getSummaryHour().get(Calendar.SECOND),
-                expectedSummaryHour.get(Calendar.SECOND));
+            assertEquals(summary.getSummaryDate().get(Calendar.DAY_OF_MONTH), expectedSummaryDate
+                    .get(Calendar.DAY_OF_MONTH));
+            assertEquals(summary.getSummaryDate().get(Calendar.MONTH), expectedSummaryDate
+                    .get(Calendar.MONTH));
+            assertEquals(summary.getSummaryDate().get(Calendar.YEAR), expectedSummaryDate
+                    .get(Calendar.YEAR));
+            assertEquals(summary.getSummaryHour().get(Calendar.HOUR_OF_DAY), expectedSummaryHour
+                    .get(Calendar.HOUR_OF_DAY));
+            assertEquals(summary.getSummaryHour().get(Calendar.MINUTE), expectedSummaryHour
+                    .get(Calendar.MINUTE));
+            assertEquals(summary.getSummaryHour().get(Calendar.SECOND), expectedSummaryHour
+                    .get(Calendar.SECOND));
             assertEquals(summary.getSummaryType().getTipo(), args2[3]);
             assertEquals(summary.getTitle(), (String) args2[4]);
             assertEquals(summary.getSummaryText(), (String) args2[5]);
 
-            // apaga o sumario inserido para verificar se nao houve mais nenhuma alteracao da bd
+            // apaga o sumario inserido para verificar se nao houve mais nenhuma
+            // alteracao da bd
             Integer summaryId = summary.getIdInternal();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
@@ -156,11 +139,9 @@ public class InsertSummaryTest extends ServiceNeedsAuthenticationTestCase
 
             // verificar as alteracoes da bd
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-        } catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("Insert the Summary of a Site" + ex);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Insert the Summary of a Site" + ex);
         }
     }

@@ -25,18 +25,14 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * @author lmac1
  */
 
-public class InsertCurricularCourseAtDegreeCurricularPlan implements IService
-{
+public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
 
-    public InsertCurricularCourseAtDegreeCurricularPlan()
-    {
+    public InsertCurricularCourseAtDegreeCurricularPlan() {
     }
 
-    public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException
-    {
+    public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan()
@@ -58,6 +54,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService
 
             ICurricularCourse curricularCourse = new CurricularCourse();
             persistentCurricularCourse.simpleLockWrite(curricularCourse);
+
             curricularCourse.setBasic(infoCurricularCourse.getBasic());
             curricularCourse.setCode(code);
             curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
@@ -75,18 +72,16 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService
             curricularCourse.setCredits(infoCurricularCourse.getCredits());
             curricularCourse.setEctsCredits(infoCurricularCourse.getEctsCredits());
             curricularCourse.setEnrollmentWeigth(infoCurricularCourse.getEnrollmentWeigth());
-
+            curricularCourse.setWeigth(infoCurricularCourse.getWeigth());
+            curricularCourse.setMandatoryEnrollment(infoCurricularCourse.getMandatoryEnrollment());
+            curricularCourse.setEnrollmentAllowed(infoCurricularCourse.getEnrollmentAllowed());
             curricularCourse.setAssociatedExecutionCourses(new ArrayList());
 
-        }
-        catch (ExistingPersistentException existingException)
-        {
+        } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException("A disciplina curricular "
                     + infoCurricularCourse.getName() + ", com código " + infoCurricularCourse.getCode(),
                     existingException);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

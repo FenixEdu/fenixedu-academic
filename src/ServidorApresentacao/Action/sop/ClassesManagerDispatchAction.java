@@ -27,53 +27,41 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author jpvl
- *
  * 
+ *  
  */
-public class ClassesManagerDispatchAction
-	extends FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
-	static public final String CLASS_LIST_KEY = "classesList";
+public class ClassesManagerDispatchAction extends
+        FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+    static public final String CLASS_LIST_KEY = "classesList";
 
-	public ActionForward listClasses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		//HttpSession session = request.getSession(false);
+        //HttpSession session = request.getSession(false);
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		InfoCurricularYear infoCurricularYear =
-			(InfoCurricularYear) request.getAttribute(
-				SessionConstants.CURRICULAR_YEAR);
+        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
+                .getAttribute(SessionConstants.CURRICULAR_YEAR);
 
-		Integer curricularYear = infoCurricularYear.getYear();
+        Integer curricularYear = infoCurricularYear.getYear();
 
-		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) request.getAttribute(
-				SessionConstants.EXECUTION_DEGREE);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+                .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-		Object argsLerTurmas[] =
-			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
+        Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
+        List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
+                "LerTurmas", argsLerTurmas);
 
-		List classesList =
-			(List) ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"LerTurmas",
-				argsLerTurmas);
+        if (classesList != null && !classesList.isEmpty())
+            request.setAttribute(CLASS_LIST_KEY, classesList);
 
-		if (classesList != null && !classesList.isEmpty())
-			request.setAttribute(CLASS_LIST_KEY, classesList);
+        request.removeAttribute(SessionConstants.EXECUTION_COURSE);
+        request.removeAttribute(SessionConstants.CLASS_VIEW);
 
-		request.removeAttribute(SessionConstants.EXECUTION_COURSE);
-		request.removeAttribute(SessionConstants.CLASS_VIEW);
-
-		return mapping.findForward("listClasses");
-	}
+        return mapping.findForward("listClasses");
+    }
 
 }

@@ -72,7 +72,7 @@
 					</tr>
 					<tr>
 						<td>
-							<input type="hidden" name="motivation" value="<%=request.getParameter("motivation")%>">			
+							<input type="hidden" name="motivation" value='<%=request.getParameter("motivation")%>'>			
 						</td>
 					</tr>
 					<tr>

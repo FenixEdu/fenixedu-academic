@@ -22,275 +22,273 @@ import Util.RoleType;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ChangeGuideInformationTest extends TestCaseServicos {
 
-	public ChangeGuideInformationTest(java.lang.String testName) {
-		super(testName);
-	}
-    
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
-    
-	public static Test suite() {
-		TestSuite suite = new TestSuite(ChangeGuideInformationTest.class);
-        
-		return suite;
-	}
-    
-	protected void setUp() {
-		super.setUp();
-        
-	}
-    
-	protected void tearDown() {
-		super.tearDown();
-	}
+    public ChangeGuideInformationTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public void testChangeContributor() {
-		System.out.println("- Test 1 : Change Guide Information (Change the Contributor) ");
-		
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
-		Integer guideNumber = new Integer(1);
-		Integer guideYear = new Integer(2003);
-		Integer guideVersion = new Integer(1);
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		ISuportePersistente sp = null;
-		IGuide guide = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ChangeGuideInformationTest.class);
 
-			IPersistentGuide persistentGuide = sp.getIPersistentGuide();
-			guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
-			assertNotNull(guide);
+        return suite;
+    }
 
-			sp.confirmarTransaccao();
+    protected void setUp() {
+        super.setUp();
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
+    }
 
-		String quantityList[] = {"1", "2", "1"};
-		Integer contributorNumber = new Integer(456);
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-		// Update The Contributor
-		InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
-		
-				
-		Object[] args = {infoGuide, quantityList, contributorNumber, null, null, null};
+    public void testChangeContributor() {
+        System.out.println("- Test 1 : Change Guide Information (Change the Contributor) ");
 
-		InfoGuide result = null;
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
+        Integer guideNumber = new Integer(1);
+        Integer guideYear = new Integer(2003);
+        Integer guideVersion = new Integer(1);
 
-		 try {
-			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
-		 } catch (FenixServiceException ex) {
-			fail("Fenix Service Exception" + ex);
-		 } catch (Exception ex) {
-			fail("Exception " + ex);
-		 }
-		 
-		 assertNotNull(result);
-		 
-		 assertEquals(result.getVersion(), new Integer(2));
-		 assertEquals(result.getInfoContributor().getContributorNumber(), contributorNumber);
-	}
+        ISuportePersistente sp = null;
+        IGuide guide = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
+            IPersistentGuide persistentGuide = sp.getIPersistentGuide();
+            guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
+            assertNotNull(guide);
 
-	public void testDeleteOneGuideLine() {
-		System.out.println("- Test 2 : Change Guide Information (Delete One Line) ");
-		
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
-		Integer guideNumber = new Integer(1);
-		Integer guideYear = new Integer(2003);
-		Integer guideVersion = new Integer(1);
+            sp.confirmarTransaccao();
 
-		ISuportePersistente sp = null;
-		IGuide guide = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
 
-			IPersistentGuide persistentGuide = sp.getIPersistentGuide();
-			guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
-			assertNotNull(guide);
+        String quantityList[] = { "1", "2", "1" };
+        Integer contributorNumber = new Integer(456);
 
-			sp.confirmarTransaccao();
+        // Update The Contributor
+        InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
+        Object[] args = { infoGuide, quantityList, contributorNumber, null, null, null };
 
-		String quantityList[] = {"0", "2", "1"};
-		Integer contributorNumber = new Integer(456);
+        InfoGuide result = null;
 
-		// Update The Contributor
-		InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
-		
-				
-		Object[] args = {infoGuide, quantityList, contributorNumber, null, null, null};
+        try {
+            result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                    "EditGuideInformation", args);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception" + ex);
+        } catch (Exception ex) {
+            fail("Exception " + ex);
+        }
 
-		InfoGuide result = null;
-		
-		assertEquals(infoGuide.getInfoGuideEntries().size(), 3);
-		assertEquals(infoGuide.getTotal(), new Double(50.02));
-		
-		 try {
-			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
-		 } catch (FenixServiceException ex) {
-			fail("Fenix Service Exception" + ex);
-		 } catch (Exception ex) {
-			fail("Exception " + ex);
-		 }
-		 
-		 assertNotNull(result);
-		 
-		 assertEquals(result.getVersion(), new Integer(2));
-		 assertEquals(result.getInfoGuideEntries().size(), 2);
-		 assertEquals(result.getTotal(), new Double(40));
-		
-	}
+        assertNotNull(result);
 
+        assertEquals(result.getVersion(), new Integer(2));
+        assertEquals(result.getInfoContributor().getContributorNumber(), contributorNumber);
+    }
 
-	public void testChangeTheQuantities() {
-		System.out.println("- Test 3 : Change Guide Information (Change Quantities) ");
-		
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
-		Integer guideNumber = new Integer(1);
-		Integer guideYear = new Integer(2003);
-		Integer guideVersion = new Integer(1);
+    public void testDeleteOneGuideLine() {
+        System.out.println("- Test 2 : Change Guide Information (Delete One Line) ");
 
-		ISuportePersistente sp = null;
-		IGuide guide = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
+        Integer guideNumber = new Integer(1);
+        Integer guideYear = new Integer(2003);
+        Integer guideVersion = new Integer(1);
 
-			IPersistentGuide persistentGuide = sp.getIPersistentGuide();
-			guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
-			assertNotNull(guide);
+        ISuportePersistente sp = null;
+        IGuide guide = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			sp.confirmarTransaccao();
+            IPersistentGuide persistentGuide = sp.getIPersistentGuide();
+            guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
+            assertNotNull(guide);
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
+            sp.confirmarTransaccao();
 
-		String quantityList[] = {"2", "3", "4"};
-		Integer contributorNumber = new Integer(456);
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
 
-		// Update The Contributor
-		InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
-		
-				
-		Object[] args = {infoGuide, quantityList, contributorNumber, null, null, null};
+        String quantityList[] = { "0", "2", "1" };
+        Integer contributorNumber = new Integer(456);
 
-		InfoGuide result = null;
-		
-		assertEquals(infoGuide.getTotal(), new Double(50.02));
-		
-		 try {
-			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
-		 } catch (FenixServiceException ex) {
-			fail("Fenix Service Exception" + ex);
-		 } catch (Exception ex) {
-			fail("Exception " + ex);
-		 }
-		 
-		 assertNotNull(result);
-		 
-		 assertEquals(result.getVersion(), new Integer(2));
-		 assertEquals(result.getTotal(), new Double(105.04));
-		
-	}
+        // Update The Contributor
+        InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
 
-	public void testAddNewLine() {
-		System.out.println("- Test 4 : Change Guide Information (Add New Line) ");
-		
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
-		Integer guideNumber = new Integer(1);
-		Integer guideYear = new Integer(2003);
-		Integer guideVersion = new Integer(1);
+        Object[] args = { infoGuide, quantityList, contributorNumber, null, null, null };
 
-		ISuportePersistente sp = null;
-		IGuide guide = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        InfoGuide result = null;
 
-			IPersistentGuide persistentGuide = sp.getIPersistentGuide();
-			guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
-			assertNotNull(guide);
+        assertEquals(infoGuide.getInfoGuideEntries().size(), 3);
+        assertEquals(infoGuide.getTotal(), new Double(50.02));
 
-			sp.confirmarTransaccao();
+        try {
+            result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                    "EditGuideInformation", args);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception" + ex);
+        } catch (Exception ex) {
+            fail("Exception " + ex);
+        }
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
+        assertNotNull(result);
 
-		String quantityList[] = {"1", "2", "1"};
-		Integer contributorNumber = new Integer(456);
+        assertEquals(result.getVersion(), new Integer(2));
+        assertEquals(result.getInfoGuideEntries().size(), 2);
+        assertEquals(result.getTotal(), new Double(40));
 
-		// Update The Contributor
-		InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
-		
-		
-		Object[] args = {infoGuide, quantityList, contributorNumber, "Stamps", new Integer(2), new Double(1.15)};
+    }
 
-		InfoGuide result = null;
-		
-		assertEquals(infoGuide.getTotal(), new Double(50.02));
-		assertEquals(infoGuide.getInfoGuideEntries().size(), 3);
-		
-		 try {
-			 result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
-		 } catch (FenixServiceException ex) {
-			fail("Fenix Service Exception" + ex);
-		 } catch (Exception ex) {
-			fail("Exception " + ex);
-		 }
-		 
-		 assertNotNull(result);
-		 
-		 assertEquals(result.getVersion(), new Integer(2));
-		 assertEquals(result.getInfoGuideEntries().size(), 4);
-		 assertEquals(result.getTotal(), new Double(52.32));
-		
-	}
+    public void testChangeTheQuantities() {
+        System.out.println("- Test 3 : Change Guide Information (Change Quantities) ");
 
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
+        Integer guideNumber = new Integer(1);
+        Integer guideYear = new Integer(2003);
+        Integer guideVersion = new Integer(1);
 
-	private UserView getUserViewToBeTested(String username, boolean withRole) {
-		Collection roles = new ArrayList();
-		InfoRole infoRole = new InfoRole();
-		if (withRole) infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		else infoRole.setRoleType(RoleType.PERSON);
-		roles.add(infoRole);
-		UserView userView = new UserView(username, roles);
-		return userView;
-	}
+        ISuportePersistente sp = null;
+        IGuide guide = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
+            IPersistentGuide persistentGuide = sp.getIPersistentGuide();
+            guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
+            assertNotNull(guide);
+
+            sp.confirmarTransaccao();
+
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+
+        String quantityList[] = { "2", "3", "4" };
+        Integer contributorNumber = new Integer(456);
+
+        // Update The Contributor
+        InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+
+        Object[] args = { infoGuide, quantityList, contributorNumber, null, null, null };
+
+        InfoGuide result = null;
+
+        assertEquals(infoGuide.getTotal(), new Double(50.02));
+
+        try {
+            result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                    "EditGuideInformation", args);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception" + ex);
+        } catch (Exception ex) {
+            fail("Exception " + ex);
+        }
+
+        assertNotNull(result);
+
+        assertEquals(result.getVersion(), new Integer(2));
+        assertEquals(result.getTotal(), new Double(105.04));
+
+    }
+
+    public void testAddNewLine() {
+        System.out.println("- Test 4 : Change Guide Information (Add New Line) ");
+
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
+        Integer guideNumber = new Integer(1);
+        Integer guideYear = new Integer(2003);
+        Integer guideVersion = new Integer(1);
+
+        ISuportePersistente sp = null;
+        IGuide guide = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+
+            IPersistentGuide persistentGuide = sp.getIPersistentGuide();
+            guide = persistentGuide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
+            assertNotNull(guide);
+
+            sp.confirmarTransaccao();
+
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+
+        String quantityList[] = { "1", "2", "1" };
+        Integer contributorNumber = new Integer(456);
+
+        // Update The Contributor
+        InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+
+        Object[] args = { infoGuide, quantityList, contributorNumber, "Stamps", new Integer(2),
+                new Double(1.15) };
+
+        InfoGuide result = null;
+
+        assertEquals(infoGuide.getTotal(), new Double(50.02));
+        assertEquals(infoGuide.getInfoGuideEntries().size(), 3);
+
+        try {
+            result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                    "EditGuideInformation", args);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception" + ex);
+        } catch (Exception ex) {
+            fail("Exception " + ex);
+        }
+
+        assertNotNull(result);
+
+        assertEquals(result.getVersion(), new Integer(2));
+        assertEquals(result.getInfoGuideEntries().size(), 4);
+        assertEquals(result.getTotal(), new Double(52.32));
+
+    }
+
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
+        Collection roles = new ArrayList();
+        InfoRole infoRole = new InfoRole();
+        if (withRole)
+            infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        else
+            infoRole.setRoleType(RoleType.PERSON);
+        roles.add(infoRole);
+        UserView userView = new UserView(username, roles);
+        return userView;
+    }
 
 }

@@ -14,18 +14,15 @@ import Util.DelegateType;
  * @author Sergio Montelobo
  *  
  */
-public class DelegateTypeFieldConversion implements FieldConversion
-{
+public class DelegateTypeFieldConversion implements FieldConversion {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#javaToSql(java.lang.Object)
-	 */
-    public Object javaToSql(Object obj) throws ConversionException
-    {
-        if (obj instanceof DelegateType)
-        {
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#javaToSql(java.lang.Object)
+     */
+    public Object javaToSql(Object obj) throws ConversionException {
+        if (obj instanceof DelegateType) {
             DelegateType delegateType = (DelegateType) obj;
             return new Integer(delegateType.getValue());
         }
@@ -33,26 +30,22 @@ public class DelegateTypeFieldConversion implements FieldConversion
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#sqlToJava(java.lang.Object)
-	 */
-    public Object sqlToJava(Object obj) throws ConversionException
-    {
+     * (non-Javadoc)
+     * 
+     * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#sqlToJava(java.lang.Object)
+     */
+    public Object sqlToJava(Object obj) throws ConversionException {
         DelegateType delegateType = null;
-        if (obj instanceof Integer)
-        {
+        if (obj instanceof Integer) {
             Integer delegateTypeId = (Integer) obj;
 
             delegateType = DelegateType.getEnum(delegateTypeId.intValue());
 
-            if (delegateType == null)
-            {
-                throw new IllegalArgumentException(
-                    this.getClass().getName() + ": Illegal delegate type!(" + obj + ")");
+            if (delegateType == null) {
+                throw new IllegalArgumentException(this.getClass().getName()
+                        + ": Illegal delegate type!(" + obj + ")");
             }
-        } else
-        {
+        } else {
             throw new IllegalArgumentException("Illegal delegate type!(" + obj + ")");
         }
         return delegateType;

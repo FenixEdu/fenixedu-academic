@@ -21,10 +21,8 @@ public class EditEvaluation implements IService {
     public EditEvaluation() {
     }
 
-    public boolean run(Integer infoExecutionCourseCode,
-            Integer infoEvaluationMethodCode,
-            InfoEvaluationMethod infoEvaluationMethod)
-            throws FenixServiceException {
+    public boolean run(Integer infoExecutionCourseCode, Integer infoEvaluationMethodCode,
+            InfoEvaluationMethod infoEvaluationMethod) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -32,8 +30,7 @@ public class EditEvaluation implements IService {
             IExecutionCourse executionCourse = new ExecutionCourse();
             executionCourse.setIdInternal(infoExecutionCourseCode);
 
-            IPersistentEvaluationMethod persistentEvaluationMethod = sp
-                    .getIPersistentEvaluationMethod();
+            IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod = persistentEvaluationMethod
                     .readByIdExecutionCourse(executionCourse);
 
@@ -44,19 +41,15 @@ public class EditEvaluation implements IService {
 
                 IPersistentExecutionCourse persistenteExecutionCourse = sp
                         .getIPersistentExecutionCourse();
-                evaluationMethod
-                        .setExecutionCourse((IExecutionCourse) persistenteExecutionCourse
-                                .readByOID(ExecutionCourse.class,
-                                        infoExecutionCourseCode));
+                evaluationMethod.setExecutionCourse((IExecutionCourse) persistenteExecutionCourse
+                        .readByOID(ExecutionCourse.class, infoExecutionCourseCode));
             } else {
 
                 persistentEvaluationMethod.simpleLockWrite(evaluationMethod);
             }
 
-            evaluationMethod.setEvaluationElements(infoEvaluationMethod
-                    .getEvaluationElements());
-            evaluationMethod.setEvaluationElementsEn(infoEvaluationMethod
-                    .getEvaluationElementsEn());
+            evaluationMethod.setEvaluationElements(infoEvaluationMethod.getEvaluationElements());
+            evaluationMethod.setEvaluationElementsEn(infoEvaluationMethod.getEvaluationElementsEn());
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

@@ -1,9 +1,8 @@
-
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student.enrolment;
 
 /**
- *
- * @author Nuno Nunes & Joana Mota 
+ * 
+ * @author Nuno Nunes & Joana Mota
  */
 
 import junit.framework.Test;
@@ -19,67 +18,70 @@ import Util.Specialization;
 import Util.TipoCurso;
 
 public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
-  
-  public GetEnrolmentListTest(java.lang.String testName) {
-	super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-	junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-	TestSuite suite = new TestSuite(GetEnrolmentListTest.class);
-        
-	return suite;
-  }
-    
-  protected void setUp() {
-	super.setUp();
-  }
-    
-  protected void tearDown() {
-	super.tearDown();
-  }
 
-  protected String getNameOfServiceToBeTested() {
-	  return "GetEnrolmentList";
-  }
+    public GetEnrolmentListTest(java.lang.String testName) {
+        super(testName);
+    }
 
-  protected int getNumberOfItemsToRetrieve(){
-	  return 2;
-  }
-  protected Object getObjectToCompare(){
-  	
-	  return null;
-  }
-	
-  protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-	ISuportePersistente sp = null;
-	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	try {
-		sp = SuportePersistenteOJB.getInstance();
-		sp.iniciarTransaccao();
-		IStudentCurricularPlan iStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentAndSpecializationCurricularPlan(
-														new Integer(46865), new TipoCurso(TipoCurso.MESTRADO_STRING), new Specialization(Specialization.ESPECIALIZACAO_STRING));
-		assertNotNull(iStudentCurricularPlan);	
-		
-		infoStudentCurricularPlan = Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(iStudentCurricularPlan);	
-		sp.confirmarTransaccao();
-	
-	} catch(Exception e) {
-		fail("Error !");  		
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(GetEnrolmentListTest.class);
 
-	Object[] args = { infoStudentCurricularPlan, EnrollmentState.ENROLLED };
+        return suite;
+    }
 
-	return args;
- 
-  }
-	
+    protected void setUp() {
+        super.setUp();
+    }
 
-  protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-	return null;
-  }
+    protected void tearDown() {
+        super.tearDown();
+    }
+
+    protected String getNameOfServiceToBeTested() {
+        return "GetEnrolmentList";
+    }
+
+    protected int getNumberOfItemsToRetrieve() {
+        return 2;
+    }
+
+    protected Object getObjectToCompare() {
+
+        return null;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        ISuportePersistente sp = null;
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+            IStudentCurricularPlan iStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+                    .readActiveStudentAndSpecializationCurricularPlan(new Integer(46865),
+                            new TipoCurso(TipoCurso.MESTRADO_STRING),
+                            new Specialization(Specialization.ESPECIALIZACAO_STRING));
+            assertNotNull(iStudentCurricularPlan);
+
+            infoStudentCurricularPlan = Cloner
+                    .copyIStudentCurricularPlan2InfoStudentCurricularPlan(iStudentCurricularPlan);
+            sp.confirmarTransaccao();
+
+        } catch (Exception e) {
+            fail("Error !");
+        }
+
+        Object[] args = { infoStudentCurricularPlan, EnrollmentState.ENROLLED };
+
+        return args;
+
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 }

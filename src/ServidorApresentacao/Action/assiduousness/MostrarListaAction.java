@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.assiduousness;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,32 +19,32 @@ import constants.assiduousness.Constants;
 
 public class MostrarListaAction extends Action {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
 
-		HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
-		if (session.getAttribute(Constants.USERNAME) == null) {
-			return mapping.findForward("PortalAssiduidadeAction");
-		}
-		ArrayList	listagem = (ArrayList) request.getAttribute("listagem");
-		ActionForward forward = (ActionForward) request.getAttribute("forward");
+        if (session.getAttribute(Constants.USERNAME) == null) {
+            return mapping.findForward("PortalAssiduidadeAction");
+        }
+        List listagem = (ArrayList) request.getAttribute("listagem");
+        ActionForward forward = (ActionForward) request.getAttribute("forward");
 
-		MostrarListaForm formMostrarLista = (MostrarListaForm) form;
+        MostrarListaForm formMostrarLista = (MostrarListaForm) form;
 
-		if (listagem != null) {
+        if (listagem != null) {
 
-			formMostrarLista.setHeaders((ArrayList) (listagem.get(0)));
-			formMostrarLista.setBody((ArrayList) (listagem.get(1)));
-			if (listagem.size() > 2) {
-				formMostrarLista.setHeaders2((ArrayList) (listagem.get(2)));
-				formMostrarLista.setBody2((ArrayList) (listagem.get(3)));
-			}
-			if (listagem.size() > 4) {
-				formMostrarLista.setHeaders3((ArrayList) (listagem.get(4)));
-				formMostrarLista.setBody3((ArrayList) (listagem.get(5)));
-			}
-		}
-		return (mapping.findForward(forward.getName()));
-	}
+            formMostrarLista.setHeaders((ArrayList) (listagem.get(0)));
+            formMostrarLista.setBody((ArrayList) (listagem.get(1)));
+            if (listagem.size() > 2) {
+                formMostrarLista.setHeaders2((ArrayList) (listagem.get(2)));
+                formMostrarLista.setBody2((ArrayList) (listagem.get(3)));
+            }
+            if (listagem.size() > 4) {
+                formMostrarLista.setHeaders3((ArrayList) (listagem.get(4)));
+                formMostrarLista.setBody3((ArrayList) (listagem.get(5)));
+            }
+        }
+        return (mapping.findForward(forward.getName()));
+    }
 }

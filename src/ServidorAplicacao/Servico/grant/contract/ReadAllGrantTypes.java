@@ -41,7 +41,7 @@ public class ReadAllGrantTypes implements IService {
         if (grantTypes == null)
             return new ArrayList();
 
-        ArrayList grantTypeList = (ArrayList) CollectionUtils.collect(grantTypes, new Transformer() {
+        List grantTypeList = (ArrayList) CollectionUtils.collect(grantTypes, new Transformer() {
             public Object transform(Object input) {
                 IGrantType grantType = (IGrantType) input;
                 InfoGrantType infoGrantType = InfoGrantType.newInfoFromDomain(grantType);

@@ -54,20 +54,17 @@ public abstract class ObjectBeanTransformer implements Transformer {
                             Object transformedValue = null;
                             if (value instanceof List) {
                                 transformedValue = copyObject(value);
-                                copyProperty(destinationObject, methods[i],
-                                        List.class, transformedValue);
+                                copyProperty(destinationObject, methods[i], List.class, transformedValue);
                             } else if (Beans.isInstanceOf(value, fromClass)) {
                                 if (alreadyProcessed(value)) {
                                     transformedValue = retrieveProcessedElement(value);
                                 } else {
                                     transformedValue = copyObject(value);
                                 }
-                                copyProperty(destinationObject, methods[i],
-                                        transformedValue.getClass(),
+                                copyProperty(destinationObject, methods[i], transformedValue.getClass(),
                                         transformedValue);
                             } else {
-                                copyProperty(destinationObject, methods[i],
-                                        value.getClass(), value);
+                                copyProperty(destinationObject, methods[i], value.getClass(), value);
                             }
                         }
 
@@ -119,9 +116,9 @@ public abstract class ObjectBeanTransformer implements Transformer {
      * @param class1
      * @param value
      */
-    protected void copyProperty(Object bean, Method method, Class class1,
-            Object value) throws IllegalArgumentException, SecurityException,
-            IllegalAccessException, InvocationTargetException {
+    protected void copyProperty(Object bean, Method method, Class class1, Object value)
+            throws IllegalArgumentException, SecurityException, IllegalAccessException,
+            InvocationTargetException {
         Class[] argTypes = { class1 };
         Object[] setArgs = { value };
         try {
@@ -136,13 +133,11 @@ public abstract class ObjectBeanTransformer implements Transformer {
      * @param argTypes
      * @param setArgs
      */
-    protected void invokeSetMethod(Object bean, Method method,
-            Class[] argTypes, Object[] setArgs)
-            throws IllegalArgumentException, SecurityException,
-            IllegalAccessException, InvocationTargetException,
-            NoSuchMethodException {
-        bean.getClass().getMethod(method.getName().replaceFirst("get", "set"),
-                argTypes).invoke(bean, setArgs);
+    protected void invokeSetMethod(Object bean, Method method, Class[] argTypes, Object[] setArgs)
+            throws IllegalArgumentException, SecurityException, IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException {
+        bean.getClass().getMethod(method.getName().replaceFirst("get", "set"), argTypes).invoke(bean,
+                setArgs);
     }
 
     public Object copyObject(Object result) {

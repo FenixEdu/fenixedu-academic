@@ -29,15 +29,13 @@ public class StoreItemFile implements IService {
     public StoreItemFile() {
     }
 
-    public Boolean run(FileSuportObject file, Integer itemId)
-            throws FenixServiceException {
+    public Boolean run(FileSuportObject file, Integer itemId) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentItem persistentItem = sp.getIPersistentItem();
             IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
             file.setUri(item.getSlideName());
-            file.setRootUri(item.getSection().getSite().getExecutionCourse()
-                    .getSlideName());
+            file.setRootUri(item.getSection().getSite().getExecutionCourse().getSlideName());
             IFileSuport fileSuport = FileSuport.getInstance();
             try {
                 fileSuport.beginTransaction();

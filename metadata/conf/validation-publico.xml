@@ -9,7 +9,23 @@
         <arg0 key="property.room" resource="true"/>
       </field>
     </form>
-
+    
+  <!-- Validation for chooseDegreeContextForm Form -->
+    <form name="chooseDegreeContextForm">
+      <field property="degreeID" depends="integer">
+        <arg0 key="DegreeID" resource="true"/>
+      </field>
+      <field property="executionDegreeID" depends="integer">
+        <arg0 key="ExecutionDegreeID" resource="true"/>
+      </field>
+      <field property="index" depends="integer">
+        <arg0 key="Index" resource="true"/>
+      </field>
+      <field property="page" depends="integer">
+        <arg0 key="Page" resource="true"/>
+      </field>
+    </form>
+    
 	<!-- Validation for Paged Index Form -->
     <form name="pagedIndexForm">
       <field property="index" depends="required, integer" page="1">
@@ -138,7 +154,7 @@
 
   <!-- Validation for chooseContextForm Form -->
     <form name="chooseContextForm">
-      <field property="index" depends="required, integer" page="1">
+      <field property="index" depends="required,integer" page="1">
         <arg0 key="property.context.degree" />
       </field>
 

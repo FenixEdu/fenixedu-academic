@@ -20,33 +20,26 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class StudentIsUserFilter extends Filtro {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-	 *      pt.utl.ist.berserk.ServiceResponse)
-	 */
-	public void execute(
-		ServiceRequest serviceRequest,
-		ServiceResponse serviceResponse)
-		throws FilterException, Exception {
-		Integer studentId = (Integer) serviceRequest.getArguments()[0];
-		IUserView userView = getRemoteUser(serviceRequest);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *      pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse)
+            throws FilterException, Exception {
+        Integer studentId = (Integer) serviceRequest.getArguments()[0];
+        IUserView userView = getRemoteUser(serviceRequest);
 
-		ISuportePersistente persistentSupport =
-			SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-		IStudent student =
-			(IStudent) persistentSupport.getIPersistentStudent().readByOID(
-				Student.class,
-				studentId);
-		if (student == null
-			|| userView == null
-			|| !userView.getUtilizador().equals(
-				student.getPerson().getUsername())) {
-			throw new NotAuthorizedFilterException();
-		}
+        IStudent student = (IStudent) persistentSupport.getIPersistentStudent().readByOID(Student.class,
+                studentId);
+        if (student == null || userView == null
+                || !userView.getUtilizador().equals(student.getPerson().getUsername())) {
+            throw new NotAuthorizedFilterException();
+        }
 
-	}
+    }
 
 }

@@ -47,8 +47,8 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
 
     }
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode)
-            throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(Integer executionCourseCode, Integer evaluationCode) throws ExcepcaoInexistente,
+            FenixServiceException {
         try {
             ISite site = new Site();
             IExecutionCourse executionCourse = new ExecutionCourse();
@@ -58,10 +58,9 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
 
             //Execution Course
 
-            IPersistentExecutionCourse disciplinaExecucaoDAO = sp
-                    .getIPersistentExecutionCourse();
-            executionCourse = (IExecutionCourse) disciplinaExecucaoDAO
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIPersistentExecutionCourse();
+            executionCourse = (IExecutionCourse) disciplinaExecucaoDAO.readByOID(ExecutionCourse.class,
+                    executionCourseCode);
 
             //Site
             IPersistentSite siteDAO = sp.getIPersistentSite();
@@ -70,55 +69,48 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
             //Evaluation
 
             IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
-            evaluation = (IEvaluation) evaluationDAO.readByOID(
-                    Evaluation.class, evaluationCode);
+            evaluation = (IEvaluation) evaluationDAO.readByOID(Evaluation.class, evaluationCode);
             //CLONER
             //infoEvaluation =
             // Cloner.copyIEvaluation2InfoEvaluation(evaluation);
             infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
             //Attends
-            IFrequentaPersistente frequentaPersistente = sp
-                    .getIFrequentaPersistente();
-            List attendList = frequentaPersistente
-                    .readByExecutionCourse(executionCourse);
+            IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+            List attendList = frequentaPersistente.readByExecutionCourse(executionCourse);
 
             //Marks
             IPersistentMark persistentMark = sp.getIPersistentMark();
             List marksList = persistentMark.readBy(evaluation);
 
-            List infoAttendList = (List) CollectionUtils.collect(attendList,
-                    new Transformer() {
-                        public Object transform(Object input) {
-                            IFrequenta attend = (IFrequenta) input;
-                            //CLONER
-                            //InfoFrequenta infoAttend =
-                            // Cloner.copyIFrequenta2InfoFrequenta(attend);
-                            InfoFrequenta infoAttend = InfoFrequentaWithAll
-                                    .newInfoFromDomain(attend);
-                            return infoAttend;
-                        }
-                    });
+            List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
+                public Object transform(Object input) {
+                    IFrequenta attend = (IFrequenta) input;
+                    //CLONER
+                    //InfoFrequenta infoAttend =
+                    // Cloner.copyIFrequenta2InfoFrequenta(attend);
+                    InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
+                    return infoAttend;
+                }
+            });
 
-            List infoMarkList = (List) CollectionUtils.collect(marksList,
-                    new Transformer() {
-                        public Object transform(Object input) {
-                            IMark mark = (IMark) input;
-                            //CLONER
-                            //InfoMark infoMark =
-                            // Cloner.copyIMark2InfoMark(mark);
-                            InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent
-                                    .newInfoFromDomain(mark);
-                            return infoMark;
-                        }
-                    });
+            List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
+                public Object transform(Object input) {
+                    IMark mark = (IMark) input;
+                    //CLONER
+                    //InfoMark infoMark =
+                    // Cloner.copyIMark2InfoMark(mark);
+                    InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
+                    return infoMark;
+                }
+            });
 
             HashMap hashMarks = new HashMap();
             Iterator iter = infoMarkList.iterator();
             while (iter.hasNext()) {
                 InfoMark infoMark = (InfoMark) iter.next();
-                hashMarks.put(infoMark.getInfoFrequenta().getAluno()
-                        .getNumber().toString(), infoMark.getMark());
+                hashMarks.put(infoMark.getInfoFrequenta().getAluno().getNumber().toString(), infoMark
+                        .getMark());
             }
             InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
             infoSiteMarks.setMarksList(infoMarkList);
@@ -127,11 +119,11 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
             infoSiteMarks.setHashMarks(hashMarks);
 
             TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-            ISiteComponent commonComponent = componentBuilder.getComponent(
-                    new InfoSiteCommon(), site, null, null, null);
+            ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,
+                    null, null, null);
 
-            TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(
-                    commonComponent, infoSiteMarks);
+            TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
+                    infoSiteMarks);
 
             return siteView;
         } catch (ExcepcaoPersistencia e) {

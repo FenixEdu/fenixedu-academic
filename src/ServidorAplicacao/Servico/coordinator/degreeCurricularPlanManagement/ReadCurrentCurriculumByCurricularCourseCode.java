@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoCurriculumWithInfoCurricularCourse;
@@ -20,7 +21,6 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -35,40 +35,20 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Fernanda Quitério 13/Nov/2003
  */
-public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
+public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
 
-    private static ReadCurrentCurriculumByCurricularCourseCode service = new ReadCurrentCurriculumByCurricularCourseCode();
-
-    public static ReadCurrentCurriculumByCurricularCourseCode getService() {
-
-        return service;
-    }
-
-    private ReadCurrentCurriculumByCurricularCourseCode() {
-
-    }
-
-    public final String getNome() {
-
-        return "ReadCurrentCurriculumByCurricularCourseCode";
-    }
-
-    public InfoCurriculum run(Integer executionDegreeCode,
-            Integer curricularCourseCode) throws FenixServiceException {
+    public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
+            throws FenixServiceException {
 
         InfoCurriculum infoCurriculum = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
-            IPersistentCurriculum persistentCurriculum = sp
-                    .getIPersistentCurriculum();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
                     .getIPersistentCurricularCourseScope();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             if (curricularCourseCode == null) {
                 throw new FenixServiceException("nullCurricularCourse");
@@ -83,8 +63,8 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
             List activeCurricularCourseScopes = persistentCurricularCourseScope
                     .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
 
-            activeCurricularCourseScopes = (List) CollectionUtils.select(
-                    activeCurricularCourseScopes, new Predicate() {
+            activeCurricularCourseScopes = (List) CollectionUtils.select(activeCurricularCourseScopes,
+                    new Predicate() {
                         public boolean evaluate(Object arg0) {
                             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
                             if (curricularCourseScope.isActive().booleanValue()) {
@@ -98,8 +78,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
             final IExecutionPeriod executionPeriod = persistentExecutionPeriod
                     .readActualExecutionPeriod();
             List associatedExecutionCourses = persistentExecutionCourse
-                    .readListbyCurricularCourseAndExecutionPeriod(
-                            curricularCourse, executionPeriod);
+                    .readListbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 
             ICurriculum curriculum = persistentCurriculum
                     .readCurriculumByCurricularCourse(curricularCourse);
@@ -112,9 +91,8 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
             //            curriculum.getCurricularCourse().setScopes(activeCurricularCourseScopes);
             //            curriculum.getCurricularCourse().setAssociatedExecutionCourses(associatedExecutionCourses);
 
-            infoCurriculum = createInfoCurriculum(curriculum,
-                    persistentExecutionCourse, activeCurricularCourseScopes,
-                    associatedExecutionCourses);
+            infoCurriculum = createInfoCurriculum(curriculum, persistentExecutionCourse,
+                    activeCurricularCourseScopes, associatedExecutionCourses);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
@@ -122,50 +100,49 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico {
     }
 
     private InfoCurriculum createInfoCurriculum(ICurriculum curriculum,
-            IPersistentExecutionCourse persistentExecutionCourse,
-            List activeCurricularCourseScopes, List associatedExecutionCourses)
-            throws ExcepcaoPersistencia {
-        
+            IPersistentExecutionCourse persistentExecutionCourse, List activeCurricularCourseScopes,
+            List associatedExecutionCourses) throws ExcepcaoPersistencia {
+
         //CLONER
-        InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
-        //InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+        InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse
+                .newInfoFromDomain(curriculum);
+        //InfoCurriculum infoCurriculum =
+        // Cloner.copyICurriculum2InfoCurriculum(curriculum);
         //infoCurriculum.setIdInternal(curriculum.getIdInternal());
 
         List scopes = new ArrayList();
 
-        CollectionUtils.collect(activeCurricularCourseScopes,
-                new Transformer() {
-                    public Object transform(Object arg0) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                        
-                        //CLONER
-                        return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+        CollectionUtils.collect(activeCurricularCourseScopes, new Transformer() {
+            public Object transform(Object arg0) {
+                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+
+                //CLONER
+                return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                         .newInfoFromDomain(curricularCourseScope);
-                        //return Cloner
-                        //        .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-                        
-                    }
-                }, scopes);
+                //return Cloner
+                //        .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+
+            }
+        }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
         List infoExecutionCourses = new ArrayList();
         //        List executionCourses = associatedExecutionCourses;
         Iterator iterExecutionCourses = associatedExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
-            IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses
-                    .next();
-            
+            IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
+
             //CLONER
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);
-            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
+            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse)
+            // Cloner
             //        .get(executionCourse);
-            infoExecutionCourse.setHasSite(persistentExecutionCourse
-                    .readSite(executionCourse.getIdInternal()));
+            infoExecutionCourse.setHasSite(persistentExecutionCourse.readSite(executionCourse
+                    .getIdInternal()));
             infoExecutionCourses.add(infoExecutionCourse);
         }
-        infoCurriculum.getInfoCurricularCourse()
-                .setInfoAssociatedExecutionCourses(infoExecutionCourses);
+        infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);
         return infoCurriculum;
     }
 }

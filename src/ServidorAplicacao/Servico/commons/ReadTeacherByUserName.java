@@ -15,33 +15,31 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 
 public class ReadTeacherByUserName implements IService {
-	
 
     /**
-     * 
+     *  
      */
     public ReadTeacherByUserName() {
-      
+
     }
-	
-	public InfoTeacher run(String userName) {
-                        
-	  InfoTeacher infoTeacher = null;
-	  try {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-		
-		ITeacher teacher = teacherDAO.readTeacherByUsername(userName);
-		if (teacher != null) {
-			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-		}
 
-	  } catch (ExcepcaoPersistencia ex) {
-	  	throw new RuntimeException(ex);
-	  }
-    
-	  return infoTeacher;
-	}
+    public InfoTeacher run(String userName) {
 
-   
+        InfoTeacher infoTeacher = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+
+            ITeacher teacher = teacherDAO.readTeacherByUsername(userName);
+            if (teacher != null) {
+                infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return infoTeacher;
+    }
+
 }

@@ -4,14 +4,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="Util.CurricularCourseType, DataBeans.InfoEnrolment" %>
 
-<h2><bean:message key="title.student.enrolment.without.rules" /></h2>
+<h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE" /></h2>
 <span class="error"><html:errors/></span>
 <br />
 <%-- HELP UNENROLL --%>
 <table width="100%">
 	<tr>
 		<td class="infoop">
-			<strong><bean:message key="label.unenroll" />:</strong>&nbsp;<bean:message key="message.help.unEnroll" />
+			<strong><bean:message key="label.unenroll" bundle="DEGREE_ADM_OFFICE" />:</strong>&nbsp;<bean:message key="message.help.unEnroll" bundle="DEGREE_ADM_OFFICE" />
 		</td>
 	</tr>
 </table>
@@ -19,11 +19,11 @@
 <logic:present name="infoStudentEnrolmentContext">
 	<bean:define id="infoEnrollmentsWithStateEnrolled" name="infoStudentEnrolmentContext" property="studentCurrentSemesterInfoEnrollments" />	
 	<bean:size id="enrollmentsSize" name="infoEnrollmentsWithStateEnrolled" />
-	<strong><bean:message key="message.student.enrolled.curricularCourses" /></strong>
+	<strong><bean:message key="message.student.enrolled.curricularCourses" bundle="DEGREE_ADM_OFFICE" /></strong>
 	<br />
 	<logic:lessEqual  name="enrollmentsSize" value="0">
 		<br />
-		<img src="<%= request.getContextPath() %>/images/icon_arrow.gif" />&nbsp;<bean:message key="message.student.whithout.enrollments" />
+		<img src="<%= request.getContextPath() %>/images/icon_arrow.gif" />&nbsp;<bean:message key="message.student.whithout.enrollments" bundle="DEGREE_ADM_OFFICE" />
 		<br /><br />
 	</logic:lessEqual >
 	
@@ -38,8 +38,11 @@
 				<logic:iterate id="infoEnrollment" name="infoEnrollmentsWithStateEnrolled">
 					<bean:define id="infoEnrollmentId" name="infoEnrollment" property="idInternal" />
 					<tr>
-						<td class="listClasses">
+						<td class="listClasses" style="text-align:left">
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
+							<% if ( !((InfoEnrolment) infoEnrollment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
+							(<bean:message name="infoEnrollment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>)
+							<% } %>
 						</td>
 						<td class="listClasses">
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>
@@ -68,7 +71,7 @@
 <table width="100%">
 	<tr>
 		<td class="infoop">
-			<strong><bean:message key="label.enroll" />:</strong>&nbsp;<bean:message key="message.help.enroll" />
+			<strong><bean:message key="label.enroll" bundle="DEGREE_ADM_OFFICE" />:</strong>&nbsp;<bean:message key="message.help.enroll" bundle="DEGREE_ADM_OFFICE" />
 		</td>
 	</tr>
 </table>
@@ -79,7 +82,7 @@
 	<html:hidden property="executionYear" />
 	<html:hidden property="degreeType" />
 	<html:submit styleClass="inputbutton">
-			<bean:message key="button.enroll"/>
+			<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
 </html:form>
 <hr>
@@ -90,10 +93,10 @@
 	<html:hidden property="page" value="0"/>
 	<html:hidden property="degreeType" />
 	<html:submit styleClass="inputbutton">
-			<bean:message key="button.student.other"/>
+			<bean:message key="button.student.other" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
 	<html:cancel styleClass="inputbutton" onclick="this.form.method.value='exit';this.form.submit();">
-		<bean:message key="button.exit"/>
+		<bean:message key="button.exit" bundle="DEGREE_ADM_OFFICE"/>
 	</html:cancel>
 </html:form>
 <br /><br />

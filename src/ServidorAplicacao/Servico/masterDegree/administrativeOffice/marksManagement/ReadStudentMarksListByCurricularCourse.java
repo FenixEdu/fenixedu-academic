@@ -14,13 +14,13 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -30,34 +30,10 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import framework.factory.ServiceManagerServiceFactory;
 
-public class ReadStudentMarksListByCurricularCourse implements IServico {
+public class ReadStudentMarksListByCurricularCourse implements IService {
 
-    private static ReadStudentMarksListByCurricularCourse servico = new ReadStudentMarksListByCurricularCourse();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadStudentMarksListByCurricularCourse getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadStudentMarksListByCurricularCourse() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-
-    public final String getNome() {
-        return "ReadStudentMarksListByCurricularCourse";
-    }
-
-    public List run(IUserView userView, Integer curricularCourseID,
-            String executionYear) throws ExcepcaoInexistente,
-            FenixServiceException {
+    public List run(IUserView userView, Integer curricularCourseID, String executionYear)
+            throws ExcepcaoInexistente, FenixServiceException {
 
         ISuportePersistente sp = null;
 
@@ -66,25 +42,21 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) sp
-                    .getIPersistentCurricularCourse().readByOID(
-                            CurricularCourse.class, curricularCourseID);
+            ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+                    .readByOID(CurricularCourse.class, curricularCourseID);
 
             if (executionYear != null) {
-                enrolmentList = sp.getIPersistentEnrolment()
-                        .readByCurricularCourseAndYear(curricularCourse,
-                                executionYear);
+                enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
+                        curricularCourse, executionYear);
             } else {
-                enrolmentList = sp.getIPersistentEnrolment()
-                        .readByCurricularCourse(curricularCourse);
+                enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(curricularCourse);
             }
             if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
                 throw new NonExistingServiceException();
             }
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
@@ -96,13 +68,11 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
      * @param enrollments
      * @return A list of Student curricular Plans without the duplicates
      */
-    private List cleanList(List enrollments, IUserView userView)
-            throws FenixServiceException {
+    private List cleanList(List enrollments, IUserView userView) throws FenixServiceException {
         List result = new ArrayList();
         Integer numberAux = null;
 
-        BeanComparator numberComparator = new BeanComparator(
-                "studentCurricularPlan.student.number");
+        BeanComparator numberComparator = new BeanComparator("studentCurricularPlan.student.number");
         Collections.sort(enrollments, numberComparator);
 
         Iterator iterator = enrollments.iterator();
@@ -110,20 +80,18 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
             IEnrollment enrolment = (IEnrollment) iterator.next();
 
             if ((numberAux == null)
-                    || (numberAux.intValue() != enrolment
-                            .getStudentCurricularPlan().getStudent()
+                    || (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent()
                             .getNumber().intValue())) {
-                numberAux = enrolment.getStudentCurricularPlan().getStudent()
-                        .getNumber();
+                numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
                 Object args[] = { enrolment };
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
                         .executeService(userView, "GetEnrolmentGrade", args);
                 if (infoEnrolmentEvaluation != null) {
-					        
-                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
-                    infoEnrolment
-                            .setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
+
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+                            .newInfoFromDomain(enrolment);
+                    infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
                     result.add(infoEnrolment);
                 }
             }

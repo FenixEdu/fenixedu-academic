@@ -12,130 +12,119 @@ import Dominio.Seminaries.ICaseStudy;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 4/Ago/2003, 19:04:21
- * 
+ *  
  */
-public class InfoCaseStudy extends InfoObject
-{
-     
-      private String themeName;
-      private List seminaryCandidacies;
-      private String code;
-      private String description;
-      private String name;
-	/**
-	 * @return
-	 */
-	public String getCode()
-	{
-		return code;
-	}
+public class InfoCaseStudy extends InfoObject {
 
-	/**
-	 * @return
-	 */
-	public String getDescription()
-	{
-		return description;
-	}
+    private String themeName;
 
-	
+    private List seminaryCandidacies;
 
-	/**
-	 * @return
-	 */
-	public String getName()
-	{
-		return name;
-	}
+    private String code;
 
-	/**
-	 * @return
-	 */
-	public List getSeminaryCandidacies()
-	{
-		return seminaryCandidacies;
-	}
+    private String description;
 
-	/**
-	 * @return
-	 */
-	public String getThemeName()
-	{
-		return themeName;
-	}
+    private String name;
 
-	/**
-	 * @param string
-	 */
-	public void setCode(String string)
-	{
-		code= string;
-	}
+    /**
+     * @return
+     */
+    public String getCode() {
+        return code;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setDescription(String string)
-	{
-		description= string;
-	}
+    /**
+     * @return
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	
+    /**
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setName(String string)
-	{
-		name= string;
-	}
+    /**
+     * @return
+     */
+    public List getSeminaryCandidacies() {
+        return seminaryCandidacies;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setSeminaryCandidacies(List list)
-	{
-		seminaryCandidacies= list;
-	}
+    /**
+     * @return
+     */
+    public String getThemeName() {
+        return themeName;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setThemeName(String string)
-	{
-		themeName= string;
-	}
-    
-    public String toString()
-    {
+    /**
+     * @param string
+     */
+    public void setCode(String string) {
+        code = string;
+    }
+
+    /**
+     * @param string
+     */
+    public void setDescription(String string) {
+        description = string;
+    }
+
+    /**
+     * @param string
+     */
+    public void setName(String string) {
+        name = string;
+    }
+
+    /**
+     * @param list
+     */
+    public void setSeminaryCandidacies(List list) {
+        seminaryCandidacies = list;
+    }
+
+    /**
+     * @param string
+     */
+    public void setThemeName(String string) {
+        themeName = string;
+    }
+
+    public String toString() {
         String result = "[InfoCaseStudy:";
-        result+="Name=" + this.getName() + ";";
-        result+="IdInternal=" + this.getIdInternal() + ";";
-        result+="Code=" + this.getCode() + ";";
-        result+="Description=" + this.getDescription() + "]";        
+        result += "Name=" + this.getName() + ";";
+        result += "IdInternal=" + this.getIdInternal() + ";";
+        result += "Code=" + this.getCode() + ";";
+        result += "Description=" + this.getDescription() + "]";
         return result;
     }
-    
+
     public void copyFromDomain(ICaseStudy caseStudy) {
         super.copyFromDomain(caseStudy);
         if (caseStudy != null) {
-        	setCode(caseStudy.getCode());
-        	setDescription(caseStudy.getDescription());
-        	setName(caseStudy.getName());
-        	if(caseStudy.getSeminaryTheme() != null) {
-        	    setThemeName(caseStudy.getSeminaryTheme().getName());
-        	}
+            setCode(caseStudy.getCode());
+            setDescription(caseStudy.getDescription());
+            setName(caseStudy.getName());
+            if (caseStudy.getSeminaryTheme() != null) {
+                setThemeName(caseStudy.getSeminaryTheme().getName());
+            }
         }
     }
 
     public static InfoCaseStudy newInfoFromDomain(ICaseStudy caseStudy) {
-    	InfoCaseStudy infoCaseStudy = null;
+        InfoCaseStudy infoCaseStudy = null;
         if (caseStudy != null) {
-        	infoCaseStudy = new InfoCaseStudy();
-        	infoCaseStudy.copyFromDomain(caseStudy);
+            infoCaseStudy = new InfoCaseStudy();
+            infoCaseStudy.copyFromDomain(caseStudy);
         }
         return infoCaseStudy;
     }

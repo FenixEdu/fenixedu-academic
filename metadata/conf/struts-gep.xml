@@ -11,6 +11,7 @@
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="executionDegreeId" type="java.lang.Integer"/>
             <form-property name="basic" type="java.lang.Boolean"/>
+            <form-property name="executionYear" type="java.lang.String"/>
         </form-bean>
         
         <!-- TEACHING REPORT FORM  -->

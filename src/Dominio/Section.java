@@ -55,9 +55,8 @@ public class Section extends DomainObject implements ISection {
     /**
      * Construtor
      */
-    public Section(String name, Integer sectionOrder, Date lastModifiedDate,
-            ISite site, ISection superiorSection, List inferiorSections,
-            List items) {
+    public Section(String name, Integer sectionOrder, Date lastModifiedDate, ISite site,
+            ISection superiorSection, List inferiorSections, List items) {
 
         setName(name);
         setSectionOrder(sectionOrder);
@@ -208,8 +207,7 @@ public class Section extends DomainObject implements ISection {
         if (arg0 instanceof ISection) {
             result = (getName().equals(((ISection) arg0).getName()))
                     && (getSite().equals(((ISection) arg0).getSite()))
-                    && ((getSuperiorSection() == null && ((ISection) arg0)
-                            .getSuperiorSection() == null) || (getSuperiorSection()
+                    && ((getSuperiorSection() == null && ((ISection) arg0).getSuperiorSection() == null) || (getSuperiorSection()
                             .equals(((ISection) arg0).getSuperiorSection())));
         }
         return result;
@@ -243,7 +241,7 @@ public class Section extends DomainObject implements ISection {
         result += ", lastModifiedDate=" + getLastModifiedDate();
         result += ", site=" + getSite();
         result += ", superiorSection=" + getSuperiorSection();
-      
+
         result += "]";
 
         return result;

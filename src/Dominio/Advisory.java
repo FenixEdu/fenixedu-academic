@@ -2,131 +2,133 @@ package Dominio;
 
 import java.util.Date;
 
-
 /**
  * @author Nuno Nunes & Luis Cruz
- *
+ * 
  * /2003/08/26
  */
 
 public class Advisory extends DomainObject implements IAdvisory {
 
-	private String sender;
-	private String subject;
-	private String message;
-	private Date created;
-	private Date expires;
-	private Boolean onlyShowOnce;
+    private String sender;
 
-	public Advisory() {
-	}
+    private String subject;
 
+    private String message;
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof IAdvisory) {
-			IAdvisory advisory = (IAdvisory) obj;
-			result = this.getIdInternal().equals(advisory.getIdInternal());
-		}
-		return result;
-	}
+    private Date created;
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + getIdInternal() + "; ";
-		result += "subject = " + this.subject + "; ";
-		result += "sender = " + this.sender + "\n";
-		result += "message = " + this.message + "\n";
-		result += "created = " + this.created + "\n";
-		result += "expires = " + this.expires + "\n";
-		result += "onlyShowOnce = " + this.onlyShowOnce + "]\n";
-		
-		return result;
-	}
+    private Date expires;
 
+    private Boolean onlyShowOnce;
 
-	/**
-	 * @return
-	 */
-	public Date getCreated() {
-		return created;
-	}
+    public Advisory() {
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getExpires() {
-		return expires;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IAdvisory) {
+            IAdvisory advisory = (IAdvisory) obj;
+            result = this.getIdInternal().equals(advisory.getIdInternal());
+        }
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getMessage() {
-		return message;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + getIdInternal() + "; ";
+        result += "subject = " + this.subject + "; ";
+        result += "sender = " + this.sender + "\n";
+        result += "message = " + this.message + "\n";
+        result += "created = " + this.created + "\n";
+        result += "expires = " + this.expires + "\n";
+        result += "onlyShowOnce = " + this.onlyShowOnce + "]\n";
 
-	/**
-	 * @return
-	 */
-	public Boolean getOnlyShowOnce() {
-		return onlyShowOnce;
-	}
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getSubject() {
-		return subject;
-	}
+    /**
+     * @return
+     */
+    public Date getCreated() {
+        return created;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setCreated(Date date) {
-		created = date;
-	}
+    /**
+     * @return
+     */
+    public Date getExpires() {
+        return expires;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setExpires(Date date) {
-		expires = date;
-	}
+    /**
+     * @return
+     */
+    public String getMessage() {
+        return message;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setMessage(String string) {
-		message = string;
-	}
+    /**
+     * @return
+     */
+    public Boolean getOnlyShowOnce() {
+        return onlyShowOnce;
+    }
 
-	/**
-	 * @param boolean1
-	 */
-	public void setOnlyShowOnce(Boolean boolean1) {
-		onlyShowOnce = boolean1;
-	}
+    /**
+     * @return
+     */
+    public String getSubject() {
+        return subject;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setSubject(String string) {
-		subject = string;
-	}
+    /**
+     * @param date
+     */
+    public void setCreated(Date date) {
+        created = date;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getSender() {
-		return sender;
-	}
+    /**
+     * @param date
+     */
+    public void setExpires(Date date) {
+        expires = date;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setSender(String string) {
-		sender = string;
-	}
+    /**
+     * @param string
+     */
+    public void setMessage(String string) {
+        message = string;
+    }
+
+    /**
+     * @param boolean1
+     */
+    public void setOnlyShowOnce(Boolean boolean1) {
+        onlyShowOnce = boolean1;
+    }
+
+    /**
+     * @param string
+     */
+    public void setSubject(String string) {
+        subject = string;
+    }
+
+    /**
+     * @return
+     */
+    public String getSender() {
+        return sender;
+    }
+
+    /**
+     * @param string
+     */
+    public void setSender(String string) {
+        sender = string;
+    }
 
 }

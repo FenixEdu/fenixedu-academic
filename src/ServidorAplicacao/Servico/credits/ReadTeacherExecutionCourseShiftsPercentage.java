@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.InfoTeacher;
@@ -25,7 +26,6 @@ import Dominio.IShiftProfessorship;
 import Dominio.ITeacher;
 import Dominio.ITurno;
 import Dominio.Teacher;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
@@ -38,28 +38,10 @@ import Util.TipoAula;
 /**
  * @author Tânia & Alexandra
  */
-public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
-    private static ReadTeacherExecutionCourseShiftsPercentage service = new ReadTeacherExecutionCourseShiftsPercentage();
+public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadTeacherExecutionCourseShiftsPercentage getService() {
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadTeacherExecutionCourseProfessorshipShifts";
-    }
-
-    public TeacherExecutionCourseProfessorshipShiftsDTO run(
-            InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse)
-            throws FenixServiceException {
+    public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher,
+            InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 
         TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
 
@@ -68,12 +50,10 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IExecutionCourse executionCourse = readExecutionCourse(
-                    infoExecutionCourse, sp);
+            IExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse, sp);
             ITeacher teacher = readTeacher(infoTeacher, sp);
 
-            result.setInfoExecutionCourse((InfoExecutionCourse) Cloner
-                    .get(executionCourse));
+            result.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
             result.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
@@ -92,38 +72,32 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
                 double availablePercentage = 100;
                 InfoShiftProfessorship infoShiftProfessorship = null;
 
-                Iterator iter = shift.getAssociatedShiftProfessorship()
-                        .iterator();
+                Iterator iter = shift.getAssociatedShiftProfessorship().iterator();
                 while (iter.hasNext()) {
-                    IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iter
-                            .next();
+                    IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iter.next();
                     /**
                      * if shift's type is LABORATORIAL the shift professorship
                      * percentage can exceed 100%
                      */
                     if ((shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL)
-                            && (!shiftProfessorship.getProfessorship()
-                                    .getTeacher().equals(teacher))) {
-                        availablePercentage -= shiftProfessorship
-                                .getPercentage().doubleValue();
+                            && (!shiftProfessorship.getProfessorship().getTeacher().equals(teacher))) {
+                        availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
                     }
                     infoShiftProfessorship = Cloner
                             .copyIShiftProfessorship2InfoShiftProfessorship(shiftProfessorship);
-                    infoShiftPercentage
-                            .addInfoShiftProfessorship(infoShiftProfessorship);
+                    infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
                 }
 
-                List infoLessons = (List) CollectionUtils.collect(shift
-                        .getAssociatedLessons(), new Transformer() {
-                    public Object transform(Object input) {
-                        IAula lesson = (IAula) input;
-                        return Cloner.copyILesson2InfoLesson(lesson);
-                    }
-                });
+                List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(),
+                        new Transformer() {
+                            public Object transform(Object input) {
+                                IAula lesson = (IAula) input;
+                                return Cloner.copyILesson2InfoLesson(lesson);
+                            }
+                        });
                 infoShiftPercentage.setInfoLessons(infoLessons);
 
-                infoShiftPercentage.setAvailablePercentage(new Double(
-                        availablePercentage));
+                infoShiftPercentage.setAvailablePercentage(new Double(availablePercentage));
 
                 infoShiftPercentageList.add(infoShiftPercentage);
             }
@@ -139,20 +113,16 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
             throws ExcepcaoPersistencia {
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
-                infoTeacher.getIdInternal());
+        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
         return teacher;
     }
 
-    private IExecutionCourse readExecutionCourse(
-            InfoExecutionCourse infoExecutionCourse, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
-        IPersistentExecutionCourse executionCourseDAO = sp
-                .getIPersistentExecutionCourse();
+    private IExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
+        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-        IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO
-                .readByOID(ExecutionCourse.class, infoExecutionCourse
-                        .getIdInternal());
+        IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+                ExecutionCourse.class, infoExecutionCourse.getIdInternal());
         return executionCourse;
     }
 }

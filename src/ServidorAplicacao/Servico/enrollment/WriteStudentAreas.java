@@ -11,7 +11,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedBranchChangeException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -24,27 +24,22 @@ public class WriteStudentAreas implements IService {
 
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanID,
-            Integer specializationAreaID, Integer secundaryAreaID)
-            throws FenixServiceException {
+            Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentBranch branchDAO = persistentSuport
-                    .getIPersistentBranch();
-            IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
+            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                     .getIStudentCurricularPlanPersistente();
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO
-                    .readByOID(StudentCurricularPlan.class,
-                            studentCurricularPlanID);
+                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
-            IBranch specializationArea = (IBranch) branchDAO.readByOID(
-                    Branch.class, specializationAreaID);
+            IBranch specializationArea = (IBranch) branchDAO.readByOID(Branch.class,
+                    specializationAreaID);
 
             IBranch secundaryArea = null;
             if (secundaryAreaID != null) {
-                secundaryArea = (IBranch) branchDAO.readByOID(Branch.class,
-                        secundaryAreaID);
+                secundaryArea = (IBranch) branchDAO.readByOID(Branch.class, secundaryAreaID);
             }
 
             if (studentCurricularPlan == null) {
@@ -54,8 +49,7 @@ public class WriteStudentAreas implements IService {
                 throw new NotAuthorizedBranchChangeException();
             }
 
-            if (studentCurricularPlan.areNewAreasCompatible(specializationArea,
-                    secundaryArea)) {
+            if (studentCurricularPlan.areNewAreasCompatible(specializationArea, secundaryArea)) {
                 studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
                 studentCurricularPlan.setBranch(specializationArea);
                 studentCurricularPlan.setSecundaryBranch(secundaryArea);

@@ -14,8 +14,7 @@ import Util.SmsDeliveryType;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion implements
-        FieldConversion {
+public class JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object source) throws ConversionException {
         if (source instanceof SmsDeliveryType) {

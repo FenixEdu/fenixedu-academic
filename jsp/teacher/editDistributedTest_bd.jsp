@@ -128,11 +128,11 @@ function getIndex(input){
 		<td><b><bean:message key="message.imsFeedback"/></b></td>
 	</tr>
 	<tr>
-		<td></td><td><bean:message key="button.yes"/></td><td><html:radio property="imsFeedback" value="true" onclick="selectImsFeedback()"/></td>
+		<td></td><td><bean:message key="message.yes"/></td><td><html:radio property="imsFeedback" value="true" onclick="selectImsFeedback()"/></td>
 	</tr>
 	<tr>
-		<td></td><td><bean:message key="button.no"/></td><td><html:radio property="imsFeedback" value="false" /></td>
-	</tr>
+				<td></td><td><bean:message key="message.no"/></td><td><html:radio property="imsFeedback" value="false" /></td>
+</tr>
 </table>
 <br/>
 <br/>
@@ -187,8 +187,8 @@ function getIndex(input){
 <table>
 	<tr>
 		<td><b><bean:message key="label.add"/>:</b></td>
-		<td><html:submit styleClass="inputbutton" property="addShifts"><bean:message key="link.executionCourse.shifts"/></html:submit></td>
 		<td><html:submit styleClass="inputbutton" property="addStudents"><bean:message key="link.students"/></html:submit></td>
+		<td><html:submit styleClass="inputbutton" property="addShifts"><bean:message key="link.executionCourse.shifts"/></html:submit></td>
 	</tr>
 </table>
 <br/>

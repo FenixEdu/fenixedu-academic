@@ -1,6 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,40 +18,32 @@ import ServidorApresentacao.Action.sop.utils.Util;
 /**
  * @author tfc130d
  */
-public class PrepararAulaFormAction
-	extends FenixExecutionDegreeAndCurricularYearContextAction {
+public class PrepararAulaFormAction extends FenixExecutionDegreeAndCurricularYearContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		super.execute(mapping, form, request, response);
+        super.execute(mapping, form, request, response);
 
-		HttpSession sessao = request.getSession(false);
-		if (sessao != null) {
-			
-			ArrayList diasSemana = Util.getDaysOfWeek();
-			request.setAttribute("diasSemana", diasSemana);
+        HttpSession sessao = request.getSession(false);
+        if (sessao != null) {
 
-			RequestUtils.setLessonTypes(request);
+            List diasSemana = Util.getDaysOfWeek();
+            request.setAttribute("diasSemana", diasSemana);
 
-			ArrayList horas = Util.getHours();
-			request.setAttribute("horas", horas);
+            RequestUtils.setLessonTypes(request);
 
-			ArrayList minutos = Util.getMinutes();
-			request.setAttribute("minutos", minutos);
+            List horas = Util.getHours();
+            request.setAttribute("horas", horas);
 
-		
-			SessionUtils.getExecutionCourses(request);
+            List minutos = Util.getMinutes();
+            request.setAttribute("minutos", minutos);
 
-			
+            SessionUtils.getExecutionCourses(request);
 
-			return mapping.findForward("Sucesso");
-		} 
-			throw new Exception();
-		
-	}
+            return mapping.findForward("Sucesso");
+        }
+        throw new Exception();
+
+    }
 }

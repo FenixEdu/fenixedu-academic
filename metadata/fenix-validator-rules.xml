@@ -216,6 +216,17 @@ Example:
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext"
                   msg="error.integerArray"/>
+	
+	<validator name="multiRadioSelect" 
+			classname="ServidorApresentacao.validator.form.ValidateMultiRadioSelect" 
+			method="validate" 
+			methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext" 
+			msg="errors.required.radioButtons" />
 	</global>
 
 </form-validation>

@@ -26,25 +26,21 @@ public class EnrollStudentInExam implements IService {
     public EnrollStudentInExam() {
     }
 
-    public Boolean run(String username, Integer examId)
-            throws FenixServiceException {
+    public Boolean run(String username, Integer examId) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = persistentStudent.readByUsername(username);
             IPersistentExam persistentExam = sp.getIPersistentExam();
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp
-                    .getIPersistentExamStudentRoom();
-            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId,
-                    true);
+            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId, true);
             if (exam == null || student == null) {
 
                 throw new InvalidArgumentsServiceException();
             }
 
-            IExamStudentRoom examStudentRoom = persistentExamStudentRoom
-                    .readBy(exam, student);
+            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam, student);
             if (examStudentRoom != null) {
                 throw new ExistingServiceException();
             }

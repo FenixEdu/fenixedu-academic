@@ -8,173 +8,191 @@ package Dominio;
 
 import fileSuport.INode;
 
-
 /**
- *
- * @author  ars
+ * 
+ * @author ars
  */
 
 public class Item extends DomainObject implements IItem {
 
-	private String information;
-	private String name;
-	private Integer itemOrder;
-	private ISection section;
-	private Boolean urgent;
+    private String information;
 
-	private Integer keySection;
+    private String name;
 
-	/** 
-	 * Construtor 
-	 */
-	public Item() {
-	}
+    private Integer itemOrder;
 
-	/** 
-	 * Construtor 
-	 */
-	public Item(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    private ISection section;
 
-	/** 
-	 * Construtor 
-	 */
-	public Item(String name, ISection section, Integer itemOrder, String information, Boolean urgent) {
-		setName(name);
-		setSection(section);
-		setItemOrder(itemOrder);
-		setInformation(information);
-		setUrgent(urgent);
-	}
+    private Boolean urgent;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof Item) {
-			Item item = (Item) obj;
-			resultado = (getName().equals(item.getName()))
-				&& getSection().equals(item.getSection());
-		}
-		return resultado;
-	}
+    private Integer keySection;
 
-	public String toString() {
-		String result = "[ITEM";
-		result += ", codInt=" + getIdInternal();
-		result += ", nome=" + name;
-		result += ", seccao=" + section;
-		result += ", ordem=" + itemOrder;
-		result += ", informacao=" + information;
-		result += ", urgente=" + urgent;
-		result += ", chaveSeccao=" + keySection;
-		result += "]";
-		return result;
-	}
+    /**
+     * Construtor
+     */
+    public Item() {
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getInformation() {
-		return information;
-	}
+    /**
+     * Construtor
+     */
+    public Item(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeySection() {
-		return keySection;
-	}
+    /**
+     * Construtor
+     */
+    public Item(String name, ISection section, Integer itemOrder, String information, Boolean urgent) {
+        setName(name);
+        setSection(section);
+        setItemOrder(itemOrder);
+        setInformation(information);
+        setUrgent(urgent);
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof Item) {
+            Item item = (Item) obj;
+            resultado = (getName().equals(item.getName())) && getSection().equals(item.getSection());
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getItemOrder() {
-		return itemOrder;
-	}
+    public String toString() {
+        String result = "[ITEM";
+        result += ", codInt=" + getIdInternal();
+        result += ", nome=" + name;
+        result += ", seccao=" + section;
+        result += ", ordem=" + itemOrder;
+        result += ", informacao=" + information;
+        result += ", urgente=" + urgent;
+        result += ", chaveSeccao=" + keySection;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return ISection
-	 */
-	public ISection getSection() {
-		return section;
-	}
+    /**
+     * @return String
+     */
+    public String getInformation() {
+        return information;
+    }
 
-	/**
-	 * @return Boolean
-	 */
-	public Boolean getUrgent() {
-		return urgent;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getKeySection() {
+        return keySection;
+    }
 
-	/**
-	 * Sets the information.
-	 * @param information The information to set
-	 */
-	public void setInformation(String information) {
-		this.information = information;
-	}
+    /**
+     * @return String
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Sets the keySection.
-	 * @param keySection The keySection to set
-	 */
-	public void setKeySection(Integer keySection) {
-		this.keySection = keySection;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getItemOrder() {
+        return itemOrder;
+    }
 
-	/**
-	 * Sets the name.
-	 * @param name The name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @return ISection
+     */
+    public ISection getSection() {
+        return section;
+    }
 
-	/**
-	 * Sets the order.
-	 * @param order The order to set
-	 */
-	public void setItemOrder(Integer order) {
-		this.itemOrder = order;
-	}
+    /**
+     * @return Boolean
+     */
+    public Boolean getUrgent() {
+        return urgent;
+    }
 
-	/**
-	 * Sets the section.
-	 * @param section The section to set
-	 */
-	public void setSection(ISection section) {
-		this.section = section;
-	}
+    /**
+     * Sets the information.
+     * 
+     * @param information
+     *            The information to set
+     */
+    public void setInformation(String information) {
+        this.information = information;
+    }
 
-	/**
-	 * Sets the urgent.
-	 * @param urgent The urgent to set
-	 */
-	public void setUrgent(Boolean urgent) {
-		this.urgent = urgent;
-	}
+    /**
+     * Sets the keySection.
+     * 
+     * @param keySection
+     *            The keySection to set
+     */
+    public void setKeySection(Integer keySection) {
+        this.keySection = keySection;
+    }
 
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getSlideName()
-	 */
-	public String getSlideName() {
-		String result=getParentNode().getSlideName()+"/I"+getIdInternal();
-		return result;
-	}
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            The name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getParentNode()
-	 */
-	public INode getParentNode() {	
-		ISection section = getSection();	
-		return section;
-	}
+    /**
+     * Sets the order.
+     * 
+     * @param order
+     *            The order to set
+     */
+    public void setItemOrder(Integer order) {
+        this.itemOrder = order;
+    }
+
+    /**
+     * Sets the section.
+     * 
+     * @param section
+     *            The section to set
+     */
+    public void setSection(ISection section) {
+        this.section = section;
+    }
+
+    /**
+     * Sets the urgent.
+     * 
+     * @param urgent
+     *            The urgent to set
+     */
+    public void setUrgent(Boolean urgent) {
+        this.urgent = urgent;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see fileSuport.INode#getSlideName()
+     */
+    public String getSlideName() {
+        String result = getParentNode().getSlideName() + "/I" + getIdInternal();
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see fileSuport.INode#getParentNode()
+     */
+    public INode getParentNode() {
+        ISection section = getSection();
+        return section;
+    }
 
 }

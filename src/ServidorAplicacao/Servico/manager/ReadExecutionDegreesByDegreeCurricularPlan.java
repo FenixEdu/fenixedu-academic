@@ -46,7 +46,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             idDegreeCurricularPlan);
-            allExecutionDegrees = sp.getICursoExecucaoPersistente().readByDegreeCurricularPlan(
+            allExecutionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
                     degreeCurricularPlan);
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -80,23 +80,22 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
                 infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
             }
 
-			if(executionDegree.getPeriodExamsFirstSemester() != null)
-			{
-				infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
-			}
-			if(executionDegree.getPeriodExamsSecondSemester() != null)
-			{
-				infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
-			}
-			if(executionDegree.getPeriodLessonsFirstSemester() != null)
-			{
-				infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
-			}
-			if(executionDegree.getPeriodLessonsSecondSemester() != null)
-			{
-				infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod.newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
-			}
-
+            if (executionDegree.getPeriodExamsFirstSemester() != null) {
+                infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod
+                        .newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
+            }
+            if (executionDegree.getPeriodExamsSecondSemester() != null) {
+                infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod
+                        .newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
+            }
+            if (executionDegree.getPeriodLessonsFirstSemester() != null) {
+                infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod
+                        .newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
+            }
+            if (executionDegree.getPeriodLessonsSecondSemester() != null) {
+                infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod
+                        .newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
+            }
 
             result.add(infoExecutionDegree);
         }

@@ -28,7 +28,7 @@ import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
@@ -102,29 +102,24 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
     }
 
     protected String getDataSetFilePath() {
-        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
-                + "/input.xml";
+        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION + "/input.xml";
     }
 
     protected String getExpectedDataSetFilePath() {
-        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
-                + "/input.xml";
+        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION + "/input.xml";
     }
 
     protected String getConfigFilePath() {
-        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
-                + "/test.properties";
+        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION + "/test.properties";
     }
 
     protected String getExpectedResultFilePath() {
-        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
-                + "/output.txt";
+        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION + "/output.txt";
 
     }
 
     protected String getDatabaseBackupFilePath() {
-        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
-                + "/backupDataSet.xml";
+        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION + "/backupDataSet.xml";
 
     }
 
@@ -136,8 +131,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
     protected String[] getAuthenticatedAndAuthorizedUser() {
         System.out.println("getUser start");
         try {
-            ResourceBundle bundle = new PropertyResourceBundle(
-                    new FileInputStream(getConfigFilePath()));
+            ResourceBundle bundle = new PropertyResourceBundle(new FileInputStream(getConfigFilePath()));
             USER = bundle.getString(STUDENT_NUMBER);
             System.out.println("getUser end");
         } catch (FileNotFoundException e) {
@@ -152,32 +146,29 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
     protected Object[] getArguments() {
 
         try {
-            ResourceBundle bundle = new PropertyResourceBundle(
-                    new FileInputStream(getConfigFilePath()));
+            ResourceBundle bundle = new PropertyResourceBundle(new FileInputStream(getConfigFilePath()));
 
-            Integer studentNumber = new Integer(bundle
-                    .getString(STUDENT_NUMBER));
+            Integer studentNumber = new Integer(bundle.getString(STUDENT_NUMBER));
 
             Integer studentCurricularPlanId = new Integer(0);
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             persistentSuport.iniciarTransaccao();
 
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSuport
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSuport
                     .getIStudentCurricularPlanPersistente();
 
-            List curricularPlans = persistentStudentCurricularPlan
-                    .readAllFromStudent(studentNumber.intValue());
+            List curricularPlans = persistentStudentCurricularPlan.readAllFromStudent(studentNumber
+                    .intValue());
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils
                     .find(curricularPlans, new Predicate() {
 
                         public boolean evaluate(Object arg0) {
                             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
-                            if (studentCurricularPlan.getDegreeCurricularPlan()
-                                    .getIdInternal().intValue() == 48) {
+                            if (studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()
+                                    .intValue() == 48) {
                                 return true;
                             }
 
@@ -193,8 +184,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
 
             studentCurricularPlanId = studentCurricularPlan.getIdInternal();
 
-            Object[] args = { new Integer(48), studentCurricularPlanId,
-                    studentNumber };
+            Object[] args = { new Integer(48), studentCurricularPlanId, studentNumber };
 
             return args;
 
@@ -230,8 +220,8 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
         InfoStudentEnrollmentContext infoSEC = null;
 
         try {
-            infoSEC = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
-                    .executeService(id, getNameOfServiceToBeTested(), args2);
+            infoSEC = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
         } catch (FenixServiceException e) {
             System.out.println("service execution failed:" + e);
             fail("Executing Service: " + getNameOfServiceToBeTested());
@@ -242,9 +232,8 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
         boolean result = CompareExpectedCCAndCreditsWithDataReturnedFromService(infoSEC);
 
         if (result) {
-            System.out
-                    .println(getNameOfServiceToBeTested()
-                            + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
 
         } else {
             fail("Returned curricular courses dont macth the expected curricular courses");
@@ -264,11 +253,10 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
         //  Integer secondaryCredits = infoSEC.getCreditsInSecundaryArea();
         //        Integer specializationCredits = infoSEC
         //                .getCreditsInSpecializationArea();
-        List curricularCourses = infoSEC
-                .getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled();
+        List curricularCourses = infoSEC.getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled();
 
-        List curricularCoursesNames = (List) CollectionUtils.collect(
-                curricularCourses, new Transformer() {
+        List curricularCoursesNames = (List) CollectionUtils.collect(curricularCourses,
+                new Transformer() {
 
                     public Object transform(Object arg0) {
                         InfoCurricularCourse curricularCourse = null;
@@ -285,20 +273,17 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
         if (infoSEC.getStudentCurrentSemesterInfoEnrollments() != null) {
 
             List forcedEnrollments = (List) CollectionUtils.collect(infoSEC
-                    .getStudentCurrentSemesterInfoEnrollments(),
-                    new Transformer() {
+                    .getStudentCurrentSemesterInfoEnrollments(), new Transformer() {
 
-                        public Object transform(Object arg0) {
-                            InfoEnrolment infoEnrolment = (InfoEnrolment) arg0;
-                            if (infoEnrolment.getInfoCurricularCourse()
-                                    .getMandatory().booleanValue()) {
-                                return infoEnrolment.getInfoCurricularCourse()
-                                        .getName();
-                            }
-                            return "XPTO";
+                public Object transform(Object arg0) {
+                    InfoEnrolment infoEnrolment = (InfoEnrolment) arg0;
+                    if (infoEnrolment.getInfoCurricularCourse().getMandatory().booleanValue()) {
+                        return infoEnrolment.getInfoCurricularCourse().getName();
+                    }
+                    return "XPTO";
 
-                        }
-                    });
+                }
+            });
             // System.out.println("inscrição obrigatória->"+forcedEnrollments);
             curricularCoursesNames.addAll(forcedEnrollments);
 
@@ -312,15 +297,13 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
 
         List expectedCCAndCredits = readExpectedCCAndCredits();
 
-        List expectedCurricularCoursesNames = (List) expectedCCAndCredits
-                .get(0);
+        List expectedCurricularCoursesNames = (List) expectedCCAndCredits.get(0);
 
         // sortCurricularCourses(curricularCoursesNames);
         Collections.sort(curricularCoursesNames);
         Collections.sort(expectedCurricularCoursesNames);
         System.out.println("curricularCoursesNames:" + curricularCoursesNames);
-        System.out.println("expectedCurricularCoursesNames:"
-                + expectedCurricularCoursesNames);
+        System.out.println("expectedCurricularCoursesNames:" + expectedCurricularCoursesNames);
         // sortCurricularCourses(expectedCurricularCoursesNames);
 
         //        Integer expectedSecondaryCredits = (Integer) expectedCCAndCredits
@@ -329,10 +312,10 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
         // expectedCCAndCredits
         //                .get(2);
 
-        return CollectionUtils.subtract(curricularCoursesNames,
-                expectedCurricularCoursesNames).isEmpty()
-                && CollectionUtils.subtract(expectedCurricularCoursesNames,
-                        curricularCoursesNames).isEmpty();
+        return CollectionUtils.subtract(curricularCoursesNames, expectedCurricularCoursesNames)
+                .isEmpty()
+                && CollectionUtils.subtract(expectedCurricularCoursesNames, curricularCoursesNames)
+                        .isEmpty();
         //                && (specializationCredits.equals(expectedSpecializationCredits)) &&
         // (secondaryCredits
         //                .equals(expectedSecondaryCredits))
@@ -346,8 +329,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
         List ccAndCredits = new ArrayList();
         try {
 
-            ResourceBundle bundle = new PropertyResourceBundle(
-                    new FileInputStream(getConfigFilePath()));
+            ResourceBundle bundle = new PropertyResourceBundle(new FileInputStream(getConfigFilePath()));
 
             Integer creditsInSecundaryArea;
             try {
@@ -396,8 +378,8 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
 
         InputStream ficheiro = new FileInputStream(file);
 
-        leitura = new BufferedReader(new InputStreamReader(ficheiro, "8859_1"),
-                new Long(file.length()).intValue());
+        leitura = new BufferedReader(new InputStreamReader(ficheiro, "8859_1"), new Long(file.length())
+                .intValue());
 
         do {
             linhaFicheiro = leitura.readLine();
@@ -415,8 +397,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase {
         String args[] = arguments;
 
         try {
-            return (IUserView) ServiceManagerServiceFactory.executeService(
-                    null, "Autenticacao", args);
+            return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
         } catch (Exception ex) {
             ex.printStackTrace();
             fail("Authenticating User!" + ex);

@@ -111,7 +111,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
                 }
             }
 
-            //adicionar os exames            
+            //adicionar os exames
             List examList = examDAO.readByRoomAndWeek(room, day);
             Iterator iteratorExams = examList.iterator();
 
@@ -136,7 +136,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
 
             int semester = executionPeriod.getSemester().intValue();
 
-            List executionDegreesList = sp.getICursoExecucaoPersistente().readByExecutionYear(
+            List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
             ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesList.get(0);
 

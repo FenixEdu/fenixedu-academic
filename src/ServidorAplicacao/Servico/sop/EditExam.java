@@ -7,9 +7,9 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 
 import java.util.Calendar;
 import java.util.List;
@@ -18,8 +18,8 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -34,120 +34,103 @@ import Util.Season;
 
 public class EditExam implements IServico {
 
-	private static EditExam _servico = new EditExam();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static EditExam getService() {
-		return _servico;
-	}
+    private static EditExam _servico = new EditExam();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private EditExam() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static EditExam getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "EditExam";
-	}
+    /**
+     * The actor of this class.
+     */
+    private EditExam() {
+    }
 
-	public Boolean run(
-		Calendar examDate,
-		Calendar examTime,
-		Season season,
-		InfoViewExamByDayAndShift infoViewOldExam)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "EditExam";
+    }
 
-		Boolean result = new Boolean(false);
+    public Boolean run(Calendar examDate, Calendar examTime, Season season,
+            InfoViewExamByDayAndShift infoViewOldExam) throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIPersistentExecutionCourse();
+        Boolean result = new Boolean(false);
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					((InfoExecutionCourse) infoViewOldExam
-						.getInfoExecutionCourses()
-						.get(0))
-						.getInfoExecutionPeriod());
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-			IExecutionCourse executionCourse =
-				executionCourseDAO
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					((InfoExecutionCourse) infoViewOldExam
-						.getInfoExecutionCourses()
-						.get(0))
-						.getSigla(),
-					executionPeriod);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(((InfoExecutionCourse) infoViewOldExam
+                            .getInfoExecutionCourses().get(0)).getInfoExecutionPeriod());
 
-			IExam examFromDBToBeEdited = null;
-			boolean newSeasonAlreadyScheduled = false;
-			for (int i = 0;
-				i < executionCourse.getAssociatedExams().size();
-				i++) {
-				IExam exam =
-					(IExam) executionCourse.getAssociatedExams().get(i);
-				if (exam
-					.getSeason()
-					.equals(infoViewOldExam.getInfoExam().getSeason())) {
-					examFromDBToBeEdited = exam;
-				} else if (exam.getSeason().equals(season)) {
-					newSeasonAlreadyScheduled = true;
-				}
-			}
+            IExecutionCourse executionCourse = executionCourseDAO
+                    .readByExecutionCourseInitialsAndExecutionPeriod(
+                            ((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0))
+                                    .getSigla(), executionPeriod);
 
-			if (newSeasonAlreadyScheduled) {
-				throw new ExistingServiceException();
-			}
+            IExam examFromDBToBeEdited = null;
+            boolean newSeasonAlreadyScheduled = false;
+            for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
+                IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+                if (exam.getSeason().equals(infoViewOldExam.getInfoExam().getSeason())) {
+                    examFromDBToBeEdited = exam;
+                } else if (exam.getSeason().equals(season)) {
+                    newSeasonAlreadyScheduled = true;
+                }
+            }
 
-			if (hasValidRooms(examFromDBToBeEdited, examDate, examTime)) {
-				// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()				
-				examFromDBToBeEdited = (IExam) sp.getIPersistentExam().readByOID(Exam.class,examFromDBToBeEdited.getIdInternal(),true);
-				examFromDBToBeEdited.setBeginning(examTime);
-				examFromDBToBeEdited.setDay(examDate);
-				examFromDBToBeEdited.setEnd(null);
-				examFromDBToBeEdited.setSeason(season);
+            if (newSeasonAlreadyScheduled) {
+                throw new ExistingServiceException();
+            }
 
-				result = new Boolean(true);
-			} else {
-				throw new InterceptingRoomsServiceException();
-			}
+            if (hasValidRooms(examFromDBToBeEdited, examDate, examTime)) {
+                // TODO: Temporary solution to lock object for write. In the
+                // future we'll use readByUnique()
+                examFromDBToBeEdited = (IExam) sp.getIPersistentExam().readByOID(Exam.class,
+                        examFromDBToBeEdited.getIdInternal(), true);
+                examFromDBToBeEdited.setBeginning(examTime);
+                examFromDBToBeEdited.setDay(examDate);
+                examFromDBToBeEdited.setEnd(null);
+                examFromDBToBeEdited.setSeason(season);
 
-		} catch (ExcepcaoPersistencia ex) {
+                result = new Boolean(true);
+            } else {
+                throw new InterceptingRoomsServiceException();
+            }
 
-			throw new FenixServiceException(ex.getMessage());
-		}
+        } catch (ExcepcaoPersistencia ex) {
 
-		return result;
-	}
+            throw new FenixServiceException(ex.getMessage());
+        }
 
-	private boolean hasValidRooms(
-		IExam exam,
-		Calendar examDate,
-		Calendar examTime)
-		throws FenixServiceException {
+        return result;
+    }
 
-		ISuportePersistente sp;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			ISalaPersistente persistentRoom = sp.getISalaPersistente();
-			IExam examQuery = new Exam(examDate, examTime, null, null);
-			examQuery.setIdInternal(exam.getIdInternal());
-			List availableRooms = persistentRoom.readAvailableRooms(examQuery);
+    private boolean hasValidRooms(IExam exam, Calendar examDate, Calendar examTime)
+            throws FenixServiceException {
 
-			if (availableRooms.containsAll(exam.getAssociatedRooms())) {
-				return true;
-			}
+        ISuportePersistente sp;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            ISalaPersistente persistentRoom = sp.getISalaPersistente();
+            IExam examQuery = new Exam(examDate, examTime, null, null);
+            examQuery.setIdInternal(exam.getIdInternal());
+            List availableRooms = persistentRoom.readAvailableRooms(examQuery);
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e.getMessage());
-		}
-		return false;
-	}
+            if (availableRooms.containsAll(exam.getAssociatedRooms())) {
+                return true;
+            }
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e.getMessage());
+        }
+        return false;
+    }
 
 }

@@ -12,26 +12,14 @@ import DataBeans.InfoDegree;
  */
 public class ComparatorByNameForInfoDegree implements Comparator {
 
-	public int compare(Object obj1, Object obj2) {
-		InfoDegree infoDegree = (InfoDegree) obj1;
-		InfoDegree infoDegree2 = (InfoDegree) obj2;
+    public int compare(Object obj1, Object obj2) {
+        InfoDegree infoDegree = (InfoDegree) obj1;
+        InfoDegree infoDegree2 = (InfoDegree) obj2;
 
-		String name =
-			""
-				+ infoDegree
-					.getTipoCurso()
-					.getTipoCurso()
-				+ infoDegree
-					.getNome();
-		String name2 =
-			""
-				+ infoDegree2
-					.getTipoCurso()
-					.getTipoCurso()
-				+ infoDegree2
-					.getNome();
-		return name.compareToIgnoreCase(name2);
-	}
+        String name = "" + infoDegree.getTipoCurso().getTipoCurso() + infoDegree.getNome();
+        String name2 = "" + infoDegree2.getTipoCurso().getTipoCurso() + infoDegree2.getNome();
+        return name.compareToIgnoreCase(name2);
+    }
 
 }
 

@@ -8,85 +8,87 @@ package Dominio;
 import java.util.List;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
 public class MasterDegreeThesis extends DomainObject implements IMasterDegreeThesis {
 
-	//database internal
-	private Integer keyStudentCurricularPlan;
+    //database internal
+    private Integer keyStudentCurricularPlan;
 
-	//fields
-	private IStudentCurricularPlan studentCurricularPlan;
-	private List masterDegreeProofVersions;
-	private List masterDegreeThesisDataVersions;
+    //fields
+    private IStudentCurricularPlan studentCurricularPlan;
 
-	public MasterDegreeThesis() {
+    private List masterDegreeProofVersions;
 
-	}
+    private List masterDegreeThesisDataVersions;
 
-	/**
-	 * @param studentCurricularPlan
-	 */
-	public MasterDegreeThesis(IStudentCurricularPlan studentCurricularPlan) {
-		super();
-		this.studentCurricularPlan = studentCurricularPlan;
-	}
+    public MasterDegreeThesis() {
 
-	public void setMasterDegreeProofVersions(List masterDegreeProofVersions) {
-		this.masterDegreeProofVersions = masterDegreeProofVersions;
-	}
+    }
 
-	public List getMasterDegreeProofVersions() {
-		return masterDegreeProofVersions;
-	}
+    /**
+     * @param studentCurricularPlan
+     */
+    public MasterDegreeThesis(IStudentCurricularPlan studentCurricularPlan) {
+        super();
+        this.studentCurricularPlan = studentCurricularPlan;
+    }
 
-	public void setMasterDegreeThesisDataVersions(List masterDegreeThesisDataVersions) {
-		this.masterDegreeThesisDataVersions = masterDegreeThesisDataVersions;
-	}
+    public void setMasterDegreeProofVersions(List masterDegreeProofVersions) {
+        this.masterDegreeProofVersions = masterDegreeProofVersions;
+    }
 
-	public List getMasterDegreeThesisDataVersions() {
-		return masterDegreeThesisDataVersions;
-	}
+    public List getMasterDegreeProofVersions() {
+        return masterDegreeProofVersions;
+    }
 
-	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
-		this.studentCurricularPlan = studentCurricularPlan;
-	}
+    public void setMasterDegreeThesisDataVersions(List masterDegreeThesisDataVersions) {
+        this.masterDegreeThesisDataVersions = masterDegreeThesisDataVersions;
+    }
 
-	public IStudentCurricularPlan getStudentCurricularPlan() {
-		return studentCurricularPlan;
-	}
+    public List getMasterDegreeThesisDataVersions() {
+        return masterDegreeThesisDataVersions;
+    }
 
-	public void setKeyStudentCurricularPlan(Integer keyStudentCurricularPlan) {
-		this.keyStudentCurricularPlan = keyStudentCurricularPlan;
-	}
+    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+        this.studentCurricularPlan = studentCurricularPlan;
+    }
 
-	public Integer getKeyStudentCurricularPlan() {
-		return keyStudentCurricularPlan;
-	}
+    public IStudentCurricularPlan getStudentCurricularPlan() {
+        return studentCurricularPlan;
+    }
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": \n";
-		result += "idInternal = " + getIdInternal() + "; \n";
-		result += "studentCurricularPlan = " + this.studentCurricularPlan.getIdInternal() + "; \n";
-		result += "masterDegreeProofVersions = " + this.masterDegreeProofVersions.toString() + "; \n";
-		result += "masterDegreeThesisDataVersions = " + this.masterDegreeThesisDataVersions.toString() + "; \n";
-		result += "] \n";
+    public void setKeyStudentCurricularPlan(Integer keyStudentCurricularPlan) {
+        this.keyStudentCurricularPlan = keyStudentCurricularPlan;
+    }
 
-		return result;
-	}
+    public Integer getKeyStudentCurricularPlan() {
+        return keyStudentCurricularPlan;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": \n";
+        result += "idInternal = " + getIdInternal() + "; \n";
+        result += "studentCurricularPlan = " + this.studentCurricularPlan.getIdInternal() + "; \n";
+        result += "masterDegreeProofVersions = " + this.masterDegreeProofVersions.toString() + "; \n";
+        result += "masterDegreeThesisDataVersions = " + this.masterDegreeThesisDataVersions.toString()
+                + "; \n";
+        result += "] \n";
 
-		if (obj instanceof IMasterDegreeThesis) {
-			IMasterDegreeThesis masterDegreeThesis = (IMasterDegreeThesis) obj;
-			result = this.studentCurricularPlan.equals(masterDegreeThesis.getStudentCurricularPlan());
-		}
+        return result;
+    }
 
-		return result;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+
+        if (obj instanceof IMasterDegreeThesis) {
+            IMasterDegreeThesis masterDegreeThesis = (IMasterDegreeThesis) obj;
+            result = this.studentCurricularPlan.equals(masterDegreeThesis.getStudentCurricularPlan());
+        }
+
+        return result;
+    }
 
 }

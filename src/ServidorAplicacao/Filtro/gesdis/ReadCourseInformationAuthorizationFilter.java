@@ -26,8 +26,7 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCourseInformationAuthorizationFilter extends
-        DomainObjectAuthorizationFilter {
+public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthorizationFilter {
     /*
      * (non-Javadoc)
      * 
@@ -47,25 +46,19 @@ public class ReadCourseInformationAuthorizationFilter extends
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
-                    .getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, objectId);
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, objectId);
 
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
-            List responsiblesFor = persistentResponsibleFor
-                    .readByExecutionCourse(executionCourse);
-            IResponsibleFor responsibleFor = new ResponsibleFor(teacher,
-                    executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+            IResponsibleFor responsibleFor = new ResponsibleFor(teacher, executionCourse);
 
             return responsiblesFor.contains(responsibleFor);
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): "
-                    + e.getMessage());
+            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());

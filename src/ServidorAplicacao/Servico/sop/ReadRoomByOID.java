@@ -18,40 +18,41 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
  * 
+ *  
  */
 public class ReadRoomByOID implements IServico {
 
-	private static ReadRoomByOID service = new ReadRoomByOID();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadRoomByOID getService() {
-		return service;
-	}
+    private static ReadRoomByOID service = new ReadRoomByOID();
 
-	/**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadRoomByOID";
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadRoomByOID getService() {
+        return service;
+    }
 
-	public InfoRoom run(Integer oid) throws FenixServiceException {
+    /**
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadRoomByOID";
+    }
 
-		InfoRoom result = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ISalaPersistente roomDAO = sp.getISalaPersistente();
-			ISala room = (ISala) roomDAO.readByOID(Sala.class, oid);
-			if (room != null) {
-				result = Cloner.copyRoom2InfoRoom(room);
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+    public InfoRoom run(Integer oid) throws FenixServiceException {
 
-		return result;
-	}
+        InfoRoom result = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISalaPersistente roomDAO = sp.getISalaPersistente();
+            ISala room = (ISala) roomDAO.readByOID(Sala.class, oid);
+            if (room != null) {
+                result = Cloner.copyRoom2InfoRoom(room);
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+
+        return result;
+    }
 }

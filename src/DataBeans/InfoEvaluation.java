@@ -36,10 +36,8 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
         boolean resultado = false;
         if (obj instanceof InfoEvaluation) {
             InfoEvaluation infoEvaluation = (InfoEvaluation) obj;
-            resultado = this.getPublishmentMessage().equals(
-                    infoEvaluation.getPublishmentMessage())
-                    && this.getEvaluationType() == infoEvaluation
-                            .getEvaluationType();
+            resultado = this.getPublishmentMessage().equals(infoEvaluation.getPublishmentMessage())
+                    && this.getEvaluationType() == infoEvaluation.getEvaluationType();
         }
         return resultado;
     }
@@ -79,14 +77,30 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
         evaluationType = type;
     }
 
-	//Methods inherited from abstract InfoShowOccupations - not used
-    public InfoShift getInfoShift() { return null; }
-    public TipoAula getTipo() { return null; }
-    public InfoRoomOccupation getInfoRoomOccupation() { return null; }
-    public DiaSemana getDiaSemana() { return null; }
-    public Calendar getInicio() { return null; }
-    public Calendar getFim() { return null; }
+    //Methods inherited from abstract InfoShowOccupations - not used
+    public InfoShift getInfoShift() {
+        return null;
+    }
 
+    public TipoAula getTipo() {
+        return null;
+    }
+
+    public InfoRoomOccupation getInfoRoomOccupation() {
+        return null;
+    }
+
+    public DiaSemana getDiaSemana() {
+        return null;
+    }
+
+    public Calendar getInicio() {
+        return null;
+    }
+
+    public Calendar getFim() {
+        return null;
+    }
 
     public void copyFromDomain(IEvaluation evaluation) {
         super.copyFromDomain(evaluation);
@@ -103,13 +117,12 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
         InfoEvaluation infoEvaluation = null;
         if (evaluation != null) {
             if (evaluation instanceof IWrittenEvaluation) {
-                infoEvaluation = InfoWrittenEvaluation.newInfoFromDomain((IWrittenEvaluation) evaluation);
+                infoEvaluation = InfoWrittenEvaluation
+                        .newInfoFromDomain((IWrittenEvaluation) evaluation);
             } else if (evaluation instanceof IFinalEvaluation) {
-                infoEvaluation = InfoFinalEvaluation
-                        .newInfoFromDomain((IFinalEvaluation) evaluation);
+                infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((IFinalEvaluation) evaluation);
             } else if (evaluation instanceof IOnlineTest) {
-                infoEvaluation = InfoOnlineTest
-                        .newInfoFromDomain((IOnlineTest) evaluation);
+                infoEvaluation = InfoOnlineTest.newInfoFromDomain((IOnlineTest) evaluation);
             } else {
                 infoEvaluation = new InfoEvaluation();
                 infoEvaluation.copyFromDomain(evaluation);

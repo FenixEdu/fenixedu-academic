@@ -48,6 +48,14 @@
 <table>
 	<tr valign="top">
 		<td>
+			<bean:message key="label.viewPhoto" />
+		</td>
+		<td colspan="3">
+			<html:checkbox  property="viewPhoto" />
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<bean:message key="label.selectShift"/>
 		</td>
 		<td colspan="3">
@@ -148,6 +156,11 @@
 			</logic:notEmpty>
 		   </logic:present>
 		
+			<logic:equal name="viewPhoto" value="true">
+				<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
+					<bean:message key="label.photo" /> 
+			   </td>
+			 </logic:equal>
 			<td class="listClasses-header" rowspan="<%= rowspan.toString() %>">
 				<bean:message key="label.number" /> 
 		   </td>
@@ -234,6 +247,14 @@
     	<logic:iterate id="attendacy" type="DataBeans.InfoAttendWithEnrollment" name="attendacies"> 
 			
 			<tr>
+				<logic:equal name="viewPhoto" value="true">
+					<td class="listClasses">
+						<bean:define id="aluno" name="attendacy" property="aluno"/>
+						<bean:define id="infoPerson" name="aluno" property="infoPerson"/>			
+						<bean:define id="personID" name="infoPerson" property="idInternal"/>
+		      			<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+					</td>
+				</logic:equal>
 				<td class="listClasses">
 					<bean:write name="attendacy" property="aluno.number"/>&nbsp;
 				</td>

@@ -9,10 +9,9 @@ import Dominio.IStudent;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public interface IGroupStudent extends IDomainObject
-{
+public interface IGroupStudent extends IDomainObject {
 
     public IGroup getFinalDegreeDegreeWorkGroup();
 

@@ -28,52 +28,44 @@ import ServidorPersistente.teacher.IPersistentExternalActivity;
  * @author Sergio Montelobo
  *  
  */
-public class ReadExternalActivities implements IServico
-{
+public class ReadExternalActivities implements IServico {
     private static ReadExternalActivities service = new ReadExternalActivities();
 
     /**
-	 *  
-	 */
-    public ReadExternalActivities()
-    {
+     *  
+     */
+    public ReadExternalActivities() {
 
     }
 
-    public static ReadExternalActivities getService()
-    {
+    public static ReadExternalActivities getService() {
 
         return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadExternalActivities";
     }
 
-    public SiteView run(String user) throws FenixServiceException
-    {
-        try
-        {
+    public SiteView run(String user) throws FenixServiceException {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
-            IPersistentExternalActivity persistentExternalActivity =
-                persistentSuport.getIPersistentExternalActivity();
+            IPersistentExternalActivity persistentExternalActivity = persistentSuport
+                    .getIPersistentExternalActivity();
             List externalActivities = persistentExternalActivity.readAllByTeacher(teacher);
 
-            List result = (List) CollectionUtils.collect(externalActivities, new Transformer()
-            {
-                public Object transform(Object o)
-                {
+            List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
+                public Object transform(Object o) {
                     IExternalActivity externalActivity = (IExternalActivity) o;
                     return Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
                 }
@@ -85,8 +77,7 @@ public class ReadExternalActivities implements IServico
 
             SiteView siteView = new SiteView(bodyComponent);
             return siteView;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

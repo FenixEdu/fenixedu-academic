@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.credits.InfoManagementPositionCreditLine;
 import DataBeans.util.Cloner;
 import Dominio.Teacher;
@@ -18,42 +19,32 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
-
 /**
  * @author jpvl
  */
-public class ReadTeacherManagementPositionsService implements IService
-{
-    public List run(Integer teacherId) throws FenixServiceException
-    {
-        try
-        {
+public class ReadTeacherManagementPositionsService implements IService {
+    public List run(Integer teacherId) throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IPersistentManagementPositionCreditLine managementPositionCreditLineDAO =
-                sp.getIPersistentManagementPositionCreditLine();
+            IPersistentManagementPositionCreditLine managementPositionCreditLineDAO = sp
+                    .getIPersistentManagementPositionCreditLine();
 
-            List managementPositions =
-                managementPositionCreditLineDAO.readByTeacher(new Teacher(teacherId));
+            List managementPositions = managementPositionCreditLineDAO.readByTeacher(new Teacher(
+                    teacherId));
 
-            List infoManagementPositions =
-                (List) CollectionUtils.collect(managementPositions, new Transformer()
-            {
+            List infoManagementPositions = (List) CollectionUtils.collect(managementPositions,
+                    new Transformer() {
 
-                public Object transform(Object input)
-                {
-                    IManagementPositionCreditLine managementPositionCreditLine =
-                        (IManagementPositionCreditLine) input;
-                    InfoManagementPositionCreditLine infoManagementPositionCreditLine =
-                        Cloner.copyIManagementPositionCreditLine2InfoManagementPositionCreditLine(
-                            managementPositionCreditLine);
-                    return infoManagementPositionCreditLine;
-                }
-            });
+                        public Object transform(Object input) {
+                            IManagementPositionCreditLine managementPositionCreditLine = (IManagementPositionCreditLine) input;
+                            InfoManagementPositionCreditLine infoManagementPositionCreditLine = Cloner
+                                    .copyIManagementPositionCreditLine2InfoManagementPositionCreditLine(managementPositionCreditLine);
+                            return infoManagementPositionCreditLine;
+                        }
+                    });
             return infoManagementPositions;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException("Problems on database", e);
 
         }

@@ -29,9 +29,8 @@ public class SOPHalfHourComparator implements Comparator {
             return (SOPAulas) o;
         }
         if (o != null) {
-            throw new IllegalArgumentException("It was expected: "
-                    + SOPAulas.class.getName() + " but received "
-                    + o.getClass().getName());
+            throw new IllegalArgumentException("It was expected: " + SOPAulas.class.getName()
+                    + " but received " + o.getClass().getName());
         }
 
         throw new IllegalArgumentException("Received null object");

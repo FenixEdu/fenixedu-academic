@@ -217,7 +217,22 @@
 		<put name="body" value="/teacher/prepareDeleteTest_bd.jsp"></put>		
 	</definition>
 	<definition name="show-Student-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showStudentTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/showStudentTestCorrection.jsp"></put>		
+	</definition>
+	<definition name="choose-Test-Simulation-Options" extends="definition.teacher.testsPage">
+		<put name="body" value="/teacher/chooseTestSimulationOptions.jsp"></put>
+	</definition>
+	<definition name="do-Test-Simulation" extends="definition.teacher.one-column">
+		<put name="body" value="/teacher/simulateTest.jsp"></put>
+		<put name="footer" value="/teacher/commons/commonFooterTests.jsp"></put>
+	</definition>
+	<definition name="show-Simulation-Feedback" extends="definition.teacher.one-column">
+		<put name="body" value="/teacher/showSimulationFeedback.jsp"></put>
+		<put name="footer" value="/teacher/commons/commonFooterTests.jsp"></put>
+	</definition>
+	<definition name="show-Simulation-Correction" extends="definition.teacher.one-column">
+		<put name="body" value="/teacher/showSimulationCorrection.jsp"></put>
+		<put name="footer" value="/teacher/commons/commonFooterTests.jsp"></put>
 	</definition>
 	<definition name="show-Student-Test-Log" extends="definition.teacher.testsPage">
 		<put name="body" value="/teacher/showStudentTestLog_bd.jsp"></put>		
@@ -380,5 +395,21 @@
 	</definition>
 	
 <!-- TJBF & PFON -->
+
+	<!-- ==================== View Curricular Course Historic ================== -->
+	<definition name="view-degree-curricular-plan-execution-year" 
+		extends="definition.curriculum.historic">
+		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
+	</definition>
+
+	<definition name="show-active-curricular-scopes" 
+		extends="definition.curriculum.historic">
+		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
+	</definition>
+
+	<definition name="view-curriculum-historic" 
+		extends="definition.curriculum.historic">
+		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
+	</definition>
 	
 </tiles-definitions>

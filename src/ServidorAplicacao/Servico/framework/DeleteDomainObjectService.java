@@ -18,26 +18,21 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Sergio Montelobo
  * @author jpvl
  */
-public abstract class DeleteDomainObjectService implements IService
-{
-    public void run(Integer objectId) throws FenixServiceException
-    {
-        try
-        {
+public abstract class DeleteDomainObjectService implements IService {
+    public void run(Integer objectId) throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = getIPersistentObject(sp);
 
             IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 
-            if ((domainObject == null) || !canDelete(domainObject, sp))
-            {
+            if ((domainObject == null) || !canDelete(domainObject, sp)) {
                 throw new NonExistingServiceException("The object does not exist");
             }
             doBeforeDelete(domainObject, sp);
             persistentObject.deleteByOID(getDomainObjectClass(), objectId);
             doAfterDelete(domainObject, sp);
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
@@ -48,43 +43,40 @@ public abstract class DeleteDomainObjectService implements IService
      * @param sp
      */
     protected void doBeforeDelete(IDomainObject domainObject, ISuportePersistente sp)
-        throws FenixServiceException, ExcepcaoPersistencia
-    {
+            throws FenixServiceException, ExcepcaoPersistencia {
     }
 
     /**
      * @param domainObject
      */
     protected void doAfterDelete(IDomainObject domainObject, ISuportePersistente sp)
-        throws FenixServiceException, ExcepcaoPersistencia
-    {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
     }
 
     /**
-	 * By default returns true
-	 * 
-	 * @param newDomainObject
-	 * @return
-	 */
+     * By default returns true
+     * 
+     * @param newDomainObject
+     * @return
+     */
     protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         return true;
     }
 
     /**
      * This is the class in witch the broker will read and delete the
      * DomainObject
-	 * 
-	 * @return
-	 */
+     * 
+     * @return
+     */
     protected abstract Class getDomainObjectClass();
 
     /**
-	 * @param sp
-	 * @return
-	 */
+     * @param sp
+     * @return
+     */
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 }

@@ -7,7 +7,7 @@
 <h3><bean:message key="label.manager.precedences.management"/></h3>
 
 <ul style="list-style-type: square;">
-	<li><html:link page='<%="/makeSimplePrecedence.do?method=showAllRestrictions&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>'><bean:message key="label.manager.insert.simple.precedence"/></html:link></li>
+	<li><html:link page='<%="/makeSimplePrecedence.do?method=showAllRestrictions&amp;page=0&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>'><bean:message key="label.manager.insert.simple.precedence"/></html:link></li>
 	<li><html:link page='<%="/makePrecedenceConjunction.do?method=showFirstPage&degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>'><bean:message key="label.manager.insert.conjunction.precedence"/></html:link></li>
 </ul>
 

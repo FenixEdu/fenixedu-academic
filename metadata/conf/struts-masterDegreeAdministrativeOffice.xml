@@ -18,8 +18,9 @@
 			<form-property name="executionDegree" type="java.lang.String"/>
 			<form-property name="curricularYears" type="java.lang.Integer[]"/>
 			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
-			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
-			<form-property name="unenrollments" type="java.lang.Integer[]"/>			
+			<form-property name="curricularCourses" type="java.lang.String[]"/>
+			<form-property name="unenrollments" type="java.lang.Integer[]"/>
+            <form-property name="enrollmentTypes" type="java.util.HashMap"/>			
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -464,7 +465,9 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="page" type="java.lang.Integer" initial="0" />
-   	        <form-property name="currentState" type="java.lang.String"/>
+   	        <form-property name="specialization" type="java.lang.Integer"/>
+			<form-property name="branch" type="java.lang.Integer"/>
+			<form-property name="currentState" type="java.lang.String"/>
    	        <form-property name="credits" type="java.lang.String"/>
    	        <form-property name="startDate" type="java.lang.String"/>
    	        <form-property name="extraCurricularCourses" type="java.lang.String[]"/>
@@ -576,6 +579,7 @@
 	  		<form-property name="page" type="java.lang.Integer"/>
 	  </form-bean>	  
 
+	  <!-- Bean to Insert External Person -->
 	  <form-bean name="insertExternalPersonForm"  
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -588,6 +592,37 @@
 	  		<form-property name="email" type="java.lang.String"/>
 	  		<form-property name="page" type="java.lang.Integer"/>
 	  </form-bean>
+	  
+	  <!-- Bean to Edit External Person -->
+	  <form-bean name="editExternalPersonForm"  
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+			<form-property name="externalPersonID" type="java.lang.Integer"/>
+	  		<form-property name="name" type="java.lang.String"/>
+	  		<form-property name="workLocationID" type="java.lang.Integer"/>
+	  		<form-property name="address" type="java.lang.String"/>
+	  		<form-property name="phone" type="java.lang.String"/>
+	  		<form-property name="mobile" type="java.lang.String"/>
+	  		<form-property name="homepage" type="java.lang.String"/>
+	  		<form-property name="email" type="java.lang.String"/>
+	  		<form-property name="page" type="java.lang.Integer"/>
+	  </form-bean>
+	  
+  	  <!-- Bean to Find External Person -->
+	  <form-bean name="findExternalPersonForm"
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+	  			 dynamic="true">
+	  		<form-property name="page" type="java.lang.Integer" />
+	  		<form-property name="name" type="java.lang.String"/>
+	  </form-bean> 
+	  
+	  <!-- Bean to Visualize External Persons -->
+	  <form-bean name="visualizeExternalPersonsForm"
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+	  			 dynamic="true">
+	  		<form-property name="page" type="java.lang.Integer" />
+	  		<form-property name="workLocationId" type="java.lang.Integer" />
+	  </form-bean> 
 
 	  <!-- Bean to Insert Work Location  -->
 	  <form-bean name="insertWorkLocationForm"
@@ -667,6 +702,54 @@
             <form-property name="degree" type="java.lang.String"/>
             <form-property name="situation" type="java.lang.String" />
        </form-bean>
+
+       <form-bean name="studentSituationForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="studentNumber" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.Integer"/>   	        
+       </form-bean>
+
+       <form-bean name="payGratuityForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="contributorNumber" type="java.lang.Integer"/>
+            <form-property name="gratuitySituationId" type="java.lang.Integer"/>   	        
+			<form-property name="insuranceExecutionYearId" type="java.lang.Integer"/>
+			<form-property name="adHocValue" type="java.lang.Double"/>   	        
+			<form-property name="studentId" type="java.lang.Integer"/>			
+       </form-bean>
+
+       <form-bean name="createGuideFromTransactionsForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="contributorNumber" type="java.lang.Integer"/>
+            <form-property name="gratuitySituationId" type="java.lang.Integer"/>   	        
+			<form-property name="studentId" type="java.lang.Integer"/>		
+			<form-property name="transactionsWithoutGuide" type="java.lang.Integer[]"/>	
+       </form-bean>
+
+	<form-bean name="editInsuranceForm" 
+      	type="org.apache.struts.validator.DynaValidatorForm"
+        dynamic="true">
+      		<form-property name="page" type="java.lang.Integer" initial="0" />
+   	        <form-property name="endDateDay" type="java.lang.Integer"/>
+   	        <form-property name="endDateMonth" type="java.lang.Integer"/>
+   	        <form-property name="endDateYear" type="java.lang.Integer"/>			
+      		<form-property name="insuranceValue" type="java.lang.Double" />
+      		<form-property name="executionYear" type="java.lang.Integer" />     
+      </form-bean> 
+	  
+	<form-bean name="fixSibsPaymentFileEntriesForm" 
+      	type="org.apache.struts.validator.DynaValidatorForm"
+        dynamic="true">
+      		<form-property name="page" type="java.lang.Integer" initial="0" />
+   	        <form-property name="sibsPaymentFileEntryId" type="java.lang.Integer" />     
+      </form-bean> 	
+	  
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -702,7 +785,7 @@
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
 			type="ServidorApresentacao.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
-			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=2"
+			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=2&amp;page=0"
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
 			parameter="method">
@@ -1477,6 +1560,24 @@
 	         
       </action>
       
+	  
+		<!-- Action to prepare the chooseCertificateInfoForm -->
+      <action path="/chooseDeclarationInfoAction"
+	          attribute="chooseCertificateInfoForm"
+	          name="chooseCertificateInfoForm"
+	          input="/certificate/chooseDeclaration.jsp"
+	      	  validate="true"
+			  parameter="method"
+  	          scope="request"
+      	      type="ServidorApresentacao.Action.certificate.ChooseDeclarationInfoAction">
+   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+      	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
+   		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForDeclaration"/>     	  		  
+      	 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
+      </action>
+	  
       <!-- Action to prepare the chooseCertificateInfoForm -->
       <action path="/chooseCertificateInfoAction"
 	     attribute="chooseCertificateInfoForm"
@@ -1493,24 +1594,10 @@
 			key="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
 			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
+		  <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForCertificate"/>     	  		  
       	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
       </action>
 
-		<!-- Action to prepare the chooseCertificateInfoForm -->
-      <action path="/chooseDeclarationInfoAction"
-	          attribute="chooseCertificateInfoForm"
-	          name="chooseCertificateInfoForm"
-	          input="/certificate/chooseDeclaration.jsp"
-	      	  validate="true"
-			  parameter="method"
-  	          scope="request"
-      	      type="ServidorApresentacao.Action.certificate.ChooseDeclarationInfoAction">
-   		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-      	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
-   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
-      </action>
       
       	<!-- Action to prepare the chooseFinalResultInfoForm -->
       <action path="/chooseFinalResultInfoAction"
@@ -1528,7 +1615,8 @@
             key="ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	 <forward name="PrepareReady" path="/certificate/chooseFinalResult.jsp"/>
-   		 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
+   		 <forward name="ChooseStudentCurricularPlan" path="df.page.chooseStudentenCurricularPlanForCertificate"/>     	  		  
+      	 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
       </action>
     
 		<!-- BEGIN OF MARKS MANAGEMENT -->
@@ -1755,7 +1843,7 @@
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
             <exception type="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
 			            key="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
-			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>            
 	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
 	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
@@ -1786,6 +1874,9 @@
             <exception type="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
 			            key="ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException"
 			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception type="ServidorApresentacao.Action.exceptions.GratuityValuesNotDefinedActionException"
+			            key="ServidorApresentacao.Action.exceptions.GratuityValuesNotDefinedActionException"
+			            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>												
 	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
 	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
@@ -2000,9 +2091,13 @@
 			<exception	type="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
 						key="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorApresentacao.Action.exceptions.GratuitySituationNotRegularizedActionException"
+						key="ServidorApresentacao.Action.exceptions.GratuitySituationNotRegularizedActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			
 			<forward name="start" path="/thesis/changeMasterDegreeProof.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 			<forward name="errorScholarshipNotFinished" path="/thesis/indexThesis.jsp"/>
+			<forward name="errorGratuityNotRegularized" path="/thesis/indexThesis.jsp"/>
 	</action>
 
 	<action		name="changeMasterDegreeProofForm"
@@ -2075,8 +2170,62 @@
 			<forward name="success" path="df.page.insertExternalPerson_Success"/>			
 	</action>	
 	
+	<!-- edit external person -->
+	<action		name="editExternalPersonForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.EditExternalPersonDispatchAction"
+				path="/editExternalPerson"
+				input="/editExternalPerson.do?page=0&amp;method=prepare"
+				parameter="method"
+				scope="request">
+			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="df.page.editExternalPerson"/>
+			<forward name="error" path="df.page.editExternalPerson_Error"/>
+			<forward name="success" path="df.page.editExternalPerson_Success"/>			
+	</action>	
 	
+	<!-- visualize external persons -->
+	<action		name="visualizeExternalPersonsForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.VisualizeExternalPersonsDispatchAction"
+				path="/visualizeExternalPersons"
+				input="/visualizeExternalPersons.do?page=0&amp;method=prepare"
+				parameter="method"
+				scope="request">
+			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="df.page.visualizeExternalPersons"/>
+			<forward name="error" path="df.page.showExternalPersons_Error"/>
+			<forward name="success" path="df.page.showExternalPersons"/>			
+	</action>	
 	
+	<!-- find external persons -->
+	<action		name="findExternalPersonForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.FindExternalPersonDispatchAction"
+				path="/findExternalPerson"
+				input="/findExternalPerson.do?page=0&amp;method=prepare"
+				parameter="method"
+				scope="request">
+			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="df.page.findExternalPerson"/>
+			<forward name="error" path="df.page.showExternalPersons_Error"/>
+			<forward name="success" path="df.page.showExternalPersons"/>			
+	</action>	
+		
+	<!-- view external person -->
+	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.ViewExternalPersonDispatchAction"
+				path="/viewExternalPerson"
+				parameter="method"
+				scope="request">
+			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="df.page.viewExternalPerson"/>
+	</action>
+		
 	<!-- insert work location -->
 	<action		name="insertWorkLocationForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.workLocation.InsertWorkLocationDispatchAction"
@@ -2243,6 +2392,16 @@
 	>
 		<forward name="manageExemptionGratuity" path="manageExemptionGratuity"/>
 		<forward name="chooseStudent" path="/readStudent.do?method=prepareReadStudent"/>
+	</action>
+	
+	<action path="/manageExemptionGratuityLA"
+	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityLAAction"
+	parameter="method"
+	name="exemptionGratuityForm"
+	validate="true"
+	scope="request"
+	input="/manageExemptionGratuity.do?method=readExemptionGratuity&amp;page=0"
+	>
 		<forward name="confirmationExemptionGratuity" path="confirmationExemptionGratuity"/>
 	</action>
 	
@@ -2280,6 +2439,93 @@
 		<forward name="chooseStudentsGratuityList" path="chooseStudentsGratuityList"/>
 		<forward name="studentsGratuityList" path="studentsGratuityList" />
 	</action>
+
+	<action path="/studentSituation"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentSituationDispatchAction"
+		parameter="method"
+		name="studentSituationForm"
+		scope="request"
+		validate="true"
+		input="/studentSituation.do?method=chooseStudent&amp;page=0"
+	>
+		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="chooseStudent" path="chooseStudentForStudentSituation" />
+		<forward name="success" path="studentSituation"/>
+	</action>
+	
+	<action path="/payGratuity"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.PayGratuityDispatchAction"
+		parameter="method"
+		name="payGratuityForm"
+		scope="request"
+		input="/payGratuity.do?method=chooseContributor&amp;page=0"
+	>
+		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="chooseContributor" path="chooseContributorForPayGratuity" />
+		<forward name="confirmPayment" path="confirmPayment" />
+		<forward name="paymentSuccess" path="paymentSuccess"/>
+	</action>
+	
+	<action path="/gratuitySituationDetails"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.GratuitySituationDetailsDispatchAction"
+		parameter="method"
+		name="createGuideFromTransactionsForm"
+		scope="request"		
+	>
+		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="showDetails" path="gratuitySituationDetails" />
+	</action>
+	
+	<action path="/createGuideFromTransactions"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.CreateGuideFromTransactionsDispatchAction"
+		parameter="method"
+		name="createGuideFromTransactionsForm"
+		scope="request"
+		input="/createGuideFromTransactionsForm.do?method=chooseContributor&amp;page=0"
+	>
+		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="chooseContributor" path="chooseContributorForCreateGuideFromTransactions" />
+		<forward name="confirmCreate" path="confirmCreateGuideFromTransactions" />
+		<forward name="createSuccess" path="createGuideFromTransactionsSuccess"/>
+	</action>
+	
+	<action path="/editInsuranceValue"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.EditInsuranceValueDispatchAction"
+		parameter="method"
+		name="editInsuranceForm"
+		scope="request"
+		validate="true"
+		input="/editInsuranceValue.do?method=chooseExecutionYear&amp;page=0"
+	>
+		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="chooseExecutionYear" path="chooseExecutionYear" />
+		<forward name="defineInsuranceValue" path="defineInsuranceValue" />
+		<forward name="defineSuccess" path="defineInsuranceValueSuccess"/>
+	</action>
+	
+	<action path="/fixSibsPaymentFileEntries"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.FixSibsConflictsDispatchAction"
+		parameter="method"
+		name="fixSibsPaymentFileEntriesForm"
+		scope="request"
+		validate="true"
+		input="/fixSibsPaymentFileEntries.do?method=prepare&amp;page=0"
+	>
+		<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="show" path="showSibsPaymentFileEntries" />
+	</action>
 	
 	<!-- Choose Master Degree to create guide -->
 	  <action path="/chooseDataToCreateGuide"
@@ -2303,7 +2549,7 @@
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-     <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>   
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>   
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

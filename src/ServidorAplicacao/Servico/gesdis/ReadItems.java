@@ -27,49 +27,44 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 
 public class ReadItems implements IService {
-    
-	
-	/**
-	 * The ctor of this class.
-	 **/
-	public ReadItems() {
-	}
-    
-	
-    
-	/**
-	 * Executes the service.
-	 *
-	 **/
-	public List run(InfoSection infoSection) throws FenixServiceException {
-		List itemsList = null;
 
-		try {
+    /**
+     * The ctor of this class.
+     */
+    public ReadItems() {
+    }
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentItem persistentItem = sp.getIPersistentItem();
+    /**
+     * Executes the service.
+     *  
+     */
+    public List run(InfoSection infoSection) throws FenixServiceException {
+        List itemsList = null;
 
-			ISection section = Cloner.copyInfoSection2ISection(infoSection);
+        try {
 
-			itemsList = persistentItem.readAllItemsBySection(section);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentItem persistentItem = sp.getIPersistentItem();
 
-		List infoItemsList = new ArrayList(itemsList.size());
-		Iterator iter = itemsList.iterator();
-		
-		while(iter.hasNext())
-			infoItemsList.add(Cloner.copyIItem2InfoItem((IItem) iter.next()));
-		
+            ISection section = Cloner.copyInfoSection2ISection(infoSection);
 
-		//			if (itemsList == null || itemsList.isEmpty())
-		//				throw new InvalidArgumentsServiceException();
-		Collections.sort(infoItemsList);
-		return infoItemsList;
+            itemsList = persistentItem.readAllItemsBySection(section);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	}
+        List infoItemsList = new ArrayList(itemsList.size());
+        Iterator iter = itemsList.iterator();
+
+        while (iter.hasNext())
+            infoItemsList.add(Cloner.copyIItem2InfoItem((IItem) iter.next()));
+
+        //			if (itemsList == null || itemsList.isEmpty())
+        //				throw new InvalidArgumentsServiceException();
+        Collections.sort(infoItemsList);
+        return infoItemsList;
+
+    }
 
 }
-
 

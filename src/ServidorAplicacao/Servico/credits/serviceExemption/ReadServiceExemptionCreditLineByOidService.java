@@ -16,16 +16,14 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class ReadServiceExemptionCreditLineByOidService extends ReadDomainObjectService
-{
+public class ReadServiceExemptionCreditLineByOidService extends ReadDomainObjectService {
 
     /*
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return ServiceExemptionCreditLine.class;
     }
 
@@ -34,8 +32,7 @@ public class ReadServiceExemptionCreditLineByOidService extends ReadDomainObject
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentServiceExemptionCreditLine();
     }
 
@@ -44,10 +41,9 @@ public class ReadServiceExemptionCreditLineByOidService extends ReadDomainObject
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject)
-    {
-        return Cloner.copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine(
-            (IServiceExemptionCreditLine) domainObject);
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return Cloner
+                .copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine((IServiceExemptionCreditLine) domainObject);
     }
 
 }

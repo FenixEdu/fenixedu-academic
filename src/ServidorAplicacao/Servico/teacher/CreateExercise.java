@@ -31,30 +31,24 @@ import UtilTests.ParseQuestion;
  */
 public class CreateExercise implements IService {
 
-    private String path = new String();
-
     public CreateExercise() {
     }
 
-    public boolean run(Integer executionCourseId, Integer metadataId,
-            String author, String description,
-            QuestionDifficultyType questionDifficultyType, String mainSubject,
-            String secondarySubject, Calendar learningTime, String level,
-            InfoQuestion infoQuestion, String questionText,
-            String secondQuestionText, String[] options,
-            String[] correctOptions, String[] shuffle,
-            String correctFeedbackText, String wrongFeedbackText,
-            Boolean breakLineBeforeResponseBox,
-            Boolean breakLineAfterResponseBox, String path)
-            throws FenixServiceException, NotExecuteException {
-        this.path = path.replace('\\', '/');
+    public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
+            QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject,
+            Calendar learningTime, String level, InfoQuestion infoQuestion, String questionText,
+            String secondQuestionText, String[] options, String[] correctOptions, String[] shuffle,
+            String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
+            Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
+            NotExecuteException {
+
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-                    .getIPersistentExecutionCourse().readByOID(
-                            ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null) { throw new InvalidArgumentsServiceException(); }
+                    .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
             IMetadata metadata = null;
             if (metadataId == null) {
                 metadata = new Metadata();
@@ -67,44 +61,38 @@ public class CreateExercise implements IService {
                 metadata.setSecondarySubject(secondarySubject);
                 metadata.setLevel(level);
                 metadata.setVisibility(new Boolean(true));
-                metadata.setNumberOfMembers(new Integer(1));    
+                metadata.setNumberOfMembers(new Integer(1));
             } else {
-                metadata = (IMetadata) persistentSuport
-                        .getIPersistentMetadata().readByOID(Metadata.class,
-                                metadataId);
-                if (metadata == null) { throw new InvalidArgumentsServiceException(); }
-                metadata.setNumberOfMembers(new Integer(metadata
-                        .getNumberOfMembers().intValue() + 1));
+                metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(
+                        Metadata.class, metadataId);
+                if (metadata == null) {
+                    throw new InvalidArgumentsServiceException();
+                }
+                metadata.setNumberOfMembers(new Integer(metadata.getNumberOfMembers().intValue() + 1));
             }
-            persistentSuport.getIPersistentMetadata().simpleLockWrite(
-                    metadata);
-            IPersistentQuestion persistentQuestion = persistentSuport
-                    .getIPersistentQuestion();
+            persistentSuport.getIPersistentMetadata().simpleLockWrite(metadata);
+            IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
             IQuestion question = new Question();
             question.setMetadata(metadata);
             question.setVisibility(new Boolean(true));
             try {
-                question.setXmlFile(getQuestion(infoQuestion, questionText,
-                        secondQuestionText, options, shuffle, correctFeedbackText,
-                        wrongFeedbackText, breakLineBeforeResponseBox,
+                question.setXmlFile(getQuestion(infoQuestion, questionText, secondQuestionText, options,
+                        shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
                         breakLineAfterResponseBox));
             } catch (UnsupportedEncodingException e) {
                 throw new FenixServiceException(e);
             }
             if (metadataId == null)
-                question.setXmlFileName("Pergunta"
-                        + metadata.getNumberOfMembers() + ".xml");
+                question.setXmlFileName("Pergunta" + metadata.getNumberOfMembers() + ".xml");
             else
-                question.setXmlFileName(persistentQuestion.correctFileName(
-                        "Pergunta" + metadata.getNumberOfMembers() + ".xml",
-                        metadataId));
+                question.setXmlFileName(persistentQuestion.correctFileName("Pergunta"
+                        + metadata.getNumberOfMembers() + ".xml", metadataId));
             persistentQuestion.simpleLockWrite(question);
 
             infoQuestion.setXmlFile(question.getXmlFile());
             ParseQuestion parse = new ParseQuestion();
             try {
-                infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(),
-                        infoQuestion, this.path);
+                infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, path);
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }
@@ -115,17 +103,16 @@ public class CreateExercise implements IService {
     }
 
     private String getQuestion(InfoQuestion infoQuestion, String questionText,
-            String secondQuestionText, String[] options, String[] shuffle,
-            String correctFeedbackText, String wrongFeedbackText,
-            Boolean breakLineBeforeResponseBox,
+            String secondQuestionText, String[] options, String[] shuffle, String correctFeedbackText,
+            String wrongFeedbackText, Boolean breakLineBeforeResponseBox,
             Boolean breakLineAfterResponseBox) throws UnsupportedEncodingException {
         String xmlFile = new String();
         XMLQuestion xmlQuestion = new XMLQuestion();
         xmlFile = new String(xmlQuestion.getXmlQuestion(questionText, secondQuestionText,
-                infoQuestion.getQuestionType(), options, shuffle, infoQuestion
-                        .getResponseProcessingInstructions(),
-                correctFeedbackText, wrongFeedbackText,
-                breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(), "ISO-8859-1");
+                infoQuestion.getQuestionType(), options, shuffle,
+                infoQuestion.getResponseProcessingInstructions(), correctFeedbackText,
+                wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(),
+                "ISO-8859-1");
         return xmlFile;
     }
 }

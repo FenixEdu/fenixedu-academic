@@ -13,236 +13,198 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Fernanda Quitério 09/Dez/2003
  *  
  */
-public class ReadInfoTeacherByTeacherNumberTest extends ServiceTestCase
-{
+public class ReadInfoTeacherByTeacherNumberTest extends ServiceTestCase {
 
-	/**
-	 * @param testName
-	 */
+    /**
+     * @param testName
+     */
 
-	public ReadInfoTeacherByTeacherNumberTest(String testName)
-	{
-		super(testName);
-	}
+    public ReadInfoTeacherByTeacherNumberTest(String testName) {
+        super(testName);
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadInfoTeacherByTeacherNumber";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadInfoTeacherByTeacherNumber";
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets_templates/servicos/manager/testDataSetTeacher.xml";
-	}
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
-	protected String[] getNotAuthenticatedUser()
-	{
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer teacherNumber = new Integer(2282);
+    protected String getDataSetFilePath() {
+        return "etc/datasets_templates/servicos/manager/testDataSetTeacher.xml";
+    }
 
-		Object[] args = { teacherNumber };
-		return args;
-	}
-	protected Object[] getUnsuccessfullArguments()
-	{
-		Integer teacherNumber = new Integer(1000);
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-		Object[] args = { teacherNumber };
-		return args;
-	}
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-	public void testReadInfoTeacherByTeacherNumberSuccessfull()
-	{
-		try
-		{
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-			Object[] args = getAuthorizeArguments();
+    protected Object[] getAuthorizeArguments() {
+        Integer teacherNumber = new Integer(2282);
 
-			//Valid user
-			String[] argsUser = getAuthenticatedAndAuthorizedUser();
-			IUserView id =
-				(IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+        Object[] args = { teacherNumber };
+        return args;
+    }
 
-			InfoTeacher infoTeacher = null;
-			infoTeacher =
-				(InfoTeacher) ServiceManagerServiceFactory.executeService(
-					id,
-					getNameOfServiceToBeTested(),
-					args);
+    protected Object[] getUnsuccessfullArguments() {
+        Integer teacherNumber = new Integer(1000);
 
-			//read something?
-			if (infoTeacher == null)
-			{
-				fail("Reading a Teacher.");
-			}
+        Object[] args = { teacherNumber };
+        return args;
+    }
 
-			assertEquals("AS1", infoTeacher.getInfoCategory().getCode());
-			assertEquals("Nome da Pessoa", infoTeacher.getInfoPerson().getNome());
-			assertEquals("user", infoTeacher.getInfoPerson().getUsername());
-			assertEquals(new Integer(2282), infoTeacher.getTeacherNumber());
-			assertEquals("2", String.valueOf((infoTeacher.getProfessorShipsExecutionCourses().size())));
-			assertEquals("1", String.valueOf((infoTeacher.getResponsibleForExecutionCourses().size())));
+    public void testReadInfoTeacherByTeacherNumberSuccessfull() {
+        try {
 
-			System.out.println(
-				"testReadInfoTeacherByTeacherNumberSuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+            Object[] args = getAuthorizeArguments();
 
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("Reading a Teacher from database " + e);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			fail("Reading a Teacher from database " + e);
-		}
-	}
+            //Valid user
+            String[] argsUser = getAuthenticatedAndAuthorizedUser();
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-	public void testReadInfoTeacherByTeacherNumberUserUnsuccessfull()
-	{
-		try
-		{
-			Object[] args = getAuthorizeArguments();
+            InfoTeacher infoTeacher = null;
+            infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args);
 
-			//Invalid user
-			String[] argsUser = getAuthenticatedAndUnauthorizedUser();
-			IUserView id =
-				(IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            //read something?
+            if (infoTeacher == null) {
+                fail("Reading a Teacher.");
+            }
 
-			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
+            assertEquals("AS1", infoTeacher.getInfoCategory().getCode());
+            assertEquals("Nome da Pessoa", infoTeacher.getInfoPerson().getNome());
+            assertEquals("user", infoTeacher.getInfoPerson().getUsername());
+            assertEquals(new Integer(2282), infoTeacher.getTeacherNumber());
+            assertEquals("2", String.valueOf((infoTeacher.getProfessorShipsExecutionCourses().size())));
+            assertEquals("1", String.valueOf((infoTeacher.getResponsibleForExecutionCourses().size())));
 
-			fail("Reading Teacher with invalid user");
-		} catch (NotAuthorizedException e)
-		{
-			System.out.println(
-				"testReadInfoTeacherByTeacherNumberUserUnsuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Teacher with invalid user " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Teacher with invalid user " + e);
-		}
-	}
+            System.out
+                    .println("testReadInfoTeacherByTeacherNumberSuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
 
-	public void testReadInfoTeacherByTeacherNumberNoTeacherUnsuccessfull()
-	{
-		try
-		{
-			// Non existing teacher
-			Object[] args = getUnsuccessfullArguments();
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("Reading a Teacher from database " + e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Reading a Teacher from database " + e);
+        }
+    }
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 =
-				(IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+    public void testReadInfoTeacherByTeacherNumberUserUnsuccessfull() {
+        try {
+            Object[] args = getAuthorizeArguments();
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Invalid user
+            String[] argsUser = getAuthenticatedAndUnauthorizedUser();
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-			fail("Reading Teacher with non existent teacher");
-		} catch (NonExistingServiceException e)
-		{
-			if (e.getMessage().equals("noTeacher"))
-			{
-				System.out.println(
-					"testReadInfoTeacherByTeacherNumberNoTeacherUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Reading Teacher with non existent teacher");
-			}
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Teacher with non existent teacher " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Teacher with non existent teacher " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
-	public void testReadInfoTeacherByTeacherNumberNoPSNorRFUnsuccessfull()
-	{
-		try
-		{
-			Integer teacherNumber = new Integer(2222);
-			Object[] args = { teacherNumber };
+            fail("Reading Teacher with invalid user");
+        } catch (NotAuthorizedException e) {
+            System.out
+                    .println("testReadInfoTeacherByTeacherNumberUserUnsuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading Teacher with invalid user " + e);
+        } catch (Exception e) {
+            fail("Reading Teacher with invalid user " + e);
+        }
+    }
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 =
-				(IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+    public void testReadInfoTeacherByTeacherNumberNoTeacherUnsuccessfull() {
+        try {
+            // Non existing teacher
+            Object[] args = getUnsuccessfullArguments();
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			fail("Reading Teacher with non existent professorships nor responsibility for");
-		} catch (NonExistingServiceException e)
-		{
-			if (e.getMessage().equals("noPSnorRF"))
-			{
-				System.out.println(
-					"testReadInfoTeacherByTeacherNumberNoPSNorRFUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Reading Teacher with non existent professorships nor responsibility for");
-			}
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Teacher with non existent professorships nor responsibility for " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Teacher with non existent professorships nor responsibility for " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
-	public void testReadInfoTeacherByTeacherNumberNullTeacherNumberUnsuccessfull()
-	{
-		try
-		{
-			// null argument
-			Object[] args = { null };
+            fail("Reading Teacher with non existent teacher");
+        } catch (NonExistingServiceException e) {
+            if (e.getMessage().equals("noTeacher")) {
+                System.out
+                        .println("testReadInfoTeacherByTeacherNumberNoTeacherUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Reading Teacher with non existent teacher");
+            }
+        } catch (FenixServiceException e) {
+            fail("Reading Teacher with non existent teacher " + e);
+        } catch (Exception e) {
+            fail("Reading Teacher with non existent teacher " + e);
+        }
+    }
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 =
-				(IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+    public void testReadInfoTeacherByTeacherNumberNoPSNorRFUnsuccessfull() {
+        try {
+            Integer teacherNumber = new Integer(2222);
+            Object[] args = { teacherNumber };
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			fail("Reading Teacher with null number");
-		} catch (FenixServiceException e)
-		{
-			if (e.getMessage().equals("nullTeacherNumber"))
-			{
-				System.out.println(
-					"testReadInfoTeacherByTeacherNumberNullTeacherNumberUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Reading Teacher with null number " + e);
-			}
-		} catch (Exception e)
-		{
-			fail("Reading Teacher with null number " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+
+            fail("Reading Teacher with non existent professorships nor responsibility for");
+        } catch (NonExistingServiceException e) {
+            if (e.getMessage().equals("noPSnorRF")) {
+                System.out
+                        .println("testReadInfoTeacherByTeacherNumberNoPSNorRFUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Reading Teacher with non existent professorships nor responsibility for");
+            }
+        } catch (FenixServiceException e) {
+            fail("Reading Teacher with non existent professorships nor responsibility for " + e);
+        } catch (Exception e) {
+            fail("Reading Teacher with non existent professorships nor responsibility for " + e);
+        }
+    }
+
+    public void testReadInfoTeacherByTeacherNumberNullTeacherNumberUnsuccessfull() {
+        try {
+            // null argument
+            Object[] args = { null };
+
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
+
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+
+            fail("Reading Teacher with null number");
+        } catch (FenixServiceException e) {
+            if (e.getMessage().equals("nullTeacherNumber")) {
+                System.out
+                        .println("testReadInfoTeacherByTeacherNumberNullTeacherNumberUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Reading Teacher with null number " + e);
+            }
+        } catch (Exception e) {
+            fail("Reading Teacher with null number " + e);
+        }
+    }
 }

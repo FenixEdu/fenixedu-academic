@@ -8,24 +8,26 @@ import Dominio.IGratuityValues;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class InfoGratuityValuesWithInfoExecutionDegree extends
-        InfoGratuityValues {
+public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValues {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoGratuityValues#copyFromDomain(Dominio.IGratuityValues)
      */
     public void copyFromDomain(IGratuityValues gratuityValues) {
         super.copyFromDomain(gratuityValues);
-        if(gratuityValues != null) {
-            setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(gratuityValues.getExecutionDegree())); 
+        if (gratuityValues != null) {
+            setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(gratuityValues
+                    .getExecutionDegree()));
         }
     }
-    
+
     public static InfoGratuityValues newInfoFromDomain(IGratuityValues gratuityValues) {
         InfoGratuityValuesWithInfoExecutionDegree infoGratuityValues = null;
-        if(gratuityValues != null) {
+        if (gratuityValues != null) {
             infoGratuityValues = new InfoGratuityValuesWithInfoExecutionDegree();
             infoGratuityValues.copyFromDomain(gratuityValues);
         }

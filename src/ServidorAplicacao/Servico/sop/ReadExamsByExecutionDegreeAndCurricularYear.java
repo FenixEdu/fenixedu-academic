@@ -7,9 +7,9 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
-  * @author Luis Cruz & Sara Ribeiro
-  * 
- **/
+ * @author Luis Cruz & Sara Ribeiro
+ *  
+ */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,82 +30,74 @@ import Util.Season;
 
 public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
 
-	private static ReadExamsByExecutionDegreeAndCurricularYear _servico =
-		new ReadExamsByExecutionDegreeAndCurricularYear();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadExamsByExecutionDegreeAndCurricularYear getService() {
-		return _servico;
-	}
+    private static ReadExamsByExecutionDegreeAndCurricularYear _servico = new ReadExamsByExecutionDegreeAndCurricularYear();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadExamsByExecutionDegreeAndCurricularYear() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadExamsByExecutionDegreeAndCurricularYear getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadExamsByExecutionDegreeAndCurricularYear";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadExamsByExecutionDegreeAndCurricularYear() {
+    }
 
-	public List run(
-		InfoExecutionDegree infoExecutionDegree,
-		InfoExecutionPeriod infoExecutionPeriod,
-		Integer curricularYear) {
-		ArrayList infoExecutionCourseAndExamsList = new ArrayList();
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ReadExamsByExecutionDegreeAndCurricularYear";
+    }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ICursoExecucao executionDegree =
-				Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+    public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
+            Integer curricularYear) {
+        List infoExecutionCourseAndExamsList = new ArrayList();
 
-			List executionCourses = sp.getIPersistentExecutionCourse()
-					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-					curricularYear,
-					executionPeriod, executionDegree);
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ICursoExecucao executionDegree = Cloner
+                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-			for (int i = 0; i < executionCourses.size(); i++) {
-				IExecutionCourse executionCourse =
-					(IExecutionCourse) executionCourses.get(i);
+            List executionCourses = sp.getIPersistentExecutionCourse()
+                    .readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
+                            executionPeriod, executionDegree);
 
-				InfoExecutionCourseAndExams infoExecutionCourseAndExams =
-					new InfoExecutionCourseAndExams();
+            for (int i = 0; i < executionCourses.size(); i++) {
+                IExecutionCourse executionCourse = (IExecutionCourse) executionCourses.get(i);
 
-				infoExecutionCourseAndExams.setInfoExecutionCourse(
-					 (InfoExecutionCourse) Cloner.get(
-						executionCourse));
+                InfoExecutionCourseAndExams infoExecutionCourseAndExams = new InfoExecutionCourseAndExams();
 
-				for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
-					IExam exam = (IExam) executionCourse.getAssociatedExams().get(j);
-					if (exam.getSeason().getseason().intValue() == Season.SEASON1) {
-						infoExecutionCourseAndExams.setInfoExam1(Cloner.copyIExam2InfoExam(exam));
-					} else if (exam.getSeason().getseason().intValue() == Season.SEASON2) {
-						infoExecutionCourseAndExams.setInfoExam2(Cloner.copyIExam2InfoExam(exam));
-					}
-				}
+                infoExecutionCourseAndExams.setInfoExecutionCourse((InfoExecutionCourse) Cloner
+                        .get(executionCourse));
 
-				// Number of students attending execution course.
-				// TODO : In this context should we realy count the number of
-				//        students attending the course or just the ones from
-				//        the indicated degree????
-				infoExecutionCourseAndExams.setNumberStudentesAttendingCourse(
-					sp
-						.getIFrequentaPersistente()
-						.countStudentsAttendingExecutionCourse(
-						executionCourse));
-			
-				infoExecutionCourseAndExamsList.add(infoExecutionCourseAndExams);
-			}
+                for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
+                    IExam exam = (IExam) executionCourse.getAssociatedExams().get(j);
+                    if (exam.getSeason().getseason().intValue() == Season.SEASON1) {
+                        infoExecutionCourseAndExams.setInfoExam1(Cloner.copyIExam2InfoExam(exam));
+                    } else if (exam.getSeason().getseason().intValue() == Season.SEASON2) {
+                        infoExecutionCourseAndExams.setInfoExam2(Cloner.copyIExam2InfoExam(exam));
+                    }
+                }
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return infoExecutionCourseAndExamsList;
-	}
+                // Number of students attending execution course.
+                // TODO : In this context should we realy count the number of
+                //        students attending the course or just the ones from
+                //        the indicated degree????
+                infoExecutionCourseAndExams.setNumberStudentesAttendingCourse(sp
+                        .getIFrequentaPersistente().countStudentsAttendingExecutionCourse(
+                                executionCourse));
+
+                infoExecutionCourseAndExamsList.add(infoExecutionCourseAndExams);
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+        return infoExecutionCourseAndExamsList;
+    }
 }

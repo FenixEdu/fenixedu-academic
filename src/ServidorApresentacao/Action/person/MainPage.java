@@ -23,51 +23,36 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public final class MainPage extends Action {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView =
-			(IUserView) request.getSession(false).getAttribute(
-				SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
 
-		Object[] args = { userView };
-		try {
-			InfoPerson infoPerson =
-				(InfoPerson) ServiceUtils.executeService(
-					userView,
-					"ReadPersonByUsername",
-					args);
-			if (infoPerson.getInfoAdvisories() == null || infoPerson.getInfoAdvisories().isEmpty()) {
-				infoPerson.setInfoAdvisories(new ArrayList());
-			} else {
-				Collections.sort(
-					infoPerson.getInfoAdvisories(),
-					new ReverseComparator(new BeanComparator("created")));
+        Object[] args = { userView };
+        try {
+            InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView,
+                    "ReadPersonByUsername", args);
+            if (infoPerson.getInfoAdvisories() == null || infoPerson.getInfoAdvisories().isEmpty()) {
+                infoPerson.setInfoAdvisories(new ArrayList());
+            } else {
+                Collections.sort(infoPerson.getInfoAdvisories(), new ReverseComparator(
+                        new BeanComparator("created")));
 
-				String selectedOidString =
-					request.getParameter("activeAdvisory");
-				Integer selectedOid = null;
-				if (selectedOidString != null) {
-					selectedOid = new Integer(selectedOidString);
-				} else {
-					selectedOid =
-						((InfoAdvisory) infoPerson.getInfoAdvisories().get(0))
-							.getIdInternal();
-				}
+                String selectedOidString = request.getParameter("activeAdvisory");
+                Integer selectedOid = null;
+                if (selectedOidString != null) {
+                    selectedOid = new Integer(selectedOidString);
+                } else {
+                    selectedOid = ((InfoAdvisory) infoPerson.getInfoAdvisories().get(0)).getIdInternal();
+                }
 
-				request.setAttribute("activeAdvisory", selectedOid);
-			}
-			request.setAttribute(
-				SessionConstants.LIST_ADVISORY,
-				infoPerson.getInfoAdvisories());
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+                request.setAttribute("activeAdvisory", selectedOid);
+            }
+            request.setAttribute(SessionConstants.LIST_ADVISORY, infoPerson.getInfoAdvisories());
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward("ShowWelcomePage");
-	}
+        return mapping.findForward("ShowWelcomePage");
+    }
 }

@@ -19,42 +19,37 @@ import ServidorPersistente.teacher.IPersistentOldPublication;
  * @author Sergio Montelobo
  *  
  */
-public class EditOldPublication extends EditDomainObjectService
-{
+public class EditOldPublication extends EditDomainObjectService {
 
     private static EditOldPublication service = new EditOldPublication();
 
-    public static EditOldPublication getService()
-    {
+    public static EditOldPublication getService() {
         return service;
     }
 
     /**
-	 *  
-	 */
-    private EditOldPublication()
-    {
+     *  
+     */
+    private EditOldPublication() {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "EditOldPublication";
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
         return persistentOldPublication;
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject)
-    {
-        IOldPublication oldPublication = Cloner.copyInfoOldPublication2IOldPublication((InfoOldPublication) infoObject);
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        IOldPublication oldPublication = Cloner
+                .copyInfoOldPublication2IOldPublication((InfoOldPublication) infoObject);
         return oldPublication;
     }
 }

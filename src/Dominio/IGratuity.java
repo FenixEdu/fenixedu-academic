@@ -5,7 +5,7 @@
  */
 
 /**
- *
+ * 
  * @author Nuno Nunes & Joana Mota
  */
 
@@ -18,17 +18,24 @@ import Util.State;
 
 public interface IGratuity extends IDomainObject {
 
-	public void setState(State state);
-	public void setGratuityState(GratuityState gratuityState);
-	public void setDate(Date date);
-	public void setRemarks(String remarks);
-	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
-	
-	
-	public State getState();
-	public GratuityState getGratuityState();
-	public Date getDate();
-	public String getRemarks();
-	public IStudentCurricularPlan getStudentCurricularPlan();
-	
+    public void setState(State state);
+
+    public void setGratuityState(GratuityState gratuityState);
+
+    public void setDate(Date date);
+
+    public void setRemarks(String remarks);
+
+    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan);
+
+    public State getState();
+
+    public GratuityState getGratuityState();
+
+    public Date getDate();
+
+    public String getRemarks();
+
+    public IStudentCurricularPlan getStudentCurricularPlan();
+
 }

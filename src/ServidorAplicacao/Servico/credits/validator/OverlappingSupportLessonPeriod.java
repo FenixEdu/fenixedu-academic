@@ -7,14 +7,12 @@ package ServidorAplicacao.Servico.credits.validator;
 /**
  * @author jpvl
  */
-public class OverlappingSupportLessonPeriod extends OverlappingPeriodException
-{
+public class OverlappingSupportLessonPeriod extends OverlappingPeriodException {
 
     /**
-	 *  
-	 */
-    public OverlappingSupportLessonPeriod()
-    {
+     *  
+     */
+    public OverlappingSupportLessonPeriod() {
 
     }
 

@@ -12,26 +12,26 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.ForwardAction;
 
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
+
 /**
- *  
- * @author jpvl
  * 
+ * @author jpvl
+ *  
  */
 public class FenixForwardAction extends ForwardAction {
-	
-	
-	/**
-	 * Tests if the session is valid.
-	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
-	 * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm, HttpServletRequest, HttpServletResponse)
-	 */
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		
-		return super.execute(mapping, actionForm, request, response);
-	}
+
+    /**
+     * Tests if the session is valid.
+     * 
+     * @see SessionUtils#validSessionVerification(HttpServletRequest,
+     *      ActionMapping)
+     * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm,
+     *      HttpServletRequest, HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        return super.execute(mapping, actionForm, request, response);
+    }
 }

@@ -19,6 +19,7 @@
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="isOptional" type="java.lang.String"/>
+			<form-property name="courseType" type="java.lang.String"/>
 		</form-bean>
 
 		<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -36,7 +37,7 @@
 			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
 			<form-property name="curricularCourses" type="java.lang.String[]"/>
 			<form-property name="unenrollments" type="java.lang.Integer[]"/>
-            <form-property name="optionalEnrollments" type="java.util.HashMap"/>			
+            <form-property name="enrollmentTypes" type="java.util.HashMap"/>			
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -56,7 +57,18 @@
 			<form-property name="degreeType" type="java.lang.Integer"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
-
+		
+		<form-bean name="studentNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="studentsNumbersBetweenForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="firstStudentNumber" type="java.lang.String"/>
+			<form-property name="lastStudentNumber" type="java.lang.String"/>
+		</form-bean>
+		
 	</form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -81,7 +93,7 @@
 		<forward name="globalOutOfPeriod" path="definition.out.of.period" redirect="true"/>
 		<forward name="enrolment" path="/globalEnrolment.do"/>
 
-		<forward name="equivalence" path="/equivalence/equivalence.do" contextRelative="true"/>
+		<forward name="equivalence" path="/equivalence/equivalence.do" contextRelative="true"/>		
 	</global-forwards>
 
 	<!-- ========== Action Mapping Definitions ============================== -->
@@ -91,7 +103,7 @@
 		<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 		<action path="/outOfPeriod" forward="definition.out.of.period"/>
 		<action path="/globalEnrolment" forward="df.page.globalEnrolment"/>	
-		<action path="/cantEnroll" forward="definition.cant.enroll"/>
+		<action path="/cantEnroll" forward="definition.cant.enroll"/>		
    		
 		<!-- ****************** Index **************************** -->
 		<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
@@ -167,6 +179,34 @@
 				<forward name="exit" path="/index.do"/>
 		</action>		
 
+		<!-- ==================== Print registration declaration =================== -->
+       	
+       	<action path="/generateDeclaration" 
+			name="studentNumberForm"    		
+			type="ServidorApresentacao.Action.degreeAdministrativeOffice.RegistrationDeclaration"
+			input="/generateDeclaration.do?method=prepare&amp;page=0"
+			validate="true"
+			scope="request"
+			parameter="method"
+			>
+			<forward name="prepare" path="df.page.prepareDeclaration"/>
+	       	<forward name="sucess" path="df.page.generateDeclaration"/>
+       	</action>
+       	
+       	<!-- ==================== Generate enrollment declaration =================== -->
+       	
+       	<action path="/generateEnrollmentsDeclaration" 
+			name="studentsNumbersBetweenForm"    		
+			type="ServidorApresentacao.Action.degreeAdministrativeOffice.EnrollmentDeclarations"
+			input="/generateEnrollmentsDeclaration.do?method=prepare&amp;page=0"
+			validate="true"
+			scope="request"
+			parameter="method"
+			>
+			<forward name="prepare" path="df.page.prepareEnrollmentsDeclaration"/>
+	       	<forward name="sucess" path="df.page.generateEnrollmentsDeclaration"/>
+       	</action>
+       	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

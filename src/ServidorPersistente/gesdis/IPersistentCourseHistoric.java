@@ -15,8 +15,8 @@ import ServidorPersistente.IPersistentObject;
  * @author Sergio Montelobo
  *  
  */
-public interface IPersistentCourseHistoric extends IPersistentObject
-{
+public interface IPersistentCourseHistoric extends IPersistentObject {
 
-    public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia;
+    public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester)
+            throws ExcepcaoPersistencia;
 }

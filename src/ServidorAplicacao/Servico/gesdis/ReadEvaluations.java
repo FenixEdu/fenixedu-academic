@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEvaluation;
 import Dominio.ExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IExecutionCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -20,40 +20,11 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *  
  */
-public class ReadEvaluations implements IServico {
-
-    private static ReadEvaluations service = new ReadEvaluations();
+public class ReadEvaluations implements IService {
 
     /**
-     * The singleton access method of this class.
-     */
-
-    public static ReadEvaluations getService() {
-
-        return service;
-
-    }
-
-    /**
-     * The ctor of this class.
-     */
-
-    private ReadEvaluations() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-
-    public final String getNome() {
-
-        return "ReadEvaluations";
-
-    }
-
-    /**
-     * Executes the service. Returns the current collection of evaluations(tests, exams, projects and
-     * final evaluations)
+     * Executes the service. Returns the current collection of
+     * evaluations(tests, exams, projects and final evaluations)
      */
     public List run(Integer executionCourseCode) throws FenixServiceException {
         try {
@@ -73,10 +44,7 @@ public class ReadEvaluations implements IServico {
             List infoEvaluations = new ArrayList();
             Iterator iterator = evaluations.iterator();
             while (iterator.hasNext()) {
-                //CLONER
-                //infoEvaluations.add(Cloner
-                //.copyIEvaluation2InfoEvaluation((IEvaluation) iterator
-                //.next()));
+
                 infoEvaluations.add(InfoEvaluation.newInfoFromDomain((IEvaluation) iterator.next()));
             }
 

@@ -32,7 +32,7 @@ public class RemoveCurricularCoursesFromGroup implements IService {
 
     }
 
-    public void run(Integer groupId,Integer[] courseIds) throws FenixServiceException {
+    public void run(Integer groupId, Integer[] courseIds) throws FenixServiceException {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentCurricularCourse persistentCurricularCourse = persistentSuport

@@ -9,280 +9,244 @@ import Dominio.IGratuityValues;
  * @author Fernanda Quitério 10/Jan/2004
  *  
  */
-public class InfoGratuityValues extends InfoObject 
-{
-	private Double anualValue;
-	private Double scholarShipValue;
-	private Double finalProofValue;
-	private Double courseValue;
-	private Double creditValue;
-	private Boolean proofRequestPayment;
-	private Date startPayment;
-	private Date endPayment;
+public class InfoGratuityValues extends InfoObject {
+    private Double anualValue;
 
-	private Boolean registrationPayment;
+    private Double scholarShipValue;
 
-	private InfoExecutionDegree infoExecutionDegree;
+    private Double finalProofValue;
 
-	private InfoEmployee infoEmployee;
-	private Date when;
+    private Double courseValue;
 
-	private List infoPaymentPhases;
+    private Double creditValue;
 
-	public String toString()
-	{
-		StringBuffer result = new StringBuffer();
-		result =
-			result
-				.append("[InfoGratuityValues: \n")
-				.append("idInternal= ")
-				.append(getIdInternal())
-				.append("\nanualValue= ")
-				.append(getAnualValue())
-				.append("\nscholarShipPart= ")
-				.append(getScholarShipValue())
-				.append("\nfinalProofValue= ")
-				.append(getFinalProofValue())
-				.append("\ncourseValue= ")
-				.append(getCourseValue())
-				.append("\ncreditValue= ")
-				.append(getCreditValue())
-				.append("\nproofRequestPayment= ")
-				.append(getProofRequestPayment())
-				.append("\nstartPayment= ")
-				.append(getStartPayment())
-				.append("\nendPayment= ")
-				.append(getEndPayment())
-				.append("\nregistrationPayment= ")
-				.append(getRegistrationPayment())
-				.append("]");
-		return result.toString();
-	}
-	
-	/**
-	 * @return Returns the when.
-	 */
-	public Date getWhen()
-	{
-		return when;
-	}
+    private Boolean proofRequestPayment;
 
-	/**
-	 * @param when
-	 *            The when to set.
-	 */
-	public void setWhen(Date when)
-	{
-		this.when = when;
-	}
+    private Date startPayment;
 
-	/**
-	 * @return Returns the registrationPayment.
-	 */
-	public Boolean getRegistrationPayment()
-	{
-		return registrationPayment;
-	}
+    private Date endPayment;
 
-	/**
-	 * @param registrationPayment
-	 *            The registrationPayment to set.
-	 */
-	public void setRegistrationPayment(Boolean registrationPayment)
-	{
-		this.registrationPayment = registrationPayment;
-	}
+    private Boolean registrationPayment;
 
-	/**
-	 * @return Returns the anualValue.
-	 */
-	public Double getAnualValue()
-	{
-		return anualValue;
-	}
+    private InfoExecutionDegree infoExecutionDegree;
 
-	/**
-	 * @param anualValue
-	 *            The anualValue to set.
-	 */
-	public void setAnualValue(Double anualValue)
-	{
-		this.anualValue = anualValue;
-	}
+    private InfoEmployee infoEmployee;
 
-	/**
-	 * @return Returns the courseValue.
-	 */
-	public Double getCourseValue()
-	{
-		return courseValue;
-	}
+    private Date when;
 
-	/**
-	 * @param courseValue
-	 *            The courseValue to set.
-	 */
-	public void setCourseValue(Double courseValue)
-	{
-		this.courseValue = courseValue;
-	}
+    private List infoPaymentPhases;
 
-	/**
-	 * @return Returns the creditValue.
-	 */
-	public Double getCreditValue()
-	{
-		return creditValue;
-	}
+    public String toString() {
+        StringBuffer result = new StringBuffer();
+        result = result.append("[InfoGratuityValues: \n").append("idInternal= ").append(getIdInternal())
+                .append("\nanualValue= ").append(getAnualValue()).append("\nscholarShipPart= ").append(
+                        getScholarShipValue()).append("\nfinalProofValue= ")
+                .append(getFinalProofValue()).append("\ncourseValue= ").append(getCourseValue()).append(
+                        "\ncreditValue= ").append(getCreditValue()).append("\nproofRequestPayment= ")
+                .append(getProofRequestPayment()).append("\nstartPayment= ").append(getStartPayment())
+                .append("\nendPayment= ").append(getEndPayment()).append("\nregistrationPayment= ")
+                .append(getRegistrationPayment()).append("]");
+        return result.toString();
+    }
 
-	/**
-	 * @param creditValue
-	 *            The creditValue to set.
-	 */
-	public void setCreditValue(Double creditValue)
-	{
-		this.creditValue = creditValue;
-	}
+    /**
+     * @return Returns the when.
+     */
+    public Date getWhen() {
+        return when;
+    }
 
-	/**
-	 * @return Returns the endPayment.
-	 */
-	public Date getEndPayment()
-	{
-		return endPayment;
-	}
+    /**
+     * @param when
+     *            The when to set.
+     */
+    public void setWhen(Date when) {
+        this.when = when;
+    }
 
-	/**
-	 * @param endPayment
-	 *            The endPayment to set.
-	 */
-	public void setEndPayment(Date endPayment)
-	{
-		this.endPayment = endPayment;
-	}
+    /**
+     * @return Returns the registrationPayment.
+     */
+    public Boolean getRegistrationPayment() {
+        return registrationPayment;
+    }
 
-	/**
-	 * @return Returns the finalProofValue.
-	 */
-	public Double getFinalProofValue()
-	{
-		return finalProofValue;
-	}
+    /**
+     * @param registrationPayment
+     *            The registrationPayment to set.
+     */
+    public void setRegistrationPayment(Boolean registrationPayment) {
+        this.registrationPayment = registrationPayment;
+    }
 
-	/**
-	 * @param finalProofValue
-	 *            The finalProofValue to set.
-	 */
-	public void setFinalProofValue(Double finalProofValue)
-	{
-		this.finalProofValue = finalProofValue;
-	}
+    /**
+     * @return Returns the anualValue.
+     */
+    public Double getAnualValue() {
+        return anualValue;
+    }
 
-	/**
-	 * @return Returns the infoEmployee.
-	 */
-	public InfoEmployee getInfoEmployee()
-	{
-		return infoEmployee;
-	}
+    /**
+     * @param anualValue
+     *            The anualValue to set.
+     */
+    public void setAnualValue(Double anualValue) {
+        this.anualValue = anualValue;
+    }
 
-	/**
-	 * @param infoEmployee
-	 *            The infoEmployee to set.
-	 */
-	public void setInfoEmployee(InfoEmployee infoEmployee)
-	{
-		this.infoEmployee = infoEmployee;
-	}
+    /**
+     * @return Returns the courseValue.
+     */
+    public Double getCourseValue() {
+        return courseValue;
+    }
 
-	/**
-	 * @return Returns the infoExecutionDegree.
-	 */
-	public InfoExecutionDegree getInfoExecutionDegree()
-	{
-		return infoExecutionDegree;
-	}
+    /**
+     * @param courseValue
+     *            The courseValue to set.
+     */
+    public void setCourseValue(Double courseValue) {
+        this.courseValue = courseValue;
+    }
 
-	/**
-	 * @param infoExecutionDegree
-	 *            The infoExecutionDegree to set.
-	 */
-	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree)
-	{
-		this.infoExecutionDegree = infoExecutionDegree;
-	}
+    /**
+     * @return Returns the creditValue.
+     */
+    public Double getCreditValue() {
+        return creditValue;
+    }
 
-	/**
-	 * @return Returns the infoPaymentPhases.
-	 */
-	public List getInfoPaymentPhases()
-	{
-		return infoPaymentPhases;
-	}
+    /**
+     * @param creditValue
+     *            The creditValue to set.
+     */
+    public void setCreditValue(Double creditValue) {
+        this.creditValue = creditValue;
+    }
 
-	/**
-	 * @param infoPaymentPhases
-	 *            The infoPaymentPhases to set.
-	 */
-	public void setInfoPaymentPhases(List infoPaymentPhases)
-	{
-		this.infoPaymentPhases = infoPaymentPhases;
-	}
+    /**
+     * @return Returns the endPayment.
+     */
+    public Date getEndPayment() {
+        return endPayment;
+    }
 
-	/**
-	 * @return Returns the proofRequestPayment.
-	 */
-	public Boolean getProofRequestPayment()
-	{
-		return proofRequestPayment;
-	}
+    /**
+     * @param endPayment
+     *            The endPayment to set.
+     */
+    public void setEndPayment(Date endPayment) {
+        this.endPayment = endPayment;
+    }
 
-	/**
-	 * @param proofRequestPayment
-	 *            The proofRequestPayment to set.
-	 */
-	public void setProofRequestPayment(Boolean proofRequestPayment)
-	{
-		this.proofRequestPayment = proofRequestPayment;
-	}
+    /**
+     * @return Returns the finalProofValue.
+     */
+    public Double getFinalProofValue() {
+        return finalProofValue;
+    }
 
-	/**
-	 * @return Returns the scholarShipValue.
-	 */
-	public Double getScholarShipValue()
-	{
-		return scholarShipValue;
-	}
+    /**
+     * @param finalProofValue
+     *            The finalProofValue to set.
+     */
+    public void setFinalProofValue(Double finalProofValue) {
+        this.finalProofValue = finalProofValue;
+    }
 
-	/**
-	 * @param scholarShipValue
-	 *            The scholarShipValue to set.
-	 */
-	public void setScholarShipValue(Double scholarShipValue)
-	{
-		this.scholarShipValue = scholarShipValue;
-	}
+    /**
+     * @return Returns the infoEmployee.
+     */
+    public InfoEmployee getInfoEmployee() {
+        return infoEmployee;
+    }
 
-	/**
-	 * @return Returns the startPayment.
-	 */
-	public Date getStartPayment()
-	{
-		return startPayment;
-	}
+    /**
+     * @param infoEmployee
+     *            The infoEmployee to set.
+     */
+    public void setInfoEmployee(InfoEmployee infoEmployee) {
+        this.infoEmployee = infoEmployee;
+    }
 
-	/**
-	 * @param startPayment
-	 *            The startPayment to set.
-	 */
-	public void setStartPayment(Date startPayment)
-	{
-		this.startPayment = startPayment;
-	}
+    /**
+     * @return Returns the infoExecutionDegree.
+     */
+    public InfoExecutionDegree getInfoExecutionDegree() {
+        return infoExecutionDegree;
+    }
+
+    /**
+     * @param infoExecutionDegree
+     *            The infoExecutionDegree to set.
+     */
+    public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
+        this.infoExecutionDegree = infoExecutionDegree;
+    }
+
+    /**
+     * @return Returns the infoPaymentPhases.
+     */
+    public List getInfoPaymentPhases() {
+        return infoPaymentPhases;
+    }
+
+    /**
+     * @param infoPaymentPhases
+     *            The infoPaymentPhases to set.
+     */
+    public void setInfoPaymentPhases(List infoPaymentPhases) {
+        this.infoPaymentPhases = infoPaymentPhases;
+    }
+
+    /**
+     * @return Returns the proofRequestPayment.
+     */
+    public Boolean getProofRequestPayment() {
+        return proofRequestPayment;
+    }
+
+    /**
+     * @param proofRequestPayment
+     *            The proofRequestPayment to set.
+     */
+    public void setProofRequestPayment(Boolean proofRequestPayment) {
+        this.proofRequestPayment = proofRequestPayment;
+    }
+
+    /**
+     * @return Returns the scholarShipValue.
+     */
+    public Double getScholarShipValue() {
+        return scholarShipValue;
+    }
+
+    /**
+     * @param scholarShipValue
+     *            The scholarShipValue to set.
+     */
+    public void setScholarShipValue(Double scholarShipValue) {
+        this.scholarShipValue = scholarShipValue;
+    }
+
+    /**
+     * @return Returns the startPayment.
+     */
+    public Date getStartPayment() {
+        return startPayment;
+    }
+
+    /**
+     * @param startPayment
+     *            The startPayment to set.
+     */
+    public void setStartPayment(Date startPayment) {
+        this.startPayment = startPayment;
+    }
 
     public void copyFromDomain(IGratuityValues gratuityValues) {
         super.copyFromDomain(gratuityValues);
-        if(gratuityValues != null) {
+        if (gratuityValues != null) {
             setAnualValue(gratuityValues.getAnualValue());
             setScholarShipValue(gratuityValues.getScholarShipValue());
             setFinalProofValue(gratuityValues.getFinalProofValue());
@@ -292,12 +256,12 @@ public class InfoGratuityValues extends InfoObject
             setStartPayment(gratuityValues.getStartPayment());
             setEndPayment(gratuityValues.getEndPayment());
             setWhen(gratuityValues.getWhen());
-        }        
+        }
     }
-    
+
     public static InfoGratuityValues newInfoFromDomain(IGratuityValues gratuityValues) {
         InfoGratuityValues infoGratuityValues = null;
-        if(gratuityValues != null) {
+        if (gratuityValues != null) {
             infoGratuityValues = new InfoGratuityValues();
             infoGratuityValues.copyFromDomain(gratuityValues);
         }

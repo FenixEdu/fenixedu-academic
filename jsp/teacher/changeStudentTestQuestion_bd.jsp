@@ -9,8 +9,20 @@
 
 function selectDelete(){
 	var e = document.forms[0].studentsType;
-	e[2].checked=true;
+	e[3].checked=true;	
+}
 		
+function selectAnotherExercise(){
+	var e = document.forms[0].studentsType;
+	
+	if(document.forms[0].changesType[0].checked==true){
+		e[2].disabled=true;
+		if(e[2].checked==true){
+			e[1].checked=true;
+}
+	} else {
+		e[2].disabled=false;
+	}
 }
 
 function selectStudents() { 
@@ -18,7 +30,7 @@ function selectStudents() {
 	var deleteType = document.forms[0].deleteVariation;
 	var disable = false;
 	
-	if(studentType[2].checked==false)
+	if(studentType[3].checked==false)
 		disable=true;
 	for (var i=0; i<document.forms[0].deleteVariation.length; i++){
 		var e = document.forms[0].deleteVariation[i];
@@ -49,7 +61,7 @@ function selectStudents() {
 	<logic:iterate id="changesType" name="changesTypeList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="changesType" property="label"/></td>
-			<td><html:radio property="changesType" value="<%=changesType.getValue()%>"/></td>
+			<td><html:radio property="changesType" value="<%=changesType.getValue()%>" onclick="selectAnotherExercise()"/></td>
 		</tr>
 	</logic:iterate>
 </table>
@@ -61,7 +73,11 @@ function selectStudents() {
 	<logic:iterate id="studentsType" name="studentsTypeList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="studentsType" property="label"/></td>
-			<td><html:radio property="studentsType" value="<%=studentsType.getValue()%>" onclick="selectStudents()"/></td>
+			<bean:define id="disabled" value="false"/>
+			<logic:equal name="studentsType" property="value" value="3">
+				<bean:define id="disabled" value="true"/>
+			</logic:equal>
+			<td><html:radio property="studentsType" value="<%=studentsType.getValue()%>" disabled="<%=new Boolean(disabled).booleanValue()%>" onclick="selectStudents()"/></td>
 		</tr>
 	</logic:iterate>
 </table>

@@ -43,28 +43,29 @@ public class InsertExerciseVariation implements IService {
     public InsertExerciseVariation() {
     }
 
-    public List run(Integer executionCourseId, Integer metadataId,
-            FormFile xmlZipFile, String path) throws FenixServiceException,
-            NotExecuteException {
+    public List run(Integer executionCourseId, Integer metadataId, FormFile xmlZipFile, String path)
+            throws FenixServiceException, NotExecuteException {
         List badXmls = new ArrayList();
         int xmlNumber = 0;
         this.path = path.replace('\\', '/');
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null) { throw new InvalidArgumentsServiceException(); }
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
 
-            IMetadata metadata = (IMetadata) persistentSuport
-                    .getIPersistentMetadata().readByOID(Metadata.class,
-                            metadataId);
-            if (metadata == null) { throw new InvalidArgumentsServiceException(); }
+            IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(
+                    Metadata.class, metadataId);
+            if (metadata == null) {
+                throw new InvalidArgumentsServiceException();
+            }
             List xmlFilesList = getXmlFilesList(xmlZipFile);
             if (xmlFilesList == null)
-                    throw new NotExecuteException("error.badMetadataFile");
+                throw new NotExecuteException("error.badMetadataFile");
             Iterator it = xmlFilesList.iterator();
 
             while (it.hasNext()) {
@@ -74,16 +75,13 @@ public class InsertExerciseVariation implements IService {
 
                 try {
                     ParseQuestion parseQuestion = new ParseQuestion();
-                    IPersistentQuestion persistentQuestion = persistentSuport
-                            .getIPersistentQuestion();
+                    IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 
-                    parseQuestion.parseQuestion(xmlFile, new InfoQuestion(),
-                            this.path);
+                    parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), this.path);
                     IQuestion question = new Question();
                     question.setMetadata(metadata);
                     question.setXmlFile(xmlFile);
-                    question.setXmlFileName(persistentQuestion.correctFileName(
-                            xmlFileName, metadataId));
+                    question.setXmlFileName(persistentQuestion.correctFileName(xmlFileName, metadataId));
                     question.setVisibility(new Boolean("true"));
                     persistentQuestion.simpleLockWrite(question);
                     xmlNumber++;
@@ -97,9 +95,8 @@ public class InsertExerciseVariation implements IService {
             }
 
             if (xmlNumber != 0)
-                    metadata.setNumberOfMembers(new Integer(metadata
-                            .getNumberOfMembers().intValue()
-                            + xmlNumber));
+                metadata.setNumberOfMembers(new Integer(metadata.getNumberOfMembers().intValue()
+                        + xmlNumber));
 
             return badXmls;
         } catch (ExcepcaoPersistencia e) {
@@ -107,29 +104,27 @@ public class InsertExerciseVariation implements IService {
         }
     }
 
-    public List getXmlFilesList(FormFile xmlZipFile)
-            throws FenixServiceException {
+    public List getXmlFilesList(FormFile xmlZipFile) throws FenixServiceException {
         List xmlFilesList = new ArrayList();
         ZipInputStream zipFile = null;
 
         try {
             if (xmlZipFile.getContentType().equals("text/xml")) {
-                xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(),
-                        new String(xmlZipFile.getFileData(), "ISO-8859-1")));
+                xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile
+                        .getFileData(), "ISO-8859-1")));
             } else {
                 zipFile = new ZipInputStream(xmlZipFile.getInputStream());
                 while (true) {
 
                     ZipEntry entry = zipFile.getNextEntry();
                     String xmlString = new String();
-                    if (entry == null) break;
+                    if (entry == null)
+                        break;
                     byte[] b = new byte[1000];
                     int readed = 0;
                     while ((readed = zipFile.read(b)) > -1)
-                        xmlString = xmlString.concat(new String(b, 0, readed,
-                                "ISO-8859-1"));
-                    xmlFilesList.add(new LabelValueBean(entry.getName(),
-                            xmlString));
+                        xmlString = xmlString.concat(new String(b, 0, readed, "ISO-8859-1"));
+                    xmlFilesList.add(new LabelValueBean(entry.getName(), xmlString));
                 }
                 zipFile.close();
             }

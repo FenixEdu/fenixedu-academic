@@ -26,7 +26,7 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -36,38 +36,32 @@ import Util.RoleType;
 import Util.SituationName;
 import Util.State;
 
-public class CreateCandidateSituationTest extends TestCaseServicos
-{
+public class CreateCandidateSituationTest extends TestCaseServicos {
 
-    public CreateCandidateSituationTest(java.lang.String testName)
-    {
+    public CreateCandidateSituationTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(CreateCandidateSituationTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
 
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
-    public void testCreateCandidateSituationNonExisting()
-    {
+
+    public void testCreateCandidateSituationNonExisting() {
         System.out.println("- Test 1 : Create Candidate Situation");
 
         UserView userView = this.getUserViewToBeTested("nmsn", true);
@@ -79,8 +73,7 @@ public class CreateCandidateSituationTest extends TestCaseServicos
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -92,39 +85,32 @@ public class CreateCandidateSituationTest extends TestCaseServicos
             IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
             assertNotNull(executionYear);
 
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-                sp.getIPersistentDegreeCurricularPlan();
-            IDegreeCurricularPlan degreeCurricularPlan =
-                persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+                    .getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan
+                    .readByNameAndDegree("plano2", degree);
             assertNotNull(degreeCurricularPlan);
 
-            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            executionDegree =
-                persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(
-                    degreeCurricularPlan,
-                    executionYear);
+            executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(
+                    degreeCurricularPlan, executionYear);
             assertNotNull(executionDegree);
 
             infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
 
             person = sp.getIPessoaPersistente().lerPessoaPorUsername("nmsn");
 
-            IMasterDegreeCandidate masterDegreeCandidate =
-                sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPerson(
-                    executionDegree,
-                    person);
+            IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                    .readByExecutionDegreeAndPerson(executionDegree, person);
             assertNotNull(masterDegreeCandidate);
 
             Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next();
-                if (candidateSituation.getValidation().equals(new State(State.ACTIVE)))
-                {
-                    assertEquals(
-                        candidateSituation.getSituation(),
-                        new SituationName(SituationName.ADMITIDO_STRING));
+                if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
+                    assertEquals(candidateSituation.getSituation(), new SituationName(
+                            SituationName.ADMITIDO_STRING));
                 }
             }
 
@@ -132,15 +118,10 @@ public class CreateCandidateSituationTest extends TestCaseServicos
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");
@@ -148,53 +129,37 @@ public class CreateCandidateSituationTest extends TestCaseServicos
 
         Object[] args = { infoExecutionDegree, infoPerson };
 
-        try
-        {
+        try {
             ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation", args);
-        }
-        catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("Fenix Service Exception");
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Eception");
         }
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IMasterDegreeCandidate masterDegreeCandidate =
-                sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPerson(
-                    executionDegree,
-                    person);
+            IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                    .readByExecutionDegreeAndPerson(executionDegree, person);
             assertNotNull(masterDegreeCandidate);
 
             Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next();
-                if (candidateSituation.getValidation().equals(new State(State.ACTIVE)))
-                {
-                    assertEquals(
-                        candidateSituation.getSituation(),
-                        new SituationName(SituationName.PENDENTE_STRING));
+                if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
+                    assertEquals(candidateSituation.getSituation(), new SituationName(
+                            SituationName.PENDENTE_STRING));
                 }
             }
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");
@@ -202,8 +167,7 @@ public class CreateCandidateSituationTest extends TestCaseServicos
 
     }
 
-    private UserView getUserViewToBeTested(String username, boolean withRole)
-    {
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
         Collection roles = new ArrayList();
         InfoRole infoRole = new InfoRole();
         if (withRole)

@@ -22,281 +22,245 @@ import ServidorAplicacao.Servicos.UtilsTestCase;
  * @author Pica
  */
 
-public class ReadQualificationsTest extends QualificationServiceNeedsAuthenticationTestCase
-{
+public class ReadQualificationsTest extends QualificationServiceNeedsAuthenticationTestCase {
 
-	public ReadQualificationsTest(java.lang.String testName)
-	{
-		super(testName);
-	}
+    public ReadQualificationsTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	/*
-	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getApplication()
-	 */
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadQualifications";
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
-	 */
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/person/qualification/testReadQualificationsDataSet.xml";
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizedUser_GrantOwnerManager()
-	 */
-	protected String[] getAuthorizedUserGrantOwnerManager()
-	{
-		String[] args = { "user_gom", "pass", getApplication()};
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizedUser_Teacher()
-	 */
-	protected String[] getAuthorizedUserTeacher()
-	{
-		String[] args = { "user_t", "pass", getApplication()};
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
-	 */
-	protected String[] getUnauthorizedUser()
-	{
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_GrantOwnerManager()
-	 */
-	protected Object[] getAuthorizeArgumentsGrantOwnerManager()
-	{
-		//Grant Owner qualification
-		InfoQualification info = new InfoQualification();
-		info.setInfoPerson(getInfoPersonGO());
+    /*
+     * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-		Object[] args = { null, info };
-		return args;
-	}
-	/*
-	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_Teacher()
-	 */
-	protected Object[] getAuthorizeArgumentsTeacher()
-	{
-		//Teacher qualification
-		InfoQualification info = new InfoQualification();
-		info.setInfoPerson(getInfoPersonT());
+    /*
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "ReadQualifications";
+    }
 
-		Object[] args = { null, info };
-		return args;
-	}
+    /*
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+     */
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/person/qualification/testReadQualificationsDataSet.xml";
+    }
 
-	/**
-	 * 
-	 * Start of the tests
-	 *  
-	 */
+    /*
+     * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizedUser_GrantOwnerManager()
+     */
+    protected String[] getAuthorizedUserGrantOwnerManager() {
+        String[] args = { "user_gom", "pass", getApplication() };
+        return args;
+    }
 
-	/**
-	 * A Grant Owner Manager reads all qualifications of a grant owner
-	 */
-	public void testReadQualificationsGOMSuccessfull()
-	{
-		try
-		{
-			String[] args = getAuthorizedUserGrantOwnerManager();
-			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
+    /*
+     * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizedUser_Teacher()
+     */
+    protected String[] getAuthorizedUserTeacher() {
+        String[] args = { "user_t", "pass", getApplication() };
+        return args;
+    }
 
-			List result = null;
-			result = (List) ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
+    /*
+     * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
+     */
+    protected String[] getUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-			if (result == null)
-			{
-				fail("Reading Qualifications of a GrantOwner: ");
-			}
+    /*
+     * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_GrantOwnerManager()
+     */
+    protected Object[] getAuthorizeArgumentsGrantOwnerManager() {
+        //Grant Owner qualification
+        InfoQualification info = new InfoQualification();
+        info.setInfoPerson(getInfoPersonGO());
 
-			//Is the data read correct
-			Object[] expectedresult = { new Integer(3), new Integer(4)};
-			UtilsTestCase.readTestList(result, expectedresult, "idInternal", Qualification.class);
+        Object[] args = { null, info };
+        return args;
+    }
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
+    /*
+     * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_Teacher()
+     */
+    protected Object[] getAuthorizeArgumentsTeacher() {
+        //Teacher qualification
+        InfoQualification info = new InfoQualification();
+        info.setInfoPerson(getInfoPersonT());
 
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
+        Object[] args = { null, info };
+        return args;
+    }
 
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Qualifications of a GrantOwner: " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Qualifications of a GrantOwner: " + e);
-		}
-	}
+    /**
+     * 
+     * Start of the tests
+     *  
+     */
 
-	/**
-	 * A Teacher reads all his qualifications
-	 */
-	public void testReadQualificationsTSuccessfull()
-	{
-		try
-		{
-			String[] args = getAuthorizedUserTeacher();
-			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsTeacher();
+    /**
+     * A Grant Owner Manager reads all qualifications of a grant owner
+     */
+    public void testReadQualificationsGOMSuccessfull() {
+        try {
+            String[] args = getAuthorizedUserGrantOwnerManager();
+            IUserView user = authenticateUser(args);
+            Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
 
-			List result = null;
-			result = (List) ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
+            List result = null;
+            result = (List) ServiceManagerServiceFactory.executeService(user,
+                    getNameOfServiceToBeTested(), argserv);
 
-			//Is the data read correct
-			Object[] expectedresult = { new Integer(1), new Integer(2), new Integer(6)};
-			UtilsTestCase.readTestList(result, expectedresult, "idInternal", Qualification.class);
+            if (result == null) {
+                fail("Reading Qualifications of a GrantOwner: ");
+            }
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
+            //Is the data read correct
+            Object[] expectedresult = { new Integer(3), new Integer(4) };
+            UtilsTestCase.readTestList(result, expectedresult, "idInternal", Qualification.class);
 
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
 
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Qualifications of a Teacher: " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Qualifications of aTeacher: " + e);
-		}
-	}
+            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
 
-	/**
-	 * Valid user(teacher), but wrong arguments(Grant Owner)
-	 */
-	public void testReadQualificationsUnsuccessfull1()
-	{
+        } catch (FenixServiceException e) {
+            fail("Reading Qualifications of a GrantOwner: " + e);
+        } catch (Exception e) {
+            fail("Reading Qualifications of a GrantOwner: " + e);
+        }
+    }
 
-		try
-		{
-			String[] args = getAuthorizedUserTeacher();
-			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
+    /**
+     * A Teacher reads all his qualifications
+     */
+    public void testReadQualificationsTSuccessfull() {
+        try {
+            String[] args = getAuthorizedUserTeacher();
+            IUserView user = authenticateUser(args);
+            Object[] argserv = getAuthorizeArgumentsTeacher();
 
-			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
+            List result = null;
+            result = (List) ServiceManagerServiceFactory.executeService(user,
+                    getNameOfServiceToBeTested(), argserv);
 
-			fail("ReadPersonQualificationsUnsuccessfull.");
+            //Is the data read correct
+            Object[] expectedresult = { new Integer(1), new Integer(2), new Integer(6) };
+            UtilsTestCase.readTestList(result, expectedresult, "idInternal", Qualification.class);
 
-		} catch (NotAuthorizedException e)
-		{
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (FenixServiceException e)
-		{
-			fail("ReadPersonQualificationsUnsuccessfull: " + e);
-		} catch (Exception e)
-		{
-			fail("ReadPersonQualificationsUnsuccessfull: " + e);
-		}
-	}
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
 
-	/**
-	 * Valid user(Grant Owner), but wrong arguments(Teacher)
-	 */
-	public void testReadQualificationsQualificationUnsuccessfull2()
-	{
-		try
-		{
-			String[] args = getAuthorizedUserGrantOwnerManager();
-			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsTeacher();
+            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
 
-			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
+        } catch (FenixServiceException e) {
+            fail("Reading Qualifications of a Teacher: " + e);
+        } catch (Exception e) {
+            fail("Reading Qualifications of aTeacher: " + e);
+        }
+    }
 
-			fail("ReadPersonQualificationsUnsuccessfull.");
+    /**
+     * Valid user(teacher), but wrong arguments(Grant Owner)
+     */
+    public void testReadQualificationsUnsuccessfull1() {
 
-		} catch (NotAuthorizedException e)
-		{
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (FenixServiceException e)
-		{
-			fail("ReadPersonQualificationsUnsuccessfull: " + e);
-		} catch (Exception e)
-		{
-			fail("ReadPersonQualificationsUnsuccessfull: " + e);
-		}
-	}
+        try {
+            String[] args = getAuthorizedUserTeacher();
+            IUserView user = authenticateUser(args);
+            Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
 
-	/**
-	 * Valid user, but wrong arguments (person key id is null)
-	 */
-	public void testQualificationsQualificationUnsuccessfull3()
-	{
-		try
-		{
-			String[] args = getAuthorizedUserGrantOwnerManager();
-			IUserView user = authenticateUser(args);
-			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
+            ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
-			//Invalid qualification
-			 ((InfoQualification) argserv[1]).getInfoPerson().setIdInternal(null);
+            fail("ReadPersonQualificationsUnsuccessfull.");
 
-			ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
+        } catch (NotAuthorizedException e) {
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
+            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (FenixServiceException e) {
+            fail("ReadPersonQualificationsUnsuccessfull: " + e);
+        } catch (Exception e) {
+            fail("ReadPersonQualificationsUnsuccessfull: " + e);
+        }
+    }
 
-			fail("ReadPersonQualificationsUnsuccessfull");
+    /**
+     * Valid user(Grant Owner), but wrong arguments(Teacher)
+     */
+    public void testReadQualificationsQualificationUnsuccessfull2() {
+        try {
+            String[] args = getAuthorizedUserGrantOwnerManager();
+            IUserView user = authenticateUser(args);
+            Object[] argserv = getAuthorizeArgumentsTeacher();
 
-		} catch (NotAuthorizedException e)
-		{
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (FenixServiceException e)
-		{
-			fail("ReadPersonQualificationsUnsuccessfull: " + e);
-		} catch (Exception e)
-		{
-			fail("ReadPersonQualificationsUnsuccessfull: " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
 
-	/**
-	 * 
-	 * End of the tests
-	 *  
-	 */
+            fail("ReadPersonQualificationsUnsuccessfull.");
 
-	//Returns a GrantOwnerManager user
-	protected InfoPerson getInfoPersonGO()
-	{
-		InfoPerson info = new InfoPerson();
-		info.setIdInternal(new Integer(14));
-		info.setUsername("user_gom");
-		return info;
-	}
-	//Returns a Teacher user
-	protected InfoPerson getInfoPersonT()
-	{
-		InfoPerson info = new InfoPerson();
-		info.setIdInternal(new Integer(18));
-		info.setUsername("user_t");
-		return info;
-	}
+        } catch (NotAuthorizedException e) {
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
+            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (FenixServiceException e) {
+            fail("ReadPersonQualificationsUnsuccessfull: " + e);
+        } catch (Exception e) {
+            fail("ReadPersonQualificationsUnsuccessfull: " + e);
+        }
+    }
+
+    /**
+     * Valid user, but wrong arguments (person key id is null)
+     */
+    public void testQualificationsQualificationUnsuccessfull3() {
+        try {
+            String[] args = getAuthorizedUserGrantOwnerManager();
+            IUserView user = authenticateUser(args);
+            Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
+
+            //Invalid qualification
+            ((InfoQualification) argserv[1]).getInfoPerson().setIdInternal(null);
+
+            ServiceManagerServiceFactory.executeService(user, getNameOfServiceToBeTested(), argserv);
+
+            fail("ReadPersonQualificationsUnsuccessfull");
+
+        } catch (NotAuthorizedException e) {
+            compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedReadQualificationsDataSet.xml");
+            System.out.println(getNameOfServiceToBeTested() + " was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (FenixServiceException e) {
+            fail("ReadPersonQualificationsUnsuccessfull: " + e);
+        } catch (Exception e) {
+            fail("ReadPersonQualificationsUnsuccessfull: " + e);
+        }
+    }
+
+    /**
+     * 
+     * End of the tests
+     *  
+     */
+
+    //Returns a GrantOwnerManager user
+    protected InfoPerson getInfoPersonGO() {
+        InfoPerson info = new InfoPerson();
+        info.setIdInternal(new Integer(14));
+        info.setUsername("user_gom");
+        return info;
+    }
+
+    //Returns a Teacher user
+    protected InfoPerson getInfoPersonT() {
+        InfoPerson info = new InfoPerson();
+        info.setIdInternal(new Integer(18));
+        info.setUsername("user_t");
+        return info;
+    }
 
 }

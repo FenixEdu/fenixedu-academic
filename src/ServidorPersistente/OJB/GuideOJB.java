@@ -1,5 +1,6 @@
 package ServidorPersistente.OJB;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -16,35 +17,30 @@ import Util.TipoDocumentoIdentificacao;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
-{
+public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
 
-    public GuideOJB()
-    {
+    public GuideOJB() {
     }
 
-
-    public Integer generateGuideNumber(Integer year) throws ExcepcaoPersistencia
-    {
+    public Integer generateGuideNumber(Integer year) throws ExcepcaoPersistencia {
 
         Integer guideNumber = new Integer(0);
-        Criteria crit = new Criteria();
-        crit.addEqualTo("year", year);
 
-        List result = queryList(Guide.class, crit, "number", false);
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("year", year);
 
-        if (result != null && result.size() != 0)
-        {
+        Iterator iterator = readIteratorByCriteria(Guide.class, criteria, "number", false);
 
-            guideNumber = ((IGuide) result.get(0)).getNumber();
+        if (iterator.hasNext()) {
+            guideNumber = ((IGuide) iterator.next()).getNumber();
         }
+
         return new Integer(guideNumber.intValue() + 1);
 
     }
 
     public IGuide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("number", number);
         crit.addEqualTo("year", year);
@@ -57,8 +53,7 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
      * IMPORTANT: If the ordering is changed here you must change the private
      * method getLatestVersions in the ChooseGuide Service
      */
-    public List readByYear(Integer year) throws ExcepcaoPersistencia
-    {
+    public List readByYear(Integer year) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         //QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
 
@@ -71,14 +66,15 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
         //(List)
         // PersistenceBrokerFactory.defaultPersistenceBroker().getCollectionByQuery(query);
 
-        if ((result == null) || (result.size() == 0)) { return null; }
+        if ((result == null) || (result.size() == 0)) {
+            return null;
+        }
 
         lockRead(result);
         return result;
     }
 
-    public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia
-    {
+    public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
         query.addOrderByDescending("version");
@@ -88,14 +84,15 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
 
         List result = queryList(Guide.class, criteria);
 
-        if (result.size() != 0) { return (IGuide) result.get(0); }
+        if (result.size() != 0) {
+            return (IGuide) result.get(0);
+        }
 
         return null;
     }
 
     public List readByPerson(String identificationDocumentNumber,
-            TipoDocumentoIdentificacao identificationDocumentType) throws ExcepcaoPersistencia
-    {
+            TipoDocumentoIdentificacao identificationDocumentType) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         //QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
@@ -111,17 +108,14 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
     }
 
     public List readByYearAndState(Integer guideYear, SituationOfGuide situationOfGuide)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
-        if (guideYear != null)
-        {
+        if (guideYear != null) {
             criteria.addEqualTo("year", guideYear);
         }
 
-        if (situationOfGuide != null)
-        {
+        if (situationOfGuide != null) {
             criteria.addEqualTo("guideSituations.state", new State(State.ACTIVE));
             criteria.addEqualTo("guideSituations.situation", situationOfGuide);
         }
@@ -142,8 +136,7 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
     //		
     //	}
 
-    public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia
-    {
+    public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("number", number);
@@ -155,17 +148,14 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
     }
 
     public List readNotAnnulledAndPayedByPersonAndExecutionDegree(Integer person, Integer executionDegree)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
-        if (person != null)
-        {
+        if (person != null) {
             criteria.addEqualTo("keyPerson", person);
         }
 
-        if (executionDegree != null)
-        {
+        if (executionDegree != null) {
             criteria.addEqualTo("keyExecutionDegree", executionDegree);
         }
 
@@ -176,12 +166,10 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide
         return queryList(Guide.class, criteria);
     }
 
-    public List readNotAnnulledAndPayedByPerson(Integer person) throws ExcepcaoPersistencia
-    {
+    public List readNotAnnulledAndPayedByPerson(Integer person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
-        if (person != null)
-        {
+        if (person != null) {
             criteria.addEqualTo("keyPerson", person);
         }
 

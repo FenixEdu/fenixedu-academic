@@ -21,63 +21,60 @@ import Dominio.IExecutionCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExamExecutionCourse;
 
-public class ExamExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExamExecutionCourse
-{
+public class ExamExecutionCourseOJB extends PersistentObjectOJB implements
+        IPersistentExamExecutionCourse {
 
     public IExamExecutionCourse readBy(IExam exam, IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
-    {
-        
+            throws ExcepcaoPersistencia {
+
         Criteria crit = new Criteria();
         crit.addEqualTo("exam.season", exam.getSeason());
         crit.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
-        crit.addEqualTo(
-                "executionCourse.executionPeriod.name",
-                executionCourse.getExecutionPeriod().getName());
-        crit.addEqualTo(
-                "executionCourse.executionPeriod.executionYear.year",
-                executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        crit.addEqualTo("executionCourse.executionPeriod.name", executionCourse.getExecutionPeriod()
+                .getName());
+        crit.addEqualTo("executionCourse.executionPeriod.executionYear.year", executionCourse
+                .getExecutionPeriod().getExecutionYear().getYear());
         return (IExamExecutionCourse) queryObject(ExamExecutionCourse.class, crit);
-       
+
     }
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
-    {
+    public List readByExam(IExam exam) throws ExcepcaoPersistencia {
+
+        Criteria crit = new Criteria();
+        crit.addEqualTo("exam.idInternal", exam.getIdInternal());
+
+        return (List) queryList(ExamExecutionCourse.class, crit);
+
+    }
+
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
-        crit.addEqualTo(
-            "executionCourse.executionPeriod.name",
-            executionCourse.getExecutionPeriod().getName());
-        crit.addEqualTo(
-            "executionCourse.executionPeriod.executionYear.year",
-            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        crit.addEqualTo("executionCourse.executionPeriod.name", executionCourse.getExecutionPeriod()
+                .getName());
+        crit.addEqualTo("executionCourse.executionPeriod.executionYear.year", executionCourse
+                .getExecutionPeriod().getExecutionYear().getYear());
         return queryList(ExamExecutionCourse.class, crit);
 
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         QueryByCriteria queryByCriteria = new QueryByCriteria(ExamExecutionCourse.class, null);
         queryByCriteria.addOrderBy("executionCourse.sigla", true);
         queryByCriteria.addOrderBy("exam.season", true);
         return queryList(queryByCriteria);
     }
 
-    
-
-    public void delete(IExam exam) throws ExcepcaoPersistencia
-    {
-        List examsExecutionCourses = readByCriteria(exam);
-        for (int i = 0; i < examsExecutionCourses.size(); i++)
-        {
-            IExamExecutionCourse examExecutionCourse =
-                (IExamExecutionCourse) examsExecutionCourses.get(i);
+    public void delete(IExam exam) throws ExcepcaoPersistencia {
+        List examsExecutionCourses = readByExam(exam);
+        for (int i = 0; i < examsExecutionCourses.size(); i++) {
+            IExamExecutionCourse examExecutionCourse = (IExamExecutionCourse) examsExecutionCourses
+                    .get(i);
             super.delete(examExecutionCourse);
         }
     }
 
-    public void delete(IExamExecutionCourse examExecutionCourse) throws ExcepcaoPersistencia
-    {
+    public void delete(IExamExecutionCourse examExecutionCourse) throws ExcepcaoPersistencia {
         super.delete(examExecutionCourse);
     }
 

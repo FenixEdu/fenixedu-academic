@@ -6,8 +6,8 @@ package ServidorApresentacao.TagLib.sop.examsMapNew;
 
 /**
  * @author Ana & Ricardo
- * 
+ *  
  */
 public interface IExamsMapRenderer {
-	public abstract StringBuffer render();
+    public abstract StringBuffer render();
 }

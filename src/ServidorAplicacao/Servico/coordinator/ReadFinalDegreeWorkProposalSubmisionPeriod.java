@@ -17,24 +17,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class ReadFinalDegreeWorkProposalSubmisionPeriod implements IService
-{
+public class ReadFinalDegreeWorkProposalSubmisionPeriod implements IService {
 
-    public ReadFinalDegreeWorkProposalSubmisionPeriod()
-    {
+    public ReadFinalDegreeWorkProposalSubmisionPeriod() {
         super();
     }
 
-    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException
-    {
+    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException {
 
         InfoScheduleing infoScheduleing = null;
 
-        if (executionDegreeOID != null)
-        {
+        if (executionDegreeOID != null) {
 
-            try
-            {
+            try {
                 ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
                 IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                         .getIPersistentFinalDegreeWork();
@@ -42,28 +37,29 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod implements IService
                 ICursoExecucao cursoExecucao = (ICursoExecucao) persistentFinalDegreeWork.readByOID(
                         CursoExecucao.class, executionDegreeOID);
 
-                if (cursoExecucao != null)
-                {
+                if (cursoExecucao != null) {
                     IScheduleing scheduleing = persistentFinalDegreeWork
                             .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
-                    if (scheduleing != null)
-                    {
+                    if (scheduleing != null) {
                         infoScheduleing = new InfoScheduleing();
                         infoScheduleing.setIdInternal(scheduleing.getIdInternal());
                         infoScheduleing.setStartOfProposalPeriod(scheduleing.getStartOfProposalPeriod());
                         infoScheduleing.setEndOfProposalPeriod(scheduleing.getEndOfProposalPeriod());
-                        infoScheduleing.setStartOfCandidacyPeriod(scheduleing.getStartOfCandidacyPeriod());
+                        infoScheduleing.setStartOfCandidacyPeriod(scheduleing
+                                .getStartOfCandidacyPeriod());
                         infoScheduleing.setEndOfCandidacyPeriod(scheduleing.getEndOfCandidacyPeriod());
-                        infoScheduleing.setMinimumNumberOfCompletedCourses(scheduleing.getMinimumNumberOfCompletedCourses());
-                        infoScheduleing.setMinimumNumberOfStudents(scheduleing.getMinimumNumberOfStudents());
-                        infoScheduleing.setMaximumNumberOfStudents(scheduleing.getMaximumNumberOfStudents());
-                        infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup());
+                        infoScheduleing.setMinimumNumberOfCompletedCourses(scheduleing
+                                .getMinimumNumberOfCompletedCourses());
+                        infoScheduleing.setMinimumNumberOfStudents(scheduleing
+                                .getMinimumNumberOfStudents());
+                        infoScheduleing.setMaximumNumberOfStudents(scheduleing
+                                .getMaximumNumberOfStudents());
+                        infoScheduleing.setMaximumNumberOfProposalCandidaciesPerGroup(scheduleing
+                                .getMaximumNumberOfProposalCandidaciesPerGroup());
                     }
                 }
-            }
-            catch (ExcepcaoPersistencia e)
-            {
+            } catch (ExcepcaoPersistencia e) {
                 throw new FenixServiceException(e);
             }
         }

@@ -9,32 +9,28 @@ import Util.DocumentType;
 import Util.GraduationType;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) 
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoGuideEntry extends InfoObject
-{
+public class InfoGuideEntry extends InfoObject {
 
     protected GraduationType graduationType;
+
     protected DocumentType documentType;
+
     protected String description;
+
     protected Double price;
+
     protected Integer quantity;
 
     protected InfoGuide infoGuide;
 
-    public InfoGuideEntry()
-    {
+    public InfoGuideEntry() {
     }
 
-    public InfoGuideEntry(
-        GraduationType graduationType,
-        DocumentType documentType,
-        String description,
-        Double price,
-        Integer quantity,
-        InfoGuide infoGuide)
-    {
+    public InfoGuideEntry(GraduationType graduationType, DocumentType documentType, String description,
+            Double price, Integer quantity, InfoGuide infoGuide) {
         this.description = description;
         this.documentType = documentType;
         this.graduationType = graduationType;
@@ -43,15 +39,12 @@ public class InfoGuideEntry extends InfoObject
         this.quantity = quantity;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof InfoGuideEntry)
-        {
+        if (obj instanceof InfoGuideEntry) {
             InfoGuideEntry infoGuideEntry = (InfoGuideEntry) obj;
 
-            resultado =
-                getInfoGuide().equals(infoGuideEntry.getInfoGuide())
+            resultado = getInfoGuide().equals(infoGuideEntry.getInfoGuide())
                     && getGraduationType().equals(infoGuideEntry.getGraduationType())
                     && getDocumentType().equals(infoGuideEntry.getDocumentType())
                     && getDescription().equals(infoGuideEntry.getDescription());
@@ -59,8 +52,7 @@ public class InfoGuideEntry extends InfoObject
         return resultado;
     }
 
-    public String toString()
-    {
+    public String toString() {
         String result = "[GUIDE ENTRY";
         result += ", description=" + description;
         result += ", infoGuide=" + infoGuide;
@@ -73,108 +65,97 @@ public class InfoGuideEntry extends InfoObject
     }
 
     /**
-	 * @return
-	 */
-    public String getDescription()
-    {
+     * @return
+     */
+    public String getDescription() {
         return description;
     }
 
     /**
-	 * @return
-	 */
-    public DocumentType getDocumentType()
-    {
+     * @return
+     */
+    public DocumentType getDocumentType() {
         return documentType;
     }
 
     /**
-	 * @return
-	 */
-    public GraduationType getGraduationType()
-    {
+     * @return
+     */
+    public GraduationType getGraduationType() {
         return graduationType;
     }
 
     /**
-	 * @return
-	 */
-    public InfoGuide getInfoGuide()
-    {
+     * @return
+     */
+    public InfoGuide getInfoGuide() {
         return infoGuide;
     }
 
     /**
-	 * @return
-	 */
-    public Double getPrice()
-    {
+     * @return
+     */
+    public Double getPrice() {
         return price;
     }
 
     /**
-	 * @return
-	 */
-    public Integer getQuantity()
-    {
+     * @return
+     */
+    public Integer getQuantity() {
         return quantity;
     }
 
     /**
-	 * @param string
-	 */
-    public void setDescription(String string)
-    {
+     * @param string
+     */
+    public void setDescription(String string) {
         description = string;
     }
 
     /**
-	 * @param type
-	 */
-    public void setDocumentType(DocumentType type)
-    {
+     * @param type
+     */
+    public void setDocumentType(DocumentType type) {
         documentType = type;
     }
 
     /**
-	 * @param type
-	 */
-    public void setGraduationType(GraduationType type)
-    {
+     * @param type
+     */
+    public void setGraduationType(GraduationType type) {
         graduationType = type;
     }
 
     /**
-	 * @param guide
-	 */
-    public void setInfoGuide(InfoGuide guide)
-    {
+     * @param guide
+     */
+    public void setInfoGuide(InfoGuide guide) {
         infoGuide = guide;
     }
 
     /**
-	 * @param double1
-	 */
-    public void setPrice(Double double1)
-    {
+     * @param double1
+     */
+    public void setPrice(Double double1) {
         price = double1;
     }
 
     /**
-	 * @param integer
-	 */
-    public void setQuantity(Integer integer)
-    {
+     * @param integer
+     */
+    public void setQuantity(Integer integer) {
         quantity = integer;
     }
 
-    
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IGuideEntry guideEntry) {
         super.copyFromDomain(guideEntry);
-        if(guideEntry != null) {
+        if (guideEntry != null) {
             setDescription(guideEntry.getDescription());
             setDocumentType(guideEntry.getDocumentType());
             setGraduationType(guideEntry.getGraduationType());
@@ -182,14 +163,14 @@ public class InfoGuideEntry extends InfoObject
             setQuantity(guideEntry.getQuantity());
         }
     }
-    
+
     public static InfoGuideEntry newInfoFromDomain(IGuideEntry guideEntry) {
         InfoGuideEntry infoGuideEntry = null;
-        if(guideEntry != null) {
+        if (guideEntry != null) {
             infoGuideEntry = new InfoGuideEntry();
             infoGuideEntry.copyFromDomain(guideEntry);
         }
-        
+
         return infoGuideEntry;
     }
 }

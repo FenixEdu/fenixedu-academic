@@ -25,18 +25,15 @@ public class VerifyIfCanDeleteDistributedTest implements IService {
     public boolean run(Integer executionCourseId, Integer distributedTestId)
             throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IDistributedTest distributedTest = (IDistributedTest) persistentSuport
-                    .getIPersistentDistributedTest().readByOID(
-                            DistributedTest.class, distributedTestId);
+                    .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
             if (distributedTest == null) {
                 throw new InvalidArgumentsServiceException();
             }
             if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
-                if (persistentSuport.getIPersistentStudentTestQuestion()
-                        .countResponsedOrNotResponsed(null, true,
-                                distributedTest) != 0)
+                if (persistentSuport.getIPersistentStudentTestQuestion().countResponsedOrNotResponsed(
+                        null, true, distributedTest) != 0)
                     return false;
             }
             return true;

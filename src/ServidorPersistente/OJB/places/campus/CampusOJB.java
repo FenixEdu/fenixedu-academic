@@ -10,20 +10,20 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Campus;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.places.campus.IPersistentCampus;
 
 /**
  * @author jpvl
  */
-public class CampusOJB extends ObjectFenixOJB implements IPersistentCampus
-{
+public class CampusOJB extends PersistentObjectOJB implements IPersistentCampus {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorPersistente.places.campus.IPersistentCampus#readAll()
      */
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         return queryList(Campus.class, criteria);
     }

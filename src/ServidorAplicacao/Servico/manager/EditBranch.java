@@ -44,8 +44,7 @@ public class EditBranch implements IService {
             persistentSuport = SuportePersistenteOJB.getInstance();
             persistentbranch = persistentSuport.getIPersistentBranch();
 
-            branch = (IBranch) persistentbranch.readByOID(Branch.class,
-                    infoBranch.getIdInternal());
+            branch = (IBranch) persistentbranch.readByOID(Branch.class, infoBranch.getIdInternal());
 
             if (branch == null) {
                 throw new NonExistingServiceException();

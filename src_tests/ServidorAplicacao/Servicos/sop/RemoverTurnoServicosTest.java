@@ -8,7 +8,7 @@
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
+ * 
  * @author tfc130
  */
 import junit.framework.Test;
@@ -28,7 +28,7 @@ import Dominio.Turma;
 import Dominio.Turno;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
@@ -41,112 +41,113 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
 public class RemoverTurnoServicosTest extends TestCaseDeleteAndEditServices {
-	private InfoClass infoClass = null;
-	private InfoShift infoShift = null;
+    private InfoClass infoClass = null;
 
+    private InfoShift infoShift = null;
 
-	public RemoverTurnoServicosTest(java.lang.String testName) {
-		super(testName);
-	}
+    public RemoverTurnoServicosTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(RemoverTurnoServicosTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(RemoverTurnoServicosTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
-	
-	protected String getNameOfServiceToBeTested() {
-		return "RemoverTurno";
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected String getNameOfServiceToBeTested() {
+        return "RemoverTurno";
+    }
 
-		this.ligarSuportePersistente(true);
-		
-		Object argsRemoverTurno[] = {this.infoShift, this.infoClass} ;
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		return argsRemoverTurno;
-	}
-	
+        this.ligarSuportePersistente(true);
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        Object argsRemoverTurno[] = { this.infoShift, this.infoClass };
 
-		this.ligarSuportePersistente(false);
-		
-		Object argsRemoverTurno[] = {this.infoShift, this.infoClass} ;
+        return argsRemoverTurno;
+    }
 
-		return argsRemoverTurno;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
+        this.ligarSuportePersistente(false);
 
-	private void ligarSuportePersistente(boolean existing) {
+        Object argsRemoverTurno[] = { this.infoShift, this.infoClass };
 
-		ISuportePersistente sp = null;
+        return argsRemoverTurno;
+    }
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+    private void ligarSuportePersistente(boolean existing) {
 
-			ICursoPersistente icp = sp.getICursoPersistente();
-			ICurso ic = icp.readBySigla("LEIC");
+        ISuportePersistente sp = null;
 
-			IPersistentDegreeCurricularPlan ipccp = sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan ipcc = ipccp.readByNameAndDegree("plano1", ic);
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+            ICursoPersistente icp = sp.getICursoPersistente();
+            ICurso ic = icp.readBySigla("LEIC");
 
-			ICursoExecucaoPersistente icep = sp.getICursoExecucaoPersistente();
-			ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
+            IPersistentDegreeCurricularPlan ipccp = sp.getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan ipcc = ipccp.readByNameAndDegree("plano1", ic);
 
-			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
-			
-			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
-			ITurma turma = null;
-			
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
-			assertNotNull(executionCourse);
-			
-			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-			ITurno shift = null;
-			
-			if(existing) {
-				turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", ice, iep);
-				assertNotNull(turma);
-				shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
-				assertNotNull(shift);
-			} else {
-				turma = new Turma("turma1", new Integer(1), ice, iep);
-				shift = new Turno("desc", new TipoAula(TipoAula.RESERVA), new Integer(1000), executionCourse);
-			}
-			
-			this.infoClass = Cloner.copyClass2InfoClass(turma);
-			this.infoShift = Cloner.copyShift2InfoShift(shift);
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-			sp.confirmarTransaccao();
+            IPersistentExecutionDegree icep = sp.getIPersistentExecutionDegree();
+            ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
+
+            ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
+            ITurma turma = null;
+
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = persistentExecutionCourse
+                    .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+            assertNotNull(executionCourse);
+
+            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+            ITurno shift = null;
+
+            if (existing) {
+                turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", ice,
+                        iep);
+                assertNotNull(turma);
+                shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
+                assertNotNull(shift);
+            } else {
+                turma = new Turma("turma1", new Integer(1), ice, iep);
+                shift = new Turno("desc", new TipoAula(TipoAula.RESERVA), new Integer(1000),
+                        executionCourse);
+            }
+
+            this.infoClass = Cloner.copyClass2InfoClass(turma);
+            this.infoShift = Cloner.copyShift2InfoShift(shift);
+
+            sp.confirmarTransaccao();
+
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
+                sp.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia ex) {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 
 }

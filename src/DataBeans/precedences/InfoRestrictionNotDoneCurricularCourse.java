@@ -16,15 +16,16 @@ public class InfoRestrictionNotDoneCurricularCourse extends InfoRestrictionByCur
         super.setRestrictionKindResourceKey("label.manager.restrictionNotDoneCurricularCourse");
     }
 
-    public static InfoRestrictionByCurricularCourse newInfoFromDomain(IRestrictionByCurricularCourse restriction) {
+    public static InfoRestrictionByCurricularCourse newInfoFromDomain(
+            IRestrictionByCurricularCourse restriction) {
 
         InfoRestrictionNotDoneCurricularCourse infoRestriction = null;
-        
+
         if (restriction != null) {
             infoRestriction = new InfoRestrictionNotDoneCurricularCourse();
             infoRestriction.copyFromDomain(restriction);
         }
-        
+
         return infoRestriction;
     }
 

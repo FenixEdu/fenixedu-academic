@@ -47,16 +47,14 @@ public class RenderSectionMenuTag extends TagSupport {
         if (getActiveSectionName() != null) {
 
             try {
-                activeSection = (InfoSection) pageContext
-                        .findAttribute(getActiveSectionName());
+                activeSection = (InfoSection) pageContext.findAttribute(getActiveSectionName());
             } catch (ClassCastException e) {
                 activeSection = null;
             }
         }
         //TODO: change the message
         if (sections == null) {
-            throw new JspException(messages.getMessage(
-                    "generateExamsMap.infoExamsMap.notFound", name));
+            throw new JspException(messages.getMessage("generateExamsMap.infoExamsMap.notFound", name));
         }
 
         //		Generate Map from sections
@@ -68,16 +66,14 @@ public class RenderSectionMenuTag extends TagSupport {
             sectionMenuMap = new SectionMenuMap(sections, activeSection);
         }
 
-        SectionMenuMapRenderer renderer = new SectionMenuMapRenderer(
-                sectionMenuMap, this.sectionMenuSlotContentRenderer, getPath(),
-                getRenderer());
+        SectionMenuMapRenderer renderer = new SectionMenuMapRenderer(sectionMenuMap,
+                this.sectionMenuSlotContentRenderer, getPath(), getRenderer());
 
         try {
             writer.print(renderer.render());
         } catch (IOException e) {
             e.printStackTrace();
-            throw new JspException(messages.getMessage("generateExamsMap.io", e
-                    .toString()));
+            throw new JspException(messages.getMessage("generateExamsMap.io", e.toString()));
         }
 
         return (SKIP_BODY);

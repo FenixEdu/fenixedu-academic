@@ -10,140 +10,145 @@ import java.util.List;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ *  
  */
-public class InfoExamsMap extends InfoObject implements Serializable  {
+public class InfoExamsMap extends InfoObject implements Serializable {
 
-	List executionCourses;
-	List curricularYears;
-	Calendar startSeason1;
-	Calendar endSeason1;
-	Calendar startSeason2;
-	Calendar endSeason2;
-	InfoExecutionDegree infoExecutionDegree;
-	InfoExecutionPeriod infoExecutionPeriod;
+    List executionCourses;
 
-	public InfoExamsMap() {
-		super();
-	}
+    List curricularYears;
 
-	public boolean equals(Object obj) {
-		if (obj instanceof InfoExamsMap) {
-			InfoExamsMap infoExamsMap = (InfoExamsMap) obj;
-			return this.getExecutionCourses().size()
-				== infoExamsMap.getExecutionCourses().size()
-				&& this.getCurricularYears().size()
-					== infoExamsMap.getCurricularYears().size();
-		}
+    Calendar startSeason1;
 
-		return false;
-	}
+    Calendar endSeason1;
 
-	/**
-	 * @return
-	 */
-	public List getCurricularYears() {
-		return curricularYears;
-	}
+    Calendar startSeason2;
 
-	/**
-	 * @return
-	 */
-	public Calendar getEndSeason1() {
-		return endSeason1;
-	}
+    Calendar endSeason2;
 
-	/**
-	 * @return
-	 */
-	public Calendar getEndSeason2() {
-		return endSeason2;
-	}
+    InfoExecutionDegree infoExecutionDegree;
 
-	/**
-	 * @return
-	 */
-	public List getExecutionCourses() {
-		return executionCourses;
-	}
+    InfoExecutionPeriod infoExecutionPeriod;
 
-	/**
-	 * @return
-	 */
-	public Calendar getStartSeason1() {
-		return startSeason1;
-	}
+    public InfoExamsMap() {
+        super();
+    }
 
-	/**
-	 * @return
-	 */
-	public Calendar getStartSeason2() {
-		return startSeason2;
-	}
+    public boolean equals(Object obj) {
+        if (obj instanceof InfoExamsMap) {
+            InfoExamsMap infoExamsMap = (InfoExamsMap) obj;
+            return this.getExecutionCourses().size() == infoExamsMap.getExecutionCourses().size()
+                    && this.getCurricularYears().size() == infoExamsMap.getCurricularYears().size();
+        }
 
-	/**
-	 * @param list
-	 */
-	public void setCurricularYears(List list) {
-		curricularYears = list;
-	}
+        return false;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEndSeason1(Calendar calendar) {
-		endSeason1 = calendar;
-	}
+    /**
+     * @return
+     */
+    public List getCurricularYears() {
+        return curricularYears;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEndSeason2(Calendar calendar) {
-		endSeason2 = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEndSeason1() {
+        return endSeason1;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setExecutionCourses(List list) {
-		executionCourses = list;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEndSeason2() {
+        return endSeason2;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setStartSeason1(Calendar calendar) {
-		startSeason1 = calendar;
-	}
+    /**
+     * @return
+     */
+    public List getExecutionCourses() {
+        return executionCourses;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setStartSeason2(Calendar calendar) {
-		startSeason2 = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getStartSeason1() {
+        return startSeason1;
+    }
 
-	/**
-	 * @return Returns the infoExecutionDegree.
-	 */
-	public InfoExecutionDegree getInfoExecutionDegree() {
-		return infoExecutionDegree;
-	}
+    /**
+     * @return
+     */
+    public Calendar getStartSeason2() {
+        return startSeason2;
+    }
 
-	/**
-	 * @return Returns the infoExecutionDegree.
-	 */
-	public InfoExecutionPeriod getInfoExecutionPeriod() {
-		return infoExecutionPeriod;
-	}
+    /**
+     * @param list
+     */
+    public void setCurricularYears(List list) {
+        curricularYears = list;
+    }
 
-	
-	/**
-	 * @param infoExecutionDegree The infoExecutionDegree to set.
-	 */
-	public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
-		this.infoExecutionDegree = infoExecutionDegree;
-	}
+    /**
+     * @param calendar
+     */
+    public void setEndSeason1(Calendar calendar) {
+        endSeason1 = calendar;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setEndSeason2(Calendar calendar) {
+        endSeason2 = calendar;
+    }
+
+    /**
+     * @param list
+     */
+    public void setExecutionCourses(List list) {
+        executionCourses = list;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setStartSeason1(Calendar calendar) {
+        startSeason1 = calendar;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setStartSeason2(Calendar calendar) {
+        startSeason2 = calendar;
+    }
+
+    /**
+     * @return Returns the infoExecutionDegree.
+     */
+    public InfoExecutionDegree getInfoExecutionDegree() {
+        return infoExecutionDegree;
+    }
+
+    /**
+     * @return Returns the infoExecutionDegree.
+     */
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+        return infoExecutionPeriod;
+    }
+
+    /**
+     * @param infoExecutionDegree
+     *            The infoExecutionDegree to set.
+     */
+    public void setInfoExecutionDegree(InfoExecutionDegree infoExecutionDegree) {
+        this.infoExecutionDegree = infoExecutionDegree;
+    }
 
     public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
         this.infoExecutionPeriod = infoExecutionPeriod;

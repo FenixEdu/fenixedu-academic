@@ -12,8 +12,7 @@ import Dominio.ISection;
  *  
  */
 
-public class InfoSection extends InfoObject implements Comparable,
-        ISiteComponent {
+public class InfoSection extends InfoObject implements Comparable, ISiteComponent {
     protected String name;
 
     protected Integer sectionOrder;
@@ -161,8 +160,7 @@ public class InfoSection extends InfoObject implements Comparable,
         //		result += ", sectionDepth=" + getSectionDepth();
         result += ", superiorInfoSection=" + getSuperiorInfoSection() + "\n";
         result += ", infoSite=\n\t\t"
-                + (getInfoSite() != null ? getInfoSite().getIdInternal()
-                        .toString() : "null");
+                + (getInfoSite() != null ? getInfoSite().getIdInternal().toString() : "null");
         result += "]";
         return result;
     }
@@ -176,11 +174,9 @@ public class InfoSection extends InfoObject implements Comparable,
                     && getSectionOrder() == infoSection.getSectionOrder();
 
             if (getInfoSite() != null && (infoSection.getInfoSite() != null))
-                resultado = resultado
-                        && getInfoSite().equals(infoSection.getInfoSite());
+                resultado = resultado && getInfoSite().equals(infoSection.getInfoSite());
             else
-                resultado = resultado
-                        && (getInfoSite() == null && infoSection.getInfoSite() == null);
+                resultado = resultado && (getInfoSite() == null && infoSection.getInfoSite() == null);
         }
         return resultado;
     }
@@ -221,20 +217,15 @@ public class InfoSection extends InfoObject implements Comparable,
 
         InfoSection section = (InfoSection) arg0;
 
-        if (getSectionDepth().intValue() == section.getSectionDepth()
-                .intValue()) {
+        if (getSectionDepth().intValue() == section.getSectionDepth().intValue()) {
             if (getSuperiorInfoSection() == null) {
-                return getSectionOrder().intValue()
-                        - section.getSectionOrder().intValue();
+                return getSectionOrder().intValue() - section.getSectionOrder().intValue();
             }
-            if (getSuperiorInfoSection().equals(
-                    section.getSuperiorInfoSection())) {
-                return getSectionOrder().intValue()
-                        - section.getSectionOrder().intValue();
+            if (getSuperiorInfoSection().equals(section.getSuperiorInfoSection())) {
+                return getSectionOrder().intValue() - section.getSectionOrder().intValue();
             }
 
-            return getSuperiorInfoSection().compareTo(
-                    section.getSuperiorInfoSection());
+            return getSuperiorInfoSection().compareTo(section.getSuperiorInfoSection());
 
         }
         if (getSectionDepth().intValue() > section.getSectionDepth().intValue()) {

@@ -14,7 +14,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.teacher.Category;
 import Dominio.teacher.ICategory;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.teacher.IPersistentCategory;
 
 /**
@@ -24,42 +24,39 @@ import ServidorPersistente.teacher.IPersistentCategory;
  * To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
-public class CategoryOJB
-	extends ObjectFenixOJB
-	implements IPersistentCategory {
+public class CategoryOJB extends PersistentObjectOJB implements IPersistentCategory {
 
-	/**
-	 *  
-	 */
-	public CategoryOJB() {
-		super();
-	}
+    /**
+     *  
+     */
+    public CategoryOJB() {
+        super();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.teacher.IPersistentCategory#readAll()
-	 */
-	public List readAll() throws ExcepcaoPersistencia {
-		
-		List categories = new ArrayList();
-		Criteria criteria = new Criteria();
-		categories = queryList(Category.class, criteria);
-		
-		return categories;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.teacher.IPersistentCategory#readAll()
+     */
+    public List readAll() throws ExcepcaoPersistencia {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.teacher.IPersistentCategory#readCategoryByCode(java.lang.String)
-	 */
-	public ICategory readCategoryByCode(String code)
-		throws ExcepcaoPersistencia {
+        List categories = new ArrayList();
+        Criteria criteria = new Criteria();
+        categories = queryList(Category.class, criteria);
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("code", code);
-		return (ICategory) queryObject(Category.class, criteria);
-	}
+        return categories;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.teacher.IPersistentCategory#readCategoryByCode(java.lang.String)
+     */
+    public ICategory readCategoryByCode(String code) throws ExcepcaoPersistencia {
+
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("code", code);
+        return (ICategory) queryObject(Category.class, criteria);
+    }
 
 }

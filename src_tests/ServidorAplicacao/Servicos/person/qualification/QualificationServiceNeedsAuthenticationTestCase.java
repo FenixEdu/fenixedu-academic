@@ -16,150 +16,136 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 
 /**
- * The users that can access to the service are: 1. GrantOwnerManager over a Grant Owner qualification 2.
- * Teacher over his own qualification
+ * The users that can access to the service are: 1. GrantOwnerManager over a
+ * Grant Owner qualification 2. Teacher over his own qualification
  */
 
-public abstract class QualificationServiceNeedsAuthenticationTestCase
-	extends ServidorAplicacao.Servicos.ServiceTestCase
-{
-	protected IUserView userViewGrantOwnerManager = null;
-	protected IUserView userViewTeacher = null;
-	protected IUserView userViewUnauthorized = null;
+public abstract class QualificationServiceNeedsAuthenticationTestCase extends
+        ServidorAplicacao.Servicos.ServiceTestCase {
+    protected IUserView userViewGrantOwnerManager = null;
 
-	protected QualificationServiceNeedsAuthenticationTestCase(String name)
-	{
-		super(name);
-	}
+    protected IUserView userViewTeacher = null;
 
-	/*
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	public void setUp()
-	{
-		super.setUp();
-		userViewGrantOwnerManager = authenticateUser(getAuthorizedUserGrantOwnerManager());
-		userViewTeacher = authenticateUser(getAuthorizedUserTeacher());
-		userViewUnauthorized = authenticateUser(getUnauthorizedUser());
-	}
+    protected IUserView userViewUnauthorized = null;
 
-	/**
-	 * Verifies if the service runs to a GrantOwnerManager user (with valid arguments)
-	 */
-	public void testAuthorizedUserGrantOwnerManager()
-	{
-		Object serviceArguments[] = getAuthorizeArgumentsGrantOwnerManager();
-		try
-		{
-			ServiceManagerServiceFactory.executeService(userViewGrantOwnerManager, getNameOfServiceToBeTested(), serviceArguments);
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by test testAuthorizedUser_GrantOwnerManager.");
+    protected QualificationServiceNeedsAuthenticationTestCase(String name) {
+        super(name);
+    }
 
-		} catch (NotAuthorizedException ex)
-		{
-			fail(getNameOfServiceToBeTested() + "fail testAuthorizedUser_GrantOwnerManager.");
-		} catch (Exception ex)
-		{
-			fail("Unable to run service: " + getNameOfServiceToBeTested());
-		}
-	}
+    /*
+     * @see junit.framework.TestCase#setUp()
+     */
+    public void setUp() {
+        super.setUp();
+        userViewGrantOwnerManager = authenticateUser(getAuthorizedUserGrantOwnerManager());
+        userViewTeacher = authenticateUser(getAuthorizedUserTeacher());
+        userViewUnauthorized = authenticateUser(getUnauthorizedUser());
+    }
 
-	/**
-	 * Verifies if the service runs to a Teacher user (with valid arguments)
-	 */
-	public void testAuthorizedUserTeacher()
-	{
-		Object serviceArguments[] = getAuthorizeArgumentsTeacher();
-		try
-		{
-			ServiceManagerServiceFactory.executeService(userViewTeacher, getNameOfServiceToBeTested(), serviceArguments);
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by test testAuthorizedUser_Teacher.");
+    /**
+     * Verifies if the service runs to a GrantOwnerManager user (with valid
+     * arguments)
+     */
+    public void testAuthorizedUserGrantOwnerManager() {
+        Object serviceArguments[] = getAuthorizeArgumentsGrantOwnerManager();
+        try {
+            ServiceManagerServiceFactory.executeService(userViewGrantOwnerManager,
+                    getNameOfServiceToBeTested(), serviceArguments);
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test testAuthorizedUser_GrantOwnerManager.");
 
-		} catch (NotAuthorizedException ex)
-		{
-			fail(getNameOfServiceToBeTested() + "fail testAuthorizedUser_Teacher.");
-		} catch (Exception ex)
-		{
-			fail("Unable to run service: " + getNameOfServiceToBeTested());
-		}
-	}
+        } catch (NotAuthorizedException ex) {
+            fail(getNameOfServiceToBeTested() + "fail testAuthorizedUser_GrantOwnerManager.");
+        } catch (Exception ex) {
+            fail("Unable to run service: " + getNameOfServiceToBeTested());
+        }
+    }
 
-	/**
-	 * A non authorized user with valid teacher arguments
-	 */
-	public void testUnauthorizedUserWithValidArguments1()
-	{
-		Object serviceArguments[] = getAuthorizeArgumentsTeacher();
+    /**
+     * Verifies if the service runs to a Teacher user (with valid arguments)
+     */
+    public void testAuthorizedUserTeacher() {
+        Object serviceArguments[] = getAuthorizeArgumentsTeacher();
+        try {
+            ServiceManagerServiceFactory.executeService(userViewTeacher, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            System.out.println(getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test testAuthorizedUser_Teacher.");
 
-		try
-		{
-			ServiceManagerServiceFactory.executeService(userViewUnauthorized, getNameOfServiceToBeTested(), serviceArguments);
-			fail(
-				getNameOfServiceToBeTested()
-					+ "fail testUnauthorizedUser(with valid arguments teacher).");
+        } catch (NotAuthorizedException ex) {
+            fail(getNameOfServiceToBeTested() + "fail testAuthorizedUser_Teacher.");
+        } catch (Exception ex) {
+            fail("Unable to run service: " + getNameOfServiceToBeTested());
+        }
+    }
 
-		} catch (NotAuthorizedException ex)
-		{
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by test testUnauthorizedUser(with valid arguments teacher). ");
-		} catch (Exception ex)
-		{
-			fail("Unable to run service: " + getNameOfServiceToBeTested());
-		}
-	}
+    /**
+     * A non authorized user with valid teacher arguments
+     */
+    public void testUnauthorizedUserWithValidArguments1() {
+        Object serviceArguments[] = getAuthorizeArgumentsTeacher();
 
-	/**
-	 * A non authorized user with valid grant owner manager arguments
-	 */
-	public void testUnauthorizedUserWithValidArguments2()
-	{
-		Object serviceArguments[] = getAuthorizeArgumentsGrantOwnerManager();
+        try {
+            ServiceManagerServiceFactory.executeService(userViewUnauthorized,
+                    getNameOfServiceToBeTested(), serviceArguments);
+            fail(getNameOfServiceToBeTested()
+                    + "fail testUnauthorizedUser(with valid arguments teacher).");
 
-		try
-		{
-			ServiceManagerServiceFactory.executeService(userViewUnauthorized, getNameOfServiceToBeTested(), serviceArguments);
-			fail(
-				getNameOfServiceToBeTested()
-					+ "fail testUnauthorizedUser(with valid arguments Grant Owner Manager).");
+        } catch (NotAuthorizedException ex) {
+            System.out
+                    .println(getNameOfServiceToBeTested()
+                            + " was SUCCESSFULY runned by test testUnauthorizedUser(with valid arguments teacher). ");
+        } catch (Exception ex) {
+            fail("Unable to run service: " + getNameOfServiceToBeTested());
+        }
+    }
 
-		} catch (NotAuthorizedException ex)
-		{
-			System.out.println(
-				getNameOfServiceToBeTested()
-					+ " was SUCCESSFULY runned by test testUnauthorizedUser(with valid arguments Grant Owner Manager). ");
-		} catch (Exception ex)
-		{
-			fail("Unable to run service: " + getNameOfServiceToBeTested());
-		}
-	}
+    /**
+     * A non authorized user with valid grant owner manager arguments
+     */
+    public void testUnauthorizedUserWithValidArguments2() {
+        Object serviceArguments[] = getAuthorizeArgumentsGrantOwnerManager();
 
-	protected IUserView authenticateUser(String[] arguments)
-	{
-		SuportePersistenteOJB.resetInstance();
-		String args[] = arguments;
-		try
-		{
-			return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
-		} catch (Exception ex)
-		{
-			fail("Authenticating User!" + ex);
-			return null;
-		}
-	}
+        try {
+            ServiceManagerServiceFactory.executeService(userViewUnauthorized,
+                    getNameOfServiceToBeTested(), serviceArguments);
+            fail(getNameOfServiceToBeTested()
+                    + "fail testUnauthorizedUser(with valid arguments Grant Owner Manager).");
 
-	protected abstract String[] getAuthorizedUserGrantOwnerManager();
-	protected abstract String[] getAuthorizedUserTeacher();
-	protected abstract String[] getUnauthorizedUser();
+        } catch (NotAuthorizedException ex) {
+            System.out
+                    .println(getNameOfServiceToBeTested()
+                            + " was SUCCESSFULY runned by test testUnauthorizedUser(with valid arguments Grant Owner Manager). ");
+        } catch (Exception ex) {
+            fail("Unable to run service: " + getNameOfServiceToBeTested());
+        }
+    }
 
-	protected abstract Object[] getAuthorizeArgumentsGrantOwnerManager();
-	protected abstract Object[] getAuthorizeArgumentsTeacher();
+    protected IUserView authenticateUser(String[] arguments) {
+        SuportePersistenteOJB.resetInstance();
+        String args[] = arguments;
+        try {
+            return (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", args);
+        } catch (Exception ex) {
+            fail("Authenticating User!" + ex);
+            return null;
+        }
+    }
 
-	protected abstract String getNameOfServiceToBeTested();
-	protected abstract String getDataSetFilePath();
-	protected abstract String getApplication();
+    protected abstract String[] getAuthorizedUserGrantOwnerManager();
+
+    protected abstract String[] getAuthorizedUserTeacher();
+
+    protected abstract String[] getUnauthorizedUser();
+
+    protected abstract Object[] getAuthorizeArgumentsGrantOwnerManager();
+
+    protected abstract Object[] getAuthorizeArgumentsTeacher();
+
+    protected abstract String getNameOfServiceToBeTested();
+
+    protected abstract String getDataSetFilePath();
+
+    protected abstract String getApplication();
 
 }

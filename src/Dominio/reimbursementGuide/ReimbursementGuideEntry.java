@@ -10,146 +10,133 @@ import Dominio.IGuideEntry;
 
 /**
  * 
- * This class contains all the information regarding a Reimbursement Guide Entry. <br>
+ * This class contains all the information regarding a Reimbursement Guide
+ * Entry. <br>
  * 
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
 
-public class ReimbursementGuideEntry extends DomainObject implements IReimbursementGuideEntry
-{
+public class ReimbursementGuideEntry extends DomainObject implements IReimbursementGuideEntry {
 
-	private Integer keyGuideEntry;
-	private Integer keyReimbursementGuide;
+    private Integer keyGuideEntry;
 
-	protected Double value;
-	protected String justification;
+    private Integer keyReimbursementGuide;
 
-	protected IGuideEntry guideEntry;
-	protected IReimbursementGuide reimbursementGuide;
+    protected Double value;
 
-	public ReimbursementGuideEntry()
-	{
-	}
+    protected String justification;
 
-	/**
-	 * @return Returns the guideEntry.
-	 */
-	public IGuideEntry getGuideEntry()
-	{
-		return guideEntry;
-	}
+    protected IGuideEntry guideEntry;
 
-	/**
-	 * @param guideEntry
-	 *            The guideEntry to set.
-	 */
-	public void setGuideEntry(IGuideEntry guideEntry)
-	{
-		this.guideEntry = guideEntry;
-	}
+    protected IReimbursementGuide reimbursementGuide;
 
-	/**
-	 * @return Returns the justification.
-	 */
-	public String getJustification()
-	{
-		return justification;
-	}
+    public ReimbursementGuideEntry() {
+    }
 
-	/**
-	 * @param justification
-	 *            The justification to set.
-	 */
-	public void setJustification(String justification)
-	{
-		this.justification = justification;
-	}
+    /**
+     * @return Returns the guideEntry.
+     */
+    public IGuideEntry getGuideEntry() {
+        return guideEntry;
+    }
 
-	/**
-	 * @return Returns the keyGuideEntry.
-	 */
-	public Integer getKeyGuideEntry()
-	{
-		return keyGuideEntry;
-	}
+    /**
+     * @param guideEntry
+     *            The guideEntry to set.
+     */
+    public void setGuideEntry(IGuideEntry guideEntry) {
+        this.guideEntry = guideEntry;
+    }
 
-	/**
-	 * @param keyGuideEntry
-	 *            The keyGuideEntry to set.
-	 */
-	public void setKeyGuideEntry(Integer keyGuideEntry)
-	{
-		this.keyGuideEntry = keyGuideEntry;
-	}
+    /**
+     * @return Returns the justification.
+     */
+    public String getJustification() {
+        return justification;
+    }
 
-	/**
-	 * @return Returns the keyReimbursementGuide.
-	 */
-	public Integer getKeyReimbursementGuide()
-	{
-		return keyReimbursementGuide;
-	}
+    /**
+     * @param justification
+     *            The justification to set.
+     */
+    public void setJustification(String justification) {
+        this.justification = justification;
+    }
 
-	/**
-	 * @param keyReimbursementGuide
-	 *            The keyReimbursementGuide to set.
-	 */
-	public void setKeyReimbursementGuide(Integer keyReimbursementGuide)
-	{
-		this.keyReimbursementGuide = keyReimbursementGuide;
-	}
+    /**
+     * @return Returns the keyGuideEntry.
+     */
+    public Integer getKeyGuideEntry() {
+        return keyGuideEntry;
+    }
 
-	/**
-	 * @return Returns the reimbursementGuide.
-	 */
-	public IReimbursementGuide getReimbursementGuide()
-	{
-		return reimbursementGuide;
-	}
+    /**
+     * @param keyGuideEntry
+     *            The keyGuideEntry to set.
+     */
+    public void setKeyGuideEntry(Integer keyGuideEntry) {
+        this.keyGuideEntry = keyGuideEntry;
+    }
 
-	/**
-	 * @param reimbursementGuide
-	 *            The reimbursementGuide to set.
-	 */
-	public void setReimbursementGuide(IReimbursementGuide reimbursementGuide)
-	{
-		this.reimbursementGuide = reimbursementGuide;
-	}
+    /**
+     * @return Returns the keyReimbursementGuide.
+     */
+    public Integer getKeyReimbursementGuide() {
+        return keyReimbursementGuide;
+    }
 
-	/**
-	 * @return Returns the value.
-	 */
-	public Double getValue()
-	{
-		return value;
-	}
+    /**
+     * @param keyReimbursementGuide
+     *            The keyReimbursementGuide to set.
+     */
+    public void setKeyReimbursementGuide(Integer keyReimbursementGuide) {
+        this.keyReimbursementGuide = keyReimbursementGuide;
+    }
 
-	/**
-	 * @param value
-	 *            The value to set.
-	 */
-	public void setValue(Double value)
-	{
-		this.value = value;
-	}
+    /**
+     * @return Returns the reimbursementGuide.
+     */
+    public IReimbursementGuide getReimbursementGuide() {
+        return reimbursementGuide;
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof IReimbursementGuideEntry)
-		{
-			IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) obj;
+    /**
+     * @param reimbursementGuide
+     *            The reimbursementGuide to set.
+     */
+    public void setReimbursementGuide(IReimbursementGuide reimbursementGuide) {
+        this.reimbursementGuide = reimbursementGuide;
+    }
 
-			if ((this.getIdInternal() == null && reimbursementGuideEntry.getGuideEntry() == null)
-				|| (this.getIdInternal().equals(reimbursementGuideEntry.getIdInternal())))
-			{
-				result = true;
-			}
-		}
+    /**
+     * @return Returns the value.
+     */
+    public Double getValue() {
+        return value;
+    }
 
-		return result;
-	}
+    /**
+     * @param value
+     *            The value to set.
+     */
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IReimbursementGuideEntry) {
+            IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) obj;
+
+            if ((this.getIdInternal() == null && reimbursementGuideEntry.getGuideEntry() == null)
+                    || (this.getIdInternal().equals(reimbursementGuideEntry.getIdInternal()))) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
 
 }

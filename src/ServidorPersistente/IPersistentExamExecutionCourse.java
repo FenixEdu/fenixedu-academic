@@ -13,8 +13,7 @@ import Dominio.IExecutionCourse;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public interface IPersistentExamExecutionCourse extends IPersistentObject
-{
+public interface IPersistentExamExecutionCourse extends IPersistentObject {
 
     public IExamExecutionCourse readBy(IExam exam, IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;

@@ -11,7 +11,7 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoFrequenta;
-import DataBeans.InfoFrequentaWithInfoStudent;
+import DataBeans.InfoFrequentaWithInfoStudentAndPerson;
 import DataBeans.InfoMark;
 import DataBeans.InfoMarkWithInfoAttendAndInfoStudent;
 import DataBeans.InfoSiteCommon;
@@ -65,8 +65,8 @@ public class ReadPublishedMarksByExam implements IServico {
         return _servico;
     }
 
-    public Object run(Integer siteCode, Integer evaluationCode)
-            throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(Integer siteCode, Integer evaluationCode) throws ExcepcaoInexistente,
+            FenixServiceException {
         List marksList = null;
         List infoMarksList = null;
 
@@ -87,12 +87,11 @@ public class ReadPublishedMarksByExam implements IServico {
 
             // Evaluation
 
-            IPersistentEvaluation persistentEvaluation = sp
-                    .getIPersistentEvaluation();
-            evaluation = (IEvaluation) persistentEvaluation.readByOID(
-                    Evaluation.class, evaluationCode);
+            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+            evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
             //CLONER
-            //infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+            //infoEvaluation =
+            // Cloner.copyIEvaluation2InfoEvaluation(evaluation);
             infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
             //Attends
@@ -103,35 +102,34 @@ public class ReadPublishedMarksByExam implements IServico {
             IPersistentMark markDAO = sp.getIPersistentMark();
             marksList = markDAO.readBy(evaluation);
 
-            List infoAttendList = (List) CollectionUtils.collect(attendList,
-                    new Transformer() {
-                        public Object transform(Object input) {
-                            IFrequenta attend = (IFrequenta) input;
-                            //CLONER
-                            //InfoFrequenta infoAttend = Cloner
-                                    //.copyIFrequenta2InfoFrequenta(attend);
-                            InfoFrequenta infoAttend = InfoFrequentaWithInfoStudent.newInfoFromDomain(attend);
-                            return infoAttend;
-                        }
-                    });
+            List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
+                public Object transform(Object input) {
+                    IFrequenta attend = (IFrequenta) input;
+                    //CLONER
+                    //InfoFrequenta infoAttend = Cloner
+                    //.copyIFrequenta2InfoFrequenta(attend);
+                    InfoFrequenta infoAttend = InfoFrequentaWithInfoStudentAndPerson
+                            .newInfoFromDomain(attend);
+                    return infoAttend;
+                }
+            });
 
-            List infoMarkList = (List) CollectionUtils.collect(marksList,
-                    new Transformer() {
-                        public Object transform(Object input) {
-                            IMark mark = (IMark) input;
-                            //CLONER
-                            //InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
-                            InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
-                            return infoMark;
-                        }
-                    });
+            List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
+                public Object transform(Object input) {
+                    IMark mark = (IMark) input;
+                    //CLONER
+                    //InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+                    InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
+                    return infoMark;
+                }
+            });
 
             HashMap hashMarks = new HashMap();
             Iterator iter = infoMarkList.iterator();
             while (iter.hasNext()) {
                 InfoMark infoMark = (InfoMark) iter.next();
-                hashMarks.put(infoMark.getInfoFrequenta().getAluno()
-                        .getNumber().toString(), infoMark.getMark());
+                hashMarks.put(infoMark.getInfoFrequenta().getAluno().getNumber().toString(), infoMark
+                        .getMark());
             }
 
             InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
@@ -141,11 +139,11 @@ public class ReadPublishedMarksByExam implements IServico {
             infoSiteMarks.setInfoAttends(infoAttendList);
 
             ExecutionCourseSiteComponentBuilder componentBuilder = new ExecutionCourseSiteComponentBuilder();
-            ISiteComponent commonComponent = componentBuilder.getComponent(
-                    new InfoSiteCommon(), site, null, null, null);
+            ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,
+                    null, null, null);
 
-            ExecutionCourseSiteView siteView = new ExecutionCourseSiteView(
-                    commonComponent, infoSiteMarks);
+            ExecutionCourseSiteView siteView = new ExecutionCourseSiteView(commonComponent,
+                    infoSiteMarks);
 
             return siteView;
 

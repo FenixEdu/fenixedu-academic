@@ -10,20 +10,19 @@ import Dominio.IQuestion;
  */
 public class InfoQuestionWithInfoMetadata extends InfoQuestion {
 
-	public void copyFromDomain(IQuestion question) {
-		super.copyFromDomain(question);
-		if (question != null) {
-			setInfoMetadata(InfoMetadata.newInfoFromDomain(question
-					.getMetadata()));
-		}
-	}
+    public void copyFromDomain(IQuestion question) {
+        super.copyFromDomain(question);
+        if (question != null) {
+            setInfoMetadata(InfoMetadata.newInfoFromDomain(question.getMetadata()));
+        }
+    }
 
-	public static InfoQuestion newInfoFromDomain(IQuestion question) {
-		InfoQuestionWithInfoMetadata infoQuestion = null;
-		if (question != null) {
-			infoQuestion = new InfoQuestionWithInfoMetadata();
-			infoQuestion.copyFromDomain(question);
-		}
-		return infoQuestion;
-	}
+    public static InfoQuestion newInfoFromDomain(IQuestion question) {
+        InfoQuestionWithInfoMetadata infoQuestion = null;
+        if (question != null) {
+            infoQuestion = new InfoQuestionWithInfoMetadata();
+            infoQuestion.copyFromDomain(question);
+        }
+        return infoQuestion;
+    }
 }

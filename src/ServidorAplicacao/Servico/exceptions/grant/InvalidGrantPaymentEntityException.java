@@ -11,29 +11,24 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
  * @author Pica
  */
 
-public class InvalidGrantPaymentEntityException extends FenixServiceException
-{
+public class InvalidGrantPaymentEntityException extends FenixServiceException {
 
-    public InvalidGrantPaymentEntityException()
-    {
+    public InvalidGrantPaymentEntityException() {
     }
 
-    public InvalidGrantPaymentEntityException(String message)
-    {
+    public InvalidGrantPaymentEntityException(String message) {
         super(message);
     }
 
-    public InvalidGrantPaymentEntityException(Throwable cause)
-    {
+    public InvalidGrantPaymentEntityException(Throwable cause) {
         super(cause);
     }
 
-    public InvalidGrantPaymentEntityException(String message, Throwable cause)
-    {
+    public InvalidGrantPaymentEntityException(String message, Throwable cause) {
         super(message, cause);
     }
-    public String toString()
-    {
+
+    public String toString() {
         String result = "[InvalidGrantPaymentEntityException\n";
         result += "message" + this.getMessage() + "\n";
         result += "cause" + this.getCause() + "\n";

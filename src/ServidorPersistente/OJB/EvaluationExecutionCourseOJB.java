@@ -15,16 +15,13 @@ import Dominio.IExecutionCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
 
-public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements
-        IPersistentEvaluationExecutionCourse
-{
+public class EvaluationExecutionCourseOJB extends PersistentObjectOJB implements
+        IPersistentEvaluationExecutionCourse {
 
     public IEvalutionExecutionCourse readBy(IEvaluation evaluation, IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
-        if (evaluation instanceof IExam)
-        {
+        if (evaluation instanceof IExam) {
             Criteria crit = new Criteria();
             crit.addEqualTo("exam.season", ((IExam) evaluation).getSeason());
             crit.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
@@ -35,13 +32,24 @@ public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements
             return (IEvalutionExecutionCourse) queryObject(ExamExecutionCourse.class, crit);
 
         }
-       
-            return null;
-        
+
+        return null;
+
     }
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
-    {
+    public List readByEvaluation(IEvaluation evaluation) throws ExcepcaoPersistencia {
+
+        if (evaluation instanceof IExam) {
+            Criteria crit = new Criteria();
+            crit.addEqualTo("exam.idInternal", ((IExam) evaluation).getIdInternal());
+            return (List) queryList(ExamExecutionCourse.class, crit);
+
+        }
+        return null;
+
+    }
+
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
         crit.addEqualTo("executionCourse.executionPeriod.name", executionCourse.getExecutionPeriod()
@@ -52,25 +60,21 @@ public class EvaluationExecutionCourseOJB extends ObjectFenixOJB implements
 
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         return queryList(ExamExecutionCourse.class, crit, "executionCourse.sigla", true);
     }
 
-    public void delete(IEvaluation evaluation) throws ExcepcaoPersistencia
-    {
-        List evaluationsExecutionCourses = readByCriteria(evaluation);
-        for (int i = 0; i < evaluationsExecutionCourses.size(); i++)
-        {
+    public void delete(IEvaluation evaluation) throws ExcepcaoPersistencia {
+        List evaluationsExecutionCourses = readByEvaluation(evaluation);
+        for (int i = 0; i < evaluationsExecutionCourses.size(); i++) {
             IEvalutionExecutionCourse evalutionExecutionCourse = (IEvalutionExecutionCourse) evaluationsExecutionCourses
                     .get(i);
             super.delete(evalutionExecutionCourse);
         }
     }
 
-    public void delete(IEvalutionExecutionCourse evalutionExecutionCourse) throws ExcepcaoPersistencia
-    {
+    public void delete(IEvalutionExecutionCourse evalutionExecutionCourse) throws ExcepcaoPersistencia {
         super.delete(evalutionExecutionCourse);
     }
 

@@ -1,95 +1,89 @@
 package Dominio;
 
-
 /**
- * @author Fernanda Quitério
- * created on 16/06/2004
+ * @author Fernanda Quitério created on 16/06/2004
  */
-public class WrittenEvaluationCurricularCourseScope	extends DomainObject implements IWrittenEvaluationCurricularCourseScope {
+public class WrittenEvaluationCurricularCourseScope extends DomainObject implements
+        IWrittenEvaluationCurricularCourseScope {
 
-	private Integer keyWrittenEvaluation;
-	private Integer keyCurricularCourseScope;
-	
-	private IWrittenEvaluation writtenEvaluation;
-	private ICurricularCourseScope curricularCourseScope;
-	
-	public WrittenEvaluationCurricularCourseScope() {
-	}
+    private Integer keyWrittenEvaluation;
 
-	public boolean equals(Object obj) {
-		return (
-			(obj instanceof WrittenEvaluationCurricularCourseScope) && 
-			(((WrittenEvaluationCurricularCourseScope) obj).getCurricularCourseScope().equals(getCurricularCourseScope())) &&
-			(((WrittenEvaluationCurricularCourseScope) obj).getWrittenEvaluation().equals(getWrittenEvaluation())));
-	}
+    private Integer keyCurricularCourseScope;
 
-	public String toString() {
-		return "[WRITTEN EVALUATION CURRICULAR COURSE SCOPE:"
-			+ " WrittenEvaluation= '"
-			+ this.getWrittenEvaluation()
-			+ "'\n"
-			+ " CurricularCourseScope= '"
-			+ this.getCurricularCourseScope()
-			+ "'\n"
-			+ "";
-	}
+    private IWrittenEvaluation writtenEvaluation;
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyWrittenEvaluation() {
-		return keyWrittenEvaluation;
-	}
+    private ICurricularCourseScope curricularCourseScope;
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyCurricularCourseScope() {
-		return keyCurricularCourseScope;
-	}
+    public WrittenEvaluationCurricularCourseScope() {
+    }
 
-	/**
-	 * @return
-	 */
-	public IWrittenEvaluation getWrittenEvaluation() {
-		return writtenEvaluation;
-	}
+    public boolean equals(Object obj) {
+        return ((obj instanceof WrittenEvaluationCurricularCourseScope)
+                && (((WrittenEvaluationCurricularCourseScope) obj).getCurricularCourseScope()
+                        .equals(getCurricularCourseScope())) && (((WrittenEvaluationCurricularCourseScope) obj)
+                .getWrittenEvaluation().equals(getWrittenEvaluation())));
+    }
 
-	/**
-	 * @return
-	 */
-	public ICurricularCourseScope getCurricularCourseScope() {
-		return curricularCourseScope;
-	}
+    public String toString() {
+        return "[WRITTEN EVALUATION CURRICULAR COURSE SCOPE:" + " WrittenEvaluation= '"
+                + this.getWrittenEvaluation() + "'\n" + " CurricularCourseScope= '"
+                + this.getCurricularCourseScope() + "'\n" + "";
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyWrittenEvaluation(Integer integer) {
-		keyWrittenEvaluation = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyWrittenEvaluation() {
+        return keyWrittenEvaluation;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyCurricularCourseScope(Integer integer) {
-		keyCurricularCourseScope = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyCurricularCourseScope() {
+        return keyCurricularCourseScope;
+    }
 
-	/**
-	 * @param writtenEvaluation
-	 */
-	public void setWrittenEvaluation(IWrittenEvaluation writtenEvaluation) {
-		this.writtenEvaluation = writtenEvaluation;
-	}
+    /**
+     * @return
+     */
+    public IWrittenEvaluation getWrittenEvaluation() {
+        return writtenEvaluation;
+    }
 
-	/**
-	 * @param curricularCourseScope
-	 */
-	public void setCurricularCourseScope(ICurricularCourseScope curricularCourseScope) {
-		this.curricularCourseScope = curricularCourseScope;
-	}
+    /**
+     * @return
+     */
+    public ICurricularCourseScope getCurricularCourseScope() {
+        return curricularCourseScope;
+    }
 
+    /**
+     * @param integer
+     */
+    public void setKeyWrittenEvaluation(Integer integer) {
+        keyWrittenEvaluation = integer;
+    }
 
+    /**
+     * @param integer
+     */
+    public void setKeyCurricularCourseScope(Integer integer) {
+        keyCurricularCourseScope = integer;
+    }
+
+    /**
+     * @param writtenEvaluation
+     */
+    public void setWrittenEvaluation(IWrittenEvaluation writtenEvaluation) {
+        this.writtenEvaluation = writtenEvaluation;
+    }
+
+    /**
+     * @param curricularCourseScope
+     */
+    public void setCurricularCourseScope(ICurricularCourseScope curricularCourseScope) {
+        this.curricularCourseScope = curricularCourseScope;
+    }
 
 }

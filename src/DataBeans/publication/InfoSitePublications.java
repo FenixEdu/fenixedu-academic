@@ -17,63 +17,66 @@ import DataBeans.InfoTeacher;
  */
 public class InfoSitePublications extends DataTranferObject implements ISiteComponent {
 
-	private List infoDidaticPublications;
-	private List infoCientificPublications;
-	private InfoTeacher infoTeacher;
+    private List infoDidaticPublications;
 
-	public InfoSitePublications() {
-	}
+    private List infoCientificPublications;
 
-	public Integer getNumberCientificPublications() {
-		return new Integer(infoCientificPublications.size());
-	}
-	public Integer getNumberDidaticPublications() {
-		return new Integer(infoDidaticPublications.size());
-	}
+    private InfoTeacher infoTeacher;
 
-	
+    public InfoSitePublications() {
+    }
 
-	/**
-	 * @return Returns the infoTeacher.
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+    public Integer getNumberCientificPublications() {
+        return new Integer(infoCientificPublications.size());
+    }
 
-	/**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    public Integer getNumberDidaticPublications() {
+        return new Integer(infoDidaticPublications.size());
+    }
 
-	/**
-	 * @return Returns the infoCientificPublications.
-	 */
-	public List getInfoCientificPublications() {
-		return infoCientificPublications;
-	}
+    /**
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
 
-	/**
-	 * @return Returns the infoDidaticPublications.
-	 */
-	public List getInfoDidaticPublications() {
-		return infoDidaticPublications;
-	}
+    /**
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
 
-	/**
-	 * @param infoCientificPublications The infoCientificPublications to set.
-	 */
-	public void setInfoCientificPublications(List infoCientificPublications) {
-		this.infoCientificPublications = infoCientificPublications;
-	}
+    /**
+     * @return Returns the infoCientificPublications.
+     */
+    public List getInfoCientificPublications() {
+        return infoCientificPublications;
+    }
 
-	/**
-	 * @param infoDidaticPublications The infoDidaticPublications to set.
-	 */
-	public void setInfoDidaticPublications(List infoDidaticPublications) {
-		this.infoDidaticPublications = infoDidaticPublications;
-	}
+    /**
+     * @return Returns the infoDidaticPublications.
+     */
+    public List getInfoDidaticPublications() {
+        return infoDidaticPublications;
+    }
+
+    /**
+     * @param infoCientificPublications
+     *            The infoCientificPublications to set.
+     */
+    public void setInfoCientificPublications(List infoCientificPublications) {
+        this.infoCientificPublications = infoCientificPublications;
+    }
+
+    /**
+     * @param infoDidaticPublications
+     *            The infoDidaticPublications to set.
+     */
+    public void setInfoDidaticPublications(List infoDidaticPublications) {
+        this.infoDidaticPublications = infoDidaticPublications;
+    }
 
 }

@@ -12,34 +12,31 @@ import Dominio.IContributor;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public interface IPersistentContributor extends IPersistentObject {
-        /**
-         * 
-         * @param contributorNumber
-         * @return IContributor
-         * @throws ExcepcaoPersistencia
-         */
-		public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia;
-		
-		
-		
-		/**
-		 * 
-		 * @return List
-		 * @throws ExcepcaoPersistencia
-		 * @throws ExistingPersistentException
-		 */
-		public List readAll() throws ExcepcaoPersistencia, ExistingPersistentException;
-		
-		/**
-		 * 
-		 * @param contributorNumber
-		 * @return List
-		 * @throws ExcepcaoPersistencia
-		 */
-		public List readContributorListByNumber(Integer contributorNumber) throws ExcepcaoPersistencia; 
-		
+    /**
+     * 
+     * @param contributorNumber
+     * @return IContributor
+     * @throws ExcepcaoPersistencia
+     */
+    public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia;
+
+    /**
+     * 
+     * @return List
+     * @throws ExcepcaoPersistencia
+     * @throws ExistingPersistentException
+     */
+    public List readAll() throws ExcepcaoPersistencia, ExistingPersistentException;
+
+    /**
+     * 
+     * @param contributorNumber
+     * @return List
+     * @throws ExcepcaoPersistencia
+     */
+    public List readContributorListByNumber(Integer contributorNumber) throws ExcepcaoPersistencia;
+
 }

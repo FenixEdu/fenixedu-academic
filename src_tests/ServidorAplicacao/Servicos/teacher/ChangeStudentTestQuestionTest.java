@@ -29,8 +29,7 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class ChangeStudentTestQuestionTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class ChangeStudentTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
 
     public ChangeStudentTestQuestionTest(String testName) {
         super(testName);
@@ -45,17 +44,17 @@ public class ChangeStudentTestQuestionTest extends
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser() {
-        String[] args = { "D3673", "pass", getApplication()};
+        String[] args = { "D3673", "pass", getApplication() };
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
     protected String[] getNotAuthenticatedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
@@ -70,12 +69,10 @@ public class ChangeStudentTestQuestionTest extends
         Boolean delete = new Boolean(false);
         TestQuestionStudentsChangesType testQuestionStudentsChangesType = new TestQuestionStudentsChangesType(
                 TestQuestionStudentsChangesType.THIS_STUDENT);
-        String path = new String(
-                "e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
+        String path = new String("e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
 
-        Object[] args = { executionCourseId, distributedTestId, oldQuestionId,
-                newMetadataId, studentId, testQuestionChangesType, delete,
-                testQuestionStudentsChangesType, path};
+        Object[] args = { executionCourseId, distributedTestId, oldQuestionId, newMetadataId, studentId,
+                testQuestionChangesType, delete, testQuestionStudentsChangesType, path };
         return args;
     }
 
@@ -88,8 +85,7 @@ public class ChangeStudentTestQuestionTest extends
         try {
             IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
-            PersistenceBroker broker = PersistenceBrokerFactory
-                    .defaultPersistenceBroker();
+            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
             Criteria criteria = null;
             Query queryCriteria = null;
             IMetadata metadata = null;
@@ -97,8 +93,7 @@ public class ChangeStudentTestQuestionTest extends
                 criteria = new Criteria();
                 criteria.addEqualTo("idInternal", args[2]);
                 queryCriteria = new QueryByCriteria(Question.class, criteria);
-                metadata = ((IQuestion) broker.getObjectByQuery(queryCriteria))
-                        .getMetadata();
+                metadata = ((IQuestion) broker.getObjectByQuery(queryCriteria)).getMetadata();
             } else {
                 criteria = new Criteria();
                 criteria.addEqualTo("idInternal", args[3]);
@@ -106,43 +101,36 @@ public class ChangeStudentTestQuestionTest extends
                 metadata = (IMetadata) broker.getObjectByQuery(queryCriteria);
             }
             System.out.println("ola");
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
             System.out.println("ola1");
             criteria = new Criteria();
             criteria.addEqualTo("keyDistributedTest", args[1]);
             criteria.addEqualTo("keyStudent", args[4]);
-            queryCriteria = new QueryByCriteria(StudentTestQuestion.class,
-                    criteria);
-            List studentTestQuestionList = (List) broker
-                    .getCollectionByQuery(queryCriteria);
+            queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
+            List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
             broker.close();
             System.out.println("ola2");
             assertEquals(studentTestQuestionList.size(), 2);
             Iterator it = studentTestQuestionList.iterator();
             boolean exist = false;
             while (it.hasNext()) {
-                IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it
-                        .next();
-                if (studentTestQuestion.getQuestion().getMetadata()
-                        .getIdInternal().equals(metadata.getIdInternal()))
-                        exist = true;
+                IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
+                if (studentTestQuestion.getQuestion().getMetadata().getIdInternal().equals(
+                        metadata.getIdInternal()))
+                    exist = true;
             }
             if (exist == false)
-                    fail("ChangeStudentTestQuestionTest "
-                            + "Não tem pergunta nova");
+                fail("ChangeStudentTestQuestionTest " + "Não tem pergunta nova");
             if (((Boolean) args[6]).booleanValue() == true) {
                 broker = PersistenceBrokerFactory.defaultPersistenceBroker();
                 criteria = new Criteria();
                 criteria.addEqualTo("idInternal", args[2]);
                 queryCriteria = new QueryByCriteria(Question.class, criteria);
-                IQuestion question = (IQuestion) broker
-                        .getObjectByQuery(queryCriteria);
+                IQuestion question = (IQuestion) broker.getObjectByQuery(queryCriteria);
                 broker.close();
                 if (question != null)
-                        if (question.getVisibility().booleanValue() != false)
-                                fail("ChangeStudentTestQuestionTest "
-                                        + "Não apagou a pergunta antiga");
+                    if (question.getVisibility().booleanValue() != false)
+                        fail("ChangeStudentTestQuestionTest " + "Não apagou a pergunta antiga");
             }
 
         } catch (FenixServiceException ex) {

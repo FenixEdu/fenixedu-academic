@@ -52,8 +52,7 @@ public class CorrectionFormula extends FenixUtil {
         List result = new ArrayList();
         result.add(new LabelValueBean(IMS_STRING, new Integer(IMS).toString()));
         //+ LID_SIMPLE_FORMULA + LID_MULTIPLE_FORMULA,
-        result.add(new LabelValueBean(FENIX_STRING, new Integer(FENIX)
-                .toString()));
+        result.add(new LabelValueBean(FENIX_STRING, new Integer(FENIX).toString()));
         return result;
     }
 }

@@ -28,8 +28,7 @@ public class ChangeGratuityState implements IService {
     public ChangeGratuityState() {
     }
 
-    public void run(Integer studentCurricularPlanID,
-            GratuityState gratuityState, String othersRemarks)
+    public void run(Integer studentCurricularPlanID, GratuityState gratuityState, String othersRemarks)
             throws FenixServiceException {
 
         IGratuity gratuity = null;
@@ -39,19 +38,15 @@ public class ChangeGratuityState implements IService {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            gratuity = sp.getIPersistentGratuity()
-                    .readByStudentCurricularPlanIDAndState(
-                            studentCurricularPlanID, new State(State.ACTIVE));
+            gratuity = sp.getIPersistentGratuity().readByStudentCurricularPlanIDAndState(
+                    studentCurricularPlanID, new State(State.ACTIVE));
 
-            
-            studentCurricularPlan = (IStudentCurricularPlan) sp
-                    .getIStudentCurricularPlanPersistente().readByOID(
-                            StudentCurricularPlan.class, studentCurricularPlanID);
+            studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error",ex);
-           
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+
             throw newEx;
         }
 

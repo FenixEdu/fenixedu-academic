@@ -12,16 +12,14 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class DeleteOtherTypeCreditLineService extends DeleteDomainObjectService
-{
+public class DeleteOtherTypeCreditLineService extends DeleteDomainObjectService {
 
     /*
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return OtherTypeCreditLine.class;
     }
 
@@ -30,8 +28,7 @@ public class DeleteOtherTypeCreditLineService extends DeleteDomainObjectService
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentOtherTypeCreditLine();
     }
 }

@@ -26,8 +26,7 @@ import Util.RoleType;
  * @author João Mota
  *  
  */
-public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends
-        AuthorizationByRoleFilter {
+public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public ExecutionCourseResponsibleForTeacherAuthorizationFilter() {
 
@@ -48,16 +47,13 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
-        if (((id != null
-                && id.getRoles() != null
-                && !AuthorizationUtils.containsRole(id.getRoles(),
-                        getRoleType()) && !isResponsibleForExecutionCourse(id,
-                arguments)))
+        if (((id != null && id.getRoles() != null
+                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType()) && !isResponsibleForExecutionCourse(
+                id, arguments)))
                 || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
@@ -68,8 +64,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends
      * @param argumentos
      * @return
      */
-    private boolean isResponsibleForExecutionCourse(IUserView id,
-            Object[] argumentos) {
+    private boolean isResponsibleForExecutionCourse(IUserView id, Object[] argumentos) {
 
         InfoExecutionCourse infoExecutionCourse = null;
         IExecutionCourse executionCourse = null;
@@ -81,26 +76,21 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends
         try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner
-                        .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class,
-                                (Integer) argumentos[0]);
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                        ExecutionCourse.class, (Integer) argumentos[0]);
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id
-                    .getUtilizador());
+            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
-            responsibleFor = persistentResponsibleFor
-                    .readByTeacherAndExecutionCoursePB(teacher, executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCoursePB(teacher,
+                    executionCourse);
 
         } catch (Exception e) {
             return false;

@@ -8,39 +8,38 @@ import java.util.Date;
 /**
  * @author jpvl
  */
-public abstract class InfoDatePeriodBaseCreditLine extends InfoCreditLine
-{
+public abstract class InfoDatePeriodBaseCreditLine extends InfoCreditLine {
     private Date start;
+
     private Date end;
+
     /**
      * @return Returns the end.
      */
-    public Date getEnd()
-    {
+    public Date getEnd() {
         return end;
     }
 
     /**
-     * @param end The end to set.
+     * @param end
+     *            The end to set.
      */
-    public void setEnd(Date end)
-    {
+    public void setEnd(Date end) {
         this.end = end;
     }
 
     /**
      * @return Returns the start.
      */
-    public Date getStart()
-    {
+    public Date getStart() {
         return start;
     }
 
     /**
-     * @param start The start to set.
+     * @param start
+     *            The start to set.
      */
-    public void setStart(Date start)
-    {
+    public void setStart(Date start) {
         this.start = start;
     }
 

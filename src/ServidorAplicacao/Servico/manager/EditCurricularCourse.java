@@ -24,8 +24,7 @@ public class EditCurricularCourse implements IService {
     public EditCurricularCourse() {
     }
 
-    public void run(InfoCurricularCourse newInfoCurricularCourse)
-            throws FenixServiceException {
+    public void run(InfoCurricularCourse newInfoCurricularCourse) throws FenixServiceException {
 
         IPersistentCurricularCourse persistentCurricularCourse = null;
         ICurricularCourse oldCurricularCourse = null;
@@ -34,13 +33,10 @@ public class EditCurricularCourse implements IService {
 
         try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            persistentCurricularCourse = persistentSuport
-                    .getIPersistentCurricularCourse();
-            oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, newInfoCurricularCourse
-                            .getIdInternal(), true);
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
+            oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                    CurricularCourse.class, newInfoCurricularCourse.getIdInternal(), true);
 
             newName = newInfoCurricularCourse.getName();
             newCode = newInfoCurricularCourse.getCode();
@@ -51,28 +47,22 @@ public class EditCurricularCourse implements IService {
             oldCurricularCourse.setName(newName);
             oldCurricularCourse.setCode(newCode);
             oldCurricularCourse.setType(newInfoCurricularCourse.getType());
-            oldCurricularCourse.setMandatory(newInfoCurricularCourse
-                    .getMandatory());
+            oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
             oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
-            oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse
-                    .getTheoreticalHours());
-            oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse
-                    .getTheoPratHours());
-            oldCurricularCourse.setPraticalHours(newInfoCurricularCourse
-                    .getPraticalHours());
-            oldCurricularCourse.setLabHours(newInfoCurricularCourse
-                    .getLabHours());
-            oldCurricularCourse
-                    .setMaximumValueForAcumulatedEnrollments(newInfoCurricularCourse
-                            .getMaximumValueForAcumulatedEnrollments());
-            oldCurricularCourse
-                    .setMinimumValueForAcumulatedEnrollments(newInfoCurricularCourse
-                            .getMinimumValueForAcumulatedEnrollments());
-            oldCurricularCourse
-                    .setCredits(newInfoCurricularCourse.getCredits());
-            oldCurricularCourse.setEctsCredits(newInfoCurricularCourse
-                    .getEctsCredits());
+            oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse.getTheoreticalHours());
+            oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse.getTheoPratHours());
+            oldCurricularCourse.setPraticalHours(newInfoCurricularCourse.getPraticalHours());
+            oldCurricularCourse.setLabHours(newInfoCurricularCourse.getLabHours());
+            oldCurricularCourse.setMaximumValueForAcumulatedEnrollments(newInfoCurricularCourse
+                    .getMaximumValueForAcumulatedEnrollments());
+            oldCurricularCourse.setMinimumValueForAcumulatedEnrollments(newInfoCurricularCourse
+                    .getMinimumValueForAcumulatedEnrollments());
+            oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
+            oldCurricularCourse.setEctsCredits(newInfoCurricularCourse.getEctsCredits());
             oldCurricularCourse.setWeigth(newInfoCurricularCourse.getWeigth());
+            oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
+            oldCurricularCourse.setMandatoryEnrollment(newInfoCurricularCourse.getMandatoryEnrollment());
+            oldCurricularCourse.setEnrollmentAllowed(newInfoCurricularCourse.getEnrollmentAllowed());
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);

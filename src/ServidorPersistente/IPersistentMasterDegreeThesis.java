@@ -10,17 +10,17 @@ import Dominio.IMasterDegreeThesis;
 import Dominio.IStudentCurricularPlan;
 
 /**
- * Authors :
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * Authors : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ * (naat@mega.ist.utl.pt)
+ *  
  */
 public interface IPersistentMasterDegreeThesis extends IPersistentObject {
-	/**
-	 * 
-	 * @param studentCurricularPlan
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
-	public abstract IMasterDegreeThesis readByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+    /**
+     * 
+     * @param studentCurricularPlan
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    public abstract IMasterDegreeThesis readByStudentCurricularPlan(
+            IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 }

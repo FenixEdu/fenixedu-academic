@@ -6,96 +6,95 @@
 
 package DataBeans;
 
-
 /**
- *
- * @author  Luis Cruz & Sara Ribeiro
+ * 
+ * @author Luis Cruz & Sara Ribeiro
  */
 
 public class InfoExecutionCourseAndExams extends InfoObject {
 
-	protected InfoExecutionCourse infoExecutionCourse;
-	protected InfoExam infoExam1;
-	protected InfoExam infoExam2;
-	protected Integer numberStudentesAttendingCourse;
+    protected InfoExecutionCourse infoExecutionCourse;
 
-	public InfoExecutionCourseAndExams() {
-	}
+    protected InfoExam infoExam1;
 
-	public InfoExecutionCourseAndExams(
-		InfoExecutionCourse infoExecutionCourse,
-		InfoExam infoExam1,
-		InfoExam infoExam2,
-		Integer numberStudentesAttendingCourse) {
-		this.setInfoExam1(infoExam1);
-		this.setInfoExam2(infoExam2);
-		this.setInfoExecutionCourse(infoExecutionCourse);
-		this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
-	}
+    protected InfoExam infoExam2;
 
-	public boolean equals(Object obj) {
-		if (obj instanceof InfoExecutionCourseAndExams) {
-			InfoExecutionCourseAndExams examObj = (InfoExecutionCourseAndExams) obj;
-			return this.getInfoExecutionCourse().equals(examObj.getInfoExecutionCourse());
-		}
+    protected Integer numberStudentesAttendingCourse;
 
-		return false;
-	}
+    public InfoExecutionCourseAndExams() {
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoExam getInfoExam1() {
-		return infoExam1;
-	}
+    public InfoExecutionCourseAndExams(InfoExecutionCourse infoExecutionCourse, InfoExam infoExam1,
+            InfoExam infoExam2, Integer numberStudentesAttendingCourse) {
+        this.setInfoExam1(infoExam1);
+        this.setInfoExam2(infoExam2);
+        this.setInfoExecutionCourse(infoExecutionCourse);
+        this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoExam getInfoExam2() {
-		return infoExam2;
-	}
+    public boolean equals(Object obj) {
+        if (obj instanceof InfoExecutionCourseAndExams) {
+            InfoExecutionCourseAndExams examObj = (InfoExecutionCourseAndExams) obj;
+            return this.getInfoExecutionCourse().equals(examObj.getInfoExecutionCourse());
+        }
 
-	/**
-	 * @return
-	 */
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
-	}
+        return false;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getNumberStudentesAttendingCourse() {
-		return numberStudentesAttendingCourse;
-	}
+    /**
+     * @return
+     */
+    public InfoExam getInfoExam1() {
+        return infoExam1;
+    }
 
-	/**
-	 * @param exam
-	 */
-	public void setInfoExam1(InfoExam exam) {
-		infoExam1 = exam;
-	}
+    /**
+     * @return
+     */
+    public InfoExam getInfoExam2() {
+        return infoExam2;
+    }
 
-	/**
-	 * @param exam
-	 */
-	public void setInfoExam2(InfoExam exam) {
-		infoExam2 = exam;
-	}
+    /**
+     * @return
+     */
+    public InfoExecutionCourse getInfoExecutionCourse() {
+        return infoExecutionCourse;
+    }
 
-	/**
-	 * @param course
-	 */
-	public void setInfoExecutionCourse(InfoExecutionCourse course) {
-		infoExecutionCourse = course;
-	}
+    /**
+     * @return
+     */
+    public Integer getNumberStudentesAttendingCourse() {
+        return numberStudentesAttendingCourse;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setNumberStudentesAttendingCourse(Integer integer) {
-		numberStudentesAttendingCourse = integer;
-	}
+    /**
+     * @param exam
+     */
+    public void setInfoExam1(InfoExam exam) {
+        infoExam1 = exam;
+    }
+
+    /**
+     * @param exam
+     */
+    public void setInfoExam2(InfoExam exam) {
+        infoExam2 = exam;
+    }
+
+    /**
+     * @param course
+     */
+    public void setInfoExecutionCourse(InfoExecutionCourse course) {
+        infoExecutionCourse = course;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setNumberStudentesAttendingCourse(Integer integer) {
+        numberStudentesAttendingCourse = integer;
+    }
 
 }

@@ -37,15 +37,13 @@ public class CreateReimbursementGuideTest extends AdministrativeOfficeBaseTest {
     }
 
     protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
-        Object[] args = { new Integer(1), "Some remarks", new ArrayList(), null};
+        Object[] args = { new Integer(1), "Some remarks", new ArrayList(), null };
 
         return args;
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser()
-            throws FenixServiceException {
-        Object[] args = { new Integer(1), "Some remarks", new ArrayList(),
-                userViewNotAuthorized};
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+        Object[] args = { new Integer(1), "Some remarks", new ArrayList(), userViewNotAuthorized };
 
         return args;
     }
@@ -54,27 +52,24 @@ public class CreateReimbursementGuideTest extends AdministrativeOfficeBaseTest {
         Integer guideId = new Integer(5762);
         InfoGuide infoGuide = null;
         try {
-            Object argsReadGuide[] = { guideId};
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadGuide", argsReadGuide);
+            Object argsReadGuide[] = { guideId };
+            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ReadGuide",
+                    argsReadGuide);
 
             List infoReimbursementGuideEntries = new ArrayList();
 
             InfoReimbursementGuideEntry infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-            infoReimbursementGuideEntry
-                    .setInfoGuideEntry((InfoGuideEntry) infoGuide
-                            .getInfoGuideEntries().get(0));
+            infoReimbursementGuideEntry.setInfoGuideEntry((InfoGuideEntry) infoGuide
+                    .getInfoGuideEntries().get(0));
             infoReimbursementGuideEntry.setJustification("alguma");
             infoReimbursementGuideEntry.setValue(new Double(500.0));
 
             infoReimbursementGuideEntries.add(infoReimbursementGuideEntry);
 
-            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries,
-                    userView};
+            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries, userView };
 
-            Integer reimbursementGuideId = (Integer) ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            createArgs);
+            Integer reimbursementGuideId = (Integer) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), createArgs);
 
             assertEquals(reimbursementGuideId, new Integer(1));
 
@@ -92,27 +87,24 @@ public class CreateReimbursementGuideTest extends AdministrativeOfficeBaseTest {
         Integer guideId = new Integer(5762);
         InfoGuide infoGuide = null;
         try {
-            Object argsReadGuide[] = { guideId};
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadGuide", argsReadGuide);
+            Object argsReadGuide[] = { guideId };
+            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ReadGuide",
+                    argsReadGuide);
 
             List infoReimbursementGuideEntries = new ArrayList();
 
             InfoReimbursementGuideEntry infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-            infoReimbursementGuideEntry
-                    .setInfoGuideEntry((InfoGuideEntry) infoGuide
-                            .getInfoGuideEntries().get(0));
+            infoReimbursementGuideEntry.setInfoGuideEntry((InfoGuideEntry) infoGuide
+                    .getInfoGuideEntries().get(0));
             infoReimbursementGuideEntry.setJustification("alguma");
             infoReimbursementGuideEntry.setValue(new Double(500.0));
 
             infoReimbursementGuideEntries.add(infoReimbursementGuideEntry);
 
-            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries,
-                    userView};
+            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries, userView };
 
-             ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            createArgs);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    createArgs);
 
             //error
             fail("testCreateWithGuideNotPayed did not throw InvalidGuideSituationServiceException.");
@@ -129,82 +121,70 @@ public class CreateReimbursementGuideTest extends AdministrativeOfficeBaseTest {
         Integer guideId = new Integer(5762);
         InfoGuide infoGuide = null;
         try {
-            Object argsReadGuide[] = { guideId};
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadGuide", argsReadGuide);
+            Object argsReadGuide[] = { guideId };
+            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ReadGuide",
+                    argsReadGuide);
 
             List infoReimbursementGuideEntries = new ArrayList();
 
             InfoReimbursementGuideEntry infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-            infoReimbursementGuideEntry
-                    .setInfoGuideEntry((InfoGuideEntry) infoGuide
-                            .getInfoGuideEntries().get(0));
+            infoReimbursementGuideEntry.setInfoGuideEntry((InfoGuideEntry) infoGuide
+                    .getInfoGuideEntries().get(0));
             infoReimbursementGuideEntry.setJustification("alguma");
             infoReimbursementGuideEntry.setValue(new Double(5000.0));
 
             infoReimbursementGuideEntries.add(infoReimbursementGuideEntry);
 
-            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries,
-                    userView};
+            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries, userView };
 
-             ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            createArgs);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    createArgs);
 
             //error
             fail("testCreateWithReimburseValueBiggerThanGuideValue did not throw InvalidReimbursementValueServiceException.");
 
         } catch (InvalidReimbursementValueServiceException e) {
             //ok
-            
+
         } catch (FenixServiceException e) {
-            fail("testCreateWithReimburseValueBiggerThanGuideValue "
-                    + e.getMessage());
+            fail("testCreateWithReimburseValueBiggerThanGuideValue " + e.getMessage());
         }
 
     }
-    
-    
+
     public void testCreateWithoutJustification() {
         Integer guideId = new Integer(5762);
         InfoGuide infoGuide = null;
         try {
-            Object argsReadGuide[] = { guideId};
-            infoGuide = (InfoGuide) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadGuide", argsReadGuide);
+            Object argsReadGuide[] = { guideId };
+            infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ReadGuide",
+                    argsReadGuide);
 
             List infoReimbursementGuideEntries = new ArrayList();
 
             InfoReimbursementGuideEntry infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-            infoReimbursementGuideEntry
-                    .setInfoGuideEntry((InfoGuideEntry) infoGuide
-                            .getInfoGuideEntries().get(0));
+            infoReimbursementGuideEntry.setInfoGuideEntry((InfoGuideEntry) infoGuide
+                    .getInfoGuideEntries().get(0));
             infoReimbursementGuideEntry.setJustification("");
             infoReimbursementGuideEntry.setValue(new Double(5000.0));
 
             infoReimbursementGuideEntries.add(infoReimbursementGuideEntry);
 
-            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries,
-                    userView};
+            Object createArgs[] = { guideId, "", infoReimbursementGuideEntries, userView };
 
-         ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            createArgs);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    createArgs);
 
             //error
             fail("testCreateWithoutJustification did not throw RequiredJustificationServiceException.");
 
         } catch (RequiredJustificationServiceException e) {
             //ok
-            
+
         } catch (FenixServiceException e) {
-            fail("testCreateWithoutJustification "
-                    + e.getMessage());
+            fail("testCreateWithoutJustification " + e.getMessage());
         }
 
     }
-    
-    
-    
 
 }

@@ -27,67 +27,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
- * 30/Jun/2003
- * fenix-branch
- * ServidorAplicacao.Servico.sop
  * 
+ * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
+ *  
  */
 public class ReadAllClasses implements IServico {
 
-	/**
-	 * 
-	 */
-	private ReadAllClasses() {
-	}
+    /**
+     *  
+     */
+    private ReadAllClasses() {
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadAllClasses";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadAllClasses";
+    }
 
-	private static ReadAllClasses service = new ReadAllClasses();
+    private static ReadAllClasses service = new ReadAllClasses();
 
-	public static ReadAllClasses getService() {
-		return service;
-	}
+    public static ReadAllClasses getService() {
+        return service;
+    }
 
-	public SiteView run(Integer keyExecutionPeriod)
-		throws FenixServiceException {
-		List infoClasses = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				sp.getIPersistentExecutionPeriod();
+    public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException {
+        List infoClasses = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-			IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) persistentExecutionPeriod.readByOID(
-				        ExecutionPeriod.class,
-				        keyExecutionPeriod);
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                    ExecutionPeriod.class, keyExecutionPeriod);
 
-			ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-			List classes =
-				persistentClass.readByExecutionPeriod(executionPeriod);
+            ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+            List classes = persistentClass.readByExecutionPeriod(executionPeriod);
 
-			infoClasses = new ArrayList();
-			Iterator iter = classes.iterator();
-			while (iter.hasNext()) {
-				ITurma dClass = (ITurma) iter.next();
-				InfoClass infoClass = Cloner.copyClass2InfoClass(dClass);
-				infoClasses.add(infoClass);
-			}
+            infoClasses = new ArrayList();
+            Iterator iter = classes.iterator();
+            while (iter.hasNext()) {
+                ITurma dClass = (ITurma) iter.next();
+                InfoClass infoClass = Cloner.copyClass2InfoClass(dClass);
+                infoClasses.add(infoClass);
+            }
 
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        ISiteComponent classesComponent = new InfoSiteClassesComponent(infoClasses);
+        SiteView siteView = new SiteView(classesComponent);
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		ISiteComponent classesComponent =
-			new InfoSiteClassesComponent(infoClasses);
-		SiteView siteView = new SiteView(classesComponent);
-
-		return siteView;
-	}
+        return siteView;
+    }
 
 }

@@ -25,7 +25,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.masterDegree.gratuity.executionYear"/>
+				<bean:message key="label.executionYear"/>
 			</td>
 			<td>
 				<html:select property="executionYear">

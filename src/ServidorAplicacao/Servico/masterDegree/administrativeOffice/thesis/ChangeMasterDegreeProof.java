@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.thesis;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,23 +30,19 @@ import Util.State;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
-public class ChangeMasterDegreeProof implements IService
-{
+public class ChangeMasterDegreeProof implements IService {
 
     /**
      * The actor of this class.
      */
-    public ChangeMasterDegreeProof()
-    {
+    public ChangeMasterDegreeProof() {
     }
 
     public void run(IUserView userView, InfoStudentCurricularPlan infoStudentCurricularPlan,
             Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult,
-            Integer attachedCopiesNumber, ArrayList infoTeacherJuries,
-            ArrayList infoExternalPersonExternalJuries) throws FenixServiceException
-    {
-        try
-        {
+            Integer attachedCopiesNumber, List infoTeacherJuries, List infoExternalPersonExternalJuries)
+            throws FenixServiceException {
+        try {
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IStudentCurricularPlan studentCurricularPlan = Cloner
@@ -55,21 +50,24 @@ public class ChangeMasterDegreeProof implements IService
 
             IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis()
                     .readByStudentCurricularPlan(studentCurricularPlan);
-            if (storedMasterDegreeThesis == null) { throw new NonExistingServiceException(
-                    "error.exception.masterDegree.nonExistentMasterDegreeThesis"); }
+            if (storedMasterDegreeThesis == null) {
+                throw new NonExistingServiceException(
+                        "error.exception.masterDegree.nonExistentMasterDegreeThesis");
+            }
             IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
                     .getInstance();
             IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
                     .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-            if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan)) { throw new ScholarshipNotFinishedServiceException(
-                    "error.exception.masterDegree.scholarshipNotFinished"); }
+            if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan)) {
+                throw new ScholarshipNotFinishedServiceException(
+                        "error.exception.masterDegree.scholarshipNotFinished");
+            }
 
             IMasterDegreeProofVersion storedMasterDegreeProofVersion = sp
                     .getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(
                             studentCurricularPlan);
-            if (storedMasterDegreeProofVersion != null)
-            {
+            if (storedMasterDegreeProofVersion != null) {
                 sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(
                         storedMasterDegreeProofVersion);
                 storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
@@ -88,9 +86,7 @@ public class ChangeMasterDegreeProof implements IService
                     teacherJuries, externalJuries);
             sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(masterDegreeProofVersion);
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;

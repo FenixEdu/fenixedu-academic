@@ -46,6 +46,5 @@ public interface IExecutionPeriod extends IDomainObject, INode {
      * @param previousExecutionPeriod
      *            The previousExecutionPeriod to set.
      */
-    public void setPreviousExecutionPeriod(
-            IExecutionPeriod previousExecutionPeriod);
+    public void setPreviousExecutionPeriod(IExecutionPeriod previousExecutionPeriod);
 }

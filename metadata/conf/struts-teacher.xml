@@ -27,7 +27,15 @@
             <form-property name="asc" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-               <form-bean name="studentTestForm" type="ServidorApresentacao.formbeans.tests.TestForm" dynamic="true">
+        <form-bean name="studentTestForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	        <form-property name="questionCode" type="java.lang.String[]"/>
+        	<form-property name="testCode" type="java.lang.String"/>        	
+        	<form-property name="testInformation" type="java.lang.String"/>
+            <form-property name="notInquiryInformation" type="java.lang.String"/>
+            <form-property name="inquiryInformation" type="java.lang.String"/>
+            <form-property name="testType" type="java.lang.String"/>
+            <form-property name="availableCorrection" type="java.lang.String"/>
+            <form-property name="imsFeedback" type="java.lang.String"/>
        </form-bean>
         <form-bean name="exerciseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="metadataFile" type="org.apache.struts.upload.FormFile"/>
@@ -400,6 +408,7 @@
             <form-property name="shiftCode" type="java.lang.Integer" />
             <form-property name="objectCode" type="java.lang.Integer" />
             <form-property name="method" type="java.lang.String" />
+			<form-property name="viewPhoto" type="java.lang.String" />
         </form-bean>
         <form-bean name="selectCandidaciesForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
@@ -606,6 +615,7 @@
 			<form-property name="unenrolledCurricularCourses" type="java.lang.String[]"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="isOptional" type="java.lang.String"/>
+			<form-property name="courseType" type="java.lang.String"/>
 		</form-bean>
 		
 		<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -664,6 +674,14 @@
 			<form-property name="selectedGroupProposal" type="java.lang.String"/>
 			<form-property name="selectedGroupProposals" type="java.lang.String[]"/>
 		</form-bean>
+
+		<!-- ==================== View Curricular Course Historic ================== -->
+		<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="executionYearID" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>		
+		
 
     </form-beans>
 
@@ -783,10 +801,14 @@
             <forward name="viewObjectives" path="/viewObjectives.jsp"/>
             <forward name="editObjectives" path="/editObjectives.jsp"/>
         </action>
-        <action name="executionCourseProgramForm" parameter="method" scope="request" 
-            input="/editProgram.jsp" path="/programManagerDA" 
+        <action name="executionCourseProgramForm" 
+            parameter="method" 
+            scope="request" 
+            input="/editProgram.jsp" 
+            path="/programManagerDA" 
             type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            validate="false" className="ServidorApresentacao.mapping.SiteManagementActionMapping">
+            validate="false" 
+            className="ServidorApresentacao.mapping.SiteManagementActionMapping">
             <set-property property="componentClassName" value="DataBeans.InfoSitePrograms"/>
             <set-property property="inputForwardName" value="editProgram"/>
             <forward name="notAuthorized" path="/programManagerDA.do?method=viewProgram" />
@@ -992,7 +1014,12 @@
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
             <forward name="showStudentTest" path="show-Student-Test"/>
+            <forward name="doTestSimulation" path="do-Test-Simulation"/>
+            <forward name="showTests" path="show-Tests"/>
             <forward name="showTestMarks" path="show-Test-Marks"/>
+            <forward name="showSimulationCorrection" path="show-Simulation-Correction"/>
+            <forward name="showSimulationFeedback" path="show-Simulation-Feedback"/>
+            <forward name="chooseTestSimulationOptions" path="choose-Test-Simulation-Options"/>
         </action>
         <action path="/exercisesManagement" name="exerciseForm"
             input="/exercisesManagement.do?method=insertNewExercise&amp;page=0" scope="request" 
@@ -1059,7 +1086,7 @@
         <action path="/testDistributionByShifts" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseShifts&amp;page=1" scope="request" parameter="method" 
             type="ServidorApresentacao.Action.teacher.TestsManagementAction" validate="true">
-            <forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
+            <forward name="showDistributedTests" path="show-Distributed-Tests"/>
         </action>
         <action path="/testDistributionByStudents" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseStudents&amp;page=1" scope="request" 
@@ -1321,7 +1348,8 @@
         </action>
         <!-- Course Information -->
         <action type="ServidorApresentacao.Action.gesdis.ViewCourseInformationAction" path="/viewCourseInformation" 
-            name="viewCourseInformationForm" scope="request">
+            name="viewCourseInformationForm" scope="request"
+            input="/teacherAdministrationViewer.do?method=instructions">
             <exception type="ServidorAplicacao.Servico.exceptions.FenixServiceException" 
                 key="error.exception.notAuthorized" 
                 handler="ServidorApresentacao.config.FenixNotAuthorizedExceptionHandler" />
@@ -1701,6 +1729,26 @@
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 				<forward name="sucess" path="/finalWorkManagement.do?method=chooseDegree&amp;page=0"/>
 	    </action>
+	    
+	    <!-- ==================== View Curricular Course Historic ================== -->
+       	<action path="/chooseExecutionYearAndDegreeCurricularPlan"
+       		name="executionYearDegreeCurricularPlanForm"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction"
+       		validate="true"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		scope="request"
+       		parameter="method">
+       		<forward name="chooseExecutionYear" path="view-degree-curricular-plan-execution-year"/>
+			<forward name="showActiveCurricularCourses" path="show-active-curricular-scopes"/>
+       	</action>
+
+		<action path="/showCurriculumHistoric"
+       		type="ServidorApresentacao.Action.commons.curriculumHistoric.ShowCurriculumHistoricAction"
+       		scope="request"
+			input="/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&amp;page=0"
+       		parameter="method">
+       		<forward name="show-report" path="view-curriculum-historic"/>
+       	</action>
 	    
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->

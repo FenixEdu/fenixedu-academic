@@ -33,8 +33,7 @@ public class InfoCountry extends InfoObject {
         boolean result = false;
         if (obj instanceof InfoCountry) {
             InfoCountry d = (InfoCountry) obj;
-            result = (getName().equals(d.getName()))
-                    && (getCode().equals(d.getCode()))
+            result = (getName().equals(d.getName())) && (getCode().equals(d.getCode()))
                     && (getNationality().equals(d.getNationality()));
         }
         return result;
@@ -114,26 +113,22 @@ public class InfoCountry extends InfoObject {
         }
         return infoCountry;
     }
-    
-    public void copyToDomain(InfoCountry infoCountry,ICountry country)
-    { 
-        super.copyToDomain(infoCountry,country);
-        
+
+    public void copyToDomain(InfoCountry infoCountry, ICountry country) {
+        super.copyToDomain(infoCountry, country);
+
         country.setCode(infoCountry.getCode());
         country.setName(infoCountry.getName());
         country.setNationality(infoCountry.getNationality());
     }
-    
-    public static ICountry newDomainFromInfo(InfoCountry infoCountry)
-    {
+
+    public static ICountry newDomainFromInfo(InfoCountry infoCountry) {
         ICountry country = null;
-        if(infoCountry != null)
-        {
+        if (infoCountry != null) {
             country = new Country();
-            infoCountry.copyToDomain(infoCountry,country);
+            infoCountry.copyToDomain(infoCountry, country);
         }
         return country;
     }
-	
 
 }

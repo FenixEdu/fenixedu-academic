@@ -12,24 +12,22 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * classe que executa operacoes de leitura e escrita de registos a partir da estrutura das mesmas
+ * classe que executa operacoes de leitura e escrita de registos a partir da
+ * estrutura das mesmas
  * 
  * @author Ivo Brandão
  */
-public class QueryGenericaRelacional
-{
+public class QueryGenericaRelacional {
 
     /** construtor */
-    public QueryGenericaRelacional()
-    {
+    public QueryGenericaRelacional() {
     }
 
     /**
-	 * gera as clausulas Where com a chave de uma Query; usado por queryLeitura, queryApagar,
-	 * queryAlteracao
-	 */
-    private String clausulasWhere(Hashtable chave)
-    {
+     * gera as clausulas Where com a chave de uma Query; usado por queryLeitura,
+     * queryApagar, queryAlteracao
+     */
+    private String clausulasWhere(Hashtable chave) {
         Iterator iteradorChaves;
         int contadorChaves = 0;
         String clausulas = new String();
@@ -37,8 +35,7 @@ public class QueryGenericaRelacional
         clausulas = clausulas.concat("WHERE ");
 
         iteradorChaves = chave.entrySet().iterator();
-        while (iteradorChaves.hasNext())
-        {
+        while (iteradorChaves.hasNext()) {
             contadorChaves++;
             Entry entrada = (Entry) iteradorChaves.next();
             String nomeChave = entrada.getKey().toString();
@@ -49,9 +46,11 @@ public class QueryGenericaRelacional
         return clausulas;
     }
 
-    /** produz um PreparedStatement para a query de leitura, usado pelo metodo ler */
-    private PreparedStatement queryLeitura(String nomeTabela, Hashtable chave) throws Exception
-    {
+    /**
+     * produz um PreparedStatement para a query de leitura, usado pelo metodo
+     * ler
+     */
+    private PreparedStatement queryLeitura(String nomeTabela, Hashtable chave) throws Exception {
         Iterator iteradorChaves;
         int contadorChaves = 0;
         String query = new String();
@@ -66,8 +65,7 @@ public class QueryGenericaRelacional
 
         //acertar valores para a chave primaria
         iteradorChaves = chave.entrySet().iterator();
-        while (iteradorChaves.hasNext())
-        {
+        while (iteradorChaves.hasNext()) {
             contadorChaves++;
             Entry entrada = (Entry) iteradorChaves.next();
             querySQL.setObject(contadorChaves, entrada.getValue());
@@ -76,10 +74,12 @@ public class QueryGenericaRelacional
         return querySQL;
     }
 
-    /** produz um PreparedStatement para a query de escrita, usado pelo metodo escrever */
+    /**
+     * produz um PreparedStatement para a query de escrita, usado pelo metodo
+     * escrever
+     */
     private PreparedStatement queryEscrita(String nomeTabela, Hashtable atributos, Hashtable valores)
-        throws Exception
-    {
+            throws Exception {
 
         Iterator iteradorAtributos;
         String query = new String();
@@ -93,8 +93,7 @@ public class QueryGenericaRelacional
 
         //construir simultaneamente pares atributo - valor
         iteradorAtributos = atributos.entrySet().iterator();
-        while (iteradorAtributos.hasNext())
-        {
+        while (iteradorAtributos.hasNext()) {
             Entry atributo = (Entry) iteradorAtributos.next();
             String nomeAtributo = atributo.getKey().toString();
 
@@ -116,8 +115,7 @@ public class QueryGenericaRelacional
 
         //acertar valores para os atributos
         iteradorAtributos = atributos.entrySet().iterator();
-        while (iteradorAtributos.hasNext())
-        {
+        while (iteradorAtributos.hasNext()) {
             Entry atributo = (Entry) iteradorAtributos.next();
             String nomeAtributo = atributo.getKey().toString();
             Object valorAtributo = valores.get(nomeAtributo);
@@ -129,14 +127,12 @@ public class QueryGenericaRelacional
         return querySQL;
     }
 
-    /** produz um PreparedStatement para a query de alteracao, usado pelo metodo alterar */
-    private PreparedStatement queryAlteracao(
-        String nomeTabela,
-        Hashtable atributos,
-        Hashtable valores,
-        Hashtable chave)
-        throws Exception
-    {
+    /**
+     * produz um PreparedStatement para a query de alteracao, usado pelo metodo
+     * alterar
+     */
+    private PreparedStatement queryAlteracao(String nomeTabela, Hashtable atributos, Hashtable valores,
+            Hashtable chave) throws Exception {
 
         Iterator iteradorAtributos;
         Iterator iteradorChaves;
@@ -151,8 +147,7 @@ public class QueryGenericaRelacional
 
         //construir simultaneamente pares atributo - valor
         iteradorAtributos = atributos.entrySet().iterator();
-        while (iteradorAtributos.hasNext())
-        {
+        while (iteradorAtributos.hasNext()) {
             Entry atributo = (Entry) iteradorAtributos.next();
             String nomeAtributo = atributo.getKey().toString();
 
@@ -173,8 +168,7 @@ public class QueryGenericaRelacional
 
         //acertar valores para os atributos
         iteradorAtributos = atributos.entrySet().iterator();
-        while (iteradorAtributos.hasNext())
-        {
+        while (iteradorAtributos.hasNext()) {
             Entry atributo = (Entry) iteradorAtributos.next();
             String nomeAtributo = atributo.getKey().toString();
             Object valorAtributo = valores.get(nomeAtributo);
@@ -185,8 +179,7 @@ public class QueryGenericaRelacional
 
         //acertar valores para as chaves
         iteradorChaves = chave.entrySet().iterator();
-        while (iteradorChaves.hasNext())
-        {
+        while (iteradorChaves.hasNext()) {
             Entry elementoChave = (Entry) iteradorChaves.next();
             String nomeChave = elementoChave.getKey().toString();
             Object valorChave = chave.get(nomeChave);
@@ -198,9 +191,11 @@ public class QueryGenericaRelacional
         return querySQL;
     }
 
-    /** produz um PreparedStatement para a query de eliminacao, usado pelo metodo apagar */
-    private PreparedStatement queryApagar(String nomeTabela, Hashtable chave) throws Exception
-    {
+    /**
+     * produz um PreparedStatement para a query de eliminacao, usado pelo metodo
+     * apagar
+     */
+    private PreparedStatement queryApagar(String nomeTabela, Hashtable chave) throws Exception {
         Iterator iteradorChaves;
         String query = new String();
         PreparedStatement querySQL;
@@ -216,8 +211,7 @@ public class QueryGenericaRelacional
 
         //acertar valores para as chaves
         iteradorChaves = chave.entrySet().iterator();
-        while (iteradorChaves.hasNext())
-        {
+        while (iteradorChaves.hasNext()) {
             Entry elementoChave = (Entry) iteradorChaves.next();
             String nomeChave = elementoChave.getKey().toString();
             Object valorChave = chave.get(nomeChave);
@@ -228,20 +222,21 @@ public class QueryGenericaRelacional
 
         return querySQL;
     }
-    /** constroi uma tabela de dispersao com os valores para os atributos, usado pelo metodo ler */
+
+    /**
+     * constroi uma tabela de dispersao com os valores para os atributos, usado
+     * pelo metodo ler
+     */
     private Hashtable constroiResultadoLeitura(Hashtable atributos, ResultSet resultadoSQL)
-        throws Exception
-    {
+            throws Exception {
         Iterator iteradorAtributos = null;
         Hashtable resultado = null;
 
         iteradorAtributos = atributos.entrySet().iterator();
-        if (resultadoSQL.next())
-        {
+        if (resultadoSQL.next()) {
             resultado = new Hashtable();
 
-            while (iteradorAtributos.hasNext())
-            {
+            while (iteradorAtributos.hasNext()) {
                 Entry atributo = (Entry) iteradorAtributos.next();
                 String nomeAtributo = atributo.getKey().toString();
                 Object valorAtributo = resultadoSQL.getObject(nomeAtributo);
@@ -253,14 +248,12 @@ public class QueryGenericaRelacional
     }
 
     /** metodo generico para implementar a leitura de um registo */
-    public Hashtable ler(String nomeTabela, Hashtable chave, Hashtable atributos)
-    {
+    public Hashtable ler(String nomeTabela, Hashtable chave, Hashtable atributos) {
         PreparedStatement querySQL = null;
         ResultSet resultadoSQL = null;
         Hashtable resultado = null;
 
-        try
-        {
+        try {
             querySQL = queryLeitura(nomeTabela, chave);
 
             resultadoSQL = querySQL.executeQuery();
@@ -268,22 +261,18 @@ public class QueryGenericaRelacional
             resultado = constroiResultadoLeitura(atributos, resultadoSQL);
 
             querySQL.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("QueryGenericaRelacional.ler: " + e.toString());
         }
         return resultado;
     }
 
     /** metodo generico para implementar a escrita de um registo */
-    public Boolean escrever(String nomeTabela, Hashtable atributos, Hashtable valores)
-    {
+    public Boolean escrever(String nomeTabela, Hashtable atributos, Hashtable valores) {
         PreparedStatement querySQL = null;
         Boolean resultado = new Boolean(false);
 
-        try
-        {
+        try {
             querySQL = queryEscrita(nomeTabela, atributos, valores);
 
             querySQL.executeUpdate();
@@ -291,22 +280,18 @@ public class QueryGenericaRelacional
 
             resultado = new Boolean(true);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("QueryGenericaRelacional.escrever: " + e.toString());
         }
         return resultado;
     }
 
     /** metodo generico para implementar a alteracao de um registo */
-    public Boolean alterar(String nomeTabela, Hashtable atributos, Hashtable valores, Hashtable chave)
-    {
+    public Boolean alterar(String nomeTabela, Hashtable atributos, Hashtable valores, Hashtable chave) {
         PreparedStatement querySQL = null;
         Boolean resultado = new Boolean(false);
 
-        try
-        {
+        try {
             querySQL = queryAlteracao(nomeTabela, atributos, valores, chave);
 
             querySQL.executeUpdate();
@@ -314,22 +299,18 @@ public class QueryGenericaRelacional
 
             resultado = new Boolean(true);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("QueryGenericaRelacional.alterar: " + e.toString());
         }
         return resultado;
     }
 
     /** metodo generico para implementar a eliminacao de um registo */
-    public Boolean apagar(String nomeTabela, Hashtable chave)
-    {
+    public Boolean apagar(String nomeTabela, Hashtable chave) {
         PreparedStatement querySQL = null;
         Boolean resultado = new Boolean(false);
 
-        try
-        {
+        try {
             querySQL = queryApagar(nomeTabela, chave);
 
             querySQL.executeUpdate();
@@ -337,9 +318,7 @@ public class QueryGenericaRelacional
 
             resultado = new Boolean(true);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("QueryGenericaRelacional.apagar: " + e.toString());
         }
         return resultado;

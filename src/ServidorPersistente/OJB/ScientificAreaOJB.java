@@ -18,23 +18,19 @@ import ServidorPersistente.IPersistentScientificArea;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class ScientificAreaOJB extends ObjectFenixOJB implements IPersistentScientificArea
-{
-    public ScientificAreaOJB()
-    {
+public class ScientificAreaOJB extends PersistentObjectOJB implements IPersistentScientificArea {
+    public ScientificAreaOJB() {
     }
 
-    public IScientificArea readByName(String name) throws ExcepcaoPersistencia
-    {
+    public IScientificArea readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
         return (IScientificArea) queryObject(ScientificArea.class, criteria);
     }
 
-    public List readAllByBranch(IBranch branch) throws ExcepcaoPersistencia
-    {
-    	Criteria criteria = new Criteria();
-    	criteria.addEqualTo("areaCurricularCourseGroups.branch.idInternal", branch.getIdInternal());
-    	return queryList(ScientificArea.class, criteria);
+    public List readAllByBranch(IBranch branch) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("areaCurricularCourseGroups.branch.idInternal", branch.getIdInternal());
+        return queryList(ScientificArea.class, criteria);
     }
 }

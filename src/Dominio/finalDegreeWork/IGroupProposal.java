@@ -8,10 +8,9 @@ import Dominio.IDomainObject;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public interface IGroupProposal extends IDomainObject
-{
+public interface IGroupProposal extends IDomainObject {
 
     public IGroup getFinalDegreeDegreeWorkGroup();
 

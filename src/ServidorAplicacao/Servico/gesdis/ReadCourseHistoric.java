@@ -15,6 +15,7 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseWithInfoDegreeCurricularPlan;
 import DataBeans.gesdis.InfoCourseHistoric;
 import DataBeans.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
 import DataBeans.gesdis.InfoSiteCourseHistoric;
@@ -41,14 +42,11 @@ public class ReadCourseHistoric implements IService {
     public List run(Integer executionCourseId) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseId);
-            Integer semester = executionCourse.getExecutionPeriod()
-                    .getSemester();
-            List curricularCourses = executionCourse
-                    .getAssociatedCurricularCourses();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
+            Integer semester = executionCourse.getExecutionPeriod().getSemester();
+            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
             return getInfoSiteCoursesHistoric(curricularCourses, semester, sp);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e.getMessage());
@@ -60,16 +58,13 @@ public class ReadCourseHistoric implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteCoursesHistoric(List curricularCourses,
-            Integer semester, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    private List getInfoSiteCoursesHistoric(List curricularCourses, Integer semester,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
         List infoSiteCoursesHistoric = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter
-                    .next();
-            infoSiteCoursesHistoric.add(getInfoSiteCourseHistoric(
-                    curricularCourse, semester, sp));
+            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            infoSiteCoursesHistoric.add(getInfoSiteCourseHistoric(curricularCourse, semester, sp));
         }
         return infoSiteCoursesHistoric;
     }
@@ -79,31 +74,29 @@ public class ReadCourseHistoric implements IService {
      * @param sp
      * @return
      */
-    private InfoSiteCourseHistoric getInfoSiteCourseHistoric(
-            ICurricularCourse curricularCourse, Integer semester,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private InfoSiteCourseHistoric getInfoSiteCourseHistoric(ICurricularCourse curricularCourse,
+            Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
         InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
         //CLONER
         //InfoCurricularCourse infoCurricularCourse = Cloner
-                //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+        //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeCurricularPlan
+                .newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-        IPersistentCourseHistoric persistentCourseHistoric = sp
-                .getIPersistentCourseHistoric();
-        List coursesHistoric = persistentCourseHistoric
-                .readByCurricularCourseAndSemester(curricularCourse, semester);
-        List infoCoursesHistoric = (List) CollectionUtils.collect(
-                coursesHistoric, new Transformer() {
-                    public Object transform(Object arg0) {
-                        ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
-                        //CLONER
-                        //return Cloner
-                        //.copyICourseHistoric2InfoCourseHistoric(courseHistoric);
-                        return InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric);
-                    }
+        IPersistentCourseHistoric persistentCourseHistoric = sp.getIPersistentCourseHistoric();
+        List coursesHistoric = persistentCourseHistoric.readByCurricularCourseAndSemester(
+                curricularCourse, semester);
+        List infoCoursesHistoric = (List) CollectionUtils.collect(coursesHistoric, new Transformer() {
+            public Object transform(Object arg0) {
+                ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
+                //CLONER
+                //return Cloner
+                //.copyICourseHistoric2InfoCourseHistoric(courseHistoric);
+                return InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric);
+            }
 
-                });
+        });
 
         Collections.sort(infoCoursesHistoric, new Comparator() {
 

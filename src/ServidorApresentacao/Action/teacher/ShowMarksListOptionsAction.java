@@ -20,46 +20,47 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
 public class ShowMarksListOptionsAction extends DispatchAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer executionCourseCode = null;
-		String executionCourseCodeString = request.getParameter("objectCode");
-		if (executionCourseCodeString == null) {
-			executionCourseCodeString = request.getAttribute("objectCode").toString();
-		}
-		executionCourseCode = new Integer(executionCourseCodeString);
+        Integer executionCourseCode = null;
+        String executionCourseCodeString = request.getParameter("objectCode");
+        if (executionCourseCodeString == null) {
+            executionCourseCodeString = request.getAttribute("objectCode").toString();
+        }
+        executionCourseCode = new Integer(executionCourseCodeString);
 
-		Integer evaluationCode = null;
-		String evaluationCodeString = request.getParameter("evaluationCode");
-		if (evaluationCodeString == null) {
-			evaluationCodeString = request.getAttribute("evaluationCode").toString();
-		}
-		evaluationCode = new Integer(evaluationCodeString);
+        Integer evaluationCode = null;
+        String evaluationCodeString = request.getParameter("evaluationCode");
+        if (evaluationCodeString == null) {
+            evaluationCodeString = request.getAttribute("evaluationCode").toString();
+        }
+        evaluationCode = new Integer(evaluationCodeString);
 
-		ISiteComponent commonComponent = new InfoSiteCommon();
-		Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
+        ISiteComponent commonComponent = new InfoSiteCommon();
+        Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
 
-		TeacherAdministrationSiteView siteView = null;
-		try {
-			siteView =
-				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        TeacherAdministrationSiteView siteView = null;
+        try {
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+                    "TeacherAdministrationSiteComponentService", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		request.setAttribute("siteView", siteView);
-		request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-		request.setAttribute("evaluationCode", evaluationCode);
-		
-		return mapping.findForward("showMarksListOptions");
-	}
+        request.setAttribute("siteView", siteView);
+        request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
+                .getExecutionCourse().getIdInternal());
+        request.setAttribute("evaluationCode", evaluationCode);
+
+        return mapping.findForward("showMarksListOptions");
+    }
 }

@@ -11,9 +11,10 @@ import ServidorPersistente.IPersistentObject;
 
 /**
  * @author TJBF & PFON
- * 
+ *  
  */
-public interface IPersistentPublicationType extends IPersistentObject
-{
-	List readAll() throws ExcepcaoPersistencia;
+public interface IPersistentPublicationType extends IPersistentObject {
+    List readAll() throws ExcepcaoPersistencia;
+
+    List readByPublicationsTypeId(String publicationType) throws ExcepcaoPersistencia;
 }

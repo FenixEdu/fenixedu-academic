@@ -40,17 +40,17 @@ public class EditTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser() {
-        String[] args = { "D3673", "pass", getApplication()};
+        String[] args = { "D3673", "pass", getApplication() };
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
     protected String[] getNotAuthenticatedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
@@ -60,10 +60,9 @@ public class EditTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
         Integer testQuestionId = new Integer(313);
         Integer questionOrder = new Integer(1);
         Double questionValue = new Double(2.3);
-        CorrectionFormula formula = new CorrectionFormula(
-                CorrectionFormula.FENIX);
-        Object[] args = { executionCourseId, testId, testQuestionId,
-                questionOrder, questionValue, formula};
+        CorrectionFormula formula = new CorrectionFormula(CorrectionFormula.FENIX);
+        Object[] args = { executionCourseId, testId, testQuestionId, questionOrder, questionValue,
+                formula };
         return args;
     }
 
@@ -75,20 +74,16 @@ public class EditTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
         try {
             IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             //ver se esta pergunta esta no teste
             //posicao/cotação certa
-            PersistenceBroker broker = PersistenceBrokerFactory
-                    .defaultPersistenceBroker();
+            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
             Criteria criteria = new Criteria();
             criteria.addEqualTo("keyTest", args[1]);
-            Query queryCriteria = new QueryByCriteria(TestQuestion.class,
-                    criteria);
-            List testQuestionList = (List) broker
-                    .getCollectionByQuery(queryCriteria);
+            Query queryCriteria = new QueryByCriteria(TestQuestion.class, criteria);
+            List testQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
             broker.close();
 
             Iterator it = testQuestionList.iterator();
@@ -97,8 +92,7 @@ public class EditTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
                 if (testQuestion.getIdInternal().equals(args[2])) {
                     int order = ((Integer) args[3]).intValue();
                     if (order != -2 && order != -1)
-                            assertEquals(testQuestion.getTestQuestionOrder(),
-                                    new Integer(order+1));
+                        assertEquals(testQuestion.getTestQuestionOrder(), new Integer(order + 1));
                     assertEquals(testQuestion.getTestQuestionValue(), args[4]);
                     assertEquals(testQuestion.getCorrectionFormula(), args[5]);
                 }

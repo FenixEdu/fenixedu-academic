@@ -37,8 +37,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
         return service;
     }
 
-    public InfoDegreeInfo run(Integer executionPeriodId, Integer degreeId)
-            throws FenixServiceException {
+    public InfoDegreeInfo run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
         InfoDegreeInfo infoDegreeInfo = null;
 
         try {
@@ -47,19 +46,17 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
             }
 
             SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             //Execution Period
             IExecutionPeriod executionPeriod;
 
             if (executionPeriodId == null) {
-                executionPeriod = persistentExecutionPeriod
-                        .readActualExecutionPeriod();
+                executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             } else {
 
-                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-                        .readByOID(ExecutionPeriod.class, executionPeriodId);
+                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                        ExecutionPeriod.class, executionPeriodId);
             }
 
             if (executionPeriod == null) {
@@ -73,27 +70,28 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
 
             //Degree
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class,
-                    degreeId);
+            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeId);
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
             //Degree Info
-            IPersistentDegreeInfo persistentDegreeInfo = sp
-                    .getIPersistentDegreeInfo();
-            List degreeInfoList = persistentDegreeInfo
-                    .readDegreeInfoByDegreeAndExecutionYear(degree,
-                            executionYear);
+            IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
+            List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegreeAndExecutionYear(degree,
+                    executionYear);
             if (degreeInfoList == null || degreeInfoList.size() <= 0) {
-                throw new FenixServiceException("error.impossibleDegreeSite");
+
+                //If dosn't exists information belongs to this execution year
+                //Find the last information in data base
+                degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(degree);
+                if (degreeInfoList == null || degreeInfoList.size() <= 0) {
+                    throw new FenixServiceException("error.impossibleDegreeSite");
+                }
             }
 
             //Find the degree info most recent
-            Collections.sort(degreeInfoList, new BeanComparator(
-                    "lastModificationDate"));
-            IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList
-                    .get(degreeInfoList.size() - 1);
+            Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
+            IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
             //CLONER
             //infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
             infoDegreeInfo = InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);

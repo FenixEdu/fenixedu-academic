@@ -7,106 +7,112 @@ package Dominio;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class EvaluationMethod extends DomainObject implements IEvaluationMethod {
 
-	private String evaluationElements;
-	private String evaluationElementsEn;
-	private Integer keyExecutionCourse;
-	private IExecutionCourse executionCourse;
+    private String evaluationElements;
 
-	/**
-	 * 
-	 */
-	public EvaluationMethod() {
-	}
+    private String evaluationElementsEn;
 
-	public EvaluationMethod(IExecutionCourse executionCourse) {
-		setExecutionCourse(executionCourse);
-	}
+    private Integer keyExecutionCourse;
 
-	public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements) {
-		setExecutionCourse(executionCourse);
-		setEvaluationElements(evaluationElements);
-	}
-	public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements, String evaluationElementsEn) {
-		setExecutionCourse(executionCourse);
-		setEvaluationElements(evaluationElements);
-		setEvaluationElementsEn(evaluationElementsEn);
-	}
-	/**
-	 * @return
-	 */
-	public String getEvaluationElements() {
-		return evaluationElements;
-	}
+    private IExecutionCourse executionCourse;
 
-	/**
-	 * @param string
-	 */
-	public void setEvaluationElements(String string) {
-		evaluationElements = string;
-	}
+    /**
+     *  
+     */
+    public EvaluationMethod() {
+    }
 
-	/**
-	 * @return
-	 */
-	public IExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public EvaluationMethod(IExecutionCourse executionCourse) {
+        setExecutionCourse(executionCourse);
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
+    public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements) {
+        setExecutionCourse(executionCourse);
+        setEvaluationElements(evaluationElements);
+    }
 
-	/**
-	 * @param execucao
-	 */
-	public void setExecutionCourse(IExecutionCourse execucao) {
-		executionCourse = execucao;
-	}
+    public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements,
+            String evaluationElementsEn) {
+        setExecutionCourse(executionCourse);
+        setEvaluationElements(evaluationElements);
+        setEvaluationElementsEn(evaluationElementsEn);
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyExecutionCourse(Integer integer) {
-		keyExecutionCourse = integer;
-	}
+    /**
+     * @return
+     */
+    public String getEvaluationElements() {
+        return evaluationElements;
+    }
 
-	public String toString() {
-		String result = "[EvaluationMethod";
-		result += ", codInt=" + getIdInternal();
-		result += ", evaluationElements =" + getEvaluationElements();
-		result += ", executionCourse =" + getExecutionCourse();
-		result += "]";
-		return result;
-	}
+    /**
+     * @param string
+     */
+    public void setEvaluationElements(String string) {
+        evaluationElements = string;
+    }
 
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof IEvaluationMethod) {
-			result = getExecutionCourse().equals(((IEvaluationMethod) arg0).getExecutionCourse());
-		}
-		return result;
-	}
+    /**
+     * @return
+     */
+    public IExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getEvaluationElementsEn() {
-		return evaluationElementsEn;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyExecutionCourse() {
+        return keyExecutionCourse;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setEvaluationElementsEn(String string) {
-		evaluationElementsEn = string;
-	}
+    /**
+     * @param execucao
+     */
+    public void setExecutionCourse(IExecutionCourse execucao) {
+        executionCourse = execucao;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyExecutionCourse(Integer integer) {
+        keyExecutionCourse = integer;
+    }
+
+    public String toString() {
+        String result = "[EvaluationMethod";
+        result += ", codInt=" + getIdInternal();
+        result += ", evaluationElements =" + getEvaluationElements();
+        result += ", executionCourse =" + getExecutionCourse();
+        result += "]";
+        return result;
+    }
+
+    public boolean equals(Object arg0) {
+        boolean result = false;
+        if (arg0 instanceof IEvaluationMethod) {
+            result = getExecutionCourse().equals(((IEvaluationMethod) arg0).getExecutionCourse());
+        }
+        return result;
+    }
+
+    /**
+     * @return
+     */
+    public String getEvaluationElementsEn() {
+        return evaluationElementsEn;
+    }
+
+    /**
+     * @param string
+     */
+    public void setEvaluationElementsEn(String string) {
+        evaluationElementsEn = string;
+    }
 
 }

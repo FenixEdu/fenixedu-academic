@@ -15,135 +15,126 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 
 /**
-  * @author Luis Cruz & Sara Ribeiro
-  * 
- **/
+ * @author Luis Cruz & Sara Ribeiro
+ *  
+ */
 public abstract class TestCaseServices extends TestCase {
 
-	protected IUserView userViewAuthorized = null;
-	protected IUserView userViewNotAuthorized = null;
-	private dbaccess dbAcessPoint = null;
+    protected IUserView userViewAuthorized = null;
 
-	protected Object[] args = null;
-	protected Object result = null;
+    protected IUserView userViewNotAuthorized = null;
 
-	public TestCaseServices(String testName) {
-		super(testName);
-	}
+    private dbaccess dbAcessPoint = null;
 
-	protected void setUp() {
-		try {
-			dbAcessPoint = new dbaccess();
-			dbAcessPoint.openConnection();
-			dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-			dbAcessPoint.loadDataBase(getDataSetFilePath());
-			dbAcessPoint.closeConnection();
-		} catch (Exception ex) {
-			fail("Setup failed loading database with test data set: " + ex);
-		}
-		// to clear cache
-		SuportePersistenteOJB.resetInstance();
-		setUserViewAuthorized();
-		setUserViewNotAuthorized();
-	}
+    protected Object[] args = null;
 
-	/**
-	 * @return
-	 */
-	protected String getDataSetFilePath() {
-		return "etc/testDataSet.xml";
-	}
+    protected Object result = null;
 
-	protected void tearDown() {
-//		try {
-//			dbAcessPoint.openConnection();
-//			dbAcessPoint.loadDataBase("etc/testBackup.xml");
-//			dbAcessPoint.closeConnection();
-//		} catch (Exception ex) {
-//			System.out.println("Tear down failed: " +ex);
-//		}
-	}
-	
-	public String getApplication(){
-		return Autenticacao.EXTRANET;
-	}
+    public TestCaseServices(String testName) {
+        super(testName);
+    }
 
-	protected void callServiceWithAuthorizedUserView()
-		throws FenixServiceException {
-		result =
-			ServiceManagerServiceFactory.executeService(
-				userViewAuthorized,
-				getNameOfServiceToBeTested(),
-				args);
-	}
+    protected void setUp() {
+        try {
+            dbAcessPoint = new dbaccess();
+            dbAcessPoint.openConnection();
+            dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+            dbAcessPoint.loadDataBase(getDataSetFilePath());
+            dbAcessPoint.closeConnection();
+        } catch (Exception ex) {
+            fail("Setup failed loading database with test data set: " + ex);
+        }
+        // to clear cache
+        SuportePersistenteOJB.resetInstance();
+        setUserViewAuthorized();
+        setUserViewNotAuthorized();
+    }
 
-	protected void callServiceWithUnauthorizedUserView()
-		throws FenixServiceException {
-		result =
-			ServiceManagerServiceFactory.executeService(
-				userViewNotAuthorized,
-				getNameOfServiceToBeTested(),
-				args);
-	}
+    /**
+     * @return
+     */
+    protected String getDataSetFilePath() {
+        return "etc/testDataSet.xml";
+    }
 
-	/**
-	 * This method must return a String with the name of the service to be tested.
-	 */
-	protected abstract String getNameOfServiceToBeTested();
+    protected void tearDown() {
+        //		try {
+        //			dbAcessPoint.openConnection();
+        //			dbAcessPoint.loadDataBase("etc/testBackup.xml");
+        //			dbAcessPoint.closeConnection();
+        //		} catch (Exception ex) {
+        //			System.out.println("Tear down failed: " +ex);
+        //		}
+    }
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return false;
-	}
+    public String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	/**
-	 * @return
-	 */
-	public IUserView getUserViewAuthorized() {
-		return userViewAuthorized;
-	}
+    protected void callServiceWithAuthorizedUserView() throws FenixServiceException {
+        result = ServiceManagerServiceFactory.executeService(userViewAuthorized,
+                getNameOfServiceToBeTested(), args);
+    }
 
-	/**
-	 * @return
-	 */
-	public IUserView getUserViewNotAuthorized() {
-		return userViewNotAuthorized;
-	}
+    protected void callServiceWithUnauthorizedUserView() throws FenixServiceException {
+        result = ServiceManagerServiceFactory.executeService(userViewNotAuthorized,
+                getNameOfServiceToBeTested(), args);
+    }
 
-	/**
-	 * @param
-	 */
-	public void setUserViewAuthorized() {
-		String argsForAuthentication[] = { "user", "pass" , getApplication()};
+    /**
+     * This method must return a String with the name of the service to be
+     * tested.
+     */
+    protected abstract String getNameOfServiceToBeTested();
 
-		try {
-			userViewAuthorized =
-				(IUserView) ServiceManagerServiceFactory.executeService(
-					null,
-					"Autenticacao",
-					argsForAuthentication);
-		} catch (Exception ex) {
-			fail("Failed obtainning an authorized user view");
-		}
-	}
+    /**
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
+        return false;
+    }
 
-	/**
-	 * @param
-	 */
-	public void setUserViewNotAuthorized() {
-		String argsForAuthentication[] = { "julia", "pass" , getApplication()};
+    /**
+     * @return
+     */
+    public IUserView getUserViewAuthorized() {
+        return userViewAuthorized;
+    }
 
-		try {
-			userViewNotAuthorized =
-				(IUserView) ServiceManagerServiceFactory.executeService(
-					null,
-					"Autenticacao",
-					argsForAuthentication);
-		} catch (Exception ex) {
-			fail("Failed obtainning an unauthorized user view");
-		}
-	}
+    /**
+     * @return
+     */
+    public IUserView getUserViewNotAuthorized() {
+        return userViewNotAuthorized;
+    }
+
+    /**
+     * @param
+     */
+    public void setUserViewAuthorized() {
+        String argsForAuthentication[] = { "user", "pass", getApplication() };
+
+        try {
+            userViewAuthorized = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsForAuthentication);
+        } catch (Exception ex) {
+            fail("Failed obtainning an authorized user view");
+        }
+    }
+
+    /**
+     * @param
+     */
+    public void setUserViewNotAuthorized() {
+        String argsForAuthentication[] = { "julia", "pass", getApplication() };
+
+        try {
+            userViewNotAuthorized = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsForAuthentication);
+        } catch (Exception ex) {
+            fail("Failed obtainning an unauthorized user view");
+        }
+    }
 
 }

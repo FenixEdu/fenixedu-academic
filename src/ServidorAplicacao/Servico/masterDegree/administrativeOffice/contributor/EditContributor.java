@@ -19,49 +19,39 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class EditContributor implements IService
-{
-
-    
+public class EditContributor implements IService {
 
     /**
      * The actor of this class.
      */
-    public EditContributor()
-    {
+    public EditContributor() {
     }
 
-   
-
     public InfoContributor run(InfoContributor infoContributor, Integer contributorNumber,
-            String contributorName, String contributorAddress) throws Exception
-    {
+            String contributorName, String contributorAddress) throws Exception {
 
         IContributor contributorBD = new Contributor();
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
 
             // Read the Actual Contributor
             contributorBD = sp.getIPersistentContributor().readByContributorNumber(
                     infoContributor.getContributorNumber());
 
-            if (contributorBD == null) { throw new NonExistingContributorServiceException(); }
+            if (contributorBD == null) {
+                throw new NonExistingContributorServiceException();
+            }
             sp.getIPersistentContributor().simpleLockWrite(contributorBD);
             contributorBD.setContributorNumber(contributorNumber);
             contributorBD.setContributorName(contributorName);
             contributorBD.setContributorAddress(contributorAddress);
 
-        }
-        catch (ExistingPersistentException ex)
-        {
+        } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;

@@ -44,17 +44,17 @@ public class InsertTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser() {
-        String[] args = { "D3673", "pass", getApplication()};
+        String[] args = { "D3673", "pass", getApplication() };
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
     protected String[] getNotAuthenticatedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
@@ -66,15 +66,13 @@ public class InsertTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
          */
         Integer executionCourseId = new Integer(34033);
         Integer testId = new Integer(273);
-        String[] metadataId = { new String("707")};
+        String[] metadataId = { new String("707") };
         Integer questionOrder = new Integer(1);
         Double questionValue = new Double(2.5);
-        CorrectionFormula formula = new CorrectionFormula(
-                CorrectionFormula.FENIX);
-        String path = new String(
-                "e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
-        Object[] args = { executionCourseId, testId, metadataId, questionOrder,
-                questionValue, formula, path};
+        CorrectionFormula formula = new CorrectionFormula(CorrectionFormula.FENIX);
+        String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
+        Object[] args = { executionCourseId, testId, metadataId, questionOrder, questionValue, formula,
+                path };
         return args;
     }
 
@@ -86,16 +84,12 @@ public class InsertTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
         try {
             IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
-            PersistenceBroker broker = PersistenceBrokerFactory
-                    .defaultPersistenceBroker();
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
             Criteria criteria = new Criteria();
             criteria.addEqualTo("keyTest", args[1]);
-            Query queryCriteria = new QueryByCriteria(TestQuestion.class,
-                    criteria);
-            List testQuestionList = (List) broker
-                    .getCollectionByQuery(queryCriteria);
+            Query queryCriteria = new QueryByCriteria(TestQuestion.class, criteria);
+            List testQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
 
             criteria = new Criteria();
             criteria.addEqualTo("idInternal", args[1]);
@@ -112,16 +106,13 @@ public class InsertTestQuestionTest extends ServiceNeedsAuthenticationTestCase {
 
             while (it.hasNext()) {
                 ITestQuestion testQuestion = (ITestQuestion) it.next();
-                if (metadatasIds.contains(testQuestion.getQuestion()
-                        .getKeyMetadata().toString())) {
+                if (metadatasIds.contains(testQuestion.getQuestion().getKeyMetadata().toString())) {
                     if (args[3] != null && !args[3].equals(new Integer(-1))) {
                         int order = ((Integer) args[3]).intValue() + 1;
-                        assertEquals(testQuestion.getTestQuestionOrder(),
-                                new Integer(order));
+                        assertEquals(testQuestion.getTestQuestionOrder(), new Integer(order));
                     }
                     if (args[4] != null)
-                            assertEquals(testQuestion.getTestQuestionValue(),
-                                    args[4]);
+                        assertEquals(testQuestion.getTestQuestionValue(), args[4]);
                     assertEquals(testQuestion.getCorrectionFormula(), args[5]);
                 }
             }

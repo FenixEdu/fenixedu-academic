@@ -7,38 +7,33 @@ package DataBeans;
 import java.util.List;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public class InfoSiteInquiryStatistics extends DataTranferObject implements ISiteComponent
-{
+public class InfoSiteInquiryStatistics extends DataTranferObject implements ISiteComponent {
 
-	private List infoInquiryStatistics;
-	private InfoExecutionCourse executionCourse;
+    private List infoInquiryStatistics;
 
-	public InfoSiteInquiryStatistics()
-	{
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public List getInfoInquiryStatistics()
-	{
-		return infoInquiryStatistics;
-	}
+    public InfoSiteInquiryStatistics() {
+    }
 
-	public void setInfoInquiryStatistics(List list)
-	{
-		infoInquiryStatistics = list;
-	}
+    public List getInfoInquiryStatistics() {
+        return infoInquiryStatistics;
+    }
 
-	public InfoExecutionCourse getExecutionCourse()
-	{
-		return executionCourse;
-	}
+    public void setInfoInquiryStatistics(List list) {
+        infoInquiryStatistics = list;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course)
-	{
-		executionCourse = course;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
+
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
 
 }

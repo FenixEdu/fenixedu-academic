@@ -17,14 +17,13 @@ import Util.DiaSemana;
 /**
  * @author jpvl
  */
-public interface IPersistentTeacherInstitutionWorkingTime extends IPersistentObject
-{
+public interface IPersistentTeacherInstitutionWorkingTime extends IPersistentObject {
 
     ITeacherInstitutionWorkTime readByUnique(ITeacherInstitutionWorkTime teacherInstitutionWorkTime)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 
-	List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
-		throws ExcepcaoPersistencia;
+    List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia;
 
     /**
      * @param teacher
@@ -33,12 +32,13 @@ public interface IPersistentTeacherInstitutionWorkingTime extends IPersistentObj
      * @param startTime
      * @param endTime
      */
-    List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia;
+    List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay,
+            Date startTime, Date endTime) throws ExcepcaoPersistencia;
 
     /**
      * @param executionPeriod
      * @return
      */
-    List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia; 
-    
+    List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
 }

@@ -12,8 +12,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ReadReimbursementGuidesByGuideTest extends
-        AdministrativeOfficeBaseTest {
+public class ReadReimbursementGuidesByGuideTest extends AdministrativeOfficeBaseTest {
 
     /**
      * @param testName
@@ -32,14 +31,13 @@ public class ReadReimbursementGuidesByGuideTest extends
     }
 
     protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
-        Object[] args = { new Integer(1)};
+        Object[] args = { new Integer(1) };
 
         return args;
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser()
-            throws FenixServiceException {
-        Object[] args = { new Integer(1)};
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+        Object[] args = { new Integer(1) };
 
         return args;
     }
@@ -48,22 +46,18 @@ public class ReadReimbursementGuidesByGuideTest extends
         try {
             Integer guideId = new Integer(5762);
 
-            Object args[] = { guideId};
+            Object args[] = { guideId };
 
-            List infoReimbursementGuideList = (List) ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            args);
+            List infoReimbursementGuideList = (List) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), args);
 
             assertFalse(infoReimbursementGuideList.isEmpty());
 
-            for (Iterator iter = infoReimbursementGuideList.iterator(); iter
-                    .hasNext();) {
+            for (Iterator iter = infoReimbursementGuideList.iterator(); iter.hasNext();) {
 
-                InfoReimbursementGuide infoReimbursementGuide = (InfoReimbursementGuide) iter
-                        .next();
+                InfoReimbursementGuide infoReimbursementGuide = (InfoReimbursementGuide) iter.next();
 
-                assertEquals(infoReimbursementGuide.getInfoGuide()
-                        .getIdInternal(), guideId);
+                assertEquals(infoReimbursementGuide.getInfoGuide().getIdInternal(), guideId);
             }
 
         } catch (FenixServiceException e) {
@@ -76,11 +70,10 @@ public class ReadReimbursementGuidesByGuideTest extends
         try {
             Integer guideId = new Integer(5762);
 
-            Object args[] = { guideId};
+            Object args[] = { guideId };
 
-            List infoReimbursementGuideList = (List) ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            args);
+            List infoReimbursementGuideList = (List) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), args);
 
             assertTrue(infoReimbursementGuideList.isEmpty());
 

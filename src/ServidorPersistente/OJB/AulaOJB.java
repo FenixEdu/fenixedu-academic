@@ -97,90 +97,75 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
         super.deleteAll(oqlQuery);
     }
 
-/*    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        if (executionCourse == null)
-            return new ArrayList();
-        try {
-            String oqlQuery = "select aulas from " + Aula.class.getName();
-            oqlQuery += " where disciplinaExecucao.sigla = $1";
-            oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2";
-            oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
-
-            query.create(oqlQuery);
-
-            query.bind(executionCourse.getSigla());
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
-
-    public List readByExecutionCourseAndLessonType(IExecutionCourse executionCourse, TipoAula lessonType)
+    /*
+     * public List readByExecutionCourse(IExecutionCourse executionCourse)
+     * throws ExcepcaoPersistencia { if (executionCourse == null) return new
+     * ArrayList(); try { String oqlQuery = "select aulas from " +
+     * Aula.class.getName(); oqlQuery += " where disciplinaExecucao.sigla = $1";
+     * oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2"; oqlQuery += "
+     * and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+     * 
+     * query.create(oqlQuery);
+     * 
+     * query.bind(executionCourse.getSigla());
+     * query.bind(executionCourse.getExecutionPeriod().getName());
+     * query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+     * 
+     * List result = (List) query.execute(); lockRead(result); return result; }
+     * catch (QueryException ex) { throw new
+     * ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex); } }
+     * 
+     * public List readByExecutionCourseAndLessonType(IExecutionCourse
+     * executionCourse, TipoAula lessonType) throws ExcepcaoPersistencia { try { //
+     * List aulas = new ArrayList(); String oqlQuery = "select aulas from " +
+     * Aula.class.getName() + " where tipo = $1" + " and
+     * disciplinaExecucao.sigla = $2" + " and
+     * disciplinaExecucao.executionPeriod.name = $3" + " and
+     * disciplinaExecucao.executionPeriod.executionYear.year = $4";
+     * query.create(oqlQuery);
+     * 
+     * query.bind(lessonType);
+     * 
+     * query.bind(executionCourse.getSigla());
+     * 
+     * query.bind(executionCourse.getExecutionPeriod().getName());
+     * query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+     * 
+     * List result = (List) query.execute(); lockRead(result); return result; }
+     * catch (QueryException ex) { throw new
+     * ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex); } }
+     *  
+     */public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia {
-        try {
-            //          List aulas = new ArrayList();
-            String oqlQuery = "select aulas from " + Aula.class.getName() + " where tipo = $1"
-                    + " and disciplinaExecucao.sigla = $2"
-                    + " and disciplinaExecucao.executionPeriod.name = $3"
-                    + " and disciplinaExecucao.executionPeriod.executionYear.year = $4";
-            query.create(oqlQuery);
-
-            query.bind(lessonType);
-
-            query.bind(executionCourse.getSigla());
-
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        /*
+         * try { String oqlQuery = "select aulas from " + Aula.class.getName();
+         * oqlQuery += " where sala.nome = $1" + " and
+         * disciplinaExecucao.executionPeriod.name = $2" + " and
+         * disciplinaExecucao.executionPeriod.executionYear.year = $3";
+         * 
+         * query.create(oqlQuery); query.bind(room.getNome());
+         * query.bind(executionPeriod.getName());
+         * query.bind(executionPeriod.getExecutionYear().getYear());
+         * 
+         * List result = (List) query.execute(); lockRead(result); return
+         * result; } catch (QueryException ex) { throw new
+         * ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex); }
+         */
+        Criteria crit = new Criteria();
+        crit.addEqualTo("keyRoom", room.getIdInternal());
+        List roomsOccupation = queryList(RoomOccupation.class, crit);
+        ArrayList lessonList = new ArrayList();
+        for (int i = 0; i < roomsOccupation.size(); i++) {
+            crit = new Criteria();
+            IRoomOccupation roomOccupation = (IRoomOccupation) roomsOccupation.get(i);
+            crit.addEqualTo("keyRoomOccupation", roomOccupation.getIdInternal());
+            crit.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
+            Aula lesson = (Aula) queryObject(Aula.class, crit);
+            if (lesson != null) {
+                lessonList.add(lesson);
+            }
         }
-    }
-
-*/    public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia {
-/*        try {
-            String oqlQuery = "select aulas from " + Aula.class.getName();
-            oqlQuery += " where sala.nome = $1" + " and disciplinaExecucao.executionPeriod.name = $2"
-                    + " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
-
-            query.create(oqlQuery);
-            query.bind(room.getNome());
-            query.bind(executionPeriod.getName());
-            query.bind(executionPeriod.getExecutionYear().getYear());
-
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-*/
-		Criteria crit = new Criteria();
-		crit.addEqualTo("keyRoom", room.getIdInternal());
-		List roomsOccupation = queryList(RoomOccupation.class, crit);
-		ArrayList lessonList = new ArrayList();
-		for (int i = 0; i < roomsOccupation.size(); i++)
-		{
-			crit = new Criteria();
-			IRoomOccupation roomOccupation = (IRoomOccupation) roomsOccupation.get(i);
-			crit.addEqualTo("keyRoomOccupation", roomOccupation.getIdInternal());
-			crit.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
-			Aula lesson = (Aula) queryObject(Aula.class, crit);
-			if (lesson != null)
-			{
-				lessonList.add(lesson);		
- 			}
-		}
-		return lessonList;
+        return lessonList;
     }
 
     public List readByRoomNamesAndExecutionPeriod(List roomNames, IExecutionPeriod executionPeriod)
@@ -325,6 +310,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
+
     public List readLessonsByStudent(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.person.username", username);
@@ -342,6 +328,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
         }
         return lessons;
     }
+
     public List readLessonsByShift(ITurno shift) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("keyShift", shift.getIdInternal());
@@ -349,15 +336,13 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
         return lessons;
     }
 
-	public List readLessonsByShiftAndLessonType(
-		ITurno shift,
-		TipoAula lessonType)
-		throws ExcepcaoPersistencia {
-		
-		Criteria crit = new Criteria();
-		crit.addEqualTo("keyShift", shift.getIdInternal());
-		crit.addEqualTo("tipo", lessonType);		
-		List lessons = queryList(Aula.class, crit);
-		return lessons;
-	}
+    public List readLessonsByShiftAndLessonType(ITurno shift, TipoAula lessonType)
+            throws ExcepcaoPersistencia {
+
+        Criteria crit = new Criteria();
+        crit.addEqualTo("keyShift", shift.getIdInternal());
+        crit.addEqualTo("tipo", lessonType);
+        List lessons = queryList(Aula.class, crit);
+        return lessons;
+    }
 }

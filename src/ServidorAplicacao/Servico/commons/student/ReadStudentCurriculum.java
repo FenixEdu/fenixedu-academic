@@ -23,63 +23,52 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadStudentCurriculum implements IService
-{
+public class ReadStudentCurriculum implements IService {
 
-	/**
-	 * The actor of this class.
-	 */
-	public ReadStudentCurriculum()
-	{
-	}
+    /**
+     * The actor of this class.
+     */
+    public ReadStudentCurriculum() {
+    }
 
-	public List run(Integer executionDegreeCode, Integer studentCurricularPlanID)
-		throws ExcepcaoInexistente, FenixServiceException
-	{
-		ISuportePersistente sp = null;
+    public List run(Integer executionDegreeCode, Integer studentCurricularPlanID)
+            throws ExcepcaoInexistente, FenixServiceException {
+        ISuportePersistente sp = null;
 
-		IStudentCurricularPlan studentCurricularPlan = null;
+        IStudentCurricularPlan studentCurricularPlan = null;
 
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-			studentCurricularPlan =
-				(IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOID(
-					StudentCurricularPlan.class,
-					studentCurricularPlanID);
+            studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
-		}
-		catch (ExcepcaoPersistencia ex)
-		{
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-			throw newEx;
-		}
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+            throw newEx;
+        }
 
-		if (studentCurricularPlan == null)
-		{
-			throw new NonExistingServiceException();
-		}
+        if (studentCurricularPlan == null) {
+            throw new NonExistingServiceException();
+        }
 
-		Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
-		List result = new ArrayList();
+        Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
+        List result = new ArrayList();
 
-		GetEnrolmentGrade getEnrollmentGrade = GetEnrolmentGrade.getService();
-		while (iterator.hasNext())
-		{
-			IEnrollment enrolmentTemp = (IEnrollment) iterator.next();
+        GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
+        while (iterator.hasNext()) {
+            IEnrollment enrolmentTemp = (IEnrollment) iterator.next();
 
-			InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(enrolmentTemp);
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(enrolmentTemp);
 
-			//CLONER
-			//InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentTemp);
-			InfoEnrolment infoEnrolment = InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear.newInfoFromDomain(enrolmentTemp);
-			
-			infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
+            InfoEnrolment infoEnrolment = InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
+                    .newInfoFromDomain(enrolmentTemp);
 
-			result.add(infoEnrolment);
-		}
+            infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
 
-		return result;
-	}
+            result.add(infoEnrolment);
+        }
+
+        return result;
+    }
 }

@@ -1,96 +1,92 @@
-
 package DataBeans;
-
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class InfoCandidateApproval extends InfoObject {
 
-	protected Integer idInternal;
-	protected Integer orderPosition;
-	
-	protected String candidateName;
-	protected String remarks;
-	protected String situationName;
-	
-	
-	
+    protected Integer idInternal;
 
-	
-	public InfoCandidateApproval() {}
+    protected Integer orderPosition;
 
+    protected String candidateName;
 
-	/**
-	 * @return
-	 */
-	public String getCandidateName() {
-		return candidateName;
-	}
+    protected String remarks;
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
+    protected String situationName;
 
-	/**
-	 * @return
-	 */
-	public Integer getOrderPosition() {
-		return orderPosition;
-	}
+    public InfoCandidateApproval() {
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks() {
-		return remarks;
-	}
+    /**
+     * @return
+     */
+    public String getCandidateName() {
+        return candidateName;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getSituationName() {
-		return situationName;
-	}
+    /**
+     * @return
+     */
+    public Integer getIdInternal() {
+        return idInternal;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setCandidateName(String string) {
-		candidateName = string;
-	}
+    /**
+     * @return
+     */
+    public Integer getOrderPosition() {
+        return orderPosition;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer) {
-		idInternal = integer;
-	}
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setOrderPosition(Integer integer) {
-		orderPosition = integer;
-	}
+    /**
+     * @return
+     */
+    public String getSituationName() {
+        return situationName;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setRemarks(String string) {
-		remarks = string;
-	}
+    /**
+     * @param string
+     */
+    public void setCandidateName(String string) {
+        candidateName = string;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setSituationName(String string) {
-		situationName = string;
-	}
+    /**
+     * @param integer
+     */
+    public void setIdInternal(Integer integer) {
+        idInternal = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setOrderPosition(Integer integer) {
+        orderPosition = integer;
+    }
+
+    /**
+     * @param string
+     */
+    public void setRemarks(String string) {
+        remarks = string;
+    }
+
+    /**
+     * @param string
+     */
+    public void setSituationName(String string) {
+        situationName = string;
+    }
 
 }

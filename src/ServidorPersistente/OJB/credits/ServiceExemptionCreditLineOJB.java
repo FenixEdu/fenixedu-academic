@@ -11,40 +11,43 @@ import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 import Dominio.credits.ServiceExemptionCreditLine;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
 
 /**
  * @author jpvl
  */
-public class ServiceExemptionCreditLineOJB extends ObjectFenixOJB implements IPersistentServiceExemptionCreditLine
-{
+public class ServiceExemptionCreditLineOJB extends PersistentObjectOJB implements
+        IPersistentServiceExemptionCreditLine {
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.credits.IPersistentServiceExemptionCreditLine#readByTeacherAndExecutionPeriod(Dominio.ITeacher, Dominio.IExecutionPeriod)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.credits.IPersistentServiceExemptionCreditLine#readByTeacherAndExecutionPeriod(Dominio.ITeacher,
+     *      Dominio.IExecutionPeriod)
      */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
-    {
+    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        
+
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addGreaterThan("end", executionPeriod.getBeginDate());
         criteria.addLessThan("start", executionPeriod.getEndDate());
-        
+
         return queryList(ServiceExemptionCreditLine.class, criteria);
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorPersistente.credits.IPersistentManagementPositionCreditLine#readByTeacher(java.lang.Integer)
      */
-    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        
+
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        
+
         return queryList(ServiceExemptionCreditLine.class, criteria);
     }
-    
 
 }

@@ -14,102 +14,81 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareerTest extends ServiceNeedsAuthenticationTestCase
-{
+public class ReadCareerTest extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	 * @param testName
-	 */
-	public ReadCareerTest(String testName)
-	{
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public ReadCareerTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testReadCareerDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testReadCareerDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadCareer";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadCareer";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser()
-	{
+    protected String[] getNotAuthenticatedUser() {
 
-		String[] args = { "jccm", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "jccm", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments()
-	{
+    protected Object[] getAuthorizeArguments() {
 
-		Integer careerId = new Integer(1);
+        Integer careerId = new Integer(1);
 
-		Object[] args = { careerId };
-		return args;
-	}
+        Object[] args = { careerId };
+        return args;
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testReadProfessionalCareer()
-	{
-		try
-		{
+    public void testReadProfessionalCareer() {
+        try {
             InfoCareer result = null;
             Object[] args = { new Integer(1) };
 
-			result =
-				(InfoCareer) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
-			
-			assertTrue(result.getIdInternal().equals(args[0]));
-			// verifica se a base de dados nao foi alterada
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-		} catch (Exception ex)
-		{
-			fail("Reading the ProfessionalCareer of a Teacher" + ex);
-		}
-	}
-    
-    public void testReadTeachingCareer()
-    {
-        try
-        {
-            InfoCareer result = null;
-            Object[] args = { new Integer(2) };
+            result = (InfoCareer) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
 
-            result =
-                (InfoCareer) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    getNameOfServiceToBeTested(),
-                    args);
-            
             assertTrue(result.getIdInternal().equals(args[0]));
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
+            fail("Reading the ProfessionalCareer of a Teacher" + ex);
+        }
+    }
+
+    public void testReadTeachingCareer() {
+        try {
+            InfoCareer result = null;
+            Object[] args = { new Integer(2) };
+
+            result = (InfoCareer) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
+
+            assertTrue(result.getIdInternal().equals(args[0]));
+            // verifica se a base de dados nao foi alterada
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+        } catch (Exception ex) {
             fail("Reading the TeachingCareer of a Teacher" + ex);
         }
     }

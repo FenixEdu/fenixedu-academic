@@ -21,8 +21,8 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -32,221 +32,196 @@ import Util.TipoCurso;
  * @author David Santos in May 19, 2004
  */
 
-public class EquivalenceAuthorizationFilter extends Filtro
-{
-	private static String DEGREE_ACRONYM = "LEEC";
+public class EquivalenceAuthorizationFilter extends Filtro {
+    private static String DEGREE_ACRONYM = "LEEC";
 
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-	{
-		IUserView id = (IUserView) request.getRequester();
-		String messageException = hasPrevilege(id, request.getArguments());
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
+        IUserView id = (IUserView) request.getRequester();
+        String messageException = hasPrevilege(id, request.getArguments());
 
-		if (messageException != null)
-		{
-			throw new NotAuthorizedException(messageException);
-		}
-	}
+        if (messageException != null) {
+            throw new NotAuthorizedException(messageException);
+        }
+    }
 
-	private List getRoleList(List roles)
-	{
-		List result = new ArrayList();
-		Iterator iterator = roles.iterator();
-		while (iterator.hasNext())
-		{
-			result.add(((InfoRole) iterator.next()).getRoleType());
-		}
+    private List getRoleList(List roles) {
+        List result = new ArrayList();
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext()) {
+            result.add(((InfoRole) iterator.next()).getRoleType());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	protected Collection getNeededRoles()
-	{
-		List roles = new ArrayList();
+    protected Collection getNeededRoles() {
+        List roles = new ArrayList();
 
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.COORDINATOR);
-		roles.add(infoRole);
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.COORDINATOR);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-		return roles;
-	}
+        return roles;
+    }
 
-	private String hasPrevilege(IUserView userView, Object[] serviceArgs)
-	{
-		try
-		{
-			if ( (userView == null) || (userView.getRoles() == null) )
-			{
-				return "errors.enrollment.equivalence.operation.not.authorized";
-			}
-					
-			if (!containsAtLeastOneOfTheRoles(userView))
-			{
-				return "errors.enrollment.equivalence.operation.not.authorized";
-			}
+    private String hasPrevilege(IUserView userView, Object[] serviceArgs) {
+        try {
+            if ((userView == null) || (userView.getRoles() == null)) {
+                return "errors.enrollment.equivalence.operation.not.authorized";
+            }
 
-			List roles = getRoleList((List) userView.getRoles());
-			
-			Integer studentNumber = (Integer) serviceArgs[0];
-			TipoCurso degreeType = (TipoCurso) serviceArgs[1];
+            if (!containsAtLeastOneOfTheRoles(userView)) {
+                return "errors.enrollment.equivalence.operation.not.authorized";
+            }
 
-			IStudent student = getStudent(studentNumber, degreeType);
-			if (student == null)
-			{
-				return "errors.enrollment.equivalence.no.student.with.that.number.and.degreeType";
-			}
+            List roles = getRoleList((List) userView.getRoles());
 
-			if (degreeType.equals(TipoCurso.LICENCIATURA_OBJ))
-			{
-				if (!isThisStudentsDegreeTheOne(student))
-				{
-					return "errors.enrollment.equivalence.data.not.authorized";
-				}
-			}
+            Integer studentNumber = (Integer) serviceArgs[0];
+            TipoCurso degreeType = (TipoCurso) serviceArgs[1];
 
-			if ((roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
-				.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
-				&& (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)))
-			{
-				if (!degreeType.equals(student.getDegreeType()))
-				{
-					return "errors.enrollment.equivalence.data.not.authorized";
-				}
-			} else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-				|| roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
-			{
-				if (!degreeType.equals(TipoCurso.LICENCIATURA_OBJ))
-				{
-					return "errors.enrollment.equivalence.data.not.authorized";
-				}
-			} else if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE))
-			{
-				if (!degreeType.equals(TipoCurso.MESTRADO_OBJ))
-				{
-					return "errors.enrollment.equivalence.data.not.authorized";
-				}
-			} else if (roles.contains(RoleType.COORDINATOR))
-			{
-				if (!isThisACoordinatorOfThisStudentsDegree(userView, student))
-				{
-					return "errors.enrollment.equivalence.data.not.authorized";
-				}
-			}
+            IStudent student = getStudent(studentNumber, degreeType);
+            if (student == null) {
+                return "errors.enrollment.equivalence.no.student.with.that.number.and.degreeType";
+            }
 
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			return "errors.enrollment.equivalence.operation.not.authorized";
-		}
+            if (degreeType.equals(TipoCurso.LICENCIATURA_OBJ)) {
+                if (!isThisStudentsDegreeTheOne(student)) {
+                    return "errors.enrollment.equivalence.data.not.authorized";
+                }
+            }
 
-		return null;
-	}
+            if ((roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
+                    .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
+                    && (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE))) {
+                if (!degreeType.equals(student.getDegreeType())) {
+                    return "errors.enrollment.equivalence.data.not.authorized";
+                }
+            } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+                    || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+                if (!degreeType.equals(TipoCurso.LICENCIATURA_OBJ)) {
+                    return "errors.enrollment.equivalence.data.not.authorized";
+                }
+            } else if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+                if (!degreeType.equals(TipoCurso.MESTRADO_OBJ)) {
+                    return "errors.enrollment.equivalence.data.not.authorized";
+                }
+            } else if (roles.contains(RoleType.COORDINATOR)) {
+                if (!isThisACoordinatorOfThisStudentsDegree(userView, student)) {
+                    return "errors.enrollment.equivalence.data.not.authorized";
+                }
+            }
 
-	/**
-	 * @param userView
-	 * @param userRoles
-	 * @return true/false
-	 */
-	private boolean containsAtLeastOneOfTheRoles(IUserView userView)
-	{
-		List neededRoles = getRoleList((List) getNeededRoles());
-		List userRoles = getRoleList((List) userView.getRoles());
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            return "errors.enrollment.equivalence.operation.not.authorized";
+        }
 
-		for (int i = 0; i < neededRoles.size(); i++)
-		{
-			if (userRoles.contains(neededRoles.get(i)))
-			{
-				return true;
-			}
-		}
+        return null;
+    }
 
-		return false;
-	}
+    /**
+     * @param userView
+     * @param userRoles
+     * @return true/false
+     */
+    private boolean containsAtLeastOneOfTheRoles(IUserView userView) {
+        List neededRoles = getRoleList((List) getNeededRoles());
+        List userRoles = getRoleList((List) userView.getRoles());
 
-	/**
-	 * @param userView
-	 * @param student
-	 * @return true/false
-	 */
-	private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, IStudent student) throws ExcepcaoPersistencia
-	{
-		List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView.getUtilizador());
+        for (int i = 0; i < neededRoles.size(); i++) {
+            if (userRoles.contains(neededRoles.get(i))) {
+                return true;
+            }
+        }
 
-		List degreeCurricularPlansOfThisCoordinator = (List) CollectionUtils.collect(executionDegreesOfThisCoordinator,
-			new Transformer()
-			{
-				public Object transform(Object obj)
-				{
-					ICursoExecucao executionDegree = (ICursoExecucao) obj;
-					return executionDegree.getCurricularPlan();
-				}
-			});
+        return false;
+    }
 
-		IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+    /**
+     * @param userView
+     * @param student
+     * @return true/false
+     */
+    private boolean isThisACoordinatorOfThisStudentsDegree(IUserView userView, IStudent student)
+            throws ExcepcaoPersistencia {
+        List executionDegreesOfThisCoordinator = getExecutionDegreesOfThisCoordinator(userView
+                .getUtilizador());
 
-		return degreeCurricularPlansOfThisCoordinator.contains(studentCurricularPlan.getDegreeCurricularPlan());
-	}
+        List degreeCurricularPlansOfThisCoordinator = (List) CollectionUtils.collect(
+                executionDegreesOfThisCoordinator, new Transformer() {
+                    public Object transform(Object obj) {
+                        ICursoExecucao executionDegree = (ICursoExecucao) obj;
+                        return executionDegree.getCurricularPlan();
+                    }
+                });
 
-	/**
-	 * @param studentNumber
-	 * @param degreeType
-	 * @return IStudent
-	 * @throws ExcepcaoPersistencia
-	 */
-	private IStudent getStudent(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-		IPersistentStudent studentDAO = persistenceDAO.getIPersistentStudent();
-		return studentDAO.readStudentByNumberAndDegreeType(studentNumber, degreeType);
-	}
+        IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 
-	/**
-	 * @param username
-	 * @return List
-	 * @throws ExcepcaoPersistencia
-	 */
-	private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-		IPersistentTeacher teacherDAO = persistenceDAO.getIPersistentTeacher();
-		IPersistentCoordinator coordinatorDAO = persistenceDAO.getIPersistentCoordinator();
+        return degreeCurricularPlansOfThisCoordinator.contains(studentCurricularPlan
+                .getDegreeCurricularPlan());
+    }
 
-		ITeacher teacher = teacherDAO.readTeacherByUsername(username);
-		return coordinatorDAO.readExecutionDegreesByTeacher(teacher);
-	}
+    /**
+     * @param studentNumber
+     * @param degreeType
+     * @return IStudent
+     * @throws ExcepcaoPersistencia
+     */
+    private IStudent getStudent(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoPersistencia {
+        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        IPersistentStudent studentDAO = persistenceDAO.getIPersistentStudent();
+        return studentDAO.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+    }
 
-	/**
-	 * @param student
-	 * @return IStudentCurricularPlan
-	 * @throws ExcepcaoPersistencia
-	 */
-	private IStudentCurricularPlan getStudentCurricularPlan(IStudent student) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-		IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistenceDAO.getIStudentCurricularPlanPersistente();
-		return studentCurricularPlanDAO.readActiveByStudentNumberAndDegreeType(student.getNumber(), student.getDegreeType());
-	}
+    /**
+     * @param username
+     * @return List
+     * @throws ExcepcaoPersistencia
+     */
+    private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {
+        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        IPersistentTeacher teacherDAO = persistenceDAO.getIPersistentTeacher();
+        IPersistentCoordinator coordinatorDAO = persistenceDAO.getIPersistentCoordinator();
 
-	/**
-	 * @param student
-	 * @return true/false
-	 * @throws ExcepcaoPersistencia
-	 */
-	private boolean isThisStudentsDegreeTheOne(IStudent student) throws ExcepcaoPersistencia
-	{
-		IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+        ITeacher teacher = teacherDAO.readTeacherByUsername(username);
+        return coordinatorDAO.readExecutionDegreesByTeacher(teacher);
+    }
 
-		return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(DEGREE_ACRONYM);
-	}
+    /**
+     * @param student
+     * @return IStudentCurricularPlan
+     * @throws ExcepcaoPersistencia
+     */
+    private IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
+            throws ExcepcaoPersistencia {
+        ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistenceDAO
+                .getIStudentCurricularPlanPersistente();
+        return studentCurricularPlanDAO.readActiveByStudentNumberAndDegreeType(student.getNumber(),
+                student.getDegreeType());
+    }
+
+    /**
+     * @param student
+     * @return true/false
+     * @throws ExcepcaoPersistencia
+     */
+    private boolean isThisStudentsDegreeTheOne(IStudent student) throws ExcepcaoPersistencia {
+        IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+
+        return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
+                DEGREE_ACRONYM);
+    }
 }

@@ -29,90 +29,91 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Fernanda Quitério
- * 24/09/2003
- *
+ * @author Fernanda Quitério 24/09/2003
+ *  
  */
 public class ReadWebSiteByObjectCode implements IServico {
-	private static ReadWebSiteByObjectCode _servico = new ReadWebSiteByObjectCode();
+    private static ReadWebSiteByObjectCode _servico = new ReadWebSiteByObjectCode();
 
-	/**
-		* The actor of this class.
-		**/
-	private ReadWebSiteByObjectCode() {
+    /**
+     * The actor of this class.
+     */
+    private ReadWebSiteByObjectCode() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "ReadWebSiteByObjectCode";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "ReadWebSiteByObjectCode";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadWebSiteByObjectCode
-	 */
-	public static ReadWebSiteByObjectCode getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return ReadWebSiteByObjectCode
+     */
+    public static ReadWebSiteByObjectCode getService() {
+        return _servico;
+    }
 
-	public InfoWebSite run(Integer webSiteCode) throws ExcepcaoInexistente, FenixServiceException {
-		
-		IWebSite webSite = null;
-		List infoWebSiteSections = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentWebSite persistentWebSite = sp.getIPersistentWebSite();
-			IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
-			IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
+    public InfoWebSite run(Integer webSiteCode) throws ExcepcaoInexistente, FenixServiceException {
 
-			
-			webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, webSiteCode);
-			
-			if(webSite == null){
-				throw new NonExistingServiceException("message.nonExistingWebSite", null);
-			}
+        IWebSite webSite = null;
+        List infoWebSiteSections = new ArrayList();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentWebSite persistentWebSite = sp.getIPersistentWebSite();
+            IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
+            IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-			List webSiteSections = persistentWebSiteSection.readByWebSite(webSite);
-			Iterator iterSections = webSiteSections.iterator();
-			while (iterSections.hasNext()) {
-				WebSiteSection section = (WebSiteSection) iterSections.next();
+            webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, webSiteCode);
 
-				InfoWebSiteSection infoWebSiteSection = Cloner.copyIWebSiteSection2InfoWebSiteSection(section);
+            if (webSite == null) {
+                throw new NonExistingServiceException("message.nonExistingWebSite", null);
+            }
 
-				List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
-				List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
-					public Object transform(Object arg0) {
-						IWebSiteItem webSiteItem = (IWebSiteItem)arg0;
-						InfoWebSiteItem infoWebSiteItem = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
+            List webSiteSections = persistentWebSiteSection.readByWebSite(webSite);
+            Iterator iterSections = webSiteSections.iterator();
+            while (iterSections.hasNext()) {
+                WebSiteSection section = (WebSiteSection) iterSections.next();
 
-						return infoWebSiteItem;
-					}
-				});
-				
-				Collections.sort(infoWebSiteItems, new BeanComparator("creationDate"));
-				if(infoWebSiteSection.getSortingOrder().equals("descendent")){
-					Collections.reverse(infoWebSiteItems);
-				}
-				
-				infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
+                InfoWebSiteSection infoWebSiteSection = Cloner
+                        .copyIWebSiteSection2InfoWebSiteSection(section);
 
-				infoWebSiteSections.add(Cloner.copyIWebSiteSection2InfoWebSiteSection(section));	
-			}
+                List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
+                List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
+                    public Object transform(Object arg0) {
+                        IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+                        InfoWebSiteItem infoWebSiteItem = Cloner
+                                .copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-			FenixServiceException newEx = new FenixServiceException("");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+                        return infoWebSiteItem;
+                    }
+                });
 
-		InfoWebSite infoWebSite = new InfoWebSite();
-		infoWebSite.setName(webSite.getName());
-		infoWebSite.setSections(infoWebSiteSections);
+                Collections.sort(infoWebSiteItems, new BeanComparator("creationDate"));
+                if (infoWebSiteSection.getSortingOrder().equals("descendent")) {
+                    Collections.reverse(infoWebSiteItems);
+                }
 
-		return infoWebSite;
-	}
+                infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
+
+                infoWebSiteSections.add(Cloner.copyIWebSiteSection2InfoWebSiteSection(section));
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+            FenixServiceException newEx = new FenixServiceException("");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+
+        InfoWebSite infoWebSite = new InfoWebSite();
+        infoWebSite.setName(webSite.getName());
+        infoWebSite.setSections(infoWebSiteSections);
+
+        return infoWebSite;
+    }
 }

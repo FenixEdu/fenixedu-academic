@@ -17,39 +17,30 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 
-public class AtomicGroupEnrolmentStrategy
-    extends GroupEnrolmentStrategy
-    implements IGroupEnrolmentStrategy
-{
+public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy implements
+        IGroupEnrolmentStrategy {
 
-    public AtomicGroupEnrolmentStrategy()
-    {
+    public AtomicGroupEnrolmentStrategy() {
     }
 
-    public Integer enrolmentPolicyNewGroup(
-        IGroupProperties groupProperties,
-        int numberOfStudentsToEnrole,
-        ITurno shift)
-    {
+    public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,
+            int numberOfStudentsToEnrole, ITurno shift) {
 
-        if (checkNumberOfGroups(groupProperties, shift))
-        {
+        if (checkNumberOfGroups(groupProperties, shift)) {
             Integer maximumCapacity = groupProperties.getMaximumCapacity();
             Integer minimumCapacity = groupProperties.getMinimumCapacity();
             Integer nrStudents = new Integer(numberOfStudentsToEnrole);
 
             if (maximumCapacity == null && minimumCapacity == null)
                 return new Integer(1);
-            if (minimumCapacity != null)
-            {
+            if (minimumCapacity != null) {
                 if (nrStudents.compareTo(minimumCapacity) < 0)
                     return new Integer(-2);
             }
-            if (maximumCapacity != null)
-            {
+            if (maximumCapacity != null) {
                 if (nrStudents.compareTo(maximumCapacity) > 0)
                     return new Integer(-3);
             }
@@ -60,32 +51,26 @@ public class AtomicGroupEnrolmentStrategy
 
     }
 
-    public boolean checkNumberOfGroupElements(
-        IGroupProperties groupProperties,
-        IStudentGroup studentGroup)
-        throws ExcepcaoPersistencia
-    {
+    public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,
+            IStudentGroup studentGroup) throws ExcepcaoPersistencia {
 
         boolean result = false;
         Integer minimumCapacity = groupProperties.getMinimumCapacity();
 
         if (minimumCapacity == null)
             result = true;
-        else
-        {
+        else {
 
             List allStudentGroupAttend = new ArrayList();
-            try
-            {
+            try {
 
                 ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-                IPersistentStudentGroupAttend persistentStudentGroupAttend =
-                    persistentSuport.getIPersistentStudentGroupAttend();
+                IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
+                        .getIPersistentStudentGroupAttend();
 
                 allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
 
-            } catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 throw ex;
             }
 

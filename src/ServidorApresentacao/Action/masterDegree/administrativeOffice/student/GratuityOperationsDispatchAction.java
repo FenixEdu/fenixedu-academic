@@ -1,4 +1,3 @@
-
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.student;
 
 import java.util.List;
@@ -15,8 +14,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoGratuity;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
@@ -27,142 +24,130 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidChangeActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.GratuityState;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * This is the Action to display all the master degrees.
- * 
+ *  
  */
 public class GratuityOperationsDispatchAction extends DispatchAction {
 
-	public ActionForward getInformation(ActionMapping mapping, ActionForm form,
-												HttpServletRequest request,
-												HttpServletResponse response)
-			throws Exception {
+    public ActionForward getInformation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-			HttpSession session = request.getSession(false);
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String studentCPIDString = request.getParameter("studentCPID");
-			Integer studentCPID = null;
-			
-			if ((studentCPIDString != null) && (studentCPIDString.length() != 0)){
-				studentCPID = new Integer(studentCPIDString); 
-			} else {
-				studentCPID = (Integer) request.getAttribute("studentCPID");
-			} 
-			
-			
-			InfoGratuity result = null;
-		
-			try {
-				Object args[] = { studentCPID };
+        String studentCPIDString = request.getParameter("studentCPID");
+        Integer studentCPID = null;
 
-				result = (InfoGratuity) ServiceManagerServiceFactory.executeService(userView, "ReadActiveGratuityByStudentCurricularPlanID", args);
+        if ((studentCPIDString != null) && (studentCPIDString.length() != 0)) {
+            studentCPID = new Integer(studentCPIDString);
+        } else {
+            studentCPID = (Integer) request.getAttribute("studentCPID");
+        }
 
-			} catch (NonExistingServiceException e) {
-				
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
+        InfoGratuity result = null;
 
+        try {
+            Object args[] = { studentCPID };
 
-			List gratuityInformationFromGuide = null;
-			if (result != null){
-				request.setAttribute("gratuityInformation", result);
-			}
+            result = (InfoGratuity) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadActiveGratuityByStudentCurricularPlanID", args);
 
-			try {
-				Object args[] = { studentCPID };
-				gratuityInformationFromGuide = (List) ServiceManagerServiceFactory.executeService(userView, "ReadGratuityInformationByStudentCurricularPlanID", args);
-			} catch (NonExistingServiceException e) {
+        } catch (NonExistingServiceException e) {
 
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			
-			if (gratuityInformationFromGuide != null){
-				request.setAttribute("gratuityInformationFromGuide", gratuityInformationFromGuide);
-			} 
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-			
-			request.setAttribute("studentCPID", studentCPID);
-			return mapping.findForward("ShowGratuityInformation");
-	  }
+        List gratuityInformationFromGuide = null;
+        if (result != null) {
+            request.setAttribute("gratuityInformation", result);
+        }
 
-	public ActionForward prepareChange(ActionMapping mapping, ActionForm form,
-												HttpServletRequest request,
-												HttpServletResponse response)
-			throws Exception {
+        try {
+            Object args[] = { studentCPID };
+            gratuityInformationFromGuide = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadGratuityInformationByStudentCurricularPlanID", args);
+        } catch (NonExistingServiceException e) {
 
-			HttpSession session = request.getSession(false);
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			DynaActionForm gratuityForm = (DynaActionForm) form;
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-			
-			Integer studentCPID = (Integer) request.getAttribute("studentCPID");  
-			
-			
-			if (studentCPID == null) {
-				studentCPID = (Integer) gratuityForm.get("studentCPID");
-			} 
+        if (gratuityInformationFromGuide != null) {
+            request.setAttribute("gratuityInformationFromGuide", gratuityInformationFromGuide);
+        }
 
-			gratuityForm.set("studentCPID", studentCPID);
-			
-			InfoStudentCurricularPlan studentCurricularPlan = null;
-			try {
-				Object args[] = { studentCPID };
-				studentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlan", args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			
-			request.setAttribute("situationList", GratuityState.getEnumList());
+        request.setAttribute("studentCPID", studentCPID);
+        return mapping.findForward("ShowGratuityInformation");
+    }
 
-			request.setAttribute("studentCurricularPlan", studentCurricularPlan);			
-			return mapping.findForward("ShowGratuityInformationReady");
-	  }
+    public ActionForward prepareChange(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        DynaActionForm gratuityForm = (DynaActionForm) form;
 
-	public ActionForward changeGratuityStatus(ActionMapping mapping, ActionForm form,
-													HttpServletRequest request,
-													HttpServletResponse response)
-				throws Exception {
+        Integer studentCPID = (Integer) request.getAttribute("studentCPID");
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		DynaActionForm gratuityForm = (DynaActionForm) form;
+        if (studentCPID == null) {
+            studentCPID = (Integer) gratuityForm.get("studentCPID");
+        }
 
-	
-		Integer studentCPID = (Integer) gratuityForm.get("studentCPID");
-		GratuityState gratuityState = GratuityState.getEnum(new Integer((String) gratuityForm.get("situation")).intValue());
-		String remarks = (String) gratuityForm.get("othersRemarks");
-			
-		if ((gratuityState.equals(GratuityState.OTHER)) &&
-			((remarks == null) || (remarks.length() == 0) )){
-				ActionError actionError = new ActionError("error.required.gratuityRemarks");
-				ActionErrors actionErrors = new ActionErrors();
-				actionErrors.add("UnNecessary", actionError);
-				saveErrors(request, actionErrors);
-				return mapping.getInputForward();
-		}
+        gratuityForm.set("studentCPID", studentCPID);
 
+        InfoStudentCurricularPlan studentCurricularPlan = null;
+        try {
+            Object args[] = { studentCPID };
+            studentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadStudentCurricularPlan", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		try {
-			Object args[] = { studentCPID, gratuityState, remarks };
-			ServiceManagerServiceFactory.executeService(userView, "ChangeGratuityState", args);
-		} catch (InvalidChangeServiceException e) {
-			throw new InvalidChangeActionException("error.exception.invalid.invalidGratuityChange", e);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-	
-		return mapping.findForward("ChangeSuccess");
-  }
+        request.setAttribute("situationList", GratuityState.getEnumList());
 
-		
-		
+        request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+        return mapping.findForward("ShowGratuityInformationReady");
+    }
+
+    public ActionForward changeGratuityStatus(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        DynaActionForm gratuityForm = (DynaActionForm) form;
+
+        Integer studentCPID = (Integer) gratuityForm.get("studentCPID");
+        GratuityState gratuityState = GratuityState.getEnum(new Integer((String) gratuityForm
+                .get("situation")).intValue());
+        String remarks = (String) gratuityForm.get("othersRemarks");
+
+        if ((gratuityState.equals(GratuityState.OTHER))
+                && ((remarks == null) || (remarks.length() == 0))) {
+            ActionError actionError = new ActionError("error.required.gratuityRemarks");
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("UnNecessary", actionError);
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
+
+        try {
+            Object args[] = { studentCPID, gratuityState, remarks };
+            ServiceManagerServiceFactory.executeService(userView, "ChangeGratuityState", args);
+        } catch (InvalidChangeServiceException e) {
+            throw new InvalidChangeActionException("error.exception.invalid.invalidGratuityChange", e);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        return mapping.findForward("ChangeSuccess");
+    }
+
 }

@@ -4,7 +4,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import ServidorAplicacao.IServico;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -12,41 +12,24 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ *  
  */
-public class ReadNumberCachedItems implements IServico {
+public class ReadNumberCachedItems implements IService {
 
-	private ReadNumberCachedItems() {
-	}
+    /**
+     * Returns info list of all execution periods.
+     */
+    public Integer run() throws FenixServiceException {
+        Integer numberCachedObjects = null;
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadNumberCachedItems";
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            numberCachedObjects = sp.getNumberCachedItems();
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	private static ReadNumberCachedItems service =
-		new ReadNumberCachedItems();
-
-	public static ReadNumberCachedItems getService() {
-		return service;
-	}
-
-	/**
-	 * Returns info list of all execution periods.
-	 */
-	public Integer run() throws FenixServiceException {
-		Integer numberCachedObjects = null;
-		
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			numberCachedObjects = sp.getNumberCachedItems();
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-
-		return numberCachedObjects;
-	}
+        return numberCachedObjects;
+    }
 
 }

@@ -1,16 +1,16 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-   <h2><p align="center">Por razões de segurança mude a sua password</p></h2>
+	<strong>Página 1 de 6</strong>
+   <h2><p align="center">Por razões de segurança mude a sua senha</p></h2>
 	<p align="center">
    		<font color='#FF0000'><strong>
-   			Atenção: A alteração da password só será efectuada no final do processo de Matricula.<br/>
-   			Se o processo de Matricula for cancelado a nova password não ficará guardada.
+   			Atenção: A alteração da senha só será efectuada no final do processo de Matricula.<br/>
+   			Se o processo de Matricula for cancelado a nova senha não ficará guardada.
    		</strong></font>
    	</p>
    	
-	<p align="center"><span class="error"><html:errors property="oldPassword"/></span>
-	<span class="error"><html:errors property="newPassword"/></span></p>
+	<p align="center"><span class="error"><html:errors/></span></p>
 
    <table align="center">
     <html:form action="/viewPersonalInfo?method=visualizeFirstTimeStudentPersonalInfoAction">

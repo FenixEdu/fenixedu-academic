@@ -48,32 +48,29 @@ public class ReadStudentCourseReport implements IService {
     public ReadStudentCourseReport() {
     }
 
-    public InfoSiteStudentCourseReport run(Integer objectId)
-            throws FenixServiceException {
+    public InfoSiteStudentCourseReport run(Integer objectId) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             IPersistentStudentCourseReport persistentStudentCourseReport = sp
                     .getIPersistentStudentCourseReport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, objectId);
             IStudentCourseReport studentCourseReport = persistentStudentCourseReport
                     .readByCurricularCourse(curricularCourse);
 
-            List infoScopes = (List) CollectionUtils.collect(curricularCourse
-                    .getScopes(), new Transformer() {
+            List infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
+                    new Transformer() {
 
-                public Object transform(Object arg0) {
-                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                    return Cloner
-                            .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-                }
+                        public Object transform(Object arg0) {
+                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                            return Cloner
+                                    .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                        }
 
-            });
+                    });
 
             InfoStudentCourseReport infoStudentCourseReport = null;
             if (studentCourseReport == null) {
@@ -81,8 +78,7 @@ public class ReadStudentCourseReport implements IService {
                 InfoCurricularCourse infoCurricularCourse = Cloner
                         .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                 infoCurricularCourse.setInfoScopes(infoScopes);
-                infoStudentCourseReport
-                        .setInfoCurricularCourse(infoCurricularCourse);
+                infoStudentCourseReport.setInfoCurricularCourse(infoCurricularCourse);
             } else {
                 infoStudentCourseReport = Cloner
                         .copyIStudentCourseReport2InfoStudentCourseReport(studentCourseReport);
@@ -92,16 +88,14 @@ public class ReadStudentCourseReport implements IService {
             }
 
             InfoSiteStudentCourseReport infoSiteStudentCourseReport = new InfoSiteStudentCourseReport();
-            List executionPeriods = persistentExecutionPeriod
-                    .readAllExecutionPeriod();
+            List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
 
             Collections.sort(executionPeriods, new Comparator() {
 
                 public int compare(Object o1, Object o2) {
                     IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
                     IExecutionPeriod executionPeriod2 = (IExecutionPeriod) o2;
-                    return executionPeriod2.getEndDate().compareTo(
-                            executionPeriod1.getEndDate());
+                    return executionPeriod2.getEndDate().compareTo(executionPeriod1.getEndDate());
                 }
             });
 
@@ -117,12 +111,9 @@ public class ReadStudentCourseReport implements IService {
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = getInfoSiteEvaluationStatistics(
                     executionPeriod, curricularCourse, sp);
 
-            infoSiteStudentCourseReport
-                    .setInfoStudentCourseReport(infoStudentCourseReport);
-            infoSiteStudentCourseReport
-                    .setInfoSiteEvaluationHistory(infoSiteEvaluationHistory);
-            infoSiteStudentCourseReport
-                    .setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
+            infoSiteStudentCourseReport.setInfoStudentCourseReport(infoStudentCourseReport);
+            infoSiteStudentCourseReport.setInfoSiteEvaluationHistory(infoSiteEvaluationHistory);
+            infoSiteStudentCourseReport.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
 
             return infoSiteStudentCourseReport;
         } catch (ExcepcaoPersistencia e) {
@@ -137,8 +128,7 @@ public class ReadStudentCourseReport implements IService {
      * @return
      */
     private InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics(
-            IExecutionPeriod executionPeriod,
-            ICurricularCourse curricularCourse, ISuportePersistente sp)
+            IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
         InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
@@ -146,10 +136,8 @@ public class ReadStudentCourseReport implements IService {
         infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
         infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
         infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner
-                .get(executionPeriod);
-        infoSiteEvaluationStatistics
-                .setInfoExecutionPeriod(infoExecutionPeriod);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+        infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
 
         return infoSiteEvaluationStatistics;
     }
@@ -160,9 +148,8 @@ public class ReadStudentCourseReport implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationsHistory(Integer semester,
-            ICurricularCourse curricularCourse, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    private List getInfoSiteEvaluationsHistory(Integer semester, ICurricularCourse curricularCourse,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
         List infoSiteEvaluationsHistory = new ArrayList();
         List executionPeriods = (List) CollectionUtils.collect(curricularCourse
                 .getAssociatedExecutionCourses(), new Transformer() {
@@ -174,14 +161,12 @@ public class ReadStudentCourseReport implements IService {
         });
         // filter the executionPeriods by semester
         final Integer historySemester = semester;
-        executionPeriods = (List) CollectionUtils.select(executionPeriods,
-                new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
-                        return executionPeriod.getSemester().equals(
-                                historySemester);
-                    }
-                });
+        executionPeriods = (List) CollectionUtils.select(executionPeriods, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
+                return executionPeriod.getSemester().equals(historySemester);
+            }
+        });
         Collections.sort(executionPeriods, new Comparator() {
             public int compare(Object o1, Object o2) {
                 IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
@@ -195,12 +180,10 @@ public class ReadStudentCourseReport implements IService {
             IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            infoSiteEvaluationStatistics
-                    .setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
-                            .get(executionPeriod));
+            infoSiteEvaluationStatistics.setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
+                    .get(executionPeriod));
             List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
-            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled
-                    .size()));
+            infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
             infoSiteEvaluationsHistory.add(infoSiteEvaluationStatistics);
@@ -251,13 +234,11 @@ public class ReadStudentCourseReport implements IService {
      * @param sp
      * @return
      */
-    private List getEnrolled(IExecutionPeriod executionPeriod,
-            ICurricularCourse curricularCourse, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    private List getEnrolled(IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse,
+            ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-        List enrolments = persistentEnrolment
-                .readByCurricularCourseAndExecutionPeriod(curricularCourse,
-                        executionPeriod);
+        List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse,
+                executionPeriod);
         return enrolments;
     }
 

@@ -7,6 +7,12 @@
 	<html:hidden property="method" value="removeCourses" />
 	
 	<html:hidden property="groupId" value="<%= groupId.toString() %>"/>
+<%--	
+	<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
+	<html:link page='<%= "/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups&degreeCurricularPlanId=" + degreeCurricularPlanId.toString() %>'>Voltar Atrás</html:link>
+--%>
+<br/>
+<br/>
 <bean:message key="message.curricularCourseGroup.courses"/>
 <table>
 <tr> 

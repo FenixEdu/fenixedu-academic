@@ -26,14 +26,13 @@ public class ViewReimbursementGuideTest extends AdministrativeOfficeBaseTest {
     }
 
     protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
-        Object[] args = { new Integer(1)};
+        Object[] args = { new Integer(1) };
 
         return args;
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser()
-            throws FenixServiceException {
-        Object[] args = { new Integer(1)};
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+        Object[] args = { new Integer(1) };
 
         return args;
     }
@@ -42,15 +41,13 @@ public class ViewReimbursementGuideTest extends AdministrativeOfficeBaseTest {
         try {
             Integer reibursementGuideId = new Integer(1);
 
-            Object args[] = { reibursementGuideId};
+            Object args[] = { reibursementGuideId };
 
             InfoReimbursementGuide infoReimbursementGuide = (InfoReimbursementGuide) ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            args);
+                    .executeService(userView, getNameOfServiceToBeTested(), args);
 
             assertNotNull(infoReimbursementGuide);
-            assertEquals(infoReimbursementGuide.getIdInternal(),
-                    reibursementGuideId);
+            assertEquals(infoReimbursementGuide.getIdInternal(), reibursementGuideId);
 
         } catch (FenixServiceException e) {
             fail("testSucessfull " + e.getMessage());
@@ -61,11 +58,9 @@ public class ViewReimbursementGuideTest extends AdministrativeOfficeBaseTest {
     public void testViewNonExistingReimbursementGuide() {
         try {
             Integer guideId = new Integer(5762);
-            Object args[] = { guideId};
+            Object args[] = { guideId };
 
-           ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             fail("testViewNonExistingReimbursementGuide did not throw NonExistingServiceException");
 

@@ -11,14 +11,13 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz
  */
-public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
-{
+public class ClonerInfoObjectCachePerformanceTest extends PersistentObjectOJB {
 
     private static SuportePersistenteOJB persistentSupport;
 
@@ -30,29 +29,22 @@ public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
 
     private static Class classToRead = ExecutionCourse.class;
 
-    static
-    {
-        try
-        {
+    static {
+        try {
             persistentSupport = SuportePersistenteOJB.getInstance();
             cacheTest = new ClonerInfoObjectCachePerformanceTest();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public ClonerInfoObjectCachePerformanceTest()
-    {
+    public ClonerInfoObjectCachePerformanceTest() {
         super();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         System.out.println("   ### Testing cache performance ###");
-        try
-        {
+        try {
             doTheTest();
             doTheTest();
             doTheTest();
@@ -60,57 +52,47 @@ public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
             doTheTest();
             doTheTest();
             doTheTest();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void doTheTest() throws ExcepcaoPersistencia
-    {
+    private static void doTheTest() throws ExcepcaoPersistencia {
         persistentSupport.iniciarTransaccao();
         List infoExecutionCourses = readInfoExecutionCourses();
 
         startTime = Calendar.getInstance();
-        for (int i = 0; i < infoExecutionCourses.size(); i++)
-        {
+        for (int i = 0; i < infoExecutionCourses.size(); i++) {
             Cloner.get((IExecutionCourse) infoExecutionCourses.get(i));
         }
         endTime = Calendar.getInstance();
-        System.out.println("Cloning of " + infoExecutionCourses.size()
-                + " objects took "
+        System.out.println("Cloning of " + infoExecutionCourses.size() + " objects took "
                 + cacheTest.calculateExecutionTime(startTime, endTime) + " ms");
 
         persistentSupport.confirmarTransaccao();
     }
 
-    private static List readInfoExecutionCourses() throws ExcepcaoPersistencia
-    {
+    private static List readInfoExecutionCourses() throws ExcepcaoPersistencia {
         startTime = Calendar.getInstance();
         List objects = cacheTest.doTheRead();
         endTime = Calendar.getInstance();
-        System.out.println("Read a total of " + objects.size() + " "
-                + classToRead.getName() + " in "
+        System.out.println("Read a total of " + objects.size() + " " + classToRead.getName() + " in "
                 + cacheTest.calculateExecutionTime(startTime, endTime) + " ms");
         return objects;
     }
 
-    private List doTheRead() throws ExcepcaoPersistencia
-    {
+    private List doTheRead() throws ExcepcaoPersistencia {
         return queryList(classToRead, new Criteria());
     }
 
-    private long calculateExecutionTime(Calendar startTime, Calendar endTime)
-    {
+    private long calculateExecutionTime(Calendar startTime, Calendar endTime) {
         return endTime.getTimeInMillis() - startTime.getTimeInMillis();
     }
 
     /**
-     * 
+     *  
      */
-    private static void clearCache() throws ExcepcaoPersistencia
-    {
+    private static void clearCache() throws ExcepcaoPersistencia {
         persistentSupport.iniciarTransaccao();
         persistentSupport.clearCache();
         System.out.println("Cache cleared.");

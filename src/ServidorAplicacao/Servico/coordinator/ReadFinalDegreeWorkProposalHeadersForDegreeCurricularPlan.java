@@ -30,48 +30,39 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implements IService
-{
+public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implements IService {
 
-    public ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan()
-    {
+    public ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan() {
         super();
     }
 
-    public List run(Integer executionDegreeOID) throws FenixServiceException
-    {
+    public List run(Integer executionDegreeOID) throws FenixServiceException {
         List finalDegreeWorkProposalHeaders = new ArrayList();
 
-        try
-        {
+        try {
             ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
             List finalDegreeWorkProposals = persistentFinalDegreeWork
                     .readFinalDegreeWorkProposalsByExecutionDegree(executionDegreeOID);
-            if (finalDegreeWorkProposals != null)
-            {
+            if (finalDegreeWorkProposals != null) {
                 finalDegreeWorkProposalHeaders = new ArrayList();
-                for (int i = 0; i < finalDegreeWorkProposals.size(); i++)
-                {
+                for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
                     IProposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
 
-                    if (proposal != null)
-                    {
+                    if (proposal != null) {
                         FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
 
                         finalDegreeWorkProposalHeader.setIdInternal(proposal.getIdInternal());
                         finalDegreeWorkProposalHeader.setProposalNumber(proposal.getProposalNumber());
                         finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
-                        if (proposal.getOrientator() != null)
-                        {
+                        if (proposal.getOrientator() != null) {
                             finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()
                                     .getIdInternal());
                             finalDegreeWorkProposalHeader.setOrientatorName(proposal.getOrientator()
                                     .getPerson().getNome());
                         }
-                        if (proposal.getCoorientator() != null)
-                        {
+                        if (proposal.getCoorientator() != null) {
                             finalDegreeWorkProposalHeader.setCoorientatorOID(proposal.getCoorientator()
                                     .getIdInternal());
                             finalDegreeWorkProposalHeader.setCoorientatorName(proposal.getCoorientator()
@@ -81,46 +72,40 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implement
                         finalDegreeWorkProposalHeader.setStatus(proposal.getStatus());
 
                         if (proposal.getGroupProposals() != null
-                                && !proposal.getGroupProposals().isEmpty())
-                        {
+                                && !proposal.getGroupProposals().isEmpty()) {
                             finalDegreeWorkProposalHeader.setGroupProposals(new ArrayList());
-                            for (int j = 0; j < proposal.getGroupProposals().size(); j++)
-                            {
+                            for (int j = 0; j < proposal.getGroupProposals().size(); j++) {
                                 IGroupProposal groupProposal = (IGroupProposal) proposal
                                         .getGroupProposals().get(j);
-                                if (groupProposal != null)
-                                {
+                                if (groupProposal != null) {
                                     InfoGroupProposal infoGroupProposal = new InfoGroupProposal();
                                     infoGroupProposal.setIdInternal(groupProposal.getIdInternal());
                                     infoGroupProposal.setOrderOfPreference(groupProposal
                                             .getOrderOfPreference());
                                     IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-                                    if (group != null)
-                                    {
+                                    if (group != null) {
                                         InfoGroup infoGroup = new InfoGroup();
                                         infoGroup.setIdInternal(group.getIdInternal());
-                                        if (group.getGroupStudents() != null)
-                                        {
+                                        if (group.getGroupStudents() != null) {
                                             infoGroup.setGroupStudents(new ArrayList());
-                                            for (int k = 0; k < group.getGroupStudents().size(); k++)
-                                            {
+                                            for (int k = 0; k < group.getGroupStudents().size(); k++) {
                                                 IGroupStudent groupStudent = (IGroupStudent) group
                                                         .getGroupStudents().get(k);
-                                                if (groupStudent != null)
-                                                {
+                                                if (groupStudent != null) {
                                                     InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
-                                                    infoGroupStudent.setIdInternal(groupStudent.getIdInternal());
-                                                    infoGroupStudent.setFinalDegreeDegreeWorkGroup(infoGroup);
+                                                    infoGroupStudent.setIdInternal(groupStudent
+                                                            .getIdInternal());
+                                                    infoGroupStudent
+                                                            .setFinalDegreeDegreeWorkGroup(infoGroup);
 
                                                     IStudent student = groupStudent.getStudent();
-                                                    if (student != null)
-                                                    {
+                                                    if (student != null) {
                                                         InfoStudent infoStudent = new InfoStudent();
-                                                        infoStudent.setIdInternal(student.getIdInternal());
+                                                        infoStudent.setIdInternal(student
+                                                                .getIdInternal());
                                                         infoStudent.setNumber(student.getNumber());
                                                         IPessoa person = student.getPerson();
-                                                        if (person != null)
-                                                        {
+                                                        if (person != null) {
                                                             InfoPerson infoPerson = new InfoPerson();
                                                             infoPerson.setIdInternal(person
                                                                     .getIdInternal());
@@ -133,31 +118,38 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implement
                                                         infoGroupStudent.setStudent(infoStudent);
                                                     }
 
-                                                    if (groupStudent.getFinalDegreeWorkProposalConfirmation() != null)
-                                                    {
-                                                        IProposal proposalConfirmation = groupStudent.getFinalDegreeWorkProposalConfirmation();
-                                                        
-                                                        if (proposal != null)
-                                                        {
+                                                    if (groupStudent
+                                                            .getFinalDegreeWorkProposalConfirmation() != null) {
+                                                        IProposal proposalConfirmation = groupStudent
+                                                                .getFinalDegreeWorkProposalConfirmation();
+
+                                                        if (proposal != null) {
                                                             InfoProposal infoProposal = new InfoProposal();
-                                                            infoProposal.setIdInternal(proposalConfirmation.getIdInternal());
-                                                            infoGroupStudent.setFinalDegreeWorkProposalConfirmation(infoProposal);
+                                                            infoProposal
+                                                                    .setIdInternal(proposalConfirmation
+                                                                            .getIdInternal());
+                                                            infoGroupStudent
+                                                                    .setFinalDegreeWorkProposalConfirmation(infoProposal);
                                                         }
                                                     }
 
-                                                    IGroup attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
+                                                    IGroup attributedGroupByTeacher = proposal
+                                                            .getGroupAttributedByTeacher();
                                                     if (attributedGroupByTeacher != null
-                                                            && attributedGroupByTeacher.getIdInternal().equals(group.getIdInternal()))
-                                                    {
-                                                        finalDegreeWorkProposalHeader.setGroupAttributedByTeacher(infoGroup);
+                                                            && attributedGroupByTeacher.getIdInternal()
+                                                                    .equals(group.getIdInternal())) {
+                                                        finalDegreeWorkProposalHeader
+                                                                .setGroupAttributedByTeacher(infoGroup);
                                                     }
-                                                    IGroup attributedGroup = proposal.getGroupAttributed();
+                                                    IGroup attributedGroup = proposal
+                                                            .getGroupAttributed();
                                                     if (attributedGroup != null
-                                                            && attributedGroup.getIdInternal().equals(group.getIdInternal()))
-                                                    {
-                                                        finalDegreeWorkProposalHeader.setGroupAttributed(infoGroup);
+                                                            && attributedGroup.getIdInternal().equals(
+                                                                    group.getIdInternal())) {
+                                                        finalDegreeWorkProposalHeader
+                                                                .setGroupAttributed(infoGroup);
                                                     }
-                                                    
+
                                                     infoGroup.getGroupStudents().add(infoGroupStudent);
                                                 }
                                             }
@@ -174,9 +166,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implement
                     }
                 }
             }
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

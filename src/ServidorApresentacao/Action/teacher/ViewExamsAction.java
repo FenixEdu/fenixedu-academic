@@ -26,44 +26,36 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author Tânia Nunes
- *
+ *  
  */
 public class ViewExamsAction extends FenixAction {
 
-	public ActionForward execute(
-					ActionMapping mapping,
-					ActionForm form,
-					HttpServletRequest request,
-					HttpServletResponse response)
-					throws FenixActionException {
-					
-		
-		
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
-		Integer executionCourseCode = new Integer(request.getParameter("objectCode"));
-		if (executionCourseCode == null) {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-			InfoSite infoSite =
-				(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-			infoExecutionCourse = infoSite.getInfoExecutionCourse();
-			executionCourseCode = infoExecutionCourse.getIdInternal();
-		}
+        HttpSession session = request.getSession(false);
+        IUserView userView = SessionUtils.getUserView(request);
+        Integer executionCourseCode = new Integer(request.getParameter("objectCode"));
+        if (executionCourseCode == null) {
 
-		Object args[] = { executionCourseCode };
-	
-		List infoExamList;
-		try {
-			infoExamList =
-				(List) ServiceUtils.executeService(userView, "ReadExams", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+            InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+            InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+            infoExecutionCourse = infoSite.getInfoExecutionCourse();
+            executionCourseCode = infoExecutionCourse.getIdInternal();
+        }
 
-		request.setAttribute("infoExamList", infoExamList);
-		request.setAttribute("objectCode",executionCourseCode);
-		return mapping.findForward("viewExams");
+        Object args[] = { executionCourseCode };
 
-	}
+        List infoExamList;
+        try {
+            infoExamList = (List) ServiceUtils.executeService(userView, "ReadExams", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        request.setAttribute("infoExamList", infoExamList);
+        request.setAttribute("objectCode", executionCourseCode);
+        return mapping.findForward("viewExams");
+
+    }
 }

@@ -21,22 +21,14 @@ import Util.TipoCurso;
  * @author lmac1
  */
 
-public class InsertDegree implements IService
-{
+public class InsertDegree implements IService {
 
-   
-
-    public InsertDegree()
-    {
+    public InsertDegree() {
     }
 
-   
+    public void run(InfoDegree infoDegree) throws FenixServiceException {
 
-    public void run(InfoDegree infoDegree) throws FenixServiceException
-    {
-
-        try
-        {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
 
@@ -50,14 +42,10 @@ public class InsertDegree implements IService
             degree.setNome(name);
             degree.setTipoCurso(type);
             degree.setConcreteClassForDegreeCurricularPlans(DegreeCurricularPlan.class.getName());
-            
-        }
-        catch (ExistingPersistentException existingException)
-        {
+
+        } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException(existingException);
-        }
-        catch (ExcepcaoPersistencia excepcaoPersistencia)
-        {
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
     }

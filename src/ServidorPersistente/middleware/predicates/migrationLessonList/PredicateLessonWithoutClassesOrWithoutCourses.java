@@ -9,14 +9,15 @@ import ServidorPersistente.middleware.MigrationLesson;
 /**
  * @author jpvl
  */
-public class PredicateLessonWithoutClassesOrWithoutCourses
-	extends PredicateForMigrationLessonList {
+public class PredicateLessonWithoutClassesOrWithoutCourses extends PredicateForMigrationLessonList {
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.middleware.predicates.PredicateForMigrationLessonList#evaluateMigrationLesson(ServidorPersistente.middleware.MigrationLesson)
-	 */
-	public boolean evaluateMigrationLesson(MigrationLesson lesson) {
-		return lesson.getClassList().size() == 0 || lesson.getCourseInitialsList().size() == 0;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.middleware.predicates.PredicateForMigrationLessonList#evaluateMigrationLesson(ServidorPersistente.middleware.MigrationLesson)
+     */
+    public boolean evaluateMigrationLesson(MigrationLesson lesson) {
+        return lesson.getClassList().size() == 0 || lesson.getCourseInitialsList().size() == 0;
+    }
 
 }

@@ -1,36 +1,34 @@
 package ServidorPersistente.middleware;
 
-
 public class CourseCurricularYearPair {
-	private String courseInitials;
-	private Integer curricularYear;
-	public CourseCurricularYearPair(
-		String courseInitials,
-		Integer curricularYear) {
-		this.courseInitials = courseInitials;
-		this.curricularYear = curricularYear;
-	}
+    private String courseInitials;
 
-	public boolean equals(Object obj) {
-		CourseCurricularYearPair courseCurricularYearPair =
-			(CourseCurricularYearPair) obj;
-		return courseInitials.equals(courseCurricularYearPair.getCourseInitials())
-			&& curricularYear.equals(courseCurricularYearPair.getCurricularYear());
+    private Integer curricularYear;
 
-	}
+    public CourseCurricularYearPair(String courseInitials, Integer curricularYear) {
+        this.courseInitials = courseInitials;
+        this.curricularYear = curricularYear;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getCourseInitials() {
-		return courseInitials;
-	}
+    public boolean equals(Object obj) {
+        CourseCurricularYearPair courseCurricularYearPair = (CourseCurricularYearPair) obj;
+        return courseInitials.equals(courseCurricularYearPair.getCourseInitials())
+                && curricularYear.equals(courseCurricularYearPair.getCurricularYear());
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getCurricularYear() {
-		return curricularYear;
-	}
+    }
+
+    /**
+     * @return String
+     */
+    public String getCourseInitials() {
+        return courseInitials;
+    }
+
+    /**
+     * @return Integer
+     */
+    public Integer getCurricularYear() {
+        return curricularYear;
+    }
 
 }

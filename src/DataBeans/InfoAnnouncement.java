@@ -10,8 +10,7 @@ import Dominio.IAnnouncement;
  * @author Ivo Brandão
  */
 
-public class InfoAnnouncement extends InfoObject implements Comparable,
-        ISiteComponent {
+public class InfoAnnouncement extends InfoObject implements Comparable, ISiteComponent {
 
     private String title;
 
@@ -26,8 +25,8 @@ public class InfoAnnouncement extends InfoObject implements Comparable,
     public InfoAnnouncement() {
     }
 
-    public InfoAnnouncement(String title, Timestamp creationDate,
-            Timestamp lastModifiedDate, String information, InfoSite infoSite) {
+    public InfoAnnouncement(String title, Timestamp creationDate, Timestamp lastModifiedDate,
+            String information, InfoSite infoSite) {
         this.title = title;
         this.creationDate = creationDate;
         this.lastModifiedDate = lastModifiedDate;
@@ -40,14 +39,10 @@ public class InfoAnnouncement extends InfoObject implements Comparable,
         boolean resultado = false;
         if (obj != null && obj instanceof InfoAnnouncement) {
             resultado = getTitle().equals(((InfoAnnouncement) obj).getTitle())
-                    && getCreationDate().equals(
-                            ((InfoAnnouncement) obj).getCreationDate())
-                    && getLastModifiedDate().equals(
-                            ((InfoAnnouncement) obj).getLastModifiedDate())
-                    && getInformation().equals(
-                            ((InfoAnnouncement) obj).getInformation())
-                    && getInfoSite().equals(
-                            ((InfoAnnouncement) obj).getInfoSite());
+                    && getCreationDate().equals(((InfoAnnouncement) obj).getCreationDate())
+                    && getLastModifiedDate().equals(((InfoAnnouncement) obj).getLastModifiedDate())
+                    && getInformation().equals(((InfoAnnouncement) obj).getInformation())
+                    && getInfoSite().equals(((InfoAnnouncement) obj).getInfoSite());
         }
         return resultado;
     }
@@ -180,8 +175,7 @@ public class InfoAnnouncement extends InfoObject implements Comparable,
 
     private Timestamp getYoungerDate() {
 
-        if (getLastModifiedDate() != null
-                && getLastModifiedDate().after(getCreationDate())) {
+        if (getLastModifiedDate() != null && getLastModifiedDate().after(getCreationDate())) {
             return getLastModifiedDate();
         }
         return getCreationDate();

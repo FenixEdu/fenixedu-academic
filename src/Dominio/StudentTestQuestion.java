@@ -8,8 +8,7 @@ import Util.tests.CorrectionFormula;
 /**
  * @author Susana Fernandes
  */
-public class StudentTestQuestion extends DomainObject implements
-        IStudentTestQuestion {
+public class StudentTestQuestion extends DomainObject implements IStudentTestQuestion {
 
     private Integer keyStudent;
 

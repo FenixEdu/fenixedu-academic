@@ -17,140 +17,107 @@ import Util.TipoCurso;
  * @author Tânia Pousão
  *  
  */
-public class ReadGratuitySituationByStudentCurricularPlanTest extends AdministrativeOfficeBaseTest
-{
+public class ReadGratuitySituationByStudentCurricularPlanTest extends AdministrativeOfficeBaseTest {
 
-	public ReadGratuitySituationByStudentCurricularPlanTest(String name)
-	{
-		super(name);
-		this.dataSetFilePath =
-			"etc/datasets/servicos/MasterDegree/administrativeOffice/gratuity/testReadGratuitySituationByStudentCurricularPlanDataSet.xml";
-	}
+    public ReadGratuitySituationByStudentCurricularPlanTest(String name) {
+        super(name);
+        this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/gratuity/testReadGratuitySituationByStudentCurricularPlanDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadGratuitySituationByStudentCurricularPlan";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadGratuitySituationByStudentCurricularPlan";
+    }
 
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser()
-	{
-		Object[] args = { new Integer(142), TipoCurso.MESTRADO_OBJ };
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
+        Object[] args = { new Integer(142), TipoCurso.MESTRADO_OBJ };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
-	{
-		Object[] argsReadStudentCurricularPlans = { new Integer(142), TipoCurso.MESTRADO_OBJ };
-		//number, degree type
-		List infoStudentCurricularPlans =
-			(List) ServiceManagerServiceFactory.executeService(
-				userView,
-				"ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree",
-				argsReadStudentCurricularPlans);
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+        Object[] argsReadStudentCurricularPlans = { new Integer(142), TipoCurso.MESTRADO_OBJ };
+        //number, degree type
+        List infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree",
+                argsReadStudentCurricularPlans);
 
-		Object[] argsReadGratuitySituationByStudentCurricularPlan =
-			{((InfoStudentCurricularPlan) infoStudentCurricularPlans.get(0)).getIdInternal()};
+        Object[] argsReadGratuitySituationByStudentCurricularPlan = { ((InfoStudentCurricularPlan) infoStudentCurricularPlans
+                .get(0)).getIdInternal() };
 
-		return argsReadGratuitySituationByStudentCurricularPlan;
-	}
+        return argsReadGratuitySituationByStudentCurricularPlan;
+    }
 
-	public void testSucessReadGratuitySituationByStudentCurricularPlan()
-	{
+    public void testSucessReadGratuitySituationByStudentCurricularPlan() {
 
-		try
-		{
-			Object[] argsReadStudentCurricularPlans = { new Integer(142), TipoCurso.MESTRADO_OBJ };
-			//number, degree type
-			List infoStudentCurricularPlans;
+        try {
+            Object[] argsReadStudentCurricularPlans = { new Integer(142), TipoCurso.MESTRADO_OBJ };
+            //number, degree type
+            List infoStudentCurricularPlans;
 
-			infoStudentCurricularPlans =
-				(List) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree",
-					argsReadStudentCurricularPlans);
+            infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree",
+                    argsReadStudentCurricularPlans);
 
-			Object[] argsReadGratuitySituationByStudentCurricularPlan =
-				{((InfoStudentCurricularPlan) infoStudentCurricularPlans.get(0)).getIdInternal()};
+            Object[] argsReadGratuitySituationByStudentCurricularPlan = { ((InfoStudentCurricularPlan) infoStudentCurricularPlans
+                    .get(0)).getIdInternal() };
 
-			InfoGratuitySituation infoGratuitySituation =
-				(InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					argsReadGratuitySituationByStudentCurricularPlan);
+            InfoGratuitySituation infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory
+                    .executeService(userView, getNameOfServiceToBeTested(),
+                            argsReadGratuitySituationByStudentCurricularPlan);
 
-			assertNotNull(infoGratuitySituation);
-			assertEquals(infoGratuitySituation.getIdInternal(), new Integer(1));
-			assertEquals(
-				infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(),
-				new Integer(8582));
-			assertNull(infoGratuitySituation.getInfoGratuityValues());
-			assertEquals(infoGratuitySituation.getExemptionPercentage(), new Integer(30));
-			assertEquals(
-				new Integer(infoGratuitySituation.getExemptionType().getValue()),
-				new Integer(1));
-			assertNull(infoGratuitySituation.getExemptionDescription());
+            assertNotNull(infoGratuitySituation);
+            assertEquals(infoGratuitySituation.getIdInternal(), new Integer(1));
+            assertEquals(infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(),
+                    new Integer(8582));
+            assertNull(infoGratuitySituation.getInfoGratuityValues());
+            assertEquals(infoGratuitySituation.getExemptionPercentage(), new Integer(30));
+            assertEquals(new Integer(infoGratuitySituation.getExemptionType().getValue()),
+                    new Integer(1));
+            assertNull(infoGratuitySituation.getExemptionDescription());
 
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("testSucessReadGratuitySituationByStudentCurricularPlan " + e.getMessage());
-		}
-	}
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("testSucessReadGratuitySituationByStudentCurricularPlan " + e.getMessage());
+        }
+    }
 
-	public void testSucessReadGratuitySituationByStudentCurricularPlanButNULL()
-	{
+    public void testSucessReadGratuitySituationByStudentCurricularPlanButNULL() {
 
-		try
-		{
-			Object[] argsReadStudentCurricularPlans = { new Integer(209), TipoCurso.MESTRADO_OBJ };
-			//number, degree type
-			List infoStudentCurricularPlans;
+        try {
+            Object[] argsReadStudentCurricularPlans = { new Integer(209), TipoCurso.MESTRADO_OBJ };
+            //number, degree type
+            List infoStudentCurricularPlans;
 
-			infoStudentCurricularPlans =
-				(List) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree",
-					argsReadStudentCurricularPlans);
+            infoStudentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree",
+                    argsReadStudentCurricularPlans);
 
-			Object[] argsReadGratuitySituationByStudentCurricularPlan =
-				{((InfoStudentCurricularPlan) infoStudentCurricularPlans.get(0)).getIdInternal()};
+            Object[] argsReadGratuitySituationByStudentCurricularPlan = { ((InfoStudentCurricularPlan) infoStudentCurricularPlans
+                    .get(0)).getIdInternal() };
 
-			InfoGratuitySituation infoGratuitySituation =
-				(InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadGratuitySituationByStudentCurricularPlan",
-					argsReadGratuitySituationByStudentCurricularPlan);
+            InfoGratuitySituation infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory
+                    .executeService(userView, "ReadGratuitySituationByStudentCurricularPlan",
+                            argsReadGratuitySituationByStudentCurricularPlan);
 
-			assertNull(infoGratuitySituation);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("testSucessReadGratuitySituationByStudentCurricularPlan " + e.getMessage());
-		}
-	}
+            assertNull(infoGratuitySituation);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("testSucessReadGratuitySituationByStudentCurricularPlan " + e.getMessage());
+        }
+    }
 
-	public void testReadGratuitySituationByStudentCurricularPlanButPlanNULL()
-	{
-		try
-		{
-			Object[] argsReadGratuitySituationByStudentCurricularPlan = { new Integer(111) };
+    public void testReadGratuitySituationByStudentCurricularPlanButPlanNULL() {
+        try {
+            Object[] argsReadGratuitySituationByStudentCurricularPlan = { new Integer(111) };
 
-			ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadGratuitySituationByStudentCurricularPlan",
-					argsReadGratuitySituationByStudentCurricularPlan);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			String msg =
-				e.getMessage().substring(
-					e.getMessage().lastIndexOf(".") + 1,
-					e.getMessage().lastIndexOf(".") + 23);
-			assertEquals(new String("insertExemptionGratuity"), msg);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(userView,
+                    "ReadGratuitySituationByStudentCurricularPlan",
+                    argsReadGratuitySituationByStudentCurricularPlan);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
+                    e.getMessage().lastIndexOf(".") + 23);
+            assertEquals(new String("insertExemptionGratuity"), msg);
+        }
+    }
 }

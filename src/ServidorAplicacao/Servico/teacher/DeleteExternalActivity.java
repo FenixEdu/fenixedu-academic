@@ -16,37 +16,39 @@ import ServidorPersistente.ISuportePersistente;
  */
 public class DeleteExternalActivity extends DeleteDomainObjectService {
 
-	private static DeleteExternalActivity service = new DeleteExternalActivity();
+    private static DeleteExternalActivity service = new DeleteExternalActivity();
 
-	public static DeleteExternalActivity getService() {
-		return service;
-	}
-    
-	private DeleteExternalActivity() {
-	}
+    public static DeleteExternalActivity getService() {
+        return service;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "DeleteExternalActivity";
-	}
-    
-    /* (non-Javadoc)
+    private DeleteExternalActivity() {
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "DeleteExternalActivity";
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getDomainObjectClass()
      */
-    protected Class getDomainObjectClass()
-    {
+    protected Class getDomainObjectClass() {
         return ExternalActivity.class;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentExternalActivity();
     }
 }

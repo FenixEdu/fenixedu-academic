@@ -5,191 +5,196 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 /**
- * @author Fernanda Quitério
- * 24/09/2003
- * 
- **/
+ * @author Fernanda Quitério 24/09/2003
+ *  
+ */
 public class InfoWebSiteSection extends InfoObject {
-	private String name;
-	private String ftpName;
-	private Integer size;
-	private String sortingOrder;
-	private String whatToSort;
-	private Integer excerptSize;
-	
-	private InfoWebSite infoWebSite;
-	private List infoItemsList;
-	
-	/**
-	 * @return
-	 */
-	public String getWhatToSort() {
-		return whatToSort;
-	}
+    private String name;
 
-	/**
-	 * @param whatToSort
-	 */
-	public void setWhatToSort(String whatToSort) {
-		this.whatToSort = whatToSort;
-	}
+    private String ftpName;
 
-	/**
-	 * @return
-	 */
-	public List getInfoItemsList() {
-		return infoItemsList;
-	}
+    private Integer size;
 
-	/**
-	 * @param itemsList
-	 */
-	public void setInfoItemsList(List itemsList) {
-		this.infoItemsList = itemsList;
-	}
+    private String sortingOrder;
 
-	/** 
-	* Construtor
-	*/
+    private String whatToSort;
 
-	public InfoWebSiteSection() {
-	
-	}
+    private Integer excerptSize;
 
+    private InfoWebSite infoWebSite;
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		String result = "[INFOWEBSITESECTION";
-		result += ", codInt=" + getIdInternal();
-		result += ", name=" + getName();
-		result += ", ftpName=" + getFtpName();
-		result += ", size=" + getSize();
-		result += ", sortingOrder=" + getSortingOrder();
-		result += ", whatToSort=" + getWhatToSort();
-		result += ", excerptSize=" + getExcerptSize();
-		result += ", webSite=" + getInfoWebSite();
-		result += "]";
+    private List infoItemsList;
 
-		return result;
-	}
+    /**
+     * @return
+     */
+    public String getWhatToSort() {
+        return whatToSort;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getExcerptSize() {
-		return excerptSize;
-	}
+    /**
+     * @param whatToSort
+     */
+    public void setWhatToSort(String whatToSort) {
+        this.whatToSort = whatToSort;
+    }
 
-	/**
-	 * @param excerptSize
-	 */
-	public void setExcerptSize(Integer excerptSize) {
-		this.excerptSize = excerptSize;
-	}
+    /**
+     * @return
+     */
+    public List getInfoItemsList() {
+        return infoItemsList;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoWebSite getInfoWebSite() {
-		return infoWebSite;
-	}
+    /**
+     * @param itemsList
+     */
+    public void setInfoItemsList(List itemsList) {
+        this.infoItemsList = itemsList;
+    }
 
-	/**
-	 * @param infoWebSite
-	 */
-	public void setInfoWebSite(InfoWebSite infoWebSite) {
-		this.infoWebSite = infoWebSite;
-	}
+    /**
+     * Construtor
+     */
 
-	/**
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
+    public InfoWebSiteSection() {
 
-	/**
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	public String getFtpName() {
-		return ftpName;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[INFOWEBSITESECTION";
+        result += ", codInt=" + getIdInternal();
+        result += ", name=" + getName();
+        result += ", ftpName=" + getFtpName();
+        result += ", size=" + getSize();
+        result += ", sortingOrder=" + getSortingOrder();
+        result += ", whatToSort=" + getWhatToSort();
+        result += ", excerptSize=" + getExcerptSize();
+        result += ", webSite=" + getInfoWebSite();
+        result += "]";
 
-	/**
-	 * @param name
-	 */
-	public void setFtpName(String ftpName) {
-		this.ftpName = ftpName;
-	}
-	
-	/**
-	 * @return
-	 */
-	public Integer getSize() {
-		return size;
-	}
+        return result;
+    }
 
-	/**
-	 * @param size
-	 */
-	public void setSize(Integer size) {
-		this.size = size;
-	}
+    /**
+     * @return
+     */
+    public Integer getExcerptSize() {
+        return excerptSize;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getSortingOrder() {
-		return sortingOrder;
-	}
+    /**
+     * @param excerptSize
+     */
+    public void setExcerptSize(Integer excerptSize) {
+        this.excerptSize = excerptSize;
+    }
 
-	/**
-	 * @param sortingOrder
-	 */
-	public void setSortingOrder(String sortingOrder) {
-		this.sortingOrder = sortingOrder;
-	}
+    /**
+     * @return
+     */
+    public InfoWebSite getInfoWebSite() {
+        return infoWebSite;
+    }
 
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof InfoWebSiteSection) {
-			InfoWebSiteSection webSiteSection = (InfoWebSiteSection) arg0;
+    /**
+     * @param infoWebSite
+     */
+    public void setInfoWebSite(InfoWebSite infoWebSite) {
+        this.infoWebSite = infoWebSite;
+    }
 
-			if (((webSiteSection.getName() == null && this.getName() == null)
-				|| (webSiteSection.getName() != null && this.getName() != null && webSiteSection.getName().equals(this.getName())))
-				&& ((webSiteSection.getExcerptSize() == null && this.getExcerptSize() == null)
-					|| (webSiteSection.getExcerptSize() != null
-						&& this.getExcerptSize() != null
-						&& webSiteSection.getExcerptSize().equals(this.getExcerptSize())))
-				&& ((webSiteSection.getSortingOrder() == null && this.getSortingOrder() == null)
-					|| (webSiteSection.getSortingOrder() != null
-						&& this.getSortingOrder() != null
-						&& webSiteSection.getSortingOrder().equals(this.getSortingOrder())))
-			&& ((webSiteSection.getWhatToSort() == null && this.getWhatToSort() == null)
-				|| (webSiteSection.getWhatToSort() != null
-					&& this.getWhatToSort() != null
-					&& webSiteSection.getWhatToSort().equals(this.getWhatToSort())))
-				&& ((webSiteSection.getInfoWebSite() == null && this.getInfoWebSite() == null)
-					|| (webSiteSection.getInfoWebSite() != null
-						&& this.getInfoWebSite() != null
-						&& webSiteSection.getInfoWebSite().equals(this.getInfoWebSite())))
-				&& (CollectionUtils.isEqualCollection(webSiteSection.getInfoItemsList(), this.getInfoItemsList()))
-				&& ((webSiteSection.getSize() == null && this.getSize() == null)
-					|| (webSiteSection.getSize() != null
-						&& this.getSize() != null
-						&& webSiteSection.getSize().equals(this.getSize())))) {
-				result = true;
-			}
-		}
-		return result;
-	}
+    /**
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return
+     */
+    public String getFtpName() {
+        return ftpName;
+    }
+
+    /**
+     * @param name
+     */
+    public void setFtpName(String ftpName) {
+        this.ftpName = ftpName;
+    }
+
+    /**
+     * @return
+     */
+    public Integer getSize() {
+        return size;
+    }
+
+    /**
+     * @param size
+     */
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    /**
+     * @return
+     */
+    public String getSortingOrder() {
+        return sortingOrder;
+    }
+
+    /**
+     * @param sortingOrder
+     */
+    public void setSortingOrder(String sortingOrder) {
+        this.sortingOrder = sortingOrder;
+    }
+
+    public boolean equals(Object arg0) {
+        boolean result = false;
+        if (arg0 instanceof InfoWebSiteSection) {
+            InfoWebSiteSection webSiteSection = (InfoWebSiteSection) arg0;
+
+            if (((webSiteSection.getName() == null && this.getName() == null) || (webSiteSection
+                    .getName() != null
+                    && this.getName() != null && webSiteSection.getName().equals(this.getName())))
+                    && ((webSiteSection.getExcerptSize() == null && this.getExcerptSize() == null) || (webSiteSection
+                            .getExcerptSize() != null
+                            && this.getExcerptSize() != null && webSiteSection.getExcerptSize().equals(
+                            this.getExcerptSize())))
+                    && ((webSiteSection.getSortingOrder() == null && this.getSortingOrder() == null) || (webSiteSection
+                            .getSortingOrder() != null
+                            && this.getSortingOrder() != null && webSiteSection.getSortingOrder()
+                            .equals(this.getSortingOrder())))
+                    && ((webSiteSection.getWhatToSort() == null && this.getWhatToSort() == null) || (webSiteSection
+                            .getWhatToSort() != null
+                            && this.getWhatToSort() != null && webSiteSection.getWhatToSort().equals(
+                            this.getWhatToSort())))
+                    && ((webSiteSection.getInfoWebSite() == null && this.getInfoWebSite() == null) || (webSiteSection
+                            .getInfoWebSite() != null
+                            && this.getInfoWebSite() != null && webSiteSection.getInfoWebSite().equals(
+                            this.getInfoWebSite())))
+                    && (CollectionUtils.isEqualCollection(webSiteSection.getInfoItemsList(), this
+                            .getInfoItemsList()))
+                    && ((webSiteSection.getSize() == null && this.getSize() == null) || (webSiteSection
+                            .getSize() != null
+                            && this.getSize() != null && webSiteSection.getSize().equals(this.getSize())))) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }

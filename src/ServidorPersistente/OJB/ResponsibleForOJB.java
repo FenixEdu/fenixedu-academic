@@ -25,95 +25,81 @@ import ServidorPersistente.IPersistentResponsibleFor;
  * 
  *  
  */
-public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResponsibleFor
-{
+public class ResponsibleForOJB extends PersistentObjectOJB implements IPersistentResponsibleFor {
 
     /**
-	 *  
-	 */
-    public ResponsibleForOJB()
-    {
+     *  
+     */
+    public ResponsibleForOJB() {
         super();
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         return queryList(ResponsibleFor.class, criteria);
     }
 
-    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia
-    {
+    public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
-            "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-            executionDegree.getCurricularPlan().getIdInternal());
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.executionYear.idInternal",
-            executionDegree.getExecutionYear().getIdInternal());
+                "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+                executionDegree.getCurricularPlan().getIdInternal());
+        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionDegree
+                .getExecutionYear().getIdInternal());
         return queryList(ResponsibleFor.class, criteria);
     }
 
-    public IResponsibleFor readByTeacherAndExecutionCourse(
-        ITeacher teacher,
-        IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
-    {
+    public IResponsibleFor readByTeacherAndExecutionCourse(ITeacher teacher,
+            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
         criteria.addEqualTo("executionCourse.sigla", executionCourse.getSigla());
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.name",
-            executionCourse.getExecutionPeriod().getName());
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.executionYear.year",
-            executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+        criteria.addEqualTo("executionCourse.executionPeriod.name", executionCourse.getExecutionPeriod()
+                .getName());
+        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.year", executionCourse
+                .getExecutionPeriod().getExecutionYear().getYear());
         return (IResponsibleFor) queryObject(ResponsibleFor.class, criteria);
     }
 
-    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia
-    {
+    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
         return queryList(ResponsibleFor.class, criteria);
     }
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
-    {
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("executionCourse.idInternal", executionCourse.getIdInternal());
         return queryList(ResponsibleFor.class, crit);
     }
 
-    public void delete(IResponsibleFor responsibleFor) throws ExcepcaoPersistencia
-    {
+    public List readByExecutionCourseID(Integer executionCourseID) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("executionCourse.idInternal", executionCourseID);
+        return queryList(ResponsibleFor.class, crit);
+    }
+
+    public void delete(IResponsibleFor responsibleFor) throws ExcepcaoPersistencia {
         super.delete(responsibleFor);
     }
 
-    public void deleteAll() throws ExcepcaoPersistencia
-    {
+    public void deleteAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         List result = queryList(ResponsibleFor.class, criteria);
         Iterator iterator = result.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             delete((IResponsibleFor) iterator.next());
         }
     }
 
-    
-
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCoursePB(Dominio.ITeacher,
-	 *      Dominio.IDisciplinaExecucao)
-	 */
-    public IResponsibleFor readByTeacherAndExecutionCoursePB(
-        ITeacher teacher,
-        IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCoursePB(Dominio.ITeacher,
+     *      Dominio.IDisciplinaExecucao)
+     */
+    public IResponsibleFor readByTeacherAndExecutionCoursePB(ITeacher teacher,
+            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
@@ -123,47 +109,42 @@ public class ResponsibleForOJB extends ObjectFenixOJB implements IPersistentResp
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionPeriod(Dominio.ITeacher)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionPeriod(Dominio.ITeacher)
+     */
     public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.idInternal",
-            executionPeriod.getIdInternal());
+        criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriod
+                .getIdInternal());
         return queryList(ResponsibleFor.class, criteria);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionYear(Dominio.ITeacher,
-	 *      Dominio.IExecutionYear)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionYear(Dominio.ITeacher,
+     *      Dominio.IExecutionYear)
+     */
     public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.executionYear.idInternal",
-            executionYear.getIdInternal());
+        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionYear
+                .getIdInternal());
         return queryList(ResponsibleFor.class, criteria);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCourseIds(Dominio.ITeacher,
-	 *      java.util.List)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentResponsibleFor#readByTeacherAndExecutionCourseIds(Dominio.ITeacher,
+     *      java.util.List)
+     */
     public List readByTeacherAndExecutionCourseIds(ITeacher teacher, List executionCourseIds)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addIn("executionCourse.idInternal", executionCourseIds);

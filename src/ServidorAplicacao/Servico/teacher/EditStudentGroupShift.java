@@ -34,24 +34,21 @@ public class EditStudentGroupShift implements IService {
      * Executes the service.
      */
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,
-            Integer newShiftCode) throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer newShiftCode)
+            throws FenixServiceException {
 
         ITurnoPersistente persistentShift = null;
         IPersistentStudentGroup persistentStudentGroup = null;
 
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
             persistentShift = persistentSupport.getITurnoPersistente();
-            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
-                    newShiftCode);
+            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, newShiftCode);
 
-            persistentStudentGroup = persistentSupport
-                    .getIPersistentStudentGroup();
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
+            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new InvalidArgumentsServiceException();

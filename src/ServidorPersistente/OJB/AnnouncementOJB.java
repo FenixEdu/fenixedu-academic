@@ -1,4 +1,5 @@
 package ServidorPersistente.OJB;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -9,18 +10,14 @@ import Dominio.IAnnouncement;
 import Dominio.ISite;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentAnnouncement;
+
 /**
- *  @author EP15
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author EP15
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  */
-public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnouncement
-{
-    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(
-        String title,
-        Timestamp cDate,
-        ISite site)
-        throws ExcepcaoPersistencia
-    {
+public class AnnouncementOJB extends PersistentObjectOJB implements IPersistentAnnouncement {
+    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Timestamp cDate,
+            ISite site) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("title", title);
@@ -30,14 +27,11 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 
     }
 
-    
-    public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia
-    {
+    public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia {
         super.delete(announcement);
     }
 
-    public List readAnnouncementsBySite(ISite site) throws ExcepcaoPersistencia
-    {
+    public List readAnnouncementsBySite(ISite site) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("site.idInternal", site.getIdInternal());
@@ -46,20 +40,18 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
     }
 
     /**
-	 * @see ServidorPersistente.IPersistentAnnouncement#readLastAnnouncement()
-	 */
-    public IAnnouncement readLastAnnouncementForSite(ISite site) throws ExcepcaoPersistencia
-    {
+     * @see ServidorPersistente.IPersistentAnnouncement#readLastAnnouncement()
+     */
+    public IAnnouncement readLastAnnouncementForSite(ISite site) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("site.idInternal", site.getIdInternal());
         List result = queryList(Announcement.class, crit, "lastModifiedDate", false);
-        if (result != null && !result.isEmpty())
-        {
+        if (result != null && !result.isEmpty()) {
             return (IAnnouncement) result.get(0);
         }
-        
-            return null;
-        
+
+        return null;
+
     }
 
 }

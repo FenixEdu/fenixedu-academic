@@ -22,13 +22,12 @@ public class DeleteAnnouncementService implements IService {
             throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
             IPersistentAnnouncement persistentAnnouncement = persistentSupport
                     .getIPersistentAnnouncement();
 
-            IAnnouncement iAnnouncement = (IAnnouncement) persistentAnnouncement
-                    .readByOID(Announcement.class, announcementCode);
+            IAnnouncement iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(
+                    Announcement.class, announcementCode);
 
             if (iAnnouncement != null) {
                 persistentAnnouncement.delete(iAnnouncement);

@@ -34,8 +34,7 @@ public class EditTeacherDegreeFinalProjectStudentAuthorization extends
         ITeacher teacher;
         try {
             teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
-                    infoTeacherDegreeFinalProjectStudent.getInfoTeacher()
-                            .getIdInternal());
+                    infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
         } catch (ExcepcaoPersistencia e) {
             return null;
         }

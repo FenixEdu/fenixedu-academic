@@ -6,95 +6,93 @@ package ServidorPersistente.cache.logging;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public class CacheLog
-{
+public class CacheLog {
 
-	private static int numberPuts = 0;
-	private static int numberSuccessfulLookUps = 0;
-	private static int numberFailedLookUps = 0;
-	private static int numberRemoves = 0;
-	private static int numberClears = 0;
+    private static int numberPuts = 0;
 
-	/**
-	 * @return Returns the numberClears.
-	 */
-	public static int getNumberClears()
-	{
-		return numberClears;
-	}
+    private static int numberSuccessfulLookUps = 0;
 
-	/**
-	 * @param numberClears The numberClears to set.
-	 */
-	public static void incrementClears()
-	{
-		CacheLog.numberClears++;
-	}
+    private static int numberFailedLookUps = 0;
 
-	/**
-	 * @return Returns the numberFailedLookUps.
-	 */
-	public static int getNumberFailedLookUps()
-	{
-		return numberFailedLookUps;
-	}
+    private static int numberRemoves = 0;
 
-	/**
-	 * @param numberFailedLookUps The numberFailedLookUps to set.
-	 */
-	public static void incrementFailedLookUps()
-	{
-		CacheLog.numberFailedLookUps++;
-	}
+    private static int numberClears = 0;
 
-	/**
-	 * @return Returns the numberPuts.
-	 */
-	public static int getNumberPuts()
-	{
-		return numberPuts;
-	}
+    /**
+     * @return Returns the numberClears.
+     */
+    public static int getNumberClears() {
+        return numberClears;
+    }
 
-	/**
-	 * @param numberPuts The numberPuts to set.
-	 */
-	public static void incrementPuts()
-	{
-		CacheLog.numberPuts++;
-	}
+    /**
+     * @param numberClears
+     *            The numberClears to set.
+     */
+    public static void incrementClears() {
+        CacheLog.numberClears++;
+    }
 
-	/**
-	 * @return Returns the numberRemoves.
-	 */
-	public static int getNumberRemoves()
-	{
-		return numberRemoves;
-	}
+    /**
+     * @return Returns the numberFailedLookUps.
+     */
+    public static int getNumberFailedLookUps() {
+        return numberFailedLookUps;
+    }
 
-	/**
-	 * @param numberRemoves The numberRemoves to set.
-	 */
-	public static void incrementRemoves()
-	{
-		CacheLog.numberRemoves++;
-	}
+    /**
+     * @param numberFailedLookUps
+     *            The numberFailedLookUps to set.
+     */
+    public static void incrementFailedLookUps() {
+        CacheLog.numberFailedLookUps++;
+    }
 
-	/**
-	 * @return Returns the numberSuccessfulLookUps.
-	 */
-	public static int getNumberSuccessfulLookUps()
-	{
-		return numberSuccessfulLookUps;
-	}
+    /**
+     * @return Returns the numberPuts.
+     */
+    public static int getNumberPuts() {
+        return numberPuts;
+    }
 
-	/**
-	 * @param numberSuccessfulLookUps The numberSuccessfulLookUps to set.
-	 */
-	public static void incrementSuccessfulLookUps()
-	{
-		CacheLog.numberSuccessfulLookUps++;
-	}
+    /**
+     * @param numberPuts
+     *            The numberPuts to set.
+     */
+    public static void incrementPuts() {
+        CacheLog.numberPuts++;
+    }
+
+    /**
+     * @return Returns the numberRemoves.
+     */
+    public static int getNumberRemoves() {
+        return numberRemoves;
+    }
+
+    /**
+     * @param numberRemoves
+     *            The numberRemoves to set.
+     */
+    public static void incrementRemoves() {
+        CacheLog.numberRemoves++;
+    }
+
+    /**
+     * @return Returns the numberSuccessfulLookUps.
+     */
+    public static int getNumberSuccessfulLookUps() {
+        return numberSuccessfulLookUps;
+    }
+
+    /**
+     * @param numberSuccessfulLookUps
+     *            The numberSuccessfulLookUps to set.
+     */
+    public static void incrementSuccessfulLookUps() {
+        CacheLog.numberSuccessfulLookUps++;
+    }
 
 }

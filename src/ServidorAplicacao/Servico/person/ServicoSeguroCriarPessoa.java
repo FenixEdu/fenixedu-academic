@@ -11,15 +11,14 @@ public class ServicoSeguroCriarPessoa extends ServicoSeguro {
 
     private Pessoa pessoa;
 
-    public ServicoSeguroCriarPessoa(ServicoAutorizacao servicoAutorizacaoCriarPessoa,
-    Pessoa pessoa) {
+    public ServicoSeguroCriarPessoa(ServicoAutorizacao servicoAutorizacaoCriarPessoa, Pessoa pessoa) {
         super(servicoAutorizacaoCriarPessoa);
         this.pessoa = pessoa;
     }
 
     public void execute() throws NotExecuteException {
         IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-        if(!iPessoaPersistente.escreverPessoa(pessoa))
+        if (!iPessoaPersistente.escreverPessoa(pessoa))
             throw new NotExecuteException();
     }
 }

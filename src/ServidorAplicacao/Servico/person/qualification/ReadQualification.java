@@ -22,57 +22,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Pica
  */
 
-public class ReadQualification extends ReadDomainObjectService
-{
+public class ReadQualification extends ReadDomainObjectService {
 
-	private static ReadQualification service = new ReadQualification();
-	
-	public static ReadQualification getService()
-	{
-		return service;
-	}
-	
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-	 */
-	protected Class getDomainObjectClass()
-	{
-		return Qualification.class;
-	}
-	
-	private ReadQualification()
-	{}
+    private static ReadQualification service = new ReadQualification();
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		return persistentSuport.getIPersistentQualification();
-	}
+    public static ReadQualification getService() {
+        return service;
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-	 */
-	protected InfoObject clone2InfoObject(IDomainObject domainObject)
-	{
-		return InfoQualificationWithPersonAndCountry.newInfoFromDomain((IQualification) domainObject);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
+     */
+    protected Class getDomainObjectClass() {
+        return Qualification.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(DataBeans.InfoObject)
-	 */
-	protected ISiteComponent getISiteComponent(InfoObject infoObject)
-	{
-		return (InfoQualification) infoObject;
-	}
+    private ReadQualification() {
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome()
-	{
-		return "ReadQualification";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
+     */
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        return persistentSuport.getIPersistentQualification();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
+     */
+    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+        return InfoQualificationWithPersonAndCountry.newInfoFromDomain((IQualification) domainObject);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(DataBeans.InfoObject)
+     */
+    protected ISiteComponent getISiteComponent(InfoObject infoObject) {
+        return (InfoQualification) infoObject;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "ReadQualification";
+    }
 }

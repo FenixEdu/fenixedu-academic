@@ -11,7 +11,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.IGrantContract;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantContract;
 
 /**
@@ -19,7 +19,7 @@ import ServidorPersistente.grant.IPersistentGrantContract;
  * @author Pica
  */
 
-public class GrantContractOJB extends ObjectFenixOJB implements IPersistentGrantContract {
+public class GrantContractOJB extends PersistentObjectOJB implements IPersistentGrantContract {
 
     public GrantContractOJB() {
     }

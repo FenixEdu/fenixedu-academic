@@ -6,7 +6,7 @@ package ServidorApresentacao.Action.teacher;
 
 /**
  * @author lmac1
- *
+ *  
  */
 import java.util.Collections;
 import java.util.List;
@@ -19,8 +19,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
 import ServidorAplicacao.Servico.UserView;
@@ -28,17 +26,12 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
-public class DeleteItemAction extends FenixAction
-{
+public class DeleteItemAction extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
 
@@ -50,8 +43,7 @@ public class DeleteItemAction extends FenixAction
 
         InfoItem infoItem = (InfoItem) infoItemsList.get(index.intValue());
 
-        try
-        {
+        try {
             Object deleteItemArguments[] = { infoItem };
 
             ServiceManagerServiceFactory.executeService(userView, "DeleteItem", deleteItemArguments);
@@ -59,15 +51,15 @@ public class DeleteItemAction extends FenixAction
             session.removeAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST);
             InfoSection infoSection = infoItem.getInfoSection();
             Object readItensArguments[] = { infoSection };
-            List allInfoItens = (List) ServiceManagerServiceFactory.executeService(null, "ReadItems", readItensArguments);
+            List allInfoItens = (List) ServiceManagerServiceFactory.executeService(null, "ReadItems",
+                    readItensArguments);
 
             Collections.sort(allInfoItens);
             session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, allInfoItens);
 
             return mapping.findForward("AccessSectionManagement");
 
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 

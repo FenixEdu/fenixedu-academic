@@ -10,20 +10,17 @@ import Dominio.IQualification;
 import Dominio.Qualification;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentQualification;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 
 /**
  * @author João Simas
  * @author Nuno Barbosa
  */
-public class QualificationOJB extends ObjectFenixOJB implements IPersistentQualification
-{
-    public QualificationOJB()
-    {
+public class QualificationOJB extends PersistentObjectOJB implements IPersistentQualification {
+    public QualificationOJB() {
     }
 
-    public List readQualificationsByPerson(IPessoa person) throws ExcepcaoPersistencia
-    {
+    public List readQualificationsByPerson(IPessoa person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", person.getIdInternal());
         List result = queryList(Qualification.class, criteria);
@@ -31,14 +28,13 @@ public class QualificationOJB extends ObjectFenixOJB implements IPersistentQuali
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentQualification#readByYearAndSchoolAndDegreeAndPerson(java.lang.String,
-	 *      java.lang.String, java.lang.String, Dominio.IPessoa)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentQualification#readByYearAndSchoolAndDegreeAndPerson(java.lang.String,
+     *      java.lang.String, java.lang.String, Dominio.IPessoa)
+     */
     public IQualification readByDateAndSchoolAndPerson(Date date, String school, IPessoa person)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("date", date);
         criteria.addEqualTo("school", school);

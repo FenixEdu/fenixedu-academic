@@ -9,58 +9,53 @@ import DataBeans.InfoShift;
 /**
  * @author jpvl
  */
-public class ShiftEnrollmentDetails extends DataTranferObject
-{
+public class ShiftEnrollmentDetails extends DataTranferObject {
     private InfoShift infoShift;
-    
+
     private Integer vacancies;
-    
+
     /*
      * (non-Javadoc)
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object obj)
-    {
-    	boolean resultado = false;
-    	if (obj instanceof ShiftEnrollmentDetails)
-    	{
-    		ShiftEnrollmentDetails details = (ShiftEnrollmentDetails) obj;
-    		resultado = getInfoShift().equals(details.getInfoShift());
-    	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof ShiftEnrollmentDetails) {
+            ShiftEnrollmentDetails details = (ShiftEnrollmentDetails) obj;
+            resultado = getInfoShift().equals(details.getInfoShift());
+        }
 
-    	return resultado;
+        return resultado;
     }
-    
+
     /**
      * @return Returns the infoShift.
      */
-    public InfoShift getInfoShift()
-    {
+    public InfoShift getInfoShift() {
         return infoShift;
     }
 
     /**
      * @return Returns the vacancies.
      */
-    public Integer getVacancies()
-    {
+    public Integer getVacancies() {
         return vacancies;
     }
 
     /**
-     * @param infoShift The infoShift to set.
+     * @param infoShift
+     *            The infoShift to set.
      */
-    public void setInfoShift(InfoShift infoShift)
-    {
+    public void setInfoShift(InfoShift infoShift) {
         this.infoShift = infoShift;
     }
 
     /**
-     * @param vacancies The vacancies to set.
+     * @param vacancies
+     *            The vacancies to set.
      */
-    public void setVacancies(Integer vacancies)
-    {
+    public void setVacancies(Integer vacancies) {
         this.vacancies = vacancies;
     }
 

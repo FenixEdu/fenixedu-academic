@@ -16,324 +16,282 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
  * @author Fernanda Quitério 18/Nov/2003
  *  
  */
-public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest extends ServiceTestCase
-{
+public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest extends ServiceTestCase {
 
-	/**
-	 * @param testName
-	 */
+    /**
+     * @param testName
+     */
 
-	public ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest(String testName)
-	{
-		super(testName);
-	}
+    public ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameTest(String testName) {
+        super(testName);
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName";
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets_templates/servicos/coordinator/testDataSetCurriculum.xml";
-	}
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-	}
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
-		String[] args = { "julia", "pass", getApplication()};
-		return args;
-	}
-	protected String[] getNotAuthenticatedUser()
-	{
-		String[] args = { "fiado", "pass", getApplication()};
-		return args;
-	}
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer infoExecutionDegreeCode = new Integer(10);
-		Integer infoCurricularCourseCode = new Integer(1);
-		String stringExecutionYear = new String("2002/2003");
+    protected String getDataSetFilePath() {
+        return "etc/datasets_templates/servicos/coordinator/testDataSetCurriculum.xml";
+    }
 
-		Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, stringExecutionYear };
-		return args;
-	}
-	protected Object[] getCurricularCourseUnsuccessfullArguments()
-	{
-		Integer infoExecutionDegreeCode = new Integer(10);
-		Integer infoCurricularCourseCode = new Integer(15);
-		String stringExecutionYear = new String("2002/2003");
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-		Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, stringExecutionYear };
-		return args;
-	}
-	protected Object[] getExecutionYearUnsuccessfullArguments()
-	{
-		Integer infoExecutionDegreeCode = new Integer(10);
-		Integer infoCurricularCourseCode = new Integer(1);
-		String stringExecutionYear = new String("2005/2006");
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-		Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, stringExecutionYear };
-		return args;
-	}
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "fiado", "pass", getApplication() };
+        return args;
+    }
 
-	public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameSuccessfull()
-	{
-		try
-		{
-			Object[] args = getAuthorizeArguments();
+    protected Object[] getAuthorizeArguments() {
+        Integer infoExecutionDegreeCode = new Integer(10);
+        Integer infoCurricularCourseCode = new Integer(1);
+        String stringExecutionYear = new String("2002/2003");
 
-			//Valid user
-			String[] argsUser = getAuthenticatedAndAuthorizedUser();
-			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+        Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, stringExecutionYear };
+        return args;
+    }
 
-			InfoCurriculum infoCurriculum = null;
-			infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
+    protected Object[] getCurricularCourseUnsuccessfullArguments() {
+        Integer infoExecutionDegreeCode = new Integer(10);
+        Integer infoCurricularCourseCode = new Integer(15);
+        String stringExecutionYear = new String("2002/2003");
 
-			//read something?
-			if (infoCurriculum == null)
-			{
-				fail("Reading a Curriculum.");
-			}
+        Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, stringExecutionYear };
+        return args;
+    }
 
-			//Check information read is correct
-			assertEquals(
-				new String("objectivos gerais em portugues mais antigo"),
-				infoCurriculum.getGeneralObjectives());
-			assertEquals(
-				new String("objectivos gerais em ingles mais antigo"),
-				infoCurriculum.getGeneralObjectivesEn());
-			assertEquals(
-				new String("objectivos operacionais em portugues mais antigo"),
-				infoCurriculum.getOperacionalObjectives());
-			assertEquals(
-				new String("objectivos operacionais em ingles mais antigo"),
-				infoCurriculum.getOperacionalObjectivesEn());
-			assertEquals(new String("programa mais antigo"), infoCurriculum.getProgram());
-			assertEquals(new String("programa em ingles mais antigo"), infoCurriculum.getProgramEn());
-			Calendar calendar = Calendar.getInstance();
-			calendar.clear();
-			calendar.set(2002, 10 - 1, 10, 0, 0, 0);
-			assertEquals(
-				calendar.getTime().getTime(),
-				infoCurriculum.getLastModificationDate().getTime());
+    protected Object[] getExecutionYearUnsuccessfullArguments() {
+        Integer infoExecutionDegreeCode = new Integer(10);
+        Integer infoCurricularCourseCode = new Integer(1);
+        String stringExecutionYear = new String("2005/2006");
 
-			assertEquals(infoCurriculum.getInfoCurricularCourse().getIdInternal(), new Integer(1));
-			assertEquals(
-				new Integer(infoCurriculum.getInfoCurricularCourse().getInfoScopes().size()),
-				new Integer(2));
-			assertEquals(
-				new Integer(
-					infoCurriculum.getInfoCurricularCourse().getInfoAssociatedExecutionCourses().size()),
-				new Integer(2));
+        Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, stringExecutionYear };
+        return args;
+    }
 
-			System.out.println(
-				"testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameSuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+    public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameSuccessfull() {
+        try {
+            Object[] args = getAuthorizeArguments();
 
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("Reading a Curriculum from database " + e);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-			fail("Reading a Curriculum from database " + e);
-		}
-	}
+            //Valid user
+            String[] argsUser = getAuthenticatedAndAuthorizedUser();
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-	public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameUserUnsuccessfull()
-	{
-		try
-		{
-			Object[] args = getAuthorizeArguments();
+            InfoCurriculum infoCurriculum = null;
+            infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args);
 
-			//Invalid user
-			String[] argsUser = getAuthenticatedAndUnauthorizedUser();
-			IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            //read something?
+            if (infoCurriculum == null) {
+                fail("Reading a Curriculum.");
+            }
 
-			ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
+            //Check information read is correct
+            assertEquals(new String("objectivos gerais em portugues mais antigo"), infoCurriculum
+                    .getGeneralObjectives());
+            assertEquals(new String("objectivos gerais em ingles mais antigo"), infoCurriculum
+                    .getGeneralObjectivesEn());
+            assertEquals(new String("objectivos operacionais em portugues mais antigo"), infoCurriculum
+                    .getOperacionalObjectives());
+            assertEquals(new String("objectivos operacionais em ingles mais antigo"), infoCurriculum
+                    .getOperacionalObjectivesEn());
+            assertEquals(new String("programa mais antigo"), infoCurriculum.getProgram());
+            assertEquals(new String("programa em ingles mais antigo"), infoCurriculum.getProgramEn());
+            Calendar calendar = Calendar.getInstance();
+            calendar.clear();
+            calendar.set(2002, 10 - 1, 10, 0, 0, 0);
+            assertEquals(calendar.getTime().getTime(), infoCurriculum.getLastModificationDate()
+                    .getTime());
 
-			fail("Reading Curriculum with invalid user");
-		} catch (NotAuthorizedException e)
-		{
-			System.out.println(
-				"testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameUserUnsuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Curriculum with invalid user " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Curriculum with invalid user " + e);
-		}
-	}
+            assertEquals(infoCurriculum.getInfoCurricularCourse().getIdInternal(), new Integer(1));
+            assertEquals(new Integer(infoCurriculum.getInfoCurricularCourse().getInfoScopes().size()),
+                    new Integer(2));
+            assertEquals(new Integer(infoCurriculum.getInfoCurricularCourse()
+                    .getInfoAssociatedExecutionCourses().size()), new Integer(2));
 
-	public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoCurricularCourseUnsuccessfull()
-	{
-		try
-		{
-			//				Non existing curricular course
-			Object[] args = getCurricularCourseUnsuccessfullArguments();
+            System.out
+                    .println("testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameSuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("Reading a Curriculum from database " + e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Reading a Curriculum from database " + e);
+        }
+    }
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+    public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameUserUnsuccessfull() {
+        try {
+            Object[] args = getAuthorizeArguments();
 
-			fail("Reading Curriculum with non existent curricular course");
-		} catch (NonExistingServiceException e)
-		{
-			System.out.println(
-				"testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoCurricularCourseUnsuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Curriculum with non existent curricular course " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Curriculum with non existent curricular course " + e);
-		}
-	}
+            //Invalid user
+            String[] argsUser = getAuthenticatedAndUnauthorizedUser();
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-	public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoExecutionYearUnsuccessfull()
-	{
-		try
-		{
-			//				Non existing execution year
-			Object[] args = getExecutionYearUnsuccessfullArguments();
+            ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+            fail("Reading Curriculum with invalid user");
+        } catch (NotAuthorizedException e) {
+            System.out
+                    .println("testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameUserUnsuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading Curriculum with invalid user " + e);
+        } catch (Exception e) {
+            fail("Reading Curriculum with invalid user " + e);
+        }
+    }
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+    public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoCurricularCourseUnsuccessfull() {
+        try {
+            //				Non existing curricular course
+            Object[] args = getCurricularCourseUnsuccessfullArguments();
 
-			fail("Reading Curriculum with non existing execution year");
-		} catch (NonExistingServiceException e)
-		{
-			System.out.println(
-				"testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoExecutionYearUnsuccessfull was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Curriculum with non existing execution year " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Curriculum with non existing execution year " + e);
-		}
-	}
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-	public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCurriculumUnsuccessfull()
-	{
-		try
-		{
-			//	existing curricular course and execution year
-			Integer infoExecutionDegreeCode = new Integer(10);
-			Integer infoCurricularCourseCode = new Integer(2);
-			String executionYear = new String("2001/2002");
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
-			Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, executionYear };
+            fail("Reading Curriculum with non existent curricular course");
+        } catch (NonExistingServiceException e) {
+            System.out
+                    .println("testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoCurricularCourseUnsuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading Curriculum with non existent curricular course " + e);
+        } catch (Exception e) {
+            fail("Reading Curriculum with non existent curricular course " + e);
+        }
+    }
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+    public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoExecutionYearUnsuccessfull() {
+        try {
+            //				Non existing execution year
+            Object[] args = getExecutionYearUnsuccessfullArguments();
 
-			InfoCurriculum infoCurriculum = null;
-			infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			if (infoCurriculum == null)
-			{
-				System.out.println(
-					"testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCurriculumUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Reading Curriculum with non existing curriculum");
-			}
-		} catch (FenixServiceException e)
-		{
-			fail("Reading Curriculum with non existing curriculum " + e);
-		} catch (Exception e)
-		{
-			fail("Reading Curriculum with non existing curriculum " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
 
-	public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCodeUnsuccessfull()
-	{
-		try
-		{
-			// null argument
-			Integer infoExecutionDegreeCode = new Integer(10);
-			String executionYear = new String("3");
+            fail("Reading Curriculum with non existing execution year");
+        } catch (NonExistingServiceException e) {
+            System.out
+                    .println("testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNoExecutionYearUnsuccessfull was SUCCESSFULY runned by service: "
+                            + getNameOfServiceToBeTested());
+        } catch (FenixServiceException e) {
+            fail("Reading Curriculum with non existing execution year " + e);
+        } catch (Exception e) {
+            fail("Reading Curriculum with non existing execution year " + e);
+        }
+    }
 
-			Object[] args = { infoExecutionDegreeCode, null, executionYear };
+    public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCurriculumUnsuccessfull() {
+        try {
+            //	existing curricular course and execution year
+            Integer infoExecutionDegreeCode = new Integer(10);
+            Integer infoCurricularCourseCode = new Integer(2);
+            String executionYear = new String("2001/2002");
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+            Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, executionYear };
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			fail("Reading Curriculum with null curricular course code");
-		} catch (FenixServiceException e)
-		{
-			if (e.getMessage().equals("nullCurricularCourse"))
-			{
-				System.out.println(
-					"testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCodeUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Reading Curriculum with null curricular course code " + e);
-			}
-		} catch (Exception e)
-		{
-			fail("Reading Curriculum with null curricular course code " + e);
-		}
-	}
+            InfoCurriculum infoCurriculum = null;
+            infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(id2,
+                    getNameOfServiceToBeTested(), args);
 
-	public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullNameUnsuccessfull()
-	{
-		try
-		{
-			// null argument
-			Integer infoExecutionDegreeCode = new Integer(10);
-			Integer infoCurricularCourseCode = new Integer(2);
+            if (infoCurriculum == null) {
+                System.out
+                        .println("testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCurriculumUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Reading Curriculum with non existing curriculum");
+            }
+        } catch (FenixServiceException e) {
+            fail("Reading Curriculum with non existing curriculum " + e);
+        } catch (Exception e) {
+            fail("Reading Curriculum with non existing curriculum " + e);
+        }
+    }
 
-			Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, null };
+    public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCodeUnsuccessfull() {
+        try {
+            // null argument
+            Integer infoExecutionDegreeCode = new Integer(10);
+            String executionYear = new String("3");
 
-			//Valid user
-			String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
-			IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser2);
+            Object[] args = { infoExecutionDegreeCode, null, executionYear };
 
-			ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
 
-			fail("Reading Curriculum with null execution year name");
-		} catch (FenixServiceException e)
-		{
-			if (e.getMessage().equals("nullExecutionYearName"))
-			{
-				System.out.println(
-					"testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullNameUnsuccessfull was SUCCESSFULY runned by service: "
-						+ getNameOfServiceToBeTested());
-			} else
-			{
-				fail("Reading Curriculum with null execution year name " + e);
-			}
-		} catch (Exception e)
-		{
-			fail("Reading Curriculum with null execution year name " + e);
-		}
-	}
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+
+            fail("Reading Curriculum with null curricular course code");
+        } catch (FenixServiceException e) {
+            if (e.getMessage().equals("nullCurricularCourse")) {
+                System.out
+                        .println("testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullCodeUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Reading Curriculum with null curricular course code " + e);
+            }
+        } catch (Exception e) {
+            fail("Reading Curriculum with null curricular course code " + e);
+        }
+    }
+
+    public void testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullNameUnsuccessfull() {
+        try {
+            // null argument
+            Integer infoExecutionDegreeCode = new Integer(10);
+            Integer infoCurricularCourseCode = new Integer(2);
+
+            Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode, null };
+
+            //Valid user
+            String[] argsUser2 = getAuthenticatedAndAuthorizedUser();
+            IUserView id2 = (IUserView) ServiceManagerServiceFactory.executeService(null,
+                    "Autenticacao", argsUser2);
+
+            ServiceManagerServiceFactory.executeService(id2, getNameOfServiceToBeTested(), args);
+
+            fail("Reading Curriculum with null execution year name");
+        } catch (FenixServiceException e) {
+            if (e.getMessage().equals("nullExecutionYearName")) {
+                System.out
+                        .println("testReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearNameNullNameUnsuccessfull was SUCCESSFULY runned by service: "
+                                + getNameOfServiceToBeTested());
+            } else {
+                fail("Reading Curriculum with null execution year name " + e);
+            }
+        } catch (Exception e) {
+            fail("Reading Curriculum with null execution year name " + e);
+        }
+    }
 }

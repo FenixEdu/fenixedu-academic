@@ -10,6 +10,7 @@
 package Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -88,44 +89,38 @@ public class EstadoCivil extends FenixUtil {
             this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
     }
 
-    public ArrayList toArrayList() {
-        ArrayList result = new ArrayList();
+    public List toArrayList() {
+        List result = new ArrayList();
         result.add(new LabelValueBean(EstadoCivil.DEFAULT, null));
-        result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING,
-                EstadoCivil.SOLTEIRO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.CASADO_STRING,
-                EstadoCivil.CASADO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING,
-                EstadoCivil.DIVORCIADO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING,
-                EstadoCivil.VIUVO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.SEPARADO_STRING,
-                EstadoCivil.SEPARADO_STRING));
+        result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, EstadoCivil.SOLTEIRO_STRING));
+        result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, EstadoCivil.CASADO_STRING));
+        result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING, EstadoCivil.DIVORCIADO_STRING));
+        result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, EstadoCivil.VIUVO_STRING));
+        result.add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, EstadoCivil.SEPARADO_STRING));
         result.add(new LabelValueBean(EstadoCivil.UNIAO_DE_FACTO_STRING,
                 EstadoCivil.UNIAO_DE_FACTO_STRING));
-        result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING,
-                EstadoCivil.DESCONHECIDO_STRING));
+        result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING, EstadoCivil.DESCONHECIDO_STRING));
         return result;
     }
 
-    public static ArrayList toIntegerArrayList() {
-        ArrayList result = new ArrayList();
+    public static List toIntegerArrayList() {
+        List result = new ArrayList();
         result.add(new LabelValueBean(EstadoCivil.DEFAULT, null));
-        result.add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, String
-                .valueOf(EstadoCivil.SOLTEIRO)));
-        result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, String
-                .valueOf(EstadoCivil.CASADO)));
+        result
+                .add(new LabelValueBean(EstadoCivil.SOLTEIRO_STRING, String
+                        .valueOf(EstadoCivil.SOLTEIRO)));
+        result.add(new LabelValueBean(EstadoCivil.CASADO_STRING, String.valueOf(EstadoCivil.CASADO)));
         result.add(new LabelValueBean(EstadoCivil.DIVORCIADO_STRING, String
                 .valueOf(EstadoCivil.DIVORCIADO)));
-        result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, String
-                .valueOf(EstadoCivil.VIUVO)));
-        result.add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, String
-                .valueOf(EstadoCivil.SEPARADO)));
+        result.add(new LabelValueBean(EstadoCivil.VIUVO_STRING, String.valueOf(EstadoCivil.VIUVO)));
+        result
+                .add(new LabelValueBean(EstadoCivil.SEPARADO_STRING, String
+                        .valueOf(EstadoCivil.SEPARADO)));
         result.add(new LabelValueBean(EstadoCivil.UNIAO_DE_FACTO_STRING, String
                 .valueOf(EstadoCivil.UNIAO_DE_FACTO)));
         result.add(new LabelValueBean(EstadoCivil.DESCONHECIDO_STRING, String
                 .valueOf(EstadoCivil.DESCONHECIDO)));
-        return result;
+        return (ArrayList) result;
     }
 
     public String toString() {

@@ -31,155 +31,116 @@ import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *  
  */
-public class ManageClassesDA
-	extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
+public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	public ActionForward listClasses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		InfoCurricularYear infoCurricularYear =
-			(InfoCurricularYear) request.getAttribute(
-				SessionConstants.CURRICULAR_YEAR);
+        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
+                .getAttribute(SessionConstants.CURRICULAR_YEAR);
 
-		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) request.getAttribute(
-				SessionConstants.EXECUTION_DEGREE);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+                .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
-		Object argsLerTurmas[] =
-			{
-				infoExecutionDegree,
-				infoExecutionPeriod,
-				infoCurricularYear.getYear()};
+        Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod,
+                infoCurricularYear.getYear() };
 
-		List classesList =
-			(List) ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"LerTurmas",
-				argsLerTurmas);
+        List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
+                "LerTurmas", argsLerTurmas);
 
-		if (classesList != null && !classesList.isEmpty()) {
-			BeanComparator nameComparator = new BeanComparator("nome");
-			Collections.sort(classesList, nameComparator);
+        if (classesList != null && !classesList.isEmpty()) {
+            BeanComparator nameComparator = new BeanComparator("nome");
+            Collections.sort(classesList, nameComparator);
 
-			request.setAttribute(SessionConstants.CLASSES, classesList);
-		}
+            request.setAttribute(SessionConstants.CLASSES, classesList);
+        }
 
-		return mapping.findForward("ShowClassList");
-	}
+        return mapping.findForward("ShowClassList");
+    }
 
-	public ActionForward create(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		DynaValidatorForm classForm = (DynaValidatorForm) form;
+        DynaValidatorForm classForm = (DynaValidatorForm) form;
 
-		String className = (String) classForm.get("className");
+        String className = (String) classForm.get("className");
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		InfoCurricularYear infoCurricularYear =
-			(InfoCurricularYear) request.getAttribute(
-				SessionConstants.CURRICULAR_YEAR);
-		Integer curricularYear = infoCurricularYear.getYear();
-		InfoExecutionDegree infoExecutionDegree =
-			(InfoExecutionDegree) request.getAttribute(
-				SessionConstants.EXECUTION_DEGREE);
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
+                .getAttribute(SessionConstants.CURRICULAR_YEAR);
+        Integer curricularYear = infoCurricularYear.getYear();
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+                .getAttribute(SessionConstants.EXECUTION_DEGREE);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		InfoClass infoClass = new InfoClass();
-		infoClass.setNome(className);
-		infoClass.setAnoCurricular(curricularYear);
-		infoClass.setInfoExecutionDegree(infoExecutionDegree);
-		infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
+        InfoClass infoClass = new InfoClass();
+        infoClass.setNome(className);
+        infoClass.setAnoCurricular(curricularYear);
+        infoClass.setInfoExecutionDegree(infoExecutionDegree);
+        infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
 
-		Object argsCriarTurma[] = { infoClass };
+        Object argsCriarTurma[] = { infoClass };
 
-		try {
-			infoClass =
-				(InfoClass) ServiceUtils.executeService(
-					userView,
-					"CriarTurma",
-					argsCriarTurma);
-		} catch (ExistingServiceException e) {
-			throw new ExistingActionException("A Turma", e);
-		}
+        try {
+            infoClass = (InfoClass) ServiceUtils.executeService(userView, "CriarTurma", argsCriarTurma);
+        } catch (ExistingServiceException e) {
+            throw new ExistingActionException("A Turma", e);
+        }
 
-		return listClasses(mapping, form, request, response);
-	}
+        return listClasses(mapping, form, request, response);
+    }
 
-	/**
-	 * Delete class.
-	 * */
-	public ActionForward delete(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    /**
+     * Delete class.
+     */
+    public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		ContextUtils.setClassContext(request);
+        ContextUtils.setClassContext(request);
 
-		InfoClass infoClass =
-			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+        InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Object argsApagarTurma[] = { infoClass };
-		ServiceUtils.executeService(userView, "ApagarTurma", argsApagarTurma);
+        Object argsApagarTurma[] = { infoClass };
+        ServiceUtils.executeService(userView, "ApagarTurma", argsApagarTurma);
 
-		request.removeAttribute(SessionConstants.CLASS_VIEW);
+        request.removeAttribute(SessionConstants.CLASS_VIEW);
 
-		return listClasses(mapping, form, request, response);
-	}
+        return listClasses(mapping, form, request, response);
+    }
 
-	public ActionForward deleteClasses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward deleteClasses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		DynaActionForm deleteClassesForm = (DynaActionForm) form;
-		String[] selectedClasses =
-			(String[]) deleteClassesForm.get("selectedItems");
+        DynaActionForm deleteClassesForm = (DynaActionForm) form;
+        String[] selectedClasses = (String[]) deleteClassesForm.get("selectedItems");
 
-		if (selectedClasses.length == 0) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(
-				"errors.classes.notSelected",
-				new ActionError("errors.classes.notSelected"));
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
+        if (selectedClasses.length == 0) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors
+                    .add("errors.classes.notSelected", new ActionError("errors.classes.notSelected"));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
 
-		} 
-			List classOIDs = new ArrayList();
-			for (int i = 0; i < selectedClasses.length; i++) {
-				classOIDs.add(new Integer(selectedClasses[i]));
-			}
+        }
+        List classOIDs = new ArrayList();
+        for (int i = 0; i < selectedClasses.length; i++) {
+            classOIDs.add(new Integer(selectedClasses[i]));
+        }
 
-			Object args[] = { classOIDs };
-			ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"DeleteClasses",
-				args);
+        Object args[] = { classOIDs };
+        ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteClasses", args);
 
-			return mapping.findForward("ShowShiftList");
-		
-	}
+        return mapping.findForward("ShowShiftList");
+
+    }
 
 }

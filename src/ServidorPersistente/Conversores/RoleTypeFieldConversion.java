@@ -12,18 +12,15 @@ import Util.RoleType;
 /**
  * @author jpvl
  */
-public class RoleTypeFieldConversion implements FieldConversion
-{
+public class RoleTypeFieldConversion implements FieldConversion {
 
     /*
      * (non-Javadoc)
      * 
      * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#javaToSql(java.lang.Object)
      */
-    public Object javaToSql(Object obj) throws ConversionException
-    {
-        if (obj instanceof RoleType)
-        {
+    public Object javaToSql(Object obj) throws ConversionException {
+        if (obj instanceof RoleType) {
             RoleType roleType = (RoleType) obj;
             return new Integer(roleType.getValue());
         }
@@ -35,22 +32,18 @@ public class RoleTypeFieldConversion implements FieldConversion
      * 
      * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#sqlToJava(java.lang.Object)
      */
-    public Object sqlToJava(Object obj) throws ConversionException
-    {
+    public Object sqlToJava(Object obj) throws ConversionException {
         RoleType roleType = null;
-        if (obj instanceof Integer)
-        {
+        if (obj instanceof Integer) {
             Integer roleTypeId = (Integer) obj;
 
             roleType = RoleType.getEnum(roleTypeId.intValue());
 
-            if (roleType == null)
-            {
-                throw new IllegalArgumentException(
-                    this.getClass().getName() + ": Illegal role type!(" + obj + ")");
+            if (roleType == null) {
+                throw new IllegalArgumentException(this.getClass().getName() + ": Illegal role type!("
+                        + obj + ")");
             }
-        } else
-        {
+        } else {
             throw new IllegalArgumentException("Illegal role type!(" + obj + ")");
         }
         return roleType;

@@ -14,8 +14,7 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class EditSupportLessonAuthorization extends
-        AbstractTeacherDepartmentAuthorization {
+public class EditSupportLessonAuthorization extends AbstractTeacherDepartmentAuthorization {
     public final static EditSupportLessonAuthorization filter = new EditSupportLessonAuthorization();
 
     public static EditSupportLessonAuthorization getInstance() {
@@ -29,19 +28,16 @@ public class EditSupportLessonAuthorization extends
      */
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp) {
         InfoSupportLesson supportLesson = (InfoSupportLesson) arguments[1];
-        IPersistentProfessorship professorshipDAO = sp
-                .getIPersistentProfessorship();
+        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
 
         IProfessorship professorship;
         try {
-            professorship = (IProfessorship) professorshipDAO.readByOID(
-                    Professorship.class, supportLesson.getInfoProfessorship()
-                            .getIdInternal());
+            professorship = (IProfessorship) professorshipDAO.readByOID(Professorship.class,
+                    supportLesson.getInfoProfessorship().getIdInternal());
         } catch (ExcepcaoPersistencia e) {
             return null;
         }
-        return professorship != null ? professorship.getTeacher()
-                .getIdInternal() : null;
+        return professorship != null ? professorship.getTeacher().getIdInternal() : null;
     }
 
 }

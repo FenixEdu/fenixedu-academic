@@ -16,32 +16,24 @@ import Util.GraduationType;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class PriceOJB extends ObjectFenixOJB implements IPersistentPrice
-{
+public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
 
-    public PriceOJB()
-    {
+    public PriceOJB() {
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(Price.class, new Criteria());
     }
 
-    public List readByGraduationType(GraduationType graduationType) throws ExcepcaoPersistencia
-    {
+    public List readByGraduationType(GraduationType graduationType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("graduationType", graduationType.getType());
         return queryList(Price.class, crit);
 
     }
 
-    public IPrice readByGraduationTypeAndDocumentTypeAndDescription(
-        GraduationType graduationType,
-        DocumentType documentType,
-        String description)
-        throws ExcepcaoPersistencia
-    {
+    public IPrice readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
+            DocumentType documentType, String description) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("graduationType", graduationType.getType());
         crit.addEqualTo("documentType", documentType.getType());
@@ -50,11 +42,8 @@ public class PriceOJB extends ObjectFenixOJB implements IPersistentPrice
 
     }
 
-    public List readByGraduationTypeAndDocumentType(
-        GraduationType graduationType,
-        DocumentType documentType)
-        throws ExcepcaoPersistencia
-    {
+    public List readByGraduationTypeAndDocumentType(GraduationType graduationType,
+            DocumentType documentType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("graduationType", graduationType.getType());
         crit.addEqualTo("documentType", documentType.getType());
@@ -64,16 +53,14 @@ public class PriceOJB extends ObjectFenixOJB implements IPersistentPrice
     }
 
     public List readByGraduationTypeAndDocumentType(GraduationType graduationType, List types)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         Criteria criteriaDocs = new Criteria();
         criteria.addEqualTo("graduationType", graduationType.getType());
         List typesInteger = new ArrayList();
         Iterator iterator = types.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             typesInteger.add(((DocumentType) iterator.next()).getType());
 
         }

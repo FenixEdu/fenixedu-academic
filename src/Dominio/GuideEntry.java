@@ -9,205 +9,182 @@ import Util.GraduationType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class GuideEntry extends DomainObject implements IGuideEntry
-{
+public class GuideEntry extends DomainObject implements IGuideEntry {
 
-	protected Integer keyGuide;
+    protected Integer keyGuide;
 
-	protected GraduationType graduationType;
-	protected DocumentType documentType;
-	protected String description;
-	protected Double price;
-	protected Integer quantity;
-	protected List reimbursementGuideEntries;
+    protected GraduationType graduationType;
 
-	protected IGuide guide;
+    protected DocumentType documentType;
 
-	public GuideEntry()
-	{
-	}
+    protected String description;
 
-	public GuideEntry(
-		GraduationType graduationType,
-		DocumentType documentType,
-		String description,
-		Integer quantity,
-		Double price,
-		IGuide guide)
-	{
-		this.description = description;
-		this.guide = guide;
-		this.documentType = documentType;
-		this.graduationType = graduationType;
-		this.price = price;
-		this.quantity = quantity;
+    protected Double price;
 
-	}
+    protected Integer quantity;
 
-	public boolean equals(Object obj)
-	{
-		boolean resultado = false;
-		if (obj instanceof IGuideEntry)
-		{
-			IGuideEntry guideEntry = (IGuideEntry) obj;
+    protected List reimbursementGuideEntries;
 
-			if (((getGuide() == null && guideEntry.getGuide() == null)
-				|| (getGuide().equals(guideEntry.getGuide())))
-				&& ((getGraduationType() == null && guideEntry.getGraduationType() == null)
-					|| (getGraduationType().equals(guideEntry.getGraduationType())))
-				&& ((getDocumentType() == null && guideEntry.getDocumentType() == null)
-					|| (getDocumentType().equals(guideEntry.getDocumentType())))
-				&& ((getDescription() == null && guideEntry.getDescription() == null)
-					|| (getDescription().equals(guideEntry.getDescription()))))
-			{
-				resultado = true;
-			}
-		}
+    protected IGuide guide;
 
-		return resultado;
-	}
+    public GuideEntry() {
+    }
 
-	public String toString()
-	{
-		String result = "[GUIDE ENTRY";
+    public GuideEntry(GraduationType graduationType, DocumentType documentType, String description,
+            Integer quantity, Double price, IGuide guide) {
+        this.description = description;
+        this.guide = guide;
+        this.documentType = documentType;
+        this.graduationType = graduationType;
+        this.price = price;
+        this.quantity = quantity;
 
-		result += ", description=" + description;
-		result += ", guide=" + guide;
-		result += ", documentType=" + documentType;
-		result += ", graduationType=" + graduationType;
-		result += ", price=" + price;
-		result += ", quantity=" + quantity;
-		result += "]";
-		return result;
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	public String getDescription()
-	{
-		return description;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IGuideEntry) {
+            IGuideEntry guideEntry = (IGuideEntry) obj;
 
-	/**
-	 * @return
-	 */
-	public DocumentType getDocumentType()
-	{
-		return documentType;
-	}
+            if (((getGuide() == null && guideEntry.getGuide() == null) || (getGuide().equals(guideEntry
+                    .getGuide())))
+                    && ((getGraduationType() == null && guideEntry.getGraduationType() == null) || (getGraduationType()
+                            .equals(guideEntry.getGraduationType())))
+                    && ((getDocumentType() == null && guideEntry.getDocumentType() == null) || (getDocumentType()
+                            .equals(guideEntry.getDocumentType())))
+                    && ((getDescription() == null && guideEntry.getDescription() == null) || (getDescription()
+                            .equals(guideEntry.getDescription())))) {
+                resultado = true;
+            }
+        }
 
-	/**
-	 * @return
-	 */
-	public GraduationType getGraduationType()
-	{
-		return graduationType;
-	}
+        return resultado;
+    }
 
-	/**
-	 * @return
-	 */
-	public IGuide getGuide()
-	{
-		return guide;
-	}
+    public String toString() {
+        String result = "[GUIDE ENTRY";
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyGuide()
-	{
-		return keyGuide;
-	}
+        result += ", description=" + description;
+        result += ", guide=" + guide;
+        result += ", documentType=" + documentType;
+        result += ", graduationType=" + graduationType;
+        result += ", price=" + price;
+        result += ", quantity=" + quantity;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public Double getPrice()
-	{
-		return price;
-	}
+    /**
+     * @return
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getQuantity()
-	{
-		return quantity;
-	}
+    /**
+     * @return
+     */
+    public DocumentType getDocumentType() {
+        return documentType;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setDescription(String string)
-	{
-		description = string;
-	}
+    /**
+     * @return
+     */
+    public GraduationType getGraduationType() {
+        return graduationType;
+    }
 
-	/**
-	 * @param type
-	 */
-	public void setDocumentType(DocumentType type)
-	{
-		documentType = type;
-	}
+    /**
+     * @return
+     */
+    public IGuide getGuide() {
+        return guide;
+    }
 
-	/**
-	 * @param type
-	 */
-	public void setGraduationType(GraduationType type)
-	{
-		graduationType = type;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyGuide() {
+        return keyGuide;
+    }
 
-	/**
-	 * @param guide
-	 */
-	public void setGuide(IGuide guide)
-	{
-		this.guide = guide;
-	}
+    /**
+     * @return
+     */
+    public Double getPrice() {
+        return price;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyGuide(Integer integer)
-	{
-		keyGuide = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-	/**
-	 * @param double1
-	 */
-	public void setPrice(Double double1)
-	{
-		price = double1;
-	}
+    /**
+     * @param string
+     */
+    public void setDescription(String string) {
+        description = string;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setQuantity(Integer integer)
-	{
-		quantity = integer;
-	}
+    /**
+     * @param type
+     */
+    public void setDocumentType(DocumentType type) {
+        documentType = type;
+    }
 
-	/**
-	 * @return Returns the reimbursementGuideEntries.
-	 */
-	public List getReimbursementGuideEntries()
-	{
-		return reimbursementGuideEntries;
-	}
+    /**
+     * @param type
+     */
+    public void setGraduationType(GraduationType type) {
+        graduationType = type;
+    }
 
-	/**
-	 * @param reimbursementGuideEntries
-	 *            The reimbursementGuideEntries to set.
-	 */
-	public void setReimbursementGuideEntries(List reimbursementGuideEntries)
-	{
-		this.reimbursementGuideEntries = reimbursementGuideEntries;
-	}
+    /**
+     * @param guide
+     */
+    public void setGuide(IGuide guide) {
+        this.guide = guide;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyGuide(Integer integer) {
+        keyGuide = integer;
+    }
+
+    /**
+     * @param double1
+     */
+    public void setPrice(Double double1) {
+        price = double1;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setQuantity(Integer integer) {
+        quantity = integer;
+    }
+
+    /**
+     * @return Returns the reimbursementGuideEntries.
+     */
+    public List getReimbursementGuideEntries() {
+        return reimbursementGuideEntries;
+    }
+
+    /**
+     * @param reimbursementGuideEntries
+     *            The reimbursementGuideEntries to set.
+     */
+    public void setReimbursementGuideEntries(List reimbursementGuideEntries) {
+        this.reimbursementGuideEntries = reimbursementGuideEntries;
+    }
 
 }

@@ -4,51 +4,54 @@
  */
 package ServidorAplicacao.Servico.manager.gratuity;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import Dominio.Guide;
-import Dominio.GuideEntry;
-import Dominio.GuideSituation;
-import Dominio.IContributor;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import Dominio.IGuide;
-import Dominio.IGuideEntry;
-import Dominio.IGuideSituation;
+import Dominio.IGratuitySituation;
+import Dominio.IGratuityValues;
+import Dominio.IInsuranceValue;
+import Dominio.IPersonAccount;
+import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.gratuity.masterDegree.ISibsPaymentFile;
 import Dominio.gratuity.masterDegree.ISibsPaymentFileEntry;
+import Dominio.transactions.GratuityTransaction;
+import Dominio.transactions.IGratuityTransaction;
+import Dominio.transactions.IInsuranceTransaction;
+import Dominio.transactions.InsuranceTransaction;
+import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentGuide;
-import ServidorPersistente.IPersistentGuideEntry;
+import ServidorPersistente.IPersistentGratuitySituation;
+import ServidorPersistente.IPersistentGratuityValues;
+import ServidorPersistente.IPersistentInsuranceValue;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
-import Util.DocumentType;
-import Util.GraduationType;
-import Util.GuideRequester;
+import ServidorPersistente.transactions.IPersistentGratuityTransaction;
+import ServidorPersistente.transactions.IPersistentInsuranceTransaction;
 import Util.PaymentType;
-import Util.SituationOfGuide;
 import Util.Specialization;
-import Util.State;
 import Util.TipoCurso;
 import Util.gratuity.SibsPaymentStatus;
 import Util.gratuity.SibsPaymentType;
 import Util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
+import Util.transactions.TransactionType;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- * 
+ *  
  */
 public class ProcessSibsPaymentFile implements IService {
 
@@ -57,41 +60,39 @@ public class ProcessSibsPaymentFile implements IService {
     }
 
     /**
-     *  Process sibs payment files and creates corresponding payment transactions
+     * Process sibs payment files and creates corresponding payment transactions
+     * 
      * @param filename
      * @param fileEntries
      * @throws FenixServiceException
      */
-    public void run(String filename, List fileEntries)
-            throws FenixServiceException {
+    public void run(String filename, List fileEntries, UserView userView) throws FenixServiceException {
 
         try {
-        	
-        	
-        	if (filename.trim().length() == 0) {
-        		throw new DuplicateSibsPaymentFileProcessingServiceException(
-        			"error.exception.duplicateSibsPaymentFileProcessing");
-        		
-        	}
-        	
+
+            if (filename.trim().length() == 0) {
+                throw new DuplicateSibsPaymentFileProcessingServiceException(
+                        "error.exception.duplicateSibsPaymentFileProcessing");
+
+            }
+
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            
-            ISibsPaymentFile storedPaymentFile = sp.getIPersistentSibsPaymentFile()
-                    .readByFilename(filename);
+
+            ISibsPaymentFile storedPaymentFile = sp.getIPersistentSibsPaymentFile().readByFilename(
+                    filename);
 
             if (storedPaymentFile != null) {
                 throw new DuplicateSibsPaymentFileProcessingServiceException(
                         "error.exception.duplicateSibsPaymentFileProcessing");
             }
 
-            ISibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils
-                    .buildPaymentFile(filename, fileEntries);
+            ISibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils.buildPaymentFile(filename,
+                    fileEntries);
 
-            buildTransactionsAndStoreFile(sp, sibsPaymentFile);
+            buildTransactionsAndStoreFile(sp, sibsPaymentFile, userView);
 
         } catch (ExcepcaoPersistencia e) {
-            FenixServiceException newEx = new FenixServiceException(
-                    "Persistence layer error");
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
@@ -99,19 +100,16 @@ public class ProcessSibsPaymentFile implements IService {
     }
 
     /**
-     * NOTE: This method is temporarily creating guides instead of transactions
      * @param sibsPaymentFile
+     * @param userView
      */
-    private void buildTransactionsAndStoreFile(ISuportePersistente sp,
-            ISibsPaymentFile sibsPaymentFile) throws ExcepcaoPersistencia,
-            NonExistingContributorServiceException {
+    private void buildTransactionsAndStoreFile(ISuportePersistente sp, ISibsPaymentFile sibsPaymentFile,
+            UserView userView) throws ExcepcaoPersistencia, NonExistingContributorServiceException {
 
-        IPersistentSibsPaymentFile sibsPaymentFileDAO = sp
-                .getIPersistentSibsPaymentFile();
+        IPersistentSibsPaymentFile sibsPaymentFileDAO = sp.getIPersistentSibsPaymentFile();
         sibsPaymentFileDAO.simpleLockWrite(sibsPaymentFile);
 
-        List sibsPaymentFileEntries = sibsPaymentFile
-                .getSibsPaymentFileEntries();
+        List sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 
         int totalPaymentEntries = sibsPaymentFileEntries.size();
 
@@ -121,181 +119,235 @@ public class ProcessSibsPaymentFile implements IService {
             ISibsPaymentFileEntry sibsPaymentFileEntry = (ISibsPaymentFileEntry) sibsPaymentFileEntries
                     .get(i);
 
-            if (sibsPaymentFileEntry.getPaymentStatus().equals(
-                    SibsPaymentStatus.NOT_PROCESSED_PAYMENT) == true) {
+            if (sibsPaymentFileEntry.getPaymentStatus().equals(SibsPaymentStatus.NOT_PROCESSED_PAYMENT) == true) {
 
-                sibsPaymentFileEntry
-                        .setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
+                sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.PROCESSED_PAYMENT);
 
                 // Exception cases should be inserted here
-                // e.g. SMS credit payments (i.e. cases where duplicate entry checking is not required)
+                // e.g. SMS credit payments (i.e. cases where duplicate entry
+                // checking is not required)
                 // assuming the form:
                 //if (isSmsPayment())) {
-                // do specific code if any 
+                // do specific code if any
                 //}
                 // else { do specific code to insurance and gratuities }
 
-                markDuplicateGratuityAndInsurancePayments(sp,
-                        sibsPaymentFileEntry, sibsPaymentFileEntries,
-                        totalPaymentEntries, i);
+                markDuplicateGratuityAndInsurancePayments(sp, sibsPaymentFileEntry,
+                        sibsPaymentFileEntries, totalPaymentEntries, i);
             }
 
-            // write the file entries
+            // write the file entry
             IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = sp
                     .getIPersistentSibsPaymentFileEntry();
 
             sibsPaymentFileEntryDAO.simpleLockWrite(sibsPaymentFileEntry);
         }
 
-        Calendar calendar = Calendar.getInstance();
-        IPersistentGuide guideDAO = sp.getIPersistentGuide();
-        Integer guideYear = new Integer(calendar.get(Calendar.YEAR));
-        int nextGuideNumber = guideDAO.generateGuideNumber(guideYear).intValue();
-        
-        // lets build guides/transactions for the entries in file
+        IPersistentInsuranceTransaction insuranceTransactionDAO = sp
+                .getIPersistentInsuranceTransaction();
+
+        IPersistentGratuityTransaction gratuityTransactionDAO = sp.getIPersistentGratuityTransaction();
+
+        IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
+
+        IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
+
+        IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
+
+        // lets build transactions for the entries in file
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             ISibsPaymentFileEntry sibsPaymentFileEntry = (ISibsPaymentFileEntry) sibsPaymentFileEntries
                     .get(i);
 
-            if (sibsPaymentFileEntry.getPaymentStatus().equals(
-                    SibsPaymentStatus.PROCESSED_PAYMENT) == false) {
+            if (sibsPaymentFileEntry.getPaymentStatus().equals(SibsPaymentStatus.PROCESSED_PAYMENT) == false) {
                 continue;
             }
 
             // Exception cases should be inserted here
-            // e.g. SMS credit payments (i.e. cases where duplicate entry checking is not required)
+            // e.g. SMS credit payments (i.e. cases where duplicate entry
+            // checking is not required)
             // assuming the form:
             //if (isSmsPayment())) {
-            // do specific code if any 
+            // do specific code if any
             //}
             // else { do specific code to insurance and gratuities }
 
-            //TipoCurso should be changed in future to support Degree Student gratuity
-            IStudent student = sp.getIPersistentStudent()
-                    .readStudentByNumberAndDegreeType(
-                            sibsPaymentFileEntry.getStudentNumber(),
-                            TipoCurso.MESTRADO_OBJ);
-           
-            // to remove in future
-            List guideList = sp.getIPersistentGuide().readByPerson(
-                    student.getPerson().getNumeroDocumentoIdentificacao(),
-                    student.getPerson().getTipoDocumentoIdentificacao());
-
-            if (guideList.size() == 0) {
-                throw new NonExistingContributorServiceException();
-            }
-
-            IContributor gratuityGuideContributor = ((IGuide) guideList.get(0))
-                    .getContributor();
+            //TipoCurso should be changed in future to support Degree Student
+            // gratuity
+            IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(
+                    sibsPaymentFileEntry.getStudentNumber(), TipoCurso.MESTRADO_OBJ);
 
             int year = sibsPaymentFileEntry.getYear().intValue();
             String executionYearName = year + "/" + (year + 1);
-            IExecutionYear executionYear = sp.getIPersistentExecutionYear()
-                    .readExecutionYearByName(executionYearName);
+            IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+                    executionYearName);
 
             if (executionYear == null) {
 
-                //Change status to be solved manually because we could not find execution year
-                sibsPaymentFileEntry
-                        .setPaymentStatus(SibsPaymentStatus.INVALID_EXECUTION_YEAR);
+                //Change status to be solved manually because we could not find
+                // execution year
+                sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.INVALID_EXECUTION_YEAR);
+                continue;
+            }
+
+            IPessoa responsiblePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
+                    userView.getUtilizador());
+
+            IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
+                    student.getPerson());
+
+            if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
+
+                IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear);
+
+                List insuranceTransactionList = insuranceTransactionDAO
+                        .readAllNonReimbursedByExecutionYearAndStudent(executionYear, student);
+
+                if (insuranceTransactionList.size() > 0) {
+                    sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);
+
+                } else {
+
+                    if (sibsPaymentFileEntry.getPayedValue().equals(insuranceValue.getAnnualValue()) == false) {
+                        // the value payed is not valid
+                        sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.INVALID_INSURANCE_VALUE);
+
+                    } else {
+                        //create the insurance transaction payment for the
+                        // execution year
+                        IInsuranceTransaction insuranceTransaction = new InsuranceTransaction(
+                                sibsPaymentFileEntry.getPayedValue(),
+                                new Timestamp(new Date().getTime()), null, PaymentType.ATM_TYPE,
+                                TransactionType.INSURANCE_PAYMENT, new Boolean(false),
+                                responsiblePerson, personAccount, null, executionYear, student);
+
+                        insuranceTransactionDAO.lockWrite(insuranceTransaction);
+                    }
+                }
                 continue;
             }
 
             Specialization specialization = determineSpecialization(sibsPaymentFileEntry);
 
-            //TipoCurso is hardcoded, it should be changed in future to meet Degree gratuity requirements
-            List studentCurricularPlanList = sp
-                    .getIStudentCurricularPlanPersistente()
-                    .readByStudentNumberAndDegreeType(student.getNumber(),
-                            TipoCurso.MESTRADO_OBJ);
+            //TipoCurso should be changed in future to meet Degree gratuity
+            // requirements
+            List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
+                    .readByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.MESTRADO_OBJ);
 
-            ICursoExecucao executionDegree = null;
+            List executionDegrees = new ArrayList();
+            List studentCurricularPlans = new ArrayList();
 
-            for (Iterator iter = studentCurricularPlanList.iterator(); iter
-                    .hasNext();) {
+            for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
 
-                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter
-                        .next();
+                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
 
-                if ((sibsPaymentFileEntry.getPaymentType().equals(
-                        SibsPaymentType.INSURANCE) == false)
-                        && (studentCurricularPlan.getSpecialization().equals(
-                                specialization) == false)) {
+                if (studentCurricularPlan.getSpecialization().equals(specialization) == false) {
                     continue;
                 }
 
-                executionDegree = sp
-                        .getICursoExecucaoPersistente()
+                ICursoExecucao candidateExecutionDegree = sp.getIPersistentExecutionDegree()
                         .readByDegreeCurricularPlanAndExecutionYear(
-                                studentCurricularPlan.getDegreeCurricularPlan(),
-                                executionYear);
+                                studentCurricularPlan.getDegreeCurricularPlan(), executionYear);
 
-                if (executionDegree != null) {
-                    break;
+                if (candidateExecutionDegree != null) {
+                    executionDegrees.add(candidateExecutionDegree);
+                    studentCurricularPlans.add(studentCurricularPlan);
                 }
             }
 
-            if (executionDegree == null) {
+            if ((executionDegrees.size() == 0) || (studentCurricularPlans.size() == 0)) {
 
-                //Change status to be solved manually because we could not find execution degree
-                sibsPaymentFileEntry
-                        .setPaymentStatus(SibsPaymentStatus.INVALID_EXECUTION_DEGREE);
+                //Change status to be solved manually because we could not
+                // decide the student curricular plan
+                sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.INVALID_EXECUTION_DEGREE);
                 continue;
             }
 
-            IGuide guide = new Guide();
-            Date currentDate = calendar.getTime();
-
-            guide.setGuideRequester(GuideRequester.STUDENT_TYPE);
-            guide.setPaymentType(PaymentType.ATM_TYPE);
-            guide.setContributor(gratuityGuideContributor);
-            guide.setNumber(new Integer(nextGuideNumber));
-            guide.setYear(guideYear);
-            guide.setPerson(student.getPerson());
-            guide.setVersion(new Integer(1));
-            guide.setCreationDate(currentDate);
-            guide.setPaymentDate(currentDate);
-            guide.setExecutionDegree(executionDegree);
-
-            guideDAO.simpleLockWrite(guide);
-            nextGuideNumber++;
-
-            IGuideSituation guideSituation = new GuideSituation(
-                    SituationOfGuide.PAYED_TYPE, null, currentDate, guide,
-                    new State(State.ACTIVE));
-
-            sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
-
-            IPersistentGuideEntry guideEntryDAO = sp.getIPersistentGuideEntry();
-
-            double payedValue = sibsPaymentFileEntry.getPayedValue()
-                    .doubleValue();
-
-            IGuideEntry guideEntry = new GuideEntry();
-
-            //GraduationType should be changed in future to support Degree gratuities
-            guideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
-            guideEntry.setPrice(new Double(payedValue));
-            guideEntry.setGuide(guide);
-            guideEntry.setQuantity(new Integer(1));
-
-            SibsPaymentType sibsPaymentType = sibsPaymentFileEntry
-                    .getPaymentType();
-
-            if (sibsPaymentType.equals(SibsPaymentType.INSURANCE)) {
-                guideEntry.setDocumentType(DocumentType.INSURANCE_TYPE);
-
-            } else {
-                guideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
+            if ((executionDegrees.size() > 1) || (studentCurricularPlans.size() > 1)) {
+                //Change status to be solved manually because we could not
+                // decide the student curricular plan
+                sibsPaymentFileEntry
+                        .setPaymentStatus(SibsPaymentStatus.UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN);
+                continue;
             }
 
-            guideEntryDAO.simpleLockWrite(guideEntry);
+            ICursoExecucao executionDegree = (ICursoExecucao) executionDegrees.get(0);
 
-            guide.setTotal(new Double(payedValue));
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlans
+                    .get(0);
+
+            IGratuityValues gratuityValues = gratuityValuesDAO
+                    .readGratuityValuesByExecutionDegree(executionDegree);
+            IGratuitySituation gratuitySituation = gratuitySituationDAO
+                    .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+                            studentCurricularPlan, gratuityValues);
+
+            if (gratuitySituation == null) {
+                //Change status to be solved manually because the student does
+                // not have a gratuity situation
+                sibsPaymentFileEntry
+                        .setPaymentStatus(SibsPaymentStatus.UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN);
+
+                continue;
+            }
+
+            TransactionType transactionType = bindSibsCodeTypeToTransactionCodeType(sibsPaymentFileEntry
+                    .getPaymentType());
+
+            IGratuityTransaction gratuityTransaction = new GratuityTransaction(sibsPaymentFileEntry
+                    .getPayedValue(), new Timestamp(new Date().getTime()), null, PaymentType.ATM_TYPE,
+                    transactionType, new Boolean(false), responsiblePerson, personAccount, null,
+                    gratuitySituation);
+
+            gratuityTransactionDAO.lockWrite(gratuityTransaction);
+
+            // update remaining value of gratuity
+            gratuitySituationDAO.lockWrite(gratuitySituation);
+            double oldRemainingValue = 0;
+            if (gratuitySituation.getRemainingValue() != null) {
+                oldRemainingValue = gratuitySituation.getRemainingValue().doubleValue();
+            }
+            double newRemainingValue = oldRemainingValue
+                    - sibsPaymentFileEntry.getPayedValue().doubleValue();
+
+            gratuitySituation.setRemainingValue(new Double(newRemainingValue));
 
         }
 
+    }
+
+    /**
+     * @param paymentType
+     * @return
+     */
+    private TransactionType bindSibsCodeTypeToTransactionCodeType(SibsPaymentType sibsPaymentType) {
+
+        // in future if codes change too much, the binding table should be
+        // loaded from a config file
+        TransactionType transactionType = null;
+
+        if (sibsPaymentType.equals(SibsPaymentType.INSURANCE)) {
+
+            transactionType = TransactionType.INSURANCE_PAYMENT;
+
+        } else if ((sibsPaymentType.equals(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE))
+                || (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE))) {
+
+            transactionType = TransactionType.GRATUITY_FIRST_PHASE_PAYMENT;
+
+        } else if ((sibsPaymentType.equals(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE))
+                || (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE))) {
+
+            transactionType = TransactionType.GRATUITY_SECOND_PHASE_PAYMENT;
+
+        } else if ((sibsPaymentType.equals(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL))
+                || (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL))) {
+
+            transactionType = TransactionType.GRATUITY_FULL_PAYMENT;
+        }
+
+        return transactionType;
     }
 
     /**
@@ -304,77 +356,73 @@ public class ProcessSibsPaymentFile implements IService {
      * @param totalPaymentEntries
      * @param currentIndex
      */
-    private void markDuplicateGratuityAndInsurancePayments(
-            ISuportePersistente sp, ISibsPaymentFileEntry sibsPaymentFileEntry,
-            List sibsPaymentFileEntries, int totalPaymentEntries,
-            int currentIndex) throws ExcepcaoPersistencia {
+    private void markDuplicateGratuityAndInsurancePayments(ISuportePersistente sp,
+            ISibsPaymentFileEntry sibsPaymentFileEntry, List sibsPaymentFileEntries,
+            int totalPaymentEntries, int currentIndex) throws ExcepcaoPersistencia {
 
-        // first check if the gratuity or insurance payment is repeated inside the file
+        // first check if the gratuity or insurance payment is repeated inside
+        // the file
         for (int j = currentIndex + 1; j < totalPaymentEntries; j++) {
             ISibsPaymentFileEntry duplicatePaymentCandidate = (ISibsPaymentFileEntry) sibsPaymentFileEntries
                     .get(j);
 
-            if (sibsPaymentFileEntry.getYear().equals(
-                    duplicatePaymentCandidate.getYear())
+            if (sibsPaymentFileEntry.getYear().equals(duplicatePaymentCandidate.getYear())
                     && sibsPaymentFileEntry.getStudentNumber().equals(
                             duplicatePaymentCandidate.getStudentNumber())
                     && sibsPaymentFileEntry.getPaymentType().equals(
                             duplicatePaymentCandidate.getPaymentType())) {
 
-                if (sibsPaymentFileEntry.getPaymentType().equals(
-                        SibsPaymentType.INSURANCE)) {
+                if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
 
-                    duplicatePaymentCandidate
-                            .setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);
+                    sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);
                 } else {
-                    duplicatePaymentCandidate
-                            .setPaymentStatus(SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT);
+                    sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT);
                 }
 
             }
         }
 
-        // next check if the gratuity or insurance payment is repeated in database
+        if (sibsPaymentFileEntry.getPaymentStatus()
+                .equals(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT)
+                || sibsPaymentFileEntry.getPaymentStatus().equals(
+                        SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT)) {
+            //the entry is already marked
+            return;
+        }
+
+        // next check if the gratuity or insurance payment is repeated in
+        // database
         IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = sp
                 .getIPersistentSibsPaymentFileEntry();
 
         List sibsPaymentFileEntryList = sibsPaymentFileEntryDAO
-                .readByYearAndStudentNumberAndPaymentType(sibsPaymentFileEntry
-                        .getYear(), sibsPaymentFileEntry.getStudentNumber(),
-                        sibsPaymentFileEntry.getPaymentType());
+                .readByYearAndStudentNumberAndPaymentType(sibsPaymentFileEntry.getYear(),
+                        sibsPaymentFileEntry.getStudentNumber(), sibsPaymentFileEntry.getPaymentType());
 
         if (sibsPaymentFileEntryList.size() > 0) {
-            if (sibsPaymentFileEntry.getPaymentType().equals(
-                    SibsPaymentType.INSURANCE)) {
+            if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
 
-                sibsPaymentFileEntry
-                        .setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);
+                sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);
             } else {
 
-                sibsPaymentFileEntry
-                        .setPaymentStatus(SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT);
+                sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT);
             }
 
         }
     }
 
-    private Specialization determineSpecialization(
-            ISibsPaymentFileEntry sibsPaymentFileEntry) {
+    private Specialization determineSpecialization(ISibsPaymentFileEntry sibsPaymentFileEntry) {
 
         //if sibs payment codes change to much in future
         //this logic should be moved to a config file
 
         SibsPaymentType sibsPaymentType = sibsPaymentFileEntry.getPaymentType();
-        if (sibsPaymentType
-                .equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL)
-                || sibsPaymentType
-                        .equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE)
-                || sibsPaymentType
-                        .equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE)) {
+        if (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL)
+                || sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE)
+                || sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE)) {
             return Specialization.ESPECIALIZACAO_TYPE;
-        } 
-            return Specialization.MESTRADO_TYPE;
-        
+        }
+        return Specialization.MESTRADO_TYPE;
 
         //degree code goes here
 

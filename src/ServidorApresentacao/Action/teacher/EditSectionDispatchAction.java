@@ -15,8 +15,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
 import ServidorAplicacao.Servico.UserView;
@@ -26,232 +24,211 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Ivo Brandão
  */
 public class EditSectionDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepareEdit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoSite infoSite =
-			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-		InfoSection currentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		List all = (List) session.getAttribute(SessionConstants.SECTIONS);
-		List allSections = new ArrayList();
-		allSections.addAll(all);
+        InfoSection currentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+        List all = (List) session.getAttribute(SessionConstants.SECTIONS);
+        List allSections = new ArrayList();
+        allSections.addAll(all);
 
-		session.removeAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
+        session.removeAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
 
-		//remove parent section, current section and all of it's daughters
-		allSections.remove(currentSection.getSuperiorInfoSection());
-		allSections.remove(currentSection);
-		
-		try {
-			allSections = this.removeDaughters(userView, infoSite, currentSection, allSections);
-		} catch (FenixActionException fenixActionException) {
-			throw fenixActionException;
-		}
+        //remove parent section, current section and all of it's daughters
+        allSections.remove(currentSection.getSuperiorInfoSection());
+        allSections.remove(currentSection);
 
-		session.setAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS, allSections);
+        try {
+            allSections = this.removeDaughters(userView, infoSite, currentSection, allSections);
+        } catch (FenixActionException fenixActionException) {
+            throw fenixActionException;
+        }
 
-		//relative to children sections
-		ArrayList sections;
-		Object args[] = { infoSite, currentSection.getSuperiorInfoSection()};
-		try {
-			sections = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadSectionsBySiteAndSuperiorSection", args);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        session.setAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS, allSections);
 
-		if (sections.size() != 0) {
-			sections.remove(currentSection);
-			Collections.sort(sections);
-			session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
-			session.setAttribute(SessionConstants.CHILDREN_SECTIONS, sections);
-		} else
-			session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
-		//end - relative to children sections		
+        //relative to children sections
+        List sections;
+        Object args[] = { infoSite, currentSection.getSuperiorInfoSection() };
+        try {
+            sections = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadSectionsBySiteAndSuperiorSection", args);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		return mapping.findForward("editSection");
-	}
+        if (sections.size() != 0) {
+            sections.remove(currentSection);
+            Collections.sort(sections);
+            session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
+            session.setAttribute(SessionConstants.CHILDREN_SECTIONS, sections);
+        } else
+            session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
+        //end - relative to children sections
 
-	public ActionForward edit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+        return mapping.findForward("editSection");
+    }
 
-		DynaActionForm sectionForm = (DynaValidatorForm) form;
-		String sectionName = (String) sectionForm.get("name");
-		Integer order = (Integer) sectionForm.get("sectionOrder");
-		order=new Integer(order.intValue()-1);
-		HttpSession session = request.getSession(false);
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		
+        DynaActionForm sectionForm = (DynaValidatorForm) form;
+        String sectionName = (String) sectionForm.get("name");
+        Integer order = (Integer) sectionForm.get("sectionOrder");
+        order = new Integer(order.intValue() - 1);
+        HttpSession session = request.getSession(false);
 
-		
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoSite infoSite =
-			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-		InfoSection oldSection =
-			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+        Object readArgs[] = { infoSite };
+        List sections;
+        if (order.intValue() == -2) {
+            //inserir no fim
 
-			Object readArgs[] = { infoSite };
-								ArrayList sections;		
-		if (order.intValue()==-2) {
-			//inserir no fim
-			
-					try {
-						sections =
-							(ArrayList) ServiceManagerServiceFactory.executeService(
-								userView,
-								"ReadSections",
-								readArgs);
-					} catch (FenixServiceException fenixServiceException) {
-						throw new FenixActionException(fenixServiceException.getMessage());
-					}
-			if (sections!=null && sections.size()!=0)		
-			{order=new Integer(sections.size()-2);} 	
-			else {
-				order = new Integer(0);
-			}
-			
-		}
+            try {
+                sections = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadSections", readArgs);
+            } catch (FenixServiceException fenixServiceException) {
+                throw new FenixActionException(fenixServiceException.getMessage());
+            }
+            if (sections != null && sections.size() != 0) {
+                order = new Integer(sections.size() - 2);
+            } else {
+                order = new Integer(0);
+            }
 
-		InfoSection newSection =
-			new InfoSection(
-				sectionName,
-				order,
-				infoSite,
-				oldSection.getSuperiorInfoSection());
+        }
 
-		//perform edition
-		Object editionArgs[] = { oldSection, newSection };
-		
-		try {
-			ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        InfoSection newSection = new InfoSection(sectionName, order, infoSite, oldSection
+                .getSuperiorInfoSection());
 
-		//read sections
-		try {
-			sections =
-				(ArrayList) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadSections",
-					readArgs);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        //perform edition
+        Object editionArgs[] = { oldSection, newSection };
 
-		Collections.sort(sections);
-		session.setAttribute(SessionConstants.SECTIONS, sections);
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		return mapping.findForward("viewSite");
-	}
+        //read sections
+        try {
+            sections = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadSections",
+                    readArgs);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-	public ActionForward prepareChangeParent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+        Collections.sort(sections);
+        session.setAttribute(SessionConstants.SECTIONS, sections);
 
-	
-		
-		return mapping.findForward("changeParent");		
-	}
-	
-	public ActionForward changeParent(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+        return mapping.findForward("viewSite");
+    }
 
-		HttpSession session = request.getSession(false);
+    public ActionForward prepareChangeParent(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
 
-		DynaActionForm sectionForm = (DynaValidatorForm) form;
-		Integer index = (Integer) sectionForm.get("sectionIndex");
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        return mapping.findForward("changeParent");
+    }
 
-		List allSections = (List) session.getAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
+    public ActionForward changeParent(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		InfoSection newParent = null;
-		if (index!=null) newParent = (InfoSection) allSections.get(index.intValue());
+        HttpSession session = request.getSession(false);
 
-		InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		InfoSection newSection = new InfoSection(oldSection.getName(), oldSection.getSectionOrder(), oldSection.getInfoSite(), newParent);
+        DynaActionForm sectionForm = (DynaValidatorForm) form;
+        Integer index = (Integer) sectionForm.get("sectionIndex");
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		//the new order should be after the last child section
-		//read child sections for newParent, get the size of the list and use size as section order
-		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-		Object args[] = { infoSite, newParent };
-		List sisters = null;
-		try {
-			sisters = (List) ServiceManagerServiceFactory.executeService(userView, "ReadSectionsBySiteAndSuperiorSection", args);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		if (sisters!=null) newSection.setSectionOrder(new Integer(sisters.size()));
-		else newSection.setSectionOrder(new Integer(0));
-		
-		//perform edition
-		Object editionArgs[] = { oldSection, newSection };
-		
-		try {
-			ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
-		} catch (ExistingServiceException fenixServiceException) {
-			throw new ExistingActionException("Uma Subsecção com este nome e essa seccção pai ",fenixServiceException);
-		} 
-		
-		catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		session.setAttribute(SessionConstants.INFO_SECTION, newSection);
-		List sections= null;
-		Object readArgs[] = { newSection.getInfoSite()	};
-		try {
-			sections=(List) ServiceManagerServiceFactory.executeService(userView, "ReadSections", readArgs);
-		} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		session.removeAttribute(SessionConstants.SECTIONS);
-		session.setAttribute(SessionConstants.SECTIONS, sections);
+        List allSections = (List) session.getAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
 
-		return mapping.findForward("viewSite");
-	}
+        InfoSection newParent = null;
+        if (index != null)
+            newParent = (InfoSection) allSections.get(index.intValue());
 
-	private List removeDaughters(UserView userView, InfoSite infoSite, InfoSection infoSection, List allSections)
-		throws FenixActionException {
+        InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+        InfoSection newSection = new InfoSection(oldSection.getName(), oldSection.getSectionOrder(),
+                oldSection.getInfoSite(), newParent);
 
-		List sections = new ArrayList();
-		Object args[] = { infoSite, infoSection };
-		try {
-			sections = (List) ServiceManagerServiceFactory.executeService(userView, "ReadSectionsBySiteAndSuperiorSection", args);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		allSections.removeAll(sections);
+        //the new order should be after the last child section
+        //read child sections for newParent, get the size of the list and use
+        // size as section order
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        Object args[] = { infoSite, newParent };
+        List sisters = null;
+        try {
+            sisters = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadSectionsBySiteAndSuperiorSection", args);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+        if (sisters != null)
+            newSection.setSectionOrder(new Integer(sisters.size()));
+        else
+            newSection.setSectionOrder(new Integer(0));
 
-		Iterator iterator = sections.iterator();
-		while (iterator.hasNext()) {
-			InfoSection infoSection2 = (InfoSection) iterator.next();
-			allSections = removeDaughters(userView, infoSite, infoSection2, allSections);
-		}
+        //perform edition
+        Object editionArgs[] = { oldSection, newSection };
 
-		return allSections;
-	}
+        try {
+            ServiceManagerServiceFactory.executeService(userView, "EditSection", editionArgs);
+        } catch (ExistingServiceException fenixServiceException) {
+            throw new ExistingActionException("Uma Subsecção com este nome e essa seccção pai ",
+                    fenixServiceException);
+        }
+
+        catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        session.setAttribute(SessionConstants.INFO_SECTION, newSection);
+        List sections = null;
+        Object readArgs[] = { newSection.getInfoSite() };
+        try {
+            sections = (List) ServiceManagerServiceFactory.executeService(userView, "ReadSections",
+                    readArgs);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+        session.removeAttribute(SessionConstants.SECTIONS);
+        session.setAttribute(SessionConstants.SECTIONS, sections);
+
+        return mapping.findForward("viewSite");
+    }
+
+    private List removeDaughters(UserView userView, InfoSite infoSite, InfoSection infoSection,
+            List allSections) throws FenixActionException {
+
+        List sections = new ArrayList();
+        Object args[] = { infoSite, infoSection };
+        try {
+            sections = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadSectionsBySiteAndSuperiorSection", args);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+        allSections.removeAll(sections);
+
+        Iterator iterator = sections.iterator();
+        while (iterator.hasNext()) {
+            InfoSection infoSection2 = (InfoSection) iterator.next();
+            allSections = removeDaughters(userView, infoSite, infoSection2, allSections);
+        }
+
+        return allSections;
+    }
 }

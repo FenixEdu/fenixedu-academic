@@ -12,31 +12,26 @@ import Util.tests.CorrectionFormula;
 /**
  * @author Susana Fernandes
  */
-public class CorrectionFormula2EnumCorrectionFormulaFieldConversion implements FieldConversion
-{
+public class CorrectionFormula2EnumCorrectionFormulaFieldConversion implements FieldConversion {
 
-    public Object javaToSql(Object arg0) throws ConversionException
-    {
-        if (arg0 instanceof CorrectionFormula)
-        {
+    public Object javaToSql(Object arg0) throws ConversionException {
+        if (arg0 instanceof CorrectionFormula) {
             CorrectionFormula cf = (CorrectionFormula) arg0;
             return cf.getFormula();
         }
-       
-            return arg0;
-        
+
+        return arg0;
+
     }
 
-    public Object sqlToJava(Object arg0) throws ConversionException
-    {
-        if (arg0 instanceof Integer)
-        {
+    public Object sqlToJava(Object arg0) throws ConversionException {
+        if (arg0 instanceof Integer) {
             Integer formula = (Integer) arg0;
             return new CorrectionFormula(formula);
         }
-       
-            return arg0;
-        
+
+        return arg0;
+
     }
 
 }

@@ -17,90 +17,96 @@ import Dominio.DomainObject;
  */
 public class Category extends DomainObject implements ICategory {
 
-	private String shortName;
-	private String longName;
-	private String code;
-	private Boolean canBeExecutionCourseResponsible;
+    private String shortName;
 
-	public Category() {
-	}
+    private String longName;
 
-	/** Creates a new instance of Category */
-	public Category(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    private String code;
 
-	/**
-	 * @return Returns the code.
-	 */
-	public String getCode() {
-		return code;
-	}
+    private Boolean canBeExecutionCourseResponsible;
 
-	/**
-	 * @param code The code to set.
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public Category() {
+    }
 
-	/**
-	 * @return Returns the longName.
-	 */
-	public String getLongName() {
-		return longName;
-	}
+    /** Creates a new instance of Category */
+    public Category(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * @param longName The longName to set.
-	 */
-	public void setLongName(String longName) {
-		this.longName = longName;
-	}
+    /**
+     * @return Returns the code.
+     */
+    public String getCode() {
+        return code;
+    }
 
-	/**
-	 * @return Returns the shortName.
-	 */
-	public String getShortName() {
-		return shortName;
-	}
+    /**
+     * @param code
+     *            The code to set.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	/**
-	 * @param shortName The shortName to set.
-	 */
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
+    /**
+     * @return Returns the longName.
+     */
+    public String getLongName() {
+        return longName;
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof ICategory) {
-			resultado =
-				getCode().equals(((ICategory) obj).getCode());
-		}
-		return resultado;
-	}
-	
-	public String toString() {
-		String result = "[Dominio.teacher.Category ";
-		result += ", code=" + getCode();
-		result += ", shortName=" + getShortName();
-		result += ", longName=" + getLongName();
-		result += "]";
-		return result;
-	}
+    /**
+     * @param longName
+     *            The longName to set.
+     */
+    public void setLongName(String longName) {
+        this.longName = longName;
+    }
+
+    /**
+     * @return Returns the shortName.
+     */
+    public String getShortName() {
+        return shortName;
+    }
+
+    /**
+     * @param shortName
+     *            The shortName to set.
+     */
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof ICategory) {
+            resultado = getCode().equals(((ICategory) obj).getCode());
+        }
+        return resultado;
+    }
+
+    public String toString() {
+        String result = "[Dominio.teacher.Category ";
+        result += ", code=" + getCode();
+        result += ", shortName=" + getShortName();
+        result += ", longName=" + getLongName();
+        result += "]";
+        return result;
+    }
+
     /**
      * @return Returns the canBeExecutionCourseResponsible.
      */
-    public Boolean getCanBeExecutionCourseResponsible()
-    {
+    public Boolean getCanBeExecutionCourseResponsible() {
         return this.canBeExecutionCourseResponsible;
     }
+
     /**
-     * @param canBeExecutionCourseResponsible The canBeExecutionCourseResponsible to set.
+     * @param canBeExecutionCourseResponsible
+     *            The canBeExecutionCourseResponsible to set.
      */
-    public void setCanBeExecutionCourseResponsible(Boolean canBeExecutionCourseResponsible)
-    {
+    public void setCanBeExecutionCourseResponsible(Boolean canBeExecutionCourseResponsible) {
         this.canBeExecutionCourseResponsible = canBeExecutionCourseResponsible;
     }
 }

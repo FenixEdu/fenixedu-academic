@@ -10,67 +10,55 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 /**
  * @author Tânia Pousão Create on 7/Nov/2003
  */
-public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
-{
-    public ReadDegreeInfoByExecutionDegreeTest(String testName)
-    {
+public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
+    public ReadDegreeInfoByExecutionDegreeTest(String testName) {
         super(testName);
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadDegreeInfoByExecutionDegree";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/coordinator/testDataSetDegreeSite.xml";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getSecondAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC2", "pass", getApplication()};
-        return args;
-    }
-    protected String[] getThirdAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC3", "pass", getApplication()};
+    protected String[] getSecondAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC2", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndAlreadyAuthorizedUser()
-    {
-        String[] args = { "userT", "pass", getApplication()};
+    protected String[] getThirdAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC3", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = { "userE", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAlreadyAuthorizedUser() {
+        String[] args = { "userT", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = { "user", "pass", getApplication()};
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "userE", "pass", getApplication() };
         return args;
     }
 
-    public void testSuccessfullWithOnlyOneDegreeInfo()
-    {
-        try
-        {
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
+
+    public void testSuccessfullWithOnlyOneDegreeInfo() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(10);
 
@@ -78,23 +66,21 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
-            try
-            {
-                infoDegreeInfo =
-                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            try {
+                infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id,
+                        getNameOfServiceToBeTested(), args);
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
             //Returned anything?
-            if (infoDegreeInfo == null)
-            {
+            if (infoDegreeInfo == null) {
                 fail("Reading a Degree Info.");
             }
 
@@ -112,28 +98,24 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMin());
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMax());
             assertEquals(new Double(12.0), infoDegreeInfo.getMarkAverage());
-            if(infoDegreeInfo.getInfoDegree() != null) {
+            if (infoDegreeInfo.getInfoDegree() != null) {
                 assertEquals(new Integer(10), infoDegreeInfo.getInfoDegree().getIdInternal());
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithOnlyOneDegreeInfo");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithOnlyOneDegreeInfo");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testSuccessfullWithMoreThanOneDegreeInfo()
-    {
-        try
-        {
+    public void testSuccessfullWithMoreThanOneDegreeInfo() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(100);
 
@@ -141,23 +123,21 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
-            try
-            {
-                infoDegreeInfo =
-                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            try {
+                infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id,
+                        getNameOfServiceToBeTested(), args);
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
             //Returned anything?
-            if (infoDegreeInfo == null)
-            {
+            if (infoDegreeInfo == null) {
                 fail("Reading a Degree Info.");
             }
 
@@ -175,28 +155,24 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMin());
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMax());
             assertEquals(new Double(10.0), infoDegreeInfo.getMarkAverage());
-            if(infoDegreeInfo.getInfoDegree() != null) {
+            if (infoDegreeInfo.getInfoDegree() != null) {
                 assertEquals(new Integer(100), infoDegreeInfo.getInfoDegree().getIdInternal());
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithMoreThanOneDegreeInfo");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithMoreThanOneDegreeInfo");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testSuccessfullWithDegreeInfoLastYear()
-    {
-        try
-        {
+    public void testSuccessfullWithDegreeInfoLastYear() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(2003);
 
@@ -204,21 +180,21 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
-            try
-            {
-                infoDegreeInfo =
-                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            try {
+                infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id,
+                        getNameOfServiceToBeTested(), args);
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
-            //In spite of this degree info doen't belong to the execution period used
+            //In spite of this degree info doen't belong to the execution
+            // period used
             //it's returned
             assertNotNull(infoDegreeInfo);
             assertEquals(new String("Obj2002"), infoDegreeInfo.getObjectives());
@@ -234,28 +210,24 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMin());
             assertEquals(new Double(0.0), infoDegreeInfo.getMarkMax());
             assertEquals(new Double(10.0), infoDegreeInfo.getMarkAverage());
-            if(infoDegreeInfo.getInfoDegree() != null) {
+            if (infoDegreeInfo.getInfoDegree() != null) {
                 assertEquals(new Integer(2002), infoDegreeInfo.getInfoDegree().getIdInternal());
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithDegreeInfoLastYear");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithDegreeInfoLastYear");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNULLArg()
-    {
-        try
-        {
+    public void testNULLArg() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = null;
 
@@ -263,35 +235,30 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 //this returned a NotAuthorizedException
                 e.printStackTrace();
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNULLArg");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNULLArg");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNoDegreeCurricularPlan()
-    {
-        try
-        {
+    public void testNoDegreeCurricularPlan() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(30);
 
@@ -299,39 +266,32 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 23);
                 assertEquals(new String("invalidExecutionDegree"), msg);
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeCurricularPlan");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeCurricularPlan");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNoDegree()
-    {
-        try
-        {
+    public void testNoDegree() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(20);
 
@@ -339,40 +299,33 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 //				this returned a NotAuthorizedException
                 e.printStackTrace();
-                String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
+                String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1,
                         e.getMessage().lastIndexOf(".") + 21);
-				assertEquals(new String("impossibleDegreeInfo"), msg);
+                assertEquals(new String("impossibleDegreeInfo"), msg);
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegree");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegree");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testNoExecutionDegree()
-    {
-        try
-        {
+    public void testNoExecutionDegree() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(1);
 
@@ -380,39 +333,36 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 //				this returned a NotAuthorizedException
                 e.printStackTrace();
-                /*String msg =
-                    e.getMessage().substring(
-                        e.getMessage().lastIndexOf(".") + 1,
-                        e.getMessage().lastIndexOf(".") + 23);
-				assertEquals(new String("invalidExecutionDegree"), msg);*/                
+                /*
+                 * String msg = e.getMessage().substring(
+                 * e.getMessage().lastIndexOf(".") + 1,
+                 * e.getMessage().lastIndexOf(".") + 23); assertEquals(new
+                 * String("invalidExecutionDegree"), msg);
+                 */
             }
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionDegree");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionDegree");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
-    public void testNoDegreeInfo()
-    {
-        try
-        {
+
+    public void testNoDegreeInfo() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(1000);
 
@@ -420,16 +370,15 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 
             //Valid user
             String[] argsUser = getThirdAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
             //Service
             InfoDegreeInfo infoDegreeInfo = null;
-            try
-            {
-                infoDegreeInfo =
-                    (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            try {
+                infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(id,
+                        getNameOfServiceToBeTested(), args);
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
@@ -439,68 +388,44 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             assertNotNull(infoDegreeInfo);
             assertNull(infoDegreeInfo.getDescription());
 
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeInfo");
+            System.out
+                    .println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeInfo");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            fail("Reading a degree information" + e);
-        }
-    }
-
-    /*public void testUserUnsuccessfull()
-    {
-        try
-        {
-            //Valid user
-            String[] argsUser = getAuthenticatedAndUnauthorizedUser();
-			try
-			{
-            ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
-
-            fail("Reading a degree site with invalid user");
-
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testUserUnsuccessfull");
-
-        } catch (FenixServiceException e)
-        {
-            e.printStackTrace();
-            fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }
     }
 
-    public void testSecondUserUnsuccessfull()
-    {
-        try
-        {
-            //Valid user
-            String[] argsUser = getNotAuthenticatedUser();
-            ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
-
-            fail("Reading a degree site with invalid user");
-
-            System.out.println(
-                "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSecondUserUnsuccessfull");
-
-        } catch (FenixServiceException e)
-        {
-            e.printStackTrace();
-            fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            fail("Reading a degree information" + e);
-        }
-    }*/
+    /*
+     * public void testUserUnsuccessfull() { try { //Valid user String[]
+     * argsUser = getAuthenticatedAndUnauthorizedUser(); try {
+     * ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+     * argsUser);
+     * 
+     * fail("Reading a degree site with invalid user");
+     * 
+     * System.out.println( "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY
+     * in test: testUserUnsuccessfull");
+     *  } catch (FenixServiceException e) { e.printStackTrace(); fail("Reading a
+     * degree information" + e); } catch (Exception e) { e.printStackTrace();
+     * fail("Reading a degree information" + e); } }
+     * 
+     * public void testSecondUserUnsuccessfull() { try { //Valid user String[]
+     * argsUser = getNotAuthenticatedUser();
+     * ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+     * argsUser);
+     * 
+     * fail("Reading a degree site with invalid user");
+     * 
+     * System.out.println( "ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY
+     * in test: testSecondUserUnsuccessfull");
+     *  } catch (FenixServiceException e) { e.printStackTrace(); fail("Reading a
+     * degree information" + e); } catch (Exception e) { e.printStackTrace();
+     * fail("Reading a degree information" + e); } }
+     */
 
 }

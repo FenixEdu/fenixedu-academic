@@ -5,6 +5,11 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="ServidorAplicacao.IUserView" %>
+<%@ page import="DataBeans.InfoStudentCurricularPlan" %>
+<%@ page import="DataBeans.InfoStudent" %>
+<%@ page import="DataBeans.InfoPerson" %>
+
 <span class="error"><html:errors/></span>
 <bean:define id="studentCPList" name="studentCPs" scope="request" />
 <bean:define id="link">/viewCurriculum.do?method=getCurriculum&page=0&studentCPID=</bean:define>
@@ -32,6 +37,20 @@
 		<br/>
 		<br/>
 		<br/>
+		<%
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			if(userView.getUtilizador().startsWith("D"))
+			{
+				InfoStudentCurricularPlan infoScp = (InfoStudentCurricularPlan) ((List) studentCPList).get(0);
+				Integer personCode = infoScp.getInfoStudent().getInfoPerson().getIdInternal();
+		%>
+		
+	    <html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personCode.toString()%>"/>
+	    
+		<br/>
+		<br/>
+		<br/>
+		<% } %>
 	<% } %>
     	<logic:iterate id="studentCP" name="studentCPList" >
         	<bean:define id="studentCPLink">

@@ -13,35 +13,27 @@ import ServidorPersistente.IPersistentCurricularYear;
  * @author dcs-rjao 20/Mar/2003
  */
 
-public class CurricularYearOJB extends ObjectFenixOJB implements IPersistentCurricularYear
-{
+public class CurricularYearOJB extends PersistentObjectOJB implements IPersistentCurricularYear {
 
-    public CurricularYearOJB()
-    {
+    public CurricularYearOJB() {
     }
 
-    public void delete(ICurricularYear curricularYear) throws ExcepcaoPersistencia
-    {
-        try
-        {
+    public void delete(ICurricularYear curricularYear) throws ExcepcaoPersistencia {
+        try {
             super.delete(curricularYear);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw ex;
         }
     }
 
-    public ICurricularYear readCurricularYearByYear(Integer year) throws ExcepcaoPersistencia
-    {
+    public ICurricularYear readCurricularYearByYear(Integer year) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("year", year);
         return (ICurricularYear) queryObject(CurricularYear.class, crit);
 
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(CurricularYear.class, new Criteria());
 
     }

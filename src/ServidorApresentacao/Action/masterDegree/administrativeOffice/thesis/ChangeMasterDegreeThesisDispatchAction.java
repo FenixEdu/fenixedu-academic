@@ -24,162 +24,117 @@ import Util.TipoCurso;
 
 /**
  * 
- * @author :
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
 
-public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction
-{
+public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction {
 
-	public ActionForward getStudentAndMasterDegreeThesisDataVersion(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward getStudentAndMasterDegreeThesisDataVersion(ActionMapping mapping,
+            ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		//Integer degreeType = (Integer) request.getAttribute("degreeType");
-		//Integer studentNumber = (Integer) request.getAttribute("studentNumber");
-		Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
-		Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
+        //Integer degreeType = (Integer) request.getAttribute("degreeType");
+        //Integer studentNumber = (Integer)
+        // request.getAttribute("studentNumber");
+        Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
+        Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
-		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
+        boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		if (isSuccess == false)
-		{
-			throw new NonExistingActionException(
-				"error.exception.masterDegree.nonExistentStudent",
-				mapping.findForward("error"));
+        if (isSuccess == false) {
+            throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent",
+                    mapping.findForward("error"));
 
-		}
+        }
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-		/* * * get student curricular plan * * */
-		Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType)};
-		try
-		{
-			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) ServiceUtils.executeService(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsStudentCurricularPlan);
-		} catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        /* * * get student curricular plan * * */
+        Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType) };
+        try {
+            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
+                    userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsStudentCurricularPlan);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		if (infoStudentCurricularPlan == null)
-		{
-			throw new NonExistingActionException(
-				"error.exception.masterDegree.nonExistentActiveStudentCurricularPlan",
-				mapping.findForward("error"));
-		}
+        if (infoStudentCurricularPlan == null) {
+            throw new NonExistingActionException(
+                    "error.exception.masterDegree.nonExistentActiveStudentCurricularPlan", mapping
+                            .findForward("error"));
+        }
 
-		/* * * get master degree thesis data * * */
-		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
-		try
-		{
-			infoMasterDegreeThesisDataVersion =
-				(InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
-					userView,
-					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
-					argsMasterDegreeThesisDataVersion);
-		} catch (NonExistingServiceException e)
-		{
-			throw new NonExistingActionException(
-				"error.exception.masterDegree.nonExistingMasterDegreeThesis",
-				mapping.findForward("error"));
+        /* * * get master degree thesis data * * */
+        Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
+        try {
+            infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ServiceUtils
+                    .executeService(userView,
+                            "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
+                            argsMasterDegreeThesisDataVersion);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException(
+                    "error.exception.masterDegree.nonExistingMasterDegreeThesis", mapping
+                            .findForward("error"));
 
-		} catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		if (infoMasterDegreeThesisDataVersion.getInfoGuiders().isEmpty() == false)
-			request.setAttribute(
-				SessionConstants.GUIDERS_LIST,
-				infoMasterDegreeThesisDataVersion.getInfoGuiders());
+        if (infoMasterDegreeThesisDataVersion.getInfoGuiders().isEmpty() == false)
+            request.setAttribute(SessionConstants.GUIDERS_LIST, infoMasterDegreeThesisDataVersion
+                    .getInfoGuiders());
 
-		if (infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders().isEmpty() == false)
-			request.setAttribute(
-				SessionConstants.ASSISTENT_GUIDERS_LIST,
-				infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders());
+        if (infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders().isEmpty() == false)
+            request.setAttribute(SessionConstants.ASSISTENT_GUIDERS_LIST,
+                    infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders());
 
-		if (infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders().isEmpty() == false)
-			request.setAttribute(
-				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
-				infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders());
+        if (infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders().isEmpty() == false)
+            request.setAttribute(SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+                    infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders());
 
-		if (infoMasterDegreeThesisDataVersion.getInfoExternalGuiders().isEmpty() == false)
-			request.setAttribute(
-				SessionConstants.EXTERNAL_GUIDERS_LIST,
-				infoMasterDegreeThesisDataVersion.getInfoExternalGuiders());
+        if (infoMasterDegreeThesisDataVersion.getInfoExternalGuiders().isEmpty() == false)
+            request.setAttribute(SessionConstants.EXTERNAL_GUIDERS_LIST,
+                    infoMasterDegreeThesisDataVersion.getInfoExternalGuiders());
 
-		//DynaActionForm changeMasterDegreeThesisForm = new DynaActionForm();
-		DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
-		changeMasterDegreeThesisForm.set(
-			"dissertationTitle",
-			infoMasterDegreeThesisDataVersion.getDissertationTitle());
+        //DynaActionForm changeMasterDegreeThesisForm = new DynaActionForm();
+        DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
+        changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion
+                .getDissertationTitle());
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
-	public ActionForward reloadForm(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
 
-		try
-		{
-			operations.getTeachersByNumbers(
-				form,
-				request,
-				"guidersNumbers",
-				SessionConstants.GUIDERS_LIST,
-				actionErrors);
-			operations.getTeachersByNumbers(
-				form,
-				request,
-				"assistentGuidersNumbers",
-				SessionConstants.ASSISTENT_GUIDERS_LIST,
-				actionErrors);
-			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-			operations.getExternalPersonsByIDs(
-				form,
-				request,
-				"externalAssistentGuidersIDs",
-				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
-				actionErrors);
-			operations.getExternalPersonsByIDs(
-				form,
-				request,
-				"externalGuidersIDs",
-				SessionConstants.EXTERNAL_GUIDERS_LIST,
-				actionErrors);
-				
-		} catch (Exception e1)
-		{
-			throw new FenixActionException(e1);
-		}
+        try {
+            operations.getTeachersByNumbers(form, request, "guidersNumbers",
+                    SessionConstants.GUIDERS_LIST, actionErrors);
+            operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+                    SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalAssistentGuidersIDs",
+                    SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getExternalPersonsByIDs(form, request, "externalGuidersIDs",
+                    SessionConstants.EXTERNAL_GUIDERS_LIST, actionErrors);
 
-		return mapping.findForward("start");
+        } catch (Exception e1) {
+            throw new FenixActionException(e1);
+        }
 
-	}
+        return mapping.findForward("start");
+
+    }
 
 }

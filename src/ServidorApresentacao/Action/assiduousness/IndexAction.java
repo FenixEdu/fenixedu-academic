@@ -29,75 +29,77 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import constants.assiduousness.Constants;
 
 /*
- * @author Fernanda Quitério & Tânia Pousão
- * (ANTES: era o nosso LogonAction)
+ * @author Fernanda Quitério & Tânia Pousão (ANTES: era o nosso LogonAction)
  */
 public final class IndexAction extends Action {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {			
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
 
-		Locale locale = request.getLocale();
+        Locale locale = request.getLocale();
 
-		ActionErrors errors = new ActionErrors();
-		HttpSession session = request.getSession();
+        ActionErrors errors = new ActionErrors();
+        HttpSession session = request.getSession();
 
-		IUserView userView = (IUserView)session.getAttribute(SessionConstants.U_VIEW);
-			 
-		String username = userView.getUtilizador();//((LogonForm) form).getUsername();
-		System.out.println("--->NA ASSIDUIDADE: " + username);
-		
-		ServicoAutorizacaoLerPessoa servicoAutorizacaoLerPessoa = new ServicoAutorizacaoLerPessoa();
-		ServicoSeguroLerPessoa servicoSeguroLerPessoa = new ServicoSeguroLerPessoa(servicoAutorizacaoLerPessoa, username);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		try {
+        String username = userView.getUtilizador();//((LogonForm)
+        // form).getUsername();
+        System.out.println("--->NA ASSIDUIDADE: " + username);
 
-			Executor.getInstance().doIt(servicoSeguroLerPessoa);
+        ServicoAutorizacaoLerPessoa servicoAutorizacaoLerPessoa = new ServicoAutorizacaoLerPessoa();
+        ServicoSeguroLerPessoa servicoSeguroLerPessoa = new ServicoSeguroLerPessoa(
+                servicoAutorizacaoLerPessoa, username);
 
-		} catch (NotExecuteException nee) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.execution"));
-		} catch (PersistenceException pe) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-		} finally {
-			if (!errors.isEmpty()) {
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
-		}
+        try {
 
-		Pessoa pessoa = servicoSeguroLerPessoa.getPessoa();		
+            Executor.getInstance().doIt(servicoSeguroLerPessoa);
 
-		session.setMaxInactiveInterval(-1); // sessao nunca expira
+        } catch (NotExecuteException nee) {
+            errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.execution"));
+        } catch (PersistenceException pe) {
+            errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+        } finally {
+            if (!errors.isEmpty()) {
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
+        }
 
-		session.setAttribute(Constants.USERNAME, username);
-		session.setAttribute(Globals.LOCALE_KEY, locale);
-		session.setAttribute(Constants.USER_KEY, pessoa);
+        Pessoa pessoa = servicoSeguroLerPessoa.getPessoa();
 
-		// datas que vão ser apresentadas enquanto o funcionario estiver ligado
-		Calendar calendario = Calendar.getInstance();
-		calendario.setLenient(false);
-		Date data = new Date(calendario.getTimeInMillis());
-		session.setAttribute(Constants.FIM_CONSULTA, data);
+        session.setMaxInactiveInterval(-1); // sessao nunca expira
 
-		int mes = calendario.get(Calendar.MONTH);
-		calendario.add(Calendar.DAY_OF_MONTH, -15);
-		calendario.setTimeInMillis(calendario.getTimeInMillis());
-		if (mes == calendario.get(Calendar.MONTH)) {
-			calendario.set(Calendar.DAY_OF_MONTH, 1);
-		}
-		data = new Date(calendario.getTimeInMillis());
+        session.setAttribute(Constants.USERNAME, username);
+        session.setAttribute(Globals.LOCALE_KEY, locale);
+        session.setAttribute(Constants.USER_KEY, pessoa);
 
-		//se data inicio de consulta for antes de 1 de Maio, prevalece o 1 de Maio
-		Calendar calendarioInicioAplicacao = Calendar.getInstance();
-		calendarioInicioAplicacao.setLenient(false);
-		calendarioInicioAplicacao.clear();
-		calendarioInicioAplicacao.set(2003, Calendar.MAY, 1, 00, 00, 00);
-		if (calendario.before(calendarioInicioAplicacao)) {
-			data = new Date(calendarioInicioAplicacao.getTimeInMillis());
-		}
+        // datas que vão ser apresentadas enquanto o funcionario estiver ligado
+        Calendar calendario = Calendar.getInstance();
+        calendario.setLenient(false);
+        Date data = new Date(calendario.getTimeInMillis());
+        session.setAttribute(Constants.FIM_CONSULTA, data);
 
-		session.setAttribute(Constants.INICIO_CONSULTA, data);
+        int mes = calendario.get(Calendar.MONTH);
+        calendario.add(Calendar.DAY_OF_MONTH, -15);
+        calendario.setTimeInMillis(calendario.getTimeInMillis());
+        if (mes == calendario.get(Calendar.MONTH)) {
+            calendario.set(Calendar.DAY_OF_MONTH, 1);
+        }
+        data = new Date(calendario.getTimeInMillis());
 
-		return (mapping.findForward("ConsultarFuncionarioMostrarAction"));
-	}
+        //se data inicio de consulta for antes de 1 de Maio, prevalece o 1 de
+        // Maio
+        Calendar calendarioInicioAplicacao = Calendar.getInstance();
+        calendarioInicioAplicacao.setLenient(false);
+        calendarioInicioAplicacao.clear();
+        calendarioInicioAplicacao.set(2003, Calendar.MAY, 1, 00, 00, 00);
+        if (calendario.before(calendarioInicioAplicacao)) {
+            data = new Date(calendarioInicioAplicacao.getTimeInMillis());
+        }
+
+        session.setAttribute(Constants.INICIO_CONSULTA, data);
+
+        return (mapping.findForward("ConsultarFuncionarioMostrarAction"));
+    }
 }

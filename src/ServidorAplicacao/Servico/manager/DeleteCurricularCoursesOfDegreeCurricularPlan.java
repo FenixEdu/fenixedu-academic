@@ -6,13 +6,14 @@ package ServidorAplicacao.Servico.manager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.commons.collections.Transformer;
-import commons.CollectionUtils;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -22,33 +23,22 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.CurricularCourseScopeOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
+import commons.CollectionUtils;
+
 /**
  * @author lmac1 modified by Fernanda Quitério
  */
-public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
-    private static DeleteCurricularCoursesOfDegreeCurricularPlan service = new DeleteCurricularCoursesOfDegreeCurricularPlan();
-
-    public static DeleteCurricularCoursesOfDegreeCurricularPlan getService() {
-        return service;
-    }
-
-    private DeleteCurricularCoursesOfDegreeCurricularPlan() {
-    }
-
-    public final String getNome() {
-        return "DeleteCurricularCoursesOfDegreeCurricularPlan";
-    }
+public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
 
     // delete a set of curricularCourses
     public List run(List curricularCoursesIds) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             IPersistentWrittenEvaluationCurricularCourseScope persistentWrittenEvaluationCurricularCourseScope = sp
                     .getIPersistentWrittenEvaluationCurricularCourseScope();
             IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-            
+
             Iterator iter = curricularCoursesIds.iterator();
             List undeletedCurricularCourses = new ArrayList();
             List executionCourses, scopes;
@@ -56,17 +46,17 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
             ICurricularCourse curricularCourse;
             while (iter.hasNext()) {
                 curricularCourseId = (Integer) iter.next();
-                curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                        .readByOID(CurricularCourse.class, curricularCourseId);
+                curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                        CurricularCourse.class, curricularCourseId);
                 if (curricularCourse != null) {
                     //delete curriculum
-                    ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-                    if(curriculum != null) {
+                    ICurriculum curriculum = persistentCurriculum
+                            .readCurriculumByCurricularCourse(curricularCourse);
+                    if (curriculum != null) {
                         persistentCurriculum.delete(curriculum);
                     }
-                    
-                    executionCourses = curricularCourse
-                            .getAssociatedExecutionCourses();
+
+                    executionCourses = curricularCourse.getAssociatedExecutionCourses();
                     if (executionCourses == null || executionCourses.isEmpty()) {
                         scopes = curricularCourse.getScopes();
                         if (scopes != null && !scopes.isEmpty()) {
@@ -74,12 +64,11 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
                             // written evaluation
                             // in case anyone is the correspondent curricular
                             // course can not be deleted
-                            List scopeIdInternals = (List) CollectionUtils
-                                    .collect(scopes, new Transformer() {
+                            List scopeIdInternals = (List) CollectionUtils.collect(scopes,
+                                    new Transformer() {
                                         public Object transform(Object arg0) {
                                             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                                            return curricularCourseScope
-                                                    .getIdInternal();
+                                            return curricularCourseScope.getIdInternal();
                                         }
                                     });
                             List writtenEvaluations = persistentWrittenEvaluationCurricularCourseScope
@@ -88,24 +77,18 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
                                 Iterator iterator = scopes.iterator();
                                 CurricularCourseScopeOJB scopeOJB = new CurricularCourseScopeOJB();
                                 while (iterator.hasNext()) {
-                                    scopeOJB
-                                            .delete((ICurricularCourseScope) iterator
-                                                    .next());
+                                    scopeOJB.delete((ICurricularCourseScope) iterator.next());
                                 }
                             } else {
-                                undeletedCurricularCourses.add(curricularCourse
-                                        .getName());
-                                undeletedCurricularCourses.add(curricularCourse
-                                        .getCode());
+                                undeletedCurricularCourses.add(curricularCourse.getName());
+                                undeletedCurricularCourses.add(curricularCourse.getCode());
                                 continue;
                             }
                         }
                         persistentCurricularCourse.delete(curricularCourse);
                     } else {
-                        undeletedCurricularCourses.add(curricularCourse
-                                .getName());
-                        undeletedCurricularCourses.add(curricularCourse
-                                .getCode());
+                        undeletedCurricularCourses.add(curricularCourse.getName());
+                        undeletedCurricularCourses.add(curricularCourse.getCode());
                     }
                 }
             }

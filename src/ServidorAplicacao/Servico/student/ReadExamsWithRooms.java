@@ -7,9 +7,9 @@
 package ServidorAplicacao.Servico.student;
 
 /**
- *
+ * 
  * @author João Mota
- **/
+ */
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,8 +19,8 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentExamDistributions;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.IExecutionCourse;
 import Dominio.IExamStudentRoom;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
@@ -33,38 +33,33 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadExamsWithRooms implements IServico
-{
+public class ReadExamsWithRooms implements IServico {
 
     private static ReadExamsWithRooms _servico = new ReadExamsWithRooms();
+
     /**
      * The singleton access method of this class.
-     **/
-    public static ReadExamsWithRooms getService()
-    {
+     */
+    public static ReadExamsWithRooms getService() {
         return _servico;
     }
 
     /**
      * The actor of this class.
-     **/
-    private ReadExamsWithRooms()
-    {
+     */
+    private ReadExamsWithRooms() {
     }
 
     /**
      * Devolve o nome do servico
-     **/
-    public final String getNome()
-    {
+     */
+    public final String getNome() {
         return "ReadExamsWithRooms";
     }
 
-    public Object run(String username) throws FenixServiceException
-    {
+    public Object run(String username) throws FenixServiceException {
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
@@ -72,33 +67,27 @@ public class ReadExamsWithRooms implements IServico
 
             IExecutionPeriod currentPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             IStudent student = persistentStudent.readByUsername(username);
-            if (student == null)
-            {
+            if (student == null) {
                 throw new InvalidArgumentsServiceException();
             }
             List examsRoomDistribution = persistentExamStudentRoom.readBy(student);
             Iterator iter = examsRoomDistribution.iterator();
             List validDistributions = new ArrayList();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 IExamStudentRoom examStudentRoom = (IExamStudentRoom) iter.next();
-                IExecutionCourse executionCourse =
-                    (IExecutionCourse) examStudentRoom.getExam().getAssociatedExecutionCourses().get(
-                        0);
-                if (currentPeriod != null
-                    && executionCourse != null
-                    && executionCourse.getExecutionPeriod() != null
-                    && currentPeriod.equals(executionCourse.getExecutionPeriod()))
-                {
-                    validDistributions.add(
-                        Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom));
+                IExecutionCourse executionCourse = (IExecutionCourse) examStudentRoom.getExam()
+                        .getAssociatedExecutionCourses().get(0);
+                if (currentPeriod != null && executionCourse != null
+                        && executionCourse.getExecutionPeriod() != null
+                        && currentPeriod.equals(executionCourse.getExecutionPeriod())) {
+                    validDistributions.add(Cloner
+                            .copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom));
                 }
             }
             ISiteComponent component = new InfoSiteStudentExamDistributions(validDistributions);
             SiteView siteView = new SiteView(component);
             return siteView;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

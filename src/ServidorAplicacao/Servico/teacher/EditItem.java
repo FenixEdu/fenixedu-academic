@@ -44,14 +44,13 @@ public class EditItem implements IServico {
     }
 
     // this method reorders some items but not the item that we are editing
-    private Integer organizeItemsOrder(Integer newOrder, Integer oldOrder,
-            ISection section) throws FenixServiceException {
+    private Integer organizeItemsOrder(Integer newOrder, Integer oldOrder, ISection section)
+            throws FenixServiceException {
 
         IPersistentItem persistentItem = null;
         try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentItem = persistentSuport.getIPersistentItem();
 
             List itemsList = persistentItem.readAllItemsBySection(section);
@@ -67,8 +66,7 @@ public class EditItem implements IServico {
                     IItem iterItem = (IItem) iterItems.next();
                     int iterItemOrder = iterItem.getItemOrder().intValue();
 
-                    if (iterItemOrder > oldOrder.intValue()
-                            && iterItemOrder <= newOrder.intValue()) {
+                    if (iterItemOrder > oldOrder.intValue() && iterItemOrder <= newOrder.intValue()) {
                         persistentItem.simpleLockWrite(iterItem);
                         iterItem.setItemOrder(new Integer(iterItemOrder - 1));
 
@@ -79,8 +77,7 @@ public class EditItem implements IServico {
                     IItem iterItem = (IItem) iterItems.next();
                     int iterItemOrder = iterItem.getItemOrder().intValue();
 
-                    if (iterItemOrder >= newOrder.intValue()
-                            && iterItemOrder < oldOrder.intValue()) {
+                    if (iterItemOrder >= newOrder.intValue() && iterItemOrder < oldOrder.intValue()) {
 
                         persistentItem.simpleLockWrite(iterItem);
                         iterItem.setItemOrder(new Integer(iterItemOrder + 1));
@@ -101,8 +98,8 @@ public class EditItem implements IServico {
      * Executes the service.
      *  
      */
-    public Boolean run(Integer infoExecutionCourseCode, Integer itemCode,
-            InfoItem newInfoItem) throws FenixServiceException {
+    public Boolean run(Integer infoExecutionCourseCode, Integer itemCode, InfoItem newInfoItem)
+            throws FenixServiceException {
         IItem item = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -115,8 +112,7 @@ public class EditItem implements IServico {
             }
             InfoItem oldInfoItem = Cloner.copyIItem2InfoItem(item);
 
-            ISection section = Cloner.copyInfoSection2ISection(oldInfoItem
-                    .getInfoSection());
+            ISection section = Cloner.copyInfoSection2ISection(oldInfoItem.getInfoSection());
 
             Integer newOrder = newInfoItem.getItemOrder();
             Integer oldOrder = oldInfoItem.getItemOrder();

@@ -17,46 +17,39 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *  
  */
-public class DeleteGroupProperties implements IService
-{
+public class DeleteGroupProperties implements IService {
 
-	public DeleteGroupProperties()
-	{
+    public DeleteGroupProperties() {
 
-	}
+    }
 
-	public Boolean run(Integer executionCourseId, Integer groupPropertiesId)
-			throws FenixServiceException
-	{
+    public Boolean run(Integer executionCourseId, Integer groupPropertiesId)
+            throws FenixServiceException {
 
-		Boolean result = Boolean.FALSE;
+        Boolean result = Boolean.FALSE;
 
-		if (groupPropertiesId == null)
-		{
-			return result;
-		}
+        if (groupPropertiesId == null) {
+            return result;
+        }
 
-		try
-		{
+        try {
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
 
-			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(GroupProperties.class,
-			        groupPropertiesId);
+            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                    GroupProperties.class, groupPropertiesId);
 
-			if (groupProperties != null)
-			{
-				persistentGroupProperties.deleteByOID(GroupProperties.class, groupPropertiesId);
-			}
+            if (groupProperties != null) {
+                persistentGroupProperties.deleteByOID(GroupProperties.class, groupPropertiesId);
+            }
 
-			result = Boolean.TRUE;
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException("error.groupProperties.delete");
-		}
+            result = Boolean.TRUE;
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException("error.groupProperties.delete");
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

@@ -3,14 +3,14 @@ package ServidorAplicacao.Servico.assiduousness;
 import ServidorAplicacao.ServicoAutorizacao;
 
 /**
- *
- * @author  Fernanda Quitério & Tania Pousão
+ * 
+ * @author Fernanda Quitério & Tania Pousão
  */
-public class ServicoAutorizacaoConsultarFuncionario extends ServicoAutorizacao{
-  
-  public ServicoAutorizacaoConsultarFuncionario() {
-  }
-  
-  public void execute() {
-  }
+public class ServicoAutorizacaoConsultarFuncionario extends ServicoAutorizacao {
+
+    public ServicoAutorizacaoConsultarFuncionario() {
+    }
+
+    public void execute() {
+    }
 }

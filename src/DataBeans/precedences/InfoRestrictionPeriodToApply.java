@@ -31,12 +31,12 @@ public class InfoRestrictionPeriodToApply extends InfoRestriction {
     public static InfoRestrictionPeriodToApply newInfoFromDomain(IRestrictionPeriodToApply restriction) {
 
         InfoRestrictionPeriodToApply infoRestriction = null;
-        
+
         if (restriction != null) {
             infoRestriction = new InfoRestrictionPeriodToApply();
             infoRestriction.copyFromDomain(restriction);
         }
-        
+
         return infoRestriction;
     }
 

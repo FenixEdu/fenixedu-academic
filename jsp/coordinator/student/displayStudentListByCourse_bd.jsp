@@ -17,9 +17,23 @@
     <% if (((List) enrolmentList).size() != 0) { %>
         </p>
         <bean:message key="label.masterDegree.chooseOne"/><br><br><br>
+        
+        <logic:equal name="viewPhoto" value="true">
+	        <html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=false">
+    	    	<bean:message key="label.notViewPhoto"/>
+        	</html:link>
+        </logic:equal>
+        <logic:notEqual name="viewPhoto" value="true">
+	        <html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0&amp;viewPhoto=true">
+    	    	<bean:message key="label.viewPhoto"/>
+        	</html:link>
+        </logic:notEqual>
     
         <table>
         	<tr>
+        		<logic:equal name="viewPhoto" value="true">
+					<td class="listClasses-header"><bean:message key="label.photo" /></td>
+			 	</logic:equal>
     			<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
     			<td class="listClasses-header"><bean:message key="label.person.name" /></td>
     			<td class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.mark" /></td>
@@ -34,6 +48,12 @@
 	    		</logic:present>
         	</bean:define>
         <tr>
+        	<logic:equal name="viewPhoto" value="true">
+				<td class="listClasses-header">
+					<bean:define id="personID" name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.idInternal"/>
+					<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/viewPhoto.do?personCode="+personID.toString()%>"/>
+			   </td>
+			</logic:equal>
         	<td class="listClasses">
         	<html:link page='<%= pageContext.findAttribute("studentLink").toString() %>'>
     			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>

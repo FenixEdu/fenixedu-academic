@@ -14,114 +14,103 @@ import org.apache.commons.lang.StringUtils;
  */
 public class FilterChainDiscriptorProperty2XML extends FileUtil {
 
-	protected static String implementationClassPackage;
-	protected static HashMap filterChainIDs;
+    protected static String implementationClassPackage;
 
-	/**
-	 *  
-	 */
-	public FilterChainDiscriptorProperty2XML() {
-		super();
-		filterChainIDs = new HashMap();
-	}
+    protected static HashMap filterChainIDs;
 
-	/**
-	 * args[0] input filename args[0] output filename
-	 *  
-	 */
-	public static void main(String[] args) {
-		FilterChainDiscriptorProperty2XML instance =
-			new FilterChainDiscriptorProperty2XML();
-		exec(args[0], args[1], args[2], instance);
-	}
+    /**
+     *  
+     */
+    public FilterChainDiscriptorProperty2XML() {
+        super();
+        filterChainIDs = new HashMap();
+    }
 
-	public static HashMap exec(
-		String inputFile,
-		String outputFile,
-		String implementationClassPackage,
-		FilterChainDiscriptorProperty2XML instance) {
-		FileUtil.inputFile = inputFile;
-		FileUtil.outputFile = outputFile;
-		FilterChainDiscriptorProperty2XML.implementationClassPackage =
-			implementationClassPackage;
-		instance.processFile();
-		return filterChainIDs;
-	}
+    /**
+     * args[0] input filename args[0] output filename
+     *  
+     */
+    public static void main(String[] args) {
+        FilterChainDiscriptorProperty2XML instance = new FilterChainDiscriptorProperty2XML();
+        exec(args[0], args[1], args[2], instance);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.utils.FileUtil#processLine(java.lang.String)
-	 */
-	protected String processLine(Integer i, String line) {
-		if (line != null) {
-			if (i.intValue() == 1) {
-				// What do we do with the filter order???
-			} else {
-				String filterAlias =
-					StringUtils.trim(StringUtils.chomp(line, "="));
-				String implementationClassName = "AccessControlFilter";
-				String discription = "";
-				String invocationTiming = "1";
-				String filterDescriptor = "\t<filterChain>\n";
-				filterDescriptor += "\t\t<idInternal>" + i + "</idInternal>\n";
-				filterDescriptor += "\t\t<name>" + filterAlias + "</name>\n";
-				filterDescriptor += "\t\t<expression>" + filterAlias + "</expression>\n";
-				filterDescriptor += "\t\t<description>"
-					+ discription
-					+ "</description>\n";
-				filterDescriptor += "\t\t<invocationTiming>"
-					+ invocationTiming
-					+ "</invocationTiming>\n";
-				// CONFIRM THIS!!!!!!
-				filterDescriptor += "\t\t<filterClass>"
-					+ implementationClassPackage
-					+ "."
-					+ implementationClassName
-					+ "</filterClass>\n";
-				filterDescriptor += "\t</filterChain>\n";
+    public static HashMap exec(String inputFile, String outputFile, String implementationClassPackage,
+            FilterChainDiscriptorProperty2XML instance) {
+        FileUtil.inputFile = inputFile;
+        FileUtil.outputFile = outputFile;
+        FilterChainDiscriptorProperty2XML.implementationClassPackage = implementationClassPackage;
+        instance.processFile();
+        return filterChainIDs;
+    }
 
-				filterChainIDs.put(filterAlias, i);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.utils.FileUtil#processLine(java.lang.String)
+     */
+    protected String processLine(Integer i, String line) {
+        if (line != null) {
+            if (i.intValue() == 1) {
+                // What do we do with the filter order???
+            } else {
+                String filterAlias = StringUtils.trim(StringUtils.chomp(line, "="));
+                String implementationClassName = "AccessControlFilter";
+                String discription = "";
+                String invocationTiming = "1";
+                String filterDescriptor = "\t<filterChain>\n";
+                filterDescriptor += "\t\t<idInternal>" + i + "</idInternal>\n";
+                filterDescriptor += "\t\t<name>" + filterAlias + "</name>\n";
+                filterDescriptor += "\t\t<expression>" + filterAlias + "</expression>\n";
+                filterDescriptor += "\t\t<description>" + discription + "</description>\n";
+                filterDescriptor += "\t\t<invocationTiming>" + invocationTiming
+                        + "</invocationTiming>\n";
+                // CONFIRM THIS!!!!!!
+                filterDescriptor += "\t\t<filterClass>" + implementationClassPackage + "."
+                        + implementationClassName + "</filterClass>\n";
+                filterDescriptor += "\t</filterChain>\n";
 
-				return filterDescriptor;
-			}
-		}
-		return new String();
-	}
+                filterChainIDs.put(filterAlias, i);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.utils.FileUtil#generateHeader()
-	 */
-	protected String generateHeader() {
-		String header = "<filterChainsDefinitions>\n";
-		return header;
-	}
+                return filterDescriptor;
+            }
+        }
+        return new String();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.utils.FileUtil#generateFooter()
-	 */
-	protected String generateFooter() {
-		String footer = "</filterChainsDefinitions>\n";
-		return footer;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.utils.FileUtil#generateHeader()
+     */
+    protected String generateHeader() {
+        String header = "<filterChainsDefinitions>\n";
+        return header;
+    }
 
-	/**
-	 * @return Returns the filterIDs.
-	 */
-	public static HashMap getFilterIDs() {
-		return filterChainIDs;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.utils.FileUtil#generateFooter()
+     */
+    protected String generateFooter() {
+        String footer = "</filterChainsDefinitions>\n";
+        return footer;
+    }
 
-	/**
-	 * @param filterIDs
-	 *            The filterIDs to set.
-	 */
-	public static void setFilterIDs(HashMap filterChainIDs) {
-		FilterChainDiscriptorProperty2XML.filterChainIDs = filterChainIDs;
-	}
+    /**
+     * @return Returns the filterIDs.
+     */
+    public static HashMap getFilterIDs() {
+        return filterChainIDs;
+    }
+
+    /**
+     * @param filterIDs
+     *            The filterIDs to set.
+     */
+    public static void setFilterIDs(HashMap filterChainIDs) {
+        FilterChainDiscriptorProperty2XML.filterChainIDs = filterChainIDs;
+    }
 
 }

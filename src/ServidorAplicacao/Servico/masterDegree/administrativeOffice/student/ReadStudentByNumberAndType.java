@@ -8,65 +8,46 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student;
 
 /**
  * Serviço LerAluno.
- *
+ * 
  * @author tfc130
- **/
+ */
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
 import Dominio.IStudent;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
+public class ReadStudentByNumberAndType implements IService {
 
-public class ReadStudentByNumberAndType implements IServico {
+    // FIXME: We have to read the student by type also !!
 
-  private static ReadStudentByNumberAndType _servico = new ReadStudentByNumberAndType();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static ReadStudentByNumberAndType getService() {
-    return _servico;
-  }
+    public Object run(Integer number, TipoCurso degreeType) {
 
-  /**
-   * The actor of this class.
-   **/
-  private ReadStudentByNumberAndType() { }
+        InfoStudent infoStudent = null;
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "ReadStudentByNumberAndType";
-  }
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Isto não é para ficar assim. Está assim temporariamente até se
+            // saber como é feita de facto a distinção
+            // dos aluno, referente ao tipo, a partir da página de login.
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+            IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+                    degreeType);
 
-  // FIXME: We have to read the student by type also !!
+            if (student != null) {
+                infoStudent = Cloner.copyIStudent2InfoStudent(student);
+            }
 
-  public Object run(Integer number,TipoCurso degreeType) {
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
 
-    InfoStudent infoStudent = null;
-
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////
-      // Isto não é para ficar assim. Está assim temporariamente até se saber como é feita de facto a distinção
-      // dos aluno, referente ao tipo, a partir da página de login.
-	  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-      IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number, degreeType);
-
-      if (student != null) { 	
-      	infoStudent = Cloner.copyIStudent2InfoStudent(student);
-      }
-      
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
+        return infoStudent;
     }
-	
-    return infoStudent;
-  }
 
 }

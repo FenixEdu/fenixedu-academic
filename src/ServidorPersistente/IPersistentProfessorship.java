@@ -16,8 +16,7 @@ import Util.TipoCurso;
 /**
  * @author João Mota
  */
-public interface IPersistentProfessorship extends IPersistentObject
-{
+public interface IPersistentProfessorship extends IPersistentObject {
 
     public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 
@@ -47,6 +46,9 @@ public interface IPersistentProfessorship extends IPersistentObject
      */
     public List readByTeacherAndTypeOfDegree(ITeacher teacher, TipoCurso degreeType)
             throws ExcepcaoPersistencia;
+
+    public IProfessorship readByTeacherIDandExecutionCourseID(Integer teacherID,
+            Integer executionCourseID) throws ExcepcaoPersistencia;
 
     /**
      * @param teacher

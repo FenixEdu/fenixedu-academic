@@ -2,126 +2,126 @@ package Dominio;
 
 /**
  * @author PTRLV
- *
+ *  
  */
 public class BibliographicReference extends DomainObject implements IBibliographicReference {
 
-	protected String title;
-	protected String authors;
-	protected String reference;
-	protected Boolean optional;
-	protected IExecutionCourse executionCourse;
-	protected String year;
-	private Integer keyExecutionCourse;
+    protected String title;
 
-	/** Creates a new instance of ReferenciaBibliografica */
-	public BibliographicReference() {
-	}
+    protected String authors;
 
-	public BibliographicReference(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    protected String reference;
 
-	public BibliographicReference(IExecutionCourse executionCourse, String reference, Boolean facultative) {
-		setExecutionCourse(executionCourse);
-		setReference(reference);
-		setOptional(facultative);
-	}
+    protected Boolean optional;
 
-	public BibliographicReference(
-		IExecutionCourse executionCourse,
-		String title,
-		String authors,
-		String reference,
-		String year,
-		Boolean facultative) {
-		setTitle(title);
-		setAuthors(authors);
-		setReference(reference);
-		setYear(year);
-		setOptional(facultative);
-		setExecutionCourse(executionCourse);
-	}
+    protected IExecutionCourse executionCourse;
 
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
+    protected String year;
 
-	public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-		this.keyExecutionCourse = keyExecutionCourse;
-	}
+    private Integer keyExecutionCourse;
 
-	public IExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    /** Creates a new instance of ReferenciaBibliografica */
+    public BibliographicReference() {
+    }
 
-	public String getYear() {
-		return year;
-	}
+    public BibliographicReference(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	public String getAuthors() {
-		return authors;
-	}
+    public BibliographicReference(IExecutionCourse executionCourse, String reference, Boolean facultative) {
+        setExecutionCourse(executionCourse);
+        setReference(reference);
+        setOptional(facultative);
+    }
 
-	public Boolean getOptional() {
-		return optional;
-	}
+    public BibliographicReference(IExecutionCourse executionCourse, String title, String authors,
+            String reference, String year, Boolean facultative) {
+        setTitle(title);
+        setAuthors(authors);
+        setReference(reference);
+        setYear(year);
+        setOptional(facultative);
+        setExecutionCourse(executionCourse);
+    }
 
-	public String getReference() {
-		return reference;
-	}
+    public Integer getKeyExecutionCourse() {
+        return keyExecutionCourse;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setKeyExecutionCourse(Integer keyExecutionCourse) {
+        this.keyExecutionCourse = keyExecutionCourse;
+    }
 
-	public void setExecutionCourse(IExecutionCourse executionCourse) {
-		this.executionCourse = executionCourse;
-	}
+    public IExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setYear(String year) {
-		this.year = year;
-	}
+    public String getYear() {
+        return year;
+    }
 
-	public void setAuthors(String author) {
-		this.authors = author;
-	}
+    public String getAuthors() {
+        return authors;
+    }
 
-	public void setOptional(Boolean facultative) {
-		this.optional = facultative;
-	}
+    public Boolean getOptional() {
+        return optional;
+    }
 
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
+    public String getReference() {
+        return reference;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof IBibliographicReference) {
-			IBibliographicReference refBiblio = (IBibliographicReference) obj;
-			result =
-				getTitle().equals(refBiblio.getTitle())
-					&& getAuthors().equals(refBiblio.getAuthors())
-					&& getReference().equals(refBiblio.getReference())
-					&& (getYear() == refBiblio.getYear());
-		}
-		return result;
-	}
+    public void setExecutionCourse(IExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
 
-	public String toString() {
-		String result = "[REFERENCIA BIBLIOGRAFICA";
-		result += ", codInt=" + getIdInternal();
-		result += ", disciplinaExecucao=" + getExecutionCourse();
-		result += ", titulo=" + getTitle();
-		result += ", autor=" + getAuthors();
-		result += ", ano=" + getYear();
-		result += ", referencia=" + getReference();
-		result += ", facultativo=" + getOptional();
-		result += "]";
-		return result;
-	}
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setAuthors(String author) {
+        this.authors = author;
+    }
+
+    public void setOptional(Boolean facultative) {
+        this.optional = facultative;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IBibliographicReference) {
+            IBibliographicReference refBiblio = (IBibliographicReference) obj;
+            result = getTitle().equals(refBiblio.getTitle())
+                    && getAuthors().equals(refBiblio.getAuthors())
+                    && getReference().equals(refBiblio.getReference())
+                    && (getYear() == refBiblio.getYear());
+        }
+        return result;
+    }
+
+    public String toString() {
+        String result = "[REFERENCIA BIBLIOGRAFICA";
+        result += ", codInt=" + getIdInternal();
+        result += ", disciplinaExecucao=" + getExecutionCourse();
+        result += ", titulo=" + getTitle();
+        result += ", autor=" + getAuthors();
+        result += ", ano=" + getYear();
+        result += ", referencia=" + getReference();
+        result += ", facultativo=" + getOptional();
+        result += "]";
+        return result;
+    }
 }

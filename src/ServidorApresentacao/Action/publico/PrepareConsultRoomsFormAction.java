@@ -21,39 +21,26 @@ import Util.TipoSala;
  */
 public class PrepareConsultRoomsFormAction extends FenixContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		super.execute(mapping, form, request, response);		
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        super.execute(mapping, form, request, response);
 
-		HttpSession session = request.getSession(true);
-		if (session != null) {
-			//TODO: No futuro, os edificios devem ser lidos da BD 
-			List buildings = Util.readExistingBuldings("*", null);
-			request.setAttribute("publico.buildings", buildings);
+        HttpSession session = request.getSession(true);
+        if (session != null) {
+            //TODO: No futuro, os edificios devem ser lidos da BD
+            List buildings = Util.readExistingBuldings("*", null);
+            request.setAttribute("publico.buildings", buildings);
 
-			//TODO: No futuro, os tipos de salas devem ser lidos da BD 
-			ArrayList types = new ArrayList();
-			types.add(new LabelValueBean("*", null));
-			types.add(
-				new LabelValueBean(
-					"Anfiteatro",
-					(new Integer(TipoSala.ANFITEATRO)).toString()));
-			types.add(
-				new LabelValueBean(
-					"Laboratório",
-					(new Integer(TipoSala.LABORATORIO)).toString()));
-			types.add(
-				new LabelValueBean(
-					"Plana",
-					(new Integer(TipoSala.PLANA)).toString()));
-			request.setAttribute("publico.types", types);
+            //TODO: No futuro, os tipos de salas devem ser lidos da BD
+            List types = new ArrayList();
+            types.add(new LabelValueBean("*", null));
+            types.add(new LabelValueBean("Anfiteatro", (new Integer(TipoSala.ANFITEATRO)).toString()));
+            types.add(new LabelValueBean("Laboratório", (new Integer(TipoSala.LABORATORIO)).toString()));
+            types.add(new LabelValueBean("Plana", (new Integer(TipoSala.PLANA)).toString()));
+            request.setAttribute("publico.types", types);
 
-			return mapping.findForward("Sucess");
-		} 
-			throw new Exception();
-	}
+            return mapping.findForward("Sucess");
+        }
+        throw new Exception();
+    }
 }

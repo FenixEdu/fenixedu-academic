@@ -5,9 +5,9 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ISummary;
 import Dominio.Summary;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSummary;
@@ -21,14 +21,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher
  *  
  */
-public class DeleteSummary implements IServico {
-
-    private static DeleteSummary service = new DeleteSummary();
-
-    public static DeleteSummary getService() {
-
-        return service;
-    }
+public class DeleteSummary implements IService {
 
     /**
      *  
@@ -36,27 +29,14 @@ public class DeleteSummary implements IServico {
     public DeleteSummary() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "DeleteSummary";
-    }
-
-    public boolean run(Integer executionCourseId, Integer summaryId)
-            throws FenixServiceException {
+    public boolean run(Integer executionCourseId, Integer summaryId) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-            IPersistentSummary persistentSummary = persistentSuport
-                    .getIPersistentSummary();
+            IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
 
-            ISummary summary = (ISummary) persistentSummary.readByOID(
-                    Summary.class, summaryId, true);
+            ISummary summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId, true);
             if (summary != null) {
                 persistentSummary.delete(summary);
             }

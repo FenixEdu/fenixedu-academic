@@ -9,8 +9,7 @@ import Util.SituationOfGuide;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class JavaGuideSituation2SqlGuideSituationFieldConversion implements
-        FieldConversion {
+public class JavaGuideSituation2SqlGuideSituationFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object source) {
         if (source instanceof SituationOfGuide) {

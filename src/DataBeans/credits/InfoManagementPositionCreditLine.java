@@ -6,8 +6,7 @@ package DataBeans.credits;
 /**
  * @author jpvl
  */
-public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLine
-{
+public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLine {
 
     private String position;
 
@@ -16,8 +15,7 @@ public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLi
     /**
      * @return Returns the position.
      */
-    public String getPosition()
-    {
+    public String getPosition() {
         return position;
     }
 
@@ -25,18 +23,15 @@ public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLi
      * @param position
      *            The position to set.
      */
-    public void setPosition(String position)
-    {
+    public void setPosition(String position) {
         this.position = position;
     }
 
-    public Double getCredits()
-    {
+    public Double getCredits() {
         return credits;
     }
 
-    public void setCredits(Double credits)
-    {
+    public void setCredits(Double credits) {
         this.credits = credits;
     }
 }

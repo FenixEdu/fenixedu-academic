@@ -10,17 +10,17 @@ import ServidorPersistenteJDBC.SuportePersistente;
 public class ServicoSeguroLerPessoa extends ServicoSeguro {
 
     private Pessoa pessoa = null;
+
     private String username;
 
-    public ServicoSeguroLerPessoa(ServicoAutorizacao servicoAutorizacaoLogin,
-    String username) {
+    public ServicoSeguroLerPessoa(ServicoAutorizacao servicoAutorizacaoLogin, String username) {
         super(servicoAutorizacaoLogin);
         this.username = username;
     }
 
     public void execute() throws NotExecuteException {
         IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-        if((pessoa = iPessoaPersistente.lerPessoa(username)) == null)
+        if ((pessoa = iPessoaPersistente.lerPessoa(username)) == null)
             throw new NotExecuteException();
     }
 

@@ -3,6 +3,7 @@ package ServidorApresentacao.formbeans.assiduousness;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
@@ -141,11 +142,11 @@ public class AssociarHorarioForm extends ActionForm {
 
     private String _trabalhoConsecutivoMinutos = null;
 
-    private ArrayList _listaModalidades = new ArrayList();
+    private List _listaModalidades = new ArrayList();
 
     private String[] _regime = null;
 
-    private ArrayList _listaRegimes = new ArrayList();
+    private List _listaRegimes = new ArrayList();
 
     private boolean _excepcaoHorario = false;
 
@@ -154,9 +155,9 @@ public class AssociarHorarioForm extends ActionForm {
     }
 
     /* Constroi um Horário para ser mostrado */
-    //	public AssociarHorarioForm(Horario horario, ArrayList listaRegimes) {
-    public AssociarHorarioForm getFormHorarioPreenchido(Horario horario,
-            ArrayList listaRegimes, String alterar) {
+    //	public AssociarHorarioForm(Horario horario, List listaRegimes) {
+    public AssociarHorarioForm getFormHorarioPreenchido(Horario horario, List listaRegimes,
+            String alterar) {
         Calendar calendario = Calendar.getInstance();
 
         String preenchimento = new String("--");
@@ -182,14 +183,11 @@ public class AssociarHorarioForm extends ActionForm {
 
         if (horario.getInicioHN1() != null) {
             calendario.setTimeInMillis(horario.getInicioHN1().getTime());
-            setInicioHN1Horas(String.valueOf(calendario
-                    .get(Calendar.HOUR_OF_DAY)));
+            setInicioHN1Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setInicioHN1Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setInicioHN1Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setInicioHN1Minutos(String.valueOf(calendario
-                        .get(Calendar.MINUTE)));
+                setInicioHN1Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Anterior
@@ -205,11 +203,9 @@ public class AssociarHorarioForm extends ActionForm {
             calendario.setTimeInMillis(horario.getFimHN1().getTime());
             setFimHN1Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setFimHN1Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setFimHN1Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setFimHN1Minutos(String
-                        .valueOf(calendario.get(Calendar.MINUTE)));
+                setFimHN1Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Seguinte
@@ -222,14 +218,11 @@ public class AssociarHorarioForm extends ActionForm {
         if (horario.getInicioHN2() != null) {
             calendario.clear();
             calendario.setTimeInMillis(horario.getInicioHN2().getTime());
-            setInicioHN2Horas(String.valueOf(calendario
-                    .get(Calendar.HOUR_OF_DAY)));
+            setInicioHN2Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setInicioHN2Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setInicioHN2Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setInicioHN2Minutos(String.valueOf(calendario
-                        .get(Calendar.MINUTE)));
+                setInicioHN2Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Anterior
@@ -245,11 +238,9 @@ public class AssociarHorarioForm extends ActionForm {
             calendario.setTimeInMillis(horario.getFimHN2().getTime());
             setFimHN2Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setFimHN2Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setFimHN2Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setFimHN2Minutos(String
-                        .valueOf(calendario.get(Calendar.MINUTE)));
+                setFimHN2Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Seguinte
@@ -263,14 +254,11 @@ public class AssociarHorarioForm extends ActionForm {
         if (horario.getInicioPF1() != null) {
             calendario.clear();
             calendario.setTimeInMillis(horario.getInicioPF1().getTime());
-            setInicioPF1Horas(String.valueOf(calendario
-                    .get(Calendar.HOUR_OF_DAY)));
+            setInicioPF1Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setInicioPF1Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setInicioPF1Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setInicioPF1Minutos(String.valueOf(calendario
-                        .get(Calendar.MINUTE)));
+                setInicioPF1Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Anterior
@@ -286,11 +274,9 @@ public class AssociarHorarioForm extends ActionForm {
             calendario.setTimeInMillis(horario.getFimPF1().getTime());
             setFimPF1Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setFimPF1Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setFimPF1Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setFimPF1Minutos(String
-                        .valueOf(calendario.get(Calendar.MINUTE)));
+                setFimPF1Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Seguinte
@@ -304,14 +290,11 @@ public class AssociarHorarioForm extends ActionForm {
         if (horario.getInicioPF2() != null) {
             calendario.clear();
             calendario.setTimeInMillis(horario.getInicioPF2().getTime());
-            setInicioPF2Horas(String.valueOf(calendario
-                    .get(Calendar.HOUR_OF_DAY)));
+            setInicioPF2Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setInicioPF2Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setInicioPF2Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setInicioPF2Minutos(String.valueOf(calendario
-                        .get(Calendar.MINUTE)));
+                setInicioPF2Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Anterior
@@ -327,11 +310,9 @@ public class AssociarHorarioForm extends ActionForm {
             calendario.setTimeInMillis(horario.getFimPF2().getTime());
             setFimPF2Horas(String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)));
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setFimPF2Minutos("0"
-                        + String.valueOf(calendario.get(Calendar.MINUTE)));
+                setFimPF2Minutos("0" + String.valueOf(calendario.get(Calendar.MINUTE)));
             } else {
-                setFimPF2Minutos(String
-                        .valueOf(calendario.get(Calendar.MINUTE)));
+                setFimPF2Minutos(String.valueOf(calendario.get(Calendar.MINUTE)));
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Seguinte
@@ -343,17 +324,13 @@ public class AssociarHorarioForm extends ActionForm {
         }
 
         if (horario.getInicioExpediente() != null) {
-            calendario.setTimeInMillis((horario.getInicioExpediente())
-                    .getTime());
-            setInicioExpedienteHoras((new Integer(calendario
-                    .get(Calendar.HOUR_OF_DAY))).toString());
+            calendario.setTimeInMillis((horario.getInicioExpediente()).getTime());
+            setInicioExpedienteHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
             if (calendario.get(Calendar.MINUTE) < 10) {
                 setInicioExpedienteMinutos("0"
-                        + (new Integer(calendario.get(Calendar.MINUTE)))
-                                .toString());
+                        + (new Integer(calendario.get(Calendar.MINUTE))).toString());
             } else {
-                setInicioExpedienteMinutos((new Integer(calendario
-                        .get(Calendar.MINUTE))).toString());
+                setInicioExpedienteMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Anterior
@@ -367,15 +344,11 @@ public class AssociarHorarioForm extends ActionForm {
         if (horario.getFimExpediente() != null) {
             calendario.clear();
             calendario.setTimeInMillis((horario.getFimExpediente()).getTime());
-            setFimExpedienteHoras((new Integer(calendario
-                    .get(Calendar.HOUR_OF_DAY))).toString());
+            setFimExpedienteHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setFimExpedienteMinutos("0"
-                        + (new Integer(calendario.get(Calendar.MINUTE)))
-                                .toString());
+                setFimExpedienteMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
             } else {
-                setFimExpedienteMinutos((new Integer(calendario
-                        .get(Calendar.MINUTE))).toString());
+                setFimExpedienteMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Seguinte
@@ -387,19 +360,14 @@ public class AssociarHorarioForm extends ActionForm {
         }
 
         //intervalo e dados de refeicao
-        if ((horario.getInicioRefeicao() != null)
-                && (horario.getFimRefeicao() != null)) {
+        if ((horario.getInicioRefeicao() != null) && (horario.getFimRefeicao() != null)) {
             calendario.clear();
             calendario.setTimeInMillis((horario.getInicioRefeicao()).getTime());
-            setInicioRefeicaoHoras((new Integer(calendario
-                    .get(Calendar.HOUR_OF_DAY))).toString());
+            setInicioRefeicaoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setInicioRefeicaoMinutos("0"
-                        + (new Integer(calendario.get(Calendar.MINUTE)))
-                                .toString());
+                setInicioRefeicaoMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
             } else {
-                setInicioRefeicaoMinutos((new Integer(calendario
-                        .get(Calendar.MINUTE))).toString());
+                setInicioRefeicaoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Seguinte
@@ -408,15 +376,11 @@ public class AssociarHorarioForm extends ActionForm {
 
             calendario.clear();
             calendario.setTimeInMillis((horario.getFimRefeicao()).getTime());
-            setFimRefeicaoHoras((new Integer(calendario
-                    .get(Calendar.HOUR_OF_DAY))).toString());
+            setFimRefeicaoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
             if (calendario.get(Calendar.MINUTE) < 10) {
-                setFimRefeicaoMinutos("0"
-                        + (new Integer(calendario.get(Calendar.MINUTE)))
-                                .toString());
+                setFimRefeicaoMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
             } else {
-                setFimRefeicaoMinutos((new Integer(calendario
-                        .get(Calendar.MINUTE))).toString());
+                setFimRefeicaoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
             }
             if (calendario.get(Calendar.DAY_OF_MONTH) != 1) {
                 //contagem no Dia Seguinte
@@ -492,18 +456,14 @@ public class AssociarHorarioForm extends ActionForm {
 
             setAnoCumprir(String.valueOf(calendario.get(Calendar.YEAR)));
             if ((calendario.get(Calendar.MONTH) + 1) < 10) {
-                setMesCumprir("0"
-                        + String.valueOf(calendario.get(Calendar.MONTH) + 1));
+                setMesCumprir("0" + String.valueOf(calendario.get(Calendar.MONTH) + 1));
             } else {
-                setMesCumprir(String
-                        .valueOf(calendario.get(Calendar.MONTH) + 1));
+                setMesCumprir(String.valueOf(calendario.get(Calendar.MONTH) + 1));
             }
             if ((calendario.get(Calendar.DAY_OF_MONTH)) < 10) {
-                setDiaCumprir("0"
-                        + String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
+                setDiaCumprir("0" + String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
             } else {
-                setDiaCumprir(String.valueOf(calendario
-                        .get(Calendar.DAY_OF_MONTH)));
+                setDiaCumprir(String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
             }
         } else {
             setAnoCumprir(preenchimento + preenchimento);
@@ -517,17 +477,14 @@ public class AssociarHorarioForm extends ActionForm {
 
             setAnoInicio(String.valueOf(calendario.get(Calendar.YEAR)));
             if ((calendario.get(Calendar.MONTH) + 1) < 10) {
-                setMesInicio("0"
-                        + String.valueOf(calendario.get(Calendar.MONTH) + 1));
+                setMesInicio("0" + String.valueOf(calendario.get(Calendar.MONTH) + 1));
             } else {
                 setMesInicio(String.valueOf(calendario.get(Calendar.MONTH) + 1));
             }
             if ((calendario.get(Calendar.DAY_OF_MONTH)) < 10) {
-                setDiaInicio("0"
-                        + String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
+                setDiaInicio("0" + String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
             } else {
-                setDiaInicio(String.valueOf(calendario
-                        .get(Calendar.DAY_OF_MONTH)));
+                setDiaInicio(String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
             }
         } else {
             setAnoInicio(preenchimento + preenchimento);
@@ -541,14 +498,12 @@ public class AssociarHorarioForm extends ActionForm {
 
             setAnoFim(String.valueOf(calendario.get(Calendar.YEAR)));
             if ((calendario.get(Calendar.MONTH) + 1) < 10) {
-                setMesFim("0"
-                        + String.valueOf(calendario.get(Calendar.MONTH) + 1));
+                setMesFim("0" + String.valueOf(calendario.get(Calendar.MONTH) + 1));
             } else {
                 setMesFim(String.valueOf(calendario.get(Calendar.MONTH) + 1));
             }
             if ((calendario.get(Calendar.DAY_OF_MONTH)) < 10) {
-                setDiaFim("0"
-                        + String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
+                setDiaFim("0" + String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
             } else {
                 setDiaFim(String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
             }
@@ -566,21 +521,17 @@ public class AssociarHorarioForm extends ActionForm {
 
         if (horario.getIntervaloMinimoRefeicao() != null) {
             calendario.clear();
-            calendario.setTimeInMillis((horario.getIntervaloMinimoRefeicao())
-                    .getTime());
+            calendario.setTimeInMillis((horario.getIntervaloMinimoRefeicao()).getTime());
             if (vemBaseDados) {
                 calendario.add(Calendar.HOUR_OF_DAY, -1);
             }
 
-            setIntervaloMinimoHoras((new Integer(calendario
-                    .get(Calendar.HOUR_OF_DAY))).toString());
+            setIntervaloMinimoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
             if (calendario.get(Calendar.MINUTE) < 10) {
                 setIntervaloMinimoMinutos("0"
-                        + (new Integer(calendario.get(Calendar.MINUTE)))
-                                .toString());
+                        + (new Integer(calendario.get(Calendar.MINUTE))).toString());
             } else {
-                setIntervaloMinimoMinutos((new Integer(calendario
-                        .get(Calendar.MINUTE))).toString());
+                setIntervaloMinimoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
             }
         } else {
             setIntervaloMinimoHoras(preenchimento);
@@ -588,20 +539,16 @@ public class AssociarHorarioForm extends ActionForm {
         }
         if (horario.getDescontoObrigatorioRefeicao() != null) {
             calendario.clear();
-            calendario.setTimeInMillis((horario
-                    .getDescontoObrigatorioRefeicao()).getTime());
+            calendario.setTimeInMillis((horario.getDescontoObrigatorioRefeicao()).getTime());
             if (vemBaseDados) {
                 calendario.add(Calendar.HOUR_OF_DAY, -1);
             }
-            setDescontoObrigatorioHoras((new Integer(calendario
-                    .get(Calendar.HOUR_OF_DAY))).toString());
+            setDescontoObrigatorioHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
             if (calendario.get(Calendar.MINUTE) < 10) {
                 setDescontoObrigatorioMinutos("0"
-                        + (new Integer(calendario.get(Calendar.MINUTE)))
-                                .toString());
+                        + (new Integer(calendario.get(Calendar.MINUTE))).toString());
             } else {
-                setDescontoObrigatorioMinutos((new Integer(calendario
-                        .get(Calendar.MINUTE))).toString());
+                setDescontoObrigatorioMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
             }
         } else {
             setDescontoObrigatorioHoras(preenchimento);
@@ -610,20 +557,16 @@ public class AssociarHorarioForm extends ActionForm {
 
         if (horario.getTrabalhoConsecutivo() != null) {
             calendario.clear();
-            calendario.setTimeInMillis(horario.getTrabalhoConsecutivo()
-                    .getTime());
+            calendario.setTimeInMillis(horario.getTrabalhoConsecutivo().getTime());
             if (vemBaseDados) {
                 calendario.add(Calendar.HOUR_OF_DAY, -1);
             }
-            setTrabalhoConsecutivoHoras((new Integer(calendario
-                    .get(Calendar.HOUR_OF_DAY))).toString());
+            setTrabalhoConsecutivoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
             if (calendario.get(Calendar.MINUTE) < 10) {
                 setTrabalhoConsecutivoMinutos("0"
-                        + (new Integer(calendario.get(Calendar.MINUTE)))
-                                .toString());
+                        + (new Integer(calendario.get(Calendar.MINUTE))).toString());
             } else {
-                setTrabalhoConsecutivoMinutos((new Integer(calendario
-                        .get(Calendar.MINUTE))).toString());
+                setTrabalhoConsecutivoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
             }
         } else {
             setTrabalhoConsecutivoHoras(preenchimento);
@@ -871,7 +814,7 @@ public class AssociarHorarioForm extends ActionForm {
         return _posicao;
     }
 
-    public ArrayList getListaModalidades() {
+    public List getListaModalidades() {
         return (_listaModalidades);
     }
 
@@ -879,7 +822,7 @@ public class AssociarHorarioForm extends ActionForm {
         return (_regime);
     }
 
-    public ArrayList getListaRegimes() {
+    public List getListaRegimes() {
         return (_listaRegimes);
     }
 
@@ -1111,7 +1054,7 @@ public class AssociarHorarioForm extends ActionForm {
         _posicao = posicao;
     }
 
-    public void setListaModalidades(ArrayList listaModalidades) {
+    public void setListaModalidades(List listaModalidades) {
         _listaModalidades = listaModalidades;
     }
 
@@ -1119,7 +1062,7 @@ public class AssociarHorarioForm extends ActionForm {
         _regime = regime;
     }
 
-    public void setListaRegimes(ArrayList listaRegimes) {
+    public void setListaRegimes(List listaRegimes) {
         _listaRegimes = listaRegimes;
     }
 
@@ -1127,8 +1070,7 @@ public class AssociarHorarioForm extends ActionForm {
         _excepcaoHorario = excepcaoHorario;
     }
 
-    public void setForm(ArrayList modalidades, ArrayList regimes,
-            ArrayList listaRegimesHorarioAlterar) {
+    public void setForm(List modalidades, List regimes, List listaRegimesHorarioAlterar) {
         setListaModalidades(modalidades);
         setListaRegimes(regimes);
 
@@ -1136,10 +1078,8 @@ public class AssociarHorarioForm extends ActionForm {
         // apos a associacao
         if (getDiaInicio() == null) {
             Calendar agora = Calendar.getInstance();
-            setDiaInicio((new Integer(agora.get(Calendar.DAY_OF_MONTH)))
-                    .toString());
-            setMesInicio((new Integer(agora.get(Calendar.MONTH) + 1))
-                    .toString());
+            setDiaInicio((new Integer(agora.get(Calendar.DAY_OF_MONTH))).toString());
+            setMesInicio((new Integer(agora.get(Calendar.MONTH) + 1)).toString());
             setAnoInicio((new Integer(agora.get(Calendar.YEAR))).toString());
         }
         if (listaRegimesHorarioAlterar != null) {
@@ -1155,13 +1095,12 @@ public class AssociarHorarioForm extends ActionForm {
         }
     }
 
-    public void setForm(Locale locale, Pessoa pessoa, Funcionario funcionario,
-            Horario horario, ArrayList listaRegime, boolean isExcepcaoHorario,
-            String alterar) {
-        IStrategyHorarios horarioStrategy = SuporteStrategyHorarios
-                .getInstance().callStrategy(getModalidade());
-        horarioStrategy.setFormAssociarHorarioConfirmar(locale, this, pessoa,
-                funcionario, horario, listaRegime, isExcepcaoHorario, alterar);
+    public void setForm(Locale locale, Pessoa pessoa, Funcionario funcionario, Horario horario,
+            List listaRegime, boolean isExcepcaoHorario, String alterar) {
+        IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
+                getModalidade());
+        horarioStrategy.setFormAssociarHorarioConfirmar(locale, this, pessoa, funcionario, horario,
+                listaRegime, isExcepcaoHorario, alterar);
     } /* setForm */
 
     public void reset(ActionMapping mapping, HttpServletRequest request) {
@@ -1207,8 +1146,7 @@ public class AssociarHorarioForm extends ActionForm {
         _excepcaoHorario = false;
     }
 
-    public ActionErrors validate(ActionMapping mapping,
-            HttpServletRequest request) {
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
 
         HttpSession session = request.getSession();
@@ -1217,27 +1155,22 @@ public class AssociarHorarioForm extends ActionForm {
             if (request.getParameter("numMecanografico") != null) {
 
                 if ((request.getParameter("numMecanografico")).length() < 1) {
-                    errors.add("numMecanografico", new ActionError(
-                            "error.numero.obrigatorio"));
+                    errors.add("numMecanografico", new ActionError("error.numero.obrigatorio"));
                     return errors;
                 }
                 try {
                     (new Integer(getNumMecanografico())).intValue();
                 } catch (java.lang.NumberFormatException e) {
-                    errors.add("numero", new ActionError(
-                            "error.numero.naoInteiro"));
+                    errors.add("numero", new ActionError("error.numero.naoInteiro"));
                     return errors;
                 }
 
             }
-        } else if (mapping.getPath().equals(
-                new String("/adicionarHorarioRotacao"))) {
-            if ((request.getParameter("numDias") != null)
-                    && (request.getParameter("posicao") != null)) {
+        } else if (mapping.getPath().equals(new String("/adicionarHorarioRotacao"))) {
+            if ((request.getParameter("numDias") != null) && (request.getParameter("posicao") != null)) {
                 if (((request.getParameter("numDias")).length() < 1)
                         || ((request.getParameter("posicao")).length() < 1)) {
-                    errors.add("numero", new ActionError(
-                            "error.numero.obrigatorio"));
+                    errors.add("numero", new ActionError("error.numero.obrigatorio"));
                     return errors;
                 }
                 int numDias = 0;
@@ -1246,25 +1179,22 @@ public class AssociarHorarioForm extends ActionForm {
                     numDias = (new Integer(getNumDias())).intValue();
                     posicao = (new Integer(getPosicao())).intValue();
                 } catch (java.lang.NumberFormatException e) {
-                    errors.add("numero", new ActionError(
-                            "error.numero.naoInteiro"));
+                    errors.add("numero", new ActionError("error.numero.naoInteiro"));
                     return errors;
                 }
 
                 // testa a posição e a duração da nova rotação
 
-                ArrayList rotacaoHorario = new ArrayList();
-                if ((rotacaoHorario = (ArrayList) session
-                        .getAttribute("rotacaoHorario")) != null) {
-                    ArrayList novaLista = (ArrayList) rotacaoHorario.clone();
+                List rotacaoHorario = new ArrayList();
+                if ((rotacaoHorario = (ArrayList) session.getAttribute("rotacaoHorario")) != null) {
+                    List novaLista = (List) ((ArrayList) rotacaoHorario).clone();
                     Horario horario = null;
                     int posMaxPrimeiroHorario = 0;
 
                     // se for uma alteracao de horario a validacao das posicoes
                     // nao pode contar com o horario anterior
                     if (request.getParameter("alterar") != null) {
-                        novaLista.remove(Integer.valueOf(
-                                request.getParameter("indiceRotacao"))
+                        novaLista.remove(Integer.valueOf(request.getParameter("indiceRotacao"))
                                 .intValue());
                     }
                     ListIterator iterador = novaLista.listIterator();
@@ -1273,24 +1203,19 @@ public class AssociarHorarioForm extends ActionForm {
                         horario = (Horario) iterador.next();
 
                         if ((posicao >= horario.getPosicao())
-                                && (posicao <= (horario.getPosicao()
-                                        + horario.getNumDias() - 1))) {
-                            errors.add("numero", new ActionError(
-                                    "error.rotacaoHorario"));
+                                && (posicao <= (horario.getPosicao() + horario.getNumDias() - 1))) {
+                            errors.add("numero", new ActionError("error.rotacaoHorario"));
                             return errors;
                         }
 
-                        if ((posicao >= posMaxPrimeiroHorario)
-                                && (posicao < horario.getPosicao())) {
+                        if ((posicao >= posMaxPrimeiroHorario) && (posicao < horario.getPosicao())) {
                             if (numDias >= (horario.getPosicao() - posMaxPrimeiroHorario)) {
-                                errors.add("rotacao", new ActionError(
-                                        "error.rotacaoHorario"));
+                                errors.add("rotacao", new ActionError("error.rotacaoHorario"));
                                 return errors;
                             }
                             /* dia de descanso entre a rotacao dos horários */
                             if (((posicao - posMaxPrimeiroHorario) == 1)
-                                    || (((horario.getPosicao()) - (posicao
-                                            + numDias - 1)) == 1)) {
+                                    || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
                                 errors.add("dia de descanso", new ActionError(
                                         "error.rotacaoHorario.diaDescanso"));
                                 return errors;
@@ -1298,40 +1223,33 @@ public class AssociarHorarioForm extends ActionForm {
 
                         }
 
-                        posMaxPrimeiroHorario = horario.getPosicao()
-                                + horario.getNumDias() - 1;
+                        posMaxPrimeiroHorario = horario.getPosicao() + horario.getNumDias() - 1;
                     }
 
                     while (iterador.hasNext()) {
                         horario = (Horario) iterador.next();
 
                         if ((posicao >= horario.getPosicao())
-                                && (posicao <= (horario.getPosicao()
-                                        + horario.getNumDias() - 1))) {
-                            errors.add("rotacao", new ActionError(
-                                    "error.rotacaoHorario"));
+                                && (posicao <= (horario.getPosicao() + horario.getNumDias() - 1))) {
+                            errors.add("rotacao", new ActionError("error.rotacaoHorario"));
                             return errors;
                         }
 
-                        if ((posicao > posMaxPrimeiroHorario)
-                                && (posicao < horario.getPosicao())) {
+                        if ((posicao > posMaxPrimeiroHorario) && (posicao < horario.getPosicao())) {
                             if (numDias >= (horario.getPosicao() - posMaxPrimeiroHorario)) {
-                                errors.add("rotacao", new ActionError(
-                                        "error.rotacaoHorario"));
+                                errors.add("rotacao", new ActionError("error.rotacaoHorario"));
                                 return errors;
                             }
                             /* dia de descanso entre a rotacao dos horários */
                             if (((posicao - posMaxPrimeiroHorario) == 1)
-                                    || (((horario.getPosicao()) - (posicao
-                                            + numDias - 1)) == 1)) {
+                                    || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
                                 errors.add("dia de descanso", new ActionError(
                                         "error.rotacaoHorario.diaDescanso"));
                                 return errors;
                             }
 
                         }
-                        posMaxPrimeiroHorario = horario.getPosicao()
-                                + horario.getNumDias() - 1;
+                        posMaxPrimeiroHorario = horario.getPosicao() + horario.getNumDias() - 1;
                     }
 
                     if (posicao > posMaxPrimeiroHorario) {
@@ -1348,8 +1266,7 @@ public class AssociarHorarioForm extends ActionForm {
         }
 
         // validacao dos outros campos
-        IStrategyHorarios horario = SuporteStrategyHorarios.getInstance()
-                .callStrategy(getModalidade());
+        IStrategyHorarios horario = SuporteStrategyHorarios.getInstance().callStrategy(getModalidade());
         errors = horario.validateAssociarHorario(this);
 
         return errors;

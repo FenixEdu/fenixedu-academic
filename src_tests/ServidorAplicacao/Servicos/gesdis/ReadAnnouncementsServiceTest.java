@@ -25,87 +25,97 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 
 public class ReadAnnouncementsServiceTest extends TestCaseReadServices {
-	
-	/**
+
+    /**
      * @param testName
-	 */
-     public ReadAnnouncementsServiceTest(String testName) {
-		super(testName);
-        	}
+     */
+    public ReadAnnouncementsServiceTest(String testName) {
+        super(testName);
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	 protected String getNameOfServiceToBeTested() {
-		return "ReadAnnouncements";
-       }
-       
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(suite());
-	  }
-    
-	  public static Test suite() {
-		TestSuite suite = new TestSuite(ReadAnnouncementsServiceTest.class);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "ReadAnnouncements";
+    }
 
-		return suite;
-	  }
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-       }
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadAnnouncementsServiceTest.class);
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISuportePersistente sp = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionCourse executionCourse = null;
-		ISite site = null;
-		try {
-			    sp = SuportePersistenteOJB.getInstance();
-				sp.iniciarTransaccao();
+        return suite;
+    }
 
-				IPersistentExecutionYear ipey = sp.getIPersistentExecutionYear();
-				executionYear = ipey.readExecutionYearByName("2002/2003");
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
-				IPersistentExecutionPeriod ipep = sp.getIPersistentExecutionPeriod();
-                executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        ISuportePersistente sp = null;
+        IExecutionYear executionYear = null;
+        IExecutionPeriod executionPeriod = null;
+        IExecutionCourse executionCourse = null;
+        ISite site = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-				IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
-				executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",executionPeriod);
+            IPersistentExecutionYear ipey = sp.getIPersistentExecutionYear();
+            executionYear = ipey.readExecutionYearByName("2002/2003");
 
-                IPersistentSite ips = sp.getIPersistentSite();
-                site = ips.readByExecutionCourse(executionCourse);
-                
-				sp.confirmarTransaccao();
-			}
-		catch (ExcepcaoPersistencia e) {
-						System.out.println("failed setting up the test data");
-					                    }
-       
-        InfoSite infoSite = Cloner.copyISite2InfoSite(site);
-		Object[] args = { infoSite };
-		return args;
-		}
+            IPersistentExecutionPeriod ipep = sp.getIPersistentExecutionPeriod();
+            executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-   /* (non-Javadoc)
-	* @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	*/
-	    protected int getNumberOfItemsToRetrieve() {
-		return 2;
+            IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
+            executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",
+                    executionPeriod);
+
+            IPersistentSite ips = sp.getIPersistentSite();
+            site = ips.readByExecutionCourse(executionCourse);
+
+            sp.confirmarTransaccao();
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("failed setting up the test data");
         }
-        
-	/* (non-Javadoc)
-		 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-		 */
-	protected Object getObjectToCompare() {
-		
-			return null;
 
-			}
+        InfoSite infoSite = Cloner.copyISite2InfoSite(site);
+        Object[] args = { infoSite };
+        return args;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
+        return 2;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+     */
+    protected Object getObjectToCompare() {
+
+        return null;
+
+    }
 }

@@ -9,13 +9,12 @@ import org.apache.commons.collections.CollectionUtils;
 import pt.utl.ist.berserk.logic.filterManager.IFilter;
 
 //defines a type of filters
-abstract public class AccessControlFilter implements IFilter
-{
+abstract public class AccessControlFilter implements IFilter {
     /**
      * @return The Needed Roles to Execute The Service
      */
     protected Collection getNeededRoles() {
-        List roles = new ArrayList();      
+        List roles = new ArrayList();
 
         return roles;
     }
@@ -26,11 +25,11 @@ abstract public class AccessControlFilter implements IFilter
      */
     protected boolean containsRole(Collection roles) {
         CollectionUtils.intersection(roles, getNeededRoles());
-    
+
         if (roles.size() != 0) {
             return true;
         }
         return false;
-    
+
     }
 }

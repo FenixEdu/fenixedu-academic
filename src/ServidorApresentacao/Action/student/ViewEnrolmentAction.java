@@ -14,43 +14,36 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+
 /**
  * @author tfc130
- *
+ *  
  */
 public class ViewEnrolmentAction extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		Object argsReadShiftEnrolment[] =
-			{(InfoStudent) session.getAttribute("infoStudent")};
+        Object argsReadShiftEnrolment[] = { (InfoStudent) session.getAttribute("infoStudent") };
 
-		InfoShiftEnrolment iSE =
-			(InfoShiftEnrolment) ServiceUtils.executeService(
-				userView,
-				"ReadShiftEnrolment",
-				argsReadShiftEnrolment);
+        InfoShiftEnrolment iSE = (InfoShiftEnrolment) ServiceUtils.executeService(userView,
+                "ReadShiftEnrolment", argsReadShiftEnrolment);
 
-		session.removeAttribute("infoShiftEnrolment");
-		session.removeAttribute("index");
-		if (iSE != null) {
-			if (iSE.getInfoEnrolmentWithOutShift() != null
-				&& iSE.getInfoEnrolmentWithOutShift().isEmpty())
-				iSE.setInfoEnrolmentWithOutShift(null);
-			session.setAttribute("infoShiftEnrolment", iSE);
-		}
+        session.removeAttribute("infoShiftEnrolment");
+        session.removeAttribute("index");
+        if (iSE != null) {
+            if (iSE.getInfoEnrolmentWithOutShift() != null
+                    && iSE.getInfoEnrolmentWithOutShift().isEmpty())
+                iSE.setInfoEnrolmentWithOutShift(null);
+            session.setAttribute("infoShiftEnrolment", iSE);
+        }
 
-		return mapping.findForward("sucess");
+        return mapping.findForward("sucess");
 
-	}
+    }
 
 }

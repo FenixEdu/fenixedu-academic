@@ -19,76 +19,68 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
-{
+public class EditCareerTest extends ServiceNeedsAuthenticationTestCase {
 
-    public EditCareerTest(String testName)
-    {
+    public EditCareerTest(String testName) {
         super(testName);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "EditCareer";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
-	 */
-    protected String getDataSetFilePath()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+     */
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testEditCareerDataSet.xml";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-	 */
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "user", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+     */
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-	 */
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = { "manager", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+     */
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "manager", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
-	 */
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = { "jccm", "pass", getApplication()};
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
+     */
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-	 */
-    protected Object[] getAuthorizeArguments()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
+    protected Object[] getAuthorizeArguments() {
         Integer careerId = new Integer(1);
-        
+
         InfoCareer infoCareer = new InfoProfessionalCareer();
         infoCareer.setIdInternal(careerId);
         infoCareer.setBeginYear(new Integer(1999));
@@ -106,19 +98,16 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
-	 */
-    protected String getApplication()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testCreateNewProfessionalCareer()
-    {
-        try
-        {
+    public void testCreateNewProfessionalCareer() {
+        try {
             InfoCareer infoCareer = new InfoProfessionalCareer();
             infoCareer.setBeginYear(new Integer(1995));
             infoCareer.setEndYear(new Integer(1999));
@@ -129,24 +118,20 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoTeacher.setIdInternal(new Integer(1));
 
             infoCareer.setInfoTeacher(infoTeacher);
-            Object[] args = { null,  infoCareer };
+            Object[] args = { null, infoCareer };
 
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateProfessionalCareerDataSet.xml");
-        } catch (FenixServiceException ex)
-        {
+        } catch (FenixServiceException ex) {
             fail("Creating a new professional career " + ex);
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Creating a new professional career " + ex);
         }
     }
 
-    public void testCreateNewTeachingCareer()
-    {
-        try
-        {
+    public void testCreateNewTeachingCareer() {
+        try {
             InfoCategory infoCategory = new InfoCategory();
             infoCategory.setIdInternal(new Integer(1));
 
@@ -165,18 +150,15 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateTeachingCareerDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Creating a new teaching career " + ex);
         }
     }
 
-    public void testEditExistingProfessionalCareer()
-    {
-        try
-        {
+    public void testEditExistingProfessionalCareer() {
+        try {
             Integer careerId = new Integer(1);
-            
+
             InfoCareer infoCareer = new InfoProfessionalCareer();
             infoCareer.setIdInternal(careerId);
             infoCareer.setBeginYear(new Integer(1999));
@@ -191,23 +173,20 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             Object[] args = { careerId, infoCareer };
 
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-            
+
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditProfessionalCareerDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Editing a professional career " + ex);
         }
     }
 
-    public void testEditExistingTeachingCareer()
-    {
-        try
-        {
+    public void testEditExistingTeachingCareer() {
+        try {
             Integer careerId = new Integer(2);
-            
+
             InfoCategory infoCategory = new InfoCategory();
             infoCategory.setIdInternal(new Integer(1));
-            
+
             InfoCareer infoCareer = new InfoTeachingCareer();
             infoCareer.setIdInternal(careerId);
             infoCareer.setBeginYear(new Integer(1999));
@@ -224,8 +203,7 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedEditTeachingCareerDataSet.xml");
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Editing a teaching career " + ex);
         }
     }

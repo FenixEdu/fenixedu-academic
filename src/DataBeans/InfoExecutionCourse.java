@@ -5,8 +5,12 @@
  */
 package DataBeans;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
+import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 
 /**
@@ -195,8 +199,10 @@ public class InfoExecutionCourse extends InfoObject {
         boolean resultado = false;
         if (obj instanceof InfoExecutionCourse) {
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) obj;
-            resultado = (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod()
-                    .equals(infoExecutionCourse.getInfoExecutionPeriod()));
+            resultado = (getIdInternal() != null && infoExecutionCourse.getIdInternal() != null && getIdInternal()
+                    .equals(infoExecutionCourse.getIdInternal()))
+                    || (getSigla().equals(infoExecutionCourse.getSigla()) && getInfoExecutionPeriod()
+                            .equals(infoExecutionCourse.getInfoExecutionPeriod()));
         }
         return resultado;
     }
@@ -394,6 +400,21 @@ public class InfoExecutionCourse extends InfoObject {
             setLabHours(executionCourse.getLabHours());
             setPraticalHours(executionCourse.getPraticalHours());
             setComment(executionCourse.getComment());
+            List associatedCurricularCourses = new ArrayList();
+            //##########################################
+            // Who forgot this ?????? >:-( (by gedl)
+            setIdInternal(executionCourse.getIdInternal());
+
+            for (Iterator iter = executionCourse.getAssociatedCurricularCourses().iterator(); iter
+                    .hasNext();) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+                associatedCurricularCourses
+                        .add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
+            }
+
+            setAssociatedInfoCurricularCourses(associatedCurricularCourses);
+            //##########################################
+
         }
     }
 

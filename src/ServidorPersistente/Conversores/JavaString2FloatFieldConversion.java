@@ -33,8 +33,7 @@ public class JavaString2FloatFieldConversion implements FieldConversion {
     public Object sqlToJava(Object source) {
         if (source instanceof String) {
             String src = (String) source;
-            Long rounded = new Long(Math.round(Double.valueOf(
-                    src.replace(',', '.')).doubleValue() * 10));
+            Long rounded = new Long(Math.round(Double.valueOf(src.replace(',', '.')).doubleValue() * 10));
 
             return new Double(rounded.doubleValue() / 10);
         }

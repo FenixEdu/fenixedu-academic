@@ -4,6 +4,7 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Servico.publico;
+
 import java.util.List;
 
 import DataBeans.StudentGroupAttendacyInformation;
@@ -15,80 +16,80 @@ import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 10/Set/2003, 20:47:24
- * 
+ *  
  */
-public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername implements IServico
-{
-	private static GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername service=
-		new GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername getService()
-	{
-		return service;
-	}
-	/**
-	 * The actor of this class.
-	 **/
-	private GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername()
-	{
-	}
-	/**
-	 * Returns The Service Name */
-	public final String getNome()
-	{
-		return "publico.GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername";
-	}
-	public StudentGroupAttendacyInformation run(Integer executionCourseID, String username) throws BDException
-	{
-		try
-		{
-			ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
-			IFrequentaPersistente persistentAttendacy= persistenceSupport.getIFrequentaPersistente();
-			IStudent student= persistenceSupport.getIPersistentStudent().readByUsername(username);
-			IPersistentStudentGroupAttend persistentStudentGroupAttend=
-				persistenceSupport.getIPersistentStudentGroupAttend();
-			//
-			IPersistentExecutionCourse persistentExecutionCourse=
-				persistenceSupport.getIPersistentExecutionCourse();
-			//
-			IExecutionCourse executionCourse=
-				(IExecutionCourse) persistentExecutionCourse.readByOID(
-					ExecutionCourse.class,
-					executionCourseID);
-			//
+public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername implements IServico {
+    private static GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername service = new GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername();
+
+    /**
+     * The singleton access method of this class.
+     */
+    public static GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername getService() {
+        return service;
+    }
+
+    /**
+     * The actor of this class.
+     */
+    private GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername() {
+    }
+
+    /**
+     * Returns The Service Name
+     */
+    public final String getNome() {
+        return "publico.GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername";
+    }
+
+    public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
+            throws BDException {
+        try {
+            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            IFrequentaPersistente persistentAttendacy = persistenceSupport.getIFrequentaPersistente();
+            IStudent student = persistenceSupport.getIPersistentStudent().readByUsername(username);
+            IPersistentStudentGroupAttend persistentStudentGroupAttend = persistenceSupport
+                    .getIPersistentStudentGroupAttend();
             //
-			IFrequenta attendacy= persistentAttendacy.readByAlunoAndDisciplinaExecucao(student, executionCourse);
+            IPersistentExecutionCourse persistentExecutionCourse = persistenceSupport
+                    .getIPersistentExecutionCourse();
+            //
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseID);
+            //
+            //
+            IFrequenta attendacy = persistentAttendacy.readByAlunoAndDisciplinaExecucao(student,
+                    executionCourse);
             if (attendacy == null)
                 return null; // the student is not enrolled on this course
             IStudentGroupAttend groupAttend = persistentStudentGroupAttend.readBy(attendacy);
             StudentGroupAttendacyInformation info = new StudentGroupAttendacyInformation();
             if (groupAttend == null)
-                return null; // the student has not a group, at least at this course 
+                return null; // the student has not a group, at least at this
+            // course
             info.setShiftName(groupAttend.getStudentGroup().getShift().getNome());
             List lessons = groupAttend.getStudentGroup().getShift().getAssociatedLessons();
             info.setDegreesNames(executionCourse.getAssociatedCurricularCourses());
             info.setLessons(lessons);
             info.setGroupNumber(groupAttend.getStudentGroup().getGroupNumber());
-            List groupAttends = persistentStudentGroupAttend.readByStudentGroupId(groupAttend.getKeyStudentGroup());
+            List groupAttends = persistentStudentGroupAttend.readByStudentGroupId(groupAttend
+                    .getKeyStudentGroup());
             info.setGroupAttends(groupAttends);
-                                
-            return info; 
-		}
-		catch (ExcepcaoPersistencia ex)
-		{
-			throw new BDException("Got an error while trying to get info about a student's work group", ex);
-		}
-	}
+
+            return info;
+        } catch (ExcepcaoPersistencia ex) {
+            throw new BDException("Got an error while trying to get info about a student's work group",
+                    ex);
+        }
+    }
 }

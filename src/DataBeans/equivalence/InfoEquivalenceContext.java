@@ -5,112 +5,106 @@ import java.util.List;
 import DataBeans.DataTranferObject;
 import DataBeans.InfoStudentCurricularPlan;
 
-public class InfoEquivalenceContext extends DataTranferObject
-{
-	private List infoEnrolmentsToGiveEquivalence;
-	private List infoCurricularCoursesToGetEquivalence;
-	private InfoStudentCurricularPlan infoStudentCurricularPlan;
-	private List chosenInfoEnrollmentGradesToGiveEquivalence;
-	private List chosenInfoCurricularCourseGradesToGetEquivalence;
+public class InfoEquivalenceContext extends DataTranferObject {
+    private List infoEnrolmentsToGiveEquivalence;
 
-	public InfoEquivalenceContext()
-	{
-	}
+    private List infoCurricularCoursesToGetEquivalence;
 
-	/**
-	 * @return
-	 */
-	public InfoStudentCurricularPlan getInfoStudentCurricularPlan()
-	{
-		return infoStudentCurricularPlan;
-	}
+    private InfoStudentCurricularPlan infoStudentCurricularPlan;
 
-	/**
-	 * @param plan
-	 */
-	public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan plan)
-	{
-		infoStudentCurricularPlan = plan;
-	}
+    private List chosenInfoEnrollmentGradesToGiveEquivalence;
 
-	/**
-	 * @return
-	 */
-	public List getInfoEnrolmentsToGiveEquivalence()
-	{
-		return infoEnrolmentsToGiveEquivalence;
-	}
+    private List chosenInfoCurricularCourseGradesToGetEquivalence;
 
-	/**
-	 * @param list
-	 */
-	public void setInfoEnrolmentsToGiveEquivalence(List list)
-	{
-		infoEnrolmentsToGiveEquivalence = list;
-	}
+    public InfoEquivalenceContext() {
+    }
 
-	/**
-	 * @return
-	 */
-	public List getChosenInfoEnrollmentGradesToGiveEquivalence()
-	{
-		return chosenInfoEnrollmentGradesToGiveEquivalence;
-	}
+    /**
+     * @return
+     */
+    public InfoStudentCurricularPlan getInfoStudentCurricularPlan() {
+        return infoStudentCurricularPlan;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setChosenInfoEnrollmentGradesToGiveEquivalence(List list)
-	{
-		chosenInfoEnrollmentGradesToGiveEquivalence = list;
-	}
+    /**
+     * @param plan
+     */
+    public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan plan) {
+        infoStudentCurricularPlan = plan;
+    }
 
-	/**
-	 * @return Returns the chosenInfoCurricularCourseGradesToGetEquivalence.
-	 */
-	public List getChosenInfoCurricularCourseGradesToGetEquivalence()
-	{
-		return chosenInfoCurricularCourseGradesToGetEquivalence;
-	}
+    /**
+     * @return
+     */
+    public List getInfoEnrolmentsToGiveEquivalence() {
+        return infoEnrolmentsToGiveEquivalence;
+    }
 
-	/**
-	 * @param chosenInfoCurricularCourseGradesToGetEquivalence The chosenInfoCurricularCourseGradesToGetEquivalence to set.
-	 */
-	public void setChosenInfoCurricularCourseGradesToGetEquivalence(List chosenInfoCurricularCoursesToGetEquivalence)
-	{
-		this.chosenInfoCurricularCourseGradesToGetEquivalence = chosenInfoCurricularCoursesToGetEquivalence;
-	}
+    /**
+     * @param list
+     */
+    public void setInfoEnrolmentsToGiveEquivalence(List list) {
+        infoEnrolmentsToGiveEquivalence = list;
+    }
 
-	/**
-	 * @return Returns the infoCurricularCoursesToGetEquivalence.
-	 */
-	public List getInfoCurricularCoursesToGetEquivalence()
-	{
-		return infoCurricularCoursesToGetEquivalence;
-	}
+    /**
+     * @return
+     */
+    public List getChosenInfoEnrollmentGradesToGiveEquivalence() {
+        return chosenInfoEnrollmentGradesToGiveEquivalence;
+    }
 
-	/**
-	 * @param infoCurricularCoursesToGetEquivalence The infoCurricularCoursesToGetEquivalence to set.
-	 */
-	public void setInfoCurricularCoursesToGetEquivalence(List infoCurricularCoursesToGetEquivalence)
-	{
-		this.infoCurricularCoursesToGetEquivalence = infoCurricularCoursesToGetEquivalence;
-	}
+    /**
+     * @param list
+     */
+    public void setChosenInfoEnrollmentGradesToGiveEquivalence(List list) {
+        chosenInfoEnrollmentGradesToGiveEquivalence = list;
+    }
 
-	/**
-	 * @return Returns the infoEnrollmentsFromEquivalences.
-	 */
-	public List getInfoEnrollmentsFromEquivalences()
-	{
-		return infoEnrolmentsToGiveEquivalence;
-	}
+    /**
+     * @return Returns the chosenInfoCurricularCourseGradesToGetEquivalence.
+     */
+    public List getChosenInfoCurricularCourseGradesToGetEquivalence() {
+        return chosenInfoCurricularCourseGradesToGetEquivalence;
+    }
 
-	/**
-	 * @param infoEnrollmentsFromEquivalences The infoEnrollmentsFromEquivalences to set.
-	 */
-	public void setInfoEnrollmentsFromEquivalences(List infoEnrollmentsFromEquivalences)
-	{
-		this.infoEnrolmentsToGiveEquivalence = infoEnrollmentsFromEquivalences;
-	}
+    /**
+     * @param chosenInfoCurricularCourseGradesToGetEquivalence
+     *            The chosenInfoCurricularCourseGradesToGetEquivalence to set.
+     */
+    public void setChosenInfoCurricularCourseGradesToGetEquivalence(
+            List chosenInfoCurricularCoursesToGetEquivalence) {
+        this.chosenInfoCurricularCourseGradesToGetEquivalence = chosenInfoCurricularCoursesToGetEquivalence;
+    }
+
+    /**
+     * @return Returns the infoCurricularCoursesToGetEquivalence.
+     */
+    public List getInfoCurricularCoursesToGetEquivalence() {
+        return infoCurricularCoursesToGetEquivalence;
+    }
+
+    /**
+     * @param infoCurricularCoursesToGetEquivalence
+     *            The infoCurricularCoursesToGetEquivalence to set.
+     */
+    public void setInfoCurricularCoursesToGetEquivalence(List infoCurricularCoursesToGetEquivalence) {
+        this.infoCurricularCoursesToGetEquivalence = infoCurricularCoursesToGetEquivalence;
+    }
+
+    /**
+     * @return Returns the infoEnrollmentsFromEquivalences.
+     */
+    public List getInfoEnrollmentsFromEquivalences() {
+        return infoEnrolmentsToGiveEquivalence;
+    }
+
+    /**
+     * @param infoEnrollmentsFromEquivalences
+     *            The infoEnrollmentsFromEquivalences to set.
+     */
+    public void setInfoEnrollmentsFromEquivalences(List infoEnrollmentsFromEquivalences) {
+        this.infoEnrolmentsToGiveEquivalence = infoEnrollmentsFromEquivalences;
+    }
 
 }

@@ -8,64 +8,41 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.IContributor;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadAllContributors implements IServico {
+public class ReadAllContributors implements IService {
 
-	private static ReadAllContributors servico = new ReadAllContributors();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadAllContributors getService() {
-		return servico;
-	}
+    public List run() throws FenixServiceException {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadAllContributors() { 
-	}
+        ISuportePersistente sp = null;
+        List result = new ArrayList();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-	/**
-	 * Returns The Service Name */
+            // Read the contributors
 
-	public final String getNome() {
-		return "ReadAllContributors";
-	}
+            result = sp.getIPersistentContributor().readAll();
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-	public List run() throws FenixServiceException {
+        List contributors = new ArrayList();
+        Iterator iterator = result.iterator();
+        while (iterator.hasNext())
+            contributors.add(Cloner.copyIContributor2InfoContributor((IContributor) iterator.next()));
 
-		ISuportePersistente sp = null;
-		List result = new ArrayList();
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-		
-			// Read the contributors
-			
-			result = sp.getIPersistentContributor().readAll();		
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
+        return contributors;
 
-		List contributors = new ArrayList();
-		Iterator iterator = result.iterator();
-		while(iterator.hasNext())
-			contributors.add(Cloner.copyIContributor2InfoContributor((IContributor) iterator.next()));
-
-		return contributors;
-		
-	}
+    }
 }

@@ -37,26 +37,23 @@ public class PublishMarks implements IService {
 
     }
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode,
-            String publishmentMessage, Boolean sendSMS, String announcementTitle)
-            throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
+            Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente, FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionCourseDAO = sp
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
 
             //Site
             IPersistentSite siteDAO = sp.getIPersistentSite();
             ISite site = siteDAO.readByExecutionCourse(executionCourse);
 
             //		find what type of evaluation we are dealing with
-            IPersistentEvaluation persistentEvaluation = sp
-                    .getIPersistentEvaluation();
-            IEvaluation evaluation = (IEvaluation) persistentEvaluation
-                    .readByOID(Evaluation.class, evaluationCode);
+            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+            IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
+                    evaluationCode);
             persistentEvaluation.simpleLockWrite(evaluation);
 
             if (publishmentMessage == null || publishmentMessage.length() == 0) {
@@ -68,14 +65,11 @@ public class PublishMarks implements IService {
                 Calendar calendar = Calendar.getInstance();
 
                 IAnnouncement announcement = new Announcement();
-                IPersistentAnnouncement persistentAnnouncement = sp
-                        .getIPersistentAnnouncement();
+                IPersistentAnnouncement persistentAnnouncement = sp.getIPersistentAnnouncement();
                 persistentAnnouncement.simpleLockWrite(announcement);
                 announcement.setInformation(publishmentMessage);
-                announcement.setCreationDate(new Timestamp(calendar
-                        .getTimeInMillis()));
-                announcement.setLastModifiedDate(new Timestamp(calendar
-                        .getTimeInMillis()));
+                announcement.setCreationDate(new Timestamp(calendar.getTimeInMillis()));
+                announcement.setLastModifiedDate(new Timestamp(calendar.getTimeInMillis()));
                 announcement.setSite(site);
                 announcement.setTitle(announcementTitle);
 
@@ -94,31 +88,25 @@ public class PublishMarks implements IService {
                     persistentMark.simpleLockWrite(mark);
                     mark.setPublishedMark(mark.getMark());
                     if (sendSMS != null && sendSMS.booleanValue()) {
-                        if (mark.getAttend().getAluno().getPerson()
-                                .getTelemovel() != null
-                                || mark.getAttend().getAluno().getPerson()
-                                        .getTelemovel().length() == 9) {
-                            String StringDestinationNumber = mark.getAttend()
-                                    .getAluno().getPerson().getTelemovel();
+                        if (mark.getAttend().getAluno().getPerson().getTelemovel() != null
+                                || mark.getAttend().getAluno().getPerson().getTelemovel().length() == 9) {
+                            String StringDestinationNumber = mark.getAttend().getAluno().getPerson()
+                                    .getTelemovel();
 
                             if (StringDestinationNumber.startsWith("96")
                                     || StringDestinationNumber.startsWith("91")
                                     || StringDestinationNumber.startsWith("93")) {
 
                                 try {
-                                    SmsUtil
-                                            .getInstance()
-                                            .sendSmsWithoutDeliveryReports(
-													Integer
-														.valueOf(StringDestinationNumber),
-                                                    evaluation
-                                                            .getPublishmentMessage()
-                                                            + " "
-                                                            + mark.getMark());
+                                    SmsUtil.getInstance().sendSmsWithoutDeliveryReports(
+                                            Integer.valueOf(StringDestinationNumber),
+                                            evaluation.getPublishmentMessage()
+                                                    + " "
+                                                    + mark.getAttend().getDisciplinaExecucao()
+                                                            .getSigla() + " - " + mark.getMark());
                                 } catch (FenixUtilException e1) {
 
-                                    throw new SmsNotSentServiceException(
-                                            "error.person.sendSms");
+                                    throw new SmsNotSentServiceException("error.person.sendSms");
                                 }
 
                             }

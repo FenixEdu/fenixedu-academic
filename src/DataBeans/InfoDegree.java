@@ -150,10 +150,10 @@ public class InfoDegree extends InfoObject implements Comparable {
         degree.setSigla(infoDegree.getSigla());
         degree.setTipoCurso(infoDegree.getTipoCurso());
     }
-    
-    public static ICurso newDomainFromInfo(InfoDegree infoDegree){
-        ICurso degree = null; 
-        if(infoDegree != null) {
+
+    public static ICurso newDomainFromInfo(InfoDegree infoDegree) {
+        ICurso degree = null;
+        if (infoDegree != null) {
             degree = new Curso();
             infoDegree.copyToDomain(infoDegree, degree);
         }

@@ -13,7 +13,7 @@ import Dominio.teacher.Career;
 import Dominio.teacher.ProfessionalCareer;
 import Dominio.teacher.TeachingCareer;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.teacher.IPersistentCareer;
 import Util.CareerType;
 
@@ -22,34 +22,28 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public class CareerOJB extends ObjectFenixOJB implements IPersistentCareer
-{
+public class CareerOJB extends PersistentObjectOJB implements IPersistentCareer {
 
     /**
-	 *  
-	 */
-    public CareerOJB()
-    {
+     *  
+     */
+    public CareerOJB() {
         super();
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.teacher.IPersistentCareer#readAllByTeacher(Dominio.ITeacher)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.teacher.IPersistentCareer#readAllByTeacher(Dominio.ITeacher)
+     */
     public List readAllByTeacherAndCareerType(ITeacher teacher, CareerType careerType)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-        if (careerType != null)
-        {
-            if (careerType.equals(CareerType.PROFESSIONAL))
-            {
+        if (careerType != null) {
+            if (careerType.equals(CareerType.PROFESSIONAL)) {
                 criteria.addEqualTo("ojbConcreteClass", ProfessionalCareer.class.getName());
-            } else
-            {
+            } else {
                 criteria.addEqualTo("ojbConcreteClass", TeachingCareer.class.getName());
             }
         }

@@ -18,42 +18,39 @@ import ServidorApresentacao.Action.sop.utils.Util;
  */
 public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 
-	/**
-	 * Prepares the information for the form used to search salas.
-	 **/
-	public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
-					 HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-			
-	  //HttpSession sessao = getSession(request);
+    /**
+     * Prepares the information for the form used to search salas.
+     */
+    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	  List edificios = Util.readExistingBuldings("*", null);
-	  List tipos = Util.readTypesOfRooms("*", null);
+        //HttpSession sessao = getSession(request);
 
-	  request.setAttribute("publico.buildings", edificios);
-	  request.setAttribute("publico.types", tipos);
-      List executionPeriods = (List) ServiceUtils.executeService(null,"ReadNotClosedExecutionPeriods",null);
-      request.setAttribute("publico.executionPeriods",executionPeriods);
-  
-	  return mapping.findForward("PesquisarSalas");
-	}
+        List edificios = Util.readExistingBuldings("*", null);
+        List tipos = Util.readTypesOfRooms("*", null);
 
+        request.setAttribute("publico.buildings", edificios);
+        request.setAttribute("publico.types", tipos);
+        List executionPeriods = (List) ServiceUtils.executeService(null,
+                "ReadNotClosedExecutionPeriods", null);
+        request.setAttribute("publico.executionPeriods", executionPeriods);
 
-	/**
-	 * Prepares the information for the form used to create a room.
-	 **/
-	public ActionForward prepareCreate(ActionMapping mapping, ActionForm form,
-					 HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-	  //HttpSession sessao = getSession(request);
-    
-	  List edificios = Util.readExistingBuldings("escolher", "");
-	  List tipos = Util.readTypesOfRooms("escolher", "");
+        return mapping.findForward("PesquisarSalas");
+    }
 
-	  request.setAttribute("publico.buildings", edificios);
-	  request.setAttribute("publico.types", tipos);
+    /**
+     * Prepares the information for the form used to create a room.
+     */
+    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //HttpSession sessao = getSession(request);
 
-	  return mapping.findForward("CriarSala");
-	}
+        List edificios = Util.readExistingBuldings("escolher", "");
+        List tipos = Util.readTypesOfRooms("escolher", "");
+
+        request.setAttribute("publico.buildings", edificios);
+        request.setAttribute("publico.types", tipos);
+
+        return mapping.findForward("CriarSala");
+    }
 }

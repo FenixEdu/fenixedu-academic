@@ -17,16 +17,13 @@ import Dominio.ITurno;
  * @author João Mota
  *  
  */
-public class InfoShiftWithInfoExecutionCourseAndCollections extends
-        InfoShiftWithInfoExecutionCourse {
+public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWithInfoExecutionCourse {
 
     public void copyFromDomain(ITurno shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
-            setInfoLessons(copyILessons2InfoLessons(shift
-                    .getAssociatedLessons()));
-            setInfoClasses(copyIClasses2InfoClasses(shift
-                    .getAssociatedClasses()));
+            setInfoLessons(copyILessons2InfoLessons(shift.getAssociatedLessons()));
+            setInfoClasses(copyIClasses2InfoClasses(shift.getAssociatedClasses()));
         }
     }
 
@@ -46,16 +43,14 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends
     private static List copyILessons2InfoLessons(List list) {
         List infoLessons = null;
         if (list != null) {
-            infoLessons = (List) CollectionUtils.collect(list,
-                    new Transformer() {
+            infoLessons = (List) CollectionUtils.collect(list, new Transformer() {
 
-                        public Object transform(Object arg0) {
+                public Object transform(Object arg0) {
 
-                            return InfoLessonWithInfoRoomAndInfoExecutionCourse
-                                    .newInfoFromDomain((IAula) arg0);
-                        }
+                    return InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain((IAula) arg0);
+                }
 
-                    });
+            });
         }
         return infoLessons;
     }
@@ -67,16 +62,14 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends
     private static List copyIClasses2InfoClasses(List list) {
         List infoClasses = null;
         if (list != null) {
-            infoClasses = (List) CollectionUtils.collect(list,
-                    new Transformer() {
+            infoClasses = (List) CollectionUtils.collect(list, new Transformer() {
 
-                        public Object transform(Object arg0) {
+                public Object transform(Object arg0) {
 
-                            return InfoClassWithInfoExecutionDegree
-                                    .newInfoFromDomain((ITurma) arg0);
-                        }
+                    return InfoClassWithInfoExecutionDegree.newInfoFromDomain((ITurma) arg0);
+                }
 
-                    });
+            });
         }
         return infoClasses;
     }

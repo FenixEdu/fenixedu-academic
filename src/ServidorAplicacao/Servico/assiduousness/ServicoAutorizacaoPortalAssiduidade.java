@@ -20,19 +20,17 @@ public class ServicoAutorizacaoPortalAssiduidade extends ServicoAutorizacao {
     }
 
     public void execute() throws NotAuthorizeException {
-        IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente
-                .getInstance().iFuncionarioPersistente();
-        IFuncNaoDocentePersistente iFuncNaoDocentePersistente = SuportePersistente
-                .getInstance().iFuncNaoDocentePersistente();
+        IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance()
+                .iFuncionarioPersistente();
+        IFuncNaoDocentePersistente iFuncNaoDocentePersistente = SuportePersistente.getInstance()
+                .iFuncNaoDocentePersistente();
         Funcionario funcionario = null;
-        if ((funcionario = iFuncionarioPersistente
-                .lerFuncionarioSemHistoricoPorPessoa(_pessoa.getIdInternal()
-                        .intValue())) == null) {
+        if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorPessoa(_pessoa
+                .getIdInternal().intValue())) == null) {
             throw new NotAuthorizeException("error.semAutorizacao");
         }
-        if (iFuncNaoDocentePersistente
-                .lerFuncNaoDocentePorNumMecanografico(funcionario
-                        .getNumeroMecanografico()) == null) {
+        if (iFuncNaoDocentePersistente.lerFuncNaoDocentePorNumMecanografico(funcionario
+                .getNumeroMecanografico()) == null) {
             throw new NotAuthorizeException("error.semAutorizacao");
         }
 

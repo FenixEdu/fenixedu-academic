@@ -6,110 +6,129 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * Created on 24/Fev/2003
  */
 public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServices {
 
-	public TestCaseReadServices(String testName) {
-		super(testName);
-	}
-	
-	protected void setUp() {
-		super.setUp();
-	}
+    public TestCaseReadServices(String testName) {
+        super(testName);
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-//	read non-existing object
-	public void testUnsuccessfulExecutionOfReadService() {
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-		Object[] args = getArgumentsOfServiceToBeTestedUnsuccessfuly();
+    //	read non-existing object
+    public void testUnsuccessfulExecutionOfReadService() {
 
-		if(args!=null){
+        Object[] args = getArgumentsOfServiceToBeTestedUnsuccessfuly();
 
-			Object result = null;
-			try {
-				result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
-				if(result instanceof Collection) {
-					assertTrue("testUnsuccessfulExecutionOfReadService", ((Collection) result).isEmpty());
-					System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
-				} else {
-					assertNull("testUnsuccessfulExecutionOfReadService", result);
-					System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
-				}
-				
-			} 
-			
-			catch (Exception ex) {
-				ex.printStackTrace();
-				System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
-				fail("testUnsuccessfulExecutionOfReadService");
-			}
-	}
-	}	
-//	read existing object
-	public void testSuccessfulExecutionOfReadService() {
+        if (args != null) {
 
-		Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
+            Object result = null;
+            try {
+                result = ServiceManagerServiceFactory.executeService(_userView,
+                        getNameOfServiceToBeTested(), args);
+                if (result instanceof Collection) {
+                    assertTrue("testUnsuccessfulExecutionOfReadService", ((Collection) result).isEmpty());
+                    System.out
+                            .println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: "
+                                    + this.getClass().getName());
+                } else {
+                    assertNull("testUnsuccessfulExecutionOfReadService", result);
+                    System.out
+                            .println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: "
+                                    + this.getClass().getName());
+                }
 
-		if(args == null) {
-			args = new Object[]{};
-		}
-			Object result = null;
-			try {
-				
-				result = ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
-				if(result instanceof Collection) {
-					assertEquals("testSuccessfulExecutionOfReadService", getNumberOfItemsToRetrieve(), ((Collection) result).size());
-					System.out.println("testSuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
-				} else {
-					assertEquals("testSuccessfulExecutionOfReadService", getObjectToCompare(), result);
-					System.out.println("testSuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				System.out.println("testSuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
-				fail("testSuccessfulExecutionOfReadService");
-			}
-	}
+            }
 
-	/**
-	 * This method must return a String with the name of the service to be tested.
-	 */
-	protected abstract String getNameOfServiceToBeTested();
+            catch (Exception ex) {
+                ex.printStackTrace();
+                System.out
+                        .println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: "
+                                + this.getClass().getName());
+                fail("testUnsuccessfulExecutionOfReadService");
+            }
+        }
+    }
 
-	/**
-	 * This method must return the service arguments that makes it fail it's execution.
-	 * This method must return null if not to be used.
-	 */
-	protected abstract Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly();
+    //	read existing object
+    public void testSuccessfulExecutionOfReadService() {
 
-	/**
-	 * This method must return the service arguments that makes it execute correctly.
-	 * This method must return null if not to be used.
-	 */
-	protected abstract Object[] getArgumentsOfServiceToBeTestedSuccessfuly();
+        Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
 
-	/**
-	 * This method must return the number of items the service should return if it executes correctly.
-	 * This method must return 0 if not to be used.
-	 */
-	protected abstract int getNumberOfItemsToRetrieve();
+        if (args == null) {
+            args = new Object[] {};
+        }
+        Object result = null;
+        try {
 
-	/**
-	 * This method must return an object that equals the object the service should return if it executes correctly.
-	 * This method must return null if not to be used.
-	 */
-	protected abstract Object getObjectToCompare();
+            result = ServiceManagerServiceFactory.executeService(_userView,
+                    getNameOfServiceToBeTested(), args);
+            if (result instanceof Collection) {
+                assertEquals("testSuccessfulExecutionOfReadService", getNumberOfItemsToRetrieve(),
+                        ((Collection) result).size());
+                System.out
+                        .println("testSuccessfulExecutionOfReadService was SUCCESSFULY runned by class: "
+                                + this.getClass().getName());
+            } else {
+                assertEquals("testSuccessfulExecutionOfReadService", getObjectToCompare(), result);
+                System.out
+                        .println("testSuccessfulExecutionOfReadService was SUCCESSFULY runned by class: "
+                                + this.getClass().getName());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out
+                    .println("testSuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: "
+                            + this.getClass().getName());
+            fail("testSuccessfulExecutionOfReadService");
+        }
+    }
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return false;
-	}
+    /**
+     * This method must return a String with the name of the service to be
+     * tested.
+     */
+    protected abstract String getNameOfServiceToBeTested();
+
+    /**
+     * This method must return the service arguments that makes it fail it's
+     * execution. This method must return null if not to be used.
+     */
+    protected abstract Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly();
+
+    /**
+     * This method must return the service arguments that makes it execute
+     * correctly. This method must return null if not to be used.
+     */
+    protected abstract Object[] getArgumentsOfServiceToBeTestedSuccessfuly();
+
+    /**
+     * This method must return the number of items the service should return if
+     * it executes correctly. This method must return 0 if not to be used.
+     */
+    protected abstract int getNumberOfItemsToRetrieve();
+
+    /**
+     * This method must return an object that equals the object the service
+     * should return if it executes correctly. This method must return null if
+     * not to be used.
+     */
+    protected abstract Object getObjectToCompare();
+
+    /**
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
+        return false;
+    }
 
 }

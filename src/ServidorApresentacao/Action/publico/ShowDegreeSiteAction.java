@@ -15,8 +15,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoExecutionDegree;
@@ -24,379 +22,294 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão Create on 11/Nov/2003
  */
-public class ShowDegreeSiteAction extends FenixContextDispatchAction
-{
+public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
-	public ActionForward showDescription(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
+    public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
 
-		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-		//request.setAttribute("executionPeriodOID", executionPeriodOId);
+        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+        //request.setAttribute("executionPeriodOID", executionPeriodOId);
 
-		Integer degreeId = getFromRequest("degreeID", request);
-		request.setAttribute("degreeID", degreeId);
+        Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
 
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
 
-		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-		request.setAttribute("inEnglish", inEnglish);
-		
-		Integer index =  getFromRequest("index",request);
-		request.setAttribute("index",index);
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
+        Integer index = getFromRequest("index", request);
+        request.setAttribute("index", index);
+        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeID", executionDegreeId);
 
-		//If degreeId is null then this was call by coordinator
-		//Don't have a degreeId but a executionDegreeId
-		//It's necessary read the executionDegree and obtain the correspond degree
-		if (degreeId == null)
-		{
+        //If degreeId is null then this was call by coordinator
+        //Don't have a degreeId but a executionDegreeId
+        //It's necessary read the executionDegree and obtain the correspond
+        // degree
+        if (degreeId == null) {
 
-			//degree information
-			Object[] args = { executionDegreeId };
+            //degree information
+            Object[] args = { executionDegreeId };
 
-			InfoExecutionDegree infoExecutionDegree = null;
-			try
-			{
-				infoExecutionDegree =
-					(InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-						null,
-						"ReadExecutionDegreeByOID",
-						args);
-			}
-			catch (FenixServiceException e)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-			}
-			if (infoExecutionDegree == null
-				|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null
-				|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-			}
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
+            InfoExecutionDegree infoExecutionDegree = null;
+            try {
+                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                        null, "ReadExecutionDegreeByOID", args);
+            } catch (FenixServiceException e) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            }
+            if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
+                    || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            }
+            if (!errors.isEmpty()) {
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
+            RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
+            degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
+            request.setAttribute("degreeID", degreeId);
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
 
-			degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
-			request.setAttribute("degreeID", degreeId);
-			request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal() );
+            //Read execution period
+            InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
+            if (infoExecutionYear == null) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
 
-			//Read execution period
-			InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
-			if (infoExecutionYear == null)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
+            Object[] args2 = { infoExecutionYear };
 
-			Object[] args2 = { infoExecutionYear };
+            List executionPeriods = null;
+            try {
+                executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
+                        "ReadExecutionPeriodsByExecutionYear", args2);
+            } catch (FenixServiceException e) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            }
+            if (executionPeriods == null || executionPeriods.size() <= 0) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            }
+            if (!errors.isEmpty()) {
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
 
-			List executionPeriods = null;
-			try
-			{
-				executionPeriods =
-					(List) ServiceManagerServiceFactory.executeService(
-						null,
-						"ReadExecutionPeriodsByExecutionYear",
-						args2);
-			}
-			catch (FenixServiceException e)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-			}
-			if (executionPeriods == null || executionPeriods.size() <= 0)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-			}
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
+            Collections.sort(executionPeriods, new BeanComparator("endDate"));
 
-			Collections.sort(executionPeriods, new BeanComparator("endDate"));
+            InfoExecutionPeriod infoExecutionPeriod = ((InfoExecutionPeriod) executionPeriods
+                    .get(executionPeriods.size() - 1));
+            executionPeriodOId = infoExecutionPeriod.getIdInternal();
 
-			InfoExecutionPeriod infoExecutionPeriod =
-				((InfoExecutionPeriod) executionPeriods.get(executionPeriods.size() - 1));
-			executionPeriodOId = infoExecutionPeriod.getIdInternal();
+            request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+            request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod
+                    .getIdInternal().toString());
+            request.setAttribute("schoolYear", infoExecutionYear.getYear());
 
-			request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD_OID,
-				infoExecutionPeriod.getIdInternal().toString());
-			request.setAttribute("schoolYear", infoExecutionYear.getYear());
+        }
 
-		}
+        //degree information
+        Object[] args = { executionPeriodOId, degreeId };
 
-		//degree information
-		Object[] args = { executionPeriodOId, degreeId };
+        InfoDegreeInfo infoDegreeInfo = null;
+        try {
+            infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
+                    "ReadDegreeInfoByDegreeAndExecutionPeriod", args);
+        } catch (FenixServiceException e) {
+            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
+            saveErrors(request, errors);
+            //return (new ActionForward(mapping.getInput()));
+        }
 
-		InfoDegreeInfo infoDegreeInfo = null;
-		try
-		{
-			infoDegreeInfo =
-				(InfoDegreeInfo) ServiceManagerServiceFactory.executeService(
-					null,
-					"ReadDegreeInfoByDegreeAndExecutionPeriod",
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
-			saveErrors(request, errors);
-			//return (new ActionForward(mapping.getInput()));
-		}
+        //execution degrees of this degree
+        List executionDegreeList = null;
+        try {
+            executionDegreeList = (List) ServiceManagerServiceFactory.executeService(null,
+                    "ReadExecutionDegreesByDegreeAndExecutionPeriod", args);
+        } catch (FenixServiceException e) {
+            errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
+            saveErrors(request, errors);
+        }
 
-		//execution degrees of this degree
-		List executionDegreeList = null;
-		try
-		{
-			executionDegreeList =
-				(List) ServiceManagerServiceFactory.executeService(
-					null,
-					"ReadExecutionDegreesByDegreeAndExecutionPeriod",
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
-			saveErrors(request, errors);
-		}
+        request.setAttribute("infoDegreeInfo", infoDegreeInfo);
+        request.setAttribute("infoExecutionDegrees", executionDegreeList);
 
-		request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-		request.setAttribute("infoExecutionDegrees", executionDegreeList);
+        if (inEnglish == null || inEnglish.booleanValue() == false) {
+            return mapping.findForward("showDescription");
+        }
 
-		if (inEnglish == null || inEnglish.booleanValue() == false)
-		{
-			return mapping.findForward("showDescription");
-		}
-	
-			return mapping.findForward("showDescriptionEnglish");
-		
-	}
+        return mapping.findForward("showDescriptionEnglish");
 
-	public ActionForward showAccessRequirements(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
+    }
 
-		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-		//request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
+    public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
 
-		Integer degreeId = getFromRequest("degreeID", request);
-		request.setAttribute("degreeID", degreeId);
+        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID,
+        // executionPeriodOId);
 
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
+        Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
 
-		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-		request.setAttribute("inEnglish", inEnglish);
+        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeID", executionDegreeId);
 
-		//degree information
-		Object[] args = { executionPeriodOId, degreeId };
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
 
-		InfoDegreeInfo infoDegreeInfo = null;
-		try
-		{
-			infoDegreeInfo =
-				(InfoDegreeInfo) ServiceManagerServiceFactory.executeService(
-					null,
-					"ReadDegreeInfoByDegreeAndExecutionPeriod",
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
-			saveErrors(request, errors);
-			//            return (new ActionForward(mapping.getInput()));
+        //degree information
+        Object[] args = { executionPeriodOId, degreeId };
 
-		}
+        InfoDegreeInfo infoDegreeInfo = null;
+        try {
+            infoDegreeInfo = (InfoDegreeInfo) ServiceManagerServiceFactory.executeService(null,
+                    "ReadDegreeInfoByDegreeAndExecutionPeriod", args);
+        } catch (FenixServiceException e) {
+            errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
+            saveErrors(request, errors);
+            //            return (new ActionForward(mapping.getInput()));
 
-		request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-		if (inEnglish == null || inEnglish.booleanValue() == false)
-		{
-			return mapping.findForward("showAccessRequirements");
-		}
-		
-			return mapping.findForward("showAccessRequirementsEnglish");
-		
-	}
+        }
 
-	public ActionForward showCurricularPlan(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
+        request.setAttribute("infoDegreeInfo", infoDegreeInfo);
+        if (inEnglish == null || inEnglish.booleanValue() == false) {
+            return mapping.findForward("showAccessRequirements");
+        }
 
-		Integer degreeId = getFromRequest("degreeID", request);
-		request.setAttribute("degreeID", degreeId);
+        return mapping.findForward("showAccessRequirementsEnglish");
 
+    }
 
-		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+    public ActionForward showCurricularPlan(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
 
-		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-		request.setAttribute("inEnglish", inEnglish);
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		request.setAttribute("executionDegreeID", executionDegreeId);
-		Integer index =  getFromRequest("index",request);
-		request.setAttribute("index",index);
-		//if came in the request a executionDegreeId that it is necessary
-		//find the correpond degree curricular plan
-		if (executionDegreeId != null)
-		{
-			Object[] args = { executionDegreeId };
+        Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
 
-			InfoExecutionDegree infoExecutionDegree = null;
-			try
-			{
-				infoExecutionDegree =
-					(InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-						null,
-						"ReadExecutionDegreeByOID",
-						args);
-			}
-			catch (FenixServiceException e)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-			}
-			if (infoExecutionDegree == null
-				|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-			}
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
-			request.setAttribute(
-				"infoDegreeCurricularPlan",
-				infoExecutionDegree.getInfoDegreeCurricularPlan());
-		}
-		else
-		{
-			Object[] args = { degreeId };
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-			List infoDegreeCurricularPlanList = null;
-			try
-			{
-				infoDegreeCurricularPlanList =
-					(List) ServiceManagerServiceFactory.executeService(
-						null,
-						"ReadPublicDegreeCurricularPlansByDegree",
-						args);
-			}
-			catch (FenixServiceException e)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
-			//order the list by state and next by begin date
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("state.degreeState"));
-			comparatorChain.addComparator(new BeanComparator("initialDate"), true);
+        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+        request.setAttribute("inEnglish", inEnglish);
+        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeID", executionDegreeId);
+        Integer index = getFromRequest("index", request);
+        request.setAttribute("index", index);
+        //if came in the request a executionDegreeId that it is necessary
+        //find the correpond degree curricular plan
+        if (executionDegreeId != null) {
+            Object[] args = { executionDegreeId };
 
-			Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
+            InfoExecutionDegree infoExecutionDegree = null;
+            try {
+                infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                        null, "ReadExecutionDegreeByOID", args);
+            } catch (FenixServiceException e) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            }
+            if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            }
+            if (!errors.isEmpty()) {
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
 
-			request.setAttribute("infoDegreeCurricularPlanList", infoDegreeCurricularPlanList);
+            request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree
+                    .getInfoDegreeCurricularPlan());
+            request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
+            request.setAttribute("executionDegreeID", infoExecutionDegree.getIdInternal());
+        } else {
+            Object[] args = { degreeId };
 
-			InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-				(InfoDegreeCurricularPlan) infoDegreeCurricularPlanList.get(0);
-			request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+            List infoDegreeCurricularPlanList = null;
+            try {
+                infoDegreeCurricularPlanList = (List) ServiceManagerServiceFactory.executeService(null,
+                        "ReadPublicDegreeCurricularPlansByDegree", args);
+            } catch (FenixServiceException e) {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
+            //order the list by state and next by begin date
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("state.degreeState"));
+            comparatorChain.addComparator(new BeanComparator("initialDate"), true);
 
-			//if came in the request a degreeCurricularPlanId that it is necessary
-			//find information about this degree curricular plan
-			if (degreeCurricularPlanId != null)
-			{
-				Iterator iterator = infoDegreeCurricularPlanList.iterator();
-				while (iterator.hasNext())
-				{
-					InfoDegreeCurricularPlan infoDegreeCurricularPlanElem =
-						(InfoDegreeCurricularPlan) iterator.next();
-					if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId))
-					{
-						request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
-						break;
-					}
-				}
-			}
-		}
+            Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
 
-		if (inEnglish == null || inEnglish.booleanValue() == false)
-		{
-			return mapping.findForward("showCurricularPlans");
-		}
-		
-			return mapping.findForward("showCurricularPlansEnglish");
-		
-	}
+            request.setAttribute("infoDegreeCurricularPlanList", infoDegreeCurricularPlanList);
 
-	private Integer getFromRequest(String parameter, HttpServletRequest request)
-	{
-		Integer parameterCode = null;
-		String parameterCodeString = request.getParameter(parameter);
-		if (parameterCodeString == null)
-		{
-			parameterCodeString = (String) request.getAttribute(parameter);
-		}
-		if (parameterCodeString != null)
-		{
-			try
-			{
-				parameterCode = new Integer(parameterCodeString);
-			}
-			catch (Exception exception)
-			{
-				return null;
-			}
-		}
-		return parameterCode;
-	}
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) infoDegreeCurricularPlanList
+                    .get(0);
+            request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
 
-	private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
-	{
-		Boolean parameterBoolean = null;
+            //if came in the request a degreeCurricularPlanId that it is
+            // necessary
+            //find information about this degree curricular plan
+            if (degreeCurricularPlanId != null) {
+                Iterator iterator = infoDegreeCurricularPlanList.iterator();
+                while (iterator.hasNext()) {
+                    InfoDegreeCurricularPlan infoDegreeCurricularPlanElem = (InfoDegreeCurricularPlan) iterator
+                            .next();
+                    if (infoDegreeCurricularPlanElem.getIdInternal().equals(degreeCurricularPlanId)) {
+                        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlanElem);
+                        break;
+                    }
+                }
+            }
+        }
 
-		String parameterCodeString = request.getParameter(parameter);
-		if (parameterCodeString == null)
-		{
-			parameterCodeString = (String) request.getAttribute(parameter);
-		}
-		if (parameterCodeString != null)
-		{
-			try
-			{
-				parameterBoolean = new Boolean(parameterCodeString);
-			}
-			catch (Exception exception)
-			{
-				return null;
-			}
-		}
+        if (inEnglish == null || inEnglish.booleanValue() == false) {
+            return mapping.findForward("showCurricularPlans");
+        }
 
-		return parameterBoolean;
-	}
+        return mapping.findForward("showCurricularPlansEnglish");
+
+    }
+
+    private Integer getFromRequest(String parameter, HttpServletRequest request) {
+        Integer parameterCode = null;
+        String parameterCodeString = request.getParameter(parameter);
+        if (parameterCodeString == null) {
+            parameterCodeString = (String) request.getAttribute(parameter);
+        }
+        if (parameterCodeString != null) {
+            try {
+                parameterCode = new Integer(parameterCodeString);
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+        return parameterCode;
+    }
+
+    private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
+        Boolean parameterBoolean = null;
+
+        String parameterCodeString = request.getParameter(parameter);
+        if (parameterCodeString == null) {
+            parameterCodeString = (String) request.getAttribute(parameter);
+        }
+        if (parameterCodeString != null) {
+            try {
+                parameterBoolean = new Boolean(parameterCodeString);
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+
+        return parameterBoolean;
+    }
 }

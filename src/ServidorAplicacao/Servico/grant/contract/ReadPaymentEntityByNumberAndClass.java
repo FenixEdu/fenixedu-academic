@@ -17,7 +17,7 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  * @author barbosa
  */
 public class ReadPaymentEntityByNumberAndClass implements IService {
-    
+
     public ReadPaymentEntityByNumberAndClass() {
     }
 

@@ -4,56 +4,57 @@
  */
 package Util;
 
-
 /**
  * @author Luis Cruz
- *
+ *  
  */
 public class AdvisoryRecipients extends FenixUtil {
 
-	public static final int STUDENTS = 1;
-	public static final int TEACHERS = 2;
-	public static final int EMPLOYEES = 3;
+    public static final int STUDENTS = 1;
 
-	private Integer recipients;
+    public static final int TEACHERS = 2;
 
-	/**
-	 * 
-	 */
-	public AdvisoryRecipients() {
-		super();
-		recipients = null;
-	}
+    public static final int EMPLOYEES = 3;
 
-	public AdvisoryRecipients(Integer recipients) {
-		super();
-		this.recipients = recipients;
-	}	
+    private Integer recipients;
 
-	/**
-	 * @return
-	 */
-	public Integer getRecipients() {
-		return recipients;
-	}
+    /**
+     *  
+     */
+    public AdvisoryRecipients() {
+        super();
+        recipients = null;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setRecipients(Integer integer) {
-		recipients = integer;
-	}
+    public AdvisoryRecipients(Integer recipients) {
+        super();
+        this.recipients = recipients;
+    }
 
-	/**
-	 * @param i
-	 * @return
-	 */
-	public boolean equals(int i) {
-		if (recipients != null && recipients.intValue() == i) {
-			return true;
-		}
+    /**
+     * @return
+     */
+    public Integer getRecipients() {
+        return recipients;
+    }
 
-		return false;
-	}
+    /**
+     * @param integer
+     */
+    public void setRecipients(Integer integer) {
+        recipients = integer;
+    }
+
+    /**
+     * @param i
+     * @return
+     */
+    public boolean equals(int i) {
+        if (recipients != null && recipients.intValue() == i) {
+            return true;
+        }
+
+        return false;
+    }
 
 }

@@ -25,10 +25,10 @@ import Dominio.finalDegreeWork.IProposal;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCoordinator;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentFinalDegreeWork;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -51,12 +51,11 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         String messageException = hasProvilege(id, request.getArguments());
-        if ((id == null) || (id.getRoles() == null)
-                || (!containsRole(id.getRoles())) || (messageException != null)) {
+        if ((id == null) || (id.getRoles() == null) || (!containsRole(id.getRoles()))
+                || (messageException != null)) {
             throw new NotAuthorizedFilterException(messageException);
         }
     }
@@ -119,38 +118,34 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
 
         // Read The DegreeCurricularPlan
         try {
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = SuportePersistenteOJB
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = SuportePersistenteOJB
                     .getInstance().getIStudentCurricularPlanPersistente();
 
-            studentCurricularPlan = readStudentCurricularPlan(
-                    studentCurricularPlanID, persistentStudentCurricularPlan);
+            studentCurricularPlan = readStudentCurricularPlan(studentCurricularPlanID,
+                    persistentStudentCurricularPlan);
 
         } catch (Exception e) {
             return "noAuthorization";
         }
 
-        if (studentCurricularPlan == null
-                || studentCurricularPlan.getStudent() == null) {
+        if (studentCurricularPlan == null || studentCurricularPlan.getStudent() == null) {
             return "noAuthorization";
         }
 
         try {
             IStudent student = studentCurricularPlan.getStudent();
 
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = SuportePersistenteOJB
-                    .getInstance().getIPersistentFinalDegreeWork();
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = SuportePersistenteOJB.getInstance()
+                    .getIPersistentFinalDegreeWork();
 
-            IGroup group = persistentFinalDegreeWork
-                    .readFinalDegreeWorkGroupByUsername(student.getPerson()
-                            .getUsername());
+            IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
+                    .getPerson().getUsername());
             if (group != null) {
                 ICursoExecucao executionDegree = group.getExecutionDegree();
-                for (int i = 0; i < executionDegree.getCoordinatorsList()
-                        .size(); i++) {
-                    ICoordinator coordinator = (ICoordinator) executionDegree
-                            .getCoordinatorsList().get(i);
-                    if (coordinator.getTeacher().getPerson().getUsername()
-                            .equals(id.getUtilizador())) {
+                for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {
+                    ICoordinator coordinator = (ICoordinator) executionDegree.getCoordinatorsList().get(
+                            i);
+                    if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
                         // The student is a candidate for a final degree work of
                         // the degree of the
                         // coordinator making the request. Allow access.
@@ -159,14 +154,11 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
                 }
 
                 for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                    IGroupProposal groupProposal = (IGroupProposal) group
-                            .getGroupProposals().get(i);
-                    IProposal proposal = groupProposal
-                            .getFinalDegreeWorkProposal();
+                    IGroupProposal groupProposal = (IGroupProposal) group.getGroupProposals().get(i);
+                    IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
                     ITeacher teacher = proposal.getOrientator();
 
-                    if (teacher.getPerson().getUsername().equals(
-                            id.getUtilizador())) {
+                    if (teacher.getPerson().getUsername().equals(id.getUtilizador())) {
                         // The student is a candidate for a final degree work of
                         // oriented by the
                         // teacher making the request. Allow access.
@@ -174,9 +166,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
                     }
 
                     teacher = proposal.getCoorientator();
-                    if (teacher != null
-                            && teacher.getPerson().getUsername().equals(
-                                    id.getUtilizador())) {
+                    if (teacher != null && teacher.getPerson().getUsername().equals(id.getUtilizador())) {
                         // The student is a candidate for a final degree work of
                         // cooriented by the
                         // teacher making the request. Allow access.
@@ -191,8 +181,8 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
-            if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                    .getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)
+            if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
+                    TipoCurso.MESTRADO_OBJ)
                     && !(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
                             .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
                 return "noAuthorization";
@@ -208,20 +198,17 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
             roleTemp.add(RoleType.COORDINATOR);
             if (CollectionUtils.containsAny(roles, roleTemp)) {
                 try {
-                    ISuportePersistente sp = SuportePersistenteOJB
-                            .getInstance();
-                    ICursoExecucaoPersistente persistentExecutionDegree = sp
-                            .getICursoExecucaoPersistente();
+                    ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+                    IPersistentExecutionDegree persistentExecutionDegree = sp
+                            .getIPersistentExecutionDegree();
 
                     ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                            .readByOID(CursoExecucao.class,
-                                    (Integer) arguments[0]);
+                            .readByOID(CursoExecucao.class, (Integer) arguments[0]);
 
                     if (executionDegree == null) {
                         return "noAuthorization";
                     }
-                    IPersistentCoordinator persistentCoordinator = sp
-                            .getIPersistentCoordinator();
+                    IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
                     List coordinatorsList = persistentCoordinator
                             .readCoordinatorsByExecutionDegree(executionDegree);
                     if (coordinatorsList == null) {
@@ -229,13 +216,12 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
                     }
 
                     final String username = id.getUtilizador();
-                    ICoordinator coordinator = (ICoordinator) CollectionUtils
-                            .find(coordinatorsList, new Predicate() {
+                    ICoordinator coordinator = (ICoordinator) CollectionUtils.find(coordinatorsList,
+                            new Predicate() {
 
                                 public boolean evaluate(Object input) {
                                     ICoordinator coordinatorTemp = (ICoordinator) input;
-                                    if (username.equals(coordinatorTemp
-                                            .getTeacher().getPerson()
+                                    if (username.equals(coordinatorTemp.getTeacher().getPerson()
                                             .getUsername())) {
                                         return true;
                                     }
@@ -246,33 +232,34 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
                         return "noAuthorization";
                     }
 
-                    if (!coordinator.getExecutionDegree().getCurricularPlan()
-                            .getDegree().getIdInternal().equals(
-                                    studentCurricularPlan
-                                            .getDegreeCurricularPlan()
-                                            .getDegree().getIdInternal())) {
+                    if (!coordinator.getExecutionDegree().getCurricularPlan().getDegree()
+                            .getIdInternal().equals(
+                                    studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+                                            .getIdInternal())) {
                         return "noAuthorization";
                     }
-                    /*IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
-                            .getIStudentCurricularPlanPersistente();
-                    List activeStudentCurricularPlans = persistentStudentCurricularPlan
-                            .readAllActiveStudentCurricularPlan(studentCurricularPlan
-                                    .getStudent().getNumber());
-                    boolean hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = false;
-                    for (int i = 0; i < activeStudentCurricularPlans.size(); i++) {
-                        IStudentCurricularPlan activeStudentCurricularPlan = (IStudentCurricularPlan) activeStudentCurricularPlans
-                                .get(i);
-                        if (coordinator.getExecutionDegree()
-                                .getCurricularPlan().getIdInternal().equals(
-                                        activeStudentCurricularPlan
-                                                .getDegreeCurricularPlan()
-                                                .getIdInternal())) {
-                            hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = true;
-                        }
-                    }
-                    if (!hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan) {
-                        return "noAuthorization";
-                    }*/
+                    /*
+                     * IStudentCurricularPlanPersistente
+                     * persistentStudentCurricularPlan = sp
+                     * .getIStudentCurricularPlanPersistente(); List
+                     * activeStudentCurricularPlans =
+                     * persistentStudentCurricularPlan
+                     * .readAllActiveStudentCurricularPlan(studentCurricularPlan
+                     * .getStudent().getNumber()); boolean
+                     * hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan =
+                     * false; for (int i = 0; i <
+                     * activeStudentCurricularPlans.size(); i++) {
+                     * IStudentCurricularPlan activeStudentCurricularPlan =
+                     * (IStudentCurricularPlan) activeStudentCurricularPlans
+                     * .get(i); if (coordinator.getExecutionDegree()
+                     * .getCurricularPlan().getIdInternal().equals(
+                     * activeStudentCurricularPlan .getDegreeCurricularPlan()
+                     * .getIdInternal())) {
+                     * hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan =
+                     * true; } } if
+                     * (!hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan) {
+                     * return "noAuthorization"; }
+                     */
                 } catch (Exception e) {
                     return "noAuthorization";
                 }
@@ -284,8 +271,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             try {
                 if (!id.getUtilizador().equals(
-                        studentCurricularPlan.getStudent().getPerson()
-                                .getUsername())) {
+                        studentCurricularPlan.getStudent().getPerson().getUsername())) {
                     return "noAuthorization";
                 }
             } catch (Exception e) {
@@ -298,18 +284,15 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
         roleTemp.add(RoleType.TEACHER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             try {
-                ITeacher teacher = SuportePersistenteOJB.getInstance()
-                        .getIPersistentTeacher().readTeacherByUsername(
-                                id.getUtilizador());
+                ITeacher teacher = SuportePersistenteOJB.getInstance().getIPersistentTeacher()
+                        .readTeacherByUsername(id.getUtilizador());
                 if (teacher == null) {
                     return "noAuthorization";
                 }
 
-                if (!verifyStudentTutor(teacher, studentCurricularPlan
-                        .getStudent())) {
+                if (!verifyStudentTutor(teacher, studentCurricularPlan.getStudent())) {
                     return new String("error.enrollment.notStudentTutor+"
-                            + studentCurricularPlan.getStudent().getNumber()
-                                    .toString());
+                            + studentCurricularPlan.getStudent().getNumber().toString());
                 }
 
             } catch (Exception e) {
@@ -322,8 +305,8 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
         roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
         roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
-            if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                    .getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) {
+            if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
+                    TipoCurso.LICENCIATURA_OBJ)) {
                 return "noAuthorization";
             }
             return null;
@@ -331,18 +314,15 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter {
         return "noAuthorization";
     }
 
-    private boolean verifyStudentTutor(ITeacher teacher, IStudent student)
-            throws ExcepcaoPersistencia {
-        ITutor tutor = SuportePersistenteOJB.getInstance()
-                .getIPersistentTutor().readTutorByTeacherAndStudent(teacher,
-                        student);
+    private boolean verifyStudentTutor(ITeacher teacher, IStudent student) throws ExcepcaoPersistencia {
+        ITutor tutor = SuportePersistenteOJB.getInstance().getIPersistentTutor()
+                .readTutorByTeacherAndStudent(teacher, student);
 
         return (tutor != null);
     }
 
-    private IStudentCurricularPlan readStudentCurricularPlan(
-            Integer studentCurricularPlanID,
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan)
+    private IStudentCurricularPlan readStudentCurricularPlan(Integer studentCurricularPlanID,
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan)
             throws ExcepcaoPersistencia {
         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);

@@ -16,113 +16,88 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Tânia Pousão
  *  
  */
-public class EditGratuitySituationByIdTest extends AdministrativeOfficeBaseTest
-{
-	public EditGratuitySituationByIdTest(String name)
-	{
-		super(name);
-		this.dataSetFilePath =
-			"etc/datasets/servicos/MasterDegree/administrativeOffice/gratuity/testEditGratuitySituationByIdDataSet.xml";
-	}
+public class EditGratuitySituationByIdTest extends AdministrativeOfficeBaseTest {
+    public EditGratuitySituationByIdTest(String name) {
+        super(name);
+        this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/gratuity/testEditGratuitySituationByIdDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "EditGratuitySituationById";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "EditGratuitySituationById";
+    }
 
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser()
-	{
-		Object[] args = { new Integer(1)};
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
+        Object[] args = { new Integer(1) };
 
-		return args;
-	}
-		
-	protected Object[] getServiceArgumentsForNotAuthorizedUser()
-	{
-		Object[] argsEditGratuitySituationById = { new Integer(1)};
+        return args;
+    }
 
-		return argsEditGratuitySituationById;
-	}
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() {
+        Object[] argsEditGratuitySituationById = { new Integer(1) };
 
-	private InfoGratuitySituation fillInfoGratuityValues(
-		Integer id,
-		Integer studentCurricularPlanId,
-		Integer gratuityValuesId)
-	{
-		InfoGratuitySituation infoGratuitySituation = new InfoGratuitySituation();
+        return argsEditGratuitySituationById;
+    }
 
-		infoGratuitySituation.setIdInternal(id);
-		infoGratuitySituation.setExemptionPercentage(new Integer(75));
-		infoGratuitySituation.setExemptionType(ExemptionGratuityType.OTHER);
-		infoGratuitySituation.setExemptionDescription("Outro motivo");
+    private InfoGratuitySituation fillInfoGratuityValues(Integer id, Integer studentCurricularPlanId,
+            Integer gratuityValuesId) {
+        InfoGratuitySituation infoGratuitySituation = new InfoGratuitySituation();
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-		infoStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
-		infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+        infoGratuitySituation.setIdInternal(id);
+        infoGratuitySituation.setExemptionPercentage(new Integer(75));
+        infoGratuitySituation.setExemptionType(ExemptionGratuityType.OTHER);
+        infoGratuitySituation.setExemptionDescription("Outro motivo");
 
-		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
-		infoGratuityValues.setIdInternal(gratuityValuesId);
-		infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
+        InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+        infoStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
+        infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
-		return infoGratuitySituation;
-	}
+        InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
+        infoGratuityValues.setIdInternal(gratuityValuesId);
+        infoGratuitySituation.setInfoGratuityValues(infoGratuityValues);
 
-	public void testSucessEditGratuitySituation()
-	{
-		Object[] args = { fillInfoGratuityValues(new Integer(1), new Integer(8582), null)};
+        return infoGratuitySituation;
+    }
 
-		InfoGratuitySituation infoGratuitySituation = null;
-		try
-		{
-			infoGratuitySituation =
-				(InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("testSucessEditGratuitySituation " + e.getMessage());
-		}
-		assertNotNull(infoGratuitySituation);
-		assertEquals(infoGratuitySituation.getIdInternal(), new Integer(1));
-		assertEquals(
-			infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(),
-			new Integer(8582));
-		assertNull(infoGratuitySituation.getInfoGratuityValues());
-		assertEquals(infoGratuitySituation.getExemptionPercentage(), new Integer(75));
-		assertEquals(new Integer(infoGratuitySituation.getExemptionType().getValue()), new Integer(10));
-		assertEquals(infoGratuitySituation.getExemptionDescription(), "Outro motivo");
+    public void testSucessEditGratuitySituation() {
+        Object[] args = { fillInfoGratuityValues(new Integer(1), new Integer(8582), null) };
 
-	}
+        InfoGratuitySituation infoGratuitySituation = null;
+        try {
+            infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("testSucessEditGratuitySituation " + e.getMessage());
+        }
+        assertNotNull(infoGratuitySituation);
+        assertEquals(infoGratuitySituation.getIdInternal(), new Integer(1));
+        assertEquals(infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(), new Integer(
+                8582));
+        assertNull(infoGratuitySituation.getInfoGratuityValues());
+        assertEquals(infoGratuitySituation.getExemptionPercentage(), new Integer(75));
+        assertEquals(new Integer(infoGratuitySituation.getExemptionType().getValue()), new Integer(10));
+        assertEquals(infoGratuitySituation.getExemptionDescription(), "Outro motivo");
 
-	public void testSucessEditGratuitySituationWithNewOne()
-	{
+    }
 
-		Object[] args = { fillInfoGratuityValues(null, new Integer(8583), null)};
+    public void testSucessEditGratuitySituationWithNewOne() {
 
-		InfoGratuitySituation infoGratuitySituation = null;
-		try
-		{
-			infoGratuitySituation =
-				(InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			fail("testSucessEditGratuitySituationWithNewOne " + e.getMessage());
-		}
-		assertNotNull(infoGratuitySituation);
-		assertEquals(
-			infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(),
-			new Integer(8583));
-		assertEquals(infoGratuitySituation.getInfoGratuityValues().getIdInternal(), new Integer(1));
-		assertEquals(infoGratuitySituation.getExemptionPercentage(), new Integer(75));
-		assertEquals(new Integer(infoGratuitySituation.getExemptionType().getValue()), new Integer(10));
-		assertEquals(infoGratuitySituation.getExemptionDescription(), "Outro motivo");
-	}
+        Object[] args = { fillInfoGratuityValues(null, new Integer(8583), null) };
+
+        InfoGratuitySituation infoGratuitySituation = null;
+        try {
+            infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("testSucessEditGratuitySituationWithNewOne " + e.getMessage());
+        }
+        assertNotNull(infoGratuitySituation);
+        assertEquals(infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(), new Integer(
+                8583));
+        assertEquals(infoGratuitySituation.getInfoGratuityValues().getIdInternal(), new Integer(1));
+        assertEquals(infoGratuitySituation.getExemptionPercentage(), new Integer(75));
+        assertEquals(new Integer(infoGratuitySituation.getExemptionType().getValue()), new Integer(10));
+        assertEquals(infoGratuitySituation.getExemptionDescription(), "Outro motivo");
+    }
 }

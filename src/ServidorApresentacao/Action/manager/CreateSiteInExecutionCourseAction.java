@@ -22,34 +22,25 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author lmac1
  */
-public class CreateSiteInExecutionCourseAction  extends FenixAction {
+public class CreateSiteInExecutionCourseAction extends FenixAction {
 
-		public ActionForward execute(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-				IUserView userView = SessionUtils.getUserView(request);
-		
-				Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-				Object args[] = { executionCourseId };
-			try {		
-					
-					
-				ServiceUtils.executeService(
-								userView,
-								"CreateSiteInExecutionCourse",
-								args);
-			} catch (NonExistingServiceException exception) {
-							throw new NonExistingActionException(exception.getMessage());	
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			//TODO:ver qd nao exeiste curricularcourse
-			return mapping.findForward("readCurricularCourse");
-		}
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+        IUserView userView = SessionUtils.getUserView(request);
+
+        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        Object args[] = { executionCourseId };
+        try {
+
+            ServiceUtils.executeService(userView, "CreateSiteInExecutionCourse", args);
+        } catch (NonExistingServiceException exception) {
+            throw new NonExistingActionException(exception.getMessage());
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        //TODO:ver qd nao exeiste curricularcourse
+        return mapping.findForward("readCurricularCourse");
+    }
 
 }
-
 

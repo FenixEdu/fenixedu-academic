@@ -65,6 +65,10 @@
 			<bean:message key="link.student.room.distribution" />
 			</html:link></div>
 		</td>
+		<td><div class="gen-button">
+			<html:link page="<%= "/studentTestManagement.do?method=chooseTestSimulationOptions&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" +testCode %>">
+			<bean:message key="label.Simulate"/>
+		</html:link></div></td>
 	</tr>
 	</logic:iterate>
 </table>

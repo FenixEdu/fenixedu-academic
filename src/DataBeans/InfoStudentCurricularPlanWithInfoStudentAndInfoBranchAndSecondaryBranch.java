@@ -10,16 +10,15 @@ import Dominio.IStudentCurricularPlan;
  * @author João Mota
  *  
  */
-public class InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch
-        extends InfoStudentCurricularPlanWithInfoStudentAndInfoBranch {
+public class InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch extends
+        InfoStudentCurricularPlanWithInfoStudentAndInfoBranch {
 
     public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {
 
-            setInfoSecundaryBranch(InfoBranch
-                    .newInfoFromDomain(studentCurricularPlan
-                            .getSecundaryBranch()));
+            setInfoSecundaryBranch(InfoBranch.newInfoFromDomain(studentCurricularPlan
+                    .getSecundaryBranch()));
         }
     }
 

@@ -14,29 +14,37 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IBranch;
+import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
-public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
-        IStudentCurricularPlanPersistente
-{
+public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
+        IPersistentStudentCurricularPlan {
 
     /** Creates a new instance of StudentCurricularPlanOJB */
-    public StudentCurricularPlanOJB()
-    {
+    public StudentCurricularPlanOJB() {
+    }
+
+    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, TipoCurso degreeType)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("student.person.username", username);
+        crit.addEqualTo("student.degreeType", degreeType);
+        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
     }
 
     // TODO Remove TipoCurso from method interface...
     public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
-            TipoCurso degreeType) throws ExcepcaoPersistencia
-    {
+            TipoCurso degreeType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
@@ -45,8 +53,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
 
     }
 
-    public List readAllActiveStudentCurricularPlan(Integer studentNumber) throws ExcepcaoPersistencia
-    {
+    public List readAllActiveStudentCurricularPlan(Integer studentNumber) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
@@ -54,19 +61,32 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
 
     }
 
-    public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan,
-            StudentCurricularPlanState state) throws ExcepcaoPersistencia
-    {
+    public List readAllActiveStudentCurricularPlansWithEnrollmentsInExecutionPeriod(
+            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("enrolments.executionPeriod.idInternal", executionPeriod.getIdInternal());
+        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        return queryList(StudentCurricularPlan.class, crit, true);
+    }
 
-        try
-        {
+    public List readAllActiveStudentCurricularPlansByDegreeWithEnrollmentsInExecutionPeriod(
+            IExecutionPeriod executionPeriod, ICurso degree) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("enrolments.executionPeriod.idInternal", executionPeriod.getIdInternal());
+        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        crit.addEqualTo("degreeCurricularPlan.degree.idInternal", degree.getIdInternal());
+        return queryList(StudentCurricularPlan.class, crit, true);
+    }
+
+    public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan,
+            StudentCurricularPlanState state) throws ExcepcaoPersistencia {
+
+        try {
             Criteria criteria = new Criteria();
             criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
             criteria.addEqualTo("currentState", state);
             return queryList(StudentCurricularPlan.class, criteria);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw e;
         }
     }
@@ -78,8 +98,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
     //        the aplication layer as well.
     // TODO : Write a test case for this method.
     public IStudentCurricularPlan readStudentCurricularPlan(
-            IStudentCurricularPlan studentCurricularPlanToRead) throws ExcepcaoPersistencia
-    {
+            IStudentCurricularPlan studentCurricularPlanToRead) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentCurricularPlanToRead.getStudent().getNumber());
         crit.addEqualTo("student.degreeType", studentCurricularPlanToRead.getStudent().getDegreeType());
@@ -92,13 +111,11 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
 
     }
 
-    public void delete(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia
-    {
+    public void delete(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia {
         super.delete(curricularPlan);
     }
 
-    public List readAllFromStudent(int studentNumber) throws ExcepcaoPersistencia
-    {
+    public List readAllFromStudent(int studentNumber) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.number", new Integer(studentNumber));
@@ -107,8 +124,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
 
     public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(
             Integer studentNumber, TipoCurso degreeType, Specialization specialization)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
@@ -117,9 +133,31 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
 
     }
 
+    public List readAllByStudentNumberAndSpecialization(Integer studentNumber, TipoCurso degreeType,
+            Specialization specialization) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("student.number", studentNumber);
+        crit.addEqualTo("student.degreeType", degreeType);
+        crit.addEqualTo("specialization", specialization.getSpecialization());
+        return queryList(StudentCurricularPlan.class, crit);
+
+    }
+
+    public List readAllByStudentNumberAndSpecializationAndState(Integer studentNumber,
+            TipoCurso degreeType, Specialization specialization, StudentCurricularPlanState state)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("student.number", studentNumber);
+        crit.addEqualTo("student.degreeType", degreeType);
+        crit.addEqualTo("currentState", state);
+        crit.addEqualTo("specialization", specialization.getSpecialization());
+
+        return queryList(StudentCurricularPlan.class, crit);
+
+    }
+
     public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeCurricularPlan.name", degreeCurricularPlan.getName());
         crit
@@ -129,8 +167,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
 
     }
 
-    public List readByBranch(IBranch branch) throws ExcepcaoPersistencia
-    {
+    public List readByBranch(IBranch branch) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("branchKey", branch.getIdInternal());
         return queryList(StudentCurricularPlan.class, criteria);
@@ -162,8 +199,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
     //        return studentCurricularPlans;
     //    }
 
-    public List readByUsername(String username) throws ExcepcaoPersistencia
-    {
+    public List readByUsername(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.person.username", username);
         return queryList(StudentCurricularPlan.class, crit);
@@ -171,8 +207,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
     }
 
     public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", number);
         crit.addEqualTo("student.degreeType", degreeType);
@@ -187,8 +222,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
      * version. The new version now uses Persistence Broker criteria API
      */
     public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
-            TipoCurso degreeType) throws ExcepcaoPersistencia
-    {
+            TipoCurso degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         List studentPlanState = new ArrayList();
         studentPlanState.add(StudentCurricularPlanState.ACTIVE_OBJ);
@@ -207,8 +241,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
     }
 
     public List readAllByStudentAntState(IStudent student, StudentCurricularPlanState state)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentKey", student.getIdInternal());
         criteria.addEqualTo("currentState", state);
@@ -217,8 +250,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
 
     public IStudentCurricularPlan readByStudentDegreeCurricularPlanAndState(IStudent student,
             IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
         criteria.addEqualTo("studentKey", student.getIdInternal());
@@ -227,8 +259,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
     }
 
     public List readAllByStudentAndDegreeCurricularPlan(IStudent student,
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia
-    {
+            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
         criteria.addEqualTo("studentKey", student.getIdInternal());
@@ -236,25 +267,27 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements
         return queryList(StudentCurricularPlan.class, criteria);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IStudentCurricularPlanPersistente#readAllBySeveralDegreeCurricularPlansAndSpecialization(java.util.List, Util.Specialization)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IStudentCurricularPlanPersistente#readAllBySeveralDegreeCurricularPlansAndSpecialization(java.util.List,
+     *      Util.Specialization)
      */
-    public List readAllByDegreeCurricularPlanAndSpecialization(IDegreeCurricularPlan degreeCurricularPlan, Specialization specialization) throws ExcepcaoPersistencia {
+    public List readAllByDegreeCurricularPlanAndSpecialization(
+            IDegreeCurricularPlan degreeCurricularPlan, Specialization specialization)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
-        
-		if (specialization != null && specialization.getSpecialization() != null)
-		{
-			criteria.addEqualTo(
-				"specialization",
-				specialization.getSpecialization());
-		}
-		else //all specialization required, but not records with  specialization null
-		{
-			criteria.addNotNull("specialization");
-		}
-        
+
+        if (specialization != null && specialization.getSpecialization() != null) {
+            criteria.addEqualTo("specialization", specialization.getSpecialization());
+        } else //all specialization required, but not records with
+        // specialization null
+        {
+            criteria.addNotNull("specialization");
+        }
+
         return queryList(StudentCurricularPlan.class, criteria);
     }
 

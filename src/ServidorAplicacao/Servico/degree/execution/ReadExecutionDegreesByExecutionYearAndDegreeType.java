@@ -18,7 +18,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -27,66 +27,52 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IService
-{
+public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IService {
 
     /**
-	 *  
-	 */
-    public ReadExecutionDegreesByExecutionYearAndDegreeType()
-    {
+     *  
+     */
+    public ReadExecutionDegreesByExecutionYearAndDegreeType() {
         super();
     }
 
     public List run(InfoExecutionYear infoExecutionYear, TipoCurso degreeType)
-        throws FenixServiceException
-    {
+            throws FenixServiceException {
 
-        ArrayList infoExecutionDegreeList = null;
+        List infoExecutionDegreeList = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
             IExecutionYear executionYear = null;
-            if (infoExecutionYear == null)
-            {
+            if (infoExecutionYear == null) {
                 IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
                 executionYear = persistentExecutionYear.readCurrentExecutionYear();
-            }
-            else
-            {
+            } else {
                 executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
             }
 
             List executionDegrees = null;
 
-            if (degreeType == null)
-            {
+            if (degreeType == null) {
                 executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
+            } else {
+                executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
+                        degreeType);
             }
-            else
-            {
-                executionDegrees =
-                    executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear, degreeType);
-            }
-            
-            infoExecutionDegreeList =
-                (ArrayList) CollectionUtils.collect(executionDegrees, new Transformer()
-            {
 
-                public Object transform(Object input)
-                {
-                    ICursoExecucao executionDegree = (ICursoExecucao) input;
-                    InfoExecutionDegree infoExecutionDegree =
-                        (InfoExecutionDegree) Cloner.get(executionDegree);
-                    return infoExecutionDegree;
-                }
-            });            
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+            infoExecutionDegreeList = (ArrayList) CollectionUtils.collect(executionDegrees,
+                    new Transformer() {
+
+                        public Object transform(Object input) {
+                            ICursoExecucao executionDegree = (ICursoExecucao) input;
+                            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+                                    .get(executionDegree);
+                            return infoExecutionDegree;
+                        }
+                    });
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", ex);
         }

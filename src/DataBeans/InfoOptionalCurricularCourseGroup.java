@@ -15,15 +15,12 @@ public class InfoOptionalCurricularCourseGroup extends InfoCurricularCourseGroup
     public InfoOptionalCurricularCourseGroup() {
     }
 
-    
-   
-
     public Integer getMinimumNumberOfOptionalCourses() {
         return super.getMinimumValue();
     }
 
     public Integer getMaximumNumberOfOptionalCourses() {
-        return super.getMinimumValue();
+        return super.getMaximumValue();
     }
 
     public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses) {
@@ -67,14 +64,13 @@ public class InfoOptionalCurricularCourseGroup extends InfoCurricularCourseGroup
         return infoCurricularCourseGroup;
     }
 
-
-
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoCurricularCourseGroup#getType()
      */
     public String getType() {
-        
+
         return "label.curricularCourseGroup.optional";
     }
 }

@@ -33,12 +33,10 @@ import Util.TipoCurso;
 /**
  * @author Luis Cruz
  */
-public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
-{
+public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
     public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request);
 
         List infoExecutionDegrees = placeListOfExecutionDegreesInRequest(request);
@@ -54,8 +52,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
         request.setAttribute("infoGroup", infoGroup);
 
         String idInternal = (String) dynaActionForm.get("idInternal");
-        if (idInternal == null || idInternal.equals(""))
-        {
+        if (idInternal == null || idInternal.equals("")) {
             selectExecutionDegree(mapping, form, request, response);
         }
 
@@ -63,22 +60,18 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
 
         if (executionDegreeOID != null && !executionDegreeOID.equals("")
-                && StringUtils.isNumeric(executionDegreeOID))
-        {
+                && StringUtils.isNumeric(executionDegreeOID)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = {userView.getUtilizador(), new Integer(executionDegreeOID)};
-            try
-            {
+            Object[] args = { userView.getUtilizador(), new Integer(executionDegreeOID) };
+            try {
                 ServiceUtils.executeService(userView, "EstablishFinalDegreeWorkStudentGroup", args);
-            } catch (FenixServiceException ex)
-            {
+            } catch (FenixServiceException ex) {
                 prepareCandidacy(mapping, form, request, response);
                 throw ex;
             }
@@ -88,8 +81,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     public ActionForward addStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String idInternal = (String) dynaActionForm.get("idInternal");
         String studentUsernameToAdd = (String) dynaActionForm.get("studentUsernameToAdd");
@@ -97,15 +89,12 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
         IUserView userView = SessionUtils.getUserView(request);
         if (studentUsernameToAdd != null && !studentUsernameToAdd.equals("")
                 && !studentUsernameToAdd.equalsIgnoreCase(userView.getUtilizador())
-                && idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal))
-        {
-            Object[] args = {new Integer(idInternal), studentUsernameToAdd};
+                && idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
+            Object[] args = { new Integer(idInternal), studentUsernameToAdd };
             System.out.println("Adding student: " + studentUsernameToAdd);
-            try
-            {
+            try {
                 ServiceUtils.executeService(userView, "AddStudentToFinalDegreeWorkStudentGroup", args);
-            } catch (FenixServiceException ex)
-            {
+            } catch (FenixServiceException ex) {
                 prepareCandidacy(mapping, form, request, response);
                 throw ex;
             }
@@ -117,8 +106,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     public ActionForward removeStudent(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String idInternal = (String) dynaActionForm.get("idInternal");
         String studentToRemove = (String) dynaActionForm.get("studentToRemove");
@@ -126,15 +114,13 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
         IUserView userView = SessionUtils.getUserView(request);
         if (studentToRemove != null && !studentToRemove.equals("")
                 && StringUtils.isNumeric(studentToRemove) && idInternal != null
-                && !idInternal.equals("") && StringUtils.isNumeric(idInternal))
-        {
-            Object[] args = {userView.getUtilizador(), new Integer(idInternal),
-                    new Integer(studentToRemove)};
-            try
-            {
-                ServiceUtils.executeService(userView, "RemoveStudentFromFinalDegreeWorkStudentGroup", args);
-            } catch (FenixServiceException ex)
-            {
+                && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
+            Object[] args = { userView.getUtilizador(), new Integer(idInternal),
+                    new Integer(studentToRemove) };
+            try {
+                ServiceUtils.executeService(userView, "RemoveStudentFromFinalDegreeWorkStudentGroup",
+                        args);
+            } catch (FenixServiceException ex) {
                 prepareCandidacy(mapping, form, request, response);
                 throw ex;
             }
@@ -146,16 +132,14 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     public ActionForward selectProposals(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String groupOID = (String) dynaActionForm.get("idInternal");
 
-        if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID))
-        {
+        if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = {new Integer(groupOID)};
+            Object[] args = { new Integer(groupOID) };
             List finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(userView,
                     "ReadAvailableFinalDegreeWorkProposalHeadersForGroup", args);
             request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
@@ -165,25 +149,22 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     public ActionForward addProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String groupOID = (String) dynaActionForm.get("idInternal");
         String selectedProposal = (String) dynaActionForm.get("selectedProposal");
 
         if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID)
                 && selectedProposal != null && !selectedProposal.equals("")
-                && StringUtils.isNumeric(selectedProposal))
-        {
+                && StringUtils.isNumeric(selectedProposal)) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = {new Integer(groupOID), new Integer(selectedProposal)};
-            try
-            {
-                ServiceUtils.executeService(userView, "AddFinalDegreeWorkProposalCandidacyForGroup", args);
-            } catch (FenixServiceException ex)
-            {
-                prepareCandidacy(mapping, form, request, response); 
+            Object[] args = { new Integer(groupOID), new Integer(selectedProposal) };
+            try {
+                ServiceUtils.executeService(userView, "AddFinalDegreeWorkProposalCandidacyForGroup",
+                        args);
+            } catch (FenixServiceException ex) {
+                prepareCandidacy(mapping, form, request, response);
                 throw ex;
             }
         }
@@ -192,8 +173,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     public ActionForward removeProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String idInternal = (String) dynaActionForm.get("idInternal");
         String selectedGroupProposal = (String) dynaActionForm.get("selectedGroupProposal");
@@ -201,9 +181,8 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
         IUserView userView = SessionUtils.getUserView(request);
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("")
                 && StringUtils.isNumeric(selectedGroupProposal) && idInternal != null
-                && !idInternal.equals("") && StringUtils.isNumeric(idInternal))
-        {
-            Object[] args = {new Integer(idInternal), new Integer(selectedGroupProposal)};
+                && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
+            Object[] args = { new Integer(idInternal), new Integer(selectedGroupProposal) };
             ServiceUtils.executeService(userView, "RemoveProposalFromFinalDegreeWorkStudentGroup", args);
         }
 
@@ -213,8 +192,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     public ActionForward changePreferenceOrder(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String idInternal = (String) dynaActionForm.get("idInternal");
         String selectedGroupProposal = (String) dynaActionForm.get("selectedGroupProposal");
@@ -226,11 +204,10 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
                 && StringUtils.isNumeric(selectedGroupProposal) && idInternal != null
                 && !idInternal.equals("") && StringUtils.isNumeric(idInternal)
                 && orderOfProposalPreference != null && !orderOfProposalPreference.equals("")
-                && StringUtils.isNumeric(orderOfProposalPreference))
-        {
+                && StringUtils.isNumeric(orderOfProposalPreference)) {
             System.out.println("Calling ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.");
-            Object[] args = {new Integer(idInternal), new Integer(selectedGroupProposal),
-                    new Integer(orderOfProposalPreference)};
+            Object[] args = { new Integer(idInternal), new Integer(selectedGroupProposal),
+                    new Integer(orderOfProposalPreference) };
             ServiceUtils.executeService(userView,
                     "ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy", args);
         }
@@ -241,44 +218,38 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     private boolean checkCandidacyConditions(IUserView userView, String executionDegreeOID)
-            throws FenixServiceException
-    {
-        Object[] args = {userView, new Integer(executionDegreeOID)};
+            throws FenixServiceException {
+        Object[] args = { userView, new Integer(executionDegreeOID) };
         ServiceUtils.executeService(userView, "CheckCandidacyConditionsForFinalDegreeWork", args);
         return true;
     }
 
     private InfoGroup fillOutFinalDegreeWorkCandidacyForm(ActionForm form, HttpServletRequest request)
-            throws Exception
-    {
+            throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Object[] args = {userView.getUtilizador()};
+        Object[] args = { userView.getUtilizador() };
         InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(userView,
                 "ReadFinalDegreeWorkStudentGroupByUsername", args);
 
-        if (infoGroup != null)
-        {
+        if (infoGroup != null) {
             if (infoGroup.getExecutionDegree() != null
-                    && infoGroup.getExecutionDegree().getIdInternal() != null)
-            {
+                    && infoGroup.getExecutionDegree().getIdInternal() != null) {
                 String executionDegreeOID = infoGroup.getExecutionDegree().getIdInternal().toString();
                 dynaActionForm.set("executionDegreeOID", executionDegreeOID);
             }
-            if (infoGroup.getGroupStudents() != null && !infoGroup.getGroupStudents().isEmpty())
-            {
+            if (infoGroup.getGroupStudents() != null && !infoGroup.getGroupStudents().isEmpty()) {
                 String[] students = new String[infoGroup.getGroupStudents().size()];
-                for (int i = 0; i < infoGroup.getGroupStudents().size(); i++)
-                {
-                    InfoGroupStudent infoGroupStudent = (InfoGroupStudent) infoGroup.getGroupStudents().get(i);
+                for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
+                    InfoGroupStudent infoGroupStudent = (InfoGroupStudent) infoGroup.getGroupStudents()
+                            .get(i);
                     students[i] = infoGroupStudent.getStudent().getIdInternal().toString();
                 }
                 dynaActionForm.set("students", students);
             }
-            if (infoGroup.getIdInternal() != null)
-            {
+            if (infoGroup.getIdInternal() != null) {
                 dynaActionForm.set("idInternal", infoGroup.getIdInternal().toString());
             }
             Collections.sort(infoGroup.getGroupProposals(), new BeanComparator("orderOfPreference"));
@@ -288,18 +259,16 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
     }
 
     private void setDefaultExecutionDegree(ActionForm form, HttpServletRequest request,
-            List infoExecutionDegrees) throws Exception
-    {
+            List infoExecutionDegrees) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
 
         if ((executionDegreeOID == null || executionDegreeOID.length() == 0 || executionDegreeOID
                 .equals(""))
-                && infoExecutionDegrees != null && !infoExecutionDegrees.isEmpty())
-        {
+                && infoExecutionDegrees != null && !infoExecutionDegrees.isEmpty()) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = {userView, TipoCurso.LICENCIATURA_OBJ};
+            Object[] args = { userView, TipoCurso.LICENCIATURA_OBJ };
             InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils
                     .executeService(userView, "ReadActiveStudentCurricularPlanByDegreeType", args);
 
@@ -307,8 +276,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
                     infoExecutionDegrees, new PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(
                             infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal()));
 
-            if (infoExecutionDegree != null && infoExecutionDegree.getIdInternal() != null)
-            {
+            if (infoExecutionDegree != null && infoExecutionDegree.getIdInternal() != null) {
                 executionDegreeOID = infoExecutionDegree.getIdInternal().toString();
                 dynaActionForm.set("executionDegreeOID", executionDegreeOID);
                 request.setAttribute("finalDegreeWorkCandidacyForm", dynaActionForm);
@@ -320,13 +288,12 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
      * @param request
      */
     private List placeListOfExecutionDegreesInRequest(HttpServletRequest request)
-            throws FenixServiceException
-    {
+            throws FenixServiceException {
         Object[] args = {};
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null,
                 "ReadCurrentExecutionYear", args);
 
-        args = new Object[]{infoExecutionYear.getIdInternal(), TipoCurso.LICENCIATURA_OBJ};
+        args = new Object[] { infoExecutionYear.getIdInternal(), TipoCurso.LICENCIATURA_OBJ };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
                 "ReadExecutionDegreesByExecutionYearAndType", args);
         Collections.sort(infoExecutionDegrees, new BeanComparator(
@@ -336,29 +303,25 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction
         return infoExecutionDegrees;
     }
 
-    private class PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB implements Predicate
-    {
+    private class PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB implements Predicate {
 
         Integer degreeCurricularPlanID = null;
 
-        public boolean evaluate(Object arg0)
-        {
+        public boolean evaluate(Object arg0) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
             if (degreeCurricularPlanID != null
                     && infoExecutionDegree != null
                     && infoExecutionDegree.getInfoDegreeCurricularPlan() != null
                     && degreeCurricularPlanID.equals(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                            .getIdInternal()))
-            {
+                            .getIdInternal())) {
                 return true;
             }
-           
-                return false;
-            
+
+            return false;
+
         }
 
-        public PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(Integer degreeCurricularPlanID)
-        {
+        public PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(Integer degreeCurricularPlanID) {
             super();
             this.degreeCurricularPlanID = degreeCurricularPlanID;
         }

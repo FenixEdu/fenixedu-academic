@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.apache.commons.collections.Predicate;
 
-import commons.CollectionUtils;
-
 import Util.AgreementType;
 import Util.EntryPhase;
 import Util.StudentCurricularPlanState;
 import Util.StudentState;
 import Util.TipoCurso;
+
+import commons.CollectionUtils;
 
 /**
  * @author dcs-rjao
@@ -27,15 +27,17 @@ public class Student extends DomainObject implements IStudent {
     protected TipoCurso degreeType;
 
     private IStudentKind studentKind;
+
     private Integer studentKindKey;
 
     private AgreementType agreementType;
 
     private IPessoa person;
+
     private Integer personKey;
 
-
     private IExecutionYear registrationYear;
+
     private Integer keyRegistrationYear;
 
     private EntryPhase entryPhase;
@@ -45,6 +47,17 @@ public class Student extends DomainObject implements IStudent {
     private Boolean enrollmentForbidden;
 
     protected List studentCurricularPlans;
+
+    private Boolean specialSeason;
+
+    //Nuno Correia & Ricardo Rodrigues
+    private Double entryGrade;
+
+    private String contigent;
+
+    private String ingression;
+
+    private String istUniversity;
 
     public Student(Integer idInternal) {
         setIdInternal(idInternal);
@@ -59,6 +72,7 @@ public class Student extends DomainObject implements IStudent {
         setPersonKey(null);
         setStudentKind(null);
         setStudentKindKey(null);
+        setSpecialSeason(new Boolean(false));
     }
 
     public Student(Integer number, StudentState state, IPessoa person, TipoCurso degreeType) {
@@ -69,6 +83,7 @@ public class Student extends DomainObject implements IStudent {
         setDegreeType(degreeType);
 
         setPersonKey(null);
+        setSpecialSeason(new Boolean(false));
     }
 
     public boolean equals(Object obj) {
@@ -332,10 +347,86 @@ public class Student extends DomainObject implements IStudent {
                         return studentCurricularPlan.getCurrentState().getState().intValue() == StudentCurricularPlanState.ACTIVE;
                     }
                 });
-        
-        if (studentCurricularPlan==null){
+
+        if (studentCurricularPlan == null) {
             studentCurricularPlan = (IStudentCurricularPlan) curricularPlans.get(0);
         }
         return studentCurricularPlan;
+    }
+
+    //Nuno Correia & Ricardo Rodrigues
+    /**
+     * @return Returns the contigent.
+     */
+    public String getContigent() {
+        return contigent;
+    }
+
+    /**
+     * @param contigent
+     *            The contigent to set.
+     */
+    public void setContigent(String contigent) {
+        this.contigent = contigent;
+    }
+
+    /**
+     * @return Returns the entryGrade.
+     */
+    public Double getEntryGrade() {
+        return entryGrade;
+    }
+
+    /**
+     * @param entryGrade
+     *            The entryGrade to set.
+     */
+    public void setEntryGrade(Double entryGrade) {
+        this.entryGrade = entryGrade;
+    }
+
+    /**
+     * @return Returns the ingression.
+     */
+    public String getIngression() {
+        return ingression;
+    }
+
+    /**
+     * @param ingression
+     *            The ingression to set.
+     */
+    public void setIngression(String ingression) {
+        this.ingression = ingression;
+    }
+
+    /**
+     * @return Returns the istUniversity.
+     */
+    public String getIstUniversity() {
+        return istUniversity;
+    }
+
+    /**
+     * @param istUniversity
+     *            The istUniversity to set.
+     */
+    public void setIstUniversity(String istUniversity) {
+        this.istUniversity = istUniversity;
+    }
+
+    /**
+     * @return Returns the specialSeason.
+     */
+    public Boolean getSpecialSeason() {
+        return specialSeason;
+    }
+
+    /**
+     * @param specialSeason
+     *            The specialSeason to set.
+     */
+    public void setSpecialSeason(Boolean specialSeason) {
+        this.specialSeason = specialSeason;
     }
 }

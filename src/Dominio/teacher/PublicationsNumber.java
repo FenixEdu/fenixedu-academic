@@ -13,124 +13,122 @@ import Util.PublicationType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class PublicationsNumber extends DomainObject implements IPublicationsNumber
-{
+public class PublicationsNumber extends DomainObject implements IPublicationsNumber {
     private Date lastModificationDate;
+
     private Integer keyTeacher;
+
     private ITeacher teacher;
+
     private Integer national;
+
     private Integer international;
+
     private PublicationType publicationType;
-    
+
     /**
-     * 
+     *  
      */
-    public PublicationsNumber()
-    {
+    public PublicationsNumber() {
         super();
     }
+
     /**
      * @param publicationsNumberId
      */
-    public PublicationsNumber(Integer idInternal)
-    {
+    public PublicationsNumber(Integer idInternal) {
         super(idInternal);
     }
+
     /**
      * @return Returns the international.
      */
-    public Integer getInternational()
-    {
+    public Integer getInternational() {
         return international;
     }
 
     /**
-     * @param international The international to set.
+     * @param international
+     *            The international to set.
      */
-    public void setInternational(Integer international)
-    {
+    public void setInternational(Integer international) {
         this.international = international;
     }
 
     /**
      * @return Returns the keyTeacher.
      */
-    public Integer getKeyTeacher()
-    {
+    public Integer getKeyTeacher() {
         return keyTeacher;
     }
 
     /**
-     * @param keyTeacher The keyTeacher to set.
+     * @param keyTeacher
+     *            The keyTeacher to set.
      */
-    public void setKeyTeacher(Integer keyTeacher)
-    {
+    public void setKeyTeacher(Integer keyTeacher) {
         this.keyTeacher = keyTeacher;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
     /**
      * @return Returns the national.
      */
-    public Integer getNational()
-    {
+    public Integer getNational() {
         return national;
     }
 
     /**
-     * @param national The national to set.
+     * @param national
+     *            The national to set.
      */
-    public void setNational(Integer national)
-    {
+    public void setNational(Integer national) {
         this.national = national;
     }
 
     /**
      * @return Returns the publicationType.
      */
-    public PublicationType getPublicationType()
-    {
+    public PublicationType getPublicationType() {
         return publicationType;
     }
 
     /**
-     * @param publicationType The publicationType to set.
+     * @param publicationType
+     *            The publicationType to set.
      */
-    public void setPublicationType(PublicationType publicationType)
-    {
+    public void setPublicationType(PublicationType publicationType) {
         this.publicationType = publicationType;
     }
 
     /**
      * @return Returns the teacher.
      */
-    public ITeacher getTeacher()
-    {
+    public ITeacher getTeacher() {
         return teacher;
     }
 
     /**
-     * @param teacher The teacher to set.
+     * @param teacher
+     *            The teacher to set.
      */
-    public void setTeacher(ITeacher teacher)
-    {
+    public void setTeacher(ITeacher teacher) {
         this.teacher = teacher;
     }
 

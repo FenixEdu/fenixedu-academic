@@ -14,9 +14,8 @@ import ServidorPersistente.IPersistentObject;
  * @author Sergio Montelobo
  *  
  */
-public interface IPersistentStudentCourseReport extends IPersistentObject
-{
+public interface IPersistentStudentCourseReport extends IPersistentObject {
 
     public IStudentCourseReport readByCurricularCourse(ICurricularCourse curricularCourse)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 }

@@ -19,8 +19,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoCandidateApproval;
 import DataBeans.InfoCandidateApprovalGroup;
 import DataBeans.InfoExecutionDegree;
@@ -32,16 +30,15 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.SituationName;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class SelectCandidatesDispatchAction extends DispatchAction
-{
+public class SelectCandidatesDispatchAction extends DispatchAction {
 
     public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -51,39 +48,32 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String executionYear = (String) request.getAttribute("executionYear");
         String degree = (String) request.getAttribute("degree");
         Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-		request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
-        if (executionYear == null)
-        {
+        request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+        if (executionYear == null) {
             executionYear = (String) approvalForm.get("executionYear");
         }
 
-        if (degree == null)
-        {
+        if (degree == null) {
             degree = (String) approvalForm.get("degree");
         }
 
         // Get Numerus Clausus
         Integer numerusClausus = null;
-        try
-        {
-            Object args[] = {executionDegree};
+        try {
+            Object args[] = { executionDegree };
             numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
                     "ReadNumerusClausus", args);
-        }
-        catch (NonExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);
         }
-        if (numerusClausus == null)
-        {
+        if (numerusClausus == null) {
             ActionErrors errors = new ActionErrors();
             errors.add("numerusClaususNotDefined", new ActionError("error.numerusClausus.notDefined"));
             saveErrors(request, errors);
             return mapping.findForward("NumerusClaususNotDefined");
         }
-      
-            request.setAttribute("numerusClausus", numerusClausus);
-        
+
+        request.setAttribute("numerusClausus", numerusClausus);
 
         //Create the Candidate Situation List
         List situationsList = new ArrayList();
@@ -99,6 +89,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction
                 SituationName.ADMITED_CONDICIONAL_OTHER_STRING));
         situationsList.add(new LabelValueBean(SituationName.NAO_ACEITE_STRING,
                 SituationName.NAO_ACEITE_STRING));
+        situationsList.add(new LabelValueBean(SituationName.PENDENTE_CONFIRMADO_STRING,
+                SituationName.PENDENTE_CONFIRMADO_STRING));
         situationsList.add(new LabelValueBean(SituationName.SUPLENTE_STRING,
                 SituationName.SUPLENTE_STRING));
         situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING,
@@ -114,26 +106,22 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         List activeSituations = new ArrayList();
         activeSituations.add(new SituationName(SituationName.PENDENT_CONFIRMADO));
+        activeSituations.add(new SituationName(SituationName.FALTA_CERTIFICADO));
 
-        Object args[] = {executionDegree, activeSituations};
+        Object args[] = { executionDegree, activeSituations };
 
-        try
-        {
+        try {
             candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
                     "ReadCandidatesForSelection", args);
 
-        }
-        catch (NonExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
             ActionErrors errors = new ActionErrors();
             errors.add("nonExisting", new ActionError(
                     "error.masterDegree.administrativeOffice.nonExistingCandidates"));
             saveErrors(request, errors);
             return mapping.getInputForward();
 
-        }
-        catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
 
@@ -147,8 +135,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         Iterator iterator = candidateList.iterator();
         int i = 0;
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             ids[i++] = ((InfoMasterDegreeCandidate) iterator.next()).getIdInternal().toString();
         }
 
@@ -168,8 +155,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
     }
 
     public ActionForward selectCandidates(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -177,7 +163,9 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        if (!isTokenValid(request)) { return mapping.findForward("BackError"); }
+        if (!isTokenValid(request)) {
+            return mapping.findForward("BackError");
+        }
 
         String[] candidateList = (String[]) approvalForm.get("situations");
         String[] ids = (String[]) approvalForm.get("candidatesID");
@@ -186,19 +174,16 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String degree = (String) approvalForm.get("degree");
         Integer executionDegree = null;
         String executionDegreeFromRequest = request.getParameter("executionDegreeID");
-        if(executionDegreeFromRequest != null && executionDegreeFromRequest.length() > 0) {
+        if (executionDegreeFromRequest != null && executionDegreeFromRequest.length() > 0) {
             executionDegree = Integer.valueOf(executionDegreeFromRequest);
         }
         List candidatesAdmited = new ArrayList();
 
-        try
-        {
-            Object args[] = {candidateList, ids};
+        try {
+            Object args[] = { candidateList, ids };
             candidatesAdmited = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
                     "ReadAdmitedCandidates", args);
-        }
-        catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
 
@@ -208,43 +193,42 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
-		session.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+        session.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
         // Get Numerus Clausus
         Integer numerusClausus = null;
-        try
-        {
+        try {
             //Object args[] = { executionYear, degree };
-            Object args[] = {executionDegree};
+            Object args[] = { executionDegree };
             numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
                     "ReadNumerusClausus", args);
-        }
-        catch (NonExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);
         }
-        if (candidatesAdmited.size() > numerusClausus.intValue())
-        {
+        if (candidatesAdmited.size() > numerusClausus.intValue()) {
             generateToken(request);
             saveToken(request);
             return mapping.findForward("RequestConfirmation");
         }
 
-        if (hasSubstitutes(candidateList)) { return mapping.findForward("OrderCandidates"); }
+        if (hasSubstitutes(candidateList)) {
+            return mapping.findForward("OrderCandidates");
+        }
 
         return mapping.findForward("ChooseSuccess");
     }
 
     public ActionForward next(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         DynaActionForm approvalForm = (DynaActionForm) form;
 
-        if (!isTokenValid(request)) { return mapping.findForward("BackError"); }
+        if (!isTokenValid(request)) {
+            return mapping.findForward("BackError");
+        }
 
         String[] candidateList = (String[]) approvalForm.get("situations");
         String[] ids = (String[]) approvalForm.get("candidatesID");
@@ -259,37 +243,31 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         request.setAttribute("situations", candidateList);
         request.setAttribute("remarks", remarks);
 
-        if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null))
-        {
-            Object args[] = {candidateList, ids};
+        if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null)) {
+            Object args[] = { candidateList, ids };
             List result = null;
-            try
-            {
+            try {
                 result = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
                         "ReadSubstituteCandidates", args);
-            }
-            catch (ExistingServiceException e)
-            {
+            } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
             }
 
-            if (hasSubstitutes(candidateList))
-            {
+            if (hasSubstitutes(candidateList)) {
                 request.setAttribute("candidateList", result);
                 return mapping.findForward("OrderCandidates");
             }
-          
-                return mapping.findForward("ChooseSuccess");
-            
+
+            return mapping.findForward("ChooseSuccess");
+
         }
-       
-            return mapping.findForward("Cancel");
-        
+
+        return mapping.findForward("Cancel");
+
     }
 
     public ActionForward getSubstituteCandidates(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -297,48 +275,42 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        if (!isTokenValid(request))
-        {
+        if (!isTokenValid(request)) {
             return mapping.findForward("BackError");
         }
-    
-            generateToken(request);
-            saveToken(request);
-        
+
+        generateToken(request);
+        saveToken(request);
 
         String[] candidateList = (String[]) substituteForm.get("situations");
         String[] ids = (String[]) substituteForm.get("candidatesID");
         String[] remarks = (String[]) substituteForm.get("remarks");
         String[] substitutes = (String[]) substituteForm.get("substitutes");
-		String executionDegree = (String) request.getAttribute("executionDegreeID");
-		if (executionDegree == null)
-		executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
+        String executionDegree = (String) request.getAttribute("executionDegreeID");
+        if (executionDegree == null)
+            executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
 
         request.setAttribute("substitutes", substitutes);
         request.setAttribute("candidatesID", ids);
         request.setAttribute("situations", candidateList);
         request.setAttribute("remarks", remarks);
-		request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+        request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
 
         List result = null;
-        Object args[] = {ids};
-        try
-        {
+        Object args[] = { ids };
+        try {
             result = (List) ServiceManagerServiceFactory
                     .executeService(userView, "ReadCandidates", args);
-        }
-        catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
         request.setAttribute("candidateList", result);
-		session.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
+        session.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
         return mapping.findForward("OrderCandidatesReady");
     }
 
     public ActionForward preparePresentation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -353,9 +325,10 @@ public class SelectCandidatesDispatchAction extends DispatchAction
 
         String executionDegree = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
         if (executionDegree == null)
-			executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
-System.out.println("*****************" + executionDegree);
-        if (!isTokenValid(request)) { return mapping.findForward("BackError"); }
+            executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
+        if (!isTokenValid(request)) {
+            return mapping.findForward("BackError");
+        }
 
         request.setAttribute("situations", candidateList);
         request.setAttribute("candidatesID", ids);
@@ -366,18 +339,14 @@ System.out.println("*****************" + executionDegree);
         resultForm.set("executionYear", resultForm.get("executionYear"));
         resultForm.set("degree", resultForm.get("degree"));
 
-        try
-        {
-            if (!validSubstituteForm(candidateList, substitutes))
-            {
+        try {
+            if (!validSubstituteForm(candidateList, substitutes)) {
                 ActionErrors errors = new ActionErrors();
                 errors.add("nonExisting", new ActionError("error.invalidOrdering"));
                 saveErrors(request, errors);
                 return mapping.findForward("OrderCandidates");
             }
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             ActionErrors errors = new ActionErrors();
             errors.add("nonExisting", new ActionError("error.numberError"));
             saveErrors(request, errors);
@@ -386,14 +355,11 @@ System.out.println("*****************" + executionDegree);
 
         List candidates = new ArrayList();
 
-        Object args[] = {ids};
-        try
-        {
+        Object args[] = { ids };
+        try {
             candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates",
                     args);
-        }
-        catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
 
@@ -403,12 +369,9 @@ System.out.println("*****************" + executionDegree);
 
         request.setAttribute("infoGroup", result);
 
-        if (request.getAttribute("confirmation") != null)
-        {
+        if (request.getAttribute("confirmation") != null) {
             request.setAttribute("confirmation", request.getAttribute("confirmation"));
-        }
-        else
-        {
+        } else {
             request.setAttribute("confirmation", "YES");
             generateToken(request);
             saveToken(request);
@@ -440,8 +403,7 @@ System.out.println("*****************" + executionDegree);
     }
 
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -462,14 +424,11 @@ System.out.println("*****************" + executionDegree);
 
         List candidates = new ArrayList();
 
-        try
-        {
-            Object args[] = {ids};
+        try {
+            Object args[] = { ids };
             candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates",
                     args);
-        }
-        catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
 
@@ -500,27 +459,21 @@ System.out.println("*****************" + executionDegree);
 
         InfoExecutionDegree infoExecutionDegree = null;
 
-        try
-        {
+        try {
             // Object args[] = { resultForm.get("executionYear"),
             // resultForm.get("degree")};
-            Object args[] = {executionDegree};
+            Object args[] = { executionDegree };
             infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                     userView, "ReadExecutionDegreeByOID", args);
-        }
-        catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
 
         request.setAttribute("infoExecutionDegree", infoExecutionDegree);
 
-        if (request.getAttribute("confirmation") != null)
-        {
+        if (request.getAttribute("confirmation") != null) {
             request.setAttribute("confirmation", request.getAttribute("confirmation"));
-        }
-        else
-        {
+        } else {
             request.setAttribute("confirmation", "PRINT_PAGE");
         }
         return mapping.findForward("PrintReady");
@@ -532,22 +485,21 @@ System.out.println("*****************" + executionDegree);
      * @return
      */
     private boolean validSubstituteForm(String[] situations, String[] substitutes)
-            throws NumberFormatException
-    {
+            throws NumberFormatException {
         List aux = new ArrayList();
 
-        for (int i = 0; i < situations.length; i++)
-        {
+        for (int i = 0; i < situations.length; i++) {
             if ((situations[i].equals(SituationName.SUPLENTE_STRING))
                     || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
                     || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
-                    || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)))
-            {
+                    || (situations[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))) {
                 aux.add(new Integer(substitutes[i]));
             }
         }
 
-        if (aux.size() == 0) { return true; }
+        if (aux.size() == 0) {
+            return true;
+        }
 
         Collections.sort(aux);
 
@@ -556,21 +508,23 @@ System.out.println("*****************" + executionDegree);
 
         previous = (Integer) iterator.next();
 
-        if (previous.intValue() != 1) { return false; }
+        if (previous.intValue() != 1) {
+            return false;
+        }
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             Integer actual = (Integer) iterator.next();
 
-            if (actual.intValue() != (previous.intValue() + 1)) { return false; }
+            if (actual.intValue() != (previous.intValue() + 1)) {
+                return false;
+            }
             previous = actual;
         }
         return true;
     }
 
     public ActionForward aprove(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
@@ -594,16 +548,12 @@ System.out.println("*****************" + executionDegree);
         substituteForm.set("executionYear", substituteForm.get("executionYear"));
         substituteForm.set("degree", substituteForm.get("degree"));
 
-        if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null))
-        {
+        if ((request.getParameter("OK") != null) && (request.getParameter("notOK") == null)) {
 
-            Object args[] = {candidateList, ids, remarks, substitutes};
-            try
-            {
+            Object args[] = { candidateList, ids, remarks, substitutes };
+            try {
                 ServiceManagerServiceFactory.executeService(userView, "ApproveCandidates", args);
-            }
-            catch (ExistingServiceException e)
-            {
+            } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
             }
 
@@ -622,30 +572,18 @@ System.out.println("*****************" + executionDegree);
     /**
      * @param result
      */
-    private void sortLists(List result)
-    {
+    private void sortLists(List result) {
 
         Iterator iterator = result.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             InfoCandidateApprovalGroup infoCandidateApprovalGroup = (InfoCandidateApprovalGroup) iterator
                     .next();
             BeanComparator comparator = null;
 
-            if ((infoCandidateApprovalGroup.getSituationName().equals(SituationName.ADMITIDO_STRING))
-                    || (infoCandidateApprovalGroup.getSituationName()
-                            .equals(SituationName.ADMITED_SPECIALIZATION_STRING)))
-            {
+            if (!infoCandidateApprovalGroup.getSituationName().equals(SituationName.SUPLENTE_STRING)) {
                 comparator = new BeanComparator("candidateName");
-            }
-            else if (infoCandidateApprovalGroup.getSituationName().equals(SituationName.SUPLENTE_STRING))
-            {
+            } else {
                 comparator = new BeanComparator("orderPosition");
-            }
-            else if (infoCandidateApprovalGroup.getSituationName().equals(
-                    SituationName.NAO_ACEITE_STRING))
-            {
-                comparator = new BeanComparator("candidateName");
             }
             Collections.sort(infoCandidateApprovalGroup.getCandidates(), comparator);
         }
@@ -659,8 +597,7 @@ System.out.println("*****************" + executionDegree);
      * @return
      */
     private List getLists(String[] candidateList, String[] ids, String[] remarks, String[] substitutes,
-            List candidates)
-    {
+            List candidates) {
         InfoCandidateApprovalGroup approvedList = new InfoCandidateApprovalGroup();
         approvedList.setSituationName(SituationName.ADMITIDO_STRING);
 
@@ -673,44 +610,33 @@ System.out.println("*****************" + executionDegree);
         InfoCandidateApprovalGroup specializationList = new InfoCandidateApprovalGroup();
         specializationList.setSituationName(SituationName.ADMITED_SPECIALIZATION_STRING);
 
-        for (int i = 0; i < candidateList.length; i++)
-        {
+        for (int i = 0; i < candidateList.length; i++) {
             InfoCandidateApproval infoCandidateApproval = new InfoCandidateApproval();
             infoCandidateApproval.setCandidateName(((InfoMasterDegreeCandidate) candidates.get(i))
                     .getInfoPerson().getNome());
             infoCandidateApproval.setIdInternal(new Integer(ids[i]));
-            if ((substitutes[i] != null) && (substitutes[i].length() > 0))
-            {
+            if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {
                 infoCandidateApproval.setOrderPosition(new Integer(substitutes[i]));
-            }
-            else
-            {
+            } else {
                 infoCandidateApproval.setOrderPosition(null);
             }
 
             infoCandidateApproval.setRemarks(remarks[i]);
             infoCandidateApproval.setSituationName(candidateList[i]);
 
-            if ((candidateList[i].equals(SituationName.ADMITED_SPECIALIZATION_STRING)))
-            {
+            if ((candidateList[i].equals(SituationName.ADMITED_SPECIALIZATION_STRING))) {
                 specializationList.getCandidates().add(infoCandidateApproval);
-            }
-            else if ((candidateList[i].equals(SituationName.ADMITIDO_STRING))
+            } else if ((candidateList[i].equals(SituationName.ADMITIDO_STRING))
                     || (candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING))
                     || (candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING))
-                    || (candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)))
-            {
+                    || (candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING))) {
                 approvedList.getCandidates().add(infoCandidateApproval);
-            }
-            else if ((candidateList[i].equals(SituationName.SUPLENTE_STRING))
+            } else if ((candidateList[i].equals(SituationName.SUPLENTE_STRING))
                     || (candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
                     || (candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
-                    || (candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)))
-            {
+                    || (candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))) {
                 substitutesList.getCandidates().add(infoCandidateApproval);
-            }
-            else if (candidateList[i].equals(SituationName.NAO_ACEITE_STRING))
-            {
+            } else if (candidateList[i].equals(SituationName.NAO_ACEITE_STRING)) {
                 notApprovedList.getCandidates().add(infoCandidateApproval);
             }
         }
@@ -724,12 +650,10 @@ System.out.println("*****************" + executionDegree);
         return result;
     }
 
-    private static boolean hasSubstitutes(String[] list)
-    {
+    private static boolean hasSubstitutes(String[] list) {
         int size = list.length;
         int i = 0;
-        for (i = 0; i < size; i++)
-        {
+        for (i = 0; i < size; i++) {
             if (list[i].equals(SituationName.SUPLENTE_STRING)
                     || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)
                     || list[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)

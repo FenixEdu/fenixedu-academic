@@ -12,15 +12,13 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class GEPAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class GEPAuthorizationFilter extends AuthorizationByRoleFilter {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.GEP;
     }
 }

@@ -8,119 +8,140 @@ package Dominio;
  * @author jpvl
  */
 public class CurricularCourseLoad {
-	private Integer idInternal;
-	private String degreeCode;
-	private String courseName;
-	private Double theoHours;
-	private Double pratHours;
-	private Double theoPratHours;
-	private Double labHours;
-	
-	public CurricularCourseLoad(){
-	}
-	/**
-	 * @return Integer
-	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
+    private Integer idInternal;
 
-	/**
-	 * @return Double
-	 */
-	public Double getLabHours() {
-		return labHours;
-	}
+    private String degreeCode;
 
-	/**
-	 * @return Double
-	 */
-	public Double getPratHours() {
-		return pratHours;
-	}
+    private String courseName;
 
-	/**
-	 * @return Double
-	 */
-	public Double getTheoHours() {
-		return theoHours;
-	}
+    private Double theoHours;
 
-	/**
-	 * @return Double
-	 */
-	public Double getTheoPratHours() {
-		return theoPratHours;
-	}
+    private Double pratHours;
 
-	/**
-	 * Sets the idInternal.
-	 * @param idInternal The idInternal to set
-	 */
-	public void setIdInternal(Integer idInternal) {
-		this.idInternal = idInternal;
-	}
+    private Double theoPratHours;
 
-	/**
-	 * Sets the labHours.
-	 * @param labHours The labHours to set
-	 */
-	public void setLabHours(Double labHours) {
-		this.labHours = labHours;
-	}
+    private Double labHours;
 
-	/**
-	 * Sets the pratHours.
-	 * @param pratHours The pratHours to set
-	 */
-	public void setPratHours(Double pratHours) {
-		this.pratHours = pratHours;
-	}
+    public CurricularCourseLoad() {
+    }
 
-	/**
-	 * Sets the theoHours.
-	 * @param theoHours The theoHours to set
-	 */
-	public void setTheoHours(Double theoHours) {
-		this.theoHours = theoHours;
-	}
+    /**
+     * @return Integer
+     */
+    public Integer getIdInternal() {
+        return idInternal;
+    }
 
-	/**
-	 * Sets the theoPratHours.
-	 * @param theoPratHours The theoPratHours to set
-	 */
-	public void setTheoPratHours(Double theoPratHours) {
-		this.theoPratHours = theoPratHours;
-	}
+    /**
+     * @return Double
+     */
+    public Double getLabHours() {
+        return labHours;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getCourseName() {
-		return courseName;
-	}
+    /**
+     * @return Double
+     */
+    public Double getPratHours() {
+        return pratHours;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getDegreeCode() {
-		return degreeCode;
-	}
+    /**
+     * @return Double
+     */
+    public Double getTheoHours() {
+        return theoHours;
+    }
 
-	/**
-	 * Sets the courseName.
-	 * @param courseName The courseName to set
-	 */
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
+    /**
+     * @return Double
+     */
+    public Double getTheoPratHours() {
+        return theoPratHours;
+    }
 
-	/**
-	 * Sets the degreeCode.
-	 * @param degreeCode The degreeCode to set
-	 */
-	public void setDegreeCode(String degreeCode) {
-		this.degreeCode = degreeCode;
-	}
+    /**
+     * Sets the idInternal.
+     * 
+     * @param idInternal
+     *            The idInternal to set
+     */
+    public void setIdInternal(Integer idInternal) {
+        this.idInternal = idInternal;
+    }
+
+    /**
+     * Sets the labHours.
+     * 
+     * @param labHours
+     *            The labHours to set
+     */
+    public void setLabHours(Double labHours) {
+        this.labHours = labHours;
+    }
+
+    /**
+     * Sets the pratHours.
+     * 
+     * @param pratHours
+     *            The pratHours to set
+     */
+    public void setPratHours(Double pratHours) {
+        this.pratHours = pratHours;
+    }
+
+    /**
+     * Sets the theoHours.
+     * 
+     * @param theoHours
+     *            The theoHours to set
+     */
+    public void setTheoHours(Double theoHours) {
+        this.theoHours = theoHours;
+    }
+
+    /**
+     * Sets the theoPratHours.
+     * 
+     * @param theoPratHours
+     *            The theoPratHours to set
+     */
+    public void setTheoPratHours(Double theoPratHours) {
+        this.theoPratHours = theoPratHours;
+    }
+
+    /**
+     * @return String
+     */
+    public String getCourseName() {
+        return courseName;
+    }
+
+    /**
+     * @return String
+     */
+    public String getDegreeCode() {
+        return degreeCode;
+    }
+
+    /**
+     * Sets the courseName.
+     * 
+     * @param courseName
+     *            The courseName to set
+     */
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    /**
+     * Sets the degreeCode.
+     * 
+     * @param degreeCode
+     *            The degreeCode to set
+     */
+    public void setDegreeCode(String degreeCode) {
+        this.degreeCode = degreeCode;
+    }
 
 }

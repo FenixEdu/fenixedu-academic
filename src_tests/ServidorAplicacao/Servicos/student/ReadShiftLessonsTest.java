@@ -19,107 +19,74 @@ import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadShiftLessonsTest extends TestCaseReadServices
-{
+public class ReadShiftLessonsTest extends TestCaseReadServices {
 
-    public ReadShiftLessonsTest(java.lang.String testName)
-    {
+    public ReadShiftLessonsTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(ReadShiftLessonsTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadShiftLessons";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         IExecutionCourse executionCourse = null;
-        try
-        {
+        try {
             SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            executionCourse =
-                SuportePersistenteOJB
-                    .getInstance()
-                    .getIPersistentExecutionCourse()
+            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
             SuportePersistenteOJB.getInstance().confirmarTransaccao();
-            Object[] result =
-                {
-                     new InfoShift(
-                        "turnoINEX",
-                        null,
-                        null,
-                        (InfoExecutionCourse)Cloner.get(executionCourse))};
+            Object[] result = { new InfoShift("turnoINEX", null, null, (InfoExecutionCourse) Cloner
+                    .get(executionCourse)) };
             return result;
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
         return null;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         IExecutionCourse executionCourse = null;
-        try
-        {
+        try {
             SuportePersistenteOJB.getInstance().iniciarTransaccao();
-            executionCourse =
-                SuportePersistenteOJB
-                    .getInstance()
-                    .getIPersistentExecutionCourse()
+            executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse()
                     .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
             assertNotNull(executionCourse);
             SuportePersistenteOJB.getInstance().confirmarTransaccao();
-            Object[] result =
-                {
-                     new InfoShift(
-                        "turno4",
-                        null,
-                        null,
-                        (InfoExecutionCourse)Cloner.get(executionCourse))};
+            Object[] result = { new InfoShift("turno4", null, null, (InfoExecutionCourse) Cloner
+                    .get(executionCourse)) };
             return result;
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
         return null;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 1;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         return null;
     }
 

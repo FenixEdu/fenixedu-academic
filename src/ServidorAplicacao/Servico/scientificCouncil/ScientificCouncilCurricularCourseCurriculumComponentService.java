@@ -8,63 +8,53 @@ package ServidorAplicacao.Servico.scientificCouncil;
 import DataBeans.ISiteComponent;
 import DataBeans.SiteView;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao
-	.Factory
-	.ScientificCouncilCurricularCourseCurriculumComponentBuilder;
+import ServidorAplicacao.Factory.ScientificCouncilCurricularCourseCurriculumComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
  * @author João Mota
- *
- * 23/Jul/2003
- * fenix-head
- * ServidorAplicacao.Servico.scientificCouncil
  * 
+ * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
+ *  
  */
-public class ScientificCouncilCurricularCourseCurriculumComponentService
-	implements IServico {
+public class ScientificCouncilCurricularCourseCurriculumComponentService implements IServico {
 
-	private static ScientificCouncilCurricularCourseCurriculumComponentService _servico =
-		new ScientificCouncilCurricularCourseCurriculumComponentService();
+    private static ScientificCouncilCurricularCourseCurriculumComponentService _servico = new ScientificCouncilCurricularCourseCurriculumComponentService();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+     * The actor of this class.
+     */
 
-	private ScientificCouncilCurricularCourseCurriculumComponentService() {
+    private ScientificCouncilCurricularCourseCurriculumComponentService() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "ScientificCouncilCurricularCourseCurriculumComponentService";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "ScientificCouncilCurricularCourseCurriculumComponentService";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadExecutionCourse
-	 */
-	public static ScientificCouncilCurricularCourseCurriculumComponentService getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return ReadExecutionCourse
+     */
+    public static ScientificCouncilCurricularCourseCurriculumComponentService getService() {
+        return _servico;
+    }
 
-	public SiteView run(
-		ISiteComponent bodyComponent,
-		Integer curricularCourseId,
-		Integer curriculumId)
-		throws FenixServiceException {
+    public SiteView run(ISiteComponent bodyComponent, Integer curricularCourseId, Integer curriculumId)
+            throws FenixServiceException {
 
-		ScientificCouncilCurricularCourseCurriculumComponentBuilder componentBuilder =
-			ScientificCouncilCurricularCourseCurriculumComponentBuilder
-				.getInstance();
-		bodyComponent =
-			componentBuilder.getComponent(bodyComponent, curricularCourseId, curriculumId);
-		SiteView siteView = new SiteView();
-		siteView.setComponent(bodyComponent);
+        ScientificCouncilCurricularCourseCurriculumComponentBuilder componentBuilder = ScientificCouncilCurricularCourseCurriculumComponentBuilder
+                .getInstance();
+        bodyComponent = componentBuilder.getComponent(bodyComponent, curricularCourseId, curriculumId);
+        SiteView siteView = new SiteView();
+        siteView.setComponent(bodyComponent);
 
-		return siteView;
-	}
+        return siteView;
+    }
 
 }

@@ -1,9 +1,11 @@
 package ServidorAplicacao;
 
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.logging.SystemInfo;
-import java.util.HashMap;
 import java.rmi.RemoteException;
+import java.util.HashMap;
+
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.logging.SystemInfo;
 
 /**
  * The business interface for the service manager seassion bean. *
@@ -30,8 +32,8 @@ public interface IServiceManagerWrapper {
     public Object execute(IUserView id, String service, Object argumentos[])
             throws FenixServiceException, RemoteException;
 
-    public Object execute(IUserView id, String service, String methods,
-            Object argumentos[]) throws FenixServiceException, RemoteException;
+    public Object execute(IUserView id, String service, String methods, Object argumentos[])
+            throws FenixServiceException, RemoteException;
 
     public HashMap getMapServicesToWatch(IUserView id) throws RemoteException;
 

@@ -13,50 +13,44 @@ import java.util.Map;
  * @author Sergio Montelobo
  *  
  */
-public class OldPublicationType extends FenixValuedEnum
-{
-	public static final int DIDACTIC_TYPE = 1;
-	public static final int CIENTIFIC_TYPE = 2;
+public class OldPublicationType extends FenixValuedEnum {
+    public static final int DIDACTIC_TYPE = 1;
 
-	public static OldPublicationType DIDACTIC = new OldPublicationType("Didactic", DIDACTIC_TYPE);
-	public static OldPublicationType CIENTIFIC = new OldPublicationType("Cientific", CIENTIFIC_TYPE);
+    public static final int CIENTIFIC_TYPE = 2;
 
-	public OldPublicationType(String name, int value)
-	{
-	    super(name, value);
-	}
+    public static OldPublicationType DIDACTIC = new OldPublicationType("Didactic", DIDACTIC_TYPE);
 
-	public static OldPublicationType getEnum(String oldPublicationType)
-	{
-		return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
-	}
+    public static OldPublicationType CIENTIFIC = new OldPublicationType("Cientific", CIENTIFIC_TYPE);
 
-	public static OldPublicationType getEnum(int oldPublicationType)
-	{
-		return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
-	}
+    public OldPublicationType(String name, int value) {
+        super(name, value);
+    }
 
-	public static Map getEnumMap()
-	{
-		return getEnumMap(OldPublicationType.class);
-	}
+    public static OldPublicationType getEnum(String oldPublicationType) {
+        return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
+    }
 
-	public static List getEnumList()
-	{
-		return getEnumList(OldPublicationType.class);
-	}
+    public static OldPublicationType getEnum(int oldPublicationType) {
+        return (OldPublicationType) getEnum(OldPublicationType.class, oldPublicationType);
+    }
 
-	public static Iterator iterator()
-	{
-		return iterator(OldPublicationType.class);
-	}
+    public static Map getEnumMap() {
+        return getEnumMap(OldPublicationType.class);
+    }
 
-	public String toString()
-	{
-		String result = "Old Publication Type Type :\n";
-		result += "\n  - OldPublication Type : " + this.getName();
+    public static List getEnumList() {
+        return getEnumList(OldPublicationType.class);
+    }
 
-		return result;
-	}
+    public static Iterator iterator() {
+        return iterator(OldPublicationType.class);
+    }
+
+    public String toString() {
+        String result = "Old Publication Type Type :\n";
+        result += "\n  - OldPublication Type : " + this.getName();
+
+        return result;
+    }
 
 }

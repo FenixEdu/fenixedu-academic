@@ -83,22 +83,22 @@ public class InfoStatResultGrantOwner extends InfoObject {
     public void setTotalNumberOfGrantOwners(Integer totalNumberOfGrantOwners) {
         this.totalNumberOfGrantOwners = totalNumberOfGrantOwners;
     }
-    
+
     public Integer getPercentageGrantOwnerResult() {
-        if(numberOfGrantOwnerByCriteria.equals(new Integer(0))) {
+        if (numberOfGrantOwnerByCriteria.equals(new Integer(0))) {
             return new Integer(0);
         }
         double totalGrantOwner = totalNumberOfGrantOwners.intValue();
         double resultGrantOwner = numberOfGrantOwnerByCriteria.intValue();
-        return new Integer( (int)((resultGrantOwner / totalGrantOwner) * 100 ));
+        return new Integer((int) ((resultGrantOwner / totalGrantOwner) * 100));
     }
-    
+
     public Integer getPercentageGrantContractResult() {
-        if(numberOfGrantContractsByCriteria.equals(new Integer(0))) {
+        if (numberOfGrantContractsByCriteria.equals(new Integer(0))) {
             return new Integer(0);
         }
         double totalGrantContract = totalNumberOfGrantContracts.intValue();
         double resultGrantContract = numberOfGrantContractsByCriteria.intValue();
-        return new Integer( (int)((resultGrantContract / totalGrantContract) * 100 ));
+        return new Integer((int) ((resultGrantContract / totalGrantContract) * 100));
     }
 }

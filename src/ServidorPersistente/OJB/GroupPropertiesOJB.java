@@ -18,12 +18,10 @@ import ServidorPersistente.IPersistentGroupProperties;
  * @author asnr and scpo
  *  
  */
-public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGroupProperties
-{
+public class GroupPropertiesOJB extends PersistentObjectOJB implements IPersistentGroupProperties {
 
     public List readAllGroupPropertiesByExecutionCourse(IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
@@ -31,8 +29,7 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
         return temp;
     }
 
-    public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia
-    {
+    public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", id);
@@ -40,10 +37,7 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
     }
 
     public IGroupProperties readGroupPropertiesByExecutionCourseAndName(
-        IExecutionCourse executionCourse,
-        String name)
-        throws ExcepcaoPersistencia
-    {
+            IExecutionCourse executionCourse, String name) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
@@ -51,26 +45,17 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
         return (IGroupProperties) queryObject(GroupProperties.class, criteria);
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
 
         return queryList(GroupProperties.class, new Criteria());
     }
 
-   
-
-    public void delete(IGroupProperties groupProperties) throws ExcepcaoPersistencia
-    {
-        try
-        {
+    public void delete(IGroupProperties groupProperties) throws ExcepcaoPersistencia {
+        try {
             super.delete(groupProperties);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw ex;
         }
     }
-
-   
 
 }

@@ -5,21 +5,31 @@
 package ServidorAplicacao.Servico.student.schoolRegistration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentWithInfoCurricularCourse;
 import Dominio.IEnrollment;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
+import Dominio.ITurma;
+import Dominio.ShiftStudent;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrollment;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoAula;
 import Util.TipoCurso;
 
 /**
@@ -27,47 +37,114 @@ import Util.TipoCurso;
  * @author Ricardo Rodrigues
  */
 public class ReadStudentEnrollmentsAndClass implements IService {
-	
-	public ReadStudentEnrollmentsAndClass() {
-		
-	}
-	
-	public List run(UserView userView) 
-		throws ExcepcaoPersistencia, FenixServiceException {
-		
-		 ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
-		 
-		 IStudentCurricularPlanPersistente pSCP = suportePersistente.getIStudentCurricularPlanPersistente();
-		 IPersistentEnrollment pEnrollment = suportePersistente.getIPersistentEnrolment();
-		 
-		 String user = userView.getUtilizador();
-	     Integer studentNumber = new Integer(user.substring(1));
-		 
-		 IStudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,TipoCurso.LICENCIATURA_OBJ);
-		 List studentEnrollments = pEnrollment.readAllByStudentCurricularPlan(scp);
 
-		 List infoEnrollments = new ArrayList();
-		 InfoClass infoClass = new InfoClass();
-		 
-		 for(int iterator = 0; iterator < studentEnrollments.size(); iterator++) {
-		 	
-		 	IEnrollment enrollment = (IEnrollment) studentEnrollments.get(iterator);
-		 	
-		 	InfoEnrolment infoEnrollment = InfoEnrolmentWithInfoCurricularCourse.newInfoFromDomain(enrollment);
-		 	infoEnrollments.add(infoEnrollment);
-		 }
-		 
-		 // TODO : [NRMC] falta ler a turma
-		 
-		infoClass.setNome("10101");
-		 
-		 
-		List result = new ArrayList();
-		result.add(infoEnrollments);
-		result.add(infoClass);
-		
-		return result;
-	}
+    public ReadStudentEnrollmentsAndClass() {
 
+    }
+
+    public List run(UserView userView) throws ExcepcaoPersistencia, FenixServiceException {
+
+        ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+
+        IPersistentStudentCurricularPlan pSCP = suportePersistente
+                .getIStudentCurricularPlanPersistente();
+        IPersistentEnrollment pEnrollment = suportePersistente.getIPersistentEnrolment();
+        ITurnoAlunoPersistente persistentShiftStudent = suportePersistente.getITurnoAlunoPersistente();
+        IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
+                .getIPersistentExecutionPeriod();
+
+        String user = userView.getUtilizador();
+        Integer studentNumber = new Integer(user.substring(1));
+
+        IStudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,
+                TipoCurso.LICENCIATURA_OBJ);
+        List studentEnrollments = pEnrollment.readAllByStudentCurricularPlan(scp);
+        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(scp.getStudent(),
+                executionPeriod);
+        List filteredStudentShifts = filterStudentShifts(studentShifts);
+
+        InfoClass infoClass = getClass(filteredStudentShifts, scp.getDegreeCurricularPlan().getDegree()
+                .getNome());
+        List infoEnrollments = new ArrayList();
+
+        for (int iterator = 0; iterator < studentEnrollments.size(); iterator++) {
+
+            IEnrollment enrollment = (IEnrollment) studentEnrollments.get(iterator);
+
+            InfoEnrolment infoEnrollment = InfoEnrolmentWithInfoCurricularCourse
+                    .newInfoFromDomain(enrollment);
+            infoEnrollments.add(infoEnrollment);
+        }
+
+        List result = new ArrayList();
+        result.add(infoEnrollments);
+        result.add(infoClass);
+        result.add(scp.getDegreeCurricularPlan().getDegree().getNome());
+
+        return result;
+    }
+
+    /**
+     * @param studentShifts
+     * @return
+     */
+    private InfoClass getClass(List studentShifts, String degreeName) {
+
+        List classesName = new ArrayList();
+        InfoClass infoClass = new InfoClass();
+        for (int iter = 0; iter < studentShifts.size(); iter++) {
+            ShiftStudent shiftStudent = (ShiftStudent) studentShifts.get(0);
+            List classes = shiftStudent.getShift().getAssociatedClasses();
+            if (classes.size() == 1) {
+                ITurma klass = (ITurma) classes.get(0);
+                infoClass.setNome(klass.getNome());
+                return infoClass;
+            }
+
+            for (int j = 0; j < classes.size(); j++) {
+                ITurma klass = (ITurma) classes.get(j);
+                if (degreeName.equals(klass.getExecutionDegree().getCurricularPlan().getDegree()
+                        .getNome())) {
+                    classesName.add(klass.getNome());
+                }
+            }
+
+        }
+        String className = getMaxOcurrenceElement(classesName);
+        infoClass.setNome(className);
+        return infoClass;
+    }
+
+    /**
+     * @param studentShifts
+     * @return
+     */
+    private List filterStudentShifts(List studentShifts) {
+        List filteredStudentShifts = (List) CollectionUtils.select(studentShifts, new Predicate() {
+            List validTypes = Arrays.asList(new TipoAula[] { new TipoAula(TipoAula.PRATICA),
+                    new TipoAula(TipoAula.TEORICO_PRATICA) });
+
+            public boolean evaluate(Object input) {
+                ShiftStudent shiftStudent = (ShiftStudent) input;
+                return validTypes.contains(shiftStudent.getShift().getTipo());
+            }
+        });
+
+        return filteredStudentShifts;
+    }
+
+    private String getMaxOcurrenceElement(List classes) {
+
+        int maxNumberOfOcurrencies = 0;
+        String resultElement = null;
+        for (int iter = 0; iter < classes.size(); iter++) {
+            String element = (String) classes.get(iter);
+            int numberOfOcurrencis = CollectionUtils.cardinality(element, classes);
+            if (numberOfOcurrencis > maxNumberOfOcurrencies)
+                resultElement = element;
+        }
+        return resultElement;
+    }
 }
 

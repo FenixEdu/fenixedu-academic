@@ -18,115 +18,107 @@ import Util.TipoAula;
  */
 public class ReadSummariesTest extends ServiceNeedsAuthenticationTestCase {
 
-	/**
-	 * @param testName
-	 */
-	public ReadSummariesTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public ReadSummariesTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testReadSummariesDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testReadSummariesDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadSummaries";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadSummaries";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "user", "pass", getApplication() };
-		return args;
-	}
+        String[] args = { "user", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		String[] args = { "julia", "pass", getApplication() };
-		return args;
-	}
+        String[] args = { "julia", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser() {
+    protected String[] getNotAuthenticatedUser() {
 
-		String[] args = { "jccm", "pass", getApplication() };
-		return args;
-	}
+        String[] args = { "jccm", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments() {
+    protected Object[] getAuthorizeArguments() {
 
-		Integer executionCourseId = new Integer(24);
-		int tipoAula = TipoAula.TEORICA;
-		TipoAula summaryType = new TipoAula(tipoAula);
+        Integer executionCourseId = new Integer(24);
+        int tipoAula = TipoAula.TEORICA;
+        TipoAula summaryType = new TipoAula(tipoAula);
 
-		Object[] args = { executionCourseId, summaryType };
-		return args;
-	}
+        Object[] args = { executionCourseId, summaryType };
+        return args;
+    }
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testSuccessfullCourseWithSummaries() {
+    public void testSuccessfullCourseWithSummaries() {
 
-		try {
-			SiteView result = null;
-			Integer executionCourseId = new Integer(24);
-			int tipoAula = TipoAula.TEORICA;
-			TipoAula summaryType = new TipoAula(tipoAula);
+        try {
+            SiteView result = null;
+            Integer executionCourseId = new Integer(24);
+            int tipoAula = TipoAula.TEORICA;
+            TipoAula summaryType = new TipoAula(tipoAula);
 
-			String[] args1 = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args1);
+            String[] args1 = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args1);
 
-			Object[] args2 = { executionCourseId, summaryType };
+            Object[] args2 = { executionCourseId, summaryType };
 
-			result =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args2);
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args2);
 
-			InfoSiteSummaries infoSiteSummaries =
-				(InfoSiteSummaries) result.getComponent();
-			List infoSummaries = infoSiteSummaries.getInfoSummaries();
-			assertEquals(infoSummaries.size(), 2);
-			
-			// verifica se a base de dados nao foi alterada
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-		} catch (FenixServiceException ex) {
-			fail("Reading the Summaries of a Site with summaries" + ex);
-		} catch (Exception ex) {
-			fail("Reading the Summaries of a Site with summaries" + ex);
-		}
-	}
+            InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) result.getComponent();
+            List infoSummaries = infoSiteSummaries.getInfoSummaries();
+            assertEquals(infoSummaries.size(), 2);
 
-	public void testSuccessfullCourseWithoutSummaries() {
+            // verifica se a base de dados nao foi alterada
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+        } catch (FenixServiceException ex) {
+            fail("Reading the Summaries of a Site with summaries" + ex);
+        } catch (Exception ex) {
+            fail("Reading the Summaries of a Site with summaries" + ex);
+        }
+    }
 
-		try {
-			SiteView result = null;
-			Integer executionCourseId = new Integer(24);
-			int tipoAula = TipoAula.DUVIDAS;
-			TipoAula summaryType = new TipoAula(tipoAula);
+    public void testSuccessfullCourseWithoutSummaries() {
 
-			String[] args1 = getAuthenticatedAndAuthorizedUser();
-			IUserView userView = authenticateUser(args1);
+        try {
+            SiteView result = null;
+            Integer executionCourseId = new Integer(24);
+            int tipoAula = TipoAula.DUVIDAS;
+            TipoAula summaryType = new TipoAula(tipoAula);
 
-			Object[] args2 = { executionCourseId, summaryType };
+            String[] args1 = getAuthenticatedAndAuthorizedUser();
+            IUserView userView = authenticateUser(args1);
 
-			result =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args2);
+            Object[] args2 = { executionCourseId, summaryType };
 
-			InfoSiteSummaries infoSiteSummaries =
-				(InfoSiteSummaries) result.getComponent();
-			List infoSummaries = infoSiteSummaries.getInfoSummaries();
-			assertEquals(infoSummaries.size(), 0);
-			// verifica se a base de dados nao foi alterada
-			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-		} catch (FenixServiceException ex) {
-			fail("Reading the Summaries of a Site without summaries" + ex);
-		} catch (Exception ex) {
-			fail("Reading the Summaries of a Site without summaries" + ex);
-		}
-	}
+            result = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args2);
+
+            InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) result.getComponent();
+            List infoSummaries = infoSiteSummaries.getInfoSummaries();
+            assertEquals(infoSummaries.size(), 0);
+            // verifica se a base de dados nao foi alterada
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+        } catch (FenixServiceException ex) {
+            fail("Reading the Summaries of a Site without summaries" + ex);
+        } catch (Exception ex) {
+            fail("Reading the Summaries of a Site without summaries" + ex);
+        }
+    }
 }

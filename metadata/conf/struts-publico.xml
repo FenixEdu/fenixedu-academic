@@ -52,6 +52,18 @@
         <form-property name="page" type="java.lang.Integer" initial="0"/>
       </form-bean>
 	  
+       <!-- Dynamic-FormBean for Choose Context Degree-->
+      <form-bean name="chooseContextDegreeForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="indice" type="java.lang.Integer"/>
+        <form-property name="curYear" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer" initial="0"/>
+        <form-property name="degreeID" type="java.lang.Integer"/>
+        <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
+        <form-property name="allCurYear" type="java.lang.Boolean"/>
+      </form-bean>
 
 	  <!-- ROOMS -->
       <!-- Dynamic-FormBean para CriarSala -->
@@ -97,6 +109,8 @@
         <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
         <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
         <form-property name="page" type="java.lang.Integer"/> 
+        <form-property name="degreeID" type="java.lang.Integer"/>
+        <form-property name="executionDegreeID" type="java.lang.Integer"/>
       </form-bean>
 
     
@@ -157,8 +171,8 @@
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-       <forward name="index" path="/index.do?method=prepare&amp;page=0" redirect="true"/>
-       <forward name="firstPage" path="/index.do?method=prepare&amp;page=0"/>
+       <forward name="index" path="/index.html" redirect="true"/>
+       <forward name="firstPage" path="/index.html"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -180,7 +194,17 @@
   		<forward name="showForm" path="/index.jsp"/>
   		<forward name="choose" path="/index.do?method=prepare&amp;page=0"/>
 	</action>
-	
+	<action path="/indexNew"
+			name="pagedIndexForm"
+			input="/index.do?method=prepare&amp;page=0"
+    		type="ServidorApresentacao.Action.publico.InitiateSessionDispatchAction"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="consultRooms"/>
+  		<!--<forward name="choose" path="/index.do?method=prepare&amp;page=0"/>-->
+	</action>
 	<action parameter="method"
             path="/consultTimeTables"
             scope="request"
@@ -195,7 +219,7 @@
               parameter="method"
               path="/chooseContextDA"
               scope="request"
-              validate="false"
+              validate="true"
               type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction"
               >
         <forward name="chooseContext" path="/chooseContext.jsp"/>
@@ -262,6 +286,15 @@
           <forward name="Sucess" path="/consultRooms.jsp"/>
       </action>
 
+       <action path="/prepareConsultRoomsNew"
+              type="ServidorApresentacao.Action.publico.PrepareConsultRoomsDispatchAction"
+              name="chooseContextForm"
+              parameter="method"
+              >
+          <forward name="Sucess" path="consultRooms"/>
+          <forward name="choose" path="/prepareConsultRoomsNew.do?method=prepare&amp;page=0"/>
+      </action>
+
       <action attribute="roomForm"
               input="/prepareConsultRooms.do"
               name="roomForm"
@@ -271,6 +304,17 @@
               type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
         <forward name="list" path="/chooseRoom.jsp"/>
         <forward name="one" path="/siteViewer.do?method=roomViewer"/>        
+      </action>
+
+       <action attribute="roomForm"
+              input="/prepareConsultRoomsNew.do?method=prepare&amp;page=0"
+              name="roomForm"
+              path="/chooseRoomsFormNew"
+              scope="request"
+              validate="true"
+              type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
+        <forward name="list" path="chooseRoom"/>
+        <forward name="one" path="/siteViewerRoomNew.do?method=roomViewer"/>        
       </action>
 
       <action input="/chooseRoomsForm.do"
@@ -283,6 +327,15 @@
         <forward name="roomViewer" path="/viewRoom.jsp"/>
       </action>
 
+	 <action input="/chooseRoomsFormNew.do"
+	              parameter="method"
+	              name="indexForm"
+	              path="/viewRoomNew"
+	              scope="request"
+	              validate="true"
+	              type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+	        <forward name="roomViewer" path="/siteViewerRoomNew.do?method=roomViewer"/>
+      </action>
       <action path="/prepareViewRoomOcupation"
               type="ServidorApresentacao.Action.publico.SelectSemesterAction"
               >
@@ -298,6 +351,8 @@
       <action input="viewClassTimeTable"
       		  path="/viewClassTimeTableNew"
               type="ServidorApresentacao.Action.publico.ViewClassTimeTableActionNew"
+              name="chooseContextDegreeForm"
+              validate="false"
               >
           <forward name="Sucess" path="viewClassTimeTable"/>
       </action>
@@ -315,7 +370,7 @@
  	<!-- Summaries -->	
 	<action 
 		path="/viewSite"
-		name="chooseSummariesForm"
+		name="showSummaryForm"
 		input="/executionCourseNotFound.jsp"
 		parameter="method"
 		validate="true"
@@ -325,7 +380,7 @@
    	
    	<action 
 		path="/viewSiteNew"
-		name="chooseSummariesForm"
+		name="showSummaryForm"
 		input="/executionCourseNotFoundNew.jsp"
 		parameter="method"
 		validate="true"
@@ -399,7 +454,7 @@
             parameter="method"
             path="/chooseExamsMapContextDA"
             scope="request"
-            validate="false"
+            validate="true"
             type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDA"
             >
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
@@ -410,7 +465,7 @@
             parameter="method"
             path="/chooseExamsMapContextDANew"
             scope="request"
-            validate="false"
+            validate="true"
             type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDANew"
             >
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
@@ -456,7 +511,14 @@
 			<forward name="roomViewer" path="/viewRoom.jsp"/>
 			<forward name="executionCourseViewer" path="viewExecutionCourse"/>
 		</action>
-	
+		<action path="/siteViewerRoomNew"
+				input="/siteViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+			<forward name="roomViewer" path="viewRoomNew"/>
+			<forward name="executionCourseViewer" path="viewExecutionCourse"/>
+		</action>
 	    <action path="/siteViewerNew"
 				input="/siteViewerError.jsp"
 				scope="request"
@@ -519,15 +581,28 @@
      <action path="/showDegreeCurricularPlan" 
      		type="ServidorApresentacao.Action.publico.ShowDegreeCurricularPlanAction" 
      		parameter="method"
+     		 name="chooseContextDegreeForm"
      		input="/showDegreeSite.do?method=showCurricularPlan"
      		>
 	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlan"/>  		  
 	     <forward  name="showDegreeCurricularPlanEnglish" path="showDegreeCurricularPlanEnglish"/>
      </action>
+      <action path="/showDegreeCurricularPlanNew" 
+     		type="ServidorApresentacao.Action.publico.ShowDegreeCurricularPlanAction" 
+     		parameter="method"
+     		 name="chooseContextDegreeForm"
+     		input="/degreeSite/errorExecutionDegree.jsp"
      
+     		>
+	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlanNew"/>  		  
+	     <forward  name="showDegreeCurricularPlanEnglish" path="showDegreeCurricularPlanEnglish"/>
+     </action>
+ <!--   "/showDegreeSite.do?method=showCurricularPlan"  -->
      <action path="/showCourseSite"
      type="ServidorApresentacao.Action.publico.ShowCourseSiteAction"
      parameter="method"
+     name="chooseContextDegreeForm"
+     validate="false"
      input="showCurricularCourseSite"
      >
      	<forward name="showCurricularCourseSite" path="showCurricularCourseSite"/>
@@ -569,6 +644,38 @@
 			>		
 	</action>
 	<!-- end of DEEC Department application  -->
+
+      <action path="/support"
+		      input="/support.do?method=prepare&amp;page=0"
+              type="ServidorApresentacao.Action.manager.ManageFAQDA"
+              parameter="method"
+              >
+          <forward name="Manage" path="df.page.support-faq"/>
+      </action>
+
+      <action path="/supportGlossary"
+		      input="/supportGlossary.do?method=prepare&amp;page=0"
+              type="ServidorApresentacao.Action.manager.ManageGlossaryDA"
+              parameter="method"
+              >
+          <forward name="Manage" path="df.page.support-glossary"/>
+      </action>
+      
+      <action path="/prepareConsultCurricularPlanNew"
+              type="ServidorApresentacao.Action.publico.PrepareConsultCurricularPlanDispatchAction"
+              name="chooseContextDegreeForm"
+              parameter="method"
+              >    
+          <forward name="Sucess" path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0"/>     
+          <forward name="choose" path="/prepareSelectExecutionCourseActionNew.do"/>
+      </action>
+      <action path="/prepareSelectExecutionCourseActionNew"
+              type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction">
+         <forward name="sucess" path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0"/>     
+      </action>
+       
+      
+
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->

@@ -23,26 +23,15 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  *  
  */
 
-public class InsertWorkLocationDispatchAction extends DispatchAction
-{
+public class InsertWorkLocationDispatchAction extends DispatchAction {
 
-    public ActionForward prepare(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         return mapping.findForward("start");
     }
 
-    public ActionForward insert(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm insertWorkLocationForm = (DynaActionForm) form;
@@ -51,16 +40,11 @@ public class InsertWorkLocationDispatchAction extends DispatchAction
 
         Object args[] = { workLocationName };
 
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "InsertWorkLocation", args);
-        }
-        catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
         }
 

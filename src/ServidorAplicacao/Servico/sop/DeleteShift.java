@@ -59,66 +59,57 @@ public class DeleteShift implements IServico {
         if (infoShift != null) {
 
             try {
-                final ISuportePersistente sp = SuportePersistenteOJB
-                        .getInstance();
+                final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-                ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(
-                        Turno.class, infoShift.getIdInternal());
+                ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
+                        infoShift.getIdInternal());
                 if (shift != null) {
                     //if the shift has students associated it can't be deleted
-                    ITurnoAlunoPersistente persistentShiftStudent = sp
-                            .getITurnoAlunoPersistente();
-                    List studentShifts = persistentShiftStudent
-                            .readByShift(shift);
-                    if (studentShifts != null && studentShifts.size() > 0) { throw new FenixServiceException(
-                            "error.deleteShift.with.students"); }
+                    ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+                    List studentShifts = persistentShiftStudent.readByShift(shift);
+                    if (studentShifts != null && studentShifts.size() > 0) {
+                        throw new FenixServiceException("error.deleteShift.with.students");
+                    }
 
-                    //if the shift has student groups associated it can't be deleted
-                    IPersistentStudentGroup persistentStudentGroup = sp
-                            .getIPersistentStudentGroup();
-                    List studentGroupShift = persistentStudentGroup
-                            .readAllStudentGroupByShift(shift);
+                    //if the shift has student groups associated it can't be
+                    // deleted
+                    IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+                    List studentGroupShift = persistentStudentGroup.readAllStudentGroupByShift(shift);
                     for (int i = 0; i < studentGroupShift.size(); i++) {
                         IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
                                 .getIPersistentStudentGroupAttend();
 
                         List studentGroupAttendShift = persistentStudentGroupAttend
-                                .readAllByStudentGroup((IStudentGroup) studentGroupShift
-                                        .get(i));
-                        if (studentGroupAttendShift != null
-                                && studentGroupAttendShift.size() > 0) {
-                            throw new FenixServiceException(
-                            "error.deleteShift.with.studentGroups");
+                                .readAllByStudentGroup((IStudentGroup) studentGroupShift.get(i));
+                        if (studentGroupAttendShift != null && studentGroupAttendShift.size() > 0) {
+                            throw new FenixServiceException("error.deleteShift.with.studentGroups");
                         }
                     }
 
                     //if the shift has summaries it can't be deleted
-                    IPersistentSummary persistentSummary = sp
-                            .getIPersistentSummary();
-                    List summariesShift = persistentSummary.readByShift(shift
-                            .getDisciplinaExecucao(), shift);
-                    if (summariesShift != null && summariesShift.size() > 0) { throw new FenixServiceException(
-                            "error.deleteShift.with.summaries"); }
+                    IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+                    List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao(),
+                            shift);
+                    if (summariesShift != null && summariesShift.size() > 0) {
+                        throw new FenixServiceException("error.deleteShift.with.summaries");
+                    }
 
                     IPersistentShiftProfessorship persistentShiftProfessorship = sp
                             .getIPersistentShiftProfessorship();
-                    List professorshipShift = persistentShiftProfessorship
-                            .readByShift(shift);
+                    List professorshipShift = persistentShiftProfessorship.readByShift(shift);
                     for (int i = 0; i < professorshipShift.size(); i++) {
-                        persistentShiftProfessorship
-                                .delete((IShiftProfessorship) professorshipShift
-                                        .get(i));
+                        persistentShiftProfessorship.delete((IShiftProfessorship) professorshipShift
+                                .get(i));
                     }
 
                     for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
-					    IAula lesson = (IAula) shift.getAssociatedLessons().get(i);
-					    sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
-						sp.getIAulaPersistente().delete(lesson);
+                        IAula lesson = (IAula) shift.getAssociatedLessons().get(i);
+                        sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
+                        sp.getIAulaPersistente().delete(lesson);
                     }
 
                     for (int i = 0; i < shift.getAssociatedClasses().size(); i++) {
-                        ITurma schoolClass = (ITurma) shift
-                                .getAssociatedClasses().get(i);
+                        ITurma schoolClass = (ITurma) shift.getAssociatedClasses().get(i);
                         sp.getITurmaPersistente().simpleLockWrite(schoolClass);
                         schoolClass.getAssociatedShifts().remove(shift);
                     }

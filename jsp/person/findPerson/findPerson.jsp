@@ -21,6 +21,19 @@
 	</tr>
 	<tr>
 		<td>
+			<bean:message key="label.viewPhoto" />
+		</td>
+		<td>
+			<html:checkbox  property="viewPhoto" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<br /><br />
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<bean:message key="label.nameWord" />
 		</td>
 		<td>

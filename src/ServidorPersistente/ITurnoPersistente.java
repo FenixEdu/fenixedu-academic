@@ -18,8 +18,7 @@ import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
 
-public interface ITurnoPersistente extends IPersistentObject
-{
+public interface ITurnoPersistente extends IPersistentObject {
 
     public ITurno readByNameAndExecutionCourse(String nome, IExecutionCourse IDE)
             throws ExcepcaoPersistencia;
@@ -59,8 +58,9 @@ public interface ITurnoPersistente extends IPersistentObject
     /**
      * @return
      */
-	public List readByLesson(IAula lesson) throws ExcepcaoPersistencia;
-	public ITurno readShiftByLesson(IAula lesson) throws ExcepcaoPersistencia;
+    public List readByLesson(IAula lesson) throws ExcepcaoPersistencia;
+
+    public ITurno readShiftByLesson(IAula lesson) throws ExcepcaoPersistencia;
 
     public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(IStudent student,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;

@@ -20,95 +20,81 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Susana Fernandes
  */
-public class InsertTestAsNewTestTest extends ServiceNeedsAuthenticationTestCase
-{
+public class InsertTestAsNewTestTest extends ServiceNeedsAuthenticationTestCase {
 
-	public InsertTestAsNewTestTest(String testName)
-	{
-		super(testName);
-	}
+    public InsertTestAsNewTestTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testInsertDistributedTestDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testInsertDistributedTestDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "InsertTestAsNewTest";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "InsertTestAsNewTest";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "D2543", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "D2543", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "L48283", "pass", getApplication() };
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser()
-	{
+    protected String[] getNotAuthenticatedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = { "L48283", "pass", getApplication() };
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer executionCourseId = new Integer(34882);
-		Integer testId = new Integer(108);
-		Object[] args = { executionCourseId, testId };
-		return args;
-	}
+    protected Object[] getAuthorizeArguments() {
+        Integer executionCourseId = new Integer(34882);
+        Integer testId = new Integer(108);
+        Object[] args = { executionCourseId, testId };
+        return args;
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-	public void testSuccessfull()
-	{
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
+    public void testSuccessfull() {
+        try {
+            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            Object[] args = getAuthorizeArguments();
 
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+            PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
-			Criteria criteria = new Criteria();
+            Criteria criteria = new Criteria();
 
-			criteria = new Criteria();
-			criteria.addEqualTo("idInternal", args[1]);
-			QueryByCriteria queryCriteria = new QueryByCriteria(Test.class, criteria);
-			ITest oldTest = (ITest) broker.getObjectByQuery(queryCriteria);
+            criteria = new Criteria();
+            criteria.addEqualTo("idInternal", args[1]);
+            QueryByCriteria queryCriteria = new QueryByCriteria(Test.class, criteria);
+            ITest oldTest = (ITest) broker.getObjectByQuery(queryCriteria);
 
-			criteria = new Criteria();
-			queryCriteria = new QueryByCriteria(Test.class, criteria);
-			queryCriteria.addOrderBy("idInternal", false);
-			ITest newTest = (ITest) broker.getObjectByQuery(queryCriteria);
-			broker.close();
+            criteria = new Criteria();
+            queryCriteria = new QueryByCriteria(Test.class, criteria);
+            queryCriteria.addOrderBy("idInternal", false);
+            ITest newTest = (ITest) broker.getObjectByQuery(queryCriteria);
+            broker.close();
 
-			assertEquals(oldTest.getTitle().concat(" (Duplicado)"), newTest.getTitle());
-			assertEquals(oldTest.getInformation(), newTest.getInformation());
-			assertEquals(oldTest.getNumberOfQuestions(), newTest.getNumberOfQuestions());
-			//assertEquals(oldTest.getTestScope().getIdInternal(), newTest.getTestScope().getIdInternal());
+            assertEquals(oldTest.getTitle().concat(" (Duplicado)"), newTest.getTitle());
+            assertEquals(oldTest.getInformation(), newTest.getInformation());
+            assertEquals(oldTest.getNumberOfQuestions(), newTest.getNumberOfQuestions());
+            //assertEquals(oldTest.getTestScope().getIdInternal(),
+            // newTest.getTestScope().getIdInternal());
 
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("InsertTestAsNewTestTest " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("InsertTestAsNewTestTest " + ex);
-		}
-	}
+        } catch (FenixServiceException ex) {
+            fail("InsertTestAsNewTestTest " + ex);
+        } catch (Exception ex) {
+            fail("InsertTestAsNewTestTest " + ex);
+        }
+    }
 }

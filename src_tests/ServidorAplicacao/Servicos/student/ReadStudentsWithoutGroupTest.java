@@ -6,7 +6,7 @@
 package ServidorAplicacao.Servicos.student;
 
 /**
- *
+ * 
  * @author asnr and scpo
  */
 import java.util.ArrayList;
@@ -25,75 +25,75 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
 
-	public ReadStudentsWithoutGroupTest(java.lang.String testName) {
-		super(testName);
-	}
+    public ReadStudentsWithoutGroupTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(ReadStudentsWithoutGroupTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadStudentsWithoutGroupTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadStudentsWithoutGroup";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadStudentsWithoutGroup";
+    }
 
-	//WHEN ALL STUDENTS HAVE GROUPS
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    //WHEN ALL STUDENTS HAVE GROUPS
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] result = { new Integer(3), "user" };
-		return result;
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] result = { new Integer(3), "user" };
+        return result;
 
-	}
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 0;
-	}
+    protected int getNumberOfItemsToRetrieve() {
+        return 0;
+    }
 
-	protected Object getObjectToCompare() {
-		InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
+    protected Object getObjectToCompare() {
+        InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
 
-		try {
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			ps.iniciarTransaccao();
-			IStudent student = null;
-			List infoStudentList = new ArrayList();
+        try {
+            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            ps.iniciarTransaccao();
+            IStudent student = null;
+            List infoStudentList = new ArrayList();
 
-			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(6));
-			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+            student = (IStudent) ps.getIPersistentStudent().readByOID(Student.class, new Integer(6));
+            infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 
-			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(7));
-			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+            student = (IStudent) ps.getIPersistentStudent().readByOID(Student.class, new Integer(7));
+            infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 
-			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(10));
-			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+            student = (IStudent) ps.getIPersistentStudent().readByOID(Student.class, new Integer(10));
+            infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 
-			student = (IStudent) ps.getIPersistentStudent().readByOID( Student.class,new Integer(11));
-			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
-			
-			infoSiteStudentsWithoutGroup.setGroupNumber(new Integer(5));
-			infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);
+            student = (IStudent) ps.getIPersistentStudent().readByOID(Student.class, new Integer(11));
+            infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
-		return infoSiteStudentsWithoutGroup;
-	}
+            infoSiteStudentsWithoutGroup.setGroupNumber(new Integer(5));
+            infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);
+
+        } catch (ExcepcaoPersistencia e) {
+            System.out.println("failed setting up the test data");
+        }
+        return infoSiteStudentsWithoutGroup;
+    }
 
 }

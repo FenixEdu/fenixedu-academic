@@ -26,7 +26,7 @@ import Dominio.ITurma;
 import Dominio.ITurno;
 import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
@@ -37,46 +37,39 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class AdicionarTurnoServicosTest extends TestCaseCreateServices
-{
+public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
 
     private InfoClass infoClass = null;
+
     private InfoShift infoShift = null;
 
-    public AdicionarTurnoServicosTest(java.lang.String testName)
-    {
+    public AdicionarTurnoServicosTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(AdicionarTurnoServicosTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "AdicionarTurno";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
         this.ligarSuportePersistente(false);
         Object argsCriarTurmaTurno[] = { this.infoClass, this.infoShift };
@@ -84,8 +77,7 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices
         return argsCriarTurmaTurno;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         this.ligarSuportePersistente(true);
         Object argsCriarTurmaTurno[] = { this.infoClass, this.infoShift };
@@ -93,18 +85,15 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices
         return argsCriarTurmaTurno;
     }
 
-    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
-    private void ligarSuportePersistente(boolean existing)
-    {
+    private void ligarSuportePersistente(boolean existing) {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -117,27 +106,24 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices
             IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
             IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-            ICursoExecucaoPersistente icep = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree icep = sp.getIPersistentExecutionDegree();
             ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
 
             IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
             ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
-            ITurma turma =
-                turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice, iep);
+            ITurma turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413",
+                    ice, iep);
 
             IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
             IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 
             ITurnoPersistente itp = sp.getITurnoPersistente();
             ITurno it = null;
-            if (existing)
-            {
+            if (existing) {
                 it = itp.readByNameAndExecutionCourse("turno453", ide);
-            }
-            else
-            {
+            } else {
                 it = itp.readByNameAndExecutionCourse("turno1", ide);
             }
 
@@ -146,15 +132,10 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");

@@ -14,49 +14,44 @@ import DataBeans.InfoPerson;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteQualifications extends InfoObject
-{
+public class InfoSiteQualifications extends InfoObject {
     List infoQualifications;
+
     InfoPerson infoPerson;
 
     /**
-	 *  
-	 */
-    public InfoSiteQualifications()
-    {
+     *  
+     */
+    public InfoSiteQualifications() {
     }
 
     /**
-	 * @return Returns the infoPerson.
-	 */
-    public InfoPerson getInfoPerson()
-    {
+     * @return Returns the infoPerson.
+     */
+    public InfoPerson getInfoPerson() {
         return infoPerson;
     }
 
     /**
-	 * @param infoPerson
-	 *            The infoPerson to set.
-	 */
-    public void setInfoPerson(InfoPerson infoPerson)
-    {
+     * @param infoPerson
+     *            The infoPerson to set.
+     */
+    public void setInfoPerson(InfoPerson infoPerson) {
         this.infoPerson = infoPerson;
     }
 
     /**
-	 * @return Returns the infoQualifications.
-	 */
-    public List getInfoQualifications()
-    {
+     * @return Returns the infoQualifications.
+     */
+    public List getInfoQualifications() {
         return infoQualifications;
     }
 
     /**
-	 * @param infoQualifications
-	 *            The infoQualifications to set.
-	 */
-    public void setInfoQualifications(List infoQualifications)
-    {
+     * @param infoQualifications
+     *            The infoQualifications to set.
+     */
+    public void setInfoQualifications(List infoQualifications) {
         this.infoQualifications = infoQualifications;
     }
 }

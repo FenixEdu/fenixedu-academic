@@ -21,51 +21,41 @@ import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Ana e Ricardo
- *
  * 
+ *  
  */
 public class ChooseExecutionCourseAction
-	//extends FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
-	extends FenixContextDispatchAction{
-	
-	public ActionForward prepare(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+//extends
+        // FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction
+        // {
+        extends FenixContextDispatchAction {
 
-		SessionUtils.getExecutionCourses(request);
-		
-		String nextPage = request.getParameter("nextPage");
-		request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
-		return mapping.findForward("showForm");
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-	}
+        SessionUtils.getExecutionCourses(request);
 
-	
-	public ActionForward choose(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		
+        String nextPage = request.getParameter("nextPage");
+        request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
+        return mapping.findForward("showForm");
 
-		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
+    }
 
-		Integer executionCourseID = new Integer((String) chooseCourseForm.get("executionCourseID"));
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		request.setAttribute(
-			SessionConstants.EXECUTION_COURSE_OID,
-			executionCourseID.toString());
-		
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setCurricularYearsContext(request);
+        DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 
-		return mapping.findForward("forwardChoose");
-	}
+        Integer executionCourseID = new Integer((String) chooseCourseForm.get("executionCourseID"));
+
+        request.setAttribute(SessionConstants.EXECUTION_COURSE_OID, executionCourseID.toString());
+
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setCurricularYearsContext(request);
+
+        return mapping.findForward("forwardChoose");
+    }
 
 }

@@ -12,15 +12,19 @@ import Dominio.ISection;
 import Dominio.ISite;
 
 /**
- *
- * @author  ars
+ * 
+ * @author ars
  * @author lmac1
  */
-public interface IPersistentSection extends IPersistentObject{
-    ISection readBySiteAndSectionAndName(ISite site, ISection superiorSection, String name) throws ExcepcaoPersistencia;
-	List readBySiteAndSection(ISite site,ISection superiorSection)throws ExcepcaoPersistencia;
+public interface IPersistentSection extends IPersistentObject {
+    ISection readBySiteAndSectionAndName(ISite site, ISection superiorSection, String name)
+            throws ExcepcaoPersistencia;
+
+    List readBySiteAndSection(ISite site, ISection superiorSection) throws ExcepcaoPersistencia;
+
     void delete(ISection section) throws ExcepcaoPersistencia;
- 
-	List readBySite(ISite site) throws ExcepcaoPersistencia;
-	List readAll() throws ExcepcaoPersistencia;     
+
+    List readBySite(ISite site) throws ExcepcaoPersistencia;
+
+    List readAll() throws ExcepcaoPersistencia;
 }

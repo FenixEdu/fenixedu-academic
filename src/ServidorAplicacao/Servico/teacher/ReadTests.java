@@ -31,42 +31,39 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadTests implements IService {
 
-	public ReadTests() {
-	}
+    public ReadTests() {
+    }
 
-	public SiteView run(Integer executionCourseId) throws FenixServiceException {
+    public SiteView run(Integer executionCourseId) throws FenixServiceException {
 
-		ISuportePersistente persistentSuport;
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
+        ISuportePersistente persistentSuport;
+        try {
+            persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-					.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-					.readByOID(ExecutionCourse.class, executionCourseId);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			IPersistentTest persistentTest = persistentSuport
-					.getIPersistentTest();
-			List tests = persistentTest.readByTestScopeObject(executionCourse);
-			List result = new ArrayList();
-			Iterator iter = tests.iterator();
-			while (iter.hasNext()) {
-				ITest test = (ITest) iter.next();
-				InfoTest infoTest = InfoTest.newInfoFromDomain(test);
-				result.add(infoTest);
-			}
-			InfoSiteTests bodyComponent = new InfoSiteTests();
-			bodyComponent.setInfoTests(result);
-			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
-					.get(executionCourse));
-			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
-					bodyComponent);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+            IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+            List tests = persistentTest.readByTestScopeObject(executionCourse);
+            List result = new ArrayList();
+            Iterator iter = tests.iterator();
+            while (iter.hasNext()) {
+                ITest test = (ITest) iter.next();
+                InfoTest infoTest = InfoTest.newInfoFromDomain(test);
+                result.add(infoTest);
+            }
+            InfoSiteTests bodyComponent = new InfoSiteTests();
+            bodyComponent.setInfoTests(result);
+            bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+            return siteView;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 
 }

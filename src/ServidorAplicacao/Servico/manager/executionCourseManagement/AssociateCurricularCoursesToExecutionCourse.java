@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourse;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -21,26 +21,11 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  * @author Fernanda Quitério 29/Dez/2003
  */
-public class AssociateCurricularCoursesToExecutionCourse implements IServico {
+public class AssociateCurricularCoursesToExecutionCourse implements IService {
 
-    private static AssociateCurricularCoursesToExecutionCourse service = new AssociateCurricularCoursesToExecutionCourse();
-
-    public static AssociateCurricularCoursesToExecutionCourse getService() {
-        return service;
-    }
-
-    private AssociateCurricularCoursesToExecutionCourse() {
-    }
-
-    public final String getNome() {
-        return "AssociateCurricularCoursesToExecutionCourse";
-    }
-
-    public void run(Integer executionCourseId, List curricularCourseIds)
-            throws FenixServiceException {
+    public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
             IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
@@ -52,15 +37,13 @@ public class AssociateCurricularCoursesToExecutionCourse implements IServico {
 
             if (curricularCourseIds != null) {
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class, executionCourseId,
-                                true);
+                        .readByOID(ExecutionCourse.class, executionCourseId, true);
 
                 if (executionCourse == null) {
                     throw new NonExistingServiceException("noExecutionCourse");
                 }
 
-                List curricularCourses = executionCourse
-                        .getAssociatedCurricularCourses();
+                List curricularCourses = executionCourse.getAssociatedCurricularCourses();
                 if (curricularCourses == null) {
                     curricularCourses = new ArrayList();
                 }
@@ -70,14 +53,11 @@ public class AssociateCurricularCoursesToExecutionCourse implements IServico {
                     Integer curricularCourseId = (Integer) iter.next();
 
                     ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                            .readByOID(CurricularCourse.class,
-                                    curricularCourseId);
+                            .readByOID(CurricularCourse.class, curricularCourseId);
                     if (curricularCourse == null) {
-                        throw new NonExistingServiceException(
-                                "noCurricularCourse");
+                        throw new NonExistingServiceException("noCurricularCourse");
                     }
-                    List executionCourses = curricularCourse
-                            .getAssociatedExecutionCourses();
+                    List executionCourses = curricularCourse.getAssociatedExecutionCourses();
                     if (executionCourses == null) {
                         executionCourses = new ArrayList();
                     }
@@ -85,13 +65,11 @@ public class AssociateCurricularCoursesToExecutionCourse implements IServico {
                             && !executionCourses.contains(executionCourse)) {
                         curricularCoursesToAssociate.add(curricularCourse);
                         executionCourses.add(executionCourse);
-                        curricularCourse
-                                .setAssociatedExecutionCourses(executionCourses);
+                        curricularCourse.setAssociatedExecutionCourses(executionCourses);
                     }
                 }
                 curricularCourses.addAll(curricularCoursesToAssociate);
-                executionCourse
-                        .setAssociatedCurricularCourses(curricularCourses);
+                executionCourse.setAssociatedCurricularCourses(curricularCourses);
             }
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

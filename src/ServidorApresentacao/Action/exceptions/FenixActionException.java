@@ -10,151 +10,128 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForward;
 
 /**
- *
+ * 
  * @author Luis Cruz & Nuno Nunes & João Mota
  */
 
 // Note: When upgrading to struts 1.1 rc1 or above change
 // extends declaration to ModuleException and remove already
 // implemented methods and constructors.
-
 public class FenixActionException extends Exception {
 
-	/**
-	 * @param actionForward to forward to when error handling.
-	 */
-	public FenixActionException(ActionForward actionForward) {
-		this.actionForward = actionForward;
-	}
+    /**
+     * @param actionForward
+     *            to forward to when error handling.
+     */
+    public FenixActionException(ActionForward actionForward) {
+        this.actionForward = actionForward;
+    }
 
+    protected String property = "error.default";
 
-	protected String property = "error.default";
-	protected ActionError error = null;
-	private ActionForward actionForward;
+    protected ActionError error = null;
 
-	// --- End of Variable Declarations ----------------------------------
+    private ActionForward actionForward;
 
-	public FenixActionException() {
-		super("error.default");
-		error = new ActionError("error.default");
-	}
+    // --- End of Variable Declarations ----------------------------------
 
-	
-	public FenixActionException(String key) {
-		super(key);
-		error = new ActionError(key);
-	}
+    public FenixActionException() {
+        super("error.default");
+        error = new ActionError("error.default");
+    }
 
-	public FenixActionException(String key, Object value) {
-		super(key);
-		error = new ActionError(key, value);
-	}
+    public FenixActionException(String key) {
+        super(key);
+        error = new ActionError(key);
+    }
 
-	public FenixActionException(String key, Object value0, Object value1) {
-		super(key);
-		error = new ActionError(key, value0, value1);
-	}
+    public FenixActionException(String key, Object value) {
+        super(key);
+        error = new ActionError(key, value);
+    }
 
-	public FenixActionException(
-		String key,
-		Object value0,
-		Object value1,
-		Object value2) {
-		super(key);
-		error = new ActionError(key, value0, value1, value2);
-	}
+    public FenixActionException(String key, Object value0, Object value1) {
+        super(key);
+        error = new ActionError(key, value0, value1);
+    }
 
-	public FenixActionException(
-		String key,
-		Object value0,
-		Object value1,
-		Object value2,
-		Object value3) {
-		super(key);
-		error = new ActionError(key, value0, value1, value2, value3);
-	}
+    public FenixActionException(String key, Object value0, Object value1, Object value2) {
+        super(key);
+        error = new ActionError(key, value0, value1, value2);
+    }
 
-	public FenixActionException(String key, Object[] values) {
-		super(key);
-		error = new ActionError(key, values);
-	}
+    public FenixActionException(String key, Object value0, Object value1, Object value2, Object value3) {
+        super(key);
+        error = new ActionError(key, value0, value1, value2, value3);
+    }
 
-	public FenixActionException(String key, Throwable cause) {
-		super(key, cause);
-		error = new ActionError(key);
-	}
+    public FenixActionException(String key, Object[] values) {
+        super(key);
+        error = new ActionError(key, values);
+    }
 
-	public FenixActionException(String key, Object value, Throwable cause) {
-		super(key, cause);
-		error = new ActionError(key, value);
-	}
+    public FenixActionException(String key, Throwable cause) {
+        super(key, cause);
+        error = new ActionError(key);
+    }
 
-	public FenixActionException(
-		String key,
-		Object value0,
-		Object value1,
-		Throwable cause) {
-		super(key, cause);
-		error = new ActionError(key, value0, value1);
-	}
+    public FenixActionException(String key, Object value, Throwable cause) {
+        super(key, cause);
+        error = new ActionError(key, value);
+    }
 
-	public FenixActionException(
-		String key,
-		Object value0,
-		Object value1,
-		Object value2,
-		Throwable cause) {
-		super(key, cause);
-		error = new ActionError(key, value0, value1, value2);
-	}
+    public FenixActionException(String key, Object value0, Object value1, Throwable cause) {
+        super(key, cause);
+        error = new ActionError(key, value0, value1);
+    }
 
-	public FenixActionException(
-		String key,
-		Object value0,
-		Object value1,
-		Object value2,
-		Object value3,
-		Throwable cause) {
-		super(key, cause);
-		error = new ActionError(key, value0, value1, value2, value3);
-	}
+    public FenixActionException(String key, Object value0, Object value1, Object value2, Throwable cause) {
+        super(key, cause);
+        error = new ActionError(key, value0, value1, value2);
+    }
 
-	public FenixActionException(String key, Object[] values, Throwable cause) {
-		super(key, cause);
-		error = new ActionError(key, values);
-	}
-	
-	public FenixActionException(Throwable cause) {
-			super(cause);
-		}
+    public FenixActionException(String key, Object value0, Object value1, Object value2, Object value3,
+            Throwable cause) {
+        super(key, cause);
+        error = new ActionError(key, value0, value1, value2, value3);
+    }
 
-	// --- End of Constructores ------------------------------------------
-	public String toString() {
-		String result = "["+this.getClass().getName()+"\n";
-		result += "property" +this.getProperty()+ "\n";
-		result += "error" +this.getError()+ "\n";
-		result += "cause" +this.getCause()+ "\n";
-		result += "]";
-		return result;
-	}
+    public FenixActionException(String key, Object[] values, Throwable cause) {
+        super(key, cause);
+        error = new ActionError(key, values);
+    }
 
-	public String getProperty() {
-		return (property != null) ? property : getError().getKey();
-	}
+    public FenixActionException(Throwable cause) {
+        super(cause);
+    }
 
-	public void setProperty(String property) {
-		this.property = property;
-	}
+    // --- End of Constructores ------------------------------------------
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "\n";
+        result += "property" + this.getProperty() + "\n";
+        result += "error" + this.getError() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
-	public ActionError getError() {
-		return error;
-	}
+    public String getProperty() {
+        return (property != null) ? property : getError().getKey();
+    }
 
-	/**
-	 * @return actionForward to forward to.
-	 */
-	public ActionForward getActionForward() {
-		return actionForward;
-	}
+    public void setProperty(String property) {
+        this.property = property;
+    }
+
+    public ActionError getError() {
+        return error;
+    }
+
+    /**
+     * @return actionForward to forward to.
+     */
+    public ActionForward getActionForward() {
+        return actionForward;
+    }
 
 }

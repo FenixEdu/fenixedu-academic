@@ -5,11 +5,17 @@
  */
 package ServidorAplicacao.Servico.Seminaries;
 
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.Seminaries.InfoEquivalency;
-import DataBeans.util.Cloner;
+import DataBeans.Seminaries.InfoTheme;
 import Dominio.Seminaries.CourseEquivalency;
 import Dominio.Seminaries.ICourseEquivalency;
-import ServidorAplicacao.IServico;
+import Dominio.Seminaries.ITheme;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -23,41 +29,29 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquival
  * Created at 4/Ago/2003, 13:05:42
  *  
  */
-public class GetEquivalency implements IServico {
-    private static GetEquivalency service = new GetEquivalency();
+public class GetEquivalency implements IService {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static GetEquivalency getService() {
-        return service;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private GetEquivalency() {
-    }
-
-    /**
-     * Returns The Service Name
-     */
-    public final String getNome() {
-        return "Seminaries.GetEquivalency";
+    public GetEquivalency() {
     }
 
     public InfoEquivalency run(Integer equivalencyID) throws BDException {
         InfoEquivalency infoEquivalency = null;
         try {
-            ISuportePersistente persistenceSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
             IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistenceSupport
                     .getIPersistentSeminaryCurricularCourseEquivalency();
-            ICourseEquivalency equivalency = (ICourseEquivalency) persistentEquivalency
-                    .readByOID(CourseEquivalency.class, equivalencyID);
+            ICourseEquivalency equivalency = (ICourseEquivalency) persistentEquivalency.readByOID(
+                    CourseEquivalency.class, equivalencyID);
             if (equivalency != null) {
-                infoEquivalency = Cloner
-                        .copyIEquivalency2InfoEquivalency(equivalency);
+                infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);
+                infoEquivalency.setThemes((List) CollectionUtils.collect(equivalency.getThemes(),
+                        new Transformer() {
+
+                            public Object transform(Object arg0) {
+
+                                return InfoTheme.newInfoFromDomain((ITheme) arg0);
+                            }
+                        }));
             }
         } catch (ExcepcaoPersistencia ex) {
             throw new BDException(

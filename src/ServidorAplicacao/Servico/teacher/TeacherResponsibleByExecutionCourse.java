@@ -33,13 +33,12 @@ public class TeacherResponsibleByExecutionCourse implements IServico {
         return "TeacherResponsibleByExecutionCourse";
     }
 
-    public Boolean run(String teacherUserName, Integer executionCourseCode,
-            Integer curricularCourseCode) throws FenixServiceException {
+    public Boolean run(String teacherUserName, Integer executionCourseCode, Integer curricularCourseCode)
+            throws FenixServiceException {
         boolean result = false;
 
         try {
-            result = ExecutionCourseResponsibleTeacher(teacherUserName,
-                    executionCourseCode)
+            result = ExecutionCourseResponsibleTeacher(teacherUserName, executionCourseCode)
                     && CurricularCourseNotBasic(curricularCourseCode);
 
         } catch (Exception e) {
@@ -54,8 +53,8 @@ public class TeacherResponsibleByExecutionCourse implements IServico {
      * @param argumentos
      * @return
      */
-    private boolean ExecutionCourseResponsibleTeacher(String teacherUserName,
-            Integer executionCourseCode) throws FenixServiceException {
+    private boolean ExecutionCourseResponsibleTeacher(String teacherUserName, Integer executionCourseCode)
+            throws FenixServiceException {
         boolean result = false;
 
         ITeacher teacher = null;
@@ -69,15 +68,13 @@ public class TeacherResponsibleByExecutionCourse implements IServico {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             teacher = persistentTeacher.readTeacherByUsername(teacherUserName);
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
 
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
-            responsibleFor = persistentResponsibleFor
-                    .readByTeacherAndExecutionCoursePB(teacher, executionCourse);
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCoursePB(teacher,
+                    executionCourse);
             if (responsibleFor == null) {
                 result = false;
             } else {
@@ -93,8 +90,7 @@ public class TeacherResponsibleByExecutionCourse implements IServico {
      * @param argumentos
      * @return
      */
-    private boolean CurricularCourseNotBasic(Integer curricularCourseCode)
-            throws FenixServiceException {
+    private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws FenixServiceException {
         boolean result = false;
         ICurricularCourse curricularCourse = null;
 
@@ -102,10 +98,9 @@ public class TeacherResponsibleByExecutionCourse implements IServico {
         try {
 
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
-            curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode);
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                    CurricularCourse.class, curricularCourseCode);
             result = curricularCourse.getBasic().equals(Boolean.FALSE);
         } catch (Exception e) {
             throw new FenixServiceException(e);

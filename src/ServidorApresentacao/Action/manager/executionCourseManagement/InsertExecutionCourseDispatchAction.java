@@ -36,156 +36,118 @@ import Util.PeriodState;
 
 /**
  * @author Fernanda Quitério 17/Dez/2003
- * 
+ *  
  */
-public class InsertExecutionCourseDispatchAction extends FenixDispatchAction
-{
-	public ActionForward prepareInsertExecutionCourse(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
-		IUserView userView = SessionUtils.getUserView(request);
+public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
+    public ActionForward prepareInsertExecutionCourse(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        IUserView userView = SessionUtils.getUserView(request);
 
-		List infoExecutionPeriods = null;
-		try
-		{
-			infoExecutionPeriods =
-				(List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
-		}
-		catch (FenixServiceException ex)
-		{
-			throw new FenixActionException();
-		}
+        List infoExecutionPeriods = null;
+        try {
+            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods",
+                    null);
+        } catch (FenixServiceException ex) {
+            throw new FenixActionException();
+        }
 
-		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
-		{
-			// exclude closed execution periods
-			infoExecutionPeriods = (List) CollectionUtils.select(infoExecutionPeriods, new Predicate()
-					{
-				public boolean evaluate(Object input)
-				{
-					InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
-					if (!infoExecutionPeriod.getState().equals(PeriodState.CLOSED))
-					{
-						return true;
-					}
-					return false;
-				}
-			});
-			
-			ComparatorChain comparator = new ComparatorChain();
-			comparator.addComparator(new BeanComparator("infoExecutionYear.year"),true);
-			comparator.addComparator(new BeanComparator("name"), true);
-			Collections.sort(infoExecutionPeriods, comparator);
+        if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
+            // exclude closed execution periods
+            infoExecutionPeriods = (List) CollectionUtils.select(infoExecutionPeriods, new Predicate() {
+                public boolean evaluate(Object input) {
+                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+                    if (!infoExecutionPeriod.getState().equals(PeriodState.CLOSED)) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
 
-			List executionPeriodLabels = new ArrayList();
-			CollectionUtils.collect(infoExecutionPeriods, new Transformer()
-			{
-				public Object transform(Object arg0)
-				{
-					InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
+            ComparatorChain comparator = new ComparatorChain();
+            comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
+            comparator.addComparator(new BeanComparator("name"), true);
+            Collections.sort(infoExecutionPeriods, comparator);
 
-					LabelValueBean executionPeriod =
-						new LabelValueBean(
-							infoExecutionPeriod.getName()
-								+ " - "
-								+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
-							infoExecutionPeriod.getIdInternal().toString());
-					return executionPeriod;
-				}
-			}, executionPeriodLabels);
+            List executionPeriodLabels = new ArrayList();
+            CollectionUtils.collect(infoExecutionPeriods, new Transformer() {
+                public Object transform(Object arg0) {
+                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
 
-			request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
-		}
-		
-		DynaActionForm executionCourseForm = (DynaActionForm) form;
-		executionCourseForm.set("theoreticalHours", new String("0.0"));
-		executionCourseForm.set("praticalHours", new String("0.0"));
-		executionCourseForm.set("theoPratHours", new String("0.0"));
-		executionCourseForm.set("labHours", new String("0.0"));
-		
-		return mapping.findForward("insertExecutionCourse");
-	}
+                    LabelValueBean executionPeriod = new LabelValueBean(infoExecutionPeriod.getName()
+                            + " - " + infoExecutionPeriod.getInfoExecutionYear().getYear(),
+                            infoExecutionPeriod.getIdInternal().toString());
+                    return executionPeriod;
+                }
+            }, executionPeriodLabels);
 
-	public ActionForward insertExecutionCourse(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-	throws FenixActionException
-	{
-		IUserView userView = SessionUtils.getUserView(request);
+            request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
+        }
 
-		InfoExecutionCourse infoExecutionCourse = fillInfoExecutionCourse(form, request);
+        DynaActionForm executionCourseForm = (DynaActionForm) form;
+        executionCourseForm.set("theoreticalHours", new String("0.0"));
+        executionCourseForm.set("praticalHours", new String("0.0"));
+        executionCourseForm.set("theoPratHours", new String("0.0"));
+        executionCourseForm.set("labHours", new String("0.0"));
 
-		Object args[] = { infoExecutionCourse };
-		try
-		{
-			ServiceUtils.executeService(userView, "InsertExecutionCourseAtExecutionPeriod", args);
-		}
-		catch (ExistingServiceException ex)
-		{
-			throw new ExistingActionException(ex.getMessage(), ex);
-		}
-		catch (NonExistingServiceException exception)
-		{
-			throw new NonExistingActionException(
-					exception.getMessage(),
-					mapping.getInputForward());
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+        return mapping.findForward("insertExecutionCourse");
+    }
 
-		return mapping.findForward("firstPage");
-	}
+    public ActionForward insertExecutionCourse(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        IUserView userView = SessionUtils.getUserView(request);
 
-	private InfoExecutionCourse fillInfoExecutionCourse(ActionForm form, HttpServletRequest request)
-	{
-		DynaActionForm dynaForm = (DynaValidatorForm) form;
+        InfoExecutionCourse infoExecutionCourse = fillInfoExecutionCourse(form, request);
 
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+        Object args[] = { infoExecutionCourse };
+        try {
+            ServiceUtils.executeService(userView, "InsertExecutionCourseAtExecutionPeriod", args);
+        } catch (ExistingServiceException ex) {
+            throw new ExistingActionException(ex.getMessage(), ex);
+        } catch (NonExistingServiceException exception) {
+            throw new NonExistingActionException(exception.getMessage(), mapping.getInputForward());
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		String name = (String) dynaForm.get("name");
-		infoExecutionCourse.setNome(name);
+        return mapping.findForward("firstPage");
+    }
 
-		String code = (String) dynaForm.get("code");
-		infoExecutionCourse.setSigla(code);
+    private InfoExecutionCourse fillInfoExecutionCourse(ActionForm form, HttpServletRequest request) {
+        DynaActionForm dynaForm = (DynaValidatorForm) form;
 
-		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-		infoExecutionPeriod.setIdInternal(new Integer((String) dynaForm.get("executionPeriodId")));
-		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
-		String labHours = (String) dynaForm.get("labHours");
-		if (labHours.compareTo("") != 0)
-		{
-			infoExecutionCourse.setLabHours(new Double(labHours));
-		}
-		String praticalHours = (String) dynaForm.get("praticalHours");
-		if (praticalHours.compareTo("") != 0)
-		{
-			infoExecutionCourse.setPraticalHours(new Double(praticalHours));
-		}
-		String theoPratHours = (String) dynaForm.get("theoPratHours");
-		if (theoPratHours.compareTo("") != 0)
-		{
-			infoExecutionCourse.setTheoPratHours(new Double(theoPratHours));
-		}
-		String theoreticalHours = (String) dynaForm.get("theoreticalHours");
-		if (theoreticalHours.compareTo("") != 0)
-		{
-			infoExecutionCourse.setTheoreticalHours(new Double(theoreticalHours));
-		}
-		String comment = new String("");
-		if ((String) dynaForm.get("comment") != null)
-		{
-			comment = (String) dynaForm.get("comment");
-		}
-		infoExecutionCourse.setComment(comment);
-		return infoExecutionCourse;
-	}
+        String name = (String) dynaForm.get("name");
+        infoExecutionCourse.setNome(name);
+
+        String code = (String) dynaForm.get("code");
+        infoExecutionCourse.setSigla(code);
+
+        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+        infoExecutionPeriod.setIdInternal(new Integer((String) dynaForm.get("executionPeriodId")));
+        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+
+        String labHours = (String) dynaForm.get("labHours");
+        if (labHours.compareTo("") != 0) {
+            infoExecutionCourse.setLabHours(new Double(labHours));
+        }
+        String praticalHours = (String) dynaForm.get("praticalHours");
+        if (praticalHours.compareTo("") != 0) {
+            infoExecutionCourse.setPraticalHours(new Double(praticalHours));
+        }
+        String theoPratHours = (String) dynaForm.get("theoPratHours");
+        if (theoPratHours.compareTo("") != 0) {
+            infoExecutionCourse.setTheoPratHours(new Double(theoPratHours));
+        }
+        String theoreticalHours = (String) dynaForm.get("theoreticalHours");
+        if (theoreticalHours.compareTo("") != 0) {
+            infoExecutionCourse.setTheoreticalHours(new Double(theoreticalHours));
+        }
+        String comment = new String("");
+        if ((String) dynaForm.get("comment") != null) {
+            comment = (String) dynaForm.get("comment");
+        }
+        infoExecutionCourse.setComment(comment);
+        return infoExecutionCourse;
+    }
 }

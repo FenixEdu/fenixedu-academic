@@ -26,4 +26,25 @@
 		<put name="navGeral" value="" />
 		<put name="body" value="/student/schoolRegistration/showSchoolRegistrationInfo_bd.jsp" />
 	</definition>
+
+	<definition name="definition.schoolRegistration.residenceCandidacy" extends="definition.schoolRegistration.one-column">
+		<put name="navGeral" value="" />
+		<put name="body" value="/student/schoolRegistration/residenceCandidacy_bd.jsp" />
+	</definition>
+	
+	<definition name="definition.schoolRegistration.declarations" extends="definition.schoolRegistration.one-column">
+		<put name="navGeral" value="" />
+		<put name="body" value="/student/schoolRegistration/declarations_bd.jsp" />
+	</definition>	
+	
+	<definition name="definition.schoolRegistration.schedule" path="/student/classTimeTable.jsp">				
+	</definition>		
+	
+	<definition name="definition.schoolRegistration.printDeclaration" 
+				path="/student/schoolRegistration/declarationTemplate_bd.jsp">				
+	</definition>	
+	
+	<definition name="definition.schoolRegistration.logout" 
+				path="/loginPage.jsp">				
+	</definition>
 </tiles-definitions>

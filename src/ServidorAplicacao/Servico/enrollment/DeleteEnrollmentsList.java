@@ -16,34 +16,26 @@ import Util.TipoCurso;
  * @author Tânia Pousão
  *  
  */
-public class DeleteEnrollmentsList implements IService
-{
-	public DeleteEnrollmentsList()
-	{
-	}
+public class DeleteEnrollmentsList implements IService {
+    public DeleteEnrollmentsList() {
+    }
 
-	// some of these arguments may be null. they are only needed for filter
-	public void run(InfoStudent infoStudent, TipoCurso degreeType, List enrolmentIDList)
-		throws FenixServiceException
-	{
-		try
-		{
-			if (enrolmentIDList != null && enrolmentIDList.size() > 0)
-			{
-				ListIterator iterator = enrolmentIDList.listIterator();
-				while (iterator.hasNext())
-				{
-					Integer enrolmentID = (Integer) iterator.next();
+    // some of these arguments may be null. they are only needed for filter
+    public void run(InfoStudent infoStudent, TipoCurso degreeType, List enrolmentIDList)
+            throws FenixServiceException {
+        try {
+            if (enrolmentIDList != null && enrolmentIDList.size() > 0) {
+                ListIterator iterator = enrolmentIDList.listIterator();
+                while (iterator.hasNext()) {
+                    Integer enrolmentID = (Integer) iterator.next();
 
-					DeleteEnrolment deleteEnrolmentService = new DeleteEnrolment();
-					deleteEnrolmentService.run(null, null, enrolmentID);
-				}
-			}
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-	}
+                    DeleteEnrolment deleteEnrolmentService = new DeleteEnrolment();
+                    deleteEnrolmentService.run(null, null, enrolmentID);
+                }
+            }
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixServiceException(e);
+        }
+    }
 }

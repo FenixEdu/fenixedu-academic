@@ -21,16 +21,10 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Ivo Brandão
  */
-public class AnnouncementManagementDispatchAction extends FenixDispatchAction
-{
+public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareCreateAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepareCreateAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -39,13 +33,8 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         return mapping.findForward("insertAnnouncement");
     }
 
-    public ActionForward createAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward createAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -57,19 +46,14 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object args[] = { infoSite, title, information };
-		ServiceManagerServiceFactory.executeService(userView, "InsertAnnouncement", args);
+        ServiceManagerServiceFactory.executeService(userView, "InsertAnnouncement", args);
 
         //return to announcementManagement
         return mapping.findForward("accessAnnouncementManagement");
     }
 
-    public ActionForward prepareEditAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepareEditAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -84,13 +68,8 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         return mapping.findForward("editAnnouncement");
     }
 
-    public ActionForward editAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -103,7 +82,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object args[] = { infoSite, infoAnnouncement, newTitle, newInformation };
-		ServiceManagerServiceFactory.executeService(userView, "EditAnnouncement", args);
+        ServiceManagerServiceFactory.executeService(userView, "EditAnnouncement", args);
 
         //remove index from session
         session.removeAttribute("index");
@@ -112,17 +91,11 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         return mapping.findForward("accessAnnouncementManagement");
     }
 
-    public ActionForward deleteAnnouncement(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         /*
-         * session: Site, Announcement; 
-         * action: delete Announcement.
+         * session: Site, Announcement; action: delete Announcement.
          */
 
         HttpSession session = request.getSession(false);
@@ -137,7 +110,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object args[] = { infoSite.getInfoExecutionCourse(), infoSite, infoAnnouncement };
-		ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncement", args);
+        ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncement", args);
 
         //remove index from session
         session.removeAttribute("index");
@@ -146,13 +119,8 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction
         return mapping.findForward("accessAnnouncementManagement");
     }
 
-    public ActionForward showAnnouncements(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward showAnnouncements(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         //return to announcementManagement
         return mapping.findForward("showAnnouncements");
     }

@@ -6,119 +6,116 @@ import java.util.ListIterator;
 
 /**
  * @author Tânia Pousão
- *
  * 
+ *  
  */
 public class InfoSiteEnrolmentEvaluation extends DataTranferObject implements ISiteComponent {
-	private List enrolmentEvaluations;
-	private InfoTeacher infoTeacher;
-	private Date lastEvaluationDate;
-	private InfoExecutionPeriod infoExecutionPeriod;
-	
+    private List enrolmentEvaluations;
 
-	public boolean equals(Object objectToCompare) {
-		boolean result = false;
+    private InfoTeacher infoTeacher;
 
-		if (objectToCompare instanceof InfoSiteEnrolmentEvaluation
-			&& (((((InfoSiteEnrolmentEvaluation) objectToCompare).getLastEvaluationDate() != null
-				&& this.getLastEvaluationDate() != null
-				&& ((InfoSiteEnrolmentEvaluation) objectToCompare).getLastEvaluationDate().equals(this.getLastEvaluationDate()))
-				|| ((InfoSiteEnrolmentEvaluation) objectToCompare).getLastEvaluationDate() == null
-				&& this.getLastEvaluationDate() == null))
-			&& (((((InfoSiteEnrolmentEvaluation) objectToCompare).getInfoTeacher() != null
-				&& this.getInfoTeacher() != null
-				&& ((InfoSiteEnrolmentEvaluation) objectToCompare).getInfoTeacher().equals(this.getInfoTeacher()))
-				|| ((InfoSiteEnrolmentEvaluation) objectToCompare).getInfoTeacher() == null
-				&& this.getInfoTeacher() == null))) {
-			result = true;
-		}
+    private Date lastEvaluationDate;
 
-		if (((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations() == null
-			&& this.getEnrolmentEvaluations() == null
-			&& result == true) {
-			return true;
-		}
-		
-		if (((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations() == null
-			|| this.getEnrolmentEvaluations() == null
-			|| ((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations().size()
-				!= this.getEnrolmentEvaluations().size()) {
-			return false;
-		}
-		
+    private InfoExecutionPeriod infoExecutionPeriod;
 
-		ListIterator iter1 = ((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations().listIterator();
-		ListIterator iter2 = this.getEnrolmentEvaluations().listIterator();
-		while (result && iter1.hasNext()) {
-			InfoEnrolmentEvaluation infoEnrolmentEvaluation1 = (InfoEnrolmentEvaluation) iter1.next();
-			InfoEnrolmentEvaluation infoEnrolmentEvaluation2 = (InfoEnrolmentEvaluation) iter2.next();
-			if (!infoEnrolmentEvaluation1.equals(infoEnrolmentEvaluation2)) {
-				result = false;
-			}
-		}
-		
-		
-		return result;
-	}
+    public boolean equals(Object objectToCompare) {
+        boolean result = false;
 
-	/**
-	 * @return
-	 */
-	public Date getLastEvaluationDate() {
-		return lastEvaluationDate;
-	}
+        if (objectToCompare instanceof InfoSiteEnrolmentEvaluation
+                && (((((InfoSiteEnrolmentEvaluation) objectToCompare).getLastEvaluationDate() != null
+                        && this.getLastEvaluationDate() != null && ((InfoSiteEnrolmentEvaluation) objectToCompare)
+                        .getLastEvaluationDate().equals(this.getLastEvaluationDate())) || ((InfoSiteEnrolmentEvaluation) objectToCompare)
+                        .getLastEvaluationDate() == null
+                        && this.getLastEvaluationDate() == null))
+                && (((((InfoSiteEnrolmentEvaluation) objectToCompare).getInfoTeacher() != null
+                        && this.getInfoTeacher() != null && ((InfoSiteEnrolmentEvaluation) objectToCompare)
+                        .getInfoTeacher().equals(this.getInfoTeacher())) || ((InfoSiteEnrolmentEvaluation) objectToCompare)
+                        .getInfoTeacher() == null
+                        && this.getInfoTeacher() == null))) {
+            result = true;
+        }
 
-	/**
-	 * @param lastEvaluationDate
-	 */
-	public void setLastEvaluationDate(Date lastEvaluationDate) {
-		this.lastEvaluationDate = lastEvaluationDate;
-	}
+        if (((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations() == null
+                && this.getEnrolmentEvaluations() == null && result == true) {
+            return true;
+        }
 
-	/**
-	 * @return
-	 */
-	public List getEnrolmentEvaluations() {
-		return enrolmentEvaluations;
-	}
+        if (((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations() == null
+                || this.getEnrolmentEvaluations() == null
+                || ((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations().size() != this
+                        .getEnrolmentEvaluations().size()) {
+            return false;
+        }
 
-	/**
-	 * @param enrolmentEvaluations
-	 */
-	public void setEnrolmentEvaluations(List enrolmentEvaluations) {
-		this.enrolmentEvaluations = enrolmentEvaluations;
-	}
+        ListIterator iter1 = ((InfoSiteEnrolmentEvaluation) objectToCompare).getEnrolmentEvaluations()
+                .listIterator();
+        ListIterator iter2 = this.getEnrolmentEvaluations().listIterator();
+        while (result && iter1.hasNext()) {
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation1 = (InfoEnrolmentEvaluation) iter1.next();
+            InfoEnrolmentEvaluation infoEnrolmentEvaluation2 = (InfoEnrolmentEvaluation) iter2.next();
+            if (!infoEnrolmentEvaluation1.equals(infoEnrolmentEvaluation2)) {
+                result = false;
+            }
+        }
 
-	/**
-	 * @return
-	 */
-	public InfoTeacher getInfoTeacher() {
-		return infoTeacher;
-	}
+        return result;
+    }
 
-	/**
-	 * @param infoTeacher
-	 */
-	public void setInfoTeacher(InfoTeacher infoTeacher) {
-		this.infoTeacher = infoTeacher;
-	}
+    /**
+     * @return
+     */
+    public Date getLastEvaluationDate() {
+        return lastEvaluationDate;
+    }
 
-	
+    /**
+     * @param lastEvaluationDate
+     */
+    public void setLastEvaluationDate(Date lastEvaluationDate) {
+        this.lastEvaluationDate = lastEvaluationDate;
+    }
 
-	/**
-	 * @return Returns the infoExecutionPeriod.
-	 */
-	public InfoExecutionPeriod getInfoExecutionPeriod()
-	{
-		return infoExecutionPeriod;
-	}
+    /**
+     * @return
+     */
+    public List getEnrolmentEvaluations() {
+        return enrolmentEvaluations;
+    }
 
-	/**
-	 * @param infoExecutionPeriod The infoExecutionPeriod to set.
-	 */
-	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
-	{
-		this.infoExecutionPeriod = infoExecutionPeriod;
-	}
+    /**
+     * @param enrolmentEvaluations
+     */
+    public void setEnrolmentEvaluations(List enrolmentEvaluations) {
+        this.enrolmentEvaluations = enrolmentEvaluations;
+    }
+
+    /**
+     * @return
+     */
+    public InfoTeacher getInfoTeacher() {
+        return infoTeacher;
+    }
+
+    /**
+     * @param infoTeacher
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
+        this.infoTeacher = infoTeacher;
+    }
+
+    /**
+     * @return Returns the infoExecutionPeriod.
+     */
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+        return infoExecutionPeriod;
+    }
+
+    /**
+     * @param infoExecutionPeriod
+     *            The infoExecutionPeriod to set.
+     */
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
 
 }

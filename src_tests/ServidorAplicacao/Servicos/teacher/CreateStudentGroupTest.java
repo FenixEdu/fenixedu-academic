@@ -13,60 +13,63 @@ import ServidorAplicacao.Servicos.TestCaseCreateServices;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class CreateStudentGroupTest extends TestCaseCreateServices {
 
-	IExecutionCourse executionCourse = null;
+    IExecutionCourse executionCourse = null;
 
-	/**
-	 * @param testName
-	 */
-	public CreateStudentGroupTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public CreateStudentGroupTest(String testName) {
+        super(testName);
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "CreateStudentGroup";
-	}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "CreateStudentGroup";
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-		Object[] args = { new Integer(25), new Integer(1), new Integer(3), new Integer(9), null };
-		return args;
-	}
+        Object[] args = { new Integer(25), new Integer(1), new Integer(3), new Integer(9), null };
+        return args;
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		List studentCodes = new ArrayList();
-		studentCodes.add(new String("14"));
-		studentCodes.add(new String("15"));
-		Object[] args = { new Integer(25), new Integer(5), new Integer(3), new Integer(9), studentCodes };
-		return args;
+        List studentCodes = new ArrayList();
+        studentCodes.add(new String("14"));
+        studentCodes.add(new String("15"));
+        Object[] args = { new Integer(25), new Integer(5), new Integer(3), new Integer(9), studentCodes };
+        return args;
 
-	}
+    }
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    /**
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
+        return true;
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 
 }

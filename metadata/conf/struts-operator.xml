@@ -18,7 +18,16 @@
 		<form-property name="page" type="java.lang.Integer"/>
       </form-bean>
       
-      
+      <form-bean name="submitPhotoForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+		<form-property name="username" type="java.lang.String"/>
+		<form-property name="theFile" type="org.apache.struts.upload.FormFile"/>
+		<form-property name="page" type="java.lang.Integer"/>
+	  </form-bean>
+
+		
+
      </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -72,6 +81,19 @@
 							handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 				<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
 			</action>
+
+			<action path="/submitPhoto"
+					parameter="method"
+					validate="true"
+					input="/submitPhoto.do?method=preparePhotoUpload&amp;page=0"
+					name="submitPhotoForm"
+					type="ServidorApresentacao.Action.operator.SubmitPhotoAction"
+					scope="request">
+				<forward name="chooseFile" path="/photo/submitPhoto.jsp"/>
+			</action>
+
+			
+
      </action-mappings>     
 
     

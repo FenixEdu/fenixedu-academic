@@ -32,40 +32,33 @@ import ServidorPersistente.IPersistentMetadata;
 /**
  * @author Susana Fernandes
  */
-public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata {
+public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetadata {
 
     public MetadataOJB() {
     }
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia {
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionCourse", executionCourse
-                .getIdInternal());
+        criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
         return queryList(Metadata.class, criteria);
     }
 
-    public List readByExecutionCourseAndVisibility(
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    public List readByExecutionCourseAndVisibility(IExecutionCourse executionCourse)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionCourse", executionCourse
-                .getIdInternal());
+        criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
         criteria.addEqualTo("visibility", new Boolean("true"));
         return queryList(Metadata.class, criteria);
     }
 
-    public List readByExecutionCourseAndVisibilityAndOrder(
-            IExecutionCourse executionCourse, String order, String asc)
-            throws ExcepcaoPersistencia {
+    public List readByExecutionCourseAndVisibilityAndOrder(IExecutionCourse executionCourse,
+            String order, String asc) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionCourse", executionCourse
-                .getIdInternal());
+        criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
         criteria.addEqualTo("visibility", new Boolean("true"));
 
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
-        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class,
-                criteria, false);
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class, criteria, false);
 
         if (asc != null && asc.equals("false"))
             queryCriteria.addOrderBy(order, false);
@@ -74,32 +67,27 @@ public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata {
         return (List) pb.getCollectionByQuery(queryCriteria);
     }
 
-    public List readByExecutionCourseAndNotTest(
-            IExecutionCourse executionCourse, ITest test, String order,
-            String asc) throws ExcepcaoPersistencia {
+    public List readByExecutionCourseAndNotTest(IExecutionCourse executionCourse, ITest test,
+            String order, String asc) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTest", test.getIdInternal());
         List testQuestionsList = queryList(TestQuestion.class, criteria);
-        Collection testMetadatasIdInternals = CollectionUtils.collect(
-                testQuestionsList, new Transformer() {
+        Collection testMetadatasIdInternals = CollectionUtils.collect(testQuestionsList,
+                new Transformer() {
 
                     public Object transform(Object input) {
                         ITestQuestion testQuestion = (ITestQuestion) input;
-                        return testQuestion.getQuestion().getMetadata()
-                                .getIdInternal();
+                        return testQuestion.getQuestion().getMetadata().getIdInternal();
                     }
                 });
         criteria = new Criteria();
         criteria.addEqualTo("visibility", new Boolean("true"));
-        criteria.addEqualTo("keyExecutionCourse", executionCourse
-                .getIdInternal());
+        criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
         if (testMetadatasIdInternals.size() != 0)
-                criteria.addNotIn("idInternal", testMetadatasIdInternals);
+            criteria.addNotIn("idInternal", testMetadatasIdInternals);
 
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
-        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class,
-                criteria, false);
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class, criteria, false);
         if (asc != null && asc.equals("false"))
             queryCriteria.addOrderBy(order, false);
         else
@@ -107,58 +95,45 @@ public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata {
         return (List) pb.getCollectionByQuery(queryCriteria);
     }
 
-    public List readByExecutionCourseAndNotDistributedTest(
-            IDistributedTest distributedTest) throws ExcepcaoPersistencia {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
+    public List readByExecutionCourseAndNotDistributedTest(IDistributedTest distributedTest)
+            throws ExcepcaoPersistencia {
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest
-                .getIdInternal());
-        QueryByCriteria queryCriteria = new QueryByCriteria(
-                StudentTestQuestion.class, criteria, true);
+        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+        QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, true);
         queryCriteria.addGroupBy("keyQuestion");
-        List studentTestQuestionList = (List) pb
-                .getCollectionByQuery(queryCriteria);
-        Collection metadatasIds = CollectionUtils.collect(
-                studentTestQuestionList, new Transformer() {
+        List studentTestQuestionList = (List) pb.getCollectionByQuery(queryCriteria);
+        Collection metadatasIds = CollectionUtils.collect(studentTestQuestionList, new Transformer() {
 
-                    public Object transform(Object input) {
-                        IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) input;
-                        return studentTestQuestion.getQuestion().getMetadata()
-                                .getIdInternal();
-                    }
-                });
+            public Object transform(Object input) {
+                IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) input;
+                return studentTestQuestion.getQuestion().getMetadata().getIdInternal();
+            }
+        });
         criteria = new Criteria();
         criteria.addEqualTo("visibility", new Boolean("true"));
-        criteria.addEqualTo("keyExecutionCourse", distributedTest
-                .getTestScope().getDomainObject().getIdInternal());
+        criteria.addEqualTo("keyExecutionCourse", distributedTest.getTestScope().getDomainObject()
+                .getIdInternal());
         if (metadatasIds.size() != 0)
-                criteria.addNotIn("idInternal", metadatasIds);
+            criteria.addNotIn("idInternal", metadatasIds);
         List result = queryList(Metadata.class, criteria);
         return result;
     }
 
-    public int getNumberOfQuestions(IMetadata metadata)
-            throws ExcepcaoPersistencia {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
+    public int getNumberOfQuestions(IMetadata metadata) throws ExcepcaoPersistencia {
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
-        QueryByCriteria queryCriteria = new QueryByCriteria(Question.class,
-                criteria);
+        QueryByCriteria queryCriteria = new QueryByCriteria(Question.class, criteria);
         return pb.getCount(queryCriteria);
     }
 
-    public int countByExecutionCourse(IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia {
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
+    public int countByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("visibility", new Boolean(true));
-        criteria.addEqualTo("keyExecutionCourse", executionCourse
-                .getIdInternal());
-        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class,
-                criteria);
+        criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+        QueryByCriteria queryCriteria = new QueryByCriteria(Metadata.class, criteria);
         return pb.getCount(queryCriteria);
     }
 
@@ -169,7 +144,8 @@ public class MetadataOJB extends ObjectFenixOJB implements IPersistentMetadata {
         Iterator it = metadatas.iterator();
         while (it.hasNext()) {
             IMetadata metadata = (IMetadata) it.next();
-            if (getNumberOfQuestions(metadata) == 0) delete(metadata);
+            if (getNumberOfQuestions(metadata) == 0)
+                delete(metadata);
         }
     }
 

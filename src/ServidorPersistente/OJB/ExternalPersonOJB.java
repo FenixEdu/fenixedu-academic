@@ -18,95 +18,81 @@ import ServidorPersistente.IPersistentExternalPerson;
 import Util.TipoDocumentoIdentificacao;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public class ExternalPersonOJB extends ObjectFenixOJB implements IPersistentExternalPerson
-{
+public class ExternalPersonOJB extends PersistentObjectOJB implements IPersistentExternalPerson {
 
-	/** Creates a new instance of ExternalPersonOJB */
-	public ExternalPersonOJB()
-	{
-	}
+    /** Creates a new instance of ExternalPersonOJB */
+    public ExternalPersonOJB() {
+    }
 
-	public IExternalPerson readByUsername(String username) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		IExternalPerson externalPerson = null;
+    public IExternalPerson readByUsername(String username) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        IExternalPerson externalPerson = null;
 
-		criteria.addEqualTo("person.username", username);
-		externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
+        criteria.addEqualTo("person.username", username);
+        externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
 
-		return externalPerson;
+        return externalPerson;
 
-	}
+    }
 
-	public List readByName(String name) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		List externalPersons = new ArrayList();
+    public List readByName(String name) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        List externalPersons = new ArrayList();
 
-		criteria.addLike("person.name", "%" + name + "%");
-		externalPersons = queryList(ExternalPerson.class, criteria);
+        criteria.addLike("person.name", "%" + name + "%");
+        externalPersons = queryList(ExternalPerson.class, criteria);
 
-		return externalPersons;
+        return externalPersons;
 
-	}
+    }
 
-	public IExternalPerson readByNameAndAddressAndWorkLocationID(
-		String name,
-		String address,
-		Integer workLocationID)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		IExternalPerson externalPerson = null;
+    public IExternalPerson readByNameAndAddressAndWorkLocationID(String name, String address,
+            Integer workLocationID) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        IExternalPerson externalPerson = null;
 
-		criteria.addEqualTo("person.nome", name);
-		criteria.addEqualTo("person.address", address);
-		criteria.addEqualTo("workLocation.idInternal", workLocationID);
-		externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
+        criteria.addEqualTo("person.nome", name);
+        criteria.addEqualTo("person.address", address);
+        criteria.addEqualTo("workLocation.idInternal", workLocationID);
+        externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
 
-		return externalPerson;
-	}
+        return externalPerson;
+    }
 
-	public List readByWorkLocation(Integer workLocationID) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		List externalPersons = new ArrayList();
+    public List readByWorkLocation(Integer workLocationID) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        List externalPersons = new ArrayList();
 
-		if (workLocationID != null)
-			criteria.addEqualTo("workLocation.idInternal", workLocationID);
+        if (workLocationID != null)
+            criteria.addEqualTo("workLocation.idInternal", workLocationID);
 
-		externalPersons = queryList(ExternalPerson.class, criteria);
+        externalPersons = queryList(ExternalPerson.class, criteria);
 
-		return externalPersons;
+        return externalPersons;
 
-	}
+    }
 
-	public String readLastDocumentIdNumber() throws ExcepcaoPersistencia
-	{
-		IExternalPerson externalPerson = null;
+    public String readLastDocumentIdNumber() throws ExcepcaoPersistencia {
+        IExternalPerson externalPerson = null;
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("person.tipoDocumentoIdentificacao", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.EXTERNO));
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("person.tipoDocumentoIdentificacao", new TipoDocumentoIdentificacao(
+                TipoDocumentoIdentificacao.EXTERNO));
 
-		externalPerson = (IExternalPerson) queryList(ExternalPerson.class, criteria, "person.numeroDocumentoIdentificacao", false).get(0);
-		String lastIdStr = null;
-		if (externalPerson == null)
-		{
-		    lastIdStr = "0";
-		}
-		else
-		{
-		    lastIdStr = externalPerson.getPerson().getNumeroDocumentoIdentificacao(); 
-		}
-		
-		return lastIdStr;
-	}
-	
-	
+        externalPerson = (IExternalPerson) queryList(ExternalPerson.class, criteria,
+                "person.numeroDocumentoIdentificacao", false).get(0);
+        String lastIdStr = null;
+        if (externalPerson == null) {
+            lastIdStr = "0";
+        } else {
+            lastIdStr = externalPerson.getPerson().getNumeroDocumentoIdentificacao();
+        }
+
+        return lastIdStr;
+    }
 
 }

@@ -49,16 +49,14 @@ public class EditCurriculum implements IServico {
     }
 
     public Boolean run(Integer curriculumId, String program, String programEn,
-            String operacionalObjectives, String operacionalObjectivesEn,
-            String generalObjectives, String generalObjectivesEn, Boolean basic)
-            throws FenixServiceException {
+            String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,
+            String generalObjectivesEn, Boolean basic) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurriculum persistentCurriculum = sp
-                    .getIPersistentCurriculum();
-            ICurriculum curriculum = (ICurriculum) persistentCurriculum
-                    .readByOID(Curriculum.class, curriculumId, true);
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+            ICurriculum curriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
+                    curriculumId, true);
             if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
                 curriculum.setProgram(program);
                 curriculum.setProgramEn(programEn);

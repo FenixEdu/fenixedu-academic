@@ -72,6 +72,14 @@
 								https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								<strong><bean:message key="label.ects.executionPeriod" bundle="GEP_RESOURCES"/></strong>
+							</td>
+							<td>
+								<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/>
+							</td>
+						</tr>
 						<bean:define id="labels" value="false"/>
 						<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
 							<tr>

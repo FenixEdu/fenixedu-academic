@@ -92,7 +92,7 @@ public class ShiftProfessorship extends DomainObject implements IShiftProfessors
      * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeUpdate(org.apache.ojb.broker.PersistenceBroker)
      */
     public void beforeUpdate(PersistenceBroker pb) throws PersistenceBrokerException {
-        
+
     }
 
     /*
@@ -146,13 +146,15 @@ public class ShiftProfessorship extends DomainObject implements IShiftProfessors
      */
     public void afterLookup(PersistenceBroker pb) throws PersistenceBrokerException {
     }
-   
+
     private void notifyTeacher() {
         ITeacher teacher = this.getProfessorship().getTeacher();
         teacher.notifyCreditsChange(CreditsEvent.LESSONS, this);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see Dominio.credits.event.ICreditsEventOriginator#belongsToExecutionPeriod(java.lang.Integer)
      */
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {

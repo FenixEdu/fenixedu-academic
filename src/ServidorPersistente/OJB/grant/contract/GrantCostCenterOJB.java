@@ -9,14 +9,14 @@ import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.GrantPaymentEntity;
 import Dominio.grant.contract.IGrantCostCenter;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantCostCenter;
 
 /**
  * @author pica
  * @author barbosa
  */
-public class GrantCostCenterOJB extends ObjectFenixOJB implements IPersistentGrantCostCenter {
+public class GrantCostCenterOJB extends PersistentObjectOJB implements IPersistentGrantCostCenter {
 
     public IGrantCostCenter readGrantCostCenterByNumber(String number) throws ExcepcaoPersistencia {
         IGrantCostCenter grantCostCenter = null;

@@ -26,21 +26,16 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import Util.PeriodState;
 
-public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistente
-{
+public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersistente {
 
-    public List readByUsername(String username) throws ExcepcaoPersistencia
-    {
+    public List readByUsername(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.person.username", username);
         return queryList(Frequenta.class, crit);
     }
 
-    public IFrequenta readByAlunoAndDisciplinaExecucao(
-        IStudent aluno,
-        IExecutionCourse disciplinaExecucao)
-        throws ExcepcaoPersistencia
-    {
+    public IFrequenta readByAlunoAndDisciplinaExecucao(IStudent aluno,
+            IExecutionCourse disciplinaExecucao) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.idInternal", aluno.getIdInternal());
@@ -50,11 +45,8 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
     }
 
     //by gedl AT rnl DOT IST DOT UTL DOT PT , september the 16th, 2003
-    public IFrequenta readByAlunoIdAndDisciplinaExecucaoId(
-        Integer alunoId,
-        Integer disciplinaExecucaoId)
-        throws ExcepcaoPersistencia
-    {
+    public IFrequenta readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
+            throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("chaveAluno", alunoId);
@@ -63,23 +55,17 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 
     }
 
-    
-
-    public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia
-    {
+    public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia {
         super.delete(frequenta);
     }
 
-    
-
-    public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia
-    {
+    public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("aluno.number", id);
         return queryList(Frequenta.class, criteria);
     }
-    public List readByStudentNumberInCurrentExecutionPeriod(Integer number) throws ExcepcaoPersistencia
-    {
+
+    public List readByStudentNumberInCurrentExecutionPeriod(Integer number) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.number", number);
         crit.addEqualTo("disciplinaExecucao.executionPeriod.state", PeriodState.CURRENT);
@@ -87,16 +73,14 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         return queryList(Frequenta.class, crit);
     }
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
-    {
+    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());
         return queryList(Frequenta.class, crit);
     }
 
     public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());
@@ -104,8 +88,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         return new Integer(pb.getCount(queryCriteria));
     }
 
-    public IFrequenta readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia
-    {
+    public IFrequenta readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
         return (IFrequenta) queryObject(Frequenta.class, crit);

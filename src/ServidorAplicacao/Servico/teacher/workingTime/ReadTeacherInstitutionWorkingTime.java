@@ -51,39 +51,35 @@ public class ReadTeacherInstitutionWorkingTime implements IServico {
         return "ReadTeacherInstitutionWorkingTime";
     }
 
-    public TeacherInstitutionWorkingTimeDTO run(InfoTeacher infoTeacher,
-            Integer executionPeriodId) throws FenixServiceException {
+    public TeacherInstitutionWorkingTimeDTO run(InfoTeacher infoTeacher, Integer executionPeriodId)
+            throws FenixServiceException {
         TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = new TeacherInstitutionWorkingTimeDTO();
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
                     .getIPersistentTeacherInstitutionWorkingTime();
-            IPersistentExecutionPeriod executionPeriodDAO = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
-                    infoTeacher.getIdInternal());
+            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher
+                    .getIdInternal());
             InfoTeacher infoTeacher2 = Cloner.copyITeacher2InfoTeacher(teacher);
 
             IExecutionPeriod executionPeriod = null;
-            if ((executionPeriodId == null)
-                    || (executionPeriodId.intValue() == 0)) {
-                executionPeriod = executionPeriodDAO
-                        .readActualExecutionPeriod();
+            if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
+                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
             } else {
-                executionPeriod = (IExecutionPeriod) executionPeriodDAO
-                        .readByOID(ExecutionPeriod.class, executionPeriodId);
+                executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+                        executionPeriodId);
             }
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner
-                    .get(executionPeriod);
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
             List teacherInstitutionWorkTimeList = teacherInstitutionWorkingTimeDAO
                     .readByTeacherAndExecutionPeriod(teacher, executionPeriod);
 
-            List infoTeacherInstitutionWorkTimeList = (List) CollectionUtils
-                    .collect(teacherInstitutionWorkTimeList, new Transformer() {
+            List infoTeacherInstitutionWorkTimeList = (List) CollectionUtils.collect(
+                    teacherInstitutionWorkTimeList, new Transformer() {
 
                         public Object transform(Object input) {
                             ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) input;
@@ -93,8 +89,7 @@ public class ReadTeacherInstitutionWorkingTime implements IServico {
                         }
                     });
 
-            teacherInstitutionWorkingTimeDTO
-                    .setInfoExecutionPeriod(infoExecutionPeriod);
+            teacherInstitutionWorkingTimeDTO.setInfoExecutionPeriod(infoExecutionPeriod);
             teacherInstitutionWorkingTimeDTO.setInfoTeacher(infoTeacher2);
             teacherInstitutionWorkingTimeDTO
                     .setInfoTeacherInstitutionWorkTimeList(infoTeacherInstitutionWorkTimeList);

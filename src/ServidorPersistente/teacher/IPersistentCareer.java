@@ -16,9 +16,8 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public interface IPersistentCareer extends IPersistentObject
-{
+public interface IPersistentCareer extends IPersistentObject {
 
     List readAllByTeacherAndCareerType(ITeacher teacher, CareerType careerType)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 }

@@ -17,6 +17,6 @@ public abstract class InfoRestriction extends InfoObject {
     public void setRestrictionKindResourceKey(String restrictionKindResourceKey) {
         this.restrictionKindResourceKey = restrictionKindResourceKey;
     }
-    
+
     public abstract String getArg();
 }

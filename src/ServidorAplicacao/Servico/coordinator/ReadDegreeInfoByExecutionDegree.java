@@ -5,37 +5,24 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDegreeInfo;
 import Dominio.CursoExecucao;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeInfo;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeInfo;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão Created on 4/Nov/2003
  */
-public class ReadDegreeInfoByExecutionDegree implements IServico {
-    private static ReadDegreeInfoByExecutionDegree service = new ReadDegreeInfoByExecutionDegree();
+public class ReadDegreeInfoByExecutionDegree implements IService {
 
-    public static ReadDegreeInfoByExecutionDegree getService() {
-        return service;
-    }
-
-    public ReadDegreeInfoByExecutionDegree() {
-    }
-
-    public final String getNome() {
-        return "ReadDegreeInfoByExecutionDegree";
-    }
-
-    public InfoDegreeInfo run(Integer infoExecutionDegreeId)
-            throws FenixServiceException {
+    public InfoDegreeInfo run(Integer infoExecutionDegreeId) throws FenixServiceException {
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
         infoDegreeInfo.setIdInternal(new Integer(0));
 
@@ -44,14 +31,13 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
                 throw new FenixServiceException("error.invalidExecutionDegree");
             }
 
-            ISuportePersistente suportePersistente = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
 
             //Execution degree
-            ICursoExecucaoPersistente cursoExecucaoPersistente = suportePersistente
-                    .getICursoExecucaoPersistente();
-            ICursoExecucao executionDegree = (ICursoExecucao) cursoExecucaoPersistente
-                    .readByOID(CursoExecucao.class, infoExecutionDegreeId);
+            IPersistentExecutionDegree cursoExecucaoPersistente = suportePersistente
+                    .getIPersistentExecutionDegree();
+            ICursoExecucao executionDegree = (ICursoExecucao) cursoExecucaoPersistente.readByOID(
+                    CursoExecucao.class, infoExecutionDegreeId);
 
             if (executionDegree == null) {
                 throw new FenixServiceException("error.invalidExecutionDegree");
@@ -70,21 +56,16 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
             }
 
             //Read degree information
-            IPersistentDegreeInfo persistentDegreeInfo = suportePersistente
-                    .getIPersistentDegreeInfo();
-            List degreeInfoList = persistentDegreeInfo
-                    .readDegreeInfoByDegree(degree);
+            IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
+            List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(degree);
 
             //Last information about this degree
             if (degreeInfoList != null && degreeInfoList.size() > 0) {
-                Collections.sort(degreeInfoList, new BeanComparator(
-                        "lastModificationDate"));
-                IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList
-                        .get(degreeInfoList.size() - 1);
-                //CLONER
-                //infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+                Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
+                IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
+
                 infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
-                
+
                 infoDegreeInfo.recaptureNULLs(degreeInfo);
 
                 //return the degree info with the last modification date

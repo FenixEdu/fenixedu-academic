@@ -27,7 +27,10 @@
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.branch" /></strong>
-			<logic:empty name="studentCurricularPlan" property="infoBranch">
+			<html:select property="branch">
+				<html:options collection="<%= SessionConstants.BRANCH %>" property="idInternal" labelProperty="name"/>
+		    </html:select>
+			<!--<logic:empty name="studentCurricularPlan" property="infoBranch">
 				<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>
 			</logic:empty>
 			<logic:notEmpty name="studentCurricularPlan" property="infoBranch">
@@ -37,13 +40,15 @@
 				<logic:notEqual name="studentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
 						<bean:write name="studentCurricularPlan" property="infoBranch.name"/>
 				</logic:notEqual>
-			</logic:notEmpty>
+			</logic:notEmpty>-->
 		</td>						
 	</tr>		
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.specialization" /></strong>
-			<bean:write name="studentCurricularPlan" property="specialization" />
+			<html:select property="specialization">
+				<html:options collection="<%= SessionConstants.SPECIALIZATION %>" property="value" labelProperty="label"/>
+		    </html:select>
 		</td>
 	</tr>		
 	<tr>

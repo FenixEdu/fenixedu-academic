@@ -27,37 +27,31 @@ public class AlterExecutionPeriodState implements IService {
     public AlterExecutionPeriodState() {
     }
 
-    public Boolean run(InfoExecutionPeriod infoExecutionPeriod,
-            PeriodState periodState) throws FenixServiceException {
+    public Boolean run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
+            throws FenixServiceException {
 
         Boolean result = new Boolean(false);
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod executionPeriodDAO = sp
-                    .getIPersistentExecutionPeriod();
-            IPersistentExecutionYear executionYearDAO = sp
-                    .getIPersistentExecutionYear();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
 
-            IExecutionPeriod executionPeriod = executionPeriodDAO
-                    .readBySemesterAndExecutionYear(infoExecutionPeriod
-                            .getSemester(), executionYearDAO
-                            .readExecutionYearByName(infoExecutionPeriod
-                                    .getInfoExecutionYear().getYear()));
+            IExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
+                    infoExecutionPeriod.getSemester(), executionYearDAO
+                            .readExecutionYearByName(infoExecutionPeriod.getInfoExecutionYear()
+                                    .getYear()));
 
             if (executionPeriod == null) {
                 throw new InvalidExecutionPeriod();
             }
 
-            if (periodState.getStateCode().equals(
-                    PeriodState.CURRENT.getStateCode())) {
+            if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
                 // Deactivate the current
-                IExecutionPeriod currentExecutionPeriod = executionPeriodDAO
-                        .readActualExecutionPeriod();
+                IExecutionPeriod currentExecutionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
                 executionPeriodDAO.simpleLockWrite(currentExecutionPeriod);
-                currentExecutionPeriod.setState(new PeriodState(
-                        PeriodState.OPEN));
+                currentExecutionPeriod.setState(new PeriodState(PeriodState.OPEN));
 
             }
 

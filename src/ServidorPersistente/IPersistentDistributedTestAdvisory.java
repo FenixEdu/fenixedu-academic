@@ -16,12 +16,11 @@ import Dominio.IDistributedTestAdvisory;
  */
 public interface IPersistentDistributedTestAdvisory extends IPersistentObject {
 
-    public void updateDistributedTestAdvisoryDates(
-            IDistributedTest distributedTest, Date newExpiresDate)
+    public void updateDistributedTestAdvisoryDates(IDistributedTest distributedTest, Date newExpiresDate)
             throws ExcepcaoPersistencia;
 
-    public abstract void deleteByDistributedTest(
-            IDistributedTest distributedTest) throws ExcepcaoPersistencia;
+    public abstract void deleteByDistributedTest(IDistributedTest distributedTest)
+            throws ExcepcaoPersistencia;
 
     public abstract void delete(IDistributedTestAdvisory distributedTestAdvisory)
             throws ExcepcaoPersistencia;

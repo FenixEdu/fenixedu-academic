@@ -36,26 +36,23 @@ public class CreateGroupProperties implements IService {
     /**
      * Executes the service.
      */
-    public boolean run(Integer executionCourseCode,
-            InfoGroupProperties infoGroupProperties)
+    public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
             throws FenixServiceException {
 
         IExecutionCourse executionCourse = null;
         try {
 
-            ISuportePersistente persistentSupport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                     .getIPersistentExecutionCourse();
             IPersistentGroupProperties persistentGroupProperties = persistentSupport
                     .getIPersistentGroupProperties();
 
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
+            executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
 
             infoGroupProperties
-                    .setInfoExecutionCourse((InfoExecutionCourse) Cloner
-                            .get(executionCourse));
+                    .setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
 
             IGroupProperties newGroupProperties = Cloner
                     .copyInfoGroupProperties2IGroupProperties(infoGroupProperties);

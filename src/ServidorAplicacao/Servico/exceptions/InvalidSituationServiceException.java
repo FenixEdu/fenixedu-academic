@@ -6,50 +6,49 @@
  */
 package ServidorAplicacao.Servico.exceptions;
 
-
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class InvalidSituationServiceException extends FenixServiceException {
 
-	/**
-	 * 
-	 */
-	public InvalidSituationServiceException() {
-		
-	}
+    /**
+     *  
+     */
+    public InvalidSituationServiceException() {
 
-	/**
-	 * @param s
-	 */
-	public InvalidSituationServiceException(String s) {
-		super(s);
-		
-	}
+    }
 
-	/**
-	 * @param cause
-	 */
-	public InvalidSituationServiceException(Throwable cause) {
-		super(cause);
-		
-	}
+    /**
+     * @param s
+     */
+    public InvalidSituationServiceException(String s) {
+        super(s);
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public InvalidSituationServiceException(String message, Throwable cause) {
-		super(message, cause);
-		
-	}
-	public String toString() {
-					String result = "[InvalidArgumentsServiceException\n";
-					result += "message" +this.getMessage()+ "\n";
-					result += "cause" +this.getCause()+ "\n";
-					result += "]";
-					return result;
-				}
+    }
+
+    /**
+     * @param cause
+     */
+    public InvalidSituationServiceException(Throwable cause) {
+        super(cause);
+
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public InvalidSituationServiceException(String message, Throwable cause) {
+        super(message, cause);
+
+    }
+
+    public String toString() {
+        String result = "[InvalidArgumentsServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 }

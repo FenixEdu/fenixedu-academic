@@ -4,219 +4,206 @@ import java.util.Calendar;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 20/Mar/2003
  */
 
 public class CurricularCourseScope extends DomainObject implements ICurricularCourseScope {
 
-	private Integer curricularCourseKey;
-	private Integer curricularSemesterKey;
-	private Integer branchKey;
+    private Integer curricularCourseKey;
 
-	private ICurricularCourse curricularCourse;
-	private ICurricularSemester curricularSemester;
-	private IBranch branch;
-	private Calendar beginDate;
-	private Calendar endDate;
+    private Integer curricularSemesterKey;
 
-	public CurricularCourseScope() {
-		setIdInternal(null);
-		setBranch(null);
-		setCurricularCourse(null);
-		setCurricularSemester(null);
-		setBranchKey(null);
-		setCurricularCourseKey(null);
-		setCurricularSemesterKey(null);
-	}
+    private Integer branchKey;
 
-	/**
-	 * @deprecated
-	 */
-	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) {
-		this();
-		setCurricularCourse(curricularCourse);
-		setCurricularSemester(curricularSemester);
-		setBranch(branch);
-	}
+    private ICurricularCourse curricularCourse;
 
-	public boolean equals(Object obj) {
+    private ICurricularSemester curricularSemester;
 
-		boolean resultado = false;
+    private IBranch branch;
 
-		if (obj instanceof ICurricularCourseScope) {
-			ICurricularCourseScope ccs = (ICurricularCourseScope) obj;
+    private Calendar beginDate;
 
-			resultado =
-				(((getBranch() == null && ccs.getBranch() == null)
-					|| (getBranch() != null
-						&& ccs.getBranch() != null
-						&& getBranch().equals(ccs.getBranch())))
-					&& ((getCurricularCourse() == null
-						&& ccs.getCurricularCourse() == null)
-						|| (getCurricularCourse() != null
-							&& ccs.getCurricularCourse() != null
-							&& getCurricularCourse().equals(
-			ccs.getCurricularCourse())))
-					&& ((getCurricularSemester() == null
-						&& ccs.getCurricularSemester() == null)
-						|| (getCurricularSemester() != null
-							&& ccs.getCurricularSemester() != null
-							&& getCurricularSemester().equals(
-			ccs.getCurricularSemester())))
-					&& ((getEndDate() == null && ccs.getEndDate() == null)
-						|| (getEndDate() != null
-							&& ccs.getEndDate() != null
-							&& getEndDate().equals(ccs.getEndDate()))));
-		}
+    private Calendar endDate;
 
-		return resultado;
-	}
+    public CurricularCourseScope() {
+        setIdInternal(null);
+        setBranch(null);
+        setCurricularCourse(null);
+        setCurricularSemester(null);
+        setBranchKey(null);
+        setCurricularCourseKey(null);
+        setCurricularSemesterKey(null);
+    }
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.getIdInternal() + "; ";
-		result += "curricularCourse = " + this.curricularCourse + "; ";
-		result += "curricularSemester = " + this.curricularSemester + "; ";
-		result += "branch = " + this.branch + "; ";
-		result += "endDate = " + this.endDate + "]\n";
+    /**
+     * @deprecated
+     */
+    public CurricularCourseScope(ICurricularCourse curricularCourse,
+            ICurricularSemester curricularSemester, IBranch branch) {
+        this();
+        setCurricularCourse(curricularCourse);
+        setCurricularSemester(curricularSemester);
+        setBranch(branch);
+    }
 
-		return result;
-	}
+    public boolean equals(Object obj) {
 
-	public Boolean isActive() {
-		Boolean result = Boolean.FALSE;
-		if (this.endDate == null) {
-			result = Boolean.TRUE;
-		}
-		return result;
-	}
+        boolean resultado = false;
 
-	/**
-	 * @return Returns the beginDate.
-	 */
-	public Calendar getBeginDate()
-	{
-		return beginDate;
-	}
+        if (obj instanceof ICurricularCourseScope) {
+            ICurricularCourseScope ccs = (ICurricularCourseScope) obj;
 
-	/**
-	 * @param beginDate The beginDate to set.
-	 */
-	public void setBeginDate(Calendar beginDate)
-	{
-		this.beginDate = beginDate;
-	}
+            resultado = (((getBranch() == null && ccs.getBranch() == null) || (getBranch() != null
+                    && ccs.getBranch() != null && getBranch().equals(ccs.getBranch())))
+                    && ((getCurricularCourse() == null && ccs.getCurricularCourse() == null) || (getCurricularCourse() != null
+                            && ccs.getCurricularCourse() != null && getCurricularCourse().equals(
+                            ccs.getCurricularCourse())))
+                    && ((getCurricularSemester() == null && ccs.getCurricularSemester() == null) || (getCurricularSemester() != null
+                            && ccs.getCurricularSemester() != null && getCurricularSemester().equals(
+                            ccs.getCurricularSemester()))) && ((getEndDate() == null && ccs.getEndDate() == null) || (getEndDate() != null
+                    && ccs.getEndDate() != null && getEndDate().equals(ccs.getEndDate()))));
+        }
 
-	/**
-	 * @return Returns the branch.
-	 */
-	public IBranch getBranch()
-	{
-		return branch;
-	}
+        return resultado;
+    }
 
-	/**
-	 * @param branch The branch to set.
-	 */
-	public void setBranch(IBranch branch)
-	{
-		this.branch = branch;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + this.getIdInternal() + "; ";
+        result += "curricularCourse = " + this.curricularCourse + "; ";
+        result += "curricularSemester = " + this.curricularSemester + "; ";
+        result += "branch = " + this.branch + "; ";
+        result += "endDate = " + this.endDate + "]\n";
 
-	/**
-	 * @return Returns the branchKey.
-	 */
-	public Integer getBranchKey()
-	{
-		return branchKey;
-	}
+        return result;
+    }
 
-	/**
-	 * @param branchKey The branchKey to set.
-	 */
-	public void setBranchKey(Integer branchKey)
-	{
-		this.branchKey = branchKey;
-	}
+    public Boolean isActive() {
+        Boolean result = Boolean.FALSE;
+        if (this.endDate == null) {
+            result = Boolean.TRUE;
+        }
+        return result;
+    }
 
-	/**
-	 * @return Returns the curricularCourse.
-	 */
-	public ICurricularCourse getCurricularCourse()
-	{
-		return curricularCourse;
-	}
+    /**
+     * @return Returns the beginDate.
+     */
+    public Calendar getBeginDate() {
+        return beginDate;
+    }
 
-	/**
-	 * @param curricularCourse The curricularCourse to set.
-	 */
-	public void setCurricularCourse(ICurricularCourse curricularCourse)
-	{
-		this.curricularCourse = curricularCourse;
-	}
+    /**
+     * @param beginDate
+     *            The beginDate to set.
+     */
+    public void setBeginDate(Calendar beginDate) {
+        this.beginDate = beginDate;
+    }
 
-	/**
-	 * @return Returns the curricularCourseKey.
-	 */
-	public Integer getCurricularCourseKey()
-	{
-		return curricularCourseKey;
-	}
+    /**
+     * @return Returns the branch.
+     */
+    public IBranch getBranch() {
+        return branch;
+    }
 
-	/**
-	 * @param curricularCourseKey The curricularCourseKey to set.
-	 */
-	public void setCurricularCourseKey(Integer curricularCourseKey)
-	{
-		this.curricularCourseKey = curricularCourseKey;
-	}
+    /**
+     * @param branch
+     *            The branch to set.
+     */
+    public void setBranch(IBranch branch) {
+        this.branch = branch;
+    }
 
-	/**
-	 * @return Returns the curricularSemester.
-	 */
-	public ICurricularSemester getCurricularSemester()
-	{
-		return curricularSemester;
-	}
+    /**
+     * @return Returns the branchKey.
+     */
+    public Integer getBranchKey() {
+        return branchKey;
+    }
 
-	/**
-	 * @param curricularSemester The curricularSemester to set.
-	 */
-	public void setCurricularSemester(ICurricularSemester curricularSemester)
-	{
-		this.curricularSemester = curricularSemester;
-	}
+    /**
+     * @param branchKey
+     *            The branchKey to set.
+     */
+    public void setBranchKey(Integer branchKey) {
+        this.branchKey = branchKey;
+    }
 
-	/**
-	 * @return Returns the curricularSemesterKey.
-	 */
-	public Integer getCurricularSemesterKey()
-	{
-		return curricularSemesterKey;
-	}
+    /**
+     * @return Returns the curricularCourse.
+     */
+    public ICurricularCourse getCurricularCourse() {
+        return curricularCourse;
+    }
 
-	/**
-	 * @param curricularSemesterKey The curricularSemesterKey to set.
-	 */
-	public void setCurricularSemesterKey(Integer curricularSemesterKey)
-	{
-		this.curricularSemesterKey = curricularSemesterKey;
-	}
+    /**
+     * @param curricularCourse
+     *            The curricularCourse to set.
+     */
+    public void setCurricularCourse(ICurricularCourse curricularCourse) {
+        this.curricularCourse = curricularCourse;
+    }
 
-	/**
-	 * @return Returns the endDate.
-	 */
-	public Calendar getEndDate()
-	{
-		return endDate;
-	}
+    /**
+     * @return Returns the curricularCourseKey.
+     */
+    public Integer getCurricularCourseKey() {
+        return curricularCourseKey;
+    }
 
-	/**
-	 * @param endDate The endDate to set.
-	 */
-	public void setEndDate(Calendar endDate)
-	{
-		this.endDate = endDate;
-	}
+    /**
+     * @param curricularCourseKey
+     *            The curricularCourseKey to set.
+     */
+    public void setCurricularCourseKey(Integer curricularCourseKey) {
+        this.curricularCourseKey = curricularCourseKey;
+    }
+
+    /**
+     * @return Returns the curricularSemester.
+     */
+    public ICurricularSemester getCurricularSemester() {
+        return curricularSemester;
+    }
+
+    /**
+     * @param curricularSemester
+     *            The curricularSemester to set.
+     */
+    public void setCurricularSemester(ICurricularSemester curricularSemester) {
+        this.curricularSemester = curricularSemester;
+    }
+
+    /**
+     * @return Returns the curricularSemesterKey.
+     */
+    public Integer getCurricularSemesterKey() {
+        return curricularSemesterKey;
+    }
+
+    /**
+     * @param curricularSemesterKey
+     *            The curricularSemesterKey to set.
+     */
+    public void setCurricularSemesterKey(Integer curricularSemesterKey) {
+        this.curricularSemesterKey = curricularSemesterKey;
+    }
+
+    /**
+     * @return Returns the endDate.
+     */
+    public Calendar getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * @param endDate
+     *            The endDate to set.
+     */
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
+    }
 }

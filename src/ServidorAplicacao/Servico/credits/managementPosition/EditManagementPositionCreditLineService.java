@@ -15,17 +15,16 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author jpvl
  */
-public class EditManagementPositionCreditLineService extends EditDomainObjectService
-{
+public class EditManagementPositionCreditLineService extends EditDomainObjectService {
 
     /*
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
      */
-    protected IDomainObject clone2DomainObject(InfoObject infoObject)
-    {
-        return Cloner.copyInfoManagementPositionCreditLine2IManagementPositionCreditLine((InfoManagementPositionCreditLine) infoObject);
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+        return Cloner
+                .copyInfoManagementPositionCreditLine2IManagementPositionCreditLine((InfoManagementPositionCreditLine) infoObject);
     }
 
     /*
@@ -33,8 +32,7 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
         return sp.getIPersistentManagementPositionCreditLine();
     }
 }

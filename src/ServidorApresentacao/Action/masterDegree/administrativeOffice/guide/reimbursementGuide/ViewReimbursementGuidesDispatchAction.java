@@ -24,63 +24,52 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.SituationOfGuide;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction
-{
+public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 
-	public ActionForward view(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer guideNumber = new Integer(this.getFromRequest("number", request));
-		Integer guideYear = new Integer(this.getFromRequest("year", request));
-		Integer guideVersion = new Integer(this.getFromRequest("version", request));
+        Integer guideNumber = new Integer(this.getFromRequest("number", request));
+        Integer guideYear = new Integer(this.getFromRequest("year", request));
+        Integer guideVersion = new Integer(this.getFromRequest("version", request));
 
-		InfoGuide infoGuide = null;
+        InfoGuide infoGuide = null;
 
-		Object args[] = { guideNumber, guideYear, guideVersion };
-		try
-		{
-			infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
+        Object args[] = { guideNumber, guideYear, guideVersion };
+        try {
+            infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
 
-			request.setAttribute(
-				SessionConstants.REIMBURSEMENT_GUIDES_LIST,
-				infoGuide.getInfoReimbursementGuides());
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-		}
+            request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDES_LIST, infoGuide
+                    .getInfoReimbursementGuides());
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+        }
 
-		if (infoGuide.getInfoReimbursementGuides().isEmpty() == true)
-			throw new NonExistingActionException(
-				"error.exception.masterDegree.nonExistingReimbursementGuides",
-				mapping.findForward("error"));
+        if (infoGuide.getInfoReimbursementGuides().isEmpty() == true)
+            throw new NonExistingActionException(
+                    "error.exception.masterDegree.nonExistingReimbursementGuides", mapping
+                            .findForward("error"));
 
-		if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
-			return mapping.findForward("start");}
-		
-			throw new InvalidGuideSituationActionException(mapping.findForward("error"));
+        if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)) {
+            return mapping.findForward("start");
+        }
 
-	}
+        throw new InvalidGuideSituationActionException(mapping.findForward("error"));
 
-	private String getFromRequest(String parameter, HttpServletRequest request)
-	{
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null)
-		{
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
+    }
+
+    private String getFromRequest(String parameter, HttpServletRequest request) {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null) {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+        return parameterString;
+    }
 
 }

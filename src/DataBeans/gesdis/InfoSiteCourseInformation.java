@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+
 import DataBeans.DataTranferObject;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoBibliographicReference;
@@ -20,8 +22,7 @@ import DataBeans.InfoExecutionCourse;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
-public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent
-{
+public class InfoSiteCourseInformation extends DataTranferObject implements ISiteComponent {
 
     private final static int MIN_LENGTH = 10;
 
@@ -55,15 +56,13 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
 
     private Integer numberOfLabLessons;
 
-    public InfoSiteCourseInformation()
-    {
+    public InfoSiteCourseInformation() {
     }
 
     /**
      * @return Returns the infoCourseReport.
      */
-    public InfoCourseReport getInfoCourseReport()
-    {
+    public InfoCourseReport getInfoCourseReport() {
         return infoCourseReport;
     }
 
@@ -71,16 +70,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoCourseReport
      *            The infoCourseReport to set.
      */
-    public void setInfoCourseReport(InfoCourseReport infoCourseReport)
-    {
+    public void setInfoCourseReport(InfoCourseReport infoCourseReport) {
         this.infoCourseReport = infoCourseReport;
     }
 
     /**
      * @return Returns the infoExecutionCourse.
      */
-    public InfoExecutionCourse getInfoExecutionCourse()
-    {
+    public InfoExecutionCourse getInfoExecutionCourse() {
         return infoExecutionCourse;
     }
 
@@ -88,16 +85,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoExecutionCourse
      *            The infoExecutionCourse to set.
      */
-    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse)
-    {
+    public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
         this.infoExecutionCourse = infoExecutionCourse;
     }
 
     /**
      * @return Returns the infoBibliographicReferences.
      */
-    public List getInfoBibliographicReferences()
-    {
+    public List getInfoBibliographicReferences() {
         return infoBibliographicReferences;
     }
 
@@ -105,16 +100,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoBibliographicReferences
      *            The infoBibliographicReferences to set.
      */
-    public void setInfoBibliographicReferences(List infoBibliographicReferences)
-    {
+    public void setInfoBibliographicReferences(List infoBibliographicReferences) {
         this.infoBibliographicReferences = infoBibliographicReferences;
     }
 
     /**
      * @return Returns the infoCurricularCourses.
      */
-    public List getInfoCurricularCourses()
-    {
+    public List getInfoCurricularCourses() {
         return infoCurricularCourses;
     }
 
@@ -122,16 +115,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoCurricularCourses
      *            The infoCurricularCourses to set.
      */
-    public void setInfoCurricularCourses(List infoCurricularCourses)
-    {
+    public void setInfoCurricularCourses(List infoCurricularCourses) {
         this.infoCurricularCourses = infoCurricularCourses;
     }
 
     /**
      * @return Returns the infoCurriculums.
      */
-    public List getInfoCurriculums()
-    {
+    public List getInfoCurriculums() {
         return infoCurriculums;
     }
 
@@ -139,16 +130,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoCurriculums
      *            The infoCurriculums to set.
      */
-    public void setInfoCurriculums(List infoCurriculums)
-    {
+    public void setInfoCurriculums(List infoCurriculums) {
         this.infoCurriculums = infoCurriculums;
     }
 
     /**
      * @return Returns the infoLecturingTeacher.
      */
-    public List getInfoLecturingTeachers()
-    {
+    public List getInfoLecturingTeachers() {
         return infoLecturingTeachers;
     }
 
@@ -156,16 +145,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoLecturingTeacher
      *            The infoLecturingTeacher to set.
      */
-    public void setInfoLecturingTeachers(List infoLecturingTeachers)
-    {
+    public void setInfoLecturingTeachers(List infoLecturingTeachers) {
         this.infoLecturingTeachers = infoLecturingTeachers;
     }
 
     /**
      * @return Returns the infoResponsibleTeachers.
      */
-    public List getInfoResponsibleTeachers()
-    {
+    public List getInfoResponsibleTeachers() {
         return infoResponsibleTeachers;
     }
 
@@ -173,16 +160,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoResponsibleTeachers
      *            The infoResponsibleTeachers to set.
      */
-    public void setInfoResponsibleTeachers(List infoResponsibleTeachers)
-    {
+    public void setInfoResponsibleTeachers(List infoResponsibleTeachers) {
         this.infoResponsibleTeachers = infoResponsibleTeachers;
     }
 
     /**
      * @return Returns the infoLessons.
      */
-    public List getInfoLessons()
-    {
+    public List getInfoLessons() {
         return infoLessons;
     }
 
@@ -190,16 +175,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoLessons
      *            The infoLessons to set.
      */
-    public void setInfoLessons(List infoLessons)
-    {
+    public void setInfoLessons(List infoLessons) {
         this.infoLessons = infoLessons;
     }
 
     /**
      * @return Returns the infoEvaluationMethod.
      */
-    public InfoEvaluationMethod getInfoEvaluationMethod()
-    {
+    public InfoEvaluationMethod getInfoEvaluationMethod() {
         return infoEvaluationMethod;
     }
 
@@ -207,20 +190,16 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoEvaluationMethod
      *            The infoEvaluationMethod to set.
      */
-    public void setInfoEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod)
-    {
+    public void setInfoEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
         this.infoEvaluationMethod = infoEvaluationMethod;
     }
 
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         List dates = new ArrayList();
         dates.add(infoCourseReport.getLastModificationDate());
-        dates.addAll(CollectionUtils.collect(infoCurriculums, new Transformer()
-        {
+        dates.addAll(CollectionUtils.collect(infoCurriculums, new Transformer() {
 
-            public Object transform(Object arg0)
-            {
+            public Object transform(Object arg0) {
                 InfoCurriculum infoCurriculum = (InfoCurriculum) arg0;
                 return infoCurriculum.getLastModificationDate();
             }
@@ -232,13 +211,11 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param dates
      * @return
      */
-    private Date getMostRecentDate(List dates)
-    {
+    private Date getMostRecentDate(List dates) {
         Date minDate = new Date(Long.MIN_VALUE);
         Date maxDate = minDate;
         Iterator iter = dates.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             Date date = (Date) iter.next();
             if (date == null)
                 continue;
@@ -254,8 +231,7 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
     /**
      * @return Returns the numberOfLabLessons.
      */
-    public Integer getNumberOfLabLessons()
-    {
+    public Integer getNumberOfLabLessons() {
         return numberOfLabLessons;
     }
 
@@ -263,16 +239,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param numberOfLabLessons
      *            The numberOfLabLessons to set.
      */
-    public void setNumberOfLabLessons(Integer numberOfLabLessons)
-    {
+    public void setNumberOfLabLessons(Integer numberOfLabLessons) {
         this.numberOfLabLessons = numberOfLabLessons;
     }
 
     /**
      * @return Returns the numberOfPratLessons.
      */
-    public Integer getNumberOfPratLessons()
-    {
+    public Integer getNumberOfPratLessons() {
         return numberOfPratLessons;
     }
 
@@ -280,16 +254,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param numberOfPratLessons
      *            The numberOfPratLessons to set.
      */
-    public void setNumberOfPratLessons(Integer numberOfPratLessons)
-    {
+    public void setNumberOfPratLessons(Integer numberOfPratLessons) {
         this.numberOfPratLessons = numberOfPratLessons;
     }
 
     /**
      * @return Returns the numberOfTheoLessons.
      */
-    public Integer getNumberOfTheoLessons()
-    {
+    public Integer getNumberOfTheoLessons() {
         return numberOfTheoLessons;
     }
 
@@ -297,16 +269,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param numberOfTheoLessons
      *            The numberOfTheoLessons to set.
      */
-    public void setNumberOfTheoLessons(Integer numberOfTheoLessons)
-    {
+    public void setNumberOfTheoLessons(Integer numberOfTheoLessons) {
         this.numberOfTheoLessons = numberOfTheoLessons;
     }
 
     /**
      * @return Returns the numberOfTheoPratLessons.
      */
-    public Integer getNumberOfTheoPratLessons()
-    {
+    public Integer getNumberOfTheoPratLessons() {
         return numberOfTheoPratLessons;
     }
 
@@ -314,16 +284,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param numberOfTheoPratLessons
      *            The numberOfTheoPratLessons to set.
      */
-    public void setNumberOfTheoPratLessons(Integer numberOfTheoPratLessons)
-    {
+    public void setNumberOfTheoPratLessons(Integer numberOfTheoPratLessons) {
         this.numberOfTheoPratLessons = numberOfTheoPratLessons;
     }
 
     /**
      * @return Returns the infoDepartments.
      */
-    public List getInfoDepartments()
-    {
+    public List getInfoDepartments() {
         return infoDepartments;
     }
 
@@ -331,16 +299,14 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoDepartments
      *            The infoDepartments to set.
      */
-    public void setInfoDepartments(List infoDepartments)
-    {
+    public void setInfoDepartments(List infoDepartments) {
         this.infoDepartments = infoDepartments;
     }
 
     /**
      * @return Returns the infoSiteEvaluationInformations.
      */
-    public List getInfoSiteEvaluationInformations()
-    {
+    public List getInfoSiteEvaluationInformations() {
         return infoSiteEvaluationInformations;
     }
 
@@ -348,25 +314,21 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
      * @param infoSiteEvaluationInformations
      *            The infoSiteEvaluationInformations to set.
      */
-    public void setInfoSiteEvaluationInformations(List infoSiteEvaluationInformations)
-    {
+    public void setInfoSiteEvaluationInformations(List infoSiteEvaluationInformations) {
         this.infoSiteEvaluationInformations = infoSiteEvaluationInformations;
     }
 
-    public Integer getNumberOfFieldsFilled()
-    {
+    public Integer getNumberOfFieldsFilled() {
         int numberOfFieldsFilled = 0;
 
         if (!this.infoLecturingTeachers.isEmpty())
             numberOfFieldsFilled++;
         Iterator iter = this.infoBibliographicReferences.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter
                     .next();
             if (infoBibliographicReference.getTitle() != null
-                    && infoBibliographicReference.getTitle().length() > MIN_LENGTH)
-            {
+                    && infoBibliographicReference.getTitle().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
             }
@@ -376,23 +338,19 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             numberOfFieldsFilled++;
 
         iter = this.infoCurriculums.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getGeneralObjectives() != null
-                    && infoCurriculum.getGeneralObjectives().length() > MIN_LENGTH)
-            {
+                    && infoCurriculum.getGeneralObjectives().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
             }
         }
 
         iter = this.infoCurriculums.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
-            if (infoCurriculum.getProgram() != null && infoCurriculum.getProgram().length() > MIN_LENGTH)
-            {
+            if (infoCurriculum.getProgram() != null && infoCurriculum.getProgram().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
             }
@@ -401,19 +359,16 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         return new Integer(numberOfFieldsFilled);
     }
 
-    public Integer getNumberOfFieldsFilledEn()
-    {
+    public Integer getNumberOfFieldsFilledEn() {
         int numberOfFieldsFilled = 0;
 
         if (!this.infoLecturingTeachers.isEmpty())
             numberOfFieldsFilled++;
         Iterator iter = this.infoBibliographicReferences.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             InfoBibliographicReference infoBibliographicReference = (InfoBibliographicReference) iter
                     .next();
-            if (infoBibliographicReference.getTitle().length() > MIN_LENGTH)
-            {
+            if (infoBibliographicReference.getTitle().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
             }
@@ -423,36 +378,30 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
             numberOfFieldsFilled++;
 
         iter = this.infoCurriculums.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getGeneralObjectivesEn() != null
-                    && infoCurriculum.getGeneralObjectivesEn().length() > MIN_LENGTH)
-            {
+                    && infoCurriculum.getGeneralObjectivesEn().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
             }
         }
 
         iter = this.infoCurriculums.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getOperacionalObjectivesEn() != null
-                    && infoCurriculum.getOperacionalObjectivesEn().length() > MIN_LENGTH)
-            {
+                    && infoCurriculum.getOperacionalObjectivesEn().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
             }
         }
 
         iter = this.infoCurriculums.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             InfoCurriculum infoCurriculum = (InfoCurriculum) iter.next();
             if (infoCurriculum.getProgramEn() != null
-                    && infoCurriculum.getProgramEn().length() > MIN_LENGTH)
-            {
+                    && infoCurriculum.getProgramEn().length() > MIN_LENGTH) {
                 numberOfFieldsFilled++;
                 break;
             }

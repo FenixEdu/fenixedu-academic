@@ -7,58 +7,60 @@
 package DataBeans;
 
 /**
- *
- * @author  Luis Cruz & Sara Ribeiro
+ * 
+ * @author Luis Cruz & Sara Ribeiro
  */
 import java.util.List;
 
 public class InfoViewExam extends InfoObject {
-	protected List infoViewExamsByDayAndShift;
-	protected Integer availableRoomOccupation;
-	
-	public InfoViewExam() {
-	}
+    protected List infoViewExamsByDayAndShift;
 
-	public InfoViewExam(List infoViewExamsByDayAndShift, Integer availableRoomOccupation) {
-		this.setAvailableRoomOccupation(availableRoomOccupation);
-		this.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShift);
-	}
+    protected Integer availableRoomOccupation;
 
-	public boolean equals(Object obj) {
-		if (obj instanceof InfoViewExam) {
-			InfoViewExam infoViewExam = (InfoViewExam) obj;
-			return this.getAvailableRoomOccupation().equals(infoViewExam.getAvailableRoomOccupation()) &&
-				   this.getInfoViewExamsByDayAndShift().size() == infoViewExam.getInfoViewExamsByDayAndShift().size();
-		}
-		return false;
-	}
+    public InfoViewExam() {
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getAvailableRoomOccupation() {
-		return availableRoomOccupation;
-	}
+    public InfoViewExam(List infoViewExamsByDayAndShift, Integer availableRoomOccupation) {
+        this.setAvailableRoomOccupation(availableRoomOccupation);
+        this.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShift);
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoViewExamsByDayAndShift() {
-		return infoViewExamsByDayAndShift;
-	}
+    public boolean equals(Object obj) {
+        if (obj instanceof InfoViewExam) {
+            InfoViewExam infoViewExam = (InfoViewExam) obj;
+            return this.getAvailableRoomOccupation().equals(infoViewExam.getAvailableRoomOccupation())
+                    && this.getInfoViewExamsByDayAndShift().size() == infoViewExam
+                            .getInfoViewExamsByDayAndShift().size();
+        }
+        return false;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setAvailableRoomOccupation(Integer integer) {
-		availableRoomOccupation = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getAvailableRoomOccupation() {
+        return availableRoomOccupation;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoViewExamsByDayAndShift(List list) {
-		infoViewExamsByDayAndShift = list;
-	}
+    /**
+     * @return
+     */
+    public List getInfoViewExamsByDayAndShift() {
+        return infoViewExamsByDayAndShift;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setAvailableRoomOccupation(Integer integer) {
+        availableRoomOccupation = integer;
+    }
+
+    /**
+     * @param list
+     */
+    public void setInfoViewExamsByDayAndShift(List list) {
+        infoViewExamsByDayAndShift = list;
+    }
 
 }

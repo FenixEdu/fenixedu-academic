@@ -2,50 +2,52 @@ package Dominio;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 24/Mar/2003
  */
 
 public class University extends DomainObject implements IUniversity {
 
-	private String code;
-	private String name;
+    private String code;
 
-	public University() {
-	}
+    private String name;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
+    public University() {
+    }
 
-		if (obj instanceof IUniversity) {
-			IUniversity universityCode = (IUniversity) obj;
+    public boolean equals(Object obj) {
+        boolean resultado = false;
 
-			resultado = (this.getCode().equals(universityCode.getCode())) && (this.getName().equals(universityCode.getName()));
-		}
-		return resultado;
-	}
+        if (obj instanceof IUniversity) {
+            IUniversity universityCode = (IUniversity) obj;
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + "; ";
-		result += "code = " + this.getCode() + "; ";
-		result += "name = " + this.getName() + "; ";
-		return result;
-	}
+            resultado = (this.getCode().equals(universityCode.getCode()))
+                    && (this.getName().equals(universityCode.getName()));
+        }
+        return resultado;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "code = " + this.getCode() + "; ";
+        result += "name = " + this.getName() + "; ";
+        return result;
+    }
 
-	public void setCode(String string) {
-		code = string;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setCode(String string) {
+        code = string;
+    }
 
-	public void setName(String string) {
-		name = string;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String string) {
+        name = string;
+    }
 
 }

@@ -1,160 +1,151 @@
 package Dominio;
 
 import java.sql.Timestamp;
+
 /**
- *
+ * 
  * @author Fernanda Quitério & Tânia Pousão
  */
 public class StatusAssiduidade extends DomainObject {
-	private int _codigoInterno;
-	private String _sigla;
-	private String _designacao;
-	private String _estado;
-	private String _assiduidade;
-	private int _quem;
-	private Timestamp _quando;
+    private int _codigoInterno;
 
-	/* Construtores */
-	public StatusAssiduidade() {
-		_codigoInterno = 0;
-		_sigla = null;
-		_designacao = null;
-		_estado = "inactivo";
-		_assiduidade = "false";
-		_quem = 0;
-		_quando = null;
-	}
+    private String _sigla;
 
-	public StatusAssiduidade(String sigla, String designacao, String estado, String assiduidade) {
-		_codigoInterno = 0;
-		_sigla = sigla;
-		_designacao = designacao;
-		_estado = estado;
-		_assiduidade = assiduidade;
-		_quem = 0;
-		_quando = null;
-	}
+    private String _designacao;
 
-	public StatusAssiduidade(
-		String sigla,
-		String designacao,
-		String estado,
-		String assiduidade,
-		int quem,
-		Timestamp quando) {
-		_codigoInterno = 0;
-		_sigla = sigla;
-		_designacao = designacao;
-		_estado = estado;
-		_assiduidade = assiduidade;
-		_quem = quem;
-		_quando = quando;
-	}
+    private String _estado;
 
-	public StatusAssiduidade(
-		int codigoInterno,
-		String sigla,
-		String designacao,
-		String estado,
-		String assiduidade) {
-		_codigoInterno = codigoInterno;
-		_sigla = sigla;
-		_designacao = designacao;
-		_estado = estado;
-		_assiduidade = assiduidade;
-		_quem = 0;
-		_quando = null;
-	}
+    private String _assiduidade;
 
-	public StatusAssiduidade(
-		int codigoInterno,
-		String sigla,
-		String designacao,
-		String estado,
-		String assiduidade,
-		int quem,
-		Timestamp quando) {
-		_codigoInterno = codigoInterno;
-		_sigla = sigla;
-		_designacao = designacao;
-		_estado = estado;
-		_assiduidade = assiduidade;
-		_quem = quem;
-		_quando = quando;
-	}
+    private int _quem;
 
-	/* Selectores */
-	public int getCodigoInterno() {
-		return _codigoInterno;
-	}
+    private Timestamp _quando;
 
-	public String getSigla() {
-		return _sigla;
-	}
+    /* Construtores */
+    public StatusAssiduidade() {
+        _codigoInterno = 0;
+        _sigla = null;
+        _designacao = null;
+        _estado = "inactivo";
+        _assiduidade = "false";
+        _quem = 0;
+        _quando = null;
+    }
 
-	public String getDesignacao() {
-		return _designacao;
-	}
+    public StatusAssiduidade(String sigla, String designacao, String estado, String assiduidade) {
+        _codigoInterno = 0;
+        _sigla = sigla;
+        _designacao = designacao;
+        _estado = estado;
+        _assiduidade = assiduidade;
+        _quem = 0;
+        _quando = null;
+    }
 
-	public String getEstado() {
-		return _estado;
-	}
+    public StatusAssiduidade(String sigla, String designacao, String estado, String assiduidade,
+            int quem, Timestamp quando) {
+        _codigoInterno = 0;
+        _sigla = sigla;
+        _designacao = designacao;
+        _estado = estado;
+        _assiduidade = assiduidade;
+        _quem = quem;
+        _quando = quando;
+    }
 
-	public String getAssiduidade() {
-		return _assiduidade;
-	}
+    public StatusAssiduidade(int codigoInterno, String sigla, String designacao, String estado,
+            String assiduidade) {
+        _codigoInterno = codigoInterno;
+        _sigla = sigla;
+        _designacao = designacao;
+        _estado = estado;
+        _assiduidade = assiduidade;
+        _quem = 0;
+        _quando = null;
+    }
 
-	public int getQuem() {
-		return _quem;
-	}
+    public StatusAssiduidade(int codigoInterno, String sigla, String designacao, String estado,
+            String assiduidade, int quem, Timestamp quando) {
+        _codigoInterno = codigoInterno;
+        _sigla = sigla;
+        _designacao = designacao;
+        _estado = estado;
+        _assiduidade = assiduidade;
+        _quem = quem;
+        _quando = quando;
+    }
 
-	public Timestamp getQuando() {
-		return _quando;
-	}
+    /* Selectores */
+    public int getCodigoInterno() {
+        return _codigoInterno;
+    }
 
-	/* Modificadores */
-	public void setCodigoInterno(int codigoInterno) {
-		_codigoInterno = codigoInterno;
-	}
+    public String getSigla() {
+        return _sigla;
+    }
 
-	public void setSigla(String sigla) {
-		_sigla = sigla;
-	}
+    public String getDesignacao() {
+        return _designacao;
+    }
 
-	public void setDesignacao(String designacao) {
-		_designacao = designacao;
-	}
+    public String getEstado() {
+        return _estado;
+    }
 
-	public void setEstado(String estado) {
-		_estado = estado;
-	}
+    public String getAssiduidade() {
+        return _assiduidade;
+    }
 
-	public void setAssiduidade(String assiduidade) {
-		_assiduidade = assiduidade;
-	}
+    public int getQuem() {
+        return _quem;
+    }
 
-	public void setQuem(int quem) {
-		_quem = quem;
-	}
+    public Timestamp getQuando() {
+        return _quando;
+    }
 
-	public void setQuando(Timestamp quando) {
-		_quando = quando;
-	}
+    /* Modificadores */
+    public void setCodigoInterno(int codigoInterno) {
+        _codigoInterno = codigoInterno;
+    }
 
-	/* teste da igualdade */
-	public boolean equals(Object obj) {
-		boolean resultado = false;
+    public void setSigla(String sigla) {
+        _sigla = sigla;
+    }
 
-		if (obj instanceof StatusAssiduidade) {
-			StatusAssiduidade status = (StatusAssiduidade)obj;
+    public void setDesignacao(String designacao) {
+        _designacao = designacao;
+    }
 
-			resultado =
-				(this.getCodigoInterno() == status.getCodigoInterno()
-					&& this.getSigla() == status.getSigla()
-					&& this.getDesignacao() == status.getDesignacao()
-					&& this.getEstado() == status.getEstado()
-					&& this.getAssiduidade() == status.getAssiduidade());
-		}
-		return resultado;
-	}
+    public void setEstado(String estado) {
+        _estado = estado;
+    }
+
+    public void setAssiduidade(String assiduidade) {
+        _assiduidade = assiduidade;
+    }
+
+    public void setQuem(int quem) {
+        _quem = quem;
+    }
+
+    public void setQuando(Timestamp quando) {
+        _quando = quando;
+    }
+
+    /* teste da igualdade */
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+
+        if (obj instanceof StatusAssiduidade) {
+            StatusAssiduidade status = (StatusAssiduidade) obj;
+
+            resultado = (this.getCodigoInterno() == status.getCodigoInterno()
+                    && this.getSigla() == status.getSigla()
+                    && this.getDesignacao() == status.getDesignacao()
+                    && this.getEstado() == status.getEstado() && this.getAssiduidade() == status
+                    .getAssiduidade());
+        }
+        return resultado;
+    }
 }

@@ -15,8 +15,7 @@ public class InfoStudentCurricularPlanWithInfoStudentAndInfoBranch extends
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {
 
-            setInfoBranch(InfoBranch.newInfoFromDomain(studentCurricularPlan
-                    .getBranch()));
+            setInfoBranch(InfoBranch.newInfoFromDomain(studentCurricularPlan.getBranch()));
         }
     }
 

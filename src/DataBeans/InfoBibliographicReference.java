@@ -10,8 +10,7 @@ import Dominio.IBibliographicReference;
 /**
  * @author EP 15
  */
-public class InfoBibliographicReference extends InfoObject implements
-        ISiteComponent {
+public class InfoBibliographicReference extends InfoObject implements ISiteComponent {
 
     protected String title;
 
@@ -29,8 +28,8 @@ public class InfoBibliographicReference extends InfoObject implements
     }
 
     /** Creates a new instance of InfoBilbiographicReference */
-    public InfoBibliographicReference(String title, String authors,
-            String reference, String year, Boolean optional) {
+    public InfoBibliographicReference(String title, String authors, String reference, String year,
+            Boolean optional) {
         this.title = title;
         this.authors = authors;
         this.reference = reference;
@@ -41,16 +40,11 @@ public class InfoBibliographicReference extends InfoObject implements
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj != null && obj instanceof InfoBibliographicReference) {
-            resultado = getTitle().equals(
-                    ((InfoBibliographicReference) obj).getTitle())
-                    && getAuthors().equals(
-                            ((InfoBibliographicReference) obj).getAuthors())
-                    && getReference().equals(
-                            ((InfoBibliographicReference) obj).getReference())
-                    && getYear() == (((InfoBibliographicReference) obj)
-                            .getYear())
-                    && getOptional() == ((InfoBibliographicReference) obj)
-                            .getOptional();
+            resultado = getTitle().equals(((InfoBibliographicReference) obj).getTitle())
+                    && getAuthors().equals(((InfoBibliographicReference) obj).getAuthors())
+                    && getReference().equals(((InfoBibliographicReference) obj).getReference())
+                    && getYear() == (((InfoBibliographicReference) obj).getYear())
+                    && getOptional() == ((InfoBibliographicReference) obj).getOptional();
         }
         return resultado;
     }

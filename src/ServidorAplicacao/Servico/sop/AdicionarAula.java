@@ -37,44 +37,39 @@ public class AdicionarAula implements IService {
     public AdicionarAula() {
     }
 
-    public List run(InfoShift infoShift, String[] classesList)
-            throws FenixServiceException {
+    public List run(InfoShift infoShift, String[] classesList) throws FenixServiceException {
 
-		//ITurnoAula turnoAula = null;
+        //ITurnoAula turnoAula = null;
         InfoShiftServiceResult result = null;
         List serviceResult = new ArrayList();
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IExecutionCourse executionCourse = Cloner
-                    .copyInfoExecutionCourse2ExecutionCourse(infoShift
-                            .getInfoDisciplinaExecucao());
+            IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
+                    .getInfoDisciplinaExecucao());
 
-            ITurno turno1 = sp.getITurnoPersistente()
-                    .readByNameAndExecutionCourse(infoShift.getNome(),
-                            executionCourse);
+            ITurno turno1 = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
+                    executionCourse);
 
             int i = 0;
             while (i < classesList.length) {
                 Integer lessonId = new Integer(classesList[i]);
-                IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
-                        Aula.class, lessonId);
+                IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(Aula.class, lessonId);
                 if (lesson != null) {
-					//turnoAula = new TurnoAula(turno1, lesson);
+                    //turnoAula = new TurnoAula(turno1, lesson);
                     result = valid(turno1, lesson);
                     serviceResult.add(result);
                     if (result.isSUCESS()) {
-/*                        try {
-                            sp.getITurnoAulaPersistente().simpleLockWrite(
-                                    turnoAula);
-                        } catch (ExistingPersistentException ex) {
-                            throw new ExistingServiceException(ex);
-						}*/
-						try {
-							sp.getIAulaPersistente().simpleLockWrite(lesson);
-							lesson.setShift(turno1);
-						} catch(ExcepcaoPersistencia ex) {
-							
+                        /*
+                         * try { sp.getITurnoAulaPersistente().simpleLockWrite(
+                         * turnoAula); } catch (ExistingPersistentException ex) {
+                         * throw new ExistingServiceException(ex); }
+                         */
+                        try {
+                            sp.getIAulaPersistente().simpleLockWrite(lesson);
+                            lesson.setShift(turno1);
+                        } catch (ExcepcaoPersistencia ex) {
+
                         }
                     }
                 }
@@ -88,84 +83,67 @@ public class AdicionarAula implements IService {
         return serviceResult;
     }
 
-    private InfoShiftServiceResult valid(ITurno shift, IAula lesson)
-            throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(ITurno shift, IAula lesson) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
 
         double hours = getTotalHoursOfShiftType(shift);
-        double lessonDuration = (getLessonDurationInMinutes(lesson)
-                .doubleValue()) / 60;
+        double lessonDuration = (getLessonDurationInMinutes(lesson).doubleValue()) / 60;
 
         if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
-            if (hours == shift.getDisciplinaExecucao().getTheoreticalHours()
+            if (hours == shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue())
+                result.setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getTheoreticalHours()
                     .doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED);
-            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
-                    .getTheoreticalHours().doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED);
+                result.setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED);
         } else if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
-            if (hours == shift.getDisciplinaExecucao().getPraticalHours()
+            if (hours == shift.getDisciplinaExecucao().getPraticalHours().doubleValue())
+                result.setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getPraticalHours()
                     .doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED);
-            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
-                    .getPraticalHours().doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED);
-        } else if (shift.getTipo().equals(
-                new TipoAula(TipoAula.TEORICO_PRATICA))) {
-            if (hours == shift.getDisciplinaExecucao().getTheoPratHours()
+                result.setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED);
+        } else if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+            if (hours == shift.getDisciplinaExecucao().getTheoPratHours().doubleValue())
+                result.setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getTheoPratHours()
                     .doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED);
-            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
-                    .getTheoPratHours().doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED);
+                result.setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED);
         } else if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
-            if (hours == shift.getDisciplinaExecucao().getLabHours()
+            if (hours == shift.getDisciplinaExecucao().getLabHours().doubleValue())
+                result.setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED);
+            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getLabHours()
                     .doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED);
-            else if ((hours + lessonDuration) > shift.getDisciplinaExecucao()
-                    .getLabHours().doubleValue())
-                result
-                        .setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED);
+                result.setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED);
         }
 
         return result;
     }
 
-    private double getTotalHoursOfShiftType(ITurno shift)
-            throws ExcepcaoPersistencia {
-/*		ITurno shiftCriteria = new Turno();
-        shiftCriteria.setNome(shift.getNome());
-        shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
-
-        List lessonsOfShiftType = SuportePersistenteOJB.getInstance()
-                .getITurnoAulaPersistente().readLessonsByShift(shiftCriteria);
+    private double getTotalHoursOfShiftType(ITurno shift) throws ExcepcaoPersistencia {
+        /*
+         * ITurno shiftCriteria = new Turno();
+         * shiftCriteria.setNome(shift.getNome());
+         * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
+         * 
+         * List lessonsOfShiftType = SuportePersistenteOJB.getInstance()
+         * .getITurnoAulaPersistente().readLessonsByShift(shiftCriteria);
+         * 
+         * IAula lesson = null; double duration = 0; for (int i = 0; i <
+         * lessonsOfShiftType.size(); i++) { lesson = ((ITurnoAula)
+         * lessonsOfShiftType.get(i)).getAula(); duration +=
+         * (getLessonDurationInMinutes(lesson).doubleValue() / 60); } return
+         * duration;
+         */
 
         IAula lesson = null;
         double duration = 0;
-        for (int i = 0; i < lessonsOfShiftType.size(); i++) {
-            lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
+        List associatedLessons = shift.getAssociatedLessons();
+
+        for (int i = 0; i < associatedLessons.size(); i++) {
+            lesson = (IAula) associatedLessons.get(i);
             duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-
         }
-		return duration;*/
-		
-		IAula lesson = null;
-		double duration = 0;
-		List associatedLessons = shift.getAssociatedLessons();
 
-		for (int i = 0; i < associatedLessons.size(); i++) {
-			lesson = (IAula) associatedLessons.get(i);
-			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-		}
-		
         return duration;
     }
 

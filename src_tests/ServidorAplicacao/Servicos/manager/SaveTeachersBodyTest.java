@@ -15,71 +15,78 @@ import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
  */
 public class SaveTeachersBodyTest extends TestCaseNeedAuthorizationServices {
 
-	public SaveTeachersBodyTest(String testName) {
-		super(testName);
-	}
+    public SaveTeachersBodyTest(String testName) {
+        super(testName);
+    }
 
-	public void testUnsuccessfulExecutionOfService() {
+    public void testUnsuccessfulExecutionOfService() {
 
-//		Object[] args = getArgumentsOfServiceToBeTestedUnsuccessfuly();
-		List responsibleTeachersIds = new ArrayList(1);
-		List professorShipTeachersIds = null;
-		
-		responsibleTeachersIds.add(new Integer(2));
-		
-		Object[] args = {responsibleTeachersIds, professorShipTeachersIds,new Integer(100)};
+        //		Object[] args = getArgumentsOfServiceToBeTestedUnsuccessfuly();
+        List responsibleTeachersIds = new ArrayList(1);
+        List professorShipTeachersIds = null;
 
-		if(args != null) {
-			
-			try {
-				ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
-				System.out.println("testUnsuccessfulExecutionOfService was UNSUCCESSFULY run by class: " + this.getClass().getName());
-				fail("testUnsuccessfulExecutionOfService");
-			} catch (Exception ex) {
-				System.out.println("testUnsuccessfulExecutionOfService was SUCCESSFULY run by class: " + this.getClass().getName());
-			}
-		}
-	}
-	
+        responsibleTeachersIds.add(new Integer(2));
 
-	public void testSuccessfulExecutionOfService() {
+        Object[] args = { responsibleTeachersIds, professorShipTeachersIds, new Integer(100) };
 
-//		Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
-		List responsibleTeachersIds = new ArrayList(1);
-				List professorShipTeachersIds = new ArrayList();
-		
-				responsibleTeachersIds.add(new Integer(2));
-		
-				Object[] args = {responsibleTeachersIds, professorShipTeachersIds,new Integer(24)};
+        if (args != null) {
 
-		if(args != null) {
-			
-			try {
-				ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
-				System.out.println("testSuccessfulExecutionOfService was SUCCESSFULY run by class: " + this.getClass().getName());
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				System.out.println("testSuccessfulExecutionOfService was UNSUCCESSFULY run by class: " + this.getClass().getName());
-				fail("testSuccessfulExecutionOfCreateService");
-			}
-		}
-	}
+            try {
+                ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(),
+                        args);
+                System.out.println("testUnsuccessfulExecutionOfService was UNSUCCESSFULY run by class: "
+                        + this.getClass().getName());
+                fail("testUnsuccessfulExecutionOfService");
+            } catch (Exception ex) {
+                System.out.println("testUnsuccessfulExecutionOfService was SUCCESSFULY run by class: "
+                        + this.getClass().getName());
+            }
+        }
+    }
 
-	/**
-	 * This method must return a String with the name of the service to be tested.
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "SaveTeachersBody";
-	}
+    public void testSuccessfulExecutionOfService() {
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return true;
-	}
-	
-	protected String[] getArgsForAuthorizedUser() {
-				return new String[] {"manager", "pass", getApplication()};
-			}
+        //		Object[] args = getArgumentsOfServiceToBeTestedSuccessfuly();
+        List responsibleTeachersIds = new ArrayList(1);
+        List professorShipTeachersIds = new ArrayList();
+
+        responsibleTeachersIds.add(new Integer(2));
+
+        Object[] args = { responsibleTeachersIds, professorShipTeachersIds, new Integer(24) };
+
+        if (args != null) {
+
+            try {
+                ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(),
+                        args);
+                System.out.println("testSuccessfulExecutionOfService was SUCCESSFULY run by class: "
+                        + this.getClass().getName());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                System.out.println("testSuccessfulExecutionOfService was UNSUCCESSFULY run by class: "
+                        + this.getClass().getName());
+                fail("testSuccessfulExecutionOfCreateService");
+            }
+        }
+    }
+
+    /**
+     * This method must return a String with the name of the service to be
+     * tested.
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "SaveTeachersBody";
+    }
+
+    /**
+     * This method must return 'true' if the service needs authorization to be
+     * runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization() {
+        return true;
+    }
+
+    protected String[] getArgsForAuthorizedUser() {
+        return new String[] { "manager", "pass", getApplication() };
+    }
 }

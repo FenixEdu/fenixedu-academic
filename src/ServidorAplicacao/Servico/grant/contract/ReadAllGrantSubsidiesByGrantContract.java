@@ -44,7 +44,7 @@ public class ReadAllGrantSubsidiesByGrantContract implements IService {
         if (subsidies == null)
             return new ArrayList();
 
-        ArrayList infoSubsidyList = (ArrayList) CollectionUtils.collect(subsidies, new Transformer() {
+        List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
             public Object transform(Object input) {
                 IGrantSubsidy grantSubsidy = (IGrantSubsidy) input;
                 InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract

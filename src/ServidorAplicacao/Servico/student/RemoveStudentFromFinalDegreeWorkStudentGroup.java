@@ -29,21 +29,16 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
         super();
     }
 
-    public boolean run(String username, Integer groupOID,
-            Integer studentToRemoveID) throws ExcepcaoPersistencia,
-            FenixServiceException {
-        ISuportePersistente persistentSupport = SuportePersistenteOJB
-                .getInstance();
+    public boolean run(String username, Integer groupOID, Integer studentToRemoveID)
+            throws ExcepcaoPersistencia, FenixServiceException {
+        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentStudent persistentStudent = persistentSupport
-                .getIPersistentStudent();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(
-                Group.class, groupOID);
+        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
         IStudent student = persistentStudent.readByUsername(username);
-        if (group == null || student == null
-                || group.getGroupStudents() == null
+        if (group == null || student == null || group.getGroupStudents() == null
                 || student.getIdInternal().equals(studentToRemoveID)) {
             return false;
         }
@@ -51,14 +46,11 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
             throw new GroupProposalCandidaciesExistException();
         }
 
-        PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(
-                studentToRemoveID);
+        PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
         for (int i = 0; i < group.getGroupStudents().size(); i++) {
-            IGroupStudent groupStudent = (IGroupStudent) group
-                    .getGroupStudents().get(i);
+            IGroupStudent groupStudent = (IGroupStudent) group.getGroupStudents().get(i);
             if (!predicate.evaluate(groupStudent)) {
-                persistentFinalDegreeWork.deleteByOID(GroupStudent.class,
-                        groupStudent.getIdInternal());
+                persistentFinalDegreeWork.deleteByOID(GroupStudent.class, groupStudent.getIdInternal());
             }
         }
         return true;
@@ -70,11 +62,8 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
 
         public boolean evaluate(Object arg0) {
             IGroupStudent groupStudent = (IGroupStudent) arg0;
-            if (groupStudent != null
-                    && groupStudent.getStudent() != null
-                    && studentID != null
-                    && !studentID.equals(groupStudent.getStudent()
-                            .getIdInternal())) {
+            if (groupStudent != null && groupStudent.getStudent() != null && studentID != null
+                    && !studentID.equals(groupStudent.getStudent().getIdInternal())) {
                 return true;
             }
             return false;
@@ -87,8 +76,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
         }
     }
 
-    public class GroupProposalCandidaciesExistException extends
-            FenixServiceException {
+    public class GroupProposalCandidaciesExistException extends FenixServiceException {
 
         public GroupProposalCandidaciesExistException() {
             super();
@@ -106,8 +94,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
             super(cause);
         }
 
-        public GroupProposalCandidaciesExistException(String message,
-                Throwable cause) {
+        public GroupProposalCandidaciesExistException(String message, Throwable cause) {
             super(message, cause);
         }
     }

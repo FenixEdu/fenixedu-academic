@@ -29,30 +29,23 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
 
     }
 
-    public List run(Integer teacherId, Integer executionYearId)
-            throws FenixServiceException {
+    public List run(Integer teacherId, Integer executionYearId) throws FenixServiceException {
         try {
             ISuportePersistente sp = getDAOFactory();
-            IPersistentProfessorship professorshipDAO = sp
-                    .getIPersistentProfessorship();
-            IPersistentResponsibleFor responsibleForDAO = sp
-                    .getIPersistentResponsibleFor();
+            IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+            IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionYear executionYearDAO = sp
-                    .getIPersistentExecutionYear();
+            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
 
             ITeacher teacher = readTeacher(teacherId, teacherDAO);
 
-            IExecutionYear executionYear = readExecutionYear(executionYearId,
-                    executionYearDAO);
+            IExecutionYear executionYear = readExecutionYear(executionYearId, executionYearDAO);
 
-            List professorships = professorshipDAO
-                    .readByTeacherAndExecutionYear(teacher, executionYear);
-            List responsibleFors = responsibleForDAO
-                    .readByTeacherAndExecutionYear(teacher, executionYear);
+            List professorships = professorshipDAO.readByTeacherAndExecutionYear(teacher, executionYear);
+            List responsibleFors = responsibleForDAO.readByTeacherAndExecutionYear(teacher,
+                    executionYear);
 
-            return getDetailedProfessorships(professorships, responsibleFors,
-                    sp);
+            return getDetailedProfessorships(professorships, responsibleFors, sp);
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
             throw new FenixServiceException();
@@ -65,14 +58,14 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
      * @return
      */
     private IExecutionYear readExecutionYear(Integer executionYearId,
-            IPersistentExecutionYear executionYearDAO)
-            throws ExcepcaoPersistencia, NotFoundExecutionYear {
+            IPersistentExecutionYear executionYearDAO) throws ExcepcaoPersistencia,
+            NotFoundExecutionYear {
         IExecutionYear executionYear = null;
         if (executionYearId == null) {
             executionYear = executionYearDAO.readCurrentExecutionYear();
         } else {
-            executionYear = (IExecutionYear) executionYearDAO.readByOID(
-                    ExecutionYear.class, executionYearId);
+            executionYear = (IExecutionYear) executionYearDAO.readByOID(ExecutionYear.class,
+                    executionYearId);
             if (executionYear == null) {
                 throw new NotFoundExecutionYear();
             }

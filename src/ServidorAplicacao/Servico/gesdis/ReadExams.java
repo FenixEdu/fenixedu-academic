@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
-import ServidorAplicacao.IServico;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -24,76 +24,46 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author João Mota
  * @author Fernanda Quitério
- *
+ *  
  */
-public class ReadExams implements IServico {
+public class ReadExams implements IService {
 
-	private static ReadExams service = new ReadExams();
+    /**
+     * Executes the service. Returns the current collection of exams
+     * 
+     *  
+     */
 
-	/**
-	 * The singleton access method of this class.
-	 **/
+    public List run(Integer executionCourseCode) throws FenixServiceException {
+        try {
+            ISuportePersistente sp;
+            IExecutionCourse executionCourse;
 
-	public static ReadExams getService() {
+            sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-		return service;
+            executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseCode);
+            if (executionCourse == null) {
+                throw new NonExistingServiceException();
+            }
+            List infoExams = new ArrayList();
+            List exams = null;
 
-	}
+            if (executionCourse != null) {
+                exams = executionCourse.getAssociatedExams();
 
-	/**
-	 * The ctor of this class.
-	 **/
+                Iterator iter = exams.iterator();
+                while (iter.hasNext()) {
+                    infoExams.add(Cloner.copyIExam2InfoExam((IExam) iter.next()));
+                }
 
-	private ReadExams() {
-	}
+            }
+            return infoExams;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-
-	public final String getNome() {
-
-		return "ReadExams";
-
-	}
-
-	/**
-	 * Executes the service. Returns the current collection of
-	 * exams
-	 *
-	 * 
-	 **/
-
-	public List run(Integer executionCourseCode)
-		throws FenixServiceException {
-			try {
-					ISuportePersistente sp;
-				IExecutionCourse executionCourse;
-				
-				sp = SuportePersistenteOJB.getInstance();
-				IPersistentExecutionCourse persistentExecutionCourse=sp.getIPersistentExecutionCourse();
-
-				
-				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseCode);
-				if (executionCourse ==null){
-					throw new NonExistingServiceException();
-				}
-				List infoExams=new ArrayList();
-				List exams = null;
-				
-				if (executionCourse!=null){ exams = executionCourse.getAssociatedExams();
-				
-				Iterator iter = exams.iterator();
-				while (iter.hasNext()) {
-					infoExams.add(Cloner.copyIExam2InfoExam((IExam) iter.next()));
-				}
-				
-				}
-				return infoExams;
-			} catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
-
-	}
+    }
 
 }

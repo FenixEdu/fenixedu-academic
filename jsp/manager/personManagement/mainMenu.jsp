@@ -12,6 +12,12 @@
 
 <h2><bean:message key="label.manager.personManagement"/></h2>
 
+<p><strong>&raquo; 
+	<html:link page="/findPerson.do?method=prepareFindPerson">
+		<bean:message key="label.manager.findPerson" />
+	</html:link>
+</strong></p>
+
 <p><strong>&raquo;
 	<html:link page="/manageRoles.do?method=prepare">
 		Gest&atilde;o de Privilégios
@@ -24,8 +30,8 @@
 	</html:link>
 </strong></p>
 
-<p><strong>&raquo; 
-	<html:link page="/findPerson.do?method=prepareFindPerson">
-		<bean:message key="label.manager.findPerson" />
+<p><strong>&raquo;
+	<html:link page="/generateNewStudentsPasswords.do?method=prepareGeneratePasswords&page=0">
+		<bean:message key="link.newPasswordForStudentRegistration" />
 	</html:link>
 </strong></p>

@@ -38,7 +38,8 @@
 		<form-property name="districtOfBirth" type="java.lang.String" />
 		<form-property name="address" type="java.lang.String" />
 		<form-property name="area" type="java.lang.String" />
-		<form-property name="areaCode" type="java.lang.String" />
+		<form-property name="primaryAreaCode" type="java.lang.String" />
+		<form-property name="secondaryAreaCode" type="java.lang.String" />
 		<form-property name="areaOfAreaCode" type="java.lang.String" />
 		<form-property name="parishOfResidence" type="java.lang.String" />
 		<form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
@@ -52,14 +53,18 @@
 		<form-property name="contributorNumber" type="java.lang.String" />
 		<form-property name="occupation" type="java.lang.String" />
 		<form-property name="username" type="java.lang.String" />
-		<form-property name="password" type="java.lang.String" />
 		<form-property name="typeIdDocument" type="java.lang.String" />
 		<form-property name="sex" type="java.lang.String" />
 		<form-property name="maritalStatus" type="java.lang.String" />
 		
         <form-property name="answersMap" type="java.util.HashMap" />
         
-        <form-property name="instructionsAccepted" type="java.lang.Boolean" />
+        <form-property name="instructionsAccepted" type="java.lang.String" />
+		<form-property name="residenceCandidate" type="java.lang.String"/>
+		<form-property name="dislocated" type="java.lang.String" />
+		<form-property name="observations" type="java.lang.String" />
+		<form-property name="charCount" type="java.lang.String" />
+		<form-property name="availablePhoto" type="java.lang.String" />
       </form-bean>
       
     </form-beans>
@@ -89,9 +94,10 @@
     
     
     <!-- ********************* SCHOOL REGISTRATION ********************* -->
-     <action path="/index" 
+
+	 	<action path="/index"
     		forward="definition.schoolRegistration.showSchoolRegistrationInstructions"/>
-    
+		
     	<action path="/changePassword"
     		name="schoolRegistrationForm"
    		 	input="/index.do"
@@ -99,9 +105,10 @@
    			validate="true"
    			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
       	    >
-      	    <exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+      	    <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
 						
       	    <forward name="beginTransaction" path="/index.do" />
       	    <forward name="changePassword" path="definition.schoolRegistration.changePassword" />
@@ -115,9 +122,10 @@
       	    type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
       	    >
       	    
-      	    <exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+      	    <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
 						
       		<forward name="beginTransaction" path="/index.do" />
       	  	<forward name="Success" path="definition.schoolRegistration.personalInfo" />      	      
@@ -128,48 +136,101 @@
 			name="schoolRegistrationForm"
 			validate="true"
 			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
-			input="/viewPersonalInfo.do?method=visualizeFirstTimeStudentPersonalInfoAction&amp;page=0"
+			input="/viewPersonalInfo.do?method=visualizeFirstTimeStudentPersonalInfoAction&amp;page=0&amp;error=true"
 			>
-			
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
 						
 			<forward name="beginTransaction" path="/index.do" />
 			<forward name="viewQuestions" path="definition.schoolRegistration.inquiry"/>
 		</action>
-		
-		<action path="/enrollStudent"
+
+		<action path="/residenceCandidacy"
 			parameter="method"
 			name="schoolRegistrationForm"
 			validate="true"
 			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
 			input="/showStudentInquiry.do?method=viewInquiryQuestions&amp;page=0"
 			>
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
+
+			<forward name="beginTransaction" path="/index.do" />
+			<forward name="residenceCandidacy" path="definition.schoolRegistration.residenceCandidacy" />
+		</action>
 			
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+		
+		<action path="/enrollStudent"
+			parameter="method"
+			name="schoolRegistrationForm"
+			validate="true"
+			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			input="/residenceCandidacy.do?method=residenceCandidacy&amp;page=0"
+			>
+			
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
+
 			<forward name="beginTransaction" path="/viewEnrollments.do?method=viewStudentEnrollments" />
 			<forward name="viewEnrollments" path="/viewEnrollments.do?method=viewStudentEnrollments" />
 		</action>
 		
 		<action path="/viewEnrollments"
 			parameter="method"
+			validate="true"
 			name="schoolRegistrationForm"
 			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
 			>
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
 
+			<forward name="declarations" path="definition.schoolRegistration.declarations" />
 			<forward name="Success" path="definition.schoolRegistration.showSchoolRegistrationInfo" />
 		</action>
+		
+		<action path="/studentTimeTable"
+        	type="ServidorApresentacao.Action.student.ViewStudentTimeTable"
+        	>
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
+        	<forward name="sucess" path="definition.schoolRegistration.schedule"/>
+        </action>
+        
+       	<action path="/declaration" 
+       		parameter="method"
+       		name="schoolRegistrationForm"
+			type="ServidorApresentacao.Action.student.schoolRegistration.SchoolRegistrationAction"
+			>
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+				 key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                 />
+	       	<forward name="sucess" path="definition.schoolRegistration.printDeclaration"/>
+       	</action>
+
+		<!--<action path="/logoff" 
+			type="ServidorApresentacao.Action.commons.LogOffAction"
+		    name="schoolRegistrationForm">
+            <forward name="Success" path="definition.schoolRegistration.logout" contextRelative="true"/>
+        </action> -->
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
-    <message-resources parameter="ServidorApresentacao.StudentResources" key="STUDENT_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.SchoolRegistrationResources" null="false"/>
         
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

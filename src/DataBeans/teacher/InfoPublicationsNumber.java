@@ -16,123 +16,118 @@ import Util.PublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class InfoPublicationsNumber extends InfoObject
-{
+public class InfoPublicationsNumber extends InfoObject {
     private PublicationType publicationType;
+
     private Date lastModificationDate;
+
     private Integer national;
+
     private Integer international;
+
     private InfoTeacher infoTeacher;
 
     /**
-	 *  
-	 */
-    public InfoPublicationsNumber()
-    {
+     *  
+     */
+    public InfoPublicationsNumber() {
         super();
-       
+
     }
 
     /**
-	 * @return Returns the international.
-	 */
-    public Integer getInternational()
-    {
+     * @return Returns the international.
+     */
+    public Integer getInternational() {
         return international;
     }
 
     /**
-	 * @param international
-	 *            The international to set.
-	 */
-    public void setInternational(Integer international)
-    {
+     * @param international
+     *            The international to set.
+     */
+    public void setInternational(Integer international) {
         this.international = international;
     }
 
     /**
-	 * @return Returns the lastModificationDate.
-	 */
-    public Date getLastModificationDate()
-    {
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-	 * @param lastModificationDate
-	 *            The lastModificationDate to set.
-	 */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
     /**
-	 * @return Returns the national.
-	 */
-    public Integer getNational()
-    {
+     * @return Returns the national.
+     */
+    public Integer getNational() {
         return national;
     }
 
     /**
-	 * @param national
-	 *            The national to set.
-	 */
-    public void setNational(Integer national)
-    {
+     * @param national
+     *            The national to set.
+     */
+    public void setNational(Integer national) {
         this.national = national;
     }
 
     /**
-	 * @return Returns the publicationType.
-	 */
-    public PublicationType getPublicationType()
-    {
+     * @return Returns the publicationType.
+     */
+    public PublicationType getPublicationType() {
         return publicationType;
     }
 
     /**
-	 * @param publicationType
-	 *            The publicationType to set.
-	 */
-    public void setPublicationType(PublicationType publicationType)
-    {
+     * @param publicationType
+     *            The publicationType to set.
+     */
+    public void setPublicationType(PublicationType publicationType) {
         this.publicationType = publicationType;
     }
 
     /**
      * @return Returns the infoTeacher.
      */
-    public InfoTeacher getInfoTeacher()
-    {
+    public InfoTeacher getInfoTeacher() {
         return infoTeacher;
     }
 
     /**
-     * @param infoTeacher The infoTeacher to set.
+     * @param infoTeacher
+     *            The infoTeacher to set.
      */
-    public void setInfoTeacher(InfoTeacher infoTeacher)
-    {
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IPublicationsNumber publicationsNumber) {
         super.copyFromDomain(publicationsNumber);
-        if(publicationsNumber != null) {
+        if (publicationsNumber != null) {
             setInternational(publicationsNumber.getInternational());
             setNational(publicationsNumber.getNational());
             setPublicationType(publicationsNumber.getPublicationType());
             setLastModificationDate(publicationsNumber.getLastModificationDate());
         }
     }
-    
+
     public static InfoPublicationsNumber newInfoFromDomain(IPublicationsNumber publicationsNumber) {
         InfoPublicationsNumber infoPublicationsNumber = null;
-        if(publicationsNumber != null) {
+        if (publicationsNumber != null) {
             infoPublicationsNumber = new InfoPublicationsNumber();
             infoPublicationsNumber.copyFromDomain(publicationsNumber);
         }

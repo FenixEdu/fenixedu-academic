@@ -15,10 +15,11 @@ import Util.OrientationType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public interface IPersistentOrientation extends IPersistentObject
-{
-    public IOrientation readByTeacherAndOrientationType(ITeacher teacher, OrientationType orientationType) throws ExcepcaoPersistencia;
+public interface IPersistentOrientation extends IPersistentObject {
+    public IOrientation readByTeacherAndOrientationType(ITeacher teacher, OrientationType orientationType)
+            throws ExcepcaoPersistencia;
+
     public List readAllByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

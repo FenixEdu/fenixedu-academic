@@ -30,154 +30,121 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class SendSmsDispatchAction extends FenixDispatchAction
-{
+public class SendSmsDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepare(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		//check if person has mobile
-		Object args[] = { userView };
-		InfoPerson infoPerson = null;
+        //check if person has mobile
+        Object args[] = { userView };
+        InfoPerson infoPerson = null;
 
-		try
-		{
-			infoPerson =
-				(InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUsername", args);
-		}
-		catch (FenixServiceException e1)
-		{
-			throw new FenixActionException();
-		}
+        try {
+            infoPerson = (InfoPerson) ServiceUtils
+                    .executeService(userView, "ReadPersonByUsername", args);
+        } catch (FenixServiceException e1) {
+            throw new FenixActionException();
+        }
 
-		if (infoPerson.getTelemovel() == null || infoPerson.getTelemovel().length() == 0)
-		{
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("noMobileDefined", new ActionError("error.person.noMobileDefined"));
-			saveErrors(request, actionErrors);
-			return mapping.findForward("error");
-		}
+        if (infoPerson.getTelemovel() == null || infoPerson.getTelemovel().length() == 0) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("noMobileDefined", new ActionError("error.person.noMobileDefined"));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("error");
+        }
 
-		//check if person has enough credits
-		Integer remainingSmsNumber = null;
+        //check if person has enough credits
+        Integer remainingSmsNumber = null;
 
-		Date startDate = getStartMonthDate();
-		Date endDate = getEndMonthDate();
+        Date startDate = getStartMonthDate();
+        Date endDate = getEndMonthDate();
 
-		Object args2[] = { userView, startDate, endDate };
-		try
-		{
-			remainingSmsNumber =
-				(Integer) ServiceUtils.executeService(
-					userView,
-					"CountSentSmsByPersonAndDatePeriod",
-					args2);
+        Object args2[] = { userView, startDate, endDate };
+        try {
+            remainingSmsNumber = (Integer) ServiceUtils.executeService(userView,
+                    "CountSentSmsByPersonAndDatePeriod", args2);
 
-		}
-		catch (SmsLimitReachedServiceException e)
-		{
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("smsLimitReached", new ActionError(e.getMessage()));
-			saveErrors(request, actionErrors);
-			return mapping.findForward("error");
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-		}
+        } catch (SmsLimitReachedServiceException e) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("smsLimitReached", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);
+            return mapping.findForward("error");
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+        }
 
-		ActionMessages messages = new ActionMessages();
-		messages.add("message1", new ActionMessage("message.person.remainingSms", remainingSmsNumber));
-		saveMessages(request, messages);
+        ActionMessages messages = new ActionMessages();
+        messages.add("message1", new ActionMessage("message.person.remainingSms", remainingSmsNumber));
+        saveMessages(request, messages);
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
-	public ActionForward send(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
+    public ActionForward send(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm sendSmsForm = (DynaActionForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
+        DynaActionForm sendSmsForm = (DynaActionForm) form;
 
-		String smsSingature =
-			" "
-				+ this.getResources(request).getMessage(
-					"message.person.smsSignature",
-					userView.getUtilizador());
-		String message = ((String) sendSmsForm.get("message")) + smsSingature;
-		Integer destinationPhoneNumber = (Integer) sendSmsForm.get("destinationPhoneNumber");
+        String smsSingature = " "
+                + this.getResources(request).getMessage("message.person.smsSignature",
+                        userView.getUtilizador());
+        String message = ((String) sendSmsForm.get("message")) + smsSingature;
+        Integer destinationPhoneNumber = (Integer) sendSmsForm.get("destinationPhoneNumber");
 
-		Date startDate = getStartMonthDate();
-		Date endDate = getEndMonthDate();
+        Date startDate = getStartMonthDate();
+        Date endDate = getEndMonthDate();
 
-		Object args[] = { userView, startDate, endDate, destinationPhoneNumber, message };
+        Object args[] = { userView, startDate, endDate, destinationPhoneNumber, message };
 
-		try
-		{
-			ServiceUtils.executeService(userView, "CreateSentSms", args);
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-		}
+        try {
+            ServiceUtils.executeService(userView, "CreateSentSms", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
+        }
 
-		ActionMessages messages = new ActionMessages();
-		messages.add("message1", new ActionMessage("message.person.sendSmsSuccess"));
-		saveMessages(request, messages);
+        ActionMessages messages = new ActionMessages();
+        messages.add("message1", new ActionMessage("message.person.sendSmsSuccess"));
+        saveMessages(request, messages);
 
-		sendSmsForm.set("message", "");
-		sendSmsForm.set("destinationPhoneNumber", null);
-		return mapping.findForward("error");
+        sendSmsForm.set("message", "");
+        sendSmsForm.set("destinationPhoneNumber", null);
+        return mapping.findForward("error");
 
-	}
+    }
 
-	private Date getStartMonthDate()
-	{
-		Calendar cal = new GregorianCalendar();
-		int month = cal.get(Calendar.MONTH);
-		int year = cal.get(Calendar.YEAR);
-		Calendar startCalendar = new GregorianCalendar(year, month, 1);
+    private Date getStartMonthDate() {
+        Calendar cal = new GregorianCalendar();
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+        Calendar startCalendar = new GregorianCalendar(year, month, 1);
 
-		return startCalendar.getTime();
-	}
+        return startCalendar.getTime();
+    }
 
-	private Date getEndMonthDate()
-	{
-		Calendar cal = new GregorianCalendar();
+    private Date getEndMonthDate() {
+        Calendar cal = new GregorianCalendar();
 
-		int month = cal.get(Calendar.MONTH);
-		int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
 
-		if (month == Calendar.DECEMBER)
-		{
-			month = Calendar.JANUARY;
-			year += 1;
-		}
-		else
-		{
-			month += 1;
-		}
+        if (month == Calendar.DECEMBER) {
+            month = Calendar.JANUARY;
+            year += 1;
+        } else {
+            month += 1;
+        }
 
-		Calendar endCalendar = new GregorianCalendar(year, month, 1);
+        Calendar endCalendar = new GregorianCalendar(year, month, 1);
 
-		return endCalendar.getTime();
+        return endCalendar.getTime();
 
-	}
+    }
 }

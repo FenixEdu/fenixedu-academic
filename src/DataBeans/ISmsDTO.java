@@ -5,13 +5,14 @@
 package DataBeans;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
 public interface ISmsDTO {
     /**
-     * Returns an Sms Text 
+     * Returns an Sms Text
+     * 
      * @return
      */
     public String toSmsText();

@@ -21,11 +21,17 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
 
     private String lastName;
 
-    private Integer contractNumber; //Only used in the list of grant owner by criteria
+    private Integer contractNumber; //Only used in the list of grant owner by
 
-    private Date beginContract; //Only used in the list of grant owner by criteria
+    // criteria
 
-    private Date endContract; //Only used in the list of grant owner by criteria
+    private Date beginContract; //Only used in the list of grant owner by
+
+    // criteria
+
+    private Date endContract; //Only used in the list of grant owner by
+
+    // criteria
 
     private String grantType; //Sigla of the grantType
 

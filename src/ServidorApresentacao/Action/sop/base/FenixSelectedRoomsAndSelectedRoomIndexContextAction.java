@@ -12,32 +12,31 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import ServidorApresentacao.Action.base.FenixContextAction;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public abstract class FenixSelectedRoomsAndSelectedRoomIndexContextAction
-	extends FenixContextAction {
+public abstract class FenixSelectedRoomsAndSelectedRoomIndexContextAction extends FenixContextAction {
 
-	/**
-	 * Tests if the session is valid
-	 * @see SessionUtils#validSessionVerification(HttpServletRequest, ActionMapping)
-	 * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm, HttpServletRequest, HttpServletResponse)
-	 */
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    /**
+     * Tests if the session is valid
+     * 
+     * @see SessionUtils#validSessionVerification(HttpServletRequest,
+     *      ActionMapping)
+     * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm,
+     *      HttpServletRequest, HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
 
-		ContextUtils.setSelectedRoomsContext(request);
-		ContextUtils.setSelectedRoomIndexContext(request);
+        ContextUtils.setSelectedRoomsContext(request);
+        ContextUtils.setSelectedRoomIndexContext(request);
 
-		return actionForward; 
-	}
+        return actionForward;
+    }
 
 }

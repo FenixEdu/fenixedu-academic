@@ -59,8 +59,7 @@ public class InfoCurricularYear extends InfoObject {
         }
     }
 
-    public static InfoCurricularYear newInfoFromDomain(
-            ICurricularYear curricularYear) {
+    public static InfoCurricularYear newInfoFromDomain(ICurricularYear curricularYear) {
         InfoCurricularYear infoCurricularYear = null;
         if (curricularYear != null) {
             infoCurricularYear = new InfoCurricularYear();

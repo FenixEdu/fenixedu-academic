@@ -3,61 +3,63 @@ package Dominio;
 import java.util.List;
 
 /**
- * @author Tânia Pousão
- * 24 de Junho de 2003	
+ * @author Tânia Pousão 24 de Junho de 2003
  */
 public class Evaluation extends DomainObject implements IEvaluation {
-	private String ojbConcreteClass;
-	private String publishmentMessage;
-	private List associatedExecutionCourses;
+    private String ojbConcreteClass;
 
-	public Evaluation() {
-		super();
-		this.ojbConcreteClass = this.getClass().getName();
-	}
-	public Evaluation(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    private String publishmentMessage;
 
-	/**
-	 * @return String
-	 */
-	public String getOjbConcreteClass() {
-		return ojbConcreteClass;
-	}
+    private List associatedExecutionCourses;
 
-	/**
-	 * @param string
-	 */
-	public void setOjbConcreteClass(String string) {
-		ojbConcreteClass = string;
-	}
+    public Evaluation() {
+        super();
+        this.ojbConcreteClass = this.getClass().getName();
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getPublishmentMessage() {
-		return publishmentMessage;
-	}
+    public Evaluation(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setPublishmentMessage(String string) {
-		publishmentMessage = string;
-	}
+    /**
+     * @return String
+     */
+    public String getOjbConcreteClass() {
+        return ojbConcreteClass;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedExecutionCourses() {
-		return associatedExecutionCourses;
-	}
+    /**
+     * @param string
+     */
+    public void setOjbConcreteClass(String string) {
+        ojbConcreteClass = string;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAssociatedExecutionCourses(List list) {
-		associatedExecutionCourses = list;
-	}
+    /**
+     * @return String
+     */
+    public String getPublishmentMessage() {
+        return publishmentMessage;
+    }
+
+    /**
+     * @param string
+     */
+    public void setPublishmentMessage(String string) {
+        publishmentMessage = string;
+    }
+
+    /**
+     * @return
+     */
+    public List getAssociatedExecutionCourses() {
+        return associatedExecutionCourses;
+    }
+
+    /**
+     * @param list
+     */
+    public void setAssociatedExecutionCourses(List list) {
+        associatedExecutionCourses = list;
+    }
 }

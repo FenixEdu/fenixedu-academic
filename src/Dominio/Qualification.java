@@ -6,287 +6,280 @@ import java.util.Date;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class Qualification extends DomainObject implements IQualification
-{
+public class Qualification extends DomainObject implements IQualification {
 
-	private String mark;
-	private String school;
-	private String title;
+    private String mark;
+
+    private String school;
+
+    private String title;
+
     private String degree;
+
     private Date lastModificationDate;
-	private Integer personKey;
+
+    private Integer personKey;
+
     private Date date;
-	private String branch;
+
+    private String branch;
+
     private String specializationArea;
+
     private String degreeRecognition;
+
     private Date equivalenceDate;
+
     private String equivalenceSchool;
+
     private ICountry country;
+
     private Integer countryKey;
 
-	private IPessoa person;
+    private IPessoa person;
 
-	public Qualification()
-	{
-	}
+    public Qualification() {
+    }
 
-	public String toString()
-	{
-		String result = "Qualification :\n";
-		result += "\n  - Internal Code : " + getIdInternal();
-		result += "\n  - School : " + school;
-		result += "\n  - Title : " + title;
-		result += "\n  - Mark : " + mark;
-		result += "\n  - Person : " + person;
+    public String toString() {
+        String result = "Qualification :\n";
+        result += "\n  - Internal Code : " + getIdInternal();
+        result += "\n  - School : " + school;
+        result += "\n  - Title : " + title;
+        result += "\n  - Mark : " + mark;
+        result += "\n  - Person : " + person;
         result += "\n  - Last Modication Date : " + lastModificationDate;
         result += "\n  - Branch : " + branch;
         result += "\n  - Specialization Area : " + specializationArea;
         result += "\n  - Degree Recognition : " + degreeRecognition;
         result += "\n  - Equivalence School : " + equivalenceSchool;
-        result += "\n  - Equivalence Date : " +  equivalenceDate;
+        result += "\n  - Equivalence Date : " + equivalenceDate;
         result += "\n  - Country : " + country.getName();
-        
-		return result;
-	}
 
-	/**
-	 * @return
-	 */
-	public String getMark()
-	{
-		return mark;
-	}
+        return result;
+    }
 
-	/**
-	 * @param mark
-	 */
-	public void setMark(String mark)
-	{
-		this.mark = mark;
-	}
+    /**
+     * @return
+     */
+    public String getMark() {
+        return mark;
+    }
 
-	/**
-	 * @return
-	 */
-	public IPessoa getPerson()
-	{
-		return person;
-	}
+    /**
+     * @param mark
+     */
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
 
-	/**
-	 * @param person
-	 */
-	public void setPerson(IPessoa person)
-	{
-		this.person = person;
-	}
+    /**
+     * @return
+     */
+    public IPessoa getPerson() {
+        return person;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getPersonKey()
-	{
-		return personKey;
-	}
+    /**
+     * @param person
+     */
+    public void setPerson(IPessoa person) {
+        this.person = person;
+    }
 
-	/**
-	 * @param personKey
-	 */
-	public void setPersonKey(Integer personKey)
-	{
-		this.personKey = personKey;
-	}
+    /**
+     * @return
+     */
+    public Integer getPersonKey() {
+        return personKey;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getSchool()
-	{
-		return school;
-	}
+    /**
+     * @param personKey
+     */
+    public void setPersonKey(Integer personKey) {
+        this.personKey = personKey;
+    }
 
-	/**
-	 * @param school
-	 */
-	public void setSchool(String school)
-	{
-		this.school = school;
-	}
+    /**
+     * @return
+     */
+    public String getSchool() {
+        return school;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getTitle()
-	{
-		return title;
-	}
+    /**
+     * @param school
+     */
+    public void setSchool(String school) {
+        this.school = school;
+    }
 
-	/**
-	 * @param title
-	 */
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
+    /**
+     * @return
+     */
+    public String getTitle() {
+        return title;
+    }
 
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     /**
      * @return Returns the degree.
      */
-    public String getDegree()
-    {
+    public String getDegree() {
         return degree;
     }
 
     /**
-     * @param degree The degree to set.
+     * @param degree
+     *            The degree to set.
      */
-    public void setDegree(String degree)
-    {
+    public void setDegree(String degree) {
         this.degree = degree;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see Dominio.IQualification#SetLastModificationDate(java.util.Date)
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see Dominio.IQualification#getLastModificationDate()
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
-	/**
-	 * @return Returns the branch.
-	 */
-	public String getBranch()
-	{
-		return branch;
-	}
 
-	/**
-	 * @param branch The branch to set.
-	 */
-	public void setBranch(String Branch)
-	{
-		branch = Branch;
-	}
+    /**
+     * @return Returns the branch.
+     */
+    public String getBranch() {
+        return branch;
+    }
 
-	/**
-	 * @return Returns the degreeRecognition.
-	 */
-	public String getDegreeRecognition()
-	{
-		return degreeRecognition;
-	}
+    /**
+     * @param branch
+     *            The branch to set.
+     */
+    public void setBranch(String Branch) {
+        branch = Branch;
+    }
 
-	/**
-	 * @param degreeRecognition The degreeRecognition to set.
-	 */
-	public void setDegreeRecognition(String degreeRecognition)
-	{
-		this.degreeRecognition = degreeRecognition;
-	}
+    /**
+     * @return Returns the degreeRecognition.
+     */
+    public String getDegreeRecognition() {
+        return degreeRecognition;
+    }
 
-	/**
-	 * @return Returns the equivalenceDate.
-	 */
-	public Date getEquivalenceDate()
-	{
-		return equivalenceDate;
-	}
+    /**
+     * @param degreeRecognition
+     *            The degreeRecognition to set.
+     */
+    public void setDegreeRecognition(String degreeRecognition) {
+        this.degreeRecognition = degreeRecognition;
+    }
 
-	/**
-	 * @param equivalenceDate The equivalenceDate to set.
-	 */
-	public void setEquivalenceDate(Date equivalenceDate)
-	{
-		this.equivalenceDate = equivalenceDate;
-	}
+    /**
+     * @return Returns the equivalenceDate.
+     */
+    public Date getEquivalenceDate() {
+        return equivalenceDate;
+    }
 
-	/**
-	 * @return Returns the equivalenceSchool.
-	 */
-	public String getEquivalenceSchool()
-	{
-		return equivalenceSchool;
-	}
+    /**
+     * @param equivalenceDate
+     *            The equivalenceDate to set.
+     */
+    public void setEquivalenceDate(Date equivalenceDate) {
+        this.equivalenceDate = equivalenceDate;
+    }
 
-	/**
-	 * @param equivalenceSchool The equivalenceSchool to set.
-	 */
-	public void setEquivalenceSchool(String equivalenceSchool)
-	{
-		this.equivalenceSchool = equivalenceSchool;
-	}
+    /**
+     * @return Returns the equivalenceSchool.
+     */
+    public String getEquivalenceSchool() {
+        return equivalenceSchool;
+    }
 
-	/**
-	 * @return Returns the specializationArea.
-	 */
-	public String getSpecializationArea()
-	{
-		return specializationArea;
-	}
+    /**
+     * @param equivalenceSchool
+     *            The equivalenceSchool to set.
+     */
+    public void setEquivalenceSchool(String equivalenceSchool) {
+        this.equivalenceSchool = equivalenceSchool;
+    }
 
-	/**
-	 * @param specializationArea The specializationArea to set.
-	 */
-	public void setSpecializationArea(String specializationArea)
-	{
-		this.specializationArea = specializationArea;
-	}
+    /**
+     * @return Returns the specializationArea.
+     */
+    public String getSpecializationArea() {
+        return specializationArea;
+    }
 
-	/**
-	 * @return Returns the qualificationDate.
-	 */
-	public Date getDate()
-	{
-		return date;
-	}
+    /**
+     * @param specializationArea
+     *            The specializationArea to set.
+     */
+    public void setSpecializationArea(String specializationArea) {
+        this.specializationArea = specializationArea;
+    }
 
-	/**
-	 * @param qualificationDate The qualificationDate to set.
-	 */
-	public void setDate(Date date)
-	{
-		this.date = date;
-	}
+    /**
+     * @return Returns the qualificationDate.
+     */
+    public Date getDate() {
+        return date;
+    }
 
-	/**
-	 * @param country The country to set.
-	 */
-	public void setCountry(ICountry country)
-	{
-		this.country = country;
-	}
+    /**
+     * @param qualificationDate
+     *            The qualificationDate to set.
+     */
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	/**
-	 * @return Returns the country.
-	 */
-	public ICountry getCountry()
-	{
-		return country;
-	}
+    /**
+     * @param country
+     *            The country to set.
+     */
+    public void setCountry(ICountry country) {
+        this.country = country;
+    }
 
-	/**
-	 * @return Returns the countryKey.
-	 */
-	public Integer getCountryKey()
-	{
-		return countryKey;
-	}
+    /**
+     * @return Returns the country.
+     */
+    public ICountry getCountry() {
+        return country;
+    }
 
-	/**
-	 * @param countryKey The countryKey to set.
-	 */
-	public void setCountryKey(Integer countryKey)
-	{
-		this.countryKey = countryKey;
-	}
+    /**
+     * @return Returns the countryKey.
+     */
+    public Integer getCountryKey() {
+        return countryKey;
+    }
+
+    /**
+     * @param countryKey
+     *            The countryKey to set.
+     */
+    public void setCountryKey(Integer countryKey) {
+        this.countryKey = countryKey;
+    }
 
 }

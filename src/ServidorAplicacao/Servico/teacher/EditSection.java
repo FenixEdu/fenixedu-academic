@@ -38,18 +38,15 @@ public class EditSection implements IService {
 
     //	this method reorders some sections but not the section that we are
     // editing
-    private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder,
-            ISection superiorSection, ISite site) throws FenixServiceException {
+    private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder, ISection superiorSection,
+            ISite site) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentSection persistentSection = persistentSuport
-                    .getIPersistentSection();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 
             List sectionsList = null;
-            sectionsList = persistentSection.readBySiteAndSection(site,
-                    superiorSection);
+            sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
 
             Iterator iterSections = sectionsList.iterator();
 
@@ -61,29 +58,25 @@ public class EditSection implements IService {
                 while (iterSections.hasNext()) {
 
                     ISection iterSection = (ISection) iterSections.next();
-                    int iterSectionOrder = iterSection.getSectionOrder()
-                            .intValue();
+                    int iterSectionOrder = iterSection.getSectionOrder().intValue();
 
                     if (iterSectionOrder > oldOrder.intValue()
                             && iterSectionOrder <= newOrder.intValue()) {
                         persistentSection.simpleLockWrite(iterSection);
-                        iterSection.setSectionOrder(new Integer(
-                                iterSectionOrder - 1));
+                        iterSection.setSectionOrder(new Integer(iterSectionOrder - 1));
                     }
                 }
             } else {
                 while (iterSections.hasNext()) {
                     ISection iterSection = (ISection) iterSections.next();
 
-                    int iterSectionOrder = iterSection.getSectionOrder()
-                            .intValue();
+                    int iterSectionOrder = iterSection.getSectionOrder().intValue();
 
                     if (iterSectionOrder >= newOrder.intValue()
                             && iterSectionOrder < oldOrder.intValue()) {
 
                         persistentSection.simpleLockWrite(iterSection);
-                        iterSection.setSectionOrder(new Integer(
-                                iterSectionOrder + 1));
+                        iterSection.setSectionOrder(new Integer(iterSectionOrder + 1));
                     }
                 }
             }
@@ -99,18 +92,15 @@ public class EditSection implements IService {
     /**
      * Executes the service.
      */
-    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode,
-            String newSectionName, Integer newOrder)
-            throws FenixServiceException {
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String newSectionName,
+            Integer newOrder) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
-            ISection iSection = (ISection) persistentSection.readByOID(
-                    Section.class, sectionCode);
+            ISection iSection = (ISection) persistentSection.readByOID(Section.class, sectionCode);
 
             if (iSection == null) {
                 throw new NonExistingServiceException();
@@ -118,18 +108,16 @@ public class EditSection implements IService {
             persistentSection.simpleLockWrite(iSection);
             iSection.setName(newSectionName);
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
 
-            ISite site = sp.getIPersistentSite().readByExecutionCourse(
-                    executionCourse);
+            ISite site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
 
             InfoSection infoSection = Cloner.copyISection2InfoSection(iSection);
             Integer oldOrder = infoSection.getSectionOrder();
 
             if (newOrder != oldOrder) {
-                newOrder = organizeSectionsOrder(newOrder, oldOrder, iSection
-                        .getSuperiorSection(), site);
+                newOrder = organizeSectionsOrder(newOrder, oldOrder, iSection.getSuperiorSection(), site);
             }
 
             //			persistentSection.lockWrite(iSection);

@@ -21,6 +21,7 @@ import ServidorPersistente.IPersistentObject;
  */
 public interface IPersistentCategory extends IPersistentObject {
 
-	public List readAll() throws ExcepcaoPersistencia;
-	public ICategory readCategoryByCode(String code) throws ExcepcaoPersistencia;
+    public List readAll() throws ExcepcaoPersistencia;
+
+    public ICategory readCategoryByCode(String code) throws ExcepcaoPersistencia;
 }

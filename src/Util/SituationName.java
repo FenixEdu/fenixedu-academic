@@ -58,20 +58,15 @@ public class SituationName extends FenixUtil {
 
     public static final int PENDENT_CONDICIONAL_CURRICULAR = 22;
 
-    public static final SituationName PENDENTE_OBJ = new SituationName(
-            SituationName.PENDENTE);
+    public static final SituationName PENDENTE_OBJ = new SituationName(SituationName.PENDENTE);
 
-    public static final SituationName ADMITIDO_OBJ = new SituationName(
-            SituationName.ADMITIDO);
+    public static final SituationName ADMITIDO_OBJ = new SituationName(SituationName.ADMITIDO);
 
-    public static final SituationName SUPLENTE_OBJ = new SituationName(
-            SituationName.SUPLENTE);
+    public static final SituationName SUPLENTE_OBJ = new SituationName(SituationName.SUPLENTE);
 
-    public static final SituationName NAO_ACEITE_OBJ = new SituationName(
-            SituationName.NAO_ACEITE);
+    public static final SituationName NAO_ACEITE_OBJ = new SituationName(SituationName.NAO_ACEITE);
 
-    public static final SituationName DESISTIU_OBJ = new SituationName(
-            SituationName.DESISTIU);
+    public static final SituationName DESISTIU_OBJ = new SituationName(SituationName.DESISTIU);
 
     public static final SituationName SUPRA_NUMERARIO_OBJ = new SituationName(
             SituationName.SUPRA_NUMERARIO);
@@ -82,8 +77,7 @@ public class SituationName extends FenixUtil {
     public static final SituationName DOCENTE_ENSINO_SUPERIOR_OBJ = new SituationName(
             SituationName.DOCENTE_ENSINO_SUPERIOR);
 
-    public static final SituationName PRE_CANDIDATO_OBJ = new SituationName(
-            SituationName.PRE_CANDIDATO);
+    public static final SituationName PRE_CANDIDATO_OBJ = new SituationName(SituationName.PRE_CANDIDATO);
 
     public static final SituationName FALTA_CERTIFICADO_OBJ = new SituationName(
             SituationName.FALTA_CERTIFICADO);
@@ -94,8 +88,7 @@ public class SituationName extends FenixUtil {
     public static final SituationName PENDENT_CONFIRMADO_OBJ = new SituationName(
             SituationName.PENDENT_CONFIRMADO);
 
-    public static final SituationName ANNULLED_OBJ = new SituationName(
-            SituationName.ANNULLED);
+    public static final SituationName ANNULLED_OBJ = new SituationName(SituationName.ANNULLED);
 
     public static final SituationName ADMITED_CONDICIONAL_CURRICULAR_OBJ = new SituationName(
             SituationName.ADMITED_CONDICIONAL_CURRICULAR);
@@ -118,8 +111,7 @@ public class SituationName extends FenixUtil {
     public static final SituationName ADMITED_SPECIALIZATION_OBJ = new SituationName(
             SituationName.ADMITED_SPECIALIZATION);
 
-    public static final SituationName ENROLLED_OBJ = new SituationName(
-            SituationName.ENROLLED);
+    public static final SituationName ENROLLED_OBJ = new SituationName(SituationName.ENROLLED);
 
     public static final SituationName PENDENT_CONDICIONAL_CURRICULAR_OBJ = new SituationName(
             SituationName.PENDENT_CONDICIONAL_CURRICULAR);
@@ -197,10 +189,8 @@ public class SituationName extends FenixUtil {
     public static boolean checkIfSubstitute(String situationName) {
         List substituteList = new ArrayList();
         substituteList.add(SituationName.SUPLENTE_STRING);
-        substituteList
-                .add(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING);
-        substituteList
-                .add(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING);
+        substituteList.add(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING);
+        substituteList.add(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING);
         substituteList.add(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING);
 
         return substituteList.contains(situationName);
@@ -222,8 +212,7 @@ public class SituationName extends FenixUtil {
         if (nomeSituacao.equals(SituationName.EXTRAORDINARIO_STRING))
             this.situationName = new Integer(SituationName.EXTRAORDINARIO);
         if (nomeSituacao.equals(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING))
-            this.situationName = new Integer(
-                    SituationName.DOCENTE_ENSINO_SUPERIOR);
+            this.situationName = new Integer(SituationName.DOCENTE_ENSINO_SUPERIOR);
         if (nomeSituacao.equals(SituationName.PRE_CANDIDATO_STRING))
             this.situationName = new Integer(SituationName.PRE_CANDIDATO);
         if (nomeSituacao.equals(SituationName.FALTA_CERTIFICADO_STRING))
@@ -235,37 +224,23 @@ public class SituationName extends FenixUtil {
         if (nomeSituacao.equals(SituationName.ANNULLED_STRING))
             this.situationName = new Integer(SituationName.ANNULLED);
         if (nomeSituacao.equals(SituationName.ADMITED_SPECIALIZATION_STRING))
-            this.situationName = new Integer(
-                    SituationName.ADMITED_SPECIALIZATION);
-        if (nomeSituacao
-                .equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING))
-            this.situationName = new Integer(
-                    SituationName.ADMITED_CONDICIONAL_CURRICULAR);
-        if (nomeSituacao
-                .equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING))
-            this.situationName = new Integer(
-                    SituationName.ADMITED_CONDICIONAL_FINALIST);
+            this.situationName = new Integer(SituationName.ADMITED_SPECIALIZATION);
+        if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING))
+            this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_CURRICULAR);
+        if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING))
+            this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_FINALIST);
         if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING))
-            this.situationName = new Integer(
-                    SituationName.ADMITED_CONDICIONAL_OTHER);
-        if (nomeSituacao
-                .equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
-            this.situationName = new Integer(
-                    SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR);
-        if (nomeSituacao
-                .equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
-            this.situationName = new Integer(
-                    SituationName.SUBSTITUTE_CONDICIONAL_FINALIST);
-        if (nomeSituacao
-                .equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))
-            this.situationName = new Integer(
-                    SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
+            this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_OTHER);
+        if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING))
+            this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR);
+        if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING))
+            this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST);
+        if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING))
+            this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
         if (nomeSituacao.equals(SituationName.ENROLLED_STRING))
             this.situationName = new Integer(SituationName.ENROLLED);
-        if (nomeSituacao
-                .equals(SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING))
-            this.situationName = new Integer(
-                    SituationName.PENDENT_CONDICIONAL_CURRICULAR);
+        if (nomeSituacao.equals(SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING))
+            this.situationName = new Integer(SituationName.PENDENT_CONDICIONAL_CURRICULAR);
 
     }
 
@@ -318,46 +293,33 @@ public class SituationName extends FenixUtil {
         return "ERRO!"; // Nunca e atingido
     }
 
-    public static ArrayList toArrayList() {
-        ArrayList result = new ArrayList();
+    public static List toArrayList() {
+        List result = new ArrayList();
         result.add(new LabelValueBean(SituationName.DEFAULT, null));
-        result.add(new LabelValueBean(SituationName.PENDENTE_STRING,
-                SituationName.PENDENTE_STRING));
-        result.add(new LabelValueBean(SituationName.ADMITIDO_STRING,
-                SituationName.ADMITIDO_STRING));
-        result.add(new LabelValueBean(
-                SituationName.ADMITED_SPECIALIZATION_STRING,
+        result.add(new LabelValueBean(SituationName.PENDENTE_STRING, SituationName.PENDENTE_STRING));
+        result.add(new LabelValueBean(SituationName.ADMITIDO_STRING, SituationName.ADMITIDO_STRING));
+        result.add(new LabelValueBean(SituationName.ADMITED_SPECIALIZATION_STRING,
                 SituationName.ADMITED_SPECIALIZATION_STRING));
-        result.add(new LabelValueBean(
-                SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING,
+        result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING,
                 SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING));
-        result.add(new LabelValueBean(
-                SituationName.ADMITED_CONDICIONAL_FINALIST_STRING,
+        result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING,
                 SituationName.ADMITED_CONDICIONAL_FINALIST_STRING));
-        result.add(new LabelValueBean(
-                SituationName.ADMITED_CONDICIONAL_OTHER_STRING,
+        result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_OTHER_STRING,
                 SituationName.ADMITED_CONDICIONAL_OTHER_STRING));
-        result.add(new LabelValueBean(SituationName.SUPLENTE_STRING,
-                SituationName.SUPLENTE_STRING));
-        result.add(new LabelValueBean(
-                SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING,
+        result.add(new LabelValueBean(SituationName.SUPLENTE_STRING, SituationName.SUPLENTE_STRING));
+        result.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING,
                 SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING));
-        result.add(new LabelValueBean(
-                SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING,
+        result.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING,
                 SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING));
-        result.add(new LabelValueBean(
-                SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING,
+        result.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING,
                 SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING));
-        result.add(new LabelValueBean(SituationName.NAO_ACEITE_STRING,
-                SituationName.NAO_ACEITE_STRING));
-        result.add(new LabelValueBean(SituationName.DESISTIU_STRING,
-                SituationName.DESISTIU_STRING));
+        result.add(new LabelValueBean(SituationName.NAO_ACEITE_STRING, SituationName.NAO_ACEITE_STRING));
+        result.add(new LabelValueBean(SituationName.DESISTIU_STRING, SituationName.DESISTIU_STRING));
         result.add(new LabelValueBean(SituationName.SUPRA_NUMERARIO_STRING,
                 SituationName.SUPRA_NUMERARIO_STRING));
         result.add(new LabelValueBean(SituationName.EXTRAORDINARIO_STRING,
                 SituationName.EXTRAORDINARIO_STRING));
-        result.add(new LabelValueBean(
-                SituationName.DOCENTE_ENSINO_SUPERIOR_STRING,
+        result.add(new LabelValueBean(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING,
                 SituationName.DOCENTE_ENSINO_SUPERIOR_STRING));
         result.add(new LabelValueBean(SituationName.PRE_CANDIDATO_STRING,
                 SituationName.PRE_CANDIDATO_STRING));
@@ -367,12 +329,9 @@ public class SituationName extends FenixUtil {
                 SituationName.PENDENTE_CONFIRMADO_STRING));
         result.add(new LabelValueBean(SituationName.PENDENTE_COM_DADOS_STRING,
                 SituationName.PENDENTE_COM_DADOS_STRING));
-        result.add(new LabelValueBean(SituationName.ANNULLED_STRING,
-                SituationName.ANNULLED_STRING));
-        result.add(new LabelValueBean(SituationName.ENROLLED_STRING,
-                SituationName.ENROLLED_STRING));
-        result.add(new LabelValueBean(
-                SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING,
+        result.add(new LabelValueBean(SituationName.ANNULLED_STRING, SituationName.ANNULLED_STRING));
+        result.add(new LabelValueBean(SituationName.ENROLLED_STRING, SituationName.ENROLLED_STRING));
+        result.add(new LabelValueBean(SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING,
                 SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING));
 
         return result;

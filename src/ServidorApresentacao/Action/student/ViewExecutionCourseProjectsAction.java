@@ -28,48 +28,48 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author asnr & scpo
- *
+ *  
  */
 public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		String executionCourseCodeString = request.getParameter("executionCourseCode");
+        String executionCourseCodeString = request.getParameter("executionCourseCode");
 
-		if (executionCourseCodeString.equals("")) {
-			ActionErrors actionErrors1 = new ActionErrors();
-			ActionError error1 = null;
-			// Create an ACTION_ERROR 
-			error1 = new ActionError("errors.notSelected.executionCourse");
-			actionErrors1.add("errors.notSelected.executionCourse", error1);
-			saveErrors(request, actionErrors1);
-			return mapping.findForward("insucess");
-		}
-		Integer executionCourseCode = new Integer(executionCourseCodeString);
+        if (executionCourseCodeString.equals("")) {
+            ActionErrors actionErrors1 = new ActionErrors();
+            ActionError error1 = null;
+            // Create an ACTION_ERROR
+            error1 = new ActionError("errors.notSelected.executionCourse");
+            actionErrors1.add("errors.notSelected.executionCourse", error1);
+            saveErrors(request, actionErrors1);
+            return mapping.findForward("insucess");
+        }
+        Integer executionCourseCode = new Integer(executionCourseCodeString);
 
-		ISiteComponent viewProjectsComponent;
-		Object[] args = { executionCourseCode };
-		try {
-			viewProjectsComponent = (InfoSiteProjects) ServiceUtils.executeService(userView, "ReadExecutionCourseProjects", args);
+        ISiteComponent viewProjectsComponent;
+        Object[] args = { executionCourseCode };
+        try {
+            viewProjectsComponent = (InfoSiteProjects) ServiceUtils.executeService(userView,
+                    "ReadExecutionCourseProjects", args);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-		InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
-		List infoGroupPropertiesList = new ArrayList();
-		if (infoSiteProjects != null) 
-			infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();
+        InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
+        List infoGroupPropertiesList = new ArrayList();
+        if (infoSiteProjects != null)
+            infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();
 
-		
-		request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
+        request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
 
-		return mapping.findForward("sucess");
+        return mapping.findForward("sucess");
 
-	}
+    }
 
 }

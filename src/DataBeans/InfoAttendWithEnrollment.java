@@ -10,56 +10,44 @@ import java.util.Map;
 /**
  * @author João Mota
  */
-public class InfoAttendWithEnrollment extends InfoObject implements
-        Serializable
-{
+public class InfoAttendWithEnrollment extends InfoObject implements Serializable {
     protected InfoStudent _aluno;
 
     protected InfoExecutionCourse _disciplinaExecucao;
 
     protected Integer enrollments;
-    
+
     protected InfoEnrolment infoEnrolment;
-    
+
     protected Map infoShifts;
 
-   
-    public InfoAttendWithEnrollment()
-    {
+    public InfoAttendWithEnrollment() {
     }
 
-    public InfoAttendWithEnrollment(InfoStudent aluno,
-            InfoExecutionCourse disciplinaExecucao)
-    {
+    public InfoAttendWithEnrollment(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao) {
         setAluno(aluno);
         setDisciplinaExecucao(disciplinaExecucao);
     }
 
-    public InfoStudent getAluno()
-    {
+    public InfoStudent getAluno() {
         return _aluno;
     }
 
-    public void setAluno(InfoStudent aluno)
-    {
+    public void setAluno(InfoStudent aluno) {
         _aluno = aluno;
     }
 
-    public InfoExecutionCourse getDisciplinaExecucao()
-    {
+    public InfoExecutionCourse getDisciplinaExecucao() {
         return _disciplinaExecucao;
     }
 
-    public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao)
-    {
+    public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
         _disciplinaExecucao = disciplinaExecucao;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof InfoFrequenta)
-        {
+        if (obj instanceof InfoFrequenta) {
             InfoFrequenta frequenta = (InfoFrequenta) obj;
             resultado = //getCodigoInterno().equals(((Frequenta)obj).getCodigoInterno());
             getAluno().equals(frequenta.getAluno())
@@ -71,8 +59,7 @@ public class InfoAttendWithEnrollment extends InfoObject implements
     /**
      * @return Returns the enrollments.
      */
-    public Integer getEnrollments()
-    {
+    public Integer getEnrollments() {
         return enrollments;
     }
 
@@ -80,34 +67,37 @@ public class InfoAttendWithEnrollment extends InfoObject implements
      * @param enrollments
      *            The enrollments to set.
      */
-    public void setEnrollments(Integer enrollments)
-    {
+    public void setEnrollments(Integer enrollments) {
         this.enrollments = enrollments;
     }
+
     /**
      * @return Returns the infoEnrolment.
      */
-    public InfoEnrolment getInfoEnrolment()
-    {
+    public InfoEnrolment getInfoEnrolment() {
         return infoEnrolment;
     }
+
     /**
-     * @param infoEnrolment The infoEnrolment to set.
+     * @param infoEnrolment
+     *            The infoEnrolment to set.
      */
-    public void setInfoEnrolment(InfoEnrolment infoEnrolment)
-    {
+    public void setInfoEnrolment(InfoEnrolment infoEnrolment) {
         this.infoEnrolment = infoEnrolment;
     }
-	/**
-	 * @return Returns the infoShifts.
-	 */
-	public Map getInfoShifts() {
-		return infoShifts;
-	}
-	/**
-	 * @param infoShifts The infoShifts to set.
-	 */
-	public void setInfoShifts(Map infoShifts) {
-		this.infoShifts = infoShifts;
-	}
+
+    /**
+     * @return Returns the infoShifts.
+     */
+    public Map getInfoShifts() {
+        return infoShifts;
+    }
+
+    /**
+     * @param infoShifts
+     *            The infoShifts to set.
+     */
+    public void setInfoShifts(Map infoShifts) {
+        this.infoShifts = infoShifts;
+    }
 }

@@ -7,13 +7,15 @@
 package Dominio;
 
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 public interface ITurmaTurno extends IDomainObject {
-  public ITurma getTurma();
-  public ITurno getTurno();
+    public ITurma getTurma();
 
-  public void setTurma(ITurma turma);
-  public void setTurno(ITurno turno);
+    public ITurno getTurno();
+
+    public void setTurma(ITurma turma);
+
+    public void setTurno(ITurno turno);
 }

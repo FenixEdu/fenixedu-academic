@@ -3,6 +3,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionDegree;
 import Dominio.Campus;
 import Dominio.CursoExecucao;
@@ -10,12 +11,11 @@ import Dominio.ExecutionYear;
 import Dominio.ICampus;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -25,67 +25,44 @@ import ServidorPersistente.places.campus.IPersistentCampus;
 /**
  * @author lmac1
  */
-public class EditExecutionDegree implements IServico {
+public class EditExecutionDegree implements IService {
 
-    private static EditExecutionDegree service = new EditExecutionDegree();
+    public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
 
-    public static EditExecutionDegree getService() {
-        return service;
-    }
-
-    private EditExecutionDegree() {
-    }
-
-    public final String getNome() {
-        return "EditExecutionDegree";
-    }
-
-    public void run(InfoExecutionDegree infoExecutionDegree)
-            throws FenixServiceException {
-
-        ICursoExecucaoPersistente persistentExecutionDegree = null;
+        IPersistentExecutionDegree persistentExecutionDegree = null;
         IExecutionYear executionYear = null;
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            persistentExecutionDegree = persistentSuport
-                    .getICursoExecucaoPersistente();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            persistentExecutionDegree = persistentSuport.getIPersistentExecutionDegree();
 
-            ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, infoExecutionDegree
-                            .getIdInternal());
+            ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                    CursoExecucao.class, infoExecutionDegree.getIdInternal());
 
-            IPersistentCampus campusDAO = persistentSuport
-                    .getIPersistentCampus();
+            IPersistentCampus campusDAO = persistentSuport.getIPersistentCampus();
 
-            ICampus campus = (ICampus) campusDAO.readByOID(Campus.class,
-                    infoExecutionDegree.getInfoCampus().getIdInternal());
+            ICampus campus = (ICampus) campusDAO.readByOID(Campus.class, infoExecutionDegree
+                    .getInfoCampus().getIdInternal());
             if (campus == null) {
-                throw new NonExistingServiceException(
-                        "message.nonExistingCampus", null);
+                throw new NonExistingServiceException("message.nonExistingCampus", null);
             }
 
             if (oldExecutionDegree == null) {
-                throw new NonExistingServiceException(
-                        "message.nonExistingExecutionDegree", null);
+                throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
             }
             IPersistentExecutionYear persistentExecutionYear = persistentSuport
                     .getIPersistentExecutionYear();
 
-            executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
-                    ExecutionYear.class, infoExecutionDegree
-                            .getInfoExecutionYear().getIdInternal());
+            executionYear = (IExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
+                    infoExecutionDegree.getInfoExecutionYear().getIdInternal());
 
             if (executionYear == null) {
-                throw new NonExistingServiceException(
-                        "message.non.existing.execution.year", null);
+                throw new NonExistingServiceException("message.non.existing.execution.year", null);
             }
             persistentExecutionDegree.simpleLockWrite(oldExecutionDegree);
             oldExecutionDegree.setExecutionYear(executionYear);
 
-            oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree
-                    .getTemporaryExamMap());
+            oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
 
             oldExecutionDegree.setCampus(campus);
 

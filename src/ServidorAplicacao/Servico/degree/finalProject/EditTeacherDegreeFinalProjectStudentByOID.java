@@ -32,8 +32,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class EditTeacherDegreeFinalProjectStudentByOID extends
-        EditDomainObjectService {
+public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectService {
     /**
      * @author jpvl
      */
@@ -65,8 +64,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends
         /**
          * @param infoTeacherDegreeFinalProjectStudentList
          */
-        public StudentPercentageExceed(
-                List infoTeacherDegreeFinalProjectStudentList) {
+        public StudentPercentageExceed(List infoTeacherDegreeFinalProjectStudentList) {
             this.infoTeacherDegreeFinalProjectStudentList = infoTeacherDegreeFinalProjectStudentList;
         }
 
@@ -104,28 +102,23 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
      *      DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
      */
-    protected void doBeforeLock(IDomainObject domainObjectToLock,
-            InfoObject infoObject, ISuportePersistente sp)
-            throws FenixServiceException {
+    protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
+            ISuportePersistente sp) throws FenixServiceException {
         try {
             InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
 
-            InfoStudent infoStudent = infoTeacherDegreeFinalProjectStudent
-                    .getInfoStudent();
+            InfoStudent infoStudent = infoTeacherDegreeFinalProjectStudent.getInfoStudent();
 
             IPersistentStudent studentDAO = sp.getIPersistentStudent();
-            IPersistentExecutionPeriod executionPeriodDAO = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-            IStudent student = studentDAO.readStudentByNumberAndDegreeType(
-                    infoStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+            IStudent student = studentDAO.readStudentByNumberAndDegreeType(infoStudent.getNumber(),
+                    TipoCurso.LICENCIATURA_OBJ);
 
-            IExecutionPeriod executionPeriod = new ExecutionPeriod(
-                    infoTeacherDegreeFinalProjectStudent
-                            .getInfoExecutionPeriod().getIdInternal());
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(
-                    ExecutionPeriod.class, infoTeacherDegreeFinalProjectStudent
-                            .getInfoExecutionPeriod().getIdInternal());
+            IExecutionPeriod executionPeriod = new ExecutionPeriod(infoTeacherDegreeFinalProjectStudent
+                    .getInfoExecutionPeriod().getIdInternal());
+            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+                    infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
 
             if (student == null) {
                 throw new StudentNotFoundServiceException();
@@ -148,27 +141,23 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends
                 ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) iterator
                         .next();
 
-                if (teacherDegreeFinalProjectStudent.getTeacher()
-                        .getIdInternal().intValue() != infoTeacherDegreeFinalProjectStudent
+                if (teacherDegreeFinalProjectStudent.getTeacher().getIdInternal().intValue() != infoTeacherDegreeFinalProjectStudent
                         .getInfoTeacher().getIdInternal().intValue()) {
-                    percentage += teacherDegreeFinalProjectStudent
-                            .getPercentage().doubleValue();
+                    percentage += teacherDegreeFinalProjectStudent.getPercentage().doubleValue();
                 }
             }
             if (percentage > 100) {
-                List infoTeacherDegreeFinalProjectStudentList = (List) CollectionUtils
-                        .collect(teacherDegreeFinalProjectStudentList,
-                                new Transformer() {
+                List infoTeacherDegreeFinalProjectStudentList = (List) CollectionUtils.collect(
+                        teacherDegreeFinalProjectStudentList, new Transformer() {
 
-                                    public Object transform(Object input) {
-                                        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) input;
-                                        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = Cloner
-                                                .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(teacherDegreeFinalProjectStudent);
-                                        return infoTeacherDegreeFinalProjectStudent;
-                                    }
-                                });
-                throw new StudentPercentageExceed(
-                        infoTeacherDegreeFinalProjectStudentList);
+                            public Object transform(Object input) {
+                                ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) input;
+                                InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = Cloner
+                                        .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(teacherDegreeFinalProjectStudent);
+                                return infoTeacherDegreeFinalProjectStudent;
+                            }
+                        });
+                throw new StudentPercentageExceed(infoTeacherDegreeFinalProjectStudentList);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
@@ -199,15 +188,14 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(Dominio.IDomainObject,
      *      ServidorPersistente.ISuportePersistente)
      */
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject,
-            ISuportePersistente sp) throws ExcepcaoPersistencia,
-            FenixServiceException {
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+            throws ExcepcaoPersistencia, FenixServiceException {
         ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) domainObject;
         IStudent student = teacherDegreeFinalProjectStudent.getStudent();
         IPersistentStudent studentDAO = sp.getIPersistentStudent();
 
-        student = studentDAO.readStudentByNumberAndDegreeType(student
-                .getNumber(), TipoCurso.LICENCIATURA_OBJ);
+        student = studentDAO.readStudentByNumberAndDegreeType(student.getNumber(),
+                TipoCurso.LICENCIATURA_OBJ);
         if (student == null) {
             throw new StudentNotFoundServiceException();
         }

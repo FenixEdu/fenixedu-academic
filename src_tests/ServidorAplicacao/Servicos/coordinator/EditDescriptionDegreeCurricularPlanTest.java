@@ -15,66 +15,54 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Tânia Pousão Create on 7/Nov/2003
  */
-public class EditDescriptionDegreeCurricularPlanTest extends ServiceTestCase
-{
-    public EditDescriptionDegreeCurricularPlanTest(String testName)
-    {
+public class EditDescriptionDegreeCurricularPlanTest extends ServiceTestCase {
+    public EditDescriptionDegreeCurricularPlanTest(String testName) {
         super(testName);
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "EditDescriptionDegreeCurricularPlan";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/coordinator/testDataSetDegreeSite.xml";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getSecondAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC2", "pass", getApplication()};
+    protected String[] getSecondAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC2", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getThridAuthenticatedAndAuthorizedUser()
-    {
-        String[] args = { "userC3", "pass", getApplication()};
+    protected String[] getThridAuthenticatedAndAuthorizedUser() {
+        String[] args = { "userC3", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndAlreadyAuthorizedUser()
-    {
-        String[] args = { "userT", "pass", getApplication()};
+    protected String[] getAuthenticatedAndAlreadyAuthorizedUser() {
+        String[] args = { "userT", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = { "userE", "pass", getApplication()};
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "userE", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = { "user", "pass", getApplication()};
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    public InfoDegreeCurricularPlan getDescriptionCurricularPlanForm(Integer infoDegreeCurricularPlanId)
-    {
+    public InfoDegreeCurricularPlan getDescriptionCurricularPlanForm(Integer infoDegreeCurricularPlanId) {
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         infoDegreeCurricularPlan.setIdInternal(infoDegreeCurricularPlanId);
 
@@ -84,58 +72,56 @@ public class EditDescriptionDegreeCurricularPlanTest extends ServiceTestCase
         return infoDegreeCurricularPlan;
     }
 
-    public void testSuccessfull()
-    {
-        try
-        {
+    public void testSuccessfull() {
+        try {
             //Service Argument
             Integer infoExecutionDegreeCode = new Integer(10);
             Integer infoDegreeCurricularPlanCode = new Integer(10);
-                        
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-                getDescriptionCurricularPlanForm(infoDegreeCurricularPlanCode);
+
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = getDescriptionCurricularPlanForm(infoDegreeCurricularPlanCode);
 
             Object[] args = { infoExecutionDegreeCode, infoDegreeCurricularPlan };
 
             //Valid user
             String[] argsUser = getAuthenticatedAndAuthorizedUser();
-            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsUser);
+            IUserView id = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+                    argsUser);
 
             //Service
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(id, getNameOfServiceToBeTested(), args);
-            } catch (FenixServiceException e)
-            {
+            } catch (FenixServiceException e) {
                 e.printStackTrace();
                 fail("Reading a degree information" + e);
             }
 
             //Read the change in degree curricular plan
             SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
-            
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+                    .getIPersistentDegreeCurricularPlan();
+
             IDegreeCurricularPlan degreeCurricularPlanAck;
-            
+
             sp.iniciarTransaccao();
-			degreeCurricularPlanAck = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlanCode);
+            degreeCurricularPlanAck = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+                    DegreeCurricularPlan.class, infoDegreeCurricularPlanCode);
             sp.confirmarTransaccao();
 
-            assertEquals(degreeCurricularPlanAck.getDescription(), infoDegreeCurricularPlan.getDescription());
-            assertEquals(degreeCurricularPlanAck.getDescriptionEn(), infoDegreeCurricularPlan.getDescriptionEn());
-                        
+            assertEquals(degreeCurricularPlanAck.getDescription(), infoDegreeCurricularPlan
+                    .getDescription());
+            assertEquals(degreeCurricularPlanAck.getDescriptionEn(), infoDegreeCurricularPlan
+                    .getDescriptionEn());
+
             assertNotNull(degreeCurricularPlanAck.getDegree());
             assertEquals(new Integer(10), degreeCurricularPlanAck.getDegree().getIdInternal());
 
-            System.out.println(
-                "EditDescriptionDegreeCurricularPlanTest was SUCCESSFULY runned by service: testSuccessfull");
+            System.out
+                    .println("EditDescriptionDegreeCurricularPlanTest was SUCCESSFULY runned by service: testSuccessfull");
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             fail("Reading a degree information" + e);
         }

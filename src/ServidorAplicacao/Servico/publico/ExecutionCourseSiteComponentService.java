@@ -33,31 +33,27 @@ public class ExecutionCourseSiteComponentService implements IService {
 
     }
 
-    public Object run(ISiteComponent commonComponent,
-            ISiteComponent bodyComponent, Integer infoSiteCode,
-            Integer infoExecutionCourseCode, Integer sectionIndex,
+    public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
+            Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException {
         ExecutionCourseSiteView siteView = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
 
             ISite site = null;
 
             if (infoSiteCode != null) {
 
-                site = (ISite) persistentSite.readByOID(Site.class,
-                        infoSiteCode);
+                site = (ISite) persistentSite.readByOID(Site.class, infoSiteCode);
                 if (site == null) {
                     throw new NonExistingServiceException();
                 }
             } else {
                 IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class,
-                                infoExecutionCourseCode);
+                        .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
                 if (executionCourse == null) {
                     throw new FenixServiceException();
                 }
@@ -67,13 +63,10 @@ public class ExecutionCourseSiteComponentService implements IService {
             if (site != null) {
                 ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder
                         .getInstance();
-                commonComponent = componentBuilder.getComponent(
-                        commonComponent, site, null, null, null);
-                bodyComponent = componentBuilder
-                        .getComponent(bodyComponent, site, commonComponent,
-                                sectionIndex, curricularCourseId);
-                siteView = new ExecutionCourseSiteView(commonComponent,
-                        bodyComponent);
+                commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
+                bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent,
+                        sectionIndex, curricularCourseId);
+                siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
             }
         } catch (ExcepcaoPersistencia e) {
 

@@ -25,47 +25,34 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		super.execute(mapping, form, request, response);
+        super.execute(mapping, form, request, response);
 
-		HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 
-		if (session != null) {
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) this
-					.servlet
-					.getServletContext()
-					.getAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+        if (session != null) {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) this.servlet
+                    .getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-			Object[] args =	{ infoExecutionPeriod };
-			List infoRoomExamsMaps;
-			try {
-				infoRoomExamsMaps =
-					(List) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadAllRoomsExamsMap",
-						args);
-			} catch (NonExistingServiceException e) {
-				throw new NonExistingActionException(e);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			request.setAttribute(SessionConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
+            Object[] args = { infoExecutionPeriod };
+            List infoRoomExamsMaps;
+            try {
+                infoRoomExamsMaps = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadAllRoomsExamsMap", args);
+            } catch (NonExistingServiceException e) {
+                throw new NonExistingActionException(e);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
+            request.setAttribute(SessionConstants.INFO_EXAMS_MAP_LIST, infoRoomExamsMaps);
 
-			return mapping.findForward("Sucess");
-		}
-			throw new FenixActionException();
-		
+            return mapping.findForward("Sucess");
+        }
+        throw new FenixActionException();
 
-	}
+    }
 }

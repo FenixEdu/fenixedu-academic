@@ -1,12 +1,10 @@
 package Dominio;
 
-
 /**
- * @author Tânia Pousão
- * Create on 10/Nov/2003
+ * @author Tânia Pousão Create on 10/Nov/2003
  */
 public interface ICampus extends IDomainObject {
-	public String getName();
+    public String getName();
 
-	public void setName(String name);
+    public void setName(String name);
 }

@@ -51,8 +51,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments)
-            throws ExcepcaoPersistencia {
+    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
 
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
@@ -75,20 +74,17 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
                 String ids[] = (String[]) arguments[1];
 
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(
-                        id.getUtilizador());
+                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
                 for (int i = 0; i < ids.length; i++) {
 
                     IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
                             .getIPersistentMasterDegreeCandidate().readByOID(
-                                    MasterDegreeCandidate.class,
-                                    new Integer(ids[i]));
+                                    MasterDegreeCandidate.class, new Integer(ids[i]));
 
                     //modified by Tânia Pousão
                     ICoordinator coordinator = sp.getIPersistentCoordinator()
-                            .readCoordinatorByTeacherAndExecutionDegree(
-                                    teacher,
+                            .readCoordinatorByTeacherAndExecutionDegree(teacher,
                                     masterDegreeCandidate.getExecutionDegree());
                     if (coordinator == null) {
                         return false;
@@ -118,14 +114,12 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView userView = getRemoteUser(request);
-        if ((userView != null && userView.getRoles() != null && !containsRole(userView
-                .getRoles()))
-                || (userView != null && userView.getRoles() != null && !hasPrivilege(
-                        userView, getServiceCallArguments(request)))
-                || (userView == null) || (userView.getRoles() == null)) {
+        if ((userView != null && userView.getRoles() != null && !containsRole(userView.getRoles()))
+                || (userView != null && userView.getRoles() != null && !hasPrivilege(userView,
+                        getServiceCallArguments(request))) || (userView == null)
+                || (userView.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
 

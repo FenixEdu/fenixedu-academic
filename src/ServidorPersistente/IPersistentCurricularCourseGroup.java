@@ -24,11 +24,11 @@ public interface IPersistentCurricularCourseGroup extends IPersistentObject {
 
     public List readByBranch(IBranch branch) throws ExcepcaoPersistencia;
 
-    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(IBranch branch, ICurricularCourse curricularCourse,
-            AreaType areaType) throws ExcepcaoPersistencia;
+    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(IBranch branch,
+            ICurricularCourse curricularCourse, AreaType areaType) throws ExcepcaoPersistencia;
 
-    public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(IBranch branch, IScientificArea scientificArea,
-            AreaType areaType) throws ExcepcaoPersistencia;
+    public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(IBranch branch,
+            IScientificArea scientificArea, AreaType areaType) throws ExcepcaoPersistencia;
 
     public List readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(
             IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;

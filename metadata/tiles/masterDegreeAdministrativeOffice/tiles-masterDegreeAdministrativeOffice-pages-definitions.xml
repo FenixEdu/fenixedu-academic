@@ -67,6 +67,38 @@
 		<put name="body" value="/posGraduacao/externalPerson/insertExternalPerson_error.jsp"/>
 	</definition>
 	
+	<definition name="df.page.editExternalPerson" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/editExternalPerson.jsp"/>
+	</definition>
+	
+	<definition name="df.page.editExternalPerson_Success" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/editExternalPerson_success.jsp"/>
+	</definition>
+	
+	<definition name="df.page.editExternalPerson_Error" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/editExternalPerson_error.jsp"/>
+	</definition>
+	
+	<definition name="df.page.viewExternalPerson" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/viewExternalPerson.jsp"/>
+	</definition>
+	
+	<definition name="df.page.visualizeExternalPersons" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/visualizeExternalPersons.jsp"/>
+	</definition>
+	
+	<definition name="df.page.findExternalPerson" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/findExternalPerson.jsp"/>
+	</definition>
+	
+	<definition name="df.page.showExternalPersons" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/showExternalPersons.jsp"/>
+	</definition>
+	
+	<definition name="df.page.showExternalPersons_Error" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
+		<put name="body" value="/posGraduacao/externalPerson/showExternalPersons_error.jsp"/>
+	</definition>
+	
 	<definition name="df.page.insertWorkLocation" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
 		<put name="body" value="/posGraduacao/externalPerson/insertWorkLocation.jsp"/>
 	</definition>
@@ -114,9 +146,46 @@
 	<definition name="studentsGratuityList" extends="definition.masterDegreeAdministrativeOffice.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/studentsGratuityList.jsp"/>
 	</definition>
-
-
-
+	<definition name="chooseStudentForStudentSituation" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/chooseStudentForStudentSituation.jsp"/>
+	</definition>
+	<definition name="studentSituation" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/studentSituation.jsp"/>
+	</definition>
+	<definition name="chooseContributorForPayGratuity" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/chooseContributorForPayGratuity.jsp"/>
+	</definition>
+	<definition name="confirmPayment" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/confirmPayment.jsp"/>
+	</definition>
+	<definition name="paymentSuccess" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/payment_success.jsp"/>
+	</definition>
+	<definition name="gratuitySituationDetails" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/gratuitySituationDetails.jsp"/>
+	</definition>
+	<definition name="chooseContributorForCreateGuideFromTransactions" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/chooseContributorForCreateGuideFromTransactions.jsp"/>
+	</definition>	
+	<definition name="confirmCreateGuideFromTransactions" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/confirmCreateGuideFromTransactions.jsp"/>
+	</definition>
+	<definition name="createGuideFromTransactionsSuccess" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/createGuideFromTransactions_success.jsp"/>
+	</definition>
+	<definition name="chooseExecutionYear" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/chooseExecutionYear.jsp"/>
+	</definition>
+	<definition name="defineInsuranceValue" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/defineInsuranceValue.jsp"/>
+	</definition>
+	<definition name="defineInsuranceValueSuccess" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/defineInsuranceValue_success.jsp"/>
+	</definition>
+	<definition name="showSibsPaymentFileEntries" extends="definition.masterDegreeAdministrativeOffice.gratuity">
+		<put name="body" value="/posGraduacao/gratuity/showSibsPaymentFileEntries.jsp"/>
+	</definition>
+					
  	<!-- ****************** Enrollment Without Rules **************************** -->	
 	<definition name="df.page.prepareEnrollmentChooseStudentWithoutRules" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/prepareEnrollmentChooseStudentAndYearWithoutRules.jsp"/>
@@ -133,8 +202,15 @@
 		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/showCurricularCourseToEnroll.jsp"/>
 	</definition>	
+		
+	<!-- ************* Certificates ************* -->
+	<definition name="df.page.chooseStudentenCurricularPlanForCertificate" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlan.jsp"/>
+	</definition>
 	
-
+	<definition name="df.page.chooseStudentenCurricularPlanForDeclaration" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
+		<put name="body" value="/posGraduacao/certificate/chooseStudentCurricularPlan.jsp"/>
+	</definition>
 
 
 </tiles-definitions>

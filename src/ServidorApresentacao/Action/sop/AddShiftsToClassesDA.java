@@ -28,85 +28,68 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
- *
- * 30/Jun/2003
- * fenix-branch
- * ServidorApresentacao.Action.sop
  * 
+ * 30/Jun/2003 fenix-branch ServidorApresentacao.Action.sop
+ *  
  */
-public class AddShiftsToClassesDA
-	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+public class AddShiftsToClassesDA extends
+        FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
-	public ActionForward showClasses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
+    public ActionForward showClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
 
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			//DynaActionForm shiftForm = (DynaActionForm) form;
+            //DynaActionForm shiftForm = (DynaActionForm) form;
 
-			//Integer shiftOID = new Integer((String) shiftForm.get("shiftOID"));
-			Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
-			Object serviceArgs[] = { shiftOID };
-			SiteView siteView = null;
-			try {
-				siteView =
-					(SiteView) ServiceUtils.executeService(
-						userView,
-						"ReadAvailableClassesForShift",
-						serviceArgs);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
+            //Integer shiftOID = new Integer((String)
+            // shiftForm.get("shiftOID"));
+            Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+            Object serviceArgs[] = { shiftOID };
+            SiteView siteView = null;
+            try {
+                siteView = (SiteView) ServiceUtils.executeService(userView,
+                        "ReadAvailableClassesForShift", serviceArgs);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
 
-			Collections.sort(
-				((InfoSiteClassesComponent) siteView.getComponent())
-					.getInfoClasses(),
-				new BeanComparator("nome"));
+            Collections.sort(((InfoSiteClassesComponent) siteView.getComponent()).getInfoClasses(),
+                    new BeanComparator("nome"));
 
-			request.setAttribute("siteView", siteView);
+            request.setAttribute("siteView", siteView);
 
-			return mapping.findForward("showClasses");
-		} 
-			throw new FenixActionException();
-		
-	}
-	public ActionForward addShiftToClasses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession sessao = request.getSession(false);
-		if (sessao != null) {
-			DynaActionForm classesForm = (DynaActionForm) form;
-			IUserView userView =
-				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+            return mapping.findForward("showClasses");
+        }
+        throw new FenixActionException();
 
-			String[] classesList = (String[]) classesForm.get("classesList");
-			//InfoShift infoShift = (InfoShift) sessao.getAttribute("infoTurno");
-			//Integer keyShift = infoShift.getIdInternal();
-			Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
-			Object argsAdicionarAula[] = { shiftOID, classesList };
+    }
 
-			try {
-				ServiceUtils.executeService(
-					userView,
-					"AddShiftToClasses",
-					argsAdicionarAula);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
+    public ActionForward addShiftToClasses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+        HttpSession sessao = request.getSession(false);
+        if (sessao != null) {
+            DynaActionForm classesForm = (DynaActionForm) form;
+            IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
-			return mapping.findForward("sucess");
-		} 
-			throw new FenixActionException();
-		
-	}
+            String[] classesList = (String[]) classesForm.get("classesList");
+            //InfoShift infoShift = (InfoShift)
+            // sessao.getAttribute("infoTurno");
+            //Integer keyShift = infoShift.getIdInternal();
+            Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+            Object argsAdicionarAula[] = { shiftOID, classesList };
+
+            try {
+                ServiceUtils.executeService(userView, "AddShiftToClasses", argsAdicionarAula);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
+
+            return mapping.findForward("sucess");
+        }
+        throw new FenixActionException();
+
+    }
 }

@@ -21,132 +21,103 @@ import Util.TipoCurso;
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanTest
-    extends AdministrativeOfficeBaseTest
-{
+public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanTest extends
+        AdministrativeOfficeBaseTest {
 
     /**
-	 * @param testName
-	 */
-    public ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanTest(String testName) {
         super(testName);
-        this.dataSetFilePath =
-            "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanDataSet.xml";
+        this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan";
     }
 
-    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
-    {
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
         Object[] argsReadMasterDegreeProofVersion = { null };
 
         return argsReadMasterDegreeProofVersion;
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
-    {
-        Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
-        InfoStudentCurricularPlan infoStudentCurricularPlan =
-            (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-                userViewNotAuthorized,
-                "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                argsReadStudentCurricularPlan);
+    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+        Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO) };
+        InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
+                .executeService(userViewNotAuthorized,
+                        "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                        argsReadStudentCurricularPlan);
 
         Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 
         return argsReadMasterDegreeProofVersion;
     }
 
-    public void testReadExistingNonActivesMasterDegreeProofVersions()
-    {
-        try
-        {
-            Object[] argsReadStudentCurricularPlan =
-                { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
-            InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                    argsReadStudentCurricularPlan);
+    public void testReadExistingNonActivesMasterDegreeProofVersions() {
+        try {
+            Object[] argsReadStudentCurricularPlan = { new Integer(142),
+                    new TipoCurso(TipoCurso.MESTRADO) };
+            InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
+                    .executeService(userView,
+                            "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                            argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeProofVersions = { infoStudentCurricularPlan };
-            List infoMasterDegreeProofVersions =
-                (List) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    getNameOfServiceToBeTested(),
-                    argsReadMasterDegreeProofVersions);
+            List infoMasterDegreeProofVersions = (List) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersions);
 
             assertNotNull(infoMasterDegreeProofVersions);
             assertEquals(infoMasterDegreeProofVersions.size(), 1);
 
-            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-                (InfoMasterDegreeProofVersion) infoMasterDegreeProofVersions.get(0);
+            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) infoMasterDegreeProofVersions
+                    .get(0);
 
             assertEquals(infoMasterDegreeProofVersion.getIdInternal(), new Integer(2));
-            assertEquals(
-                infoMasterDegreeProofVersion.getInfoMasterDegreeThesis().getIdInternal(),
-                new Integer(1));
-            assertEquals(
-                infoMasterDegreeProofVersion.getInfoResponsibleEmployee().getIdInternal(),
-                new Integer(1194));
+            assertEquals(infoMasterDegreeProofVersion.getInfoMasterDegreeThesis().getIdInternal(),
+                    new Integer(1));
+            assertEquals(infoMasterDegreeProofVersion.getInfoResponsibleEmployee().getIdInternal(),
+                    new Integer(1194));
             assertEquals(infoMasterDegreeProofVersion.getCurrentState(), new State(State.INACTIVE));
             assertEquals(infoMasterDegreeProofVersion.getAttachedCopiesNumber(), new Integer(5));
-            assertEquals(
-                infoMasterDegreeProofVersion.getFinalResult(),
-                MasterDegreeClassification.APPROVED);
+            assertEquals(infoMasterDegreeProofVersion.getFinalResult(),
+                    MasterDegreeClassification.APPROVED);
             Date proofDate = new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime();
             assertEquals(infoMasterDegreeProofVersion.getProofDate(), proofDate);
             Date thesisDeliveryDate = new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime();
             assertEquals(infoMasterDegreeProofVersion.getThesisDeliveryDate(), thesisDeliveryDate);
-            assertEquals(
-                ((InfoTeacher) infoMasterDegreeProofVersion.getInfoJuries().get(0)).getIdInternal(),
-                new Integer(954));
-            assertEquals(
-                ((InfoExternalPerson) infoMasterDegreeProofVersion.getInfoExternalJuries().get(0))
-                    .getIdInternal(),
-                new Integer(1));
+            assertEquals(((InfoTeacher) infoMasterDegreeProofVersion.getInfoJuries().get(0))
+                    .getIdInternal(), new Integer(954));
+            assertEquals(((InfoExternalPerson) infoMasterDegreeProofVersion.getInfoExternalJuries().get(
+                    0)).getIdInternal(), new Integer(1));
 
             //ok
 
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             fail("testReadExistingNonActivesMasterDegreeProofVersions " + ex.getMessage());
         }
 
     }
 
-    public void testReadNonExistingNonActivesMasterDegreeProofVersions()
-    {
-        try
-        {
-            Object[] argsReadStudentCurricularPlan =
-                { new Integer(5461), new TipoCurso(TipoCurso.MESTRADO)};
-            InfoStudentCurricularPlan infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                    argsReadStudentCurricularPlan);
+    public void testReadNonExistingNonActivesMasterDegreeProofVersions() {
+        try {
+            Object[] argsReadStudentCurricularPlan = { new Integer(5461),
+                    new TipoCurso(TipoCurso.MESTRADO) };
+            InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
+                    .executeService(userView,
+                            "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                            argsReadStudentCurricularPlan);
 
             Object[] argsReadMasterDegreeProofVersions = { infoStudentCurricularPlan };
 
-            List infoMasterDegreeProofVersions =
-                (List) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    getNameOfServiceToBeTested(),
-                    argsReadMasterDegreeProofVersions);
+            List infoMasterDegreeProofVersions = (List) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersions);
 
             assertNotNull(infoMasterDegreeProofVersions);
             assertTrue(infoMasterDegreeProofVersions.isEmpty());
 
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             e.printStackTrace();
             fail("testReadNonExistingNonActivesMasterDegreeProofVersions " + e.getMessage());
         }

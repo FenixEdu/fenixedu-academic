@@ -16,46 +16,34 @@ import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ *  
  */
 public class ValidateMultiBoxWithSelectAllCheckBox {
 
-	public static boolean validate(
-		Object bean,
-		ValidatorAction va,
-		Field field,
-		ActionErrors errors,
-		HttpServletRequest request,
-		ServletContext application) {
+    public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
+            HttpServletRequest request, ServletContext application) {
 
-		try {
+        try {
 
-			DynaActionForm form = (DynaActionForm) bean;
-			Boolean selectAllBox = (Boolean) form.get(field.getProperty());
-			String sProperty2 = field.getVarValue("secondProperty");
-			String[] multiBox = (String[]) form.get(sProperty2);
+            DynaActionForm form = (DynaActionForm) bean;
+            Boolean selectAllBox = (Boolean) form.get(field.getProperty());
+            String sProperty2 = field.getVarValue("secondProperty");
+            String[] multiBox = (String[]) form.get(sProperty2);
 
-			if (((selectAllBox != null) && selectAllBox.booleanValue())
-				|| (multiBox != null)
-				&& (multiBox.length > 0)) {
-				return true;
-			} 
-				errors.add(
-					field.getKey(),
-					new ActionError(
-						"errors.required.checkbox",
-						field.getArg0().getKey()));
-				return false;
-			
-		} catch (Exception e) {
-			errors.add(
-				field.getKey(),
-				new ActionError(
-					"errors.required.checkbox",
-					field.getArg0().getKey()));
-			return false;
-		}
+            if (((selectAllBox != null) && selectAllBox.booleanValue()) || (multiBox != null)
+                    && (multiBox.length > 0)) {
+                return true;
+            }
+            errors.add(field.getKey(), new ActionError("errors.required.checkbox", field.getArg0()
+                    .getKey()));
+            return false;
 
-	}
+        } catch (Exception e) {
+            errors.add(field.getKey(), new ActionError("errors.required.checkbox", field.getArg0()
+                    .getKey()));
+            return false;
+        }
+
+    }
 
 }

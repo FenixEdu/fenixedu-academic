@@ -6,16 +6,13 @@
 <span class="error">
 	<html:errors/>
 </span>
-<br />
-<strong><font color="#FF0000">Aviso:</font></strong>
-<br />
-<strong>Se pretende consultar informação relativa a disciplinas de 4º ou 5º do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong>
-<br /><br />
+<p><strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4º ou 5º em 2003/2004 ou 5ª em 2004/2005 do curso de Informática - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informática e de Computadores - LEIC - Currículo Antigo"</strong></p>
+<p>	<strong><font color="#FF0000">Atenção&nbsp;-&nbsp;</font>Devido à alteração do calendário das Licenciaturas em Engenharia Civil, em Engenharia do Território, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas três Licenciaturas foram alteradas</strong></p>
 
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:parameter id="nextPage" name="nextPage" />
 <bean:parameter id="inputPage" name="inputPage" />
-<html:form action="<%=path%>" method="GET">
+<html:form action="<%=path%>" >
 	<input type="hidden" name="method" value="nextPagePublic"/>
 	<input type="hidden" name="nextPage" value="<%= nextPage %>"/>
 	<input type="hidden" name="inputPage" value="<%= inputPage %>"/>

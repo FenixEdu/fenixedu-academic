@@ -120,8 +120,7 @@ public class ResponseCondition extends FenixUtil {
 
     private String responseLabelId;
 
-    public ResponseCondition(String condition, String response,
-            String responseLabelId) {
+    public ResponseCondition(String condition, String response, String responseLabelId) {
         this.condition = getConditionCode(condition);
         this.response = response;
         this.responseLabelId = responseLabelId;
@@ -143,13 +142,11 @@ public class ResponseCondition extends FenixUtil {
             return new Integer(VARGTE);
         else if (condition.compareToIgnoreCase(VARSUBSTRING_XML_STRING) == 0)
             return new Integer(VARSUBSTRING);
-        else if (condition
-                .compareToIgnoreCase(VARSUBSTRING_IGNORE_CASE_XML_STRING) == 0)
-                return new Integer(VARSUBSTRING_IGNORE_CASE);
+        else if (condition.compareToIgnoreCase(VARSUBSTRING_IGNORE_CASE_XML_STRING) == 0)
+            return new Integer(VARSUBSTRING_IGNORE_CASE);
         if (condition.compareToIgnoreCase(NOTVAREQUAL_XML_STRING) == 0)
             return new Integer(NOTVAREQUAL);
-        else if (condition
-                .compareToIgnoreCase(NOTVAREQUAL_IGNORE_CASE_XML_STRING) == 0)
+        else if (condition.compareToIgnoreCase(NOTVAREQUAL_IGNORE_CASE_XML_STRING) == 0)
             return new Integer(NOTVAREQUAL_IGNORE_CASE);
         else if (condition.compareToIgnoreCase(NOTVARLT_XML_STRING) == 0)
             return new Integer(NOTVARLT);
@@ -161,9 +158,8 @@ public class ResponseCondition extends FenixUtil {
             return new Integer(NOTVARGTE);
         else if (condition.compareToIgnoreCase(NOTVARSUBSTRING_XML_STRING) == 0)
             return new Integer(NOTVARSUBSTRING);
-        else if (condition
-                .compareToIgnoreCase(NOTVARSUBSTRING_IGNORE_CASE_XML_STRING) == 0)
-                return new Integer(NOTVARSUBSTRING_IGNORE_CASE);
+        else if (condition.compareToIgnoreCase(NOTVARSUBSTRING_IGNORE_CASE_XML_STRING) == 0)
+            return new Integer(NOTVARSUBSTRING_IGNORE_CASE);
 
         return null;
     }
@@ -184,8 +180,9 @@ public class ResponseCondition extends FenixUtil {
         else if (condition.intValue() == VARSUBSTRING)
             return VARSUBSTRING_XML_STRING;
         else if (condition.intValue() == VARSUBSTRING_IGNORE_CASE)
-                return VARSUBSTRING_IGNORE_CASE_XML_STRING;
-        if (condition.intValue() == NOTVAREQUAL) return NOTVAREQUAL_XML_STRING;
+            return VARSUBSTRING_IGNORE_CASE_XML_STRING;
+        if (condition.intValue() == NOTVAREQUAL)
+            return NOTVAREQUAL_XML_STRING;
         if (condition.intValue() == NOTVAREQUAL_IGNORE_CASE)
             return NOTVAREQUAL_IGNORE_CASE_XML_STRING;
         else if (condition.intValue() == NOTVARLT)
@@ -199,7 +196,7 @@ public class ResponseCondition extends FenixUtil {
         else if (condition.intValue() == NOTVARSUBSTRING)
             return NOTVARSUBSTRING_XML_STRING;
         else if (condition.intValue() == NOTVARSUBSTRING_IGNORE_CASE)
-                return NOTVARSUBSTRING_IGNORE_CASE_XML_STRING;
+            return NOTVARSUBSTRING_IGNORE_CASE_XML_STRING;
         return null;
     }
 
@@ -234,57 +231,65 @@ public class ResponseCondition extends FenixUtil {
 
     public static List getConditionSignalsToStringQuestion() {
         List signalsList = new ArrayList();
-        signalsList.add(new LabelValueBean(VAREQUAL_STRING, getConditionCode(
-                VAREQUAL_XML_STRING).toString()));
-        signalsList.add(new LabelValueBean(NOTVAREQUAL_STRING,
-                getConditionCode(NOTVAREQUAL_XML_STRING).toString()));
+        signalsList.add(new LabelValueBean(VAREQUAL_STRING, getConditionCode(VAREQUAL_XML_STRING)
+                .toString()));
+        signalsList.add(new LabelValueBean(NOTVAREQUAL_STRING, getConditionCode(NOTVAREQUAL_XML_STRING)
+                .toString()));
         signalsList.add(new LabelValueBean(VARSUBSTRING_STRING,
                 getConditionCode(VARSUBSTRING_XML_STRING).toString()));
-        signalsList.add(new LabelValueBean(NOTVARSUBSTRING_STRING,
-                getConditionCode(NOTVARSUBSTRING_XML_STRING).toString()));
+        signalsList.add(new LabelValueBean(NOTVARSUBSTRING_STRING, getConditionCode(
+                NOTVARSUBSTRING_XML_STRING).toString()));
         return signalsList;
     }
 
     public static List getConditionSignalsToNumericalQuestion() {
         List signalsList = new ArrayList();
-        signalsList.add(new LabelValueBean(VAREQUAL_SIGNAL, getConditionCode(
-                VAREQUAL_XML_STRING).toString()));
-        signalsList.add(new LabelValueBean(NOTVAREQUAL_SIGNAL,
-                getConditionCode(NOTVAREQUAL_XML_STRING).toString()));
-        signalsList.add(new LabelValueBean(VARLT_SIGNAL, getConditionCode(
-                VARLT_XML_STRING).toString()));
-        signalsList.add(new LabelValueBean(VARLTE_SIGNAL, getConditionCode(
-                VARLTE_XML_STRING).toString()));
-        signalsList.add(new LabelValueBean(VARGT_SIGNAL, getConditionCode(
-                VARGT_XML_STRING).toString()));
-        signalsList.add(new LabelValueBean(VARGTE_SIGNAL, getConditionCode(
-                VARGTE_XML_STRING).toString()));
+        signalsList.add(new LabelValueBean(VAREQUAL_SIGNAL, getConditionCode(VAREQUAL_XML_STRING)
+                .toString()));
+        signalsList.add(new LabelValueBean(NOTVAREQUAL_SIGNAL, getConditionCode(NOTVAREQUAL_XML_STRING)
+                .toString()));
+        signalsList.add(new LabelValueBean(VARLT_SIGNAL, getConditionCode(VARLT_XML_STRING).toString()));
+        signalsList
+                .add(new LabelValueBean(VARLTE_SIGNAL, getConditionCode(VARLTE_XML_STRING).toString()));
+        signalsList.add(new LabelValueBean(VARGT_SIGNAL, getConditionCode(VARGT_XML_STRING).toString()));
+        signalsList
+                .add(new LabelValueBean(VARGTE_SIGNAL, getConditionCode(VARGTE_XML_STRING).toString()));
         return signalsList;
     }
 
     public Integer getReverseCondition() {
-        if (condition.intValue() == VAREQUAL) return new Integer(NOTVAREQUAL);
-        if (condition.intValue() == NOTVAREQUAL) return new Integer(VAREQUAL);
+        if (condition.intValue() == VAREQUAL)
+            return new Integer(NOTVAREQUAL);
+        if (condition.intValue() == NOTVAREQUAL)
+            return new Integer(VAREQUAL);
         if (condition.intValue() == VAREQUAL_IGNORE_CASE)
-                return new Integer(NOTVAREQUAL_IGNORE_CASE);
+            return new Integer(NOTVAREQUAL_IGNORE_CASE);
         if (condition.intValue() == NOTVAREQUAL_IGNORE_CASE)
-                return new Integer(VAREQUAL_IGNORE_CASE);
+            return new Integer(VAREQUAL_IGNORE_CASE);
         if (condition.intValue() == VARSUBSTRING)
-                return new Integer(NOTVARSUBSTRING);
+            return new Integer(NOTVARSUBSTRING);
         if (condition.intValue() == NOTVARSUBSTRING)
-                return new Integer(VARSUBSTRING);
+            return new Integer(VARSUBSTRING);
         if (condition.intValue() == VARSUBSTRING_IGNORE_CASE)
-                return new Integer(NOTVARSUBSTRING_IGNORE_CASE);
+            return new Integer(NOTVARSUBSTRING_IGNORE_CASE);
         if (condition.intValue() == NOTVARSUBSTRING_IGNORE_CASE)
-                return new Integer(VARSUBSTRING_IGNORE_CASE);
-        if (condition.intValue() == VARLT) return new Integer(NOTVARLT);
-        if (condition.intValue() == NOTVARLT) return new Integer(VARLT);
-        if (condition.intValue() == VARLTE) return new Integer(NOTVARLTE);
-        if (condition.intValue() == NOTVARLTE) return new Integer(VARLTE);
-        if (condition.intValue() == VARGT) return new Integer(NOTVARGT);
-        if (condition.intValue() == NOTVARGT) return new Integer(VARGT);
-        if (condition.intValue() == VARGTE) return new Integer(NOTVARGTE);
-        if (condition.intValue() == NOTVARGTE) return new Integer(VARGTE);
+            return new Integer(VARSUBSTRING_IGNORE_CASE);
+        if (condition.intValue() == VARLT)
+            return new Integer(NOTVARLT);
+        if (condition.intValue() == NOTVARLT)
+            return new Integer(VARLT);
+        if (condition.intValue() == VARLTE)
+            return new Integer(NOTVARLTE);
+        if (condition.intValue() == NOTVARLTE)
+            return new Integer(VARLTE);
+        if (condition.intValue() == VARGT)
+            return new Integer(NOTVARGT);
+        if (condition.intValue() == NOTVARGT)
+            return new Integer(VARGT);
+        if (condition.intValue() == VARGTE)
+            return new Integer(NOTVARGTE);
+        if (condition.intValue() == NOTVARGTE)
+            return new Integer(VARGTE);
         return null;
     }
 
@@ -320,50 +325,39 @@ public class ResponseCondition extends FenixUtil {
         this.responseLabelId = responseLabelId;
     }
 
-    public boolean isCorrect(String userResponse) {
+    public boolean isCorrectLID(String userResponse) {
+        if (getCondition().intValue() == VAREQUAL)
+            return (userResponse.compareTo(getResponse()) == 0 ? true : false);
+        return false;
+    }
+
+    public boolean isCorrectSTR(String userResponse) {
         if (getCondition().intValue() == VAREQUAL)
             return (userResponse.compareTo(getResponse()) == 0 ? true : false);
         else if (getCondition().intValue() == ResponseCondition.VAREQUAL_IGNORE_CASE)
-            return (userResponse.compareToIgnoreCase(getResponse()) == 0 ? true
-                    : false);
+            return (userResponse.compareToIgnoreCase(getResponse()) == 0 ? true : false);
         else if (getCondition().intValue() == NOTVAREQUAL)
             return (userResponse.compareTo(getResponse()) == 0 ? false : true);
         else if (getCondition().intValue() == NOTVAREQUAL_IGNORE_CASE)
-            return (userResponse.compareToIgnoreCase(getResponse()) == 0 ? false
-                    : true);
-        else if (getCondition().intValue() == VARLT
-                || getCondition().intValue() == NOTVARGTE)
-            return ((userResponse.compareTo(getResponse()) < 0) ? true : false);
-        else if (getCondition().intValue() == VARLTE
-                || getCondition().intValue() == ResponseCondition.NOTVARGT)
-            return ((userResponse.compareTo(getResponse()) <= 0) ? true : false);
-        else if (getCondition().intValue() == VARGT
-                || getCondition().intValue() == NOTVARLTE)
-            return ((userResponse.compareTo(getResponse()) > 0) ? true : false);
-        else if (getCondition().intValue() == VARGTE
-                || getCondition().intValue() == NOTVARLT)
-            return ((userResponse.compareTo(getResponse()) >= 0) ? true : false);
+            return (userResponse.compareToIgnoreCase(getResponse()) == 0 ? false : true);
         else if (getCondition().intValue() == VARSUBSTRING)
             return ((userResponse.matches(getResponse())) ? true : false);
         else if (getCondition().intValue() == NOTVARSUBSTRING)
             return ((userResponse.matches(getResponse())) ? false : true);
         else if (getCondition().intValue() == VARSUBSTRING_IGNORE_CASE)
-            return ((userResponse.matches(getResponse().toLowerCase())) ? true
-                    : false);
+            return ((userResponse.matches(getResponse().toLowerCase())) ? true : false);
         else if (getCondition().intValue() == NOTVARSUBSTRING_IGNORE_CASE)
-                return ((userResponse.matches(getResponse().toLowerCase())) ? false
-                        : true);
+            return ((userResponse.matches(getResponse().toLowerCase())) ? false : true);
         return false;
     }
 
-    public boolean isCorrect(Double userResponse) {
+    public boolean isCorrectNUM(Double userResponse) {
         Double response = new Double(getResponse());
         if (getCondition().intValue() == VAREQUAL)
             return (userResponse.compareTo(response) == 0 ? true : false);
         else if (getCondition().intValue() == NOTVAREQUAL)
             return (userResponse.compareTo(response) == 0 ? false : true);
-        else if (getCondition().intValue() == VARLT
-                || getCondition().intValue() == NOTVARGTE)
+        else if (getCondition().intValue() == VARLT || getCondition().intValue() == NOTVARGTE)
             return ((userResponse.compareTo(response) < 0) ? true : false);
         else if (getCondition().intValue() == ResponseCondition.VARLTE
                 || getCondition().intValue() == NOTVARGT)
@@ -371,9 +365,8 @@ public class ResponseCondition extends FenixUtil {
         else if (getCondition().intValue() == ResponseCondition.VARGT
                 || getCondition().intValue() == NOTVARLTE)
             return ((userResponse.compareTo(response) > 0) ? true : false);
-        else if (getCondition().intValue() == VARGTE
-                || getCondition().intValue() == NOTVARLT)
-                return ((userResponse.compareTo(response) >= 0) ? true : false);
+        else if (getCondition().intValue() == VARGTE || getCondition().intValue() == NOTVARLT)
+            return ((userResponse.compareTo(response) >= 0) ? true : false);
         return false;
     }
 
@@ -381,8 +374,7 @@ public class ResponseCondition extends FenixUtil {
         boolean result = false;
         if (obj instanceof ResponseCondition) {
             ResponseCondition rc = (ResponseCondition) obj;
-            result = getResponse().equals(rc.getResponse())
-                    && getCondition().equals(rc.getCondition());
+            result = getResponse().equals(rc.getResponse()) && getCondition().equals(rc.getCondition());
         }
         return result;
     }
@@ -403,12 +395,10 @@ public class ResponseCondition extends FenixUtil {
             ignoreCase = "Yes";
         }
         result = result.concat(new String("<" + condition));
-        if (condition.equals(VAREQUAL_XML_STRING)
-                || condition.equals(VARSUBSTRING_XML_STRING))
-                result = result.concat(new String(" case=\"" + ignoreCase)
-                        + "\"");
-        result = result.concat(new String(" respident=\"" + responseLabelId
-                + "\">\n" + response + "\n</" + condition + ">"));
+        if (condition.equals(VAREQUAL_XML_STRING) || condition.equals(VARSUBSTRING_XML_STRING))
+            result = result.concat(new String(" case=\"" + ignoreCase) + "\"");
+        result = result.concat(new String(" respident=\"" + responseLabelId + "\">\n" + response
+                + "\n</" + condition + ">"));
         return result.concat(endResult);
     }
 }

@@ -16,58 +16,64 @@ import Util.RoleType;
 
 /**
  * @author Fernanda Quitério
- *
+ *  
  */
 public class PublishMarksTest extends TestCaseServices {
-	/**
-	 * @param testName
-	 */
-	public PublishMarksTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public PublishMarksTest(String testName) {
+        super(testName);
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "PublishMarks";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "PublishMarks";
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServices#getDataSetFilePath()
-	 */
-	protected String getDataSetFilePath() {
-		return "etc/testDataSetForPublishMarks.xml";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseServices#getDataSetFilePath()
+     */
+    protected String getDataSetFilePath() {
+        return "etc/testDataSetForPublishMarks.xml";
+    }
 
-	public void testSucessfullExecution() {
-		try {
-			//Service
+    public void testSucessfullExecution() {
+        try {
+            //Service
 
-			Object[] args = { new Integer(3), new Integer(1), "mensagem de publicacao", Boolean.TRUE, "Publicacao de Notas" };
+            Object[] args = { new Integer(3), new Integer(1), "mensagem de publicacao", Boolean.TRUE,
+                    "Publicacao de Notas" };
 
-			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
-			
-			assertEquals("Error in Exam !", ((InfoSiteMarks)siteView.getComponent()).getInfoEvaluation().getIdInternal().intValue(), 1);
-			assertEquals("Error in marks list !", ((InfoSiteMarks)siteView.getComponent()).getMarksList().size(), 3);
-			
-			
-						
-		} catch (FenixServiceException e) {
-			e.printStackTrace();
-			fail("Executing  Service!");
-		}
-	}
+            TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory
+                    .executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
 
-	public IUserView authorizedUserView() {
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.TEACHER);
+            assertEquals("Error in Exam !", ((InfoSiteMarks) siteView.getComponent())
+                    .getInfoEvaluation().getIdInternal().intValue(), 1);
+            assertEquals("Error in marks list !", ((InfoSiteMarks) siteView.getComponent())
+                    .getMarksList().size(), 3);
 
-		Collection roles = new ArrayList();
-		roles.add(infoRole);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            fail("Executing  Service!");
+        }
+    }
 
-		UserView userView = new UserView("user", roles);
-	
-		return userView;
-	}
+    public IUserView authorizedUserView() {
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.TEACHER);
+
+        Collection roles = new ArrayList();
+        roles.add(infoRole);
+
+        UserView userView = new UserView("user", roles);
+
+        return userView;
+    }
 }

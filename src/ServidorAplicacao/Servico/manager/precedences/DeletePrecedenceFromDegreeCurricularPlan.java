@@ -23,12 +23,13 @@ public class DeletePrecedenceFromDegreeCurricularPlan implements IService {
         try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-            
-            IPrecedence precedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class, precedenceID);
-            
+
+            IPrecedence precedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
+                    precedenceID);
+
             List restrictions = precedence.getRestrictions();
             int size = restrictions.size();
-            
+
             for (int i = 0; i < size; i++) {
                 IRestriction restriction = (IRestriction) restrictions.get(i);
                 precedenceDAO.deleteByOID(Restriction.class, restriction.getIdInternal());

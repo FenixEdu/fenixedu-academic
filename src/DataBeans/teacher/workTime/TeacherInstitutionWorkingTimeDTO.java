@@ -13,59 +13,55 @@ import DataBeans.InfoTeacher;
 /**
  * @author jpvl
  */
-public class TeacherInstitutionWorkingTimeDTO extends DataTranferObject
-{
+public class TeacherInstitutionWorkingTimeDTO extends DataTranferObject {
     private InfoExecutionPeriod infoExecutionPeriod;
+
     private InfoTeacher infoTeacher;
+
     private List infoTeacherInstitutionWorkTimeList;
+
     /**
-	 * @return Returns the infoExecutionPeriod.
-	 */
-    public InfoExecutionPeriod getInfoExecutionPeriod()
-    {
+     * @return Returns the infoExecutionPeriod.
+     */
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
         return this.infoExecutionPeriod;
     }
 
     /**
-	 * @return Returns the infoTeacher.
-	 */
-    public InfoTeacher getInfoTeacher()
-    {
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
         return this.infoTeacher;
     }
 
     /**
-	 * @return Returns the infoTeacherInstitutionWorkTimeList.
-	 */
-    public List getInfoTeacherInstitutionWorkTimeList()
-    {
+     * @return Returns the infoTeacherInstitutionWorkTimeList.
+     */
+    public List getInfoTeacherInstitutionWorkTimeList() {
         return this.infoTeacherInstitutionWorkTimeList;
     }
 
     /**
-	 * @param infoExecutionPeriod
-	 *                   The infoExecutionPeriod to set.
-	 */
-    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
-    {
+     * @param infoExecutionPeriod
+     *            The infoExecutionPeriod to set.
+     */
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
         this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**
-	 * @param infoTeacher
-	 *                   The infoTeacher to set.
-	 */
-    public void setInfoTeacher(InfoTeacher infoTeacher)
-    {
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
     }
 
     /**
-	 * @param infoTeacherInstitutionWorkTimeList
-	 *                   The infoTeacherInstitutionWorkTimeList to set.
-	 */
-    public void setInfoTeacherInstitutionWorkTimeList(List infoTeacherInstitutionWorkTimeList)
-    {
+     * @param infoTeacherInstitutionWorkTimeList
+     *            The infoTeacherInstitutionWorkTimeList to set.
+     */
+    public void setInfoTeacherInstitutionWorkTimeList(List infoTeacherInstitutionWorkTimeList) {
         this.infoTeacherInstitutionWorkTimeList = infoTeacherInstitutionWorkTimeList;
     }
 

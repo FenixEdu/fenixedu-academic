@@ -37,7 +37,7 @@
 			<td>
 				<html:select property="executionYear" onchange="document.studentsGratuityListForm.method.value='prepareChooseDegree';document.studentsGratuityListForm.submit();">
 					<html:option value="" key="label.manager.executionCourseManagement.select">
-						<bean:message key="label.manager.executionCourseManagement.select"/>
+						<bean:message key="label.choose.one"/>
 					</html:option>
 					<html:optionsCollection name="executionYears"/>
 				</html:select>
@@ -52,7 +52,7 @@
 				<td>
 					<html:select property="degree">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
+							<bean:message key="label.choose.one"/>
 						</html:option>
 						<html:option value="all" key="label.masterDegree.gratuity.all">
 							<bean:message key="label.masterDegree.gratuity.all"/>
@@ -68,7 +68,7 @@
 				<td>
 					<html:select property="specialization">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
+							<bean:message key="label.choose.one"/>
 						</html:option>
 						<html:option value="all" key="label.masterDegree.gratuity.all">
 							<bean:message key="label.gratuitySituationType.all"/>
@@ -84,7 +84,7 @@
 				<td>
 					<html:select property="situation">
 						<html:option value="">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
+							<bean:message key="label.choose.one"/>
 						</html:option>						
 						<html:option value="all">
 							<bean:message key="label.gratuitySituationType.all"/>

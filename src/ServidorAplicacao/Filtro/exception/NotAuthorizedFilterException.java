@@ -4,27 +4,23 @@
  */
 package ServidorAplicacao.Filtro.exception;
 
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class NotAuthorizedFilterException extends FenixFilterException
-{
+public class NotAuthorizedFilterException extends FenixFilterException {
     /**
      *  
      */
-    public NotAuthorizedFilterException()
-    {
+    public NotAuthorizedFilterException() {
         super();
     }
 
     /**
      * @param message
      */
-    public NotAuthorizedFilterException(String message)
-    {
+    public NotAuthorizedFilterException(String message) {
         super(message);
     }
 
@@ -32,16 +28,14 @@ public class NotAuthorizedFilterException extends FenixFilterException
      * @param message
      * @param cause
      */
-    public NotAuthorizedFilterException(String message, Throwable cause)
-    {
+    public NotAuthorizedFilterException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
      * @param cause
      */
-    public NotAuthorizedFilterException(Throwable cause)
-    {
+    public NotAuthorizedFilterException(Throwable cause) {
         super(cause);
     }
 

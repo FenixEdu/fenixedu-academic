@@ -31,53 +31,44 @@ public class ConfigureWebSiteSections implements IService {
     public boolean run(InfoWebSite infoWebSite) throws FenixServiceException {
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
                     .getIPersistentWebSiteSection();
-            IPersistentWebSite persistentWebSite = persistentSuport
-                    .getIPersistentWebSite();
+            IPersistentWebSite persistentWebSite = persistentSuport.getIPersistentWebSite();
 
             IWebSiteSection webSiteSection = null;
             Iterator iterSections = infoWebSite.getSections().iterator();
             while (iterSections.hasNext()) {
-                InfoWebSiteSection infoWebSiteSection = (InfoWebSiteSection) iterSections
-                        .next();
+                InfoWebSiteSection infoWebSiteSection = (InfoWebSiteSection) iterSections.next();
 
-                IWebSite webSite = (IWebSite) persistentWebSite.readByOID(
-                        WebSite.class, infoWebSite.getIdInternal());
+                IWebSite webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, infoWebSite
+                        .getIdInternal());
 
                 if (webSite == null) {
                     throw new NonExistingServiceException("website");
                 }
 
-                IWebSiteSection repeatedWebSiteSection = persistentWebSiteSection
-                        .readByWebSiteAndName(webSite, infoWebSiteSection
-                                .getName());
+                IWebSiteSection repeatedWebSiteSection = persistentWebSiteSection.readByWebSiteAndName(
+                        webSite, infoWebSiteSection.getName());
 
                 if (repeatedWebSiteSection != null
                         && !repeatedWebSiteSection.getIdInternal().equals(
                                 infoWebSiteSection.getIdInternal())) {
-                    throw new ExistingServiceException(infoWebSiteSection
-                            .getName());
+                    throw new ExistingServiceException(infoWebSiteSection.getName());
                 }
 
-                webSiteSection = (IWebSiteSection) persistentWebSiteSection
-                        .readByOID(WebSiteSection.class, infoWebSiteSection
-                                .getIdInternal(), true);
+                webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(
+                        WebSiteSection.class, infoWebSiteSection.getIdInternal(), true);
 
                 if (webSiteSection == null) {
                     throw new NonExistingServiceException("websiteSection");
                 }
                 webSiteSection.setName(infoWebSiteSection.getName());
                 webSiteSection.setFtpName(infoWebSiteSection.getFtpName());
-                webSiteSection
-                        .setWhatToSort(infoWebSiteSection.getWhatToSort());
-                webSiteSection.setSortingOrder(infoWebSiteSection
-                        .getSortingOrder());
+                webSiteSection.setWhatToSort(infoWebSiteSection.getWhatToSort());
+                webSiteSection.setSortingOrder(infoWebSiteSection.getSortingOrder());
                 webSiteSection.setSize(infoWebSiteSection.getSize());
-                webSiteSection.setExcerptSize(infoWebSiteSection
-                        .getExcerptSize());
+                webSiteSection.setExcerptSize(infoWebSiteSection.getExcerptSize());
             }
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

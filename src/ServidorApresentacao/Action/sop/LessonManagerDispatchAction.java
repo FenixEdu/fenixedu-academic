@@ -50,69 +50,60 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class LessonManagerDispatchAction
-    extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextLookupDispatchAction
-{
+public class LessonManagerDispatchAction extends
+        FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextLookupDispatchAction {
 
     public static String INVALID_TIME_INTERVAL = "errors.lesson.invalid.time.interval";
-	public static String UNKNOWN_ERROR = "errors.unknown";
 
-    protected Map getKeyMethodMap()
-    {
-		Map map = new HashMap();
-		map.put("lable.changeRoom", "changeRoom");
-		map.put("label.save", "storeChanges");
-		map.put("lable.chooseRoom", "chooseRoom");
-		map.put("label.create", "createRoom");
-		map.put("input", "input");
-		return map;
-	}
+    public static String UNKNOWN_ERROR = "errors.unknown";
 
-	public ActionForward createRoom(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-        throws Exception
-    {
+    protected Map getKeyMethodMap() {
+        Map map = new HashMap();
+        map.put("lable.changeRoom", "changeRoom");
+        map.put("label.save", "storeChanges");
+        map.put("lable.chooseRoom", "chooseRoom");
+        map.put("label.create", "createRoom");
+        map.put("input", "input");
+        return map;
+    }
 
-		DynaActionForm criarAulaForm = (DynaActionForm) form;
-		HttpSession sessao = request.getSession(false);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setCurricularYearContext(request);
-        if (sessao != null)
-        {
+    public ActionForward createRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        DynaActionForm criarAulaForm = (DynaActionForm) form;
+        HttpSession sessao = request.getSession(false);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        if (sessao != null) {
             IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
-			Calendar inicio = Calendar.getInstance();
+            Calendar inicio = Calendar.getInstance();
             inicio.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) criarAulaForm.get("horaInicio")));
             inicio.set(Calendar.MINUTE, Integer.parseInt((String) criarAulaForm.get("minutosInicio")));
-			inicio.set(Calendar.SECOND, 0);
-			Calendar fim = Calendar.getInstance();
+            inicio.set(Calendar.SECOND, 0);
+            Calendar fim = Calendar.getInstance();
             fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) criarAulaForm.get("horaFim")));
             fim.set(Calendar.MINUTE, Integer.parseInt((String) criarAulaForm.get("minutosFim")));
-			fim.set(Calendar.SECOND, 0);
+            fim.set(Calendar.SECOND, 0);
 
-			String initials = (String) criarAulaForm.get("courseInitials");
+            String initials = (String) criarAulaForm.get("courseInitials");
 
             InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request, initials);
 
-            if (courseView == null)
-            {
-				return mapping.getInputForward();
-			}
+            if (courseView == null) {
+                return mapping.getInputForward();
+            }
 
-			InfoRoom infoSala = new InfoRoom();
-			infoSala.setNome((String) criarAulaForm.get("nomeSala"));
+            InfoRoom infoSala = new InfoRoom();
+            infoSala.setNome((String) criarAulaForm.get("nomeSala"));
 
-            DiaSemana diaSemana =
-                new DiaSemana(
-                    new Integer(formDay2EnumerateDay((String) criarAulaForm.get("diaSemana"))));
+            DiaSemana diaSemana = new DiaSemana(new Integer(formDay2EnumerateDay((String) criarAulaForm
+                    .get("diaSemana"))));
 
-            /***** added on 27 may 2004 by amsg **/
-            InfoExecutionDegree infoExecutionDegree =
-                (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+            /** *** added on 27 may 2004 by amsg * */
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+                    .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
             InfoRoomOccupation infoRoomOccupation = new InfoRoomOccupation();
             infoRoomOccupation.setDayOfWeek(diaSemana);
@@ -120,168 +111,126 @@ public class LessonManagerDispatchAction
             infoRoomOccupation.setStartTime(inicio);
             infoRoomOccupation.setInfoRoom(infoSala);
             InfoPeriod infoPeriod = null;
-            if (courseView.getInfoExecutionPeriod().getSemester().equals(new Integer(1)))
-            {
+            if (courseView.getInfoExecutionPeriod().getSemester().equals(new Integer(1))) {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-            }
-            else
-            {
+            } else {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
             }
-            if (infoPeriod == null)
-            {
-				throw new FenixActionException("Info Execution Degree doesn't have a Lessons Info Period");
+            if (infoPeriod == null) {
+                throw new FenixActionException(
+                        "Info Execution Degree doesn't have a Lessons Info Period");
             }
             infoRoomOccupation.setInfoPeriod(infoPeriod);
-            /******/
+            /** *** */
 
-			Object argsCriarAula[] =
-				{
-					 new InfoLesson(
-                        diaSemana,
-						inicio,
-						fim,
-                        new TipoAula(new Integer((String) criarAulaForm.get("tipoAula"))),
-						infoSala,
-                        infoRoomOccupation,
-                        new InfoShift(
-                            null,
-                            new TipoAula(new Integer((String) criarAulaForm.get("tipoAula"))),
-                            null,
-                            courseView))};
+            Object argsCriarAula[] = { new InfoLesson(diaSemana, inicio, fim, new TipoAula(new Integer(
+                    (String) criarAulaForm.get("tipoAula"))), infoSala, infoRoomOccupation,
+                    new InfoShift(null,
+                            new TipoAula(new Integer((String) criarAulaForm.get("tipoAula"))), null,
+                            courseView)) };
 
-			InfoLessonServiceResult result = null;
-            try
-            {
-				result =
-					(InfoLessonServiceResult) ServiceUtils.executeService(
-						userView,
-						"CriarAula",
-						argsCriarAula);
+            InfoLessonServiceResult result = null;
+            try {
+                result = (InfoLessonServiceResult) ServiceUtils.executeService(userView, "CriarAula",
+                        argsCriarAula);
+            } catch (InterceptingServiceException ex) {
+
+                throw new InterceptingActionException(infoSala.getNome(), ex);
+            } catch (ExistingServiceException ex) {
+
+                throw new ExistingActionException("A aula", ex);
+            } catch (InvalidTimeIntervalServiceException ex) {
+                throw new InvalidTimeIntervalActionException(ex);
             }
-            catch (InterceptingServiceException ex)
-            {
+            ActionErrors actionErrors = getActionErrors(result, inicio, fim);
 
-				throw new InterceptingActionException(infoSala.getNome(), ex);
-            }
-            catch (ExistingServiceException ex)
-            {
-
-				throw new ExistingActionException("A aula", ex);
-            }
-            catch (InvalidTimeIntervalServiceException ex)
-            {
-				throw new InvalidTimeIntervalActionException(ex);
-			}
-			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
-
-            if (actionErrors.isEmpty())
-            {
+            if (actionErrors.isEmpty()) {
                 String parameter = request.getParameter(new String("operation"));
-				return mapping.findForward(parameter);
-			} 
+                return mapping.findForward(parameter);
+            }
             saveErrors(request, actionErrors);
             return mapping.getInputForward();
-           
 
         }
         throw new Exception();
     }
 
-	/**
-	 * @param string
-	 */
-    private String formDay2EnumerateDay(String string)
-    {
-		String result = string;
-        if (string.equalsIgnoreCase("2"))
-        {
-			result = "2";
-		}
-        if (string.equalsIgnoreCase("3"))
-        {
-			result = "3";
-		}
-        if (string.equalsIgnoreCase("4"))
-        {
-			result = "4";
-		}
-        if (string.equalsIgnoreCase("5"))
-        {
-			result = "5";
-		}
-        if (string.equalsIgnoreCase("6"))
-        {
-			result = "6";
-		}
-        if (string.equalsIgnoreCase("S"))
-        {
-			result = "7";
-		}
-        if (string.equalsIgnoreCase("D"))
-        {
-			result = "1";
-		}
-		return result;
-	}
+    /**
+     * @param string
+     */
+    private String formDay2EnumerateDay(String string) {
+        String result = string;
+        if (string.equalsIgnoreCase("2")) {
+            result = "2";
+        }
+        if (string.equalsIgnoreCase("3")) {
+            result = "3";
+        }
+        if (string.equalsIgnoreCase("4")) {
+            result = "4";
+        }
+        if (string.equalsIgnoreCase("5")) {
+            result = "5";
+        }
+        if (string.equalsIgnoreCase("6")) {
+            result = "6";
+        }
+        if (string.equalsIgnoreCase("S")) {
+            result = "7";
+        }
+        if (string.equalsIgnoreCase("D")) {
+            result = "1";
+        }
+        return result;
+    }
 
-	public ActionForward storeChanges(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward storeChanges(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		DynaActionForm editarAulaForm = (DynaActionForm) form;
+        DynaActionForm editarAulaForm = (DynaActionForm) form;
 
-		HttpSession sessao = request.getSession(false);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionCourseContext(request);
+        HttpSession sessao = request.getSession(false);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionCourseContext(request);
 
-        if (sessao != null)
-        {
+        if (sessao != null) {
             IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
-			RequestUtils.setLessonTypes(request);
+            RequestUtils.setLessonTypes(request);
 
             Integer oldLessonOID = new Integer(request.getParameter("infoAula_oid"));
 
-			Object args[] = { oldLessonOID };
+            Object args[] = { oldLessonOID };
 
-			InfoLesson iAulaAntiga = null;
-			iAulaAntiga =
-                (InfoLesson) ServiceManagerServiceFactory.executeService(
-                    userView,
-                    "ReadLessonByOID",
-                    args);
+            InfoLesson iAulaAntiga = null;
+            iAulaAntiga = (InfoLesson) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadLessonByOID", args);
 
-			//InfoLesson iAulaAntiga =
-			//	(InfoLesson) request.getAttribute("infoAula");
+            //InfoLesson iAulaAntiga =
+            //	(InfoLesson) request.getAttribute("infoAula");
 
-			Calendar inicio = Calendar.getInstance();
-			inicio.set(
-				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String) editarAulaForm.get("horaInicio")));
+            Calendar inicio = Calendar.getInstance();
+            inicio
+                    .set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) editarAulaForm
+                            .get("horaInicio")));
             inicio.set(Calendar.MINUTE, Integer.parseInt((String) editarAulaForm.get("minutosInicio")));
-			inicio.set(Calendar.SECOND, 0);
-			Calendar fim = Calendar.getInstance();
+            inicio.set(Calendar.SECOND, 0);
+            Calendar fim = Calendar.getInstance();
             fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) editarAulaForm.get("horaFim")));
             fim.set(Calendar.MINUTE, Integer.parseInt((String) editarAulaForm.get("minutosFim")));
-			fim.set(Calendar.SECOND, 0);
+            fim.set(Calendar.SECOND, 0);
 
-			InfoRoom infoSala = new InfoRoom();
-			infoSala.setNome((String) editarAulaForm.get("nomeSala"));
+            InfoRoom infoSala = new InfoRoom();
+            infoSala.setNome((String) editarAulaForm.get("nomeSala"));
 
-            DiaSemana diaSemana =
-                new DiaSemana(
-                    new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana"))));
+            DiaSemana diaSemana = new DiaSemana(new Integer(formDay2EnumerateDay((String) editarAulaForm
+                    .get("diaSemana"))));
 
-            /***** added on 27 may 2004 by amsg **/
-            InfoExecutionDegree infoExecutionDegree =
-                (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+            /** *** added on 27 may 2004 by amsg * */
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+                    .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
             InfoRoomOccupation infoRoomOccupation = new InfoRoomOccupation();
             infoRoomOccupation.setDayOfWeek(diaSemana);
@@ -293,415 +242,325 @@ public class LessonManagerDispatchAction
             InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request, initials);
 
             InfoPeriod infoPeriod = null;
-            if (courseView.getInfoExecutionPeriod().getSemester().equals(new Integer(1)))
-            {
+            if (courseView.getInfoExecutionPeriod().getSemester().equals(new Integer(1))) {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-            }
-            else
-            {
+            } else {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
             }
-            if (infoPeriod == null)
-            {
-				throw new FenixActionException("Info Execution Degree doesn't have a Lessons Info Period");
+            if (infoPeriod == null) {
+                throw new FenixActionException(
+                        "Info Execution Degree doesn't have a Lessons Info Period");
             }
             infoRoomOccupation.setInfoPeriod(infoPeriod);
-            /*********/
+            /** ****** */
 
-            //            RoomKey kSalaAntiga = new RoomKey(iAulaAntiga.getInfoSala().getNome());
+            //            RoomKey kSalaAntiga = new
+            // RoomKey(iAulaAntiga.getInfoSala().getNome());
+            InfoLesson iAula = new InfoLesson(diaSemana, inicio, fim, new TipoAula(new Integer(
+                    (String) editarAulaForm.get("tipoAula"))), infoSala, infoRoomOccupation, iAulaAntiga
+                    .getInfoShift());
 
-			InfoLesson iAula =
-				new InfoLesson(
-                    diaSemana,
-					inicio,
-					fim,
-                    new TipoAula(new Integer((String) editarAulaForm.get("tipoAula"))),
-					infoSala,
-                    infoRoomOccupation,
-                    iAulaAntiga.getInfoShift());
+            //			InfoExecutionPeriod iExecutionPeriod =
+            //				(InfoExecutionPeriod) sessao.getAttribute(
+            //					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-			//			InfoExecutionPeriod iExecutionPeriod =
-			//				(InfoExecutionPeriod) sessao.getAttribute(
-			//					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+            Object argsEditarAula[] = { iAulaAntiga, iAula /* , iExecutionPeriod */
+            };
 
-            Object argsEditarAula[] = { iAulaAntiga, iAula /*, iExecutionPeriod*/
-			};
-
-			InfoLessonServiceResult result = null;
-            try
-            {
-				result =
-					(InfoLessonServiceResult) ServiceManagerServiceFactory.executeService(
-						userView,
-						"EditarAula",
-						argsEditarAula);
+            InfoLessonServiceResult result = null;
+            try {
+                result = (InfoLessonServiceResult) ServiceManagerServiceFactory.executeService(userView,
+                        "EditarAula", argsEditarAula);
+            } catch (ExistingServiceException ex) {
+                throw new ExistingActionException("A aula", ex);
+            } catch (InterceptingServiceException ex) {
+                throw new InterceptingActionException(infoSala.getNome(), ex);
+            } catch (InvalidTimeIntervalServiceException ex) {
+                throw new InvalidTimeIntervalActionException(ex);
             }
-            catch (ExistingServiceException ex)
-            {
-				throw new ExistingActionException("A aula", ex);
-            }
-            catch (InterceptingServiceException ex)
-            {
-				throw new InterceptingActionException(infoSala.getNome(), ex);
-            }
-            catch (InvalidTimeIntervalServiceException ex)
-            {
-				throw new InvalidTimeIntervalActionException(ex);
-			}
 
-			InfoExecutionCourse iDE =
-                (InfoExecutionCourse) request.getAttribute(SessionConstants.EXECUTION_COURSE);
-			Object argsLerAulas[] = new Object[1];
-			argsLerAulas[0] = iDE;
-			ArrayList infoAulas =
-				(ArrayList) ServiceManagerServiceFactory.executeService(
-					userView,
-					"LerAulasDeDisciplinaExecucao",
-					argsLerAulas);
+            InfoExecutionCourse iDE = (InfoExecutionCourse) request
+                    .getAttribute(SessionConstants.EXECUTION_COURSE);
+            Object argsLerAulas[] = new Object[1];
+            argsLerAulas[0] = iDE;
+            ArrayList infoAulas = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "LerAulasDeDisciplinaExecucao", argsLerAulas);
 
-			//sessao.removeAttribute("listaAulas");
-			if (infoAulas != null && !infoAulas.isEmpty())
-				request.setAttribute("listaAulas", infoAulas);
+            //sessao.removeAttribute("listaAulas");
+            if (infoAulas != null && !infoAulas.isEmpty())
+                request.setAttribute("listaAulas", infoAulas);
 
-			//sessao.removeAttribute("indexAula");
+            //sessao.removeAttribute("indexAula");
 
-			ActionErrors actionErrors = getActionErrors(result, inicio, fim);
+            ActionErrors actionErrors = getActionErrors(result, inicio, fim);
 
-            if (actionErrors.isEmpty())
-            {
-				//sessao.removeAttribute("infoAula");
+            if (actionErrors.isEmpty()) {
+                //sessao.removeAttribute("infoAula");
 
                 String parameter = request.getParameter(new String("operation"));
-				return mapping.findForward(parameter);
-			} 
-				saveErrors(request, actionErrors);
-				return mapping.getInputForward();
-			
-		} 
-			throw new Exception();
-	}
+                return mapping.findForward(parameter);
+            }
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
 
-	public ActionForward changeRoom(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-        throws Exception
-    {
+        }
+        throw new Exception();
+    }
 
-		DynaActionForm editarAulaForm = (DynaActionForm) form;
+    public ActionForward changeRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		HttpSession sessao = request.getSession(false);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionCourseContext(request);
+        DynaActionForm editarAulaForm = (DynaActionForm) form;
 
-        if (sessao != null)
-        {
+        HttpSession sessao = request.getSession(false);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionCourseContext(request);
+
+        if (sessao != null) {
             IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 
-			RequestUtils.setLessonTypes(request);
+            RequestUtils.setLessonTypes(request);
 
             Integer oldLessonOID = new Integer(request.getParameter("infoAula_oid"));
-			Object argsLesson[] = { oldLessonOID };
-			InfoLesson iAulaAntiga = null;
-			iAulaAntiga =
-				(InfoLesson) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadLessonByOID",
-					argsLesson);
-			request.setAttribute("infoAula", iAulaAntiga);
+            Object argsLesson[] = { oldLessonOID };
+            InfoLesson iAulaAntiga = null;
+            iAulaAntiga = (InfoLesson) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadLessonByOID", argsLesson);
+            request.setAttribute("infoAula", iAulaAntiga);
 
-			DiaSemana weekDay =
-				new DiaSemana(
-                    new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana"))));
+            DiaSemana weekDay = new DiaSemana(new Integer(formDay2EnumerateDay((String) editarAulaForm
+                    .get("diaSemana"))));
 
-			request.setAttribute("weekDayString", weekDay.toString());
+            request.setAttribute("weekDayString", weekDay.toString());
 
-			Calendar inicio = Calendar.getInstance();
-			inicio.set(
-				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String) editarAulaForm.get("horaInicio")));
+            Calendar inicio = Calendar.getInstance();
+            inicio
+                    .set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) editarAulaForm
+                            .get("horaInicio")));
             inicio.set(Calendar.MINUTE, Integer.parseInt((String) editarAulaForm.get("minutosInicio")));
-			inicio.set(Calendar.SECOND, 0);
-			Calendar fim = Calendar.getInstance();
+            inicio.set(Calendar.SECOND, 0);
+            Calendar fim = Calendar.getInstance();
             fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) editarAulaForm.get("horaFim")));
             fim.set(Calendar.MINUTE, Integer.parseInt((String) editarAulaForm.get("minutosFim")));
-			fim.set(Calendar.SECOND, 0);
+            fim.set(Calendar.SECOND, 0);
 
-			InfoRoom infoSala = new InfoRoom();
-			infoSala.setNome((String) editarAulaForm.get("nomeSala"));
+            InfoRoom infoSala = new InfoRoom();
+            infoSala.setNome((String) editarAulaForm.get("nomeSala"));
 
-			ActionErrors actionErrors = checkTimeInterval(inicio, fim);
+            ActionErrors actionErrors = checkTimeInterval(inicio, fim);
 
-            if (actionErrors.isEmpty())
-            {
-				InfoRoom infoRoom = new InfoRoom();
-				infoRoom.setCapacidadeNormal(new Integer(0));
-				infoRoom.setCapacidadeExame(new Integer(0));
+            if (actionErrors.isEmpty()) {
+                InfoRoom infoRoom = new InfoRoom();
+                infoRoom.setCapacidadeNormal(new Integer(0));
+                infoRoom.setCapacidadeExame(new Integer(0));
 
-				InfoLesson infoLesson = new InfoLesson();
-				infoLesson.setDiaSemana(weekDay);
-				infoLesson.setInicio(inicio);
-				infoLesson.setFim(fim);
+                InfoLesson infoLesson = new InfoLesson();
+                infoLesson.setDiaSemana(weekDay);
+                infoLesson.setInicio(inicio);
+                infoLesson.setFim(fim);
 
-				InfoExecutionPeriod infoExecutionPeriod =
-                    (InfoExecutionPeriod) (request.getAttribute(SessionConstants.EXECUTION_PERIOD));
+                InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) (request
+                        .getAttribute(SessionConstants.EXECUTION_PERIOD));
 
-				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
+                Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
-				List emptyRoomsList =
-					(List) ServiceUtils.executeService(
-						SessionUtils.getUserView(request),
-						"ReadEmptyRoomsService",
-						args);
+                List emptyRoomsList = (List) ServiceUtils.executeService(SessionUtils
+                        .getUserView(request), "ReadEmptyRoomsService", args);
 
-                if (emptyRoomsList == null || emptyRoomsList.isEmpty())
-                {
-					actionErrors.add(
-						"search.empty.rooms.no.rooms",
-						new ActionError("search.empty.rooms.no.rooms"));
-					saveErrors(request, actionErrors);
-					return mapping.getInputForward();
-				}
+                if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
+                    actionErrors.add("search.empty.rooms.no.rooms", new ActionError(
+                            "search.empty.rooms.no.rooms"));
+                    saveErrors(request, actionErrors);
+                    return mapping.getInputForward();
+                }
                 Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
-				List listaSalas = new ArrayList();
+                List listaSalas = new ArrayList();
                 listaSalas.add(new LabelValueBean(infoSala.getNome(), infoSala.getNome()));
-                for (int i = 0; i < emptyRoomsList.size(); i++)
-                {
-					InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
+                for (int i = 0; i < emptyRoomsList.size(); i++) {
+                    InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
                     listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));
-				}
-				emptyRoomsList.add(0, infoSala);
+                }
+                emptyRoomsList.add(0, infoSala);
 
-				//sessao.removeAttribute("listaSalas");
-				//sessao.removeAttribute("listaInfoSalas");
-				request.setAttribute("listaSalas", listaSalas);
-				request.setAttribute("listaInfoSalas", emptyRoomsList);
+                //sessao.removeAttribute("listaSalas");
+                //sessao.removeAttribute("listaInfoSalas");
+                request.setAttribute("listaSalas", listaSalas);
+                request.setAttribute("listaInfoSalas", emptyRoomsList);
 
                 String parameter = request.getParameter(new String("operation"));
-				return mapping.findForward(parameter);
-			}
-				saveErrors(request, actionErrors);
-				return mapping.getInputForward();
-			
-		} 
-			throw new Exception();
-	}
+                return mapping.findForward(parameter);
+            }
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
 
-	public ActionForward chooseRoom(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-        throws Exception
-    {
+        }
+        throw new Exception();
+    }
 
-		//super.execute(mapping, form, request, response);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setCurricularYearContext(request);
+    public ActionForward chooseRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		DynaActionForm editarAulaForm = (DynaActionForm) form;
+        //super.execute(mapping, form, request, response);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setCurricularYearContext(request);
 
-		HttpSession sessao = request.getSession(false);
-		RequestUtils.setLessonTypes(request);
-		SessionUtils.getExecutionCourses(request);
-        if (sessao != null)
-        {
-			DiaSemana weekDay =
-				new DiaSemana(
-                    new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana"))));
+        DynaActionForm editarAulaForm = (DynaActionForm) form;
 
-			request.setAttribute("weekDayString", weekDay.toString());
+        HttpSession sessao = request.getSession(false);
+        RequestUtils.setLessonTypes(request);
+        SessionUtils.getExecutionCourses(request);
+        if (sessao != null) {
+            DiaSemana weekDay = new DiaSemana(new Integer(formDay2EnumerateDay((String) editarAulaForm
+                    .get("diaSemana"))));
 
-			Calendar inicio = Calendar.getInstance();
-			inicio.set(
-				Calendar.HOUR_OF_DAY,
-				Integer.parseInt((String) editarAulaForm.get("horaInicio")));
+            request.setAttribute("weekDayString", weekDay.toString());
+
+            Calendar inicio = Calendar.getInstance();
+            inicio
+                    .set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) editarAulaForm
+                            .get("horaInicio")));
             inicio.set(Calendar.MINUTE, Integer.parseInt((String) editarAulaForm.get("minutosInicio")));
-			inicio.set(Calendar.SECOND, 0);
-			Calendar fim = Calendar.getInstance();
+            inicio.set(Calendar.SECOND, 0);
+            Calendar fim = Calendar.getInstance();
             fim.set(Calendar.HOUR_OF_DAY, Integer.parseInt((String) editarAulaForm.get("horaFim")));
             fim.set(Calendar.MINUTE, Integer.parseInt((String) editarAulaForm.get("minutosFim")));
-			fim.set(Calendar.SECOND, 0);
+            fim.set(Calendar.SECOND, 0);
 
-			ActionErrors actionErrors = checkTimeInterval(inicio, fim);
+            ActionErrors actionErrors = checkTimeInterval(inicio, fim);
 
-            if (actionErrors.isEmpty())
-            {
-				InfoRoom infoRoom = new InfoRoom();
-				infoRoom.setCapacidadeNormal(new Integer(0));
-				infoRoom.setCapacidadeExame(new Integer(0));
+            if (actionErrors.isEmpty()) {
+                InfoRoom infoRoom = new InfoRoom();
+                infoRoom.setCapacidadeNormal(new Integer(0));
+                infoRoom.setCapacidadeExame(new Integer(0));
 
-				InfoLesson infoLesson = new InfoLesson();
-				infoLesson.setDiaSemana(weekDay);
-				infoLesson.setInicio(inicio);
-				infoLesson.setFim(fim);
+                InfoLesson infoLesson = new InfoLesson();
+                infoLesson.setDiaSemana(weekDay);
+                infoLesson.setInicio(inicio);
+                infoLesson.setFim(fim);
 
-				InfoExecutionPeriod infoExecutionPeriod =
-                    (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+                InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                        .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
+                Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
-				List emptyRoomsList =
-					(List) ServiceUtils.executeService(
-						SessionUtils.getUserView(request),
-						"ReadEmptyRoomsService",
-						args);
+                List emptyRoomsList = (List) ServiceUtils.executeService(SessionUtils
+                        .getUserView(request), "ReadEmptyRoomsService", args);
                 Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
-                if (emptyRoomsList == null || emptyRoomsList.isEmpty())
-                {
-					actionErrors.add(
-						"search.empty.rooms.no.rooms",
-						new ActionError("search.empty.rooms.no.rooms"));
-					saveErrors(request, actionErrors);
-					return mapping.getInputForward();
-				}
+                if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
+                    actionErrors.add("search.empty.rooms.no.rooms", new ActionError(
+                            "search.empty.rooms.no.rooms"));
+                    saveErrors(request, actionErrors);
+                    return mapping.getInputForward();
+                }
 
-				ArrayList listaSalas = new ArrayList();
-				listaSalas.add(new LabelValueBean("Escolher", ""));
-                for (int i = 0; i < emptyRoomsList.size(); i++)
-                {
-					InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
+                ArrayList listaSalas = new ArrayList();
+                listaSalas.add(new LabelValueBean("Escolher", ""));
+                for (int i = 0; i < emptyRoomsList.size(); i++) {
+                    InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
                     listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));
-				}
+                }
 
-				//sessao.removeAttribute("listaSalas");
-				//sessao.removeAttribute("listaInfoSalas");
-				request.setAttribute("listaSalas", listaSalas);
-				request.setAttribute("listaInfoSalas", emptyRoomsList);
+                //sessao.removeAttribute("listaSalas");
+                //sessao.removeAttribute("listaInfoSalas");
+                request.setAttribute("listaSalas", listaSalas);
+                request.setAttribute("listaInfoSalas", emptyRoomsList);
 
                 String parameter = request.getParameter(new String("operation"));
-				return mapping.findForward(parameter);
-			} 
-				saveErrors(request, actionErrors);
-				return mapping.getInputForward();
-			
-		} 
-			throw new Exception();
-	}
+                return mapping.findForward(parameter);
+            }
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
 
-    private ActionErrors checkTimeInterval(Calendar begining, Calendar end)
-    {
-		ActionErrors actionErrors = new ActionErrors();
-		String beginMinAppend = "";
-		String endMinAppend = "";
+        }
+        throw new Exception();
+    }
 
-		if (begining.get(Calendar.MINUTE) == 0)
-			beginMinAppend = "0";
-		if (end.get(Calendar.MINUTE) == 0)
-			endMinAppend = "0";
+    private ActionErrors checkTimeInterval(Calendar begining, Calendar end) {
+        ActionErrors actionErrors = new ActionErrors();
+        String beginMinAppend = "";
+        String endMinAppend = "";
 
-        if (begining.getTime().getTime() >= end.getTime().getTime())
-        {
-			actionErrors.add(
-				INVALID_TIME_INTERVAL,
-				new ActionError(
-					INVALID_TIME_INTERVAL,
-					""
-						+ begining.get(Calendar.HOUR_OF_DAY)
-						+ ":"
-						+ begining.get(Calendar.MINUTE)
-						+ beginMinAppend
-						+ " - "
-						+ end.get(Calendar.HOUR_OF_DAY)
-						+ ":"
-						+ end.get(Calendar.MINUTE)
-						+ endMinAppend));
-		}
-		return actionErrors;
-	}
+        if (begining.get(Calendar.MINUTE) == 0)
+            beginMinAppend = "0";
+        if (end.get(Calendar.MINUTE) == 0)
+            endMinAppend = "0";
 
-    private ActionErrors getActionErrors(InfoLessonServiceResult result, Calendar inicio, Calendar fim)
-    {
-		ActionErrors actionErrors = new ActionErrors();
-		String beginMinAppend = "";
-		String endMinAppend = "";
+        if (begining.getTime().getTime() >= end.getTime().getTime()) {
+            actionErrors.add(INVALID_TIME_INTERVAL, new ActionError(INVALID_TIME_INTERVAL, ""
+                    + begining.get(Calendar.HOUR_OF_DAY) + ":" + begining.get(Calendar.MINUTE)
+                    + beginMinAppend + " - " + end.get(Calendar.HOUR_OF_DAY) + ":"
+                    + end.get(Calendar.MINUTE) + endMinAppend));
+        }
+        return actionErrors;
+    }
 
-		if (inicio.get(Calendar.MINUTE) == 0)
-			beginMinAppend = "0";
-		if (fim.get(Calendar.MINUTE) == 0)
-			endMinAppend = "0";
+    private ActionErrors getActionErrors(InfoLessonServiceResult result, Calendar inicio, Calendar fim) {
+        ActionErrors actionErrors = new ActionErrors();
+        String beginMinAppend = "";
+        String endMinAppend = "";
 
-        switch (result.getMessageType())
-        {
-			case InfoLessonServiceResult.SUCESS :
-				break;
-			case InfoLessonServiceResult.INVALID_TIME_INTERVAL :
-				actionErrors.add(
-					INVALID_TIME_INTERVAL,
-					new ActionError(
-						INVALID_TIME_INTERVAL,
-						""
-							+ inicio.get(Calendar.HOUR_OF_DAY)
-							+ ":"
-							+ inicio.get(Calendar.MINUTE)
-							+ beginMinAppend
-							+ " - "
-							+ fim.get(Calendar.HOUR_OF_DAY)
-							+ ":"
-							+ fim.get(Calendar.MINUTE)
-							+ endMinAppend));
-				break;
-			default :
-				actionErrors.add(UNKNOWN_ERROR, new ActionError(UNKNOWN_ERROR));
-				break;
-		}
-		return actionErrors;
-	}
+        if (inicio.get(Calendar.MINUTE) == 0)
+            beginMinAppend = "0";
+        if (fim.get(Calendar.MINUTE) == 0)
+            endMinAppend = "0";
 
-	public ActionForward input(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-        throws Exception
-    {
+        switch (result.getMessageType()) {
+        case InfoLessonServiceResult.SUCESS:
+            break;
+        case InfoLessonServiceResult.INVALID_TIME_INTERVAL:
+            actionErrors.add(INVALID_TIME_INTERVAL, new ActionError(INVALID_TIME_INTERVAL, ""
+                    + inicio.get(Calendar.HOUR_OF_DAY) + ":" + inicio.get(Calendar.MINUTE)
+                    + beginMinAppend + " - " + fim.get(Calendar.HOUR_OF_DAY) + ":"
+                    + fim.get(Calendar.MINUTE) + endMinAppend));
+            break;
+        default:
+            actionErrors.add(UNKNOWN_ERROR, new ActionError(UNKNOWN_ERROR));
+            break;
+        }
+        return actionErrors;
+    }
 
-		//super.execute(mapping, form, request, response);
-		ContextUtils.setExecutionPeriodContext(request);
-		ContextUtils.setExecutionDegreeContext(request);
-		ContextUtils.setCurricularYearContext(request);
-		ContextUtils.setExecutionCourseContext(request);
+    public ActionForward input(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		DynaActionForm editarAulaForm = (DynaActionForm) form;
+        //super.execute(mapping, form, request, response);
+        ContextUtils.setExecutionPeriodContext(request);
+        ContextUtils.setExecutionDegreeContext(request);
+        ContextUtils.setCurricularYearContext(request);
+        ContextUtils.setExecutionCourseContext(request);
 
-		HttpSession sessao = request.getSession(false);
-        if (sessao != null)
-        {
+        DynaActionForm editarAulaForm = (DynaActionForm) form;
 
-			IUserView userView = (IUserView) sessao.getAttribute("UserView");
+        HttpSession sessao = request.getSession(false);
+        if (sessao != null) {
+
+            IUserView userView = (IUserView) sessao.getAttribute("UserView");
 
             Integer oldLessonOID = new Integer(request.getParameter("infoAula_oid"));
-			Object argsLesson[] = { oldLessonOID };
-			InfoLesson infoAula = null;
-			infoAula =
-				(InfoLesson) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadLessonByOID",
-					argsLesson);
-			request.setAttribute("infoAula", infoAula);
+            Object argsLesson[] = { oldLessonOID };
+            InfoLesson infoAula = null;
+            infoAula = (InfoLesson) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadLessonByOID", argsLesson);
+            request.setAttribute("infoAula", infoAula);
 
-			editarAulaForm.set("diaSemana", String.valueOf(infoAula.getWeekDay()));
-			editarAulaForm.set(
-				"horaInicio",
-				String.valueOf(infoAula.getInicio().get(Calendar.HOUR_OF_DAY)));
-			editarAulaForm.set(
-				"minutosInicio",
-				String.valueOf(infoAula.getInicio().get(Calendar.MINUTE)));
+            editarAulaForm.set("diaSemana", String.valueOf(infoAula.getWeekDay()));
+            editarAulaForm.set("horaInicio", String.valueOf(infoAula.getInicio().get(
+                    Calendar.HOUR_OF_DAY)));
+            editarAulaForm.set("minutosInicio", String
+                    .valueOf(infoAula.getInicio().get(Calendar.MINUTE)));
             editarAulaForm.set("horaFim", String.valueOf(infoAula.getFim().get(Calendar.HOUR_OF_DAY)));
             editarAulaForm.set("minutosFim", String.valueOf(infoAula.getFim().get(Calendar.MINUTE)));
             editarAulaForm.set("tipoAula", String.valueOf(infoAula.getTipo().getTipo().intValue()));
             editarAulaForm.set("nomeSala", infoAula.getInfoRoomOccupation().getInfoRoom().getNome());
 
-			RequestUtils.setLessonTypes(request);
+            RequestUtils.setLessonTypes(request);
 
-			return mapping.findForward("Input");
-		} 
-			throw new Exception();
+            return mapping.findForward("Input");
+        }
+        throw new Exception();
 
-		
-	}
+    }
 }

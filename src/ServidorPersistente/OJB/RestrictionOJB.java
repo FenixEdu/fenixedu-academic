@@ -18,10 +18,11 @@ import ServidorPersistente.IPersistentRestriction;
  * @author David Santos in Aug 2, 2004
  */
 
-public class RestrictionOJB extends ObjectFenixOJB implements IPersistentRestriction {
+public class RestrictionOJB extends PersistentObjectOJB implements IPersistentRestriction {
 
     public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-        return readByCurricularCourseAndRestrictionClass(curricularCourse, RestrictionByCurricularCourse.class);
+        return readByCurricularCourseAndRestrictionClass(curricularCourse,
+                RestrictionByCurricularCourse.class);
     }
 
     public List readByCurricularCourseAndRestrictionClass(ICurricularCourse curricularCourse, Class clazz)

@@ -4,235 +4,247 @@
  */
 package Dominio;
 
-
 /**
  * @author Ivo Brandão
  */
 public class Site extends DomainObject implements ISite {
-	
-	private IExecutionCourse executionCourse;
-	private Integer keyExecutionCourse;
 
-	private String alternativeSite;
-	private String mail;
+    private IExecutionCourse executionCourse;
 
-	private String initialStatement;
-	private String introduction;
-	private String style;
-	
-	/** 
-	 * Construtor
-	 */
-	public Site() {
-	}
+    private Integer keyExecutionCourse;
 
-	public Site(Integer idInternal) {
-		setIdInternal(idInternal);
-		}
-	/** 
-	 * Construtor
-	 */
-	public Site(IExecutionCourse executionCourse) {
+    private String alternativeSite;
 
-		setExecutionCourse(executionCourse);
-	}
+    private String mail;
 
-	/**
-	 * @return IDisciplinaExecucao
-	 */
-	public IExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    private String initialStatement;
 
-	/**
-	 * Sets the executionCourse.
-	 * @param executionCourse The executionCourse to set
-	 */
-	public void setExecutionCourse(IExecutionCourse executionCourse) {
-		this.executionCourse = executionCourse;
-	}
+    private String introduction;
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
+    private String style;
 
-	/**
-	 * Sets the keyExecutionCourse.
-	 * @param keyExecutionCourse The keyExecutionCourse to set
-	 */
-	public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-		this.keyExecutionCourse = keyExecutionCourse;
-	}
+    /**
+     * Construtor
+     */
+    public Site() {
+    }
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof ISite) {
-			result =
-				(getExecutionCourse()
-					.equals(((ISite) arg0).getExecutionCourse()));
-		}
-		return result;
-	}
+    public Site(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * @return List
-	 */
-//	public List getAnnouncements() {
-//		return announcements;
-//	}
+    /**
+     * Construtor
+     */
+    public Site(IExecutionCourse executionCourse) {
 
-	/**
-	 * @return ISection
-	 */
-//	public ISection getInitialSection() {
-//		return initialSection;
-//	}
+        setExecutionCourse(executionCourse);
+    }
 
-	
+    /**
+     * @return IDisciplinaExecucao
+     */
+    public IExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	/**
-	 * @return List
-	 */
-//	public List getSections() {
-//		return sections;
-//	}
+    /**
+     * Sets the executionCourse.
+     * 
+     * @param executionCourse
+     *            The executionCourse to set
+     */
+    public void setExecutionCourse(IExecutionCourse executionCourse) {
+        this.executionCourse = executionCourse;
+    }
 
-	/**
-	 * Sets the announcements.
-	 * @param announcements The announcements to set
-	 */
-//	public void setAnnouncements(List announcements) {
-//		this.announcements = announcements;
-//	}
+    /**
+     * @return Integer
+     */
+    public Integer getKeyExecutionCourse() {
+        return keyExecutionCourse;
+    }
 
-	/**
-	 * Sets the initialSection.
-	 * @param initialSection The initialSection to set
-	 */
-//	public void setInitialSection(ISection initialSection) {
-//		this.initialSection = initialSection;
-//	}
+    /**
+     * Sets the keyExecutionCourse.
+     * 
+     * @param keyExecutionCourse
+     *            The keyExecutionCourse to set
+     */
+    public void setKeyExecutionCourse(Integer keyExecutionCourse) {
+        this.keyExecutionCourse = keyExecutionCourse;
+    }
 
-	
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object arg0) {
+        boolean result = false;
+        if (arg0 instanceof ISite) {
+            result = (getExecutionCourse().equals(((ISite) arg0).getExecutionCourse()));
+        }
+        return result;
+    }
 
-	/**
-	 * Sets the sections.
-	 * @param sections The sections to set
-	 */
-//	public void setSections(List sections) {
-//		this.sections = sections;
-//	}
+    /**
+     * @return List
+     */
+    //	public List getAnnouncements() {
+    //		return announcements;
+    //	}
+    /**
+     * @return ISection
+     */
+    //	public ISection getInitialSection() {
+    //		return initialSection;
+    //	}
+    /**
+     * @return List
+     */
+    //	public List getSections() {
+    //		return sections;
+    //	}
+    /**
+     * Sets the announcements.
+     * 
+     * @param announcements
+     *            The announcements to set
+     */
+    //	public void setAnnouncements(List announcements) {
+    //		this.announcements = announcements;
+    //	}
+    /**
+     * Sets the initialSection.
+     * 
+     * @param initialSection
+     *            The initialSection to set
+     */
+    //	public void setInitialSection(ISection initialSection) {
+    //		this.initialSection = initialSection;
+    //	}
+    /**
+     * Sets the sections.
+     * 
+     * @param sections
+     *            The sections to set
+     */
+    //	public void setSections(List sections) {
+    //		this.sections = sections;
+    //	}
+    /**
+     * @return Integer
+     */
+    //	public Integer getKeyInitialSection() {
+    //		return keyInitialSection;
+    //	}
+    /**
+     * Sets the keyInitialSection.
+     * 
+     * @param keyInitialSection
+     *            The keyInitialSection to set
+     */
+    //	public void setKeyInitialSection(Integer keyInitialSection) {
+    //		this.keyInitialSection = keyInitialSection;
+    //	}
+    /**
+     * @return String
+     */
+    public String getAlternativeSite() {
+        return alternativeSite;
+    }
 
-	/**
-	 * @return Integer
-	 */
-//	public Integer getKeyInitialSection() {
-//		return keyInitialSection;
-//	}
+    /**
+     * Sets the alternativeSite.
+     * 
+     * @param alternativeSite
+     *            The alternativeSite to set
+     */
+    public void setAlternativeSite(String alternativeSite) {
+        this.alternativeSite = alternativeSite;
+    }
 
-	/**
-	 * Sets the keyInitialSection.
-	 * @param keyInitialSection The keyInitialSection to set
-	 */
-//	public void setKeyInitialSection(Integer keyInitialSection) {
-//		this.keyInitialSection = keyInitialSection;
-//	}
-	
-	/**
-	 * @return String
-	 */
-	public String getAlternativeSite() {
-		return alternativeSite;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[SITE";
+        result += ", codInt=" + getIdInternal();
+        result += ", executionCourse=" + getExecutionCourse();
+        //			result += ", initialSection=" + getInitialSection();
+        result += ", initialStatement=" + getInitialStatement();
+        result += ", introduction=" + getIntroduction();
+        result += ", mail =" + getMail();
+        result += ", alternativeSite=" + getAlternativeSite();
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * Sets the alternativeSite.
-	 * @param alternativeSite The alternativeSite to set
-	 */
-	public void setAlternativeSite(String alternativeSite) {
-		this.alternativeSite = alternativeSite;
-	}
+    /**
+     * @return String
+     */
+    public String getMail() {
+        return mail;
+    }
 
-	/**
-		 * @see java.lang.Object#toString()
-		 */
-		public String toString() {
-			String result = "[SITE";
-			result += ", codInt=" + getIdInternal();
-			result += ", executionCourse=" + getExecutionCourse();
-//			result += ", initialSection=" + getInitialSection();
-			result += ", initialStatement=" + getInitialStatement();
-			result += ", introduction=" + getIntroduction();
-			result += ", mail =" + getMail();
-			result += ", alternativeSite="+getAlternativeSite();
-			result += "]";
-			return result;
-		}
+    /**
+     * Sets the mail.
+     * 
+     * @param mail
+     *            The mail to set
+     */
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getMail() {
-		return mail;
-	}
+    /**
+     * @return String
+     */
+    public String getInitialStatement() {
+        return initialStatement;
+    }
 
-	/**
-	 * Sets the mail.
-	 * @param mail The mail to set
-	 */
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+    /**
+     * @return String
+     */
+    public String getIntroduction() {
+        return introduction;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getInitialStatement() {
-		return initialStatement;
-	}
+    /**
+     * Sets the initialStatement.
+     * 
+     * @param initialStatement
+     *            The initialStatement to set
+     */
+    public void setInitialStatement(String initialStatement) {
+        this.initialStatement = initialStatement;
+    }
 
-	/**
-	 * @return String
-	 */
-	public String getIntroduction() {
-		return introduction;
-	}
+    /**
+     * Sets the introduction.
+     * 
+     * @param introduction
+     *            The introduction to set
+     */
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 
-	/**
-	 * Sets the initialStatement.
-	 * @param initialStatement The initialStatement to set
-	 */
-	public void setInitialStatement(String initialStatement) {
-		this.initialStatement = initialStatement;
-	}
+    /**
+     * @return String
+     */
+    public String getStyle() {
+        return style;
+    }
 
-	/**
-	 * Sets the introduction.
-	 * @param introduction The introduction to set
-	 */
-	public void setIntroduction(String introduction) {
-		this.introduction = introduction;
-	}
-
-	/**
-	 * @return String
-	 */
-	public String getStyle() {
-		return style;
-	}
-
-	/**
-	 * Sets the style.
-	 * @param style The style to set
-	 */
-	public void setStyle(String style) {
-		this.style = style;
-	}
+    /**
+     * Sets the style.
+     * 
+     * @param style
+     *            The style to set
+     */
+    public void setStyle(String style) {
+        this.style = style;
+    }
 
 }

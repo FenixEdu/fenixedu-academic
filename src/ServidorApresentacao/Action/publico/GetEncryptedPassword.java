@@ -33,24 +33,23 @@ public class GetEncryptedPassword extends Action {
      * error codes: 1-> service unavailable 2-> input data error 3-> no such
      * user
      */
-    public ActionForward execute(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
         String username = request.getParameter("login");
         String timestamp = request.getParameter("timestamp");
         String url = request.getParameter("url");
 
-        Object[] args = { username};
+        Object[] args = { username };
         InfoTeacher infoTeacher = null;
-        url= url +"?";
+        url = url + "?";
         Integer error = new Integer(0);
-        if (username.equals("") || timestamp.equals("")  || url.equals("?")) {
+        if (username.equals("") || timestamp.equals("") || url.equals("?")) {
             error = new Integer(2);
         } else {
-           
+
             try {
-                infoTeacher = (InfoTeacher) ServiceUtils.executeService(null,
-                        "ReadTeacherByUserName", args);
+                infoTeacher = (InfoTeacher) ServiceUtils.executeService(null, "ReadTeacherByUserName",
+                        args);
             } catch (FenixServiceException e) {
                 error = new Integer(1);
             }
@@ -58,8 +57,7 @@ public class GetEncryptedPassword extends Action {
         if (infoTeacher == null) {
             error = new Integer(3);
         } else {
-            url = url + "encrypted_password="
-                    + infoTeacher.getInfoPerson().getPassword() + "&";
+            url = url + "encrypted_password=" + infoTeacher.getInfoPerson().getPassword() + "&";
 
         }
         url = url + "timestamp=" + timestamp + "&";

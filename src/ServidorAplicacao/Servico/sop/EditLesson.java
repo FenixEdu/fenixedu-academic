@@ -95,10 +95,12 @@ public class EditLesson implements IServico {
                 if (result.getMessageType() == 1) {
                     throw new InvalidTimeIntervalServiceException();
                 }
-                boolean resultB = validNoInterceptingLesson(Cloner.copyInfoRoomOccupation2RoomOccupation(aulaNova.getInfoRoomOccupation()), roomOccupation);
+                boolean resultB = validNoInterceptingLesson(Cloner
+                        .copyInfoRoomOccupation2RoomOccupation(aulaNova.getInfoRoomOccupation()),
+                        roomOccupation);
                 /*
-                 * ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID( Turno.class,
-                 * infoShift.getIdInternal());
+                 * ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(
+                 * Turno.class, infoShift.getIdInternal());
                  */
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, newLesson);
                 if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
@@ -169,13 +171,15 @@ public class EditLesson implements IServico {
      * 
      * System.out.println("Tenho aulas:" + lessonMatchList.size());
      * 
-     * if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) || (lessonMatchList.size() >1 &&
-     * lessonMatchList.contains(lesson))) {
+     * if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) ||
+     * (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
      * 
-     * return false; } else { return true; } } catch (ExcepcaoPersistencia e) { return false; } }
+     * return false; } else { return true; } } catch (ExcepcaoPersistencia e) {
+     * return false; } }
      */
 
-    private boolean validNoInterceptingLesson(IRoomOccupation roomOccupation, IRoomOccupation oldroomOccupation) throws FenixServiceException {
+    private boolean validNoInterceptingLesson(IRoomOccupation roomOccupation,
+            IRoomOccupation oldroomOccupation) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             List roomOccupationInDBList = sp.getIPersistentRoomOccupation().readAll();
@@ -183,7 +187,7 @@ public class EditLesson implements IServico {
             Iterator iter = roomOccupationInDBList.iterator();
             while (iter.hasNext()) {
                 IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
-                if (roomOccupationInDB.equals(oldroomOccupation)){
+                if (roomOccupationInDB.equals(oldroomOccupation)) {
                     continue;
                 }
                 if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB)) {
@@ -196,13 +200,16 @@ public class EditLesson implements IServico {
         }
 
         /*
-         * throws ExistingServiceException,InterceptingServiceException { try { ISuportePersistente sp =
-         * SuportePersistenteOJB.getInstance(); IAulaPersistente persistentLesson =
-         * sp.getIAulaPersistente(); List lessonMatchList =
-         * persistentLesson.readLessonsInBroadPeriod(newLesson, oldLesson, executionPeriod); if
-         * (lessonMatchList.size() > 0) { if (lessonMatchList.contains(newLesson)) { throw new
-         * ExistingServiceException(); } else { throw new InterceptingServiceException(); } } else {
-         * return true; } } catch (ExcepcaoPersistencia e) { return false; }
+         * throws ExistingServiceException,InterceptingServiceException { try {
+         * ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+         * IAulaPersistente persistentLesson = sp.getIAulaPersistente(); List
+         * lessonMatchList =
+         * persistentLesson.readLessonsInBroadPeriod(newLesson, oldLesson,
+         * executionPeriod); if (lessonMatchList.size() > 0) { if
+         * (lessonMatchList.contains(newLesson)) { throw new
+         * ExistingServiceException(); } else { throw new
+         * InterceptingServiceException(); } } else { return true; } } catch
+         * (ExcepcaoPersistencia e) { return false; }
          */
     }
 
@@ -244,16 +251,19 @@ public class EditLesson implements IServico {
     private double getTotalHoursOfShiftType(ITurno shift, IAula alteredLesson)
             throws ExcepcaoPersistencia {
         /*
-         * ITurno shiftCriteria = new Turno(); shiftCriteria.setNome(shift.getNome());
+         * ITurno shiftCriteria = new Turno();
+         * shiftCriteria.setNome(shift.getNome());
          * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
          * 
-         * List lessonsOfShiftType = SuportePersistenteOJB .getInstance() .getITurnoAulaPersistente()
-         * .readLessonsByShift(shiftCriteria);
+         * List lessonsOfShiftType = SuportePersistenteOJB .getInstance()
+         * .getITurnoAulaPersistente() .readLessonsByShift(shiftCriteria);
          * 
-         * IAula lesson = null; double duration = 0; for (int i = 0; i < lessonsOfShiftType.size(); i++) {
-         * lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula(); if
-         * (!lesson.getIdInternal().equals(alteredLesson.getIdInternal())) { duration +=
-         * (getLessonDurationInMinutes(lesson).doubleValue() / 60); } } return duration;
+         * IAula lesson = null; double duration = 0; for (int i = 0; i <
+         * lessonsOfShiftType.size(); i++) { lesson = ((ITurnoAula)
+         * lessonsOfShiftType.get(i)).getAula(); if
+         * (!lesson.getIdInternal().equals(alteredLesson.getIdInternal())) {
+         * duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60); } }
+         * return duration;
          */
         IAula lesson = null;
         double duration = 0;
@@ -283,8 +293,8 @@ public class EditLesson implements IServico {
     }
 
     /**
-     * To change the template for this generated type comment go to Window&gt;Preferences&gt;Java&gt;Code
-     * Generation&gt;Code and Comments
+     * To change the template for this generated type comment go to
+     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
      */
     public class InvalidLoadException extends FenixServiceException {
         /**

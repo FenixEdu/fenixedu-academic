@@ -9,14 +9,14 @@ import Dominio.grant.contract.GrantPaymentEntity;
 import Dominio.grant.contract.GrantProject;
 import Dominio.grant.contract.IGrantProject;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantProject;
 
 /**
  * @author pica
  * @author barbosa
  */
-public class GrantProjectOJB extends ObjectFenixOJB implements IPersistentGrantProject {
+public class GrantProjectOJB extends PersistentObjectOJB implements IPersistentGrantProject {
 
     public IGrantProject readGrantProjectByNumber(String number) throws ExcepcaoPersistencia {
         IGrantProject grantProject = null;

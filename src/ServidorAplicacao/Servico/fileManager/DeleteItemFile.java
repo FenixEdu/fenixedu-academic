@@ -6,9 +6,9 @@ package ServidorAplicacao.Servico.fileManager;
 
 import org.apache.slide.common.SlideException;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IItem;
 import Dominio.Item;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
@@ -23,26 +23,9 @@ import fileSuport.IFileSuport;
  * @author João Mota 17/Set/2003
  *  
  */
-public class DeleteItemFile implements IServico {
+public class DeleteItemFile implements IService {
 
-    private static DeleteItemFile service = new DeleteItemFile();
-
-    public static DeleteItemFile getService() {
-
-        return service;
-    }
-
-    private DeleteItemFile() {
-
-    }
-
-    public final String getNome() {
-
-        return "DeleteItemFile";
-    }
-
-    public void run(Integer itemId, String fileName)
-            throws FenixServiceException {
+    public void run(Integer itemId, String fileName) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();

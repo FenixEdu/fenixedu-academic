@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -20,29 +20,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadExecutionCourseResponsiblesIds implements IServico {
-
-    private static ReadExecutionCourseResponsiblesIds service = new ReadExecutionCourseResponsiblesIds();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExecutionCourseResponsiblesIds getService() {
-        return service;
-    }
-
-    /**
-     * The constructor of this class.
-     */
-    private ReadExecutionCourseResponsiblesIds() {
-    }
-
-    /**
-     * Service name
-     */
-    public final String getNome() {
-        return "ReadExecutionCourseResponsiblesIds";
-    }
+public class ReadExecutionCourseResponsiblesIds implements IService {
 
     /**
      * Executes the service. Returns the current collection of ids of teachers.
@@ -53,11 +31,9 @@ public class ReadExecutionCourseResponsiblesIds implements IServico {
         List responsibles = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IExecutionCourse executionCourse = (IExecutionCourse) sp
-                    .getIPersistentExecutionCourse().readByOID(
-                            ExecutionCourse.class, executionCourseId);
-            responsibles = sp.getIPersistentResponsibleFor()
-                    .readByExecutionCourse(executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                    .readByOID(ExecutionCourse.class, executionCourseId);
+            responsibles = sp.getIPersistentResponsibleFor().readByExecutionCourse(executionCourse);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
@@ -69,8 +45,7 @@ public class ReadExecutionCourseResponsiblesIds implements IServico {
         Iterator iter = responsibles.iterator();
 
         while (iter.hasNext()) {
-            ids.add(((IResponsibleFor) iter.next()).getTeacher()
-                    .getIdInternal());
+            ids.add(((IResponsibleFor) iter.next()).getTeacher().getIdInternal());
         }
 
         return ids;

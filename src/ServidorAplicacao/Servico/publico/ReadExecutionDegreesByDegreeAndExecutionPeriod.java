@@ -14,8 +14,8 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -36,8 +36,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
         return service;
     }
 
-    public List run(Integer executionPeriodId, Integer degreeId)
-            throws FenixServiceException {
+    public List run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
         List infoExecutionDegreeList = null;
 
         try {
@@ -46,18 +45,16 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
             }
 
             SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             //Execution Period
             IExecutionPeriod executionPeriod;
             if (executionPeriodId == null) {
-                executionPeriod = persistentExecutionPeriod
-                        .readActualExecutionPeriod();
+                executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             } else {
 
-                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-                        .readByOID(ExecutionPeriod.class, executionPeriodId);
+                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                        ExecutionPeriod.class, executionPeriodId);
             }
 
             if (executionPeriod == null) {
@@ -71,17 +68,15 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
 
             //Degree
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class,
-                    degreeId);
+            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class, degreeId);
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
             //Execution degrees
-            ICursoExecucaoPersistente persistentExecutionDegre = sp
-                    .getICursoExecucaoPersistente();
-            List executionDegreeList = persistentExecutionDegre
-                    .readByDegreeAndExecutionYear(degree, executionYear);
+            IPersistentExecutionDegree persistentExecutionDegre = sp.getIPersistentExecutionDegree();
+            List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree,
+                    executionYear);
             if (executionDegreeList == null || executionDegreeList.size() <= 0) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
@@ -89,11 +84,11 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
             infoExecutionDegreeList = new ArrayList();
             ListIterator listIterator = executionDegreeList.listIterator();
             while (listIterator.hasNext()) {
-                ICursoExecucao executionDegree = (ICursoExecucao) listIterator
-                        .next();
+                ICursoExecucao executionDegree = (ICursoExecucao) listIterator.next();
 
                 //CLONER
-                //InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+                //InfoExecutionDegree infoExecutionDegree =
+                // (InfoExecutionDegree) Cloner
                 //        .get(executionDegree);
                 //if (executionDegree.getCoordinatorsList() != null) {
                 //    List infoCoordinatorList = new ArrayList();
@@ -110,7 +105,8 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
                 //    infoExecutionDegree
                 //            .setCoordinatorsList(infoCoordinatorList);
                 //}
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators.newInfoFromDomain(executionDegree);
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators
+                        .newInfoFromDomain(executionDegree);
 
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }

@@ -8,33 +8,27 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
-public class ReadPublishedFinalDegreeWorkProposalHeadersTest extends ServiceTestCase
-{
+public class ReadPublishedFinalDegreeWorkProposalHeadersTest extends ServiceTestCase {
 
-    public ReadPublishedFinalDegreeWorkProposalHeadersTest(java.lang.String testName)
-    {
+    public ReadPublishedFinalDegreeWorkProposalHeadersTest(java.lang.String testName) {
         super(testName);
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadPublishedFinalDegreeWorkProposalHeaders";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets_templates/servicos/finalDegreeWork/testDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath()
-    {
+    protected String getExpectedDataSetFilePath() {
         return "etc/datasets_templates/servicos/finalDegreeWork/testDataSet.xml";
     }
 
-    public void testSuccessfullCreateExamNew()
-    {
+    public void testSuccessfullCreateExamNew() {
     }
 
 }

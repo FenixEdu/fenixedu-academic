@@ -7,40 +7,41 @@ package DataBeans;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class InfoSiteExamMap extends DataTranferObject implements ISiteComponent {
-	
-	private InfoExamsMap infoExamsMap;
-	private InfoExecutionDegree infoExecutionDegree;
 
-	/**
-	 * @return
-	 */
-	public InfoExamsMap getInfoExamsMap() {
-		return infoExamsMap;
-	}
+    private InfoExamsMap infoExamsMap;
 
-	/**
-	 * @param map
-	 */
-	public void setInfoExamsMap(InfoExamsMap map) {
-		infoExamsMap = map;
-	}
+    private InfoExecutionDegree infoExecutionDegree;
 
-	/**
-	 * @return
-	 */
-	public InfoExecutionDegree getInfoExecutionDegree() {
-		return infoExecutionDegree;
-	}
+    /**
+     * @return
+     */
+    public InfoExamsMap getInfoExamsMap() {
+        return infoExamsMap;
+    }
 
-	/**
-	 * @param degree
-	 */
-	public void setInfoExecutionDegree(InfoExecutionDegree degree) {
-		infoExecutionDegree = degree;
-	}
+    /**
+     * @param map
+     */
+    public void setInfoExamsMap(InfoExamsMap map) {
+        infoExamsMap = map;
+    }
+
+    /**
+     * @return
+     */
+    public InfoExecutionDegree getInfoExecutionDegree() {
+        return infoExecutionDegree;
+    }
+
+    /**
+     * @param degree
+     */
+    public void setInfoExecutionDegree(InfoExecutionDegree degree) {
+        infoExecutionDegree = degree;
+    }
 
 }

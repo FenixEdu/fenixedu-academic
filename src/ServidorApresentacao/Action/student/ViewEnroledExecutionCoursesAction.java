@@ -28,51 +28,43 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author asnr & scpo
- *
+ *  
  */
 public class ViewEnroledExecutionCoursesAction extends FenixContextAction {
 
-	public ActionForward  execute (
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object[] args = { userView.getUtilizador()};
-		List allInfoExecutionCourses = null;
-		try {
-			allInfoExecutionCourses=
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadEnroledExecutionCourses",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		
-		List infoExecutionCourses = new ArrayList();
-		if (allInfoExecutionCourses.size() != 0) {
-			infoExecutionCourses.add(new LabelValueBean("[Escolha a Disciplina]", ""));
-			Iterator iter = allInfoExecutionCourses.iterator();
-			String label, value;
-			while (iter.hasNext()) {
-				InfoExecutionCourse infoExecutionCourse =(InfoExecutionCourse) iter.next();
-				value = infoExecutionCourse.getIdInternal().toString();
-				label = infoExecutionCourse.getNome();
-				
-				infoExecutionCourses.add(new LabelValueBean(label, value));
-			}
-	
-		}
-		request.setAttribute("infoExecutionCourses", infoExecutionCourses);
-		
-		return mapping.findForward("sucess");
-	
-		}
+        Object[] args = { userView.getUtilizador() };
+        List allInfoExecutionCourses = null;
+        try {
+            allInfoExecutionCourses = (List) ServiceUtils.executeService(userView,
+                    "ReadEnroledExecutionCourses", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        List infoExecutionCourses = new ArrayList();
+        if (allInfoExecutionCourses.size() != 0) {
+            infoExecutionCourses.add(new LabelValueBean("[Escolha a Disciplina]", ""));
+            Iterator iter = allInfoExecutionCourses.iterator();
+            String label, value;
+            while (iter.hasNext()) {
+                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) iter.next();
+                value = infoExecutionCourse.getIdInternal().toString();
+                label = infoExecutionCourse.getNome();
+
+                infoExecutionCourses.add(new LabelValueBean(label, value));
+            }
+
+        }
+        request.setAttribute("infoExecutionCourses", infoExecutionCourses);
+
+        return mapping.findForward("sucess");
+
+    }
 
 }

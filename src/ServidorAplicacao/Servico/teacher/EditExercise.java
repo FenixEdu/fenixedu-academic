@@ -23,39 +23,36 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class EditExercise implements IService {
 
-	public EditExercise() {
-	}
+    public EditExercise() {
+    }
 
-	public boolean run(Integer executionCourseId, Integer metadataId,
-			String author, String description, String difficulty,
-			Calendar learningTime, String level, String mainSubject,
-			String secondarySubject) throws FenixServiceException {
+    public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
+            String difficulty, Calendar learningTime, String level, String mainSubject,
+            String secondarySubject) throws FenixServiceException {
 
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB
-					.getInstance();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentMetadata persistentMetadata = persistentSuport
-					.getIPersistentMetadata();
+            IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 
-			IMetadata metadata = (IMetadata) persistentMetadata.readByOID(
-					Metadata.class, metadataId, true);
-			if (metadata == null)
-				throw new InvalidArgumentsServiceException();
-			if (author != null)
-				metadata.setAuthor(author);
-			if (!difficulty.equals("-1"))
-				metadata.setDifficulty(difficulty);
-			metadata.setDescription(description);
-			metadata.setLearningTime(learningTime);
-			metadata.setLevel(level);
-			metadata.setMainSubject(mainSubject);
-			metadata.setSecondarySubject(secondarySubject);
-			persistentMetadata.simpleLockWrite(metadata);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return true;
-	}
+            IMetadata metadata = (IMetadata) persistentMetadata.readByOID(Metadata.class, metadataId,
+                    true);
+            if (metadata == null)
+                throw new InvalidArgumentsServiceException();
+            if (author != null)
+                metadata.setAuthor(author);
+            if (!difficulty.equals("-1"))
+                metadata.setDifficulty(difficulty);
+            metadata.setDescription(description);
+            metadata.setLearningTime(learningTime);
+            metadata.setLevel(level);
+            metadata.setMainSubject(mainSubject);
+            metadata.setSecondarySubject(secondarySubject);
+            persistentMetadata.simpleLockWrite(metadata);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return true;
+    }
 
 }

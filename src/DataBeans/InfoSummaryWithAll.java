@@ -15,14 +15,12 @@ public class InfoSummaryWithAll extends InfoSummary {
     public void copyFromDomain(ISummary summary) {
         super.copyFromDomain(summary);
         if (summary != null) {
-            setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
-                    .newInfoFromDomain(summary.getExecutionCourse()));
-            setInfoShift(InfoShiftWithInfoExecutionCourseAndCollections
-                    .newInfoFromDomain(summary.getShift()));
-            setInfoProfessorship(InfoProfessorshipWithAll
-                    .newInfoFromDomain(summary.getProfessorship()));
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(summary
-                    .getTeacher()));
+            setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(summary
+                    .getExecutionCourse()));
+            setInfoShift(InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(summary
+                    .getShift()));
+            setInfoProfessorship(InfoProfessorshipWithAll.newInfoFromDomain(summary.getProfessorship()));
+            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(summary.getTeacher()));
             setInfoRoom(InfoRoom.newInfoFromDomain(summary.getRoom()));
         }
     }

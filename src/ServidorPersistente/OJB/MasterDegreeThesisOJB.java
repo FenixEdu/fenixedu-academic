@@ -14,23 +14,24 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMasterDegreeThesis;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public class MasterDegreeThesisOJB extends ObjectFenixOJB implements IPersistentMasterDegreeThesis {
+public class MasterDegreeThesisOJB extends PersistentObjectOJB implements IPersistentMasterDegreeThesis {
 
-	/** Creates a new instance of MasterDegreeCandidateOJB */
-	public MasterDegreeThesisOJB() {
-	}
+    /** Creates a new instance of MasterDegreeCandidateOJB */
+    public MasterDegreeThesisOJB() {
+    }
 
-	public IMasterDegreeThesis readByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-		IMasterDegreeThesis storedMasterDegreeThesis = (IMasterDegreeThesis) queryObject(MasterDegreeThesis.class, criteria);
+    public IMasterDegreeThesis readByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
+        IMasterDegreeThesis storedMasterDegreeThesis = (IMasterDegreeThesis) queryObject(
+                MasterDegreeThesis.class, criteria);
 
-		return storedMasterDegreeThesis;
-	}
+        return storedMasterDegreeThesis;
+    }
 
 }

@@ -12,79 +12,84 @@ import Dominio.DomainObject;
 
 /**
  * @author TJBF & PFON
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
+ * 
+ * To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Generation - Code and Comments
  */
 public class PublicationType extends DomainObject implements IPublicationType {
-	
-	private String publicationType;
-	private List requiredAttributes;
-	private List nonRequiredAttributes;
-	private List subtypes;
-	
 
-	/**
-	 * 
-	 */
-	public PublicationType() {
-	}
-	
-	
-	/**
-	 * @return Returns the nonRequiredAttributes.
-	 */
-	public List getNonRequiredAttributes() {
-		return nonRequiredAttributes;
-	}
+    private String publicationType;
 
-	/**
-	 * @return Returns the publicationType.
-	 */
-	public String getPublicationType() {
-		return publicationType;
-	}
+    private List requiredAttributes;
 
-	/**
-	 * @return Returns the requiredAttributes.
-	 */
-	public List getRequiredAttributes() {
-		return requiredAttributes;
-	}
+    private List nonRequiredAttributes;
 
-	/**
-	 * @return Returns the subtypes.
-	 */
-	public List getSubtypes() {
-		return subtypes;
-	}
+    private List subtypes;
 
-	/**
-	 * @param nonRequiredAttributes The nonRequiredAttributes to set.
-	 */
-	public void setNonRequiredAttributes(List nonRequiredAttributes) {
-		this.nonRequiredAttributes = nonRequiredAttributes;
-	}
+    /**
+     *  
+     */
+    public PublicationType() {
+    }
 
-	/**
-	 * @param publicationType The publicationType to set.
-	 */
-	public void setPublicationType(String publicationType) {
-		this.publicationType = publicationType;
-	}
+    /**
+     * @return Returns the nonRequiredAttributes.
+     */
+    public List getNonRequiredAttributes() {
+        return nonRequiredAttributes;
+    }
 
-	/**
-	 * @param requiredAttributes The requiredAttributes to set.
-	 */
-	public void setRequiredAttributes(List requiredAttributes) {
-		this.requiredAttributes = requiredAttributes;
-	}
+    /**
+     * @return Returns the publicationType.
+     */
+    public String getPublicationType() {
+        return publicationType;
+    }
 
-	/**
-	 * @param subtypes The subtypes to set.
-	 */
-	public void setSubtypes(List subtypes) {
-		this.subtypes = subtypes;
-	}
+    /**
+     * @return Returns the requiredAttributes.
+     */
+    public List getRequiredAttributes() {
+        return requiredAttributes;
+    }
+
+    /**
+     * @return Returns the subtypes.
+     */
+    public List getSubtypes() {
+        return subtypes;
+    }
+
+    /**
+     * @param nonRequiredAttributes
+     *            The nonRequiredAttributes to set.
+     */
+    public void setNonRequiredAttributes(List nonRequiredAttributes) {
+        this.nonRequiredAttributes = nonRequiredAttributes;
+    }
+
+    /**
+     * @param publicationType
+     *            The publicationType to set.
+     */
+    public void setPublicationType(String publicationType) {
+        this.publicationType = publicationType;
+    }
+
+    /**
+     * @param requiredAttributes
+     *            The requiredAttributes to set.
+     */
+    public void setRequiredAttributes(List requiredAttributes) {
+        this.requiredAttributes = requiredAttributes;
+    }
+
+    /**
+     * @param subtypes
+     *            The subtypes to set.
+     */
+    public void setSubtypes(List subtypes) {
+        this.subtypes = subtypes;
+    }
 
 }

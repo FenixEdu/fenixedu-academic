@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Servico.exceptions;
 
 /**
@@ -10,21 +9,21 @@ public class ActiveStudentCurricularPlanAlreadyExistsServiceException extends Fe
 
     public ActiveStudentCurricularPlanAlreadyExistsServiceException() {
     }
-    
-	public ActiveStudentCurricularPlanAlreadyExistsServiceException(Throwable cause) {
-		super(cause);
-	}
 
-	public ActiveStudentCurricularPlanAlreadyExistsServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	public String toString() {
-				String result = "[ActiveStudentCurricularPlanAlreadyExistsServiceException\n";
-				result += "message" +this.getMessage()+ "\n";
-				result += "cause" +this.getCause()+ "\n";
-				result += "]";
-				return result;
-			}
+    public ActiveStudentCurricularPlanAlreadyExistsServiceException(Throwable cause) {
+        super(cause);
+    }
 
+    public ActiveStudentCurricularPlanAlreadyExistsServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public String toString() {
+        String result = "[ActiveStudentCurricularPlanAlreadyExistsServiceException\n";
+        result += "message" + this.getMessage() + "\n";
+        result += "cause" + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

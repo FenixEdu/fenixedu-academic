@@ -28,17 +28,15 @@ public class InsertSection implements IService {
     public InsertSection() {
     }
 
-    private int organizeExistingSectionsOrder(ISection superiorSection,
-            ISite site, int insertSectionOrder) throws FenixServiceException {
+    private int organizeExistingSectionsOrder(ISection superiorSection, ISite site,
+            int insertSectionOrder) throws FenixServiceException {
 
         IPersistentSection persistentSection = null;
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentSection = persistentSuport.getIPersistentSection();
 
-            List sectionsList = persistentSection.readBySiteAndSection(site,
-                    superiorSection);
+            List sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
 
             if (sectionsList != null) {
 
@@ -54,8 +52,7 @@ public class InsertSection implements IService {
 
                     if (sectionOrder >= insertSectionOrder) {
                         persistentSection.simpleLockWrite(iterSection);
-                        iterSection.setSectionOrder(new Integer(
-                                sectionOrder + 1));
+                        iterSection.setSectionOrder(new Integer(sectionOrder + 1));
 
                     }
 
@@ -72,36 +69,30 @@ public class InsertSection implements IService {
 
     //infoItem with an infoSection
 
-    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode,
-            String sectionName, Integer sectionOrder)
-            throws FenixServiceException {
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String sectionName,
+            Integer sectionOrder) throws FenixServiceException {
 
         ISection section = null;
 
         try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = persistentSuport
-                    .getIPersistentSite();
-            IPersistentSection persistentSection = persistentSuport
-                    .getIPersistentSection();
+            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 
-            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
-            ISite iSite = persistentSite
-                    .readByExecutionCourse(iExecutionCourse);
+            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
+            ISite iSite = persistentSite.readByExecutionCourse(iExecutionCourse);
 
             ISection parentSection = null;
             if (sectionCode != null) {
-                parentSection = (ISection) persistentSection.readByOID(
-                        Section.class, sectionCode);
+                parentSection = (ISection) persistentSection.readByOID(Section.class, sectionCode);
             }
 
-            sectionOrder = new Integer(organizeExistingSectionsOrder(
-                    parentSection, iSite, sectionOrder.intValue()));
+            sectionOrder = new Integer(organizeExistingSectionsOrder(parentSection, iSite, sectionOrder
+                    .intValue()));
 
             Calendar calendario = Calendar.getInstance();
             section = new Section();

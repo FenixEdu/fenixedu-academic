@@ -85,7 +85,8 @@ public class ChangeStudentAreasDispatchAction extends DispatchAction {
 
         prepareContext(request, infoStudentCurricularPlan.getInfoBranch(), infoStudentCurricularPlan
                 .getInfoSecundaryBranch(), studentNumber);
-        request.setAttribute("degreeCurricularPlan",infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
+        request.setAttribute("degreeCurricularPlan", infoStudentCurricularPlan
+                .getInfoDegreeCurricularPlan());
         request.setAttribute("infoBranches", infoBranches);
         return mapping.findForward("showAndChooseStudentAreas");
     }

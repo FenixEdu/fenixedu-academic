@@ -36,18 +36,16 @@ public class AssociateTeacher implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentProfessorship persistentProfessorship = sp
-                    .getIPersistentProfessorship();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
             ITeacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
             if (iTeacher == null) {
                 throw new InvalidArgumentsServiceException();
             }
 
-            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
             IProfessorship professorship = new Professorship();
             persistentProfessorship.simpleLockWrite(professorship);
 

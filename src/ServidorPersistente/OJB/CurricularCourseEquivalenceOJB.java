@@ -14,7 +14,7 @@ import ServidorPersistente.IPersistentCurricularCourseEquivalence;
  * @author David Santos in Jun 29, 2004
  */
 
-public class CurricularCourseEquivalenceOJB extends ObjectFenixOJB implements
+public class CurricularCourseEquivalenceOJB extends PersistentObjectOJB implements
         IPersistentCurricularCourseEquivalence {
 
     /*
@@ -52,10 +52,9 @@ public class CurricularCourseEquivalenceOJB extends ObjectFenixOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("equivalentCurricularCourse.idInternal", equivalentCurricularCourse
                 .getIdInternal());
-        crit.addEqualTo("oldCurricularCourse.idInternal", oldCurricularCourse
-                .getIdInternal());
-        crit.addEqualTo("degreeCurricularPlan.idInternal", 
-                equivalentCurricularCourse.getDegreeCurricularPlan().getIdInternal());
+        crit.addEqualTo("oldCurricularCourse.idInternal", oldCurricularCourse.getIdInternal());
+        crit.addEqualTo("degreeCurricularPlan.idInternal", equivalentCurricularCourse
+                .getDegreeCurricularPlan().getIdInternal());
         return (ICurricularCourseEquivalence) queryObject(CurricularCourseEquivalence.class, crit);
     }
 }

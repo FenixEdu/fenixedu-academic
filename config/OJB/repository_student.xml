@@ -47,6 +47,11 @@
 		jdbc-type="BIT"
 	/>
 	<field-descriptor
+		name="specialSeason"
+		column="SPECIAL_SEASON"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
 		name="enrollmentForbidden"
 		column="ENROLLMENT_FORBIDDEN"
 		jdbc-type="BIT"
@@ -62,6 +67,26 @@
 		column="ACK_OPT_LOCK"
 		jdbc-type="INTEGER"
 		locking="true"
+	/>
+	<field-descriptor 
+        name="entryGrade"
+        column="ENTRY_GRADE"
+        jdbc-type="DOUBLE"
+	/>
+	<field-descriptor 
+        name="contigent"
+        column="CONTIGENT"
+        jdbc-type="VARCHAR"
+	/>
+	<field-descriptor 
+        name="ingression"
+        column="INGRESSION"
+        jdbc-type="VARCHAR"
+	/>
+	<field-descriptor 
+        name="istUniversity"
+        column="IST_UNIVERSITY"
+        jdbc-type="VARCHAR"
 	/>
 	<reference-descriptor
 			name="person"

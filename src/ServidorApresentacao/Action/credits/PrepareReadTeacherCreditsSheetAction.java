@@ -25,30 +25,33 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author jpvl
  */
-public class PrepareReadTeacherCreditsSheetAction extends Action
-{
-    
-    /* (non-Javadoc)
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+public class PrepareReadTeacherCreditsSheetAction extends Action {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
      */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception
-    {
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
-        
-        DynaActionForm dynaForm = (DynaActionForm) form;        
+
+        DynaActionForm dynaForm = (DynaActionForm) form;
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
-        if (infoTeacher == null){
-            Integer teacherNumber = (Integer)dynaForm.get("teacherNumber");
+        if (infoTeacher == null) {
+            Integer teacherNumber = (Integer) dynaForm.get("teacherNumber");
             infoTeacher = new InfoTeacher();
             infoTeacher.setTeacherNumber(teacherNumber);
         }
-        
+
         Object args[] = { infoTeacher.getIdInternal() };
         List infoCredits = (List) ServiceUtils.executeService(userView, "ReadTeacherCredits", args);
-        
+
         request.setAttribute("infoCredits", infoCredits);
-        
+
         BeanComparator descriptionComparator = new BeanComparator("infoExecutionPeriod.description");
         Collections.sort(infoCredits, descriptionComparator);
         return mapping.findForward("successfull-prepare");

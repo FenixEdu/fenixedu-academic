@@ -14,20 +14,17 @@ import Util.enrollment.CurricularCourseEnrollmentType;
  */
 
 public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends
-	RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse implements IRestrictionByCurricularCourse
-{
-	public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse()
-	{
-		super();
-	}
+        RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse implements IRestrictionByCurricularCourse {
+    public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse() {
+        super();
+    }
 
-	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
-	{
-		ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
-		CurricularCourseEnrollmentType result1 = null;
-		CurricularCourseEnrollmentType result2 = null;
-		
-		List curricularCoursesWhereStudentCanBeEnrolled = (List) CollectionUtils.collect(
+    public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
+        ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
+        CurricularCourseEnrollmentType result1 = null;
+        CurricularCourseEnrollmentType result2 = null;
+
+        List curricularCoursesWhereStudentCanBeEnrolled = (List) CollectionUtils.collect(
                 precedenceContext.getCurricularCourses2Enroll(), new Transformer() {
                     public Object transform(Object obj) {
                         CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
@@ -42,7 +39,7 @@ public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse ex
         }
 
         result2 = super.evaluate(precedenceContext);
-        
+
         return result1.or(result2);
-	}
+    }
 }

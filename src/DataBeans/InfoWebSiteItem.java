@@ -5,297 +5,314 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @author  Fernanda Quitério
- * 24/09/2003
- * 
+ * @author Fernanda Quitério 24/09/2003
+ *  
  */
 public class InfoWebSiteItem extends InfoObject {
-	private String title;
-	private String mainEntryText;
-	private String excerpt;
-	private Boolean published;
-	private Timestamp creationDate;
-	private String keywords;
-	private Date onlineBeginDay;
-	private Date onlineEndDay;
-	private Calendar itemBeginDayCalendar;
-	private Calendar itemEndDayCalendar;
-	private Boolean toDelete;
-	private String authorName;
-	private String authorEmail;
+    private String title;
 
-	private InfoWebSiteSection infoWebSiteSection;
-	private InfoPerson infoEditor;
+    private String mainEntryText;
 
-	/**
-	 * @return
-	 */
-	public Boolean getToDelete() {
-		return toDelete;
-	}
+    private String excerpt;
 
-	/**
-	 * @param toDelete
-	 */
-	public void setToDelete(Boolean toDelete) {
-		this.toDelete = toDelete;
-	}
+    private Boolean published;
 
-	/**
-	 * @return
-	 */
-	public Timestamp getCreationDate() {
-		return creationDate;
-	}
+    private Timestamp creationDate;
 
-	/**
-	 * @param creationDate
-	 */
-	public void setCreationDate(Timestamp creationDate) {
+    private String keywords;
 
-		this.creationDate = creationDate;
-	}
+    private Date onlineBeginDay;
 
-	/**
-	 * @return
-	 */
-	public InfoPerson getInfoEditor() {
-		return infoEditor;
-	}
+    private Date onlineEndDay;
 
-	/**
-	 * @param editor
-	 */
-	public void setInfoEditor(InfoPerson editor) {
-		this.infoEditor = editor;
-	}
+    private Calendar itemBeginDayCalendar;
 
-	/**
-	 * @return
-	 */
-	public String getExcerpt() {
-		return excerpt;
-	}
+    private Calendar itemEndDayCalendar;
 
-	/**
-	 * @param excerpt
-	 */
-	public void setExcerpt(String excerpt) {
-		this.excerpt = excerpt;
-	}
+    private Boolean toDelete;
 
-	/**
-	 * @return
-	 */
-	public Calendar getItemBeginDayCalendar() {
-		return itemBeginDayCalendar;
-	}
+    private String authorName;
 
-	/**
-	 * @param itemBeginDay
-	 */
-	public void setItemBeginDayCalendar(Calendar itemBeginDayCalendar) {
-		this.itemBeginDayCalendar = itemBeginDayCalendar;
-	}
+    private String authorEmail;
 
-	/**
-	 * @return
-	 */
-	public Calendar getItemEndDayCalendar() {
-		return itemEndDayCalendar;
-	}
+    private InfoWebSiteSection infoWebSiteSection;
 
-	/**
-	 * @param itemEndDay
-	 */
-	public void setItemEndDayCalendar(Calendar itemEndDayCalendar) {
-		this.itemEndDayCalendar = itemEndDayCalendar;
-	}
+    private InfoPerson infoEditor;
 
-	/**
-	 * @return
-	 */
-	public String getKeywords() {
-		return keywords;
-	}
+    /**
+     * @return
+     */
+    public Boolean getToDelete() {
+        return toDelete;
+    }
 
-	/**
-	 * @param keywords
-	 */
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
+    /**
+     * @param toDelete
+     */
+    public void setToDelete(Boolean toDelete) {
+        this.toDelete = toDelete;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getMainEntryText() {
-		return mainEntryText;
-	}
+    /**
+     * @return
+     */
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
 
-	/**
-	 * @param mainEntryText
-	 */
-	public void setMainEntryText(String mainEntryText) {
-		this.mainEntryText = mainEntryText;
-	}
+    /**
+     * @param creationDate
+     */
+    public void setCreationDate(Timestamp creationDate) {
 
-	/**
-	 * @return
-	 */
-	public Date getOnlineBeginDay() {
-		return onlineBeginDay;
-	}
+        this.creationDate = creationDate;
+    }
 
-	/**
-	 * @param onlineBeginDay
-	 */
-	public void setOnlineBeginDay(Date onlineBeginDay) {
-		this.onlineBeginDay = onlineBeginDay;
-	}
+    /**
+     * @return
+     */
+    public InfoPerson getInfoEditor() {
+        return infoEditor;
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getOnlineEndDay() {
-		return onlineEndDay;
-	}
+    /**
+     * @param editor
+     */
+    public void setInfoEditor(InfoPerson editor) {
+        this.infoEditor = editor;
+    }
 
-	/**
-	 * @param onlineEndDay
-	 */
-	public void setOnlineEndDay(Date onlineEndDay) {
-		this.onlineEndDay = onlineEndDay;
-	}
+    /**
+     * @return
+     */
+    public String getExcerpt() {
+        return excerpt;
+    }
 
-	/**
-	 * @return
-	 */
-	public Boolean getPublished() {
-		return published;
-	}
+    /**
+     * @param excerpt
+     */
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
+    }
 
-	/**
-	 * @param published
-	 */
-	public void setPublished(Boolean published) {
-		this.published = published;
-	}
+    /**
+     * @return
+     */
+    public Calendar getItemBeginDayCalendar() {
+        return itemBeginDayCalendar;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getTitle() {
-		return title;
-	}
+    /**
+     * @param itemBeginDay
+     */
+    public void setItemBeginDayCalendar(Calendar itemBeginDayCalendar) {
+        this.itemBeginDayCalendar = itemBeginDayCalendar;
+    }
 
-	/**
-	 * @param title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    /**
+     * @return
+     */
+    public Calendar getItemEndDayCalendar() {
+        return itemEndDayCalendar;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoWebSiteSection getInfoWebSiteSection() {
-		return infoWebSiteSection;
-	}
+    /**
+     * @param itemEndDay
+     */
+    public void setItemEndDayCalendar(Calendar itemEndDayCalendar) {
+        this.itemEndDayCalendar = itemEndDayCalendar;
+    }
 
-	/**
-	 * @param infoWebSiteSection
-	 */
-	public void setInfoWebSiteSection(InfoWebSiteSection infoWebSiteSection) {
-		this.infoWebSiteSection = infoWebSiteSection;
-	}
+    /**
+     * @return
+     */
+    public String getKeywords() {
+        return keywords;
+    }
 
-	/**
-	 * Constructor
-	 */
-	public InfoWebSiteItem() {
-		setToDelete(Boolean.FALSE);
-	}
+    /**
+     * @param keywords
+     */
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
 
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof InfoWebSiteItem) {
-			InfoWebSiteItem webSiteItem = (InfoWebSiteItem) arg0;
+    /**
+     * @return
+     */
+    public String getMainEntryText() {
+        return mainEntryText;
+    }
 
-			if (elementsAreEqual(webSiteItem.getTitle(), this.getTitle())
-				&& elementsAreEqual(webSiteItem.getCreationDate(), this.getCreationDate())
-				&& elementsAreEqual(webSiteItem.getInfoEditor(), this.getInfoEditor())
-				&& elementsAreEqual(webSiteItem.getAuthorName(), this.getAuthorName())
-			&& elementsAreEqual(webSiteItem.getAuthorEmail(), this.getAuthorEmail())
-				&& elementsAreEqual(webSiteItem.getExcerpt(), this.getExcerpt())
-				&& elementsAreEqual(webSiteItem.getItemBeginDayCalendar(), this.getItemBeginDayCalendar())
-				&& elementsAreEqual(webSiteItem.getItemEndDayCalendar(), this.getItemEndDayCalendar())
-				&& elementsAreEqual(webSiteItem.getKeywords(), this.getKeywords())
-				&& elementsAreEqual(webSiteItem.getMainEntryText(), this.getMainEntryText())
-				&& elementsAreEqual(webSiteItem.getOnlineBeginDay(), this.getOnlineBeginDay())
-				&& elementsAreEqual(webSiteItem.getOnlineEndDay(), this.getOnlineEndDay())
-				&& elementsAreEqual(webSiteItem.getPublished(), this.getPublished())
-				&& elementsAreEqual(webSiteItem.getInfoWebSiteSection(), this.getInfoWebSiteSection())) {
-				result = true;
-			}
-		}
-		return result;
-	}
+    /**
+     * @param mainEntryText
+     */
+    public void setMainEntryText(String mainEntryText) {
+        this.mainEntryText = mainEntryText;
+    }
 
-	private boolean elementsAreEqual(Object element1, Object element2) {
-		boolean result = false;
-		if ((element1 == null && element2 == null) || (element1 != null && element2 != null && element1.equals(element2))) {
-			result = true;
-		}
-		return result;
-	}
-	public String toString() {
-		String result = "[INFOWEBSITEITEM";
-		result += ", codInt=" + this.getIdInternal();
-		result += ", title=" + this.getTitle();
-		result += ", mainEntryText=" + this.getMainEntryText();
-		result += ", excerpt=" + this.getExcerpt();
-		result += ", published=" + this.getPublished();
-		result += ", creationDate=" + this.getCreationDate();
-		result += ", keywords=" + this.getKeywords();
-		result += ", onlineBeginDay=" + this.getOnlineBeginDay();
-		result += ", onlineEndDay=" + this.getOnlineEndDay();
-		result += ", itemBeginDay=" + this.getItemBeginDayCalendar();
-		result += ", itemEndDay=" + this.getItemEndDayCalendar();
-		result += ", webSiteSection=" + this.getInfoWebSiteSection();
-		result += ", editor=" + this.getInfoEditor();
-		result += ", authorName=" + this.getAuthorName();
-		result += ", authorEmail=" + this.getAuthorEmail();
-		result += "]";
-		return result;
-	}
+    /**
+     * @return
+     */
+    public Date getOnlineBeginDay() {
+        return onlineBeginDay;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getAuthorEmail() {
-		return authorEmail;
-	}
+    /**
+     * @param onlineBeginDay
+     */
+    public void setOnlineBeginDay(Date onlineBeginDay) {
+        this.onlineBeginDay = onlineBeginDay;
+    }
 
-	/**
-	 * @param authorEmail
-	 */
-	public void setAuthorEmail(String authorEmail) {
-		this.authorEmail = authorEmail;
-	}
+    /**
+     * @return
+     */
+    public Date getOnlineEndDay() {
+        return onlineEndDay;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getAuthorName() {
-		return authorName;
-	}
+    /**
+     * @param onlineEndDay
+     */
+    public void setOnlineEndDay(Date onlineEndDay) {
+        this.onlineEndDay = onlineEndDay;
+    }
 
-	/**
-	 * @param authorName
-	 */
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
-	}
+    /**
+     * @return
+     */
+    public Boolean getPublished() {
+        return published;
+    }
+
+    /**
+     * @param published
+     */
+    public void setPublished(Boolean published) {
+        this.published = published;
+    }
+
+    /**
+     * @return
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return
+     */
+    public InfoWebSiteSection getInfoWebSiteSection() {
+        return infoWebSiteSection;
+    }
+
+    /**
+     * @param infoWebSiteSection
+     */
+    public void setInfoWebSiteSection(InfoWebSiteSection infoWebSiteSection) {
+        this.infoWebSiteSection = infoWebSiteSection;
+    }
+
+    /**
+     * Constructor
+     */
+    public InfoWebSiteItem() {
+        setToDelete(Boolean.FALSE);
+    }
+
+    public boolean equals(Object arg0) {
+        boolean result = false;
+        if (arg0 instanceof InfoWebSiteItem) {
+            InfoWebSiteItem webSiteItem = (InfoWebSiteItem) arg0;
+
+            if (elementsAreEqual(webSiteItem.getTitle(), this.getTitle())
+                    && elementsAreEqual(webSiteItem.getCreationDate(), this.getCreationDate())
+                    && elementsAreEqual(webSiteItem.getInfoEditor(), this.getInfoEditor())
+                    && elementsAreEqual(webSiteItem.getAuthorName(), this.getAuthorName())
+                    && elementsAreEqual(webSiteItem.getAuthorEmail(), this.getAuthorEmail())
+                    && elementsAreEqual(webSiteItem.getExcerpt(), this.getExcerpt())
+                    && elementsAreEqual(webSiteItem.getItemBeginDayCalendar(), this
+                            .getItemBeginDayCalendar())
+                    && elementsAreEqual(webSiteItem.getItemEndDayCalendar(), this
+                            .getItemEndDayCalendar())
+                    && elementsAreEqual(webSiteItem.getKeywords(), this.getKeywords())
+                    && elementsAreEqual(webSiteItem.getMainEntryText(), this.getMainEntryText())
+                    && elementsAreEqual(webSiteItem.getOnlineBeginDay(), this.getOnlineBeginDay())
+                    && elementsAreEqual(webSiteItem.getOnlineEndDay(), this.getOnlineEndDay())
+                    && elementsAreEqual(webSiteItem.getPublished(), this.getPublished())
+                    && elementsAreEqual(webSiteItem.getInfoWebSiteSection(), this
+                            .getInfoWebSiteSection())) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    private boolean elementsAreEqual(Object element1, Object element2) {
+        boolean result = false;
+        if ((element1 == null && element2 == null)
+                || (element1 != null && element2 != null && element1.equals(element2))) {
+            result = true;
+        }
+        return result;
+    }
+
+    public String toString() {
+        String result = "[INFOWEBSITEITEM";
+        result += ", codInt=" + this.getIdInternal();
+        result += ", title=" + this.getTitle();
+        result += ", mainEntryText=" + this.getMainEntryText();
+        result += ", excerpt=" + this.getExcerpt();
+        result += ", published=" + this.getPublished();
+        result += ", creationDate=" + this.getCreationDate();
+        result += ", keywords=" + this.getKeywords();
+        result += ", onlineBeginDay=" + this.getOnlineBeginDay();
+        result += ", onlineEndDay=" + this.getOnlineEndDay();
+        result += ", itemBeginDay=" + this.getItemBeginDayCalendar();
+        result += ", itemEndDay=" + this.getItemEndDayCalendar();
+        result += ", webSiteSection=" + this.getInfoWebSiteSection();
+        result += ", editor=" + this.getInfoEditor();
+        result += ", authorName=" + this.getAuthorName();
+        result += ", authorEmail=" + this.getAuthorEmail();
+        result += "]";
+        return result;
+    }
+
+    /**
+     * @return
+     */
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    /**
+     * @param authorEmail
+     */
+    public void setAuthorEmail(String authorEmail) {
+        this.authorEmail = authorEmail;
+    }
+
+    /**
+     * @return
+     */
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    /**
+     * @param authorName
+     */
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 
 }

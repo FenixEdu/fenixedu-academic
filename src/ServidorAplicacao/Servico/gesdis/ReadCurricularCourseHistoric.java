@@ -41,20 +41,16 @@ public class ReadCurricularCourseHistoric implements IService {
         super();
     }
 
-    public InfoSiteCourseHistoric run(Integer curricularCourseId)
-            throws FenixServiceException {
+    public InfoSiteCourseHistoric run(Integer curricularCourseId) throws FenixServiceException {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                    .getIPersistentExecutionPeriod();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, curricularCourseId);
 
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readActualExecutionPeriod();
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             Integer semester = executionPeriod.getSemester();
             // TODO: corrigir o calculo do semestre
             semester = new Integer(semester.intValue() == 2 ? 1 : 2);
@@ -69,27 +65,23 @@ public class ReadCurricularCourseHistoric implements IService {
      * @param sp
      * @return
      */
-    private InfoSiteCourseHistoric getInfoSiteCourseHistoric(
-            ICurricularCourse curricularCourse, Integer semester,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private InfoSiteCourseHistoric getInfoSiteCourseHistoric(ICurricularCourse curricularCourse,
+            Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
         InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
         InfoCurricularCourse infoCurricularCourse = Cloner
                 .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-        IPersistentCourseHistoric persistentCourseHistoric = sp
-                .getIPersistentCourseHistoric();
-        List coursesHistoric = persistentCourseHistoric
-                .readByCurricularCourseAndSemester(curricularCourse, semester);
-        List infoCoursesHistoric = (List) CollectionUtils.collect(
-                coursesHistoric, new Transformer() {
-                    public Object transform(Object arg0) {
-                        ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
-                        return Cloner
-                                .copyICourseHistoric2InfoCourseHistoric(courseHistoric);
-                    }
+        IPersistentCourseHistoric persistentCourseHistoric = sp.getIPersistentCourseHistoric();
+        List coursesHistoric = persistentCourseHistoric.readByCurricularCourseAndSemester(
+                curricularCourse, semester);
+        List infoCoursesHistoric = (List) CollectionUtils.collect(coursesHistoric, new Transformer() {
+            public Object transform(Object arg0) {
+                ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
+                return Cloner.copyICourseHistoric2InfoCourseHistoric(courseHistoric);
+            }
 
-                });
+        });
 
         Collections.sort(infoCoursesHistoric, new Comparator() {
 

@@ -1,6 +1,6 @@
 /*
  * Created on 8/Abr/2003
- *
+ *  
  */
 package ServidorApresentacao.Action.teacher;
 
@@ -16,8 +16,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
 import ServidorAplicacao.Servico.UserView;
@@ -27,16 +25,12 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
-public class EditItemDispatchAction extends FenixDispatchAction
-{
+public class EditItemDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepareEdit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-    {
+    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
 
         String indexString = request.getParameter("index");
 
@@ -51,9 +45,10 @@ public class EditItemDispatchAction extends FenixDispatchAction
 
         //		GestorServicos manager = GestorServicos.manager();
         //		Object readSectionArgs[] = { oldInfoItem.getInfoSection() };
-        //		ArrayList items;
+        //		List items;
         //		try {
-        //			infoItemsList =(ArrayList) ServiceManagerServiceFactory.executeService(null,"ReadItems",readSectionArgs);
+        //			infoItemsList =(ArrayList)
+        // ServiceManagerServiceFactory.executeService(null,"ReadItems",readSectionArgs);
         //			} catch (FenixServiceException fenixServiceException) {
         //				throw new FenixActionException(fenixServiceException.getMessage());
         //			}
@@ -67,13 +62,8 @@ public class EditItemDispatchAction extends FenixDispatchAction
         return mapping.findForward("editItem");
     }
 
-    public ActionForward edit(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         DynaActionForm itemForm = (DynaActionForm) form;
         HttpSession session = request.getSession(false);
@@ -84,14 +74,14 @@ public class EditItemDispatchAction extends FenixDispatchAction
 
         InfoItem oldInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
 
-        //InfoItem newInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
+        //InfoItem newInfoItem = (InfoItem)
+        // session.getAttribute(SessionConstants.INFO_ITEM);
         Object readSectionArgs[] = { infoSection };
-        ArrayList items;
-        try
-        {
-            items = (ArrayList) ServiceManagerServiceFactory.executeService(null, "ReadItems", readSectionArgs);
-        } catch (FenixServiceException fenixServiceException)
-        {
+        List items;
+        try {
+            items = (ArrayList) ServiceManagerServiceFactory.executeService(null, "ReadItems",
+                    readSectionArgs);
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
@@ -99,21 +89,18 @@ public class EditItemDispatchAction extends FenixDispatchAction
         newInfoItem.setInfoSection(infoSection);
         newInfoItem.setInformation((String) itemForm.get("information"));
         Integer order = new Integer((String) itemForm.get("itemOrder"));
-        if (items != null && items.size() != 0)
-        {
+        if (items != null && items.size() != 0) {
 
-            switch (order.intValue())
-            {
-                case -1 :
-                    order = new Integer(items.size() - 1);
-                    break;
+            switch (order.intValue()) {
+            case -1:
+                order = new Integer(items.size() - 1);
+                break;
 
-                default :
-                    order = new Integer(order.intValue() - 1);
-                    break;
+            default:
+                order = new Integer(order.intValue() - 1);
+                break;
             }
-        } else
-        {
+        } else {
             order = new Integer(0);
         }
         newInfoItem.setItemOrder(order);
@@ -122,27 +109,23 @@ public class EditItemDispatchAction extends FenixDispatchAction
 
         Object editItemArgs[] = { oldInfoItem, newInfoItem };
 
-        try
-        {
+        try {
             ServiceManagerServiceFactory.executeService(userView, "EditItem", editItemArgs);
-        } catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             throw new ExistingActionException("Um item com esse nome", e);
-        } catch (FenixServiceException fenixServiceException)
-        {
+        } catch (FenixServiceException fenixServiceException) {
 
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
         session.setAttribute(SessionConstants.INFO_ITEM, newInfoItem);
 
-        //			read section items 
+        //			read section items
 
-        try
-        {
-            items = (ArrayList) ServiceManagerServiceFactory.executeService(null, "ReadItems", readSectionArgs);
-        } catch (FenixServiceException fenixServiceException)
-        {
+        try {
+            items = (ArrayList) ServiceManagerServiceFactory.executeService(null, "ReadItems",
+                    readSectionArgs);
+        } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 

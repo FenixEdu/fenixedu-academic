@@ -14,8 +14,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import framework.factory.ServiceManagerServiceFactory;
+import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -23,39 +22,34 @@ import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão Created on 9/Out/2003
  */
-public class ShowDegreesAction extends FenixContextDispatchAction
-{
+public class ShowDegreesAction extends FenixContextDispatchAction {
 
-    public ActionForward nonMaster(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward nonMaster(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        InfoExecutionPeriod infoExecutionPeriod =
-            (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+        DynaActionForm chooseDegreeContextForm = (DynaActionForm) form;
+        Boolean inEnglish = new Boolean(false);
+        //	chooseDegreeContextForm.set("inEnglish",inEnglish);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
         InfoExecutionYear infoExecutionYear = null;
-        if (infoExecutionPeriod != null)
-        {
+        if (infoExecutionPeriod != null) {
             infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
         }
 
         Object[] args = { infoExecutionYear };
         List executionDegreesList = null;
-        try
-        {
-            //ReadExecutionDegreesByExecutionYear 
-            executionDegreesList =
-                (List) ServiceManagerServiceFactory.executeService(null, "ReadNonMasterExecutionDegreesByExecutionYear", args);
-        } catch (FenixServiceException e)
-        {
+        try {
+            //ReadExecutionDegreesByExecutionYear
+            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(null,
+                    "ReadNonMasterExecutionDegreesByExecutionYear", args);
+        } catch (FenixServiceException e) {
             errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
             saveErrors(request, errors);
         }
@@ -64,27 +58,21 @@ public class ShowDegreesAction extends FenixContextDispatchAction
         List degreesList = buildDegreesList(executionDegreesList);
 
         //put both list in request
-       
+
         request.setAttribute("degreesList", degreesList);
- 
+        request.setAttribute("inEnglish", inEnglish);
         return mapping.findForward("showDegrees");
     }
 
-    public ActionForward master(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward master(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        InfoExecutionPeriod infoExecutionPeriod =
-            (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
         InfoExecutionYear infoExecutionYear = null;
         String ano = null;
-        if (infoExecutionPeriod != null)
-        {
+        if (infoExecutionPeriod != null) {
             infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
             ano = infoExecutionYear.getYear();
         }
@@ -92,12 +80,11 @@ public class ShowDegreesAction extends FenixContextDispatchAction
         Object[] args = { ano };
 
         List executionDegreesList = null;
-        try
-        {
+        try {
             //ReadExecutionDegreesByExecutionYear
-            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(null, "ReadMasterDegrees", args);
-        } catch (FenixServiceException e)
-        {
+            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(null,
+                    "ReadMasterDegrees", args);
+        } catch (FenixServiceException e) {
             errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
             saveErrors(request, errors);
         }
@@ -111,25 +98,20 @@ public class ShowDegreesAction extends FenixContextDispatchAction
         return mapping.findForward("showDegrees");
     }
 
-    private List buildDegreesList(List executionDegreesList)
-    {
-        if (executionDegreesList == null)
-        {
+    private List buildDegreesList(List executionDegreesList) {
+        if (executionDegreesList == null) {
             return null;
         }
 
         List degreesList = new ArrayList();
 
         ListIterator listIterator = executionDegreesList.listIterator();
-        while (listIterator.hasNext())
-        {
+        while (listIterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) listIterator.next();
 
-            if (!degreesList
-                .contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()))
-            {
-				
-               degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
+            if (!degreesList.contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree())) {
+
+                degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
             }
         }
 

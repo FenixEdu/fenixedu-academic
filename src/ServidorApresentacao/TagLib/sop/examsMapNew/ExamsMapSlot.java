@@ -9,31 +9,32 @@ import java.util.List;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ *  
  */
 public class ExamsMapSlot {
 
-	private Calendar day;
-	private List exams;
+    private Calendar day;
 
-	public ExamsMapSlot(Calendar day, List exams) {
-		setDay(day);
-		setExams(exams);
-	}
+    private List exams;
 
-	public Calendar getDay() {
-		return day;
-	}
+    public ExamsMapSlot(Calendar day, List exams) {
+        setDay(day);
+        setExams(exams);
+    }
 
-	public List getExams() {
-		return exams;
-	}
+    public Calendar getDay() {
+        return day;
+    }
 
-	public void setDay(Calendar calendar) {
-		day = calendar;
-	}
+    public List getExams() {
+        return exams;
+    }
 
-	public void setExams(List list) {
-		exams = list;
-	}
+    public void setDay(Calendar calendar) {
+        day = calendar;
+    }
+
+    public void setExams(List list) {
+        exams = list;
+    }
 }

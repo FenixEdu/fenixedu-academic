@@ -12,41 +12,39 @@ import DataBeans.InfoProfessorship;
 /**
  * @author jpvl
  */
-public class ProfessorshipSupportLessonsDTO extends DataTranferObject
-{
+public class ProfessorshipSupportLessonsDTO extends DataTranferObject {
     InfoProfessorship infoProfessorship;
+
     List infoSupportLessonList;
-    
+
     /**
      * @return Returns the infoProfessorShip.
      */
-    public InfoProfessorship getInfoProfessorship()
-    {
+    public InfoProfessorship getInfoProfessorship() {
         return this.infoProfessorship;
     }
 
     /**
      * @return Returns the infoSupportLessonList.
      */
-    public List getInfoSupportLessonList()
-    {
+    public List getInfoSupportLessonList() {
         return this.infoSupportLessonList;
     }
 
     /**
-     * @param infoProfessorShip The infoProfessorShip to set.
+     * @param infoProfessorShip
+     *            The infoProfessorShip to set.
      */
-    public void setInfoProfessorship(InfoProfessorship infoProfessorShip)
-    {
+    public void setInfoProfessorship(InfoProfessorship infoProfessorShip) {
         this.infoProfessorship = infoProfessorShip;
     }
 
     /**
-     * @param infoSupportLessonList The infoSupportLessonList to set.
+     * @param infoSupportLessonList
+     *            The infoSupportLessonList to set.
      */
-    public void setInfoSupportLessonList(List infoSupportLessonList)
-    {
+    public void setInfoSupportLessonList(List infoSupportLessonList) {
         this.infoSupportLessonList = infoSupportLessonList;
     }
 
-} 
+}

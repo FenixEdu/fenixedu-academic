@@ -9,313 +9,310 @@ package Dominio;
 import java.util.List;
 
 /**
- *
- * @author  rpfi
+ * 
+ * @author rpfi
  */
 
-public class CursoExecucao extends DomainObject implements ICursoExecucao {	
-	private Integer keyCurricularPlan;
-	private Integer keyCoordinator;
+public class CursoExecucao extends DomainObject implements ICursoExecucao {
+    private Integer keyCurricularPlan;
 
-	private IExecutionYear executionYear;
+    private Integer keyCoordinator;
 
-	private Integer academicYear;
+    private IExecutionYear executionYear;
 
-	private IDegreeCurricularPlan degreeCurricularPlan;
-	
-	//added by Tânia Pousão
-	private List coordinatorsList;
-	
-	private Boolean temporaryExamMap;
-	
-	//added by Tânia Pousão
-	private Integer keyCampus;
-	private ICampus campus;
-	
+    private Integer academicYear;
 
-	// added by amsg 4 Jun 2004
-	private IPeriod periodLessonsFirstSemester;
-	private IPeriod periodExamsFirstSemester;
-	private IPeriod periodLessonsSecondSemester;
-	private IPeriod periodExamsSecondSemester;
-	private Integer keyPeriodLessonsFirstSemester;
-	private Integer keyPeriodExamsFirstSemester;
-	private Integer keyPeriodLessonsSecondSemester;
-	private Integer keyPeriodExamsSecondSemester;
-	
+    private IDegreeCurricularPlan degreeCurricularPlan;
 
-	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
-	public CursoExecucao() {
-	}
+    //added by Tânia Pousão
+    private List coordinatorsList;
 
-	public CursoExecucao(
-		IExecutionYear executionYear,
-		IDegreeCurricularPlan curricularPlan) {
-		setExecutionYear(executionYear);
-		setCurricularPlan(curricularPlan);
-	}
+    private Boolean temporaryExamMap;
 
-	/**
-	 * @param executionDegreeId
-	 */
-	public CursoExecucao(Integer executionDegreeId) {
-		setIdInternal(executionDegreeId);
-	}
+    //added by Tânia Pousão
+    private Integer keyCampus;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof ICursoExecucao) {
-			ICursoExecucao cursoExecucao = (ICursoExecucao) obj;
-			resultado = getIdInternal().equals(cursoExecucao.getIdInternal());
-		}
-		return resultado;
-	}
+    private ICampus campus;
 
-	public String toString() {
-		String result = "[CURSO_EXECUCAO";
-		result += ", codInt=" + getIdInternal();
-		result += ", executionYear=" + executionYear;
-		result += ", keyExecutionYear=" + academicYear;
-		result += ", degreeCurricularPlan=" + degreeCurricularPlan;
-		if(coordinatorsList != null) {
-			result += ", coordinatorsList=" + coordinatorsList.size();
-		} else {
-			result += ", coordinatorsList is NULL";
-		}
-		result += ", campus=" + campus;		
-		result += "]";
-		return result;
-	}
+    // added by amsg 4 Jun 2004
+    private IPeriod periodLessonsFirstSemester;
 
+    private IPeriod periodExamsFirstSemester;
 
-	
+    private IPeriod periodLessonsSecondSemester;
 
-	/**
-	 * 
-	 * @see Dominio.ICursoExecucao#getExecutionYear()
-	 */
-	public IExecutionYear getExecutionYear() {
-		return executionYear;
-	}
+    private IPeriod periodExamsSecondSemester;
 
-	/**
-	 * 
-	 * @see Dominio.ICursoExecucao#setExecutionYear(IExecutionYear)
-	 */
-	public void setExecutionYear(IExecutionYear executionYear) {
-		this.executionYear = executionYear;
-	}
+    private Integer keyPeriodLessonsFirstSemester;
 
-	/**
-	 * Returns the academicYear.
-	 * @return Integer
-	 */
-	public Integer getAcademicYear() {
-		return academicYear;
-	}
+    private Integer keyPeriodExamsFirstSemester;
 
-	/**
-	 * Sets the academicYear.
-	 * @param academicYear The academicYear to set
-	 */
-	public void setAcademicYear(Integer academicYear) {
-		this.academicYear = academicYear;
-	}
+    private Integer keyPeriodLessonsSecondSemester;
 
-	/**
-	 * Returns the curricularPlan.
-	 * @return IDegreeCurricularPlan
-	 */
-	public IDegreeCurricularPlan getCurricularPlan() {
-		return degreeCurricularPlan;
-	}
+    private Integer keyPeriodExamsSecondSemester;
 
-	/**
-	 * Returns the keyCurricularPlan.
-	 * @return Integer
-	 */
-	public Integer getKeyCurricularPlan() {
-		return keyCurricularPlan;
-	}
+    /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
+    public CursoExecucao() {
+    }
 
-	/**
-	 * Sets the curricularPlan.
-	 * @param curricularPlan The curricularPlan to set
-	 */
-	public void setCurricularPlan(IDegreeCurricularPlan curricularPlan) {
-		this.degreeCurricularPlan = curricularPlan;
-	}
+    public CursoExecucao(IExecutionYear executionYear, IDegreeCurricularPlan curricularPlan) {
+        setExecutionYear(executionYear);
+        setCurricularPlan(curricularPlan);
+    }
 
-	/**
-	 * Sets the keyCurricularPlan.
-	 * @param keyCurricularPlan The keyCurricularPlan to set
-	 */
-	public void setKeyCurricularPlan(Integer keyCurricularPlan) {
-		this.keyCurricularPlan = keyCurricularPlan;
-	}
+    /**
+     * @param executionDegreeId
+     */
+    public CursoExecucao(Integer executionDegreeId) {
+        setIdInternal(executionDegreeId);
+    }
 
-	/**
-	 * @return
-	 */
-	public IDegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof ICursoExecucao) {
+            ICursoExecucao cursoExecucao = (ICursoExecucao) obj;
+            resultado = getIdInternal().equals(cursoExecucao.getIdInternal());
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyCoordinator() {
-		return keyCoordinator;
-	}
+    public String toString() {
+        String result = "[CURSO_EXECUCAO";
+        result += ", codInt=" + getIdInternal();
+        result += ", executionYear=" + executionYear;
+        result += ", keyExecutionYear=" + academicYear;
+        result += ", degreeCurricularPlan=" + degreeCurricularPlan;
+        if (coordinatorsList != null) {
+            result += ", coordinatorsList=" + coordinatorsList.size();
+        } else {
+            result += ", coordinatorsList is NULL";
+        }
+        result += ", campus=" + campus;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @param plan
-	 */
-	public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
-		degreeCurricularPlan = plan;
-	}
+    /**
+     * 
+     * @see Dominio.ICursoExecucao#getExecutionYear()
+     */
+    public IExecutionYear getExecutionYear() {
+        return executionYear;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyCoordinator(Integer integer) {
-		keyCoordinator = integer;
-	}
+    /**
+     * 
+     * @see Dominio.ICursoExecucao#setExecutionYear(IExecutionYear)
+     */
+    public void setExecutionYear(IExecutionYear executionYear) {
+        this.executionYear = executionYear;
+    }
 
-	/**
-	 * @return
-	 */
-	public Boolean getTemporaryExamMap() {
-		return temporaryExamMap;
-	}
+    /**
+     * Returns the academicYear.
+     * 
+     * @return Integer
+     */
+    public Integer getAcademicYear() {
+        return academicYear;
+    }
 
-	/**
-	 * @param boolean1
-	 */
-	public void setTemporaryExamMap(Boolean temporary) {
-		temporaryExamMap = temporary;
-	}
+    /**
+     * Sets the academicYear.
+     * 
+     * @param academicYear
+     *            The academicYear to set
+     */
+    public void setAcademicYear(Integer academicYear) {
+        this.academicYear = academicYear;
+    }
 
-	/**
-	 * @return Returns the campus.
-	 */
-	public ICampus getCampus() {
-		return campus;
-	}
+    /**
+     * Returns the curricularPlan.
+     * 
+     * @return IDegreeCurricularPlan
+     */
+    public IDegreeCurricularPlan getCurricularPlan() {
+        return degreeCurricularPlan;
+    }
 
-	/**
-	 * @param campus The campus to set.
-	 */
-	public void setCampus(ICampus campus) {
-		this.campus = campus;
-	}
+    /**
+     * Returns the keyCurricularPlan.
+     * 
+     * @return Integer
+     */
+    public Integer getKeyCurricularPlan() {
+        return keyCurricularPlan;
+    }
 
-	/**
-	 * @return Returns the keyCampus.
-	 */
-	public Integer getKeyCampus() {
-		return keyCampus;
-	}
+    /**
+     * Sets the curricularPlan.
+     * 
+     * @param curricularPlan
+     *            The curricularPlan to set
+     */
+    public void setCurricularPlan(IDegreeCurricularPlan curricularPlan) {
+        this.degreeCurricularPlan = curricularPlan;
+    }
 
-	/**
-	 * @param keyCampus The keyCampus to set.
-	 */
-	public void setKeyCampus(Integer keyCampus) {
-		this.keyCampus = keyCampus;
-	}
+    /**
+     * Sets the keyCurricularPlan.
+     * 
+     * @param keyCurricularPlan
+     *            The keyCurricularPlan to set
+     */
+    public void setKeyCurricularPlan(Integer keyCurricularPlan) {
+        this.keyCurricularPlan = keyCurricularPlan;
+    }
 
-	/**
-	 * @return Returns the coordinatorsList.
-	 */
-	public List getCoordinatorsList()
-	{
-		return coordinatorsList;
-	}
+    /**
+     * @return
+     */
+    public IDegreeCurricularPlan getDegreeCurricularPlan() {
+        return degreeCurricularPlan;
+    }
 
-	/**
-	 * @param coordinatorsList The coordinatorsList to set.
-	 */
-	public void setCoordinatorsList(List coordinatorsList)
-	{
-		this.coordinatorsList = coordinatorsList;
-	}	
-		
-	public IPeriod getPeriodExamsFirstSemester()
-	{
-	    return periodExamsFirstSemester;
-}
-    public void setPeriodExamsFirstSemester(IPeriod periodExamsFirstSemester)
-    {
+    /**
+     * @return
+     */
+    public Integer getKeyCoordinator() {
+        return keyCoordinator;
+    }
+
+    /**
+     * @param plan
+     */
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
+        degreeCurricularPlan = plan;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyCoordinator(Integer integer) {
+        keyCoordinator = integer;
+    }
+
+    /**
+     * @return
+     */
+    public Boolean getTemporaryExamMap() {
+        return temporaryExamMap;
+    }
+
+    /**
+     * @param boolean1
+     */
+    public void setTemporaryExamMap(Boolean temporary) {
+        temporaryExamMap = temporary;
+    }
+
+    /**
+     * @return Returns the campus.
+     */
+    public ICampus getCampus() {
+        return campus;
+    }
+
+    /**
+     * @param campus
+     *            The campus to set.
+     */
+    public void setCampus(ICampus campus) {
+        this.campus = campus;
+    }
+
+    /**
+     * @return Returns the keyCampus.
+     */
+    public Integer getKeyCampus() {
+        return keyCampus;
+    }
+
+    /**
+     * @param keyCampus
+     *            The keyCampus to set.
+     */
+    public void setKeyCampus(Integer keyCampus) {
+        this.keyCampus = keyCampus;
+    }
+
+    /**
+     * @return Returns the coordinatorsList.
+     */
+    public List getCoordinatorsList() {
+        return coordinatorsList;
+    }
+
+    /**
+     * @param coordinatorsList
+     *            The coordinatorsList to set.
+     */
+    public void setCoordinatorsList(List coordinatorsList) {
+        this.coordinatorsList = coordinatorsList;
+    }
+
+    public IPeriod getPeriodExamsFirstSemester() {
+        return periodExamsFirstSemester;
+    }
+
+    public void setPeriodExamsFirstSemester(IPeriod periodExamsFirstSemester) {
         this.periodExamsFirstSemester = periodExamsFirstSemester;
     }
 
-    public IPeriod getPeriodExamsSecondSemester()
-    {
+    public IPeriod getPeriodExamsSecondSemester() {
         return periodExamsSecondSemester;
     }
 
-    public void setPeriodExamsSecondSemester(IPeriod periodExamsSecondSemester)
-    {
+    public void setPeriodExamsSecondSemester(IPeriod periodExamsSecondSemester) {
         this.periodExamsSecondSemester = periodExamsSecondSemester;
     }
 
-    public IPeriod getPeriodLessonsSecondSemester()
-    {
+    public IPeriod getPeriodLessonsSecondSemester() {
         return periodLessonsSecondSemester;
     }
 
-    public void setPeriodLessonsSecondSemester(IPeriod periodLessonsSecondSemester)
-    {
+    public void setPeriodLessonsSecondSemester(IPeriod periodLessonsSecondSemester) {
         this.periodLessonsSecondSemester = periodLessonsSecondSemester;
     }
 
-    public IPeriod getPeriodLessonsFirstSemester()
-    {
+    public IPeriod getPeriodLessonsFirstSemester() {
         return periodLessonsFirstSemester;
     }
 
-    public void setPeriodLessonsFirstSemester(IPeriod periodLessonsFirstSemester)
-    {
+    public void setPeriodLessonsFirstSemester(IPeriod periodLessonsFirstSemester) {
         this.periodLessonsFirstSemester = periodLessonsFirstSemester;
     }
 
-    public Integer getKeyPeriodExamsFirstSemester()
-    {
+    public Integer getKeyPeriodExamsFirstSemester() {
         return keyPeriodExamsFirstSemester;
     }
 
-    public void setKeyPeriodExamsFirstSemester(Integer keyPeriodExamsFirstSemester)
-    {
+    public void setKeyPeriodExamsFirstSemester(Integer keyPeriodExamsFirstSemester) {
         this.keyPeriodExamsFirstSemester = keyPeriodExamsFirstSemester;
     }
 
-    public Integer getKeyPeriodExamsSecondSemester()
-    {
+    public Integer getKeyPeriodExamsSecondSemester() {
         return keyPeriodExamsSecondSemester;
     }
 
-    public void setKeyPeriodExamsSecondSemester(Integer keyPeriodExamsSecondSemester)
-    {
+    public void setKeyPeriodExamsSecondSemester(Integer keyPeriodExamsSecondSemester) {
         this.keyPeriodExamsSecondSemester = keyPeriodExamsSecondSemester;
     }
 
-    public Integer getKeyPeriodLessonsFirstSemester()
-    {
+    public Integer getKeyPeriodLessonsFirstSemester() {
         return keyPeriodLessonsFirstSemester;
     }
 
-    public void setKeyPeriodLessonsFirstSemester(Integer keyPeriodLessonsFirstSemester)
-    {
+    public void setKeyPeriodLessonsFirstSemester(Integer keyPeriodLessonsFirstSemester) {
         this.keyPeriodLessonsFirstSemester = keyPeriodLessonsFirstSemester;
     }
 
-    public Integer getKeyPeriodLessonsSecondSemester()
-    {
+    public Integer getKeyPeriodLessonsSecondSemester() {
         return keyPeriodLessonsSecondSemester;
     }
 
-    public void setKeyPeriodLessonsSecondSemester(Integer keyPeriodLessonsSecondSemester)
-    {
+    public void setKeyPeriodLessonsSecondSemester(Integer keyPeriodLessonsSecondSemester) {
         this.keyPeriodLessonsSecondSemester = keyPeriodLessonsSecondSemester;
     }
 

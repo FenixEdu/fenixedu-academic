@@ -13,8 +13,7 @@ import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 /**
  * @author dcs-rjao 17/Jul/2003
  */
-public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends IPersistentObject
-{
+public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends IPersistentObject {
 
     public void delete(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction)
             throws ExcepcaoPersistencia;
@@ -26,5 +25,7 @@ public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends I
     public List readAll() throws ExcepcaoPersistencia;
 
     public List readByEquivalentEnrolment(IEnrollment equivalentEnrolment) throws ExcepcaoPersistencia;
-    public List readByEnrolmentEquivalence(IEnrolmentEquivalence enrolmentEquivalence) throws ExcepcaoPersistencia;
+
+    public List readByEnrolmentEquivalence(IEnrolmentEquivalence enrolmentEquivalence)
+            throws ExcepcaoPersistencia;
 }

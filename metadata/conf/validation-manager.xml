@@ -110,6 +110,9 @@
       <field property="ectsCredits" depends="double" page="1">
         <arg0 key="message.manager.curricular.course.scope.ectsCredits" resource="true" />
       </field>      
+      <field property="enrollmentWeigth" depends="required,integer" page="1">
+        <arg0 key="message.manager.curricular.course.enrollmentWeigth" resource="true" />
+      </field>      
     </form>
 
  	<!--validation to the form associate a ExecutionCourse to a CurricularCourse-->
@@ -578,6 +581,119 @@
 			    <var-value>AND</var-value>
   			</var>	
 		</field> 
+	</form>
+		
+	<form name="insertRestrictionForm">
+		<field property="degreeId" depends="required, integer" page="1">		
+			<arg0 key="label.manager.degree" />
+		</field>
+		<field property="degreeCurricularPlanId" depends="required, integer" page="1">		
+			<arg0 key="label.manager.degreeCurricularPlan" />
+		</field>
+		<field property="className" depends="required" page="1">
+			<arg0 key="label.manager.precedence.type" />
+		</field>
+		<field property="curricularCourseToAddPrecedenceID" depends="required, integer" page="1">
+			<arg0 key="label.manager.curricularCourseToAddPrecedence" />
+		</field>
+		<field property="precedentCurricularCourseID" depends="requiredif, integer" page="1">
+			<arg0 key="label.manager.precedentCurricularCourse" />
+			<var>
+				<var-name>field[0]</var-name>
+			    <var-value>className</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[0]</var-name>
+			    <var-value>EQUAL</var-value>
+			</var>
+			<var>
+			    <var-name>fieldValue[0]</var-name>
+			    <var-value>RestrictionDoneCurricularCourse</var-value>
+			</var>
+			<var>
+				<var-name>field[1]</var-name>
+			    <var-value>className</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[1]</var-name>
+			    <var-value>EQUAL</var-value>
+			</var>
+			<var>
+			    <var-name>fieldValue[1]</var-name>
+			    <var-value>RestrictionNotDoneCurricularCourse</var-value>
+			</var>
+			<var>
+				<var-name>field[2]</var-name>
+			    <var-value>className</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[2]</var-name>
+			    <var-value>EQUAL</var-value>
+			</var>
+			<var>
+			    <var-name>fieldValue[2]</var-name>
+			    <var-value>RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse</var-value>
+			</var>
+			<var>
+				<var-name>field[3]</var-name>
+			    <var-value>className</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[3]</var-name>
+			    <var-value>EQUAL</var-value>
+			</var>
+			<var>
+			    <var-name>fieldValue[3]</var-name>
+			    <var-value>RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse</var-value>
+			</var>
+			<var>
+				<var-name>field[4]</var-name>
+			    <var-value>className</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[4]</var-name>
+			    <var-value>EQUAL</var-value>
+			</var>
+			<var>
+			    <var-name>fieldValue[4]</var-name>
+			    <var-value>RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse</var-value>
+			</var>
+			<var>
+		    	<var-name>fieldJoin</var-name>
+			    <var-value>OR</var-value>
+			</var>
+		</field>
+		<field property="number" depends="requiredif, integer" page="1">
+			<arg0 key="label.manager.number.courses.or.period" />
+			<var>
+				<var-name>field[0]</var-name>
+			    <var-value>className</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[0]</var-name>
+			    <var-value>EQUAL</var-value>
+			</var>
+			<var>
+			    <var-name>fieldValue[0]</var-name>
+			    <var-value>RestrictionByNumberOfDoneCurricularCourses</var-value>
+			</var>
+			<var>
+				<var-name>field[1]</var-name>
+			    <var-value>className</var-value>
+			</var>
+			<var>
+			    <var-name>fieldTest[1]</var-name>
+			    <var-value>EQUAL</var-value>
+			</var>
+			<var>
+			    <var-name>fieldValue[1]</var-name>
+			    <var-value>RestrictionPeriodToApply</var-value>
+			</var>			
+			<var>
+		    	<var-name>fieldJoin</var-name>
+			    <var-value>OR</var-value>
+			</var>
+		</field>
 	</form>
     </formset>
 </form-validation>

@@ -11,8 +11,7 @@ import DataBeans.InfoStudentCurricularPlan;
  * @author David Santos Jan 27, 2004
  */
 
-public class InfoStudentEnrollmentContext extends InfoObject implements
-        Serializable {
+public class InfoStudentEnrollmentContext extends InfoObject implements Serializable {
     //deprecated
     private InfoExecutionPeriod infoExecutionPeriod;
 
@@ -43,8 +42,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements
      * @param studentCurrentSemesterInfoEnrollments
      *            The studentCurrentSemesterInfoEnrollments to set.
      */
-    public void setStudentInfoEnrollmentsWithStateEnrolled(
-            List studentInfoEnrollmentsWithStateEnrolled) {
+    public void setStudentInfoEnrollmentsWithStateEnrolled(List studentInfoEnrollmentsWithStateEnrolled) {
         this.studentCurrentSemesterInfoEnrollments = studentInfoEnrollmentsWithStateEnrolled;
     }
 
@@ -91,8 +89,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements
      * @param infoStudentCurricularPlan
      *            The infoStudentCurricularPlan to set.
      */
-    public void setInfoStudentCurricularPlan(
-            InfoStudentCurricularPlan infoStudentCurricularPlan) {
+    public void setInfoStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
         this.infoStudentCurricularPlan = infoStudentCurricularPlan;
     }
 
@@ -107,8 +104,7 @@ public class InfoStudentEnrollmentContext extends InfoObject implements
      * @param studentCurrentSemesterInfoEnrollments
      *            The studentCurrentSemesterInfoEnrollments to set.
      */
-    public void setStudentCurrentSemesterInfoEnrollments(
-            List studentCurrentSemesterInfoEnrollments) {
+    public void setStudentCurrentSemesterInfoEnrollments(List studentCurrentSemesterInfoEnrollments) {
         this.studentCurrentSemesterInfoEnrollments = studentCurrentSemesterInfoEnrollments;
     }
 
@@ -144,12 +140,10 @@ public class InfoStudentEnrollmentContext extends InfoObject implements
      * @param creditsInSpecializationArea
      *            The creditsInSpecializationArea to set.
      */
-    public void setCreditsInSpecializationArea(
-            Integer creditsInSpecializationArea) {
+    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
         this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
 
-   
     /**
      * @return Returns the curricularCourses2Enroll.
      */

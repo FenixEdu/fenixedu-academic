@@ -40,18 +40,15 @@ public class ReadExecutionCoursesByCurricularCourse implements IService {
         try {
             sp = SuportePersistenteOJB.getInstance();
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) sp
-                    .getIPersistentCurricularCourse().readByOID(
-                            CurricularCourse.class, curricularCourseId);
+            ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+                    .readByOID(CurricularCourse.class, curricularCourseId);
 
             if (curricularCourse == null) {
 
-                throw new NonExistingServiceException(
-                        "message.nonExistingCurricularCourse", null);
+                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
             }
 
-            allExecutionCourses = curricularCourse
-                    .getAssociatedExecutionCourses();
+            allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
 
             if (allExecutionCourses == null || allExecutionCourses.isEmpty()) {
                 return allExecutionCourses;

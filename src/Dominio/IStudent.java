@@ -67,6 +67,17 @@ public interface IStudent extends IDomainObject {
     public void setPayedTuition(Boolean payedTuition);
 
     /**
+     * @return Returns the specialSeason.
+     */
+    public Boolean getSpecialSeason();
+
+    /**
+     * @param specialSeason
+     *            The specialSeason to set.
+     */
+    public void setSpecialSeason(Boolean specialSeason);
+
+    /**
      * @return Returns the registrationYear.
      */
     public IExecutionYear getRegistrationYear();
@@ -89,8 +100,25 @@ public interface IStudent extends IDomainObject {
     public void setEnrollmentForbidden(Boolean forbiddenEnrollment);
 
     public List getStudentCurricularPlans();
-    
+
     public void setStudentCurricularPlans(List studentCurricularPlans);
-    
+
     public IStudentCurricularPlan getActiveStudentCurricularPlan();
+
+    //Nuno Correia & Ricardo Rodrigues
+    public String getContigent();
+
+    public void setContigent(String contigent);
+
+    public Double getEntryGrade();
+
+    public void setEntryGrade(Double entryGrade);
+
+    public String getIngression();
+
+    public void setIngression(String ingression);
+
+    public String getIstUniversity();
+
+    public void setIstUniversity(String istUniversity);
 }

@@ -8,35 +8,35 @@ import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class DeleteStudentGroupTest extends TestCaseDeleteAndEditServices {
 
-	public DeleteStudentGroupTest(String testName) {
-		super(testName);
-	}
+    public DeleteStudentGroupTest(String testName) {
+        super(testName);
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "DeleteStudentGroup";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "DeleteStudentGroup";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] argsDeleteStudentGroup = { new Integer(25),new Integer(7)};
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] argsDeleteStudentGroup = { new Integer(25), new Integer(7) };
 
-		return argsDeleteStudentGroup;
-	}
+        return argsDeleteStudentGroup;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Object[] argsDeleteStudentGroup = { new Integer(25),new Integer(6)};
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        Object[] argsDeleteStudentGroup = { new Integer(25), new Integer(6) };
 
-		return argsDeleteStudentGroup;
-	}
+        return argsDeleteStudentGroup;
+    }
 }

@@ -16,131 +16,122 @@ import Util.State;
  * 
  * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  *  
  */
-public class InfoReimbursementGuideSituation extends InfoObject
-{
+public class InfoReimbursementGuideSituation extends InfoObject {
 
-	protected State state;
-	protected InfoReimbursementGuide infoReimbursementGuide;
-	protected String remarks;
-	protected InfoEmployee infoEmployee;
-	protected Calendar modificationDate;
-	protected Calendar officialDate;
-	protected ReimbursementGuideState reimbursementGuideState;
+    protected State state;
 
-	/**
-	 * @return
-	 */
-	public InfoEmployee getInfoEmployee()
-	{
-		return infoEmployee;
-	}
+    protected InfoReimbursementGuide infoReimbursementGuide;
 
-	/**
-	 * @param infoEmployee
-	 */
-	public void setInfoEmployee(InfoEmployee infoEmployee)
-	{
-		this.infoEmployee = infoEmployee;
-	}
+    protected String remarks;
 
-	/**
-	 * @return
-	 */
-	public InfoReimbursementGuide getInfoReimbursementGuide()
-	{
-		return infoReimbursementGuide;
-	}
+    protected InfoEmployee infoEmployee;
 
-	/**
-	 * @param infoReimbursementGuide
-	 */
-	public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide)
-	{
-		this.infoReimbursementGuide = infoReimbursementGuide;
-	}
+    protected Calendar modificationDate;
 
-	/**
-	 * @return
-	 */
-	public Calendar getModificationDate()
-	{
-		return modificationDate;
-	}
+    protected Calendar officialDate;
 
-	/**
-	 * @param modificationDate
-	 */
-	public void setModificationDate(Calendar modificationDate)
-	{
-		this.modificationDate = modificationDate;
-	}
+    protected ReimbursementGuideState reimbursementGuideState;
 
-	/**
-	 * @return
-	 */
-	public ReimbursementGuideState getReimbursementGuideState()
-	{
-		return reimbursementGuideState;
-	}
+    /**
+     * @return
+     */
+    public InfoEmployee getInfoEmployee() {
+        return infoEmployee;
+    }
 
-	/**
-	 * @param reimbursementGuideState
-	 */
-	public void setReimbursementGuideState(ReimbursementGuideState reimbursementGuideState)
-	{
-		this.reimbursementGuideState = reimbursementGuideState;
-	}
+    /**
+     * @param infoEmployee
+     */
+    public void setInfoEmployee(InfoEmployee infoEmployee) {
+        this.infoEmployee = infoEmployee;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks()
-	{
-		return remarks;
-	}
+    /**
+     * @return
+     */
+    public InfoReimbursementGuide getInfoReimbursementGuide() {
+        return infoReimbursementGuide;
+    }
 
-	/**
-	 * @param remarks
-	 */
-	public void setRemarks(String remarks)
-	{
-		this.remarks = remarks;
-	}
+    /**
+     * @param infoReimbursementGuide
+     */
+    public void setInfoReimbursementGuide(InfoReimbursementGuide infoReimbursementGuide) {
+        this.infoReimbursementGuide = infoReimbursementGuide;
+    }
 
-	/**
-	 * @return
-	 */
-	public State getState()
-	{
-		return state;
-	}
+    /**
+     * @return
+     */
+    public Calendar getModificationDate() {
+        return modificationDate;
+    }
 
-	/**
-	 * @param state
-	 */
-	public void setState(State state)
-	{
-		this.state = state;
-	}
+    /**
+     * @param modificationDate
+     */
+    public void setModificationDate(Calendar modificationDate) {
+        this.modificationDate = modificationDate;
+    }
 
-	/**
-	 * @return Returns the officialDate.
-	 */
-	public Calendar getOfficialDate()
-	{
-		return officialDate;
-	}
+    /**
+     * @return
+     */
+    public ReimbursementGuideState getReimbursementGuideState() {
+        return reimbursementGuideState;
+    }
 
-	/**
-	 * @param officialDate
-	 *            The officialDate to set.
-	 */
-	public void setOfficialDate(Calendar officialDate)
-	{
-		this.officialDate = officialDate;
-	}
+    /**
+     * @param reimbursementGuideState
+     */
+    public void setReimbursementGuideState(ReimbursementGuideState reimbursementGuideState) {
+        this.reimbursementGuideState = reimbursementGuideState;
+    }
+
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
+
+    /**
+     * @param remarks
+     */
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    /**
+     * @return
+     */
+    public State getState() {
+        return state;
+    }
+
+    /**
+     * @param state
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    /**
+     * @return Returns the officialDate.
+     */
+    public Calendar getOfficialDate() {
+        return officialDate;
+    }
+
+    /**
+     * @param officialDate
+     *            The officialDate to set.
+     */
+    public void setOfficialDate(Calendar officialDate) {
+        this.officialDate = officialDate;
+    }
 
 }

@@ -623,7 +623,7 @@
     </filterChain>
     <filterChain>
         <name>ReadGratuityListAuthorization</name>
-        <expression>MasterDegreeAdministrativeOfficeAuthorization || DirectiveCouncilAuthorization </expression>
+        <expression>MasterDegreeAdministrativeOfficeAuthorization || DirectiveCouncilAuthorization || CoordinatorAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
@@ -712,4 +712,32 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>	
+    <filterChain>
+        <name>FirstTimeStudentAuthorization</name>
+        <expression>FirstTimeStudentAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+	<filterChain>
+		<name>ManagerOrMasterDegreeAdministrativeOfficeAuthorization</name>
+		<expression>ManagerAuthorization || MasterDegreeAdministrativeOfficeAuthorization</expression>
+		<description />
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>		
+	<filterChain>
+		<name>ClassEnrollmentAuthorization</name>
+		<expression>ClassEnrollmentAuthorizationFilter</expression>
+		<description />
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
+	<filterChain>
+		<name>ReadCurriculumHistoricAuthorization</name>
+		<expression>TeacherAuthorization || TimeTableManagerAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentMemberAuthorization &amp;&amp; EmployeeAuthorization)</expression>
+		<description />
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
 </filterChainsDefinitions>

@@ -45,7 +45,10 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         List infoExecutionYearList = null;
         List infoCampusList = null;
-        /* Needed service and creation of bean of InfoExecutionYears for use in jsp */
+        /*
+         * Needed service and creation of bean of InfoExecutionYears for use in
+         * jsp
+         */
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(userView,
                     "ReadAllExecutionYears", null);
@@ -56,36 +59,35 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         dynaForm.set("tempExamMap", "true");
-        
-        
-        dynaForm.set("lessonsFirstStartDay", new String[]{""});
-        dynaForm.set("lessonsFirstStartMonth", new String[]{""});
-        dynaForm.set("lessonsFirstStartYear", new String[]{""});
-        dynaForm.set("lessonsFirstEndDay", new String[]{""});
-        dynaForm.set("lessonsFirstEndMonth", new String[]{""});
-        dynaForm.set("lessonsFirstEndYear", new String[]{""});
 
-        dynaForm.set("examsFirstStartDay", new String[]{""});
-        dynaForm.set("examsFirstStartMonth", new String[]{""});
-        dynaForm.set("examsFirstStartYear", new String[]{""});
-        dynaForm.set("examsFirstEndDay", new String[]{""});
-        dynaForm.set("examsFirstEndMonth", new String[]{""});
-        dynaForm.set("examsFirstEndYear", new String[]{""});
+        dynaForm.set("lessonsFirstStartDay", new String[] { "" });
+        dynaForm.set("lessonsFirstStartMonth", new String[] { "" });
+        dynaForm.set("lessonsFirstStartYear", new String[] { "" });
+        dynaForm.set("lessonsFirstEndDay", new String[] { "" });
+        dynaForm.set("lessonsFirstEndMonth", new String[] { "" });
+        dynaForm.set("lessonsFirstEndYear", new String[] { "" });
 
-        dynaForm.set("lessonsSecondStartDay", new String[]{""});
-        dynaForm.set("lessonsSecondStartMonth", new String[]{""});
-        dynaForm.set("lessonsSecondStartYear", new String[]{""});
-        dynaForm.set("lessonsSecondEndDay", new String[]{""});
-        dynaForm.set("lessonsSecondEndMonth", new String[]{""});
-        dynaForm.set("lessonsSecondEndYear", new String[]{""});
+        dynaForm.set("examsFirstStartDay", new String[] { "" });
+        dynaForm.set("examsFirstStartMonth", new String[] { "" });
+        dynaForm.set("examsFirstStartYear", new String[] { "" });
+        dynaForm.set("examsFirstEndDay", new String[] { "" });
+        dynaForm.set("examsFirstEndMonth", new String[] { "" });
+        dynaForm.set("examsFirstEndYear", new String[] { "" });
 
-        dynaForm.set("examsSecondStartDay", new String[]{""});
-        dynaForm.set("examsSecondStartMonth", new String[]{""});
-        dynaForm.set("examsSecondStartYear", new String[]{""});
-        dynaForm.set("examsSecondEndDay", new String[]{""});
-        dynaForm.set("examsSecondEndMonth", new String[]{""});
-        dynaForm.set("examsSecondEndYear", new String[]{""});
-                
+        dynaForm.set("lessonsSecondStartDay", new String[] { "" });
+        dynaForm.set("lessonsSecondStartMonth", new String[] { "" });
+        dynaForm.set("lessonsSecondStartYear", new String[] { "" });
+        dynaForm.set("lessonsSecondEndDay", new String[] { "" });
+        dynaForm.set("lessonsSecondEndMonth", new String[] { "" });
+        dynaForm.set("lessonsSecondEndYear", new String[] { "" });
+
+        dynaForm.set("examsSecondStartDay", new String[] { "" });
+        dynaForm.set("examsSecondStartMonth", new String[] { "" });
+        dynaForm.set("examsSecondStartYear", new String[] { "" });
+        dynaForm.set("examsSecondEndDay", new String[] { "" });
+        dynaForm.set("examsSecondEndMonth", new String[] { "" });
+        dynaForm.set("examsSecondEndYear", new String[] { "" });
+
         request.setAttribute("infoExecutionYearsList", infoExecutionYearList);
         request.setAttribute("infoCampusList", infoCampusList);
         return mapping.findForward("insertExecutionDegree");
@@ -151,13 +153,13 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
                 saveErrors(request, actionErrors);
                 return prepareInsert(mapping, form, request, response);
             }
-            
+
             periodLessonFirstSemester[i] = new InfoPeriod();
             periodLessonFirstSemester[i].setStartDate(startPeriodLessonsFirstSemester);
             periodLessonFirstSemester[i].setEndDate(endPeriodLessonsFirstSemester);
             if (i > 0) {
                 periodLessonFirstSemester[i - 1].setNextPeriod(periodLessonFirstSemester[i]);
-                if (periodLessonFirstSemester[i-1].getEndDate().after(startPeriodLessonsFirstSemester)){
+                if (periodLessonFirstSemester[i - 1].getEndDate().after(startPeriodLessonsFirstSemester)) {
                     ActionError actionError = new ActionError("error.dateSwitched.periods");
                     ActionErrors actionErrors = new ActionErrors();
                     actionErrors.add("error.dateSwitched.periods", actionError);
@@ -206,13 +208,14 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
             periodLessonSecondSemester[i].setEndDate(endPeriodLessonsSecondSemester);
             if (i > 0) {
                 periodLessonSecondSemester[i - 1].setNextPeriod(periodLessonSecondSemester[i]);
-                if (periodLessonSecondSemester[i-1].getEndDate().after(startPeriodLessonsSecondSemester)){
+                if (periodLessonSecondSemester[i - 1].getEndDate().after(
+                        startPeriodLessonsSecondSemester)) {
                     ActionError actionError = new ActionError("error.dateSwitched.periods");
                     ActionErrors actionErrors = new ActionErrors();
                     actionErrors.add("error.dateSwitched.periods", actionError);
                     saveErrors(request, actionErrors);
                     return prepareInsert(mapping, form, request, response);
-                }                        
+                }
             }
         }
 
@@ -255,7 +258,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
             periodExamsFirstSemester[i].setEndDate(endPeriodExamsFirstSemester);
             if (i > 0) {
                 periodExamsFirstSemester[i - 1].setNextPeriod(periodExamsFirstSemester[i]);
-                if (periodExamsFirstSemester[i-1].getEndDate().after(startPeriodExamsFirstSemester)){
+                if (periodExamsFirstSemester[i - 1].getEndDate().after(startPeriodExamsFirstSemester)) {
                     ActionError actionError = new ActionError("error.dateSwitched.periods");
                     ActionErrors actionErrors = new ActionErrors();
                     actionErrors.add("error.dateSwitched.periods", actionError);
@@ -304,7 +307,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
             periodExamsSecondSemester[i].setEndDate(endPeriodExamsSecondSemester);
             if (i > 0) {
                 periodExamsSecondSemester[i - 1].setNextPeriod(periodExamsSecondSemester[i]);
-                if (periodExamsSecondSemester[i-1].getEndDate().after(startPeriodExamsSecondSemester)){
+                if (periodExamsSecondSemester[i - 1].getEndDate().after(startPeriodExamsSecondSemester)) {
                     ActionError actionError = new ActionError("error.dateSwitched.periods");
                     ActionErrors actionErrors = new ActionErrors();
                     actionErrors.add("error.dateSwitched.periods", actionError);
@@ -320,32 +323,27 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         Object args[] = { infoExecutionDegree };
 
-        
-        try 
-        { 
-            ServiceUtils.executeService(userView, "InsertExecutionDegreeAtDegreeCurricularPlan",args);
-        } 
-        catch (ExistingServiceException ex) { 
+        try {
+            ServiceUtils.executeService(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
+        } catch (ExistingServiceException ex) {
             throw new ExistingActionException(ex.getMessage(), ex);
+        } catch (NonExistingServiceException exception) {
+            throw new NonExistingActionException(exception.getMessage(), mapping
+                    .findForward("readDegreeCurricularPlan"));
         }
-        catch (NonExistingServiceException exception) 
-        {
-            throw new NonExistingActionException(exception.getMessage(), mapping.findForward(
-            "readDegreeCurricularPlan")); 
-        }
-        
+
         return mapping.findForward("readDegreeCurricularPlan");
     }
-    
-    public ActionForward addLine(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
+    public ActionForward addLine(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
-        
+
         DynaActionForm dynaForm = (DynaValidatorForm) form;
-        
+
         String periodToEdit = (String) dynaForm.get("periodToEdit");
-        
+
         String[] startDay = (String[]) dynaForm.get(periodToEdit + "StartDay");
         String[] startMonth = (String[]) dynaForm.get(periodToEdit + "StartMonth");
         String[] startYear = (String[]) dynaForm.get(periodToEdit + "StartYear");
@@ -353,14 +351,13 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
         String[] endMonth = (String[]) dynaForm.get(periodToEdit + "EndMonth");
         String[] endYear = (String[]) dynaForm.get(periodToEdit + "EndYear");
 
-        
         startDay = addEmptyElement(startDay);
         startMonth = addEmptyElement(startMonth);
         startYear = addEmptyElement(startYear);
         endDay = addEmptyElement(endDay);
         endMonth = addEmptyElement(endMonth);
         endYear = addEmptyElement(endYear);
-        
+
         dynaForm.set(periodToEdit + "StartDay", startDay);
         dynaForm.set(periodToEdit + "StartMonth", startMonth);
         dynaForm.set(periodToEdit + "StartYear", startYear);
@@ -370,7 +367,10 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         List infoExecutionYearList = null;
         List infoCampusList = null;
-        /* Needed service and creation of bean of InfoExecutionYears for use in jsp */
+        /*
+         * Needed service and creation of bean of InfoExecutionYears for use in
+         * jsp
+         */
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(userView,
                     "ReadAllExecutionYears", null);
@@ -378,38 +378,35 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        
+
         request.setAttribute("infoExecutionYearsList", infoExecutionYearList);
         request.setAttribute("infoCampusList", infoCampusList);
-        
-        
+
         return mapping.findForward("insertExecutionDegree");
     }
 
-    private String[] addEmptyElement(String[] array)
-    {
+    private String[] addEmptyElement(String[] array) {
         int size = array.length;
-        
-        String[] returnArray = new String[size+1];
-        
-        for(int i = 0; i < size; i++)
-        {
+
+        String[] returnArray = new String[size + 1];
+
+        for (int i = 0; i < size; i++) {
             returnArray[i] = array[i];
         }
         returnArray[size] = "";
-        
+
         return returnArray;
     }
-    
-    public ActionForward removeLine(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
+    public ActionForward removeLine(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
-        
+
         DynaActionForm dynaForm = (DynaValidatorForm) form;
-        
+
         String periodToEdit = (String) dynaForm.get("periodToEdit");
-        
+
         String[] startDay = (String[]) dynaForm.get(periodToEdit + "StartDay");
         String[] startMonth = (String[]) dynaForm.get(periodToEdit + "StartMonth");
         String[] startYear = (String[]) dynaForm.get(periodToEdit + "StartYear");
@@ -417,14 +414,13 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
         String[] endMonth = (String[]) dynaForm.get(periodToEdit + "EndMonth");
         String[] endYear = (String[]) dynaForm.get(periodToEdit + "EndYear");
 
-        
         startDay = removeLastElement(startDay);
         startMonth = removeLastElement(startMonth);
         startYear = removeLastElement(startYear);
         endDay = removeLastElement(endDay);
         endMonth = removeLastElement(endMonth);
         endYear = removeLastElement(endYear);
-        
+
         dynaForm.set(periodToEdit + "StartDay", startDay);
         dynaForm.set(periodToEdit + "StartMonth", startMonth);
         dynaForm.set(periodToEdit + "StartYear", startYear);
@@ -434,7 +430,10 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 
         List infoExecutionYearList = null;
         List infoCampusList = null;
-        /* Needed service and creation of bean of InfoExecutionYears for use in jsp */
+        /*
+         * Needed service and creation of bean of InfoExecutionYears for use in
+         * jsp
+         */
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(userView,
                     "ReadAllExecutionYears", null);
@@ -442,22 +441,19 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        
+
         request.setAttribute("infoExecutionYearsList", infoExecutionYearList);
         request.setAttribute("infoCampusList", infoCampusList);
-        
-        
+
         return mapping.findForward("insertExecutionDegree");
     }
-    
-    private String[] removeLastElement(String[] array)
-    {
+
+    private String[] removeLastElement(String[] array) {
         int size = array.length;
-        
-        String[] returnArray = new String[size-1];
-        
-        for(int i = 0; i < size - 1; i++)
-        {
+
+        String[] returnArray = new String[size - 1];
+
+        for (int i = 0; i < size - 1; i++) {
             returnArray[i] = array[i];
         }
         return returnArray;

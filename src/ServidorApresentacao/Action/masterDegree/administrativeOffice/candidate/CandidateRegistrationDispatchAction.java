@@ -30,9 +30,11 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.gratuity.masterDegree.GratuityValuesNotDefinedServiceException;
 import ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.GratuityValuesNotDefinedActionException;
 import ServidorApresentacao.Action.exceptions.InvalidChangeActionException;
 import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException;
 import ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException;
@@ -42,212 +44,206 @@ import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * 
+ *  
  */
 public class CandidateRegistrationDispatchAction extends DispatchAction {
 
-	public ActionForward getCandidateList(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+    public ActionForward getCandidateList(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		DynaActionForm candidateRegistration = (DynaActionForm) form;
+        DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-		String executionYearString = request.getParameter("executionYear");
-		String degreeCode = request.getParameter("degree");
-	
-		Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
-		if ((executionYearString == null) || (executionYearString.length() == 0)){
-			executionYearString = (String) candidateRegistration.get("executionYear");
-		}
-		
-		if ((degreeCode == null) || (degreeCode.length() == 0)){
-			degreeCode = (String) candidateRegistration.get("degreeCode");
-		}
-		
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-		List result = null;
-		
-		try {
-			Object args[] = {executionDegree };
-			result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidateForRegistration", args);
-		} catch (NonExistingServiceException e) {
-			session.removeAttribute(SessionConstants.DEGREE_LIST);
-			ActionErrors errors = new ActionErrors();
-			errors.add("nonExisting", new ActionError("error.candidatesNotFound"));
-			saveErrors(request, errors);
-			return mapping.getInputForward();	
-		}
+        String executionYearString = request.getParameter("executionYear");
+        String degreeCode = request.getParameter("degree");
 
+        Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+        if ((executionYearString == null) || (executionYearString.length() == 0)) {
+            executionYearString = (String) candidateRegistration.get("executionYear");
+        }
 
-		BeanComparator nameComparator = new BeanComparator("infoPerson.nome");
-		Collections.sort(result, nameComparator);
+        if ((degreeCode == null) || (degreeCode.length() == 0)) {
+            degreeCode = (String) candidateRegistration.get("degreeCode");
+        }
 
-		request.setAttribute("candidateList", result);
-		candidateRegistration.set("degreeCode", degreeCode);
-		candidateRegistration.set("executionYear", executionYearString);
-		candidateRegistration.set("candidateID", null);
-		
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		InfoExecutionDegree infoExecutionDegree = null;
-		try {
-			Object args[] = { executionDegree };
-			infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByOID", args);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(e);
-		}
-	
-		request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-		return mapping.findForward("ListCandidates");
-	}
+        List result = null;
 
+        try {
+            Object args[] = { executionDegree };
+            result = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadCandidateForRegistration", args);
+        } catch (NonExistingServiceException e) {
+            session.removeAttribute(SessionConstants.DEGREE_LIST);
+            ActionErrors errors = new ActionErrors();
+            errors.add("nonExisting", new ActionError("error.candidatesNotFound"));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-	public ActionForward prepareCandidateRegistration(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+        BeanComparator nameComparator = new BeanComparator("infoPerson.nome");
+        Collections.sort(result, nameComparator);
 
-	
-		
-		HttpSession session = request.getSession(false);
+        request.setAttribute("candidateList", result);
+        candidateRegistration.set("degreeCode", degreeCode);
+        candidateRegistration.set("executionYear", executionYearString);
+        candidateRegistration.set("candidateID", null);
 
-		DynaActionForm candidateRegistration = (DynaActionForm) form;
+        InfoExecutionDegree infoExecutionDegree = null;
+        try {
+            Object args[] = { executionDegree };
+            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadExecutionDegreeByOID", args);
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException(e);
+        }
 
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer candidateID = new Integer(request.getParameter("candidateID"));
-		
-		candidateRegistration.set("candidateID", candidateID);		
-		candidateRegistration.set("studentNumber", null);
-		List branchList = null;
-		try {
-			Object args[] = { candidateID };
-			branchList = (List) ServiceManagerServiceFactory.executeService(userView, "GetBranchListByCandidateID", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-					
-		request.setAttribute("branchList", branchList);					
-						
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
-		try {
-			Object args[] = { candidateID };
-			infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
-		} catch (NonExistingServiceException e) {
-			throw new FenixActionException(e);
-		}
-		candidateRegistration.set("branchID", null);
-		request.setAttribute("infoMasterDegreeCandidate", infoMasterDegreeCandidate);
-				
-		return mapping.findForward("ShowConfirmation");
-	}
-	  
+        request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+        return mapping.findForward("ListCandidates");
+    }
 
-	public ActionForward confirm(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepareCandidateRegistration(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	
-		
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		DynaActionForm candidateRegistration = (DynaActionForm) form;
+        DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer candidateID = (Integer) candidateRegistration.get("candidateID");
-		Integer branchID = (Integer) candidateRegistration.get("branchID");
-		
-		String studentNumberString = (String) candidateRegistration.get("studentNumber");
-		Integer studentNumber = null;
-		if ((studentNumberString != null) && (studentNumberString.length() > 0)) {
-			try {
-				studentNumber = new Integer(studentNumberString);
-				if (studentNumber.intValue() < 0) {
-					throw new NumberFormatException();
-				}
-			} catch(NumberFormatException e) {
-				throw new InvalidInformationInFormActionException("error.exception.invalidInformationInStudentNumber");
-			}
-		} 
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        Integer candidateID = new Integer(request.getParameter("candidateID"));
 
-		if ((request.getParameter("confirmation") == null) || request.getParameter("confirmation").equals("Confirmar")) {
-		
-			InfoCandidateRegistration infoCandidateRegistration = null;
-			try {
-				Object args[] = { candidateID , branchID,  studentNumber};
-				infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory.executeService(userView, "RegisterCandidate", args);
-			} catch (InvalidStudentNumberServiceException e) {
-				throw new InvalidStudentNumberActionException(e);
-			} catch (ActiveStudentCurricularPlanAlreadyExistsServiceException e) {
-				throw new ActiveStudentCurricularPlanAlreadyExistsActionException(e);
-			} catch (ExistingServiceException e) {
-				
-				List branchList = null;
-				try {
-					Object args[] = { candidateID };
-					branchList = (List) ServiceManagerServiceFactory.executeService(userView, "GetBranchListByCandidateID", args);
-				} catch (FenixServiceException ex) {
-					throw new FenixActionException(ex);
-				}
-					
-				request.setAttribute("branchList", branchList);					
-					
-					
-				try {
-					Object args[] = { candidateID };
-					ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
-				} catch (NonExistingServiceException ex) {
-					throw new FenixActionException(ex);
-				}
-				throw new ExistingActionException("O Aluno", e);
-			} catch (InvalidChangeServiceException e) {
-				throw new InvalidChangeActionException("error.cantRegisterCandidate", e);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
+        candidateRegistration.set("candidateID", candidateID);
+        candidateRegistration.set("studentNumber", null);
+        List branchList = null;
+        try {
+            Object args[] = { candidateID };
+            branchList = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "GetBranchListByCandidateID", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
 
-			candidateRegistration.set("studentCurricularPlanID", infoCandidateRegistration.getInfoStudentCurricularPlan().getIdInternal());
-			request.setAttribute("infoCandidateRegistration", infoCandidateRegistration);
+        request.setAttribute("branchList", branchList);
 
-			return mapping.findForward("ShowResult");
-		} 
-			return mapping.findForward("PrepareCandidateList");
-		
-	}
-	
-	public ActionForward preparePrint(ActionMapping mapping, ActionForm form,
-									HttpServletRequest request,
-									HttpServletResponse response)
-		throws Exception {
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+        try {
+            Object args[] = { candidateID };
+            infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
+                    .executeService(userView, "GetCandidatesByID", args);
+        } catch (NonExistingServiceException e) {
+            throw new FenixActionException(e);
+        }
+        candidateRegistration.set("branchID", null);
+        request.setAttribute("infoMasterDegreeCandidate", infoMasterDegreeCandidate);
 
-	
-		
-		HttpSession session = request.getSession(false);
+        return mapping.findForward("ShowConfirmation");
+    }
 
-		DynaActionForm candidateRegistration = (DynaActionForm) form;
-		
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer candidateID = (Integer) candidateRegistration.get("candidateID");
-		
-		InfoCandidateRegistration infoCandidateRegistration = null;
-		try {
-			Object args[] = { candidateID };
-			infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory.executeService(userView, "GetCandidateRegistrationInformation", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+    public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		request.setAttribute("infoCandidateRegistration", infoCandidateRegistration);
-		request.setAttribute("infoExecutionDegree", infoCandidateRegistration.getInfoMasterDegreeCandidate().getInfoExecutionDegree());
+        HttpSession session = request.getSession(false);
 
-		return mapping.findForward("Print");
-	}	
-	
+        DynaActionForm candidateRegistration = (DynaActionForm) form;
+
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        Integer candidateID = (Integer) candidateRegistration.get("candidateID");
+        Integer branchID = (Integer) candidateRegistration.get("branchID");
+
+        String studentNumberString = (String) candidateRegistration.get("studentNumber");
+        Integer studentNumber = null;
+        if ((studentNumberString != null) && (studentNumberString.length() > 0)) {
+            try {
+                studentNumber = new Integer(studentNumberString);
+                if (studentNumber.intValue() < 0) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                throw new InvalidInformationInFormActionException(
+                        "error.exception.invalidInformationInStudentNumber");
+            }
+        }
+
+        if ((request.getParameter("confirmation") == null)
+                || request.getParameter("confirmation").equals("Confirmar")) {
+
+            InfoCandidateRegistration infoCandidateRegistration = null;
+            try {
+                Object args[] = { candidateID, branchID, studentNumber };
+                infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory
+                        .executeService(userView, "RegisterCandidate", args);
+            } catch (InvalidStudentNumberServiceException e) {
+                throw new InvalidStudentNumberActionException(e);
+            } catch (ActiveStudentCurricularPlanAlreadyExistsServiceException e) {
+                throw new ActiveStudentCurricularPlanAlreadyExistsActionException(e);
+            } catch (GratuityValuesNotDefinedServiceException e) {
+                throw new GratuityValuesNotDefinedActionException(e);
+            } catch (ExistingServiceException e) {
+
+                List branchList = null;
+                try {
+                    Object args[] = { candidateID };
+                    branchList = (List) ServiceManagerServiceFactory.executeService(userView,
+                            "GetBranchListByCandidateID", args);
+                } catch (FenixServiceException ex) {
+                    throw new FenixActionException(ex);
+                }
+
+                request.setAttribute("branchList", branchList);
+
+                try {
+                    Object args[] = { candidateID };
+                    ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
+                } catch (NonExistingServiceException ex) {
+                    throw new FenixActionException(ex);
+                }
+                throw new ExistingActionException("O Aluno", e);
+            } catch (InvalidChangeServiceException e) {
+                throw new InvalidChangeActionException("error.cantRegisterCandidate", e);
+            } catch (FenixServiceException e) {
+                throw new FenixActionException(e);
+            }
+
+            candidateRegistration.set("studentCurricularPlanID", infoCandidateRegistration
+                    .getInfoStudentCurricularPlan().getIdInternal());
+            request.setAttribute("infoCandidateRegistration", infoCandidateRegistration);
+
+            return mapping.findForward("ShowResult");
+        }
+        return mapping.findForward("PrepareCandidateList");
+
+    }
+
+    public ActionForward preparePrint(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        HttpSession session = request.getSession(false);
+
+        DynaActionForm candidateRegistration = (DynaActionForm) form;
+
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        Integer candidateID = (Integer) candidateRegistration.get("candidateID");
+
+        InfoCandidateRegistration infoCandidateRegistration = null;
+        try {
+            Object args[] = { candidateID };
+            infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory
+                    .executeService(userView, "GetCandidateRegistrationInformation", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+
+        request.setAttribute("infoCandidateRegistration", infoCandidateRegistration);
+        request.setAttribute("infoExecutionDegree", infoCandidateRegistration
+                .getInfoMasterDegreeCandidate().getInfoExecutionDegree());
+
+        return mapping.findForward("Print");
+    }
+
 }

@@ -6,58 +6,59 @@ import ServidorAplicacao.Servicos.ServiceTestCase;
 
 /**
  * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
  */
 public class ReadTeacherByNumberTest extends ServiceTestCase {
 
-	private String dataSetFilePath;
+    private String dataSetFilePath;
 
-	/**
-	 * @param testName
-	 */
-	public ReadTeacherByNumberTest(String testName) {
-		super(testName);
-		this.dataSetFilePath = "etc/datasets/servicos/commons/testReadTeacherByNumberDataSet.xml";
-	}
+    /**
+     * @param testName
+     */
+    public ReadTeacherByNumberTest(String testName) {
+        super(testName);
+        this.dataSetFilePath = "etc/datasets/servicos/commons/testReadTeacherByNumberDataSet.xml";
+    }
 
-	protected String getDataSetFilePath() {
-		return this.dataSetFilePath;
-	}
+    protected String getDataSetFilePath() {
+        return this.dataSetFilePath;
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadTeacherByNumber";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadTeacherByNumber";
+    }
 
-	public void testReadExistingTeacher() {
-		try {
-			Integer teacherNumber = new Integer(53);
-			Object[] argsReadTeacher = { teacherNumber };
+    public void testReadExistingTeacher() {
+        try {
+            Integer teacherNumber = new Integer(53);
+            Object[] argsReadTeacher = { teacherNumber };
 
-			InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadTeacher);
-			assertNotNull(infoTeacher);
-			assertEquals(infoTeacher.getTeacherNumber(), teacherNumber);
+            InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), argsReadTeacher);
+            assertNotNull(infoTeacher);
+            assertEquals(infoTeacher.getTeacherNumber(), teacherNumber);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testReadExistingTeacher " + ex.getMessage());
-		}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail("testReadExistingTeacher " + ex.getMessage());
+        }
 
-	}
+    }
 
-	public void testReadNonExistingTeacher() {
-		try {
-			Integer teacherNumber = new Integer(1225);
-			Object[] argsReadTeacher = { teacherNumber };
+    public void testReadNonExistingTeacher() {
+        try {
+            Integer teacherNumber = new Integer(1225);
+            Object[] argsReadTeacher = { teacherNumber };
 
-			InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), argsReadTeacher);
-			assertNull(infoTeacher);
+            InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), argsReadTeacher);
+            assertNull(infoTeacher);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("testReadNonExistingTeacher " + ex.getMessage());
-		}
-	}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail("testReadNonExistingTeacher " + ex.getMessage());
+        }
+    }
 
 }

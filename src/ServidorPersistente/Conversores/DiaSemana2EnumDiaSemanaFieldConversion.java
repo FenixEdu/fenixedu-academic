@@ -7,45 +7,40 @@
 package ServidorPersistente.Conversores;
 
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.DiaSemana;
 
-public class DiaSemana2EnumDiaSemanaFieldConversion   implements FieldConversion
-{
-    
+public class DiaSemana2EnumDiaSemanaFieldConversion implements FieldConversion {
+
     /*
      * @see FieldConversion#javaToSql(Object)
      */
-    public Object javaToSql(Object source)
-    {
-        
-        if (source instanceof DiaSemana)
-        {
+    public Object javaToSql(Object source) {
+
+        if (source instanceof DiaSemana) {
             DiaSemana dia = (DiaSemana) source;
             return dia.getDiaSemana();
         }
-     
-            return source;
-        
+
+        return source;
+
     }
 
     /*
      * @see FieldConversion#sqlToJava(Object)
      */
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Integer)
-        {
+    public Object sqlToJava(Object source) {
+        if (source instanceof Integer) {
             Integer src = (Integer) source;
             return new DiaSemana(src);
         }
-      
-            return source;
-        
+
+        return source;
+
     }
-    
+
 }

@@ -26,77 +26,52 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class EscolherContextoFormAction extends FenixContextAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
-		super.execute(mapping, form, request, response);
+        super.execute(mapping, form, request, response);
 
-		DynaActionForm escolherContextoForm = (DynaActionForm) form;
+        DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
+        HttpSession session = request.getSession(false);
+        IUserView userView = SessionUtils.getUserView(request);
 
+        if (session != null) {
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
+            Integer semestre = infoExecutionPeriod.getSemester();
+            Integer anoCurricular = (Integer) escolherContextoForm.get("anoCurricular");
 
-		if (session != null) {
-			InfoExecutionPeriod infoExecutionPeriod =
-				(InfoExecutionPeriod) request.getAttribute(
-					SessionConstants.EXECUTION_PERIOD);
+            Object argsReadCurricularYearByOID[] = { anoCurricular };
+            InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(
+                    userView, "ReadCurricularYearByOID", argsReadCurricularYearByOID);
 
-			Integer semestre = infoExecutionPeriod.getSemester();
-			Integer anoCurricular =
-				(Integer) escolherContextoForm.get("anoCurricular");
+            int index = Integer.parseInt((String) escolherContextoForm.get("index"));
 
-			Object argsReadCurricularYearByOID[] =
-				{ anoCurricular };
-			InfoCurricularYear infoCurricularYear =
-				(InfoCurricularYear) ServiceUtils.executeService(
-						userView,
-						"ReadCurricularYearByOID",
-						argsReadCurricularYearByOID);
-			
+            request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
-			int index =
-				Integer.parseInt((String) escolherContextoForm.get("index"));
+            Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-			request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
-			
+            List infoExecutionDegreeList = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
-			Object argsLerLicenciaturas[] =
-				{ infoExecutionPeriod.getInfoExecutionYear()};
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList
+                    .get(index);
 
-			List infoExecutionDegreeList =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadExecutionDegreesByExecutionYear",
-					argsLerLicenciaturas);
+            if (infoExecutionDegree != null) {
+                CurricularYearAndSemesterAndInfoExecutionDegree cYSiED = new CurricularYearAndSemesterAndInfoExecutionDegree(
+                        anoCurricular, semestre, infoExecutionDegree);
+                request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
 
-			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
+                request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+            } else {
 
-			if (infoExecutionDegree != null) {
-				CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
-					new CurricularYearAndSemesterAndInfoExecutionDegree(
-						anoCurricular,
-						semestre,
-						infoExecutionDegree);
-				request.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
+                return mapping.findForward("Licenciatura execucao inexistente");
+            }
+            return mapping.findForward("Sucesso");
+        }
+        throw new Exception();
 
-
-				request.setAttribute(
-					SessionConstants.EXECUTION_DEGREE,
-					infoExecutionDegree);
-			} else {
-
-				return mapping.findForward("Licenciatura execucao inexistente");
-			}
-			return mapping.findForward("Sucesso");
-		} 
-			throw new Exception();
-		
-	}
+    }
 }

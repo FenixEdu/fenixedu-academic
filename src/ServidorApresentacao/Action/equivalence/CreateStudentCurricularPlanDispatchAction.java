@@ -27,116 +27,98 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author David Santos in Apr 30, 2004
  */
 
-public class CreateStudentCurricularPlanDispatchAction extends DispatchAction
-{
-	public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+public class CreateStudentCurricularPlanDispatchAction extends DispatchAction {
+    public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		String degreeTypeCode = request.getParameter("degreeType");
-		String studentNumber = request.getParameter("studentNumber");
-		String backLink = request.getParameter("backLink");
+        String degreeTypeCode = request.getParameter("degreeType");
+        String studentNumber = request.getParameter("studentNumber");
+        String backLink = request.getParameter("backLink");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
 
-		Object args1[] = {studentNumber, degreeType};
+        Object args1[] = { studentNumber, degreeType };
 
-		InfoStudent infoStudent = null;
+        InfoStudent infoStudent = null;
 
-		try
-		{
-			infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByNumberAndDegreeType",
-				args1);
-		} catch (FenixServiceException e)
-		{
-			return mapping.getInputForward();
-		}
-		
-		if (infoStudent == null)
-		{
-			return mapping.getInputForward();
-		}
+        try {
+            infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentByNumberAndDegreeType", args1);
+        } catch (FenixServiceException e) {
+            return mapping.getInputForward();
+        }
 
-		List infoBranches = null;
+        if (infoStudent == null) {
+            return mapping.getInputForward();
+        }
 
-		Object[] args2 = { null, null, studentNumber };
-		try
-		{
-			infoBranches = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadSpecializationAndSecundaryAreasByStudent", args2);
-		}
-		catch (Exception e)
-		{
-			return mapping.getInputForward();
-		}
+        List infoBranches = null;
 
-		if ( (infoBranches == null) || (infoBranches.isEmpty()) )
-		{
-			return mapping.getInputForward();
-		}
+        Object[] args2 = { null, null, studentNumber };
+        try {
+            infoBranches = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadSpecializationAndSecundaryAreasByStudent", args2);
+        } catch (Exception e) {
+            return mapping.getInputForward();
+        }
 
-		List infoDegreeCurricularPlans = null;
+        if ((infoBranches == null) || (infoBranches.isEmpty())) {
+            return mapping.getInputForward();
+        }
 
-		Object[] args3 = { degreeType };
-		try
-		{
-			infoDegreeCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
-				"ReadAllDegreeCurricularPlansByDegreeTypeExceptForPASTOnes", args3);
-		}
-		catch (Exception e)
-		{
-			return mapping.getInputForward();
-		}
+        List infoDegreeCurricularPlans = null;
 
-		if ( (infoDegreeCurricularPlans == null) || (infoDegreeCurricularPlans.isEmpty()) )
-		{
-			return mapping.getInputForward();
-		}
+        Object[] args3 = { degreeType };
+        try {
+            infoDegreeCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadAllDegreeCurricularPlansByDegreeTypeExceptForPASTOnes", args3);
+        } catch (Exception e) {
+            return mapping.getInputForward();
+        }
 
-		request.setAttribute("degreeType", degreeTypeCode);
-		request.setAttribute("studentOID", infoStudent.getIdInternal());
-		request.setAttribute("infoBranches", infoBranches);
-		request.setAttribute("infoDegreeCurricularPlans", buildLabelValueBeanForDegreeCurricularPlans(infoDegreeCurricularPlans));
-		request.setAttribute("studentCurricularPlanStates", buildLabelValueBeanForStudentCurricularPlanStates());
-		request.setAttribute("backLink", backLink);
+        if ((infoDegreeCurricularPlans == null) || (infoDegreeCurricularPlans.isEmpty())) {
+            return mapping.getInputForward();
+        }
 
-		return mapping.findForward("showFormToCreateStudentCurricularPlan");
-	}
+        request.setAttribute("degreeType", degreeTypeCode);
+        request.setAttribute("studentOID", infoStudent.getIdInternal());
+        request.setAttribute("infoBranches", infoBranches);
+        request.setAttribute("infoDegreeCurricularPlans",
+                buildLabelValueBeanForDegreeCurricularPlans(infoDegreeCurricularPlans));
+        request.setAttribute("studentCurricularPlanStates",
+                buildLabelValueBeanForStudentCurricularPlanStates());
+        request.setAttribute("backLink", backLink);
 
+        return mapping.findForward("showFormToCreateStudentCurricularPlan");
+    }
 
+    // ============================================================================================================
+    // ============================================================================================================
+    // ============================================================================================================
 
-	// ============================================================================================================	
-	// ============================================================================================================	
-	// ============================================================================================================	
-	
-	
-	private List buildLabelValueBeanForDegreeCurricularPlans(List infoDegreeCurricularPlans)
-	{
-		List labelValueBeans = new ArrayList();
-		CollectionUtils.collect(infoDegreeCurricularPlans, new Transformer()
-		{
-			public Object transform(Object arg0)
-			{
-				InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
+    private List buildLabelValueBeanForDegreeCurricularPlans(List infoDegreeCurricularPlans) {
+        List labelValueBeans = new ArrayList();
+        CollectionUtils.collect(infoDegreeCurricularPlans, new Transformer() {
+            public Object transform(Object arg0) {
+                InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
 
-				LabelValueBean labelValueBean = new LabelValueBean(infoDegreeCurricularPlan.getInfoDegree().getNome() + " - "
-					+ infoDegreeCurricularPlan.getName(), infoDegreeCurricularPlan.getIdInternal().toString());
+                LabelValueBean labelValueBean = new LabelValueBean(infoDegreeCurricularPlan
+                        .getInfoDegree().getNome()
+                        + " - " + infoDegreeCurricularPlan.getName(), infoDegreeCurricularPlan
+                        .getIdInternal().toString());
 
-				return labelValueBean;
-			}
-		}, labelValueBeans);
-		return labelValueBeans;
-	}
+                return labelValueBean;
+            }
+        }, labelValueBeans);
+        return labelValueBeans;
+    }
 
-	private List buildLabelValueBeanForStudentCurricularPlanStates()
-	{
-		List labelValueBeans = new ArrayList();
-		
-		
+    private List buildLabelValueBeanForStudentCurricularPlanStates() {
+        List labelValueBeans = new ArrayList();
 
-		return labelValueBeans;
-	}
+        return labelValueBeans;
+    }
 }

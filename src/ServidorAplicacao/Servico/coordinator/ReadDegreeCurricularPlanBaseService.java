@@ -10,7 +10,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourseScope;
+import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -21,98 +23,110 @@ import ServidorPersistente.ISuportePersistente;
  * @author Fernanda Quitério 5/Dez/2003
  *  
  */
-abstract public class ReadDegreeCurricularPlanBaseService implements IService
-{
-	protected List readActiveCurricularCourseScopes(
-		IDegreeCurricularPlan degreeCurricularPlan,
-		ISuportePersistente sp)
-		throws FenixServiceException
-	{
-		List infoActiveScopes = null;
-		try
-		{
+abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
-			IPersistentCurricularCourseScope persistentCurricularCourseScope =
-				sp.getIPersistentCurricularCourseScope();
+    protected List readActiveCurricularCourseScopes(IDegreeCurricularPlan degreeCurricularPlan,
+            ISuportePersistente sp) throws FenixServiceException {
+        List infoActiveScopes = null;
+        try {
 
-			if (degreeCurricularPlan != null)
-			{
+            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+                    .getIPersistentCurricularCourseScope();
 
-				List allActiveScopes =
-					persistentCurricularCourseScope
-						.readActiveCurricularCourseScopesByDegreeCurricularPlan(
-						degreeCurricularPlan);
+            if (degreeCurricularPlan != null) {
 
-				if (allActiveScopes != null && allActiveScopes.size() > 0)
-				{
-					infoActiveScopes = new ArrayList();
+                List allActiveScopes = persistentCurricularCourseScope
+                        .readActiveCurricularCourseScopesByDegreeCurricularPlan(degreeCurricularPlan);
 
-					CollectionUtils.collect(allActiveScopes, new Transformer()
-					{
-						public Object transform(Object input)
-						{
-							ICurricularCourseScope curricularCourseScope =
-								(ICurricularCourseScope) input;
-							//CLONER
-							return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
+                if (allActiveScopes != null && allActiveScopes.size() > 0) {
+                    infoActiveScopes = new ArrayList();
+
+                    CollectionUtils.collect(allActiveScopes, new Transformer() {
+                        public Object transform(Object input) {
+                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                            //CLONER
+                            return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                                     .newInfoFromDomain(curricularCourseScope);
-							//return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-							//	curricularCourseScope);
-						}
-					}, infoActiveScopes);
-				}
-			}
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-		return infoActiveScopes;
+                            //return
+                            // Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+                            //	curricularCourseScope);
+                        }
+                    }, infoActiveScopes);
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return infoActiveScopes;
 
-	}
-	
-	//Read all curricular course scope of this year
-	protected List readActiveCurricularCourseScopesInExecutionYear(
-			IDegreeCurricularPlan degreeCurricularPlan,
-			IExecutionYear executionYear,
-			ISuportePersistente sp)
-	throws FenixServiceException
-	{
-		List infoActiveScopes = null;
-		try
-		{
+    }
 
-			IPersistentCurricularCourseScope persistentCurricularCourseScope =
-			sp.getIPersistentCurricularCourseScope();
+    //Read all curricular course scope of this year
+    protected List readActiveCurricularCourseScopesInExecutionYear(
+            IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear,
+            ISuportePersistente sp) throws FenixServiceException {
+        List infoActiveScopes = null;
+        try {
 
-			if (degreeCurricularPlan != null)
-			{
+            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+                    .getIPersistentCurricularCourseScope();
 
-				List allActiveScopes =
-				persistentCurricularCourseScope
-				.readCurricularCourseScopesByCurricularCourseInExecutionYear(
-						degreeCurricularPlan, executionYear);
+            if (degreeCurricularPlan != null) {
 
-				if (allActiveScopes != null && allActiveScopes.size() > 0)
-				{
-					infoActiveScopes = new ArrayList();
+                List allActiveScopes = persistentCurricularCourseScope
+                        .readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(
+                                degreeCurricularPlan, executionYear);
+                if (allActiveScopes != null && allActiveScopes.size() > 0) {
+                    infoActiveScopes = new ArrayList();
 
-					CollectionUtils.collect(allActiveScopes, new Transformer()
-							{
-						public Object transform(Object input)
-						{
-							ICurricularCourseScope curricularCourseScope =
-							(ICurricularCourseScope) input;
-							return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-									curricularCourseScope);
-						}
-					}, infoActiveScopes);
-				}
-			}
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-		return infoActiveScopes;
+                    CollectionUtils.collect(allActiveScopes, new Transformer() {
+                        public Object transform(Object input) {
+                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                            return Cloner
+                                    .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                        }
+                    }, infoActiveScopes);
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
 
-	}
+            throw new FenixServiceException(e);
+        }
+        return infoActiveScopes;
+
+    }
+
+    //Read all curricular course scope of this year and curricular year
+    protected List readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
+            IExecutionPeriod executionPeriod, ICursoExecucao executionDegree, Integer curricularYear,
+            ISuportePersistente sp) throws FenixServiceException {
+        List infoActiveScopes = null;
+        try {
+
+            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+                    .getIPersistentCurricularCourseScope();
+            if (executionPeriod != null) {
+
+                List allActiveExecution = persistentCurricularCourseScope
+                        .readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(
+                                executionDegree.getCurricularPlan(), curricularYear, executionPeriod
+                                        .getExecutionYear());
+
+                if (allActiveExecution != null && allActiveExecution.size() > 0) {
+                    infoActiveScopes = new ArrayList();
+                    CollectionUtils.collect(allActiveExecution, new Transformer() {
+                        public Object transform(Object input) {
+                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                            return Cloner
+                                    .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                        }
+                    }, infoActiveScopes);
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return infoActiveScopes;
+
+    }
 }

@@ -28,18 +28,12 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * 
  * @author João Mota
- * 
+ *  
  */
-public class CoordinationTeamDispatchAction extends FenixDispatchAction
-{
+public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
-    public ActionForward viewTeam(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -48,23 +42,19 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Object[] args = { infoExecutionDegreeId };
         List coordinators = new ArrayList();
-        try
-        {
+        try {
             coordinators = (List) ServiceUtils.executeService(userView, "ReadCoordinationTeam", args);
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         Boolean result = new Boolean(false);
         Object[] args1 = { infoExecutionDegreeId, userView };
-        try
-        {
-            result =
-                (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility", args1);
+        try {
+            result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility",
+                    args1);
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -73,13 +63,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction
         return mapping.findForward("coordinationTeam");
     }
 
-    public ActionForward prepareAddCoordinator(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
@@ -87,13 +72,11 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Boolean result = new Boolean(false);
         Object[] args1 = { infoExecutionDegreeId, userView };
-        try
-        {
-            result =
-                (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility", args1);
+        try {
+            result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility",
+                    args1);
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 
@@ -103,13 +86,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction
 
     }
 
-    public ActionForward AddCoordinator(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm teacherForm = (DynaActionForm) form;
@@ -118,38 +96,28 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Object[] args = { infoExecutionDegreeId, teacherNumber };
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "AddCoordinator", args);
-        } catch (NonExistingServiceException e)
-        {
+        } catch (NonExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
             saveErrors(request, actionErrors);
             return prepareAddCoordinator(mapping, form, request, response);
-        } catch (InvalidArgumentsServiceException e)
-        {
+        } catch (InvalidArgumentsServiceException e) {
             throw new FenixActionException(e);
-        } catch (ExistingServiceException e)
-        {
+        } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("existingCoordinator", new ActionError("error.existingTeacher"));
             saveErrors(request, actionErrors);
             return prepareAddCoordinator(mapping, form, request, response);
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
         return mapping.findForward("sucess");
     }
 
-    public ActionForward removeCoordinators(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+    public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
@@ -160,12 +128,10 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Object[] args = { infoExecutionDegreeId, coordinators };
-        try
-        {
+        try {
             ServiceUtils.executeService(userView, "RemoveCoordinators", args);
 
-        } catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
 

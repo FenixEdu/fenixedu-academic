@@ -13,75 +13,56 @@ import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 24/Mar/2003
  */
 
-public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
-    extends ObjectFenixOJB
-    implements IPersistentEquivalentEnrolmentForEnrolmentEquivalence
-{
-
-   
-
-    
+public class EquivalentEnrolmentForEnrolmentEquivalenceOJB extends PersistentObjectOJB implements
+        IPersistentEquivalentEnrolmentForEnrolmentEquivalence {
 
     public void delete(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction)
-        throws ExcepcaoPersistencia
-    {
-        try
-        {
+            throws ExcepcaoPersistencia {
+        try {
             super.delete(enrolmentEquivalenceRestriction);
-        } catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw ex;
         }
     }
 
     public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(
-        IEnrolmentEquivalence enrolmentEquivalence,
-        IEnrollment equivalentEnrolment)
-        throws ExcepcaoPersistencia
-    {
-        try
-        {
+            IEnrolmentEquivalence enrolmentEquivalence, IEnrollment equivalentEnrolment)
+            throws ExcepcaoPersistencia {
+        try {
             Criteria criteria = new Criteria();
             criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
             criteria.addEqualTo("equivalentEnrolment.idInternal", equivalentEnrolment.getIdInternal());
             return (IEquivalentEnrolmentForEnrolmentEquivalence) queryObject(
-                EquivalentEnrolmentForEnrolmentEquivalence.class,
-                criteria);
-        } catch (ExcepcaoPersistencia e)
-        {
+                    EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
+        } catch (ExcepcaoPersistencia e) {
             throw e;
         }
     }
 
-    public List readByEquivalentEnrolment(IEnrollment equivalentEnrolment) throws ExcepcaoPersistencia
-    {
-        try
-        {
+    public List readByEquivalentEnrolment(IEnrollment equivalentEnrolment) throws ExcepcaoPersistencia {
+        try {
             Criteria criteria = new Criteria();
             criteria.addEqualTo("equivalentEnrolment.idInternal", equivalentEnrolment.getIdInternal());
             return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw e;
         }
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
 
-       return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class,new Criteria());
+        return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, new Criteria());
     }
 
     public List readByEnrolmentEquivalence(IEnrolmentEquivalence enrolmentEquivalence)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
-		return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
-	}
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
+        return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
+    }
 
 }

@@ -27,18 +27,16 @@ public class CreditsServiceWithOtherCreditLineIdFirstArgumentFilter extends
             throws FenixServiceException {
         Integer id = (Integer) arguments[0];
 
-        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp
-                .getIPersistentOtherTypeCreditLine();
+        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
 
         IOtherTypeCreditLine otherTypeCreditLine;
         try {
-            otherTypeCreditLine = (IOtherTypeCreditLine) otherTypeCreditLineDAO
-                    .readByOID(OtherTypeCreditLine.class, id);
+            otherTypeCreditLine = (IOtherTypeCreditLine) otherTypeCreditLineDAO.readByOID(
+                    OtherTypeCreditLine.class, id);
         } catch (ExcepcaoPersistencia e) {
             return null;
         }
-        return otherTypeCreditLine == null ? null : otherTypeCreditLine
-                .getTeacher().getIdInternal();
+        return otherTypeCreditLine == null ? null : otherTypeCreditLine.getTeacher().getIdInternal();
     }
 
 }

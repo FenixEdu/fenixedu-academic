@@ -12,14 +12,14 @@ import Dominio.grant.contract.IGrantPart;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import Dominio.grant.contract.IGrantSubsidy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantPart;
 
 /**
  * @author Pica
  * @author Barbosa
  */
-public class GrantPartOJB extends ObjectFenixOJB implements IPersistentGrantPart {
+public class GrantPartOJB extends PersistentObjectOJB implements IPersistentGrantPart {
 
     public GrantPartOJB() {
     }

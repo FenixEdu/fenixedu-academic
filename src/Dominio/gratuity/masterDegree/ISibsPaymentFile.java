@@ -9,13 +9,11 @@ import java.util.List;
 import Dominio.IDomainObject;
 
 /**
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public interface ISibsPaymentFile extends IDomainObject
-{
+public interface ISibsPaymentFile extends IDomainObject {
 
     /**
      * @return Returns the sibsPaymentFileEntries.
@@ -23,7 +21,8 @@ public interface ISibsPaymentFile extends IDomainObject
     public abstract List getSibsPaymentFileEntries();
 
     /**
-     * @param sibsPaymentFileEntries The sibsPaymentFileEntries to set.
+     * @param sibsPaymentFileEntries
+     *            The sibsPaymentFileEntries to set.
      */
     public abstract void setSibsPaymentFileEntries(List sibsPaymentFileEntries);
 
@@ -33,7 +32,8 @@ public interface ISibsPaymentFile extends IDomainObject
     public abstract String getFilename();
 
     /**
-     * @param filename The filename to set.
+     * @param filename
+     *            The filename to set.
      */
     public abstract void setFilename(String filename);
 }

@@ -24,35 +24,27 @@ import Dominio.Section;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
 
-public class SectionOJB extends ObjectFenixOJB implements IPersistentSection
-{
+public class SectionOJB extends PersistentObjectOJB implements IPersistentSection {
 
     /** Creates a new instance of SeccaoOJB */
-    public SectionOJB()
-    {
+    public SectionOJB() {
     }
 
     public ISection readBySiteAndSectionAndName(ISite site, ISection superiorSection, String name)
-        throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Section section = null;
         section = (Section) superiorSection;
         Criteria crit = new Criteria();
         crit.addEqualTo("name", name);
         crit.addEqualTo("site.executionCourse.code", site.getExecutionCourse().getSigla());
-        crit.addEqualTo(
-            "site.executionCourse.executionPeriod.name",
-            site.getExecutionCourse().getExecutionPeriod().getName());
-        crit.addEqualTo(
-            "site.executionCourse.executionPeriod.executionYear.year",
-            site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-        if (section == null)
-        {
+        crit.addEqualTo("site.executionCourse.executionPeriod.name", site.getExecutionCourse()
+                .getExecutionPeriod().getName());
+        crit.addEqualTo("site.executionCourse.executionPeriod.executionYear.year", site
+                .getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        if (section == null) {
             crit.addIsNull("keySuperiorSection");
-        }
-        else
-        {
+        } else {
             crit.addEqualTo("keySuperiorSection", section.getIdInternal());
         }
         return (ISection) queryObject(Section.class, crit);
@@ -60,84 +52,66 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection
     }
 
     //reads imediatly inferior sections of a section
-    public List readBySiteAndSection(ISite site, ISection superiorSection) throws ExcepcaoPersistencia
-    {
+    public List readBySiteAndSection(ISite site, ISection superiorSection) throws ExcepcaoPersistencia {
 
         ISection section = (Section) superiorSection;
         Criteria crit = new Criteria();
         crit.addEqualTo("site.executionCourse.code", site.getExecutionCourse().getSigla());
-        crit.addEqualTo(
-            "site.executionCourse.executionPeriod.name",
-            site.getExecutionCourse().getExecutionPeriod().getName());
-        crit.addEqualTo(
-            "site.executionCourse.executionPeriod.executionYear.year",
-            site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-        if (section == null)
-        {
+        crit.addEqualTo("site.executionCourse.executionPeriod.name", site.getExecutionCourse()
+                .getExecutionPeriod().getName());
+        crit.addEqualTo("site.executionCourse.executionPeriod.executionYear.year", site
+                .getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        if (section == null) {
             crit.addIsNull("keySuperiorSection");
-        }
-        else
-        {
+        } else {
             crit.addEqualTo("keySuperiorSection", section.getIdInternal());
         }
         return queryList(Section.class, crit);
 
     }
 
-    public List readBySite(ISite site) throws ExcepcaoPersistencia
-    {
+    public List readBySite(ISite site) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("site.executionCourse.code", site.getExecutionCourse().getSigla());
-        crit.addEqualTo(
-            "site.executionCourse.executionPeriod.name",
-            site.getExecutionCourse().getExecutionPeriod().getName());
-        crit.addEqualTo(
-            "site.executionCourse.executionPeriod.executionYear.year",
-            site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        crit.addEqualTo("site.executionCourse.executionPeriod.name", site.getExecutionCourse()
+                .getExecutionPeriod().getName());
+        crit.addEqualTo("site.executionCourse.executionPeriod.executionYear.year", site
+                .getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
         return queryList(Section.class, crit);
 
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(Section.class, new Criteria());
 
     }
 
-    
-
-    public void delete(ISection section) throws ExcepcaoPersistencia
-    {
+    public void delete(ISection section) throws ExcepcaoPersistencia {
 
         ISection inferiorSection = section;
         List imediatlyInferiorSections = readBySiteAndSection(section.getSite(), section);
 
         Iterator iterator = imediatlyInferiorSections.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             inferiorSection = (ISection) iterator.next();
             delete(inferiorSection);
         }
 
         Criteria crit = new Criteria();
         crit.addEqualTo("section.name", section.getName());
-        crit.addEqualTo(
-            "section.site.executionCourse.code",
-            section.getSite().getExecutionCourse().getSigla());
-        crit.addEqualTo(
-            "section.site.executionCourse.executionPeriod.name",
-            section.getSite().getExecutionCourse().getExecutionPeriod().getName());
-        crit.addEqualTo(
-            "section.site.executionCourse.executionPeriod.executionYear.year",
-            section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        crit.addEqualTo("section.site.executionCourse.code", section.getSite().getExecutionCourse()
+                .getSigla());
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.name", section.getSite()
+                .getExecutionCourse().getExecutionPeriod().getName());
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year", section
+                .getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
         IItem item = null;
         ItemOJB itemOJB = new ItemOJB();
 
         List result = queryList(Item.class, crit);
 
         Iterator iterador = result.iterator();
-        while (iterador.hasNext())
-        {
+        while (iterador.hasNext()) {
             item = (IItem) iterador.next();
             itemOJB.delete(item);
         }
@@ -145,7 +119,5 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection
         super.delete(section);
 
     }
-
-   
 
 }

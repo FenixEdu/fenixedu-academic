@@ -31,35 +31,31 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadAllRoomsExamsMap implements IServico
-{
+public class ReadAllRoomsExamsMap implements IServico {
 
     private static ReadAllRoomsExamsMap servico = new ReadAllRoomsExamsMap();
+
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadAllRoomsExamsMap getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadAllRoomsExamsMap getService() {
         return servico;
     }
 
     /**
-	 * The actor of this class.
-	 */
-    private ReadAllRoomsExamsMap()
-    {
+     * The actor of this class.
+     */
+    private ReadAllRoomsExamsMap() {
     }
 
     /**
-	 * Devolve o nome do servico
-	 */
-    public String getNome()
-    {
+     * Devolve o nome do servico
+     */
+    public String getNome() {
         return "ReadAllRoomsExamsMap";
     }
 
-    public List run(InfoExecutionPeriod infoExecutionPeriod)
-    {
+    public List run(InfoExecutionPeriod infoExecutionPeriod) {
 
         // Object to be returned
         List infoRoomExamMapList = new ArrayList();
@@ -83,13 +79,11 @@ public class ReadAllRoomsExamsMap implements IServico
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             List rooms = sp.getISalaPersistente().readForRoomReservation();
 
-            for (int i = 0; i < rooms.size(); i++)
-            {
+            for (int i = 0; i < rooms.size(); i++) {
 
                 ISala room = (ISala) rooms.get(i);
 
@@ -103,8 +97,8 @@ public class ReadAllRoomsExamsMap implements IServico
                 infoExamsMap.setEndSeason2(endSeason2);
 
                 // Translate to execute following queries
-                IExecutionPeriod executionPeriod =
-                    Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+                IExecutionPeriod executionPeriod = Cloner
+                        .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
                 List exams = sp.getIPersistentExam().readBy(room, executionPeriod);
                 infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
@@ -112,23 +106,18 @@ public class ReadAllRoomsExamsMap implements IServico
                 infoRoomExamMapList.add(infoExamsMap);
             }
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 
         return infoRoomExamMapList;
     }
 
-    private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer()
-    {
-        public Object transform(Object exam)
-        {
+    private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
+        public Object transform(Object exam) {
             InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
-            infoExam.setInfoExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(
-                    (IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
+            infoExam.setInfoExecutionCourse((InfoExecutionCourse) Cloner
+                    .get((IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }
     };

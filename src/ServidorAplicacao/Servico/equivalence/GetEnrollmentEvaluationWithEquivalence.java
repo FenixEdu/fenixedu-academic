@@ -27,42 +27,42 @@ import Util.TipoCurso;
  * @author David Santos in May 17, 2004
  */
 
-public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenceServiceUtils implements IService
-{
-	public GetEnrollmentEvaluationWithEquivalence()
-	{
-	}
+public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenceServiceUtils implements
+        IService {
+    public GetEnrollmentEvaluationWithEquivalence() {
+    }
 
-	public List run(Integer studentNumber, TipoCurso degreeType, Integer enrollmentID) throws FenixServiceException
-	{
-		return (List) convertDataOutput(execute(convertDataInput(enrollmentID)));
-	}
+    public List run(Integer studentNumber, TipoCurso degreeType, Integer enrollmentID)
+            throws FenixServiceException {
+        return (List) convertDataOutput(execute(convertDataInput(enrollmentID)));
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
-	 */
-	protected Object convertDataInput(Object object)
-	{
-		return object;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
+     */
+    protected Object convertDataInput(Object object) {
+        return object;
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.Service#convertDataOutput(java.lang.Object)
-	 */
-	protected Object convertDataOutput(Object object)
-	{
-		List input = (List) object;
-		List output = new ArrayList();
-		
-		for (int i = 0; i < input.size(); i++)
-		{
-			IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) input.get(i);
-			
-			//CLONER
-			//InfoEnrolmentEvaluation infoEnrollmentEvaluation = Cloner
-			//	.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrollmentEvaluation);
-			//infoEnrollmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollmentEvaluation.getEnrolment()));
-			InfoEnrolmentEvaluation infoEnrollmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.Service#convertDataOutput(java.lang.Object)
+     */
+    protected Object convertDataOutput(Object object) {
+        List input = (List) object;
+        List output = new ArrayList();
+
+        for (int i = 0; i < input.size(); i++) {
+            IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) input.get(i);
+
+            //CLONER
+            //InfoEnrolmentEvaluation infoEnrollmentEvaluation = Cloner
+            //	.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrollmentEvaluation);
+            //infoEnrollmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollmentEvaluation.getEnrolment()));
+            InfoEnrolmentEvaluation infoEnrollmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
                     .newInfoFromDomain(enrollmentEvaluation);
             infoEnrollmentEvaluation
                     .setInfoEnrolment(InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
@@ -70,73 +70,71 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
             infoEnrollmentEvaluation.getInfoEnrolment().setInfoStudentCurricularPlan(
                     InfoStudentCurricularPlanWithInfoStudent.newInfoFromDomain(enrollmentEvaluation
                             .getEnrolment().getStudentCurricularPlan()));
-			
-			output.add(i, infoEnrollmentEvaluation);
-		}
-		
-		return output;
-	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servico.Service#execute(java.lang.Object)
-	 */
-	protected Object execute(Object object) throws FenixServiceException
-	{
-		Integer enrollmentID = (Integer) object;
-		
-		List enrollmentEvaluations = new ArrayList();
+            output.add(i, infoEnrollmentEvaluation);
+        }
 
-		try
-		{
-			ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-			IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
-			IPersistentEnrolmentEquivalence enrollmentEquivalenceDAO = persistenceDAO.getIPersistentEnrolmentEquivalence();
-			IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalenceDAO = persistenceDAO
-				.getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
+        return output;
+    }
 
-			IEnrollment enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
-			
-			enrollmentEvaluations.add(0, getEnrollmentEvaluation(enrollment));
-			
-			if (enrollment != null)
-			{
-				IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO.readByEnrolment(enrollment);
-				if (enrollmentEquivalence != null)
-				{
-					List equivalentEnrollmentsForEnrollmentEquivalence = equivalentEnrollmentForEnrollmentEquivalenceDAO
-						.readByEnrolmentEquivalence(enrollmentEquivalence);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servico.Service#execute(java.lang.Object)
+     */
+    protected Object execute(Object object) throws FenixServiceException {
+        Integer enrollmentID = (Integer) object;
 
-					if ((equivalentEnrollmentsForEnrollmentEquivalence != null)
-						&& (!equivalentEnrollmentsForEnrollmentEquivalence.isEmpty()))
-					{
-						for (int j = 0; j < equivalentEnrollmentsForEnrollmentEquivalence.size(); j++)
-						{
-							IEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolmentForEnrolmentEquivalence =
-								(IEquivalentEnrolmentForEnrolmentEquivalence) equivalentEnrollmentsForEnrollmentEquivalence
-								.get(j);
-							
-							enrollmentEvaluations.add((j + 1), getEnrollmentEvaluation(equivalentEnrolmentForEnrolmentEquivalence
-								.getEquivalentEnrolment()));
-						}
-					}
-				}
-			}
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
+        List enrollmentEvaluations = new ArrayList();
 
-		return enrollmentEvaluations;
-	}
+        try {
+            ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
+            IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
+            IPersistentEnrolmentEquivalence enrollmentEquivalenceDAO = persistenceDAO
+                    .getIPersistentEnrolmentEquivalence();
+            IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalenceDAO = persistenceDAO
+                    .getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
 
-	private IEnrolmentEvaluation getEnrollmentEvaluation(IEnrollment enrollment)
-	{
-		List enrolmentEvaluations = enrollment.getEvaluations();
+            IEnrollment enrollment = (IEnrollment) enrollmentDAO
+                    .readByOID(Enrolment.class, enrollmentID);
 
-		// This sorts the list ascendingly so we need to reverse it to get the first object.
-		Collections.sort(enrolmentEvaluations);
-		Collections.reverse(enrolmentEvaluations);
-		
-		return (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
-	}
+            enrollmentEvaluations.add(0, getEnrollmentEvaluation(enrollment));
+
+            if (enrollment != null) {
+                IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO
+                        .readByEnrolment(enrollment);
+                if (enrollmentEquivalence != null) {
+                    List equivalentEnrollmentsForEnrollmentEquivalence = equivalentEnrollmentForEnrollmentEquivalenceDAO
+                            .readByEnrolmentEquivalence(enrollmentEquivalence);
+
+                    if ((equivalentEnrollmentsForEnrollmentEquivalence != null)
+                            && (!equivalentEnrollmentsForEnrollmentEquivalence.isEmpty())) {
+                        for (int j = 0; j < equivalentEnrollmentsForEnrollmentEquivalence.size(); j++) {
+                            IEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolmentForEnrolmentEquivalence = (IEquivalentEnrolmentForEnrolmentEquivalence) equivalentEnrollmentsForEnrollmentEquivalence
+                                    .get(j);
+
+                            enrollmentEvaluations.add((j + 1),
+                                    getEnrollmentEvaluation(equivalentEnrolmentForEnrolmentEquivalence
+                                            .getEquivalentEnrolment()));
+                        }
+                    }
+                }
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+        return enrollmentEvaluations;
+    }
+
+    private IEnrolmentEvaluation getEnrollmentEvaluation(IEnrollment enrollment) {
+        List enrolmentEvaluations = enrollment.getEvaluations();
+
+        // This sorts the list ascendingly so we need to reverse it to get the
+        // first object.
+        Collections.sort(enrolmentEvaluations);
+        Collections.reverse(enrolmentEvaluations);
+
+        return (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
+    }
 }

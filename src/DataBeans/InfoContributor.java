@@ -21,8 +21,7 @@ public class InfoContributor extends InfoObject {
     public InfoContributor() {
     }
 
-    public InfoContributor(Integer contributorNumber, String contributorName,
-            String contributorAddress) {
+    public InfoContributor(Integer contributorNumber, String contributorName, String contributorAddress) {
         this.contributorNumber = contributorNumber;
         this.contributorName = contributorName;
         this.contributorAddress = contributorAddress;
@@ -30,10 +29,8 @@ public class InfoContributor extends InfoObject {
 
     public boolean equals(Object o) {
         return ((o instanceof InfoContributor)
-                && (contributorNumber.equals(((InfoContributor) o)
-                        .getContributorNumber()))
-                && (contributorName.equals(((InfoContributor) o)
-                        .getContributorName())) && (contributorAddress
+                && (contributorNumber.equals(((InfoContributor) o).getContributorNumber()))
+                && (contributorName.equals(((InfoContributor) o).getContributorName())) && (contributorAddress
                 .equals(((InfoContributor) o).getContributorAddress())));
 
     }
@@ -114,20 +111,20 @@ public class InfoContributor extends InfoObject {
         }
         return infoContributor;
     }
-    
+
     public void copyToDomain(InfoContributor infoContributor, IContributor contributor) {
         super.copyToDomain(infoContributor, contributor);
-        
+
         contributor.setContributorAddress(infoContributor.getContributorAddress());
         contributor.setContributorName(infoContributor.getContributorName());
         contributor.setContributorNumber(infoContributor.getContributorNumber());
     }
-    
+
     public static IContributor newDomainFromInfo(InfoContributor infoContributor) {
-        IContributor contributor  = null;
-        
-        if(infoContributor != null) {
-            contributor  = new Contributor();
+        IContributor contributor = null;
+
+        if (infoContributor != null) {
+            contributor = new Contributor();
             infoContributor.copyToDomain(infoContributor, contributor);
         }
         return contributor;

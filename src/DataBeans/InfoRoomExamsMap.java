@@ -9,103 +9,108 @@ import java.util.List;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ *  
  */
 public class InfoRoomExamsMap extends InfoObject {
 
-	List exams;
-	InfoRoom infoRoom;
-	Calendar startSeason1;
-	Calendar endSeason1;
-	Calendar startSeason2;
-	Calendar endSeason2;
+    List exams;
 
-	public InfoRoomExamsMap() {
-		super();
-	}
+    InfoRoom infoRoom;
 
-	/**
-	 * @return
-	 */
-	public Calendar getEndSeason1() {
-		return endSeason1;
-	}
+    Calendar startSeason1;
 
-	/**
-	 * @return
-	 */
-	public Calendar getEndSeason2() {
-		return endSeason2;
-	}
+    Calendar endSeason1;
 
-	/**
-	 * @return
-	 */
-	public Calendar getStartSeason1() {
-		return startSeason1;
-	}
+    Calendar startSeason2;
 
-	/**
-	 * @return
-	 */
-	public Calendar getStartSeason2() {
-		return startSeason2;
-	}
+    Calendar endSeason2;
 
-	/**
-	 * @param calendar
-	 */
-	public void setEndSeason1(Calendar calendar) {
-		endSeason1 = calendar;
-	}
+    public InfoRoomExamsMap() {
+        super();
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEndSeason2(Calendar calendar) {
-		endSeason2 = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEndSeason1() {
+        return endSeason1;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setStartSeason1(Calendar calendar) {
-		startSeason1 = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEndSeason2() {
+        return endSeason2;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setStartSeason2(Calendar calendar) {
-		startSeason2 = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getStartSeason1() {
+        return startSeason1;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getExams() {
-		return exams;
-	}
+    /**
+     * @return
+     */
+    public Calendar getStartSeason2() {
+        return startSeason2;
+    }
 
-	/**
-	 * @param exams
-	 */
-	public void setExams(List exams) {
-		this.exams = exams;
-	}
+    /**
+     * @param calendar
+     */
+    public void setEndSeason1(Calendar calendar) {
+        endSeason1 = calendar;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoRoom getInfoRoom() {
-		return infoRoom;
-	}
+    /**
+     * @param calendar
+     */
+    public void setEndSeason2(Calendar calendar) {
+        endSeason2 = calendar;
+    }
 
-	/**
-	 * @param room
-	 */
-	public void setInfoRoom(InfoRoom room) {
-		infoRoom = room;
-	}
+    /**
+     * @param calendar
+     */
+    public void setStartSeason1(Calendar calendar) {
+        startSeason1 = calendar;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setStartSeason2(Calendar calendar) {
+        startSeason2 = calendar;
+    }
+
+    /**
+     * @return
+     */
+    public List getExams() {
+        return exams;
+    }
+
+    /**
+     * @param exams
+     */
+    public void setExams(List exams) {
+        this.exams = exams;
+    }
+
+    /**
+     * @return
+     */
+    public InfoRoom getInfoRoom() {
+        return infoRoom;
+    }
+
+    /**
+     * @param room
+     */
+    public void setInfoRoom(InfoRoom room) {
+        infoRoom = room;
+    }
 
 }

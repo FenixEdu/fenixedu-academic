@@ -58,7 +58,7 @@
 <table border="0" width="100%" cellspacing="3" cellpadding="10">
 
 	<!-- Guiders -->
-	<logic:present name="<%= SessionConstants.GUIDERS_LIST %>" scope="request">
+	<logic:notEmpty name="<%= SessionConstants.GUIDERS_LIST %>" scope="request">
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.guiders"/></th>				
 		</tr>
@@ -78,7 +78,7 @@
 				<td>&nbsp;</td>					
 			</tr>				
 		</logic:iterate>
-	</logic:present >				
+	</logic:notEmpty >				
 	<tr> 
 		<td>&nbsp;</td>
 	</tr>
@@ -86,7 +86,7 @@
 	
 	<!-- External Guiders -->
 	
-	<logic:present name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" scope="request">
+	<logic:notEmpty name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" scope="request">
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalGuiders"/></th>				
 		</tr>
@@ -111,11 +111,11 @@
 		<tr> 
 			<td>&nbsp;</td>
 		</tr>			
-	</logic:present>
+	</logic:notEmpty>
 	
 	<!-- Assistent Guiders -->
 	
-	<logic:present name="<%= SessionConstants.ASSISTENT_GUIDERS_LIST %>" scope="request">
+	<logic:notEmpty name="<%= SessionConstants.ASSISTENT_GUIDERS_LIST %>" scope="request">
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.assistentGuiders"/></th>				
 		</tr>
@@ -138,13 +138,13 @@
 		<tr> 
 			<td>&nbsp;</td>
 		</tr>			
-	</logic:present>
+	</logic:notEmpty>
 
 		
 		<!-- External Assistent Guiders -->
 	
 			
-	<logic:present name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST %>" scope="request">
+	<logic:notEmpty name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST %>" scope="request">
 	
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalAssistentGuiders"/></th>				
@@ -167,7 +167,7 @@
 		<tr> 
 			<td>&nbsp;</td>
 		</tr>		
-	</logic:present>
+	</logic:notEmpty>
 	
 	<!-- last modification -->
 	<tr>
@@ -183,7 +183,7 @@
 	</tr>
 					
 	<!-- history -->
-	<logic:present name="<%= SessionConstants.MASTER_DEGREE_THESIS_HISTORY %>" scope="request">
+	<logic:notEmpty name="<%= SessionConstants.MASTER_DEGREE_THESIS_HISTORY %>" scope="request">
 	
 		<tr>
 			<th align="left" colspan="4">
@@ -238,7 +238,7 @@
 					
 		</logic:iterate>	
 	
-	</logic:present>
+	</logic:notEmpty>
 					
 </table>
 

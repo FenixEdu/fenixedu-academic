@@ -46,8 +46,8 @@ public class InfoShift extends InfoObject {
         setTipo(tipo);
         setLotacao(lotacao);
         setInfoDisciplinaExecucao(infoDisciplinaExecucao);
-		setInfoClasses(new ArrayList());
-		setInfoLessons(new ArrayList());
+        setInfoClasses(new ArrayList());
+        setInfoLessons(new ArrayList());
     }
 
     /**
@@ -57,10 +57,9 @@ public class InfoShift extends InfoObject {
         setIdInternal(shiftIdInternal);
     }
 
-    public Integer getSize()
-    {
-    	if (infoClasses == null)
-    		return new Integer(0);
+    public Integer getSize() {
+        if (infoClasses == null)
+            return new Integer(0);
         return new Integer(infoClasses.size());
     }
 
@@ -76,8 +75,7 @@ public class InfoShift extends InfoObject {
         return _infoDisciplinaExecucao;
     }
 
-    public void setInfoDisciplinaExecucao(
-            InfoExecutionCourse infoDisciplinaExecucao) {
+    public void setInfoDisciplinaExecucao(InfoExecutionCourse infoDisciplinaExecucao) {
         _infoDisciplinaExecucao = infoDisciplinaExecucao;
     }
 
@@ -110,8 +108,7 @@ public class InfoShift extends InfoObject {
         if (obj instanceof InfoShift) {
             InfoShift infoTurno = (InfoShift) obj;
             resultado = (getNome().equals(infoTurno.getNome()))
-                    && (getInfoDisciplinaExecucao().equals(infoTurno
-                            .getInfoDisciplinaExecucao()));
+                    && (getInfoDisciplinaExecucao().equals(infoTurno.getInfoDisciplinaExecucao()));
         }
         return resultado;
     }
@@ -133,7 +130,9 @@ public class InfoShift extends InfoObject {
         String result = new String();
 
         List infoLessonsList = getInfoLessons();
-        if (infoLessonsList == null) { return ""; }
+        if (infoLessonsList == null) {
+            return "";
+        }
         Iterator itLesson = infoLessonsList.iterator();
         int index = 0;
         while (itLesson.hasNext()) {
@@ -228,7 +227,7 @@ public class InfoShift extends InfoObject {
 
     public void copyFromDomain(ITurno shift) {
         super.copyFromDomain(shift);
-        if (shift!=null) {
+        if (shift != null) {
             setNome(shift.getNome());
             setTipo(shift.getTipo());
             setLotacao(shift.getLotacao());
@@ -236,11 +235,12 @@ public class InfoShift extends InfoObject {
             setPercentage(shift.getPercentage());
         }
     }
+
     public static InfoShift newInfoFromDomain(ITurno shift) {
         InfoShift infoShift = null;
         if (shift != null) {
             infoShift = new InfoShift();
-            infoShift.copyFromDomain(shift);            
+            infoShift.copyFromDomain(shift);
         }
         return infoShift;
     }

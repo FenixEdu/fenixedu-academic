@@ -18,21 +18,17 @@ import ServidorPersistente.IPersistentPaymentPhase;
  * @author Tânia Pousão
  *  
  */
-public class PaymentPhaseOJB extends ObjectFenixOJB implements IPersistentPaymentPhase
-{
-    public void deletePaymentPhasesOfThisGratuity(Integer gratuityValuesID) throws ExcepcaoPersistencia
-    {
+public class PaymentPhaseOJB extends PersistentObjectOJB implements IPersistentPaymentPhase {
+    public void deletePaymentPhasesOfThisGratuity(Integer gratuityValuesID) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("gratuityValues.idInternal", gratuityValuesID);
 
         List result = queryList(PaymentPhase.class, crit);
-        if (result != null)
-        {
+        if (result != null) {
 
             ListIterator iterator = result.listIterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
 
                 delete(iterator.next());
             }
@@ -40,8 +36,7 @@ public class PaymentPhaseOJB extends ObjectFenixOJB implements IPersistentPaymen
 
     }
 
-    public List readByGratuityValues(IGratuityValues gratuityValues) throws ExcepcaoPersistencia
-    {
+    public List readByGratuityValues(IGratuityValues gratuityValues) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("gratuityValues.idInternal", gratuityValues.getIdInternal());
 

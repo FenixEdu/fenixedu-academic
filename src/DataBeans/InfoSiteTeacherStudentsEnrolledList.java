@@ -11,8 +11,7 @@ import java.util.List;
  * @author João Mota
  *  
  */
-public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject
-        implements ISiteComponent {
+public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject implements ISiteComponent {
     private List infoStudents;
 
     private InfoExam infoExam;
@@ -26,8 +25,8 @@ public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject
 
     }
 
-    public InfoSiteTeacherStudentsEnrolledList(List infoStudents,
-            InfoExam infoExam, List infoExamStudentRoomList) {
+    public InfoSiteTeacherStudentsEnrolledList(List infoStudents, InfoExam infoExam,
+            List infoExamStudentRoomList) {
         setInfoExam(infoExam);
         setInfoStudents(infoStudents);
         setInfoExamStudentRoomList(infoExamStudentRoomList);
@@ -74,10 +73,8 @@ public class InfoSiteTeacherStudentsEnrolledList extends DataTranferObject
 
         if (arg0 instanceof InfoSiteTeacherStudentsEnrolledList) {
             InfoSiteTeacherStudentsEnrolledList component = (InfoSiteTeacherStudentsEnrolledList) arg0;
-            result = component.getInfoStudents().containsAll(
-                    this.getInfoStudents())
-                    && this.getInfoStudents().containsAll(
-                            component.getInfoStudents());
+            result = component.getInfoStudents().containsAll(this.getInfoStudents())
+                    && this.getInfoStudents().containsAll(component.getInfoStudents());
         }
 
         return result;

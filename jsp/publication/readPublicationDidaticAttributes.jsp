@@ -41,7 +41,7 @@
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="idInternal"/>
 	<html:hidden property="teacherId"/>
-	<html:hidden property="infoPublicationTypeId"/>
+	<!--<html:hidden property="infoPublicationTypeId"/>-->
 	<html:hidden property="typePublication"/>
 	<html:hidden property="method" value="edit"/>
 	<logic:present name="infoAuthorsList">
@@ -82,6 +82,12 @@
 	<br />
 </p>
 	<bean:message key="message.publications.fieldsToFill"/>
+	
+	<html:select property="infoPublicationTypeId" onchange="this.form.method.value='prepareEdit';
+		this.form.page.value='0';this.form.typePublication.value='Didatic';this.form.submit();">
+		<html:options collection="publicationTypesList" property="idInternal" labelProperty="publicationType"/>
+	</html:select>
+	<br/><br/>
 	
 <table>
 		<logic:iterate id="att" name="infoRequiredAttributeList">

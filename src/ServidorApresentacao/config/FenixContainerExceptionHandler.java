@@ -19,15 +19,10 @@ import org.apache.struts.config.ExceptionConfig;
  */
 public class FenixContainerExceptionHandler extends FenixExceptionHandler {
 
-	public ActionForward execute(
-		Exception ex,
-		ExceptionConfig ae,
-		ActionMapping mapping,
-		ActionForm formInstance,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws ServletException {
-		super.execute(ex, ae, mapping, formInstance, request, response);
-		throw new ServletException(ex);
-	}
+    public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
+            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException {
+        super.execute(ex, ae, mapping, formInstance, request, response);
+        throw new ServletException(ex);
+    }
 }

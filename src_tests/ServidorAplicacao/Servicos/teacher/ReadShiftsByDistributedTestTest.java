@@ -19,44 +19,36 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadShiftsByDistributedTestTest extends TestCaseReadServices
-{
+public class ReadShiftsByDistributedTestTest extends TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public ReadShiftsByDistributedTestTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadShiftsByDistributedTestTest(String testName) {
         super(testName);
 
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadShiftsByDistributedTest";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         return null;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
-        Object[] args = { new Integer(26), new Integer(25)};
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] args = { new Integer(26), new Integer(25) };
         return args;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 1;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         List shiftList = new ArrayList();
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, new Integer(19));
@@ -66,16 +58,13 @@ public class ReadShiftsByDistributedTestTest extends TestCaseReadServices
             InfoShift infoShift = (InfoShift) Cloner.get(shift);
 
             shiftList.add(infoShift);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             fail("exception: ExcepcaoPersistencia ");
         }
         return shiftList;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 }

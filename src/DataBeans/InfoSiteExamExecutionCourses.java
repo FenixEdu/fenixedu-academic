@@ -3,29 +3,27 @@
  *
  */
 package DataBeans;
+
 /**
- * @author  Luis Egidio, lmre@mega.ist.utl.pt
- * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
- *
+ * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
+ *  
  */
-public class InfoSiteExamExecutionCourses extends InfoSiteEvaluationExecutionCourses implements ISiteComponent
-{
+public class InfoSiteExamExecutionCourses extends InfoSiteEvaluationExecutionCourses implements
+        ISiteComponent {
     protected InfoExam infoExam;
 
-    
     /**
      * @return Returns the infoExam.
      */
-    public InfoExam getInfoExam()
-    {
+    public InfoExam getInfoExam() {
         return infoExam;
     }
 
     /**
-     * @param infoExam The infoExam to set.
+     * @param infoExam
+     *            The infoExam to set.
      */
-    public void setInfoExam(InfoExam infoExam)
-    {
+    public void setInfoExam(InfoExam infoExam) {
         this.infoExam = infoExam;
     }
 

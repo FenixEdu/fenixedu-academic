@@ -13,122 +13,115 @@ import Dominio.StudentGroupAttend;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 10/Set/2003, 21:48:21
- * 
+ *  
  */
-public class StudentGroupAttendacyInformation extends InfoObject
-{
+public class StudentGroupAttendacyInformation extends InfoObject {
     private Integer groupNumber;
-    private String shiftName;    
+
+    private String shiftName;
+
     private List lessons;
+
     private List degreesNames;
+
     private List groupAttends;
-	/**
-	 * @return
-	 */
-	public Integer getGroupNumber()
-	{
-		return groupNumber;
-	}
 
-	/**
-	 * @return
-	 */
-	public String getShiftName()
-	{
-		return shiftName;
-	}
+    /**
+     * @return
+     */
+    public Integer getGroupNumber() {
+        return groupNumber;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setGroupNumber(Integer integer)
-	{
-		groupNumber= integer;
-	}
+    /**
+     * @return
+     */
+    public String getShiftName() {
+        return shiftName;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setShiftName(String string)
-	{
-		shiftName= string;
-	}
+    /**
+     * @param integer
+     */
+    public void setGroupNumber(Integer integer) {
+        groupNumber = integer;
+    }
 
-	/**
-	 * @param string
-	 */
+    /**
+     * @param string
+     */
+    public void setShiftName(String string) {
+        shiftName = string;
+    }
 
-    public String toString()
-    {
+    /**
+     * @param string
+     */
+
+    public String toString() {
         String result = "[StudentGroupAttendacyInformation ";
-        result+="GroupNumber: "+this.getGroupNumber() +";";
-        result+="GroupAttends:: "+this.getGroupAttends() +";";
-        result+="ShiftName: "+this.getShiftName() +";";
-        result+="Lessons:" + this.getLessons() +"]";
-        
+        result += "GroupNumber: " + this.getGroupNumber() + ";";
+        result += "GroupAttends:: " + this.getGroupAttends() + ";";
+        result += "ShiftName: " + this.getShiftName() + ";";
+        result += "Lessons:" + this.getLessons() + "]";
+
         return result;
     }
-	/**
-	 * @return
-	 */
-	public List getLessons()
-	{
-		return lessons;
-	}
 
-	/**
-	 * @param list
-	 */
-	public void setLessons(List list)
-	{
-		lessons= list;
-	}
+    /**
+     * @return
+     */
+    public List getLessons() {
+        return lessons;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getDegreesNames()
-	{
-		return degreesNames;
-	}
+    /**
+     * @param list
+     */
+    public void setLessons(List list) {
+        lessons = list;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setDegreesNames(List list)
-	{
-		degreesNames= list;
-	}
-	/**
-	 * @return
-	 */
-	public List getGroupAttends()
-	{
-		return groupAttends;
-	}
+    /**
+     * @return
+     */
+    public List getDegreesNames() {
+        return degreesNames;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setGroupAttends(List list)
-	{
-		groupAttends= list;
-	}
-    
-    public boolean isStudentMemberOfThisGroup(Integer studentNumber)
-    {
+    /**
+     * @param list
+     */
+    public void setDegreesNames(List list) {
+        degreesNames = list;
+    }
 
-        for (Iterator iterator= this.getGroupAttends().iterator(); iterator.hasNext();)
-        {
-		  StudentGroupAttend studentGroupAttend = (StudentGroupAttend) iterator.next();
-          IFrequenta attendacy = studentGroupAttend.getAttend();
-          if (attendacy.getAluno().getNumber().equals(studentNumber))
-            return true;
+    /**
+     * @return
+     */
+    public List getGroupAttends() {
+        return groupAttends;
+    }
+
+    /**
+     * @param list
+     */
+    public void setGroupAttends(List list) {
+        groupAttends = list;
+    }
+
+    public boolean isStudentMemberOfThisGroup(Integer studentNumber) {
+
+        for (Iterator iterator = this.getGroupAttends().iterator(); iterator.hasNext();) {
+            StudentGroupAttend studentGroupAttend = (StudentGroupAttend) iterator.next();
+            IFrequenta attendacy = studentGroupAttend.getAttend();
+            if (attendacy.getAluno().getNumber().equals(studentNumber))
+                return true;
         }
-        
-        return false;	
+
+        return false;
     }
 }

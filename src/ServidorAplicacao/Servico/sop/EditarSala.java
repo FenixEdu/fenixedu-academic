@@ -18,40 +18,32 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class EditarSala implements IService
-{
-
-    
+public class EditarSala implements IService {
 
     /**
      * The actor of this class.
      */
-    public EditarSala()
-    {
+    public EditarSala() {
     }
 
-   
-
-    public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException
-    {
+    public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException {
 
         ISala sala = null;
         boolean result = false;
 
-        try
-        {
+        try {
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             sala = sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
 
-            if (sala != null)
-            {
+            if (sala != null) {
 
-                if (!sala.getNome().equals(salaNova.getNome()))
-                {
+                if (!sala.getNome().equals(salaNova.getNome())) {
                     ISala roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
-                    if (roomWithSameName != null) { throw new ExistingServiceException(); }
+                    if (roomWithSameName != null) {
+                        throw new ExistingServiceException();
+                    }
                 }
 
                 sp.getISalaPersistente().simpleLockWrite(sala);
@@ -63,9 +55,7 @@ public class EditarSala implements IService
                 sala.setTipo(salaNova.getTipo());
                 result = true;
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
 

@@ -8,14 +8,14 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.grant.contract.GrantInsurance;
 import Dominio.grant.contract.IGrantInsurance;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.grant.IPersistentGrantInsurance;
 
 /**
  * @author Pica
  * @author Barbosa
  */
-public class GrantInsuranceOJB extends ObjectFenixOJB implements IPersistentGrantInsurance {
+public class GrantInsuranceOJB extends PersistentObjectOJB implements IPersistentGrantInsurance {
 
     public IGrantInsurance readGrantInsuranceByGrantContract(Integer key_contract)
             throws ExcepcaoPersistencia {

@@ -25,109 +25,86 @@ import framework.factory.ServiceManagerServiceFactory;
 /**
  * @author Luis Cruz e Sara Ribeiro
  */
-public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
-{
+public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
 
-    public ActionForward choose(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        if (session != null)
-        {
+        if (session != null) {
             //GestorServicos gestor = GestorServicos.manager();
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            InfoExecutionPeriod infoExecutionPeriod =
-                (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
             //				setExecutionContext(request);
-            /* Cria o form bean com as licenciaturas em execucao.*/
-            Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear()};
+            /* Cria o form bean com as licenciaturas em execucao. */
+            Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-            List executionDegreeList =
-                (List) ServiceUtils.executeService(
-                    userView,
-                    "ReadExecutionDegreesByExecutionYear",
-                    argsLerLicenciaturas);
+            List executionDegreeList = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+            executionDegreeList = InfoExecutionDegree.buildLabelValueBeansForList(executionDegreeList);
 
             request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST, executionDegreeList);
 
             return mapping.findForward("choose");
-        } 
-            throw new Exception();
-        
+        }
+        throw new Exception();
+
     }
 
-    public ActionForward list(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-        if (session != null)
-        {
+        if (session != null) {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             DynaActionForm chooseViewAllClassesSchedulesContextForm = (DynaActionForm) form;
 
-            InfoExecutionPeriod infoExecutionPeriod =
-                (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                    .getAttribute(SessionConstants.EXECUTION_PERIOD);
             //				setExecutionContext(request);
 
-            Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear()};
-            List infoExecutionDegreeList =
-                (List) ServiceUtils.executeService(
-                    userView,
-                    "ReadExecutionDegreesByExecutionYear",
-                    argsLerLicenciaturas);
+            Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
+            List infoExecutionDegreeList = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
             Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-            
-            Boolean selectAllDegrees =
-                (Boolean) chooseViewAllClassesSchedulesContextForm.get("selectAllDegrees");
+
+            Boolean selectAllDegrees = (Boolean) chooseViewAllClassesSchedulesContextForm
+                    .get("selectAllDegrees");
             List selectedInfoExecutionDegrees = null;
-            if (selectAllDegrees != null && selectAllDegrees.booleanValue())
-            {
+            if (selectAllDegrees != null && selectAllDegrees.booleanValue()) {
                 selectedInfoExecutionDegrees = infoExecutionDegreeList;
-            } else
-            {
-                String[] selectedDegreesIndexes =
-                    (String[]) chooseViewAllClassesSchedulesContextForm.get("selectedDegrees");
+            } else {
+                String[] selectedDegreesIndexes = (String[]) chooseViewAllClassesSchedulesContextForm
+                        .get("selectedDegrees");
                 selectedInfoExecutionDegrees = new ArrayList();
-                
-                for (int i = 0; i < selectedDegreesIndexes.length; i++)
-                {
+
+                for (int i = 0; i < selectedDegreesIndexes.length; i++) {
                     Integer index = new Integer("" + selectedDegreesIndexes[i]);
-                    InfoExecutionDegree infoEd = (InfoExecutionDegree) infoExecutionDegreeList.get(index.intValue());
-                                    
+                    InfoExecutionDegree infoEd = (InfoExecutionDegree) infoExecutionDegreeList.get(index
+                            .intValue());
+
                     selectedInfoExecutionDegrees.add(infoEd);
                 }
             }
 
             Object[] args = { selectedInfoExecutionDegrees, infoExecutionPeriod };
-            List infoViewClassScheduleList =
-                (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreesClassesLessons", args);
+            List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadDegreesClassesLessons", args);
 
-            if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty())
-            {
+            if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
                 request.removeAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE);
-            } else
-            {
-                request.setAttribute(
-                    SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE,
-                    infoViewClassScheduleList);
+            } else {
+                request.setAttribute(SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE,
+                        infoViewClassScheduleList);
             }
 
             return mapping.findForward("list");
-        } 
-            throw new Exception();
-        
+        }
+        throw new Exception();
+
     }
 }

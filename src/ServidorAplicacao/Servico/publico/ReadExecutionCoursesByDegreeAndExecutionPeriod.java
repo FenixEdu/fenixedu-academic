@@ -20,79 +20,64 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author João Mota
  */
-public class ReadExecutionCoursesByDegreeAndExecutionPeriod implements IServico
-{
+public class ReadExecutionCoursesByDegreeAndExecutionPeriod implements IServico {
 
-    private static ReadExecutionCoursesByDegreeAndExecutionPeriod _servico =
-        new ReadExecutionCoursesByDegreeAndExecutionPeriod();
+    private static ReadExecutionCoursesByDegreeAndExecutionPeriod _servico = new ReadExecutionCoursesByDegreeAndExecutionPeriod();
 
     /**
-	 * The actor of this class.
-	 */
+     * The actor of this class.
+     */
 
-    private ReadExecutionCoursesByDegreeAndExecutionPeriod()
-    {
+    private ReadExecutionCoursesByDegreeAndExecutionPeriod() {
 
     }
 
     /**
-	 * Returns Service Name
-	 */
-    public String getNome()
-    {
+     * Returns Service Name
+     */
+    public String getNome() {
         return "ReadExecutionCoursesByDegreeAndExecutionPeriod";
     }
 
     /**
-	 * Returns the _servico.
-	 * 
-	 * @return ReadExecutionCoursesByDegreeAndExecutionPeriod
-	 */
-    public static ReadExecutionCoursesByDegreeAndExecutionPeriod getService()
-    {
+     * Returns the _servico.
+     * 
+     * @return ReadExecutionCoursesByDegreeAndExecutionPeriod
+     */
+    public static ReadExecutionCoursesByDegreeAndExecutionPeriod getService() {
         return _servico;
     }
 
     public Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod)
-        throws FenixServiceException
-    {
+            throws FenixServiceException {
 
         List infoExecutionCourseList = new ArrayList();
 
-        try
-        {
+        try {
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            ICursoExecucao executionDegree =
-                Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IExecutionPeriod executionPeriod =
-                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            ICursoExecucao executionDegree = Cloner
+                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
             List executionCourseList = new ArrayList();
             List temp = null;
-            for (int i = 1; i < 6; i++)
-            {
-                temp =
-                    executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                        new Integer(i),
-                        executionPeriod,
-                        executionDegree);
+            for (int i = 1; i < 6; i++) {
+                temp = executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
+                        new Integer(i), executionPeriod, executionDegree);
                 executionCourseList.addAll(temp);
             }
 
-            for (int i = 0; i < executionCourseList.size(); i++)
-            {
+            for (int i = 0; i < executionCourseList.size(); i++) {
                 IExecutionCourse aux = (IExecutionCourse) executionCourseList.get(i);
-                InfoExecutionCourse infoExecutionCourse =
-                    (InfoExecutionCourse) Cloner.get(aux);
+                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(aux);
                 infoExecutionCourseList.add(infoExecutionCourse);
             }
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

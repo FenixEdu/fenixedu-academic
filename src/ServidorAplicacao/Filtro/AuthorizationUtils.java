@@ -14,19 +14,18 @@ import Util.RoleType;
  * @author jpvl
  */
 public abstract class AuthorizationUtils {
-	
 
-	/**
-	 * @param collection
-	 * @return boolean
-	 */
-	public static boolean containsRole(Collection roles, RoleType role) {
-		Iterator rolesIterator = roles.iterator();
-		while (rolesIterator.hasNext()) {
-			InfoRole infoRole = (InfoRole) rolesIterator.next();
-			if (infoRole.getRoleType().equals(role))
-				return true;	
-		}
-		return false;
-	}
+    /**
+     * @param collection
+     * @return boolean
+     */
+    public static boolean containsRole(Collection roles, RoleType role) {
+        Iterator rolesIterator = roles.iterator();
+        while (rolesIterator.hasNext()) {
+            InfoRole infoRole = (InfoRole) rolesIterator.next();
+            if (infoRole.getRoleType().equals(role))
+                return true;
+        }
+        return false;
+    }
 }

@@ -1,4 +1,3 @@
-
 /*
  * CriarSalaServicosTest.java
  * JUnit based test
@@ -9,8 +8,8 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.candidate;
 
 /**
- *
- * @author Nuno Nunes & Joana Mota 
+ * 
+ * @author Nuno Nunes & Joana Mota
  */
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,182 +34,145 @@ import Util.TipoDocumentoIdentificacao;
 
 public class CreateMasterDegreeCandidateServiceTest extends TestCaseServicos {
 
-	public CreateMasterDegreeCandidateServiceTest(java.lang.String testName) {
-		super(testName);
-	}
+    public CreateMasterDegreeCandidateServiceTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite =
-			new TestSuite(CreateMasterDegreeCandidateServiceTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(CreateMasterDegreeCandidateServiceTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp() {
-		super.setUp();
+    protected void setUp() {
+        super.setUp();
 
-	}
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
-	public void testCreateMasterDegreeCandidateNonExisting() {
-		System.out.println("- Test 1 : Create Master Degree Candidate");
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
+    public void testCreateMasterDegreeCandidateNonExisting() {
+        System.out.println("- Test 1 : Create Master Degree Candidate");
 
-		InfoPerson infoPerson = new InfoPerson();
-		infoPerson.setNome("Nuno & Joana");
-		infoPerson.setNumeroDocumentoIdentificacao("123");
-		infoPerson.setTipoDocumentoIdentificacao(
-			new TipoDocumentoIdentificacao(
-				TipoDocumentoIdentificacao
-					.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING));
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
 
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate =
-			new InfoMasterDegreeCandidate();
-		infoMasterDegreeCandidate.setSpecialization(
-		new Specialization(Specialization.INTEGRADO_STRING));
-		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
+        InfoPerson infoPerson = new InfoPerson();
+        infoPerson.setNome("Nuno & Joana");
+        infoPerson.setNumeroDocumentoIdentificacao("123");
+        infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING));
 
-		InfoDegree infoDegree = new InfoDegree();
-		infoDegree.setNome(
-			"Mestrado em Engenharia Electrotecnica e de Computadores");
-		infoDegree.setSigla("MEEC");
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
+        infoMasterDegreeCandidate.setSpecialization(new Specialization(Specialization.MESTRADO_STRING));
+        infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			new InfoDegreeCurricularPlan();
-		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-		
+        InfoDegree infoDegree = new InfoDegree();
+        infoDegree.setNome("Mestrado em Engenharia Electrotecnica e de Computadores");
+        infoDegree.setSigla("MEEC");
 
-		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-		infoExecutionYear.setYear("2002/2003");
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
-		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionDegree.setInfoDegreeCurricularPlan(
-			infoDegreeCurricularPlan);
+        InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
+        infoExecutionYear.setYear("2002/2003");
 
-		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+        InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+        infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-		Object[] args = { infoMasterDegreeCandidate };
+        infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
-		InfoMasterDegreeCandidate newInfoMasterDegreeCandidate = null;
+        Object[] args = { infoMasterDegreeCandidate };
 
-		try {
-			newInfoMasterDegreeCandidate =
-				(InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-					userView,
-					"CreateMasterDegreeCandidate",
-					args);
-		} catch (FenixServiceException ex) {
-			fail("Fenix Service Exception");
-		} catch (Exception ex) {
-			fail("Eception");
-		}
+        InfoMasterDegreeCandidate newInfoMasterDegreeCandidate = null;
 
-		assertNotNull(newInfoMasterDegreeCandidate);
-		assertEquals(
-			newInfoMasterDegreeCandidate.getInfoPerson().getNome(),
-			infoMasterDegreeCandidate.getInfoPerson().getNome());
-		assertEquals(
-			newInfoMasterDegreeCandidate
-				.getInfoPerson()
-				.getNumeroDocumentoIdentificacao(),
-			infoMasterDegreeCandidate
-				.getInfoPerson()
-				.getNumeroDocumentoIdentificacao());
-		assertEquals(
-			newInfoMasterDegreeCandidate
-				.getInfoPerson()
-				.getTipoDocumentoIdentificacao(),
-			infoMasterDegreeCandidate
-				.getInfoPerson()
-				.getTipoDocumentoIdentificacao());
-		assertEquals(
-			newInfoMasterDegreeCandidate.getSpecialization(),
-			infoMasterDegreeCandidate.getSpecialization());
+        try {
+            newInfoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
+                    .executeService(userView, "CreateMasterDegreeCandidate", args);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception");
+        } catch (Exception ex) {
+            fail("Eception");
+        }
 
-	}
+        assertNotNull(newInfoMasterDegreeCandidate);
+        assertEquals(newInfoMasterDegreeCandidate.getInfoPerson().getNome(), infoMasterDegreeCandidate
+                .getInfoPerson().getNome());
+        assertEquals(newInfoMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
+                infoMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
+        assertEquals(newInfoMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao(),
+                infoMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+        assertEquals(newInfoMasterDegreeCandidate.getSpecialization(), infoMasterDegreeCandidate
+                .getSpecialization());
 
-	public void testCreateMasterDegreeCandidateExisting() {
-		System.out.println(
-			"- Test 2 : Create Existing Master Degree Candidate");
+    }
 
-		UserView userView = this.getUserViewToBeTested("jccm", true);
+    public void testCreateMasterDegreeCandidateExisting() {
+        System.out.println("- Test 2 : Create Existing Master Degree Candidate");
 
-		InfoPerson infoPerson = new InfoPerson();
-		infoPerson.setNome("Joana");
-		infoPerson.setNumeroDocumentoIdentificacao("55555555");
-		infoPerson.setTipoDocumentoIdentificacao(
-			new TipoDocumentoIdentificacao(
-				TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
+        UserView userView = this.getUserViewToBeTested("jccm", true);
 
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate =
-			new InfoMasterDegreeCandidate();
-		infoMasterDegreeCandidate.setSpecialization(
-		new Specialization(Specialization.INTEGRADO_STRING));
-		infoMasterDegreeCandidate.setInfoPerson(infoPerson);
+        InfoPerson infoPerson = new InfoPerson();
+        infoPerson.setNome("Joana");
+        infoPerson.setNumeroDocumentoIdentificacao("55555555");
+        infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
+                TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 
-		Object[] args =
-			{
-				infoMasterDegreeCandidate,
-				"Mestrado em Engenharia Electrotecnica e de Computadores",
-				userView };
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
+        infoMasterDegreeCandidate.setSpecialization(new Specialization(Specialization.MESTRADO_STRING));
+        infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 
-		InfoMasterDegreeCandidate newInfoMasterDegreeCandidate = null;
+        Object[] args = { infoMasterDegreeCandidate,
+                "Mestrado em Engenharia Electrotecnica e de Computadores", userView };
 
-		try {
-			newInfoMasterDegreeCandidate =
-				(InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-					userView,
-					"CreateMasterDegreeCandidate",
-					args);
-		} catch (FenixServiceException ex) {
-			// All is OK
-		} catch (Exception ex) {
-			fail("Error Reading without Role");
-		}
+        InfoMasterDegreeCandidate newInfoMasterDegreeCandidate = null;
 
-		assertNull(newInfoMasterDegreeCandidate);
-	}
+        try {
+            newInfoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
+                    .executeService(userView, "CreateMasterDegreeCandidate", args);
+        } catch (FenixServiceException ex) {
+            // All is OK
+        } catch (Exception ex) {
+            fail("Error Reading without Role");
+        }
 
-	public void testCreateMasterDegreeCandidateWithoutRole() {
-		System.out.println(
-			"- Test 3 : Create Master Degree Candidate without Role");
+        assertNull(newInfoMasterDegreeCandidate);
+    }
 
-		UserView userView = this.getUserViewToBeTested("nmsn", false);
+    public void testCreateMasterDegreeCandidateWithoutRole() {
+        System.out.println("- Test 3 : Create Master Degree Candidate without Role");
 
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+        UserView userView = this.getUserViewToBeTested("nmsn", false);
 
-		try {
-			infoMasterDegreeCandidate =
-				(InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(
-					userView,
-					"CreateMasterDegreeCandidate",
-					null);
-		} catch (FenixServiceException ex) {
-			// All is OK
-		} catch (Exception ex) {
-			fail("Error Reading without Role");
-		}
-		assertNull(infoMasterDegreeCandidate);
-	}
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
-	private UserView getUserViewToBeTested(String username, boolean withRole) {
-		Collection roles = new ArrayList();
-		InfoRole infoRole = new InfoRole();
-		if (withRole)
-			infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		else
-			infoRole.setRoleType(RoleType.PERSON);
-		roles.add(infoRole);
-		UserView userView = new UserView(username, roles);
-		return userView;
-	}
+        try {
+            infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
+                    .executeService(userView, "CreateMasterDegreeCandidate", null);
+        } catch (FenixServiceException ex) {
+            // All is OK
+        } catch (Exception ex) {
+            fail("Error Reading without Role");
+        }
+        assertNull(infoMasterDegreeCandidate);
+    }
+
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
+        Collection roles = new ArrayList();
+        InfoRole infoRole = new InfoRole();
+        if (withRole)
+            infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        else
+            infoRole.setRoleType(RoleType.PERSON);
+        roles.add(infoRole);
+        UserView userView = new UserView(username, roles);
+        return userView;
+    }
 
 }

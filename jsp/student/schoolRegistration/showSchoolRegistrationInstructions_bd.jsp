@@ -3,10 +3,17 @@
 
 <html:form action="/changePassword?method=start">
 <html:hidden property="page" value="1"/>
-<p align="center"><span class="error"><html:errors/></span></p>
-<p align="center">
-	bla bla bla<br/>
-	<html:checkbox  property="instructionsAccepted" /> Li e percebi o bla bla bla<br/>
-	<html:submit value="Continuar" styleClass="inputbutton"/>
-</p>
+
+<table align="center" width="70%">
+<tr>
+	<td align="center"><h4 class="registration">Ler com Atenção</h4></td>
+</tr>	
+<tr>
+	<td class="infoop" align="justify">
+		<h4 class="registration_cell"><bean:message key="label.registration.info" /></h4>
+	</td>
+</tr>
+</table>
+<br>
+<p align="center"><html:submit value="Continuar" styleClass="inputbutton"/></p>
 </html:form>

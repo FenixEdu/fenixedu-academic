@@ -52,19 +52,15 @@ public class InsertCurriculum implements IServico {
         return _servico;
     }
 
-    public Boolean run(Integer curricularCourseId, String program,
-            String programEn, String operacionalObjectives,
-            String operacionalObjectivesEn, String generalObjectives,
-            String generalObjectivesEn, Boolean basic)
-            throws FenixServiceException {
+    public Boolean run(Integer curricularCourseId, String program, String programEn,
+            String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,
+            String generalObjectivesEn, Boolean basic) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurriculum persistentCurriculum = sp
-                    .getIPersistentCurriculum();
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             ICurriculum curriculum = new Curriculum();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, curricularCourseId);
             if (curricularCourse == null) {

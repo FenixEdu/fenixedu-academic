@@ -63,8 +63,8 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
         Object obj1 = new Integer(6);
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, obj1, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode, obj1,
+                obj2 };
         return args;
     }
 
@@ -81,16 +81,13 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentSection persistentSection = sp.getIPersistentSection();
-            section = (ISection) persistentSection.readByOID(Section.class,
-                    new Integer(6));
+            section = (ISection) persistentSection.readByOID(Section.class, new Integer(6));
             sp.confirmarTransaccao();
 
-            result = (TeacherAdministrationSiteView) ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            getAuthorizeArguments());
+            result = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
+                    userView, getNameOfServiceToBeTested(), getAuthorizeArguments());
 
-            InfoSiteSection bodyComponent = (InfoSiteSection) result
-                    .getComponent();
+            InfoSiteSection bodyComponent = (InfoSiteSection) result.getComponent();
             InfoSection infoSection = bodyComponent.getSection();
             ISection iSection = Cloner.copyInfoSection2ISection(infoSection);
 
@@ -98,14 +95,12 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 
             compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testExpectedReadSiteSectionDataSet.xml");
 
-            System.out
-                    .println("testReadSiteSection was SUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadSiteSection was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out
-                    .println("testReadSiteSection was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadSiteSection was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadSiteSection");
         }
     }
@@ -118,24 +113,21 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
         Object obj1 = new Integer(7);
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, obj1, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode, obj1,
+                obj2 };
 
         try {
 
             //result =
             //				(TeacherAdministrationSiteView)
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            System.out
-                    .println("testReadNonSiteSection was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonSiteSection was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadNonSiteSection");
         } catch (Exception ex) {
-            System.out
-                    .println("testReadNonSiteSection was SUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonSiteSection was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
         }
     }
 
@@ -148,28 +140,24 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
         Object obj1 = new Integer(100);
         Object obj2 = null;
 
-        Object[] args = { infoExecutionCourseCode, commonComponent,
-                bodyComponent, infoSiteCode, obj1, obj2 };
+        Object[] args = { infoExecutionCourseCode, commonComponent, bodyComponent, infoSiteCode, obj1,
+                obj2 };
 
         try {
 
-            ServiceManagerServiceFactory.executeService(userView,
-                    getNameOfServiceToBeTested(), args);
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
 
-            System.out
-                    .println("testReadNonExistingSection was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonExistingSection was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadNonExistingSection");
         } catch (FenixServiceException ex) {
-            System.out
-                    .println("testReadNonExistingSection was SUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonExistingSection was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out
-                    .println("testReadNonExistingSection was UNSUCCESSFULY runned by class: "
-                            + this.getClass().getName());
+            System.out.println("testReadNonExistingSection was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
             fail("testReadNonExistingSection");
         }
     }

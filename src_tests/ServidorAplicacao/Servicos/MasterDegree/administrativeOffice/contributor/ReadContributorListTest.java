@@ -1,4 +1,3 @@
-
 /*
  * CriarSalaServicosTest.java
  * JUnit based test
@@ -9,8 +8,8 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.contributor;
 
 /**
- *
- * @author Nuno Nunes & Joana Mota 
+ * 
+ * @author Nuno Nunes & Joana Mota
  */
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,74 +27,74 @@ import ServidorAplicacao.Servicos.TestCaseServicos;
 import Util.RoleType;
 
 public class ReadContributorListTest extends TestCaseServicos {
-	
-	public ReadContributorListTest(java.lang.String testName) {
-		super(testName);
-	}
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public ReadContributorListTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(ReadContributorListTest.class);
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ReadContributorListTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	public void testReadContributorList() {
-		System.out.println("- Test 1 : Read Contributor List");
-		
-		UserView userView = this.getUserViewToBeTested("nmsn", true);
+    public void testReadContributorList() {
+        System.out.println("- Test 1 : Read Contributor List");
 
-		InfoContributor infoContributor = null;
-	 
-	 	Object[] args = { new Integer(123)};
-	 
-		try {
-		    infoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(userView, "ReadContributor", args);
-		} catch (FenixServiceException ex) {
-			fail("Fenix Service Exception");
-		} catch (Exception ex) {
-			fail("Exception");
-		}
-		 
-		assertNotNull(infoContributor);
-		assertEquals(infoContributor.getContributorNumber(), new Integer(123));
+        UserView userView = this.getUserViewToBeTested("nmsn", true);
 
-		Object[] args2 = { new Integer(9999)};
-		
-		infoContributor = null;
-	 
-		try {
-			infoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(userView, "ReadContributor", args2);
-		} catch (ExcepcaoInexistente ex) {
-			// All is OK
-		} catch (Exception ex) {
-			fail("Exception");
-		}
-	}
-	
-	
+        InfoContributor infoContributor = null;
 
-	private UserView getUserViewToBeTested(String username, boolean withRole) {
-		Collection roles = new ArrayList();
-		InfoRole infoRole = new InfoRole();
-		if (withRole) infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		else infoRole.setRoleType(RoleType.PERSON);
-		roles.add(infoRole);
-		UserView userView = new UserView(username, roles);
-		return userView;
-	}
+        Object[] args = { new Integer(123) };
 
+        try {
+            infoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadContributor", args);
+        } catch (FenixServiceException ex) {
+            fail("Fenix Service Exception");
+        } catch (Exception ex) {
+            fail("Exception");
+        }
+
+        assertNotNull(infoContributor);
+        assertEquals(infoContributor.getContributorNumber(), new Integer(123));
+
+        Object[] args2 = { new Integer(9999) };
+
+        infoContributor = null;
+
+        try {
+            infoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadContributor", args2);
+        } catch (ExcepcaoInexistente ex) {
+            // All is OK
+        } catch (Exception ex) {
+            fail("Exception");
+        }
+    }
+
+    private UserView getUserViewToBeTested(String username, boolean withRole) {
+        Collection roles = new ArrayList();
+        InfoRole infoRole = new InfoRole();
+        if (withRole)
+            infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        else
+            infoRole.setRoleType(RoleType.PERSON);
+        roles.add(infoRole);
+        UserView userView = new UserView(username, roles);
+        return userView;
+    }
 
 }

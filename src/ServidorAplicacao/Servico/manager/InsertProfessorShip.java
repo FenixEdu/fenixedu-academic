@@ -36,52 +36,46 @@ public class InsertProfessorShip implements IService {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            Integer executionCourseId = infoProfessorShip
-                    .getInfoExecutionCourse().getIdInternal();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseId);
+            Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
 
             if (executionCourse == null) {
-                throw new NonExistingServiceException(
-                        "message.nonExisting.executionCourse", null);
+                throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
             }
 
-            Integer teacherNumber = infoProfessorShip.getInfoTeacher()
-                    .getTeacherNumber();
+            Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
 
             if (teacher == null) {
-                throw new NonExistingServiceException(
-                        "message.non.existing.teacher", null);
+                throw new NonExistingServiceException("message.non.existing.teacher", null);
             }
 
-            IPersistentProfessorship persistentProfessorShip = sp
-                    .getIPersistentProfessorship();
+            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
 
             IProfessorship professorShip = new Professorship();
             persistentProfessorShip.simpleLockWrite(professorShip);
             professorShip.setExecutionCourse(executionCourse);
             professorShip.setTeacher(teacher);
+            professorShip.setHours(infoProfessorShip.getHours());
+            if (professorShip.getHours() == null) {
+                professorShip.setHours(new Double(0.0));
+            }
 
             if (responsibleFor.booleanValue()) {
-                IPersistentResponsibleFor responsibleForDAO = sp
-                        .getIPersistentResponsibleFor();
+                IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
 
                 IResponsibleFor responsibleForTeacher = responsibleForDAO
-                        .readByTeacherAndExecutionCoursePB(teacher,
-                                executionCourse);
+                        .readByTeacherAndExecutionCoursePB(teacher, executionCourse);
                 if (responsibleForTeacher == null) {
                     responsibleForTeacher = new ResponsibleFor();
                     responsibleForDAO.simpleLockWrite(responsibleForTeacher);
                     responsibleForTeacher.setExecutionCourse(executionCourse);
                     responsibleForTeacher.setTeacher(teacher);
-                    ResponsibleForValidator.getInstance()
-                            .validateResponsibleForList(teacher,
-                                    executionCourse, responsibleForTeacher,
-                                    responsibleForDAO);
+                    ResponsibleForValidator.getInstance().validateResponsibleForList(teacher,
+                            executionCourse, responsibleForTeacher, responsibleForDAO);
                 }
             }
 

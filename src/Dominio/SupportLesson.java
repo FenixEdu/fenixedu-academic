@@ -195,7 +195,7 @@ public class SupportLesson extends DomainObject implements ISupportLesson, Persi
     }
 
     /**
-     * 
+     *  
      */
     private void notifyTeacher() {
         ITeacher teacher = this.professorship.getTeacher();

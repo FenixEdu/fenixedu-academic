@@ -19,39 +19,43 @@ import Dominio.ITeacher;
  * 
  *  
  */
-public interface IPersistentResponsibleFor extends IPersistentObject
-{
+public interface IPersistentResponsibleFor extends IPersistentObject {
     public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
-    public IResponsibleFor readByTeacherAndExecutionCourse(
-        ITeacher teacher,
-        IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia;
-    public IResponsibleFor readByTeacherAndExecutionCoursePB(
-        ITeacher teacher,
-        IExecutionCourse executionCourse)
-        throws ExcepcaoPersistencia;
+
+    public IResponsibleFor readByTeacherAndExecutionCourse(ITeacher teacher,
+            IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+
+    public IResponsibleFor readByTeacherAndExecutionCoursePB(ITeacher teacher,
+            IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+
+    public List readByExecutionCourseID(Integer executionCourseID) throws ExcepcaoPersistencia;
+
     public void delete(IResponsibleFor responsibleFor) throws ExcepcaoPersistencia;
+
     public void deleteAll() throws ExcepcaoPersistencia;
+
     public List readAll() throws ExcepcaoPersistencia;
-    
 
     public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
+
     /**
-	 * @param teacher
-	 * @param executionYear
-	 * @return
-	 */
+     * @param teacher
+     * @param executionYear
+     * @return
+     */
     public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
+
     /**
-	 * @param teacher
-	 * @param responsabilitiesToRemove
-	 * @return
-	 */
+     * @param teacher
+     * @param responsabilitiesToRemove
+     * @return
+     */
     public List readByTeacherAndExecutionCourseIds(ITeacher teacher, List executionCourseIds)
-        throws ExcepcaoPersistencia;
+            throws ExcepcaoPersistencia;
 
     public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 }

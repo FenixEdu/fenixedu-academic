@@ -18,53 +18,52 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author jpvl
  */
 public class ReadClassesWithShiftService implements IServico {
-	private static ReadClassesWithShiftService serviceInstance =
-		new ReadClassesWithShiftService();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadClassesWithShiftService getService() {
-		return serviceInstance;
-	}
+    private static ReadClassesWithShiftService serviceInstance = new ReadClassesWithShiftService();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadClassesWithShiftService() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadClassesWithShiftService getService() {
+        return serviceInstance;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadClassesWithShiftService";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadClassesWithShiftService() {
+    }
 
-	public Object run(InfoShift infoShift) {
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ReadClassesWithShiftService";
+    }
 
-			ITurmaTurnoPersistente classShiftDAO =
-				sp.getITurmaTurnoPersistente();
+    public Object run(InfoShift infoShift) {
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			ITurno shift = Cloner.copyInfoShift2Shift(infoShift);
+            ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
 
-			List shiftClasses = classShiftDAO.readClassesWithShift(shift);
+            ITurno shift = Cloner.copyInfoShift2Shift(infoShift);
 
-			Iterator iterator = shiftClasses.iterator();
+            List shiftClasses = classShiftDAO.readClassesWithShift(shift);
 
-			List infoClasses = new ArrayList();
-			while (iterator.hasNext()) {
-				ITurmaTurno element = (ITurmaTurno) iterator.next();
-				infoClasses.add(Cloner.copyClass2InfoClass(element.getTurma()));
-			}
-			return infoClasses;
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace(System.out);
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			return null;
-		}
-	}
+            Iterator iterator = shiftClasses.iterator();
+
+            List infoClasses = new ArrayList();
+            while (iterator.hasNext()) {
+                ITurmaTurno element = (ITurmaTurno) iterator.next();
+                infoClasses.add(Cloner.copyClass2InfoClass(element.getTurma()));
+            }
+            return infoClasses;
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace(System.out);
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        }
+    }
 }

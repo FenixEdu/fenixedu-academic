@@ -15,56 +15,61 @@ import Util.RoleType;
 
 /**
  * @author Tânia
- *
+ *  
  */
 public class ReadCurricularCourseListByExecutionCourseCodeTest extends TestCaseServices {
-	/**
-	 * @param testName
-	 */
-	public ReadCurricularCourseListByExecutionCourseCodeTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public ReadCurricularCourseListByExecutionCourseCodeTest(String testName) {
+        super(testName);
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "ReadCurricularCourseListByExecutionCourseCode";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
+        return "ReadCurricularCourseListByExecutionCourseCode";
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServices#getDataSetFilePath()
-	 */
-	protected String getDataSetFilePath() {
-		return "etc/testDataSetForGesDis.xml";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseServices#getDataSetFilePath()
+     */
+    protected String getDataSetFilePath() {
+        return "etc/testDataSetForGesDis.xml";
+    }
 
-	public void readTest() {
-		//Exectuion Course 24
+    public void readTest() {
+        //Exectuion Course 24
 
-		Object args[] = { new Integer(24)};
+        Object args[] = { new Integer(24) };
 
-		List curricularCourseList = new ArrayList();
-		
-		try {
-			curricularCourseList = (List) ServiceManagerServiceFactory.executeService(authorizedUserView(), getNameOfServiceToBeTested(), args);
-		} catch (FenixServiceException e) {
-			fail("Executing  Service!");
-			e.printStackTrace();
-		}
+        List curricularCourseList = new ArrayList();
 
-		assertEquals("curricularCourseNumber", 1, curricularCourseList.size());
-	}
+        try {
+            curricularCourseList = (List) ServiceManagerServiceFactory.executeService(
+                    authorizedUserView(), getNameOfServiceToBeTested(), args);
+        } catch (FenixServiceException e) {
+            fail("Executing  Service!");
+            e.printStackTrace();
+        }
 
-	public IUserView authorizedUserView() {
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.TEACHER);
+        assertEquals("curricularCourseNumber", 1, curricularCourseList.size());
+    }
 
-		Collection roles = new ArrayList();
-		roles.add(infoRole);
+    public IUserView authorizedUserView() {
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.TEACHER);
 
-		UserView userView = new UserView("user", roles);
+        Collection roles = new ArrayList();
+        roles.add(infoRole);
 
-		return userView;
-	}
+        UserView userView = new UserView("user", roles);
+
+        return userView;
+    }
 }

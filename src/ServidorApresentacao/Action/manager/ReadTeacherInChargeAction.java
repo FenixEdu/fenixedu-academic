@@ -29,61 +29,64 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class ReadTeacherInChargeAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);
-		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        IUserView userView = SessionUtils.getUserView(request);
+        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
-		Object args[] = { executionCourseId };
-		
-		InfoExecutionCourse infoExecutionCourse = null;
+        Object args[] = { executionCourseId };
 
-				try {
-					infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView, "ReadExecutionCourse", args);
-			
-				} catch (FenixServiceException fenixServiceException) {
-					throw new FenixActionException(fenixServiceException.getMessage());
-				}
-				
-		List infoTeachersList = null;
-		
-		try {
-			infoTeachersList = (List) ServiceUtils.executeService(userView, "ReadExecutionCourseTeachers", args);
-			
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		
-		if(infoTeachersList != null) {
-			List teachersIds = new ArrayList();
-			Integer teacherId;
-			Iterator iter = infoTeachersList.iterator();
-			while(iter.hasNext()) {
-				teacherId = ((InfoTeacher) iter.next()).getIdInternal();
-				teachersIds.add(teacherId);
-			}
-			
-			Integer[] professorShipTeachersIds = (Integer[]) teachersIds.toArray(new Integer[]{});
-			DynaActionForm newForm = (DynaActionForm) form;
-			newForm.set("professorShipTeachersIds", professorShipTeachersIds);
-		
-			List responsiblesIds = null;
-			
-			try {
-					responsiblesIds = (List) ServiceUtils.executeService(userView, "ReadExecutionCourseResponsiblesIds", args);
-			
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(fenixServiceException.getMessage());
-			}
-		
-			Integer[] responsibleTeachersIds = (Integer[]) responsiblesIds.toArray(new Integer[]{});
-			newForm.set("responsibleTeachersIds", responsibleTeachersIds);
-			request.setAttribute("infoTeachersList", infoTeachersList);
-			
+        InfoExecutionCourse infoExecutionCourse = null;
 
-		}
-		request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
-		return mapping.findForward("readExecutionCourseTeachers");
-	}
+        try {
+            infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
+                    "ReadExecutionCourse", args);
+
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        List infoTeachersList = null;
+
+        try {
+            infoTeachersList = (List) ServiceUtils.executeService(userView,
+                    "ReadExecutionCourseTeachers", args);
+
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        if (infoTeachersList != null) {
+            List teachersIds = new ArrayList();
+            Integer teacherId;
+            Iterator iter = infoTeachersList.iterator();
+            while (iter.hasNext()) {
+                teacherId = ((InfoTeacher) iter.next()).getIdInternal();
+                teachersIds.add(teacherId);
+            }
+
+            Integer[] professorShipTeachersIds = (Integer[]) teachersIds.toArray(new Integer[] {});
+            DynaActionForm newForm = (DynaActionForm) form;
+            newForm.set("professorShipTeachersIds", professorShipTeachersIds);
+
+            List responsiblesIds = null;
+
+            try {
+                responsiblesIds = (List) ServiceUtils.executeService(userView,
+                        "ReadExecutionCourseResponsiblesIds", args);
+
+            } catch (FenixServiceException fenixServiceException) {
+                throw new FenixActionException(fenixServiceException.getMessage());
+            }
+
+            Integer[] responsibleTeachersIds = (Integer[]) responsiblesIds.toArray(new Integer[] {});
+            newForm.set("responsibleTeachersIds", responsibleTeachersIds);
+            request.setAttribute("infoTeachersList", infoTeachersList);
+
+        }
+        request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
+        return mapping.findForward("readExecutionCourseTeachers");
+    }
 
 }

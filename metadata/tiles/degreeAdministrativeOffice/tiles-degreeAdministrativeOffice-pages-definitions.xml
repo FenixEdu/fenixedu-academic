@@ -64,5 +64,22 @@
 	<definition name="df.page.showAndChooseStudentAreas" extends="definition.degreeAdministrativeOffice.change.student.areas">
 		<put name="body" value="/degreeAdministrativeOffice/areas/showAndChooseStudentAreas.jsp"/>
 	</definition>
+	
+	<!-- ============= Print registration declaration =============== -->
+	<definition name="df.page.generateDeclaration" 
+				path="/degreeAdministrativeOffice/declaration/declarationTemplate.jsp">
+	</definition>
+	<definition name="df.page.prepareDeclaration" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/declaration/prepareDeclaration_bd.jsp"/>
+	</definition>
+	
+	<!-- ============= Generate enrollment declaration =============== -->
+	<definition name="df.page.generateEnrollmentsDeclaration" 
+				path="/degreeAdministrativeOffice/declaration/enrollmentDeclarationTemplate.jsp">
+	</definition>
+	<definition name="df.page.prepareEnrollmentsDeclaration" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/declaration/prepareEnrollmentsDeclaration_bd.jsp"/>
+	</definition>
+	
 
 </tiles-definitions>

@@ -14,6 +14,7 @@ import Dominio.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCours
 import Dominio.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import Dominio.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse;
 import Dominio.precedences.RestrictionNotDoneCurricularCourse;
+import Dominio.precedences.RestrictionNotEnrolledInCurricularCourse;
 import Dominio.precedences.RestrictionPeriodToApply;
 
 /**
@@ -30,7 +31,7 @@ public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
     public List getInfoRestrictions() {
         return infoRestrictions;
     }
-    
+
     public void setInfoRestrictions(List infoRestrictions) {
         this.infoRestrictions = infoRestrictions;
     }
@@ -43,12 +44,12 @@ public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
     public static InfoPrecedence newInfoFromDomain(IPrecedence precedence) {
 
         InfoPrecedenceWithRestrictions infoPrecedenceWithRestrictions = null;
-        
+
         if (precedence != null) {
             infoPrecedenceWithRestrictions = new InfoPrecedenceWithRestrictions();
             infoPrecedenceWithRestrictions.copyFromDomain(precedence);
         }
-        
+
         return infoPrecedenceWithRestrictions;
     }
 
@@ -57,21 +58,13 @@ public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
         List infoRestrictions = new ArrayList();
 
         int size = restrictions.size();
-        
+
         for (int i = 0; i < size; i++) {
             IRestriction restriction = (IRestriction) restrictions.get(i);
-            
+
             if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses) {
                 InfoRestrictionByNumberOfCurricularCourses infoRestriction = InfoRestrictionByNumberOfDoneCurricularCourses
                         .newInfoFromDomain((IRestrictionByNumberOfCurricularCourses) restriction);
-                infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof RestrictionDoneCurricularCourse) {
-                InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionDoneCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
-                infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse) {
-                InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
             } else if (restriction instanceof RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse
@@ -79,6 +72,18 @@ public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
                 infoRestrictions.add(infoRestriction);
             } else if (restriction instanceof RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse
+                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse
+                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionNotEnrolledInCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionNotEnrolledInCurricularCourse
+                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                infoRestrictions.add(infoRestriction);
+            } else if (restriction instanceof RestrictionDoneCurricularCourse) {
+                InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionDoneCurricularCourse
                         .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
             } else if (restriction instanceof RestrictionNotDoneCurricularCourse) {

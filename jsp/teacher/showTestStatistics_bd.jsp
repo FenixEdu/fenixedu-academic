@@ -87,7 +87,8 @@
 				<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 				<bean:define id="indexOption" value="0"/>
 				<bean:define id="correct" value="false"/>
-				<logic:iterate id="optionBody" name="question" property="options">
+				<logic:iterate id="questionOption" name="question" property="options">
+				<logic:iterate id="optionBody" name="questionOption" property="optionContent">
 					<bean:define id="optionLabel" name="optionBody" property="label"/>
 					<% if (((String)optionLabel).startsWith("image/")){ %>
 						<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
@@ -116,6 +117,7 @@
 					 } else {%>
 					<bean:write name="optionBody" property="value"/>
 					<% } %>
+				</logic:iterate>
 				</logic:iterate>
 				</td></tr></table></td>	
 			</tr>

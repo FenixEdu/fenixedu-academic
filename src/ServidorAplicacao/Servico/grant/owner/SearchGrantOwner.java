@@ -83,10 +83,11 @@ public class SearchGrantOwner implements IService {
                         numberOfResultsByName = persistentPerson.countAllPersonByName(name);
                     }
                 }
-            } else if (grantOwner != null)
+            } else if (grantOwner != null) {
                 grantOwnerList.add(grantOwner);
-            else
+            } else {
                 personList.add(person);
+            }
             if ((personList.size() > 0) && !onlyGrantOwner.booleanValue()) {
                 //Get all the grantOwners associated with each person in list
                 for (int i = 0; i < personList.size(); i++) {
@@ -98,8 +99,8 @@ public class SearchGrantOwner implements IService {
                         infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
                     else {
                         //The person is NOT a GrantOwner
-                        infoGrantOwner
-                                .setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(newPerson));
+                        infoGrantOwner.setPersonInfo(InfoPersonWithInfoCountry
+                                .newInfoFromDomain(newPerson));
                     }
                     infoGrantOwnerList.add(infoGrantOwner);
                 }
@@ -113,8 +114,8 @@ public class SearchGrantOwner implements IService {
 
             if (numberOfResultsByName != null) {
                 /**
-                 * Set an arraylist with: position 0: result size position 1:
-                 * start index used position 2: list with results
+                 * Set an List with: position 0: result size position 1: start
+                 * index used position 2: list with results
                  */
                 List result = new ArrayList();
                 result.add(0, numberOfResultsByName);

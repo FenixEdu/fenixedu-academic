@@ -24,17 +24,14 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import Util.SituationName;
 import Util.State;
 
-public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistentCandidateSituation
-{
+public class CandidateSituationOJB extends PersistentObjectOJB implements IPersistentCandidateSituation {
 
     /** Creates a new instance of CandidateSituationOJB */
-    public CandidateSituationOJB()
-    {
+    public CandidateSituationOJB() {
     }
 
     public ICandidateSituation readActiveCandidateSituation(IMasterDegreeCandidate masterDegreeCandidate)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("masterDegreeCandidate.candidateNumber", masterDegreeCandidate
                 .getCandidateNumber());
@@ -50,8 +47,7 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
     }
 
     public List readCandidateSituations(IMasterDegreeCandidate masterDegreeCandidate)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("masterDegreeCandidate.candidateNumber", masterDegreeCandidate
                 .getCandidateNumber());
@@ -66,8 +62,7 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
     }
 
     public List readActiveSituationsBySituationList(ICursoExecucao executionDegree, List situations)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         Criteria criteriaSituations = new Criteria();
@@ -75,12 +70,10 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         criteria.addEqualTo("masterDegreeCandidate.executionDegree.idInternal", executionDegree
                 .getIdInternal());
 
-        if ((situations != null) && (situations.size() != 0))
-        {
+        if ((situations != null) && (situations.size() != 0)) {
             List situationsInteger = new ArrayList();
             Iterator iterator = situations.iterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 situationsInteger.add(((SituationName) iterator.next()).getSituationName());
 
             }
@@ -92,14 +85,12 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         return result;
     }
 
-    public void delete(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia
-    {
+    public void delete(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia {
         super.delete(candidateSituation);
     }
 
     public List readCandidateListforRegistration(ICursoExecucao executionDegree)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         Criteria criteriaDocs = new Criteria();
         criteria.addEqualTo("validation", new State(State.ACTIVE));
@@ -117,7 +108,9 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         criteria.addAndCriteria(criteriaDocs);
 
         List result = queryList(CandidateSituation.class, criteria);
-        if ((result == null) || (result.size() == 0)) { return null; }
+        if ((result == null) || (result.size() == 0)) {
+            return null;
+        }
         return result;
 
     }

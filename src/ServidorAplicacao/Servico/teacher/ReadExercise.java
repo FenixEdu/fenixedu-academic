@@ -38,77 +38,64 @@ import UtilTests.ParseQuestion;
  * @author Susana Fernandes
  */
 public class ReadExercise implements IService {
-	private String path = new String();
+    private String path = new String();
 
-	public ReadExercise() {
-	}
+    public ReadExercise() {
+    }
 
-	public SiteView run(Integer executionCourseId, Integer metadataId,
-			Integer variationId, String path) throws FenixServiceException {
-		this.path = path.replace('\\', '/');
-		try {
-			ISuportePersistente persistentSuport = SuportePersistenteOJB
-					.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-					.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-					.readByOID(ExecutionCourse.class, executionCourseId);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			IPersistentMetadata persistentMetadata = persistentSuport
-					.getIPersistentMetadata();
-			IMetadata metadata = (IMetadata) persistentMetadata.readByOID(
-					Metadata.class, metadataId);
-			if (metadata == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			InfoMetadata infoMetadata = InfoMetadataWithVisibleQuestions
-					.newInfoFromDomain(metadata);
-			List visibleInfoQuestions = new ArrayList();
-			List questionNames = new ArrayList();
-			if (metadata.getVisibleQuestions() != null) {
-				Iterator it = metadata.getVisibleQuestions().iterator();
-				while (it.hasNext()) {
-					IQuestion question = (IQuestion) it.next();
-					if (question.getIdInternal().equals(variationId)
-							|| variationId.intValue() == -2) {
-						InfoQuestion infoQuestion = InfoQuestion
-								.newInfoFromDomain(question);
-						ParseQuestion parse = new ParseQuestion();
-						try {
-							infoQuestion = parse.parseQuestion(infoQuestion
-									.getXmlFile(), infoQuestion, this.path);
-							if (infoQuestion.getQuestionType().getType()
-									.equals(new Integer(QuestionType.LID)))
-								infoQuestion
-										.setResponseProcessingInstructions(parse
-												.newResponseList(
-														infoQuestion
-																.getResponseProcessingInstructions(),
-														infoQuestion
-																.getOptions()));
-						} catch (Exception e) {
-							throw new FenixServiceException(e);
-						}
-						visibleInfoQuestions.add(infoQuestion);
-					}
-					questionNames.add(new LabelValueBean(question
-							.getXmlFileName(), question.getIdInternal()
-							.toString()));
-				}
-			}
-			infoMetadata.setVisibleQuestions(visibleInfoQuestions);
-			InfoSiteExercise infoSiteExercise = new InfoSiteExercise();
-			infoSiteExercise.setInfoMetadata(infoMetadata);
-			infoSiteExercise.setQuestionNames(questionNames);
-			infoSiteExercise.setExecutionCourse((InfoExecutionCourse) Cloner
-					.get(executionCourse));
-			SiteView siteView = new ExecutionCourseSiteView(infoSiteExercise,
-					infoSiteExercise);
-			return siteView;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+    public SiteView run(Integer executionCourseId, Integer metadataId, Integer variationId, String path)
+            throws FenixServiceException {
+        this.path = path.replace('\\', '/');
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                    .getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseId);
+            if (executionCourse == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+            IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+            IMetadata metadata = (IMetadata) persistentMetadata.readByOID(Metadata.class, metadataId);
+            if (metadata == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+            InfoMetadata infoMetadata = InfoMetadataWithVisibleQuestions.newInfoFromDomain(metadata);
+            List visibleInfoQuestions = new ArrayList();
+            List questionNames = new ArrayList();
+            if (metadata.getVisibleQuestions() != null) {
+                Iterator it = metadata.getVisibleQuestions().iterator();
+                while (it.hasNext()) {
+                    IQuestion question = (IQuestion) it.next();
+                    if (question.getIdInternal().equals(variationId) || variationId.intValue() == -2) {
+                        InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
+                        ParseQuestion parse = new ParseQuestion();
+                        try {
+                            infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion,
+                                    this.path);
+                            if (infoQuestion.getQuestionType().getType().equals(
+                                    new Integer(QuestionType.LID)))
+                                infoQuestion.setResponseProcessingInstructions(parse.newResponseList(
+                                        infoQuestion.getResponseProcessingInstructions(), infoQuestion
+                                                .getOptions()));
+                        } catch (Exception e) {
+                            throw new FenixServiceException(e);
+                        }
+                        visibleInfoQuestions.add(infoQuestion);
+                    }
+                    questionNames.add(new LabelValueBean(question.getXmlFileName(), question
+                            .getIdInternal().toString()));
+                }
+            }
+            infoMetadata.setVisibleQuestions(visibleInfoQuestions);
+            InfoSiteExercise infoSiteExercise = new InfoSiteExercise();
+            infoSiteExercise.setInfoMetadata(infoMetadata);
+            infoSiteExercise.setQuestionNames(questionNames);
+            infoSiteExercise.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+            SiteView siteView = new ExecutionCourseSiteView(infoSiteExercise, infoSiteExercise);
+            return siteView;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+    }
 }

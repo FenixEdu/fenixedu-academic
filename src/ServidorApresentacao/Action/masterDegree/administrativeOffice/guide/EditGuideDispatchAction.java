@@ -19,11 +19,10 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoContributor;
 import DataBeans.InfoGuide;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
@@ -39,29 +38,22 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
 import Util.PaymentType;
 import Util.SituationOfGuide;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * 
+ *  
  */
-public class EditGuideDispatchAction extends DispatchAction
-{
+public class EditGuideDispatchAction extends DispatchAction {
 
-    public ActionForward prepareEditSituation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepareEditSituation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
             DynaActionForm editGuideForm = (DynaActionForm) form;
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -74,11 +66,10 @@ public class EditGuideDispatchAction extends DispatchAction
             Object args[] = { guideNumber, guideYear, guideVersion };
 
             InfoGuide infoGuide = null;
-            try
-            {
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-            } catch (NonExistingServiceException e)
-            {
+            try {
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                        "ChooseGuide", args);
+            } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Versão da Guia", e);
             }
 
@@ -93,22 +84,16 @@ public class EditGuideDispatchAction extends DispatchAction
             session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
 
             return mapping.findForward("EditReady");
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
-    public ActionForward editGuideSituation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward editGuideSituation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             Integer guideYear = new Integer(request.getParameter("year"));
@@ -133,66 +118,49 @@ public class EditGuideDispatchAction extends DispatchAction
             ActionErrors actionErrors = new ActionErrors();
 
             Calendar calendar = Calendar.getInstance();
-            if (situationOfGuide.equals(SituationOfGuide.PAYED_STRING))
-            {
-                if ((day == null)
-                    || (day.length() == 0)
-                    || (month == null)
-                    || (month.length() == 0)
-                    || (year == null)
-                    || (year.length() == 0))
-                {
+            if (situationOfGuide.equals(SituationOfGuide.PAYED_STRING)) {
+                if ((day == null) || (day.length() == 0) || (month == null) || (month.length() == 0)
+                        || (year == null) || (year.length() == 0)) {
 
                     ActionError actionError = new ActionError("error.required.paymentDate");
                     actionErrors.add("UnNecessary1", actionError);
-                } else
-                {
+                } else {
                     paymentDateYear = new Integer(request.getParameter("paymentDateYear"));
                     paymentDateMonth = new Integer(request.getParameter("paymentDateMonth"));
                     paymentDateDay = new Integer(request.getParameter("paymentDateDay"));
 
-                    if (!Data.validDate(paymentDateDay, paymentDateMonth, paymentDateYear))
-                    {
+                    if (!Data.validDate(paymentDateDay, paymentDateMonth, paymentDateYear)) {
                         ActionError actionError = new ActionError("error.required.paymentDate");
                         actionErrors.add("UnNecessary1", actionError);
-                    } else
-                    {
-                        calendar.set(
-                            paymentDateYear.intValue(),
-                            paymentDateMonth.intValue(),
-                            paymentDateDay.intValue());
+                    } else {
+                        calendar.set(paymentDateYear.intValue(), paymentDateMonth.intValue(),
+                                paymentDateDay.intValue());
                     }
                 }
             }
 
             if ((situationOfGuide.equals(SituationOfGuide.PAYED_STRING))
-                && (paymentType.equals(PaymentType.DEFAULT_STRING)))
-            {
+                    && (paymentType.equals(PaymentType.DEFAULT_STRING))) {
                 ActionError actionError = new ActionError("error.required.paymentType");
                 actionErrors.add("UnNecessary2", actionError);
             }
-            if (actionErrors.size() != 0)
-            {
+            if (actionErrors.size() != 0) {
                 saveErrors(request, actionErrors);
                 return mapping.getInputForward();
             }
 
-            Object args[] =
-                {
-                    guideNumber,
-                    guideYear,
-                    guideVersion,
-                    calendar.getTime(),
-                    remarks,
-                    situationOfGuide,
-                    paymentType };
+            Object args[] = { guideNumber, guideYear, guideVersion, calendar.getTime(), remarks,
+                    situationOfGuide, paymentType, userView };
 
-            try
-            {
+            try {
                 ServiceManagerServiceFactory.executeService(userView, "ChangeGuideSituation", args);
-            } catch (NonValidChangeServiceException e)
-            {
+            } catch (NonValidChangeServiceException e) {
                 throw new NonValidChangeActionException(e);
+            } catch (ExistingServiceException e) {
+                ActionError actionError = new ActionError(e.getMessage());
+                actionErrors.add("existing", actionError);
+                saveErrors(request, actionErrors);
+                return mapping.getInputForward();
             }
 
             session.removeAttribute(SessionConstants.GUIDE);
@@ -204,51 +172,42 @@ public class EditGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("SituationChanged");
 
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
-    public ActionForward prepareEditInformation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepareEditInformation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
 
-        	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));
             Integer guideVersion = new Integer(request.getParameter("version"));
 
             Object args[] = { guideNumber, guideYear, guideVersion };
 
-            // Read the Guide 
+            // Read the Guide
 
             InfoGuide infoGuide = null;
             List contributors = null;
-            try
-            {
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-                contributors = (List) ServiceManagerServiceFactory.executeService(userView, "ReadAllContributors", null);
-            } catch (FenixServiceException e)
-            {
+            try {
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                        "ChooseGuide", args);
+                contributors = (List) ServiceManagerServiceFactory.executeService(userView,
+                        "ReadAllContributors", null);
+            } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
 
-            ArrayList contributorList = new ArrayList();
+            List contributorList = new ArrayList();
             Iterator iterator = contributors.iterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 InfoContributor infoContributor = (InfoContributor) iterator.next();
-                contributorList.add(
-                    new LabelValueBean(
-                        infoContributor.getContributorName(),
+                contributorList.add(new LabelValueBean(infoContributor.getContributorName(),
                         infoContributor.getContributorNumber().toString()));
             }
 
@@ -260,22 +219,16 @@ public class EditGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("PrepareReady");
 
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
-    public ActionForward editGuideInformation(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward editGuideInformation(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
             DynaActionForm editGuideForm = (DynaActionForm) form;
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -292,15 +245,14 @@ public class EditGuideDispatchAction extends DispatchAction
 
             String othersRemarks = request.getParameter("othersRemarks");
 
-            // Read the Guide 
+            // Read the Guide
 
             InfoGuide infoGuide = null;
-            try
-            {
+            try {
                 Object args[] = { guideNumber, guideYear, guideVersion };
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-            } catch (FenixServiceException e)
-            {
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                        "ChooseGuide", args);
+            } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
 
@@ -315,8 +267,7 @@ public class EditGuideDispatchAction extends DispatchAction
 
             String[] quantityList = new String[infoGuide.getInfoGuideEntries().size()];
 
-            try
-            {
+            try {
                 if ((othersPriceString != null) && (othersPriceString.length() != 0))
                     othersPrice = new Double(othersPriceString);
 
@@ -325,25 +276,22 @@ public class EditGuideDispatchAction extends DispatchAction
 
                 // Check for invalid quantities and prices
                 if (((othersPrice != null) && (othersPrice.floatValue() < 0))
-                    || ((othersQuantity != null) && (othersQuantity.intValue() < 0)))
+                        || ((othersQuantity != null) && (othersQuantity.intValue() < 0)))
                     throw new InvalidInformationInFormActionException(new Throwable());
 
-                while (arguments.hasMoreElements())
-                {
+                while (arguments.hasMoreElements()) {
                     String parameter = (String) arguments.nextElement();
-                    if (parameter.startsWith("quantityList"))
-                    {
+                    if (parameter.startsWith("quantityList")) {
                         int arrayPosition = "quantityList".length();
                         String position = parameter.substring(arrayPosition);
 
-                        // This is made to verify if the argument is a valid one. If it's not
-                        // it will give a NumberFormatException 
+                        // This is made to verify if the argument is a valid
+                        // one. If it's not
+                        // it will give a NumberFormatException
                         String quantityString = request.getParameter(parameter);
-                        if (quantityString.equals(null) || (quantityString.length() == 0))
-                        {
+                        if (quantityString.equals(null) || (quantityString.length() == 0)) {
                             quantityList[new Integer(position).intValue()] = new Integer(0).toString();
-                        } else
-                        {
+                        } else {
                             Integer value = new Integer(request.getParameter(parameter));
                             if (value.intValue() < 0)
                                 throw new InvalidInformationInFormActionException(new Throwable());
@@ -352,50 +300,39 @@ public class EditGuideDispatchAction extends DispatchAction
                         }
                     }
                 }
-            } catch (NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 throw new InvalidInformationInFormActionException(e);
             }
 
             InfoGuide result = null;
-            try
-            {
-                Object args[] =
-                    {
-                        infoGuide,
-                        quantityList,
-                        contributorNumber,
-                        othersRemarks,
-                        othersQuantity,
-                        othersPrice };
-                result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "EditGuideInformation", args);
-            } catch (InvalidChangeServiceException e)
-            {
+            try {
+                Object args[] = { infoGuide, quantityList, contributorNumber, othersRemarks,
+                        othersQuantity, othersPrice };
+                result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                        "EditGuideInformation", args);
+            } catch (InvalidChangeServiceException e) {
                 throw new InvalidChangeActionException(e);
-            } catch (NoChangeMadeServiceException e)
-            {
+            } catch (NoChangeMadeServiceException e) {
                 throw new NoChangeMadeActionException(e);
             }
 
             // Read The new Guide
 
             List guideList = null;
-            try
-            {
+            try {
                 Object args[] = { guideNumber, guideYear };
-                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-            } catch (NonExistingServiceException e)
-            {
+                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                        args);
+            } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Guia", e);
             }
             request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
 
-         
             request.setAttribute(SessionConstants.GUIDE, result);
             return mapping.findForward("EditInformationSuccess");
 
-        } 
-            throw new Exception();
+        }
+        throw new Exception();
     }
 
 }

@@ -37,13 +37,12 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response)
-            throws Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && !hasPrivilege(id,
-                        argumentos)) || (id == null) || (id.getRoles() == null)) {
+                || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
+                || (id == null) || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -70,8 +69,7 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments)
-            throws ExcepcaoPersistencia {
+    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
 
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
@@ -98,18 +96,14 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
                     return false;
                 }
 
-                ICursoExecucao executionDegree = (ICursoExecucao) sp
-                        .getICursoExecucaoPersistente().readByOID(
-                                CursoExecucao.class,
-                                infoExecutionDegree.getIdInternal());
+                ICursoExecucao executionDegree = (ICursoExecucao) sp.getIPersistentExecutionDegree()
+                        .readByOID(CursoExecucao.class, infoExecutionDegree.getIdInternal());
 
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(
-                        id.getUtilizador());
+                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
                 //modified by Tânia Pousão
                 ICoordinator coordinator = sp.getIPersistentCoordinator()
-                        .readCoordinatorByTeacherAndExecutionDegree(teacher,
-                                executionDegree);
+                        .readCoordinatorByTeacherAndExecutionDegree(teacher, executionDegree);
                 if (coordinator != null) {
                     return true;
                 }

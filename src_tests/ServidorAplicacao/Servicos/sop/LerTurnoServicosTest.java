@@ -27,48 +27,40 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurnoServicosTest extends TestCaseReadServices
-{
+public class LerTurnoServicosTest extends TestCaseReadServices {
     private InfoExecutionCourse infoExecutionCourse = null;
 
-    public LerTurnoServicosTest(java.lang.String testName)
-    {
+    public LerTurnoServicosTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(LerTurnoServicosTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "LerTurno";
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 0;
     }
-    protected Object getObjectToCompare()
-    {
+
+    protected Object getObjectToCompare() {
         this.ligarSuportePersistente(true);
 
         InfoShift infoShift = new InfoShift();
@@ -77,33 +69,29 @@ public class LerTurnoServicosTest extends TestCaseReadServices
         return infoShift;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
         this.ligarSuportePersistente(true);
 
-        Object argsLerTurmas[] = { new ShiftKey("turno1", this.infoExecutionCourse)};
+        Object argsLerTurmas[] = { new ShiftKey("turno1", this.infoExecutionCourse) };
 
         return argsLerTurmas;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         this.ligarSuportePersistente(false);
 
-        Object argsLerTurmas[] = { new ShiftKey("turno1", this.infoExecutionCourse)};
+        Object argsLerTurmas[] = { new ShiftKey("turno1", this.infoExecutionCourse) };
 
         return argsLerTurmas;
     }
 
-    private void ligarSuportePersistente(boolean existing)
-    {
+    private void ligarSuportePersistente(boolean existing) {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -112,49 +100,31 @@ public class LerTurnoServicosTest extends TestCaseReadServices
             assertNotNull(executionYear);
 
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod =
-                persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                    "2º Semestre", executionYear);
             assertNotNull(executionPeriod);
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = null;
 
-            if (existing)
-            {
-                executionCourse =
-                    persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-                        "TFCI",
-                        "2002/2003",
-                        "LEIC");
+            if (existing) {
+                executionCourse = persistentExecutionCourse
+                        .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
                 assertNotNull(executionCourse);
 
-            }
-            else
-            {
-                executionCourse =
-                    new ExecutionCourse(
-                        "desc",
-                        "desc",
-                        new Double(1),
-                        new Double(2),
-                        new Double(3),
-                        new Double(4),
-                        executionPeriod);
+            } else {
+                executionCourse = new ExecutionCourse("desc", "desc", new Double(1), new Double(2),
+                        new Double(3), new Double(4), executionPeriod);
             }
 
             this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");

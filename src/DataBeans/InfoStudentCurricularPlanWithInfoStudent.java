@@ -9,14 +9,13 @@ import Dominio.IStudentCurricularPlan;
 /**
  * @author Tânia Pousão 23/Jun/2004
  */
-public class InfoStudentCurricularPlanWithInfoStudent extends
-        InfoStudentCurricularPlan {
+public class InfoStudentCurricularPlanWithInfoStudent extends InfoStudentCurricularPlan {
     public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {
 
-            setInfoStudent(InfoStudentWithInfoPerson
-                    .newInfoFromDomain(studentCurricularPlan.getStudent()));
+            setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(studentCurricularPlan
+                    .getStudent()));
         }
     }
 

@@ -9,57 +9,57 @@ import java.util.List;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class InfoSiteShifts extends DataTranferObject implements ISiteComponent {
 
-private String infoExecutionPeriodName;
-private String infoExecutionYearName;
-private List shifts;
+    private String infoExecutionPeriodName;
 
-/**
- * @return
- */
-public List getShifts() {
-	return shifts;
-}
+    private String infoExecutionYearName;
 
-/**
- * @param list
- */
-public void setShifts(List list) {
-	shifts = list;
-}
+    private List shifts;
 
+    /**
+     * @return
+     */
+    public List getShifts() {
+        return shifts;
+    }
 
-/**
- * @return
- */
-public String getInfoExecutionPeriodName() {
-	return infoExecutionPeriodName;
-}
+    /**
+     * @param list
+     */
+    public void setShifts(List list) {
+        shifts = list;
+    }
 
-/**
- * @return
- */
-public String getInfoExecutionYearName() {
-	return infoExecutionYearName;
-}
+    /**
+     * @return
+     */
+    public String getInfoExecutionPeriodName() {
+        return infoExecutionPeriodName;
+    }
 
+    /**
+     * @return
+     */
+    public String getInfoExecutionYearName() {
+        return infoExecutionYearName;
+    }
 
-/**
- * @param string
- */
-public void setInfoExecutionPeriodName(String string) {
-	infoExecutionPeriodName = string;
-}
+    /**
+     * @param string
+     */
+    public void setInfoExecutionPeriodName(String string) {
+        infoExecutionPeriodName = string;
+    }
 
-/**
- * @param string
- */
-public void setInfoExecutionYearName(String string) {
-	infoExecutionYearName = string;
-}
+    /**
+     * @param string
+     */
+    public void setInfoExecutionYearName(String string) {
+        infoExecutionYearName = string;
+    }
 
 }

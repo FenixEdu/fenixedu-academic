@@ -27,89 +27,75 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices
-{
+public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
 
     private InfoShift infoShift = null;
 
-    public LerAlunosDeTurnoServicosTest(java.lang.String testName)
-    {
+    public LerAlunosDeTurnoServicosTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(LerAlunosDeTurnoServicosTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "LerAlunosDeTurno";
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
         this.ligarSuportePersistente(true);
 
         Object argsLerAlunos[] = new Object[1];
-        argsLerAlunos[0] =
-            new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
+        argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift
+                .getInfoDisciplinaExecucao());
 
         return argsLerAlunos;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         this.ligarSuportePersistente(false);
 
         Object argsLerAlunos[] = new Object[1];
-        argsLerAlunos[0] =
-            new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
+        argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift
+                .getInfoDisciplinaExecucao());
 
         return argsLerAlunos;
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 1;
     }
 
-    protected Object getObjectToCompare()
-    {
+    protected Object getObjectToCompare() {
         return null;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 
-    private void ligarSuportePersistente(boolean existing)
-    {
+    private void ligarSuportePersistente(boolean existing) {
 
         ISuportePersistente sp = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -125,12 +111,9 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices
             ITurnoPersistente itp = sp.getITurnoPersistente();
             ITurno it = null;
 
-            if (existing)
-            {
+            if (existing) {
                 it = itp.readByNameAndExecutionCourse("turno4", ide);
-            }
-            else
-            {
+            } else {
                 it = itp.readByNameAndExecutionCourse("turno1", ide);
             }
 
@@ -138,15 +121,10 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices
 
             sp.confirmarTransaccao();
 
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
-            try
-            {
+        } catch (ExcepcaoPersistencia excepcao) {
+            try {
                 sp.cancelarTransaccao();
-            }
-            catch (ExcepcaoPersistencia ex)
-            {
+            } catch (ExcepcaoPersistencia ex) {
                 fail("ligarSuportePersistente: cancelarTransaccao");
             }
             fail("ligarSuportePersistente: confirmarTransaccao");

@@ -1,6 +1,5 @@
 package ServidorAplicacao.Servicos.publico;
 
-
 import java.util.List;
 
 import framework.factory.ServiceManagerServiceFactory;
@@ -17,146 +16,128 @@ import ServidorAplicacao.Servicos.UtilsTestCase;
  *  
  */
 public class ReadPublishedMarksByExamTest extends ServiceTestCase {
-	/**
-	 * @param testName
-	 */
-	public ReadPublishedMarksByExamTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public ReadPublishedMarksByExamTest(String testName) {
+        super(testName);
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadPublishedMarksByExam";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadPublishedMarksByExam";
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/publico/testReadPublishedMarksByExamDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/publico/testReadPublishedMarksByExamDataSet.xml";
+    }
 
-	public void testNonExistingEvaluation() {
+    public void testNonExistingEvaluation() {
 
-		Object[] args = { new Integer(4), new Integer(1000)};
-		try {
+        Object[] args = { new Integer(4), new Integer(1000) };
+        try {
 
-			
-				 ServiceManagerServiceFactory.executeService(
-					null,
-					getNameOfServiceToBeTested(),
-					args);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
 
-			System.out.println(
-				"testNonExistingEvaluation was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testNonExistingEvaluation");
+            System.out.println("testNonExistingEvaluation was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testNonExistingEvaluation");
 
-		} catch (FenixServiceException e) {
-			System.out.println(
-				"testNonExistingEvaluation was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(
-				"testNonExistingEvaluation was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testNonExistingEvaluation");
-		}
-	}
+        } catch (FenixServiceException e) {
+            System.out.println("testNonExistingEvaluation was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("testNonExistingEvaluation was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testNonExistingEvaluation");
+        }
+    }
 
-	public void testNonExistingSite() {
+    public void testNonExistingSite() {
 
-		Object[] args = { new Integer(1000), new Integer(5)};
-		try {
+        Object[] args = { new Integer(1000), new Integer(5) };
+        try {
 
-		 ServiceManagerServiceFactory.executeService(
-					null,
-					getNameOfServiceToBeTested(),
-					args);
+            ServiceManagerServiceFactory.executeService(null, getNameOfServiceToBeTested(), args);
 
-			System.out.println(
-				"testNonExistingSite was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testNonExistingSite");
+            System.out.println("testNonExistingSite was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testNonExistingSite");
 
-		} catch (FenixServiceException e) {
-			System.out.println(
-				"testNonExistingSite was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(
-				"testNonExistingSite was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testNonExistingSite");
-		}
-	}
+        } catch (FenixServiceException e) {
+            System.out.println("testNonExistingSite was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("testNonExistingSite was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testNonExistingSite");
+        }
+    }
 
-	public void testExistingSiteAndEvaluationWithoutMarks() {
+    public void testExistingSiteAndEvaluationWithoutMarks() {
 
-		Object[] args = { new Integer(4), new Integer(6)};
-		ExecutionCourseSiteView result = null;
+        Object[] args = { new Integer(4), new Integer(6) };
+        ExecutionCourseSiteView result = null;
 
-		try {
+        try {
 
-			result =
-				(ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(
-					null,
-					getNameOfServiceToBeTested(),
-					args);
-			
-			InfoSiteMarks infoSiteMarks = (InfoSiteMarks) result.getComponent();
-			List marksList = infoSiteMarks.getMarksList();
-			
-			assertEquals(marksList.size(), 0);
-			
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testReadPublishedMarksByExamExpectedDataSet.xml");
-			
-			System.out.println(
-				"testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
+            result = (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), args);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(
-				"testExistingSiteAndEvaluationWithoutMarks was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testExistingSiteAndEvaluationWithoutMarks");
-		}
+            InfoSiteMarks infoSiteMarks = (InfoSiteMarks) result.getComponent();
+            List marksList = infoSiteMarks.getMarksList();
 
-	}
-	
-	public void testExistingSiteAndEvaluation() {
+            assertEquals(marksList.size(), 0);
 
-		Object[] args = { new Integer(4), new Integer(5)};
-		ExecutionCourseSiteView result = null;
+            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testReadPublishedMarksByExamExpectedDataSet.xml");
 
-		try {
+            System.out
+                    .println("testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
+                            + this.getClass().getName());
 
-			result =
-				(ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(
-					null,
-					getNameOfServiceToBeTested(),
-					args);
-			
-			InfoSiteMarks infoSiteMarks = (InfoSiteMarks) result.getComponent();
-			List marksList = infoSiteMarks.getMarksList();
-			
-			assertEquals(marksList.size(), 6);
-			
-			Object[] values = { new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6)};
-			UtilsTestCase.readTestList(marksList, values, "idInternal", InfoMark.class);
-			
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testReadPublishedMarksByExamExpectedDataSet.xml");
-			
-			System.out.println(
-				"testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
-					+ this.getClass().getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out
+                    .println("testExistingSiteAndEvaluationWithoutMarks was UNSUCCESSFULY runned by class: "
+                            + this.getClass().getName());
+            fail("testExistingSiteAndEvaluationWithoutMarks");
+        }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(
-				"testExistingSiteAndEvaluationWithoutMarks was UNSUCCESSFULY runned by class: "
-					+ this.getClass().getName());
-			fail("testExistingSiteAndEvaluationWithoutMarks");
-		}
+    }
 
-	}
+    public void testExistingSiteAndEvaluation() {
+
+        Object[] args = { new Integer(4), new Integer(5) };
+        ExecutionCourseSiteView result = null;
+
+        try {
+
+            result = (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(null,
+                    getNameOfServiceToBeTested(), args);
+
+            InfoSiteMarks infoSiteMarks = (InfoSiteMarks) result.getComponent();
+            List marksList = infoSiteMarks.getMarksList();
+
+            assertEquals(marksList.size(), 6);
+
+            Object[] values = { new Integer(1), new Integer(2), new Integer(3), new Integer(4),
+                    new Integer(5), new Integer(6) };
+            UtilsTestCase.readTestList(marksList, values, "idInternal", InfoMark.class);
+
+            compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testReadPublishedMarksByExamExpectedDataSet.xml");
+
+            System.out
+                    .println("testExistingSiteAndEvaluationWithoutMarks was SUCCESSFULY runned by class: "
+                            + this.getClass().getName());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out
+                    .println("testExistingSiteAndEvaluationWithoutMarks was UNSUCCESSFULY runned by class: "
+                            + this.getClass().getName());
+            fail("testExistingSiteAndEvaluationWithoutMarks");
+        }
+
+    }
 }

@@ -10,73 +10,72 @@ import Dominio.Seminaries.ITheme;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
- *
+ * 
  * 
  * Created at 1/Ago/2003, 21:13:13
- * 
+ *  
  */
-public class InfoTheme extends InfoObject
-{
-   
+public class InfoTheme extends InfoObject {
+
     private String description;
+
     private String name;
+
     private String shortName;
-	/**
-	 * @return
-	 */
-	public String getDescription()
-	{
-		return description;
-	}
 
-	
+    public InfoTheme() {
 
-	/**
-	 * @return
-	 */
-	public String getName()
-	{
-		return name;
-	}
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setDescription(String string)
-	{
-		description= string;
-	}
+    public InfoTheme(Integer idInternal) {
+        super(idInternal);
+    }
 
-	
+    /**
+     * @return
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setName(String string)
-	{
-		name= string;
-	}
+    /**
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getShortName()
-	{
-		return shortName;
-	}
+    /**
+     * @param string
+     */
+    public void setDescription(String string) {
+        description = string;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setShortName(String string)
-	{
-		shortName= string;
-	}
-    
-    public String toString()
-    {
+    /**
+     * @param string
+     */
+    public void setName(String string) {
+        name = string;
+    }
+
+    /**
+     * @return
+     */
+    public String getShortName() {
+        return shortName;
+    }
+
+    /**
+     * @param string
+     */
+    public void setShortName(String string) {
+        shortName = string;
+    }
+
+    public String toString() {
         String retorno;
-        retorno= "[InfoTheme:";
+        retorno = "[InfoTheme:";
         retorno += "ID=" + this.getIdInternal();
         retorno += "Name=" + this.getName();
         retorno += ",Description=" + this.getDescription();
@@ -84,23 +83,23 @@ public class InfoTheme extends InfoObject
         return retorno;
     }
 
-	public void copyFromDomain(ITheme theme) {
-		super.copyFromDomain(theme);
-		if(theme!=null) {
-			setDescription(theme.getDescription());
-			setName(theme.getName());
-			setShortName(theme.getShortName());
-		}
-	}
-	
-	public static InfoTheme newInfoFromDomain(ITheme theme) {
-		InfoTheme infoTheme = null;
-		
-		if(theme != null) {
-			infoTheme = new InfoTheme();
-			infoTheme.copyFromDomain(theme);
-		}
-		return infoTheme;
-	}
+    public void copyFromDomain(ITheme theme) {
+        super.copyFromDomain(theme);
+        if (theme != null) {
+            setDescription(theme.getDescription());
+            setName(theme.getName());
+            setShortName(theme.getShortName());
+        }
+    }
+
+    public static InfoTheme newInfoFromDomain(ITheme theme) {
+        InfoTheme infoTheme = null;
+
+        if (theme != null) {
+            infoTheme = new InfoTheme();
+            infoTheme.copyFromDomain(theme);
+        }
+        return infoTheme;
+    }
 
 }

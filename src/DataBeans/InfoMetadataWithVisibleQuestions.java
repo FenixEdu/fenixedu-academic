@@ -18,29 +18,29 @@ import Dominio.IQuestion;
 
 public class InfoMetadataWithVisibleQuestions extends InfoMetadata {
 
-	public void copyFromDomain(IMetadata metadata) {
-		super.copyFromDomain(metadata);
-		if (metadata != null && metadata.getVisibleQuestions() != null) {
-			setVisibleQuestions((List) CollectionUtils.collect(metadata
-					.getVisibleQuestions(), new Transformer() {
+    public void copyFromDomain(IMetadata metadata) {
+        super.copyFromDomain(metadata);
+        if (metadata != null && metadata.getVisibleQuestions() != null) {
+            setVisibleQuestions((List) CollectionUtils.collect(metadata.getVisibleQuestions(),
+                    new Transformer() {
 
-				public Object transform(Object question) {
-					return InfoQuestion.newInfoFromDomain((IQuestion) question);
-				}
-			})
+                        public Object transform(Object question) {
+                            return InfoQuestion.newInfoFromDomain((IQuestion) question);
+                        }
+                    })
 
-			);
+            );
 
-		}
-	}
+        }
+    }
 
-	public static InfoMetadata newInfoFromDomain(IMetadata metadata) {
-		InfoMetadataWithVisibleQuestions infoMetadata = null;
-		if (metadata != null) {
-			infoMetadata = new InfoMetadataWithVisibleQuestions();
-			infoMetadata.copyFromDomain(metadata);
-		}
-		return infoMetadata;
-	}
+    public static InfoMetadata newInfoFromDomain(IMetadata metadata) {
+        InfoMetadataWithVisibleQuestions infoMetadata = null;
+        if (metadata != null) {
+            infoMetadata = new InfoMetadataWithVisibleQuestions();
+            infoMetadata.copyFromDomain(metadata);
+        }
+        return infoMetadata;
+    }
 
 }

@@ -49,9 +49,8 @@ public class ExamRoomDistribution implements IService {
     public ExamRoomDistribution() {
     }
 
-    public Boolean run(Integer executionCourseCode, Integer examCode,
-            List roomsIds, Boolean sms, Boolean enrolledStudents)
-            throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer examCode, List roomsIds, Boolean sms,
+            Boolean enrolledStudents) throws FenixServiceException {
         Boolean result = new Boolean(false);
         List students = new ArrayList();
         try {
@@ -59,41 +58,35 @@ public class ExamRoomDistribution implements IService {
             IPersistentExam persistentExam = sp.getIPersistentExam();
             ISalaPersistente persistentRoom = sp.getISalaPersistente();
 
-            IFrequentaPersistente persistentAttends = sp
-                    .getIFrequentaPersistente();
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp
-                    .getIPersistentExamStudentRoom();
+            IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
+            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
             IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
             if (exam == null) {
                 throw new InvalidArgumentsServiceException("exam");
             }
 
-            if (!enrolledStudents.booleanValue()
-                    || exam.getEnrollmentEndDay() == null) {
+            if (!enrolledStudents.booleanValue() || exam.getEnrollmentEndDay() == null) {
                 Calendar examDay = exam.getDay();
                 Calendar today = Calendar.getInstance();
                 //                Calendar twoWeeksBeforeExam = (Calendar) examDay.clone();
                 //                twoWeeksBeforeExam.add(Calendar.DATE, -14);
 
                 if (today.after(examDay)) {
-                    throw new FenixServiceException(
-                            ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
+                    throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
                 }
 
                 List executionCourses = exam.getAssociatedExecutionCourses();
                 Iterator iterCourse = executionCourses.iterator();
                 while (iterCourse.hasNext()) {
-                    List attends = persistentAttends
-                            .readByExecutionCourse((IExecutionCourse) iterCourse
-                                    .next());
-                    students.addAll(CollectionUtils.collect(attends,
-                            new Transformer() {
+                    List attends = persistentAttends.readByExecutionCourse((IExecutionCourse) iterCourse
+                            .next());
+                    students.addAll(CollectionUtils.collect(attends, new Transformer() {
 
-                                public Object transform(Object arg0) {
-                                    IFrequenta frequenta = (IFrequenta) arg0;
-                                    return frequenta.getAluno();
-                                }
-                            }));
+                        public Object transform(Object arg0) {
+                            IFrequenta frequenta = (IFrequenta) arg0;
+                            return frequenta.getAluno();
+                        }
+                    }));
                 }
 
             } else {
@@ -102,26 +95,20 @@ public class ExamRoomDistribution implements IService {
 
                 endEnrollmentDay.set(Calendar.HOUR_OF_DAY, 0);
                 endEnrollmentDay.set(Calendar.MINUTE, 0);
-                endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay
-                        .get(Calendar.HOUR_OF_DAY));
-                endEnrollmentDay.roll(Calendar.MINUTE, endHourDay
-                        .get(Calendar.MINUTE));
+                endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay.get(Calendar.HOUR_OF_DAY));
+                endEnrollmentDay.roll(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));
 
                 Calendar examDay = exam.getDay();
                 Calendar today = Calendar.getInstance();
 
                 if (today.after(examDay) || today.before(endEnrollmentDay)) {
-                    throw new FenixServiceException(
-                            ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
+                    throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
                 }
 
-                List examStudentRoomList = persistentExamStudentRoom
-                        .readBy(exam);
-                Iterator iterExamStudentRoomList = examStudentRoomList
-                        .iterator();
+                List examStudentRoomList = persistentExamStudentRoom.readBy(exam);
+                Iterator iterExamStudentRoomList = examStudentRoomList.iterator();
                 while (iterExamStudentRoomList.hasNext()) {
-                    students.add(((IExamStudentRoom) iterExamStudentRoomList
-                            .next()).getStudent());
+                    students.add(((IExamStudentRoom) iterExamStudentRoomList.next()).getStudent());
                 }
 
             }
@@ -130,8 +117,7 @@ public class ExamRoomDistribution implements IService {
             Iterator iterRoom = uniqueRooms.iterator();
             List rooms = new ArrayList();
             while (iterRoom.hasNext()) {
-                ISala room = (ISala) persistentRoom.readByOID(Sala.class,
-                        (Integer) iterRoom.next());
+                ISala room = (ISala) persistentRoom.readByOID(Sala.class, (Integer) iterRoom.next());
                 if (room == null) {
                     throw new InvalidArgumentsServiceException("room");
                 }
@@ -148,18 +134,16 @@ public class ExamRoomDistribution implements IService {
                 while (i <= room.getCapacidadeExame().intValue()) {
                     if (students.size() > 0) {
                         IStudent student = (IStudent) getRandomObjectFromList(students);
-                        IExamStudentRoom examStudentRoom = persistentExamStudentRoom
-                                .readBy(exam, student);
+                        IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam,
+                                student);
                         if (examStudentRoom == null) {
                             examStudentRoom = new ExamStudentRoom();
-                            persistentExamStudentRoom
-                                    .simpleLockWrite(examStudentRoom);
+                            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
                             examStudentRoom.setExam(exam);
                             examStudentRoom.setRoom(room);
                             examStudentRoom.setStudent(student);
                         } else {
-                            persistentExamStudentRoom
-                                    .simpleLockWrite(examStudentRoom);
+                            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
                             examStudentRoom.setRoom(room);
                         }
 

@@ -19,8 +19,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Susana Fernandes
  *  
  */
-public class ReadMetadatasByDistributedTestTest extends
-        ServiceNeedsAuthenticationTestCase {
+public class ReadMetadatasByDistributedTestTest extends ServiceNeedsAuthenticationTestCase {
 
     public ReadMetadatasByDistributedTestTest(String testName) {
         super(testName);
@@ -35,26 +34,25 @@ public class ReadMetadatasByDistributedTestTest extends
     }
 
     protected String[] getAuthenticatedAndAuthorizedUser() {
-        String[] args = { "D3673", "pass", getApplication()};
+        String[] args = { "D3673", "pass", getApplication() };
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
     protected String[] getNotAuthenticatedUser() {
-        String[] args = { "L46730", "pass", getApplication()};
+        String[] args = { "L46730", "pass", getApplication() };
         return args;
     }
 
     protected Object[] getAuthorizeArguments() {
         Integer executionCourseId = new Integer(34033);
         Integer distributedTestId = new Integer(254);
-        String path = new String(
-                "e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
-        Object[] args = { executionCourseId, distributedTestId, path};
+        String path = new String("e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
+        Object[] args = { executionCourseId, distributedTestId, path };
         return args;
     }
 
@@ -66,13 +64,10 @@ public class ReadMetadatasByDistributedTestTest extends
         try {
             IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
-            SiteView siteView = (SiteView) ServiceManagerServiceFactory
-                    .executeService(userView, getNameOfServiceToBeTested(),
-                            args);
-            InfoSiteMetadatas bodyComponent = (InfoSiteMetadatas) siteView
-                    .getComponent();
-            InfoExecutionCourse infoExecutionCourse = bodyComponent
-                    .getExecutionCourse();
+            SiteView siteView = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
+            InfoSiteMetadatas bodyComponent = (InfoSiteMetadatas) siteView.getComponent();
+            InfoExecutionCourse infoExecutionCourse = bodyComponent.getExecutionCourse();
             assertEquals(infoExecutionCourse.getIdInternal(), args[0]);
             List infoMetadatasList = bodyComponent.getInfoMetadatas();
             assertEquals(infoMetadatasList.size(), 3);

@@ -7,7 +7,7 @@
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
  */
 import java.util.ArrayList;
@@ -27,107 +27,103 @@ import Util.Season;
 
 public class EditExamServiceTest extends TestCaseCreateServices {
 
-	public EditExamServiceTest(java.lang.String testName) {
-		super(testName);
-	}
+    public EditExamServiceTest(java.lang.String testName) {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(EditExamServiceTest.class);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(EditExamServiceTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "EditExam";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "EditExam";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Calendar examDateAndTime = Calendar.getInstance();
-		Season season = new Season(Season.SEASON1);
-		InfoViewExamByDayAndShift infoViewOldExam = new InfoViewExamByDayAndShift();
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Calendar examDateAndTime = Calendar.getInstance();
+        Season season = new Season(Season.SEASON1);
+        InfoViewExamByDayAndShift infoViewOldExam = new InfoViewExamByDayAndShift();
 
-		examDateAndTime.set(Calendar.YEAR, 2003);
-		examDateAndTime.set(Calendar.MONTH, Calendar.JULY);
-		examDateAndTime.set(Calendar.DAY_OF_MONTH, 8);
-		examDateAndTime.set(Calendar.HOUR_OF_DAY, 17);
-		examDateAndTime.set(Calendar.MINUTE, 0);
-		examDateAndTime.set(Calendar.SECOND, 0);
+        examDateAndTime.set(Calendar.YEAR, 2003);
+        examDateAndTime.set(Calendar.MONTH, Calendar.JULY);
+        examDateAndTime.set(Calendar.DAY_OF_MONTH, 8);
+        examDateAndTime.set(Calendar.HOUR_OF_DAY, 17);
+        examDateAndTime.set(Calendar.MINUTE, 0);
+        examDateAndTime.set(Calendar.SECOND, 0);
 
-		InfoExecutionYear infoExecutionYear =
-			new InfoExecutionYear("2002/2003");
-		InfoExecutionPeriod infoExecutionPeriod =
-			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		infoExecutionPeriod.setSemester(new Integer(2));
+        InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
+        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre",
+                infoExecutionYear);
+        infoExecutionPeriod.setSemester(new Integer(2));
 
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		infoExecutionCourse.setSigla("RCI");
-		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+        infoExecutionCourse.setSigla("RCI");
+        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-		List infoExecutionCourses = new ArrayList();
-		infoExecutionCourses.add(infoExecutionCourse);
+        List infoExecutionCourses = new ArrayList();
+        infoExecutionCourses.add(infoExecutionCourse);
 
-		InfoExam infoExam = new InfoExam();
-		infoExam.setSeason(new Season(Season.SEASON1));
+        InfoExam infoExam = new InfoExam();
+        infoExam.setSeason(new Season(Season.SEASON1));
 
-		infoViewOldExam.setInfoExecutionCourses(infoExecutionCourses);
-		infoViewOldExam.setInfoExam(infoExam);
+        infoViewOldExam.setInfoExecutionCourses(infoExecutionCourses);
+        infoViewOldExam.setInfoExam(infoExam);
 
-		Object args[] =
-			{ examDateAndTime, examDateAndTime, season, infoViewOldExam };
+        Object args[] = { examDateAndTime, examDateAndTime, season, infoViewOldExam };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Calendar examDateAndTime = Calendar.getInstance();
-		Season season = new Season(Season.SEASON2);
-		InfoViewExamByDayAndShift infoViewOldExam = new InfoViewExamByDayAndShift();
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        Calendar examDateAndTime = Calendar.getInstance();
+        Season season = new Season(Season.SEASON2);
+        InfoViewExamByDayAndShift infoViewOldExam = new InfoViewExamByDayAndShift();
 
-		examDateAndTime.set(Calendar.YEAR, 2003);
-		examDateAndTime.set(Calendar.MONTH, Calendar.JULY);
-		examDateAndTime.set(Calendar.DAY_OF_MONTH, 8);
-		examDateAndTime.set(Calendar.HOUR_OF_DAY, 17);
-		examDateAndTime.set(Calendar.MINUTE, 0);
-		examDateAndTime.set(Calendar.SECOND, 0);
+        examDateAndTime.set(Calendar.YEAR, 2003);
+        examDateAndTime.set(Calendar.MONTH, Calendar.JULY);
+        examDateAndTime.set(Calendar.DAY_OF_MONTH, 8);
+        examDateAndTime.set(Calendar.HOUR_OF_DAY, 17);
+        examDateAndTime.set(Calendar.MINUTE, 0);
+        examDateAndTime.set(Calendar.SECOND, 0);
 
-		InfoExecutionYear infoExecutionYear =
-			new InfoExecutionYear("2002/2003");
-		InfoExecutionPeriod infoExecutionPeriod =
-			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		infoExecutionPeriod.setSemester(new Integer(2));
+        InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
+        InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre",
+                infoExecutionYear);
+        infoExecutionPeriod.setSemester(new Integer(2));
 
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		infoExecutionCourse.setSigla("RCI");
-		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+        infoExecutionCourse.setSigla("RCI");
+        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-		List infoExecutionCourses = new ArrayList();
-		infoExecutionCourses.add(infoExecutionCourse);
+        List infoExecutionCourses = new ArrayList();
+        infoExecutionCourses.add(infoExecutionCourse);
 
-		InfoExam infoExam = new InfoExam();
-		infoExam.setSeason(new Season(Season.SEASON1));
+        InfoExam infoExam = new InfoExam();
+        infoExam.setSeason(new Season(Season.SEASON1));
 
-		infoViewOldExam.setInfoExecutionCourses(infoExecutionCourses);
-		infoViewOldExam.setInfoExam(infoExam);
+        infoViewOldExam.setInfoExecutionCourses(infoExecutionCourses);
+        infoViewOldExam.setInfoExam(infoExam);
 
-		Object args[] =
-			{ examDateAndTime, examDateAndTime, season, infoViewOldExam };
+        Object args[] = { examDateAndTime, examDateAndTime, season, infoViewOldExam };
 
-		return args;
-	}
+        return args;
+    }
 
-	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 }

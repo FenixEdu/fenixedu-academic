@@ -3,6 +3,7 @@ package ServidorApresentacao.servlets.startup;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -14,17 +15,23 @@ import ServidorAplicacao.Servico.person.ServicoSeguroLerCargos;
 import constants.assiduousness.Constants;
 
 public final class ConstantsServlet extends HttpServlet {
-    
-    private ArrayList cargos = null;
-    private ArrayList sexo = null;
-    private ArrayList estadoCivil = null;
-    private ArrayList dias = null;
+
+    private List cargos = null;
+
+    private List sexo = null;
+
+    private List estadoCivil = null;
+
+    private List dias = null;
+
     private Hashtable meses = null;
-    private ArrayList anos = null;
-    private ArrayList tipoDoc = null;
-    
+
+    private List anos = null;
+
+    private List tipoDoc = null;
+
     private int debug = 0;
-    
+
     public void destroy() {
 
         getServletContext().removeAttribute(Constants.CARGOS);
@@ -35,7 +42,7 @@ public final class ConstantsServlet extends HttpServlet {
         getServletContext().removeAttribute(Constants.ANOS);
         getServletContext().removeAttribute(Constants.TIPODOC);
     }
-    
+
     public void init() throws ServletException {
 
         String value;
@@ -59,11 +66,11 @@ public final class ConstantsServlet extends HttpServlet {
             throw new UnavailableException("Cannot load");
         }
     }
-    
+
     public int getDebug() {
         return (this.debug);
     }
-    
+
     private synchronized void load() throws Exception {
         cargos = new ArrayList();
         sexo = new ArrayList();
@@ -72,19 +79,18 @@ public final class ConstantsServlet extends HttpServlet {
         meses = new Hashtable();
         anos = new ArrayList();
         tipoDoc = new ArrayList();
-        
-        ServicoAutorizacaoLerCargos servicoAutorizacaoLerCargos =
-        new ServicoAutorizacaoLerCargos();
-        ServicoSeguroLerCargos servicoSeguroLerCargos =
-        new ServicoSeguroLerCargos(servicoAutorizacaoLerCargos, cargos);
-        
+
+        ServicoAutorizacaoLerCargos servicoAutorizacaoLerCargos = new ServicoAutorizacaoLerCargos();
+        ServicoSeguroLerCargos servicoSeguroLerCargos = new ServicoSeguroLerCargos(
+                servicoAutorizacaoLerCargos, cargos);
+
         Executor.getInstance().doIt(servicoSeguroLerCargos);
-        
+
         cargos = servicoSeguroLerCargos.getCargos();
-        
+
         sexo.add("masculino");
         sexo.add("feminino");
-        
+
         estadoCivil.add("SOLTEIRO");
         estadoCivil.add("CASADO");
         estadoCivil.add("VIÚVO");
@@ -115,7 +121,7 @@ public final class ConstantsServlet extends HttpServlet {
             anos.add(new Integer(i));
             i--;
         }
-        
+
         // isto deve estar numa tabela
         tipoDoc.add("BIMD");
         tipoDoc.add("BIPT");

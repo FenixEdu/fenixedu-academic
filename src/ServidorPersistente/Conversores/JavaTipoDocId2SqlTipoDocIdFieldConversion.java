@@ -15,8 +15,7 @@ import Util.TipoDocumentoIdentificacao;
  * @author dcs-rjao
  */
 
-public class JavaTipoDocId2SqlTipoDocIdFieldConversion implements
-        FieldConversion {
+public class JavaTipoDocId2SqlTipoDocIdFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)

@@ -40,7 +40,7 @@ public class UpdateProfessorshipHoursAction extends Action {
         Integer teacherId = (Integer) professorshipsHours.get("teacherId");
         Integer executionYearId = (Integer) professorshipsHours.get("executionYearId");
         Object args[] = { teacherId, executionYearId, hours };
-        
+
         IUserView userView = SessionUtils.getUserView(request);
         ServiceUtils.executeService(userView, "UpdateProfessorshipsHours", args);
 

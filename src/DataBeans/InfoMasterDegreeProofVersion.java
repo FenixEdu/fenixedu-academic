@@ -12,157 +12,139 @@ import Util.MasterDegreeClassification;
 import Util.State;
 
 /**
- * @author :
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public class InfoMasterDegreeProofVersion extends InfoObject
-{
+public class InfoMasterDegreeProofVersion extends InfoObject {
 
-	private InfoMasterDegreeThesis infoMasterDegreeThesis;
-	private InfoEmployee infoResponsibleEmployee;
-	private Timestamp lastModification;
-	private Date proofDate;
-	private Date thesisDeliveryDate;
-	private MasterDegreeClassification finalResult;
-	private Integer attachedCopiesNumber;
-	private State currentState;
-	private List infoJuries; /*Teachers*/
-	private List infoExternalJuries; /*External Persons*/
+    private InfoMasterDegreeThesis infoMasterDegreeThesis;
 
-	public String toString()
-	{
-		String result = "[" + this.getClass().getName() + ": \n";
-		result += "idInternal = " + getIdInternal() + "; \n";
-		result += "infoMasterDegreeThesis = " + this.infoMasterDegreeThesis.getIdInternal() + "; \n";
-		result += "infoResponsibleEmployee = " + this.infoResponsibleEmployee.getIdInternal() + "; \n";
-		result += "lastModification = " + this.lastModification.toString() + "; \n";
-		result += "proofDate = " + this.proofDate.toString() + "; \n";
-		result += "thesisDeliveryDate = " + this.thesisDeliveryDate.toString() + "; \n";
-		result += "finalResult = " + this.finalResult.toString() + "; \n";
-		result += "attachedCopiesNumber = " + this.attachedCopiesNumber.toString() + "; \n";
-		result += "currentState = " + this.currentState.toString() + "; \n";
-		result += "] \n";
+    private InfoEmployee infoResponsibleEmployee;
 
-		return result;
-	}
+    private Timestamp lastModification;
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
+    private Date proofDate;
 
-		if (obj instanceof InfoMasterDegreeProofVersion)
-		{
-			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) obj;
-			result =
-				this.getInfoMasterDegreeThesis().equals(
-					infoMasterDegreeProofVersion.getInfoMasterDegreeThesis())
-					&& this.getLastModification().equals(
-						infoMasterDegreeProofVersion.getLastModification());
-		}
-		return result;
-	}
+    private Date thesisDeliveryDate;
 
-	public void setAttachedCopiesNumber(Integer attachedCopiesNumber)
-	{
-		this.attachedCopiesNumber = attachedCopiesNumber;
-	}
+    private MasterDegreeClassification finalResult;
 
-	public Integer getAttachedCopiesNumber()
-	{
-		return attachedCopiesNumber;
-	}
+    private Integer attachedCopiesNumber;
 
-	public void setCurrentState(State currentState)
-	{
-		this.currentState = currentState;
-	}
+    private State currentState;
 
-	public State getCurrentState()
-	{
-		return currentState;
-	}
+    private List infoJuries; /* Teachers */
 
-	public void setFinalResult(MasterDegreeClassification finalResult)
-	{
-		this.finalResult = finalResult;
-	}
+    private List infoExternalJuries; /* External Persons */
 
-	public MasterDegreeClassification getFinalResult()
-	{
-		return finalResult;
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": \n";
+        result += "idInternal = " + getIdInternal() + "; \n";
+        result += "infoMasterDegreeThesis = " + this.infoMasterDegreeThesis.getIdInternal() + "; \n";
+        result += "infoResponsibleEmployee = " + this.infoResponsibleEmployee.getIdInternal() + "; \n";
+        result += "lastModification = " + this.lastModification.toString() + "; \n";
+        result += "proofDate = " + this.proofDate.toString() + "; \n";
+        result += "thesisDeliveryDate = " + this.thesisDeliveryDate.toString() + "; \n";
+        result += "finalResult = " + this.finalResult.toString() + "; \n";
+        result += "attachedCopiesNumber = " + this.attachedCopiesNumber.toString() + "; \n";
+        result += "currentState = " + this.currentState.toString() + "; \n";
+        result += "] \n";
 
-	public void setInfoMasterDegreeThesis(InfoMasterDegreeThesis infoMasterDegreeThesis)
-	{
-		this.infoMasterDegreeThesis = infoMasterDegreeThesis;
-	}
+        return result;
+    }
 
-	public InfoMasterDegreeThesis getInfoMasterDegreeThesis()
-	{
-		return infoMasterDegreeThesis;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
 
-	public void setInfoResponsibleEmployee(InfoEmployee infoResponsibleEmployee)
-	{
-		this.infoResponsibleEmployee = infoResponsibleEmployee;
-	}
+        if (obj instanceof InfoMasterDegreeProofVersion) {
+            InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) obj;
+            result = this.getInfoMasterDegreeThesis().equals(
+                    infoMasterDegreeProofVersion.getInfoMasterDegreeThesis())
+                    && this.getLastModification().equals(
+                            infoMasterDegreeProofVersion.getLastModification());
+        }
+        return result;
+    }
 
-	public InfoEmployee getInfoResponsibleEmployee()
-	{
-		return infoResponsibleEmployee;
-	}
+    public void setAttachedCopiesNumber(Integer attachedCopiesNumber) {
+        this.attachedCopiesNumber = attachedCopiesNumber;
+    }
 
-	public void setLastModification(Timestamp lastModification)
-	{
-		this.lastModification = lastModification;
-	}
+    public Integer getAttachedCopiesNumber() {
+        return attachedCopiesNumber;
+    }
 
-	public Timestamp getLastModification()
-	{
-		return lastModification;
-	}
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
+    }
 
-	public void setProofDate(Date proofDate)
-	{
-		this.proofDate = proofDate;
-	}
+    public State getCurrentState() {
+        return currentState;
+    }
 
-	public Date getProofDate()
-	{
-		return proofDate;
-	}
+    public void setFinalResult(MasterDegreeClassification finalResult) {
+        this.finalResult = finalResult;
+    }
 
-	public void setThesisDeliveryDate(Date thesisDeliveryDate)
-	{
-		this.thesisDeliveryDate = thesisDeliveryDate;
-	}
+    public MasterDegreeClassification getFinalResult() {
+        return finalResult;
+    }
 
-	public Date getThesisDeliveryDate()
-	{
-		return thesisDeliveryDate;
-	}
+    public void setInfoMasterDegreeThesis(InfoMasterDegreeThesis infoMasterDegreeThesis) {
+        this.infoMasterDegreeThesis = infoMasterDegreeThesis;
+    }
 
-	public void setInfoJuries(List infoJuries)
-	{
-		this.infoJuries = infoJuries;
-	}
+    public InfoMasterDegreeThesis getInfoMasterDegreeThesis() {
+        return infoMasterDegreeThesis;
+    }
 
-	public List getInfoJuries()
-	{
-		return infoJuries;
-	}
+    public void setInfoResponsibleEmployee(InfoEmployee infoResponsibleEmployee) {
+        this.infoResponsibleEmployee = infoResponsibleEmployee;
+    }
 
-	public List getInfoExternalJuries()
-	{
-		return infoExternalJuries;
-	}
+    public InfoEmployee getInfoResponsibleEmployee() {
+        return infoResponsibleEmployee;
+    }
 
-	public void setInfoExternalJuries(List infoExternalJuries)
-	{
-		this.infoExternalJuries = infoExternalJuries;
-	}
+    public void setLastModification(Timestamp lastModification) {
+        this.lastModification = lastModification;
+    }
+
+    public Timestamp getLastModification() {
+        return lastModification;
+    }
+
+    public void setProofDate(Date proofDate) {
+        this.proofDate = proofDate;
+    }
+
+    public Date getProofDate() {
+        return proofDate;
+    }
+
+    public void setThesisDeliveryDate(Date thesisDeliveryDate) {
+        this.thesisDeliveryDate = thesisDeliveryDate;
+    }
+
+    public Date getThesisDeliveryDate() {
+        return thesisDeliveryDate;
+    }
+
+    public void setInfoJuries(List infoJuries) {
+        this.infoJuries = infoJuries;
+    }
+
+    public List getInfoJuries() {
+        return infoJuries;
+    }
+
+    public List getInfoExternalJuries() {
+        return infoExternalJuries;
+    }
+
+    public void setInfoExternalJuries(List infoExternalJuries) {
+        this.infoExternalJuries = infoExternalJuries;
+    }
 
 }

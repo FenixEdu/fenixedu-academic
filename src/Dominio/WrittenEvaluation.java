@@ -10,184 +10,178 @@ import java.util.List;
 /**
  * @author Ana e Ricardo
  */
-public class WrittenEvaluation
-	extends Evaluation
-	implements IWrittenEvaluation {
+public class WrittenEvaluation extends Evaluation implements IWrittenEvaluation {
 
-	protected Calendar day;
-	protected Calendar beginning;
-	protected Calendar end;
-	protected Calendar enrollmentBeginDay;
-	protected Calendar enrollmentBeginTime;
-	protected Calendar enrollmentEndDay;
-	protected Calendar enrollmentEndTime;
-	protected List associatedCurricularCourseScope;
-	protected List associatedRoomOccupation;
+    protected Calendar day;
 
-	public WrittenEvaluation() {
-	}
+    protected Calendar beginning;
 
-	public WrittenEvaluation(Integer idInternal) {
-		setIdInternal(idInternal);
-	}
+    protected Calendar end;
 
-	public WrittenEvaluation(Calendar day, Calendar beginning, Calendar end) {
-		this.setDay(day);
-		this.setBeginning(beginning);
-		this.setEnd(end);
-	}
-	
-	public boolean equals(Object obj) {
-		if (obj instanceof IWrittenEvaluation) {
-			IWrittenEvaluation writtenEvaluationObj = (IWrittenEvaluation) obj;
-			return this.getIdInternal().equals(writtenEvaluationObj.getIdInternal());
-		}
+    protected Calendar enrollmentBeginDay;
 
-		return false;
-	}
+    protected Calendar enrollmentBeginTime;
 
-	public String toString() {
-		return "[WRITTEN EVALUATION:"
-			+ " id= '"
-			+ this.getIdInternal()
-			+ "'\n"
-			+ " day= '"
-			+ this.getDay()
-			+ "'\n"
-			+ " beginning= '"
-			+ this.getBeginning()
-			+ "'\n"
-			+ " end= '"
-			+ this.getEnd()
-			+ "'\n"
-			+ "";
-	}
+    protected Calendar enrollmentEndDay;
 
+    protected Calendar enrollmentEndTime;
 
-	/**
-	 * @return
-	 */
-	public Calendar getBeginning() {
-		return beginning;
-	}
+    protected List associatedCurricularCourseScope;
 
-	/**
-	 * @return
-	 */
-	public Calendar getDay() {
-		return day;
-	}
+    protected List associatedRoomOccupation;
 
-	/**
-	 * @return
-	 */
-	public Calendar getEnd() {
-		return end;
-	}
+    public WrittenEvaluation() {
+    }
 
-	/**
-	 * @return
-	 */
-	public Calendar getEnrollmentBeginDay() {
-		return enrollmentBeginDay;
-	}
+    public WrittenEvaluation(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	/**
-	 * @return
-	 */
-	public Calendar getEnrollmentBeginTime() {
-		return enrollmentBeginTime;
-	}
+    public WrittenEvaluation(Calendar day, Calendar beginning, Calendar end) {
+        this.setDay(day);
+        this.setBeginning(beginning);
+        this.setEnd(end);
+    }
 
-	/**
-	 * @return
-	 */
-	public Calendar getEnrollmentEndDay() {
-		return enrollmentEndDay;
-	}
+    public boolean equals(Object obj) {
+        if (obj instanceof IWrittenEvaluation) {
+            IWrittenEvaluation writtenEvaluationObj = (IWrittenEvaluation) obj;
+            return this.getIdInternal().equals(writtenEvaluationObj.getIdInternal());
+        }
 
-	/**
-	 * @return
-	 */
-	public Calendar getEnrollmentEndTime() {
-		return enrollmentEndTime;
-	}
+        return false;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setBeginning(Calendar calendar) {
-		beginning = calendar;
-	}
+    public String toString() {
+        return "[WRITTEN EVALUATION:" + " id= '" + this.getIdInternal() + "'\n" + " day= '"
+                + this.getDay() + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '"
+                + this.getEnd() + "'\n" + "";
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setDay(Calendar calendar) {
-		day = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getBeginning() {
+        return beginning;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEnd(Calendar calendar) {
-		end = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getDay() {
+        return day;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEnrollmentBeginDay(Calendar calendar) {
-		enrollmentBeginDay = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEnd() {
+        return end;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEnrollmentBeginTime(Calendar calendar) {
-		enrollmentBeginTime = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentBeginDay() {
+        return enrollmentBeginDay;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEnrollmentEndDay(Calendar calendar) {
-		enrollmentEndDay = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentBeginTime() {
+        return enrollmentBeginTime;
+    }
 
-	/**
-	 * @param calendar
-	 */
-	public void setEnrollmentEndTime(Calendar calendar) {
-		enrollmentEndTime = calendar;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentEndDay() {
+        return enrollmentEndDay;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedCurricularCourseScope() {
-		return associatedCurricularCourseScope;
-	}
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentEndTime() {
+        return enrollmentEndTime;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAssociatedCurricularCourseScope(List list) {
-		associatedCurricularCourseScope = list;
-	}
+    /**
+     * @param calendar
+     */
+    public void setBeginning(Calendar calendar) {
+        beginning = calendar;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedRoomOccupation() {
-		return associatedRoomOccupation;
-	}
+    /**
+     * @param calendar
+     */
+    public void setDay(Calendar calendar) {
+        day = calendar;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAssociatedRoomOccupation(List list) {
-		associatedRoomOccupation = list;
-	}
+    /**
+     * @param calendar
+     */
+    public void setEnd(Calendar calendar) {
+        end = calendar;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setEnrollmentBeginDay(Calendar calendar) {
+        enrollmentBeginDay = calendar;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setEnrollmentBeginTime(Calendar calendar) {
+        enrollmentBeginTime = calendar;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setEnrollmentEndDay(Calendar calendar) {
+        enrollmentEndDay = calendar;
+    }
+
+    /**
+     * @param calendar
+     */
+    public void setEnrollmentEndTime(Calendar calendar) {
+        enrollmentEndTime = calendar;
+    }
+
+    /**
+     * @return
+     */
+    public List getAssociatedCurricularCourseScope() {
+        return associatedCurricularCourseScope;
+    }
+
+    /**
+     * @param list
+     */
+    public void setAssociatedCurricularCourseScope(List list) {
+        associatedCurricularCourseScope = list;
+    }
+
+    /**
+     * @return
+     */
+    public List getAssociatedRoomOccupation() {
+        return associatedRoomOccupation;
+    }
+
+    /**
+     * @param list
+     */
+    public void setAssociatedRoomOccupation(List list) {
+        associatedRoomOccupation = list;
+    }
 
 }

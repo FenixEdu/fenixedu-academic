@@ -41,8 +41,7 @@ public class EJBHomeFactory {
         homes = Collections.synchronizedMap(new HashMap());
         try {
             // load the properties file from the classpath root
-            InputStream inputStream = getClass().getResourceAsStream(
-                    "/jndi.properties");
+            InputStream inputStream = getClass().getResourceAsStream("/jndi.properties");
             if (inputStream != null) {
                 Properties jndiParams = new Properties();
                 jndiParams.load(inputStream);
@@ -53,8 +52,7 @@ public class EJBHomeFactory {
                 //properties.put(Context.PROVIDER_URL,
                 // jndiParams.getProperty(Context.PROVIDER_URL));
                 properties.put(Context.PROVIDER_URL, "localhost:1099");
-                properties.put(Context.URL_PKG_PREFIXES,
-                        "jboss.naming:org.jnp.interfaces");
+                properties.put(Context.URL_PKG_PREFIXES, "jboss.naming:org.jnp.interfaces");
                 context = new InitialContext(properties);
             } else {
                 // use default provider
@@ -74,12 +72,11 @@ public class EJBHomeFactory {
         return homeFactory;
     }
 
-    public EJBHome lookupHome(String jndiName, Class homeClass)
-            throws ClassCastException, NamingException {
+    public EJBHome lookupHome(String jndiName, Class homeClass) throws ClassCastException,
+            NamingException {
         EJBHome home = (EJBHome) homes.get(homeClass);
         if (home == null) {
-            home = (EJBHome) PortableRemoteObject.narrow(context
-                    .lookup(jndiName), homeClass);
+            home = (EJBHome) PortableRemoteObject.narrow(context.lookup(jndiName), homeClass);
             // cache the home for repeated use
             homes.put(homeClass, home);
         }
@@ -87,12 +84,11 @@ public class EJBHomeFactory {
         return home;
     }
 
-    public EJBLocalHome lookupLocalHome(String jndiName, Class homeClass)
-            throws ClassCastException, NamingException {
+    public EJBLocalHome lookupLocalHome(String jndiName, Class homeClass) throws ClassCastException,
+            NamingException {
         EJBLocalHome home = (EJBLocalHome) homes.get(homeClass);
         if (home == null) {
-            home = (EJBLocalHome) PortableRemoteObject.narrow(context
-                    .lookup(jndiName), homeClass);
+            home = (EJBLocalHome) PortableRemoteObject.narrow(context.lookup(jndiName), homeClass);
             // cache the home for repeated use
             homes.put(homeClass, home);
         }

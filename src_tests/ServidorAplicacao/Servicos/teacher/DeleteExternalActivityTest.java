@@ -13,76 +13,63 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
  * @author Sergio Montelobo
  *  
  */
-public class DeleteExternalActivityTest extends ServiceNeedsAuthenticationTestCase
-{
+public class DeleteExternalActivityTest extends ServiceNeedsAuthenticationTestCase {
 
     /**
-	 *  
-	 */
-    public DeleteExternalActivityTest(String testName)
-    {
+     *  
+     */
+    public DeleteExternalActivityTest(String testName) {
         super(testName);
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testDeleteExternalActivityDataSet.xml";
     }
 
-    protected String getExpectedDataSetFilePath()
-    {
+    protected String getExpectedDataSetFilePath() {
         return "etc/datasets/servicos/teacher/testExpectedDeleteExternalActivityDataSet.xml";
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "DeleteExternalActivity";
     }
 
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
 
-        String[] args = { "user", "pass", getApplication()};
+        String[] args = { "user", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-        String[] args = { "julia", "pass", getApplication()};
+        String[] args = { "julia", "pass", getApplication() };
         return args;
     }
 
-    protected String[] getNotAuthenticatedUser()
-    {
+    protected String[] getNotAuthenticatedUser() {
 
-        String[] args = { "jccm", "pass", getApplication()};
+        String[] args = { "jccm", "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
 
-        Object[] args = { new Integer(1)};
+        Object[] args = { new Integer(1) };
         return args;
     }
 
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    public void testSuccessfull()
-    {
-        try
-        {
-            Object[] args = { new Integer(1)};
+    public void testSuccessfull() {
+        try {
+            Object[] args = { new Integer(1) };
 
             ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-            
+
             compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             fail("Deleting a ExternalActivity of a Teacher " + ex);
         }
     }

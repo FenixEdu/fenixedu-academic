@@ -13,55 +13,55 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
+ *  
  */
 public class SelectShifts implements IServico {
 
-	private static SelectShifts _servico = new SelectShifts();
+    private static SelectShifts _servico = new SelectShifts();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+     * The actor of this class.
+     */
 
-	private SelectShifts() {
+    private SelectShifts() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "SelectShifts";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "SelectShifts";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return SelectShifts
-	 */
-	public static SelectShifts getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return SelectShifts
+     */
+    public static SelectShifts getService() {
+        return _servico;
+    }
 
-	public Object run(InfoShift infoShift) {
+    public Object run(InfoShift infoShift) {
 
-		List shifts = new ArrayList();
-		List infoShifts = new ArrayList();
+        List shifts = new ArrayList();
+        List infoShifts = new ArrayList();
 
-		ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+        ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			shifts =
-				sp.getITurnoPersistente().readByExecutionCourse(shift.getDisciplinaExecucao());
-			
-			for (int i = 0; i < shifts.size(); i++) {
-				ITurno taux = (ITurno) shifts.get(i);
-				infoShifts.add(Cloner.copyShift2InfoShift(taux));
-			}
-		} catch (ExcepcaoPersistencia e) {
-		}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            shifts = sp.getITurnoPersistente().readByExecutionCourse(shift.getDisciplinaExecucao());
 
-		return infoShifts;
-	}
+            for (int i = 0; i < shifts.size(); i++) {
+                ITurno taux = (ITurno) shifts.get(i);
+                infoShifts.add(Cloner.copyShift2InfoShift(taux));
+            }
+        } catch (ExcepcaoPersistencia e) {
+        }
+
+        return infoShifts;
+    }
 
 }

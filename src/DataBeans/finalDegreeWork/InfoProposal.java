@@ -15,496 +15,525 @@ import Util.TipoCurso;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
 public class InfoProposal extends InfoObject {
 
-	private Integer proposalNumber;
-	private InfoExecutionDegree executionDegree;
-	private String title;
-	private InfoTeacher orientator;
-	private InfoDepartment orientatorsDepartment;
-	private InfoTeacher coorientator;
-	private InfoDepartment coorientatorsDepartment;
-	private String companionName;
-	private String companionMail;
-	private Integer companionPhone;	
-	private Integer orientatorsCreditsPercentage;
-	private Integer coorientatorsCreditsPercentage;
-	private String framing;
-	private String objectives;
-	private String description;
-	private String requirements;
-	private String deliverable;
-	private String url;
-	private Integer minimumNumberOfGroupElements;
-	private Integer maximumNumberOfGroupElements;
-	private String location;
-	private TipoCurso degreeType;
-	private String observations;
-	private String companyName;
-	private String companyAdress;
-	private List branches;
-	private FinalDegreeWorkProposalStatus status;
-	private InfoGroup groupAttributedByTeacher;
-	private InfoGroup groupAttributed;
+    private Integer proposalNumber;
 
-	/* Construtores */
-	public InfoProposal() {
-		super();
-	}
+    private InfoExecutionDegree executionDegree;
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoProposal) {
-			InfoProposal proposal = (InfoProposal) obj;
+    private String title;
 
-			result = getTitle().equals(proposal.getTitle())
-			&& getExecutionDegree().equals(proposal.getExecutionDegree());
-		}
-		return result;
-	}
+    private InfoTeacher orientator;
 
-	public String toString() {
-		String result = "[Proposal";
-		result += ", idInternal=" + getIdInternal();
-		result += ", title=" + getTitle();
-		result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
-		result += "]";
-		return result;
-	}
+    private InfoDepartment orientatorsDepartment;
 
+    private InfoTeacher coorientator;
 
-	/**
-	 * @return Returns the companyName.
-	 */
-	public String getCompanyName()
-	{
-		return companyName;
-	}
+    private InfoDepartment coorientatorsDepartment;
 
-	/**
-	 * @param companyName The companyName to set.
-	 */
-	public void setCompanyName(String companyName)
-	{
-		this.companyName = companyName;
-	}
+    private String companionName;
 
-	/**
-	 * @return Returns the coorientator.
-	 */
-	public InfoTeacher getCoorientator()
-	{
-		return coorientator;
-	}
+    private String companionMail;
 
-	/**
-	 * @param coorientator The coorientator to set.
-	 */
-	public void setCoorientator(InfoTeacher coorientator)
-	{
-		this.coorientator = coorientator;
-	}
+    private Integer companionPhone;
 
-	/**
-	 * @return Returns the coorientatorsCreditsPercentage.
-	 */
-	public Integer getCoorientatorsCreditsPercentage()
-	{
-		return coorientatorsCreditsPercentage;
-	}
+    private Integer orientatorsCreditsPercentage;
 
-	/**
-	 * @param coorientatorsCreditsPercentage The coorientatorsCreditsPercentage to set.
-	 */
-	public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage)
-	{
-		this.coorientatorsCreditsPercentage = coorientatorsCreditsPercentage;
-	}
+    private Integer coorientatorsCreditsPercentage;
 
-	/**
-	 * @return Returns the degreeType.
-	 */
-	public TipoCurso getDegreeType()
-	{
-		return degreeType;
-	}
+    private String framing;
 
-	/**
-	 * @param degreeType The degreeType to set.
-	 */
-	public void setDegreeType(TipoCurso degreeType)
-	{
-		this.degreeType = degreeType;
-	}
+    private String objectives;
 
-	/**
-	 * @return Returns the description.
-	 */
-	public String getDescription()
-	{
-		return description;
-	}
+    private String description;
 
-	/**
-	 * @param description The description to set.
-	 */
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
+    private String requirements;
 
-	/**
-	 * @return Returns the objectives.
-	 */
-	public String getObjectives()
-	{
-		return objectives;
-	}
+    private String deliverable;
 
-	/**
-	 * @param objectives The objectives to set.
-	 */
-	public void setObjectives(String objectives)
-	{
-		this.objectives = objectives;
-	}
+    private String url;
 
-	/**
-	 * @return Returns the observations.
-	 */
-	public String getObservations()
-	{
-		return observations;
-	}
+    private Integer minimumNumberOfGroupElements;
 
-	/**
-	 * @param observations The observations to set.
-	 */
-	public void setObservations(String observations)
-	{
-		this.observations = observations;
-	}
+    private Integer maximumNumberOfGroupElements;
 
-	/**
-	 * @return Returns the orientator.
-	 */
-	public InfoTeacher getOrientator()
-	{
-		return orientator;
-	}
+    private String location;
 
-	/**
-	 * @param orientator The orientator to set.
-	 */
-	public void setOrientator(InfoTeacher orientator)
-	{
-		this.orientator = orientator;
-	}
+    private TipoCurso degreeType;
 
-	/**
-	 * @return Returns the orientatorsCreditsPercentage.
-	 */
-	public Integer getOrientatorsCreditsPercentage()
-	{
-		return orientatorsCreditsPercentage;
-	}
+    private String observations;
 
-	/**
-	 * @param orientatorsCreditsPercentage The orientatorsCreditsPercentage to set.
-	 */
-	public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage)
-	{
-		this.orientatorsCreditsPercentage = orientatorsCreditsPercentage;
-	}
+    private String companyName;
 
-	/**
-	 * @return Returns the requirements.
-	 */
-	public String getRequirements()
-	{
-		return requirements;
-	}
+    private String companyAdress;
 
-	/**
-	 * @param requirements The requirements to set.
-	 */
-	public void setRequirements(String requirements)
-	{
-		this.requirements = requirements;
-	}
+    private List branches;
 
-	/**
-	 * @return Returns the title.
-	 */
-	public String getTitle()
-	{
-		return title;
-	}
+    private FinalDegreeWorkProposalStatus status;
 
-	/**
-	 * @param title The title to set.
-	 */
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
+    private InfoGroup groupAttributedByTeacher;
 
-	/**
-	 * @return Returns the url.
-	 */
-	public String getUrl()
-	{
-		return url;
-	}
+    private InfoGroup groupAttributed;
 
-	/**
-	 * @param url The url to set.
-	 */
-	public void setUrl(String url)
-	{
-		this.url = url;
-	}
+    /* Construtores */
+    public InfoProposal() {
+        super();
+    }
 
-	/**
-	 * @return Returns the executionDegree.
-	 */
-	public InfoExecutionDegree getExecutionDegree() {
-		return executionDegree;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoProposal) {
+            InfoProposal proposal = (InfoProposal) obj;
 
-	/**
-	 * @param executionDegree The executionDegree to set.
-	 */
-	public void setExecutionDegree(InfoExecutionDegree executionDegree) {
-		this.executionDegree = executionDegree;
-	}
+            result = getTitle().equals(proposal.getTitle())
+                    && getExecutionDegree().equals(proposal.getExecutionDegree());
+        }
+        return result;
+    }
 
-	/**
-	 * @return Returns the framing.
-	 */
-	public String getFraming() {
-		return framing;
-	}
+    public String toString() {
+        String result = "[Proposal";
+        result += ", idInternal=" + getIdInternal();
+        result += ", title=" + getTitle();
+        result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @param framing The framing to set.
-	 */
-	public void setFraming(String framing) {
-		this.framing = framing;
-	}
+    /**
+     * @return Returns the companyName.
+     */
+    public String getCompanyName() {
+        return companyName;
+    }
 
-	/**
-	 * @return Returns the deliverable.
-	 */
-	public String getDeliverable() {
-		return deliverable;
-	}
+    /**
+     * @param companyName
+     *            The companyName to set.
+     */
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
-	/**
-	 * @param deliverable The deliverable to set.
-	 */
-	public void setDeliverable(String deliverable) {
-		this.deliverable = deliverable;
-	}
+    /**
+     * @return Returns the coorientator.
+     */
+    public InfoTeacher getCoorientator() {
+        return coorientator;
+    }
 
-	/**
-	 * @return Returns the location.
-	 */
-	public String getLocation() {
-		return location;
-	}
+    /**
+     * @param coorientator
+     *            The coorientator to set.
+     */
+    public void setCoorientator(InfoTeacher coorientator) {
+        this.coorientator = coorientator;
+    }
 
-	/**
-	 * @param location The location to set.
-	 */
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    /**
+     * @return Returns the coorientatorsCreditsPercentage.
+     */
+    public Integer getCoorientatorsCreditsPercentage() {
+        return coorientatorsCreditsPercentage;
+    }
 
-	/**
-	 * @return Returns the maximumNumberOfGroupElements.
-	 */
-	public Integer getMaximumNumberOfGroupElements() {
-		return maximumNumberOfGroupElements;
-	}
+    /**
+     * @param coorientatorsCreditsPercentage
+     *            The coorientatorsCreditsPercentage to set.
+     */
+    public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage) {
+        this.coorientatorsCreditsPercentage = coorientatorsCreditsPercentage;
+    }
 
-	/**
-	 * @param maximumNumberOfGroupElements The maximumNumberOfGroupElements to set.
-	 */
-	public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements) {
-		this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
-	}
+    /**
+     * @return Returns the degreeType.
+     */
+    public TipoCurso getDegreeType() {
+        return degreeType;
+    }
 
-	/**
-	 * @return Returns the minimumNumberOfGroupElements.
-	 */
-	public Integer getMinimumNumberOfGroupElements() {
-		return minimumNumberOfGroupElements;
-	}
+    /**
+     * @param degreeType
+     *            The degreeType to set.
+     */
+    public void setDegreeType(TipoCurso degreeType) {
+        this.degreeType = degreeType;
+    }
 
-	/**
-	 * @param minimumNumberOfGroupElements The minimumNumberOfGroupElements to set.
-	 */
-	public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements) {
-		this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
-	}
+    /**
+     * @return Returns the description.
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @return Returns the companionMail.
-	 */
-	public String getCompanionMail()
-	{
-		return companionMail;
-	}
-	/**
-	 * @param companionMail The companionMail to set.
-	 */
-	public void setCompanionMail(String companionMail)
-	{
-		this.companionMail = companionMail;
-	}
-	/**
-	 * @return Returns the companionName.
-	 */
-	public String getCompanionName()
-	{
-		return companionName;
-	}
-	/**
-	 * @param companionName The companionName to set.
-	 */
-	public void setCompanionName(String companionName)
-	{
-		this.companionName = companionName;
-	}
-	/**
-	 * @return Returns the companionPhone.
-	 */
-	public Integer getCompanionPhone()
-	{
-		return companionPhone;
-	}
-	/**
-	 * @param companionPhone The companionPhone to set.
-	 */
-	public void setCompanionPhone(Integer companionPhone)
-	{
-		this.companionPhone = companionPhone;
-	}
-	/**
-	 * @return Returns the companyAdress.
-	 */
-	public String getCompanyAdress()
-	{
-		return companyAdress;
-	}
-	/**
-	 * @param companyAdress The companyAdress to set.
-	 */
-	public void setCompanyAdress(String companyAdress)
-	{
-		this.companyAdress = companyAdress;
-	}
-	/**
-	 * @return Returns the branches.
-	 */
-	public List getBranches()
-	{
-		return branches;
-	}
+    /**
+     * @param description
+     *            The description to set.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * @param branches The branches to set.
-	 */
-	public void setBranches(List branches)
-	{
-		this.branches = branches;
-	}
+    /**
+     * @return Returns the objectives.
+     */
+    public String getObjectives() {
+        return objectives;
+    }
 
-	/**
-	 * @return Returns the proposalNumber.
-	 */
-	public Integer getProposalNumber() {
-		return proposalNumber;
-	}
+    /**
+     * @param objectives
+     *            The objectives to set.
+     */
+    public void setObjectives(String objectives) {
+        this.objectives = objectives;
+    }
 
-	/**
-	 * @param proposalNumber The proposalNumber to set.
-	 */
-	public void setProposalNumber(Integer proposalNumber) {
-		this.proposalNumber = proposalNumber;
-	}
+    /**
+     * @return Returns the observations.
+     */
+    public String getObservations() {
+        return observations;
+    }
 
-	/**
-	 * @return Returns the coorientatorsDepartment.
-	 */
-	public InfoDepartment getCoorientatorsDepartment() {
-		return coorientatorsDepartment;
-	}
+    /**
+     * @param observations
+     *            The observations to set.
+     */
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
 
-	/**
-	 * @param coorientatorsDepartment The coorientatorsDepartment to set.
-	 */
-	public void setCoorientatorsDepartment(InfoDepartment coorientatorsDepartment) {
-		this.coorientatorsDepartment = coorientatorsDepartment;
-	}
+    /**
+     * @return Returns the orientator.
+     */
+    public InfoTeacher getOrientator() {
+        return orientator;
+    }
 
-	/**
-	 * @return Returns the orientatorsDepartment.
-	 */
-	public InfoDepartment getOrientatorsDepartment() {
-		return orientatorsDepartment;
-	}
+    /**
+     * @param orientator
+     *            The orientator to set.
+     */
+    public void setOrientator(InfoTeacher orientator) {
+        this.orientator = orientator;
+    }
 
-	/**
-	 * @param orientatorsDepartment The orientatorsDepartment to set.
-	 */
-	public void setOrientatorsDepartment(InfoDepartment orientatorsDepartment) {
-		this.orientatorsDepartment = orientatorsDepartment;
-	}
+    /**
+     * @return Returns the orientatorsCreditsPercentage.
+     */
+    public Integer getOrientatorsCreditsPercentage() {
+        return orientatorsCreditsPercentage;
+    }
 
-	/**
-	 * @return Returns the status.
-	 */
-	public FinalDegreeWorkProposalStatus getStatus() {
-		return status;
-	}
+    /**
+     * @param orientatorsCreditsPercentage
+     *            The orientatorsCreditsPercentage to set.
+     */
+    public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage) {
+        this.orientatorsCreditsPercentage = orientatorsCreditsPercentage;
+    }
 
-	/**
-	 * @param status The status to set.
-	 */
-	public void setStatus(FinalDegreeWorkProposalStatus status) {
-		this.status = status;
-	}
+    /**
+     * @return Returns the requirements.
+     */
+    public String getRequirements() {
+        return requirements;
+    }
+
+    /**
+     * @param requirements
+     *            The requirements to set.
+     */
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
+
+    /**
+     * @return Returns the title.
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title
+     *            The title to set.
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return Returns the url.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url
+     *            The url to set.
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * @return Returns the executionDegree.
+     */
+    public InfoExecutionDegree getExecutionDegree() {
+        return executionDegree;
+    }
+
+    /**
+     * @param executionDegree
+     *            The executionDegree to set.
+     */
+    public void setExecutionDegree(InfoExecutionDegree executionDegree) {
+        this.executionDegree = executionDegree;
+    }
+
+    /**
+     * @return Returns the framing.
+     */
+    public String getFraming() {
+        return framing;
+    }
+
+    /**
+     * @param framing
+     *            The framing to set.
+     */
+    public void setFraming(String framing) {
+        this.framing = framing;
+    }
+
+    /**
+     * @return Returns the deliverable.
+     */
+    public String getDeliverable() {
+        return deliverable;
+    }
+
+    /**
+     * @param deliverable
+     *            The deliverable to set.
+     */
+    public void setDeliverable(String deliverable) {
+        this.deliverable = deliverable;
+    }
+
+    /**
+     * @return Returns the location.
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location
+     *            The location to set.
+     */
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    /**
+     * @return Returns the maximumNumberOfGroupElements.
+     */
+    public Integer getMaximumNumberOfGroupElements() {
+        return maximumNumberOfGroupElements;
+    }
+
+    /**
+     * @param maximumNumberOfGroupElements
+     *            The maximumNumberOfGroupElements to set.
+     */
+    public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements) {
+        this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
+    }
+
+    /**
+     * @return Returns the minimumNumberOfGroupElements.
+     */
+    public Integer getMinimumNumberOfGroupElements() {
+        return minimumNumberOfGroupElements;
+    }
+
+    /**
+     * @param minimumNumberOfGroupElements
+     *            The minimumNumberOfGroupElements to set.
+     */
+    public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements) {
+        this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
+    }
+
+    /**
+     * @return Returns the companionMail.
+     */
+    public String getCompanionMail() {
+        return companionMail;
+    }
+
+    /**
+     * @param companionMail
+     *            The companionMail to set.
+     */
+    public void setCompanionMail(String companionMail) {
+        this.companionMail = companionMail;
+    }
+
+    /**
+     * @return Returns the companionName.
+     */
+    public String getCompanionName() {
+        return companionName;
+    }
+
+    /**
+     * @param companionName
+     *            The companionName to set.
+     */
+    public void setCompanionName(String companionName) {
+        this.companionName = companionName;
+    }
+
+    /**
+     * @return Returns the companionPhone.
+     */
+    public Integer getCompanionPhone() {
+        return companionPhone;
+    }
+
+    /**
+     * @param companionPhone
+     *            The companionPhone to set.
+     */
+    public void setCompanionPhone(Integer companionPhone) {
+        this.companionPhone = companionPhone;
+    }
+
+    /**
+     * @return Returns the companyAdress.
+     */
+    public String getCompanyAdress() {
+        return companyAdress;
+    }
+
+    /**
+     * @param companyAdress
+     *            The companyAdress to set.
+     */
+    public void setCompanyAdress(String companyAdress) {
+        this.companyAdress = companyAdress;
+    }
+
+    /**
+     * @return Returns the branches.
+     */
+    public List getBranches() {
+        return branches;
+    }
+
+    /**
+     * @param branches
+     *            The branches to set.
+     */
+    public void setBranches(List branches) {
+        this.branches = branches;
+    }
+
+    /**
+     * @return Returns the proposalNumber.
+     */
+    public Integer getProposalNumber() {
+        return proposalNumber;
+    }
+
+    /**
+     * @param proposalNumber
+     *            The proposalNumber to set.
+     */
+    public void setProposalNumber(Integer proposalNumber) {
+        this.proposalNumber = proposalNumber;
+    }
+
+    /**
+     * @return Returns the coorientatorsDepartment.
+     */
+    public InfoDepartment getCoorientatorsDepartment() {
+        return coorientatorsDepartment;
+    }
+
+    /**
+     * @param coorientatorsDepartment
+     *            The coorientatorsDepartment to set.
+     */
+    public void setCoorientatorsDepartment(InfoDepartment coorientatorsDepartment) {
+        this.coorientatorsDepartment = coorientatorsDepartment;
+    }
+
+    /**
+     * @return Returns the orientatorsDepartment.
+     */
+    public InfoDepartment getOrientatorsDepartment() {
+        return orientatorsDepartment;
+    }
+
+    /**
+     * @param orientatorsDepartment
+     *            The orientatorsDepartment to set.
+     */
+    public void setOrientatorsDepartment(InfoDepartment orientatorsDepartment) {
+        this.orientatorsDepartment = orientatorsDepartment;
+    }
+
+    /**
+     * @return Returns the status.
+     */
+    public FinalDegreeWorkProposalStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     *            The status to set.
+     */
+    public void setStatus(FinalDegreeWorkProposalStatus status) {
+        this.status = status;
+    }
 
     /**
      * @return Returns the groupAttributedByTeacher.
      */
-    public InfoGroup getGroupAttributedByTeacher()
-    {
+    public InfoGroup getGroupAttributedByTeacher() {
         return groupAttributedByTeacher;
     }
+
     /**
-     * @param groupAttributedByTeacher The groupAttributedByTeacher to set.
+     * @param groupAttributedByTeacher
+     *            The groupAttributedByTeacher to set.
      */
-    public void setGroupAttributedByTeacher(InfoGroup groupAttributedByTeacher)
-    {
+    public void setGroupAttributedByTeacher(InfoGroup groupAttributedByTeacher) {
         this.groupAttributedByTeacher = groupAttributedByTeacher;
     }
+
     /**
      * @return Returns the groupAttributed.
      */
-    public InfoGroup getGroupAttributed()
-    {
+    public InfoGroup getGroupAttributed() {
         return groupAttributed;
     }
+
     /**
-     * @param groupAttributed The groupAttributed to set.
+     * @param groupAttributed
+     *            The groupAttributed to set.
      */
-    public void setGroupAttributed(InfoGroup groupAttributed)
-    {
+    public void setGroupAttributed(InfoGroup groupAttributed) {
         this.groupAttributed = groupAttributed;
     }
 }

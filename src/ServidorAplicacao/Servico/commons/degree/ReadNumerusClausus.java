@@ -5,7 +5,7 @@ import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -21,18 +21,16 @@ public class ReadNumerusClausus implements IService {
 
     }
 
-    public Integer run(Integer executionDegreeID)
-            throws NonExistingServiceException {
+    public Integer run(Integer executionDegreeID) throws NonExistingServiceException {
 
         ICursoExecucao executionDegree = null;
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            ICursoExecucaoPersistente executionDegreeDAO = sp
-                    .getICursoExecucaoPersistente();
-            executionDegree = (CursoExecucao) executionDegreeDAO.readByOID(
-                    CursoExecucao.class, executionDegreeID);
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+            executionDegree = (CursoExecucao) executionDegreeDAO.readByOID(CursoExecucao.class,
+                    executionDegreeID);
 
         } catch (ExcepcaoPersistencia ex) {
             throw new RuntimeException(ex);

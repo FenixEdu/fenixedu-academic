@@ -29,38 +29,32 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadCareers implements IServico
-{
+public class ReadCareers implements IServico {
     private static ReadCareers service = new ReadCareers();
 
     /**
-	 *  
-	 */
-    private ReadCareers()
-    {
+     *  
+     */
+    private ReadCareers() {
 
     }
 
-    public static ReadCareers getService()
-    {
+    public static ReadCareers getService() {
 
         return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadCareers";
     }
 
-    public SiteView run(CareerType careerType, String user) throws FenixServiceException
-    {
-        try
-        {
+    public SiteView run(CareerType careerType, String user) throws FenixServiceException {
+        try {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
@@ -70,10 +64,8 @@ public class ReadCareers implements IServico
             IPersistentCareer persistentCareer = persistentSuport.getIPersistentCareer();
             List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
 
-            List result = (List) CollectionUtils.collect(careers, new Transformer()
-            {
-                public Object transform(Object o)
-                {
+            List result = (List) CollectionUtils.collect(careers, new Transformer() {
+                public Object transform(Object o) {
                     ICareer career = (ICareer) o;
                     return Cloner.copyICareer2InfoCareer(career);
                 }
@@ -86,8 +78,7 @@ public class ReadCareers implements IServico
 
             SiteView siteView = new SiteView(bodyComponent);
             return siteView;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

@@ -63,6 +63,9 @@
 			<td width="35%"><strong><bean:message key="message.teachingReport.curricularName"/></strong></td>
 			<td><bean:write name="siteEvaluationInformation" 
 							property="infoCurricularCourse.name"/>
+							&nbsp;- &nbsp;
+				<bean:write name="siteEvaluationInformation" 
+							property="infoCurricularCourse.infoDegreeCurricularPlan.name"/>
 			</td>
 		</tr>
 		<tr>

@@ -1,89 +1,87 @@
-
 package DataBeans;
-
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class InfoCandidateEnrolment  extends InfoObject{
-	private InfoMasterDegreeCandidate infoMasterDegreeCandidate;
-	private InfoCurricularCourseScope infoCurricularCourseScope;
-	private InfoCurricularCourse infoCurricularCourse;
-	
+public class InfoCandidateEnrolment extends InfoObject {
+    private InfoMasterDegreeCandidate infoMasterDegreeCandidate;
 
-	public InfoCandidateEnrolment() {
-	}
+    private InfoCurricularCourseScope infoCurricularCourseScope;
 
-	public InfoCandidateEnrolment(InfoMasterDegreeCandidate infoMasterDegreeCandidate, InfoCurricularCourse infoCurricularCourse) {
-		setInfoMasterDegreeCandidate(infoMasterDegreeCandidate);
-		setInfoCurricularCourse(infoCurricularCourse);
-	}
+    private InfoCurricularCourse infoCurricularCourse;
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoCandidateEnrolment) {
-			InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) obj;
-			result = getInfoMasterDegreeCandidate().equals(infoCandidateEnrolment.getInfoMasterDegreeCandidate())
-				&& getInfoCurricularCourse().equals(infoCandidateEnrolment.getInfoCurricularCourse());
-		}
-		return result;
-	}
+    public InfoCandidateEnrolment() {
+    }
 
-	public String toString() {
-		String result = "[CANDIDATE_ENROLMENT";
-		result += ", codInt=" + getIdInternal();
-		result += ", infoMasterDegreeCandidate=" + infoMasterDegreeCandidate;
-		result += ", infoCurricularCourse=" + infoCurricularCourse;
-		result += "]";
-		return result;
-	}
+    public InfoCandidateEnrolment(InfoMasterDegreeCandidate infoMasterDegreeCandidate,
+            InfoCurricularCourse infoCurricularCourse) {
+        setInfoMasterDegreeCandidate(infoMasterDegreeCandidate);
+        setInfoCurricularCourse(infoCurricularCourse);
+    }
 
-	/**
-	 * @return
-	 * @deprecated
-	 */
-	public InfoCurricularCourseScope getInfoCurricularCourseScope() {
-		return infoCurricularCourseScope;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoCandidateEnrolment) {
+            InfoCandidateEnrolment infoCandidateEnrolment = (InfoCandidateEnrolment) obj;
+            result = getInfoMasterDegreeCandidate().equals(
+                    infoCandidateEnrolment.getInfoMasterDegreeCandidate())
+                    && getInfoCurricularCourse()
+                            .equals(infoCandidateEnrolment.getInfoCurricularCourse());
+        }
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoMasterDegreeCandidate getInfoMasterDegreeCandidate() {
-		return infoMasterDegreeCandidate;
-	}
+    public String toString() {
+        String result = "[CANDIDATE_ENROLMENT";
+        result += ", codInt=" + getIdInternal();
+        result += ", infoMasterDegreeCandidate=" + infoMasterDegreeCandidate;
+        result += ", infoCurricularCourse=" + infoCurricularCourse;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @param course
-	 * @deprecated
-	 */
-	public void setInfoCurricularCourseScope(InfoCurricularCourseScope courseScope) {
-		infoCurricularCourseScope = courseScope;
-	}
+    /**
+     * @return @deprecated
+     */
+    public InfoCurricularCourseScope getInfoCurricularCourseScope() {
+        return infoCurricularCourseScope;
+    }
 
-	/**
-	 * @param candidate
-	 */
-	public void setInfoMasterDegreeCandidate(InfoMasterDegreeCandidate candidate) {
-		infoMasterDegreeCandidate = candidate;
-	}
-	
-	/**
-	 * @return
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse()
-	{
-		return infoCurricularCourse;
-	}
+    /**
+     * @return
+     */
+    public InfoMasterDegreeCandidate getInfoMasterDegreeCandidate() {
+        return infoMasterDegreeCandidate;
+    }
 
-	/**
-	 * @param infoCurricularCourse
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse)
-	{
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
+    /**
+     * @param course
+     * @deprecated
+     */
+    public void setInfoCurricularCourseScope(InfoCurricularCourseScope courseScope) {
+        infoCurricularCourseScope = courseScope;
+    }
+
+    /**
+     * @param candidate
+     */
+    public void setInfoMasterDegreeCandidate(InfoMasterDegreeCandidate candidate) {
+        infoMasterDegreeCandidate = candidate;
+    }
+
+    /**
+     * @return
+     */
+    public InfoCurricularCourse getInfoCurricularCourse() {
+        return infoCurricularCourse;
+    }
+
+    /**
+     * @param infoCurricularCourse
+     */
+    public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
+        this.infoCurricularCourse = infoCurricularCourse;
+    }
 
 }

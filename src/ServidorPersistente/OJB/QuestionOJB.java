@@ -24,13 +24,13 @@ import ServidorPersistente.IPersistentQuestion;
 /**
  * @author Susana Fernandes
  */
-public class QuestionOJB extends ObjectFenixOJB implements IPersistentQuestion {
+public class QuestionOJB extends PersistentObjectOJB implements IPersistentQuestion {
 
     public QuestionOJB() {
     }
 
-    public Question readByFileNameAndMetadataId(String fileName,
-            IMetadata metadata) throws ExcepcaoPersistencia {
+    public Question readByFileNameAndMetadataId(String fileName, IMetadata metadata)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         criteria.addEqualTo("xmlFileName", fileName);
@@ -43,8 +43,7 @@ public class QuestionOJB extends ObjectFenixOJB implements IPersistentQuestion {
         return queryList(Question.class, criteria);
     }
 
-    public List readByMetadataAndVisibility(IMetadata metadata)
-            throws ExcepcaoPersistencia {
+    public List readByMetadataAndVisibility(IMetadata metadata) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         criteria.addEqualTo("visibility", new Boolean("true"));
@@ -54,43 +53,36 @@ public class QuestionOJB extends ObjectFenixOJB implements IPersistentQuestion {
     public int countByMetadata(IMetadata metadata) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
-        QueryByCriteria queryCriteria = new QueryByCriteria(Question.class,
-                criteria, false);
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(Question.class, criteria, false);
         return pb.getCount(queryCriteria);
     }
 
-    public String correctFileName(String fileName, Integer metadataId)
-            throws ExcepcaoPersistencia {
-        String original = fileName.replaceAll(".xml","");
+    public String correctFileName(String fileName, Integer metadataId) throws ExcepcaoPersistencia {
+        String original = fileName.replaceAll(".xml", "");
         String newName = fileName;
-        
-        for(int i=1;;i++){
-            
+
+        for (int i = 1;; i++) {
+
             Criteria criteria = new Criteria();
             criteria.addEqualTo("xmlFileName", newName);
             criteria.addEqualTo("keyMetadata", metadataId);
-            if(count(Question.class, criteria)==0)
+            if (count(Question.class, criteria) == 0)
                 return newName;
-            newName = original.concat("("+new Integer(i).toString()+").xml");
+            newName = original.concat("(" + new Integer(i).toString() + ").xml");
         }
     }
 
-    public void cleanQuestions(IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public void cleanQuestions(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest
-                .getIdInternal());
+        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         criteria.addEqualTo("question.visibility", new Boolean(false));
         List questions = queryList(StudentTestQuestion.class, criteria);
         Iterator it = questions.iterator();
         while (it.hasNext()) {
-            IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it
-                    .next();
-            if (countReferences(distributedTest.getIdInternal(),
-                    studentTestQuestion.getKeyQuestion()) == 0)
-                    delete(studentTestQuestion.getQuestion());
+            IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
+            if (countReferences(distributedTest.getIdInternal(), studentTestQuestion.getKeyQuestion()) == 0)
+                delete(studentTestQuestion.getQuestion());
         }
     }
 
@@ -99,15 +91,12 @@ public class QuestionOJB extends ObjectFenixOJB implements IPersistentQuestion {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("keyDistributedTest", distributedTestId);
         criteria.addEqualTo("keyQuestion", questionId);
-        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction())
-                .getBroker();
-        QueryByCriteria queryCriteria = new QueryByCriteria(
-                StudentTestQuestion.class, criteria, false);
+        PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
+        QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
         return pb.getCount(queryCriteria);
     }
 
-    public void deleteByMetadata(IMetadata metadata)
-            throws ExcepcaoPersistencia {
+    public void deleteByMetadata(IMetadata metadata) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         List questions = queryList(Question.class, criteria);

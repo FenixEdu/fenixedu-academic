@@ -32,50 +32,41 @@ public class EditWebSiteItem extends ManageWebSiteItem {
     // modified date whose value is used in section ordering
     // true if has mofified, false if it hasn't
 
-    public Boolean run(Integer sectionCode, InfoWebSiteItem infoWebSiteItem,
-            String user) throws FenixServiceException {
+    public Boolean run(Integer sectionCode, InfoWebSiteItem infoWebSiteItem, String user)
+            throws FenixServiceException {
 
         Boolean result = Boolean.FALSE;
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
                     .getIPersistentWebSiteSection();
-            IPersistentWebSiteItem persistentWebSiteItem = persistentSuport
-                    .getIPersistentWebSiteItem();
-            IPessoaPersistente persistentPerson = persistentSuport
-                    .getIPessoaPersistente();
+            IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
+            IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
 
             IWebSiteSection webSiteSection;
-            webSiteSection = (IWebSiteSection) persistentWebSiteSection
-                    .readByOID(WebSiteSection.class, sectionCode);
+            webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+                    sectionCode);
             InfoWebSiteSection infoWebSiteSection = Cloner
                     .copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
 
             checkData(infoWebSiteItem, webSiteSection);
 
-            IWebSiteItem webSiteItem = (IWebSiteItem) persistentWebSiteItem
-                    .readByOID(WebSiteItem.class, infoWebSiteItem
-                            .getIdInternal(), true);
+            IWebSiteItem webSiteItem = (IWebSiteItem) persistentWebSiteItem.readByOID(WebSiteItem.class,
+                    infoWebSiteItem.getIdInternal(), true);
 
-            InfoWebSiteItem infoItemFromDB = Cloner
-                    .copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
+            InfoWebSiteItem infoItemFromDB = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
             Calendar calendarItemFromDB = Calendar.getInstance();
             Calendar calendarEditedItem = Calendar.getInstance();
-            calendarItemFromDB.setTime(dateToSort(infoWebSiteSection,
-                    infoItemFromDB));
-            calendarEditedItem.setTime(dateToSort(infoWebSiteSection,
-                    infoWebSiteItem));
+            calendarItemFromDB.setTime(dateToSort(infoWebSiteSection, infoItemFromDB));
+            calendarEditedItem.setTime(dateToSort(infoWebSiteSection, infoWebSiteItem));
 
-            if (calendarEditedItem.get(Calendar.MONTH) != calendarItemFromDB
-                    .get(Calendar.MONTH)
-                    || calendarEditedItem.get(Calendar.YEAR) != calendarItemFromDB
-                            .get(Calendar.YEAR)) {
+            if (calendarEditedItem.get(Calendar.MONTH) != calendarItemFromDB.get(Calendar.MONTH)
+                    || calendarEditedItem.get(Calendar.YEAR) != calendarItemFromDB.get(Calendar.YEAR)) {
                 result = Boolean.TRUE;
             }
 
-            fillWebSiteItemForDB(infoWebSiteItem, user, persistentPerson,
-                    persistentWebSiteSection, webSiteSection, webSiteItem);
+            fillWebSiteItemForDB(infoWebSiteItem, user, persistentPerson, persistentWebSiteSection,
+                    webSiteSection, webSiteItem);
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

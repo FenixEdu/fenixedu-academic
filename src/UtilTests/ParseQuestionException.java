@@ -19,8 +19,7 @@ public class ParseQuestionException extends Exception {
     }
 
     public ParseQuestionException(String element, boolean isElement) {
-        super("O elemento <" + element
-                + "> ainda não é suportado pelo sistema.");
+        super("O elemento <" + element + "> ainda não é suportado pelo sistema.");
     }
 
     public ParseQuestionException(String element, String attribute) {

@@ -16,8 +16,7 @@ import ServidorApresentacao.Action.exceptions.FenixTransactionException;
  * @author Tânia Pousão 12/Fev/2004
  */
 
-public abstract class TransactionalLookupDispatchAction extends
-        LookupDispatchAction {
+public abstract class TransactionalLookupDispatchAction extends LookupDispatchAction {
 
     /**
      * Creates a token and saves it on request
@@ -41,9 +40,8 @@ public abstract class TransactionalLookupDispatchAction extends
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form,
-            ActionMapping mapping, String errorMessageKey)
-            throws FenixTransactionException {
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
+            String errorMessageKey) throws FenixTransactionException {
         validateToken(request, form, mapping, errorMessageKey, true);
     }
 
@@ -61,9 +59,8 @@ public abstract class TransactionalLookupDispatchAction extends
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form,
-            ActionMapping mapping, String errorMessageKey, boolean renewToken)
-            throws FenixTransactionException {
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping,
+            String errorMessageKey, boolean renewToken) throws FenixTransactionException {
 
         if (!isTokenValid(request)) {
             form.reset(mapping, request);

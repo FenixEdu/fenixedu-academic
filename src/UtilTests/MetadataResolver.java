@@ -12,21 +12,19 @@ import org.xml.sax.SAXException;
 
 /**
  * @author Susana Fernandes
- *
+ *  
  */
-public class MetadataResolver implements EntityResolver
-{
-	private String path;
-	private String metadataDtd = "WEB-INF/ims/imsmd2_rootv1p2.dtd";
+public class MetadataResolver implements EntityResolver {
+    private String path;
 
-	public MetadataResolver(String dtdPath)
-	{
-		this.path = dtdPath;
-	}
+    private String metadataDtd = "WEB-INF/ims/imsmd2_rootv1p2.dtd";
 
-	public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException
-	{
-		return new InputSource(new String("file:///" + path.concat(metadataDtd)));
-	}
+    public MetadataResolver(String dtdPath) {
+        this.path = dtdPath;
+    }
+
+    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+        return new InputSource(new String("file:///" + path.concat(metadataDtd)));
+    }
 
 }

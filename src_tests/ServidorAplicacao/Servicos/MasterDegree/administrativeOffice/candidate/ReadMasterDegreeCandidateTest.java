@@ -1,4 +1,3 @@
-
 /*
  * CriarSalaServicosTest.java JUnit based test
  * 
@@ -27,51 +26,42 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.Specialization;
 
-public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet
-{
+public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet {
 
-    public ReadMasterDegreeCandidateTest(java.lang.String testName)
-    {
+    public ReadMasterDegreeCandidateTest(java.lang.String testName) {
         super(testName);
     }
 
-    public static void main(java.lang.String[] args)
-    {
+    public static void main(java.lang.String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         TestSuite suite = new TestSuite(ReadMasterDegreeCandidateTest.class);
 
         return suite;
     }
 
-    protected void setUp()
-    {
+    protected void setUp() {
         super.setUp();
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
         super.tearDown();
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ReadMasterDegreeCandidate";
     }
 
-    protected int getNumberOfItemsToRetrieve()
-    {
+    protected int getNumberOfItemsToRetrieve() {
         return 1;
     }
-    protected Object getObjectToCompare()
-    {
+
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -81,43 +71,35 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet
             ICurso degree = sp.getICursoPersistente().readBySigla("MEEC");
             assertNotNull(degree);
 
-            IDegreeCurricularPlan degreeCurricularPlan =
-                sp.getIPersistentDegreeCurricularPlan().readByNameAndDegree("plano2", degree);
+            IDegreeCurricularPlan degreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan()
+                    .readByNameAndDegree("plano2", degree);
             assertNotNull(degreeCurricularPlan);
 
-            ICursoExecucao executionDegree =
-                sp.getICursoExecucaoPersistente().readByDegreeCurricularPlanAndExecutionYear(
-                    degreeCurricularPlan,
-                    executionYear);
+            ICursoExecucao executionDegree = sp.getIPersistentExecutionDegree()
+                    .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
             assertNotNull(executionDegree);
 
             IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername("nmsn");
             assertNotNull(person);
 
-            IMasterDegreeCandidate masterDegreeCandidate =
-                sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPerson(
-                    executionDegree,
-                    person);
-            infoMasterDegreeCandidate =
-                Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+            IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                    .readByExecutionDegreeAndPerson(executionDegree, person);
+            infoMasterDegreeCandidate = Cloner
+                    .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 
             sp.confirmarTransaccao();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("Error !");
         }
 
         return infoMasterDegreeCandidate;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         ISuportePersistente sp = null;
         InfoExecutionDegree infoExecutionDegree = null;
         ICursoExecucao executionDegree = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -127,43 +109,35 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet
             ICurso degree = sp.getICursoPersistente().readBySigla("MEEC");
             assertNotNull(degree);
 
-            IDegreeCurricularPlan degreeCurricularPlan =
-                sp.getIPersistentDegreeCurricularPlan().readByNameAndDegree("plano2", degree);
+            IDegreeCurricularPlan degreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan()
+                    .readByNameAndDegree("plano2", degree);
             assertNotNull(degreeCurricularPlan);
 
-            executionDegree =
-                sp.getICursoExecucaoPersistente().readByDegreeCurricularPlanAndExecutionYear(
-                    degreeCurricularPlan,
-                    executionYear);
+            executionDegree = sp.getIPersistentExecutionDegree()
+                    .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
             assertNotNull(executionDegree);
 
             sp.confirmarTransaccao();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("Error !");
         }
 
         infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
-        Object[] args =
-            { infoExecutionDegree, new Integer(1), new Specialization(Specialization.MESTRADO)};
+        Object[] args = { infoExecutionDegree, new Integer(1),
+                new Specialization(Specialization.MESTRADO) };
 
         return args;
     }
 
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
         ISuportePersistente sp = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             //TODO: delete all no longer exists
-           // sp.getIPersistentMasterDegreeCandidate().deleteAll();
+            // sp.getIPersistentMasterDegreeCandidate().deleteAll();
             sp.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia excepcao)
-        {
+        } catch (ExcepcaoPersistencia excepcao) {
             fail("Exception when setUp");
         }
         return null;

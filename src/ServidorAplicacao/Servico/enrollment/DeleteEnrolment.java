@@ -47,8 +47,7 @@ public class DeleteEnrolment implements IService {
             IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
                     .getIPersistentEnrolmentEvaluation();
-            IPersistentRestriction persistentRestriction = persistentSuport
-                    .getIPersistentRestriction();
+            IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
             final IEnrollment enrollment1 = (IEnrollment) enrolmentDAO.readByOID(Enrolment.class,
                     enrolmentID);
 
@@ -94,7 +93,8 @@ public class DeleteEnrolment implements IService {
                                                     restriction.getPrecedence().getCurricularCourse());
                                         }
                                     });
-                            if (!finalEnrollments2Delete.contains(enrollment2Delete)) {
+                            if (enrollment2Delete != null
+                                    && !finalEnrollments2Delete.contains(enrollment2Delete)) {
                                 finalEnrollments2Delete.add(enrollment2Delete);
                             }
                         }

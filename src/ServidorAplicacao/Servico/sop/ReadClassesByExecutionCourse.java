@@ -20,56 +20,48 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author LuisCruz & Sara Ribeiro
  */
 public class ReadClassesByExecutionCourse implements IServico {
-	private static ReadClassesByExecutionCourse serviceInstance =
-		new ReadClassesByExecutionCourse();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadClassesByExecutionCourse getService() {
-		return serviceInstance;
-	}
+    private static ReadClassesByExecutionCourse serviceInstance = new ReadClassesByExecutionCourse();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadClassesByExecutionCourse() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadClassesByExecutionCourse getService() {
+        return serviceInstance;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadClassesByExecutionCourse";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadClassesByExecutionCourse() {
+    }
 
-	public List run(InfoExecutionCourse infoExecutionCourse)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ReadClassesByExecutionCourse";
+    }
 
-		List infoClasses = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 
-			IExecutionCourse executionCourse =
-				(IExecutionCourse) sp
-					.getIPersistentExecutionCourse()
-					.readByOID(
-					ExecutionCourse.class,
-					infoExecutionCourse.getIdInternal());
+        List infoClasses = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			List classes =
-				sp.getITurmaPersistente().readByExecutionCourse(
-					executionCourse);
+            IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                    .readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-			infoClasses =
-				(List) CollectionUtils.collect(classes, new Transformer() {
-				public Object transform(Object arg0) {
-					return Cloner.copyClass2InfoClass((ITurma) arg0);
-				}
-			});
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+            List classes = sp.getITurmaPersistente().readByExecutionCourse(executionCourse);
 
-		return infoClasses;
-	}
+            infoClasses = (List) CollectionUtils.collect(classes, new Transformer() {
+                public Object transform(Object arg0) {
+                    return Cloner.copyClass2InfoClass((ITurma) arg0);
+                }
+            });
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+
+        return infoClasses;
+    }
 }

@@ -35,32 +35,27 @@ import Util.TipoCurso;
  * @author Luis Cruz
  *  
  */
-public class FinalDegreeWorkProposalsDispatchAction extends
-        FenixContextDispatchAction {
+public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         Object args[] = {};
-        List infoExecutionYears = (List) ServiceUtils.executeService(null,
-                "ReadExecutionYearsService", args);
-        CollectionUtils.collect(infoExecutionYears,
-                new INFO_EXECUTION_YEAR_INCREMENTER());
+        List infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadExecutionYearsService",
+                args);
+        CollectionUtils.collect(infoExecutionYears, new INFO_EXECUTION_YEAR_INCREMENTER());
         request.setAttribute("infoExecutionYears", infoExecutionYears);
         DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String executionYearOID = (String) finalWorkForm
-                .get("executionYearOID");
+        String executionYearOID = (String) finalWorkForm.get("executionYearOID");
         if (executionYearOID == null || executionYearOID.equals("")) {
-            InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils
-                    .executeService(null, "ReadCurrentExecutionYear", args);
+            InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null,
+                    "ReadCurrentExecutionYear", args);
             if (infoExecutionYear != null) {
                 executionYearOID = infoExecutionYear.getIdInternal().toString();
                 finalWorkForm.set("executionYearOID", executionYearOID);
                 request.setAttribute("finalDegreeWorksForm", finalWorkForm);
             }
         }
-        args = new Object[] { new Integer(executionYearOID),
-                TipoCurso.LICENCIATURA_OBJ};
+        args = new Object[] { new Integer(executionYearOID), TipoCurso.LICENCIATURA_OBJ };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
                 "ReadExecutionDegreesByExecutionYearAndType", args);
         Collections.sort(infoExecutionDegrees, new BeanComparator(
@@ -69,23 +64,20 @@ public class FinalDegreeWorkProposalsDispatchAction extends
         return mapping.findForward("show-final-degree-work-list");
     }
 
-    public ActionForward search(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
-        String executionDegreeOID = (String) finalWorkForm
-                .get("executionDegreeOID");
+        String executionDegreeOID = (String) finalWorkForm.get("executionDegreeOID");
 
-        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
-                request, executionDegreeOID, "proposalNumber");
+        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(request, executionDegreeOID,
+                "proposalNumber");
         putInRequestBranchList(request, executionDegreeOID);
 
         return prepareSearch(mapping, form, request, response);
     }
 
-    public ActionForward filter(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ActionForward filter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         search(mapping, form, request, response);
 
@@ -101,14 +93,13 @@ public class FinalDegreeWorkProposalsDispatchAction extends
         if (branchOID != null && !branchOID.equals("") && StringUtils.isNumeric(branchOID)) {
             Collection headers = (Collection) request
                     .getAttribute("publishedFinalDegreeWorkProposalHeaders");
-            CollectionUtils.filter(headers,
-                    new FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(
-                            new Integer(branchOID)));
-        }        
+            CollectionUtils.filter(headers, new FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE(
+                    new Integer(branchOID)));
+        }
     }
-    
-    private void putInRequestBranchList(HttpServletRequest request,
-            String executionDegreeOID) throws Exception {
+
+    private void putInRequestBranchList(HttpServletRequest request, String executionDegreeOID)
+            throws Exception {
         Set branches = new TreeSet(new BeanComparator("name"));
 
         List publishedFinalDegreeWorkProposalHeaders = (List) request
@@ -118,12 +109,10 @@ public class FinalDegreeWorkProposalsDispatchAction extends
             for (int i = 0; i < publishedFinalDegreeWorkProposalHeaders.size(); i++) {
                 FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = (FinalDegreeWorkProposalHeader) publishedFinalDegreeWorkProposalHeaders
                         .get(i);
-                List branchesFromProposal = finalDegreeWorkProposalHeader
-                        .getBranches();
+                List branchesFromProposal = finalDegreeWorkProposalHeader.getBranches();
 
                 for (int j = 0; j < branchesFromProposal.size(); j++) {
-                    InfoBranch infoBranch = (InfoBranch) branchesFromProposal
-                            .get(j);
+                    InfoBranch infoBranch = (InfoBranch) branchesFromProposal.get(j);
 
                     if (!branches.contains(infoBranch)) {
                         branches.add(infoBranch);
@@ -135,96 +124,79 @@ public class FinalDegreeWorkProposalsDispatchAction extends
         request.setAttribute("branches", branches);
     }
 
-    public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        String finalDegreeWorkProposalOID = request
-                .getParameter("finalDegreeWorkProposalOID");
-        if (finalDegreeWorkProposalOID != null
-                && !finalDegreeWorkProposalOID.equals("")
+    public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String finalDegreeWorkProposalOID = request.getParameter("finalDegreeWorkProposalOID");
+        if (finalDegreeWorkProposalOID != null && !finalDegreeWorkProposalOID.equals("")
                 && StringUtils.isNumeric(finalDegreeWorkProposalOID)) {
-            Object[] args = { new Integer(finalDegreeWorkProposalOID)};
-            InfoProposal infoProposal = (InfoProposal) ServiceUtils
-                    .executeService(null, "ReadFinalDegreeWorkProposal", args);
+            Object[] args = { new Integer(finalDegreeWorkProposalOID) };
+            InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(null,
+                    "ReadFinalDegreeWorkProposal", args);
             infoProposal.getExecutionDegree().setInfoExecutionYear(
-                    (InfoExecutionYear) (new INFO_EXECUTION_YEAR_INCREMENTER())
-                            .transform(infoProposal.getExecutionDegree()
-                                    .getInfoExecutionYear()));
+                    (InfoExecutionYear) (new INFO_EXECUTION_YEAR_INCREMENTER()).transform(infoProposal
+                            .getExecutionDegree().getInfoExecutionYear()));
             request.setAttribute("finalDegreeWorkProposal", infoProposal);
         }
         return mapping.findForward("show-final-degree-work-proposal");
     }
 
     public ActionForward sortByNumber(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        String executionDegreeOID = request
-                .getParameter("executionDegreeOID");
-        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
-                request, executionDegreeOID, "proposalNumber");
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String executionDegreeOID = request.getParameter("executionDegreeOID");
+        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(request, executionDegreeOID,
+                "proposalNumber");
         putInRequestBranchList(request, executionDegreeOID);
         filterBranchList(form, request);
         return prepareSearch(mapping, form, request, response);
     }
 
-    public ActionForward sortByTitle(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        String executionDegreeOID = request
-                .getParameter("executionDegreeOID");
-        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
-                request, executionDegreeOID, "title");
-        putInRequestBranchList(request, executionDegreeOID);
-        filterBranchList(form, request);
-        return prepareSearch(mapping, form, request, response);
-    }
-
-    public ActionForward sortByOrientatorName(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
+    public ActionForward sortByTitle(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String executionDegreeOID = request
-                .getParameter("executionDegreeOID");
-        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
-                request, executionDegreeOID, "orientatorName");
+        String executionDegreeOID = request.getParameter("executionDegreeOID");
+        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(request, executionDegreeOID,
+                "title");
         putInRequestBranchList(request, executionDegreeOID);
         filterBranchList(form, request);
         return prepareSearch(mapping, form, request, response);
     }
 
-    public ActionForward sortByCompanyLink(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        String executionDegreeOID = request
-                .getParameter("executionDegreeOID");
-        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
-                request, executionDegreeOID, "companyLink");
+    public ActionForward sortByOrientatorName(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String executionDegreeOID = request.getParameter("executionDegreeOID");
+        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(request, executionDegreeOID,
+                "orientatorName");
         putInRequestBranchList(request, executionDegreeOID);
         filterBranchList(form, request);
         return prepareSearch(mapping, form, request, response);
     }
 
-    public ActionForward sortByCoorientatorName(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        String executionDegreeOID = request
-                .getParameter("executionDegreeOID");
-        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
-                request, executionDegreeOID, "coorientatorName");
+    public ActionForward sortByCompanyLink(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String executionDegreeOID = request.getParameter("executionDegreeOID");
+        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(request, executionDegreeOID,
+                "companyLink");
+        putInRequestBranchList(request, executionDegreeOID);
+        filterBranchList(form, request);
+        return prepareSearch(mapping, form, request, response);
+    }
+
+    public ActionForward sortByCoorientatorName(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String executionDegreeOID = request.getParameter("executionDegreeOID");
+        putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(request, executionDegreeOID,
+                "coorientatorName");
         putInRequestBranchList(request, executionDegreeOID);
         filterBranchList(form, request);
         return prepareSearch(mapping, form, request, response);
     }
 
     private void putInRequestSortedListOfPublishedFinalDegreeWorkProposalHeaders(
-            HttpServletRequest request, String executionDegreeOID, String sortBy)
-            throws Exception {
+            HttpServletRequest request, String executionDegreeOID, String sortBy) throws Exception {
         if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
-            Object[] args = { new Integer(executionDegreeOID)};
-            List publishedFinalDegreeWorkProposalHeaders = (List) ServiceUtils
-                    .executeService(null,
-                            "ReadPublishedFinalDegreeWorkProposalHeaders", args);
-            Collections.sort(publishedFinalDegreeWorkProposalHeaders,
-                    new BeanComparator(sortBy));
+            Object[] args = { new Integer(executionDegreeOID) };
+            List publishedFinalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(null,
+                    "ReadPublishedFinalDegreeWorkProposalHeaders", args);
+            Collections.sort(publishedFinalDegreeWorkProposalHeaders, new BeanComparator(sortBy));
             request.setAttribute("publishedFinalDegreeWorkProposalHeaders",
                     publishedFinalDegreeWorkProposalHeaders);
         }
@@ -235,19 +207,16 @@ public class FinalDegreeWorkProposalsDispatchAction extends
         public Object transform(Object arg0) {
             InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
             int seperatorIndex = infoExecutionYear.getYear().indexOf("/");
-            String year1 = infoExecutionYear.getYear().substring(0,
-                    seperatorIndex);
-            String year2 = infoExecutionYear.getYear().substring(
-                    seperatorIndex + 1, infoExecutionYear.getYear().length());
-            infoExecutionYear.setYear(""
-                    + ((new Integer(year1)).intValue() + 1) + "/"
+            String year1 = infoExecutionYear.getYear().substring(0, seperatorIndex);
+            String year2 = infoExecutionYear.getYear().substring(seperatorIndex + 1,
+                    infoExecutionYear.getYear().length());
+            infoExecutionYear.setYear("" + ((new Integer(year1)).intValue() + 1) + "/"
                     + ((new Integer(year2)).intValue() + 1));
             return infoExecutionYear;
         }
     }
 
-    public class FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE implements
-            Predicate {
+    public class FILTER_INFOPROSAL_HEADERS_BY_BRANCH_PREDICATE implements Predicate {
 
         Integer branchOID = null;
 
@@ -261,7 +230,9 @@ public class FinalDegreeWorkProposalsDispatchAction extends
 
             for (int i = 0; i < branches.size(); i++) {
                 InfoBranch branch = (InfoBranch) branches.get(i);
-                if (branchOID.equals(branch.getIdInternal())) { return true; }
+                if (branchOID.equals(branch.getIdInternal())) {
+                    return true;
+                }
             }
 
             return false;

@@ -19,101 +19,90 @@ import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRen
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ *  
  */
 public class RenderExamsMapTag extends TagSupport {
 
-	// Name of atribute containing ExamMap
-	private String name;
-	private String user;
+    // Name of atribute containing ExamMap
+    private String name;
 
-	private ExamsMapSlotContentRenderer examsMapSlotContentRenderer =
-		new ExamsMapContentRenderer();
+    private String user;
 
-	public int doStartTag() throws JspException {
-		// Obtain InfoExamMap
-		InfoExamsMap infoExamsMap = null;
-		InfoRoomExamsMap infoRoomExamsMap = null;
-		ExamsMap examsMap = null;
-		IExamsMapRenderer renderer = null;
-		String typeUser = "";
+    private ExamsMapSlotContentRenderer examsMapSlotContentRenderer = new ExamsMapContentRenderer();
 
-		try {
-			infoExamsMap = (InfoExamsMap) pageContext.findAttribute(name);
-			typeUser = user;
-			examsMap = new ExamsMap(infoExamsMap);
-			renderer =
-				new ExamsMapRenderer(
-					examsMap,
-					this.examsMapSlotContentRenderer,
-					typeUser);
-		} catch (ClassCastException e) {
-			infoExamsMap = null;
-		}		
-		try {
-			infoRoomExamsMap = (InfoRoomExamsMap) pageContext.findAttribute(name);
-			typeUser = user;
-			examsMap = new ExamsMap(infoRoomExamsMap);
-			renderer =
-				new ExamsMapForRoomRenderer(
-					examsMap,
-					this.examsMapSlotContentRenderer,
-					typeUser);
-		} catch (ClassCastException e) {
-			infoRoomExamsMap = null;
-		}
-		if (infoExamsMap == null && infoRoomExamsMap == null) {
-			throw new JspException(
-				messages.getMessage("generateExamsMap.infoExamsMap.notFound", name));
-		}
-		
-		// Generate Map from infoExamsMap
-		JspWriter writer = pageContext.getOut();
-		//ExamsMap examsMap = new ExamsMap(infoExamsMap);
+    public int doStartTag() throws JspException {
+        // Obtain InfoExamMap
+        InfoExamsMap infoExamsMap = null;
+        InfoRoomExamsMap infoRoomExamsMap = null;
+        ExamsMap examsMap = null;
+        IExamsMapRenderer renderer = null;
+        String typeUser = "";
 
-//		ExamsMapRenderer renderer =
-//			new ExamsMapRenderer(
-//				examsMap,
-//				this.examsMapSlotContentRenderer,
-//				typeUser);
-		
-		try {
-			writer.print(renderer.render());
-		} catch (IOException e) {
-			throw new JspException(
-				messages.getMessage("generateExamsMap.io", e.toString()));
-		}
+        try {
+            infoExamsMap = (InfoExamsMap) pageContext.findAttribute(name);
+            typeUser = user;
+            examsMap = new ExamsMap(infoExamsMap);
+            renderer = new ExamsMapRenderer(examsMap, this.examsMapSlotContentRenderer, typeUser);
+        } catch (ClassCastException e) {
+            infoExamsMap = null;
+        }
+        try {
+            infoRoomExamsMap = (InfoRoomExamsMap) pageContext.findAttribute(name);
+            typeUser = user;
+            examsMap = new ExamsMap(infoRoomExamsMap);
+            renderer = new ExamsMapForRoomRenderer(examsMap, this.examsMapSlotContentRenderer, typeUser);
+        } catch (ClassCastException e) {
+            infoRoomExamsMap = null;
+        }
+        if (infoExamsMap == null && infoRoomExamsMap == null) {
+            throw new JspException(messages.getMessage("generateExamsMap.infoExamsMap.notFound", name));
+        }
 
-		return (SKIP_BODY);
-	}
+        // Generate Map from infoExamsMap
+        JspWriter writer = pageContext.getOut();
+        //ExamsMap examsMap = new ExamsMap(infoExamsMap);
 
+        //		ExamsMapRenderer renderer =
+        //			new ExamsMapRenderer(
+        //				examsMap,
+        //				this.examsMapSlotContentRenderer,
+        //				typeUser);
 
-	public int doEndTag() throws JspException {
-		return (EVAL_PAGE);
-	}
+        try {
+            writer.print(renderer.render());
+        } catch (IOException e) {
+            throw new JspException(messages.getMessage("generateExamsMap.io", e.toString()));
+        }
 
-	public void release() {
-		super.release();
-	}
+        return (SKIP_BODY);
+    }
 
-	// Error Messages
-	protected static MessageResources messages =
-		MessageResources.getMessageResources("ApplicationResources");
+    public int doEndTag() throws JspException {
+        return (EVAL_PAGE);
+    }
 
-	public String getName() {
-		return (this.name);
-	}
+    public void release() {
+        super.release();
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    // Error Messages
+    protected static MessageResources messages = MessageResources
+            .getMessageResources("ApplicationResources");
 
-	public String getUser() {
-		return user;
-	}
+    public String getName() {
+        return (this.name);
+    }
 
-	public void setUser(String string) {
-		user = string;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String string) {
+        user = string;
+    }
 
 }

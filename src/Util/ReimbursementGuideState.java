@@ -22,30 +22,28 @@ public class ReimbursementGuideState extends FenixValuedEnum {
 
     public static final int ANNULLED_TYPE = 4;
 
-    public static final ReimbursementGuideState ISSUED = new ReimbursementGuideState(
-            "issued", ReimbursementGuideState.ISSUED_TYPE);
+    public static final ReimbursementGuideState ISSUED = new ReimbursementGuideState("issued",
+            ReimbursementGuideState.ISSUED_TYPE);
 
-    public static final ReimbursementGuideState APPROVED = new ReimbursementGuideState(
-            "approved", ReimbursementGuideState.APPROVED_TYPE);
+    public static final ReimbursementGuideState APPROVED = new ReimbursementGuideState("approved",
+            ReimbursementGuideState.APPROVED_TYPE);
 
-    public static final ReimbursementGuideState PAYED = new ReimbursementGuideState(
-            "payed", ReimbursementGuideState.PAYED_TYPE);
+    public static final ReimbursementGuideState PAYED = new ReimbursementGuideState("payed",
+            ReimbursementGuideState.PAYED_TYPE);
 
-    public static final ReimbursementGuideState ANNULLED = new ReimbursementGuideState(
-            "annulled", ReimbursementGuideState.ANNULLED_TYPE);
+    public static final ReimbursementGuideState ANNULLED = new ReimbursementGuideState("annulled",
+            ReimbursementGuideState.ANNULLED_TYPE);
 
     private ReimbursementGuideState(String name, int value) {
         super(name, value);
     }
 
     public static ReimbursementGuideState getEnum(String reimbursementGuideState) {
-        return (ReimbursementGuideState) getEnum(ReimbursementGuideState.class,
-                reimbursementGuideState);
+        return (ReimbursementGuideState) getEnum(ReimbursementGuideState.class, reimbursementGuideState);
     }
 
     public static ReimbursementGuideState getEnum(int reimbursementGuideState) {
-        return (ReimbursementGuideState) getEnum(ReimbursementGuideState.class,
-                reimbursementGuideState);
+        return (ReimbursementGuideState) getEnum(ReimbursementGuideState.class, reimbursementGuideState);
     }
 
     public static Map getEnumMap() {

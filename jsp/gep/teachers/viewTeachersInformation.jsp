@@ -9,6 +9,13 @@
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="DataBeans.teacher.InfoOldPublication" %>
 <logic:present name="infoSiteTeachersInformation">	
+	<h2>
+		<bean:message key="title.gep.teachersInformation"
+					  bundle="GEP_RESOURCES"/>
+  			(<dt:format pattern="dd/MM/yyyy">
+  				<dt:currentTime/>
+  			</dt:format>)
+  	</h2>
 	<logic:present name="infoExecutionDegree">
 		<table width="90%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
@@ -26,18 +33,24 @@
 			</tr>
 		</table>
 	</logic:present>
-	<br/>
-	<h2>
-		<bean:message key="title.gep.teachersInformation"
-					  bundle="GEP_RESOURCES"/>
-  			(<dt:format pattern="dd/MM/yyyy">
-  				<dt:currentTime/>
-  			</dt:format>)
-  	</h2>
+	<logic:notPresent name="infoExecutionDegree">
+		<table width="90%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="center" class="infoselected">
+					<p>
+						<strong><bean:message key="title.gep.executionYear"
+											  bundle="GEP_RESOURCES"/>:</strong>
+						<bean:write name="executionYear"/>
+					</p>			
+				</td>
+			</tr>
+		</table>
+	</logic:notPresent>
+	<br />
 	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -47,7 +60,7 @@
 		</logic:present>
 		<logic:notPresent name="basic">
 			<div class="button">
-				<html:link page="/listTeachersAcreditation.do?method=doSearch" target="_blank"
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -59,14 +72,14 @@
 	<logic:notPresent name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionDegreeId=all"%>" target="_blank">
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionDegreeId=all" + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 		</logic:present>
 		<logic:notPresent name="basic">
 			<div class="button">
-				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all" target="_blank">
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
@@ -78,7 +91,8 @@
 			<td class="listClasses-header"><bean:message key="label.gep.teacher.number" bundle="GEP_RESOURCES"/></td>
 			<td class="listClasses-header"><bean:message key="label.gep.teacher.category" bundle="GEP_RESOURCES"/> </td> 
 		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses" bundle="GEP_RESOURCES"/></td> 
-		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.degrees" bundle="GEP_RESOURCES"/></td> 
+		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.degrees" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="label.gep.teachersInformation.associatedLecturingCourses.executionPeriod" bundle="GEP_RESOURCES"></bean:message></td>
 		    <td class="listClasses-header"><bean:message key="title.gep.teachersInformationSituation" bundle="GEP_RESOURCES"/></td> 
 		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.lastModificationDate" bundle="GEP_RESOURCES"/></td> 
 	    </tr>
@@ -179,10 +193,13 @@
 					    	(<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %>					    	
 					    </td>
 					    <td  class="listClasses" >
-					    	 <logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
+							<logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">					    	 
 					    	 	<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>&nbsp;
-					    	 </logic:iterate>
+					    	</logic:iterate>
 					    </td> 
+			         	<td class="listClasses" >
+			        		<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
+						</td>
 					    <td  class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">
 							<bean:define id="fieldsRequired"><%= requiredFields %></bean:define>
 					    	<logic:lessThan name="fieldsRequired" value="5">
@@ -219,6 +236,9 @@
 					    	 	<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>&nbsp;
 					    	</logic:iterate>
 				     	</td> 
+						<td class="listClasses" >
+			        		<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
+						</td>
 				     </tr>
 			     </logic:iterate>
 		</logic:iterate>		
@@ -321,7 +341,7 @@
 	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -331,7 +351,7 @@
 		</logic:present>
 		<logic:notPresent name="basic">
 			<div class="button">
-				<html:link page="/listTeachersAcreditation.do?method=doSearch" target="_blank"
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -343,14 +363,14 @@
 	<logic:notPresent name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionDegreeId=all"%>" target="_blank">
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionDegreeId=all&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 		</logic:present>
 		<logic:notPresent name="basic">
 			<div class="button">
-				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all" target="_blank">
+				<html:link page="<%="/listTeachersAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all&amp;executionYear=" + pageContext.findAttribute("executionYear")%>" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>

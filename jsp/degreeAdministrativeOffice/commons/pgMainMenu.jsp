@@ -17,5 +17,10 @@
 	<li> 
 		<html:link forward="equivalence"><bean:message key="link.manual.equivalence"/></html:link>
 	</li>
-
+	<li>
+		<html:link page="/generateDeclaration.do?method=prepare&amp;page=0"><bean:message key="title.student.print.registrationDeclaration"/></html:link>
+	</li>
+	<li>
+		<html:link page="/generateEnrollmentsDeclaration.do?method=prepare&amp;page=0"><bean:message key="title.student.print.enrollmentsDeclaration"/></html:link>
+	</li>
 </ul>     

@@ -12,10 +12,12 @@ import java.io.Serializable;
  * 
  *  
  */
-public interface IDomainObject extends Serializable
-{
-	public Integer getIdInternal();
-	public void setIdInternal(Integer idInternal);
-	public Integer getAckOptLock();
-	public void setAckOptLock(Integer ackOptLock);
+public interface IDomainObject extends Serializable {
+    public Integer getIdInternal();
+
+    public void setIdInternal(Integer idInternal);
+
+    public Integer getAckOptLock();
+
+    public void setAckOptLock(Integer ackOptLock);
 }

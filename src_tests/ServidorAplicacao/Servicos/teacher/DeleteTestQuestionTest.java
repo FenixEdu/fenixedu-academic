@@ -11,31 +11,32 @@ import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
  */
 public class DeleteTestQuestionTest extends TestCaseDeleteAndEditServices {
 
-	public DeleteTestQuestionTest(String testName) {
-		super(testName);
-	}
+    public DeleteTestQuestionTest(String testName) {
+        super(testName);
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp() {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown() {
+        super.tearDown();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "DeleteTestQuestion";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "DeleteTestQuestion";
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = {new Integer(3), new Integer(7)};
-		return args;
-	}
+    protected boolean needsAuthorization() {
+        return true;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+        Object[] args = { new Integer(3), new Integer(7) };
+        return args;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return null;
+    }
 }

@@ -29,8 +29,8 @@ public class InfoRoom extends InfoObject implements Comparable {
     public InfoRoom() {
     }
 
-    public InfoRoom(String nome, String edificio, Integer piso, TipoSala tipo,
-            Integer capacidadeNormal, Integer capacidadeExame) {
+    public InfoRoom(String nome, String edificio, Integer piso, TipoSala tipo, Integer capacidadeNormal,
+            Integer capacidadeExame) {
         setNome(nome);
         setEdificio(edificio);
         setPiso(piso);

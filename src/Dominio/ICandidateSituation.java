@@ -5,11 +5,10 @@
  */
 
 /**
- *
- * Autores :
- *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *   - Joana Mota (jccm@rnl.ist.utl.pt)
- *
+ * 
+ * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
+ * (jccm@rnl.ist.utl.pt)
+ *  
  */
 package Dominio;
 
@@ -19,23 +18,28 @@ import Util.SituationName;
 import Util.State;
 
 public interface ICandidateSituation extends IDomainObject {
-    
+
     // Set Methods
     void setDate(Date date);
+
     void setRemarks(String remarks);
+
     void setValidation(State validation);
-    void setMasterDegreeCandidate (IMasterDegreeCandidate masterDegreeCandidate);
+
+    void setMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate);
+
     void setSituation(SituationName situation);
-    
-    
+
     // Get Methods
     Date getDate();
+
     String getRemarks();
+
     State getValidation();
-    IMasterDegreeCandidate getMasterDegreeCandidate();    
+
+    IMasterDegreeCandidate getMasterDegreeCandidate();
+
     SituationName getSituation();
 
 }
-
-
 

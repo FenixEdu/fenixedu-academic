@@ -7,18 +7,19 @@
 package ServidorPersistente;
 
 /**
- *
- * @author  ars
+ * 
+ * @author ars
  */
 import java.util.List;
 
 import Dominio.IItem;
 import Dominio.ISection;
 
-public interface IPersistentItem extends IPersistentObject{
+public interface IPersistentItem extends IPersistentObject {
     public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia;
-	public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia;
-    
+
+    public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia;
+
     public void delete(IItem item) throws ExcepcaoPersistencia;
-   
+
 }

@@ -28,8 +28,7 @@ import Util.credits.ServiceExemptionType;
 /**
  * @author jpvl
  */
-public class CRUDServiceExemptionAction extends CRUDActionByOID
-{
+public class CRUDServiceExemptionAction extends CRUDActionByOID {
 
     /*
      * (non-Javadoc)
@@ -38,23 +37,17 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID
      *      DataBeans.InfoObject, org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
-    protected void populateFormFromInfoObject(
-        ActionMapping mapping,
-        InfoObject infoObject,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixActionException
-    {
+    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
+            ActionForm form, HttpServletRequest request) throws FenixActionException {
         DynaActionForm serviceExemptionForm = (DynaActionForm) form;
-        InfoServiceExemptionCreditLine infoServiceExemptionCreditLine =
-            (InfoServiceExemptionCreditLine) infoObject;
+        InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = (InfoServiceExemptionCreditLine) infoObject;
 
         serviceExemptionForm.set("idInternal", infoServiceExemptionCreditLine.getIdInternal());
-        serviceExemptionForm.set(
-            "teacherId",
-            infoServiceExemptionCreditLine.getInfoTeacher().getIdInternal());
-        
-        serviceExemptionForm.set("type", String.valueOf(infoServiceExemptionCreditLine.getType().getValue()));
+        serviceExemptionForm.set("teacherId", infoServiceExemptionCreditLine.getInfoTeacher()
+                .getIdInternal());
+
+        serviceExemptionForm.set("type", String.valueOf(infoServiceExemptionCreditLine.getType()
+                .getValue()));
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -70,11 +63,9 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID
      *      ServidorApresentacao.mapping.framework.CRUDMapping)
      */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-        throws FenixActionException
-    {
+            throws FenixActionException {
         DynaActionForm serviceExemptionForm = (DynaActionForm) form;
-        InfoServiceExemptionCreditLine infoServiceExemptionCreditLine =
-            new InfoServiceExemptionCreditLine();
+        InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = new InfoServiceExemptionCreditLine();
 
         int type = Integer.parseInt((String) serviceExemptionForm.get("type"));
         String start = (String) serviceExemptionForm.get("start");
@@ -89,19 +80,15 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID
         infoServiceExemptionCreditLine.setInfoTeacher(new InfoTeacher(teacherId));
         infoServiceExemptionCreditLine.setType(ServiceExemptionType.getEnum(type));
 
-        try
-        {
+        try {
             infoServiceExemptionCreditLine.setStart(df.parse(start));
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace(System.out);
             throw new RuntimeException("Problems parsing end date!" + start);
         }
-        try
-        {
+        try {
             infoServiceExemptionCreditLine.setEnd(df.parse(end));
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace(System.out);
             throw new RuntimeException("Problems parsing end date!" + end);
         }
@@ -116,22 +103,18 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID
      *      org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
-    protected void prepareFormConstants(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixServiceException
-    {
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request) throws FenixServiceException {
         DynaActionForm managementPositionForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer teacherId = (Integer) managementPositionForm.get("teacherId");
 
         Object args[] = { teacherId };
-        InfoTeacher infoTeacher =
-            (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByOID", args);
+        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+                "ReadTeacherByOID", args);
         request.setAttribute("infoTeacher", infoTeacher);
-        
+
         request.setAttribute("serviceExemptionTypes", ServiceExemptionType.getEnumList());
     }
 

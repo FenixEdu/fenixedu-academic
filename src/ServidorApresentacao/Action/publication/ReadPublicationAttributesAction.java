@@ -35,134 +35,105 @@ import constants.publication.PublicationConstants;
  */
 public class ReadPublicationAttributesAction extends FenixAction {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-	 *      org.apache.struts.action.ActionForm,
-	 *      javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		HttpSession session = request.getSession(false);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession(false);
 
-		DynaActionForm dynaForm = (DynaActionForm) actionForm;
+        DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
-		Integer publicationTypeId =
-			(Integer)dynaForm.get("infoPublicationTypeId");
-		
-		String typePublication = (String) dynaForm.get("typePublication");
-		
-		Integer idTeacher =  (Integer)dynaForm.get("teacherId");
-		
-		String[] list = (String[]) dynaForm.get("authorsIds");
-		List newList = Arrays.asList(list);
-		List authorsIds = new ArrayList();
-		authorsIds.addAll(newList);
-		
-		IUserView userView = SessionUtils.getUserView(request);
+        Integer publicationTypeId = (Integer) dynaForm.get("infoPublicationTypeId");
 
-		if (session != null) {
+        String typePublication = (String) dynaForm.get("typePublication");
 
-			Object[] args = { userView.getUtilizador(), publicationTypeId };
-			List requiredAttributes =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadRequiredAttributes",
-					args);
+        Integer idTeacher = (Integer) dynaForm.get("teacherId");
 
-			List nonRequiredAttributes =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadNonRequiredAttributes",
-					args);
+        String[] list = (String[]) dynaForm.get("authorsIds");
+        List newList = Arrays.asList(list);
+        List authorsIds = new ArrayList();
+        authorsIds.addAll(newList);
 
-			List subTypeList =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadPublicationSubtypes",
-					args);
+        IUserView userView = SessionUtils.getUserView(request);
 
-			List formatList =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadPublicationFormats",
-					args);
+        if (session != null) {
 
-			List monthList =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadPublicationMonths",
-					args);
+            Object[] args = { userView.getUtilizador(), publicationTypeId };
+            List requiredAttributes = (List) ServiceUtils.executeService(userView,
+                    "ReadRequiredAttributes", args);
 
-			List scopeList =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadPublicationScopes",
-					args);
+            List nonRequiredAttributes = (List) ServiceUtils.executeService(userView,
+                    "ReadNonRequiredAttributes", args);
 
-			List infoAuthors = readInfoAuthors(authorsIds, userView);
-			
-			InfoSiteAttributes bodyComponent = new InfoSiteAttributes();
-			bodyComponent.setInfoRequiredAttributes(requiredAttributes);
-			bodyComponent.setInfoNonRequiredAttributes(nonRequiredAttributes);
+            List subTypeList = (List) ServiceUtils.executeService(userView, "ReadPublicationSubtypes",
+                    args);
 
-			SiteView siteView = new SiteView(bodyComponent);
+            List formatList = (List) ServiceUtils.executeService(userView, "ReadPublicationFormats",
+                    args);
 
-			request.setAttribute("infoAuthorsList", infoAuthors);
-			request.setAttribute("siteView", siteView);
-			request.setAttribute("subTypeList", subTypeList);
-			request.setAttribute("formatList", formatList);
-			request.setAttribute("monthList", monthList);
-			request.setAttribute("scopeList", scopeList);
-			dynaForm.set("infoPublicationTypeId", publicationTypeId);
-			dynaForm.set("typePublication", typePublication);
-			dynaForm.set("teacherId", idTeacher);
+            List monthList = (List) ServiceUtils.executeService(userView, "ReadPublicationMonths", args);
 
-		}
-		ActionForward actionForward = null;
+            List scopeList = (List) ServiceUtils.executeService(userView, "ReadPublicationScopes", args);
 
-		if (typePublication.equalsIgnoreCase(PublicationConstants.DIDATIC_STRING)) {
-			actionForward =
-				mapping.findForward("show-publicationDidatic-attributes-form");
-		} else {
-			actionForward =
-				mapping.findForward(
-					"show-publicationCientific-attributes-form");
-		}
-		return actionForward;
-	}
-	
-	public List readInfoAuthors(List authorsIds, IUserView userView)
-	throws FenixServiceException {
+            List infoAuthors = readInfoAuthors(authorsIds, userView);
 
-		List newAuthorsIds = new ArrayList();
-		Iterator iteratorIds = authorsIds.iterator();
+            InfoSiteAttributes bodyComponent = new InfoSiteAttributes();
+            bodyComponent.setInfoRequiredAttributes(requiredAttributes);
+            bodyComponent.setInfoNonRequiredAttributes(nonRequiredAttributes);
 
-		while (iteratorIds.hasNext()) {
-			String idString = (String) iteratorIds.next();
-			newAuthorsIds.add(new Integer(idString));
-		}
-		
-		Object[] args = { newAuthorsIds };
-		List authors =
-			(List) ServiceUtils.executeService(
-					userView,
-					"ReadAuthorsToInsert",
-					args);
+            SiteView siteView = new SiteView(bodyComponent);
 
-		List infoAuthors =
-			(List) CollectionUtils.collect(authors, new Transformer() {
-				public Object transform(Object o) {
-					IAuthor author = (IAuthor) o;
-					return Cloner.copyIAuthor2InfoAuthor(author);
-				}
-			});
-		return infoAuthors;
-	}
+            Object argPubType[] = { userView.getUtilizador() };
+            List infoPublicationTypes = (List) ServiceUtils.executeService(userView,
+                    "ReadPublicationTypes", argPubType);
+            request.setAttribute("publicationTypesList", infoPublicationTypes);
+
+            request.setAttribute("infoAuthorsList", infoAuthors);
+            request.setAttribute("siteView", siteView);
+            request.setAttribute("subTypeList", subTypeList);
+            request.setAttribute("formatList", formatList);
+            request.setAttribute("monthList", monthList);
+            request.setAttribute("scopeList", scopeList);
+            dynaForm.set("infoPublicationTypeId", publicationTypeId);
+            dynaForm.set("typePublication", typePublication);
+            dynaForm.set("teacherId", idTeacher);
+
+        }
+        ActionForward actionForward = null;
+
+        if (typePublication.equalsIgnoreCase(PublicationConstants.DIDATIC_STRING)) {
+            actionForward = mapping.findForward("show-publicationDidatic-attributes-form");
+        } else {
+            actionForward = mapping.findForward("show-publicationCientific-attributes-form");
+        }
+        return actionForward;
+    }
+
+    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException {
+
+        List newAuthorsIds = new ArrayList();
+        Iterator iteratorIds = authorsIds.iterator();
+
+        while (iteratorIds.hasNext()) {
+            String idString = (String) iteratorIds.next();
+            newAuthorsIds.add(new Integer(idString));
+        }
+
+        Object[] args = { newAuthorsIds };
+        List authors = (List) ServiceUtils.executeService(userView, "ReadAuthorsToInsert", args);
+
+        List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
+            public Object transform(Object o) {
+                IAuthor author = (IAuthor) o;
+                return Cloner.copyIAuthor2InfoAuthor(author);
+            }
+        });
+        return infoAuthors;
+    }
 }

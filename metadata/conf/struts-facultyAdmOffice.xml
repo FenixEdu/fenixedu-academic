@@ -820,7 +820,7 @@
 
     <!-- ===================== USE CASE: CORRECT GRANT OWNER============================== -->
 	<action path="/correctGrantOwner" 
-			input="/correctGrantOwner.do?page=0&amp;method=listGrantOwner"
+			input="/correctGrantOwner.do?page=0&amp;method=prepareForm"
 			name="correctGrantOwner" 
 			scope="request"
    			parameter="method"

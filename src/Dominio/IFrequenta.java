@@ -7,23 +7,31 @@
 package Dominio;
 
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 public interface IFrequenta extends IDomainObject {
-	public IStudent getAluno();
-	public IExecutionCourse getDisciplinaExecucao();
-	public IEnrollment getEnrolment();
+    public IStudent getAluno();
 
-	public void setAluno(IStudent aluno);
-	public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
-	public void setEnrolment(IEnrollment enrolment);
+    public IExecutionCourse getDisciplinaExecucao();
 
-	public Integer getChaveAluno();
-	public Integer getChaveDisciplinaExecucao();
-	public Integer getKeyEnrolment();
-	
-	public void setChaveAluno(Integer keyAluno);
-	public void setChaveDisciplinaExecucao(Integer keyDisciplinaExecucao);
-	public void setKeyEnrolment(Integer keyEnrolment);
+    public IEnrollment getEnrolment();
+
+    public void setAluno(IStudent aluno);
+
+    public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
+
+    public void setEnrolment(IEnrollment enrolment);
+
+    public Integer getChaveAluno();
+
+    public Integer getChaveDisciplinaExecucao();
+
+    public Integer getKeyEnrolment();
+
+    public void setChaveAluno(Integer keyAluno);
+
+    public void setChaveDisciplinaExecucao(Integer keyDisciplinaExecucao);
+
+    public void setKeyEnrolment(Integer keyEnrolment);
 }

@@ -62,15 +62,15 @@ public class InfoPerson extends InfoObject {
     private String telefone;
 
     private String telemovel;
-    
-	private String workPhone;
+
+    private String workPhone;
 
     private String email;
-    
-	private Boolean availableEmail;
+
+    private Boolean availableEmail;
 
     private String enderecoWeb;
-    
+
     private Boolean availableWebSite;
 
     private String numContribuinte;
@@ -93,24 +93,22 @@ public class InfoPerson extends InfoObject {
 
     private List infoAdvisories;
 
+    private Boolean availablePhoto;
+
     /* Construtores */
     public InfoPerson() {
     }
 
     public InfoPerson(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
-            String localEmissaoDocumentoIdentificacao,
-            Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Sexo sexo,
-            EstadoCivil estadoCivil, Date nascimento, String nomePai,
-            String nomeMae, String nacionalidade, String freguesiaNaturalidade,
-            String concelhoNaturalidade, String distritoNaturalidade,
-            String morada, String localidade, String codigoPostal,
-            String localidadeCodigoPostal, String freguesiaMorada,
-            String concelhoMorada, String distritoMorada, String telefone,
-            String telemovel, String email, String enderecoWeb,
-            String numContribuinte, String profissao, String username,
-            String password, InfoCountry infoPais, String codigoFiscal) {
+            String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
+            Date dataValidadeDocumentoIdentificacao, String nome, Sexo sexo, EstadoCivil estadoCivil,
+            Date nascimento, String nomePai, String nomeMae, String nacionalidade,
+            String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
+            String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
+            String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone,
+            String telemovel, String email, String enderecoWeb, String numContribuinte,
+            String profissao, String username, String password, InfoCountry infoPais, String codigoFiscal) {
 
         setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
         setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
@@ -160,14 +158,10 @@ public class InfoPerson extends InfoObject {
      */
     public String toString() {
         String result = "Person :\n";
-        result += "\n  - Identification Document Number : "
-                + numeroDocumentoIdentificacao;
-        result += "\n  - Identification Document Type : "
-                + tipoDocumentoIdentificacao;
-        result += "\n  - Identification Document Issue Place : "
-                + localEmissaoDocumentoIdentificacao;
-        result += "\n  - Identification Document Issue Date : "
-                + dataEmissaoDocumentoIdentificacao;
+        result += "\n  - Identification Document Number : " + numeroDocumentoIdentificacao;
+        result += "\n  - Identification Document Type : " + tipoDocumentoIdentificacao;
+        result += "\n  - Identification Document Issue Place : " + localEmissaoDocumentoIdentificacao;
+        result += "\n  - Identification Document Issue Date : " + dataEmissaoDocumentoIdentificacao;
         result += "\n  - Identification Document Expiration Date : "
                 + dataValidadeDocumentoIdentificacao;
         result += "\n  - Name : " + nome;
@@ -466,8 +460,7 @@ public class InfoPerson extends InfoObject {
      * @param dataEmissaoDocumentoIdentificacao
      *            The dataEmissaoDocumentoIdentificacao to set
      */
-    public void setDataEmissaoDocumentoIdentificacao(
-            Date dataEmissaoDocumentoIdentificacao) {
+    public void setDataEmissaoDocumentoIdentificacao(Date dataEmissaoDocumentoIdentificacao) {
         this.dataEmissaoDocumentoIdentificacao = dataEmissaoDocumentoIdentificacao;
     }
 
@@ -477,8 +470,7 @@ public class InfoPerson extends InfoObject {
      * @param dataValidadeDocumentoIdentificacao
      *            The dataValidadeDocumentoIdentificacao to set
      */
-    public void setDataValidadeDocumentoIdentificacao(
-            Date dataValidadeDocumentoIdentificacao) {
+    public void setDataValidadeDocumentoIdentificacao(Date dataValidadeDocumentoIdentificacao) {
         this.dataValidadeDocumentoIdentificacao = dataValidadeDocumentoIdentificacao;
     }
 
@@ -568,8 +560,7 @@ public class InfoPerson extends InfoObject {
      * @param localEmissaoDocumentoIdentificacao
      *            The localEmissaoDocumentoIdentificacao to set
      */
-    public void setLocalEmissaoDocumentoIdentificacao(
-            String localEmissaoDocumentoIdentificacao) {
+    public void setLocalEmissaoDocumentoIdentificacao(String localEmissaoDocumentoIdentificacao) {
         this.localEmissaoDocumentoIdentificacao = localEmissaoDocumentoIdentificacao;
     }
 
@@ -669,8 +660,7 @@ public class InfoPerson extends InfoObject {
      * @param numeroDocumentoIdentificacao
      *            The numeroDocumentoIdentificacao to set
      */
-    public void setNumeroDocumentoIdentificacao(
-            String numeroDocumentoIdentificacao) {
+    public void setNumeroDocumentoIdentificacao(String numeroDocumentoIdentificacao) {
         this.numeroDocumentoIdentificacao = numeroDocumentoIdentificacao;
     }
 
@@ -730,8 +720,7 @@ public class InfoPerson extends InfoObject {
      * @param tipoDocumentoIdentificacao
      *            The tipoDocumentoIdentificacao to set
      */
-    public void setTipoDocumentoIdentificacao(
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) {
+    public void setTipoDocumentoIdentificacao(TipoDocumentoIdentificacao tipoDocumentoIdentificacao) {
         this.tipoDocumentoIdentificacao = tipoDocumentoIdentificacao;
     }
 
@@ -759,55 +748,76 @@ public class InfoPerson extends InfoObject {
         infoAdvisories = list;
     }
 
-	/**
-	 * @return Returns the availableEmail.
-	 */
-	public Boolean getAvailableEmail() {
-		return availableEmail;
-	}
-	/**
-	 * @param availableEmail The availableEmail to set.
-	 */
-	public void setAvailableEmail(Boolean availableEmail) {
-		this.availableEmail = availableEmail;
-	}
-	/**
-	 * @return Returns the workPhone.
-	 */
-	public String getWorkPhone() {
-		return workPhone;
-	}
-	/**
-	 * @param workPhone The workPhone to set.
-	 */
-	public void setWorkPhone(String workPhone) {
-		this.workPhone = workPhone;
-	}	
-	/**
-	 * @return Returns the availableHomepage.
-	 */
-	public Boolean getAvailableWebSite() {
-		return availableWebSite;
-	}
-	/**
-	 * @param availableHomepage The availableHomepage to set.
-	 */
-	public void setAvailableWebSite(Boolean availableWebSite) {
-		this.availableWebSite = availableWebSite;
-	}
-    
+    /**
+     * @return Returns the availableEmail.
+     */
+    public Boolean getAvailableEmail() {
+        return availableEmail;
+    }
+
+    /**
+     * @param availableEmail
+     *            The availableEmail to set.
+     */
+    public void setAvailableEmail(Boolean availableEmail) {
+        this.availableEmail = availableEmail;
+    }
+
+    /**
+     * @return Returns the workPhone.
+     */
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    /**
+     * @param workPhone
+     *            The workPhone to set.
+     */
+    public void setWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+    }
+
+    /**
+     * @return Returns the availableHomepage.
+     */
+    public Boolean getAvailableWebSite() {
+        return availableWebSite;
+    }
+
+    /**
+     * @param availableHomepage
+     *            The availableHomepage to set.
+     */
+    public void setAvailableWebSite(Boolean availableWebSite) {
+        this.availableWebSite = availableWebSite;
+    }
+
+    /**
+     * @return Returns the availableHomepage.
+     */
+    public Boolean getAvailablePhoto() {
+        return availablePhoto;
+    }
+
+    /**
+     * @param availableHomepage
+     *            The availableHomepage to set.
+     */
+    public void setAvailablePhoto(Boolean availablePhoto) {
+        this.availablePhoto = availablePhoto;
+    }
+
     public void copyFromDomain(IPessoa person) {
         super.copyFromDomain(person);
-        if (person!=null) {
+        if (person != null) {
             setNome(person.getNome());
-            setNumeroDocumentoIdentificacao(person
-                    .getNumeroDocumentoIdentificacao());
-            setTipoDocumentoIdentificacao(person
-                    .getTipoDocumentoIdentificacao());
+            setNumeroDocumentoIdentificacao(person.getNumeroDocumentoIdentificacao());
+            setTipoDocumentoIdentificacao(person.getTipoDocumentoIdentificacao());
             setLocalEmissaoDocumentoIdentificacao(person.getLocalEmissaoDocumentoIdentificacao());
             setDataEmissaoDocumentoIdentificacao(person.getDataEmissaoDocumentoIdentificacao());
             setDataValidadeDocumentoIdentificacao(person.getDataValidadeDocumentoIdentificacao());
-            
+
             setSexo(person.getSexo());
             setEstadoCivil(person.getEstadoCivil());
 
@@ -818,16 +828,16 @@ public class InfoPerson extends InfoObject {
             setTelefone(person.getTelefone());
             setTelemovel(person.getTelemovel());
             setWorkPhone(person.getWorkPhone());
-                        
+
             setProfissao(person.getProfissao());
-            
+
             setMorada(person.getMorada());
             setCodigoPostal(person.getCodigoPostal());
             setLocalidade(person.getLocalidade());
             setFreguesiaMorada(person.getFreguesiaMorada());
             setConcelhoMorada(person.getConcelhoMorada());
             setDistritoMorada(person.getDistritoMorada());
-            
+
             setConcelhoNaturalidade(person.getConcelhoNaturalidade());
             setDistritoNaturalidade(person.getDistritoNaturalidade());
             setFreguesiaNaturalidade(person.getFreguesiaNaturalidade());
@@ -838,15 +848,18 @@ public class InfoPerson extends InfoObject {
             setNascimento(person.getNascimento());
             setNomeMae(person.getNomeMae());
             setNomePai(person.getNomePai());
-            
+
             setNumContribuinte(person.getNumContribuinte());
             setCodigoFiscal(person.getCodigoFiscal());
 
             setPassword(person.getPassword());
-            setUsername(person.getUsername());            
+            setUsername(person.getUsername());
+
+            setAvailablePhoto(person.getAvailablePhoto());
+
         }
     }
-    
+
     /**
      * @param pessoa
      * @return
@@ -854,23 +867,22 @@ public class InfoPerson extends InfoObject {
     public static InfoPerson newInfoFromDomain(IPessoa person) {
         InfoPerson infoPerson = null;
         if (person != null) {
-           infoPerson = new InfoPerson();
-           infoPerson.copyFromDomain(person);
+            infoPerson = new InfoPerson();
+            infoPerson.copyFromDomain(person);
         }
         return infoPerson;
     }
-    
-    public void copyToDomain(InfoPerson infoPerson,IPessoa person)
-    {
-        super.copyToDomain(infoPerson,person);
-        
+
+    public void copyToDomain(InfoPerson infoPerson, IPessoa person) {
+        super.copyToDomain(infoPerson, person);
+
         person.setNome(infoPerson.getNome());
         person.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
         person.setTipoDocumentoIdentificacao(infoPerson.getTipoDocumentoIdentificacao());
         person.setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
         person.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
         person.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
-        
+
         person.setSexo(infoPerson.getSexo());
         person.setEstadoCivil(infoPerson.getEstadoCivil());
 
@@ -881,16 +893,16 @@ public class InfoPerson extends InfoObject {
         person.setTelefone(infoPerson.getTelefone());
         person.setTelemovel(infoPerson.getTelemovel());
         person.setWorkPhone(infoPerson.getWorkPhone());
-                    
+
         person.setProfissao(infoPerson.getProfissao());
-        
+
         person.setMorada(infoPerson.getMorada());
         person.setCodigoPostal(infoPerson.getCodigoPostal());
         person.setLocalidade(infoPerson.getLocalidade());
         person.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
         person.setConcelhoMorada(infoPerson.getConcelhoMorada());
         person.setDistritoMorada(infoPerson.getDistritoMorada());
-        
+
         person.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
         person.setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
         person.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
@@ -901,21 +913,21 @@ public class InfoPerson extends InfoObject {
         person.setNascimento(infoPerson.getNascimento());
         person.setNomeMae(infoPerson.getNomeMae());
         person.setNomePai(infoPerson.getNomePai());
-        
+
         person.setNumContribuinte(infoPerson.getNumContribuinte());
         person.setCodigoFiscal(infoPerson.getCodigoFiscal());
 
         person.setPassword(infoPerson.getPassword());
         person.setUsername(infoPerson.getUsername());
+
+        person.setAvailablePhoto(infoPerson.getAvailablePhoto());
     }
-    
-    public static IPessoa newDomainFromInfo(InfoPerson infoPerson)
-    {
+
+    public static IPessoa newDomainFromInfo(InfoPerson infoPerson) {
         IPessoa person = null;
-        if(infoPerson != null)
-        {
+        if (infoPerson != null) {
             person = new Pessoa();
-            infoPerson.copyToDomain(infoPerson,person);
+            infoPerson.copyToDomain(infoPerson, person);
         }
         return person;
     }

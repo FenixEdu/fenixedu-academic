@@ -24,40 +24,29 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author João Mota
- *
- * 29/Ago/2003
- * fenix-head
- * ServidorApresentacao.Action.student
  * 
+ * 29/Ago/2003 fenix-head ServidorApresentacao.Action.student
+ *  
  */
 public class ViewStudentTimeTable extends FenixAction {
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object[] args = { userView.getUtilizador()};
-		List infoLessons;
-		try {
-			infoLessons =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadStudentTimeTable",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("infoLessons", infoLessons);
+        Object[] args = { userView.getUtilizador() };
+        List infoLessons;
+        try {
+            infoLessons = (List) ServiceUtils.executeService(userView, "ReadStudentTimeTable", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("infoLessons", infoLessons);
 
-		return mapping.findForward("sucess");
+        return mapping.findForward("sucess");
 
-	}
+    }
 
 }

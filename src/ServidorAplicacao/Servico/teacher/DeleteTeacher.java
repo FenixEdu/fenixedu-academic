@@ -67,41 +67,33 @@ public class DeleteTeacher implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentProfessorship persistentProfessorship = sp
-                    .getIPersistentProfessorship();
-            IPersistentResponsibleFor persistentResponsibleFor = sp
-                    .getIPersistentResponsibleFor();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IPersistentSupportLesson supportLessonDAO = sp
-                    .getIPersistentSupportLesson();
+            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-            IPersistentShiftProfessorship shiftProfessorshipDAO = sp
-                    .getIPersistentShiftProfessorship();
+            IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
 
-            ITeacher iTeacher = (ITeacher) persistentTeacher.readByOID(
-                    Teacher.class, teacherCode);
+            ITeacher iTeacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherCode);
             if (iTeacher == null) {
                 throw new InvalidArgumentsServiceException();
             }
 
-            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
 
             //note: removed the possibility for a responsible teacher to remove
             // from himself the professorship
             //(it was a feature that didnt make sense)
-            IResponsibleFor responsibleFor = persistentResponsibleFor
-                    .readByTeacherAndExecutionCourse(iTeacher, iExecutionCourse);
-            IPersistentResponsibleFor responsibleForDAO = sp
-                    .getIPersistentResponsibleFor();
+            IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(
+                    iTeacher, iExecutionCourse);
+            IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
 
             if (responsibleFor != null) {
                 if (!canDeleteResponsibleFor()) {
                     throw new notAuthorizedServiceDeleteException();
-                } 
-                    responsibleForDAO.delete(responsibleFor);
-                
+                }
+                responsibleForDAO.delete(responsibleFor);
 
             }
 
@@ -110,17 +102,15 @@ public class DeleteTeacher implements IServico {
 
             List shiftProfessorshipList = shiftProfessorshipDAO
                     .readByProfessorship(professorshipToDelete);
-            List supportLessonList = supportLessonDAO
-                    .readByProfessorship(professorshipToDelete);
+            List supportLessonList = supportLessonDAO.readByProfessorship(professorshipToDelete);
 
             if (shiftProfessorshipList.isEmpty() && supportLessonList.isEmpty()) {
                 persistentProfessorship.delete(professorshipToDelete);
             } else {
                 if (!shiftProfessorshipList.isEmpty()) {
                     throw new ExistingShiftProfessorship();
-                } 
-                    throw new ExistingSupportLesson();
-                
+                }
+                throw new ExistingSupportLesson();
 
             }
 

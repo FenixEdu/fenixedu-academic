@@ -28,7 +28,7 @@ import Dominio.IResponsibleFor;
 import Dominio.ResponsibleFor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.ISuportePersistente;
@@ -38,8 +38,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
  *  
  */
-public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements
-        IService {
+public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements IService {
 
     /**
      *  
@@ -50,43 +49,32 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements
     public List run(Integer executionDegreeId) throws FenixServiceException {
         try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente persistentExecutionDegree = ps
-                    .getICursoExecucaoPersistente();
-            IPersistentProfessorship persistentProfessorship = ps
-                    .getIPersistentProfessorship();
-            IPersistentResponsibleFor persistentResponsibleFor = ps
-                    .getIPersistentResponsibleFor();
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, executionDegreeId);
+            IPersistentExecutionDegree persistentExecutionDegree = ps.getIPersistentExecutionDegree();
+            IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
+            IPersistentResponsibleFor persistentResponsibleFor = ps.getIPersistentResponsibleFor();
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                    CursoExecucao.class, executionDegreeId);
 
-            List professorships = persistentProfessorship
-                    .readByExecutionDegree(executionDegree);
-            List responsibleFors = persistentResponsibleFor
-                    .readByExecutionDegree(executionDegree);
-            List detailedProfessorships = getDetailedProfessorships(
-                    professorships, responsibleFors, ps);
+            List professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+            List responsibleFors = persistentResponsibleFor.readByExecutionDegree(executionDegree);
+            List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, ps);
 
             Collections.sort(detailedProfessorships, new Comparator() {
 
                 public int compare(Object o1, Object o2) {
                     DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
                     DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
-                    int result = detailedProfessorship1.getInfoProfessorship()
-                            .getInfoExecutionCourse().getIdInternal()
-                            .intValue()
-                            - detailedProfessorship2.getInfoProfessorship()
-                                    .getInfoExecutionCourse().getIdInternal()
-                                    .intValue();
+                    int result = detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse()
+                            .getIdInternal().intValue()
+                            - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse()
+                                    .getIdInternal().intValue();
                     if (result == 0
-                            && (detailedProfessorship1.getResponsibleFor()
-                                    .booleanValue() || detailedProfessorship2
+                            && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
                                     .getResponsibleFor().booleanValue())) {
-                        if (detailedProfessorship1.getResponsibleFor()
-                                .booleanValue()) {
+                        if (detailedProfessorship1.getResponsibleFor().booleanValue()) {
                             return -1;
                         }
-                        if (detailedProfessorship2.getResponsibleFor()
-                                .booleanValue()) {
+                        if (detailedProfessorship2.getResponsibleFor().booleanValue()) {
                             return 1;
                         }
                     }
@@ -100,14 +88,11 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements
             Iterator iter = detailedProfessorships.iterator();
             List temp = new ArrayList();
             while (iter.hasNext()) {
-                DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter
-                        .next();
+                DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
                 if (temp.isEmpty()
-                        || ((DetailedProfessorship) temp.get(temp.size() - 1))
-                                .getInfoProfessorship()
+                        || ((DetailedProfessorship) temp.get(temp.size() - 1)).getInfoProfessorship()
                                 .getInfoExecutionCourse().equals(
-                                        detailedProfessorship
-                                                .getInfoProfessorship()
+                                        detailedProfessorship.getInfoProfessorship()
                                                 .getInfoExecutionCourse())) {
                     temp.add(detailedProfessorship);
                 } else {
@@ -127,17 +112,18 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements
 
     }
 
-    protected List getDetailedProfessorships(List professorships,
-            final List responsibleFors, ISuportePersistente sp) {
-        List detailedProfessorshipList = (List) CollectionUtils.collect(
-                professorships, new Transformer() {
+    protected List getDetailedProfessorships(List professorships, final List responsibleFors,
+            ISuportePersistente sp) {
+        List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
+                new Transformer() {
 
                     public Object transform(Object input) {
                         IProfessorship professorship = (IProfessorship) input;
                         //CLONER
                         //InfoProfessorship infoProfessorShip = Cloner
-                                //.copyIProfessorship2InfoProfessorship(professorship);
-                        InfoProfessorship infoProfessorShip = InfoProfessorshipWithAll.newInfoFromDomain(professorship);
+                        //.copyIProfessorship2InfoProfessorship(professorship);
+                        InfoProfessorship infoProfessorShip = InfoProfessorshipWithAll
+                                .newInfoFromDomain(professorship);
 
                         List executionCourseCurricularCoursesList = getInfoCurricularCourses(professorship
                                 .getExecutionCourse());
@@ -145,38 +131,34 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements
                         DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
                         IResponsibleFor responsibleFor = new ResponsibleFor();
-                        responsibleFor.setExecutionCourse(professorship
-                                .getExecutionCourse());
+                        responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
                         responsibleFor.setTeacher(professorship.getTeacher());
-                        detailedProfessorship.setResponsibleFor(Boolean
-                                .valueOf(responsibleFors
-                                        .contains(responsibleFor)));
+                        detailedProfessorship.setResponsibleFor(Boolean.valueOf(responsibleFors
+                                .contains(responsibleFor)));
 
-                        detailedProfessorship
-                                .setInfoProfessorship(infoProfessorShip);
+                        detailedProfessorship.setInfoProfessorship(infoProfessorShip);
                         detailedProfessorship
                                 .setExecutionCourseCurricularCoursesList(executionCourseCurricularCoursesList);
 
                         return detailedProfessorship;
                     }
 
-                    private List getInfoCurricularCourses(
-                            IExecutionCourse executionCourse) {
+                    private List getInfoCurricularCourses(IExecutionCourse executionCourse) {
 
-                        List infoCurricularCourses = (List) CollectionUtils
-                                .collect(executionCourse
-                                        .getAssociatedCurricularCourses(),
-                                        new Transformer() {
+                        List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
+                                .getAssociatedCurricularCourses(), new Transformer() {
 
-                                            public Object transform(Object input) {
-                                                ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                                                //CLONER
-                                                //InfoCurricularCourse infoCurricularCourse = Cloner
-                                                        //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-                                                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
-                                                return infoCurricularCourse;
-                                            }
-                                        });
+                            public Object transform(Object input) {
+                                ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                                //CLONER
+                                //InfoCurricularCourse infoCurricularCourse =
+                                // Cloner
+                                //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                                InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+                                        .newInfoFromDomain(curricularCourse);
+                                return infoCurricularCourse;
+                            }
+                        });
                         return infoCurricularCourses;
                     }
                 });

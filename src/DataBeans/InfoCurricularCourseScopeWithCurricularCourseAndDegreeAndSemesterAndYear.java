@@ -8,23 +8,28 @@ import Dominio.ICurricularCourseScope;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear extends InfoCurricularCourseScopeWithSemesterAndYear {
+public class InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear extends
+        InfoCurricularCourseScopeWithSemesterAndYear {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoCurricularCourseScope#copyFromDomain(Dominio.ICurricularCourseScope)
      */
     public void copyFromDomain(ICurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);
-        if(curricularCourseScope != null) {
-            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourseScope.getCurricularCourse()));
+        if (curricularCourseScope != null) {
+            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree
+                    .newInfoFromDomain(curricularCourseScope.getCurricularCourse()));
         }
     }
-    
-    public static InfoCurricularCourseScope newInfoFromDomain(ICurricularCourseScope curricularCourseScope) {
+
+    public static InfoCurricularCourseScope newInfoFromDomain(
+            ICurricularCourseScope curricularCourseScope) {
         InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear infoCurricularCourseScope = null;
-        if(curricularCourseScope != null) {
+        if (curricularCourseScope != null) {
             infoCurricularCourseScope = new InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear();
             infoCurricularCourseScope.copyFromDomain(curricularCourseScope);
         }

@@ -5,17 +5,21 @@
  */
 package ServidorPersistente;
 
-
 /**
  * @author dcs-rjao
- *
  * 
+ *  
  */
 public interface IPersistentDegreeCurricularPlanEnrolmentInfo {
-//	public abstract void deleteAll() throws ExcepcaoPersistencia;
-//	public abstract void delete(IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfo) throws ExcepcaoPersistencia;
-//	public abstract void lockWrite(IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfoToWrite)	throws ExcepcaoPersistencia, ExistingPersistentException;
-//	public abstract List readAll() throws ExcepcaoPersistencia;
-//	public abstract IDegreeCurricularPlanEnrolmentInfo readDegreeEnrolmentInfoByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
-//		throws ExcepcaoPersistencia;
+    //	public abstract void deleteAll() throws ExcepcaoPersistencia;
+    //	public abstract void delete(IDegreeCurricularPlanEnrolmentInfo
+    // degreeEnrolmentInfo) throws ExcepcaoPersistencia;
+    //	public abstract void lockWrite(IDegreeCurricularPlanEnrolmentInfo
+    // degreeEnrolmentInfoToWrite) throws ExcepcaoPersistencia,
+    // ExistingPersistentException;
+    //	public abstract List readAll() throws ExcepcaoPersistencia;
+    //	public abstract IDegreeCurricularPlanEnrolmentInfo
+    // readDegreeEnrolmentInfoByDegreeCurricularPlan(IDegreeCurricularPlan
+    // degreeCurricularPlan)
+    //		throws ExcepcaoPersistencia;
 }

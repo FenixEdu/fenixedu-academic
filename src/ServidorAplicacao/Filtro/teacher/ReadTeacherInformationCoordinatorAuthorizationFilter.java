@@ -17,7 +17,7 @@ import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -29,52 +29,45 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class ReadTeacherInformationCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class ReadTeacherInformationCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-    protected RoleType getRoleType()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-	 *      pt.utl.ist.berserk.ServiceResponse)
-	 */
-    public void execute(ServiceRequest arg0, ServiceResponse arg1) throws FilterException, Exception
-    {
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *      pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest arg0, ServiceResponse arg1) throws FilterException, Exception {
         IUserView id = (IUserView) arg0.getRequester();
         Object[] arguments = arg0.getArguments();
-        if (((id != null
-            && id.getRoles() != null
-            && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
-            || (id == null)
-            || (id.getRoles() == null)
-            || !verifyCondition(id, (String) arguments[0]))
-        {
+        if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(id.getRoles(),
+                getRoleType())))
+                || (id == null)
+                || (id.getRoles() == null)
+                || !verifyCondition(id, (String) arguments[0])) {
             throw new NotAuthorizedFilterException();
         }
     }
 
     /**
-	 * @param id
-	 * @param string
-	 * @return
-	 */
-    protected boolean verifyCondition(IUserView id, String user)
-    {
-        try
-        {
+     * @param id
+     * @param string
+     * @return
+     */
+    protected boolean verifyCondition(IUserView id, String user) {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
@@ -83,19 +76,16 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
 
             List professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
             Iterator iter = professorships.iterator();
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 IProfessorship professorship = (IProfessorship) iter.next();
                 if (professorship.getTeacher().equals(teacher))
                     return true;
             }
             return false;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();
             return false;

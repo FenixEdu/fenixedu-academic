@@ -12,27 +12,19 @@ import org.apache.struts.actions.DispatchAction;
  * @author Fernanda Quitério 05/Fev/2004
  *  
  */
-public class ViewStudentCurriculumDispatchAction extends DispatchAction
-{
+public class ViewStudentCurriculumDispatchAction extends DispatchAction {
 
-	public ActionForward prepareView(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		getExecutionDegreeId(request);
-		return mapping.findForward("prepareViewStudentCurriculumChooseStudent");
-	}
+    public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        getExecutionDegreeId(request);
+        return mapping.findForward("prepareViewStudentCurriculumChooseStudent");
+    }
 
-	private void getExecutionDegreeId(HttpServletRequest request)
-	{
-		String executionDegreeId = request.getParameter("executionDegreeId");
-		if(executionDegreeId == null)
-		{
-			executionDegreeId = (String) request.getAttribute("executionDegreeId");
-		}
-		request.setAttribute("executionDegreeId",executionDegreeId);
-	}
+    private void getExecutionDegreeId(HttpServletRequest request) {
+        String executionDegreeId = request.getParameter("executionDegreeId");
+        if (executionDegreeId == null) {
+            executionDegreeId = (String) request.getAttribute("executionDegreeId");
+        }
+        request.setAttribute("executionDegreeId", executionDegreeId);
+    }
 }

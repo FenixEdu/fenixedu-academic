@@ -9,27 +9,28 @@ import Util.credits.ServiceExemptionType;
 /**
  * @author jpvl
  */
-public class ServiceExemptionCreditLine extends DatePeriodBaseCreditLine implements IServiceExemptionCreditLine
-{
+public class ServiceExemptionCreditLine extends DatePeriodBaseCreditLine implements
+        IServiceExemptionCreditLine {
     private ServiceExemptionType type;
-    
+
     /**
      * @return Returns the type.
      */
-    public ServiceExemptionType getType()
-    {
+    public ServiceExemptionType getType() {
         return type;
     }
 
     /**
-     * @param type The type to set.
+     * @param type
+     *            The type to set.
      */
-    public void setType(ServiceExemptionType type)
-    {
+    public void setType(ServiceExemptionType type) {
         this.type = type;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see Dominio.credits.CreditLine#getCreditEventGenerated()
      */
     protected CreditsEvent getCreditEventGenerated() {

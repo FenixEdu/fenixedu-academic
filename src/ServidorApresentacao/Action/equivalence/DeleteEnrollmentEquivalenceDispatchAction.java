@@ -31,91 +31,89 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author David Santos in Apr 28, 2004
  */
 
-public class DeleteEnrollmentEquivalenceDispatchAction extends DispatchAction
-{
-	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+public class DeleteEnrollmentEquivalenceDispatchAction extends DispatchAction {
+    public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer fromStudentCurricularPlanID = (Integer) request.getAttribute("fromStudentCurricularPlanID");
-		String backLink = (String) request.getAttribute("backLink");
-		Integer degreeTypeCode = (Integer) request.getAttribute("degreeType");
-		String studentNumberSTR = (String) request.getAttribute("studentNumber");
+        Integer fromStudentCurricularPlanID = (Integer) request
+                .getAttribute("fromStudentCurricularPlanID");
+        String backLink = (String) request.getAttribute("backLink");
+        Integer degreeTypeCode = (Integer) request.getAttribute("degreeType");
+        String studentNumberSTR = (String) request.getAttribute("studentNumber");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType, fromStudentCurricularPlanID);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType,
+                    fromStudentCurricularPlanID);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		sortInfoEquivalenceContext(infoEquivalenceContext);
+        sortInfoEquivalenceContext(infoEquivalenceContext);
 
-		setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-			infoEquivalenceContext);
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                fromStudentCurricularPlanID, infoEquivalenceContext);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "show", backLink));
+    }
 
-	public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward confirm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         DynaActionForm deleteEnrollmentEquivalenceFrom = (DynaActionForm) form;
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		ActionErrors errors = new ActionErrors();
+        ActionErrors errors = new ActionErrors();
 
         Integer degreeTypeCode = (Integer) deleteEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) deleteEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) deleteEnrollmentEquivalenceFrom.get("backLink");
-        Integer fromStudentCurricularPlanID = (Integer) deleteEnrollmentEquivalenceFrom.get("fromStudentCurricularPlanID");
+        Integer fromStudentCurricularPlanID = (Integer) deleteEnrollmentEquivalenceFrom
+                .get("fromStudentCurricularPlanID");
 
         List idsOfChosenEnrollments = getIDsOfChosenEnrollments(deleteEnrollmentEquivalenceFrom);
 
-		if (idsOfChosenEnrollments.isEmpty())
-		{
-			saveAcurateError(request, errors, "confirm");
-			setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID, null);
-			request.setAttribute("commingFrom", "confirm");
-			return mapping.getInputForward();
-		}
+        if (idsOfChosenEnrollments.isEmpty()) {
+            saveAcurateError(request, errors, "confirm");
+            setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                    fromStudentCurricularPlanID, null);
+            request.setAttribute("commingFrom", "confirm");
+            return mapping.getInputForward();
+        }
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType, fromStudentCurricularPlanID);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType,
+                    fromStudentCurricularPlanID);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		keepOnlyChosenEnrollments(infoEquivalenceContext, idsOfChosenEnrollments);
+        keepOnlyChosenEnrollments(infoEquivalenceContext, idsOfChosenEnrollments);
 
-		sortInfoEquivalenceContext(infoEquivalenceContext);
+        sortInfoEquivalenceContext(infoEquivalenceContext);
 
-		setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID,
-			infoEquivalenceContext);
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                fromStudentCurricularPlanID, infoEquivalenceContext);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("confirm", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "confirm", backLink));
+    }
 
-	public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward accept(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         DynaActionForm deleteEnrollmentEquivalenceFrom = (DynaActionForm) form;
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -123,279 +121,261 @@ public class DeleteEnrollmentEquivalenceDispatchAction extends DispatchAction
         Integer degreeTypeCode = (Integer) deleteEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) deleteEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) deleteEnrollmentEquivalenceFrom.get("backLink");
-        Integer fromStudentCurricularPlanID = (Integer) deleteEnrollmentEquivalenceFrom.get("fromStudentCurricularPlanID");
+        Integer fromStudentCurricularPlanID = (Integer) deleteEnrollmentEquivalenceFrom
+                .get("fromStudentCurricularPlanID");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(degreeTypeCode);
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(degreeTypeCode);
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         List idsOfChosenEnrollments = getIDsOfChosenEnrollments(deleteEnrollmentEquivalenceFrom);
-		try
-		{
-			runSecondService(userView, studentNumber, degreeType, idsOfChosenEnrollments);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        try {
+            runSecondService(userView, studentNumber, degreeType, idsOfChosenEnrollments);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink, fromStudentCurricularPlanID, null);
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
+                fromStudentCurricularPlanID, null);
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("accept", backLink));
-	}
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "accept", backLink));
+    }
 
-	public ActionForward details(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
+    public ActionForward details(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String degreeTypeCode = request.getParameter("degreeType");
-		String studentNumberSTR = request.getParameter("studentNumber");
-		String backLink = request.getParameter("backLink");
-		String fromStudentCurricularPlanID = request.getParameter("fromStudentCurricularPlanID");
-		String enrollmentID = request.getParameter("enrollmentID");
+        String studentNumberSTR = request.getParameter("studentNumber");
+        String backLink = request.getParameter("backLink");
+        String fromStudentCurricularPlanID = request.getParameter("fromStudentCurricularPlanID");
+        String enrollmentID = request.getParameter("enrollmentID");
 
-		TipoCurso degreeType = new TipoCurso();
-		degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
-		Integer studentNumber = Integer.valueOf(studentNumberSTR);
+        TipoCurso degreeType = new TipoCurso();
+        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
-		try
-		{
-			infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType, Integer
-				.valueOf(fromStudentCurricularPlanID));
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
+        try {
+            infoEquivalenceContext = runFirstService(userView, studentNumber, degreeType, Integer
+                    .valueOf(fromStudentCurricularPlanID));
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		Object args[] = {studentNumber, degreeType, Integer.valueOf(enrollmentID)};
+        Object args[] = { studentNumber, degreeType, Integer.valueOf(enrollmentID) };
 
-		List infoEnrolmentEvaluations = null;
-		try
-		{
-			infoEnrolmentEvaluations = (List) ServiceManagerServiceFactory.executeService(userView,
-				"GetEnrollmentEvaluationWithEquivalence", args);
-		} catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			throw new FenixActionException(e);
-		}
-		
-		request.setAttribute("infoEnrolmentEvaluations", infoEnrolmentEvaluations);
-		setRequestAttributes(request, Integer.valueOf(degreeTypeCode), studentNumberSTR, backLink, Integer
-			.valueOf(fromStudentCurricularPlanID), infoEquivalenceContext);
+        List infoEnrolmentEvaluations = null;
+        try {
+            infoEnrolmentEvaluations = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "GetEnrollmentEvaluationWithEquivalence", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("details", backLink));
-	}
+        request.setAttribute("infoEnrolmentEvaluations", infoEnrolmentEvaluations);
+        setRequestAttributes(request, Integer.valueOf(degreeTypeCode), studentNumberSTR, backLink,
+                Integer.valueOf(fromStudentCurricularPlanID), infoEquivalenceContext);
 
-	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		DynaActionForm deleteEnrollmentEquivalenceFrom = (DynaActionForm) form;
-		
-		String forward = null;
+        return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
+                "details", backLink));
+    }
 
-		Integer degreeType = (Integer) request.getAttribute("degreeType");
-		String studentNumber = (String) request.getAttribute("studentNumber");
-		String backLink = (String) request.getAttribute("backLink");
-		Integer fromStudentCurricularPlanID = (Integer) request.getAttribute("fromStudentCurricularPlanID");
-		String commingFrom = (String) request.getAttribute("commingFrom");
+    public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        DynaActionForm deleteEnrollmentEquivalenceFrom = (DynaActionForm) form;
 
-		if (degreeType == null)
-		{
-			degreeType = (Integer) deleteEnrollmentEquivalenceFrom.get("degreeType");
-		}
+        String forward = null;
 
-		if (studentNumber == null)
-		{
-			studentNumber = (String) deleteEnrollmentEquivalenceFrom.get("studentNumber");
-		}
+        Integer degreeType = (Integer) request.getAttribute("degreeType");
+        String studentNumber = (String) request.getAttribute("studentNumber");
+        String backLink = (String) request.getAttribute("backLink");
+        Integer fromStudentCurricularPlanID = (Integer) request
+                .getAttribute("fromStudentCurricularPlanID");
+        String commingFrom = (String) request.getAttribute("commingFrom");
 
-		if (backLink == null)
-		{
-			backLink = (String) deleteEnrollmentEquivalenceFrom.get("backLink");
-		}
+        if (degreeType == null) {
+            degreeType = (Integer) deleteEnrollmentEquivalenceFrom.get("degreeType");
+        }
 
-		if (fromStudentCurricularPlanID == null)
-		{
-			fromStudentCurricularPlanID = (Integer) deleteEnrollmentEquivalenceFrom.get("fromStudentCurricularPlanID");
-		}
+        if (studentNumber == null) {
+            studentNumber = (String) deleteEnrollmentEquivalenceFrom.get("studentNumber");
+        }
 
-		if (commingFrom == null)
-		{
-			commingFrom = request.getParameter("commingFrom");
-		}
+        if (backLink == null) {
+            backLink = (String) deleteEnrollmentEquivalenceFrom.get("backLink");
+        }
 
-		InfoEquivalenceContext infoEquivalenceContext = null;
+        if (fromStudentCurricularPlanID == null) {
+            fromStudentCurricularPlanID = (Integer) deleteEnrollmentEquivalenceFrom
+                    .get("fromStudentCurricularPlanID");
+        }
 
-		if (commingFrom.equals("confirm"))
-		{
-			TipoCurso realDegreeType = new TipoCurso();
-			realDegreeType.setTipoCurso(degreeType);
-			Integer realStudentNumber = Integer.valueOf(studentNumber);
+        if (commingFrom == null) {
+            commingFrom = request.getParameter("commingFrom");
+        }
 
-			try
-			{
-				infoEquivalenceContext = runFirstService(userView, realStudentNumber, realDegreeType, fromStudentCurricularPlanID);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				throw new FenixActionException(e);
-			}
-			
-			forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show", backLink);
-			
-			sortInfoEquivalenceContext(infoEquivalenceContext);
-		}
+        InfoEquivalenceContext infoEquivalenceContext = null;
 
-		setRequestAttributes(request, degreeType, studentNumber, backLink, fromStudentCurricularPlanID, infoEquivalenceContext);
+        if (commingFrom.equals("confirm")) {
+            TipoCurso realDegreeType = new TipoCurso();
+            realDegreeType.setTipoCurso(degreeType);
+            Integer realStudentNumber = Integer.valueOf(studentNumber);
 
-		return mapping.findForward(forward);
-	}
+            try {
+                infoEquivalenceContext = runFirstService(userView, realStudentNumber, realDegreeType,
+                        fromStudentCurricularPlanID);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
 
-	/**
-	 * @param request
-	 * @param errors
-	 * @param methodName
-	 */
-	private void saveAcurateError(HttpServletRequest request, ActionErrors errors, String methodName)
-	{
-		if (methodName.equals("confirm"))
-		{
-			errors.add("must.select.enrollment.to.delete.equivalence", new ActionError(
-				"errors.enrollment.equivalence.must.select.enrollment.to.delete.equivalence"));
-		}
+            forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show",
+                    backLink);
 
-		saveErrors(request, errors);
-	}
+            sortInfoEquivalenceContext(infoEquivalenceContext);
+        }
 
-	/**
-	 * @param infoEquivalenceContext
-	 */
-	private void sortInfoEquivalenceContext(InfoEquivalenceContext infoEquivalenceContext)
-	{
-		List infoEnrollmentsFromEquivalences = infoEquivalenceContext.getInfoEnrollmentsFromEquivalences();
+        setRequestAttributes(request, degreeType, studentNumber, backLink, fromStudentCurricularPlanID,
+                infoEquivalenceContext);
 
-		if ( (infoEnrollmentsFromEquivalences != null) && (!infoEnrollmentsFromEquivalences.isEmpty()) )
-		{
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-			Collections.sort(infoEnrollmentsFromEquivalences, comparatorChain);
-		}
-	}
+        return mapping.findForward(forward);
+    }
 
-	/**
-	 * @param deleteEnrollmentEquivalenceFrom
-	 * @return List
-	 */
-	private List getIDsOfChosenEnrollments(DynaActionForm deleteEnrollmentEquivalenceFrom)
-	{
-		Integer[] idsOfEnrollmentsToGiveEquivalence = (Integer[]) deleteEnrollmentEquivalenceFrom
-			.get("curricularCoursesToGiveEquivalence");
+    /**
+     * @param request
+     * @param errors
+     * @param methodName
+     */
+    private void saveAcurateError(HttpServletRequest request, ActionErrors errors, String methodName) {
+        if (methodName.equals("confirm")) {
+            errors.add("must.select.enrollment.to.delete.equivalence", new ActionError(
+                    "errors.enrollment.equivalence.must.select.enrollment.to.delete.equivalence"));
+        }
 
-		List idsOfChosenEnrollmentsToGiveEquivalence = new ArrayList();
+        saveErrors(request, errors);
+    }
 
-		if (idsOfEnrollmentsToGiveEquivalence != null)
-		{
-			for (int i = 0; i < idsOfEnrollmentsToGiveEquivalence.length; i++)
-			{
-				Integer enrollmentID = idsOfEnrollmentsToGiveEquivalence[i];
-				idsOfChosenEnrollmentsToGiveEquivalence.add(enrollmentID);
-			}
-		}
+    /**
+     * @param infoEquivalenceContext
+     */
+    private void sortInfoEquivalenceContext(InfoEquivalenceContext infoEquivalenceContext) {
+        List infoEnrollmentsFromEquivalences = infoEquivalenceContext
+                .getInfoEnrollmentsFromEquivalences();
 
-		return idsOfChosenEnrollmentsToGiveEquivalence;
-	}
+        if ((infoEnrollmentsFromEquivalences != null) && (!infoEnrollmentsFromEquivalences.isEmpty())) {
+            ComparatorChain comparatorChain = new ComparatorChain();
+            comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
+            Collections.sort(infoEnrollmentsFromEquivalences, comparatorChain);
+        }
+    }
 
-	/**
-	 * @param infoEquivalenceContext
-	 * @param idsOfChosenEnrollments
-	 */
-	private void keepOnlyChosenEnrollments(InfoEquivalenceContext infoEquivalenceContext, List idsOfChosenEnrollments)
-	{
-		List infoEnrollmentsFromEquivalences = infoEquivalenceContext.getInfoEnrollmentsFromEquivalences();
-		List elementsToRemove = new ArrayList();
-		
-		for (int i = 0; i < infoEnrollmentsFromEquivalences.size(); i++)
-		{
-			InfoEnrolment infoEnrollment = (InfoEnrolment) infoEnrollmentsFromEquivalences.get(i);
-			
-			if (!idsOfChosenEnrollments.contains(infoEnrollment.getIdInternal()))
-			{
-				elementsToRemove.add(infoEnrollment);
-			}
-		}
-		
-		infoEnrollmentsFromEquivalences.removeAll(elementsToRemove);
-		infoEquivalenceContext.setInfoEnrollmentsFromEquivalences(infoEnrollmentsFromEquivalences);
-	}
+    /**
+     * @param deleteEnrollmentEquivalenceFrom
+     * @return List
+     */
+    private List getIDsOfChosenEnrollments(DynaActionForm deleteEnrollmentEquivalenceFrom) {
+        Integer[] idsOfEnrollmentsToGiveEquivalence = (Integer[]) deleteEnrollmentEquivalenceFrom
+                .get("curricularCoursesToGiveEquivalence");
 
-	/**
-	 * @param request
-	 * @param degreeType
-	 * @param studentNumber
-	 * @param backLink
-	 * @param fromStudentCurricularPlanID
-	 * @param infoEquivalenceContext
-	 */
-	private void setRequestAttributes(HttpServletRequest request, Integer degreeType, String studentNumber, String backLink,
-		Integer fromStudentCurricularPlanID, InfoEquivalenceContext infoEquivalenceContext)
-	{
-		request.setAttribute("degreeType", degreeType);
-		request.setAttribute("studentNumber", studentNumber);
-		request.setAttribute("backLink", backLink);
-		request.setAttribute("fromStudentCurricularPlanID", fromStudentCurricularPlanID);
+        List idsOfChosenEnrollmentsToGiveEquivalence = new ArrayList();
 
-		if (infoEquivalenceContext != null)
-		{
-			request.setAttribute("infoEquivalenceContext", infoEquivalenceContext);
-		}
-	}
+        if (idsOfEnrollmentsToGiveEquivalence != null) {
+            for (int i = 0; i < idsOfEnrollmentsToGiveEquivalence.length; i++) {
+                Integer enrollmentID = idsOfEnrollmentsToGiveEquivalence[i];
+                idsOfChosenEnrollmentsToGiveEquivalence.add(enrollmentID);
+            }
+        }
 
-	/**
-	 * @param userView
-	 * @param studentNumber
-	 * @param degreeType
-	 * @param fromStudentCurricularPlanID
-	 * @return InfoEquivalenceContext
-	 * @throws FenixServiceException
-	 */
-	private InfoEquivalenceContext runFirstService(IUserView userView, Integer studentNumber, TipoCurso degreeType,
-		Integer fromStudentCurricularPlanID) throws FenixServiceException
-	{
-		InfoEquivalenceContext infoEquivalenceContext = null;
+        return idsOfChosenEnrollmentsToGiveEquivalence;
+    }
 
-		Object args[] = {studentNumber, degreeType, fromStudentCurricularPlanID};
-		infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(userView,
-			"ReadListsOfEnrollmentsWithEquivalences", args);
+    /**
+     * @param infoEquivalenceContext
+     * @param idsOfChosenEnrollments
+     */
+    private void keepOnlyChosenEnrollments(InfoEquivalenceContext infoEquivalenceContext,
+            List idsOfChosenEnrollments) {
+        List infoEnrollmentsFromEquivalences = infoEquivalenceContext
+                .getInfoEnrollmentsFromEquivalences();
+        List elementsToRemove = new ArrayList();
 
-		return infoEquivalenceContext;
-	}
+        for (int i = 0; i < infoEnrollmentsFromEquivalences.size(); i++) {
+            InfoEnrolment infoEnrollment = (InfoEnrolment) infoEnrollmentsFromEquivalences.get(i);
 
-	/**
-	 * @param userView
-	 * @param studentNumber
-	 * @param degreeType
-	 * @param idsOfChosenEnrollments
-	 * @return InfoEquivalenceContext
-	 * @throws FenixServiceException
-	 */
-	private InfoEquivalenceContext runSecondService(IUserView userView, Integer studentNumber, TipoCurso degreeType,
-		List idsOfChosenEnrollments) throws FenixServiceException
-	{
-		InfoEquivalenceContext infoEquivalenceContext = null;
+            if (!idsOfChosenEnrollments.contains(infoEnrollment.getIdInternal())) {
+                elementsToRemove.add(infoEnrollment);
+            }
+        }
 
-		Object args[] = {studentNumber, degreeType, idsOfChosenEnrollments};
-		infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(userView,
-			"DeleteChosenEnrollmentEquivalences", args);
+        infoEnrollmentsFromEquivalences.removeAll(elementsToRemove);
+        infoEquivalenceContext.setInfoEnrollmentsFromEquivalences(infoEnrollmentsFromEquivalences);
+    }
 
-		return infoEquivalenceContext;
-	}
+    /**
+     * @param request
+     * @param degreeType
+     * @param studentNumber
+     * @param backLink
+     * @param fromStudentCurricularPlanID
+     * @param infoEquivalenceContext
+     */
+    private void setRequestAttributes(HttpServletRequest request, Integer degreeType,
+            String studentNumber, String backLink, Integer fromStudentCurricularPlanID,
+            InfoEquivalenceContext infoEquivalenceContext) {
+        request.setAttribute("degreeType", degreeType);
+        request.setAttribute("studentNumber", studentNumber);
+        request.setAttribute("backLink", backLink);
+        request.setAttribute("fromStudentCurricularPlanID", fromStudentCurricularPlanID);
+
+        if (infoEquivalenceContext != null) {
+            request.setAttribute("infoEquivalenceContext", infoEquivalenceContext);
+        }
+    }
+
+    /**
+     * @param userView
+     * @param studentNumber
+     * @param degreeType
+     * @param fromStudentCurricularPlanID
+     * @return InfoEquivalenceContext
+     * @throws FenixServiceException
+     */
+    private InfoEquivalenceContext runFirstService(IUserView userView, Integer studentNumber,
+            TipoCurso degreeType, Integer fromStudentCurricularPlanID) throws FenixServiceException {
+        InfoEquivalenceContext infoEquivalenceContext = null;
+
+        Object args[] = { studentNumber, degreeType, fromStudentCurricularPlanID };
+        infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(
+                userView, "ReadListsOfEnrollmentsWithEquivalences", args);
+
+        return infoEquivalenceContext;
+    }
+
+    /**
+     * @param userView
+     * @param studentNumber
+     * @param degreeType
+     * @param idsOfChosenEnrollments
+     * @return InfoEquivalenceContext
+     * @throws FenixServiceException
+     */
+    private InfoEquivalenceContext runSecondService(IUserView userView, Integer studentNumber,
+            TipoCurso degreeType, List idsOfChosenEnrollments) throws FenixServiceException {
+        InfoEquivalenceContext infoEquivalenceContext = null;
+
+        Object args[] = { studentNumber, degreeType, idsOfChosenEnrollments };
+        infoEquivalenceContext = (InfoEquivalenceContext) ServiceManagerServiceFactory.executeService(
+                userView, "DeleteChosenEnrollmentEquivalences", args);
+
+        return infoEquivalenceContext;
+    }
 
 }

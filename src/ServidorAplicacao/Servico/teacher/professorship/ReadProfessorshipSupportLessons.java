@@ -28,68 +28,56 @@ import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 /**
  * @author jpvl
  */
-public class ReadProfessorshipSupportLessons implements IServico
-{
+public class ReadProfessorshipSupportLessons implements IServico {
     private static ReadProfessorshipSupportLessons service = new ReadProfessorshipSupportLessons();
 
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadProfessorshipSupportLessons getService()
-    {
+     * The singleton access method of this class.
+     */
+    public static ReadProfessorshipSupportLessons getService() {
         return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
         return "ReadProfessorshipSupportLessons";
     }
 
     public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId)
-        throws FenixServiceException
-    {
-        ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO =
-            new ProfessorshipSupportLessonsDTO();
+            throws FenixServiceException {
+        ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-            IProfessorship professorship =
-                professorshipDAO.readByTeacherIDAndExecutionCourseID(
-                    new Teacher(teacherId),
-                    new ExecutionCourse(executionCourseId));
+            IProfessorship professorship = professorshipDAO.readByTeacherIDAndExecutionCourseID(
+                    new Teacher(teacherId), new ExecutionCourse(executionCourseId));
 
-            InfoProfessorship infoProfessorship =
-                Cloner.copyIProfessorship2InfoProfessorship(professorship);
+            InfoProfessorship infoProfessorship = Cloner
+                    .copyIProfessorship2InfoProfessorship(professorship);
 
             professorshipSupportLessonsDTO.setInfoProfessorship(infoProfessorship);
 
             IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
             List supportLessons = supportLessonDAO.readByProfessorship(professorship);
-            List infoSupportLessons = (List) CollectionUtils.collect(supportLessons, new Transformer()
-            {
+            List infoSupportLessons = (List) CollectionUtils.collect(supportLessons, new Transformer() {
 
-                public Object transform(Object input)
-                {
+                public Object transform(Object input) {
                     ISupportLesson supportLesson = (ISupportLesson) input;
-                    InfoSupportLesson infoSupportLesson =
-                        Cloner.copyISupportLesson2InfoSupportLesson(supportLesson);
+                    InfoSupportLesson infoSupportLesson = Cloner
+                            .copyISupportLesson2InfoSupportLesson(supportLesson);
                     return infoSupportLesson;
                 }
             });
 
             professorshipSupportLessonsDTO.setInfoSupportLessonList(infoSupportLessons);
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }

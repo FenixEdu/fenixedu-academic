@@ -13,23 +13,14 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
  * @author Fernanda Quitério 4/Dez/2003
  *  
  */
-public class TeachersManagementAction extends FenixDispatchAction
-{
-	public ActionForward firstPage(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-	{
-		return mapping.findForward("firstPage");
-	}
+public class TeachersManagementAction extends FenixDispatchAction {
+    public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("firstPage");
+    }
 
-	public ActionForward mainPage(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-	{
-		return mapping.findForward("mainPage");
-	}	
+    public ActionForward mainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("mainPage");
+    }
 }

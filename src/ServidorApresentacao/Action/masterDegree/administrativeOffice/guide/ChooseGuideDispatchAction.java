@@ -17,13 +17,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoGuide;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -31,21 +30,14 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * This is the Action to choose, visualize and edit a Guide.
  *  
  */
-public class ChooseGuideDispatchAction extends DispatchAction
-{
+public class ChooseGuideDispatchAction extends DispatchAction {
 
-    public ActionForward prepareChoose(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepareChoose(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
 
             String action = request.getParameter("action");
             DynaActionForm chooseGuide = (DynaActionForm) form;
@@ -54,12 +46,9 @@ public class ChooseGuideDispatchAction extends DispatchAction
             session.removeAttribute(SessionConstants.GUIDE_LIST);
             session.removeAttribute(SessionConstants.REQUESTER_NUMBER);
 
-            if (action.equals("visualize"))
-            {
+            if (action.equals("visualize")) {
                 session.setAttribute(SessionConstants.ACTION, "label.action.visualizeGuide");
-            }
-            else if (action.equals("edit"))
-            {
+            } else if (action.equals("edit")) {
                 session.setAttribute(SessionConstants.ACTION, "label.action.editGuide");
             }
 
@@ -67,24 +56,17 @@ public class ChooseGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("PrepareReady");
         }
-        
-            throw new Exception();
+
+        throw new Exception();
 
     }
-  
 
-    public ActionForward choose(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
 
             DynaActionForm chooseGuide = (DynaActionForm) form;
 
@@ -97,18 +79,15 @@ public class ChooseGuideDispatchAction extends DispatchAction
             Object args[] = { guideNumber, guideYear };
 
             List result = null;
-            try
-            {
-                result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-            }
-            catch (NonExistingServiceException e)
-            {
+            try {
+                result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                        args);
+            } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Guia", e);
             }
 
             request.setAttribute(SessionConstants.GUIDE_LIST, result);
-            if (result.size() == 1)
-            {
+            if (result.size() == 1) {
                 request.setAttribute(SessionConstants.GUIDE, result.get(0));
                 return mapping.findForward("ActionReady");
             }
@@ -118,22 +97,16 @@ public class ChooseGuideDispatchAction extends DispatchAction
 
             return mapping.findForward("ShowVersionList");
         }
-        
-            throw new Exception();
+
+        throw new Exception();
     }
 
-    public ActionForward chooseVersion(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward chooseVersion(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null)
-        {
+        if (session != null) {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -144,24 +117,20 @@ public class ChooseGuideDispatchAction extends DispatchAction
 
             InfoGuide infoGuide = null;
 
-            try
-            {
+            try {
                 Object args[] = { guideNumber, guideYear, guideVersion };
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-            }
-            catch (NonExistingServiceException e)
-            {
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                        "ChooseGuide", args);
+            } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Versão da Guia", e);
             }
 
             List guideList = null;
-            try
-            {
+            try {
                 Object args[] = { guideNumber, guideYear };
-                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide", args);
-            }
-            catch (NonExistingServiceException e)
-            {
+                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                        args);
+            } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Guia", e);
             }
 
@@ -169,8 +138,8 @@ public class ChooseGuideDispatchAction extends DispatchAction
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
             return mapping.findForward("ActionReady");
         }
-        
-            throw new Exception();
+
+        throw new Exception();
     }
 
 }

@@ -18,193 +18,255 @@ import ServidorPersistente.IPersistentCurricularCourseScope;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 24/Mar/2003
  */
 
-public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersistentCurricularCourseScope {
+public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
+        IPersistentCurricularCourseScope {
 
-	
+    public void delete(ICurricularCourseScope scope) throws ExcepcaoPersistencia {
+        try {
+            super.delete(scope);
+        } catch (ExcepcaoPersistencia ex) {
+            throw ex;
+        }
+    }
 
-	
+    public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+            ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch)
+            throws ExcepcaoPersistencia {
 
-	public void delete(ICurricularCourseScope scope) throws ExcepcaoPersistencia {
-		try {
-			super.delete(scope);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
+        criteria.addEqualTo("branchKey", branch.getIdInternal());
+        return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
-	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
-		ICurricularCourse curricularCourse,
-		ICurricularSemester curricularSemester,
-		IBranch branch)
-		throws ExcepcaoPersistencia {
+    }
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
-		criteria.addEqualTo("branchKey", branch.getIdInternal());
-		return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
+    public List readAll() throws ExcepcaoPersistencia {
 
-	}
+        return queryList(CurricularCourseScope.class, new Criteria());
+    }
 
-	public List readAll() throws ExcepcaoPersistencia {
+    public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        List result = queryList(CurricularCourseScope.class, crit);
+        return result;
+    }
 
-		return queryList(CurricularCourseScope.class,new Criteria());
-	}
+    public List readByCurricularCourseAndSemesterAndBranch(ICurricularCourse curricularCourse,
+            Integer semester, IBranch branch) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        crit.addEqualTo("curricularSemester.semester", semester);
+        crit.addEqualTo("branchKey", branch.getIdInternal());
 
-	public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		List result = queryList(CurricularCourseScope.class, crit);
-		return result;
-	}
+        return queryList(CurricularCourseScope.class, crit);
 
-	public List readByCurricularCourseAndSemesterAndBranch(ICurricularCourse curricularCourse, Integer semester, IBranch branch)
-		throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		crit.addEqualTo("curricularSemester.semester", semester);
-		crit.addEqualTo("branchKey", branch.getIdInternal());
+    }
 
-		return queryList(CurricularCourseScope.class, crit);
+    public List readByCurricularCourseAndYearAndSemester(ICurricularCourse curricularCourse,
+            Integer year, Integer semester) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        crit.addEqualTo("curricularSemester.semester", semester);
+        crit.addEqualTo("curricularSemester.curricularYear.year", year);
 
-	}
+        return queryList(CurricularCourseScope.class, crit);
+    }
 
-	public List readByCurricularCourseAndYearAndSemester(ICurricularCourse curricularCourse, Integer year, Integer semester)
-		throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		crit.addEqualTo("curricularSemester.semester", semester);
-		crit.addEqualTo("curricularSemester.curricularYear.year", year);
+    public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, Integer year)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        crit.addEqualTo("curricularSemester.curricularYear.year", year);
 
-		return queryList(CurricularCourseScope.class, crit);
-	}
+        return queryList(CurricularCourseScope.class, crit);
+    }
 
-	public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, Integer year) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		crit.addEqualTo("curricularSemester.curricularYear.year", year);
+    public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        crit.addEqualTo("curricularSemester.semester", semester);
 
-		return queryList(CurricularCourseScope.class, crit);
-	}
+        return queryList(CurricularCourseScope.class, crit);
 
-	public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		crit.addEqualTo("curricularSemester.semester", semester);
+    }
 
-		return queryList(CurricularCourseScope.class, crit);
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentCurricularCourseScope#readByCurricularCourse(Dominio.ICurricularCourse)
+     */
+    public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
 
-	}
+        return queryList(CurricularCourseScope.class, crit);
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentCurricularCourseScope#readByCurricularCourse(Dominio.ICurricularCourse)
-	 */
-	public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+    }
 
-		return queryList(CurricularCourseScope.class, crit);
+    public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+            ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch,
+            Calendar endDate) throws ExcepcaoPersistencia {
 
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
+        criteria.addEqualTo("branchKey", branch.getIdInternal());
+        if (endDate == null) {
+            criteria.addIsNull("endDate");
+        } else {
+            criteria.addEqualTo("endDate", endDate);
+        }
+        return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
-	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
-		ICurricularCourse curricularCourse,
-		ICurricularSemester curricularSemester,
-		IBranch branch,
-		Calendar endDate)
-		throws ExcepcaoPersistencia {
+    }
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
-		criteria.addEqualTo("branchKey", branch.getIdInternal());
-		if (endDate == null) {
-			criteria.addIsNull("endDate");
-		} else {
-			criteria.addEqualTo("endDate", endDate);
-		}
-		return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
+    public List readActiveCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        crit.addIsNull("endDate");
+        List result = queryList(CurricularCourseScope.class, crit);
+        return result;
+    }
 
-	}
+    public List readActiveCurricularCourseScopesByDegreeCurricularPlan(
+            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit
+                .addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan
+                        .getIdInternal());
+        crit.addIsNull("endDate");
+        List result = queryList(CurricularCourseScope.class, crit);
+        return result;
+    }
 
-	public List readActiveCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		crit.addIsNull("endDate");
-		List result = queryList(CurricularCourseScope.class, crit);
-		return result;
-	}
+    public List readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
+            ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        crit.addLessThan("beginDate", executionPeriod.getEndDate());
 
-	public List readActiveCurricularCourseScopesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
-		crit.addIsNull("endDate");
-		List result = queryList(CurricularCourseScope.class, crit);
-		return result;
-	}
+        Criteria crit3 = new Criteria();
+        crit3.addIsNull("endDate");
 
-	public List readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
-		ICurricularCourse curricularCourse,
-		IExecutionPeriod executionPeriod)
-		throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		crit.addLessThan("beginDate", executionPeriod.getEndDate());
+        Criteria crit4 = new Criteria();
+        crit4.addGreaterThan("endDate", executionPeriod.getBeginDate());
 
-		Criteria crit3 = new Criteria();
-		crit3.addIsNull("endDate");
+        crit3.addOrCriteria(crit4);
+        crit.addAndCriteria(crit3);
 
-		Criteria crit4 = new Criteria();
-		crit4.addGreaterThan("endDate", executionPeriod.getBeginDate());
+        List result = queryList(CurricularCourseScope.class, crit);
+        return result;
+    }
 
-		crit3.addOrCriteria(crit4);
-		crit.addAndCriteria(crit3);
+    public List readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(
+            IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
 
-		List result = queryList(CurricularCourseScope.class, crit);
-		return result;
-	}
-	
-	public List readCurricularCourseScopesByCurricularCourseInExecutionYear(
-			IDegreeCurricularPlan degreeCurricularPlan,
-			IExecutionYear executionYear)
-	throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
-		crit.addLessThan("beginDate", executionYear.getEndDate());
+        crit
+                .addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan
+                        .getIdInternal());
+        crit.addLessThan("beginDate", executionYear.getEndDate());
 
-		Criteria crit3 = new Criteria();
-		crit3.addIsNull("endDate");
+        Criteria crit3 = new Criteria();
+        crit3.addIsNull("endDate");
 
-		Criteria crit4 = new Criteria();
-		crit4.addGreaterThan("endDate", executionYear.getBeginDate());
+        Criteria crit4 = new Criteria();
+        crit4.addGreaterThan("endDate", executionYear.getBeginDate());
 
-		crit3.addOrCriteria(crit4);
-		crit.addAndCriteria(crit3);
+        crit3.addOrCriteria(crit4);
+        crit.addAndCriteria(crit3);
 
-		List result = queryList(CurricularCourseScope.class, crit);
-		return result;
-	}
-	
-	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndBeginDate(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch, Calendar beginDate) throws ExcepcaoPersistencia {
+        List result = queryList(CurricularCourseScope.class, crit);
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-		criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
-		criteria.addEqualTo("branchKey", branch.getIdInternal());
-		criteria.addEqualTo("beginDate", beginDate);
-		return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
+        return result;
+    }
 
-	}
-	
-	//added by Nuno Correia
-	public List readByBranch(IBranch branch) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("branchKey", branch.getIdInternal());
-		return queryList(CurricularCourseScope.class, criteria);
-	}
+    public List readCurricularCourseScopesByCurricularCourseInExecutionYear(
+            ICurricularCourse curricularCourse, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+        crit.addLessThan("beginDate", executionYear.getEndDate());
+
+        Criteria crit3 = new Criteria();
+        crit3.addIsNull("endDate");
+
+        Criteria crit4 = new Criteria();
+        crit4.addGreaterThan("endDate", executionYear.getBeginDate());
+
+        crit3.addOrCriteria(crit4);
+        crit.addAndCriteria(crit3);
+
+        List result = queryList(CurricularCourseScope.class, crit);
+        return result;
+    }
+
+    public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndBeginDate(
+            ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch,
+            Calendar beginDate) throws ExcepcaoPersistencia {
+
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+        criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
+        criteria.addEqualTo("branchKey", branch.getIdInternal());
+        criteria.addEqualTo("beginDate", beginDate);
+        return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
+
+    }
+
+    //added by Nuno Correia
+    public List readByBranch(IBranch branch) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("branchKey", branch.getIdInternal());
+        return queryList(CurricularCourseScope.class, criteria);
+    }
+
+    public List readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(
+            IDegreeCurricularPlan degreeCurricularPlan, Integer curricularYear,
+            IExecutionYear executionYear) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit
+                .addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan
+                        .getIdInternal());
+        crit.addEqualTo("curricularSemester.curricularYear.year", curricularYear);
+        crit.addLessThan("beginDate", executionYear.getEndDate());
+
+        Criteria crit3 = new Criteria();
+        crit3.addIsNull("endDate");
+
+        Criteria crit4 = new Criteria();
+        crit4.addGreaterThan("endDate", executionYear.getBeginDate());
+
+        crit3.addOrCriteria(crit4);
+        crit.addAndCriteria(crit3);
+        List result = queryList(CurricularCourseScope.class, crit);
+
+        return result;
+    }
+
+    public List readCurricularCourseScopesByDegreeCurricularPlanAndExecutionYear(
+            IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+
+        crit
+                .addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan
+                        .getIdInternal());
+
+        List result = queryList(CurricularCourseScope.class, crit);
+
+        return result;
+    }
+
 }

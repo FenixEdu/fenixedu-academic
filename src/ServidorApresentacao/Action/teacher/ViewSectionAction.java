@@ -23,23 +23,16 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author asnr and scpo
  */
 
-public class ViewSectionAction extends FenixAction
-{
+public class ViewSectionAction extends FenixAction {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
         String indexString = request.getParameter("index");
 
-        if (indexString != null)
-        {
+        if (indexString != null) {
 
             Integer index = new Integer(indexString);
 
@@ -51,8 +44,8 @@ public class ViewSectionAction extends FenixAction
 
             Object argsViewSection[] = { infoSection };
 
-			List infoItems =
-				(List) ServiceManagerServiceFactory.executeService(null, "ReadItems", argsViewSection);
+            List infoItems = (List) ServiceManagerServiceFactory.executeService(null, "ReadItems",
+                    argsViewSection);
 
             session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, infoItems);
 

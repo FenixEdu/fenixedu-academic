@@ -94,8 +94,7 @@ public class InfoProfessorship extends InfoObject {
         }
     }
 
-    public static InfoProfessorship newInfoFromDomain(
-            IProfessorship professorship) {
+    public static InfoProfessorship newInfoFromDomain(IProfessorship professorship) {
         InfoProfessorship infoProfessorship = null;
         if (professorship != null) {
             infoProfessorship = new InfoProfessorship();

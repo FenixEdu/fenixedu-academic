@@ -7,151 +7,146 @@ import Util.State;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
 public class GuideSituation extends DomainObject implements IGuideSituation {
-	
-	protected Integer keyGuide;
 
-	protected String remarks;
-	protected SituationOfGuide situation;
-	protected Date date;
-	protected State state;
+    protected Integer keyGuide;
 
-	protected IGuide guide;
+    protected String remarks;
 
-	public GuideSituation() {
-	}
+    protected SituationOfGuide situation;
 
-	public GuideSituation(
-		SituationOfGuide situation,
-		String remarks,
-		Date date,
-		IGuide guide,
-		State state) {
-		this.remarks = remarks;
-		this.guide = guide;
-		this.situation = situation;
-		this.date = date;
-		this.state = state;
+    protected Date date;
 
-	}
+    protected State state;
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof GuideSituation) {
-			GuideSituation guideSituation = (GuideSituation) obj;
+    protected IGuide guide;
 
-			if (((getGuide() == null && guideSituation.getGuide() == null)
-				|| (getGuide().equals(guideSituation.getGuide())))
-				&& ((getSituation() == null && guideSituation.getSituation() == null)
-					|| (getSituation().equals(guideSituation.getSituation())))) {
-				resultado = true;
-			}
-		}
+    public GuideSituation() {
+    }
 
-		return resultado;
-	}
+    public GuideSituation(SituationOfGuide situation, String remarks, Date date, IGuide guide,
+            State state) {
+        this.remarks = remarks;
+        this.guide = guide;
+        this.situation = situation;
+        this.date = date;
+        this.state = state;
 
-	public String toString() {
-		String result = "[GUIDE SITUATION";
-		
-		result += ", remarks=" + remarks;
-		result += ", guide=" + guide;
-		result += ", guide Situtation=" + situation;
-		result += ", date=" + date;
-		result += ", state=" + state;
-		result += "]";
-		return result;
-	}
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getDate() {
-		return date;
-	}
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof GuideSituation) {
+            GuideSituation guideSituation = (GuideSituation) obj;
 
-	/**
-	 * @return
-	 */
-	public IGuide getGuide() {
-		return guide;
-	}
+            if (((getGuide() == null && guideSituation.getGuide() == null) || (getGuide()
+                    .equals(guideSituation.getGuide())))
+                    && ((getSituation() == null && guideSituation.getSituation() == null) || (getSituation()
+                            .equals(guideSituation.getSituation())))) {
+                resultado = true;
+            }
+        }
 
-	
-	/**
-	 * @return
-	 */
-	public Integer getKeyGuide() {
-		return keyGuide;
-	}
+        return resultado;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getRemarks() {
-		return remarks;
-	}
+    public String toString() {
+        String result = "[GUIDE SITUATION";
 
-	/**
-	 * @return
-	 */
-	public SituationOfGuide getSituation() {
-		return situation;
-	}
+        result += ", remarks=" + remarks;
+        result += ", guide=" + guide;
+        result += ", guide Situtation=" + situation;
+        result += ", date=" + date;
+        result += ", state=" + state;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public State getState() {
-		return state;
-	}
+    /**
+     * @return
+     */
+    public Date getDate() {
+        return date;
+    }
 
-	/**
-	 * @param date
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    /**
+     * @return
+     */
+    public IGuide getGuide() {
+        return guide;
+    }
 
-	/**
-	 * @param guide
-	 */
-	public void setGuide(IGuide guide) {
-		this.guide = guide;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyGuide() {
+        return keyGuide;
+    }
 
-	
+    /**
+     * @return
+     */
+    public String getRemarks() {
+        return remarks;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyGuide(Integer integer) {
-		keyGuide = integer;
-	}
+    /**
+     * @return
+     */
+    public SituationOfGuide getSituation() {
+        return situation;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setRemarks(String string) {
-		remarks = string;
-	}
+    /**
+     * @return
+     */
+    public State getState() {
+        return state;
+    }
 
-	/**
-	 * @param guide
-	 */
-	public void setSituation(SituationOfGuide guide) {
-		situation = guide;
-	}
+    /**
+     * @param date
+     */
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	/**
-	 * @param state
-	 */
-	public void setState(State state) {
-		this.state = state;
-	}
+    /**
+     * @param guide
+     */
+    public void setGuide(IGuide guide) {
+        this.guide = guide;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyGuide(Integer integer) {
+        keyGuide = integer;
+    }
+
+    /**
+     * @param string
+     */
+    public void setRemarks(String string) {
+        remarks = string;
+    }
+
+    /**
+     * @param guide
+     */
+    public void setSituation(SituationOfGuide guide) {
+        situation = guide;
+    }
+
+    /**
+     * @param state
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
 
 }

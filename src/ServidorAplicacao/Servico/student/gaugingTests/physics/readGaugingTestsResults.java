@@ -21,57 +21,48 @@ import ServidorPersistente.OJB.gaugingTests.physics.IPersistentGaugingTestResult
 import Util.TipoCurso;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  *  
  */
 
-public class readGaugingTestsResults implements IService
-{
+public class readGaugingTestsResults implements IService {
 
     /**
-	 * The constructor of this class.
-	 */
-    public readGaugingTestsResults()
-    {
+     * The constructor of this class.
+     */
+    public readGaugingTestsResults() {
     }
 
     /**
-	 * Executes the service.
-	 */
+     * Executes the service.
+     */
 
-    public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException
-    {
-        try
-        {
+    public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
+        try {
             ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            IPersistentGaugingTestResult persistentGaugingTestResult =
-                ps.getIPersistentGaugingTestResult();
+            IPersistentGaugingTestResult persistentGaugingTestResult = ps
+                    .getIPersistentGaugingTestResult();
             IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
             IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
             IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 
-            IStudent student =
-                persistentStudent.readByPersonAndDegreeType(person, TipoCurso.LICENCIATURA_OBJ);
-            if (student == null)
-            {
+            IStudent student = persistentStudent.readByPersonAndDegreeType(person,
+                    TipoCurso.LICENCIATURA_OBJ);
+            if (student == null) {
                 return null;
             }
             IGaugingTestResult gaugingTestsResult = persistentGaugingTestResult.readByStudent(student);
-            if (gaugingTestsResult != null)
-            {
+            if (gaugingTestsResult != null) {
 
-                InfoGaugingTestResult infoGaugingTestResult =
-                    Cloner.copyIGaugingTestResult2IngoGaugingTestResult(gaugingTestsResult);
+                InfoGaugingTestResult infoGaugingTestResult = Cloner
+                        .copyIGaugingTestResult2IngoGaugingTestResult(gaugingTestsResult);
                 return infoGaugingTestResult;
             }
-          
-                return null;
-            
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+            return null;
+
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

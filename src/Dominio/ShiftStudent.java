@@ -6,95 +6,94 @@
 
 package Dominio;
 
-
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 public class ShiftStudent extends DomainObject implements ITurnoAluno {
-	private ITurno shift;
-	private IStudent student;
-	// códigos internos da base de dados
-	private Integer keyShift;
-	private Integer keyStudent;
+    private ITurno shift;
 
-	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
-	public ShiftStudent() {
-	}
+    private IStudent student;
 
-	public ShiftStudent(ITurno shift, IStudent student) {
-		setShift(shift);
-		setStudent(student);
-	}
+    // códigos internos da base de dados
+    private Integer keyShift;
 
-	public void setShift(ITurno shift) {
-		this.shift = shift;
-	}
+    private Integer keyStudent;
 
-	public IStudent getStudent() {
-		return student;
-	}
+    /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
+    public ShiftStudent() {
+    }
 
-	public void setStudent(IStudent student) {
-		this.student = student;
-	}
+    public ShiftStudent(ITurno shift, IStudent student) {
+        setShift(shift);
+        setStudent(student);
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof ITurnoAluno) {
-			ITurnoAluno shiftStudent = (ITurnoAluno) obj;
-			result =
-				getShift().equals(shiftStudent.getShift())
-					&& getStudent().equals(shiftStudent.getStudent());
-		}
-		return result;
-	}
+    public void setShift(ITurno shift) {
+        this.shift = shift;
+    }
 
-	public String toString() {
-		String result = "[SHIFT_STUDENT";
-		result += ", shift=" + shift;
-		result += ", student=" + student;
-		result += ", keyShift=" + keyShift;
-		result += ", keyStudent=" + keyStudent;
-		result += "]";
-		return result;
-	}
+    public IStudent getStudent() {
+        return student;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyShift() {
-		return keyShift;
-	}
+    public void setStudent(IStudent student) {
+        this.student = student;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyStudent() {
-		return keyStudent;
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof ITurnoAluno) {
+            ITurnoAluno shiftStudent = (ITurnoAluno) obj;
+            result = getShift().equals(shiftStudent.getShift())
+                    && getStudent().equals(shiftStudent.getStudent());
+        }
+        return result;
+    }
 
-	/**
-	 * @return
-	 */
-	public ITurno getShift() {
-		return shift;
-	}
+    public String toString() {
+        String result = "[SHIFT_STUDENT";
+        result += ", shift=" + shift;
+        result += ", student=" + student;
+        result += ", keyShift=" + keyShift;
+        result += ", keyStudent=" + keyStudent;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyShift(Integer integer) {
-		keyShift = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyShift() {
+        return keyShift;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyStudent(Integer integer) {
-		keyStudent = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyStudent() {
+        return keyStudent;
+    }
 
+    /**
+     * @return
+     */
+    public ITurno getShift() {
+        return shift;
+    }
 
+    /**
+     * @param integer
+     */
+    public void setKeyShift(Integer integer) {
+        keyShift = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyStudent(Integer integer) {
+        keyStudent = integer;
+    }
 
 }

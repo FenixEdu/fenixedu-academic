@@ -37,6 +37,9 @@ public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatc
 
         IUserView userView = SessionUtils.getUserView(request);
 
+        //   Integer degreeId = new Integer(request.getParameter("degreeId"));
+        //        Integer degreeCurricularPlanId = new
+        // Integer(request.getParameter("degreeCurricularPlanId"));
         Integer groupId = new Integer(request.getParameter("groupId"));
         Object[] args1 = { groupId };
         InfoCurricularCourseGroupWithCoursesToAdd composite;
@@ -53,11 +56,17 @@ public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatc
         actionForm.set("courseIds", getListOfIds(composite.getInfoCurricularCourses()).toArray(
                 new Integer[0]));
 
+        //  request.setAttribute("degreeId",degreeId);
+        //        request.setAttribute("degreeCurricularPlanId",degreeCurricularPlanId);
         return mapping.findForward("viewCurricularCourses");
     }
 
     public ActionForward removeCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+
+        //             Integer degreeID = new Integer(request.getParameter("degreeId"));
+        //        Integer degreeCurricularPlanID = new
+        // Integer(request.getParameter("degreeCurricularPlanId"));
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm actionForm = (DynaActionForm) form;
@@ -72,6 +81,9 @@ public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatc
             throw new FenixActionException(e);
         }
 
+        //	request.setAttribute("degreeId", degreeID);
+        //        		request.setAttribute("degreeCurricularPlanId",degreeCurricularPlanID);
+
         request.setAttribute("groupId", groupId);
 
         return manageCourses(mapping, form, request, response);
@@ -79,6 +91,10 @@ public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatc
 
     public ActionForward addCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
+
+        //  Integer degreeID = new Integer(request.getParameter("degreeId"));
+        //                Integer degreeCurricularPlanID = new
+        //         Integer(request.getParameter("degreeCurricularPlanId"));
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm actionForm = (DynaActionForm) form;
@@ -93,8 +109,11 @@ public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatc
             throw new FenixActionException(e);
         }
 
-        request.setAttribute("groupId", groupId);
+        //	request.setAttribute("degreeId", degreeID);
+        //        		request.setAttribute("degreeCurricularPlanId",degreeCurricularPlanID);
 
+        request.setAttribute("groupId", groupId);
+        actionForm.set("courseIds", new Integer[0]);
         return manageCourses(mapping, form, request, response);
     }
 

@@ -8,19 +8,19 @@ package ServidorAplicacao.Servicos.manager;
  */
 
 public class ReadAllTeachersTest extends TestCaseManagerReadServices {
-	    
-	/**
-	 * @param testName
-	 */
-	 public ReadAllTeachersTest(String testName) {
-		super(testName);
-	 }
 
-	 protected String getNameOfServiceToBeTested() {
-		return "ReadAllTeachers";
-	 }
+    /**
+     * @param testName
+     */
+    public ReadAllTeachersTest(String testName) {
+        super(testName);
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 7;
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "ReadAllTeachers";
+    }
+
+    protected int getNumberOfItemsToRetrieve() {
+        return 7;
+    }
 }

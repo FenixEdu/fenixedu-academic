@@ -12,49 +12,40 @@ import java.util.List;
  * @author Luis Cruz & Sara Ribeiro
  */
 
-public class InfoViewClassSchedule extends InfoObject
-{
+public class InfoViewClassSchedule extends InfoObject {
     protected InfoClass infoClass;
+
     protected List classLessons;
 
-    public InfoViewClassSchedule()
-    {
+    public InfoViewClassSchedule() {
     }
 
-    public InfoViewClassSchedule(InfoClass infoClass, List classLessons)
-    {
+    public InfoViewClassSchedule(InfoClass infoClass, List classLessons) {
         setInfoClass(infoClass);
         setClassLessons(classLessons);
     }
 
-    public List getClassLessons()
-    {
+    public List getClassLessons() {
         return classLessons;
     }
 
-    public InfoClass getInfoClass()
-    {
+    public InfoClass getInfoClass() {
         return infoClass;
     }
 
-    public void setClassLessons(List list)
-    {
+    public void setClassLessons(List list) {
         classLessons = list;
     }
 
-    public void setInfoClass(InfoClass class1)
-    {
+    public void setInfoClass(InfoClass class1) {
         infoClass = class1;
     }
 
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof InfoViewClassSchedule)
-        {
+        if (obj instanceof InfoViewClassSchedule) {
             InfoViewClassSchedule infoViewClassSchedule = (InfoViewClassSchedule) obj;
-            resultado =
-                getInfoClass().equals(infoViewClassSchedule.getInfoClass())
+            resultado = getInfoClass().equals(infoViewClassSchedule.getInfoClass())
                     && getClassLessons().size() == infoViewClassSchedule.getClassLessons().size();
         }
         return resultado;

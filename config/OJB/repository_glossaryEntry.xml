@@ -1,0 +1,28 @@
+<class-descriptor
+		class="Dominio.support.GlossaryEntry"
+		table="GLOSSARY_ENTRY"
+		>
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+		/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+		/>
+	<field-descriptor
+		name="term"
+		column="TERM"
+		jdbc-type="VARCHAR"
+		/>
+	<field-descriptor
+		name="definition"
+		column="DEFINITION"
+		jdbc-type="VARCHAR"
+		/>
+</class-descriptor>

@@ -27,40 +27,36 @@ import ServidorPersistente.publication.IPersistentAuthor;
  */
 public class ReadAuthorsToInsert implements IServico {
 
-	/**
-	 *  
-	 */
-	public ReadAuthorsToInsert() {
+    /**
+     *  
+     */
+    public ReadAuthorsToInsert() {
 
-	}
+    }
 
-	public String getNome() {
-		return "ReadAuthorsToInsert";
-	}
+    public String getNome() {
+        return "ReadAuthorsToInsert";
+    }
 
-	public List run(List idsInternalAuthors)
-		throws FenixServiceException {
-		List authors = new ArrayList();
+    public List run(List idsInternalAuthors) throws FenixServiceException {
+        List authors = new ArrayList();
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
 
-			Iterator iterator = idsInternalAuthors.iterator();
+            Iterator iterator = idsInternalAuthors.iterator();
 
-			while (iterator.hasNext()) {
-				Integer idInternal = (Integer) iterator.next();
-				IAuthor author =
-					(IAuthor) persistentAuthor.readByOID(
-						Author.class,
-						idInternal);
-				authors.add(author);
-			}
+            while (iterator.hasNext()) {
+                Integer idInternal = (Integer) iterator.next();
+                IAuthor author = (IAuthor) persistentAuthor.readByOID(Author.class, idInternal);
+                authors.add(author);
+            }
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return authors;
-	}
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+        return authors;
+    }
 
 }

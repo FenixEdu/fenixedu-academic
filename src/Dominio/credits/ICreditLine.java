@@ -9,14 +9,15 @@ import Dominio.ITeacher;
 /**
  * @author jpvl
  */
-public interface ICreditLine extends IDomainObject
-{
+public interface ICreditLine extends IDomainObject {
     /**
      * @return Returns the teacher.
      */
     public abstract ITeacher getTeacher();
+
     /**
-     * @param teacher The teacher to set.
+     * @param teacher
+     *            The teacher to set.
      */
     public abstract void setTeacher(ITeacher teacher);
 }

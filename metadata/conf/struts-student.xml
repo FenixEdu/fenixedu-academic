@@ -3,7 +3,7 @@
       "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
       "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
-    
+     
     <!-- ========== Data Source Configuration =============================== -->
 
     
@@ -59,13 +59,17 @@
       </form-bean>
       
       <!-- Student tests -->
- 	
- 	  <form-bean name="studentTestForm"
-                 type="ServidorApresentacao.formbeans.tests.TestForm"
-                 dynamic="true">
+	  <form-bean name="studentTestForm" 
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
         <form-property name="testCode" type="java.lang.String"/>
       </form-bean>
- 
+
+<!--
+	  <form-bean name="studentTestForm" 
+		type="ServidorApresentacao.formbeans.tests.TestForm">
+        <form-property name="testCode" type="java.lang.String"/>
+      </form-bean>
+-->      
        <form-bean name="groupEnrolmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -94,6 +98,7 @@
 		<form-property name="enrolledCurricularCoursesAfter" type="java.lang.Integer[]"/>
 		<form-property name="unenrolledCurricularCourses" type="java.lang.String[]"/>
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
+		<form-property name="courseType" type="java.lang.String"/>
 		<form-property name="isOptional" type="java.lang.String"/>
 	</form-bean>
 
@@ -180,10 +185,14 @@
 	  <action path="/studentShiftEnrollmentManager"
 	  	name="studentShiftEnrollmentForm"
         type="ServidorApresentacao.Action.student.enrollment.ShiftStudentEnrollmentManagerDispatchAction"
-		input="/dotIstPortal.do?prefix=/student&amp;page=/index.do" 
+		input="prepare-enrollment-view-warning"
         parameter="method"
         scope="request"
-        validate="false">                         
+        validate="false">
+			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+			/>
         <forward name="prepareEnrollmentViewWarning" path="prepare-enrollment-view-warning"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
 		<forward name="showShiftsEnrollment" path="show-shifts-enrollment"/>
@@ -197,6 +206,10 @@
 		parameter="method"
         scope="request"
         validate="false">                           
+			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+			/>
         <forward name="beginTransaction" path="/studentShiftEnrollmentManager.do?method=start&amp;firstTime=true"/>
         <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
     	<forward name="prepareShiftEnrollment" path="/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment" />
@@ -233,11 +246,6 @@
               name="shiftEnrollmentForm"
               validate="true">
         <forward name="sucess" path="/viewEnrollment.do"/>
-      </action>
-
-      <action type="ServidorApresentacao.Action.student.ChooseOtherCourseAction"
-              path="/chooseOtherCourse">
-        <forward name="sucess" path="/chooseOtherCourse.jsp"/>
       </action>
       
        <action type="ServidorApresentacao.Action.student.ExamEnrollmentManager"
@@ -491,11 +499,12 @@
           <!-- TESTS -->
       <action path="/studentTests"
 		    name="studentTestForm"
+		    attribute="studentTestForm"
 			input="/studentTests.do?method=prepareToDoTest"
-			scope="session"
+			scope="request"
 			parameter="method"
 			type="ServidorApresentacao.Action.student.StudentTestsAction"
-			validate="true">
+			validate="false">
 			<forward name="testsFirstPage" path="tests-First-Page"/>
 			<forward name="doTest" path="do-Test"/>
 			<forward name="testError" path="test-Error"/>
@@ -511,7 +520,7 @@
 			<forward name="viewGaugingTestsResults" path="definition.gaugingTestResults"/>
 		</action>  
     
-    	<!-- ********************* LEEC Enrollment ********************** -->
+    	<!-- *********************  Enrollment ********************** -->
     	<action	path="/studentCurricularCoursesEnrollment"
 				type="ServidorApresentacao.Action.student.enrollment.StudentCurricularCoursesEnrollmentDispatchAction"
 				name="curricularCoursesEnrollmentForm"				

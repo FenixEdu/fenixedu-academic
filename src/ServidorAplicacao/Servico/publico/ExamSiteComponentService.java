@@ -15,7 +15,7 @@ import Dominio.IExecutionYear;
 import ServidorAplicacao.Factory.ExamSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -26,44 +26,33 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class ExamSiteComponentService implements IService
-{
+public class ExamSiteComponentService implements IService {
 
-    public ExamSiteComponentService()
-    {
+    public ExamSiteComponentService() {
 
     }
 
-    public Object run(
-        ISiteComponent bodyComponent,
-        String executionYearName,
-        String executionPeriodName,
-        String degreeInitials,
-        String nameDegreeCurricularPlan,
-        List curricularYears)
-        throws FenixServiceException
-    {
+    public Object run(ISiteComponent bodyComponent, String executionYearName,
+            String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
+            List curricularYears) throws FenixServiceException {
 
         SiteView siteView = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-            IExecutionYear executionYear =
-                persistentExecutionYear.readExecutionYearByName(executionYearName);
+            IExecutionYear executionYear = persistentExecutionYear
+                    .readExecutionYearByName(executionYearName);
 
-            IExecutionPeriod executionPeriod =
-                persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+                    executionPeriodName, executionYear);
 
-            ICursoExecucao executionDegree =
-                executionDegreeDAO.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-                    degreeInitials,
-                    nameDegreeCurricularPlan,
-                    executionYear);
+            ICursoExecucao executionDegree = executionDegreeDAO
+                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
+                            nameDegreeCurricularPlan, executionYear);
             //			if (executionDegree != null) {
             //				infoExecutionDegree =
             //					Cloner.copyIExecutionDegree2InfoExecutionDegree(
@@ -71,16 +60,10 @@ public class ExamSiteComponentService implements IService
             //			}
             ExamSiteComponentBuilder componentBuilder = ExamSiteComponentBuilder.getInstance();
 
-            bodyComponent =
-                componentBuilder.getComponent(
-                    bodyComponent,
-                    executionPeriod,
-                    executionDegree,
-                    curricularYears);
+            bodyComponent = componentBuilder.getComponent(bodyComponent, executionPeriod,
+                    executionDegree, curricularYears);
             siteView = new SiteView(bodyComponent);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

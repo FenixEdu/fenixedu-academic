@@ -109,7 +109,11 @@
     	<required>false</required>
     	<rtexprvalue>true</rtexprvalue>
     </attribute>
-
+	<attribute>
+		<name>application</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
   </tag>
 
   <tag>

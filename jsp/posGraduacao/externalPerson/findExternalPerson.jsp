@@ -6,13 +6,13 @@
 <%@ page import="DataBeans.InfoExternalPerson" %>
 
 
-<h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insert"/></h2>
+<h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.find"/></h2>
 <center>
 <span class="error"><html:errors/></span>
 
 <br/>
 
-<html:form action="/insertExternalPerson.do?method=insert">
+<html:form action="/findExternalPerson.do?method=find">
 	<html:hidden property="page" value="1"/>
 
 	<table border="0" width="100%" cellspacing="3" cellpadding="10">
@@ -28,10 +28,13 @@
 			</td>
 	
 		</tr>
+	</table>
+	<p/>
+	<table>
 		<tr>
 			<td align="left" >
 				<bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/>:
-				<input type="text" name="externalPersonName" size="25" value=""/>
+				<input type="text" name="name" size="25" value=""/>
 				<html:submit styleClass="inputbuttonSmall">
 					<bean:message key="button.submit.masterDegree.externalPerson.find"/>
 				</html:submit>

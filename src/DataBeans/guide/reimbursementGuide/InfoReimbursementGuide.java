@@ -19,130 +19,117 @@ import Util.State;
  * 
  * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  *  
  */
-public class InfoReimbursementGuide extends InfoObject
-{
+public class InfoReimbursementGuide extends InfoObject {
 
-	protected Integer number;
-	protected InfoGuide infoGuide;
-	protected Calendar creationDate;
-	protected List infoReimbursementGuideSituations;
-	protected List infoReimbursementGuideEntries;
+    protected Integer number;
 
-	/**
-	 *  
-	 */
-	public InfoReimbursementGuide()
-	{
+    protected InfoGuide infoGuide;
 
-	}
+    protected Calendar creationDate;
 
-	/**
-	 * @param reimbursementGuideId
-	 */
-	public InfoReimbursementGuide(Integer reimbursementGuideId)
-	{
-		setIdInternal(reimbursementGuideId);
-	}
+    protected List infoReimbursementGuideSituations;
 
-	/**
-	 * @return
-	 */
-	public Calendar getCreationDate()
-	{
-		return creationDate;
-	}
+    protected List infoReimbursementGuideEntries;
 
-	/**
-	 * @param creationDate
-	 */
-	public void setCreationDate(Calendar creationDate)
-	{
-		this.creationDate = creationDate;
-	}
+    /**
+     *  
+     */
+    public InfoReimbursementGuide() {
 
-	/**
-	 * @return
-	 */
-	public InfoGuide getInfoGuide()
-	{
-		return infoGuide;
-	}
+    }
 
-	/**
-	 * @param paymentGuide
-	 */
-	public void setInfoGuide(InfoGuide paymentGuide)
-	{
-		this.infoGuide = paymentGuide;
-	}
+    /**
+     * @param reimbursementGuideId
+     */
+    public InfoReimbursementGuide(Integer reimbursementGuideId) {
+        setIdInternal(reimbursementGuideId);
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getNumber()
-	{
-		return number;
-	}
+    /**
+     * @return
+     */
+    public Calendar getCreationDate() {
+        return creationDate;
+    }
 
-	/**
-	 * @param number
-	 */
-	public void setNumber(Integer number)
-	{
-		this.number = number;
-	}
+    /**
+     * @param creationDate
+     */
+    public void setCreationDate(Calendar creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getInfoReimbursementGuideSituations()
-	{
-		return infoReimbursementGuideSituations;
-	}
+    /**
+     * @return
+     */
+    public InfoGuide getInfoGuide() {
+        return infoGuide;
+    }
 
-	/**
-	 * @param infoReimbursementGuideSituations
-	 */
-	public void setInfoReimbursementGuideSituations(List infoReimbursementGuideSituations)
-	{
-		this.infoReimbursementGuideSituations = infoReimbursementGuideSituations;
-	}
+    /**
+     * @param paymentGuide
+     */
+    public void setInfoGuide(InfoGuide paymentGuide) {
+        this.infoGuide = paymentGuide;
+    }
 
-	/**
-	 * @return
-	 */
-	public InfoReimbursementGuideSituation getActiveInfoReimbursementGuideSituation()
-	{
-		return (
-			InfoReimbursementGuideSituation) CollectionUtils
-				.find(getInfoReimbursementGuideSituations(), new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				InfoReimbursementGuideSituation situation = (InfoReimbursementGuideSituation) obj;
-				return situation.getState().getState().intValue() == State.ACTIVE;
-			}
-		});
-	}
+    /**
+     * @return
+     */
+    public Integer getNumber() {
+        return number;
+    }
 
-	/**
-	 * @return Returns the infoReimbursementGuideEntries.
-	 */
-	public List getInfoReimbursementGuideEntries()
-	{
-		return infoReimbursementGuideEntries;
-	}
+    /**
+     * @param number
+     */
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 
-	/**
-	 * @param infoReimbursementGuideEntries
-	 *            The infoReimbursementGuideEntries to set.
-	 */
-	public void setInfoReimbursementGuideEntries(List infoReimbursementGuideEntries)
-	{
-		this.infoReimbursementGuideEntries = infoReimbursementGuideEntries;
-	}
+    /**
+     * @return
+     */
+    public List getInfoReimbursementGuideSituations() {
+        return infoReimbursementGuideSituations;
+    }
+
+    /**
+     * @param infoReimbursementGuideSituations
+     */
+    public void setInfoReimbursementGuideSituations(List infoReimbursementGuideSituations) {
+        this.infoReimbursementGuideSituations = infoReimbursementGuideSituations;
+    }
+
+    /**
+     * @return
+     */
+    public InfoReimbursementGuideSituation getActiveInfoReimbursementGuideSituation() {
+        return (InfoReimbursementGuideSituation) CollectionUtils.find(
+                getInfoReimbursementGuideSituations(), new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        InfoReimbursementGuideSituation situation = (InfoReimbursementGuideSituation) obj;
+                        return situation.getState().getState().intValue() == State.ACTIVE;
+                    }
+                });
+    }
+
+    /**
+     * @return Returns the infoReimbursementGuideEntries.
+     */
+    public List getInfoReimbursementGuideEntries() {
+        return infoReimbursementGuideEntries;
+    }
+
+    /**
+     * @param infoReimbursementGuideEntries
+     *            The infoReimbursementGuideEntries to set.
+     */
+    public void setInfoReimbursementGuideEntries(List infoReimbursementGuideEntries) {
+        this.infoReimbursementGuideEntries = infoReimbursementGuideEntries;
+    }
 
 }

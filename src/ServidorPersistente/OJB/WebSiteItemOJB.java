@@ -13,15 +13,12 @@ import ServidorPersistente.IPersistentWebSiteItem;
 /**
  * @author Fernanda Quitério 23/09/2003
  */
-public class WebSiteItemOJB extends ObjectFenixOJB implements IPersistentWebSiteItem
-{
+public class WebSiteItemOJB extends PersistentObjectOJB implements IPersistentWebSiteItem {
 
     public IWebSiteItem readByWebSiteSectionAndName(IWebSiteSection webSiteSection, String title)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         IWebSiteItem item = null;
-        if (webSiteSection != null && title != null)
-        {
+        if (webSiteSection != null && title != null) {
             Criteria criteria = new Criteria();
 
             criteria.addEqualTo("webSiteSection.name", webSiteSection.getName());
@@ -33,11 +30,9 @@ public class WebSiteItemOJB extends ObjectFenixOJB implements IPersistentWebSite
     }
 
     public List readAllWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         List items = null;
-        if (webSiteSection != null)
-        {
+        if (webSiteSection != null) {
             Criteria criteria = new Criteria();
 
             criteria.addEqualTo("webSiteSection.name", webSiteSection.getName());
@@ -49,11 +44,9 @@ public class WebSiteItemOJB extends ObjectFenixOJB implements IPersistentWebSite
     }
 
     public List readPublishedWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection)
-            throws ExcepcaoPersistencia
-    {
+            throws ExcepcaoPersistencia {
         List items = null;
-        if (webSiteSection != null)
-        {
+        if (webSiteSection != null) {
             Criteria criteria = new Criteria();
 
             criteria.addEqualTo("webSiteSection.name", webSiteSection.getName());
@@ -65,8 +58,7 @@ public class WebSiteItemOJB extends ObjectFenixOJB implements IPersistentWebSite
         return items;
     }
 
-    public void delete(IWebSiteItem item) throws ExcepcaoPersistencia
-    {
+    public void delete(IWebSiteItem item) throws ExcepcaoPersistencia {
         super.delete(item);
     }
 

@@ -31,8 +31,7 @@ import Util.RoleType;
  * 
  * @author jpvl
  */
-public abstract class AbstractTeacherDepartmentAuthorization extends
-        AccessControlFilter {
+public abstract class AbstractTeacherDepartmentAuthorization extends AccessControlFilter {
 
     /*
      * (non-Javadoc)
@@ -40,8 +39,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest serviceRequest,
-            ServiceResponse serviceResponse) throws Exception {
+    public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse) throws Exception {
         IUserView requester = (IUserView) serviceRequest.getRequester();
         if ((requester == null)
                 || !AuthorizationUtils.containsRole(requester.getRoles(),
@@ -56,18 +54,14 @@ public abstract class AbstractTeacherDepartmentAuthorization extends
         if (teacherId != null) {
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester
-                    .getUtilizador());
+            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
-                    teacherId);
+            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
-            IDepartment teacherDepartment = departmentDAO
-                    .readByTeacher(teacher);
+            IDepartment teacherDepartment = departmentDAO.readByTeacher(teacher);
 
-            List departmentsWithAccessGranted = requesterPerson
-                    .getManageableDepartmentCredits();
+            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 
             if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
                 throw new NotAuthorizedException();
@@ -80,6 +74,6 @@ public abstract class AbstractTeacherDepartmentAuthorization extends
      * @param arguments
      * @return
      */
-    protected abstract Integer getTeacherId(Object[] arguments,
-            ISuportePersistente sp) throws FenixServiceException, ExcepcaoPersistencia;
+    protected abstract Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
+            throws FenixServiceException, ExcepcaoPersistencia;
 }

@@ -33,8 +33,7 @@ public class InsertItem implements IService {
         IPersistentItem persistentItem = null;
         try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
             persistentItem = persistentSuport.getIPersistentItem();
 
@@ -70,28 +69,24 @@ public class InsertItem implements IService {
 
     //infoItem with an infoSection
 
-    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode,
-            InfoItem infoItem) throws FenixServiceException {
+    public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem)
+            throws FenixServiceException {
 
         IItem item = null;
         ISection section = null;
 
         try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentSection persistentSection = persistentSuport
-                    .getIPersistentSection();
-            IPersistentItem persistentItem = persistentSuport
-                    .getIPersistentItem();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+            IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
 
-            section = (ISection) persistentSection.readByOID(Section.class,
-                    sectionCode);
+            section = (ISection) persistentSection.readByOID(Section.class, sectionCode);
 
             infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
             item = Cloner.copyInfoItem2IItem(infoItem);
             persistentItem.simpleLockWrite(item);
-            Integer itemOrder = new Integer(organizeExistingItemsOrder(section,
-                    infoItem.getItemOrder().intValue()));
+            Integer itemOrder = new Integer(organizeExistingItemsOrder(section, infoItem.getItemOrder()
+                    .intValue()));
 
             item.setItemOrder(itemOrder);
 

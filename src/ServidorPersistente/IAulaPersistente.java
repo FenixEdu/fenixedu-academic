@@ -30,20 +30,21 @@ public interface IAulaPersistente extends IPersistentObject {
 
     public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
+
     public List readByRoomNamesAndExecutionPeriod(List roomNames, IExecutionPeriod executionPeriod)
-    throws ExcepcaoPersistencia;    
+            throws ExcepcaoPersistencia;
 
     public List readLessonsInBroadPeriod(IAula newLesson, IAula oldLesson,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
     public List readLessonsInBroadPeriodInAnyRoom(IAula lesson, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
-		
-	public List readLessonsByStudent(String username) throws ExcepcaoPersistencia;
-	public List readLessonsByShift(ITurno shift) throws ExcepcaoPersistencia;
-	public List readLessonsByShiftAndLessonType(
-			ITurno shift,
-			TipoAula lessonType)
-			throws ExcepcaoPersistencia;
+
+    public List readLessonsByStudent(String username) throws ExcepcaoPersistencia;
+
+    public List readLessonsByShift(ITurno shift) throws ExcepcaoPersistencia;
+
+    public List readLessonsByShiftAndLessonType(ITurno shift, TipoAula lessonType)
+            throws ExcepcaoPersistencia;
 
 }

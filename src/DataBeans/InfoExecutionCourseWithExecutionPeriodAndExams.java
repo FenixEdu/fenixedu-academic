@@ -39,13 +39,13 @@ public class InfoExecutionCourseWithExecutionPeriodAndExams extends
         });
         return associatedInfoExams;
     }
-    
+
     public static InfoExecutionCourse newInfoFromDomain(IExecutionCourse executionCourse) {
         InfoExecutionCourseWithExecutionPeriodAndExams infoExecutionCourse = null;
-        if(executionCourse != null) {
+        if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourseWithExecutionPeriodAndExams();
             infoExecutionCourse.copyFromDomain(executionCourse);
         }
-        return infoExecutionCourse;        
+        return infoExecutionCourse;
     }
 }

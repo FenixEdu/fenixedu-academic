@@ -13,17 +13,15 @@ import Dominio.IDomainObject;
 /**
  * @author jpvl
  */
-public abstract class TransformationUtils
-{
-    
-    public static List transformToIds(List domainList)
-    {
+public abstract class TransformationUtils {
+
+    public static List transformToIds(List domainList) {
         return (List) CollectionUtils.collect(domainList, new Transformer() {
 
-            public Object transform(Object input)
-            {
+            public Object transform(Object input) {
                 IDomainObject domainObject = (IDomainObject) input;
                 return domainObject == null ? null : domainObject.getIdInternal();
-            }});
+            }
+        });
     }
 }

@@ -6,7 +6,7 @@
 <bean:define id="infoExecutionDegreesNamesList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>
 <bean:define id="yearsList" name="<%= SessionConstants.ENROLMENT_YEAR_LIST_KEY %>" scope="request"/>
 <bean:define id="semestersList" name="<%= SessionConstants.ENROLMENT_SEMESTER_LIST_KEY %>"  scope="request"/>
-<h2><bean:message key="title.student.enrolment.without.rules"/></h2>
+<h2><bean:message key="title.student.enrolment.without.rules" bundle="DEGREE_ADM_OFFICE"/></h2>
 <span class="error"><html:errors/></span>
 <br />
 <html:form action="/courseEnrolmentWithoutRulesManagerDA">

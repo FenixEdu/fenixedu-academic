@@ -1,42 +1,59 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for Dominio.EnrolmentPeriod -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.EnrolmentPeriod" table="ENROLMENT_PERIOD">
+<class-descriptor class="Dominio.EnrolmentPeriod">
+	<extent-class class-ref="Dominio.EnrolmentPeriodInCurricularCourses" />
+	<extent-class class-ref="Dominio.EnrolmentPeriodInClasses" />
 	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+	/>
+</class-descriptor>
+
+<class-descriptor
+		class="Dominio.EnrolmentPeriodInCurricularCourses"
+		table="ENROLMENT_PERIOD">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
 	/>
 	<field-descriptor
-		name="keyDegreeCurricularPlan"
-		column="KEY_DEGREE_CURRICULAR_PLAN"
-		jdbc-type="INTEGER"
+			name="ackOptLock"
+			column="ACK_OPT_LOCK"
+			jdbc-type="INTEGER"
+			locking="true"
 	/>
 	<field-descriptor
-		name="keyExecutionPeriod"
-		column="KEY_EXECUTION_PERIOD"
-		jdbc-type="INTEGER"
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
-		name="startDate"
-		column="START_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+			name="keyDegreeCurricularPlan"
+			column="KEY_DEGREE_CURRICULAR_PLAN"
+			jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="endDate"
-		column="END_DATE"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+			name="keyExecutionPeriod"
+			column="KEY_EXECUTION_PERIOD"
+			jdbc-type="INTEGER"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor
+			name="startDate"
+			column="START_DATE"
+			jdbc-type="DATE"
+			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+			name="endDate"
+			column="END_DATE"
+			jdbc-type="DATE"
+			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
 
 	<reference-descriptor
 			name="degreeCurricularPlan"
@@ -44,7 +61,6 @@
 			proxy="true">
 		<foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</reference-descriptor>
-
 	<reference-descriptor
 			name="executionPeriod"
 			class-ref="Dominio.ExecutionPeriod"
@@ -53,6 +69,63 @@
 	</reference-descriptor>
 </class-descriptor>
 
+<class-descriptor
+		class="Dominio.EnrolmentPeriodInClasses"
+		table="ENROLMENT_PERIOD">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+	/>
+	<field-descriptor
+			name="ackOptLock"
+			column="ACK_OPT_LOCK"
+			jdbc-type="INTEGER"
+			locking="true"
+	/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+			name="keyDegreeCurricularPlan"
+			column="KEY_DEGREE_CURRICULAR_PLAN"
+			jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+			name="keyExecutionPeriod"
+			column="KEY_EXECUTION_PERIOD"
+			jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+			name="startDate"
+			column="START_DATE"
+			jdbc-type="DATE"
+			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+			name="endDate"
+			column="END_DATE"
+			jdbc-type="DATE"
+			conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+
+	<reference-descriptor
+			name="degreeCurricularPlan"
+			class-ref="Dominio.DegreeCurricularPlan"
+			proxy="true">
+		<foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="executionPeriod"
+			class-ref="Dominio.ExecutionPeriod"
+			proxy="true">
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>
+</class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourse -->
@@ -176,6 +249,11 @@
 	<field-descriptor
 		name="mandatoryEnrollment"
 		column="MANDATORY_ENROLLMENT"
+		jdbc-type="BIT"
+	/>
+	<field-descriptor
+		name="enrollmentAllowed"
+		column="ENROLLMENT_ALLOWED"
 		jdbc-type="BIT"
 	/>
 	<reference-descriptor
@@ -586,6 +664,7 @@
 	<reference-descriptor
 			name="enrolment"
 			class-ref="Dominio.Enrolment"
+			refresh="true"
 			proxy="true">
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>

@@ -5,6 +5,8 @@
 
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.SituationOfGuide" %>
+<%@ page import="Util.DocumentType" %>
+<%@ page import="DataBeans.InfoGuideEntry" %>
 
    	  <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session" type="DataBeans.InfoGuide"/>  		
       <bean:define id="number" name="infoGuide" property="number" />
@@ -121,8 +123,19 @@
            			<tr>
             			<td><bean:write name="guideEntry" property="documentType"/></td>
             			<td><bean:write name="guideEntry" property="description"/></td>
-            			<td><input type="text" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' ></td>
-            			<td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>
+						
+						<% if(((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.GRATUITY_TYPE) || ((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.INSURANCE_TYPE)){ %>
+							
+							<input type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
+							<td><bean:write name="entryQuantity" /></td>
+            			
+						<%	}else{ %>
+						
+							<td><input type="text" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' ></td>
+						
+						<% } %>
+													
+						<td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>
 		   			</tr>
         		</logic:iterate>
 

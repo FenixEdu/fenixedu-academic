@@ -25,20 +25,15 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoAula;
+
 /**
  * @author João Mota
  */
 
-public class ShowShiftListAction extends Action
-{
+public class ShowShiftListAction extends Action {
 
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -54,38 +49,25 @@ public class ShowShiftListAction extends Action
         TipoAula lessonType = null;
 
         List infoEnrollmentWithShift = iSE.getInfoEnrolmentWithShift();
-        executionCourse =
-            ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (infoEnrollmentWithShift
-                .get(indexi.intValue())))
-                .getInfoExecutionCourse();
+        executionCourse = ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (infoEnrollmentWithShift
+                .get(indexi.intValue()))).getInfoExecutionCourse();
 
-        lessonType =
-            (
-                (TypeLessonAndInfoShift) ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (iSE
-                    .getInfoEnrolmentWithShift()
-                    .get(indexi.intValue())))
-                .getTypeLessonsAndInfoShifts()
-                .get(indexj.intValue()))
-                .getTypeLesson();
+        lessonType = ((TypeLessonAndInfoShift) ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (iSE
+                .getInfoEnrolmentWithShift().get(indexi.intValue()))).getTypeLessonsAndInfoShifts().get(
+                indexj.intValue())).getTypeLesson();
 
         Object[] argsReadShiftsByType = { executionCourse, lessonType };
 
-        ArrayList shiftsList = new ArrayList();
+        List shiftsList = new ArrayList();
 
-        try
-        {
-            shiftsList =
-                (ArrayList) ServiceUtils.executeService(
-                    userView,
-                    "ReadShiftsByTypeFromExecutionCourse",
-                    argsReadShiftsByType);
-            if (!shiftsList.isEmpty())
-            {
+        try {
+            shiftsList = (ArrayList) ServiceUtils.executeService(userView,
+                    "ReadShiftsByTypeFromExecutionCourse", argsReadShiftsByType);
+            if (!shiftsList.isEmpty()) {
                 request.setAttribute("shiftsList", shiftsList);
             }
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace(System.out);
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unableToReadShifts", new ActionError("errors.unableToReadShifts"));
@@ -93,28 +75,24 @@ public class ShowShiftListAction extends Action
             return mapping.getInputForward();
         }
 
-        try
-        {
-            ArrayList vacancies = new ArrayList();
+        try {
+            List vacancies = new ArrayList();
             Iterator iterator = shiftsList.iterator();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 InfoShift element = (InfoShift) iterator.next();
-                Object[] args = { new ShiftKey(element.getNome(), element.getInfoDisciplinaExecucao())};
-                ArrayList students =
-                    (ArrayList) ServiceUtils.executeService(userView, "LerAlunosDeTurno", args);
+                Object[] args = { new ShiftKey(element.getNome(), element.getInfoDisciplinaExecucao()) };
+                List students = (ArrayList) ServiceUtils.executeService(userView, "LerAlunosDeTurno",
+                        args);
                 Integer vacancy = element.getLotacao();
 
                 vacancy = new Integer(vacancy.intValue() - students.size());
                 vacancies.add(vacancy);
             }
 
-            if (!vacancies.isEmpty())
-            {
+            if (!vacancies.isEmpty()) {
                 request.setAttribute("vacancies", vacancies);
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace(System.out);
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unableToReadVacancies", new ActionError("errors.unableToReadVacancies"));

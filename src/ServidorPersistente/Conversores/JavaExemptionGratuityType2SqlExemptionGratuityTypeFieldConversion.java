@@ -11,33 +11,28 @@ import Util.ExemptionGratuityType;
 /**
  * 
  * @author Tânia Pousão
- *         
+ *  
  */
 
-public class JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion
-    implements FieldConversion
-{
+public class JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion implements
+        FieldConversion {
 
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof ExemptionGratuityType)
-        {
-        	ExemptionGratuityType exemptionGratuityType = (ExemptionGratuityType) source;
-        	return new Integer(exemptionGratuityType.getValue());
-        } 
-            return source;
-        
+    public Object javaToSql(Object source) {
+        if (source instanceof ExemptionGratuityType) {
+            ExemptionGratuityType exemptionGratuityType = (ExemptionGratuityType) source;
+            return new Integer(exemptionGratuityType.getValue());
+        }
+        return source;
+
     }
 
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Integer)
-        {
+    public Object sqlToJava(Object source) {
+        if (source instanceof Integer) {
             Integer src = (Integer) source;
             return ExemptionGratuityType.getEnum(src.intValue());
-        } 
-            return source;
-        
+        }
+        return source;
+
     }
 
 }

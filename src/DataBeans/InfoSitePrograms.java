@@ -6,48 +6,48 @@ package DataBeans;
 
 import java.util.List;
 
-import DataBeans.ISiteComponent;
-
 /**
  * @author Tânia Nunes
- *
+ *  
  */
-public class InfoSitePrograms extends DataTranferObject implements ISiteComponent{
-	private List infoCurriculums;
-	private List infoCurricularCourses;
+public class InfoSitePrograms extends DataTranferObject implements ISiteComponent {
+    private List infoCurriculums;
 
-	/**
-	 * @return
-	 */
-	public List getInfoCurricularCourses() {
-		return infoCurricularCourses;
-	}
+    private List infoCurricularCourses;
 
-	/**
-	 * @return
-	 */
-	public List getInfoCurriculums() {
-		return infoCurriculums;
-	}
+    /**
+     * @return
+     */
+    public List getInfoCurricularCourses() {
+        return infoCurricularCourses;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoCurricularCourses(List list) {
-		infoCurricularCourses = list;
-	}
+    /**
+     * @return
+     */
+    public List getInfoCurriculums() {
+        return infoCurriculums;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoCurriculums(List list) {
-		infoCurriculums = list;
-	}
-	/**
-	 * 
-	 */
-	public InfoSitePrograms() {
-		super();
-			
-		}
+    /**
+     * @param list
+     */
+    public void setInfoCurricularCourses(List list) {
+        infoCurricularCourses = list;
+    }
+
+    /**
+     * @param list
+     */
+    public void setInfoCurriculums(List list) {
+        infoCurriculums = list;
+    }
+
+    /**
+     *  
+     */
+    public InfoSitePrograms() {
+        super();
+
+    }
 }

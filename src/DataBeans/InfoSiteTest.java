@@ -10,49 +10,48 @@ import java.util.List;
  * @author Susana Fernandes
  */
 public class InfoSiteTest extends DataTranferObject implements ISiteComponent {
-	private InfoTest infoTest;
-	private List infoTestQuestions;
-	private InfoExecutionCourse executionCourse;
+    private InfoTest infoTest;
 
-	public InfoSiteTest() {
-	}
+    private List infoTestQuestions;
 
-	public List getInfoTestQuestions() {
-		return infoTestQuestions;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public void setInfoTestQuestions(List list) {
-		infoTestQuestions = list;
-	}
+    public InfoSiteTest() {
+    }
 
-	public InfoTest getInfoTest() {
-		return infoTest;
-	}
+    public List getInfoTestQuestions() {
+        return infoTestQuestions;
+    }
 
-	public void setInfoTest(InfoTest test) {
-		infoTest = test;
-	}
+    public void setInfoTestQuestions(List list) {
+        infoTestQuestions = list;
+    }
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public InfoTest getInfoTest() {
+        return infoTest;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
+    public void setInfoTest(InfoTest test) {
+        infoTest = test;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoSiteTest) {
-			InfoSiteTest infoSiteTest = (InfoSiteTest) obj;
-			result =
-				getExecutionCourse().equals(infoSiteTest.getExecutionCourse())
-					&& getInfoTest().equals(infoSiteTest.getInfoTest())
-					&& getInfoTestQuestions().containsAll(
-						infoSiteTest.getInfoTestQuestions())
-					&& infoSiteTest.getInfoTestQuestions().containsAll(
-						getInfoTestQuestions());
-		}
-		return result;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
+
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoSiteTest) {
+            InfoSiteTest infoSiteTest = (InfoSiteTest) obj;
+            result = getExecutionCourse().equals(infoSiteTest.getExecutionCourse())
+                    && getInfoTest().equals(infoSiteTest.getInfoTest())
+                    && getInfoTestQuestions().containsAll(infoSiteTest.getInfoTestQuestions())
+                    && infoSiteTest.getInfoTestQuestions().containsAll(getInfoTestQuestions());
+        }
+        return result;
+    }
 }

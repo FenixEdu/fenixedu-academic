@@ -11,127 +11,109 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CurricularCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.OJB.ObjectFenixOJB;
+import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz
  *  
  */
-public class DistributedCachePerformanceTest extends ObjectFenixOJB
-{
+public class DistributedCachePerformanceTest extends PersistentObjectOJB {
 
-	private static SuportePersistenteOJB persistentSupport;
-	private static DistributedCachePerformanceTest cacheTest;
+    private static SuportePersistenteOJB persistentSupport;
 
-	private static Calendar startTime;
-	private static Calendar endTime;
-	
-	private static Class classToRead = CurricularCourse.class;
+    private static DistributedCachePerformanceTest cacheTest;
 
-	static {
-		try
-		{
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			cacheTest = new DistributedCachePerformanceTest();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+    private static Calendar startTime;
 
-	public DistributedCachePerformanceTest()
-	{
-		super();
-	}
+    private static Calendar endTime;
 
-	public static void main(String[] args)
-	{
-		System.out.println("   ### Testing distributed cache performance ###");
-		try
-		{
-			// Make a bogus db connection so that initialization overheads
-			// don't influence test results.
-			warmUp();
-			
-			// Do a couple of reads...
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			
-			clearCache();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-			readAlotOfObjects();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+    private static Class classToRead = CurricularCourse.class;
 
-	/**
-	 * 
-	 */
-	private static void clearCache() throws ExcepcaoPersistencia
-	{
-		persistentSupport.iniciarTransaccao();
-		persistentSupport.clearCache();
-		System.out.println("Cache cleared.");
-		persistentSupport.confirmarTransaccao();
-	}
+    static {
+        try {
+            persistentSupport = SuportePersistenteOJB.getInstance();
+            cacheTest = new DistributedCachePerformanceTest();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * 
-	 */
-	private static void warmUp() throws ExcepcaoPersistencia
-	{
-		persistentSupport.iniciarTransaccao();
-		persistentSupport.confirmarTransaccao();
-	}
+    public DistributedCachePerformanceTest() {
+        super();
+    }
 
-	private static void readAlotOfObjects() throws ExcepcaoPersistencia
-	{
-		persistentSupport.iniciarTransaccao();
-		startTime = Calendar.getInstance();
-		List objects = cacheTest.doTheRead();
-		endTime = Calendar.getInstance();
-		System.out.println(
-			"Read a total of "
-				+ objects.size()
-				+ " "
-				+ classToRead.getName()
-				+ " in "
-				+ cacheTest.calculateServiceExecutionTime(startTime, endTime)
-				+ " ms");
-		persistentSupport.confirmarTransaccao();
-	}
+    public static void main(String[] args) {
+        System.out.println("   ### Testing distributed cache performance ###");
+        try {
+            // Make a bogus db connection so that initialization overheads
+            // don't influence test results.
+            warmUp();
 
-	private List doTheRead() throws ExcepcaoPersistencia
-	{
-		return queryList(classToRead, new Criteria());
-	}
+            // Do a couple of reads...
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
 
-	private long calculateServiceExecutionTime(Calendar serviceStartTime, Calendar serviceEndTime)
-	{
-		return serviceEndTime.getTimeInMillis() - serviceStartTime.getTimeInMillis();
-	}
+            clearCache();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+            readAlotOfObjects();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *  
+     */
+    private static void clearCache() throws ExcepcaoPersistencia {
+        persistentSupport.iniciarTransaccao();
+        persistentSupport.clearCache();
+        System.out.println("Cache cleared.");
+        persistentSupport.confirmarTransaccao();
+    }
+
+    /**
+     *  
+     */
+    private static void warmUp() throws ExcepcaoPersistencia {
+        persistentSupport.iniciarTransaccao();
+        persistentSupport.confirmarTransaccao();
+    }
+
+    private static void readAlotOfObjects() throws ExcepcaoPersistencia {
+        persistentSupport.iniciarTransaccao();
+        startTime = Calendar.getInstance();
+        List objects = cacheTest.doTheRead();
+        endTime = Calendar.getInstance();
+        System.out.println("Read a total of " + objects.size() + " " + classToRead.getName() + " in "
+                + cacheTest.calculateServiceExecutionTime(startTime, endTime) + " ms");
+        persistentSupport.confirmarTransaccao();
+    }
+
+    private List doTheRead() throws ExcepcaoPersistencia {
+        return queryList(classToRead, new Criteria());
+    }
+
+    private long calculateServiceExecutionTime(Calendar serviceStartTime, Calendar serviceEndTime) {
+        return serviceEndTime.getTimeInMillis() - serviceStartTime.getTimeInMillis();
+    }
 
 }

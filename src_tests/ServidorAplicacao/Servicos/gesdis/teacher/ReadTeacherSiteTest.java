@@ -27,53 +27,47 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jmota
  */
-public class ReadTeacherSiteTest extends TestCaseReadServices
-{
+public class ReadTeacherSiteTest extends TestCaseReadServices {
 
     /**
-	 * @param testName
-	 */
-    public ReadTeacherSiteTest(String testName)
-    {
+     * @param testName
+     */
+    public ReadTeacherSiteTest(String testName) {
         super(testName);
 
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-    protected String getNameOfServiceToBeTested()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested() {
         return "ReadExecutionCourseSite";
 
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
         ISuportePersistente sp = null;
         IExecutionYear executionYear = null;
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -85,18 +79,15 @@ public class ReadTeacherSiteTest extends TestCaseReadServices
             executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
             IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
-            executionCourse =
-                idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
+            executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",
+                    executionPeriod);
 
-            InfoExecutionCourse infoExecutionCourse =
-                (InfoExecutionCourse) Cloner.get(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             Object[] args = { infoExecutionCourse };
 
             sp.confirmarTransaccao();
             return args;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
         }
 
@@ -104,30 +95,27 @@ public class ReadTeacherSiteTest extends TestCaseReadServices
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-    protected int getNumberOfItemsToRetrieve()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve() {
 
         return 0;
 
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-    protected Object getObjectToCompare()
-    {
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+     */
+    protected Object getObjectToCompare() {
         ISuportePersistente sp = null;
         IExecutionYear executionYear = null;
         IExecutionPeriod executionPeriod = null;
         IExecutionCourse executionCourse = null;
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
@@ -139,11 +127,10 @@ public class ReadTeacherSiteTest extends TestCaseReadServices
             executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
             IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
-            executionCourse =
-                idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
+            executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",
+                    executionPeriod);
 
-            InfoExecutionCourse infoExecutionCourse =
-                (InfoExecutionCourse) Cloner.get(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             List infoSections = new ArrayList();
             InfoSite infoSite = new InfoSite(infoExecutionCourse);
             infoSections.add(new InfoSection("Seccao1deTFCI", new Integer(0), infoSite, null));
@@ -154,17 +141,14 @@ public class ReadTeacherSiteTest extends TestCaseReadServices
             sp.confirmarTransaccao();
 
             return infoSite;
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             System.out.println("failed setting up the test data");
         }
 
         return null;
     }
 
-    protected boolean needsAuthorization()
-    {
+    protected boolean needsAuthorization() {
         return true;
     }
 }

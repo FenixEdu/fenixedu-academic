@@ -9,93 +9,99 @@ import java.util.ListIterator;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 public class InfoSiteStudentGroup extends DataTranferObject implements ISiteComponent {
 
-	private List infoSiteStudentInformationList;
-	private InfoStudentGroup infoStudentGroup;
-	private Object nrOfElements;
+    private List infoSiteStudentInformationList;
 
-	/**
-	* @return
-	*/
-	public InfoStudentGroup getInfoStudentGroup() {
-		return infoStudentGroup;
-	}
+    private InfoStudentGroup infoStudentGroup;
 
-	/**
-	* @param list
-	*/
-	public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
-		this.infoStudentGroup = infoStudentGroup;
-	}
+    private Object nrOfElements;
 
-	/**
-	* @return
-	*/
-	public Object getNrOfElements() {
-		return nrOfElements;
-	}
+    /**
+     * @return
+     */
+    public InfoStudentGroup getInfoStudentGroup() {
+        return infoStudentGroup;
+    }
 
-	/**
-	* @param list
-	*/
-	public void setNrOfElements(Object nrOfElements) {
-		this.nrOfElements = nrOfElements;
-	}
+    /**
+     * @param list
+     */
+    public void setInfoStudentGroup(InfoStudentGroup infoStudentGroup) {
+        this.infoStudentGroup = infoStudentGroup;
+    }
 
-	/**
-	* @return
-	*/
-	public List getInfoSiteStudentInformationList() {
-		return infoSiteStudentInformationList;
-	}
+    /**
+     * @return
+     */
+    public Object getNrOfElements() {
+        return nrOfElements;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setInfoSiteStudentInformationList(List infoSiteStudentInformationList) {
-		this.infoSiteStudentInformationList = infoSiteStudentInformationList;
-	}
+    /**
+     * @param list
+     */
+    public void setNrOfElements(Object nrOfElements) {
+        this.nrOfElements = nrOfElements;
+    }
 
-	public boolean equals(Object objectToCompare) {
-		boolean result = false;
+    /**
+     * @return
+     */
+    public List getInfoSiteStudentInformationList() {
+        return infoSiteStudentInformationList;
+    }
 
-		if (objectToCompare instanceof InfoSiteStudentGroup) {
-			if (this.getInfoStudentGroup() == null && ((InfoSiteStudentGroup) objectToCompare).getInfoStudentGroup() == null)
-				result = true;
-			else
-				result = (this.getInfoStudentGroup().equals(((InfoSiteStudentGroup) objectToCompare).getInfoStudentGroup()));
+    /**
+     * @param list
+     */
+    public void setInfoSiteStudentInformationList(List infoSiteStudentInformationList) {
+        this.infoSiteStudentInformationList = infoSiteStudentInformationList;
+    }
 
-		}
+    public boolean equals(Object objectToCompare) {
+        boolean result = false;
 
-		if (((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList() == null
-			&& this.getInfoSiteStudentInformationList() == null
-			&& result) {
+        if (objectToCompare instanceof InfoSiteStudentGroup) {
+            if (this.getInfoStudentGroup() == null
+                    && ((InfoSiteStudentGroup) objectToCompare).getInfoStudentGroup() == null)
+                result = true;
+            else
+                result = (this.getInfoStudentGroup().equals(((InfoSiteStudentGroup) objectToCompare)
+                        .getInfoStudentGroup()));
 
-			return true;
-		}
+        }
 
-		if (((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList() == null
-			|| this.getInfoSiteStudentInformationList() == null
-			|| ((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList().size()
-				!= this.getInfoSiteStudentInformationList().size()) {
+        if (((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList() == null
+                && this.getInfoSiteStudentInformationList() == null && result) {
 
-			return false;
-		}
+            return true;
+        }
 
-		ListIterator iter1 = ((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList().listIterator();
-		ListIterator iter2 = this.getInfoSiteStudentInformationList().listIterator();
-		while (result && iter1.hasNext()) {
-			InfoSiteStudentInformation infoSiteStudentInformation1 = (InfoSiteStudentInformation) iter1.next();
-			InfoSiteStudentInformation infoSiteStudentInformation2 = (InfoSiteStudentInformation) iter2.next();
+        if (((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList() == null
+                || this.getInfoSiteStudentInformationList() == null
+                || ((InfoSiteStudentGroup) objectToCompare).getInfoSiteStudentInformationList().size() != this
+                        .getInfoSiteStudentInformationList().size()) {
 
-			if (!infoSiteStudentInformation1.equals(infoSiteStudentInformation2)) {
+            return false;
+        }
 
-				result = false;
-			}
-		}
-		return result;
-	}
+        ListIterator iter1 = ((InfoSiteStudentGroup) objectToCompare)
+                .getInfoSiteStudentInformationList().listIterator();
+        ListIterator iter2 = this.getInfoSiteStudentInformationList().listIterator();
+        while (result && iter1.hasNext()) {
+            InfoSiteStudentInformation infoSiteStudentInformation1 = (InfoSiteStudentInformation) iter1
+                    .next();
+            InfoSiteStudentInformation infoSiteStudentInformation2 = (InfoSiteStudentInformation) iter2
+                    .next();
+
+            if (!infoSiteStudentInformation1.equals(infoSiteStudentInformation2)) {
+
+                result = false;
+            }
+        }
+        return result;
+    }
 }

@@ -10,76 +10,61 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
  * @author Leonor Almeida
- * @author Sérgio Montelobo 
- *
+ * @author Sérgio Montelobo
+ *  
  */
-public abstract class SummaryBelongsExecutionCourseTest
-	extends ServiceNeedsAuthenticationTestCase {
+public abstract class SummaryBelongsExecutionCourseTest extends ServiceNeedsAuthenticationTestCase {
 
-	protected SummaryBelongsExecutionCourseTest(String name) {
-		super(name);
-	}
+    protected SummaryBelongsExecutionCourseTest(String name) {
+        super(name);
+    }
 
-	public void testSummaryBelongsExecutionCourse() {
+    public void testSummaryBelongsExecutionCourse() {
 
-		Object serviceArguments[] = getAuthorizeArguments();
+        Object serviceArguments[] = getAuthorizeArguments();
 
-		try {
-			ServiceManagerServiceFactory.executeService(
-				userView,
-				getNameOfServiceToBeTested(),
-				serviceArguments);
-			System.out.println(
-				"testSummaryBelongsExecutionCourse was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+        try {
+            ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            System.out.println("testSummaryBelongsExecutionCourse was SUCCESSFULY runned by service: "
+                    + getNameOfServiceToBeTested());
 
-		}
-		catch (NotAuthorizedException ex) {
-			fail(
-				getNameOfServiceToBeTested()
-					+ " testSummaryBelongsExecutionCourse "
-					+ ex);
-		}
-		catch (Exception ex) {
-			fail(
-				getNameOfServiceToBeTested()
-					+ " testSummaryBelongsExecutionCourse "
-					+ ex);
-		}
-	}
+        } catch (NotAuthorizedException ex) {
+            fail(getNameOfServiceToBeTested() + " testSummaryBelongsExecutionCourse " + ex);
+        } catch (Exception ex) {
+            fail(getNameOfServiceToBeTested() + " testSummaryBelongsExecutionCourse " + ex);
+        }
+    }
 
-	public void testSummaryNotBelongsExecutionCourse() {
+    public void testSummaryNotBelongsExecutionCourse() {
 
-		Object serviceArguments[] = getTestSummaryUnsuccessfullArguments();
+        Object serviceArguments[] = getTestSummaryUnsuccessfullArguments();
 
-		try {
-			ServiceManagerServiceFactory.executeService(
-				userView3,
-				getNameOfServiceToBeTested(),
-				serviceArguments);
-			fail(
-				getNameOfServiceToBeTested()
-					+ " testSummaryNotBelongsExecutionCourse");
-		}
-		catch (NotAuthorizedException ex) {
-			System.out.println(
-				"testItemNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-		}
-		catch (Exception ex) {
-			fail(
-				getNameOfServiceToBeTested()
-					+ " testSummaryNotBelongsExecutionCourse" + ex);
-		}
-	}
+        try {
+            ServiceManagerServiceFactory.executeService(userView3, getNameOfServiceToBeTested(),
+                    serviceArguments);
+            fail(getNameOfServiceToBeTested() + " testSummaryNotBelongsExecutionCourse");
+        } catch (NotAuthorizedException ex) {
+            System.out.println("testItemNotBelongsExecutionCourse was SUCCESSFULY runned by service: "
+                    + getNameOfServiceToBeTested());
+        } catch (Exception ex) {
+            fail(getNameOfServiceToBeTested() + " testSummaryNotBelongsExecutionCourse" + ex);
+        }
+    }
 
-	protected abstract Object[] getAuthorizeArguments();
-	protected abstract String[] getAuthenticatedAndAuthorizedUser();
-	protected abstract String getDataSetFilePath();
-	protected abstract String getNameOfServiceToBeTested();
-	protected abstract String[] getNotAuthenticatedUser();
-	protected abstract String[] getAuthenticatedAndUnauthorizedUser();
-	protected abstract String getApplication();
+    protected abstract Object[] getAuthorizeArguments();
 
-	protected abstract Object[] getTestSummaryUnsuccessfullArguments();
+    protected abstract String[] getAuthenticatedAndAuthorizedUser();
+
+    protected abstract String getDataSetFilePath();
+
+    protected abstract String getNameOfServiceToBeTested();
+
+    protected abstract String[] getNotAuthenticatedUser();
+
+    protected abstract String[] getAuthenticatedAndUnauthorizedUser();
+
+    protected abstract String getApplication();
+
+    protected abstract Object[] getTestSummaryUnsuccessfullArguments();
 }

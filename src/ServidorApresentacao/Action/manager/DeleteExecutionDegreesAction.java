@@ -31,39 +31,36 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class DeleteExecutionDegreesAction extends FenixAction {
 
-	public ActionForward execute(ActionMapping mapping, 
-								 ActionForm form,
-								 HttpServletRequest request, 
-								 HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException {
 
-			IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm deleteForm = (DynaActionForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
+        DynaActionForm deleteForm = (DynaActionForm) form;
 
-		
-		List executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
-	
-		Object args[] = { executionDegreesIds };
-		
-		List errorsList = new ArrayList();
+        List executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
 
-		try {
-				errorsList = (List) ServiceUtils.executeService(userView, "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		
-		if (!errorsList.isEmpty()) {
-				ActionErrors actionErrors = new ActionErrors();
-				ActionError error = null;
-				Iterator iter = errorsList.iterator();
-				while (iter.hasNext()) {
-						// Create an ACTION_ERROR for each EXECUTION_DEGREE
-						error = new ActionError("errors.invalid.delete.not.empty.execution.degree", iter.next());
-						actionErrors.add("errors.invalid.delete.not.empty.execution.degree", error);
-				}
-				saveErrors(request, actionErrors);
-		}
-		return mapping.findForward("readDegreeCurricularPlan");
-	}
+        Object args[] = { executionDegreesIds };
+
+        List errorsList = new ArrayList();
+
+        try {
+            errorsList = (List) ServiceUtils.executeService(userView,
+                    "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
+        } catch (FenixServiceException fenixServiceException) {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        if (!errorsList.isEmpty()) {
+            ActionErrors actionErrors = new ActionErrors();
+            ActionError error = null;
+            Iterator iter = errorsList.iterator();
+            while (iter.hasNext()) {
+                // Create an ACTION_ERROR for each EXECUTION_DEGREE
+                error = new ActionError("errors.invalid.delete.not.empty.execution.degree", iter.next());
+                actionErrors.add("errors.invalid.delete.not.empty.execution.degree", error);
+            }
+            saveErrors(request, actionErrors);
+        }
+        return mapping.findForward("readDegreeCurricularPlan");
+    }
 }

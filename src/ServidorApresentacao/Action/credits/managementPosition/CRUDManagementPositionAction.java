@@ -27,8 +27,7 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
 /**
  * @author jpvl
  */
-public class CRUDManagementPositionAction extends CRUDActionByOID
-{
+public class CRUDManagementPositionAction extends CRUDActionByOID {
 
     /*
      * (non-Javadoc)
@@ -37,21 +36,14 @@ public class CRUDManagementPositionAction extends CRUDActionByOID
      *      DataBeans.InfoObject, org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
-    protected void populateFormFromInfoObject(
-        ActionMapping mapping,
-        InfoObject infoObject,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixActionException
-    {
+    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
+            ActionForm form, HttpServletRequest request) throws FenixActionException {
         DynaActionForm managementPositionForm = (DynaActionForm) form;
-        InfoManagementPositionCreditLine infoManagementPositionCreditLine =
-            (InfoManagementPositionCreditLine) infoObject;
+        InfoManagementPositionCreditLine infoManagementPositionCreditLine = (InfoManagementPositionCreditLine) infoObject;
 
         managementPositionForm.set("idInternal", infoManagementPositionCreditLine.getIdInternal());
-        managementPositionForm.set(
-            "teacherId",
-            infoManagementPositionCreditLine.getInfoTeacher().getIdInternal());
+        managementPositionForm.set("teacherId", infoManagementPositionCreditLine.getInfoTeacher()
+                .getIdInternal());
         managementPositionForm.set("position", infoManagementPositionCreditLine.getPosition());
         managementPositionForm.set("credits", infoManagementPositionCreditLine.getCredits().toString());
 
@@ -69,11 +61,9 @@ public class CRUDManagementPositionAction extends CRUDActionByOID
      *      ServidorApresentacao.mapping.framework.CRUDMapping)
      */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-        throws FenixActionException
-    {
+            throws FenixActionException {
         DynaActionForm managementPositionForm = (DynaActionForm) form;
-        InfoManagementPositionCreditLine infoManagementPositionCreditLine =
-            new InfoManagementPositionCreditLine();
+        InfoManagementPositionCreditLine infoManagementPositionCreditLine = new InfoManagementPositionCreditLine();
 
         String position = (String) managementPositionForm.get("position");
         String start = (String) managementPositionForm.get("start");
@@ -89,24 +79,20 @@ public class CRUDManagementPositionAction extends CRUDActionByOID
         infoManagementPositionCreditLine.setInfoTeacher(new InfoTeacher(teacherId));
         infoManagementPositionCreditLine.setPosition(position);
 
-        try
-        {
+        try {
             infoManagementPositionCreditLine.setStart(df.parse(start));
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace(System.out);
             throw new RuntimeException("Problems parsing end date!" + start);
         }
-        try
-        {
+        try {
             infoManagementPositionCreditLine.setEnd(df.parse(end));
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             e.printStackTrace(System.out);
             throw new RuntimeException("Problems parsing end date!" + end);
         }
         infoManagementPositionCreditLine.setCredits(Double.valueOf(credits));
-        
+
         return infoManagementPositionCreditLine;
     }
 
@@ -117,20 +103,16 @@ public class CRUDManagementPositionAction extends CRUDActionByOID
      *      org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
-    protected void prepareFormConstants(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixServiceException
-    {
+    protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request) throws FenixServiceException {
         DynaActionForm managementPositionForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer teacherId = (Integer) managementPositionForm.get("teacherId");
 
         Object args[] = { teacherId };
-        InfoTeacher infoTeacher =
-            (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByOID", args);
+        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+                "ReadTeacherByOID", args);
         request.setAttribute("infoTeacher", infoTeacher);
     }
 

@@ -21,11 +21,9 @@ import Util.RoleType;
  * @author João Mota
  *  
  */
-public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter
-{
+public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
-    public DegreeCoordinatorAuthorizationFilter()
-    {
+    public DegreeCoordinatorAuthorizationFilter() {
     }
 
     /*
@@ -33,8 +31,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
-    protected RoleType getRoleType()
-    {
+    protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
@@ -42,24 +39,19 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *          pt.utl.ist.berserk.ServiceResponse)
+     *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-    {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
 
-        try
-        {
+        try {
             if ((id == null) || (id.getRoles() == null)
-                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                            || !isCoordinatorOfExecutionDegree(id, argumentos))
-            {
+                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                    || !isCoordinatorOfExecutionDegree(id, argumentos)) {
                 throw new NotAuthorizedFilterException();
             }
-        }
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -69,21 +61,17 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
      * @param argumentos
      * @return
      */
-    private boolean isCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos)
-    {
+    private boolean isCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
 
         ISuportePersistente sp;
         boolean result = false;
-        if (argumentos == null)
-        {
+        if (argumentos == null) {
             return result;
         }
-        if (argumentos[0] == null)
-        {
+        if (argumentos[0] == null) {
             return result;
         }
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -91,14 +79,11 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 
             ICoordinator coordinator = persistentCoordinator
-                            .readCoordinatorByTeacherAndExecutionDegreeId(
-                                            teacher, (Integer) argumentos[0]);
+                    .readCoordinatorByTeacherAndExecutionDegreeId(teacher, (Integer) argumentos[0]);
 
             result = coordinator != null;
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
 

@@ -12,14 +12,12 @@ import Dominio.IExecutionYear;
  * @author João Mota
  *  
  */
-public class InfoExecutionPeriodWithInfoExecutionYear extends
-        InfoExecutionPeriod {
+public class InfoExecutionPeriodWithInfoExecutionYear extends InfoExecutionPeriod {
 
     public void copyFromDomain(IExecutionPeriod executionPeriod) {
         super.copyFromDomain(executionPeriod);
         if (executionPeriod != null) {
-            setInfoExecutionYear(InfoExecutionYear
-                    .newInfoFromDomain(executionPeriod.getExecutionYear()));
+            setInfoExecutionYear(InfoExecutionYear.newInfoFromDomain(executionPeriod.getExecutionYear()));
         }
     }
 
@@ -36,18 +34,18 @@ public class InfoExecutionPeriodWithInfoExecutionYear extends
         }
         return infoExecutionPeriod;
     }
-    
+
     public static IExecutionPeriod newDomainFromInfo(InfoExecutionPeriod infoExecutionPeriod) {
         IExecutionPeriod executionPeriod = null;
-        if(infoExecutionPeriod != null) {
+        if (infoExecutionPeriod != null) {
             executionPeriod = new ExecutionPeriod();
             infoExecutionPeriod.copyToDomain(infoExecutionPeriod, executionPeriod);
-            
+
             InfoExecutionYear executionYear = infoExecutionPeriod.getInfoExecutionYear();
             IExecutionYear executionYear2 = InfoExecutionYear.newDomainFromInfo(executionYear);
             executionPeriod.setExecutionYear(executionYear2);
         }
-        return executionPeriod;  
+        return executionPeriod;
     }
 
 }

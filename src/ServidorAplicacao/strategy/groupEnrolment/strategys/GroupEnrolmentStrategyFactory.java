@@ -9,46 +9,43 @@ import Util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 
-public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFactory{
-	
-		private static GroupEnrolmentStrategyFactory instance = null; 
+public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFactory {
 
-		private GroupEnrolmentStrategyFactory() {
-		}
+    private static GroupEnrolmentStrategyFactory instance = null;
 
-		public static synchronized GroupEnrolmentStrategyFactory getInstance() {
-			if (instance == null) {
-				instance = new GroupEnrolmentStrategyFactory();
-			}
-			return instance;
-		}
+    private GroupEnrolmentStrategyFactory() {
+    }
 
-		public static synchronized void resetInstance() {
-			if (instance != null) {
-				instance = null;
-			}
-		}
+    public static synchronized GroupEnrolmentStrategyFactory getInstance() {
+        if (instance == null) {
+            instance = new GroupEnrolmentStrategyFactory();
+        }
+        return instance;
+    }
 
-		public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties) {
-		
-			IGroupEnrolmentStrategy strategyInstance = null;
-			EnrolmentGroupPolicyType policy = groupProperties.getEnrolmentPolicy();
-			
-			if (policy == null)
-				throw new IllegalArgumentException("Must initialize Group Properties!");
+    public static synchronized void resetInstance() {
+        if (instance != null) {
+            instance = null;
+        }
+    }
 
+    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties) {
 
-			if (policy.equals(new EnrolmentGroupPolicyType(1))){
-				strategyInstance = new AtomicGroupEnrolmentStrategy();
-			} 
-			else 
-				if (policy.equals(new EnrolmentGroupPolicyType(2))){
-					strategyInstance = new IndividualGroupEnrolmentStrategy(); 
-				}  
-				return strategyInstance;
-			}
+        IGroupEnrolmentStrategy strategyInstance = null;
+        EnrolmentGroupPolicyType policy = groupProperties.getEnrolmentPolicy();
+
+        if (policy == null)
+            throw new IllegalArgumentException("Must initialize Group Properties!");
+
+        if (policy.equals(new EnrolmentGroupPolicyType(1))) {
+            strategyInstance = new AtomicGroupEnrolmentStrategy();
+        } else if (policy.equals(new EnrolmentGroupPolicyType(2))) {
+            strategyInstance = new IndividualGroupEnrolmentStrategy();
+        }
+        return strategyInstance;
+    }
 
 }

@@ -57,35 +57,33 @@ public class DeleteExamNew implements IServico {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(
-                    Exam.class, examOID);
-            if (examToDelete == null) { throw new FenixServiceException(
-                    "The exam does not exist"); }
+            IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(Exam.class, examOID);
+            if (examToDelete == null) {
+                throw new FenixServiceException("The exam does not exist");
+            }
 
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp
-                    .getIPersistentExamStudentRoom();
-            List examStudentRoomList = persistentExamStudentRoom
-                    .readBy(examToDelete);
-            if (examStudentRoomList != null && examStudentRoomList.size() > 0) { throw new notAuthorizedServiceDeleteException(
-                    "error.notAuthorizedExamDelete.withStudent"); }
+            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+            List examStudentRoomList = persistentExamStudentRoom.readBy(examToDelete);
+            if (examStudentRoomList != null && examStudentRoomList.size() > 0) {
+                throw new notAuthorizedServiceDeleteException(
+                        "error.notAuthorizedExamDelete.withStudent");
+            }
 
             List roomOccupations = examToDelete.getAssociatedRoomOccupation();
             if (roomOccupations != null && !roomOccupations.isEmpty()) {
                 Iterator iter = roomOccupations.iterator();
                 IPeriod period = null;
                 if (!examToDelete.getAssociatedRoomOccupation().isEmpty()) {
-                    period = ((IRoomOccupation) roomOccupations.get(0))
-                            .getPeriod();
+                    period = ((IRoomOccupation) roomOccupations.get(0)).getPeriod();
                 }
 
                 boolean isEmpty = false;
                 List periodRoomOccupations = period.getRoomOccupations();
-                Collection otherRoomOccupations = CollectionUtils.disjunction(
-                        roomOccupations, periodRoomOccupations);
+                Collection otherRoomOccupations = CollectionUtils.disjunction(roomOccupations,
+                        periodRoomOccupations);
                 isEmpty = otherRoomOccupations.isEmpty();
                 while (iter.hasNext()) {
-                    IRoomOccupation roomOccupation = (IRoomOccupation) iter
-                            .next();
+                    IRoomOccupation roomOccupation = (IRoomOccupation) iter.next();
                     sp.getIPersistentRoomOccupation().delete(roomOccupation);
                 }
                 if (period != null) {

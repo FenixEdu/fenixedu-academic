@@ -55,22 +55,20 @@ public class DefineExamComment implements IServico {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionCourseDAO = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
             IExecutionPeriod executionPeriod = Cloner
                     .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
                             .getInfoExecutionPeriod());
 
             IExecutionCourse executionCourse = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriod(
-                            infoExecutionCourse.getSigla(), executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
+                            executionPeriod);
 
             // TODO: Temporary solution to lock object for write. In the future
             // we'll use readByUnique()
-            executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
-                    ExecutionCourse.class, executionCourse.getIdInternal(),
-                    true);
+            executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(ExecutionCourse.class,
+                    executionCourse.getIdInternal(), true);
             executionCourse.setComment(comment);
 
             result = new Boolean(true);

@@ -37,21 +37,17 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
 
     }
 
-    public InfoCurriculum run(Integer curricularCourseCode)
-            throws FenixServiceException {
+    public InfoCurriculum run(Integer curricularCourseCode) throws FenixServiceException {
 
         InfoCurriculum infoCurriculum = null;
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
-            IPersistentCurriculum persistentCurriculum = sp
-                    .getIPersistentCurriculum();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
                     .getIPersistentCurricularCourseScope();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (curricularCourseCode == null) {
                 throw new FenixServiceException("nullCurricularCourse");
             }
@@ -65,65 +61,55 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
             ICurriculum curriculum = persistentCurriculum
                     .readCurriculumByCurricularCourse(curricularCourse);
             if (curriculum != null) {
-                infoCurriculum = Cloner
-                        .copyICurriculum2InfoCurriculum(curriculum);
+                infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
             } else {
                 //Although doesn't exist CURRICULUM, an object is returned with
                 // the correspond curricular course
                 infoCurriculum = new InfoCurriculum();
-                infoCurriculum
-                        .setInfoCurricularCourse(Cloner
-                                .copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+                infoCurriculum.setInfoCurricularCourse(Cloner
+                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse));
             }
 
-            List infoExecutionCourses = buildExecutionCourses(
-                    persistentExecutionCourse, curricularCourse);
-            infoCurriculum.getInfoCurricularCourse()
-                    .setInfoAssociatedExecutionCourses(infoExecutionCourses);
+            List infoExecutionCourses = buildExecutionCourses(persistentExecutionCourse,
+                    curricularCourse);
+            infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(
+                    infoExecutionCourses);
 
-            List activeInfoScopes = buildActiveScopes(
-                    persistentCurricularCourseScope, curricularCourse);
-            infoCurriculum.getInfoCurricularCourse().setInfoScopes(
-                    activeInfoScopes);
+            List activeInfoScopes = buildActiveScopes(persistentCurricularCourseScope, curricularCourse);
+            infoCurriculum.getInfoCurricularCourse().setInfoScopes(activeInfoScopes);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
         return infoCurriculum;
     }
 
-    private List buildExecutionCourses(
-            IPersistentExecutionCourse persistentExecutionCourse,
+    private List buildExecutionCourses(IPersistentExecutionCourse persistentExecutionCourse,
             ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
         List infoExecutionCourses = new ArrayList();
-        List executionCourses = curricularCourse
-                .getAssociatedExecutionCourses();
+        List executionCourses = curricularCourse.getAssociatedExecutionCourses();
         Iterator iterExecutionCourses = executionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
-            IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses
-                    .next();
-            if (executionCourse.getExecutionPeriod().getState().equals(
-                    PeriodState.OPEN)
-                    || executionCourse.getExecutionPeriod().getState().equals(
-                            PeriodState.CURRENT)) {
+            IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
+            if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.OPEN)
+                    || executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
                         .get(executionCourse);
-                infoExecutionCourse.setHasSite(persistentExecutionCourse
-                        .readSite(executionCourse.getIdInternal()));
+                infoExecutionCourse.setHasSite(persistentExecutionCourse.readSite(executionCourse
+                        .getIdInternal()));
                 infoExecutionCourses.add(infoExecutionCourse);
             }
         }
         return infoExecutionCourses;
     }
 
-    private List buildActiveScopes(
-            IPersistentCurricularCourseScope persistentCurricularCourseScope,
+    private List buildActiveScopes(IPersistentCurricularCourseScope persistentCurricularCourseScope,
             ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
         //selects active curricular course scopes
         List activeCurricularCourseScopes = persistentCurricularCourseScope
                 .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
 
-        activeCurricularCourseScopes = (List) CollectionUtils.select(
-                activeCurricularCourseScopes, new Predicate() {
+        activeCurricularCourseScopes = (List) CollectionUtils.select(activeCurricularCourseScopes,
+                new Predicate() {
                     public boolean evaluate(Object arg0) {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
                         if (curricularCourseScope.isActive().booleanValue()) {
@@ -133,8 +119,8 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
                     }
                 });
 
-        List activeInfoScopes = (List) CollectionUtils.collect(
-                activeCurricularCourseScopes, new Transformer() {
+        List activeInfoScopes = (List) CollectionUtils.collect(activeCurricularCourseScopes,
+                new Transformer() {
 
                     public Object transform(Object arg0) {
 

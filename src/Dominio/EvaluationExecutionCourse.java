@@ -1,96 +1,96 @@
 package Dominio;
 
-
 /**
  * @author Tânia Pousão
- *
+ *  
  */
 public class EvaluationExecutionCourse extends DomainObject implements IEvalutionExecutionCourse {
 
-	private IEvaluation evaluation;
-	private IExecutionCourse executionCourse;
+    private IEvaluation evaluation;
 
-	private Integer keyEvaluation;
-	private Integer keyExecutionCourse;
+    private IExecutionCourse executionCourse;
 
-	public EvaluationExecutionCourse() {}
-	
-	public EvaluationExecutionCourse(IEvaluation evaluation, IExecutionCourse executionCourse) {
-		this.setEvaluation(evaluation);
-		this.setExecutionCourse(executionCourse);
-	}
+    private Integer keyEvaluation;
 
-	public boolean equals(Object obj) {
-		if (obj instanceof EvaluationExecutionCourse) {
-			EvaluationExecutionCourse evaluationObj = (EvaluationExecutionCourse) obj;
-			return this.getEvaluation().equals(evaluationObj.getEvaluation())
-					 && this.getExecutionCourse().equals(evaluationObj.getExecutionCourse());
-		}
+    private Integer keyExecutionCourse;
 
-		return false;
-	}
+    public EvaluationExecutionCourse() {
+    }
 
-	public String toString() {
-		return "[EVALUATION_EXECUTIONCOURSE:"
-			+ " evaluation= '"               + this.getEvaluation()  + "'"
-			+ " execution_course= '"   + this.getExecutionCourse()  + "'"
-			+ "]";
-	}
+    public EvaluationExecutionCourse(IEvaluation evaluation, IExecutionCourse executionCourse) {
+        this.setEvaluation(evaluation);
+        this.setExecutionCourse(executionCourse);
+    }
 
-	/**
-	 * @return
-	 */
-	public IEvaluation getEvaluation() {
-		return evaluation;
-	}
+    public boolean equals(Object obj) {
+        if (obj instanceof EvaluationExecutionCourse) {
+            EvaluationExecutionCourse evaluationObj = (EvaluationExecutionCourse) obj;
+            return this.getEvaluation().equals(evaluationObj.getEvaluation())
+                    && this.getExecutionCourse().equals(evaluationObj.getExecutionCourse());
+        }
 
-	/**
-	 * @return
-	 */
-	public IExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+        return false;
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyEvaluation() {
-		return keyEvaluation;
-	}
+    public String toString() {
+        return "[EVALUATION_EXECUTIONCOURSE:" + " evaluation= '" + this.getEvaluation() + "'"
+                + " execution_course= '" + this.getExecutionCourse() + "'" + "]";
+    }
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
+    /**
+     * @return
+     */
+    public IEvaluation getEvaluation() {
+        return evaluation;
+    }
 
-	/**
-	 * @param evaluation
-	 */
-	public void setEvaluation(IEvaluation evaluation) {
-		this.evaluation = evaluation;
-	}
+    /**
+     * @return
+     */
+    public IExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	/**
-	 * @param execucao
-	 */
-	public void setExecutionCourse(IExecutionCourse execucao) {
-		executionCourse = execucao;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyEvaluation() {
+        return keyEvaluation;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyEvaluation(Integer integer) {
-		keyEvaluation = integer;
-	}
+    /**
+     * @return
+     */
+    public Integer getKeyExecutionCourse() {
+        return keyExecutionCourse;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyExecutionCourse(Integer integer) {
-		keyExecutionCourse = integer;
-	}
+    /**
+     * @param evaluation
+     */
+    public void setEvaluation(IEvaluation evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    /**
+     * @param execucao
+     */
+    public void setExecutionCourse(IExecutionCourse execucao) {
+        executionCourse = execucao;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyEvaluation(Integer integer) {
+        keyEvaluation = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setKeyExecutionCourse(Integer integer) {
+        keyExecutionCourse = integer;
+    }
 
 }

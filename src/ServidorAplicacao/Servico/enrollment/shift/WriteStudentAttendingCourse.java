@@ -20,7 +20,7 @@ import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.IPersistentStudentCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -31,31 +31,26 @@ import Util.TipoCurso;
  *  
  */
 public class WriteStudentAttendingCourse implements IService {
-    public class ReachedAttendsLimitServiceException extends
-            FenixServiceException {
+    public class ReachedAttendsLimitServiceException extends FenixServiceException {
 
     }
 
     public WriteStudentAttendingCourse() {
     }
 
-    public Boolean run(InfoStudent infoStudent, Integer executionCourseId)
-            throws FenixServiceException {
+    public Boolean run(InfoStudent infoStudent, Integer executionCourseId) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IFrequentaPersistente persistentAttend = sp
-                    .getIFrequentaPersistente();
-            IPersistentExecutionCourse persistentExecutionCourse = sp
-                    .getIPersistentExecutionCourse();
-            IPersistentEnrollment persistentEnrolment = sp
-                    .getIPersistentEnrolment();
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
 
             IPersistentStudent studentDAO = sp.getIPersistentStudent();
-            IStudent student = (IStudent) studentDAO.readByOID(Student.class,
-                    infoStudent.getIdInternal());
+            IStudent student = (IStudent) studentDAO.readByOID(Student.class, infoStudent
+                    .getIdInternal());
             infoStudent.setNumber(student.getNumber());
 
             if (infoStudent == null) {
@@ -63,24 +58,23 @@ public class WriteStudentAttendingCourse implements IService {
             }
 
             if (executionCourseId != null) {
-                IStudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(
-                        infoStudent, persistentStudentCurricularPlan);
+                IStudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(infoStudent,
+                        persistentStudentCurricularPlan);
 
-                IExecutionCourse executionCourse = findExecutionCourse(
-                        executionCourseId, persistentExecutionCourse);
+                IExecutionCourse executionCourse = findExecutionCourse(executionCourseId,
+                        persistentExecutionCourse);
 
                 //Read every course the student attends to:
                 List attends = persistentAttend
-                        .readByStudentNumberInCurrentExecutionPeriod(studentCurricularPlan
-                                .getStudent().getNumber());
+                        .readByStudentNumberInCurrentExecutionPeriod(studentCurricularPlan.getStudent()
+                                .getNumber());
 
                 if (attends != null && attends.size() >= 8) {
                     throw new ReachedAttendsLimitServiceException();
                 }
 
-                IFrequenta attendsEntry = persistentAttend
-                        .readByAlunoAndDisciplinaExecucao(studentCurricularPlan
-                                .getStudent(), executionCourse);
+                IFrequenta attendsEntry = persistentAttend.readByAlunoAndDisciplinaExecucao(
+                        studentCurricularPlan.getStudent(), executionCourse);
 
                 if (attendsEntry == null) {
                     attendsEntry = new Frequenta();
@@ -88,8 +82,7 @@ public class WriteStudentAttendingCourse implements IService {
                     attendsEntry.setAluno(studentCurricularPlan.getStudent());
                     attendsEntry.setDisciplinaExecucao(executionCourse);
 
-                    findEnrollmentForAttend(persistentEnrolment,
-                            studentCurricularPlan, executionCourse,
+                    findEnrollmentForAttend(persistentEnrolment, studentCurricularPlan, executionCourse,
                             attendsEntry);
 
                 }
@@ -101,22 +94,18 @@ public class WriteStudentAttendingCourse implements IService {
         return new Boolean(true);
     }
 
-    private void findEnrollmentForAttend(
-            IPersistentEnrollment persistentEnrolment,
-            IStudentCurricularPlan studentCurricularPlan,
-            IExecutionCourse executionCourse, IFrequenta attendsEntry)
-            throws ExcepcaoPersistencia {
+    private void findEnrollmentForAttend(IPersistentEnrollment persistentEnrolment,
+            IStudentCurricularPlan studentCurricularPlan, IExecutionCourse executionCourse,
+            IFrequenta attendsEntry) throws ExcepcaoPersistencia {
         // checks if there is an enrollment for this attend
-        Iterator iterCurricularCourses = executionCourse
-                .getAssociatedCurricularCourses().iterator();
+        Iterator iterCurricularCourses = executionCourse.getAssociatedCurricularCourses().iterator();
         while (iterCurricularCourses.hasNext()) {
-            ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses
-                    .next();
+            ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses.next();
 
             IEnrollment enrollment = persistentEnrolment
                     .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-                            studentCurricularPlan, curricularCourseElem,
-                            executionCourse.getExecutionPeriod());
+                            studentCurricularPlan, curricularCourseElem, executionCourse
+                                    .getExecutionPeriod());
             if (enrollment != null) {
                 attendsEntry.setEnrolment(enrollment);
                 break;
@@ -125,10 +114,10 @@ public class WriteStudentAttendingCourse implements IService {
     }
 
     private IExecutionCourse findExecutionCourse(Integer executionCourseId,
-            IPersistentExecutionCourse persistentExecutionCourse)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                .readByOID(ExecutionCourse.class, executionCourseId);
+            IPersistentExecutionCourse persistentExecutionCourse) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseId);
 
         if (executionCourse == null) {
             throw new FenixServiceException("noExecutionCourse");
@@ -136,21 +125,20 @@ public class WriteStudentAttendingCourse implements IService {
         return executionCourse;
     }
 
-    private IStudentCurricularPlan findStudentCurricularPlan(
-            InfoStudent infoStudent,
-            IStudentCurricularPlanPersistente persistentStudentCurricularPlan)
+    private IStudentCurricularPlan findStudentCurricularPlan(InfoStudent infoStudent,
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan)
             throws FenixServiceException {
         try {
 
             IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType(infoStudent
-                            .getNumber(), TipoCurso.LICENCIATURA_OBJ);
+                    .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(),
+                            TipoCurso.LICENCIATURA_OBJ);
 
             if (studentCurricularPlan == null) {
 
                 studentCurricularPlan = persistentStudentCurricularPlan
-                        .readActiveByStudentNumberAndDegreeType(infoStudent
-                                .getNumber(), TipoCurso.MESTRADO_OBJ);
+                        .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(),
+                                TipoCurso.MESTRADO_OBJ);
 
             }
             if (studentCurricularPlan == null) {

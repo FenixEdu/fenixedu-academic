@@ -373,11 +373,19 @@
                fork="yes">
                
             <include name="Tools/*.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/guide/CreateGuideFromTransactionsTest.java"/>
             <include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/thesis/*.java"/>
-   	        <include name="ServidorAplicacao/Servicos/manager/gratuity/ProcessSibsPaymentFileTest.java"/>
             <include name="ServidorAplicacao/Servicos/commons/workLocation/**/*.java"/>
             <include name="ServidorAplicacao/Servicos/commons/externalPerson/*.java"/>
 			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/guide/reimbursementGuide/*.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/transactions/*.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/EditInsuranceValueByExecutionYearIDTest.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadGratuitySituationByExecutionDegreeIDAndStudentIDTest.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadInsuranceValueByExecutionYearIDTest.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadGratuitySituationsByStudentNumberTest.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadNonProcessedSibsEntriesTest.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/FixSibsEntryByIDTest.java"/>
+            <include name="ServidorAplicacao/Servicos/commons/ReadExecutionYearByIDTest.java"/>
 
             
 		</javac>
@@ -392,11 +400,21 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/guide/CreateGuideFromTransactionsTest.java"/>
 					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/thesis/*.java"/>
        	            <include name="ServidorAplicacao/Servicos/commons/workLocation/**/*.java"/>
-   	       	        <include name="ServidorAplicacao/Servicos/manager/gratuity/ProcessSibsPaymentFileTest.java"/>
        	            <include name="ServidorAplicacao/Servicos/commons/externalPerson/*.java"/>
 					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/guide/reimbursementGuide/*.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/transactions/*.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/EditInsuranceValueByExecutionYearIDTest.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadGratuitySituationByExecutionDegreeIDAndStudentIDTest.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadInsuranceValueByExecutionYearIDTest.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadGratuitySituationsByStudentNumberTest.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/ReadNonProcessedSibsEntriesTest.java"/>					
+		            <include name="ServidorAplicacao/Servicos/commons/ReadExecutionYearByIDTest.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/gratuity/FixSibsEntryByIDTest.java"/>
+				
+					
                 </fileset>
             </batchtest>
             <classpath>

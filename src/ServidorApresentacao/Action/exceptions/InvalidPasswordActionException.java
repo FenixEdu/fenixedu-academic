@@ -10,36 +10,35 @@ package ServidorApresentacao.Action.exceptions;
  */
 public class InvalidPasswordActionException extends FenixActionException {
 
-	public static String key = "error.exception.invalid.existing.password";
-		
-	
-	public InvalidPasswordActionException(Throwable cause) {
-		super(key, cause);
-	}
-		
-	public InvalidPasswordActionException(Object value, Throwable cause) {
-		super(key, value, cause);
-	}	
-		
-	public InvalidPasswordActionException(Object[] values, Throwable cause) {
-		super(key, values, cause);
-	}
-	    
-	public static String getKey() {
-		return key;
-	}
-	
-	public static void setKey(String key) {
-		InvalidPasswordActionException.key = key;
-	}
-	
-	public String toString() {
-			String result = "[InvalidPasswordActionException\n";
-			result += "property: " +this.getProperty()+ "\n";
-			result += "error: " +this.getError()+ "\n";
-			result += "cause: " +this.getCause()+ "\n";
-			result += "]";
-			return result;
-		}
+    public static String key = "error.exception.invalid.existing.password";
+
+    public InvalidPasswordActionException(Throwable cause) {
+        super(key, cause);
+    }
+
+    public InvalidPasswordActionException(Object value, Throwable cause) {
+        super(key, value, cause);
+    }
+
+    public InvalidPasswordActionException(Object[] values, Throwable cause) {
+        super(key, values, cause);
+    }
+
+    public static String getKey() {
+        return key;
+    }
+
+    public static void setKey(String key) {
+        InvalidPasswordActionException.key = key;
+    }
+
+    public String toString() {
+        String result = "[InvalidPasswordActionException\n";
+        result += "property: " + this.getProperty() + "\n";
+        result += "error: " + this.getError() + "\n";
+        result += "cause: " + this.getCause() + "\n";
+        result += "]";
+        return result;
+    }
 
 }

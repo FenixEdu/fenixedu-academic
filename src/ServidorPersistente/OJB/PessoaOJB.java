@@ -21,12 +21,11 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
-
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
+public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente {
 
     public PessoaOJB() {
     }
@@ -133,31 +132,31 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 
     public List findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
             throws ExcepcaoPersistencia {
-        
+
         Criteria criteria = new Criteria();
         criteria.addLike("name", name);
-        
-        if(startIndex != null && numberOfElementsInSpan != null) {
-            return readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex); 
+
+        if (startIndex != null && numberOfElementsInSpan != null) {
+            return readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex);
         }
         return queryList(Pessoa.class, criteria);
-        
+
     }
-    
+
     public Integer countAllPersonByName(String name) {
         Criteria criteria = new Criteria();
         criteria.addLike("name", name);
         return new Integer(count(Pessoa.class, criteria));
     }
 
-      /*
-     * This method return a list with 2 elements.
-     * The first is a Integer with the number of elements returned by the main search, 
-     * The second is a list with the elemts returned by the limited search. 
+    /*
+     * This method return a list with 2 elements. The first is a Integer with
+     * the number of elements returned by the main search, The second is a list
+     * with the elemts returned by the limited search.
      */
-    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber, Integer startIndex, Integer numberOfElementsInSpan)
-        throws ExcepcaoPersistencia
-    {
+    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email,
+            String username, String documentIdNumber, Integer startIndex, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia {
         List personList = null;
 
         Criteria criteria = new Criteria();
@@ -196,55 +195,48 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 
     public void alterarPessoa(String numDocId, TipoDocumentoIdentificacao tipoDocId, IPessoa pessoa) {
     }
-    
+
     /*
-     * This method return a list with 2 elements.
-     * The first is a Integer with the number of elements returned by the main search, 
-     * The second is a list with the elemts returned by the limited search. 
+     * This method return a list with 2 elements. The first is a Integer with
+     * the number of elements returned by the main search, The second is a list
+     * with the elemts returned by the limited search.
      */
-    public List findActivePersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber, Integer startIndex, Integer numberOfElementsInSpan)
-        throws ExcepcaoPersistencia
-    {
+    public List findActivePersonByNameAndEmailAndUsernameAndDocumentId(String name, String email,
+            String username, String documentIdNumber, Integer startIndex, Integer numberOfElementsInSpan)
+            throws ExcepcaoPersistencia {
         List result = new ArrayList();
-        
+
         List personList = null;
 
         Criteria criteria = new Criteria();
 
-        if (name != null && name.length() > 0)
-        {
+        if (name != null && name.length() > 0) {
             criteria.addLike("nome", name);
         }
 
-        if (email != null && email.length() > 0)
-        {
+        if (email != null && email.length() > 0) {
             criteria.addLike("email", email);
         }
 
-        if (username != null && username.length() > 0)
-        {
+        if (username != null && username.length() > 0) {
             criteria.addLike("username", username);
         }
         criteria.addNotLike("username", "INA%");
-        
-        if (documentIdNumber != null && documentIdNumber.length() > 0)
-        {
-        	criteria.addLike("numeroDocumentoIdentificacao", documentIdNumber);
+
+        if (documentIdNumber != null && documentIdNumber.length() > 0) {
+            criteria.addLike("numeroDocumentoIdentificacao", documentIdNumber);
         }
         result.add(0, new Integer(count(Pessoa.class, criteria)));
-        
-        if(startIndex == null && numberOfElementsInSpan == null) {
-            personList = queryList(Pessoa.class, criteria, "nome", false); 
-        } else  if(startIndex != null && numberOfElementsInSpan != null) {       
-            personList = readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex, "nome", false);
-        }               
-        result.add(personList);        
-        
+
+        if (startIndex == null && numberOfElementsInSpan == null) {
+            personList = queryList(Pessoa.class, criteria, "nome", false);
+        } else if (startIndex != null && numberOfElementsInSpan != null) {
+            personList = readInterval(Pessoa.class, criteria, numberOfElementsInSpan, startIndex,
+                    "nome", false);
+        }
+        result.add(personList);
+
         return result;
     }
 
-   
-    
-    
-    
 }

@@ -1,6 +1,6 @@
 /*
  * JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion.java
- *
+ * 
  * Created on 21 de Dezembro de 2002, 16:21
  */
 
@@ -10,8 +10,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.gratuity.SibsPaymentType;
 
-public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements
-        FieldConversion {
+public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)
@@ -20,9 +19,9 @@ public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements
         if (source instanceof SibsPaymentType) {
             SibsPaymentType sibsPaymentType = (SibsPaymentType) source;
             return new Integer(sibsPaymentType.getValue());
-        } 
-            return source;
-        
+        }
+        return source;
+
     }
 
     /*
@@ -32,17 +31,15 @@ public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements
         SibsPaymentType sibsPaymentType = null;
         if (source instanceof Integer) {
             Integer sibsPaymentTypeID = (Integer) source;
-            
-            sibsPaymentType = SibsPaymentType.getEnum(sibsPaymentTypeID
-                    .intValue());
 
-            if (sibsPaymentType == null) { throw new IllegalArgumentException(
-                    this.getClass().getName()
-                            + ": Illegal SibsPaymentType!(" + source
-                            + ")"); }
+            sibsPaymentType = SibsPaymentType.getEnum(sibsPaymentTypeID.intValue());
+
+            if (sibsPaymentType == null) {
+                throw new IllegalArgumentException(this.getClass().getName()
+                        + ": Illegal SibsPaymentType!(" + source + ")");
+            }
         } else {
-            throw new IllegalArgumentException(
-                    "Illegal SibsPaymentType!(" + source + ")");
+            throw new IllegalArgumentException("Illegal SibsPaymentType!(" + source + ")");
         }
         return sibsPaymentType;
     }

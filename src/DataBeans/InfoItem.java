@@ -34,8 +34,8 @@ public class InfoItem extends InfoObject implements Comparable {
     /**
      * Constructor
      */
-    public InfoItem(String information, String name, Integer itemOrder,
-            InfoSection infoSection, Boolean urgent) {
+    public InfoItem(String information, String name, Integer itemOrder, InfoSection infoSection,
+            Boolean urgent) {
 
         this.information = information;
         this.name = name;
@@ -160,8 +160,7 @@ public class InfoItem extends InfoObject implements Comparable {
 
     public int compareTo(Object arg0) {
 
-        return this.getItemOrder().intValue()
-                - ((InfoItem) arg0).getItemOrder().intValue();
+        return this.getItemOrder().intValue() - ((InfoItem) arg0).getItemOrder().intValue();
     }
 
     /**

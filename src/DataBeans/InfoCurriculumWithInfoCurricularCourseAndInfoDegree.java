@@ -8,24 +8,26 @@ import Dominio.ICurriculum;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class InfoCurriculumWithInfoCurricularCourseAndInfoDegree extends
-        InfoCurriculum {
+public class InfoCurriculumWithInfoCurricularCourseAndInfoDegree extends InfoCurriculum {
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoCurriculum#copyFromDomain(Dominio.ICurriculum)
      */
     public void copyFromDomain(ICurriculum curriculum) {
         super.copyFromDomain(curriculum);
-        if(curriculum != null) {
-            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curriculum.getCurricularCourse()));
+        if (curriculum != null) {
+            setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curriculum
+                    .getCurricularCourse()));
         }
     }
-    
+
     public static InfoCurriculum newInfoFromDomain(ICurriculum curriculum) {
         InfoCurriculumWithInfoCurricularCourseAndInfoDegree infoCurriculum = null;
-        if(curriculum != null) {
+        if (curriculum != null) {
             infoCurriculum = new InfoCurriculumWithInfoCurricularCourseAndInfoDegree();
             infoCurriculum.copyFromDomain(curriculum);
         }

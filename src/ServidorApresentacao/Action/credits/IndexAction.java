@@ -29,8 +29,7 @@ import Util.PeriodState;
 /**
  * @author jpvl
  */
-public class IndexAction extends Action
-{
+public class IndexAction extends Action {
 
     /*
      * (non-Javadoc)
@@ -40,19 +39,14 @@ public class IndexAction extends Action
      *      javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
-    public ActionForward execute(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaValidatorForm executionPeriodForm = (DynaValidatorForm) form;
 
-        List executionPeriodsNotClosed =
-            (List) ServiceUtils.executeService(userView, "ReadNotClosedExecutionPeriods", null);
+        List executionPeriodsNotClosed = (List) ServiceUtils.executeService(userView,
+                "ReadNotClosedExecutionPeriods", null);
 
         setChoosedExecutionPeriod(request, executionPeriodsNotClosed, executionPeriodForm);
 
@@ -65,44 +59,37 @@ public class IndexAction extends Action
     }
 
     /**
-     * If the executionPeriod is not already selected it chooses the current executionPeriod.
+     * If the executionPeriod is not already selected it chooses the current
+     * executionPeriod.
+     * 
      * @param request
      * @param executionPeriodNotClosed
      * @param executionPeriodForm
      */
-    private void setChoosedExecutionPeriod(
-        HttpServletRequest request,
-        List executionPeriodsNotClosed,
-        DynaValidatorForm executionPeriodForm)
-    {
+    private void setChoosedExecutionPeriod(HttpServletRequest request, List executionPeriodsNotClosed,
+            DynaValidatorForm executionPeriodForm) {
         final Integer executionPeriodId = (Integer) executionPeriodForm.get("executionPeriodId");
         InfoExecutionPeriod infoExecutionPeriod = null;
-        if (executionPeriodId == null)
-        {
-            infoExecutionPeriod =
-                (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate()
-            {
+        if (executionPeriodId == null) {
+            infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed,
+                    new Predicate() {
 
-                public boolean evaluate(Object input)
-                {
-                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+                        public boolean evaluate(Object input) {
+                            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-                    return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
-                }
-            });
-        } else
-        {
-            infoExecutionPeriod =
-                (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate()
-            {
+                            return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
+                        }
+                    });
+        } else {
+            infoExecutionPeriod = (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed,
+                    new Predicate() {
 
-                public boolean evaluate(Object input)
-                {
-                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+                        public boolean evaluate(Object input) {
+                            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
 
-                    return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
-                }
-            });
+                            return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+                        }
+                    });
 
         }
         request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);

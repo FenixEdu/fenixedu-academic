@@ -30,116 +30,91 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Tânia Pousão
  *  
  */
-public class TutorManagementDispatchAction extends FenixDispatchAction
-{
-	public ActionForward prepareChooseTutor(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
+public class TutorManagementDispatchAction extends FenixDispatchAction {
+    public ActionForward prepareChooseTutor(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
 
-		String executionDegreeId = request.getParameter("executionDegreeId");
-		request.setAttribute("executionDegreeId", executionDegreeId);
+        String executionDegreeId = request.getParameter("executionDegreeId");
+        request.setAttribute("executionDegreeId", executionDegreeId);
 
-		//This code is temporary, it just verify if the coordinator logged is a LEEC's coordinator
-		HttpSession session = request.getSession();
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        //This code is temporary, it just verify if the coordinator logged is a
+        // LEEC's coordinator
+        HttpSession session = request.getSession();
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Object[] args = { Integer.valueOf(executionDegreeId), userView.getUtilizador(), "LEEC" };
-		Boolean authorized = Boolean.FALSE;
-		try
-		{
-			authorized =
-				(Boolean) ServiceManagerServiceFactory.executeService(
-					userView,
-					"UserCoordinatorByExecutionDegree",
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			errors.add("error", new ActionError("error.tutor.impossibleOperation"));
-			saveErrors(request, errors);
-			return mapping.findForward("notAuthorized");
-		}
-		if (authorized.booleanValue() == false)
-		{
-			errors.add("notAuthorized", new ActionError("error.tutor.notAuthorized.LEEC"));
-			saveErrors(request, errors);
+        Object[] args = { Integer.valueOf(executionDegreeId), userView.getUtilizador(), "LEEC" };
+        Boolean authorized = Boolean.FALSE;
+        try {
+            authorized = (Boolean) ServiceManagerServiceFactory.executeService(userView,
+                    "UserCoordinatorByExecutionDegree", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            errors.add("error", new ActionError("error.tutor.impossibleOperation"));
+            saveErrors(request, errors);
+            return mapping.findForward("notAuthorized");
+        }
+        if (authorized.booleanValue() == false) {
+            errors.add("notAuthorized", new ActionError("error.tutor.notAuthorized.LEEC"));
+            saveErrors(request, errors);
 
-			return mapping.findForward("notAuthorized");
-		}
+            return mapping.findForward("notAuthorized");
+        }
 
-		return mapping.findForward("chooseTutor");
-	}
+        return mapping.findForward("chooseTutor");
+    }
 
-	public ActionForward readTutor(
-		ActionMapping mapping,
-		ActionForm actionForm,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception
-	{
-		ActionErrors errors = new ActionErrors();
+    public ActionForward readTutor(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ActionErrors errors = new ActionErrors();
 
-		HttpSession httpSession = request.getSession();
-		IUserView userView = (IUserView) httpSession.getAttribute(SessionConstants.U_VIEW);
+        HttpSession httpSession = request.getSession();
+        IUserView userView = (IUserView) httpSession.getAttribute(SessionConstants.U_VIEW);
 
-		DynaActionForm tutorForm = (DynaActionForm) actionForm;
-		Integer tutorNumber = Integer.valueOf((String) tutorForm.get("tutorNumber"));
-		request.setAttribute("tutorNumber", tutorNumber);
+        DynaActionForm tutorForm = (DynaActionForm) actionForm;
+        Integer tutorNumber = Integer.valueOf((String) tutorForm.get("tutorNumber"));
+        request.setAttribute("tutorNumber", tutorNumber);
 
-		Integer executionDegreeId = Integer.valueOf((String) tutorForm.get("executionDegreeId"));
-		request.setAttribute("executionDegreeId", executionDegreeId);
+        Integer executionDegreeId = Integer.valueOf((String) tutorForm.get("executionDegreeId"));
+        request.setAttribute("executionDegreeId", executionDegreeId);
 
-		
-		 //This service returns a list with size two:
-		 // 		first element is infoTeacher that is tutor
-		 // 		second element is the list of students that this tutor tutorizes
-		 // 
-		Object[] args = { executionDegreeId, tutorNumber };
-		List infoTeacherAndStudents = null;
-		try
-		{
-		    infoTeacherAndStudents =
-				(List) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ReadStudentsByTutor",
-					args);
-		}
-		catch (FenixServiceException e)
-		{
-			e.printStackTrace();
-			errors.add("error", new ActionError(e.getMessage(), tutorNumber));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
+        //This service returns a list with size two:
+        // 		first element is infoTeacher that is tutor
+        // 		second element is the list of students that this tutor tutorizes
+        // 
+        Object[] args = { executionDegreeId, tutorNumber };
+        List infoTeacherAndStudents = null;
+        try {
+            infoTeacherAndStudents = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadStudentsByTutor", args);
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+            errors.add("error", new ActionError(e.getMessage(), tutorNumber));
+            saveErrors(request, errors);
+            return mapping.getInputForward();
+        }
 
-		InfoTeacher infoTeacher = (InfoTeacher)infoTeacherAndStudents.get(0);
-		request.setAttribute("infoTeacher", infoTeacher);
-		
-		if (infoTeacherAndStudents.size() > 1)
-		{
-			//order list by number
-			Collections.sort((List)infoTeacherAndStudents.get(1), new BeanComparator("infoStudent.number"));
-			request.setAttribute("studentsOfTutor", infoTeacherAndStudents.get(1));
-		}
+        InfoTeacher infoTeacher = (InfoTeacher) infoTeacherAndStudents.get(0);
+        request.setAttribute("infoTeacher", infoTeacher);
 
-		cleanForm(tutorForm);
+        if (infoTeacherAndStudents.size() > 1) {
+            //order list by number
+            Collections.sort((List) infoTeacherAndStudents.get(1), new BeanComparator(
+                    "infoStudent.number"));
+            request.setAttribute("studentsOfTutor", infoTeacherAndStudents.get(1));
+        }
 
-		return mapping.findForward("showStudentsByTutor");
-	}
+        cleanForm(tutorForm);
 
-	/**
-	 * @param tutorForm
-	 */
-	private void cleanForm(DynaActionForm tutorForm)
-	{
-		tutorForm.set("studentNumber", null);
-		tutorForm.set("studentNumberFirst", null);
-		tutorForm.set("studentNumberSecond", null);
-	}
+        return mapping.findForward("showStudentsByTutor");
+    }
+
+    /**
+     * @param tutorForm
+     */
+    private void cleanForm(DynaActionForm tutorForm) {
+        tutorForm.set("studentNumber", null);
+        tutorForm.set("studentNumberFirst", null);
+        tutorForm.set("studentNumberSecond", null);
+    }
 }

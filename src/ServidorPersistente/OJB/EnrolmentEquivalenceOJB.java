@@ -14,29 +14,23 @@ import ServidorPersistente.IPersistentEnrolmentEquivalence;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public class EnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersistentEnrolmentEquivalence
-{
+public class EnrolmentEquivalenceOJB extends PersistentObjectOJB implements
+        IPersistentEnrolmentEquivalence {
 
-    public void delete(IEnrolmentEquivalence enrolment) throws ExcepcaoPersistencia
-    {
-        try
-        {
+    public void delete(IEnrolmentEquivalence enrolment) throws ExcepcaoPersistencia {
+        try {
             super.delete(enrolment);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw ex;
         }
     }
 
-    public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
 
         return queryList(EnrolmentEquivalence.class, new Criteria());
     }
 
-    public IEnrolmentEquivalence readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia
-    {
+    public IEnrolmentEquivalence readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
         return (IEnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);

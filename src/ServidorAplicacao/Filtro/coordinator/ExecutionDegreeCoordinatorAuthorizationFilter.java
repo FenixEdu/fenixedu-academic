@@ -12,7 +12,7 @@ import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionDegree;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -23,8 +23,7 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class ExecutionDegreeCoordinatorAuthorizationFilter extends
-        DomainObjectAuthorizationFilter {
+public class ExecutionDegreeCoordinatorAuthorizationFilter extends DomainObjectAuthorizationFilter {
     /**
      *  
      */
@@ -50,21 +49,17 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente persistentExecutionDegree = sp
-                    .getICursoExecucaoPersistente();
+            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
-                    .readByOID(CursoExecucao.class, objectId);
-            ITeacher coordinator = persistentTeacher.readTeacherByUsername(id
-                    .getUtilizador());
-            List executionDegrees = persistentExecutionDegree
-                    .readByTeacher(coordinator);
+            ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOID(
+                    CursoExecucao.class, objectId);
+            ITeacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator);
 
             return executionDegrees.contains(executionDegree);
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): "
-                    + e.getMessage());
+            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.out.println("Filter error(Unknown): " + e.getMessage());

@@ -22,36 +22,28 @@ import ServidorPersistente.credits.IPersistentServiceExemptionCreditLine;
 /**
  * @author jpvl
  */
-public class ReadTeacherServiceExemptionsService implements IService
-{
-    public List run(Integer teacherId) throws FenixServiceException
-    {
-        try
-        {
+public class ReadTeacherServiceExemptionsService implements IService {
+    public List run(Integer teacherId) throws FenixServiceException {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            IPersistentServiceExemptionCreditLine serviceExemptionCreditLineDAO =
-                sp.getIPersistentServiceExemptionCreditLine();
+            IPersistentServiceExemptionCreditLine serviceExemptionCreditLineDAO = sp
+                    .getIPersistentServiceExemptionCreditLine();
 
-            List serviceExemptions =
-                serviceExemptionCreditLineDAO.readByTeacher(new Teacher(teacherId));
+            List serviceExemptions = serviceExemptionCreditLineDAO.readByTeacher(new Teacher(teacherId));
 
-            List infoServiceExemptions =
-                (List) CollectionUtils.collect(serviceExemptions, new Transformer()
-            {
+            List infoServiceExemptions = (List) CollectionUtils.collect(serviceExemptions,
+                    new Transformer() {
 
-                public Object transform(Object input)
-                {
-                    IServiceExemptionCreditLine serviceExemptionCreditLine =
-                        (IServiceExemptionCreditLine) input;
-                    InfoServiceExemptionCreditLine infoServiceExemptionCreditLine =
-                        Cloner.copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine(serviceExemptionCreditLine);
-                    return infoServiceExemptionCreditLine;
-                }
-            });
+                        public Object transform(Object input) {
+                            IServiceExemptionCreditLine serviceExemptionCreditLine = (IServiceExemptionCreditLine) input;
+                            InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = Cloner
+                                    .copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine(serviceExemptionCreditLine);
+                            return infoServiceExemptionCreditLine;
+                        }
+                    });
             return infoServiceExemptions;
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException("Problems on database", e);
 
         }

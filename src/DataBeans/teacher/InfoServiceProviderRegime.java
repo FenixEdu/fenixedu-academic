@@ -14,80 +14,80 @@ import Util.ProviderRegimeType;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *
+ *  
  */
-public class InfoServiceProviderRegime extends InfoObject
-{
+public class InfoServiceProviderRegime extends InfoObject {
     private ProviderRegimeType providerRegimeType;
+
     private InfoTeacher infoTeacher;
+
     private Date lastModificationDate;
-    
-    public InfoServiceProviderRegime() 
-    {
-    }   
-    
+
+    public InfoServiceProviderRegime() {
+    }
+
     /**
      * @return Returns the infoTeacher.
      */
-    public InfoTeacher getInfoTeacher()
-    {
+    public InfoTeacher getInfoTeacher() {
         return infoTeacher;
     }
 
     /**
-     * @param infoTeacher The infoTeacher to set.
+     * @param infoTeacher
+     *            The infoTeacher to set.
      */
-    public void setInfoTeacher(InfoTeacher infoTeacher)
-    {
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
     }
 
     /**
      * @return Returns the providerRegimeType.
      */
-    public ProviderRegimeType getProviderRegimeType()
-    {
+    public ProviderRegimeType getProviderRegimeType() {
         return providerRegimeType;
     }
 
     /**
-     * @param providerRegimeType The providerRegimeType to set.
+     * @param providerRegimeType
+     *            The providerRegimeType to set.
      */
-    public void setProviderRegimeType(ProviderRegimeType providerRegimeType)
-    {
+    public void setProviderRegimeType(ProviderRegimeType providerRegimeType) {
         this.providerRegimeType = providerRegimeType;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IServiceProviderRegime serviceProviderRegime) {
         super.copyFromDomain(serviceProviderRegime);
-        if(serviceProviderRegime != null) {
+        if (serviceProviderRegime != null) {
             setLastModificationDate(serviceProviderRegime.getLastModificationDate());
             setProviderRegimeType(serviceProviderRegime.getProviderRegimeType());
         }
     }
-    
-    public static InfoServiceProviderRegime newInfoFromDomain(IServiceProviderRegime serviceProviderRegime) {
+
+    public static InfoServiceProviderRegime newInfoFromDomain(
+            IServiceProviderRegime serviceProviderRegime) {
         InfoServiceProviderRegime infoServiceProviderRegime = null;
-        if(serviceProviderRegime != null) {
+        if (serviceProviderRegime != null) {
             infoServiceProviderRegime = new InfoServiceProviderRegime();
             infoServiceProviderRegime.copyFromDomain(serviceProviderRegime);
         }

@@ -8,10 +8,9 @@
 		page="/publicGesDisLayout_2col.jsp" >
 		<put name="title" value="" />	
 	  	<put name="serviceName" value="Instituto Superior Técnico" />
-	 	<put name="executionCourseName" value=""  />
+	 	<put name="executionCourseName" value="/publico/executionCourseName.jsp"/>
  		<put name="degrees" value="/publico/associatedDegrees.jsp" />
 	 	<put name="body" value=""/>
-	  	<put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" /> 
 		<put name="navbar" value="/publico/gesdisNavbar.jsp"/>
   		<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>
@@ -33,7 +32,6 @@
   		<put name="title" value=".Instituto Superior Técnico" /> 
 		<put name="serviceName" value="Instituto Superior Técnico" />
 	    <put name="navGeral" value="" />
-		<put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />
 		<put name="body" value="" />
   		<put name="footer" value="/publico/commonFooterPub.jsp" />
 	</definition>	
@@ -53,7 +51,7 @@
             <put name="title" value="Instituto Superior Técnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
-			<put name="main_navigation" value="" />
+			<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 			<put name="body" value="" />
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>	

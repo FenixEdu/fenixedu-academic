@@ -10,8 +10,7 @@ import java.util.List;
  * @author Susana Fernandes
  *  
  */
-public class InfoSiteStudentsTestMarks extends DataTranferObject implements
-        ISiteComponent {
+public class InfoSiteStudentsTestMarks extends DataTranferObject implements ISiteComponent {
 
     private List infoStudentTestQuestionList;
 

@@ -141,8 +141,15 @@
 	  </table> 
 	</div>
 			
-<%-- DESCRIÇÃO DO PLANO CURRICULAR(activo e o mais recente) --%>
+	<%-- DESCRIÇÃO DO PLANO CURRICULAR(activo e o mais recente) --%>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="descriptionEn">
 		<p><bean:write name="infoDegreeCurricularPlan" property="descriptionEn" filter="false" /></p>
 	</logic:notEmpty>	
+	
+	<br />
+	<br />
+	<br /> 
+	<bean:message key="label.information.responsability.information.degree.en" />			 
+	<br />
+	<br />
 </logic:present>	

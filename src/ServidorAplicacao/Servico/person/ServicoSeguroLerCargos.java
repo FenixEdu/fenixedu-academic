@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.person;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
@@ -9,22 +9,21 @@ import ServidorPersistenteJDBC.IPessoaPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
 public class ServicoSeguroLerCargos extends ServicoSeguro {
-    
-    private ArrayList cargos;
-    
-    public ServicoSeguroLerCargos(ServicoAutorizacao servicoAutorizacaoLerCargos,
-    ArrayList cargos) {
+
+    private List cargos;
+
+    public ServicoSeguroLerCargos(ServicoAutorizacao servicoAutorizacaoLerCargos, List cargos) {
         super(servicoAutorizacaoLerCargos);
         this.cargos = cargos;
     }
-    
-    public void execute() throws NotExecuteException {
-IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
 
-		cargos = iPessoaPersistente.lerTodosCargos();
+    public void execute() throws NotExecuteException {
+        IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
+
+        cargos = iPessoaPersistente.lerTodosCargos();
     }
-    
-    public ArrayList getCargos() {
+
+    public List getCargos() {
         return cargos;
     }
 }

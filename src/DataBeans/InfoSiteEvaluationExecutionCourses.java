@@ -7,28 +7,24 @@ package DataBeans;
 import java.util.List;
 
 /**
- * @author  Luis Egidio, lmre@mega.ist.utl.pt
- * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
- *
+ * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
+ *  
  */
-public class InfoSiteEvaluationExecutionCourses extends DataTranferObject implements ISiteComponent
-{
+public class InfoSiteEvaluationExecutionCourses extends DataTranferObject implements ISiteComponent {
     protected List infoExecutionCourses;
-    
-    
+
     /**
      * @return Returns the infoExecutionCourses.
      */
-    public List getInfoExecutionCourses()
-    {
+    public List getInfoExecutionCourses() {
         return infoExecutionCourses;
     }
 
     /**
-     * @param infoExecutionCourses The infoExecutionCourses to set.
+     * @param infoExecutionCourses
+     *            The infoExecutionCourses to set.
      */
-    public void setInfoExecutionCourses(List infoExecutionCourses)
-    {
+    public void setInfoExecutionCourses(List infoExecutionCourses) {
         this.infoExecutionCourses = infoExecutionCourses;
     }
 

@@ -19,8 +19,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseOccupancy;
@@ -32,49 +30,37 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.TipoAula;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *  
  */
-public class ExecutionCourseInfoDispatchAction extends DispatchAction
-{
+public class ExecutionCourseInfoDispatchAction extends DispatchAction {
 
-    public ActionForward prepareChoice(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward prepareChoice(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-        InfoExecutionDegree infoExecutionDegree =
-            (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+                .getAttribute(SessionConstants.MASTER_DEGREE);
 
-        Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear()};
-        List executionPeriods =
-            (List) ServiceManagerServiceFactory.executeService(
-                userView,
-                "ReadExecutionPeriodsByExecutionYear",
-                argsReadExecutionPeriods);
+        Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear() };
+        List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
 
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
         chainComparator.addComparator(new BeanComparator("semester"));
         Collections.sort(executionPeriods, chainComparator);
 
-        ArrayList executionPeriodsLabelValueList = new ArrayList();
-        for (int i = 0; i < executionPeriods.size(); i++)
-        {
+        List executionPeriodsLabelValueList = new ArrayList();
+        for (int i = 0; i < executionPeriods.size(); i++) {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-            executionPeriodsLabelValueList.add(
-                new LabelValueBean(
-                    infoExecutionPeriod.getName()
-                        + " - "
-                        + infoExecutionPeriod.getInfoExecutionYear().getYear(),
-                    infoExecutionPeriod.getIdInternal().toString()));
+            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
+                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod
+                    .getIdInternal().toString()));
         }
 
         request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
@@ -86,30 +72,23 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
         return mapping.findForward("ReadyToSearch");
     }
 
-    public ActionForward getExecutionCourses(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward getExecutionCourses(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        InfoExecutionDegree infoExecutionDegree =
-            (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+                .getAttribute(SessionConstants.MASTER_DEGREE);
 
         DynaActionForm searchExecutionCourse = (DynaActionForm) form;
 
         // Mandatory Selection
         Integer executionPeriodOID = null;
-        if (((String) searchExecutionCourse.get("executionPeriodOID")) != null)
-        {
+        if (((String) searchExecutionCourse.get("executionPeriodOID")) != null) {
             executionPeriodOID = new Integer((String) searchExecutionCourse.get("executionPeriodOID"));
-        } else
-        {
+        } else {
             executionPeriodOID = new Integer(request.getParameter("executionPeriodOID"));
         }
         request.setAttribute("executionPeriodOID", executionPeriodOID.toString());
@@ -118,19 +97,16 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
         Integer curricularYearOID = null;
         InfoCurricularYear infoCurricularYear = null;
         if (searchExecutionCourse.get("curricularYearOID") != null
-            && !searchExecutionCourse.get("curricularYearOID").equals("")
-            && !searchExecutionCourse.get("curricularYearOID").equals("null"))
-        {
+                && !searchExecutionCourse.get("curricularYearOID").equals("")
+                && !searchExecutionCourse.get("curricularYearOID").equals("null")) {
             curricularYearOID = new Integer((String) searchExecutionCourse.get("curricularYearOID"));
             infoCurricularYear = new InfoCurricularYear();
             infoCurricularYear.setIdInternal(curricularYearOID);
             request.setAttribute("curricularYearOID", curricularYearOID);
-        } else
-        {
+        } else {
             if ((request.getParameter("curricularYearOID") != null)
-                && (request.getParameter("curricularYearOID").length() != 0)
-                && (!searchExecutionCourse.get("curricularYearOID").equals("null")))
-            {
+                    && (request.getParameter("curricularYearOID").length() != 0)
+                    && (!searchExecutionCourse.get("curricularYearOID").equals("null"))) {
                 infoCurricularYear = new InfoCurricularYear();
                 infoCurricularYear.setIdInternal(new Integer(request.getParameter("curricularYearOID")));
             }
@@ -138,8 +114,7 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
 
         // Optional Selection
         String executionCourseName = (String) searchExecutionCourse.get("executionCourseName");
-        if ((executionCourseName != null) && (executionCourseName.length() == 0))
-        {
+        if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
             executionCourseName = request.getParameter("executionCourseName");
         }
         request.setAttribute("executionCourseName", executionCourseName);
@@ -147,18 +122,16 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
         InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
         infoExecutionPeriod.setIdInternal(executionPeriodOID);
 
-        if ((executionCourseName != null) && (executionCourseName.length() == 0))
-        {
+        if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
             executionCourseName = null;
         }
 
-        Object args[] =
-            { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear, executionCourseName };
+        Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear,
+                executionCourseName };
 
-        List infoExecutionCourses =
-            (List) ServiceManagerServiceFactory.executeService(userView, "SearchExecutionCourses", args);
-        if (infoExecutionCourses != null)
-        {
+        List infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView,
+                "SearchExecutionCourses", args);
+        if (infoExecutionCourses != null) {
             sortList(request, infoExecutionCourses);
             request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
         }
@@ -166,62 +139,46 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
         return mapping.findForward("ShowCurricularCourseList");
     }
 
-   
-    public ActionForward showOccupancyLevels(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward showOccupancyLevels(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-        Object args[] = { new Integer(request.getParameter("executionCourseOID"))};
+        Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
-        InfoExecutionCourseOccupancy infoExecutionCourseOccupancy =
-            (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory.executeService(
-                userView,
-                "ReadShiftsByExecutionCourseID",
-                args);
+        InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory
+                .executeService(userView, "ReadShiftsByExecutionCourseID", args);
 
         arranjeShifts(infoExecutionCourseOccupancy);
 
-        //		Collections.sort(infoExecutionCourseOccupancy.getInfoShifts(), new ReverseComparator(new
-		// BeanComparator("percentage")));
+        //		Collections.sort(infoExecutionCourseOccupancy.getInfoShifts(), new
+        // ReverseComparator(new
+        // BeanComparator("percentage")));
 
         request.setAttribute("infoExecutionCourseOccupancy", infoExecutionCourseOccupancy);
         return mapping.findForward("showOccupancy");
 
     }
 
-    private void sortList(HttpServletRequest request, List infoExecutionCourses)
-    {
+    private void sortList(HttpServletRequest request, List infoExecutionCourses) {
         String sortParameter = request.getParameter("sortBy");
-        if ((sortParameter != null) && (sortParameter.length() != 0))
-        {
-            if (sortParameter.equals("occupancy"))
-            {
-                Collections.sort(
-                    infoExecutionCourses,
-                    new ReverseComparator(new BeanComparator(sortParameter)));
-            } else
-            {
+        if ((sortParameter != null) && (sortParameter.length() != 0)) {
+            if (sortParameter.equals("occupancy")) {
+                Collections.sort(infoExecutionCourses, new ReverseComparator(new BeanComparator(
+                        sortParameter)));
+            } else {
                 Collections.sort(infoExecutionCourses, new BeanComparator(sortParameter));
             }
-        } else
-        {
-            Collections.sort(
-                infoExecutionCourses,
-                new ReverseComparator(new BeanComparator("occupancy")));
+        } else {
+            Collections.sort(infoExecutionCourses,
+                    new ReverseComparator(new BeanComparator("occupancy")));
         }
     }
 
     /**
-	 * @param infoExecutionCourseOccupancy
-	 */
-    private void arranjeShifts(InfoExecutionCourseOccupancy infoExecutionCourseOccupancy)
-    {
+     * @param infoExecutionCourseOccupancy
+     */
+    private void arranjeShifts(InfoExecutionCourseOccupancy infoExecutionCourseOccupancy) {
 
         // Note : This must be synched with TipoAula.java
 
@@ -235,67 +192,54 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
         infoExecutionCourseOccupancy.setShiftsInGroups(new ArrayList());
 
         Iterator iterator = infoExecutionCourseOccupancy.getInfoShifts().iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             InfoShift infoShift = (InfoShift) iterator.next();
-            if (infoShift.getTipo().equals(new TipoAula(TipoAula.TEORICA)))
-            {
+            if (infoShift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
                 theoreticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.PRATICA)))
-            {
+            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
                 praticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.DUVIDAS)))
-            {
+            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.DUVIDAS))) {
                 doubtsShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL)))
-            {
+            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
                 labShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.RESERVA)))
-            {
+            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.RESERVA))) {
                 reserveShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA)))
-            {
+            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
                 theoPraticalShifts.add(infoShift);
             }
         }
         infoExecutionCourseOccupancy.setInfoShifts(null);
         InfoShiftGroupStatistics infoShiftGroupStatistics = new InfoShiftGroupStatistics();
-        if (!theoreticalShifts.isEmpty())
-        {
+        if (!theoreticalShifts.isEmpty()) {
             infoShiftGroupStatistics.setShiftsInGroup(theoreticalShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
 
-        if (!theoPraticalShifts.isEmpty())
-        {
+        if (!theoPraticalShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(theoPraticalShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
 
-        if (!labShifts.isEmpty())
-        {
+        if (!labShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(labShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
 
-        if (!praticalShifts.isEmpty())
-        {
+        if (!praticalShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(praticalShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
 
-        if (!reserveShifts.isEmpty())
-        {
+        if (!reserveShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(reserveShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
         }
 
-        if (!doubtsShifts.isEmpty())
-        {
+        if (!doubtsShifts.isEmpty()) {
             infoShiftGroupStatistics = new InfoShiftGroupStatistics();
             infoShiftGroupStatistics.setShiftsInGroup(doubtsShifts);
             infoExecutionCourseOccupancy.getShiftsInGroups().add(infoShiftGroupStatistics);
@@ -303,29 +247,18 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
 
     }
 
-    public ActionForward showLoads(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
+    public ActionForward showLoads(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
 
-        Object args[] = { new Integer(request.getParameter("executionCourseOID"))};
+        Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
-        InfoExecutionCourse infoExecutionCourse =
-            (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-                userView,
-                "ReadExecutionCourseByOID",
-                args);
+        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
+                .executeService(userView, "ReadExecutionCourseByOID", args);
 
-        List curricularCoursesWithScopes =
-            (List) ServiceManagerServiceFactory.executeService(
-                userView,
-                "ReadCurricularCourseScopesByExecutionCourseID",
-                args);
+        List curricularCoursesWithScopes = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadCurricularCourseScopesByExecutionCourseID", args);
 
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
         request.setAttribute("curricularCourses", curricularCoursesWithScopes);

@@ -1,11 +1,11 @@
 package ServidorAplicacao.Servico.commons.externalPerson;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
 import Dominio.IPessoa;
 import Dominio.IWorkLocation;
 import Dominio.WorkLocation;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -15,102 +15,67 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
+ *         (naat@mega.ist.utl.pt)
+ *  
  */
-public class EditExternalPerson implements IServico
-{
+public class EditExternalPerson implements IService {
 
-	private static EditExternalPerson servico = new EditExternalPerson();
+    /**
+     * The actor of this class.
+     */
+    public EditExternalPerson() {
+    }
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static EditExternalPerson getService()
-	{
-		return servico;
-	}
+    public void run(Integer externalPersonID, String name, String address, Integer workLocationID,
+            String phone, String mobile, String homepage, String email) throws FenixServiceException {
+        IExternalPerson storedExternalPerson = null;
+        IExternalPerson existingExternalPerson = null;
 
-	/**
-	 * The actor of this class.
-	 **/
-	private EditExternalPerson()
-	{
-	}
+        IWorkLocation storedWorkLocation = null;
 
-	/**
-	 * Returns The Service Name */
-	public final String getNome()
-	{
-		return "EditExternalPerson";
-	}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-	public void run(
-		Integer externalPersonID,
-		String name,
-		String address,
-		Integer workLocationID,
-		String phone,
-		String mobile,
-		String homepage,
-		String email)
-		throws FenixServiceException
-	{
-		IExternalPerson storedExternalPerson = null;
-		IExternalPerson existingExternalPerson = null;
+            storedExternalPerson = (IExternalPerson) sp.getIPersistentExternalPerson().readByOID(
+                    ExternalPerson.class, externalPersonID);
 
-		IWorkLocation storedWorkLocation = null;
+            if (storedExternalPerson == null)
+                throw new NonExistingServiceException(
+                        "error.exception.externalPerson.nonExistingExternalPsrson");
 
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            existingExternalPerson = sp.getIPersistentExternalPerson()
+                    .readByNameAndAddressAndWorkLocationID(name, address, workLocationID);
 
-			storedExternalPerson =
-				(IExternalPerson) sp.getIPersistentExternalPerson().readByOID(
-					ExternalPerson.class,
-					externalPersonID);
+            // checks if existes another exernal person with the same name,
+            // address and name location
+            if (existingExternalPerson != null) {
+                if (!storedExternalPerson.getIdInternal().equals(existingExternalPerson.getIdInternal()))
+                    throw new ExistingServiceException(
+                            "error.exception.externalPerson.existingExternalPerson");
+            }
 
-			if (storedExternalPerson == null)
-				throw new NonExistingServiceException("error.exception.externalPerson.nonExistingExternalPsrson");
+            sp.getIPersistentExternalPerson().simpleLockWrite(storedExternalPerson);
 
-			existingExternalPerson =
-				sp.getIPersistentExternalPerson().readByNameAndAddressAndWorkLocationID(
-					name,
-					address,
-					workLocationID);
+            storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(
+                    WorkLocation.class, workLocationID);
+            storedExternalPerson.setWorkLocation(storedWorkLocation);
 
-			// checks if existes another exernal person with the same name, address and name location
-			if (existingExternalPerson != null)
-			{
-				if (!storedExternalPerson.getIdInternal().equals(existingExternalPerson.getIdInternal()))
-					throw new ExistingServiceException("error.exception.externalPerson.existingExternalPerson");
-			}
-			
-			sp.getIPersistentExternalPerson().simpleLockWrite(storedExternalPerson);
-			
-			storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(WorkLocation.class, workLocationID);
-			storedExternalPerson.setWorkLocation(storedWorkLocation);
-			
-			IPessoa person = storedExternalPerson.getPerson();
-			sp.getIPessoaPersistente().lockWrite(person);
+            IPessoa person = storedExternalPerson.getPerson();
+            sp.getIPessoaPersistente().lockWrite(person);
 
-			person.setNome(name);
-			person.setMorada(address);
-			person.setTelefone(phone);
-			person.setTelemovel(mobile);
-			person.setEnderecoWeb(homepage);
-			person.setEmail(email);
-		
-	
-		}
-		catch (ExcepcaoPersistencia ex)
-		{
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+            person.setNome(name);
+            person.setMorada(address);
+            person.setTelefone(phone);
+            person.setTelemovel(mobile);
+            person.setEnderecoWeb(homepage);
+            person.setEmail(email);
 
-	}
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+
+    }
 }

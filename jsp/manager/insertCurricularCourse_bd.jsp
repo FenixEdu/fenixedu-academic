@@ -137,6 +137,31 @@
 				<html:text size="5" property="weight" />
 			</td>
 		</tr>			
+
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.enrollmentWeigth"/>
+			</td>
+			<td>
+				<html:text size="5" property="enrollmentWeigth"/>
+			</td>
+		</tr>			
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.mandatoryEnrollment"/>
+			</td>
+			<td>
+				<html:checkbox property="mandatoryEnrollment" value ="true"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.enrollmentAllowed"/>
+			</td>
+			<td>
+				<html:checkbox property="enrollmentAllowed" value ="true"/>
+			</td>
+		</tr>
 	</table>
 	
 	<br>

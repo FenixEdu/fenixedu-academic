@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.enrollment;
 
-import Dominio.IEnrolmentPeriod;
+import Dominio.IEnrolmentPeriodInCurricularCourses;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
@@ -21,10 +21,9 @@ public class ShowAvailableCurricularCourses extends
     }
 
     // some of these arguments may be null. they are only needed for filter
-    public InfoStudentEnrollmentContext run(Integer executionDegreeId,
-            Integer studentCurricularPlanId, Integer studentNumber)
-            throws FenixServiceException {
-        try { 
+    public InfoStudentEnrollmentContext run(Integer executionDegreeId, Integer studentCurricularPlanId,
+            Integer studentNumber) throws FenixServiceException {
+        try {
 
             IStudent student = getStudent(studentNumber);
 
@@ -32,18 +31,17 @@ public class ShowAvailableCurricularCourses extends
                 IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 
                 if (studentCurricularPlan != null) {
-                    IEnrolmentPeriod enrolmentPeriod = getEnrolmentPeriod(studentCurricularPlan);
+                    IEnrolmentPeriodInCurricularCourses enrolmentPeriod = getEnrolmentPeriod(studentCurricularPlan);
                     IExecutionPeriod executionPeriod = getExecutionPeriod(null);
-                    if (executionPeriod.equals(enrolmentPeriod
-                            .getExecutionPeriod())) {
+                    if (executionPeriod.equals(enrolmentPeriod.getExecutionPeriod())) {
                         try {
-                            return super.run(executionDegreeId,
-                                    studentCurricularPlanId, studentNumber);
+                            return super.run(executionDegreeId, studentCurricularPlanId, studentNumber);
                         } catch (IllegalArgumentException e) {
                             throw new FenixServiceException("degree");
                         }
                     }
-                    throw new OutOfCurricularCourseEnrolmentPeriod(enrolmentPeriod.getStartDate(),enrolmentPeriod.getEndDate());
+                    throw new OutOfCurricularCourseEnrolmentPeriod(enrolmentPeriod.getStartDate(),
+                            enrolmentPeriod.getEndDate());
 
                 }
                 throw new ExistingServiceException("studentCurricularPlan");

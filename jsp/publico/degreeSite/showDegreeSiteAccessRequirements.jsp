@@ -9,18 +9,14 @@
 
 <logic:present name="infoDegreeInfo">
 
-	<div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > 
+	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a>
+		&nbsp;&gt;&nbsp;<a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>
 		<bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso" />	
-		<logic:equal name="degreeType" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
-			 <html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino Mestrados</html:link>
-		</logic:equal>
-		<logic:equal name="degreeType" value="<%= TipoCurso.LICENCIATURA_OBJ.toString() %>">
-			<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino Licenciaturas</html:link>		
-		</logic:equal>	
-		&gt;&nbsp; <html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>">
+		&nbsp;&gt;&nbsp; 
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>">
 			<bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
 		</html:link>
-		&gt;&nbsp;<bean:message key="label.accessRequirements"/>
+		&nbsp;&gt;&nbsp;<bean:message key="label.accessRequirements"/>
 	</div>
 	
 	<!-- PÁGINA EM INGLÊS -->
@@ -31,19 +27,21 @@
 	</div> 
 	<div class="clear"></div> 
 	
-	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp;<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
+	<h1>
+		<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />
+		&nbsp;em&nbsp;
+		<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
+	</h1>
 	<h2><span class="greytxt"><bean:message key="label.accessRequirements"/></span></h2>
-  	<br /> 
-	<bean:message key="label.information.responsability.accessRequirements.degree" />			 
-	<br />
-	<br />
 
+	<br />
 	<!-- NOME(S) DA PROVA(S) DE INGRESSO -->
   <logic:notEmpty name="infoDegreeInfo" property="testIngression">
   	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.testIngression" /></h2>  
 	<p><bean:write name="infoDegreeInfo" property="testIngression" filter="false" /></p>
   </logic:notEmpty>
   
+  	<br />
   <!-- VAGAS -->
  	<logic:notEmpty name="infoDegreeInfo" property="driftsInitial">
 	  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.drifts" /></h2>
@@ -59,8 +57,9 @@
 			</logic:notEmpty>
 	  </ul>			
 	</logic:notEmpty>    	  	
-	  	
-  <!-- CLASSIFICAÇÕES-->
+	 
+	 <br />
+	  <!-- CLASSIFICAÇÕES-->
   <logic:notEmpty name="infoDegreeInfo" property="classifications">
 	  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.classifications" /></h2>
 	 	<bean:write name="infoDegreeInfo" property="classifications" filter="false" />
@@ -81,21 +80,25 @@
 			</logic:notEmpty>
 	  </ul>			
 	</logic:notEmpty>
-<logic:empty name="infoDegreeInfo" property="testIngression">
-<logic:empty name="infoDegreeInfo" property="classifications">
-<logic:empty name="infoDegreeInfo" property="driftsInitial">
-<logic:empty name="infoDegreeInfo" property="driftsFirst">
-<logic:empty name="infoDegreeInfo" property="driftsSecond">
-<logic:empty name="infoDegreeInfo" property="markAverage">
-<logic:empty name="infoDegreeInfo" property="markMin">
-<logic:empty name="infoDegreeInfo" property="markMax">
-	<p><span class="error"><bean:message key="error.public.DegreeInfoNotPresent" /></span></p>
-</logic:empty>
-</logic:empty>
-</logic:empty>	
-</logic:empty>	
-</logic:empty>
-</logic:empty>
-</logic:empty>	
-</logic:empty> 
+	<logic:empty name="infoDegreeInfo" property="testIngression">
+	<logic:empty name="infoDegreeInfo" property="classifications">
+	<logic:empty name="infoDegreeInfo" property="driftsInitial">
+	<logic:empty name="infoDegreeInfo" property="driftsFirst">
+	<logic:empty name="infoDegreeInfo" property="driftsSecond">
+	<logic:empty name="infoDegreeInfo" property="markAverage">
+	<logic:empty name="infoDegreeInfo" property="markMin">
+	<logic:empty name="infoDegreeInfo" property="markMax">
+		<p><span class="error"><bean:message key="error.public.DegreeInfoNotPresent" /></span></p>
+	</logic:empty>
+	</logic:empty>
+	</logic:empty>	
+	</logic:empty>	
+	</logic:empty>
+	</logic:empty>
+	</logic:empty>	
+	</logic:empty> 
+
+	<br />
+	<p><span class="px10"><bean:message key="label.information.responsability.information.degree" /></span></p>				 
+
 </logic:present>

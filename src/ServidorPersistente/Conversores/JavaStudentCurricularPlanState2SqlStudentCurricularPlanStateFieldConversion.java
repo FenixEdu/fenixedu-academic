@@ -10,8 +10,8 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.StudentCurricularPlanState;
 
-public class JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion
-        implements FieldConversion {
+public class JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion implements
+        FieldConversion {
 
     /*
      * @see FieldConversion#javaToSql(Object)

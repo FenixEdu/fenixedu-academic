@@ -23,37 +23,33 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class ChangePersonalInfo implements IService
-{
+public class ChangePersonalInfo implements IService {
 
     /**
      * The actor of this class.
      */
-    public ChangePersonalInfo()
-    {
+    public ChangePersonalInfo() {
     }
 
     public UserView run(UserView userView, InfoPerson newInfoPerson) throws ExcepcaoInexistente,
-            FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia
-    {
+            FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         IPessoa person = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
-        if (person == null) { throw new ExcepcaoInexistente("Unknown Person !!"); }
+        if (person == null) {
+            throw new ExcepcaoInexistente("Unknown Person !!");
+        }
         sp.getIPessoaPersistente().simpleLockWrite(person);
- 
+
         // Change personal Information
         person.setTelemovel(newInfoPerson.getTelemovel());
         person.setWorkPhone(newInfoPerson.getWorkPhone());
@@ -61,6 +57,7 @@ public class ChangePersonalInfo implements IService
         person.setAvailableEmail(newInfoPerson.getAvailableEmail());
         person.setEnderecoWeb(newInfoPerson.getEnderecoWeb());
         person.setAvailableWebSite(newInfoPerson.getAvailableWebSite());
+        person.setAvailablePhoto(newInfoPerson.getAvailablePhoto());
 
         return userView;
     }

@@ -10,49 +10,51 @@ package DataBeans;
 
 /**
  * @author tfc130
- *
  * 
+ *  
  */
 public final class InfoLessonServiceResult extends InfoObject {
-	public static final int SUCESS = 0;
-	public static final int INVALID_TIME_INTERVAL = 1;
-	public static final int CLASSES_EXISTING_IN_TIME_INTERVAL = 2;
+    public static final int SUCESS = 0;
 
-	private int _messageType;
+    public static final int INVALID_TIME_INTERVAL = 1;
 
-	public InfoLessonServiceResult() {
-	}
+    public static final int CLASSES_EXISTING_IN_TIME_INTERVAL = 2;
 
-	public InfoLessonServiceResult(int messageType) {
-		switch (messageType) {
-			case SUCESS :
-			case INVALID_TIME_INTERVAL :
-				_messageType = messageType;
-			case CLASSES_EXISTING_IN_TIME_INTERVAL :
-				_messageType = messageType;
-				break;
-			default :
-				throw new IllegalArgumentException("Message type not recognized!");
-		}
-	}
+    private int _messageType;
 
-	public int getMessageType() {
-		return _messageType;
-	}
+    public InfoLessonServiceResult() {
+    }
 
-	public void setMessageType(int messageType) {
-		_messageType = messageType;
-	}
+    public InfoLessonServiceResult(int messageType) {
+        switch (messageType) {
+        case SUCESS:
+        case INVALID_TIME_INTERVAL:
+            _messageType = messageType;
+        case CLASSES_EXISTING_IN_TIME_INTERVAL:
+            _messageType = messageType;
+            break;
+        default:
+            throw new IllegalArgumentException("Message type not recognized!");
+        }
+    }
 
-	public boolean isSUCESS() {
-		return (_messageType == SUCESS);
-	}
+    public int getMessageType() {
+        return _messageType;
+    }
 
-	/**
-	 * @return int
-	 */
-	public static int getCLASSES_EXISTING_IN_TIME_INTERVAL() {
-		return CLASSES_EXISTING_IN_TIME_INTERVAL;
-	}
+    public void setMessageType(int messageType) {
+        _messageType = messageType;
+    }
+
+    public boolean isSUCESS() {
+        return (_messageType == SUCESS);
+    }
+
+    /**
+     * @return int
+     */
+    public static int getCLASSES_EXISTING_IN_TIME_INTERVAL() {
+        return CLASSES_EXISTING_IN_TIME_INTERVAL;
+    }
 
 }

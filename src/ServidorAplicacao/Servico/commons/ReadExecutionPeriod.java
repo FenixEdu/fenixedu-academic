@@ -5,12 +5,12 @@
  */
 package ServidorAplicacao.Servico.commons;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -22,46 +22,23 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class ReadExecutionPeriod implements IServico
-{
-
-    private static ReadExecutionPeriod service = new ReadExecutionPeriod();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadExecutionPeriod getService()
-    {
-        return service;
-    }
-
-    /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadExecutionPeriod";
-    }
+public class ReadExecutionPeriod implements IService {
 
     public InfoExecutionPeriod run(String name, InfoExecutionYear infoExecutionYear)
-        throws FenixServiceException
-    {
+            throws FenixServiceException {
 
         InfoExecutionPeriod result = null;
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IExecutionYear executionYear =
-                Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
-            IExecutionPeriod executionPeriod =
-                executionPeriodDAO.readByNameAndExecutionYear(name, executionYear);
-            if (executionPeriod != null)
-            {
+            IExecutionYear executionYear = Cloner
+                    .copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+            IExecutionPeriod executionPeriod = executionPeriodDAO.readByNameAndExecutionYear(name,
+                    executionYear);
+            if (executionPeriod != null) {
                 result = (InfoExecutionPeriod) Cloner.get(executionPeriod);
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 

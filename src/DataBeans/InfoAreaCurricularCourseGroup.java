@@ -4,8 +4,8 @@
  */
 package DataBeans;
 
-import Util.AreaType;
 import Dominio.ICurricularCourseGroup;
+import Util.AreaType;
 
 /**
  * @author João Mota
@@ -13,12 +13,9 @@ import Dominio.ICurricularCourseGroup;
 
 public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
 
-
-
     public InfoAreaCurricularCourseGroup() {
     }
 
-  
     public Integer getMaximumCredits() {
         return super.getMaximumValue();
     }
@@ -48,32 +45,34 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
     public void setAreaType(AreaType areaType) {
         this.areaType = areaType;
     }
+
     public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
-        if (curricularCourseGroup != null) {            
+        if (curricularCourseGroup != null) {
             setAreaType(curricularCourseGroup.getAreaType());
             setMaximumCredits(curricularCourseGroup.getMaximumCredits());
             setMinimumCredits(curricularCourseGroup.getMinimumCredits());
         }
     }
+
     public static InfoCurricularCourseGroup newInfoFromDomain(
             ICurricularCourseGroup curricularCourseGroup) {
         InfoCurricularCourseGroup infoCurricularCourseGroup = null;
-        if(curricularCourseGroup != null) {
+        if (curricularCourseGroup != null) {
             infoCurricularCourseGroup = new InfoAreaCurricularCourseGroup();
             infoCurricularCourseGroup.copyFromDomain(curricularCourseGroup);
         }
         return infoCurricularCourseGroup;
-       
+
     }
 
-
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see DataBeans.InfoCurricularCourseGroup#getType()
      */
-    public String getType() {        
+    public String getType() {
         return "label.curricularCourseGroup.area";
     }
-    
+
 }

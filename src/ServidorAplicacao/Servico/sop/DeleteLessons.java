@@ -20,25 +20,23 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class DeleteLessons implements IService {
 
-	public Object run(List lessonOIDs) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(List lessonOIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-		boolean result = false;
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        boolean result = false;
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			for (int j = 0; j < lessonOIDs.size(); j++) {
-				IAula lesson =
-					(IAula) sp.getIAulaPersistente().readByOID(
-						Aula.class,
-						(Integer) lessonOIDs.get(j));
+        for (int j = 0; j < lessonOIDs.size(); j++) {
+            IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(Aula.class,
+                    (Integer) lessonOIDs.get(j));
 
-				sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
-				sp.getIAulaPersistente().delete(lesson);
-			}
+            sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
+            sp.getIAulaPersistente().delete(lesson);
+        }
 
-			result = true;
+        result = true;
 
-	return new Boolean(result);
+        return new Boolean(result);
 
-}
+    }
 
 }

@@ -28,41 +28,30 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class EditarTurno implements IService
-{
+public class EditarTurno implements IService {
 
     /**
      * The actor of this class.
      */
-    public EditarTurno()
-    {
+    public EditarTurno() {
     }
 
-    public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException
-    {
+    public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException {
 
         InfoShift infoShift = null;
 
-        try
-        {
+        try {
             newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew
                     .getInfoDisciplinaExecucao(), infoShiftNew.getLotacao());
-        }
-        catch (InvalidNewShiftExecutionCourse ex)
-        {
+        } catch (InvalidNewShiftExecutionCourse ex) {
             throw new InvalidNewShiftExecutionCourse();
-        }
-        catch (InvalidNewShiftType ex)
-        {
+        } catch (InvalidNewShiftType ex) {
             throw new InvalidNewShiftType();
-        }
-        catch (InvalidNewShiftCapacity ex)
-        {
+        } catch (InvalidNewShiftCapacity ex) {
             throw new InvalidNewShiftCapacity();
         }
 
-        try
-        {
+        try {
             ISuportePersistente sp;
             sp = SuportePersistenteOJB.getInstance();
 
@@ -71,7 +60,9 @@ public class EditarTurno implements IService
 
             int capacityDiference = infoShiftNew.getLotacao().intValue() - shift.getLotacao().intValue();
 
-            if (shift.getAvailabilityFinal().intValue() + capacityDiference < 0) { throw new InvalidFinalAvailabilityException(); }
+            if (shift.getAvailabilityFinal().intValue() + capacityDiference < 0) {
+                throw new InvalidFinalAvailabilityException();
+            }
 
             sp.getITurnoPersistente().simpleLockWrite(shift);
 
@@ -90,23 +81,20 @@ public class EditarTurno implements IService
 
             // Also change the type of associated lessons and lessons execution
             // course
-            if (shift.getAssociatedLessons() != null)
-            {
-                for (int i = 0; i < shift.getAssociatedLessons().size(); i++)
-                {
+            if (shift.getAssociatedLessons() != null) {
+                for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
                     sp.getIAulaPersistente().simpleLockWrite(
                             (IDomainObject) shift.getAssociatedLessons().get(i));
                     ((IAula) shift.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
-					((IAula) shift.getAssociatedLessons().get(i)).setShift(shift);
-                    //((IAula) shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
+                    ((IAula) shift.getAssociatedLessons().get(i)).setShift(shift);
+                    //((IAula)
+                    // shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
                 }
             }
 
             infoShift = Cloner.copyShift2InfoShift(shift);
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new ExistingShiftException(ex);
         }
         // NOTE: changed the lock twice strategy to see if the new turn exists
@@ -120,51 +108,48 @@ public class EditarTurno implements IService
 
     private void newShiftIsValid(InfoShift infoShiftOld, TipoAula newShiftType,
             InfoExecutionCourse newShiftExecutionCourse, Integer newShiftCapacity)
-            throws FenixServiceException
-    {
+            throws FenixServiceException {
 
         // 1. Read shift lessons
         List shiftLessons = null;
         ITurno shift = null;
-        try
-        {
+        try {
             ISuportePersistente sp;
             sp = SuportePersistenteOJB.getInstance();
             shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class,
                     infoShiftOld.getIdInternal());
             shiftLessons = shift.getAssociatedLessons();
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
 
         // 2. Count shift total duration and get maximum lesson room capacity
         Integer maxCapacity = new Integer(0);
         double shiftDuration = 0;
-        for (int i = 0; i < shiftLessons.size(); i++)
-        {
+        for (int i = 0; i < shiftLessons.size(); i++) {
             IAula lesson = ((IAula) shiftLessons.get(i));
             shiftDuration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-            if (lesson.getRoomOccupation().getRoom().getCapacidadeNormal().intValue() > maxCapacity.intValue())
-            {
+            if (lesson.getRoomOccupation().getRoom().getCapacidadeNormal().intValue() > maxCapacity
+                    .intValue()) {
                 maxCapacity = lesson.getRoomOccupation().getRoom().getCapacidadeNormal();
             }
         }
 
         // 3a. If NEW shift type is diferent from CURRENT shift type
         //     check if shift total duration exceeds new shift type duration
-        if (!newShiftType.equals(infoShiftOld.getTipo()))
-        {
-            if (!newShiftTypeIsValid(shift, newShiftType, shiftDuration)) { throw new InvalidNewShiftType(); }
+        if (!newShiftType.equals(infoShiftOld.getTipo())) {
+            if (!newShiftTypeIsValid(shift, newShiftType, shiftDuration)) {
+                throw new InvalidNewShiftType();
+            }
         }
 
         // 3b. If NEW shift executionCourse is diferent from CURRENT shift
         // executionCourse
         //     check if shift total duration exceeds new executionCourse duration
-        if (!newShiftExecutionCourse.equals(infoShiftOld.getInfoDisciplinaExecucao()))
-        {
-            if (!newShiftExecutionCourseIsValid(shift, newShiftExecutionCourse, shiftDuration)) { throw new InvalidNewShiftExecutionCourse(); }
+        if (!newShiftExecutionCourse.equals(infoShiftOld.getInfoDisciplinaExecucao())) {
+            if (!newShiftExecutionCourseIsValid(shift, newShiftExecutionCourse, shiftDuration)) {
+                throw new InvalidNewShiftExecutionCourse();
+            }
         }
 
         // 4. Check if NEW shift capacity is bigger then maximum lesson room
@@ -175,54 +160,59 @@ public class EditarTurno implements IService
 
     }
 
-    private boolean newShiftTypeIsValid(ITurno shift, TipoAula newShiftType, double shiftDuration)
-    {
+    private boolean newShiftTypeIsValid(ITurno shift, TipoAula newShiftType, double shiftDuration) {
         // Verify if shift total duration exceeds new shift type duration
-        if (newShiftType.equals(new TipoAula(TipoAula.TEORICA)))
-        {
-            if (shiftDuration > shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) { return false; }
+        if (newShiftType.equals(new TipoAula(TipoAula.TEORICA))) {
+            if (shiftDuration > shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
+                return false;
+            }
         }
-        if (newShiftType.equals(new TipoAula(TipoAula.PRATICA)))
-        {
-            if (shiftDuration > shift.getDisciplinaExecucao().getPraticalHours().doubleValue()) { return false; }
+        if (newShiftType.equals(new TipoAula(TipoAula.PRATICA))) {
+            if (shiftDuration > shift.getDisciplinaExecucao().getPraticalHours().doubleValue()) {
+                return false;
+            }
         }
-        if (newShiftType.equals(new TipoAula(TipoAula.TEORICO_PRATICA)))
-        {
-            if (shiftDuration > shift.getDisciplinaExecucao().getTheoPratHours().doubleValue()) { return false; }
+        if (newShiftType.equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+            if (shiftDuration > shift.getDisciplinaExecucao().getTheoPratHours().doubleValue()) {
+                return false;
+            }
         }
-        if (newShiftType.equals(new TipoAula(TipoAula.LABORATORIAL)))
-        {
-            if (shiftDuration > shift.getDisciplinaExecucao().getLabHours().doubleValue()) { return false; }
+        if (newShiftType.equals(new TipoAula(TipoAula.LABORATORIAL))) {
+            if (shiftDuration > shift.getDisciplinaExecucao().getLabHours().doubleValue()) {
+                return false;
+            }
         }
         return true;
     }
 
     private boolean newShiftExecutionCourseIsValid(ITurno shift,
-            InfoExecutionCourse newShiftExecutionCourse, double shiftDuration)
-    {
+            InfoExecutionCourse newShiftExecutionCourse, double shiftDuration) {
 
         // Verify if shift total duration exceeds new executionCourse uration
-        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA)))
-        {
-            if (shiftDuration > newShiftExecutionCourse.getTheoreticalHours().doubleValue()) { return false; }
+        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
+            if (shiftDuration > newShiftExecutionCourse.getTheoreticalHours().doubleValue()) {
+                return false;
+            }
         }
-        if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA)))
-        {
-            if (shiftDuration > newShiftExecutionCourse.getPraticalHours().doubleValue()) { return false; }
+        if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
+            if (shiftDuration > newShiftExecutionCourse.getPraticalHours().doubleValue()) {
+                return false;
+            }
         }
-        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA)))
-        {
-            if (shiftDuration > newShiftExecutionCourse.getTheoPratHours().doubleValue()) { return false; }
+        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+            if (shiftDuration > newShiftExecutionCourse.getTheoPratHours().doubleValue()) {
+                return false;
+            }
         }
-        if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL)))
-        {
-            if (shiftDuration > newShiftExecutionCourse.getLabHours().doubleValue()) { return false; }
+        if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+            if (shiftDuration > newShiftExecutionCourse.getLabHours().doubleValue()) {
+                return false;
+            }
         }
         return true;
     }
 
-    private Integer getLessonDurationInMinutes(IAula lesson)
-    {
+    private Integer getLessonDurationInMinutes(IAula lesson) {
         int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
         int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
         int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);
@@ -237,14 +227,12 @@ public class EditarTurno implements IService
      * To change the template for this generated type comment go to
      * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
      */
-    public class InvalidNewShiftType extends FenixServiceException
-    {
+    public class InvalidNewShiftType extends FenixServiceException {
 
         /**
-         * 
+         *  
          */
-        InvalidNewShiftType()
-        {
+        InvalidNewShiftType() {
             super();
         }
 
@@ -254,14 +242,12 @@ public class EditarTurno implements IService
      * To change the template for this generated type comment go to
      * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
      */
-    public class InvalidNewShiftExecutionCourse extends FenixServiceException
-    {
+    public class InvalidNewShiftExecutionCourse extends FenixServiceException {
 
         /**
-         * 
+         *  
          */
-        InvalidNewShiftExecutionCourse()
-        {
+        InvalidNewShiftExecutionCourse() {
             super();
         }
 
@@ -271,14 +257,12 @@ public class EditarTurno implements IService
      * To change the template for this generated type comment go to
      * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
      */
-    public class InvalidNewShiftCapacity extends FenixServiceException
-    {
+    public class InvalidNewShiftCapacity extends FenixServiceException {
 
         /**
-         * 
+         *  
          */
-        InvalidNewShiftCapacity()
-        {
+        InvalidNewShiftCapacity() {
             super();
         }
 
@@ -288,22 +272,19 @@ public class EditarTurno implements IService
      * To change the template for this generated type comment go to
      * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
      */
-    public class ExistingShiftException extends FenixServiceException
-    {
+    public class ExistingShiftException extends FenixServiceException {
 
         /**
-         * 
+         *  
          */
-        private ExistingShiftException()
-        {
+        private ExistingShiftException() {
             super();
         }
 
         /**
          * @param cause
          */
-        ExistingShiftException(Throwable cause)
-        {
+        ExistingShiftException(Throwable cause) {
             super(cause);
         }
 
@@ -313,14 +294,12 @@ public class EditarTurno implements IService
      * To change the template for this generated type comment go to
      * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
      */
-    public class InvalidFinalAvailabilityException extends FenixServiceException
-    {
+    public class InvalidFinalAvailabilityException extends FenixServiceException {
 
         /**
-         * 
+         *  
          */
-        InvalidFinalAvailabilityException()
-        {
+        InvalidFinalAvailabilityException() {
             super();
         }
 

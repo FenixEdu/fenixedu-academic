@@ -34,13 +34,14 @@ public abstract class InfoObject extends DataTranferObject {
     }
 
     public boolean equals(Object obj) {
-        if(obj instanceof InfoObject) {
+        if (obj instanceof InfoObject) {
             InfoObject infoObject = (InfoObject) obj;
             return this.getIdInternal().equals(infoObject.getIdInternal());
         }
-        
+
         return false;
     }
+
     /*
      * (non-Javadoc)
      * 

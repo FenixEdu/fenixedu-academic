@@ -11,40 +11,38 @@ import java.util.List;
  */
 
 public class InfoSiteMetadatas extends DataTranferObject implements ISiteComponent {
-	private List infoMetadatas;
-	private InfoExecutionCourse executionCourse;
+    private List infoMetadatas;
 
-	public InfoSiteMetadatas() {
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    public InfoSiteMetadatas() {
+    }
 
-	public List getInfoMetadatas() {
-		return infoMetadatas;
-	}
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
-	public void setInfoMetadatas(List list) {
-		infoMetadatas = list;
-	}
+    public List getInfoMetadatas() {
+        return infoMetadatas;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoSiteMetadatas) {
-			InfoSiteMetadatas infoSiteMetadatas = (InfoSiteMetadatas) obj;
-			result =
-				getExecutionCourse().equals(
-					infoSiteMetadatas.getExecutionCourse())
-					&& getInfoMetadatas().containsAll(
-						infoSiteMetadatas.getInfoMetadatas())
-					&& infoSiteMetadatas.getInfoMetadatas().containsAll(
-						getInfoMetadatas());
-		}
-		return result;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
+
+    public void setInfoMetadatas(List list) {
+        infoMetadatas = list;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoSiteMetadatas) {
+            InfoSiteMetadatas infoSiteMetadatas = (InfoSiteMetadatas) obj;
+            result = getExecutionCourse().equals(infoSiteMetadatas.getExecutionCourse())
+                    && getInfoMetadatas().containsAll(infoSiteMetadatas.getInfoMetadatas())
+                    && infoSiteMetadatas.getInfoMetadatas().containsAll(getInfoMetadatas());
+        }
+        return result;
+    }
 
 }
