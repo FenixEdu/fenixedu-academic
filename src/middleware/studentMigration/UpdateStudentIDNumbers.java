@@ -25,26 +25,32 @@ public class UpdateStudentIDNumbers {
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWAluno persistentAluno = mws.getIPersistentMWAluno();
 		
-		System.out.println("Reading Students ....");
-
-
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 		
 		sp.iniciarTransaccao();
-		List result = persistentAluno.readAll();
+		Integer numberOfStudents = persistentAluno.countAll();
 		sp.confirmarTransaccao();
+		int numberOfElementsInSpan = 100;
 		
-		System.out.println("Updating " + result.size() + " Student Document Id Numbers ...");
-
-
-		Iterator iterator = result.iterator();
-		while(iterator.hasNext()) {
-			MWStudent student = (MWStudent) iterator.next();
+		int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
+		numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 		
+		for (int span = 0; span < numberOfSpans; span++) {
+			System.gc();
 			sp.iniciarTransaccao();
-			sp.clearCache();
-			UpdateStudentIDNumbers.updateStudentIDNumbers(student, sp);
-			sp.confirmarTransaccao();
+			System.out.println("Reading Students...");
+			List result = persistentAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
+			System.out.println("Updating " + result.size() + " Student Document Id Numbers ...");
+			sp.confirmarTransaccao();		
+			
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()) {
+				MWStudent student = (MWStudent) iterator.next();
+				sp.iniciarTransaccao();
+				sp.clearCache();
+				UpdateStudentIDNumbers.updateStudentIDNumbers(student, sp);
+				sp.confirmarTransaccao();
+			}
 		}
 	}
 

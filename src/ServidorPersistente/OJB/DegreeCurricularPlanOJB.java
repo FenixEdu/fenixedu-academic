@@ -116,25 +116,31 @@ public class DegreeCurricularPlanOJB extends ObjectFenixOJB implements IPersiste
 //	}
 
 	public List readByDegree(ICurso degree) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + DegreeCurricularPlan.class.getName();
-			oqlQuery += " where degree.nome = $1 " + " and degree.sigla = $2 " + " and degree.tipoCurso = $3 ";
 
-			query.create(oqlQuery);
-			query.bind(degree.getNome());
-			query.bind(degree.getSigla());
-			query.bind(degree.getTipoCurso());
-
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("degree.nome",degree.getNome());
+		criteria.addEqualTo("degree.sigla",degree.getSigla());
+		criteria.addEqualTo("degree.tipoCurso",degree.getTipoCurso());
+		return queryList(DegreeCurricularPlan.class, criteria);
+//		try {
+//			String oqlQuery = "select all from " + DegreeCurricularPlan.class.getName();
+//			oqlQuery += " where degree.nome = $1 " + " and degree.sigla = $2 " + " and degree.tipoCurso = $3 ";
+//
+//			query.create(oqlQuery);
+//			query.bind(degree.getNome());
+//			query.bind(degree.getSigla());
+//			query.bind(degree.getTipoCurso());
+//
+//			List result = (List) query.execute();
+//			try {
+//				lockRead(result);
+//			} catch (ExcepcaoPersistencia ex) {
+//				throw ex;
+//			}
+//			return result;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
 	}
 	
 	public List readByDegreeAndState(ICurso degree,DegreeCurricularPlanState state) throws ExcepcaoPersistencia{

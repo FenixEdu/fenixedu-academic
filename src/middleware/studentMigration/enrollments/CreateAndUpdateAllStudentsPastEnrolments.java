@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWCurricularCourseScope;
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MWEnrolment;
+import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
@@ -85,6 +85,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	public static void main(String args[])
 	{
 		MWStudent mwStudent = null;
+		UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates = 0;
 
 		try {
 			ISuportePersistente fenixPersistentSuport = SuportePersistenteOJB.getInstance();
@@ -117,16 +118,24 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
 		
 				Iterator iterator = result.iterator();
-				while (iterator.hasNext()) {
+				while (iterator.hasNext())
+				{
 					mwStudent = (MWStudent) iterator.next();
 	
 					fenixPersistentSuport.iniciarTransaccao();
 	
 					mwStudent.setEnrolments(persistentMWEnrolment.readByStudentNumber(mwStudent.getNumber()));
-	
+
 					CreateAndUpdateAllStudentsPastEnrolments.createAndUpdateAllStudentPastEnrolments(mwStudent, fenixPersistentSuport);
 	
-					fenixPersistentSuport.confirmarTransaccao();
+					try
+					{
+						fenixPersistentSuport.confirmarTransaccao();
+					} catch (NullPointerException e) {
+						// NOTE [DAVID]: Isto é apenas para prevenir uma situação de excepção
+						// ao confirmar a transacção que eu não consegui decifrar ainda.
+						ReportAllPastEnrollmentMigration.addClassCastExceptions(mwStudent);
+					}
 
 					ReportAllPastEnrollmentMigration.addStudentCurricularPlansMigrated(CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.size());
 					ReportAllPastEnrollmentMigration.addEnrolmentsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.size());
@@ -148,6 +157,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			System.out.println("[ERROR 201] Branch: [" + mwStudent.getBranchcode() + "]");
 			e.printStackTrace(System.out);
 		}
+
+		System.out.println("[INFO] DONE!");
+		System.out.println("[INFO] Total EnrolmentEvaluations updated: [" + UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates + "].");
 
 		ReportAllPastEnrollmentMigration.report(new PrintWriter(System.out, true));
 	}
@@ -538,12 +550,13 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		}
 		long dateInLongFormat = whenAltered.getTime();
 		dateInLongFormat = dateInLongFormat + (mwEnrolment.getIdinternal().longValue() * 1000);
-		whenAltered = new Date(dateInLongFormat);
-		
+		Date newDate = new Date(dateInLongFormat);
+
 		String grade = CreateAndUpdateAllStudentsPastEnrolments.getAcurateGrade(mwEnrolment);
 
-		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluationType, grade, whenAltered);
-
+//		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluationType, grade, whenAltered);
+		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(enrolment, enrolmentEvaluationType, grade);
+		
 		IEnrolmentEvaluation enrolmentEvaluationToObtainKey = new EnrolmentEvaluation();
 		enrolmentEvaluationToObtainKey.setEnrolment(enrolment);
 		enrolmentEvaluationToObtainKey.setGrade(grade);
@@ -569,7 +582,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
 
 				enrolmentEvaluation.setGradeAvailableDate(mwEnrolment.getExamdate());
-				enrolmentEvaluation.setWhen(whenAltered);
+				enrolmentEvaluation.setWhen(newDate);
 				enrolmentEvaluation.setEmployee(CreateAndUpdateAllStudentsPastEnrolments.getEmployee(mwEnrolment, fenixPersistentSuport));
 
 				enrolmentEvaluation.setCheckSum(null);
@@ -582,9 +595,13 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		} else {
 //			System.out.println("[WARNING 204] No EnrolmentEvaluation was created!");
 //			ReportAllPastEnrollmentMigration.addNotCreatedEnrolmentEvaluation(key, mwEnrolment);
+			fenixPersistentSuport.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
+			enrolmentEvaluation.setWhen(newDate);
+			UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates++;
 		}
 
 		CreateAndUpdateAllStudentsPastEnrolments.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+		
 		return enrolment;
 	}
 
@@ -648,6 +665,10 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		}
 
 		if (grade.equals("0")) {
+			return EnrolmentState.NOT_EVALUATED;
+		}
+
+		if (grade.equals("NA")) {
 			return EnrolmentState.NOT_EVALUATED;
 		}
 

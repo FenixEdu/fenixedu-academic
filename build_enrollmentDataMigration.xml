@@ -228,7 +228,7 @@
 		</java>
 	</target>
 
-	<target name="migrate-all-student-curricular-plans" depends="compile-proj">
+	<target name="migrate-all-student-curricular-plans" depends="compile-proj, load-data-from-old-system">
 		<exec executable="${sql}/middleware/commands/migrateAllStudenCurricularPlans.sh" os="Linux, Unix">
 			<arg value="stop"/>
 		</exec>
@@ -280,7 +280,7 @@
 		</java>
 	</target>
 
-	<target name="update-enrollmentEvaluations-dates-for-all-students-past-enrolments" depends="compile-proj, load-data-from-old-system">
+	<target name="update-enrollmentEvaluations-dates-for-all-students-past-enrolments" depends="load-mw-tables-with-data-for-all-enrollment-migration">
 		<java classname="middleware.studentMigration.enrollments.UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>

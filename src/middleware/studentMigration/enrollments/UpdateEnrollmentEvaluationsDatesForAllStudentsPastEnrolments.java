@@ -56,8 +56,8 @@ import Util.TipoCurso;
 
 public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 {
-	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 100;
-	private static int alteredDates = 0;
+	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 50;
+	protected static int alteredDates = 0;
 
 	public static void main(String args[])
 	{
@@ -252,6 +252,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			ICurricularCourseScope curricularCourseScope = UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.getCurricularCourseScope(mwEnrolment, curricularCourse, /*studentCurricularPlan, */degreeCurricularPlan, fenixPersistentSuport);
 			if (curricularCourseScope == null) {
 				System.out.print("[ERROR 506] Couldn't find Fenix CurricularCourseScope for data: ");
+				System.out.print("Student Number - [" + mwEnrolment.getNumber() + "], ");
 				System.out.print("Course Code - [" + mwEnrolment.getCoursecode() + "], ");
 				System.out.print("Degree Code - [" + mwEnrolment.getDegreecode() + "], ");
 				System.out.print("Branch Code - [" + mwEnrolment.getBranchcode() + "], ");
@@ -269,6 +270,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			IEnrolment enrolment = enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(studentCurricularPlan, curricularCourseScope, executionPeriod);
 			if (enrolment == null) {
 				System.out.print("[ERROR 507] Couldn't find Fenix Enrolment for data: ");
+				System.out.print("Student Number - [" + mwEnrolment.getNumber() + "], ");
 				System.out.print("Course Code - [" + mwEnrolment.getCoursecode() + "], ");
 				System.out.print("Degree Code - [" + mwEnrolment.getDegreecode() + "], ");
 				System.out.print("Branch Code - [" + mwEnrolment.getBranchcode() + "], ");
@@ -283,6 +285,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 
 			if (enrolmentEvaluation == null) {
 				System.out.print("[ERROR 508] Couldn't find Fenix EnrolmentEvaluation for data: ");
+				System.out.print("Student Number - [" + mwEnrolment.getNumber() + "], ");
 				System.out.print("Course Code - [" + mwEnrolment.getCoursecode() + "], ");
 				System.out.print("Degree Code - [" + mwEnrolment.getDegreecode() + "], ");
 				System.out.print("Branch Code - [" + mwEnrolment.getBranchcode() + "], ");
@@ -444,11 +447,11 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 		String grade = mwEnrolment.getGrade();
 
 		if (grade == null) {
-			return "0";
+			return "NA";
 		}
 
 		if (grade.equals("")) {
-			return "0";
+			return "NA";
 		}
 
 		if (grade.equals("RE")) {

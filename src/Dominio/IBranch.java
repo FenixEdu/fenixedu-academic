@@ -2,6 +2,8 @@ package Dominio;
 
 import java.util.List;
 
+import Util.BranchType;
+
 
 /**
  * @author dcs-rjao
@@ -18,7 +20,8 @@ public interface IBranch extends IDomainObject {
 	public String getAcronym();
 	public Integer getSecondaryCredits();
 	public Integer getSpecializationCredits();
-
+	public BranchType getBranchType();
+	
 	public void setCode(String code);
 	public void setName(String name);
 	public void setScopes(List scopes);
@@ -26,5 +29,5 @@ public interface IBranch extends IDomainObject {
 	public void setAcronym(String acronym);
 	public void setSecondaryCredits(Integer secondaryCredits);
 	public void setSpecializationCredits(Integer specializationCredits);
-	
+	public void setBranchType(BranchType branchType);
 }

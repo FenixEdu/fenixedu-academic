@@ -1,7 +1,3 @@
-/*
- * Created on 25/Nov/2003
- *
- */
 package Dominio;
 
 import java.util.List;
@@ -16,35 +12,18 @@ import Util.AreaType;
 
 public class CurricularCourseGroup extends DomainObject implements ICurricularCourseGroup
 {
-
     private Integer minimumCredits;
     private Integer maximumCredits;
     private Integer keyBranch;
     private AreaType areaType;
     private IBranch branch;
-    private List curricularCourseScopes;
+    private List curricularCourses;
+    private List scientificAreas;
 
     public CurricularCourseGroup()
     {
     }
     
-    public CurricularCourseGroup(Integer idInternal)
-    {
-    	this.setIdInternal(idInternal);
-    }
-
-    public CurricularCourseGroup(
-        IBranch branch,
-        Integer minCredits,
-        Integer maxCredits,
-        AreaType areaType)
-    {
-        setBranch(branch);
-        setMinimumCredits(minCredits);
-        setMaximumCredits(maxCredits);
-        setAreaType(areaType);
-    }
-
     /**
      * @return
      */
@@ -112,17 +91,17 @@ public class CurricularCourseGroup extends DomainObject implements ICurricularCo
     /**
      * @return
      */
-    public List getCurricularCourseScopes()
+    public List getCurricularCourses()
     {
-        return curricularCourseScopes;
+        return curricularCourses;
     }
 
     /**
-     * @param curricularCourseScopes
+     * @param curricularCourses
      */
-    public void setCurricularCourseScopes(List curricularCourseScopes)
+    public void setCurricularCourses(List curricularCourses)
     {
-        this.curricularCourseScopes = curricularCourseScopes;
+        this.curricularCourses = curricularCourses;
     }
 
     /**
@@ -141,19 +120,37 @@ public class CurricularCourseGroup extends DomainObject implements ICurricularCo
         this.areaType = areaType;
     }
 
-    public String toString()
-    {
-        return " [minimumCredits] "
-            + minimumCredits
-            + " [maximumCredits] "
-            + maximumCredits
-            + " [keyBranch] "
-            + keyBranch
-            + " [AreaType] "
-            + areaType
-            + " [Branch] "
-            + branch.toString()
-            + " [curricularCourseScopes] "
-            + curricularCourseScopes;
-    }
+    /**
+	 * @return Returns the scientificAreas.
+	 */
+	public List getScientificAreas()
+	{
+		return scientificAreas;
+	}
+
+	/**
+	 * @param scientificAreas The scientificAreas to set.
+	 */
+	public void setScientificAreas(List scientificAreas)
+	{
+		this.scientificAreas = scientificAreas;
+	}
+
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if ((result) && (obj instanceof ICurricularCourseGroup))
+		{
+			ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) obj;
+			result =
+				curricularCourseGroup.getBranch().equals(this.getBranch()) &&
+				curricularCourseGroup.getMaximumCredits().equals(this.getMaximumCredits()) &&
+				curricularCourseGroup.getMinimumCredits().equals(this.getMinimumCredits());
+		}
+		return result;
+	}
+	
+	public String toString()
+	{
+		return "minimumCredits[" + minimumCredits + "] maximumCredits[" + maximumCredits + "] branch[" + branch.getName() + "]";
+	}
 }

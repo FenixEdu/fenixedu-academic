@@ -46,6 +46,7 @@ import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentUniversity;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.BranchType;
 import Util.CurricularCourseType;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
@@ -483,10 +484,12 @@ public class CreateAndUpdateAllPastCurriculums
 			if (branch == null) {
 				branch = new Branch();
 				persistentBranch.simpleLockWrite(branch);
-				branch.setName(new String("BRANCH THAT NO LONGER EXISTS"));
+//				branch.setName(new String("BRANCH THAT NO LONGER EXISTS"));
+				branch.setName(new String("RAMO QUE JÁ NÃO EXISTE"));
 				branch.setCode(realBranchCode);
 				branch.setDegreeCurricularPlan(degreeCurricularPlan);
 				branch.setScopes(null);
+				branch.setBranchType(BranchType.COMMON_BRANCH);
 				CreateAndUpdateAllPastCurriculums.branchesCreated.put(realBranchCode, branch);
 			}
 

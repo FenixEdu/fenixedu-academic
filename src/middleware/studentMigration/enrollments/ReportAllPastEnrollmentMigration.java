@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import middleware.middlewareDomain.MWEnrolment;
+import middleware.middlewareDomain.MWStudent;
 
 
 /**
@@ -32,6 +33,18 @@ public class ReportAllPastEnrollmentMigration
 	private static int unknownCurricularCoursesTimes = 0;
 	private static int unknownTeachersAndEmployeesTimes = 0;
 	private static int notCreatedEnrolmentEvaluationsTimes = 0;
+
+	// For debuging:
+	private static List classCastExceptions = new ArrayList();
+
+	/**
+	 * @param mwStudent
+	 */
+	public static void addClassCastExceptions(MWStudent mwStudent)
+	{
+		String value = "Number: [" + mwStudent.getNumber() + "] Degree: [" + mwStudent.getDegreecode() + "] Branch: [" + mwStudent.getBranchcode() + "] Document ID number: [" + mwStudent.getDocumentidnumber() + "]";
+		ReportAllPastEnrollmentMigration.classCastExceptions.add(value);
+	}
 
 	/**
 	 * @param mwEnrolment
@@ -140,7 +153,6 @@ public class ReportAllPastEnrollmentMigration
 		ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated += value;
 	}
 
-
 	/**
 	 * @param out
 	 * @return
@@ -197,6 +209,24 @@ public class ReportAllPastEnrollmentMigration
 	 * @param out
 	 * @return
 	 */
+	private static void printClassCastExceptions(PrintWriter out)
+	{
+		if(!ReportAllPastEnrollmentMigration.classCastExceptions.isEmpty()) {
+			out.println("\nERROR TYPE 3 - CLASS CAST EXCEPTIONS");
+			Iterator iterator = ReportAllPastEnrollmentMigration.classCastExceptions.iterator();
+			while (iterator.hasNext())
+			{
+				String value = (String) iterator.next();
+				out.println("\t" + value);
+			}
+			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.classCastExceptions.size());
+		}
+	}
+
+	/**
+	 * @param out
+	 * @return
+	 */
 	private static void printNotCreatedEnrolmentEvaluations(PrintWriter out)
 	{
 		if(!ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.entrySet().isEmpty()) {
@@ -228,6 +258,7 @@ public class ReportAllPastEnrollmentMigration
 
 		ReportAllPastEnrollmentMigration.printUnknownCurricularCourses(out);
 		ReportAllPastEnrollmentMigration.printNotFoundCurricularCourseScopes(out);
+		ReportAllPastEnrollmentMigration.printClassCastExceptions(out);
 
 		if(ReportAllPastEnrollmentMigration.totalEnrollmentsCreated > 0) {
 			out.println("\nTOTAL MIGRATED ENROLMENTS: " + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated);

@@ -16,6 +16,7 @@ create table mw_STUDENT_AUXILIARY_TABLE(
   answer5 varchar(1),
   answer6 varchar(1),
   answer7 varchar(1),
+  ACK_OPT_LOCK int(11) not null default '1',
   idInternal integer(11) not null auto_increment,
   primary key (idInternal)
 )type= InnoDB;
@@ -55,6 +56,7 @@ create table mw_PERSON(
   fiscalCode varchar(250),
   documentIdValidation date,
   financialRepCode varchar(250),
+  ACK_OPT_LOCK int(11) not null default '1',
   idInternal integer(11) not null auto_increment,
   primary key (idInternal)
 )type= InnoDB;
@@ -66,19 +68,20 @@ create table mw_BRANCH(
   branchCode integer(10),
   orientationCode integer(10),
   description varchar(250),
+  ACK_OPT_LOCK int(11) not null default '1',
   id_internal integer(11) not null auto_increment,
   primary key (id_internal)
-
 )type= InnoDB;
 
 
 drop table if exists mw_AVERAGE;
 create table mw_AVERAGE(
- number integer(10) not null,
- numberOfCoursesEnrolled integer(10) not null,
- numberOfCoursesApproved integer(10),
- sum integer(10),
- average float(10)
+  number integer(10) not null,
+  numberOfCoursesEnrolled integer(10) not null,
+  numberOfCoursesApproved integer(10),
+  sum integer(10),
+  average float(10),
+  ACK_OPT_LOCK int(11) not null default '1'
 )type= InnoDB;
 -- primary key (number, numberOfCoursesEnrolled)
 
@@ -98,10 +101,9 @@ create table mw_ENROLMENT_AUXILIARY_TABLE_1(
 	examDate date,
 	universityCode varchar(10),
 	remarks varchar(255),
+	ACK_OPT_LOCK int(11) not null default '1',
 	idinternal integer(11) not null auto_increment,
 	primary key (idInternal),
-	index I1 (enrolmentYear),
-	index I2 (enrolmentYear, degreeCode)
 )type= InnoDB;
 
 
@@ -111,6 +113,7 @@ create table mw_CURRICULAR_COURSE(
 	courseCode varchar(10) not null, 
 	courseName varchar(255) not null, 
 	universityCode varchar(10),
+	ACK_OPT_LOCK int(11) not null default '1',
 	primary key (courseCode)	
 )type= InnoDB;
 
@@ -131,6 +134,7 @@ create table mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE(
 	theoPratHours float(10),
 	credits float(10),		
 	orientation varchar(255),
+	ACK_OPT_LOCK int(11) not null default '1',
 	idInternal integer(11) not null auto_increment,
 	primary key(idinternal)
 )type= InnoDB;
@@ -138,7 +142,8 @@ create table mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE(
 drop table if exists mw_DEGREE_TRANSLATION;
 create table mw_DEGREE_TRANSLATION(
 	ADM_DEGREE_CODE int(11),
-	KEY_DEGREE int(11)
+	KEY_DEGREE int(11),
+	ACK_OPT_LOCK int(11) not null default '1'
 )type=InnoDB;
 
 drop table if exists mw_STUDENT_CLASS;
@@ -147,19 +152,13 @@ create table mw_STUDENT_CLASS(
 	STUDENT_NAME varchar(255),
 	DEGREE_CODE int(11),
 	AVERAGE float(10,2),
-	CLASS_NAME varchar(20)
+	CLASS_NAME varchar(20),
+	ACK_OPT_LOCK int(11) not null default '1'
 )type=InnoDB;
-
--- drop table if exists mw_COURSE;
--- CREATE TABLE mw_COURSE (
---   courseCode varchar(10) NOT NULL default '',
---   courseName varchar(250) default NULL,
---   universityCode varchar(10) default NULL
--- ) TYPE=InnoDB;
 
 drop table if exists mw_UNIVERSITY;
 create table mw_UNIVERSITY(
 	universityCode varchar(10),
-	universityName varchar(255)
+	universityName varchar(255),
+	ACK_OPT_LOCK int(11) not null default '1'
 )type=InnoDB;
-

@@ -21,11 +21,13 @@ public interface ICurricularCourseGroup extends IDomainObject
 	public Integer getMaximumCredits();
 	public IBranch getBranch();
 	public Integer getMinimumCredits();
-	public List getCurricularCourseScopes();
-
+	public List getCurricularCourses();
+	public List getScientificAreas();
+	
 	public void setAreaType(AreaType areaType);
 	public void setMaximumCredits(Integer maximumCredits);
 	public void setBranch(IBranch branch);
 	public void setMinimumCredits(Integer minimumCredits);
-	public void setCurricularCourseScopes(List curricularCourseScopes);
+	public void setCurricularCourses(List curricularCourses);
+	public void setScientificAreas(List scientificAreas);
 }

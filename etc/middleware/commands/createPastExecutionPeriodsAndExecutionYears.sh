@@ -1,3 +1,3 @@
-mysql ciapl < etc/middleware/allEnrollmentsMigration/createTableMWDistinctEnrollmentYearAndSemester.sql
-mysql ciapl < etc/middleware/allEnrollmentsMigration/createPastExecutionYears.sql | mysql ciapl
-mysql ciapl < etc/middleware/allEnrollmentsMigration/createPastExecutionPeriods.sql | mysql ciapl
+mysql migration < etc/middleware/allEnrollmentsMigration/createTableMWDistinctEnrollmentYearAndSemester.sql | mysql migration
+mysql migration < etc/middleware/allEnrollmentsMigration/createPastExecutionYears.sql | mysql migration
+mysql migration < etc/middleware/allEnrollmentsMigration/createPastExecutionPeriods.sql | mysql migration

@@ -17,8 +17,6 @@ import Util.AreaType;
  */
 public interface IPersistentCurricularCourseGroup extends IPersistentObject
 {
-	public ICurricularCourseGroup readByBranchAndAreaType(IBranch branch, AreaType areaType)
-		throws ExcepcaoPersistencia;
-
+	public ICurricularCourseGroup readByBranchAndAreaType(IBranch branch, AreaType areaType) throws ExcepcaoPersistencia;
 	public List readByBranch(IBranch branch) throws ExcepcaoPersistencia;
 }

@@ -16,14 +16,10 @@ public class ScientificArea extends DomainObject implements IScientificArea {
 
     private String name;
 
-	public ScientificArea(){}
-	
-	public ScientificArea(String name)
+	public ScientificArea()
 	{
-		setName(name);
 	}
-
-
+	
     /**
      * @return
      */
@@ -42,7 +38,7 @@ public class ScientificArea extends DomainObject implements IScientificArea {
 
     public String toString()
     {
-        return " [name] " + name;
+        return "name[" + name + "]";
     }
 
     public boolean equals(Object obj)
@@ -51,7 +47,6 @@ public class ScientificArea extends DomainObject implements IScientificArea {
         if (obj instanceof IScientificArea)
         {
 			IScientificArea scientificArea = (IScientificArea) obj;
-
             result = scientificArea.getName().equals(getName());            
         }
 		return result;

@@ -287,12 +287,12 @@
 		column="KEY_SCIENTIFIC_AREA"
 		jdbc-type="INTEGER"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
 	<reference-descriptor
 			name="university"
 			class-ref="Dominio.University"
@@ -374,7 +374,19 @@
 	/>
 	<field-descriptor
 		name="branchKey"
-		column="KEY_BRANCH"
+		column="KEY_SPECIALIZATION_BRANCH"
+		jdbc-type="INTEGER"
+	/>
+<!--
+	<field-descriptor
+		name="specializationBranchKey"
+		column="KEY_SPECIALIZATION_BRANCH"
+		jdbc-type="INTEGER"
+	/>
+-->
+	<field-descriptor
+		name="secundaryBranchKey"
+		column="KEY_SECUNDARY_BRANCH"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -382,29 +394,26 @@
 		column="GIVEN_CREDITS"
 		jdbc-type="FLOAT"
 	/>
-	
 	<field-descriptor
 		name="completedCourses"
 		column="COMPLETED_COURSES"
 		jdbc-type="INTEGER"
 	/>
-
 	<field-descriptor
 		name="enrolledCourses"
 		column="ENROLLED_COURSES"
 		jdbc-type="INTEGER"
 	/>
-
 	<field-descriptor
 		name="classification"
 		column="CLASSIFICATION"
 		jdbc-type="FLOAT"
 	/>
-	 <field-descriptor 
-         name="observations"
-         column="OBSERVATIONS"
-    	  jdbc-type="LONGVARCHAR"
-      />
+	<field-descriptor 
+		name="observations"
+		column="OBSERVATIONS"
+		jdbc-type="LONGVARCHAR"
+	/>
     <field-descriptor
 		name="employeeKey"
 		column="KEY_EMPLOYEE"
@@ -416,12 +425,12 @@
 		jdbc-type="TIMESTAMP"
 		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"
@@ -440,6 +449,20 @@
 			proxy="false">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
+<!--
+	<reference-descriptor
+			name="specializationBranch"
+			class-ref="Dominio.Branch"
+			proxy="false">
+		<foreignkey field-ref="specializationBranchKey"/>
+	</reference-descriptor>
+-->
+	<reference-descriptor
+			name="secundaryBranch"
+			class-ref="Dominio.Branch"
+			proxy="false">
+		<foreignkey field-ref="secundaryBranchKey"/>
+	</reference-descriptor>
 	<reference-descriptor
 			name="employee"
 			class-ref="Dominio.Employee"
@@ -454,7 +477,6 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>    
-	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -799,19 +821,32 @@
 		column="SECONDARY_CREDITS"
 		jdbc-type="INTEGER"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<field-descriptor
+		name="branchType"
+		column="BRANCH_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="ServidorPersistente.Conversores.JavaBranchType2SqlBranchTypeFieldConversion"
+	/>
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="Dominio.DegreeCurricularPlan"
 		proxy="false">
 	<foreignkey field-ref="keyDegreeCurricularPlan"/>
    </reference-descriptor>
-	
+
+	<collection-descriptor
+			name="scopes"
+			element-class-ref="Dominio.CurricularCourseScope"
+			proxy="true">
+		<inverse-foreignkey field-ref="branchKey"/>
+	</collection-descriptor>    
+
 <!--
 	<collection-descriptor
 			name="associatedStudentCurricularPlans"
@@ -822,8 +857,6 @@
 		<fk-pointing-to-this-class column="KEY_BRANCH"/>
 		<fk-pointing-to-element-class column="KEY_STUDENT_CURRICULAR_PLAN"/>
 	</collection-descriptor>
--->
-<!--
 	<collection-descriptor
 			name="associatedCurricularCourses"
 			element-class-ref="Dominio.CurricularCourse"
@@ -834,14 +867,6 @@
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
 -->
-
-	<collection-descriptor
-			name="scopes"
-			element-class-ref="Dominio.CurricularCourseScope"
-			proxy="true">
-		<inverse-foreignkey field-ref="branchKey"/>
-	</collection-descriptor>    
-
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -1299,90 +1324,6 @@
 	</reference-descriptor>
 </class-descriptor>
 
-
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.CurricularCourseGroup -->
-<!-- ************************************************************************************************************ -->
- <class-descriptor class="Dominio.CurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyBranch"
-		column="KEY_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="areaType"
-		column="AREA_TYPE"
-		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
-	/>
-	<field-descriptor
-		name="minimumCredits"
-		column="MINIMUM_CREDITS"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="maximumCredits"
-		column="MAXIMUM_CREDITS"
-		jdbc-type="INTEGER"
-	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-	<reference-descriptor
-			name="branch"
-			class-ref="Dominio.Branch"
-			proxy="false">
-		<foreignkey field-ref="keyBranch"/>
-	</reference-descriptor>		
-	
-	<collection-descriptor
-			name="curricularCourseScopes"
-			element-class-ref="Dominio.CurricularCourseScope"
-			indirection-table="CURRICULAR_COURSE_SCOPE_GROUP"
-			auto-retrieve="true"
-			proxy="true">
-		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
-		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
-	</collection-descriptor>
-	
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.ScientificArea -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.ScientificArea" table="SCIENTIFIC_AREA">
-  <field-descriptor 
-    name="idInternal"
-    column="id_internal"
-    jdbc-type="INTEGER"
-    primarykey="true"
-	autoincrement="true"
-  />
-  <field-descriptor 
-    name="name"
-    column="name"
-    jdbc-type="VARCHAR"
-  />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-
-</class-descriptor>
-
-
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.University -->
 <!-- ************************************************************************************************************ -->
@@ -1412,4 +1353,207 @@
       />
 </class-descriptor>
 
+
+
+
+
+
+
+
+
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.CurricularCourseGroup -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.CurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyBranch"
+		column="KEY_BRANCH"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="areaType"
+		column="AREA_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="minimumCredits"
+		column="MINIMUM_CREDITS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="maximumCredits"
+		column="MAXIMUM_CREDITS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="branch"
+			class-ref="Dominio.Branch"
+			proxy="false">
+		<foreignkey field-ref="keyBranch"/>
+	</reference-descriptor>		
+	<collection-descriptor
+			name="curricularCourses"
+			element-class-ref="Dominio.CurricularCourse"
+			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
+			auto-retrieve="true"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="scientificAreas"
+			element-class-ref="Dominio.ScientificArea"
+			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
+			auto-retrieve="true"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_SCIENTIFIC_AREA"/>
+	</collection-descriptor>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.ScientificArea -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.ScientificArea" table="SCIENTIFIC_AREA">
+	<field-descriptor 
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor 
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.CreditsInSpecificScientificArea -->
+<!-- ************************************************************************************************************ -->
+<!--
+<class-descriptor class="Dominio.CreditsInSpecificScientificArea" table="CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA">
+	<field-descriptor 
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor 
+		name="studentCurricularPlanKey"
+		column="KEY_STUDENT_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor 
+		name="scientificAreaKey"
+		column="KEY_SCIENTIFIC_AREA"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor 
+		name="enrolmentKey"
+		column="KEY_ENROLMENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor 
+		name="givenCredits"
+		column="GIVEN_CREDITS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="studentCurricularPlan"
+			class-ref="Dominio.StudentCurricularPlan"
+			proxy="false">
+		<foreignkey field-ref="studentCurricularPlanKey"/>
+	</reference-descriptor>		
+	<reference-descriptor
+			name="scientificArea"
+			class-ref="Dominio.ScientificArea"
+			proxy="false">
+		<foreignkey field-ref="scientificAreaKey"/>
+	</reference-descriptor>		
+	<reference-descriptor
+			name="enrolment"
+			class-ref="Dominio.Enrolment"
+			proxy="false">
+		<foreignkey field-ref="enrolmentKey"/>
+	</reference-descriptor>		
+</class-descriptor>
+-->
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.CreditsInAnySecundaryArea -->
+<!-- ************************************************************************************************************ -->
+<!--
+<class-descriptor class="Dominio.CreditsInAnySecundaryArea" table="CREDITS_IN_ANY_SECUNDARY_AREA">
+	<field-descriptor 
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor 
+		name="studentCurricularPlanKey"
+		column="KEY_STUDENT_CURRICULAR_PLAN"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor 
+		name="enrolmentKey"
+		column="KEY_ENROLMENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor 
+		name="givenCredits"
+		column="GIVEN_CREDITS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="studentCurricularPlan"
+			class-ref="Dominio.StudentCurricularPlan"
+			proxy="false">
+		<foreignkey field-ref="studentCurricularPlanKey"/>
+	</reference-descriptor>		
+	<reference-descriptor
+			name="enrolment"
+			class-ref="Dominio.Enrolment"
+			proxy="false">
+		<foreignkey field-ref="enrolmentKey"/>
+	</reference-descriptor>		
+</class-descriptor>
+-->
 <!-- Mapping of User defined classes ends here -->

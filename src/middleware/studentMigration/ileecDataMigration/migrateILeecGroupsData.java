@@ -120,12 +120,11 @@ public class migrateILeecGroupsData
 
 				setBranchCredits(sp, branch, areaType, credits);
 
-				ICurricularCourseGroup ccg =
-					new CurricularCourseGroup(
-						branch,
-						mwgl.getMinCreditos(),
-						mwgl.getMaxCreditos(),
-						areaType);
+				ICurricularCourseGroup ccg = new CurricularCourseGroup();
+				ccg.setBranch(branch);
+				ccg.setMaximumCredits(mwgl.getMaxCreditos());
+				ccg.setMinimumCredits(mwgl.getMinCreditos());
+				ccg.setAreaType(areaType);
 
 				ccg.setIdInternal(mwgl.getIdGrupo());
 				pccg.lockWrite(ccg);
@@ -178,17 +177,16 @@ public class migrateILeecGroupsData
 				List listCurricularCourses =
 					getFenixCurricularCoursesWithDegreeCurricularPlan(mwg, sp, pmws);
 
-				List listCurricularCourseScopes = getCurricularCourseScopes(listCurricularCourses, sp);
+//				List listCurricularCourseScopes = getCurricularCourseScopes(listCurricularCourses, sp);
 
-				ICurricularCourseGroup fenixGroup =
-					(ICurricularCourseGroup) pCCGroup.readByOId(
-						new CurricularCourseGroup(mwg.getIdGrupo()),
-						true);
+				ICurricularCourseGroup curricularCourseGroup = new CurricularCourseGroup();
+				curricularCourseGroup.setIdInternal(mwg.getIdGrupo());
+				ICurricularCourseGroup fenixGroup = (ICurricularCourseGroup) pCCGroup.readByOId(curricularCourseGroup, true);
 				//fenixGroup.getCurricularCourseScopes().clear();
 				//fenixGroup.getCurricularCourseScopes().addAll(listCurricularCourseScopes);
 
-				fenixGroup.setCurricularCourseScopes(listCurricularCourseScopes);
-				totalCurricularCourseGroupsScopesCreated += listCurricularCourseScopes.size();
+				fenixGroup.setCurricularCourses(listCurricularCourses);
+				totalCurricularCourseGroupsScopesCreated += listCurricularCourses.size();
 			}
 
 			sp.confirmarTransaccao();

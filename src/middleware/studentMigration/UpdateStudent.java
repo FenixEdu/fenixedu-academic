@@ -57,8 +57,8 @@ public class UpdateStudent {
 		numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 		
 		for (int span = 0; span < numberOfSpans; span++) {
+			System.gc();
 			sp.iniciarTransaccao();
-			sp.clearCache();	
 			System.out.println("Reading Students...");
 			List result = persistentAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
 			System.out.println("Updating " + result.size() + " students ...");
@@ -68,6 +68,7 @@ public class UpdateStudent {
 				MWStudent student = (MWStudent) iterator.next();
 				try {
 					sp.iniciarTransaccao();
+					sp.clearCache();
 					UpdateStudent.updateCorrectStudents(student, sp);
 					sp.confirmarTransaccao();
 				} catch(Exception e) {
@@ -100,7 +101,7 @@ public class UpdateStudent {
 			
 			if (student == null) {
 				System.out.println("Error Reading Fenix Student! Student Number [" + oldStudent.getNumber() + "]");
-				sp.confirmarTransaccao();
+//				sp.confirmarTransaccao();
 				return;
 			}
 	

@@ -14,7 +14,9 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	protected Specialization specialization;
 	protected Double givenCredits;
 	protected Date when;
-
+	protected Integer secundaryBranchKey;
+	protected Branch secundaryBranch;
+	
 	protected IStudent student;
 	protected IBranch branch;
 	protected IDegreeCurricularPlan degreeCurricularPlan;
@@ -355,6 +357,38 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	 */
 	public void setObservations(String observations) {
 		this.observations = observations;
+	}
+
+	/**
+	 * @return Returns the secundaryBranch.
+	 */
+	public Branch getSecundaryBranch()
+	{
+		return secundaryBranch;
+	}
+
+	/**
+	 * @param secundaryBranch The secundaryBranch to set.
+	 */
+	public void setSecundaryBranch(Branch secundaryBranch)
+	{
+		this.secundaryBranch = secundaryBranch;
+	}
+
+	/**
+	 * @return Returns the secundaryBranchKey.
+	 */
+	public Integer getSecundaryBranchKey()
+	{
+		return secundaryBranchKey;
+	}
+
+	/**
+	 * @param secundaryBranchKey The secundaryBranchKey to set.
+	 */
+	public void setSecundaryBranchKey(Integer secundaryBranchKey)
+	{
+		this.secundaryBranchKey = secundaryBranchKey;
 	}
 
 }

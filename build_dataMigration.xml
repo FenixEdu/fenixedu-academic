@@ -730,7 +730,7 @@
 		<java classname="middleware.studentMigration.CreateStudent"
 			fork="yes"
 			failonerror="false"
-			maxmemory="128m"
+			maxmemory="512m"
 		>
 	    	<classpath>
 	        	<pathelement path="${webapp.classes}"/>
@@ -770,12 +770,11 @@
 
 
 
-	<target name="update-existing-students"
-	        depends="compile-proj, load-existing-students, clean-persons-with-duplicate-id">
+	<target name="update-existing-students" depends="compile-proj, load-existing-students, clean-persons-with-duplicate-id">
 		<java classname="middleware.studentMigration.UpdateStudent"
 			fork="yes"
 			failonerror="false"
-			maxmemory="128m"
+			maxmemory="1024m"
 		>
 	    	<classpath>
 	        	<pathelement path="${webapp.classes}"/>
@@ -820,7 +819,7 @@
 		<java classname="middleware.studentMigration.UpdateStudentIDNumbers"
 			fork="yes"
 			failonerror="false"
-			maxmemory="128m"
+			maxmemory="512m"
 		>
 	    	<classpath>
 	        	<pathelement path="${webapp.classes}"/>
@@ -955,7 +954,7 @@
 		<java classname="middleware.curricularCourseMigration.CreateAndUpdateScopes"
 			fork="yes"
 			failonerror="false"
-			maxmemory="128m"
+			maxmemory="512m"
 		>
 	    	<classpath>
 	        	<pathelement path="${webapp.classes}"/>
@@ -976,7 +975,7 @@
 		<java classname="middleware.studentMigration.DistributeStudentsByClass"
 			fork="yes"
 			failonerror="false"
-			maxmemory="128m"
+			maxmemory="512m"
 		>
 	    	<classpath>
 	        	<pathelement path="${webapp.classes}"/>

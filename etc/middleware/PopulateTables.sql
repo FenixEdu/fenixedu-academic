@@ -22,15 +22,16 @@ UPDATE mw_CURRICULAR_COURSE_SCOPE_AUXILIARY_TABLE SET courseCode = LTRIM(courseC
 UPDATE mw_UNIVERSITY SET universityCode = LTRIM(universityCode);
 
 delete from mw_DEGREE_TRANSLATION;
-insert into mw_DEGREE_TRANSLATION values (01,1),(02,2),(03,3),(04,4),(05,5),(06,6)
+insert into mw_DEGREE_TRANSLATION (ADM_DEGREE_CODE, KEY_DEGREE) values (01,1),(02,2),(03,3),(04,4),(05,5),(06,6)
 ,(07,7),(08,8),(09,9),(10,10),(19,19),(11,11),(12,12),(13,13),(14,14)
 ,(15,15),(16,16),(17,17),(18,18),(20,20),(21,21),(22,22),(23,23),(24,51)
 ,(51,1),(53,3),(54,4),(64,14);
 
 
 
+---------- TUDO O QUE ESTÁ DAQUI PARA BAIXO É PARA SAIR TÃO BREVEMENTE QUANTO SE CONSEGUIR ----------
 
-
+UPDATE ENROLMENT_EVALUATION SET GRADE = 'NA' WHERE GRADE = '0';
 
 -----------------------------------------------------------------------------------------------------------------------------
 -- Temporary Delete's (Student's that changed degree but the Branch wasn't updated)
@@ -46,15 +47,14 @@ delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 46896;
 delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 42455;
 delete from mw_ENROLMENT_AUXILIARY_TABLE_1 where number = 45067;
 
-
 delete from mw_PERSON where documentidnumber = 'ERASMUS';
 delete from mw_STUDENT_AUXILIARY_TABLE where documentidnumber = 'ERASMUS';
 
 drop table if exists mw_PERSON_WITH_DUPLICATE_ID;
 create table mw_PERSON_WITH_DUPLICATE_ID
-	select documentidnumber, max(idinternal) as maxidinternal, count(1) as total from mw_PERSON group by documentidnumber having count(1) > 1;
+select documentidnumber, max(idinternal) as maxidinternal, count(1) as total from mw_PERSON group by documentidnumber having count(1) > 1;
 
 drop table if exists mw_STUDENTS_WITH_VARIOUS_NUMBERS;
 create table mw_STUDENTS_WITH_VARIOUS_NUMBERS
-	select documentidnumber, number, max(number) as maxidinternal, count(1) as total from mw_STUDENT_AUXILIARY_TABLE group by documentidnumber having count(1) > 1;
+select documentidnumber, number, max(number) as maxidinternal, count(1) as total from mw_STUDENT_AUXILIARY_TABLE group by documentidnumber having count(1) > 1;
 -----------------------------------------------------------------------------------------------------------------------------
