@@ -1,7 +1,6 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -154,11 +153,6 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
 					userView,
 					"ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan",
 					argsMasterDegreeProofHistory);
-		}
-		catch (NonExistingServiceException e)
-		{
-			//no history yet
-			masterDegreeProofHistory = new ArrayList();
 		}
 		catch (FenixServiceException e)
 		{
