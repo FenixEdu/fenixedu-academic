@@ -50,8 +50,7 @@ public class WriteExtraWork implements IService {
             if (personWho != null) {
                 employeeWho = employeeDAO.readByPerson(personWho
                         .getIdInternal().intValue());
-            }
-            
+            }            
             IEmployee employee = employeeDAO.readByNumber(employeeNumber);
             if (employee == null) {
                 // TODO
@@ -70,8 +69,13 @@ public class WriteExtraWork implements IService {
                             ExtraWork.class, infoExtraWork.getIdInternal());
                 }
                 if (extraWork == null) {
+                    extraWork = extraWorkDAO.readExtraWorkByDay(extraWork.getDay());
+                }
+                
+                if (extraWork == null) {
                     extraWork = new ExtraWork();
                 }
+                
                 extraWorkDAO.simpleLockWrite(extraWork);
 
                 extraWork.setDay(infoExtraWork.getDay());
@@ -90,7 +94,6 @@ public class WriteExtraWork implements IService {
                 extraWork.setRestDay(infoExtraWork.getRestDay());
                 extraWork.setRestDayAuthorized(infoExtraWork.getRestDayAuthorized());
                 
-
                 extraWork.setEmployee(employee);
 
                 extraWork.setWho(employeeWho.getIdInternal().intValue());

@@ -3,6 +3,9 @@
  */
 package ServidorPersistente.managementAssiduousness;
 
+import java.util.Date;
+
+import Dominio.managementAssiduousness.IExtraWork;
 import ServidorPersistente.IPersistentObject;
 
 /**
@@ -10,5 +13,5 @@ import ServidorPersistente.IPersistentObject;
  *
  */
 public interface IPersistentExtraWork  extends IPersistentObject{
-
+    public IExtraWork readExtraWorkByDay(Date day) throws Exception;
 }

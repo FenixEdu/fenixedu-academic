@@ -100,6 +100,7 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
                 infoExtraWorkList.size()));
         request.setAttribute("year", year);
         request.setAttribute("moth", moth);
+        System.out.println("--->" + infoExtraWorkList.size());	
 
         return (mapping.findForward("extraWorkSheet"));
     }
@@ -226,6 +227,7 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
                 return null;
             }
 
+            Integer idInternal = null;
             Date day = null;
             Date beginHour = null;
             Date endHour = null;
@@ -236,6 +238,17 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
             Boolean nocturnalFirstHourAuthorized = new Boolean(false);
             Boolean nocturnalAfterSecondHourAuthorized = new Boolean(false);
             Boolean restDayAuthorized = new Boolean(false);
+            
+
+            if (request
+                    .getParameter("infoExtraWork[" + index + "].idInternal") != null
+                    && request.getParameter(
+                            "infoExtraWork[" + index + "].idInternal")
+                            .length() > 0) {
+                idInternal = Integer.valueOf(request
+                        .getParameter("infoExtraWork[" + index
+                                + "].idInternal"));
+            }
             
             SimpleDateFormat simpleDayDateFormat = new SimpleDateFormat(
                     "dd/MM/yyyy");
@@ -269,7 +282,6 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
                 mealSubsidy = Integer.valueOf(request
                         .getParameter("infoExtraWork[" + index
                                 + "].mealSubsidy"));
-                existsExtraWork = true;
             }
             if (request.getParameter("infoExtraWork[" + index
                     + "].mealSubsidyAuthorized") != null) {
@@ -309,6 +321,7 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
             }
             
             InfoExtraWork infoExtraWork = new InfoExtraWork();
+            infoExtraWork.setIdInternal(idInternal);
             infoExtraWork.setDay(day);
             infoExtraWork.setBeginHour(beginHour);
             infoExtraWork.setEndHour(endHour);
