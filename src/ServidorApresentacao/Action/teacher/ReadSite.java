@@ -58,7 +58,7 @@ public class ReadSite extends FenixAction {
 						session.setAttribute(SessionConstants.INFO_SITE,site);			
 						session.setAttribute(SessionConstants.ALTERNATIVE_SITE,site.getAlternativeSite());	
 			//TODO: Read Sections
-			//TODO: Read last Anouncement	
+			//TODO: Read last Anouncement
 				
 			
 			return mapping.findForward("viewSite");}
