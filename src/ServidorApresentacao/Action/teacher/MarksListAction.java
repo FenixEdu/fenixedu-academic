@@ -1,9 +1,12 @@
 package ServidorApresentacao.Action.teacher;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -13,6 +16,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
+import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
@@ -86,6 +90,9 @@ public class MarksListAction extends DispatchAction {
 			e.printStackTrace();
 			throw new FenixActionException(e.getMessage());
 		}
+
+		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
+		Collections.sort(infoSiteMarks.getMarksList(), new BeanComparator("infoFrequenta.aluno.number"));
 
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", executionCourseCode);
