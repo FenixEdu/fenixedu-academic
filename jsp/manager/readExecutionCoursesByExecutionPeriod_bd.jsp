@@ -5,7 +5,7 @@
 
 <table>
 		<td>
-			<h3><bean:message key="label.manager.curricularCourse.administrating"/></h3>
+			<h2><bean:message key="label.manager.curricularCourse.administrating"/></h2>
 		</td>
 		<td>
 			<h2><b><bean:define id="curricularCourseName" value="<%= request.getParameter("name") %>"/>
@@ -21,13 +21,17 @@
 		</td>
 </table>
 
+<span class="error"><html:errors/></span>
 <logic:notEmpty name="infoExecutionCoursesList" scope="request">
 
-<html:form action="/associateExecutionCourseToCurricularCourse" method="get">
+<html:form action="/associateExecutionCoursesToCurricularCourse" method="get">
+	<html:hidden property="page" value="1"/>
+	<html:hidden property="method" value="execute"/>
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>	
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 	<html:hidden property="executionPeriodId" value="<%= request.getParameter("executionPeriodId") %>"/>
+	<html:hidden property="name"  value="<%= request.getParameter("name") %>"/>
 
 	<bean:message key="list.title.execution.courses.toAssociate"/>
 	<br>
@@ -61,7 +65,7 @@
 			</tr>
 		</logic:iterate>	
 	</table>
-	<html:submit><bean:message key="label.manager.associate.execution.courses"/></html:submit>
+	<html:submit ><bean:message key="label.manager.associate.execution.courses"/></html:submit>
 </html:form>
 </logic:notEmpty>
 

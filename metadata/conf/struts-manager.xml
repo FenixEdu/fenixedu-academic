@@ -505,6 +505,21 @@
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	           	      
     </action>
     
+    <!-- Action for dissociating an execution course  -->
+	<action
+	    path="/dissociateExecutionCourse"
+	    name="curricularCourseForm"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.DissociateExecutionCourseDA"
+        validate="true"> 
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="dissociateExecutionCourse" path="df.page.dissociate-execution-course"/>      	          
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+	</action>
+    
       <!--Input actions-->  
      <action path="/readDegreesInput"
      		scope="request"

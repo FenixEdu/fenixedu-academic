@@ -26,7 +26,7 @@
 <br>
 
 <logic:present name="basic">
-		<h2><font color="#0066CC><bean:message key="label.manager.curricularCourse.message.basic"/></font></h2>
+		<h2><font color="#0066CC"><bean:message key="label.manager.curricularCourse.message.basic"/></font></h2>
 </logic:present>
 
 <logic:notPresent name="basic">
@@ -53,6 +53,8 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
 					</td>
+					<td class="listClasses-header">
+					</td>
 				</tr>
 				
 				<logic:iterate id="executionCourse" name="executionCoursesList">
@@ -62,7 +64,12 @@
 						</td>
 						<td class="listClasses"><bean:write name="executionCourse" property="sigla"/>
 						</td>
-						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/> <b>/</b> <bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
+						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/> - <bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
+						</td>
+						<td class="listClasses">
+							<html:link page="<%="/dissociateExecutionCourse.do?method=prepareDissociate&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+								<bean:message key="label.manager.dissociate.execution.course"/>
+							</html:link>
 						</td>
 	 				</tr>
 	 			</logic:iterate>						
@@ -136,9 +143,9 @@
 						<td class="listClasses">
 							<html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
 								<bean:message key="label.manager.edit.curricularCourseScope"/>
-								</html:link> /<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-									<bean:message key="label.manager.insert.curricularCourseScope.fromAnother"/>
-								</html:link>
+							</html:link> /<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
+												<bean:message key="label.manager.insert.curricularCourseScope.fromAnother"/>
+										  </html:link>
 						</td>
 	 				</tr>
 	 			</logic:iterate>			

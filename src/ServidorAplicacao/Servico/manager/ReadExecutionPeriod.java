@@ -50,11 +50,8 @@ public class ReadExecutionPeriod implements IServico {
 	
 	try {
 			sp = SuportePersistenteOJB.getInstance();
-		System.out.println("IIIIIIIIII"+executionPeriodId);
 			ExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
 		executionPeriodToRead.setIdInternal(executionPeriodId);
-		
-		System.out.println("executionPPPPPPP"+executionPeriod+"IIIIIIIIII"+executionPeriod);
 			
 			executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOId(executionPeriodToRead, false);
 			

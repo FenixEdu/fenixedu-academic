@@ -83,6 +83,9 @@
       <field property="code" depends="required" page="1" >
         <arg0 key="label.manager.curricularCourse.code" resource="true"/>
       </field>
+      <field property="executionCourseId" depends="required" page="1" >
+        <arg0 key="label.manager.executionCourseId" resource="true"/>
+      </field>
     </form>
 
 
