@@ -60,7 +60,7 @@
 	<table class="tab_altrow" cellspacing="0" cellpadding="5">
 		<!-- cabeçalho -->
 		<tr>
-			<th colspan="4"><bean:write name="currentYear"/>º&nbsp;<bean:message key="label.manager.curricularCourseScope.curricularYear.en"/></th>
+			<th colspan="4"><bean:write name="currentYear"/>º&nbsp;<bean:message key="label.curricular.year.en"/></th>
 		</tr>
 		<tr>						
 			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.semester.en"/></td>
