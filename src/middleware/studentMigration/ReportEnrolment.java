@@ -147,9 +147,9 @@ public class ReportEnrolment
 
 	public static void report(PrintWriter out)
 	{
-		out.println("Enrolment cases --------------------------------------------------------------------------");
+		out.println("\nCASOS DE ERRO --------------------------------------------------------------------------");
 //		out.println("\tCaso 1 - Disciplinas não encontradas no curso do aluno mas encontradas em varios outros cursos");
-		out.println("\tCaso 1 - Disciplinas encontradas num curso diferente do curso do aluno mas nas quais o aluno não tem Attend");
+		out.println("\tCASO 1 - Disciplinas encontradas num curso diferente do curso do aluno mas nas quais o aluno não tem Attend");
 		Iterator iterator = curricularCoursesFoundInOtherDegree.entrySet().iterator();
 		while (iterator.hasNext())
 		{
@@ -164,40 +164,40 @@ public class ReportEnrolment
 		}
 		
 		
-		out.println("\tCaso 2 - Execuções não encontradas");
+		out.println("\n\tCASO 2 - Execuções não encontradas");
 		Iterator iterator2 = notFoundExecutionCourse.entrySet().iterator();
 		while (iterator2.hasNext())
 		{
 			Map.Entry mapEntry = (Map.Entry) iterator2.next();
 			String key = (String) mapEntry.getKey();
 			List studentList = (List) mapEntry.getValue();
-			out.print("\t\tCadeira - Curso = " + key);
+			out.print("\t\t Cadeira - Curso = " + key);
 			out.println(" Aconteceu " + studentList.size() + " veze(s)...");
 			out.println("\t\t\tAlunos ="+ studentList.toString());
 		}
 		
 
-		out.println("\tCaso 3 - Scopes não encontrados");
+		out.println("\n\tCASO 3 - Scopes não encontrados");
 		Iterator iterator3 = notFoundCurricularCourseScopes.entrySet().iterator();
 		while (iterator3.hasNext())
 		{
 			Map.Entry mapEntry = (Map.Entry) iterator3.next();
 			String key = (String) mapEntry.getKey();
 			List studentList = (List) mapEntry.getValue();
-			out.print("\t\tCadeira - Curso - Ano - Semestre - Ramo = " + key);
+			out.print("\t\t Cadeira - Curso - Ano - Semestre - Ramo = " + key);
 			out.println(" Aconteceu " + studentList.size() + " veze(s)...");
 			out.println("\t\t\tAlunos ="+ studentList.toString());
 		}
 		
 
-		out.println("\tCaso 4 - Curriculares não encontradas");
+		out.println("\n\tCASO 4 - Curriculares não encontradas");
 		Iterator iterator4 = notFoundCurricularCourses.entrySet().iterator();
 		while (iterator4.hasNext())
 		{
 			Map.Entry mapEntry = (Map.Entry) iterator4.next();
 			String key = (String) mapEntry.getKey();
 			List studentList = (List) mapEntry.getValue();
-			out.print("\t\tCadeira - Curso = " + key);
+			out.print("\t\t Cadeira - Curso = " + key);
 			out.println(" Aconteceu " + studentList.size() + " veze(s)...");
 			out.println("\t\t\tAlunos ="+ studentList.toString());
 		}
