@@ -10,10 +10,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import middleware.middlewareDomain.MWAreaEspecializacaoIleec;
 import middleware.middlewareDomain.MWAreaSecundariaIleec;
 import middleware.middlewareDomain.MWDegreeTranslation;
+import middleware.middlewareDomain.MWDisciplinaIleec;
+import middleware.middlewareDomain.MWGrupoIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWAreaEspecializacaoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaSecundariaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
+import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWGrupoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
@@ -55,9 +61,9 @@ public class migrateILeecGroupsData
 
 			PersistentMiddlewareSupportOJB persistentMiddlewareSupportOJB =
 				PersistentMiddlewareSupportOJB.getInstance();
-			IPersistentMWGruposIleec pMWGroups =
+			IPersistentMWGrupoIleec pMWGroups =
 				persistentMiddlewareSupportOJB.getIPersistentMWGruposILeec();
-			IPersistentMWAreasEspecializacaoIleec pMWAreaEspecializacao =
+			IPersistentMWAreaEspecializacaoIleec pMWAreaEspecializacao =
 				persistentMiddlewareSupportOJB.getIPersistentMWAreasEspecializacaoIleec();
 			IPersistentMWAreaSecundariaIleec pMWAreaSecundaria =
 				persistentMiddlewareSupportOJB.getIPersistentMWAreaSecundariaIleec();
@@ -82,14 +88,14 @@ public class migrateILeecGroupsData
 
 			while (groupsIterator.hasNext())
 			{
-				MWGruposIleec mwgl = (MWGruposIleec) groupsIterator.next();
+				MWGrupoIleec mwgl = (MWGrupoIleec) groupsIterator.next();
 
 				Integer areaId = mwgl.getIdAreaEspecializacao();
 				AreaType areaType;
 
 				if (areaId.intValue() != 0)
 				{
-					MWAreasEspecializacaoIleec mwae =
+					MWAreaEspecializacaoIleec mwae =
 						pMWAreaEspecializacao.readSpecializationAreaById(areaId);
 
 					nomeArea = mwae.getNome();
@@ -161,14 +167,14 @@ public class migrateILeecGroupsData
 
 			sp.iniciarTransaccao();
 			PersistentMiddlewareSupportOJB pmws = PersistentMiddlewareSupportOJB.getInstance();
-			IPersistentMWGruposIleec pMWGroups = pmws.getIPersistentMWGruposILeec();
+			IPersistentMWGrupoIleec pMWGroups = pmws.getIPersistentMWGruposILeec();
 
 			List listIleecGroups = pMWGroups.readAll();
 			Iterator iterator = listIleecGroups.iterator();
 
 			while (iterator.hasNext())
 			{
-				MWGruposIleec mwg = (MWGruposIleec) iterator.next();
+				MWGrupoIleec mwg = (MWGrupoIleec) iterator.next();
 				List listCurricularCourses =
 					getFenixCurricularCoursesWithDegreeCurricularPlan(mwg, sp, pmws);
 
@@ -263,7 +269,7 @@ public class migrateILeecGroupsData
 	 * @return
 	 */
 	private static List getFenixCurricularCoursesWithDegreeCurricularPlan(
-		MWGruposIleec groupIleec,
+		MWGrupoIleec groupIleec,
 		ISuportePersistente sp,
 		PersistentMiddlewareSupportOJB pmwsOJB)
 	{
@@ -280,7 +286,7 @@ public class migrateILeecGroupsData
 			e.printStackTrace();
 		}
 		IPersistentCurricularCourse pCurricularCourse = sp.getIPersistentCurricularCourse();
-		IPersistentMWDisciplinasIleec pCourseIleec = pmwsOJB.getIPersistentMWDisciplinaIleec();
+		IPersistentMWDisciplinaIleec pCourseIleec = pmwsOJB.getIPersistentMWDisciplinaIleec();
 
 		List listCoursesIleec = null;
 		try
@@ -302,7 +308,7 @@ public class migrateILeecGroupsData
 		Iterator iterator = listCoursesIleec.iterator();
 		while (iterator.hasNext())
 		{
-			MWDisciplinasIleec mwCourseIleec = (MWDisciplinasIleec) iterator.next();
+			MWDisciplinaIleec mwCourseIleec = (MWDisciplinaIleec) iterator.next();
 
 			List listCC = null;
 			try
