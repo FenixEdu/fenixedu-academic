@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.odmg.HasBroker;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamsMap;
@@ -58,6 +61,7 @@ public class ReadExamsMap implements IServico {
 		InfoExecutionDegree infoExecutionDegree,
 		List curricularYears,
 		InfoExecutionPeriod infoExecutionPeriod) {
+		
 		// Object to be returned
 		InfoExamsMap infoExamsMap = new InfoExamsMap();
 		
