@@ -11,9 +11,9 @@
   <li class="treenode"><a href="">Ensino</a>
 		<ul class="expmenu">
 			<li><html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>
-			<li><a href="/html/ensino/pos_grad.html">Pós-graduações</a></li>
+			<li><a href="http://www.ist.utl.pt/html/ensino/pos_grad.html">Pós-graduações</a></li>
 			<li><html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.master"/></html:link></li>
-			<li><a href="/html/ensino/doutoramentos.html">Doutoramentos</a></li>
+			<li><a href="http://www.ist.utl.pt/html/ensino/doutoramentos.html">Doutoramentos</a></li>
 		</ul>
 	</li>
   <li><a href="http://www.ist.utl.pt/pt/investigacao/">I &amp; D</a></li>

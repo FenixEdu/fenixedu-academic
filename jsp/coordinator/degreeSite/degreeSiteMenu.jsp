@@ -30,7 +30,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="<%= "/degreeSiteManagement.do?method=viewDegreeSite&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">			
+			<html:link href="<%= request.getContextPath()+"/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeId=" + infoExecutionDegreeId.toString() %>" target="_blank">
 			    <bean:message key="link.coordinator.degreeSite.viewSite" /></html:link>
 			    <br/>
 				<br/>

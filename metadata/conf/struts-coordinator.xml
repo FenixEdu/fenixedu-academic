@@ -82,13 +82,13 @@
 				<form-property name="additionalInfo" type="java.lang.String" />
 				<form-property name="links" type="java.lang.String" />
 				<form-property name="testIngression" type="java.lang.String" />
-				<form-property name="driftsInitial" type="java.lang.Integer" />
-				<form-property name="driftsFirst" type="java.lang.Integer" />
-				<form-property name="driftsSecond" type="java.lang.Integer" />
+				<form-property name="driftsInitial" type="java.lang.String" />
+				<form-property name="driftsFirst" type="java.lang.String" />
+				<form-property name="driftsSecond" type="java.lang.String" />
 				<form-property name="classifications" type="java.lang.String" />
-				<form-property name="markMin" type="java.lang.Double" />
-				<form-property name="markMax" type="java.lang.Double" />
-				<form-property name="markAverage" type="java.lang.Double" />
+				<form-property name="markMin" type="java.lang.String" />
+				<form-property name="markMax" type="java.lang.String" />
+				<form-property name="markAverage" type="java.lang.String" />
 				<form-property name="lastModificationDate" type="java.lang.String" />
 				<form-property name="descriptionEn" type="java.lang.String" />				
 				<form-property name="objectivesEn" type="java.lang.String" />
@@ -377,8 +377,7 @@
 			<forward name="degreeSiteMenu" path="degreeSiteMenu" />
 			<forward name="viewInformation" path="viewInformation" />
 			<forward name="viewHistoric" path="viewHistoric" />
-			<forward name="viewSite" path="viewSite" />
-		</action>		
+		</action>			
 
 		<!-- ======== degree curricular plan management mappings -->
 		<action path="/degreeCurricularPlanManagement"

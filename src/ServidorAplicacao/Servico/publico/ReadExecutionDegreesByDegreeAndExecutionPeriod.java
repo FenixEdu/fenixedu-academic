@@ -22,81 +22,101 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Tânia Pousão Create on 13/Nov/2003
  */
-public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico {
-	private static ReadExecutionDegreesByDegreeAndExecutionPeriod service = new ReadExecutionDegreesByDegreeAndExecutionPeriod();
+public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico
+{
+    private static ReadExecutionDegreesByDegreeAndExecutionPeriod service =
+        new ReadExecutionDegreesByDegreeAndExecutionPeriod();
 
-	public ReadExecutionDegreesByDegreeAndExecutionPeriod() {
-	}
+    public ReadExecutionDegreesByDegreeAndExecutionPeriod()
+    {
+    }
 
-	public String getNome() {
-		return "ReadExecutionDegreesByDegreeAndExecutionPeriod";
-	}
+    public String getNome()
+    {
+        return "ReadExecutionDegreesByDegreeAndExecutionPeriod";
+    }
 
-	public static ReadExecutionDegreesByDegreeAndExecutionPeriod getService() {
-		return service;
-	}
+    public static ReadExecutionDegreesByDegreeAndExecutionPeriod getService()
+    {
+        return service;
+    }
 
-	public List run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException {
-		List infoExecutionDegreeList = null;
+    public List run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException
+    {
+        List infoExecutionDegreeList = null;
 
-		try {
-			if (executionPeriodId == null) {
-				throw new FenixServiceException("error.impossibleDegreeSite");
-			}
+        try
+        {
+            if (degreeId == null)
+            {
+                throw new FenixServiceException("error.impossibleDegreeSite");
+            }
 
-			if (degreeId == null) {
-				throw new FenixServiceException("error.impossibleDegreeSite");
-			}
+            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            //Execution Period
+            IExecutionPeriod executionPeriod = new ExecutionPeriod();
+            if (executionPeriodId == null)
+            {
+                executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            } else
+            {
+                executionPeriod.setIdInternal(executionPeriodId);
 
-			//Execution Period
-			IExecutionPeriod executionPeriod = new ExecutionPeriod();
-			executionPeriod.setIdInternal(executionPeriodId);
+                executionPeriod =
+                    (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
+            }
 
-			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
-			if (executionPeriod == null) {
-				throw new FenixServiceException("error.impossibleDegreeSite");
-			}
+            if (executionPeriod == null)
+            {
+                throw new FenixServiceException("error.impossibleDegreeSite");
+            }
 
-			IExecutionYear executionYear = executionPeriod.getExecutionYear();
-			if (executionYear == null) {
-				throw new FenixServiceException("error.impossibleDegreeSite");
-			}
-			System.out.println(executionYear);
+            IExecutionYear executionYear = executionPeriod.getExecutionYear();
+            if (executionYear == null)
+            {
+                throw new FenixServiceException("error.impossibleDegreeSite");
+            }
+            System.out.println(executionYear);
 
-			//Degree
-			ICursoPersistente persistentDegree = sp.getICursoPersistente();
-			ICurso degree = new Curso();
-			degree.setIdInternal(degreeId);
+            //Degree
+            ICursoPersistente persistentDegree = sp.getICursoPersistente();
+            ICurso degree = new Curso();
+            degree.setIdInternal(degreeId);
 
-			degree = (ICurso) persistentDegree.readByOId(degree, false);
-			if (degree == null) {
-				throw new FenixServiceException("error.impossibleDegreeSite");
-			}
+            degree = (ICurso) persistentDegree.readByOId(degree, false);
+            if (degree == null)
+            {
+                throw new FenixServiceException("error.impossibleDegreeSite");
+            }
 
-			//Execution degrees
-			ICursoExecucaoPersistente persistentExecutionDegre = sp.getICursoExecucaoPersistente();
-			List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree, executionYear);
-			if (executionDegreeList == null || executionDegreeList.size() <= 0) {
-				throw new FenixServiceException("error.impossibleDegreeSite");
-			}
+            //Execution degrees
+            ICursoExecucaoPersistente persistentExecutionDegre = sp.getICursoExecucaoPersistente();
+            List executionDegreeList =
+                persistentExecutionDegre.readByDegreeAndExecutionYear(degree, executionYear);
+            if (executionDegreeList == null || executionDegreeList.size() <= 0)
+            {
+                throw new FenixServiceException("error.impossibleDegreeSite");
+            }
 
-			infoExecutionDegreeList = new ArrayList();
-			ListIterator listIterator = executionDegreeList.listIterator();
-			while (listIterator.hasNext()) {
-				ICursoExecucao executionDegree = (ICursoExecucao) listIterator.next();
-			
-				InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            infoExecutionDegreeList = new ArrayList();
+            ListIterator listIterator = executionDegreeList.listIterator();
+            while (listIterator.hasNext())
+            {
+                ICursoExecucao executionDegree = (ICursoExecucao) listIterator.next();
 
-				infoExecutionDegreeList.add(infoExecutionDegree);
-			}			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
+                InfoExecutionDegree infoExecutionDegree =
+                    Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
 
-		return infoExecutionDegreeList;
-	}
+                infoExecutionDegreeList.add(infoExecutionDegree);
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException(e);
+        }
+
+        return infoExecutionDegreeList;
+    }
 }

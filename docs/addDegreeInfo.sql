@@ -27,7 +27,7 @@ create table DEGREE_INFO(
 	LINKS_EN text,
 	TEST_INGRESSION_EN text,	
 	CLASSIFICATIONS_EN text,
-	LAST_MODIFICATION_DATE datetime,
+	LAST_MODIFICATION_DATE datetime not null,
 	primary key (ID_INTERNAL),
 	unique U1 (KEY_DEGREE, LAST_MODIFICATION_DATE)
 ) type=InnoDB;

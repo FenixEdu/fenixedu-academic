@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoDegreeInfo;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -35,6 +36,39 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
         Integer degreeId = getFromRequest("degreeId", request);
+
+        //If degreeId is null then this was call by coordinator
+        //Don't have a degreeId but a executionDegreeId
+        //It's necessary read the executionDegree and obtain the correspond degree
+        if (degreeId == null)
+        {
+            Integer executionDegreeId = getFromRequest("executionDegreeId", request);
+
+            GestorServicos gestorServicos = GestorServicos.manager();
+
+            //degree information
+            Object[] args = { executionDegreeId };
+
+            InfoExecutionDegree infoExecutionDegree = null;
+            try
+            {
+                infoExecutionDegree =
+                    (InfoExecutionDegree) gestorServicos.executar(
+                        null,
+                        "ReadExecutionDegreeByOID",
+                        args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
+
+            if (infoExecutionDegree != null
+                && infoExecutionDegree.getInfoDegreeCurricularPlan() != null
+                && infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null)
+            {
+                degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();                
+            }
+        }
 
         GestorServicos gestorServicos = GestorServicos.manager();
 

@@ -16,8 +16,8 @@
 	<table>
 		<tr>
 			<td width="100%" colspan="3" id="main">
-				<div class="breadcumbs"><a href="/index.shtml">IST</a> > Ensino</div>
-				<div class="version"><span class="px10"><a href="/html/en/teaching.shtml">english version</a> <img src="../../img/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+				<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > Ensino</div>
+				<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="../../img/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 				
 				<h1><bean:message key="label.education" /></h1>
 				<p class="greytxt">

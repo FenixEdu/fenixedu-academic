@@ -127,8 +127,10 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
 			Object[] args = { infoExecutionPeriodCode, infoDegreeCode  };
 
+			//Service
+			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-			    gestor.executar(null, getNameOfServiceToBeTested(), args);
+				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeSite"))) {
@@ -154,8 +156,10 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
 			Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
+			//Service
+			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-			    gestor.executar(null, getNameOfServiceToBeTested(), args);
+				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeSite"))) {
@@ -180,8 +184,10 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
 			Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
+			//Service
+			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-			    gestor.executar(null, getNameOfServiceToBeTested(), args);
+				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeSite"))) {
@@ -206,14 +212,13 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
 			Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
+			//Service
+			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-			    gestor.executar(null, getNameOfServiceToBeTested(), args);
+				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
-				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
-				if (!msg.equals(new String("impossibleDegreeSite"))) {
-					e.printStackTrace();
-					fail("Reading a degree information");
-				}
+				e.printStackTrace();
+				fail("Reading a degree information" + e);
 			}
 
 			System.out.println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionPeriod");
@@ -233,8 +238,9 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 			Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
 			//Service
+			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-			    gestor.executar(null, getNameOfServiceToBeTested(), args);
+				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeSite"))) {
@@ -259,8 +265,10 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 
 			Object[] args = { infoExecutionPeriodCode, infoDegreeCode };
 
+			//Service
+			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-			    gestor.executar(null, getNameOfServiceToBeTested(), args);
+				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeSite"))) {
@@ -286,9 +294,9 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriodTest extends ServiceTestCas
 			Object[] args = { infoExecutionPeriodCode, infoDegreeCode  };
 
 			//Service
-
+			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-			    gestor.executar(null, getNameOfServiceToBeTested(), args);
+				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(null, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeSite"))) {

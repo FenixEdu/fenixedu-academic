@@ -7,12 +7,12 @@
 
 <logic:present name="infoDegreeInfo">
 
-				<div class="breadcumbs"><a href="/index.shtml">IST</a> > <a href="/html/ensino/ensino.shtml">Ensino</a> &gt; 
+				<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <a href="http://www.ist.utl.pt/html/ensino/ensino.shtml">Ensino</a> &gt; 
 					<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
 				</div>
 				
 				<!-- PÁGINA EM INGLÊS -->
-				<div class="version"><span class="px10"><a href="/html/en/teaching.shtml">english version</a> <img src="/img/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+				<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="/img/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 			 	<div class="clear"></div> 
 			  
 			  <!-- NOME DO CURSO -->
@@ -50,29 +50,29 @@
 			  	<logic:iterate id="executionDegree" name="infoExecutionDegrees" indexId="indexCampus" >
 				  	<bean:message key="label.title.coordinator" />&nbsp; 
 					
-						<logic:present name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
+						<logic:notEmpty name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
 							<bean:define id="homepage" name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb" />						
 
 							<a href=" <%= homepage %>">
 							<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />						
 							</a>
-						</logic:present>		
+						</logic:notEmpty>		
 						
-						<logic:notPresent name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
-							<logic:present name="executionDegree" property="infoCoordinator.infoPerson.email">
+						<logic:empty name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
+							<logic:notEmpty name="executionDegree" property="infoCoordinator.infoPerson.email">
 								<bean:define id="email" name="executionDegree" property="infoCoordinator.infoPerson.email" />
 							
 								<a href="mailto: <%= email %>">
 								<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />						
 								</a>											
-							</logic:present>						
-						</logic:notPresent>		
+							</logic:notEmpty>						
+						</logic:empty>		
 						
-						<logic:notPresent name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
-							<logic:notPresent name="executionDegree" property="infoCoordinator.infoPerson.email">
+						<logic:empty name="executionDegree" property="infoCoordinator.infoPerson.enderecoWeb">
+							<logic:notEmpty name="executionDegree" property="infoCoordinator.infoPerson.email">
 								<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome" />											
-							</logic:notPresent>						
-						</logic:notPresent>	
+							</logic:notEmpty>						
+						</logic:empty>	
 						
 						<logic:lessThan name="indexCampus" value="campusSize" >
 					  	<br />
@@ -88,49 +88,49 @@
 			 	</div>
 			 
 			 	<div class="col_left">			 	
-			 		<logic:present name="infoDegreeInfo" property="description" >			 	
+			 		<logic:notEmpty name="infoDegreeInfo" property="description" >			 	
 				 	<h2><img alt="" height="12" src="/img/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.description" /> </h2>
 				 	<p><!-- BREVE DESCRIÇAO DA LICENCIATURA--><bean:write name="infoDegreeInfo" property="description" filter="false" /></p>
-				 	</logic:present>
+				 	</logic:notEmpty>
 				 
-  			  <logic:present name="infoDegreeInfo" property="objectives" >
+  			  <logic:notEmpty name="infoDegreeInfo" property="objectives" >
 				 	<h2> <img alt="" height="12" src="/img/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.objectives" /></h2>
 		 	   	<p><!-- OBJECTIVOS --><bean:write name="infoDegreeInfo" property="objectives" filter="false" /></p>
-					</logic:present>
+					</logic:notEmpty>
 				</div>
 			  
 			  <div class="col_right">
 					<table class="box" cellspacing="0">
-						<logic:present name="infoDegreeInfo" property="additionalInfo" >		
+						<logic:notEmpty name="infoDegreeInfo" property="additionalInfo" >		
 						<tr>
 							<td class="box_header"><strong><bean:message key="label.coordinator.degreeSite.additionalInfo"/></strong></td>
 						</tr>						
 						<tr>
 							<td class="box_cell"><p><!-- TEXTO - INFORMACOES ADICIONAIS! --><bean:write name="infoDegreeInfo" property="additionalInfo" filter="false" /></p></td>						
 						</tr>
-						</logic:present>
+						</logic:notEmpty>
 						
-						<logic:present name="infoDegreeInfo" property="links" >	
+						<logic:notEmpty name="infoDegreeInfo" property="links" >	
 						<tr>
 							<td class="box_header"><strong><bean:message key="label.coordinator.degreeSite.links"/></strong></td>
 						</tr>
 						<tr>
 							<td class="box_cell"><p><!-- TEXTO - LINKS! --><bean:write name="infoDegreeInfo" property="links" filter="false" /></p></td>	
 						</tr>
-						</logic:present>
+						</logic:notEmpty>
 					</table>
 				</div>
 				
-				<logic:present name="infoDegreeInfo" property="professionalExits" >
+				<logic:notEmpty name="infoDegreeInfo" property="professionalExits" >
 			  <h2><img alt="" height="12" src="/img/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.professionalExits" /></h2>
 			  <p><!-- TEXTO - SAÍDAS PROFISSIONAIS--><bean:write name="infoDegreeInfo" property="professionalExits" filter="false" /></p>  
-			  </logic:present>
+			  </logic:notEmpty>
 			  
-			  <logic:present name="infoDegreeInfo" property="history" >
+			  <logic:notEmpty name="infoDegreeInfo" property="history" >
 			  <div class="col_left">
 			  	<h2><img alt="" height="12" src="/img/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.history" /></h2>
 				  <p><!-- TEXTO - HISTORIAL DA LICENCIATURA --><bean:write name="infoDegreeInfo" property="history" filter="false" /></p>
 				</div>
-				</logic:present>
+				</logic:notEmpty>
 
 </logic:present>
