@@ -5725,7 +5725,7 @@
         <filterChains/>
     </service> 
     <service>
-    	<name>PrepareInfoShiftEnrollmentByUsername</name>
+    	<name>PrepareInfoShiftEnrollmentByStudentNumber</name>
     	<description>Read all information needed for shift enrollment</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.PrepareInfoShiftEnrollmentByStudentNumber</implementationClass>
     	<isTransactional>True</isTransactional>

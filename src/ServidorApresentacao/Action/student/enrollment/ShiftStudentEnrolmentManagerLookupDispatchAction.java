@@ -54,6 +54,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 	{
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
+		checkParameter(request);
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -108,6 +109,14 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		return mapping.findForward("chooseCourses");
 	}
 
+	private void checkParameter(HttpServletRequest request)
+	{
+		String selectCourses = request.getParameter("selectCourses");
+		if(selectCourses != null) {
+			request.setAttribute("selectCourses", selectCourses);
+		}
+	}
+	
 	public ActionForward removeCourses(
 		ActionMapping mapping,
 		ActionForm form,
@@ -117,6 +126,8 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 	{
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
+		checkParameter(request);
+		
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -181,6 +192,8 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 	{
 		System.out.println("-->proceedToShiftEnrolment");
 
+		checkParameter(request);
+		
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -315,6 +328,7 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		map.put("button.removeCourse", "removeCourses");
 		map.put("button.continue.enrolment", "proceedToShiftEnrolment");
 		map.put("button.exit.enrollment", "exitEnrollment");
+		map.put("proceedToShiftEnrolment", "proceedToShiftEnrolment");
 		return map;
 	}
 }

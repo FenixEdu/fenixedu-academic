@@ -7,6 +7,9 @@
 </logic:notPresent>
 <logic:present name="infoShiftEnrollment" >
 <div align="center" >
+	<h2 style="text-align:center">
+		<bean:message key="title.student.shift.enrollment" />
+	</h2>
 	<span class="error"><html:errors/></span>
 	<br />
 	<p align="left">
@@ -28,6 +31,9 @@
 	<html:form action="/studentShiftEnrolmentManager" >
 		<html:hidden property="method" value="start" />
 		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
+		<logic:present name="selectCourses">
+			<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
+		</logic:present>
 		<p style="text-align:left;margin-bottom:0px">
 			<b><bean:message key="label.chooseCourses" />:</b>
 		</p>			
@@ -38,6 +44,9 @@
 	<html:form action="/studentShiftEnrolmentManagerLoockup" >
 		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
 		<html:hidden property="degree" value="<%= degreeSelected.toString() %>" />
+		<logic:present name="selectCourses">
+			<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
+		</logic:present>
 		<p style="text-align:left;margin-bottom:0px">
 			<b><bean:message key="label.degreeSelected.courses" />:</b>
 		</p>

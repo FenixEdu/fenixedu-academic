@@ -4,7 +4,6 @@
 package ServidorApresentacao.Action.student.enrollment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +53,9 @@ public class EnrollStudentInShiftsAction extends FenixAction
 
         List shiftList =buildShiftList(shiftsToEnroll);
 
+        if(shiftList != null) {
+        	System.out.println("tamanho da lista de turnos que vem do jsp: " + shiftList.size());
+        }
         
 
         Object[] args = { studentId, shiftList };

@@ -13,7 +13,7 @@
 <logic:iterate id="infoClass" name="infoClassEnrollmentDetails" property="infoClassList">
 	<!-- CLASS -->
 	<bean:define id="classId" name="infoClass" property="idInternal"/>
-	<h2 class="redtxt" style="text-align:left"><bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome"/></h2>
+	<h2 class="redtxt" style="text-align:left"><%--<bean:message key="label.class" />&nbsp;--%><bean:write name="infoClass" property="nome"/></h2>
 	<br />
 	<table border="0" width="75%" cellspacing="1" cellpadding="5">
 		<!-- MAP -->
@@ -28,9 +28,12 @@
 					<!-- SHIFT -->
 					<logic:iterate id="shiftEnrollmentDetails" name="executionCourseDetails" property="shiftEnrollmentDetailsList">						
 						<tr>
-							<td colspan="4" class="listClasses-header">
+							<td colspan="3" class="listClasses-header">
 								<b><bean:message key="label.shift" /></b>&nbsp;<bean:write name="shiftEnrollmentDetails" property="infoShift.nome"/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<bean:message key="label.vacancies" />:&nbsp;<bean:write name="shiftEnrollmentDetails" property="vacancies"/>
+							</td>
+							<td  class="listClasses-header" style="text-align:right">
 								<bean:message key="label.enroll" />?
 								<!-- Radio button -->
 								<%-- :AQUI: a key estava executionId-shiftId --%>

@@ -29,23 +29,21 @@ import Util.ExecutionDegreesFormat;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- * @author tdi-dev (bruno) 
- * Modified by Tânia Pousão
- * Modified by Fernanda Quitério
+ * @author tdi-dev (bruno) Modified by Tânia Pousão Modified by Fernanda Quitério
  *  
  */
 public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDispatchAction
 {
 	public ActionForward prepareStartViewWarning(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-	throws Exception
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
 	{
 		return mapping.findForward("prepareEnrollmentViewWarning");
 	}
-	
+
 	public ActionForward start(
 		ActionMapping mapping,
 		ActionForm form,
@@ -91,12 +89,11 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			infoShiftEnrollment =
 				(InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
 					userView,
-					"PrepareInfoShiftEnrollmentByUsername",
+					"PrepareInfoShiftEnrollmentByStudentNumber",
 					args);
 		}
 		catch (FenixServiceException serviceException)
 		{
-			serviceException.printStackTrace();
 			errors.add("error", new ActionError(serviceException.getMessage()));
 			saveErrors(request, errors);
 			return mapping.findForward("studentFirstPage");
@@ -108,8 +105,10 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 		request.setAttribute("infoShiftEnrollment", infoShiftEnrollment);
 
+		String selectCourses = checkParameter(request);
 		if (infoShiftEnrollment.getInfoShiftEnrollment() != null
-			&& infoShiftEnrollment.getInfoShiftEnrollment().size() > 0)
+			&& infoShiftEnrollment.getInfoShiftEnrollment().size() > 0
+			&&  selectCourses == null)
 		{
 			return mapping.findForward("showShiftsEnrollment");
 		}
@@ -131,7 +130,17 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		}
 	}
 
-	private String obtainStudentNumber(HttpServletRequest request, IUserView userView) throws FenixActionException
+	private String checkParameter(HttpServletRequest request)
+	{
+		String selectCourses = request.getParameter("selectCourses");
+		if(selectCourses != null) {
+		request.setAttribute("selectCourses", selectCourses);
+		}
+		return selectCourses;
+	}
+
+	private String obtainStudentNumber(HttpServletRequest request, IUserView userView)
+		throws FenixActionException
 	{
 		String studentNumber = getStudent(request);
 		if (studentNumber == null)
@@ -163,18 +172,16 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 		String studentIDString = request.getParameter("studentId");
 		String shidtIDString = request.getParameter("shiftId");
-		
+
 		Integer studentId = new Integer(studentIDString);
 		Integer shiftId = new Integer(shidtIDString);
 
 		try
 		{
 			Object args[] = { studentId, shiftId };
-			ServiceManagerServiceFactory.executeService(
-					userView,
-					"UnEnrollStudentFromShift",
-					args);
-		} catch (FenixServiceException e)
+			ServiceManagerServiceFactory.executeService(userView, "UnEnrollStudentFromShift", args);
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
@@ -182,9 +189,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 		return start(mapping, form, request, response);
 	}
 
-	private InfoStudent obtainStudent(
-		HttpServletRequest request,
-		IUserView userView)
+	private InfoStudent obtainStudent(HttpServletRequest request, IUserView userView)
 		throws FenixActionException
 	{
 		InfoStudent infoStudent = null;
@@ -196,7 +201,8 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 					userView,
 					"ReadStudentByUsername",
 					args);
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
