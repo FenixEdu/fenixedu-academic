@@ -1404,7 +1404,7 @@
 	  		name="teacherInformationForm"
 	  		parameter="method"
 	  		scope="request"
-	  		input="/teacherInformation.do?page=0&amp;method=prepareEdit"
+	  		input="/teacherInformation.do?page=0&amp;method=prepareEdit">
 	  	<forward name="show-form" path="..."/> 
 		<forward name="successfull-edit" path="..."/> 
 		<forward name="successfull-read" path="..."/>
