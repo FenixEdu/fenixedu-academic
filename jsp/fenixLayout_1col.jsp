@@ -13,7 +13,7 @@
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_sop.gif" width="192" />
 	</td>
@@ -23,7 +23,7 @@
 </table>
 <!-- End Header -->
 <!-- NavGeral -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td class="navbargeral"><tiles:insert attribute="navGeral" />
     </td>
@@ -44,7 +44,7 @@
 </table>
 <!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td class="footer"><tiles:insert attribute="footer" />
     </td>
