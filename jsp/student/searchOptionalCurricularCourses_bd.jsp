@@ -6,15 +6,13 @@
 <bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" />
 <bean:define id="infoDegreesList" name="infoEnrolmentContext" property="infoDegreesForOptionalCurricularCourses"/>
 
-<bean:write name="infoEnrolmentContext" property="infoExecutionPeriod.name" /> <br />
-
-	Opção: <bean:define id="optionalCourseChossen" name="infoEnrolmentContext" property="InfoChosenOptionalCurricularCourseScope.curricularCourse.name"/> <br />
-
 	<html:form action="curricularCourseEnrolmentManager">
 		<html:hidden property="method" value="showOptionalCurricularCourses" />
 
 		<html:select property="infoDegree" size="1">
        		<html:options collection="infoDegree" property="nome" labelProperty="sigla"/>
        </html:select>
-		<html:submit value="Continuar"/>
+	   <html:submit styleClass="inputbutton">
+			<bean:message key="button.continue.enrolment"/>
+		</html:submit>
 	</html:form>
