@@ -181,6 +181,11 @@ public abstract class SessionConstants {
 	public static final String ENROLMENT_EVALUATION_TYPE_LIST ="ENROLMENT_EVALUATION_TYPE_LIST";
 	
 
+	// -------------------------------------------------------------------------------
+	//    SOP Constants - For Working Area
+	// -------------------------------------------------------------------------------	
+	public static String LIST_EXECUTION_PERIODS            = "listExecutionPeriods";
+	public static String LIST_WORKING_AREAS                = "listWorkingAreas";
 	
 	// -------------------------------------------------------------------------------
 	//    SOP Constants - For Exams

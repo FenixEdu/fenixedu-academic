@@ -26,7 +26,8 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 * @param executionPeriod
 	 * @return boolean
 	 */
-	public void writeExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia, ExistingPersistentException;
+	public void writeExecutionPeriod(IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia, ExistingPersistentException;
 	/**
 	 * 
 	 * @param executionPeriod
@@ -43,8 +44,9 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 * @return IExecutionPeriod
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia;	
-	
+	public IExecutionPeriod readActualExecutionPeriod()
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * Method readByNameAndExecutionYear.
 	 * @param string
@@ -53,6 +55,17 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 */
 	public IExecutionPeriod readByNameAndExecutionYear(
 		String executionPeriodName,
-		IExecutionYear executionYear) throws ExcepcaoPersistencia;
+		IExecutionYear executionYear)
+		throws ExcepcaoPersistencia;
+
+	/**
+	 * @param string
+	 * @param year
+	 * @return
+	 */
+	public IExecutionPeriod readBySemesterAndExecutionYear(
+		Integer semester,
+		IExecutionYear year)
+		throws ExcepcaoPersistencia;
 
 }

@@ -68,4 +68,9 @@ public class InfoExecutionYear implements Serializable{
 		this.state = state;
 	}
 
+	public int compareTo(Object arg0) {
+		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
+		return this.getYear().compareTo(infoExecutionYear.getYear());
+	}
+
 }

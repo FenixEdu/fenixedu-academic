@@ -103,4 +103,10 @@ public class InfoExecutionPeriod extends InfoObject {
 		semester = integer;
 	}
 
+	public int compareTo(Object arg0) {
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
+		int yearCmp = this.getInfoExecutionYear().compareTo(infoExecutionPeriod.getInfoExecutionYear());
+		return yearCmp + this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
+	}
+
 }

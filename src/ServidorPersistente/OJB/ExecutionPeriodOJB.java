@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.ExecutionPeriod;
@@ -145,12 +146,13 @@ public class ExecutionPeriodOJB
 		try {
 			IExecutionPeriod executionPeriod = null;
 			String oqlQuery =
-				"select all from " + ExecutionPeriod.class.getName()
-				+" where state = $1";
+				"select all from "
+					+ ExecutionPeriod.class.getName()
+					+ " where state = $1";
 
 			query.create(oqlQuery);
 			query.bind(PeriodState.CURRENT);
-			
+
 			List result = (List) query.execute();
 			lockRead(result);
 			if ((result != null) && (!result.isEmpty()))
@@ -188,6 +190,19 @@ public class ExecutionPeriodOJB
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#readBySemesterAndExecutionYear(java.lang.String, Dominio.IExecutionYear)
+	 */
+	public IExecutionPeriod readBySemesterAndExecutionYear(
+		Integer semester,
+		IExecutionYear year)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("semester", semester);
+		criteria.addEqualTo("executionYear.year", year.getYear());
+		return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
 	}
 
 }

@@ -262,7 +262,23 @@
         <form-property name="selectAllPavillions" type="java.lang.Boolean"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean> 
-      
+
+
+	  <!-- ========== WORKING AREA ========== -->
+
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="createWorkingAreaForm"
+                type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="semesterToCreate" type="java.lang.String"/>
+        <form-property name="yearToCreate" type="java.lang.String"/>
+        <form-property name="semesterToExportDataFrom" type="java.lang.String"/>
+        <form-property name="yearToExportDataFrom" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1054,6 +1070,27 @@
               type="ServidorApresentacao.Action.sop.ViewAllRoomsForExamsFormAction"
               >
           <forward name="Sucess" path="/viewAllRoomsForExams.jsp"/>
+      </action>
+
+
+	<!-- ========== WORKING AREA ========== -->
+      <action path="/manageWorkingArea"
+              type="ServidorApresentacao.Action.sop.ManageWorkingAreaDA"
+              parameter="method"
+              scope="request"
+              >
+          <forward name="Manage" path="/manageWorkingArea.jsp"/>
+      </action>
+
+      <action input="/manageWorkingArea.do?method=prepare&amp;page=1"
+			  name="createWorkingAreaForm"	
+      		  path="/createWorkingAreaForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.ManageWorkingAreaDA"
+              parameter="method"
+              validate="true"
+              >
+           <forward name="Sucess" path="/manageWorkingArea.do?method=prepare"/>
       </action>
 
 
