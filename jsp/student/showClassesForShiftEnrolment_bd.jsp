@@ -79,6 +79,8 @@
 								<dt:format pattern="HH:mm">
 									<bean:write name="lesson" property="fim.time.time"/>
 								</dt:format>
+								na sala
+								<bean:write name="lesson" property="infoSala.nome"/>
 						<br/>
 							</logic:iterate> 
 		</td>
