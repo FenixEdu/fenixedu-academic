@@ -52,7 +52,6 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 		
 		return (ITeacher) queryObject(Teacher.class, criteria);
 	}
-	
 	public ITeacher readTeacherByNumber(Integer teacherNumber) throws ExcepcaoPersistencia {
 		try {
 			ITeacher teacher = null;
@@ -192,5 +191,14 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 			}
 		}
 		return  employees;
+	}
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentTeacher#readByNumber(java.lang.Integer)
+	 */
+	public ITeacher readByNumber(Integer teacherNumber) throws ExcepcaoPersistencia 
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("teacherNumber", teacherNumber);
+		return (ITeacher) queryObject(Teacher.class, criteria);
 	}
 }
