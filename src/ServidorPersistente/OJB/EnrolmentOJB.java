@@ -220,5 +220,4 @@ public class EnrolmentOJB
 		}
 		return enrolments;
 	}
-
 }

@@ -71,9 +71,9 @@ public class SelectOptionalCurricularCourse implements IServico {
 		infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().add(infoEnrolment);
 
 		// Automaticaly add the enrolment in the chosen curricular course to the actual enrolments list for this student.
-		if (!infoEnrolmentContext.getActualEnrolment().contains(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope())) {
-			infoEnrolmentContext.getActualEnrolment().add(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope());
-		}
+//		if (!infoEnrolmentContext.getActualEnrolment().contains(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope())) {
+//			infoEnrolmentContext.getActualEnrolment().add(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope());
+//		}
 		return infoEnrolmentContext;
 	}
 }

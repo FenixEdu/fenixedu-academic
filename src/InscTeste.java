@@ -31,7 +31,7 @@ public class InscTeste {
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
 		showFinalSpan(infoEnrolmentContext);
 
-/*		Object serviceArgs2[] = { infoEnrolmentContext };
+		Object serviceArgs2[] = { infoEnrolmentContext };
 		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
 		showAvailableDegreesForOption(infoEnrolmentContext);
 
@@ -47,7 +47,7 @@ public class InscTeste {
 		infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
 		showCosenCurricularCoursesForOptionalCurricularCourse(infoEnrolmentContext);
 
-		Object serviceArgs5[] = { infoEnrolmentContext };
+/*		Object serviceArgs5[] = { infoEnrolmentContext };
 		infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs5);
 		showAvailableDegreesForOption(infoEnrolmentContext);
 
@@ -102,6 +102,8 @@ public class InscTeste {
 
 //		System.out.println(infoEnrolmentContext.getEnrolmentValidationResult().getMessage());
 
+//		Object serviceArgs11[] = {userView};
+//		executeService("ChangeEnrolmentStateFromTemporarilyToEnroled", serviceArgs11);		
 	}
 
 	private static void autentication() {
