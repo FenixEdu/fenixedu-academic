@@ -27,20 +27,20 @@ import Util.RoleType;
  * @author Pica
  *  
  */
-public class CreateGrantOwner extends CreatePersonBaseClass implements IServico
+public class EditGrantOwner extends CreatePersonBaseClass implements IServico
 {
-    private static CreateGrantOwner service = new CreateGrantOwner();
+    private static EditGrantOwner service = new EditGrantOwner();
     /**
 	 * The singleton access method of this class.
 	 */
-    public static CreateGrantOwner getService()
+    public static EditGrantOwner getService()
     {
         return service;
     }
     /**
 	 * The constructor of this class.
 	 */
-    private CreateGrantOwner()
+    private EditGrantOwner()
     {
     }
     /**
@@ -48,7 +48,7 @@ public class CreateGrantOwner extends CreatePersonBaseClass implements IServico
 	 */
     public final String getNome()
     {
-        return "CreateGrantOwner";
+        return "EditGrantOwner";
     }
 
     private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber)

@@ -131,7 +131,7 @@ public class EditGrantOwnerAction extends DispatchAction
         //Edit Grant Owner
 		Object[] args = { infoGrantOwner };
 		IUserView userView = SessionUtils.getUserView(request);
-		ServiceUtils.executeService(userView, "CreateGrantOwner", args);
+		ServiceUtils.executeService(userView, "EditGrantOwner", args);
 
 		//Read the grant owner by person
 		Object[] args2 = { infoGrantOwner.getPersonInfo().getIdInternal()};

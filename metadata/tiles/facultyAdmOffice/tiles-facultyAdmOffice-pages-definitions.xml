@@ -23,4 +23,7 @@
 	<definition name="manageGrantOwner" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/owner/manageGrantOwner.jsp"></put>
 	</definition>
+	<definition name="editGrantContractForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantContractForm.jsp"></put>
+	</definition>
 </tiles-definitions>

@@ -1,5 +1,7 @@
 package ServidorPersistente.OJB.grant.contract;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.grant.contract.GrantType;
@@ -27,5 +29,11 @@ public class GrantTypeOJB extends ServidorPersistente.OJB.ObjectFenixOJB impleme
         criteria.addEqualTo("sigla", sigla);
         grantType = (IGrantType) queryObject(GrantType.class, criteria);
         return grantType;
+    }
+    
+    public List readAll() throws ExcepcaoPersistencia
+    {
+    	List grantTypes = queryList(GrantType.class, null);
+    	return grantTypes;
     }
 }

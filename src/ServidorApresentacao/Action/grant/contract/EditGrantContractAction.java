@@ -62,16 +62,14 @@ public class EditGrantContractAction extends DispatchAction
 				(InfoGrantContract) ServiceUtils.executeService(userView, "ReadGrantContract", args);
 			//Populate the form
 			setFormGrantContract(grantContractForm, infoGrantContract);
-			request.setAttribute(
-				"idInternal",
-				infoGrantContract.getGrantOwnerInfo().getIdInternal());
+			request.setAttribute("idInternal", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 		} else
 		{
 			//New contract
-			if (request.getParameter("idGrantOwner") != null)
+			if (request.getParameter("idInternal") != null)
 			{
-				grantContractForm.set("idInternal", request.getParameter("idGrantOwner"));
-				request.setAttribute("idInternal", request.getParameter("idGrantOwner"));
+				grantContractForm.set("idInternal", new Integer(request.getParameter("idInternal")));
+				request.setAttribute("idInternal", new Integer(request.getParameter("idInternal")));
 			} else
 			{
 				//TODO!!! erro
@@ -79,7 +77,8 @@ public class EditGrantContractAction extends DispatchAction
 		}
 
 		//Read grant types for the contract
-		Object[] args2 = {};
+		Object[] args2 = {
+		};
 		List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
 		request.setAttribute("grantTypeList", grantTypeList);
 
@@ -100,14 +99,6 @@ public class EditGrantContractAction extends DispatchAction
 		IUserView userView = SessionUtils.getUserView(request);
 		ServiceUtils.executeService(userView, "EditGrantContract", args);
 
-		//		//Read the grant owner by person
-		//		Object[] args2 = { infoGrantOwner.getPersonInfo().getIdInternal()};
-		//		infoGrantOwner =
-		//			(InfoGrantOwner) ServiceUtils.executeService(
-		//				SessionUtils.getUserView(request),
-		//				"ReadGrantOwnerByPerson",
-		//				args2);
-
 		request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
 
 		return mapping.findForward("manage-grant-owner");
@@ -121,7 +112,7 @@ public class EditGrantContractAction extends DispatchAction
 	{
 		//BeanUtils.copyProperties(form, infoGrantContract);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		form.set("idGrantContract", infoGrantContract.getIdInternal());
 		if (infoGrantContract.getDateBeginContract() != null)
 			form.set("dateBeginContract", sdf.format(infoGrantContract.getDateBeginContract()));
@@ -131,8 +122,20 @@ public class EditGrantContractAction extends DispatchAction
 			form.set("endContractMotive", infoGrantContract.getEndContractMotive());
 		form.set("grantType", infoGrantContract.getGrantTypeInfo().getSigla());
 		form.set("contractNumber", infoGrantContract.getContractNumber().toString());
-		//form.set("grantResponsibleTeacher",infoGrantContract.getGrantResponsibleTeacherInfo().getResponsibleTeacherInfo().getTeacherNumber().toString());
-		//form.set("grantOrientationTeacher",infoGrantContract.getGrantOrientationTeacherInfo().getOrientationTeacherInfo().getTeacherNumber().toString());
+		form.set(
+			"grantResponsibleTeacher",
+			infoGrantContract
+				.getGrantResponsibleTeacherInfo()
+				.getResponsibleTeacherInfo()
+				.getTeacherNumber()
+				.toString());
+		form.set(
+			"grantOrientationTeacher",
+			infoGrantContract
+				.getGrantOrientationTeacherInfo()
+				.getOrientationTeacherInfo()
+				.getTeacherNumber()
+				.toString());
 		form.set("idInternal", infoGrantContract.getGrantOwnerInfo().getIdInternal());
 	}
 
@@ -179,10 +182,12 @@ public class EditGrantContractAction extends DispatchAction
 		}
 
 		//set IdInternal
-		infoGrantContract.setIdInternal((Integer) editGrantContractForm.get("idGrantContract"));
+		if (editGrantContractForm.get("idGrantContract") != null)
+			infoGrantContract.setIdInternal((Integer) editGrantContractForm.get("idGrantContract"));
 		//set grantContractNumber
-		infoGrantContract.setContractNumber(
-			new Integer((String) editGrantContractForm.get("contractNumber")));
+		if (editGrantContractForm.get("contractNumber") != null && !editGrantContractForm.get("contractNumber").equals(""))
+			infoGrantContract.setContractNumber(
+				new Integer((String) editGrantContractForm.get("contractNumber")));
 		infoGrantOwner.setIdInternal((Integer) editGrantContractForm.get("idInternal"));
 		infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
 

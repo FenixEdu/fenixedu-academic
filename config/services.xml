@@ -2253,8 +2253,8 @@
         </filterChains>
     </service>
     <service>
-        <name>CreateGrantOwner</name>
-        <implementationClass>ServidorAplicacao.Servico.grant.owner.CreateGrantOwner</implementationClass>
+        <name>EditGrantOwner</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.owner.EditGrantOwner</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -2282,16 +2282,6 @@
     <service>
         <name>ReadGrantOwnerByPerson</name>
         <implementationClass>ServidorAplicacao.Servico.grant.owner.ReadGrantOwnerByPerson</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="GrantOwnerManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>CreateGrantContract</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.grant.contract.CreateGrantContract</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5381,6 +5371,24 @@
             ServidorAplicacao.Servico.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByDepartment</implementationClass>
     	<isTransactional>true</isTransactional>
         <filterChains/>                    	
+    </service>
+    <service>
+        <name>EditGrantContract</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.contract.EditGrantContract</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAllGrantTypes</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.contract.ReadAllGrantTypes</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
     </service>
     <service>
     	<name>ReadGratuitySituationByStudentCurricularPlan</name>

@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;

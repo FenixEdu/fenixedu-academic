@@ -444,9 +444,9 @@
 			</td>		
 			<td class="listClasses">
 				<logic:present name="infoGrantContract" property="grantResponsibleTeacherInfo">
-					<bean:write name="infoGrantContract" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.name"/>
+					<bean:write name="infoGrantContract" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.nome"/>
 				</logic:present>
-				<logic:notPresent name="infoGrantContratc" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.name">
+				<logic:notPresent name="infoGrantContract" property="grantResponsibleTeacherInfo.responsibleTeacherInfo.infoPerson.nome">
 					---
 				</logic:notPresent>
 			</td>
@@ -469,9 +469,9 @@
 <br/>
 
 <html:form action="/editGrantContract">
-	<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+	<bean:define id="idInternal" name="infoGrantOwner" property="idInternal"/>
 	<html:hidden property="method" value="prepareEditGrantContractForm"/>
-	<html:hidden property="idGrantOwner" value='<%= idGrantOwner.toString() %>'/>		
+	<html:hidden property="idInternal" value='<%= idInternal.toString() %>'/>		
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.createNewContract"/>
 	</html:submit> 

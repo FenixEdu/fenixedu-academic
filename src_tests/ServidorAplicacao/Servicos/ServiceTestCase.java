@@ -46,7 +46,7 @@ public abstract class ServiceTestCase extends TestCase
     {
         Class.forName("com.mysql.jdbc.Driver");
         Connection jdbcConnection =
-            DriverManager.getConnection("jdbc:mysql://localhost/fenix", "root", "");
+            DriverManager.getConnection("jdbc:mysql://localhost/ciapl", "root", "");
         return new DatabaseConnection(jdbcConnection);
     }
 

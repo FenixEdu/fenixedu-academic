@@ -1,11 +1,13 @@
 package ServidorPersistente.OJB.grant.contract;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.grant.contract.GrantResponsibleTeacher;
 import Dominio.grant.contract.IGrantContract;
+import Dominio.grant.contract.IGrantResponsibleTeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 
@@ -23,7 +25,7 @@ public class GrantResponsibleTeacherOJB
     {
     }
 
-    public List readActualGrantResponsibleTeacherByContract(
+    public IGrantResponsibleTeacher readActualGrantResponsibleTeacherByContract(
         IGrantContract contract,
         Integer idInternal)
         throws ExcepcaoPersistencia
@@ -35,6 +37,12 @@ public class GrantResponsibleTeacherOJB
         criteria.addOrderBy("beginDate", false);
         criteria.addNotEqualTo("idInternal",idInternal);
         grantResponsibleTeacher = queryList(GrantResponsibleTeacher.class, criteria);
-        return grantResponsibleTeacher;
+        
+        Iterator respIter = grantResponsibleTeacher.iterator();
+        IGrantResponsibleTeacher responsibleTeacher = null;
+        if (respIter.hasNext())
+        	responsibleTeacher = (IGrantResponsibleTeacher) respIter.next();
+        	
+        return responsibleTeacher;
     }
 }

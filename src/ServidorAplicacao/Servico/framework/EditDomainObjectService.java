@@ -43,7 +43,7 @@ public abstract class EditDomainObjectService implements IServico
 		 * Not new and exist on database and object ids are equal OR is a new object and doesn't exist
 		 * on database OR is not new and doesn't exist on database (unique changed)
 		 */
-
+    	
         return (
             !isNew(objectToEdit)
                 && ((existingDomainObject != null)
@@ -168,24 +168,22 @@ public abstract class EditDomainObjectService implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = getIPersistentObject(sp);
             IDomainObject objectToEdit = clone2DomainObject(infoObject);
-            
+
             IDomainObject objectFromDatabase = getObjectFromDatabase(objectToEdit, sp);
-            
             if (!canCreate(objectToEdit, objectFromDatabase))
             {
                 throw new ExistingServiceException("The object already exists");
             }
-            
             IDomainObject domainObject = getObjectToLock(objectToEdit, objectFromDatabase);
-            
+
             doBeforeLock(domainObject, infoObject, sp);
+            
             persistentObject.simpleLockWrite(domainObject);
             Integer ackOptLock = domainObject.getAckOptLock();
-            
             PropertyUtils.copyProperties(domainObject, objectToEdit);
             domainObject.setAckOptLock(ackOptLock);
             fillAssociatedObjects(domainObject, persistentObject);
-
+            
             doAfterLock(domainObject, infoObject, sp);
         } catch (ExcepcaoPersistencia e)
         {

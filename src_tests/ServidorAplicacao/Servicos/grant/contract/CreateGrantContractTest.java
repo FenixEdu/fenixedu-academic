@@ -53,7 +53,7 @@ public class CreateGrantContractTest
 
     protected String getNameOfServiceToBeTested()
     {
-        return "CreateGrantContract";
+        return "EditGrantContract";
     }
 
     protected String getDataSetFilePath()

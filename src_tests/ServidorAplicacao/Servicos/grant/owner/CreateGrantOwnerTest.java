@@ -45,7 +45,7 @@ public class CreateGrantOwnerTest
 	}
 
 	protected String getNameOfServiceToBeTested() {
-		return "CreateGrantOwner";
+		return "EditGrantOwner";
 	}
 
 	protected String getDataSetFilePath() {
