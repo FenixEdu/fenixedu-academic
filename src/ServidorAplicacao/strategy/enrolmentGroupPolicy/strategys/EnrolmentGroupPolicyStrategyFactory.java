@@ -6,17 +6,16 @@
  */
 package ServidorAplicacao.strategy.enrolmentGroupPolicy.strategys;
 
-import java.util.List;
-
 import Dominio.IGroupProperties;
 import Util.EnrolmentGroupPolicyType;
 
 /**
- * @author lmac
+ * @author asnr and scpo
  *
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
+
 public class EnrolmentGroupPolicyStrategyFactory implements IEnrolmentGroupPolicyStrategyFactory{
 	//public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory {
 
@@ -40,22 +39,23 @@ public class EnrolmentGroupPolicyStrategyFactory implements IEnrolmentGroupPolic
 
 
 
-		public IEnrolmentGroupPolicyStrategy getEnrolmentGroupPolicyStrategyInstance(IGroupProperties groupProperties,List listOfStudentsToEnrole) {
+		public IEnrolmentGroupPolicyStrategy getEnrolmentGroupPolicyStrategyInstance(IGroupProperties groupProperties) {
 		
 			IEnrolmentGroupPolicyStrategy strategyInstance = null;
-			EnrolmentGroupPolicyType policy=groupProperties.getEnrolmentPolicy();
+			EnrolmentGroupPolicyType policy = groupProperties.getEnrolmentPolicy();
 			
 			if (policy == null)
-			throw new IllegalArgumentException("Must initialize Group Properties!");
+				throw new IllegalArgumentException("Must initialize Group Properties!");
 
 
-					if (policy.equals(new EnrolmentGroupPolicyType(1))){
-						strategyInstance = new AtomicGroupStrategy();
-					} else if (policy.equals(new EnrolmentGroupPolicyType(2))){
-						strategyInstance = new IndividualGroupStrategy(); 
-					}  
-					return strategyInstance;
-				}
-			
-					
+			if (policy.equals(new EnrolmentGroupPolicyType(1))){
+				strategyInstance = new AtomicGroupStrategy();
+			} 
+			else 
+				if (policy.equals(new EnrolmentGroupPolicyType(2))){
+					strategyInstance = new IndividualGroupStrategy(); 
+				}  
+				return strategyInstance;
+			}
+
 }

@@ -12,7 +12,7 @@ package DataBeans;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class InfoStudentGroupAttend {
+public class InfoStudentGroupAttend extends InfoObject{
 		
 		private InfoFrequenta infoAttend;
 		private InfoStudentGroup infoStudentGroup;

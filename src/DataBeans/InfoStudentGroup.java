@@ -13,7 +13,7 @@ package DataBeans;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class InfoStudentGroup {
+public class InfoStudentGroup extends InfoObject{
 	
 		private Integer groupNumber;
 		private InfoShift infoShift;
@@ -55,6 +55,7 @@ public class InfoStudentGroup {
 			String result = "[INFO_STUDENT_GROUP";
 			result += ", groupNumber=" + getGroupNumber();
 			result += ", infoGroupProperties=" + getInfoGroupProperties();
+			result += ", infoShift" + getInfoShift();
 			result += "]";
 			return result;
 		}

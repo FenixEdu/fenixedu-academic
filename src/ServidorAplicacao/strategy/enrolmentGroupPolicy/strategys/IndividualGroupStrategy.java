@@ -15,56 +15,47 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author lmac
+ * @author asnr and scpo
  *
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
+
 public class IndividualGroupStrategy extends EnrolmentGroupPolicyStrategy implements IEnrolmentGroupPolicyStrategy {
 	
-	private IGroupProperties groupProperties = null;
 
 	public IndividualGroupStrategy(){
-		
-		
-		}
 	
-	public IGroupProperties getGroupProperties() {
-			return groupProperties;
-		}
-
-	public void setGroupProperties(IGroupProperties groupProperties) {
-			this.groupProperties = groupProperties;
+	}
+	
+		
+	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup){
+		boolean result = false;
+		
+		if(studentGroup == null)
+			if(checkNumberOfGroups(groupProperties))
+				result=true;
+		else
+		{	
+			List listStudentGroupAttend = null;
+			try
+			{
+				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+				listStudentGroupAttend = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
+				
+				
+			} catch (ExcepcaoPersistencia ex) {
+				ex.printStackTrace();
+			}
+			int nrOfElements = listStudentGroupAttend.size();
+			
+			
+			if(nrOfElements < groupProperties.getMaximumCapacity().intValue())
+				result = true;
 		}
 		
-	public boolean enrolmentPolicy(IGroupProperties groupProperties,List listOfStudentsToEnrole,IStudentGroup studentGroup)
-	{
-		boolean result = false;
-		if(checkNumberOfGroups(groupProperties,listOfStudentsToEnrole))
-		{
-			if(studentGroup==null)
-				result=true;
-			else
-			{
-				
-				List listStudentGroupAttend=null;
-				try
-				{
-					ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-					listStudentGroupAttend = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
-			
-				} catch (ExcepcaoPersistencia ex) {
-					ex.printStackTrace();
-				}
-				int nrOfElements = listStudentGroupAttend.size();
-				if(nrOfElements < groupProperties.getMaximumCapacity().intValue())
-				result=true;
-			}
-		}			
 		return result;			
 				
 	}
-	
-	
 		
 }

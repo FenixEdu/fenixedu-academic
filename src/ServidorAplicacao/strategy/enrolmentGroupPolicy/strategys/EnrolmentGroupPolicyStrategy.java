@@ -21,10 +21,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
+
 public abstract class EnrolmentGroupPolicyStrategy implements IEnrolmentGroupPolicyStrategy{
 
 	private IGroupProperties groupProperties = null;
-	List listOfStudentsToEnrole = null;
+	int numberOfStudentsToEnrole;
+	private IStudentGroup studentGroup = null;
 	
 	public IGroupProperties getGroupProperties() {
 		return groupProperties;
@@ -34,33 +36,38 @@ public abstract class EnrolmentGroupPolicyStrategy implements IEnrolmentGroupPol
 		this.groupProperties = groupProperties;
 	}
 
-	public List getListOfStudentsToEnrole() {
-		return listOfStudentsToEnrole;
+	public int getNumberOfStudentsToEnrole() {
+		return numberOfStudentsToEnrole;
 	}
 
-	public void setListOfStudentsToEnrole(List listOfStudentsToEnrole) {
-		this.listOfStudentsToEnrole = listOfStudentsToEnrole;
+	public void setNumberOfStudentsToEnrole(int numberOfStudentsToEnrole) {
+		this.numberOfStudentsToEnrole = numberOfStudentsToEnrole;
 	}
 
+	public IStudentGroup getStudentGroup() {
+		return studentGroup;
+	}
 
-
-	public boolean checkNumberOfGroups(IGroupProperties groupProperties, List ListOfStudentsToEnrole)
+	public void setStudentGroup(IStudentGroup studentGroup) {
+		this.studentGroup = studentGroup;
+	}
+	
+	public boolean checkNumberOfGroups(IGroupProperties groupProperties)
 		{
 			boolean result = false;
-			try{
-			
+			try
+			{
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 				List groups = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
 				int numberOfGroups = groups.size();
-				if(numberOfGroups<groupProperties.getGroupMaximumNumber().intValue())
+				if(numberOfGroups < groupProperties.getGroupMaximumNumber().intValue())
 					result = true;
-					
-				}
-				catch (ExcepcaoPersistencia e) {
-				}
+			
+			}catch (ExcepcaoPersistencia e) {
+			 }
 			return result;
 		}
 		
-	public abstract boolean enrolmentPolicy(IGroupProperties groupProperties,List listOfStudentsToEnrole,IStudentGroup studentGroup);
+	public abstract boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup);
 }
