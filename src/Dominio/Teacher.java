@@ -106,6 +106,6 @@ public class Teacher extends DomainObject implements ITeacher {
 		result += ", professorShipsExecutionCourses=" + getProfessorShipsExecutionCourses();
 		result += ", responsibleForExecutionCourses=" + getResponsibleForExecutionCourses();		
 		result += "]";
-		return null;
+		return result;
 	}
 }
