@@ -18,7 +18,8 @@
         <center><font color='#034D7A' size='5'> <b> <bean:message key="title.adicionarAulas"/> </b> </font></center>
         <br/>
         <br/>
-        <html:errors/>
+
+        <span class="error"><html:errors/></span>
         <html:form action="/adicionarAulasForm">
             <center> <b> <bean:message key="listAulas.available"/> </b> </center>
             <br/>
