@@ -4,13 +4,10 @@
  */
 package framework;
 
-import org.apache.struts.action.ActionMapping;
-
 import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixRemoteServiceException;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**

@@ -42,7 +42,7 @@ public class MarksManagementDispatchAction extends DispatchAction
 		ActionErrors errors = new ActionErrors();
 		
 		List masterDegrees = null;
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		TipoCurso degreeType = TipoCurso.MESTRADO_OBJ;
 		Object args[] = { degreeType };
 		try
@@ -73,7 +73,7 @@ public class MarksManagementDispatchAction extends DispatchAction
 		String masterDegreeId  = getFromRequest("degreeId", request);
 		
 		List degreeCurricularPlans = null;
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		Object args[] = { Integer.valueOf(masterDegreeId) };
 		try
 		{
@@ -107,7 +107,7 @@ public class MarksManagementDispatchAction extends DispatchAction
 		getFromRequest("degreeId", request);
 		
 		Object args[] = { Integer.valueOf(degreeCurricularPlanId) };
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		List curricularCourseList = null;
 		try
 		{
@@ -140,7 +140,7 @@ public class MarksManagementDispatchAction extends DispatchAction
 		getFromRequest("degreeId", request);
 		
 		List listEnrolmentEvaluation = null;
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
 		try
 		{

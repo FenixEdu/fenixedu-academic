@@ -39,13 +39,13 @@ public class ConfirmMarksAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-        Integer curricularCourseCode = new Integer((String) MarksManagementDispatchAction.getFromRequest("courseId", request));
+        Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest("courseId", request));
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         // Get students final evaluation			
         Object args[] = { curricularCourseCode, null };
-        IUserView userView = (IUserView) SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try
         {
@@ -111,12 +111,12 @@ public class ConfirmMarksAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-    	Integer curricularCourseCode = new Integer((String) MarksManagementDispatchAction.getFromRequest("courseId", request));
+    	Integer curricularCourseCode = new Integer(MarksManagementDispatchAction.getFromRequest("courseId", request));
     	MarksManagementDispatchAction.getFromRequest("objectCode", request);
     	MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         //		set final evaluation to final state
-        IUserView userView = (IUserView) SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
         Object args[] = { curricularCourseCode, null, userView };
         try
         {

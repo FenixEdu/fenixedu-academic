@@ -55,7 +55,7 @@ public class SubmitMarksAction extends DispatchAction
 
 		// Get students List
 		Object args[] = { curricularCourseCode, null };
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		try
 		{
@@ -156,7 +156,7 @@ public class SubmitMarksAction extends DispatchAction
 		Date evaluationDate = calendar.getTime();
 
 		//		Insert final evaluation
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		Object args[] = { evaluations, teacherNumber, evaluationDate, userView };
 		List evaluationsWithError = null;
 		try

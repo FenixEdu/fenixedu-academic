@@ -156,8 +156,7 @@ public class WriteStudentAttendingCourse implements IService
 		try
 		{
 			IStudentCurricularPlan studentCurricularPlan =
-				(
-					IStudentCurricularPlan) persistentStudentCurricularPlan
+				persistentStudentCurricularPlan
 						.readActiveByStudentNumberAndDegreeType(
 					infoStudent.getNumber(),
 					TipoCurso.LICENCIATURA_OBJ);

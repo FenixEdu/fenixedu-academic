@@ -60,11 +60,11 @@ public class UnEnrollStudentFromShift implements IService {
 			}
 
 			ITurnoAluno studentShift =
-				(ITurnoAluno) persistentSupport
-					.getITurnoAlunoPersistente()
-					.readByTurnoAndAluno(
-					shift,
-					student);
+				persistentSupport
+                    	.getITurnoAlunoPersistente()
+                    	.readByTurnoAndAluno(
+                    	shift,
+                    	student);
 			if (studentShift == null) {
 				throw new ShiftEnrolmentNotFoundServiceException();
 			}

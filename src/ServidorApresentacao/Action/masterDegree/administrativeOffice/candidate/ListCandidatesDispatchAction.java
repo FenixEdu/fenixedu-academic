@@ -136,7 +136,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			// Get the Information
 			String degreeTypeTemp = (String) listCandidatesForm.get("specialization");
 			String degreeName = (String) listCandidatesForm.get("degree");
-			String executionDegree = (String) request.getParameter("executionDegreeOID");
+			String executionDegree = request.getParameter("executionDegreeOID");
 
 			String candidateSituationTemp = (String) listCandidatesForm.get("candidateSituation");
 			String candidateNumberTemp = (String) listCandidatesForm.get("candidateNumber");

@@ -59,7 +59,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
 		MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
 		List listEnrolmentEvaluation = null;
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
 		try
 		{
@@ -127,7 +127,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
 		String showMarks = MarksManagementDispatchAction.getFromRequest("showMarks", request);
 
 		List infoSiteEnrolmentEvaluations = null;
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		try
 		{
 			Object args[] = { Integer.valueOf(curricularCourseId), studentNumber, null };
@@ -406,7 +406,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
 		List evaluationsWithError = null;
 		try
 		{
-			IUserView userView = (IUserView) SessionUtils.getUserView(request);
+			IUserView userView = SessionUtils.getUserView(request);
 			Object args[] =
 				{
 					Integer.valueOf(curricularCourseId),

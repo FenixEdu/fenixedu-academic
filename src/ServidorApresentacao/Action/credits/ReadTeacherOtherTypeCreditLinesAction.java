@@ -4,8 +4,6 @@
  */
 package ServidorApresentacao.Action.credits;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +14,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoTeacher;
-import DataBeans.credits.TeacherCreditsSheetDTO;
 import DataBeans.credits.TeacherOtherTypeCreditLineDTO;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;

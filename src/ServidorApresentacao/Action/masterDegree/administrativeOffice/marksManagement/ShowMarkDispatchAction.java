@@ -41,7 +41,7 @@ public class ShowMarkDispatchAction extends DispatchAction
 		MarksManagementDispatchAction.getFromRequest("degreeId", request);
 		
 		// Get students List
-		IUserView userView = (IUserView) SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
 		List listEnrolmentEvaluation = null;
 		try
