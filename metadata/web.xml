@@ -97,10 +97,6 @@
             <param-value>/WEB-INF/conf/struts-scientificCouncil.xml</param-value>
         </init-param>
         <init-param>
-            <param-name>config/admin</param-name>
-            <param-value>/WEB-INF/conf/struts-admin.xml</param-value>
-        </init-param>
-        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>
