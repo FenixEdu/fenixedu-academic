@@ -16,72 +16,81 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.ExecutionCourseKeyAndLessonType;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
 import Util.TipoAula;
 
-public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseServicos {
-    public LerAulasDeDisciplinaExecucaoETipoServicosTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(LerAulasDeDisciplinaExecucaoETipoServicosTest.class);
+public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseServicosWithAuthorization {
 
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
+	public LerAulasDeDisciplinaExecucaoETipoServicosTest(
+		java.lang.String testName) {
+		super(testName);
+	}
 
-    // read aulas by unauthorized user
-  public void testUnauthorizedReadAulas() {
-    Object argsLerAulas[] = new Object[1];
-    argsLerAulas[0] = new ExecutionCourseKeyAndLessonType(new TipoAula(TipoAula.TEORICA), _disciplinaExecucao1.getSigla());
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView2, "LerAulasDeDisciplinaExecucaoETipo", argsLerAulas);
-        fail("testUnauthorizedReadAulas");
-      } catch (Exception ex) {
-        assertNull("testUnauthorizedReadAulas", result);
-      }
-  }
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
 
-    // read new existing aulas
-  public void testReadExistingAulas() {
-    Object argsLerAulas[] = new Object[1];
-    argsLerAulas[0] = new ExecutionCourseKeyAndLessonType(new TipoAula(TipoAula.TEORICA), _disciplinaExecucao1.getSigla());
-    
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "LerAulasDeDisciplinaExecucaoETipo", argsLerAulas);
-        assertEquals("testLerExistingAulas", 1, ((List) result).size());
-      } catch (Exception ex) {
-      	fail("testLerExistingAulas");
-      }
-  }
+	public static Test suite() {
+		TestSuite suite =
+			new TestSuite(LerAulasDeDisciplinaExecucaoETipoServicosTest.class);
 
-    // read new non-existing aulas
-  public void testReadNonExistingAulas() {
-    Object argsLerAulas[] = new Object[1];
-    argsLerAulas[0] = new ExecutionCourseKeyAndLessonType(new TipoAula(TipoAula.PRATICA), _disciplinaExecucao2.getSigla());
+		return suite;
+	}
 
-    Object result = null; 
-      try {
-        result = _gestor.executar(_userView, "LerAulasDeDisciplinaExecucaoETipo", argsLerAulas);
-        assertTrue("testLerNonExistingAulas", ((List) result).isEmpty());
-      } catch (Exception ex) {
-      	fail("testLerNonExistingAulas");
-      }
-  }
-    
+	protected void setUp() {
+		super.setUp();
+	}
+
+	protected void tearDown() {
+		super.tearDown();
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 */
+	protected String getNameOfServiceToBeTested() {
+		return "LerAulasDeDisciplinaExecucaoETipo";
+	}
+
+	// read existing aulas
+	public void testReadExistingAulas() {
+		Object argsLerAulas[] = new Object[1];
+		argsLerAulas[0] =
+			new ExecutionCourseKeyAndLessonType(
+				new TipoAula(TipoAula.TEORICA),
+				_disciplinaExecucao1.getSigla());
+
+		Object result = null;
+		try {
+			result =
+				_gestor.executar(
+					_userView,
+					getNameOfServiceToBeTested(),
+					argsLerAulas);
+			assertEquals("testLerExistingAulas", 1, ((List) result).size());
+		} catch (Exception ex) {
+			fail("testLerExistingAulas");
+		}
+	}
+
+	// read non-existing aulas
+	public void testReadNonExistingAulas() {
+		Object argsLerAulas[] = new Object[1];
+		argsLerAulas[0] =
+			new ExecutionCourseKeyAndLessonType(
+				new TipoAula(TipoAula.PRATICA),
+				_disciplinaExecucao2.getSigla());
+
+		Object result = null;
+		try {
+			result =
+				_gestor.executar(
+					_userView,
+					getNameOfServiceToBeTested(),
+					argsLerAulas);
+			assertTrue("testLerNonExistingAulas", ((List) result).isEmpty());
+		} catch (Exception ex) {
+			fail("testLerNonExistingAulas");
+		}
+	}
 }

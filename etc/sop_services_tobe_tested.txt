@@ -1,0 +1,3 @@
+. EditarAulaServicosTest.java
+. LerAulasDeDisciplinaExecucaoETipoServicosTest.java
+. 
