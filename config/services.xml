@@ -1647,7 +1647,7 @@
 	</service>
 	<service>
 		<idInternal>413294</idInternal>
-		<name>InsertProfessorShipByDepartment</name>
+		<name>InsertProfessorshipByDepartment</name>
 		<implementationClass>ServidorAplicacao.Servico.manager.InsertProfessorShip</implementationClass>
 		<description></description>
 		<isTransactional>true</isTransactional>
