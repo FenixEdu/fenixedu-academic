@@ -10,7 +10,7 @@
 -- ee2.grade is null and
 -- e.state = 3;
 
-select concat('DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = ', ee2.id_internal, ';') as "QQ"
+select concat('DELETE FROM ENROLMENT_EVALUATION WHERE ID_INTERNAL = ', ee2.id_internal, ';') as ""
 from enrolment e
 inner join enrolment_evaluation ee1 on ee1.key_enrolment = e.id_internal
 inner join enrolment_evaluation ee2 on ee2.key_enrolment = e.id_internal
