@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -24,6 +25,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
@@ -51,7 +53,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException, InvalidArgumentException {
 
 		HttpSession session = request.getSession(false);
 		UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -73,23 +75,26 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
   		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
 
+		Calendar initialDate = Calendar.getInstance();
  		if(initialDateString.compareTo("") != 0) {
 			String[] initialDateTokens = initialDateString.split("/");
-			Calendar initialDate = Calendar.getInstance();
 			initialDate.set(Calendar.DAY_OF_MONTH, (new Integer(initialDateTokens[0])).intValue());
 			initialDate.set(Calendar.MONTH, (new Integer(initialDateTokens[1])).intValue() - 1);
 			initialDate.set(Calendar.YEAR, (new Integer(initialDateTokens[2])).intValue());
 			infoDegreeCurricularPlan.setInitialDate(initialDate.getTime());
  		}
 
+		Calendar endDate = Calendar.getInstance();
 		if(endDateString.compareTo("") != 0) {
 			String[] endDateTokens = endDateString.split("/");
-			Calendar endDate = Calendar.getInstance();
 			endDate.set(Calendar.DAY_OF_MONTH, (new Integer(endDateTokens[0])).intValue());
 			endDate.set(Calendar.MONTH, (new Integer(endDateTokens[1])).intValue() - 1);
 			endDate.set(Calendar.YEAR, (new Integer(endDateTokens[2])).intValue());
 			infoDegreeCurricularPlan.setEndDate(endDate.getTime());
 		}
+		
+		if(endDate.before(initialDate))
+			throw new InvalidArgumentsActionException("message.manager.date.restriction");
 
 		if(neededCreditsString.compareTo("") != 0) {
 			Double neededCredits = new Double(neededCreditsString); 

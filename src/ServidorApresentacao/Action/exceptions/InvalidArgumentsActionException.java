@@ -27,6 +27,10 @@ public class InvalidArgumentsActionException extends FenixActionException{
 	public InvalidArgumentsActionException(Object[] values, Throwable cause) {
 		super(key, values, cause);
 	}
+	
+	public InvalidArgumentsActionException(String key) {
+		super(key);
+	}
     
 
 	/**

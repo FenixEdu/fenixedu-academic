@@ -228,6 +228,9 @@
         <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+         	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertDegreeCurricularPlan" path="df.page.insert-degree-curricular-plan"/>
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
@@ -258,7 +261,11 @@
          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-                   /> 
+                   />
+         <exception type="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+         	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
        <forward name="editDegreeCP" path="df.page.edit-degree-curricular-plan"/>
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
