@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <span class="error"><html:errors/></span>	
-
+<bean:message key="title.objectives"/>
 <table>
 <tr>
 	<td><bean:message key="label.generalObjectives" />	

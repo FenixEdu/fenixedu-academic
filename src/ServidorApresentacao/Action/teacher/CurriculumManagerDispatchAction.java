@@ -90,19 +90,22 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		Object args[] = { oldCurriculum, newCurriculum };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		System.out.println("################################");
-		System.out.println("oldCurriculum: "+oldCurriculum);
-		System.out.println("newCurriculum: "+newCurriculum);
-		System.out.println("################################");
+		
 			GestorServicos serviceManager = GestorServicos.manager();
-			InfoCurriculum curriculumView =
-				(InfoCurriculum) serviceManager.executar(
+			Boolean  result =
+				(Boolean) serviceManager.executar(
 					userView,
 					"EditCurriculum",
 					args);
-			session.setAttribute(
+			if (result.booleanValue()){	
+					session.setAttribute(
 				SessionConstants.EXECUTION_COURSE_CURRICULUM,
-				curriculumView);
+				newCurriculum);
+			}else {
+				mapping.getInputForward();
+				//TODO: error message required. verify which  error
+			}
+			
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		} catch (IllegalAccessException e) {
@@ -167,14 +170,20 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 			GestorServicos serviceManager = GestorServicos.manager();
-			InfoCurriculum curriculumView =
-				(InfoCurriculum) serviceManager.executar(
+			Boolean result =
+				(Boolean) serviceManager.executar(
 					userView,
 					"EditCurriculum",
 					args);
-			session.setAttribute(
+			if (result.booleanValue()) {session.setAttribute(
 				SessionConstants.EXECUTION_COURSE_CURRICULUM,
-				curriculumView);
+				newCurriculum);		
+			} else {
+				
+				//TODO verify errors
+				return mapping.getInputForward();
+			}
+			
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		} catch (IllegalAccessException e) {

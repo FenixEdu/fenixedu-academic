@@ -359,7 +359,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularSemester -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.CurricularSemester" table="CURRICULAR_SEMESTER">
+<!--<class-descriptor class="Dominio.CurricularSemester" table="CURRICULAR_SEMESTER">
 	<field-descriptor id="1"
 		name="internalID"
 		column="ID_INTERNAL"
@@ -391,7 +391,7 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_SEMESTER"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-</class-descriptor>
+</class-descriptor> -->
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.Branch -->
