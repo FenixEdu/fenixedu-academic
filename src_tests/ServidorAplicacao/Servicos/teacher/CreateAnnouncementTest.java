@@ -115,7 +115,7 @@ public class CreateAnnouncementTest
 			fail("Creating a new Announcement for a Site " + e);
 		}
 	}
-/*
+
 	public void testCreateExistingAnnouncement() {
 		Integer infoExecutionCourseCode = new Integer(24);
 		String newAnnouncementTitle = "announcement1deTFCI";
@@ -144,5 +144,5 @@ public class CreateAnnouncementTest
 					+ this.getClass().getName());
 			fail("testCreateExistingAnnouncement");
 		}
-	}*/
+	}
 }
