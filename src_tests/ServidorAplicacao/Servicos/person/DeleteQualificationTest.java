@@ -320,92 +320,16 @@ public class DeleteQualificationTest
 	/** **************************** FIM DOS TESTES******************* */
 
 	protected InfoPerson getInfoPersonGO() {
-		InfoPerson info =
-			new InfoPerson(
-				"161616161",
-				new TipoDocumentoIdentificacao(
-					TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE),
-				"Lisboa",
-				getDateByArgs(2002, 10, 12),
-				getDateByArgs(2002, 10, 12),
-				"Nome da Pessoa",
-				new Sexo(Sexo.MASCULINO),
-				new EstadoCivil(EstadoCivil.SOLTEIRO),
-				getDateByArgs(2002, 10, 12),
-				"Nome do Pai",
-				"Nome da Mae",
-				"Portuguesa",
-				"Freguesia",
-				"Concelho",
-				"Distrito",
-				"Morada",
-				"localidade",
-				"1700-200",
-				"l200",
-				"frequesia morada",
-				"concelho morada",
-				"distrito morada",
-				"214443523",
-				"965463210",
-				"s@h.c",
-				"http",
-				"1111111111",
-				"Profissao",
-				"14",
-				"pass",
-				new InfoCountry("Portugal", "PT", "Portuguesa"),
-				"1111111111");
+		InfoPerson info = new InfoPerson();
 		info.setIdInternal(new Integer(14));
+		info.setUsername("user_gom");
 		return info;
 	}
 	protected InfoPerson getInfoPersonT() {
-		InfoPerson info =
-			new InfoPerson(
-				"696969692",
-				new TipoDocumentoIdentificacao(
-					TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE),
-				"Lisboa",
-				getDateByArgs(2002, 10, 12),
-				getDateByArgs(2002, 10, 12),
-				"Teacher",
-				new Sexo(Sexo.MASCULINO),
-				new EstadoCivil(EstadoCivil.SOLTEIRO),
-				getDateByArgs(2002, 10, 12),
-				"Nome do Pai",
-				"Nome da Mae",
-				"Portuguesa",
-				"Freguesia",
-				"Concelho",
-				"Distrito",
-				"Morada",
-				"localidade",
-				"1700-200",
-				"l200",
-				"frequesia morada",
-				"concelho morada",
-				"distrito morada",
-				"214443523",
-				"965463210",
-				"s@h.c",
-				"http",
-				"1111111111",
-				"Profissao",
-				"user_t",
-				"pass",
-				new InfoCountry("Portugal", "PT", "Portuguesa"),
-				"1111111111");
+		InfoPerson info = new InfoPerson();
 		info.setIdInternal(new Integer(18));
+		info.setUsername("user_t");
 		return info;
 	}
 
-	/*
-	 * TODO: alterar date para calendar.. o mesmo na Infoperson!
-	 */
-	protected Date getDateByArgs(int year, int month, int day) {
-		Date d = new Date();
-		d.setYear(year);
-		d.setMonth(month);
-		d.setDate(day);
-		return d;
-	}
 }
