@@ -20,42 +20,59 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteCurricularCourseScope implements IServico {
+public class DeleteCurricularCourseScope implements IServico
+{
 
 	private static DeleteCurricularCourseScope service = new DeleteCurricularCourseScope();
 
-	public static DeleteCurricularCourseScope getService() {
+	public static DeleteCurricularCourseScope getService()
+	{
 		return service;
 	}
 
-	private DeleteCurricularCourseScope() {
+	private DeleteCurricularCourseScope()
+	{
 	}
 
-	public final String getNome() {
+	public final String getNome()
+	{
 		return "DeleteCurricularCourseScope";
 	}
-	
-    // delete a scope
-	public void run(Integer scopeId) throws FenixServiceException {
 
-		try {
+	// delete a scope
+	public void run(Integer scopeId) throws FenixServiceException
+	{
+
+		try
+		{
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
+			IPersistentCurricularCourseScope persistentCurricularCourseScope =
+				sp.getIPersistentCurricularCourseScope();
+			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
+				sp.getIStudentCurricularPlanPersistente();
 
 			ICurricularCourseScope helpCurricularCourseScope = new CurricularCourseScope();
 			helpCurricularCourseScope.setIdInternal(scopeId);
-			ICurricularCourseScope scope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(helpCurricularCourseScope, false);			
-			if(scope != null) {
-				List studentCurricularPlans = persistentStudentCurricularPlan.readByCurricularCourseScope(scope);
-				if(studentCurricularPlans.isEmpty())
+			ICurricularCourseScope scope =
+				(ICurricularCourseScope) persistentCurricularCourseScope.readByOId(
+					helpCurricularCourseScope,
+					false);
+			if (scope != null)
+			{
+				if (scope.getCurricularCourse().getScopes().size() > 1)
+				{
 					persistentCurricularCourseScope.delete(scope);
+				}
 				else
+				{
 					throw new CantDeleteServiceException();
+				}
 			}
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+		 throw new FenixServiceException(e);
 		}
 	}
 }

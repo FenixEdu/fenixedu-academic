@@ -173,27 +173,27 @@ public class StudentCurricularPlanOJB
         return queryList(StudentCurricularPlan.class, criteria);
     }
 
-    public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope)
-        throws ExcepcaoPersistencia
-    {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
-        List enrolments = queryList(Enrolment.class, criteria);
-        List studentCurricularPlans = new ArrayList();
-        Integer studentCurricularPlanId;
-        IStudentCurricularPlan helpStudentCurricularPlan = new StudentCurricularPlan();
-        Iterator iter = enrolments.iterator();
-        while (iter.hasNext())
-        {
-            studentCurricularPlanId =
-                ((IEnrolment) iter.next()).getStudentCurricularPlan().getIdInternal();
-            helpStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
-            IStudentCurricularPlan studentCurricularPlan =
-                (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan, false);
-            studentCurricularPlans.add(studentCurricularPlan);
-        }
-        return studentCurricularPlans;
-    }
+//    public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope)
+//        throws ExcepcaoPersistencia
+//    {
+//        Criteria criteria = new Criteria();
+//        criteria.addEqualTo("curricularCourseScopeKey", curricularCourseScope.getIdInternal());
+//        List enrolments = queryList(Enrolment.class, criteria);
+//        List studentCurricularPlans = new ArrayList();
+//        Integer studentCurricularPlanId;
+//        IStudentCurricularPlan helpStudentCurricularPlan = new StudentCurricularPlan();
+//        Iterator iter = enrolments.iterator();
+//        while (iter.hasNext())
+//        {
+//            studentCurricularPlanId =
+//                ((IEnrolment) iter.next()).getStudentCurricularPlan().getIdInternal();
+//            helpStudentCurricularPlan.setIdInternal(studentCurricularPlanId);
+//            IStudentCurricularPlan studentCurricularPlan =
+//                (IStudentCurricularPlan) this.readByOId(helpStudentCurricularPlan, false);
+//            studentCurricularPlans.add(studentCurricularPlan);
+//        }
+//        return studentCurricularPlans;
+//    }
 
     public List readByUsername(String username) throws ExcepcaoPersistencia
     {

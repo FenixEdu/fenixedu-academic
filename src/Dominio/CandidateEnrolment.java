@@ -12,7 +12,6 @@ public class CandidateEnrolment extends DomainObject implements ICandidateEnrolm
     private ICurricularCourse curricularCourse;
 
     private Integer masterDegreeCandidateKey;
-    private Integer curricularCourseScopeKey;
     private Integer curricularCourseKey;
 
     public CandidateEnrolment()
@@ -59,14 +58,6 @@ public class CandidateEnrolment extends DomainObject implements ICandidateEnrolm
     /**
 	 * @return
 	 */
-    public Integer getCurricularCourseScopeKey()
-    {
-        return curricularCourseScopeKey;
-    }
-
-    /**
-	 * @return
-	 */
     public IMasterDegreeCandidate getMasterDegreeCandidate()
     {
         return masterDegreeCandidate;
@@ -81,14 +72,6 @@ public class CandidateEnrolment extends DomainObject implements ICandidateEnrolm
     }
 
    
-
-    /**
-	 * @param integer
-	 */
-    public void setCurricularCourseScopeKey(Integer integer)
-    {
-        curricularCourseScopeKey = integer;
-    }
 
     /**
 	 * @param candidate

@@ -63,16 +63,6 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 
 	public void delete(ICurricularCourseScope scope) throws ExcepcaoPersistencia {
 		try {
-			Criteria crit = new Criteria();
-			crit.addEqualTo("curricularCourseScopeKey", scope.getIdInternal());
-			List result = queryList(Enrolment.class, crit);
-
-			Iterator iter = result.iterator();
-			EnrolmentOJB enrolmentOJB = new EnrolmentOJB();
-			while (iter.hasNext()) {
-				enrolmentOJB.delete((Enrolment) iter.next());
-			}
-
 			super.delete(scope);
 		} catch (ExcepcaoPersistencia ex) {
 			throw ex;
