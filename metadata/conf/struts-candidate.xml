@@ -170,7 +170,7 @@
       <action path="/changePasswordForm"
       	      attribute="changePasswordForm"
       	      name="changePasswordForm"
-              type="ServidorApresentacao.Action.person.ChangeCandidatePasswordAction"
+              type="ServidorApresentacao.Action.person.ChangePersonPasswordAction"
               input="/changePassword.jsp"
               scope="request">
   	  <exception type="ServidorApresentacao.Action.exceptions.InvalidPasswordActionException"

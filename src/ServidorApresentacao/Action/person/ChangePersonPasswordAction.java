@@ -24,7 +24,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ChangeCandidatePasswordAction extends ServidorApresentacao.Action.FenixAction {
+public class ChangePersonPasswordAction extends ServidorApresentacao.Action.FenixAction {
 	
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 									HttpServletRequest request,
