@@ -120,10 +120,12 @@ public class ExamRoomDistribution implements IServico {
 								exam,
 								(IStudent) getRandomObjectFromList(students),
 								room);
+						persistentExamStudentRoom.lockWrite(examStudentRoom);		
 					} else {
+						persistentExamStudentRoom.lockWrite(examStudentRoom);
 						examStudentRoom.setRoom(room);
 					}
-					persistentExamStudentRoom.lockWrite(examStudentRoom);
+					
 					if (sms) {
 						sendSMSToStudent(examStudentRoom);
 					}
