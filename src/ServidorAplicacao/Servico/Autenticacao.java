@@ -61,13 +61,16 @@ public class Autenticacao implements IServico {
 			ex.printStackTrace(System.out);
 			throw new FenixServiceException(ex.getMessage());
 		}
-		if (pessoa != null && PasswordEncryptor.areEquals(pessoa.getPassword(), password)) {
+		if (pessoa != null
+			&& PasswordEncryptor.areEquals(pessoa.getPassword(), password)) {
 			Collection roles = new ArrayList();
-			Iterator rolesIterator = pessoa.getPersonRoles().iterator();
-			while (rolesIterator.hasNext()) {
-				IRole role = (IRole) rolesIterator.next();
-				InfoRole infoRole = Cloner.copyIRole2InfoRole(role);
-				roles.add(infoRole);
+			if (pessoa.getPersonRoles() != null) {
+				Iterator rolesIterator = pessoa.getPersonRoles().iterator();
+				while (rolesIterator.hasNext()) {
+					IRole role = (IRole) rolesIterator.next();
+					InfoRole infoRole = Cloner.copyIRole2InfoRole(role);
+					roles.add(infoRole);
+				}
 			}
 			UserView userView = new UserView(pessoa.getUsername(), roles);
 			return userView;
