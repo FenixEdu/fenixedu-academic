@@ -16,9 +16,11 @@ import org.apache.struts.action.DynaActionForm;
 
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -44,6 +46,9 @@ public class SaveTeachersBodyAction extends FenixAction {
 		
 		try {
 				result = (Boolean) ServiceUtils.executeService(userView, "SaveTeachersBody", args);
+				
+		} catch (NonExistingServiceException e) {
+					throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
 				
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());

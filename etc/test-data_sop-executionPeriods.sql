@@ -3,6 +3,7 @@
 # Data for table 'EXECUTION_COURSE'
 #-----------------------------
 INSERT INTO EXECUTION_COURSE VALUES (34,'Arquitecturas de Computadores','AC',1,0,0,0, 1, 3,"");
+INSERT INTO EXECUTION_COURSE VALUES (35,'Para apagar','PA',1,0,0,0, 1, 3,"");
 
 #-----------------------------
 # Data for table 'CURRICULAR_COURSE_EXECUTION_COURSE'
