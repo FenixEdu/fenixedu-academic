@@ -503,6 +503,11 @@
 		<description></description>
 		<isTransactional>false</isTransactional>
 	</filter>
-	
-
+	<filter>
+		<idInternal>413292</idInternal>
+		<name>CreditsServiceWithInfoProfessorshipArgumentAuthorizationFilter</name>
+		<implementationClass>ServidorAplicacao.Filtro.credits.CreditsServiceWithInfoProfessorshipArgumentAuthorization</implementationClass>
+		<description></description>
+		<isTransactional>false</isTransactional>
+	</filter>
 </filterDefinitions>

@@ -1646,6 +1646,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<idInternal>413294</idInternal>
+		<name>InsertProfessorShipByDepartment</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.InsertProfessorShip</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="413292"/>
+		</filterChains>
+	</service>
+	<service>
 		<idInternal>174</idInternal>
 		<name>ReadExecutionCourseResponsiblesIds</name>
 		<implementationClass>ServidorAplicacao.Servico.manager.ReadExecutionCourseResponsiblesIds</implementationClass>

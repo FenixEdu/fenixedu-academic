@@ -578,10 +578,17 @@
 	<filterChain>
 		<idInternal>483191</idInternal>
 		<name>DegreeOrMasterDegreeAdmininstrativeOfficeChain</name>
-		<expression>MasterDegreeAdministrativeOfficeAuthorization</expression>
+		<expression>MasterDegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeAuthorization</expression>
 		<description></description>
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
 	</filterChain>
-
+	<filterChain>
+		<idInternal>413292</idInternal>
+		<name>DepartmentInsertProfessorshipAuthorizationChain</name>
+		<expression>CreditsServiceWithInfoProfessorshipArgumentAuthorizationFilter</expression>
+		<description></description>
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
 </filterChainsDefinitions>
