@@ -49,7 +49,7 @@ public class CurricularSemesterOJB extends ObjectFenixOJB implements IPersistent
 		if (curricularSemesterFromDB == null) {
 			super.lockWrite(curricularSemesterToWrite);
 		// else If the CurricularSemester is mapped to the database, then write any existing changes.
-		} else if ((curricularSemesterToWrite instanceof CurricularSemester) && ((CurricularSemester) curricularSemesterFromDB).getInternalID().equals(((CurricularSemester) curricularSemesterToWrite).getInternalID())) {
+		} else if ((curricularSemesterToWrite instanceof CurricularSemester) && ((CurricularSemester) curricularSemesterFromDB).getIdInternal().equals(((CurricularSemester) curricularSemesterToWrite).getIdInternal())) {
 			super.lockWrite(curricularSemesterToWrite);
 			// else Throw an already existing exception
 		} else

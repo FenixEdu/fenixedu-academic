@@ -20,6 +20,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.GestorServicos;
@@ -93,8 +95,8 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 					request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
 				}
 				
-				request.setAttribute("degreeId", degreeId);
-				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
+//				request.setAttribute("degreeId", degreeId);
+//				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				return mapping.findForward("insertExecutionDegree");
 	}
 
@@ -114,8 +116,19 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
-		Object args[] = { (String) dynaForm.get("executionYear"), (String) dynaForm.get("coordinatorId"),
-							(String) dynaForm.get("tempExamMap"), degreeCurricularPlanId };
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear((String) dynaForm.get("executionYear"));
+		InfoTeacher infoTeacher = new InfoTeacher();
+		infoTeacher.setIdInternal(new Integer((String) dynaForm.get("coordinatorId")));
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+		infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
+		
+		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+		infoExecutionDegree.setInfoCoordinator(infoTeacher);
+		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		infoExecutionDegree.setTemporaryExamMap(new Boolean((String) dynaForm.get("tempExamMap")));
+		
+		Object args[] = { infoExecutionDegree };
 		
 		GestorServicos manager = GestorServicos.manager();
 		String serviceResult = null;

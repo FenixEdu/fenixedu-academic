@@ -20,6 +20,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
@@ -112,9 +113,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 					request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
 				}
 				
-				request.setAttribute("degreeId", degreeId);
-				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
-				request.setAttribute("executionDegreeId", executionDegreeId.toString());
+//				request.setAttribute("degreeId", degreeId);
+//				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
+//				request.setAttribute("executionDegreeId", executionDegreeId.toString());
 				request.setAttribute("infoExecutionDegree", oldInfoExecutionDegree);
 				return mapping.findForward("editExecutionDegree");
 	}
@@ -134,34 +135,59 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 			Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
     	
 			DynaActionForm dynaForm = (DynaValidatorForm) form;
-		
-			Object args[] = { (String) dynaForm.get("executionYear"), (String) dynaForm.get("coordinatorId"),
-								(String) dynaForm.get("tempExamMap"), degreeCurricularPlanId,
-								executionDegreeId };
-		
-			GestorServicos manager = GestorServicos.manager();
-			List serviceResult = null;
-		
-			try {
-					serviceResult = (List) manager.executar(userView, "EditExecutionDegree", args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
+			String executionYearString = (String) dynaForm.get("executionYear");
+			String coordinatorIdString = (String) dynaForm.get("coordinatorId");
+			String tempExamMapString = (String) dynaForm.get("tempExamMap");
+			
+			boolean modified = false;
+			InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+			
+			if(executionYearString.compareTo("") != 0) {
+				InfoExecutionYear infoExecutionYear = new InfoExecutionYear(executionYearString);
+				infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+				modified = true;
 			}
+			if(coordinatorIdString.compareTo("") != 0) {
+				InfoTeacher infoTeacher = new InfoTeacher();
+				infoTeacher.setIdInternal(new Integer(coordinatorIdString));
+				infoExecutionDegree.setInfoCoordinator(infoTeacher);
+				modified = true;
+			}
+			if(tempExamMapString.compareTo("") != 0) {
+				infoExecutionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
+				modified = true;
+			}
+			
+			if(modified) {
+				InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+				infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
+				infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		
-			if(serviceResult != null) {
-				ActionErrors actionErrors = new ActionErrors();
-				if(serviceResult.get(0) == "alreadyExisting") {
-					ActionError error = new ActionError("message.existingExecutionDegree", serviceResult.get(1));
-					actionErrors.add("message.existingExecutionDegree", error);			
-					saveErrors(request, actionErrors);
+				Object args[] = { infoExecutionDegree, executionDegreeId };
+		
+				GestorServicos manager = GestorServicos.manager();
+				List serviceResult = null;
+		
+				try {
+						serviceResult = (List) manager.executar(userView, "EditExecutionDegree", args);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
 				}
-				else {
-					ActionError error = new ActionError("message.nonExistingExecutionDegree");
-					actionErrors.add("message.nonExistingExecutionDegree", error);			
-					saveErrors(request, actionErrors);
+		
+				if(serviceResult != null) {
+					ActionErrors actionErrors = new ActionErrors();
+					if(serviceResult.get(0) == "alreadyExisting") {
+						ActionError error = new ActionError("message.existingExecutionDegree", serviceResult.get(1));
+						actionErrors.add("message.existingExecutionDegree", error);			
+						saveErrors(request, actionErrors);
+					}
+					else {
+						ActionError error = new ActionError("message.nonExistingExecutionDegree");
+						actionErrors.add("message.nonExistingExecutionDegree", error);			
+						saveErrors(request, actionErrors);
+					}
 				}
 			}
-		
 			return mapping.findForward("readDegreeCurricularPlan");
 		}			
 	}

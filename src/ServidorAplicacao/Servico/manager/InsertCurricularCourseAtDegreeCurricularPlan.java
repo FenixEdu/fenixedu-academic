@@ -6,11 +6,11 @@ package ServidorAplicacao.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.InfoCurricularCourse;
 import Dominio.CurricularCourse;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDisciplinaDepartamento;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -19,7 +19,6 @@ import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.CurricularCourseType;
 
 /**
  * @author lmac1
@@ -41,77 +40,43 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 	}
 	
 
-	public List run(String name, String code, String type, String mandatory, String basic,
-						String departmentCourseCodeAndName, Integer degreeCurricularPlanId) throws FenixServiceException {
+	public List run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException {
 
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 	
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
+				Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
+				
 				IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
+				
+				String name = infoCurricularCourse.getName();
+				String code = infoCurricularCourse.getCode();
 				
 				persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 
 				ICurricularCourse curricularCourse = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(degreeCurricularPlanId, name, code);
+//				if it doesn´t exist in the database yet
 				if(curricularCourse == null) {
-					// if it doesn´t exist in the database yet
-					curricularCourse = new CurricularCourse();			
-					curricularCourse.setName(name);
+					curricularCourse = new CurricularCourse();
+					curricularCourse.setBasic(infoCurricularCourse.getBasic());		
 					curricularCourse.setCode(code);
-//					if(credits.compareTo("") != 0) {
-//						curricularCourse.setCredits(new Double(credits));
-//					}
-//					if(theoreticalHours.compareTo("") != 0) {
-//						curricularCourse.setTheoreticalHours(new Double(theoreticalHours));
-//					}
-//					if(praticalHours.compareTo("") != 0) {
-//						curricularCourse.setPraticalHours(new Double(praticalHours));
-//					}
-//					if(theoPratHours.compareTo("") != 0) {
-//						curricularCourse.setTheoPratHours(new Double(theoPratHours));
-//					}
-//					if(labHours.compareTo("") != 0) {
-//						curricularCourse.setLabHours(new Double(labHours));
-//					}
-					if(type.compareTo("") != 0) {
-						curricularCourse.setType(new CurricularCourseType(new Integer(type)));
-					}
-					if(mandatory.compareTo("") != 0) {
-						curricularCourse.setMandatory(new Boolean(mandatory));
-					}
-					
-//					Integer universityId = new Integer(universityId);
-//					IPersistentUniversity persistentUniversity = persistentSuport.getIPersistentUniversity();
-//					IUniversity university = (IUniversity) persistentUniversity.readByOid(new University(universityId), false);
-//					curricularCourse.setUniversity(university);
-
-					if(basic.compareTo("") != 0) {
-						curricularCourse.setBasic(new Boolean(basic));
-					}
-					
-					if(departmentCourseCodeAndName.compareTo("") != 0) {
-						String[] codeAndName = departmentCourseCodeAndName.split("-");
-						String departmentCourseCode = codeAndName[0];
-						String departmentCourseName = codeAndName[1];
-						IDisciplinaDepartamentoPersistente persistentDepartmentCourse = persistentSuport.getIDisciplinaDepartamentoPersistente();
-						IDisciplinaDepartamento departmentCourse = (IDisciplinaDepartamento) persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla(departmentCourseName, departmentCourseCode);
-						curricularCourse.setDepartmentCourse(departmentCourse);
-					}
-					
-//  curricularCourseExecutionScope? scopes?
-				
-					// associatedExecutionCourses? nao pode ser null qd se insere, pk dp n da papagar
-					curricularCourse.setAssociatedExecutionCourses(new ArrayList());
-					
 					curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
+					curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
+					curricularCourse.setName(name);
+					curricularCourse.setType(infoCurricularCourse.getType());
+					curricularCourse.setAssociatedExecutionCourses(new ArrayList());
+					IDisciplinaDepartamentoPersistente persistentDepartmentCourse = persistentSuport.getIDisciplinaDepartamentoPersistente();
+//					department???
+//					university???								
 
 					persistentCurricularCourse.simpleLockWrite(curricularCourse);
 					return null;
 				}
 
-				//if already exists
+//				if already exists
 				List errors = new ArrayList(2);
 				errors.add(name);
 				errors.add(code);

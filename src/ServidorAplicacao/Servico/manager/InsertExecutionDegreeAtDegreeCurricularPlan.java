@@ -3,6 +3,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import DataBeans.InfoExecutionDegree;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICursoExecucao;
@@ -40,7 +41,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
 	}
 	
 
-	public String run(String executionYearString, String coordenatorIdString, String tempExamMapString, Integer degreeCurricularPlanId) throws FenixServiceException {
+	public String run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException {
 
 		ICursoExecucaoPersistente persistentExecutionDegree = null;
 	
@@ -48,33 +49,28 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
 				IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
-				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
-				
+				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()), false);
+//				
 				IPersistentExecutionYear persistentExecutionYear = persistentSuport.getIPersistentExecutionYear();
-				IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
+				IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(infoExecutionDegree.getInfoExecutionYear().getYear());
 				
 				persistentExecutionDegree = persistentSuport.getICursoExecucaoPersistente();
 				ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+				
 				// if it doesn´t exist in the database yet
 				if(executionDegree == null) {
-					
-					executionDegree = new CursoExecucao();			
-					executionDegree.setExecutionYear(executionYear);
-					executionDegree.setCurricularPlan(degreeCurricularPlan);
-					
+					executionDegree = new CursoExecucao();
 					IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-					ITeacher teacher = (ITeacher) persistentTeacher.readByOId(new Teacher(new Integer(coordenatorIdString)), false);
-					executionDegree.setCoordinator(teacher);
-					
-					if(tempExamMapString.compareTo("") != 0)
-						executionDegree.setTemporaryExamMap(new Boolean(tempExamMapString));
-
+					ITeacher coordinator = (ITeacher) persistentTeacher.readByOId(new Teacher(infoExecutionDegree.getInfoCoordinator().getIdInternal()), false);
+					executionDegree.setCoordinator(coordinator);
+					executionDegree.setCurricularPlan(degreeCurricularPlan);
+					executionDegree.setExecutionYear(executionYear);
+					executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
 					persistentExecutionDegree.simpleLockWrite(executionDegree);
 					return null;
 				}
 				//if already exists
-				else 
-					return executionYearString;
+				return executionYear.getYear();
 				
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);

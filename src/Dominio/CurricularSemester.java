@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CurricularSemester extends DomainObject implements ICurricularSemester {
 
-	private Integer internalID;
+//	private Integer internalID;
 	private Integer curricularYearKey;
 	private Integer semester;
 
@@ -21,14 +21,12 @@ public class CurricularSemester extends DomainObject implements ICurricularSemes
 
 	public CurricularSemester() {
 		setSemester(null);
-		setInternalID(null);
+		setIdInternal(null);
 		//		setAssociatedCurricularCourses(null);
 		setCurricularYearKey(null);
 		setCurricularYear(null);
 		setScopes(null);
 	}
-//TODO: tirar isto-ACRESCENTEI NAO SEI S E BOM MAS E PA O READ BY OID FUNCIONAR
-public CurricularSemester(Integer idInternal){setInternalID(idInternal);}
 
 	public CurricularSemester(Integer semester, ICurricularYear curricularYear) {
 		this();
@@ -49,26 +47,26 @@ public CurricularSemester(Integer idInternal){setInternalID(idInternal);}
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.internalID + "; ";
+		result += "idInternal = " + this.getIdInternal() + "; ";
 		result += "semester = " + this.getSemester() + "; ";
 		result += "curricularYear = " + this.getCurricularYear() + "]\n";
 		return result;
 	}
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getInternalID() {
-		return internalID;
-	}
+//	/**
+//	 * @return Integer
+//	 */
+//	public Integer getIdInternal() {
+//		return internalID;
+//	}
 
-	/**
-	 * Sets the internalID.
-	 * @param internalID The internalID to set
-	 */
-	public void setInternalID(Integer internalID) {
-		this.internalID = internalID;
-	}
+//	/**
+//	 * Sets the internalID.
+//	 * @param internalID The internalID to set
+//	 */
+//	public void setInternalID(Integer internalID) {
+//		this.internalID = internalID;
+//	}
 
 	//	/**
 	//	 * @return List

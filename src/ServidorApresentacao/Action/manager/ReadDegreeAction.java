@@ -76,7 +76,7 @@ public class ReadDegreeAction extends FenixAction  {
 					throw new FenixActionException(e);
 				}		
 				Collections.sort(degreeCurricularPlans);
-				request.setAttribute("degreeId", degreeId);
+			//	request.setAttribute("degreeId", degreeId);
 				request.setAttribute("infoDegree", degree);					
 				request.setAttribute("lista de planos curriculares", degreeCurricularPlans);
 				return mapping.findForward("viewDegree");

@@ -57,7 +57,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
-			
+
 			dynaForm.set("name", oldInfoCurricularCourse.getName());
 			dynaForm.set("code", oldInfoCurricularCourse.getCode());
 			
@@ -74,9 +74,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 				dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
 			
 			
-			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
-			request.setAttribute("degreeId", degreeId);
-			request.setAttribute("curricularCourseId", curricularCourseId);
+//			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
+//			request.setAttribute("degreeId", degreeId);
+//			request.setAttribute("curricularCourseId", curricularCourseId);
 			return mapping.findForward("editCurricularCourse");
 		}
 				
@@ -93,9 +93,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
-		Integer degreeCPId = (Integer) dynaForm.get("degreeCurricularPlanId");
+		Integer degreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		Integer oldCurricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-		Integer degreeId = (Integer) dynaForm.get("degreeId");
+		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		
 		InfoCurricularCourse newInfoCurricularCourse = new InfoCurricularCourse();	
 		
@@ -115,7 +115,6 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		
 		newInfoCurricularCourse.setName(name);
 		newInfoCurricularCourse.setCode(code);
-		
 		
 		if(typeString.compareTo("") != 0) {
 			CurricularCourseType type = new CurricularCourseType(new Integer(typeString)); 
@@ -160,7 +159,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			}			
 			saveErrors(request, actionErrors);
 		}
-		request.setAttribute("degreeId", degreeId);
+//		request.setAttribute("degreeId", degreeId);
 		return mapping.findForward("readDegreeCP");
 	}			
 }

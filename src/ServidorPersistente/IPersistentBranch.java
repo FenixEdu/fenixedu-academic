@@ -29,4 +29,5 @@ public interface IPersistentBranch extends IPersistentObject {
 	 * @return
 	 */
 	public List readByExecutionDegree(ICursoExecucao execucao) throws ExcepcaoPersistencia;
+	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 }

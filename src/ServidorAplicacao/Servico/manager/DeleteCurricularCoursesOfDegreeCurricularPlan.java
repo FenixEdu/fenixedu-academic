@@ -53,7 +53,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IServico {
 
 				curricularCourseId = (Integer) iter.next();
 				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(curricularCourseId), false);
-				if (curricularCourse != null)
+				if(curricularCourse != null)
 					result = persistentCurricularCourse.delete(curricularCourse);			
 				if(result.equals(new Boolean(false))) {
 					undeletedCurricularCourses.add((String) curricularCourse.getName());		

@@ -63,7 +63,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 			readDegreeForm.set("name", (String) oldInfoDegree.getNome());
 			readDegreeForm.set("code", (String) oldInfoDegree.getSigla());
 			readDegreeForm.set("degreeType", degreeType.getTipoCurso());
-			request.setAttribute("degreeId", degreeId);
+//			request.setAttribute("degreeId", degreeId);
 			return mapping.findForward("editDegree");
 		}
 
@@ -79,7 +79,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 		DynaActionForm editDegreeForm = (DynaActionForm) form;	
-		Integer oldDegreeId = (Integer) editDegreeForm.get("degreeId");	
+		Integer oldDegreeId = new Integer(request.getParameter("degreeId"));	
 		String code = (String) editDegreeForm.get("code");
 		String name = (String) editDegreeForm.get("name");
 		Integer degreeTypeInt = (Integer) editDegreeForm.get("degreeType");

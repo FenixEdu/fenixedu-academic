@@ -4,12 +4,14 @@
 package ServidorApresentacao.Action.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -39,7 +41,7 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				HttpSession session = request.getSession(false);
 						
 				UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-				
+			System.out.println("INICIO DA ACCAO READCURRICULARCOURSE");	
 				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 				Integer	curricularCourseId = new Integer(request.getParameter("curricularCourseId"));	
 				Integer	degreeId = new Integer(request.getParameter("degreeId"));
@@ -48,17 +50,12 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				
 				GestorServicos manager = GestorServicos.manager();
 				InfoCurricularCourse infoCurricularCourse = null;
-				
-//				System.out.println("ANTES DO SERVICO READ CURRICULAR COURSE");
-				
 								
 				try {
 					infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
 				} catch(FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
-			    
-//				System.out.println("DEPOIS/RESULTADO DO SERVICO READ CURRICULAR COURSE"+infoCurricularCourse);
 			    
 				// trying to read a curricular course that doesn´t exist in the database
 				if(infoCurricularCourse == null) {
@@ -71,35 +68,34 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				}
 				
 				// in case the curricular course really exists
-				
 				List executionCourses = null;
 				try {		
-					executionCourses = (List) manager.executar(
+						executionCourses = (List) manager.executar(
 													userView,
 													"ReadExecutionCoursesByCurricularCourse",
 													args);	
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
-				}		
-//				Collections.sort(executionCourses, new BeanComparator("infoExecutionYear.year"));
+				}
+				if(executionCourses != null)
+					Collections.sort(executionCourses, new BeanComparator("_nome"));
 												
 				List curricularCourseScopes = new ArrayList();
-				
 				try {		
-					curricularCourseScopes = (List) manager.executar(
+						curricularCourseScopes = (List) manager.executar(
 														userView,
 														"ReadCurricularCourseScopes",
-														args                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          );	
+														args);	
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
-				}						
-
-//				Collections.sort(curricularCourseScopes, new BeanComparator("name"));
+				}
+				if(curricularCourseScopes != null)						
+					Collections.sort(curricularCourseScopes, new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
 					
 				request.setAttribute("executionCoursesList", executionCourses);
-				request.setAttribute("degreeId", degreeId);
-				request.setAttribute("curricularCourseId", curricularCourseId);
-				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
+//				request.setAttribute("degreeId", degreeId);
+//				request.setAttribute("curricularCourseId", curricularCourseId);
+//				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				request.setAttribute("infoCurricularCourse", infoCurricularCourse);	
 				request.setAttribute("curricularCourseScopesList", curricularCourseScopes);				
 				return mapping.findForward("viewCurricularCourse");

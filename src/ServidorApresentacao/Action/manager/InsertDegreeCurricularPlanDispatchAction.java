@@ -42,8 +42,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 			HttpServletResponse response)
 			throws FenixActionException {
 				
-				Integer degreeId = new Integer(request.getParameter("degreeId"));
-				request.setAttribute("degreeId", degreeId);
+//				Integer degreeId = new Integer(request.getParameter("degreeId"));
+//				request.setAttribute("degreeId", degreeId);
 				return mapping.findForward("insertDegreeCurricularPlan");
 	}
 
@@ -59,7 +59,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
-		Integer degreeId = (Integer) dynaForm.get("degreeId");
+		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		String name = (String) dynaForm.get("name");
 		Integer stateInt = new Integer((String) dynaForm.get("state"));
 		String initialDateString = (String) dynaForm.get("initialDate");

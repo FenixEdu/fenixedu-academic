@@ -113,8 +113,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			if(oldInfoDegreeCP.getNumerusClausus() != null)
 				dynaForm.set("numerusClausus", (String) oldInfoDegreeCP.getNumerusClausus().toString());
 
-			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
-			request.setAttribute("degreeId", degreeId);
+//			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
+//			request.setAttribute("degreeId", degreeId);
 			return mapping.findForward("editDegreeCP");
 		}
 				
@@ -132,8 +132,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
-		Integer oldDegreeCPId = (Integer) dynaForm.get("degreeCurricularPlanId");
-		Integer degreeId = (Integer) dynaForm.get("degreeId");
+		Integer oldDegreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
+		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		
 		InfoDegreeCurricularPlan newInfoDegreeCP = new InfoDegreeCurricularPlan();		
 

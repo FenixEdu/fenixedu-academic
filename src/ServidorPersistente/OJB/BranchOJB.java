@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Branch;
@@ -171,5 +172,12 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+	
+	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+				
+		Criteria crit = new Criteria();
+		crit.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
+		return queryList(Branch.class, crit);
 	}
 }

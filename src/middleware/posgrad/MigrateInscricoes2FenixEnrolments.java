@@ -221,7 +221,7 @@ public class MigrateInscricoes2FenixEnrolments {
 				
 				criteria = new Criteria();
 				criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
-				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getInternalID());
+				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
 				criteria.addEqualTo("branchKey", branch.getIdInternal());
 				query = new QueryByCriteria(CurricularCourseScope.class,criteria);
 

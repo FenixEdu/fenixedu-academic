@@ -809,7 +809,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
 		criteria.addEqualTo("branch.internalID", branch.getIdInternal());
-		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getInternalID());
+		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getIdInternal());
 
 		List result = query(CurricularCourseScope.class, criteria);
 		if (result.size() == 1) {
@@ -910,7 +910,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
-		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getInternalID());
+		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getIdInternal());
 		//criteria.addEqualTo("executionYear", executionYear);
 
 		List result = query(CurricularCourseScope.class, criteria);
