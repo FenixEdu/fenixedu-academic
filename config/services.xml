@@ -2575,7 +2575,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="StudentCurriculumAuthorization"/>
+            <chain name="StudentCurriculumAccess"/>
         </filterChains>
     </service>
     <service>
@@ -4525,6 +4525,16 @@
         </filterChains>
     </service>
     <service>
+        <name>Seminaries.GetCandidaciesByStudentIDAndSeminaryID</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.Seminaries.GetCandidaciesByStudentIDAndSeminaryID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="SeminaryCoordinatorOrStudent"/>
+        </filterChains>
+    </service>
+    <service>
         <name>Seminaries.GetCaseStudiesByEquivalencyID</name>
         <implementationClass> 
             ServidorAplicacao.Servico.Seminaries.GetCaseStudiesByEquivalencyID</implementationClass>
@@ -5454,7 +5464,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="StudentCurriculumAccess"/>
         </filterChains>
     </service>
     <service>
