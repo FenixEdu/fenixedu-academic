@@ -14,6 +14,7 @@ import DataBeans.InfoAdvisory;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoBranch;
+import DataBeans.InfoCampus;
 import DataBeans.InfoCandidateEnrolment;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoClass;
@@ -140,7 +141,7 @@ public abstract class Cloner {
 	 */
 	public static IDisciplinaExecucao copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-		IExecutionPeriod executionPeriod =
+			IExecutionPeriod executionPeriod =
 			Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
 				infoExecutionCourse.getInfoExecutionPeriod());
 
@@ -372,7 +373,11 @@ public abstract class Cloner {
 		executionDegree.setCoordinator(coordinator);
 		executionDegree.setExecutionYear(executionYear);
 		executionDegree.setCurricularPlan(degreeCurricularPlan);
-
+		
+		
+		ICampus campus = Cloner.copyInfoCampus2ICampus(infoExecutionDegree.getInfoCampus());
+		executionDegree.setCampus(campus);
+		
 		return executionDegree;
 
 	}
@@ -405,13 +410,17 @@ public abstract class Cloner {
 			e.printStackTrace(System.out);
 			throw new RuntimeException(e.getMessage());
 		}
-
+		
 		infoExecutionDegree.setInfoCoordinator(infoCoordinator);
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		infoExecutionDegree.setInfoDegreeCurricularPlan(
 			infoDegreeCurricularPlan);
 		infoExecutionDegree.setTemporaryExamMap(
 			executionDegree.getTemporaryExamMap());
+
+		//added by Tânia Pousão
+		InfoCampus infoCampus = Cloner.copyICampus2InfoCampus(executionDegree.getCampus());
+		infoExecutionDegree.setInfoCampus(infoCampus);
 
 		return infoExecutionDegree;
 
@@ -675,6 +684,7 @@ public abstract class Cloner {
 			person =
 				Cloner.copyInfoPerson2IPerson(infoGrantOwner.getPersonInfo());
 			grantOwner.setPerson(person);
+
 		}
 		return grantOwner;
 	}
@@ -1205,7 +1215,7 @@ public abstract class Cloner {
 	public static InfoCurriculum copyICurriculum2InfoCurriculum(ICurriculum curriculum) {
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		InfoCurricularCourse infoCurricularCourse =
+	InfoCurricularCourse infoCurricularCourse =
 			Cloner.copyCurricularCourse2InfoCurricularCourse(
 				curriculum.getCurricularCourse());
 
@@ -1987,7 +1997,7 @@ public abstract class Cloner {
 	}
 
 	/**
-	 * @author dcs-rjao
+		 * @author dcs-rjao
 	 * @param copyIEquivalence2InfoEquivalence
 	 * @return InfoEquivalence
 	 */
@@ -3399,5 +3409,25 @@ public abstract class Cloner {
 		degreeInfo.setDegree(degree);
 
 		return degreeInfo;
+	}
+
+	/**
+	 * @author Tânia Pousão Created on 13/Nov/2003
+	 */
+	public static InfoCampus copyICampus2InfoCampus(ICampus campus) {
+		InfoCampus infoCampus = new InfoCampus();
+		copyObjectProperties(infoCampus, campus);
+
+		return infoCampus;
+	}
+
+	/**
+	 * @author Tânia Pousão Created on 13/Nov/2003
+	 */
+	public static ICampus copyInfoCampus2ICampus(InfoCampus infoCampus) {
+		ICampus campus = new Campus();
+		copyObjectProperties(campus, infoCampus);
+
+		return campus;
 	}
 }

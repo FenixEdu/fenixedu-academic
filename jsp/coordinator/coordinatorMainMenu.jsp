@@ -70,7 +70,6 @@
 	</logic:notEqual> 
 	
 	<%-- Start of Common Options --%>
-	<%--
 	<ul>
 		<li>
 			<bean:define id="infoExecutionDegreeCode" name="infoExecutionDegree" property="idInternal"/>
@@ -98,5 +97,4 @@
 			<br/>
 		</li>
 	</ul>
-	--%>
 </logic:present>

@@ -5,12 +5,7 @@
 
 	<definition name="showDegrees" extends="definition.public.mainPageIST">
 		<put name="body" value="/publico/degreeSite/showDegrees.jsp"/>
-	</definition>
-	
-	<!--<definition name="showDegreeCurricularPlan" extends="definition.public.mainPage">
-		<put name="body" value="/publico/showDegreeCurricularPlan.jsp"/>
-	</definition> -->
-	
+	</definition>	
 	<definition name="showDescription" extends="definition.public.mainPageIST">
 		<put name="" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/degreeSite/showDegreeSiteDescription.jsp" />
@@ -21,4 +16,7 @@
 	<definition name="showCurricularPlan" extends="definition.public.mainPageIST">
 		<put name="body" value="/publico/showDegreeSiteCurricularPlan.jsp" />
 	</definition>
+	<!--<definition name="showDegreeCurricularPlan" extends="definition.public.mainPage">
+		<put name="body" value="/publico/showDegreeCurricularPlan.jsp"/>
+	</definition> -->	
 </tiles-definitions>

@@ -22,7 +22,6 @@ public class Curso extends DomainObject implements ICurso {
 	protected TipoCurso tipoCurso;
 	private List degreeCurricularPlans;
 	private List degreeInfos;//added by Tânia Pousão
-	private List campus;//added by Tânia Pousão
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
 	public Curso() {
@@ -134,19 +133,4 @@ public class Curso extends DomainObject implements ICurso {
 	public void setDegreeInfos(List degreeInfos) {
 		this.degreeInfos = degreeInfos;
 	}
-
-	/**
-	 * @return Returns the campus.
-	 */
-	public List getCampus() {
-		return campus;
-	}
-
-	/**
-	 * @param campus The campus to set.
-	 */
-	public void setCampus(List campus) {
-		this.campus = campus;
-	}
-
 }

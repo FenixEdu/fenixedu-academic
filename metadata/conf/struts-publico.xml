@@ -412,6 +412,7 @@
     <action path="/showDegreeSite" 
      		type="ServidorApresentacao.Action.publico.ShowDegreeSiteAction" 
      		parameter="method"
+     		input="/showDegrees"
      		>
 	     <forward  name="showDescription" path="showDescription"/>  	
 	     <forward  name="showAccessRequirements" path="showAccessRequirements"/>  

@@ -11,9 +11,7 @@ package Dominio;
  * @author  rpfi
  */
 
-public class CursoExecucao extends DomainObject implements ICursoExecucao {
-	
-	
+public class CursoExecucao extends DomainObject implements ICursoExecucao {	
 	private Integer keyCurricularPlan;
 	private Integer keyCoordinator;
 
@@ -25,6 +23,11 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	private ITeacher coordinator;
 	
 	private Boolean temporaryExamMap;
+	
+	//added by Tânia Pousão
+	private Integer keyCampus;
+	private ICampus campus;
+	
 
 	/** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
 	public CursoExecucao() {
@@ -62,6 +65,7 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 		result += ", keyExecutionYear=" + academicYear;
 		result += ", planoCurricularCurso=" + degreeCurricularPlan;
 		result += ", coordinator=" + coordinator;
+		result += ", campus=" + campus;		
 		result += "]";
 		return result;
 	}
@@ -187,6 +191,34 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 	 */
 	public void setTemporaryExamMap(Boolean temporary) {
 		temporaryExamMap = temporary;
+	}
+
+	/**
+	 * @return Returns the campus.
+	 */
+	public ICampus getCampus() {
+		return campus;
+	}
+
+	/**
+	 * @param campus The campus to set.
+	 */
+	public void setCampus(ICampus campus) {
+		this.campus = campus;
+	}
+
+	/**
+	 * @return Returns the keyCampus.
+	 */
+	public Integer getKeyCampus() {
+		return keyCampus;
+	}
+
+	/**
+	 * @param keyCampus The keyCampus to set.
+	 */
+	public void setKeyCampus(Integer keyCampus) {
+		this.keyCampus = keyCampus;
 	}
 
 }

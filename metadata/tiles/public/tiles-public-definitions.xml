@@ -37,7 +37,7 @@
 	</definition>	
 	
 		<definition name="definition.public.mainPageIST" 
-		page="/ISTLayout_3space.jsp" >
+		page="/istLayout.jsp" >
   		<put name="title" value="Instituto Superior Técnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 	    <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />

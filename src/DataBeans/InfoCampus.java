@@ -1,20 +1,22 @@
 package DataBeans;
 
+import java.util.List;
+
 /**
  * @author Tânia Pousão
  * Create on 10/Nov/2003
  */
 public class InfoCampus extends InfoObject {
-	private InfoDegree infoDegree;
-	
 	private String name;
+	
+	private List executionDegreeList;
 
 	public InfoCampus() {	
 	}
 	
-	public InfoCampus(InfoDegree degree, String name) {
-		this.infoDegree = degree;
+	public InfoCampus(String name, List executionDegreeList) {
 		this.name = name;
+		this.executionDegreeList = executionDegreeList;
 	}
 	
 	/**
@@ -32,26 +34,24 @@ public class InfoCampus extends InfoObject {
 	}
 	
 	/**
-	 * @return Returns the infoDegree.
+	 * @return Returns the executionDegreeList.
 	 */
-	public InfoDegree getInfoDegree() {
-		return infoDegree;
+	public List getExecutionDegreeList() {
+		return executionDegreeList;
 	}
 
 	/**
-	 * @param infoDegree The infoDegree to set.
+	 * @param executionDegreeList The executionDegreeList to set.
 	 */
-	public void setInfoDegree(InfoDegree infoDegree) {
-		this.infoDegree = infoDegree;
+	public void setExecutionDegreeList(List executionDegreeList) {
+		this.executionDegreeList = executionDegreeList;
 	}
 	
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof InfoCampus) {
 			InfoCampus infoCampus = (InfoCampus) obj;
-			result =
-				getInfoDegree().equals(infoCampus.getInfoDegree())
-				&& getName().equals(infoCampus.getName());
+			result = getName().equals(infoCampus.getName());
 		}
 		return result;
 	}
@@ -59,7 +59,9 @@ public class InfoCampus extends InfoObject {
 	public String toString() {
 		String result = "[INFODEGREE_INFO:";
 		result += " codigo interno= " + getIdInternal();
-		result += " degree= " + getInfoDegree();
+		if (getExecutionDegreeList() != null) {
+			result += "nr execution Degrees= " + getExecutionDegreeList().size();		
+		}
 		result += " name= " + getName();
 		result += "]";
 		return result;

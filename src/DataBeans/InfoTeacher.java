@@ -128,5 +128,13 @@ public class InfoTeacher extends InfoObject{
 		 }
 		 return result;
 	 }
+	
+	public String toString() {
+		String result = "[INFOTEACHER";
+		result += ", number=" + this.teacherNumber;
+		result += ", nome=" + this.infoPerson.getNome();
+		result += "]";
+		return result;
+	}
     
 }

@@ -21,6 +21,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CursoExecucao;
+import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
@@ -211,6 +212,13 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 //		}
 	}
 
+	public List readByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionYear.year ", executionYear.getYear());
+		criteria.addEqualTo("curricularPlan.degree.idInternal", degree.getIdInternal());
+		return (List) queryList(CursoExecucao.class, criteria);
+	}
+	
 	public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 		try {
 

@@ -18,9 +18,13 @@ public class InfoExecutionDegree extends InfoObject implements Serializable {
 	private InfoTeacher infoCoordinator;
 	
 	private Boolean temporaryExamMap;
+	
+	//added by Tânia Pousão
+	private InfoCampus infoCampus;
 
 	public InfoExecutionDegree() {
 	}
+	
 	/**
 	 * 
 	 * @param infoDegreeCurricularPlan
@@ -50,6 +54,7 @@ public class InfoExecutionDegree extends InfoObject implements Serializable {
 			result += ", infoExecutionYear=" + infoExecutionYear;
 			result += ", infoDegreeCurricularPlan=" + infoDegreeCurricularPlan;
 			result += ", infoCoordinator=" + infoCoordinator;
+			result += ", infoCampus= " + infoCampus;
 			result += "]";
 		return result;
 	}
@@ -115,6 +120,20 @@ public class InfoExecutionDegree extends InfoObject implements Serializable {
 	 */
 	public void setTemporaryExamMap(Boolean temporary) {
 		temporaryExamMap = temporary;
+	}
+
+	/**
+	 * @return Returns the infoCampus.
+	 */
+	public InfoCampus getInfoCampus() {
+		return infoCampus;
+	}
+
+	/**
+	 * @param infoCampus The infoCampus to set.
+	 */
+	public void setInfoCampus(InfoCampus infoCampus) {
+		this.infoCampus = infoCampus;
 	}
 
 }

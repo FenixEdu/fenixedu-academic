@@ -23,7 +23,6 @@ public class InfoDegree extends InfoObject implements Comparable {
 
 	private List infoDegreeCurricularPlans;
 	private List infoDegreeInfos; //added by Tânia Pousão
-	private List infoCampus; //added by Tânia Pousão
 
 	public InfoDegree() {
 	}
@@ -149,13 +148,4 @@ public class InfoDegree extends InfoObject implements Comparable {
 	public void setInfoDegreeInfos(List infoDegreeInfos) {
 		this.infoDegreeInfos = infoDegreeInfos;
 	}
-
-	public List getInfoCampus() {
-		return infoCampus;
-	}
-
-	public void setInfoCampus(List campus) {
-		this.infoCampus = campus;
-	}
-
 }
