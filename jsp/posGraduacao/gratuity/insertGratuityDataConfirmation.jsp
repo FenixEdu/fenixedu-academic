@@ -19,6 +19,7 @@
 		</tr>
 	</table>
 	<br />
+	<center><b><bean:message key="message.masterDegree.gratuity.definition.success"/></b></center>
 	<table>
 		<%-- Gratuity Values --%>
 		<tr>
