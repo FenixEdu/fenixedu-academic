@@ -2,7 +2,6 @@ package ServidorAplicacao.Servico.teacher;
 
 import Dominio.BibliographicReference;
 import Dominio.IBibliographicReference;
-import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -47,7 +46,6 @@ public class EditBibliographicReference implements IServico {
 		Boolean optional)
 		throws FenixServiceException {
 
-		ISite site = null;
 		IBibliographicReference ibibliographicReference = null;
 		try {
 
@@ -62,7 +60,6 @@ public class EditBibliographicReference implements IServico {
 			if (ibibliographicReference == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-//			persistentBibliographicReference.lockWrite(ibibliographicReference);
 
 			ibibliographicReference.setTitle(newTitle);
 			ibibliographicReference.setAuthors(newAuthors);

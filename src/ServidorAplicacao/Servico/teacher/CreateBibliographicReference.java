@@ -4,13 +4,11 @@ import Dominio.BibliographicReference;
 import Dominio.DisciplinaExecucao;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
-import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
-import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -49,19 +47,16 @@ public class CreateBibliographicReference implements IServico {
 		String newBibliographyYear,
 		Boolean newBibliographyOptional)
 		throws FenixServiceException {
-		ISite site = null;
 
 		try {
 
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
-			IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentSupport.getIPersistentBibliographicReference();
 
 			IDisciplinaExecucao executionCourse =
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
-			site = persistentSite.readByExecutionCourse(executionCourse);
 
 			IBibliographicReference newBibliographicReference = new BibliographicReference();
 

@@ -84,9 +84,7 @@ public class InsertSection implements IServico {
 	public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String sectionName, Integer sectionOrder)
 		throws FenixServiceException {
 
-		ISite site = null;
 		ISection section = null;
-		ISection fatherSection = null;
 
 		try {
 

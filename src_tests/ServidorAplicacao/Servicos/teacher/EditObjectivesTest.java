@@ -1,8 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteObjectives;
-import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
@@ -43,17 +41,15 @@ public class EditObjectivesTest extends TestCaseDeleteAndEditServices {
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 		ISuportePersistente sp = null;
-		InfoExecutionCourse infoExecutionCourse = null;
+		IDisciplinaExecucao executionCourse = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
 			sp.iniciarTransaccao();
-			IDisciplinaExecucao executionCourse =
+			 executionCourse =
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(new Integer(26)), false);
 			sp.confirmarTransaccao();
-
-			infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("failed setting up the test data");
@@ -65,7 +61,7 @@ public class EditObjectivesTest extends TestCaseDeleteAndEditServices {
 		infoSiteObjectives.setOperacionalObjectives("operacionalObjectives");
 		infoSiteObjectives.setOperacionalObjectivesEn("operacionalObjectivesEn");
 
-		Object[] args = { new Integer(26), infoSiteObjectives };
+		Object[] args = { executionCourse.getIdInternal(), infoSiteObjectives };
 		return args;
 	}
 

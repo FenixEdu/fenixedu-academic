@@ -64,7 +64,7 @@ public class EditProgramTest extends TestCaseDeleteAndEditServices {
 		infoSiteProgram.setProgram("program");
 		infoSiteProgram.setProgramEn("programEn");
 
-		Object[] args = { new Integer(26), infoSiteProgram };
+		Object[] args = { infoExecutionCourse.getIdInternal(), infoSiteProgram };
 		return args;
 	}
 

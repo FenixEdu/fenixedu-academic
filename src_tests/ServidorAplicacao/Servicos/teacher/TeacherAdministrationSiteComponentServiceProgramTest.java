@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
-import DataBeans.InfoCurriculum;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
@@ -100,8 +99,6 @@ public class TeacherAdministrationSiteComponentServiceProgramTest extends TestCa
 			InfoSection infoSection = (InfoSection) Cloner.copyISection2InfoSection((ISection)iter.next());
 			infoSections.add(infoSection);
 		}
-
-		InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 
 		InfoSiteProgram infoSiteProgram = new InfoSiteProgram();
 		infoSiteProgram.setProgram(curriculum.getProgram());

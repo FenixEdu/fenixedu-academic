@@ -5,20 +5,15 @@ import java.util.List;
 
 import DataBeans.InfoItem;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
-import Dominio.IDisciplinaExecucao;
 import Dominio.IItem;
 import Dominio.ISection;
-import Dominio.ISite;
 import Dominio.Section;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentSection;
-import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -93,15 +88,9 @@ public class InsertItem implements IServico {
 
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
-			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
 
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
-
-			ISite site = persistentSite.readByExecutionCourse(executionCourse);
 
 			section = (ISection) persistentSection.readByOId(new Section(sectionCode), false);
 

@@ -8,7 +8,6 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
-import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -32,7 +31,6 @@ public class DeleteItem implements IServico {
 	public Boolean run(Integer infoExecutionCourseCode, Integer itemCode) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 
 			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
 
