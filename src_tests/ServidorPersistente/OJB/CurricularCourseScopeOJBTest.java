@@ -250,7 +250,7 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 			fail("Read All CurricularCourseScopes");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 11);
+		assertEquals(14, list.size());
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------------
