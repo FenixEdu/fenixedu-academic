@@ -39,13 +39,13 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
-		Integer examIdInternal = new Integer( request.getParameter("examCode"));
+		Integer examIdInternal = new Integer(request.getParameter("examCode"));
 		Integer disciplinaExecucaoIdInternal =
-			(Integer) request.getAttribute("objectCode");
-		
+			new Integer(request.getParameter("objectCode"));
+
 		Object args[] = { disciplinaExecucaoIdInternal, examIdInternal };
 
-		SiteView siteView= null;
+		SiteView siteView = null;
 		try {
 			siteView =
 				(SiteView) ServiceUtils.executeService(
@@ -57,10 +57,10 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		}
 
 		request.setAttribute("examCode", examIdInternal);
-		System.out.println("objectCode->"+ disciplinaExecucaoIdInternal);
+		System.out.println("objectCode->" + disciplinaExecucaoIdInternal);
 		request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
-		
-		request.setAttribute("siteView",siteView);
+
+		request.setAttribute("siteView", siteView);
 		return mapping.findForward("prepareEditExamEnrollment");
 
 	}
@@ -142,25 +142,33 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession();
 		IUserView userView = SessionUtils.getUserView(request);
 
-		Integer examIdInternal =
-			(Integer) request.getAttribute("examCode");
+		Integer examIdInternal = (Integer) request.getAttribute("examCode");
 		Integer disciplinaExecucaoIdInternal =
 			(Integer) request.getAttribute("objectCode");
 
 		Integer examEnrollment =
 			(Integer) request.getAttribute("examEnrollmentCode");
 
-		Integer beginDay = (Integer) examEnrollmentForm.get("beginDay");
-		Integer beginMonth = (Integer) examEnrollmentForm.get("beginMonth");
-		Integer beginYear = (Integer) examEnrollmentForm.get("beginYear");
-		Integer beginHour = (Integer) examEnrollmentForm.get("beginHour");
-		Integer beginMinutes = (Integer) examEnrollmentForm.get("beginMinutes");
+		Integer beginDay =
+			new Integer((String) examEnrollmentForm.get("beginDay"));
+		Integer beginMonth =
+			new Integer((String) examEnrollmentForm.get("beginMonth"));
+		Integer beginYear =
+			new Integer((String) examEnrollmentForm.get("beginYear"));
+		Integer beginHour =
+			new Integer((String) examEnrollmentForm.get("beginHour"));
+		Integer beginMinutes =
+			new Integer((String) examEnrollmentForm.get("beginMinutes"));
 
-		Integer endDay = (Integer) examEnrollmentForm.get("endDay");
-		Integer endMonth = (Integer) examEnrollmentForm.get("endMonth");
-		Integer endYear = (Integer) examEnrollmentForm.get("endYear");
-		Integer endHour = (Integer) examEnrollmentForm.get("endHour");
-		Integer endMinutes = (Integer) examEnrollmentForm.get("endMinutes");
+		Integer endDay = new Integer((String) examEnrollmentForm.get("endDay"));
+		Integer endMonth =
+			new Integer((String) examEnrollmentForm.get("endMonth"));
+		Integer endYear =
+			new Integer((String) examEnrollmentForm.get("endYear"));
+		Integer endHour =
+			new Integer((String) examEnrollmentForm.get("endHour"));
+		Integer endMinutes =
+			new Integer((String) examEnrollmentForm.get("endMinutes"));
 
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(

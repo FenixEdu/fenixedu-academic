@@ -1,4 +1,4 @@
-package ServidorPersistente.OJB;
+package ServidorPersistente.OJB; 
 
 import java.util.ArrayList;
 
@@ -22,7 +22,6 @@ import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.EquivalenceType;
 import Util.TipoCurso;
-import Util.UniversityCode;
 
 /**
  * @author dcs-rjao
