@@ -140,7 +140,6 @@ public class CurricularCourse implements ICurricularCourse {
 		result += "theoreticalHours = " + theoreticalHours + "; ";
 		result += "praticalHours = " + praticalHours + "; ";
 		result += "theoPratHours = " + theoPratHours + "; ";
-		result += "labHours = " + labHours + "; ";
 		result += "labHours = " + labHours + "]\n";
 
 //		result += "associatedExecutionCourses = " + associatedExecutionCourses + "; ";
