@@ -225,14 +225,17 @@ public class StudentCurricularPlanOJB
         throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-
-        criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
+		List studentPlanState = new ArrayList();
+		studentPlanState.add(new Integer(1));
+		studentPlanState.add(new Integer(4));
+		
+		criteria.addIn("currentState",studentPlanState);
+     //   criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
         criteria.addEqualTo("student.number", number);
         criteria.addEqualTo("student.degreeType", degreeType);
 
         IStudentCurricularPlan storedStudentCurricularPlan =
             (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
-
         return storedStudentCurricularPlan;
 
     }
