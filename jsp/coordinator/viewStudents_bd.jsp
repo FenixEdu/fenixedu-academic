@@ -308,14 +308,12 @@
 				 }
 				%>
 				<td class="listClasses">
-					<logic:present name="attendacy" property="aluno.infoPerson.email">
+					&nbsp;
+					<logic:notEmpty name="attendacy" property="aluno.infoPerson.email">
 						<bean:define id="mail" name="attendacy" property="aluno.infoPerson.email"/>
 							<html:link href="<%= "mailto:"+ mail %>"><bean:write name="attendacy" property="aluno.infoPerson.email"/></html:link>
 						</bean:define>
-					</logic:present>
-					<logic:notPresent  name="attendacy" property="aluno.infoPerson.email">
-						&nbsp;
-					</logic:notPresent>
+					</logic:notEmpty>
 				</td>
 				<logic:greaterThan value="0" name="theoreticalHours" >
           <td class="listClasses">

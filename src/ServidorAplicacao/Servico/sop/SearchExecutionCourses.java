@@ -21,7 +21,6 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
-import DataBeans.util.Cloner;
 import Dominio.CurricularYear;
 import Dominio.CursoExecucao;
 import Dominio.ExecutionPeriod;
@@ -338,8 +337,10 @@ public class SearchExecutionCourses implements IServico {
                                 }
 
                             }
-                            infoExecutionCourse = (InfoExecutionCourse) Cloner
-                                    .get(executionCourse);
+                            //CLONER
+                            //infoExecutionCourse = (InfoExecutionCourse) Cloner
+                            //        .get(executionCourse);
+                            infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
                             List capacities = new ArrayList();
 
                             if (theoreticalCapacity.intValue() != 0) {
