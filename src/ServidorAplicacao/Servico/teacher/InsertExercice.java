@@ -89,7 +89,7 @@ public class InsertExercice implements IServico {
 				//new String(metadataFile.getFileData()
 				metadataString =
 					changeDocumentType(
-						new String(metadataFile.getFileData(), "Latin1"),
+						new String(metadataFile.getFileData(),"ISO-8859-1"),
 						true);
 				xmls = parseMetadata.parseMetadata(metadataString);
 			} catch (Exception e) {
@@ -208,5 +208,5 @@ public class InsertExercice implements IServico {
 	}
 	//<?xml version="1.0" encoding="Latin1"?>
 	//ISO-8859-1
-
+	
 }
