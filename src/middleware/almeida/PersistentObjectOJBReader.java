@@ -22,7 +22,7 @@ import Dominio.CurricularSemester;
 import Dominio.CurricularYear;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
@@ -201,7 +201,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		criteria.addEqualTo("associatedCurricularCourses.idInternal", ((CurricularCourse) curricularCourse).getIdInternal());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 		criteria.addEqualTo("executionPeriod.name.executionYear.year", executionPeriod.getExecutionYear().getYear());
-		List result = query(DisciplinaExecucao.class, criteria);
+		List result = query(ExecutionCourse.class, criteria);
 		//System.out.println("result.size" + result.size());
 		if (result.size() == 1) {
 			return (IExecutionCourse) result.get(0);
@@ -285,9 +285,9 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	public IFrequenta readFrequenta(IStudent student, IExecutionCourse disciplinaExecucao) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("aluno.idInternal", ((Student) student).getIdInternal());
-		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
+		criteria.addEqualTo("disciplinaExecucao.idInternal", ((ExecutionCourse) disciplinaExecucao).getIdInternal());
 		criteria.addEqualTo("aluno.idInternal", ((Student) student).getIdInternal());
-		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
+		criteria.addEqualTo("disciplinaExecucao.idInternal", ((ExecutionCourse) disciplinaExecucao).getIdInternal());
 		List result = query(Frequenta.class, criteria);
 		if (result.size() == 1) {
 			return (IFrequenta) result.get(0);
@@ -792,7 +792,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		criteria.addEqualTo("sigla", code);
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 		criteria.addEqualTo("executionPeriod.name.executionYear.year", executionPeriod.getExecutionYear().getYear());
-		List result = query(DisciplinaExecucao.class, criteria);
+		List result = query(ExecutionCourse.class, criteria);
 		if (result.size() == 1) {
 			return (IExecutionCourse) result.get(0);
 		} else if (result.size() > 1) {

@@ -21,7 +21,7 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.IStudent;
@@ -525,7 +525,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         throws ExcepcaoPersistencia
     {
         ITurno shiftExample = new Turno();
-        IExecutionCourse executionCourseExample = new DisciplinaExecucao();
+        IExecutionCourse executionCourseExample = new ExecutionCourse();
         List associatedStudents = new ArrayList();
         associatedStudents.add(student);
         executionCourseExample.setAttendingStudents(associatedStudents);

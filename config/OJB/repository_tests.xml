@@ -27,7 +27,7 @@
 	/>
     <reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.DisciplinaExecucao"
+         class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
 	<foreignkey field-id-ref="2"/>
@@ -127,7 +127,7 @@
 	/>
 	<reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.DisciplinaExecucao"
+         class-ref="Dominio.ExecutionCourse"
          proxy="true"
     > 
 	<foreignkey field-id-ref="7"/>
@@ -264,7 +264,7 @@
 	/>
 	<reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.DisciplinaExecucao"
+         class-ref="Dominio.ExecutionCourse"
          proxy="true"
     > 
 	<foreignkey field-id-ref="12"/>

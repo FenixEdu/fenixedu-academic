@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Enrolment;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
@@ -145,7 +145,7 @@ public class LoadCourseEnrolments extends DataFileLoader
                     // Ver se existe o frequenta
                     IFrequenta frequentaCriteria = new Frequenta();
                     frequentaCriteria.setAluno(studentCriteria);
-                    IExecutionCourse disciplinaExecucaoCriteria = new DisciplinaExecucao();
+                    IExecutionCourse disciplinaExecucaoCriteria = new ExecutionCourse();
                     disciplinaExecucaoCriteria.setNome(
                         alunoDisciplinaCurricular.getNomeDisciplinaCurricular());
                     frequentaCriteria.setDisciplinaExecucao(disciplinaExecucaoCriteria);

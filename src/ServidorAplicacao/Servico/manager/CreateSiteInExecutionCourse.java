@@ -3,7 +3,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.Site;
@@ -42,7 +42,7 @@ public class CreateSiteInExecutionCourse  implements IServico {
 								
 			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-			IExecutionCourse executionCourseToRead = new DisciplinaExecucao();
+			IExecutionCourse executionCourseToRead = new ExecutionCourse();
 			executionCourseToRead.setIdInternal(executionCourseId);
 			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourseToRead, false);
 				

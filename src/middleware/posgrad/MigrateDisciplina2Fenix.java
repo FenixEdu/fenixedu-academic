@@ -19,7 +19,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
@@ -207,7 +207,7 @@ public class MigrateDisciplina2Fenix {
 				
 				
 				// Execution Course for the public site
-				IExecutionCourse executionCourse = new DisciplinaExecucao();
+				IExecutionCourse executionCourse = new ExecutionCourse();
 //				executionCourse.setLabHours(curricularCourse2Write.getLabHours());
 //				executionCourse.setTheoPratHours(curricularCourse2Write.getTheoPratHours());
 //				executionCourse.setTheoreticalHours(curricularCourse2Write.getTheoreticalHours());

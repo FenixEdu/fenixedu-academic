@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.teacher;
 
 import Dominio.BibliographicReference;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IBibliographicReference;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
@@ -56,7 +56,7 @@ public class CreateBibliographicReference implements IServico {
 				persistentSupport.getIPersistentBibliographicReference();
 
 			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(infoExecutionCourseCode), false);
 
 			IBibliographicReference newBibliographicReference = new BibliographicReference();
 

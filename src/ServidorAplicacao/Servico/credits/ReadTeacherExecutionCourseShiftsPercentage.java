@@ -17,7 +17,7 @@ import DataBeans.teacher.credits.InfoShiftPercentage;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.teacher.professorship.TeacherExecutionCourseProfessorshipShiftsDTO;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.IShiftProfessorship;
@@ -158,7 +158,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
 
         IExecutionCourse executionCourse =
             (IExecutionCourse) executionCourseDAO.readByOId(
-                new DisciplinaExecucao(infoExecutionCourse.getIdInternal()),
+                new ExecutionCourse(infoExecutionCourse.getIdInternal()),
                 false);
         return executionCourse;
     }

@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.InfoEvaluationMethod;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.EvaluationMethod;
 import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
@@ -40,7 +40,7 @@ public class EditEvaluation implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
-			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(infoExecutionCourseCode); 
 				
 			IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();

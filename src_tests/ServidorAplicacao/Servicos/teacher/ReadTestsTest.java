@@ -13,7 +13,7 @@ import DataBeans.InfoSiteTests;
 import DataBeans.InfoTest;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITest;
 import Dominio.Test;
@@ -63,7 +63,7 @@ public class ReadTestsTest extends TestCaseReadServices {
 			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(new Integer(26));
+				new ExecutionCourse(new Integer(26));
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,

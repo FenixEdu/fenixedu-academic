@@ -12,7 +12,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteInstructions;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -84,7 +84,7 @@ public class TeacherAdministrationSiteComponentServiceInstructionsTest extends T
 
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new DisciplinaExecucao(new Integer(26)),
+                    new ExecutionCourse(new Integer(26)),
                     false);
             infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 

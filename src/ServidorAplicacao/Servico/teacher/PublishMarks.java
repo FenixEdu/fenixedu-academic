@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import Dominio.Announcement;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Evaluation;
 import Dominio.IAnnouncement;
 import Dominio.IExecutionCourse;
@@ -66,7 +66,7 @@ public class PublishMarks implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Execution Course
-			IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseCode);
+			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
 			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
 			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 

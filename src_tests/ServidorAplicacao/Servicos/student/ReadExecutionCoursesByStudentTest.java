@@ -9,7 +9,7 @@ import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -53,9 +53,9 @@ public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices {
 			sp.iniciarTransaccao();
 
 			IExecutionCourse disciplinaExecucao25 =
-				new DisciplinaExecucao(new Integer(25));
+				new ExecutionCourse(new Integer(25));
 			IExecutionCourse disciplinaExecucao26 =
-				new DisciplinaExecucao(new Integer(26));
+				new ExecutionCourse(new Integer(26));
 
 			disciplinaExecucao25 =
 				(IExecutionCourse) sp

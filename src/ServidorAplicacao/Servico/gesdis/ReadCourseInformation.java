@@ -22,7 +22,7 @@ import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -101,7 +101,7 @@ public class ReadCourseInformation implements IServico
 
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new DisciplinaExecucao(executionCourseId),
+                    new ExecutionCourse(executionCourseId),
                     false);
 
             InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();

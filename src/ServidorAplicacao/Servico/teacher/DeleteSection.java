@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -43,7 +43,7 @@ public class DeleteSection implements IServico {
 			ISite site = null;
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
-					new DisciplinaExecucao(infoExecutionCourseCode),
+					new ExecutionCourse(infoExecutionCourseCode),
 					false);
 			site = persistentSite.readByExecutionCourse(executionCourse);
 			ISection sectionToDelete =

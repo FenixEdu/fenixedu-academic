@@ -10,7 +10,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTest;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.DistributedTest;
 import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
@@ -58,7 +58,7 @@ public class ReadDistributedTestTest extends TestCaseReadServices {
 			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(new Integer(26));
+				new ExecutionCourse(new Integer(26));
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,

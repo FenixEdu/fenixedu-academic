@@ -21,7 +21,7 @@ import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import DataBeans.TypeLessonAndInfoShift;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.ITurma;
@@ -87,7 +87,7 @@ public class ReadShiftEnrolment implements IServico {
 //		executionCoure.setAnoLectivo(de.getLicenciaturaExecucao().getAnoLectivo());
 //		executionCoure.setCurso(degree);
 
-		IExecutionCourse executionDegree = new DisciplinaExecucao();
+		IExecutionCourse executionDegree = new ExecutionCourse();
 		executionDegree.setSigla(de.getSigla());
 
 		ITurno shift1 = new Turno();

@@ -7,7 +7,7 @@ import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITurma;
 import ServidorAplicacao.IServico;
@@ -53,7 +53,7 @@ public class ReadClassesByExecutionCourse implements IServico {
 				(IExecutionCourse) sp
 					.getIDisciplinaExecucaoPersistente()
 					.readByOID(
-					DisciplinaExecucao.class,
+					ExecutionCourse.class,
 					infoExecutionCourse.getIdInternal());
 
 			List classes =

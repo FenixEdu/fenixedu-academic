@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -76,7 +76,7 @@ public class PrepareEditStudentGroupMembers  implements IServico {
 			persistentStudentGroup = ps.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 			
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseCode),false);
 			IStudentGroup studentGroup = (IStudentGroup)ps.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
 			
 			

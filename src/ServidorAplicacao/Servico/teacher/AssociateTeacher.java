@@ -1,5 +1,5 @@
 package ServidorAplicacao.Servico.teacher;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITeacher;
 import Dominio.Professorship;
@@ -52,7 +52,7 @@ public class AssociateTeacher implements IServico {
 			if (iTeacher == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
+			ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
 			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 			persistentProfessorship.lockWrite(new Professorship(iTeacher, iExecutionCourse));
 		} catch (ExistingPersistentException ex){

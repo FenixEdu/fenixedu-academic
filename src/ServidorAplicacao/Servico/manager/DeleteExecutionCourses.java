@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -77,7 +77,7 @@ public class DeleteExecutionCourses implements IServico
                 internalId = (Integer) iter.next();
                 IExecutionCourse executionCourse =
                     (IExecutionCourse) persistentExecutionCourse.readByOId(
-                        new DisciplinaExecucao(internalId),
+                        new ExecutionCourse(internalId),
                         false);
                 if (executionCourse != null)
                 {

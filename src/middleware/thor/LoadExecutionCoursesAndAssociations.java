@@ -19,7 +19,7 @@ import middleware.LoadDataFile;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
@@ -325,7 +325,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 
 			if (disciplinaExecucao == null) {
 
-				disciplinaExecucao = new DisciplinaExecucao();
+				disciplinaExecucao = new ExecutionCourse();
 				disciplinaExecucao.setSigla(siglaDE);
 				disciplinaExecucao.setNome(courseDegreesPair.getNome());
 				disciplinaExecucao.setAssociatedExams(null);

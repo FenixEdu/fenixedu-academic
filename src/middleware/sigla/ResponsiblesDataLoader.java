@@ -16,7 +16,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
@@ -444,7 +444,7 @@ public class ResponsiblesDataLoader
         }
         Criteria crit2 = new Criteria();
         crit2.addIn("executionPeriod.idInternal", executionPeriodIds);
-        Query query2 = new QueryByCriteria(DisciplinaExecucao.class, crit2);
+        Query query2 = new QueryByCriteria(ExecutionCourse.class, crit2);
         List executionCourses = (List) broker.getCollectionByQuery(query2);
         System.out.println("# disciplinas fenix ->" + executionCourses.size());
         return executionCourses;

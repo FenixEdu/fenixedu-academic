@@ -6,7 +6,7 @@ import java.util.Date;
 import DataBeans.InfoAnnouncement;
 import DataBeans.util.Cloner;
 import Dominio.Announcement;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IAnnouncement;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
@@ -99,7 +99,7 @@ public class EditAnnouncementService implements IServico {
 
 			// read executionCourse and site
 			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(infoExecutionCourseCode), false);
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
 			checkIfAnnouncementExists(announcementOldTitle, date, announcementNewTitle, site);

@@ -14,7 +14,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteStudentInformation;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
@@ -83,7 +83,7 @@ public class PrepareCreateStudentGroup implements IServico {
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 
 			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseCode), false);
 			IGroupProperties groupProperties =
 				(IGroupProperties) ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
 

@@ -13,7 +13,7 @@ import DataBeans.InfoProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import DataBeans.teacher.professorship.ProfessorshipSupportLessonsDTO;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.Teacher;
@@ -63,7 +63,7 @@ public class ReadProfessorshipSupportLessons implements IServico
             IProfessorship professorship =
                 professorshipDAO.readByTeacherIDAndExecutionCourseID(
                     new Teacher(teacherId),
-                    new DisciplinaExecucao(executionCourseId));
+                    new ExecutionCourse(executionCourseId));
 
             InfoProfessorship infoProfessorship =
                 Cloner.copyIProfessorship2InfoProfessorship(professorship);

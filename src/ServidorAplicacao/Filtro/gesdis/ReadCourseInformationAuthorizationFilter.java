@@ -6,7 +6,7 @@ package ServidorAplicacao.Filtro.gesdis;
 
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
@@ -93,7 +93,7 @@ public class ReadCourseInformationAuthorizationFilter extends AuthorizationByRol
                 sp.getIDisciplinaExecucaoPersistente();
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new DisciplinaExecucao(executioncourseId),
+                    new ExecutionCourse(executioncourseId),
                     false);
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();

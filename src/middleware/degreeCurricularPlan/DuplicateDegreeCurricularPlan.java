@@ -15,7 +15,7 @@ import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IBranch;
@@ -207,7 +207,7 @@ public class DuplicateDegreeCurricularPlan {
 		while(iterator.hasNext()){
 			ICurricularCourse  curricularCourse = (ICurricularCourse) iterator.next();
 
-			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setAssociatedCurricularCourses(new ArrayList());
 			executionCourse.getAssociatedCurricularCourses().add(curricularCourse);
 			executionCourse.setAssociatedEvaluations(null);

@@ -23,7 +23,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.apache.struts.upload.FormFile;
 import org.xml.sax.SAXParseException;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
@@ -76,7 +76,7 @@ public class InsertExercice implements IServico {
 			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(executionCourseId);
+				new ExecutionCourse(executionCourseId);
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,

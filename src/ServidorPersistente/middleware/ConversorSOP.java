@@ -22,7 +22,7 @@ import org.odmg.QueryInvalidException;
 
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseLoad;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
@@ -216,7 +216,7 @@ public class ConversorSOP {
 			classShiftDAO.deleteAll();
 			lessonDAO.deleteAll();
 			readDatabase.deleteAll(
-				"select all from " + DisciplinaExecucao.class.getName());
+				"select all from " + ExecutionCourse.class.getName());
 
 			Constants.executionPeriod =
 				executionPeriodDAO.readActualExecutionPeriod();

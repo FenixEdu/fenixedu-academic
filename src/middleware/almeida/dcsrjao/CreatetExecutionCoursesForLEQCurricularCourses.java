@@ -7,7 +7,7 @@ import java.util.List;
 
 import Util.CurricularCourseType;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
@@ -100,7 +100,7 @@ public class CreatetExecutionCoursesForLEQCurricularCourses extends LoadDataToFe
 					numberUntreatableElements++;
 					return;
 				} else {
-					executionCourse = new DisciplinaExecucao();
+					executionCourse = new ExecutionCourse();
 					executionCourse.setExecutionPeriod(executionPeriod);
 					executionCourse.setNome(curricularCourse.getName());
 					executionCourse.setSigla(curricularCourse.getCode());

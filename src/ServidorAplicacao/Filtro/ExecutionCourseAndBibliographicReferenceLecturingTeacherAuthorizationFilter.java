@@ -9,7 +9,7 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.BibliographicReference;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IBibliographicReference;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
@@ -96,7 +96,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 			IPersistentBibliographicReference persistentBibliographicReference = sp.getIPersistentBibliographicReference();
@@ -144,7 +144,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 

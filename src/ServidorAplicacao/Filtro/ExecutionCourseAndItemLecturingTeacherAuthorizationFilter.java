@@ -8,7 +8,7 @@ package ServidorAplicacao.Filtro;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoItem;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IItem;
 import Dominio.IProfessorship;
@@ -96,7 +96,7 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 			IPersistentItem persistentItem = sp.getIPersistentItem();
@@ -148,7 +148,7 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 

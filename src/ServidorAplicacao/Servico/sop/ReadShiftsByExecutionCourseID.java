@@ -8,7 +8,7 @@ import java.util.List;
 
 import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
@@ -54,11 +54,11 @@ public class ReadShiftsByExecutionCourseID implements IServico {
 		try {
 			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 			
-			IExecutionCourse executionCourseTemp = new DisciplinaExecucao();
+			IExecutionCourse executionCourseTemp = new ExecutionCourse();
 			executionCourseTemp.setIdInternal(executionCourseID);
 			
 			
-			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
 	
 	

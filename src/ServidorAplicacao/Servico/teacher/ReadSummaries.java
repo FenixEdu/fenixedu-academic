@@ -14,7 +14,7 @@ import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSummary;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISummary;
 import ServidorAplicacao.IServico;
@@ -66,7 +66,7 @@ public class ReadSummaries implements IServico {
 			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(executionCourseId);
+				new ExecutionCourse(executionCourseId);
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,

@@ -193,7 +193,7 @@ public abstract class Cloner
 	 */
     public static IExecutionCourse copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse)
     {
-        IExecutionCourse executionCourse = new DisciplinaExecucao();
+        IExecutionCourse executionCourse = new ExecutionCourse();
         IExecutionPeriod executionPeriod =
             Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
                 infoExecutionCourse.getInfoExecutionPeriod());
@@ -2873,7 +2873,7 @@ public abstract class Cloner
     {
         IGroupProperties groupProperties = new GroupProperties();
 
-        IExecutionCourse executionCourse = new DisciplinaExecucao();
+        IExecutionCourse executionCourse = new ExecutionCourse();
         groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
         groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
         groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());

@@ -57,7 +57,7 @@ import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.BibliographicReference;
 import Dominio.CurricularCourse;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Evaluation;
 import Dominio.EvaluationExecutionCourse;
 import Dominio.FinalEvaluation;
@@ -1017,7 +1017,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
-					new DisciplinaExecucao(executionCourseCode),
+					new ExecutionCourse(executionCourseCode),
 					false);
 
 			List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);

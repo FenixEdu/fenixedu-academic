@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoStudent;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Frequenta;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
@@ -101,7 +101,7 @@ public class WriteStudentAttendingCourses implements IServico {
 			Iterator i = infoExecutionCourses.iterator();
 			while (i.hasNext()) {
 				Integer executionCourseId = new Integer((String) i.next());
-				IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
+				IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
 				executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 				if (executionCourse == null) {

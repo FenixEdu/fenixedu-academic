@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -65,7 +65,7 @@ public class SaveTeachersBody implements IServico {
 			
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
+				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
 				if(executionCourse == null)
 					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 

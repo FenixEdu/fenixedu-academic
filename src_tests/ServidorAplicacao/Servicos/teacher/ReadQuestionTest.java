@@ -11,7 +11,7 @@ import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
@@ -77,7 +77,7 @@ public class ReadQuestionTest extends TestCaseReadServices
 
             IPersistentExecutionCourse persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
-            IExecutionCourse executionCourse = new DisciplinaExecucao(new Integer(26));
+            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
             executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
             assertNotNull("executionCourse null", executionCourse);

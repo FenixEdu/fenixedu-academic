@@ -12,7 +12,7 @@ package ServidorAplicacao.Servico.sop;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -54,7 +54,7 @@ public class EditExecutionCourse implements IServico {
 				sp.getIDisciplinaExecucaoPersistente();
 
 			
-			IExecutionCourse executionCourseAux = new DisciplinaExecucao(infoExecutionCourse.getIdInternal());
+			IExecutionCourse executionCourseAux = new ExecutionCourse(infoExecutionCourse.getIdInternal());
 						
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) executionCourseDAO.readByOId(executionCourseAux, true);

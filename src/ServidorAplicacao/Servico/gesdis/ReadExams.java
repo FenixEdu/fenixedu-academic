@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import ServidorAplicacao.IServico;
@@ -68,7 +68,7 @@ public class ReadExams implements IServico {
 		throws FenixServiceException {
 			try {
 					ISuportePersistente sp;
-				IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseCode);
+				IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
 				
 				sp = SuportePersistenteOJB.getInstance();
 				IPersistentExecutionCourse persistentExecutionCourse=sp.getIDisciplinaExecucaoPersistente();

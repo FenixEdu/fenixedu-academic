@@ -284,7 +284,7 @@
 	</reference-descriptor>
 	<collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.DisciplinaExecucao"
+			element-class-ref="Dominio.ExecutionCourse"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
 			auto-retrieve="true"
 			proxy="true">

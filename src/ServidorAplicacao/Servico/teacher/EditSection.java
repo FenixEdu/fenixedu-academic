@@ -5,7 +5,7 @@ import java.util.List;
 
 import DataBeans.InfoSection;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -141,7 +141,7 @@ public class EditSection implements IServico {
 
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
-					new DisciplinaExecucao(infoExecutionCourseCode),
+					new ExecutionCourse(infoExecutionCourseCode),
 					false);
 
 			ISite site =

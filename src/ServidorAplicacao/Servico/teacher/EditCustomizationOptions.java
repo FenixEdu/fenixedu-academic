@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.InfoSite;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
@@ -43,7 +43,7 @@ public class EditCustomizationOptions implements IServico {
 			ISite siteOld = null;
 
 			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(infoExecutionCourseCode), false);
 			siteOld = persistentSite.readByExecutionCourse(executionCourse);
 
 			persistentSite.lockWrite(siteOld);

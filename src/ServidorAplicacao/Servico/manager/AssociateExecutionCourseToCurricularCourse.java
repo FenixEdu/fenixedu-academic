@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import Dominio.CurricularCourse;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
@@ -65,7 +65,7 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 					throw new ExistingServiceException("message.unavailable.execution.period",null);
 				}
 				
-				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
+				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
 				if(executionCourse == null)
 					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
 				else {

@@ -4,7 +4,7 @@
 package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoProfessorship;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
@@ -47,7 +47,7 @@ public class InsertProfessorShip implements IServico {
 				
 				Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
 				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
+				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
 				
 				if(executionCourse == null)
 					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);

@@ -151,7 +151,7 @@
       />
       <reference-descriptor
          name="disciplinaExecucao"
-         class-ref="Dominio.DisciplinaExecucao">
+         class-ref="Dominio.ExecutionCourse">
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
       
@@ -247,7 +247,7 @@
       </reference-descriptor>
      <reference-descriptor
          name="disciplinaExecucao"
-         class-ref="Dominio.DisciplinaExecucao"
+         class-ref="Dominio.ExecutionCourse"
       >
          <foreignkey field-id-ref="6"/>
       </reference-descriptor>      
@@ -408,7 +408,7 @@
       </reference-descriptor> 
       <reference-descriptor
          name="disciplinaExecucao"
-         class-ref="Dominio.DisciplinaExecucao"
+         class-ref="Dominio.ExecutionCourse"
          proxy="true"
       >
          <foreignkey field-id-ref="3"/>
@@ -515,7 +515,7 @@
       />
 	<collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.DisciplinaExecucao"
+			element-class-ref="Dominio.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			proxy="true"
 			auto-retrieve="true"
@@ -577,7 +577,7 @@
       />      
 	  <collection-descriptor
 			name="associatedExecutionCourses"
-			element-class-ref="Dominio.DisciplinaExecucao"
+			element-class-ref="Dominio.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			proxy="true"
 			auto-retrieve="true"
@@ -674,7 +674,7 @@
       </reference-descriptor> 
       <reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.DisciplinaExecucao"
+         class-ref="Dominio.ExecutionCourse"
       >
          <foreignkey field-ref="keyExecutionCourse"/>
       </reference-descriptor>
@@ -714,7 +714,7 @@
       </reference-descriptor> 
       <reference-descriptor
          name="executionCourse"
-         class-ref="Dominio.DisciplinaExecucao"
+         class-ref="Dominio.ExecutionCourse"
       >
          <foreignkey field-ref="keyExecutionCourse"/>
       </reference-descriptor>

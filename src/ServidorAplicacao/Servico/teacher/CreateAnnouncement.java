@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import Dominio.Announcement;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IAnnouncement;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
@@ -95,7 +95,7 @@ public class CreateAnnouncement implements IServico {
 
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
-					new DisciplinaExecucao(infoExecutionCourseCode),
+					new ExecutionCourse(infoExecutionCourseCode),
 					false);
 			site = persistentSite.readByExecutionCourse(executionCourse);
 

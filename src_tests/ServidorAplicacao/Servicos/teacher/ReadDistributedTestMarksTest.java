@@ -15,7 +15,7 @@ import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IStudentTestQuestion;
 import Dominio.StudentTestQuestion;
@@ -72,7 +72,7 @@ public class ReadDistributedTestMarksTest extends TestCaseReadServices {
 			IPersistentExecutionCourse persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(new Integer(26));
+				new ExecutionCourse(new Integer(26));
 
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(

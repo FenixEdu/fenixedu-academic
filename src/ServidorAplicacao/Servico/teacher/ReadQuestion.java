@@ -11,7 +11,7 @@ import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
@@ -57,7 +57,7 @@ public class ReadQuestion implements IServico {
 			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(executionCourseId);
+				new ExecutionCourse(executionCourseId);
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,

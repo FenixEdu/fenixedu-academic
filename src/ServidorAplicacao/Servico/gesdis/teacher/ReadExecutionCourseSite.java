@@ -8,7 +8,7 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
@@ -66,7 +66,7 @@ public class ReadExecutionCourseSite implements IServico {
 			
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
-			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
 			executionCourse =  (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 			

@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -79,7 +79,7 @@ public class DeleteStudentGroupMembers implements IServico {
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
 		
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseCode),false);
 			IStudentGroup studentGroup =(IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
 			
 			if(studentGroup==null)

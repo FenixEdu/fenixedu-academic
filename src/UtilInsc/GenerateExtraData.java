@@ -12,7 +12,7 @@ import Dominio.CurricularCourseScope;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -348,7 +348,7 @@ public class GenerateExtraData {
 			e.printStackTrace(System.out);
 		}
 		
-		IExecutionCourse executionCourse = new DisciplinaExecucao();
+		IExecutionCourse executionCourse = new ExecutionCourse();
 		executionCourse.setAssociatedExams(null);
 		executionCourse.setComment(null);
 		executionCourse.setIdInternal(null);

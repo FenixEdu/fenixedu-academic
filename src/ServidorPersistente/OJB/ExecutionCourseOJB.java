@@ -12,7 +12,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
@@ -39,7 +39,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
     {
         try
         {
-            String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+            String oqlQuery = "select all from " + ExecutionCourse.class.getName();
             super.deleteAll(oqlQuery);
             return true;
         } catch (ExcepcaoPersistencia ex)
@@ -69,9 +69,9 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
             super.lockWrite(executionCourseToWrite);
         // else If the execution course is mapped to the database, then write any existing changes.
         else if (
-            (executionCourseToWrite instanceof DisciplinaExecucao)
-                && ((DisciplinaExecucao) executionCourseFromDB).getIdInternal().equals(
-                    ((DisciplinaExecucao) executionCourseToWrite).getIdInternal()))
+            (executionCourseToWrite instanceof ExecutionCourse)
+                && ((ExecutionCourse) executionCourseFromDB).getIdInternal().equals(
+                    ((ExecutionCourse) executionCourseToWrite).getIdInternal()))
         {
             super.lockWrite(executionCourseToWrite);
             // else Throw an already existing exception
@@ -84,7 +84,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
     {
         try
         {
-            String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+            String oqlQuery = "select all from " + ExecutionCourse.class.getName();
             query.create(oqlQuery);
             List result = (List) query.execute();
             lockRead(result);
@@ -104,7 +104,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         try
         {
             IExecutionCourse disciplinaExecucao = null;
-            String oqlQuery = "select disciplinaExecucao from " + DisciplinaExecucao.class.getName();
+            String oqlQuery = "select disciplinaExecucao from " + ExecutionCourse.class.getName();
             oqlQuery += " where sigla = $1";
             oqlQuery += " and executionPeriod.executionYear.year = $2";
             oqlQuery += " and associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $3";
@@ -149,7 +149,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
 
-        List executionCourseList = queryList(DisciplinaExecucao.class, criteria, true);
+        List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
         return executionCourseList;
     }
 
@@ -169,14 +169,14 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
             "executionPeriod.executionYear.year",
             executionPeriod.getExecutionYear().getYear());
         criteria.addEqualTo("sigla", courseInitials);
-        return (IExecutionCourse) queryObject(DisciplinaExecucao.class, criteria);
+        return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
     }
 
     public void deleteExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
     {
         try
         {
-            String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+            String oqlQuery = "select all from " + ExecutionCourse.class.getName();
             oqlQuery += " where executionPeriod.name = $1 "
                 + " and executionPeriod.executionYear.year = $2 "
                 + " and sigla = $3 ";
@@ -230,7 +230,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
-        return queryList(DisciplinaExecucao.class, criteria);
+        return queryList(ExecutionCourse.class, criteria);
     }
 
     /* (non-Javadoc)
@@ -242,7 +242,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso", curso);
-        return queryList(DisciplinaExecucao.class, criteria);
+        return queryList(ExecutionCourse.class, criteria);
     }
 
     /* (non-Javadoc)
@@ -276,7 +276,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         }
         criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
 
-        List temp = queryList(DisciplinaExecucao.class, criteria, true);
+        List temp = queryList(ExecutionCourse.class, criteria, true);
 
         return temp;
         //		return queryList(DisciplinaExecucao.class, criteria, true);
@@ -317,9 +317,9 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
             super.lockWrite(executionCourseToWrite);
             // else If the ExecutionCourse is mapped to the database, then write any existing changes.
         } else if (
-            (executionCourseToWrite instanceof DisciplinaExecucao)
-                && ((DisciplinaExecucao) executionCourseFromDB).getIdInternal().equals(
-                    ((DisciplinaExecucao) executionCourseToWrite).getIdInternal()))
+            (executionCourseToWrite instanceof ExecutionCourse)
+                && ((ExecutionCourse) executionCourseFromDB).getIdInternal().equals(
+                    ((ExecutionCourse) executionCourseToWrite).getIdInternal()))
         {
             super.lockWrite(executionCourseToWrite);
             // else Throw an already existing exception
@@ -352,7 +352,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
         criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
 
-        return (IExecutionCourse) queryObject(DisciplinaExecucao.class, criteria);
+        return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
 
     }
 	public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
@@ -361,7 +361,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 		criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
 		criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
 		
-		return (List) queryList(DisciplinaExecucao.class, criteria);
+		return (List) queryList(ExecutionCourse.class, criteria);
 
 	}
 }

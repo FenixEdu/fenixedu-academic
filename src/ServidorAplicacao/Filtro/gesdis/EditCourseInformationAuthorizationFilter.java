@@ -8,7 +8,7 @@ import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.gesdis.InfoCourseReport;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
@@ -96,7 +96,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
                 sp.getIDisciplinaExecucaoPersistente();
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
-                    new DisciplinaExecucao(infoExecutionCourse.getIdInternal()),
+                    new ExecutionCourse(infoExecutionCourse.getIdInternal()),
                     false);
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();

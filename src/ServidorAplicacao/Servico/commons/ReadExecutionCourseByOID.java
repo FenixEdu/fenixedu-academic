@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.commons;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -48,7 +48,7 @@ public class ReadExecutionCourseByOID implements IServico {
 				sp.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) executionDegreeDAO.readByOID(
-					DisciplinaExecucao.class,
+					ExecutionCourse.class,
 					oid);
 			if (executionCourse != null) {
 				result =

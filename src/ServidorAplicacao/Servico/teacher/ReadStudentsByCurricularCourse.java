@@ -11,7 +11,7 @@ import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourseScope;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Enrolment;
 import Dominio.Frequenta;
 import Dominio.ICurricularCourseScope;
@@ -78,7 +78,7 @@ public class ReadStudentsByCurricularCourse implements IServico
         ICurricularCourseScope curricularCourseScope = null;
         try
         {
-            executionCourse = new DisciplinaExecucao();
+            executionCourse = new ExecutionCourse();
             executionCourse.setIdInternal(executionCourseCode);
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();

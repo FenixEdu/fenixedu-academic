@@ -7,7 +7,7 @@ package ServidorAplicacao.Filtro;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Exam;
 import Dominio.IExecutionCourse;
 import Dominio.IExam;
@@ -101,7 +101,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             {
                 executionCourse =
                     (IExecutionCourse)persistentExecutionCourse.readByOId(
-                        new DisciplinaExecucao((Integer)argumentos[0]),
+                        new ExecutionCourse((Integer)argumentos[0]),
                         false);
             }
 
@@ -148,7 +148,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             {
                 executionCourse =
                     (IExecutionCourse)persistentExecutionCourse.readByOId(
-                        new DisciplinaExecucao((Integer)argumentos[0]),
+                        new ExecutionCourse((Integer)argumentos[0]),
                         false);
             }
 

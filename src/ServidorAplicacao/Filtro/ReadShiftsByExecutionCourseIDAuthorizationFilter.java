@@ -11,7 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -127,7 +127,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 				
 				
-				IExecutionCourse executionCourseTemp = new DisciplinaExecucao();
+				IExecutionCourse executionCourseTemp = new ExecutionCourse();
 				executionCourseTemp.setIdInternal(executionCourseID);
 				
 				IExecutionCourse executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
@@ -195,7 +195,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                 } else {
                     executionCourse =
                         (IExecutionCourse) persistentExecutionCourse.readByOId(
-                            new DisciplinaExecucao((Integer) argumentos[0]),
+                            new ExecutionCourse((Integer) argumentos[0]),
                             false);
                 }
 

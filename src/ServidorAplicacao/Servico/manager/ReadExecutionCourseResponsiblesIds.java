@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import ServidorAplicacao.IServico;
@@ -61,7 +61,7 @@ public class ReadExecutionCourseResponsiblesIds implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IExecutionCourse executionCourse =
                 (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
-                    new DisciplinaExecucao(executionCourseId),
+                    new ExecutionCourse(executionCourseId),
                     false);
             responsibles = sp.getIPersistentResponsibleFor().readByExecutionCourse(executionCourse);
         } catch (ExcepcaoPersistencia excepcaoPersistencia)

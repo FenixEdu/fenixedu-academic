@@ -18,7 +18,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
@@ -98,7 +98,7 @@ public class SubmitMarks implements IServico {
 			//execution course and execution course's site
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
-			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(executionCourseCode);
 			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 

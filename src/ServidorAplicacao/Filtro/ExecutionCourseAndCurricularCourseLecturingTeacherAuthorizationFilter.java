@@ -9,7 +9,7 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
@@ -98,7 +98,7 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 			if (argumentos[1] instanceof InfoCurricularCourse) {
@@ -149,7 +149,7 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 

@@ -14,7 +14,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Exam;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionCourse;
@@ -141,7 +141,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             sp.iniciarTransaccao();
 
-            IExecutionCourse executionCourse2 = (DisciplinaExecucao) executionCourses1ano.get(0);
+            IExecutionCourse executionCourse2 = (ExecutionCourse) executionCourses1ano.get(0);
             disciplinaExecucaoPersistente.simpleLockWrite(executionCourse2);
 
             List list2 = new ArrayList();
@@ -150,7 +150,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             list2.add(exam2);
             executionCourse2.setAssociatedExams(list2);
 
-            IExecutionCourse executionCourse1 = (DisciplinaExecucao) executionCourses1ano.get(1);
+            IExecutionCourse executionCourse1 = (ExecutionCourse) executionCourses1ano.get(1);
 
             disciplinaExecucaoPersistente.simpleLockWrite(executionCourse1);
 
@@ -159,7 +159,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             list1.add(exam1);
             executionCourse1.setAssociatedExams(list1);
 
-            IExecutionCourse executionCourse3 = (DisciplinaExecucao) executionCourses1ano.get(2);
+            IExecutionCourse executionCourse3 = (ExecutionCourse) executionCourses1ano.get(2);
 
             disciplinaExecucaoPersistente.simpleLockWrite(executionCourse3);
 
@@ -169,7 +169,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             for (int i = 3; i < executionCourses1ano.size(); i++)
             {
-                executionCourse4 = (DisciplinaExecucao) executionCourses1ano.get(i);
+                executionCourse4 = (ExecutionCourse) executionCourses1ano.get(i);
 
                 disciplinaExecucaoPersistente.simpleLockWrite(executionCourse4);
 
@@ -180,7 +180,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
 
             for (int i = 0; i < executionCourses2ano.size(); i++)
             {
-                IExecutionCourse executionCourse5 = (DisciplinaExecucao) executionCourses2ano.get(i);
+                IExecutionCourse executionCourse5 = (ExecutionCourse) executionCourses2ano.get(i);
 
                 disciplinaExecucaoPersistente.simpleLockWrite(executionCourse5);
 

@@ -1,5 +1,5 @@
 package ServidorAplicacao.Servico.teacher;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -56,7 +56,7 @@ public class DeleteTeacher implements IServico {
 				throw new InvalidArgumentsServiceException();
 			}
 			
-			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
+			ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
 			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 			
 			//note: removed the possibility for a responsible teacher to remove from himself the professorship 

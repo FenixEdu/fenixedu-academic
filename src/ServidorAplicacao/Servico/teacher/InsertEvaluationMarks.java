@@ -13,7 +13,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Evaluation;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
@@ -90,7 +90,7 @@ public class InsertEvaluationMarks implements IServico {
 			IPersistentMark persistentMark = sp.getIPersistentMark();
 
 			//Execution Course
-			executionCourse = new DisciplinaExecucao(executionCourseCode);
+			executionCourse = new ExecutionCourse(executionCourseCode);
 			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 			//Site

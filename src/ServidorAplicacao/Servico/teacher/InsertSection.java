@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -93,7 +93,7 @@ public class InsertSection implements IServico {
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 
-			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
+			ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
 			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 			ISite iSite = persistentSite.readByExecutionCourse(iExecutionCourse);
 

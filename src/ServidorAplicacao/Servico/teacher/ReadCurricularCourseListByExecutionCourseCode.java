@@ -14,7 +14,7 @@ import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IExecutionCourse;
@@ -64,7 +64,7 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IServico {
 		List infoCurricularCourseList = new ArrayList();
 		ISite site = null;
 		try {
-			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(executionCourseCode);
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();

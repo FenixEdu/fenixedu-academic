@@ -4,7 +4,7 @@ import java.util.List;
 
 import fileSuport.INode;
 
-public class DisciplinaExecucao extends DomainObject implements IExecutionCourse {
+public class ExecutionCourse extends DomainObject implements IExecutionCourse {
 
 	private String nome;
 	private String sigla;
@@ -25,15 +25,15 @@ public class DisciplinaExecucao extends DomainObject implements IExecutionCourse
 	private List attendingStudents;
 	/* Construtores */
 
-	public DisciplinaExecucao() {
+	public ExecutionCourse() {
 	}
 
-	public DisciplinaExecucao(Integer idInternal) {
+	public ExecutionCourse(Integer idInternal) {
 		setIdInternal(idInternal);
 		}
 
 
-	public DisciplinaExecucao(
+	public ExecutionCourse(
 		String nome,
 		String sigla,
 		Double theoreticalHours,

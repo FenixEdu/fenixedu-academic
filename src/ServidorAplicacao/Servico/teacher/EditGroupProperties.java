@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoGroupProperties;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.GroupProperties;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
@@ -177,7 +177,7 @@ public class EditGroupProperties implements IServico {
 			if (checkIfAlreadyExists(infoGroupProperties, groupProperties)) {
 				result = checkIfIsPossibleToEdit(infoGroupProperties, groupProperties);
 				IExecutionCourse executionCourse =
-					(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(objectCode), false);
+					(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(objectCode), false);
 
 				groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
 				groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());

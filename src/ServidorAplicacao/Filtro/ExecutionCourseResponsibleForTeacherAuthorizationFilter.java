@@ -7,7 +7,7 @@ package ServidorAplicacao.Filtro;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IResponsibleFor;
 import Dominio.ITeacher;
@@ -94,7 +94,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 

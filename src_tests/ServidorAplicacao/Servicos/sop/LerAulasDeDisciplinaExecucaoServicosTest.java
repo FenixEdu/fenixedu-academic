@@ -15,7 +15,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -109,7 +109,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 			if(existing) {
 				ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 			} else {
-				ide = new DisciplinaExecucao("NOME", "SIGLA", new Double(1.5), new Double(1.5), new Double(1.5), new Double(1.5), iep);
+				ide = new ExecutionCourse("NOME", "SIGLA", new Double(1.5), new Double(1.5), new Double(1.5), new Double(1.5), iep);
 			}
 			
 			this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(ide);

@@ -9,7 +9,7 @@ import DataBeans.InfoAnnouncement;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.Announcement;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IAnnouncement;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
@@ -100,7 +100,7 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 			IPersistentAnnouncement persistentAnnouncement =
@@ -155,7 +155,7 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter
 			} else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 

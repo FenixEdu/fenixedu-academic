@@ -26,7 +26,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.IPessoa;
@@ -171,7 +171,7 @@ public class ReadStudentShiftEnrolment implements IServico
         ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
         //read all the shifts associated with the course in which the student is enrolled
-        IExecutionCourse executionCourseExample = new DisciplinaExecucao();
+        IExecutionCourse executionCourseExample = new ExecutionCourse();
         List associatedStudents = new ArrayList();
         associatedStudents.add(student);
         executionCourseExample.setAttendingStudents(associatedStudents);
@@ -347,7 +347,7 @@ public class ReadStudentShiftEnrolment implements IServico
     {
 
         ITurno shiftExample = new Turno();
-        IExecutionCourse executionCourseExample = new DisciplinaExecucao();
+        IExecutionCourse executionCourseExample = new ExecutionCourse();
 
         List associatedStudents = new ArrayList();
         associatedStudents.add(student);

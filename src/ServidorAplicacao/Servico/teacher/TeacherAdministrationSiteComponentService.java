@@ -2,7 +2,7 @@ package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ISiteComponent;
 import DataBeans.TeacherAdministrationSiteView;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import ServidorAplicacao.IServico;
@@ -63,7 +63,7 @@ public class TeacherAdministrationSiteComponentService implements IServico {
 			ISite site = null;
 
 			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(infoExecutionCourseCode), false);
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
 			TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder.getInstance();

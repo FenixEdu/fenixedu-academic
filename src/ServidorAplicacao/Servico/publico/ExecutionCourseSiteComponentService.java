@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.publico;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.Site;
@@ -71,7 +71,7 @@ public class ExecutionCourseSiteComponentService implements IServico {
 					throw new NonExistingServiceException();
 				}
 			} else {
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(infoExecutionCourseCode), false);
 				if (executionCourse == null) {
 					throw new FenixServiceException();
 				}

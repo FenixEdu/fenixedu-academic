@@ -14,7 +14,7 @@ import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.Metadata;
@@ -66,7 +66,7 @@ public class ReadMetadatasByDistributedTestTest extends TestCaseReadServices {
 			IPersistentMetadata persistentMetadata =
 				sp.getIPersistentMetadata();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(new Integer(26));
+				new ExecutionCourse(new Integer(26));
 
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(

@@ -6,7 +6,7 @@ import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IExecutionCourse;
@@ -46,7 +46,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
 			// Read The ExecutionCourse
-			IExecutionCourse executionCourseTemp = new DisciplinaExecucao();
+			IExecutionCourse executionCourseTemp = new ExecutionCourse();
 			executionCourseTemp.setIdInternal(executionCourseID);
 			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false); 
 

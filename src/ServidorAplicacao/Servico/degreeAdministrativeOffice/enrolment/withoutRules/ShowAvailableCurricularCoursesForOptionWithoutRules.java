@@ -8,7 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
@@ -196,7 +196,7 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 		while (iterator.hasNext()) {
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 		
-			IExecutionCourse executionCourseCriteria = new DisciplinaExecucao();
+			IExecutionCourse executionCourseCriteria = new ExecutionCourse();
 			executionCourseCriteria.setExecutionPeriod(executionPeriod);
 			executionCourseCriteria.setNome(curricularCourse.getName());
 			executionCourseCriteria.setSigla(curricularCourse.getCode());

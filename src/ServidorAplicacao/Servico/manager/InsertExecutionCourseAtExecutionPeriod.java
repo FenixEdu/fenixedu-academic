@@ -4,7 +4,7 @@
 package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoExecutionCourse;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -42,7 +42,7 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 	
 
 	public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
-		IExecutionCourse executionCourse = new DisciplinaExecucao();
+		IExecutionCourse executionCourse = new ExecutionCourse();
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 								

@@ -7,7 +7,7 @@ package ServidorAplicacao.Servico.publico;
 import java.util.List;
 
 import DataBeans.StudentGroupAttendacyInformation;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -65,7 +65,7 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername impl
 			//
 			IExecutionCourse executionCourse=
 				(IExecutionCourse) persistentExecutionCourse.readByOID(
-					DisciplinaExecucao.class,
+					ExecutionCourse.class,
 					executionCourseID);
 			//
             //

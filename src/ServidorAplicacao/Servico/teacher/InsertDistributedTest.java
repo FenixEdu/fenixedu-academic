@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 import Dominio.Advisory;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.DistributedTest;
 import Dominio.Frequenta;
 import Dominio.IAdvisory;
@@ -88,7 +88,7 @@ public class InsertDistributedTest implements IServico
         {
 
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
+            IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
             executionCourse =
                 (IExecutionCourse) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
                     executionCourse,
@@ -269,7 +269,7 @@ public class InsertDistributedTest implements IServico
             {
                 if (students[i].equals("Todos os Alunos"))
                 {
-                    IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
+                    IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
                     executionCourse =
                         (IExecutionCourse) persistentSuport
                             .getIDisciplinaExecucaoPersistente()

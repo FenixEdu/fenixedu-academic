@@ -8,7 +8,7 @@ package ServidorAplicacao.Filtro;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSummary;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ISummary;
@@ -102,7 +102,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter
 			else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 			IPersistentSummary persistentSummary = sp.getIPersistentSummary();
@@ -155,7 +155,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter
 			else {
 				executionCourse =
 					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao((Integer) argumentos[0]),
+						new ExecutionCourse((Integer) argumentos[0]),
 						false);
 			}
 

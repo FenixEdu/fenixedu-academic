@@ -12,7 +12,7 @@ import java.util.List;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteProjects;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.IServico;
@@ -65,7 +65,7 @@ public class ReadExecutionCourseProjects implements IServico
                 ISuportePersistente sp = SuportePersistenteOJB.getInstance();
                 IExecutionCourse executionCourse =
                     (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
-                        new DisciplinaExecucao(executionCourseCode),
+                        new ExecutionCourse(executionCourseCode),
                         false);
 
                 List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);

@@ -10,7 +10,7 @@ import org.apache.commons.collections.Predicate;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Enrolment;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
@@ -76,7 +76,7 @@ public class ValidateSubmitMarks implements IServico {
 			//execution course and execution course's site
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 
-			IExecutionCourse executionCourse = new DisciplinaExecucao();
+			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(executionCourseCode);
 			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 

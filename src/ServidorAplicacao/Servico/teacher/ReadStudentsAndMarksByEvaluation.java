@@ -12,7 +12,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
 import Dominio.IExecutionCourse;
@@ -72,7 +72,7 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 		List infoMarksList = new ArrayList();
 
 		ISite site = new Site();
-		IExecutionCourse executionCourse = new DisciplinaExecucao();
+		IExecutionCourse executionCourse = new ExecutionCourse();
 		IEvaluation evaluation = new Evaluation();
 		InfoEvaluation infoEvaluation = new InfoEvaluation();
 
@@ -80,7 +80,7 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 	
 			//Execution Course
-			executionCourse = new DisciplinaExecucao();
+			executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(executionCourseCode);
 
 			IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIDisciplinaExecucaoPersistente();

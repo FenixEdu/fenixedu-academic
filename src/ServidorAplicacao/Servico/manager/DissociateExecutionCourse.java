@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.manager;
 import java.util.List;
 
 import Dominio.CurricularCourse;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
@@ -51,7 +51,7 @@ public class DissociateExecutionCourse implements IServico {
 					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 				
 				IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
+				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
 				
 				if(executionCourse == null)
 					throw new NonExistingServiceException("message.nonExisting.executionCourse", null);

@@ -20,7 +20,7 @@ import Dominio.CurricularCourse;
 import Dominio.CurricularSemester;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
@@ -231,7 +231,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("sigla", sigla);
 		criteria.addEqualTo("keyExecutionPeriod", new Integer(2));
-		List result = query(DisciplinaExecucao.class, criteria);
+		List result = query(ExecutionCourse.class, criteria);
 		if (result.size() == 1) {
 			return (IExecutionCourse) result.get(0);
 		} else if (result.size() > 1) {

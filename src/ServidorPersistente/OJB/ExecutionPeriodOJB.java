@@ -11,7 +11,7 @@ import org.odmg.QueryException;
 import Dominio.Aula;
 import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.IAula;
@@ -648,12 +648,12 @@ public class ExecutionPeriodOJB
 			executionPeriodToExportDataFrom.getIdInternal());
 
 		int numberOfExecutionCoursesToTransfer =
-			count(DisciplinaExecucao.class, criteria);
+			count(ExecutionCourse.class, criteria);
 
 		for (int i = 0; i < numberOfExecutionCoursesToTransfer; i++) {
 			IExecutionCourse executionCourseToTransfer =
 				(IExecutionCourse) readSpan(
-					DisciplinaExecucao.class,
+					ExecutionCourse.class,
 					criteria,
 					new Integer(1),
 					new Integer(i+1)).get(
@@ -793,7 +793,7 @@ public class ExecutionPeriodOJB
 			executionPeriod.getIdInternal());
 
 		// Execution Courses
-		List executionCourses = queryList(DisciplinaExecucao.class, criteria);
+		List executionCourses = queryList(ExecutionCourse.class, criteria);
 		for (int i = 0; i < executionCourses.size(); i++) {
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) executionCourses.get(i);
@@ -853,13 +853,13 @@ public class ExecutionPeriodOJB
 		}
 	}
 
-	private DisciplinaExecucao createExecutionCourse(
+	private ExecutionCourse createExecutionCourse(
 		Object arg0,
 		IExecutionPeriod executionPeriodToImportDataTo)
 		throws ExcepcaoPersistencia {
-		DisciplinaExecucao executionCourseToTransfer =
-			(DisciplinaExecucao) arg0;
-		DisciplinaExecucao executionCourseToCreate = new DisciplinaExecucao();
+		ExecutionCourse executionCourseToTransfer =
+			(ExecutionCourse) arg0;
+		ExecutionCourse executionCourseToCreate = new ExecutionCourse();
 		List curricularCourses = new ArrayList();
 
 		for (int i = 0;
@@ -991,7 +991,7 @@ public class ExecutionPeriodOJB
 		IAula lessonToTransfer = (IAula) arg0;
 		Aula lessonToCreate = new Aula();
 
-		DisciplinaExecucao executionCourse =
+		ExecutionCourse executionCourse =
 			findCorrespondingExecutionCourse(
 				executionPeriodToImportDataTo,
 				lessonToTransfer.getDisciplinaExecucao());
@@ -1021,7 +1021,7 @@ public class ExecutionPeriodOJB
 	 * @param execucao
 	 * @return
 	 */
-	private DisciplinaExecucao findCorrespondingExecutionCourse(
+	private ExecutionCourse findCorrespondingExecutionCourse(
 		IExecutionPeriod executionPeriodToImportDataTo,
 		IExecutionCourse executionCourse)
 		throws ExcepcaoPersistencia {
@@ -1030,8 +1030,8 @@ public class ExecutionPeriodOJB
 		criteria.addEqualTo(
 			"executionPeriod.idInternal",
 			executionPeriodToImportDataTo.getIdInternal());
-		return (DisciplinaExecucao) queryObject(
-			DisciplinaExecucao.class,
+		return (ExecutionCourse) queryObject(
+			ExecutionCourse.class,
 			criteria);
 	}
 
@@ -1042,7 +1042,7 @@ public class ExecutionPeriodOJB
 		ITurno shiftToTransfer = (ITurno) arg0;
 		ITurno shiftToCreate = new Turno();
 
-		DisciplinaExecucao executionCourse =
+		ExecutionCourse executionCourse =
 			findCorrespondingExecutionCourse(
 				executionPeriodToImportDataTo,
 				shiftToTransfer.getDisciplinaExecucao());
@@ -1338,7 +1338,7 @@ public class ExecutionPeriodOJB
 			IResponsibleFor responsibleForToTransfer = (IResponsibleFor) arg0;
 			IResponsibleFor responsibleForToCreate = new ResponsibleFor();
 
-			DisciplinaExecucao executionCourse =
+			ExecutionCourse executionCourse =
 				findCorrespondingExecutionCourse(
 					executionPeriodToImportDataTo,
 					responsibleForToTransfer.getExecutionCourse());
@@ -1396,7 +1396,7 @@ public class ExecutionPeriodOJB
 		IProfessorship professorshipForToTransfer = (IProfessorship) arg0;
 		IProfessorship professorshipForToCreate = new Professorship();
 
-		DisciplinaExecucao executionCourse =
+		ExecutionCourse executionCourse =
 			findCorrespondingExecutionCourse(
 				executionPeriodToImportDataTo,
 				professorshipForToTransfer.getExecutionCourse());
@@ -1455,7 +1455,7 @@ public class ExecutionPeriodOJB
 		ISite siteToTransfer = (ISite) arg0;
 		ISite siteToCreate = new Site();
 
-		DisciplinaExecucao executionCourse =
+		ExecutionCourse executionCourse =
 			findCorrespondingExecutionCourse(
 				executionPeriodToImportDataTo,
 				siteToTransfer.getExecutionCourse());

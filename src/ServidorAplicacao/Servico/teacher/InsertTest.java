@@ -4,7 +4,7 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITest;
 import Dominio.Test;
@@ -47,7 +47,7 @@ public class InsertTest implements IServico {
 			IPersistentExecutionCourse persistentExecutionCourse =
 				persistentSuport.getIDisciplinaExecucaoPersistente();
 			IExecutionCourse executionCourse =
-				new DisciplinaExecucao(executionCourseId);
+				new ExecutionCourse(executionCourseId);
 			executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
 					executionCourse,

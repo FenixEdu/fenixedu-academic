@@ -14,7 +14,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.util.Cloner;
 
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.DistributedTest;
 import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
@@ -56,7 +56,7 @@ public class ReadDistributedTestMarksToString implements IServico
             persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse =
                 persistentSuport.getIDisciplinaExecucaoPersistente();
-            IExecutionCourse executionCourse = new DisciplinaExecucao(executionCourseId);
+            IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
             executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
             if (executionCourse == null)

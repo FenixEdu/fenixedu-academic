@@ -14,7 +14,7 @@ import DataBeans.InfoSiteTeacherStudentsEnrolledList;
 import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
 import Dominio.IExecutionCourse;
@@ -67,7 +67,7 @@ public class ReadStudentsEnrolledInExam implements IServico {
 
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) persistentExecutionCourse.readByOId(
-					new DisciplinaExecucao(executionCourseCode),
+					new ExecutionCourse(executionCourseCode),
 					false);
 			ISite site = persistentSite.readByExecutionCourse(executionCourse);
 

@@ -5,7 +5,7 @@ package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -50,7 +50,7 @@ public class ReadExecutionCourse implements IServico {
 		
 		try {
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(idInternal), false);
+				executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(new ExecutionCourse(idInternal), false);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia){
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

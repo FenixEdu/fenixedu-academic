@@ -17,7 +17,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
-import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -117,7 +117,7 @@ public class LerTurnoServicosTest extends TestCaseReadServices {
 				assertNotNull(executionCourse);
 
 			} else {
-				executionCourse = new DisciplinaExecucao("desc", "desc", new Double(1), new Double(2), new Double(3), new Double(4), executionPeriod);
+				executionCourse = new ExecutionCourse("desc", "desc", new Double(1), new Double(2), new Double(3), new Double(4), executionPeriod);
 			}
 			
 			this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse); 
