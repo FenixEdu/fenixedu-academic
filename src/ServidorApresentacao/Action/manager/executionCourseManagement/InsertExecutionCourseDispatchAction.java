@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
@@ -31,6 +32,7 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.PeriodState;
 
 /**
  * @author Fernanda Quitério 17/Dez/2003
@@ -60,6 +62,20 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction
 
 		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
 		{
+			// exclude closed execution periods
+			infoExecutionPeriods = (List) CollectionUtils.select(infoExecutionPeriods, new Predicate()
+					{
+				public boolean evaluate(Object input)
+				{
+					InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+					if (!infoExecutionPeriod.getState().equals(PeriodState.CLOSED))
+					{
+						return true;
+					}
+					return false;
+				}
+			});
+			
 			ComparatorChain comparator = new ComparatorChain();
 			comparator.addComparator(new BeanComparator("infoExecutionYear.year"),true);
 			comparator.addComparator(new BeanComparator("name"), true);

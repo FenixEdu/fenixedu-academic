@@ -1,0 +1,1 @@
+update execution_period set begin_date ='2004-03-01', end_date='2004-06-12' where id_internal=80;

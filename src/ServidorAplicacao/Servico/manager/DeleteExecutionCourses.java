@@ -52,10 +52,8 @@ public class DeleteExecutionCourses implements IServico
     // delete a set of execution courses
     public List run(List internalIds) throws FenixServiceException
     {
-
         try
         {
-
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();

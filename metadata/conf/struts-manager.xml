@@ -148,6 +148,12 @@
 				<form-property name="semester" type="java.lang.String" />
 				<form-property name="comment" type="java.lang.String" />
 				<form-property name="executionPeriodId" type="java.lang.String" />
+				<form-property name="executionCourseId" type="java.lang.String" />
+				<form-property name="executionDegreeId" type="java.lang.String" />
+				<form-property name="degreeCurricularPlanId" type="java.lang.String" />
+				<form-property name="curYear" type="java.lang.String" />
+				<form-property name="executionCoursesNotLinked" type="java.lang.Boolean" />				
+				<form-property name="curricularCoursesListSize" type="java.lang.Integer" />				
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
@@ -1063,6 +1069,37 @@
 		<forward name="insertExecutionCourse" path="df.executionCourseManagement.page.insertExecutionCourse"/>
 		<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
 	</action>
+
+	<action path="/editExecutionCourse"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+			parameter="method"
+			name="executionCourseForm"
+			scope="request"
+			input="/editExecutionCourse.do?method=prepareEditECChooseExecutionPeriod&amp;page=0">
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+
+		<forward name="prepareEditECChooseExecutionPeriod" path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod"/>
+		<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
+		<forward name="prepareEditExecutionCourse" path="df.executionCourseManagement.prepareEditExecutionCourse"/>
+		<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
+	</action>
+	<action path="/editExecutionCourseManageCurricularCourses"
+			type="ServidorApresentacao.Action.manager.executionCourseManagement.EditExecutionCourseManageCurricularCoursesDispatchAction"
+			parameter="method"
+			name="executionCourseForm"
+			scope="request"
+			input="/editExecutionCourse.do?method=prepareEditExecutionCourse&amp;page=0">
+
+		<forward name="editExecutionCourse" path="/editExecutionCourse.do?method=editExecutionCourse&amp;page=0"/>
+		<forward name="prepareAssociateCurricularCourseChooseDegreeCurricularPlan" path="df.executionCourseManagement.prepareAssociateCurricularCourseChooseDegreeCurricularPlan"/>
+		<forward name="associateCurricularCourse" path="df.executionCourseManagement.associateCurricularCourse"/>
+	</action>
+
 	
 	<!-- ========== PERSON MANAGEMENT MANAGEMENT ========== -->
 	<action path="/personManagement"

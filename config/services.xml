@@ -5247,6 +5247,52 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
+   	<service>
+		<name>ReadExecutionDegreesByExecutionPeriodId</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+   	<service>
+		<name>ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+   	<service>
+		<name>ReadInfoExecutionCourseByOID</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.executionCourseManagement.ReadInfoExecutionCourseByOID</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+   	<service>
+		<name>DissociateCurricularCourseByExecutionCourseId</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.executionCourseManagement.DissociateCurricularCourseByExecutionCourseId</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+   	<service>
+		<name>AssociateCurricularCoursesToExecutionCourse</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.executionCourseManagement.AssociateCurricularCoursesToExecutionCourse</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+    
     <service>
         <name>ReadProfessorshipsAndResponsibilitiesByExecutionDegree</name>
         <implementationClass> 

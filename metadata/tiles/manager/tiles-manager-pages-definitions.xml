@@ -207,6 +207,34 @@
 		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	
+	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecutionPeriod.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>	
+	
+	<definition name="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecDegreeAndCurYear.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>	
+	
+	<definition name="df.executionCourseManagement.prepareEditExecutionCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/prepareEditExecutionCourse.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>	
+	<definition name="df.executionCourseManagement.editExecutionCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/editExecutionCourse.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>	
+	<definition name="df.executionCourseManagement.prepareAssociateCurricularCourseChooseDegreeCurricularPlan" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/prepareAssociateCurricularCourseChooseDegreeCurricularPlan.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>	
+	<definition name="df.executionCourseManagement.associateCurricularCourse" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/executionCourseManagement/associateCurricularCourse.jsp" />
+		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
+	</definition>	
+	
+
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPage" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/personManagement/welcomeScreen.jsp" />

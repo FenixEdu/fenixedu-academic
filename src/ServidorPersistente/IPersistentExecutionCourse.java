@@ -111,5 +111,6 @@ public interface IPersistentExecutionCourse extends IPersistentObject
 	 * @return
 	 */
     public List readByExecutionCourseIds(List executionCourseIds) throws ExcepcaoPersistencia;
-
+    public List readByExecutionPeriodWithNoCurricularCourses(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    
 }

@@ -790,7 +790,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject
 	 * 
 	 * @return PersistenceBroker associated with current transaction
 	 */
-    private PersistenceBroker getCurrentPersistenceBroker()
+    protected PersistenceBroker getCurrentPersistenceBroker()
     {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         return pb;

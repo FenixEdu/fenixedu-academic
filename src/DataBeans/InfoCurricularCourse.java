@@ -17,24 +17,25 @@ import Util.CurricularCourseType;
  *
  * @author  tfc130
  */
-public class InfoCurricularCourse extends InfoObject implements Comparable, ISiteComponent
-{
-    private String name;
-    private String code;
-    private Double credits;
-    private Double theoreticalHours;
-    private Double praticalHours;
-    private Double theoPratHours;
-    private Double labHours;
-    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-    //	private List associatedInfoCurricularSemesters;
-    private List infoScopes;
-    private List infoAssociatedExecutionCourses;
-    private CurricularCourseType type;
-    private CurricularCourseExecutionScope curricularCourseExecutionScope;
-    private Boolean mandatory;
-    private IUniversity university;
-    private Boolean basic;
+public class InfoCurricularCourse  extends InfoObject implements Comparable,ISiteComponent{
+	private String name;
+	private String code;
+	private Double credits;
+	private Double theoreticalHours;
+	private Double praticalHours;
+	private Double theoPratHours;
+	private Double labHours;
+	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+	//	private List associatedInfoCurricularSemesters;
+	private List infoScopes;
+	private List infoAssociatedExecutionCourses;
+	private CurricularCourseType type;
+	private CurricularCourseExecutionScope curricularCourseExecutionScope;
+	private Boolean mandatory;
+	private IUniversity university;
+	private Boolean basic;
+	
+	private String chosen;
 
     //	Nuno Correia & Ricardo Rodrigues
     private InfoScientificArea scientificArea;
@@ -444,4 +445,20 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     {
         this.scientificArea = scientificArea;
     }
+	/**
+	 * @return Returns the chosen.
+	 */
+	public String getChosen()
+	{
+		return chosen;
+	}
+
+	/**
+	 * @param chosen The chosen to set.
+	 */
+	public void setChosen(String chosen)
+	{
+		this.chosen = chosen;
+	}
+
 }
