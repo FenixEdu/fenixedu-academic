@@ -38,6 +38,9 @@
 			</html:multibox>
 			<bean:write name="item"/> º ano <br/>
 		</logic:iterate>
+		<html:checkbox property="selectAllCurricularYears">
+			<bean:message key="checkbox.show.all"/><br/>
+		</html:checkbox>
 	</logic:present>
 	<br/>
    <p><html:submit value="Submeter" styleClass="inputbutton">

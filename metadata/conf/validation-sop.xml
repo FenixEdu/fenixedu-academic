@@ -47,6 +47,14 @@
         <arg0 key="property.context.degree" />
         <msg name="required" key="errors.choose.one.year"/>
       </field>
+        <field property="selectAllCurricularYears"
+               depends="multiBoxWithSelectAllCheckBox" page="1">
+                  <arg0 key="property.curricularYear"/>
+                  <var>
+                     <var-name>secondProperty</var-name>
+                     <var-value>selectedCurricularYears</var-value>
+                  </var>
+        </field>
     </form>
 
 

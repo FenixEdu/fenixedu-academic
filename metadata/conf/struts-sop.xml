@@ -215,12 +215,8 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
         <form-property name="index" type="java.lang.String"/>
-        <form-property name="curricularYear1" type="java.lang.Integer"/>
-        <form-property name="curricularYear2" type="java.lang.Integer"/>
-        <form-property name="curricularYear3" type="java.lang.Integer"/>
-        <form-property name="curricularYear4" type="java.lang.Integer"/>
-        <form-property name="curricularYear5" type="java.lang.Integer"/>
         <form-property name="selectedCurricularYears" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllCurricularYears" type="java.lang.Boolean"/>
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
 
@@ -899,6 +895,6 @@
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-sop.xml"/>
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-sop.xml"/>
     </plug-in>
 </struts-config>

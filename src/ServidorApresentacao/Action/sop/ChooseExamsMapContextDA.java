@@ -136,11 +136,21 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 				(String[]) chooseExamContextoForm.get(
 					"selectedCurricularYears");
 
+			Boolean selectAllCurricularYears =
+				(Boolean) chooseExamContextoForm.get(
+					"selectAllCurricularYears");
+
+			if ((selectAllCurricularYears != null)
+				&& selectAllCurricularYears.booleanValue()) {
+				String[] allCurricularYears = { "1", "2", "3", "4", "5" };
+				selectedCurricularYears = allCurricularYears;
+			}
+
 			List curricularYears =
 				new ArrayList(selectedCurricularYears.length);
 			for (int i = 0; i < selectedCurricularYears.length; i++)
 				curricularYears.add(new Integer(selectedCurricularYears[i]));
-			
+
 			session.setAttribute(
 				SessionConstants.CURRICULAR_YEARS_LIST,
 				curricularYears);

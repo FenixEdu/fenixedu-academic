@@ -8,8 +8,8 @@
 <br/>
 <table width="80%" border="0" cellpadding="0" cellspacing="0" align="center">
 	<tr>
-		<td bgcolor="#FFFFFF" class="infoselected"><p>O dia e turno selecionados
-        	s&atilde;o:</p>
+		<td bgcolor="#FFFFFF" class="infoselected"><p>A licenciatura seleccionada
+        	&eacute;:</p>
 			<strong><jsp:include page="examsMapContext.jsp"/></strong>
          </td>
     </tr>
