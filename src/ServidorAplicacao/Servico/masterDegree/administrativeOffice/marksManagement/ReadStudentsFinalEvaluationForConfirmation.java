@@ -28,7 +28,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentTeacher;
@@ -77,7 +77,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
                     .getIPersistentEnrolmentEvaluation();
             IPersistentCurricularCourse persistentCurricularCourse = sp
                     .getIPersistentCurricularCourse();
-            IPersistentEnrolment persistentEnrolment = sp
+            IPersistentEnrollment persistentEnrolment = sp
                     .getIPersistentEnrolment();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp

@@ -63,7 +63,7 @@ import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDepartment;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
@@ -349,7 +349,7 @@ public class ReadCourseInformation implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrollmentState enrolmentState = enrolment.getEnrolmentState();
+            EnrollmentState enrolmentState = enrolment.getEnrollmentState();
             if (enrolmentState.equals(EnrollmentState.APROVED)) {
                 approved++;
             }
@@ -367,7 +367,7 @@ public class ReadCourseInformation implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrollmentState enrolmentState = enrolment.getEnrolmentState();
+            EnrollmentState enrolmentState = enrolment.getEnrollmentState();
             if (enrolmentState.equals(EnrollmentState.APROVED)
                     || enrolmentState.equals(EnrollmentState.NOT_APROVED)) {
                 evaluated++;
@@ -384,7 +384,7 @@ public class ReadCourseInformation implements IService {
     private List getEnrolled(IExecutionPeriod executionPeriod,
             ICurricularCourse curricularCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
         List enrolments = persistentEnrolment
                 .readByCurricularCourseAndExecutionPeriod(curricularCourse,
                         executionPeriod);

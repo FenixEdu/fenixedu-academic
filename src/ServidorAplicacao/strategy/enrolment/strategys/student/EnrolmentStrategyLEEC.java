@@ -35,7 +35,7 @@ import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
 import ServidorPersistente.IPersistentCreditsInSpecificScientificArea;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseGroup;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentScientificArea;
 import ServidorPersistente.ISuportePersistente;
@@ -113,7 +113,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB
                 .getInstance();
-        IPersistentEnrolment enrolmentDAO = persistentSuport
+        IPersistentEnrollment enrolmentDAO = persistentSuport
                 .getIPersistentEnrolment();
         IPersistentExecutionPeriod executionPeriodDAO = persistentSuport
                 .getIPersistentExecutionPeriod();
@@ -164,7 +164,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB
                 .getInstance();
-        IPersistentEnrolment enrolmentDAO = persistentSuport
+        IPersistentEnrollment enrolmentDAO = persistentSuport
                 .getIPersistentEnrolment();
 
         List enrollments = enrolmentDAO
@@ -1358,7 +1358,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = SuportePersistenteOJB
                 .getInstance();
-        IPersistentEnrolment enrolmentDAO = persistentSuport
+        IPersistentEnrollment enrolmentDAO = persistentSuport
                 .getIPersistentEnrolment();
 
         IEnrollment enrolment = enrolmentDAO
@@ -1375,7 +1375,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment
                         .setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-                enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
+                enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
                 enrolment.setExecutionPeriod(executionPeriod);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setCreationDate(new Date());

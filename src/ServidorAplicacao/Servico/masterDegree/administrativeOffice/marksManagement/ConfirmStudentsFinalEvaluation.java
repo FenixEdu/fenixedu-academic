@@ -18,7 +18,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -71,7 +71,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation =
                 sp.getIPersistentEnrolmentEvaluation();
-            IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+            IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
             //			employee
@@ -137,7 +137,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
 
     private void updateEnrolmentEvaluation(
         IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
-        IPersistentEnrolment persistentEnrolment,
+        IPersistentEnrollment persistentEnrolment,
         IEmployee employee,
         IEnrolmentEvaluation enrolmentEvaluationElem)
         throws ExcepcaoPersistencia
@@ -157,7 +157,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
     }
 
     private void updateEnrolmentState(
-        IPersistentEnrolment persistentEnrolment,
+        IPersistentEnrollment persistentEnrolment,
         IEnrolmentEvaluation enrolmentEvaluationElem)
         throws ExcepcaoPersistencia
     {
@@ -173,7 +173,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico
         {
             newEnrolmentState = EnrollmentState.NOT_EVALUATED;
         }
-        enrolmentToEdit.setEnrolmentState(newEnrolmentState);
+        enrolmentToEdit.setEnrollmentState(newEnrolmentState);
     }
 
     private IEmployee readEmployee(IPessoa person)

@@ -58,8 +58,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 				(InfoExecutionPeriod) request.getAttribute(
 					SessionConstants.EXECUTION_PERIOD);
 					
-			Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-
 			Integer degreeId = getFromRequest("degreeID", request);
 			request.setAttribute("degreeID", degreeId);
 

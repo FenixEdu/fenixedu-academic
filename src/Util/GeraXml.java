@@ -46,7 +46,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -166,7 +166,7 @@ public class GeraXml extends FenixUtil {
         try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
-            IPersistentEnrolment persistentEnrolment = suportePersistente
+            IPersistentEnrollment persistentEnrolment = suportePersistente
                     .getIPersistentEnrolment();
 
             suportePersistente.iniciarTransaccao();
@@ -201,7 +201,7 @@ public class GeraXml extends FenixUtil {
                     .getIPersistentCurricularCourse();
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = suportePersistente
                     .getIPersistentDegreeCurricularPlan();
-            IPersistentEnrolment persistentEnrolment = suportePersistente
+            IPersistentEnrollment persistentEnrolment = suportePersistente
                     .getIPersistentEnrolment();
             IStudentCurricularPlanPersistente studentCurricularPlanPersistente = suportePersistente
                     .getIStudentCurricularPlanPersistente();
@@ -234,7 +234,7 @@ public class GeraXml extends FenixUtil {
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setExecutionPeriod(executionPeriod);
-                enrolment.setEnrolmentState(enrolmentState);
+                enrolment.setEnrollmentState(enrolmentState);
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
             } catch (RuntimeException e1) {
                 System.out
@@ -335,7 +335,7 @@ public class GeraXml extends FenixUtil {
         try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
-            IPersistentEnrolment persistentEnrolment = suportePersistente
+            IPersistentEnrollment persistentEnrolment = suportePersistente
                     .getIPersistentEnrolment();
             IStudentCurricularPlanPersistente studentCurricularPlanPersistente = suportePersistente
                     .getIStudentCurricularPlanPersistente();

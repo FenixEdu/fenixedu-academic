@@ -15,7 +15,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import Util.CurricularCourseType;
 import Util.EnrollmentState;
 import Util.StudentCurricularPlanState;
@@ -26,7 +26,7 @@ import Util.TipoCurso;
  */
 
 public class EnrolmentOJB extends ObjectFenixOJB implements
-        IPersistentEnrolment {
+        IPersistentEnrollment {
 
     public List readAll() throws ExcepcaoPersistencia {
         return queryList(Enrolment.class, new Criteria());

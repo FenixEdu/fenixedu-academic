@@ -24,7 +24,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoSala;
@@ -64,7 +64,7 @@ public class ReadExamsByDate implements IServico
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+            IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
             // Read exams on requested day, start and end time
             List exams = sp.getIPersistentExam().readBy(day, beginning, end);

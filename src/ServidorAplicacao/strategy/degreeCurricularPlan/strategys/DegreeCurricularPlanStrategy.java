@@ -105,7 +105,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		while (iterator.hasNext())
 		{
 			IEnrollment enrolment = (IEnrollment) iterator.next();
-			if ((enrolment.getEnrolmentState().equals(EnrollmentState.APROVED))
+			if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
 				&& (!enrolment
 					.getCurricularCourse()
 					.getType()
@@ -168,7 +168,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		while (iterator.hasNext())
 		{
 			IEnrollment enrolment = (IEnrollment) iterator.next();
-			if ((enrolment.getEnrolmentState().equals(EnrollmentState.APROVED))
+			if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
 				&& (!enrolment
 					.getCurricularCourse()
 					.getType()

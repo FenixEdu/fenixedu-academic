@@ -17,7 +17,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -76,7 +76,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			IEmployee employee = null;
 			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+			IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 			
 			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 			if (person == null) {
@@ -99,10 +99,10 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
 				while (iterator.hasNext()) {
 					IEnrollment enrolment = (IEnrollment) iterator.next();
-					if (enrolment.getEnrolmentState().getValue() ==  EnrollmentState.ENROLLED_TYPE
-							|| enrolment.getEnrolmentState().getValue() ==  EnrollmentState.TEMPORARILY_ENROLLED_TYPE) {
+					if (enrolment.getEnrollmentState().getValue() ==  EnrollmentState.ENROLLED_TYPE
+							|| enrolment.getEnrollmentState().getValue() ==  EnrollmentState.TEMPORARILY_ENROLLED_TYPE) {
 						persistentEnrolment.simpleLockWrite(enrolment);
-						enrolment.setEnrolmentState(EnrollmentState.ANNULED);
+						enrolment.setEnrollmentState(EnrollmentState.ANNULED);
 					}
 				}
 			} else {
@@ -161,7 +161,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
         try {
         	auxEnrolment.setEnrolmentEvaluationType(
         		enrolment.getEnrolmentEvaluationType());
-        	auxEnrolment.setEnrolmentState(enrolment.getEnrolmentState());
+        	auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
         	auxEnrolment.setEvaluations(enrolment.getEvaluations());
         } catch (Exception e1) {
         	throw new FenixServiceException(e1);
@@ -174,12 +174,12 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
      * @param enrolment
      * @throws ExcepcaoPersistencia
      */
-    private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, IPersistentEnrolment persistentEnrolment, IEnrollment enrolment) throws ExcepcaoPersistencia
+    private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, IPersistentEnrollment persistentEnrolment, IEnrollment enrolment) throws ExcepcaoPersistencia
     {
         if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
-            if (enrolment.getEnrolmentState().getValue() ==  EnrollmentState.ANNULED_TYPE) {
+            if (enrolment.getEnrollmentState().getValue() ==  EnrollmentState.ANNULED_TYPE) {
         		persistentEnrolment.simpleLockWrite(enrolment);		
-        		enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
+        		enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
         	}					    
         }
     }

@@ -31,7 +31,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -133,7 +133,7 @@ public class ReadFilteredExamsMap implements IServico
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+            IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
             // List of execution courses
             List infoExecutionCourses = new ArrayList();

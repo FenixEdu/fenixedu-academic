@@ -15,7 +15,7 @@ import Dominio.finalDegreeWork.IGroupStudent;
 import Dominio.finalDegreeWork.IScheduleing;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
@@ -41,7 +41,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
         //        IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
         // persistentSupport
         //                .getIStudentCurricularPlanPersistente();
-        IPersistentEnrolment persistentEnrolment = persistentSupport
+        IPersistentEnrollment persistentEnrolment = persistentSupport
                 .getIPersistentEnrolment();
 
         IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(

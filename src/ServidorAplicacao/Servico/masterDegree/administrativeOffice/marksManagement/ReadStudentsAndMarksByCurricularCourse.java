@@ -31,7 +31,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -80,7 +80,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
                     .getIPersistentCurricularCourse();
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
                     .getIPersistentEnrolmentEvaluation();
-            IPersistentEnrolment persistentEnrolment = sp
+            IPersistentEnrollment persistentEnrolment = sp
                     .getIPersistentEnrolment();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 

@@ -31,7 +31,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
@@ -108,7 +108,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 		{
 			ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse curricularCourseDAO = persistenceDAO.getIPersistentCurricularCourse();
-			IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
+			IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 			IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistenceDAO.getIStudentCurricularPlanPersistente();
 
 			IStudentCurricularPlan toStudentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(
@@ -174,7 +174,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 		String grade, IUserView userView) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-		IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
+		IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 		IPersistentExecutionPeriod executionPeriodDAO = persistenceDAO.getIPersistentExecutionPeriod();
 
 		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
@@ -190,7 +190,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
 			enrollmentToWrite.setCurricularCourse(curricularCourse);
 			enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
-			enrollmentToWrite.setEnrolmentState(getEnrollmentStateByGrade(grade));
+			enrollmentToWrite.setEnrollmentState(getEnrollmentStateByGrade(grade));
 			enrollmentToWrite.setExecutionPeriod(executionPeriod);
 			enrollmentToWrite.setStudentCurricularPlan(toStudentCurricularPlan);
 			enrollmentToWrite.setCreationDate(new Date());
@@ -314,7 +314,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 		IStudentCurricularPlan toStudentCurricularPlan) throws ExcepcaoPersistencia
 	{
 		ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-		IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
+		IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 		
 		IEnrollment enrollment = enrollmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 			toStudentCurricularPlan, oldEnrollment.getCurricularCourse(), oldEnrollment.getExecutionPeriod());

@@ -248,10 +248,10 @@
 		jdbc-type="INTEGER"
 	/>    
 	<field-descriptor
-		name="enrolmentState"
+		name="enrollmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentState2SqlEnrolmentStateFieldConversion"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
 		name="condition"
@@ -335,7 +335,7 @@
 		name="enrolmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentState2SqlEnrolmentStateFieldConversion"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
 		name="enrolmentEvaluationType"
@@ -415,7 +415,7 @@
 		name="enrolmentState"
 		column="STATE"
 		jdbc-type="INTEGER"
-		conversion="ServidorPersistente.Conversores.JavaEnrolmentState2SqlEnrolmentStateFieldConversion"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
 		name="enrolmentEvaluationType"

@@ -25,7 +25,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -63,7 +63,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
 
             if (isStudentCurricularPlanFromChosenExecutionYear(
                     studentCurricularPlan, executionYear)) {
-                IPersistentEnrolment persistentEnrolment = sp
+                IPersistentEnrollment persistentEnrolment = sp
                         .getIPersistentEnrolment();
                 List enrollments = persistentEnrolment
                         .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(

@@ -16,7 +16,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -123,7 +123,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
 		try
 		{
 			ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-			IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
+			IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 			IPersistentCurricularCourse curricularCourseDAO = persistenceDAO.getIPersistentCurricularCourse();
 
 			List enrollmentsToGiveEquivalence = new ArrayList();

@@ -29,7 +29,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
@@ -57,7 +57,7 @@ public class GetAttendaciesByStudentList implements IService {
                     .getIFrequentaPersistente();
             IPersistentStudent persistentStudent = persistenceSupport
                     .getIPersistentStudent();
-            IPersistentEnrolment persistentEnrolment = persistenceSupport
+            IPersistentEnrollment persistentEnrolment = persistenceSupport
                     .getIPersistentEnrolment();
             ITurnoAlunoPersistente persistentShiftStudent = persistenceSupport
                     .getITurnoAlunoPersistente();

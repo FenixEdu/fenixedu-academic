@@ -8,7 +8,7 @@ import Dominio.IEnrollment;
 import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -58,7 +58,7 @@ public class GetEnrollmentEvaluation extends EnrollmentEquivalenceServiceUtils i
 		try
 		{
 			ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-			IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
+			IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 			enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
 		} catch (ExcepcaoPersistencia e)
 		{

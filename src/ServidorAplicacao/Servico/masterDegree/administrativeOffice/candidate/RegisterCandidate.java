@@ -216,7 +216,7 @@ public class RegisterCandidate implements IService {
                 enrolment
                         .setEnrolmentEvaluationType(new EnrolmentEvaluationType(
                                 EnrolmentEvaluationType.NORMAL));
-                enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
+                enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
                 enrolment.setExecutionPeriod(sp.getIPersistentExecutionPeriod()
                         .readActualExecutionPeriod());
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);

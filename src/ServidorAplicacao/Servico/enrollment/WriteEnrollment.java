@@ -25,7 +25,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -62,7 +62,7 @@ public class WriteEnrollment implements IService
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
+			IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
 			IStudentCurricularPlanPersistente studentCurricularPlanDAO =
 				persistentSuport.getIStudentCurricularPlanPersistente();
 			IPersistentExecutionPeriod executionPeriodDAO =
@@ -103,7 +103,7 @@ public class WriteEnrollment implements IService
 				IEnrollment enrolmentToWrite = new Enrolment();
 				enrolmentDAO.simpleLockWrite(enrolmentToWrite);
 				enrolmentToWrite.setCurricularCourse(curricularCourse);
-				enrolmentToWrite.setEnrolmentState(EnrollmentState.ENROLLED);
+				enrolmentToWrite.setEnrollmentState(EnrollmentState.ENROLLED);
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);

@@ -14,7 +14,7 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
@@ -72,7 +72,7 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
 		try
 		{
 			ISuportePersistente persistenceDAO = SuportePersistenteOJB.getInstance();
-			IPersistentEnrolment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
+			IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
 			IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistenceDAO.getIPersistentEnrolmentEvaluation();
 			IPersistentEnrolmentEquivalence enrollmentEquivalenceDAO = persistenceDAO.getIPersistentEnrolmentEquivalence();
 			IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalenceDAO = persistenceDAO

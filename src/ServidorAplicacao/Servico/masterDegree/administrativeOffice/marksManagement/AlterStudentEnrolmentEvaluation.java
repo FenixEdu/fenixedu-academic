@@ -25,7 +25,7 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStra
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
@@ -81,7 +81,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
                     .getIPersistentEnrolmentEvaluation();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentEnrolment persistentEnrolment = sp
+            IPersistentEnrollment persistentEnrolment = sp
                     .getIPersistentEnrolment();
 
             if ((infoEnrolmentEvaluation.getGrade().equals("0"))
@@ -96,7 +96,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 
                 persistentEnrolment.simpleLockWrite(enrolment);
 
-                enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
+                enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
                 enrolment.setCurricularCourse(enrolmentEvaluationCopy
                         .getEnrolment().getCurricularCourse());
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationCopy
@@ -172,17 +172,17 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
                         persistentEnrolment.simpleLockWrite(enrolment);
                         try {
                             new Integer(enrolmentEvaluation.getGrade());
-                            enrolment.setEnrolmentState(EnrollmentState.APROVED);
+                            enrolment.setEnrollmentState(EnrollmentState.APROVED);
                         } catch (NumberFormatException e) {
                             String grade = null;
                             grade = enrolmentEvaluation.getGrade()
                                     .toUpperCase();
                             if (grade.equals("RE"))
                                 enrolment
-                                        .setEnrolmentState(EnrollmentState.NOT_APROVED);
+                                        .setEnrollmentState(EnrollmentState.NOT_APROVED);
                             if (grade.equals("NA"))
                                 enrolment
-                                        .setEnrolmentState(EnrollmentState.NOT_EVALUATED);
+                                        .setEnrollmentState(EnrollmentState.NOT_EVALUATED);
                         }
 
                         iEnrolmentEvaluation.setEnrolment(enrolment);

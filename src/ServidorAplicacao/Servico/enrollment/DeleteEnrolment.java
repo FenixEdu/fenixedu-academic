@@ -15,7 +15,7 @@ import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMark;
@@ -41,7 +41,7 @@ public class DeleteEnrolment implements IService
         {
             ISuportePersistente persistentSuport = SuportePersistenteOJB
                     .getInstance();
-            IPersistentEnrolment enrolmentDAO = persistentSuport
+            IPersistentEnrollment enrolmentDAO = persistentSuport
                     .getIPersistentEnrolment();
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
                     .getIPersistentEnrolmentEvaluation();

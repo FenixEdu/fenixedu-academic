@@ -17,7 +17,7 @@ import Dominio.Student;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -48,7 +48,7 @@ public class WriteStudentAttendingCourse implements IService {
                     .getIFrequentaPersistente();
             IPersistentExecutionCourse persistentExecutionCourse = sp
                     .getIPersistentExecutionCourse();
-            IPersistentEnrolment persistentEnrolment = sp
+            IPersistentEnrollment persistentEnrolment = sp
                     .getIPersistentEnrolment();
             IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
@@ -102,7 +102,7 @@ public class WriteStudentAttendingCourse implements IService {
     }
 
     private void findEnrollmentForAttend(
-            IPersistentEnrolment persistentEnrolment,
+            IPersistentEnrollment persistentEnrolment,
             IStudentCurricularPlan studentCurricularPlan,
             IExecutionCourse executionCourse, IFrequenta attendsEntry)
             throws ExcepcaoPersistencia {

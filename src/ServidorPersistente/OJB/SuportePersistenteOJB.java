@@ -314,7 +314,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	{
 		return new FrequentaOJB();
 	}
-	public IPersistentEnrolment getIPersistentEnrolment()
+	public IPersistentEnrollment getIPersistentEnrolment()
 	{
 		return new EnrolmentOJB();
 	}

@@ -35,7 +35,7 @@ import Dominio.gesdis.ICourseReport;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
@@ -196,7 +196,7 @@ public class SearchExecutionCourses implements IServico {
                             while (iter.hasNext()) {
                                 IEnrollment enrolment = (IEnrollment) iter.next();
                                 EnrollmentState enrolmentState = enrolment
-                                        .getEnrolmentState();
+                                        .getEnrollmentState();
                                 if (enrolmentState
                                         .equals(EnrollmentState.APROVED)) {
                                     approved++;
@@ -212,7 +212,7 @@ public class SearchExecutionCourses implements IServico {
                             while (iter.hasNext()) {
                                 IEnrollment enrolment = (IEnrollment) iter.next();
                                 EnrollmentState enrolmentState = enrolment
-                                        .getEnrolmentState();
+                                        .getEnrollmentState();
                                 if (enrolmentState
                                         .equals(EnrollmentState.APROVED)
                                         || enrolmentState
@@ -228,7 +228,7 @@ public class SearchExecutionCourses implements IServico {
                                 ICurricularCourse curricularCourse,
                                 ISuportePersistente sp)
                                 throws ExcepcaoPersistencia {
-                            IPersistentEnrolment persistentEnrolment = sp
+                            IPersistentEnrollment persistentEnrolment = sp
                                     .getIPersistentEnrolment();
                             List enrolments = persistentEnrolment
                                     .readByCurricularCourseAndExecutionPeriod(

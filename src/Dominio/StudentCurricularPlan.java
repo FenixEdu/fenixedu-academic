@@ -473,7 +473,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IEnrollment enrollment = (IEnrollment) obj;
-                return (enrollment.getEnrolmentState().equals(EnrollmentState.ENROLLED) && enrollment.getCondition().equals(
+                return (enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) && enrollment.getCondition().equals(
                         EnrollmentCondition.TEMPORARY));
             }
         }));
@@ -638,7 +638,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IEnrollment enrollment = (IEnrollment) obj;
-                return enrollment.getEnrolmentState().equals(EnrollmentState.APROVED);
+                return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED);
             }
         });
     }
@@ -648,7 +648,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IEnrollment enrollment = (IEnrollment) obj;
-                return enrollment.getEnrolmentState().equals(EnrollmentState.ENROLLED);
+                return enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED);
             }
         });
     }
@@ -679,7 +679,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IEnrollment enrollment = (IEnrollment) obj;
-                return !enrollment.getEnrolmentState().equals(EnrollmentState.ENROLLED);
+                return !enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED);
             }
         });
     }

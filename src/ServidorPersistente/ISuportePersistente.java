@@ -70,7 +70,7 @@ public interface ISuportePersistente
 	public ITurnoPersistente getITurnoPersistente();
 
 	public IFrequentaPersistente getIFrequentaPersistente();
-	public IPersistentEnrolment getIPersistentEnrolment();
+	public IPersistentEnrollment getIPersistentEnrolment();
 	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();
 	public ITurmaTurnoPersistente getITurmaTurnoPersistente();
 	public ITurnoAlunoPersistente getITurnoAlunoPersistente();

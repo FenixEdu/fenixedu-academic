@@ -18,7 +18,7 @@ public interface IEnrollment extends IDomainObject {
 
     public IStudentCurricularPlan getStudentCurricularPlan();
 
-    public EnrollmentState getEnrolmentState();
+    public EnrollmentState getEnrollmentState();
 
     public IExecutionPeriod getExecutionPeriod();
 
@@ -32,7 +32,7 @@ public interface IEnrollment extends IDomainObject {
 
     public Integer getAccumulatedWeight();
 
-    public void setEnrolmentState(EnrollmentState state);
+    public void setEnrollmentState(EnrollmentState state);
 
     public void setCurricularCourse(ICurricularCourse curricularCourse);
 

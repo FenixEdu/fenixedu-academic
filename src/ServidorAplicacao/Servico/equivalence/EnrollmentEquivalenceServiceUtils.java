@@ -36,7 +36,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 */
 	protected boolean isAnAprovedEnrollment(IEnrollment enrollment)
 	{
-		return enrollment.getEnrolmentState().equals(EnrollmentState.APROVED);
+		return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 */
 	protected boolean isAnEnroledEnrollment(IEnrollment enrollment)
 	{
-		return (enrollment.getEnrolmentState().equals(EnrollmentState.ENROLLED) || enrollment.getEnrolmentState().equals(
+		return (enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) || enrollment.getEnrollmentState().equals(
 			EnrollmentState.TEMPORARILY_ENROLED));
 	}
 

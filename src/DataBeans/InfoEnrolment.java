@@ -20,7 +20,7 @@ public class InfoEnrolment extends InfoObject {
 
     private InfoExecutionPeriod infoExecutionPeriod;
 
-    private EnrollmentState enrolmentState;
+    private EnrollmentState enrollmentState;
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
 
@@ -59,7 +59,7 @@ public class InfoEnrolment extends InfoObject {
         this();
         setInfoCurricularCourse(infoCurricularCourse);
         setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-        setEnrolmentState(state);
+        setEnrollmentState(state);
         setInfoExecutionPeriod(infoExecutionPeriod);
     }
 
@@ -88,7 +88,7 @@ public class InfoEnrolment extends InfoObject {
         String result = "[" + this.getClass().getName() + "; ";
         result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
         result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
-        result += "state = " + this.enrolmentState + "; ";
+        result += "state = " + this.enrollmentState + "; ";
         result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
         result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
         result += "infoEvaluations = " + this.infoEvaluations + "]\n";
@@ -116,8 +116,8 @@ public class InfoEnrolment extends InfoObject {
     /**
      * @return EnrolmentState
      */
-    public EnrollmentState getEnrolmentState() {
-        return enrolmentState;
+    public EnrollmentState getEnrollmentState() {
+        return enrollmentState;
     }
 
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
@@ -150,8 +150,8 @@ public class InfoEnrolment extends InfoObject {
      * @param state
      *            The state to set
      */
-    public void setEnrolmentState(EnrollmentState state) {
-        this.enrolmentState = state;
+    public void setEnrollmentState(EnrollmentState state) {
+        this.enrollmentState = state;
     }
 
     public EnrolmentEvaluationType getEnrolmentEvaluationType() {
@@ -204,7 +204,7 @@ public class InfoEnrolment extends InfoObject {
         if (enrollment != null) {
             setCreationDate(enrollment.getCreationDate());
             setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
-            setEnrolmentState(enrollment.getEnrolmentState());
+            setEnrollmentState(enrollment.getEnrollmentState());
             setAccumulatedWeight(enrollment.getAccumulatedWeight());
             setCondition(enrollment.getCondition());
         }

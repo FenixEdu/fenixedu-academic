@@ -17,7 +17,7 @@ import Util.StudentCurricularPlanState;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public interface IPersistentEnrolment extends IPersistentObject
+public interface IPersistentEnrollment extends IPersistentObject
 {
     public void delete(IEnrollment enrolment) throws ExcepcaoPersistencia;
 

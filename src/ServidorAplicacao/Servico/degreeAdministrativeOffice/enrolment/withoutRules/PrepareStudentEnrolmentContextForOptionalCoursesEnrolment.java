@@ -24,7 +24,7 @@ import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrollmentContext
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -71,7 +71,7 @@ public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment
 
             if (isStudentCurricularPlanFromChosenExecutionYear(
                     studentCurricularPlan, executionYear)) {
-                IPersistentEnrolment enrolmentDAO = sp
+                IPersistentEnrollment enrolmentDAO = sp
                         .getIPersistentEnrolment();
                 IPersistentCurricularCourse curricularCourseDAO = sp
                         .getIPersistentCurricularCourse();

@@ -13,7 +13,7 @@ import Dominio.finalDegreeWork.IScheduleing;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
@@ -39,7 +39,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork implements IService
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         //IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport
         		//.getIStudentCurricularPlanPersistente();
-        IPersistentEnrolment persistentEnrolment = persistentSupport
+        IPersistentEnrollment persistentEnrolment = persistentSupport
         	.getIPersistentEnrolment();
 
         IScheduleing scheduleing = persistentFinalDegreeWork

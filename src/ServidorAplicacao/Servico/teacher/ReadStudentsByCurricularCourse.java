@@ -27,7 +27,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -89,7 +89,7 @@ public class ReadStudentsByCurricularCourse implements IService {
             ICurricularCourse curricularCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         List infoStudentList;
-        IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
         List enrolments = persistentEnrolment
                 .readByCurricularCourse(curricularCourse);

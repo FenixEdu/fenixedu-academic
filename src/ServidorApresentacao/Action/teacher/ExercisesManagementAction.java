@@ -681,11 +681,10 @@ public class ExercisesManagementAction extends FenixDispatchAction {
             return mapping.findForward("addExerciseVariation");
         }
 
-        List badXmls = null;
         try {
             Object[] args = { executionCourseId, metadataId, xmlZipFile,
                     getServlet().getServletContext().getRealPath("/")};
-            badXmls = (List) ServiceUtils.executeService(userView,
+             ServiceUtils.executeService(userView,
                     "InsertExerciseVariation", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

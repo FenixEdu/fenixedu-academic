@@ -11,7 +11,7 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.EnrollmentState;
 
-public class JavaEnrolmentState2SqlEnrolmentStateFieldConversion implements FieldConversion {
+public class JavaEnrollmentState2SqlEnrollmentStateFieldConversion implements FieldConversion {
     
     /*
      * @see FieldConversion#javaToSql(Object)
