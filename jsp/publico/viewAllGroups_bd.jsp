@@ -30,7 +30,7 @@
          		
 			<logic:notEmpty name="infoSiteGroupsByShift" property="infoShift">
 			<bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>	
-			<table width="400" cellpadding="0" border="0" style="text-align: left;" > 		
+			<table width="400" cellpadding="0" border="1" bgColor="black" style="text-align: left;" > 		
 																
 											
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
@@ -87,35 +87,11 @@
 			<br>
               
               
-            
-       <table width="400" cellpadding="0" border="0" style="text-align: left;">
-          	<tbody>
-            	<logic:iterate id="infoStudentGroup" name="infoSiteGroupsByShift" property="infoStudentGroupsList" >
-        		<tr>
-        		<td>
-          			<br>
-             		<td class="listClasses">
-               			<li>
-               				   	<html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
-								<bean:message key="label.groupWord"/>
-                				<bean:write name="infoStudentGroup" property="groupNumber"/>	</h2>
-								</html:link>
-						</li>
-					</td>
-               		
-	           	
-            	</td>
-                </tr>
 
-            	</logic:iterate>
-            	
-            </tbody>
-			</table>
-			  <%--  
+			  
             <logic:iterate id="infoStudentGroup" name="infoSiteGroupsByShift" property="infoStudentGroupsList" >
         		<tr>
           		<td>
-             	<br>
              	
                	<li><html:link page="<%= "/viewSite.do" + "?method=viewStudentGroupInformationAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
 						<bean:message key="label.groupWord"/>
@@ -126,7 +102,7 @@
              	</td>
                 </tr>
 			
-            </logic:iterate>--%>
+            </logic:iterate>
             
             
             
