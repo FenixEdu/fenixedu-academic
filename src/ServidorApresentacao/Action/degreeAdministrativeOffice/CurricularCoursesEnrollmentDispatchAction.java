@@ -365,7 +365,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends
         if (toEnroll.size() == 1) {
             Integer executionDegreeId = getExecutionDegree(request);
             Object[] args = { executionDegreeId, studentCurricularPlanId,
-                    toEnroll.get(0), null,enrollmentType };
+                    toEnroll.get(0), null, enrollmentType };
             try {
                 ServiceManagerServiceFactory.executeService(userView,
                         "WriteEnrollment", args);

@@ -71,8 +71,8 @@ public class ReadExamsByStudent implements IService {
                     infoExamStudentRoom.setInfoExam(Cloner
                             .copyIExam2InfoExam(examStudentRoom.getExam()));
                     infoExamStudentRoom.getInfoExam().setInfoExecutionCourses(
-                            (List) CollectionUtils.collect(examStudentRoom.getExam()
-                                    .getAssociatedExecutionCourses(),
+                            (List) CollectionUtils.collect(examStudentRoom
+                                    .getExam().getAssociatedExecutionCourses(),
                                     new Transformer() {
 
                                         public Object transform(Object arg0) {
@@ -157,34 +157,32 @@ public class ReadExamsByStudent implements IService {
                 || exam.getEnrollmentBeginTime() == null
                 || exam.getEnrollmentEndTime() == null) {
             return false;
-        } else {
-            Calendar begin = Calendar.getInstance();
-            begin.set(Calendar.YEAR, exam.getEnrollmentBeginDay().get(
-                    Calendar.YEAR));
-            begin.set(Calendar.MONTH, exam.getEnrollmentBeginDay().get(
-                    Calendar.MONTH));
-            begin.set(Calendar.DAY_OF_MONTH, exam.getEnrollmentBeginDay().get(
-                    Calendar.DAY_OF_MONTH));
-            begin.set(Calendar.HOUR_OF_DAY, exam.getEnrollmentBeginTime().get(
-                    Calendar.HOUR_OF_DAY));
-            begin.set(Calendar.MINUTE, exam.getEnrollmentBeginTime().get(
-                    Calendar.MINUTE));
-
-            Calendar end = Calendar.getInstance();
-            end.set(Calendar.YEAR, exam.getEnrollmentEndDay()
-                    .get(Calendar.YEAR));
-            end.set(Calendar.MONTH, exam.getEnrollmentEndDay().get(
-                    Calendar.MONTH));
-            end.set(Calendar.DAY_OF_MONTH, exam.getEnrollmentEndDay().get(
-                    Calendar.DAY_OF_MONTH));
-            end.set(Calendar.HOUR_OF_DAY, exam.getEnrollmentEndTime().get(
-                    Calendar.HOUR_OF_DAY));
-            end.set(Calendar.MINUTE, exam.getEnrollmentEndTime().get(
-                    Calendar.MINUTE));
-            return (Calendar.getInstance().getTimeInMillis() < end
-                    .getTimeInMillis() && Calendar.getInstance()
-                    .getTimeInMillis() > begin.getTimeInMillis());
         }
+        Calendar begin = Calendar.getInstance();
+        begin.set(Calendar.YEAR, exam.getEnrollmentBeginDay()
+                .get(Calendar.YEAR));
+        begin.set(Calendar.MONTH, exam.getEnrollmentBeginDay().get(
+                Calendar.MONTH));
+        begin.set(Calendar.DAY_OF_MONTH, exam.getEnrollmentBeginDay().get(
+                Calendar.DAY_OF_MONTH));
+        begin.set(Calendar.HOUR_OF_DAY, exam.getEnrollmentBeginTime().get(
+                Calendar.HOUR_OF_DAY));
+        begin.set(Calendar.MINUTE, exam.getEnrollmentBeginTime().get(
+                Calendar.MINUTE));
+
+        Calendar end = Calendar.getInstance();
+        end.set(Calendar.YEAR, exam.getEnrollmentEndDay().get(Calendar.YEAR));
+        end.set(Calendar.MONTH, exam.getEnrollmentEndDay().get(Calendar.MONTH));
+        end.set(Calendar.DAY_OF_MONTH, exam.getEnrollmentEndDay().get(
+                Calendar.DAY_OF_MONTH));
+        end.set(Calendar.HOUR_OF_DAY, exam.getEnrollmentEndTime().get(
+                Calendar.HOUR_OF_DAY));
+        end.set(Calendar.MINUTE, exam.getEnrollmentEndTime().get(
+                Calendar.MINUTE));
+        return (Calendar.getInstance().getTimeInMillis() < end
+                .getTimeInMillis() && Calendar.getInstance().getTimeInMillis() > begin
+                .getTimeInMillis());
+
     }
 
 }

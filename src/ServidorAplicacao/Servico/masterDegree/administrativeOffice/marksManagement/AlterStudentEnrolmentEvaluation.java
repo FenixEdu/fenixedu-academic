@@ -6,9 +6,7 @@ import java.util.List;
 
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
-import Dominio.CurricularCourse;
 import Dominio.EnrolmentEvaluation;
-import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEmployee;
 import Dominio.IEnrollment;
@@ -26,7 +24,6 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrat
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
@@ -79,8 +76,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
         try {
             Calendar calendario = Calendar.getInstance();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp
-                    .getIPersistentCurricularCourse();
+           
             IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
                     .getIPersistentEnrolmentEvaluation();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
@@ -148,9 +144,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
                         .getUtilizador());
                 IEmployee employee = readEmployee(person);
 
-                //	curricular Course Scope
-                ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                        .readByOID(CurricularCourse.class, curricularCourseCode);
+               
 
                 infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
 
@@ -315,10 +309,10 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
         if (infoEnrolmentEvaluation.getGrade() == null
                 || infoEnrolmentEvaluation.getGrade().length() == 0) {
             return false;
-        } else {
+        } 
             return degreeCurricularPlanStrategy
                     .checkMark(infoEnrolmentEvaluation.getGrade().toUpperCase());
-        }
+        
     }
 
 }

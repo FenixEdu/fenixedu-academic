@@ -28,7 +28,7 @@
 	}
 // -->
 </script>
-<h2><bean:message key="title.student.LEEC.enrollment"/></h2>
+<h2><bean:message key="title.student.enrollment"/></h2>
 <span class="error"><html:errors/></span>
 <html:form action="/curricularCoursesEnrollment">
 	<html:hidden property="method" value="enrollmentConfirmation" />
@@ -54,7 +54,7 @@
 	<br />
 	<table>	
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.student.enrollment.specializationArea" /></td>
+			<td class="listClasses-header"><bean:message key="label.student.enrollment.specializationArea" />/<bean:message key="label.student.enrollment.branch" /></td>
 			<td class="listClasses-header"><bean:message key="label.student.enrollment.secondaryArea" /></td>
 			<td class="listClasses-header">&nbsp;</td>
 		</tr>
@@ -93,7 +93,7 @@
 				</logic:notPresent>
 			</tr>
 		</logic:present>
-		<%--<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
+		<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 			<tr>
 				<td class="listClasses">
 					<bean:message key="label.student.enrollment.no.area" />
@@ -118,7 +118,7 @@
 					</logic:notPresent>
 				</td>
 			</tr>
-		</logic:notPresent>--%>
+		</logic:notPresent>
 	</table>
 	
 	<table>

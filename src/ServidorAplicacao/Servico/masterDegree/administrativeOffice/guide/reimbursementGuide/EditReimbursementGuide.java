@@ -77,52 +77,49 @@ public class EditReimbursementGuide implements IService {
 
             if (!validateReimbursementGuideSituation(activeSituation, situation)) {
                 throw new InvalidGuideSituationServiceException();
+            }
+            persistentReimbursementGuideSituation
+                    .simpleLockWrite(activeSituation);
+            activeSituation.setState(new State(State.INACTIVE_STRING));
+            IReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
+
+            IPersistentEmployee persistentEmployee = ps
+                    .getIPersistentEmployee();
+            IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
+            IPessoa person = persistentPerson.lerPessoaPorUsername(userView
+                    .getUtilizador());
+            IEmployee employee = persistentEmployee.readByPerson(person);
+
+            newActiveSituation.setEmployee(employee);
+            newActiveSituation.setModificationDate(Calendar.getInstance());
+
+            if (officialDate != null) {
+                Calendar officialDateCalendar = new GregorianCalendar();
+                officialDateCalendar.setTime(officialDate);
+                newActiveSituation.setOfficialDate(officialDateCalendar);
             } else {
-                persistentReimbursementGuideSituation
-                        .simpleLockWrite(activeSituation);
-                activeSituation.setState(new State(State.INACTIVE_STRING));
-                IReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
+                newActiveSituation.setOfficialDate(Calendar.getInstance());
+            }
 
-                IPersistentEmployee persistentEmployee = ps
-                        .getIPersistentEmployee();
-                IPessoaPersistente persistentPerson = ps
-                        .getIPessoaPersistente();
-                IPessoa person = persistentPerson.lerPessoaPorUsername(userView
-                        .getUtilizador());
-                IEmployee employee = persistentEmployee.readByPerson(person);
+            ReimbursementGuideState newState = ReimbursementGuideState
+                    .getEnum(situation);
+            newActiveSituation.setReimbursementGuideState(newState);
 
-                newActiveSituation.setEmployee(employee);
-                newActiveSituation.setModificationDate(Calendar.getInstance());
+            newActiveSituation.setReimbursementGuide(reimbursementGuide);
+            newActiveSituation.setState(new State(State.ACTIVE));
+            newActiveSituation.setRemarks(remarks);
 
-                if (officialDate != null) {
-                    Calendar officialDateCalendar = new GregorianCalendar();
-                    officialDateCalendar.setTime(officialDate);
-                    newActiveSituation.setOfficialDate(officialDateCalendar);
-                } else {
-                    newActiveSituation.setOfficialDate(Calendar.getInstance());
-                }
+            List reimbursementGuideSituations = reimbursementGuide
+                    .getReimbursementGuideSituations();
+            reimbursementGuideSituations.add(newActiveSituation);
+            reimbursementGuide
+                    .setReimbursementGuideSituations(reimbursementGuideSituations);
 
-                ReimbursementGuideState newState = ReimbursementGuideState
-                        .getEnum(situation);
-                newActiveSituation.setReimbursementGuideState(newState);
+            persistentReimbursementGuideSituation
+                    .simpleLockWrite(newActiveSituation);
 
-                newActiveSituation.setReimbursementGuide(reimbursementGuide);
-                newActiveSituation.setState(new State(State.ACTIVE));
-                newActiveSituation.setRemarks(remarks);
-
-                List reimbursementGuideSituations = reimbursementGuide
-                        .getReimbursementGuideSituations();
-                reimbursementGuideSituations.add(newActiveSituation);
-                reimbursementGuide
-                        .setReimbursementGuideSituations(reimbursementGuideSituations);
-
-                persistentReimbursementGuideSituation
-                        .simpleLockWrite(newActiveSituation);
-
-                if (newState.equals(ReimbursementGuideState.PAYED)) {
-                    //TODO: create reimbursement transactions
-                }
-
+            if (newState.equals(ReimbursementGuideState.PAYED)) {
+                //TODO: create reimbursement transactions
             }
 
         } catch (ExcepcaoPersistencia e) {
@@ -156,17 +153,17 @@ public class EditReimbursementGuide implements IService {
                     || newState.equals(ReimbursementGuideState.PAYED)
                     || newState.equals(ReimbursementGuideState.ANNULLED)) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
+
         }
         if (currentState.equals(ReimbursementGuideState.APPROVED)) {
             if (newState.equals(ReimbursementGuideState.PAYED)
                     || newState.equals(ReimbursementGuideState.ANNULLED)) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
+
         }
         if (currentState.equals(ReimbursementGuideState.PAYED)) {
             return false;

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="Util.EnrolmentState, Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
-<h2><bean:message key="title.student.LEEC.enrollment"/></h2>
+<h2><bean:message key="title.student.enrollment"/></h2>
 <span class="error"><html:errors/></span>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -35,17 +35,17 @@
 <table>	
 	<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
-			<td>
+			<td class="listclasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
 			</td>
-			<td>
+			<td class="listclasses">
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />
 			</td>
-			<td>&nbsp;&nbsp;&nbsp;</td>
-			<td>
+			<td class="listclasses">&nbsp;&nbsp;&nbsp;</td>
+			<td class="listclasses">
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
-			<td>
+			<td class="listclasses">
 			
 					<bean:write name="infoStudentEnrolmentContext" property="creditsInSpecializationArea" />
 			
@@ -54,17 +54,17 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td class="listclasses-header">
 				<bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;
 			</td>
-			<td>
+			<td class="listclasses">
 				<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
 			</td>
-			<td>&nbsp;&nbsp;&nbsp;</td>
-			<td>
+			<td  class="listclasses">&nbsp;&nbsp;&nbsp;</td>
+			<td class="listclasses">
 				<bean:message key="label.branch.credits" />:&nbsp;
 			</td>
-			<td>
+			<td class="listclasses">
 			
 					<bean:write name="infoStudentEnrolmentContext" property="creditsInSecundaryArea" />
 			
@@ -75,18 +75,18 @@
 	</logic:present>
 	<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>
-			<td>
+			<td class="listclasses-header">
 				<bean:message key="label.student.enrollment.specializationArea" />:&nbsp;
 			</td>
-			<td colspan='4' style="text-align:left">
+			<td  class="listclasses">
 				<bean:message key="label.student.enrollment.no.area" />
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td class="listclasses-header">
 				<bean:message key="label.student.enrollment.secondaryArea" />:&nbsp;
 			</td>
-			<td colspan='4' style="text-align:left">
+			<td  class="listclasses">
 				<bean:message key="label.student.enrollment.no.area" />
 			</td>
 		</tr>
@@ -104,7 +104,7 @@
 				<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
 			</td>
 			<td class="listClasses">
-			&nbsp;
+					<bean:message name="enrollmentElem" property="condition.name" bundle="ENUMERATION_RESOURCES"/>
 			</td>
 		</tr>
 	</logic:iterate>

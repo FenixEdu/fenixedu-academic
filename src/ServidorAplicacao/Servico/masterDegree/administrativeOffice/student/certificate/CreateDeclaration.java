@@ -1,10 +1,4 @@
-
-package ServidorAplicacao
-	.Servico
-	.masterDegree
-	.administrativeOffice
-	.student
-	.certificate;
+package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.certificate;
 
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
@@ -20,70 +14,66 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Specialization;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
 public class CreateDeclaration implements IServico {
 
-	private static CreateDeclaration servico = new CreateDeclaration();
+    private static CreateDeclaration servico = new CreateDeclaration();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static CreateDeclaration getService() {
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static CreateDeclaration getService() {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private CreateDeclaration() {
-	}
+    /**
+     * The actor of this class.
+     */
+    private CreateDeclaration() {
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * Returns The Service Name
+     */
 
-	public final String getNome() {
-		return "CreateDeclaration";
-	}
+    public final String getNome() {
+        return "CreateDeclaration";
+    }
 
-	public InfoStudentCurricularPlan run(InfoStudent infoStudent, Specialization specialization)
-		throws Exception {
+    public InfoStudentCurricularPlan run(InfoStudent infoStudent,
+            Specialization specialization) throws Exception {
 
-		IStudentCurricularPlan studentCurricularPlan = null;
+        IStudentCurricularPlan studentCurricularPlan = null;
 
-		ISuportePersistente sp = null;
+        ISuportePersistente sp = null;
 
-		sp = SuportePersistenteOJB.getInstance();
-		
-		try {
-			studentCurricularPlan =
-				sp
-					.getIStudentCurricularPlanPersistente()
-					.readActiveStudentAndSpecializationCurricularPlan(
-					infoStudent.getNumber(),
-					infoStudent.getDegreeType(), 
-					specialization);
-					
+        sp = SuportePersistenteOJB.getInstance();
 
-		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException(ex);
-		} catch (ExcepcaoPersistencia ex) {
-			
-			FenixServiceException newEx =
-				new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+        try {
+            studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+                    .readActiveStudentAndSpecializationCurricularPlan(
+                            infoStudent.getNumber(),
+                            infoStudent.getDegreeType(), specialization);
 
-		if (studentCurricularPlan == null || studentCurricularPlan.getIdInternal() == null) 
-			return null;
-		 
-		else
-		
-			return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
-			
-				
-	}
+        } catch (ExistingPersistentException ex) {
+            throw new ExistingServiceException(ex);
+        } catch (ExcepcaoPersistencia ex) {
+
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error", ex);
+
+            throw newEx;
+        }
+
+        if (studentCurricularPlan == null
+                || studentCurricularPlan.getIdInternal() == null) {
+            return null;
+        }
+
+        return Cloner
+                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+
+    }
 }
