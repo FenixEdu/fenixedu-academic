@@ -22,5 +22,7 @@ public interface ISite {
 	public String getIntroduction();
 	public void setInitialStatement(String initialStatement);
 	public void setIntroduction(String introduction);
+	public String getStyle();
+	public void setStyle(String style);
 	
 }

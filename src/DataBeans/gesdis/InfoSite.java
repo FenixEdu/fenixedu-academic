@@ -18,6 +18,7 @@ public class InfoSite {
 	private String mail;
 	private String initialStatement;
 	private String introduction;
+	private String style;
 	/** 
 	* Construtor
 	*/
@@ -197,6 +198,21 @@ public class InfoSite {
 	 */
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getStyle() {
+		return style;
+	}
+
+	/**
+	 * Sets the style.
+	 * @param style The style to set
+	 */
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 }

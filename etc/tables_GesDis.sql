@@ -101,6 +101,7 @@ create table SITE (
    MAIL varchar(50),
    INITIAL_STATEMENT varchar(255),
    INTRODUCTION 	varchar(255),
+   STYLE varchar(255) ,
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";

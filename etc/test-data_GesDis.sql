@@ -5,16 +5,16 @@
 #
 #---------
 DELETE FROM SITE;
-INSERT INTO SITE VALUES (1, '24', 7, 'http://www.ist.utl.pt','joao@ist.utl.pt',null,null);
-INSERT INTO SITE VALUES (2, '25', null, null, null, null, null);
-INSERT INTO SITE VALUES (3, '26', null, null, null, null, null);
-INSERT INTO SITE VALUES (4, '27', null, null, null, null, null);
-INSERT INTO SITE VALUES (5, '28', null, null, null, null, null);
-INSERT INTO SITE VALUES (6, '29', null, null, null, null, null);
-INSERT INTO SITE VALUES (7, '30', null, null, null, null, null);
-INSERT INTO SITE VALUES (8, '31', null, null, null, null, null);
-INSERT INTO SITE VALUES (9, '32', null, null, null, null, null);
-INSERT INTO SITE VALUES (10,'33', null, null, null, null, null);
+INSERT INTO SITE VALUES (1, '24', 7, 'http://www.ist.utl.pt','joao@ist.utl.pt',null,null,'gesdis-web.css');
+INSERT INTO SITE VALUES (2, '25', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (3, '26', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (4, '27', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (5, '28', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (6, '29', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (7, '30', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (8, '31', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (9, '32', null, null, null, null, null,'gesdis-web.css');
+INSERT INTO SITE VALUES (10,'33', null, null, null, null, null,'gesdis-web.css');
 
 
 

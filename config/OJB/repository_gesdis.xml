@@ -42,7 +42,12 @@
     <field-descriptor id="7"
          name="introduction"
          column="INTRODUCTION"
-    	 jdbc-type="VARCHAR"/>	 
+    	 jdbc-type="VARCHAR"/>
+    	 
+    <field-descriptor id="8"
+         name="style"
+         column="STYLE"
+    	 jdbc-type="VARCHAR"/>		 	 
 	
     <reference-descriptor
          name="executionCourse"
