@@ -92,6 +92,12 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip
 					continue;
 				}
 
+				if(verifyStudentAlreadyTutor(student, teacher).booleanValue()){
+					//student already with tutor...
+					studentsErrors.add(studentNumber);
+					continue;
+				}
+				
 				if (!verifyStudentOfThisDegree(student, TipoCurso.LICENCIATURA_OBJ, degreeCode)
 					.booleanValue())
 				{

@@ -79,6 +79,11 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip
 				throw new NonExistingServiceException("error.tutor.unExistStudent");
 			}
 
+			if(verifyStudentAlreadyTutor(student, teacher).booleanValue()){
+				//student already with tutor...
+				throw new FenixServiceException("error.tutor.studentAlreadyWithTutor");
+			}
+			
 			if (!verifyStudentOfThisDegree(student, TipoCurso.LICENCIATURA_OBJ, degreeCode)
 				.booleanValue())
 			{

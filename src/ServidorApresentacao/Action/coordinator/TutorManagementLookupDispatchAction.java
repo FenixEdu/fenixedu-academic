@@ -54,15 +54,18 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 		request.setAttribute("executionDegreeId", executionDegreeId);
 
 		Integer studentNumber = null;
-		try{		
+		try
+		{
 			studentNumber = Integer.valueOf((String) tutorForm.get("studentNumber"));
-		} catch (NumberFormatException e){
+		}
+		catch (NumberFormatException e)
+		{
 			errors.add("errors", new ActionError("error.tutor.numberAndRequired"));
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		
-		Object[] args = {executionDegreeId, tutorNumber, studentNumber };
+
+		Object[] args = { executionDegreeId, tutorNumber, studentNumber };
 
 		try
 		{
@@ -70,7 +73,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 		}
 		catch (NonExistingServiceException e1)
 		{
-			e1.printStackTrace();			
+			e1.printStackTrace();
 			if (e1.getMessage().endsWith("Teacher"))
 			{
 				errors.add("errors", new ActionError(e1.getMessage(), tutorNumber));
@@ -84,6 +87,10 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 		{
 			e2.printStackTrace();
 			if (e2.getMessage().endsWith("NoDegree"))
+			{
+				errors.add("errors", new ActionError(e2.getMessage(), studentNumber));
+			}
+			else if (e2.getMessage().endsWith("Tutor"))
 			{
 				errors.add("errors", new ActionError(e2.getMessage(), studentNumber));
 			}
@@ -122,29 +129,33 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 
 		Integer studentNumberFirst = null;
 		Integer studentNumberSecond = null;
-		try{		
+		try
+		{
 			studentNumberFirst = Integer.valueOf((String) tutorForm.get("studentNumberFirst"));
 			studentNumberSecond = Integer.valueOf((String) tutorForm.get("studentNumberSecond"));
-		} catch (NumberFormatException e){
+		}
+		catch (NumberFormatException e)
+		{
 			errors.add("errors", new ActionError("error.tutor.numberAndRequired"));
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		if(studentNumberFirst.intValue() > studentNumberSecond.intValue()){
+		if (studentNumberFirst.intValue() > studentNumberSecond.intValue())
+		{
 			errors.add("errors", new ActionError("error.tutor.numbersRange"));
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		
-		
-		Object[] args = {executionDegreeId, tutorNumber, studentNumberFirst, studentNumberSecond};
+
+		Object[] args = { executionDegreeId, tutorNumber, studentNumberFirst, studentNumberSecond };
 		List studentsWithErros = null;
 		try
 		{
-			studentsWithErros = (List) ServiceManagerServiceFactory.executeService(
-				userView,
-				"InsertTutorShipWithManyStudent",
-				args);
+			studentsWithErros =
+				(List) ServiceManagerServiceFactory.executeService(
+					userView,
+					"InsertTutorShipWithManyStudent",
+					args);
 		}
 		catch (NonExistingServiceException e1)
 		{
@@ -153,7 +164,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 			{
 				errors.add("errors", new ActionError(e1.getMessage(), tutorNumber));
 			}
-		}		
+		}
 		catch (FenixServiceException e)
 		{
 			e.printStackTrace();
@@ -164,10 +175,11 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		if(studentsWithErros != null && studentsWithErros.size() > 0){
-			request.setAttribute("studentsWithErros", studentsWithErros);		
+		if (studentsWithErros != null && studentsWithErros.size() > 0)
+		{
+			request.setAttribute("studentsWithErros", studentsWithErros);
 		}
-		
+
 		return mapping.findForward("confirmation");
 	}
 
@@ -192,7 +204,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 
 		Integer[] deletedTutors = (Integer[]) tutorForm.get("deletedTutorsIds");
 		List deletedTutorsList = Arrays.asList(deletedTutors);
-		Object[] args = {executionDegreeId, tutorNumber, deletedTutorsList };
+		Object[] args = { executionDegreeId, tutorNumber, deletedTutorsList };
 
 		try
 		{
@@ -208,7 +220,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
-		
+
 		return mapping.findForward("confirmation");
 	}
 

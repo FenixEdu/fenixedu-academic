@@ -7,8 +7,11 @@ package ServidorAplicacao.Servico.coordinator;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.ITeacher;
+import Dominio.ITutor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentTutor;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -48,5 +51,32 @@ public class InsertTutorShip implements IService
 		}
 
 		return Boolean.valueOf(result);
+	}
+
+	public Boolean verifyStudentAlreadyTutor(IStudent student, ITeacher teacher)
+		throws FenixServiceException
+	{
+		boolean result = false;
+		ITutor tutor = null;
+
+		ISuportePersistente sp;
+		try
+		{
+			sp = SuportePersistenteOJB.getInstance();
+			IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+
+			tutor = persistentTutor.readTeachersByStudent(student);
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			e.printStackTrace();
+			throw new FenixServiceException();
+		}
+
+		if(tutor != null && !tutor.getTeacher().equals(teacher)){
+			result = true;
+		}
+			
+		return new Boolean(result);
 	}
 }

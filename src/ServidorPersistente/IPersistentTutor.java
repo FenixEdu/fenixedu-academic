@@ -17,6 +17,6 @@ import Dominio.ITutor;
 public interface IPersistentTutor extends IPersistentObject
 {
 	public ITutor readTutorByTeacherAndStudent(ITeacher teacher, IStudent student)  throws ExcepcaoPersistencia;
-	public List readTeachersByStudent(IStudent student)  throws ExcepcaoPersistencia;
+	public ITutor readTeachersByStudent(IStudent student)  throws ExcepcaoPersistencia;
 	public List readStudentsByTeacher(ITeacher teacher)  throws ExcepcaoPersistencia;	
 }

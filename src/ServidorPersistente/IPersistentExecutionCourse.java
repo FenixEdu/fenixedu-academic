@@ -39,6 +39,12 @@ public interface IPersistentExecutionCourse extends IPersistentObject
         IExecutionPeriod executionPeriod,
         ICursoExecucao executionDegree)
         throws ExcepcaoPersistencia;
+    
+    public List readByExecutionPeriodAndExecutionDegree(
+			IExecutionPeriod executionPeriod,
+			ICursoExecucao executionDegree)
+    throws ExcepcaoPersistencia;
+    
     /**
 	 * @param courseInitials
 	 * @param executionPeriod

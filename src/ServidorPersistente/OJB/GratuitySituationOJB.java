@@ -88,11 +88,11 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 				"studentCurricularPlan.currentState",
 				StudentCurricularPlanState.ACTIVE_OBJ);
 		
-//		Criteria criteriaState = new Criteria();
-//		criteriaState.addEqualTo(
-//				"studentCurricularPlan.currentState",
-//				StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
-//		criteria.addOrCriteria(criteriaState);
+		Criteria criteriaState = new Criteria();
+		criteriaState.addEqualTo(
+				"studentCurricularPlan.currentState",
+				StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
+		criteria.addOrCriteria(criteriaState);
 		
 		return queryList(GratuitySituation.class, criteria);
 	}

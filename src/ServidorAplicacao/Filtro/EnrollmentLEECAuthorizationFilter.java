@@ -215,8 +215,8 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
 
 		IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-		List tutors = persistentTutor.readTeachersByStudent(studentCurricularPlan.getStudent());
-		if (tutors == null)
+		ITutor tutor = persistentTutor.readTeachersByStudent(studentCurricularPlan.getStudent());
+		if (tutor == null)
 		{
 			return false;
 		}
@@ -286,7 +286,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		return DEGREE_LEEC_CODE.equals(degreeCode);
 	}
 
-	private boolean curriculumOwner(IStudent student, IUserView id) throws ExcepcaoPersistencia
+	private boolean curriculumOwner(IStudent student, IUserView id)
 	{
 		if (!student.getPerson().getUsername().equals(id.getUtilizador()))
 		{
@@ -301,13 +301,13 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 	 * @return
 	 */
 	private ITutor verifyStudentWithTutor(IStudent student, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
+	throws ExcepcaoPersistencia
 	{
 		IPersistentTutor persistentTutor = sp.getIPersistentTutor();
 
-		List tutors = persistentTutor.readTeachersByStudent(student);
+		ITutor tutor = persistentTutor.readTeachersByStudent(student);
 
-		return ((tutors != null && tutors.size() > 0) ? (ITutor) tutors.get(0) : null);
+		return tutor;
 	}
 
 	private ITeacher readTeacher(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia

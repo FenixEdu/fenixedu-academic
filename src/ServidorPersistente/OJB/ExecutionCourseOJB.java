@@ -96,7 +96,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 	}
 
 	/**
-	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer,
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByCurricularYearAndExecutionPeriodAndExecutionDegree(java.lang.Integer,
 	 *      Dominio.IExecutionPeriod, java.lang.String)
 	 */
 	public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(
@@ -126,6 +126,33 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 		return executionCourseList;
 	}
 
+	/**
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriodAndExecutionDegree(java.lang.Integer,
+	 *      Dominio.IExecutionPeriod, java.lang.String)
+	 */
+	public List readByExecutionPeriodAndExecutionDegree(
+			IExecutionPeriod executionPeriod,
+			ICursoExecucao executionDegree)
+	throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo(
+				"associatedCurricularCourses.scopes.curricularSemester.semester",
+				executionPeriod.getSemester());
+		criteria.addEqualTo(
+				"associatedCurricularCourses.degreeCurricularPlan.name",
+				executionDegree.getCurricularPlan().getName());
+		criteria.addEqualTo(
+				"associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
+				executionDegree.getCurricularPlan().getDegree().getSigla());
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+
+		List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
+		return executionCourseList;
+	}
+	
 	/**
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
 	 */

@@ -38,7 +38,7 @@ public class TutorOJB extends ObjectFenixOJB implements IPersistentTutor
 	 * 
 	 * @see ServidorPersistente.IPersistentTutor#readTeachersByStudent(Dominio.IStudent)
 	 */
-	public List readTeachersByStudent(IStudent student) throws ExcepcaoPersistencia
+	public ITutor readTeachersByStudent(IStudent student) throws ExcepcaoPersistencia
 	{		
 		Criteria criteria = new Criteria();
 		if (student != null && student.getIdInternal() != null)
@@ -49,7 +49,7 @@ public class TutorOJB extends ObjectFenixOJB implements IPersistentTutor
 		{
 			criteria.addEqualTo("student.number", student.getNumber());
 		}
-		return queryList(Tutor.class, criteria);
+		return (ITutor) queryObject(Tutor.class, criteria);
 	}
 
 	/*
