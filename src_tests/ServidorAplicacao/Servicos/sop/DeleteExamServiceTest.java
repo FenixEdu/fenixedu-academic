@@ -1,15 +1,14 @@
 /*
- * ApagarAulaServicosTest.java
- * JUnit based test
+ * DeleteExamServiceTest.java
  *
- * Created on 26 de Outubro de 2002, 15:07
+ * Created on 2003/03/28
  */
 
 package ServidorAplicacao.Servicos.sop;
 
 /**
  *
- * @author tfc130
+ * @author Luis Cruz & Sara Ribeiro
  */
 import java.util.ArrayList;
 import java.util.Calendar;
