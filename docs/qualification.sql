@@ -1,5 +1,6 @@
 ALTER TABLE QUALIFICATION ADD DEGREE varchar(200) not null;
-ALTER TABLE QUALIFICATION DROP INDEX U1, ADD unique U1 (YEAR,SCHOOL,DEGREE,KEY_PERSON);
+ALTER TABLE QUALIFICATION ADD UNIQUE U1 (YEAR,SCHOOL,DEGREE,KEY_PERSON);
+-- ALTER TABLE QUALIFICATION DROP INDEX U1, ADD unique U1 (YEAR,SCHOOL,DEGREE,KEY_PERSON);
 
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1967,'IST','Licenciatura','Engª. Química Industrail',200);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1970,'Instituto Superior Técnico','Licenciatura','Engª Química Industrial',201);
