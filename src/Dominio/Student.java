@@ -40,7 +40,7 @@ public class Student implements IStudent {
     boolean resultado = false;
     if (obj instanceof IStudent) {
       IStudent student = (IStudent)obj;
-      resultado = (getNumber() == student.getNumber()) &&
+      resultado = (getNumber().equals(student.getNumber())) &&
 				  (getDegreeType().getTipoCurso().equals(student.getDegreeType().getTipoCurso()));
     } 
     return resultado;

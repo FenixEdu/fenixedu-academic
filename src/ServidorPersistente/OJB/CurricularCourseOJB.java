@@ -96,25 +96,4 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
             return null;
         }
     }
-    
-    public boolean deleteCurricularCourseByNameCode(String name, String code) {
-        try {
-            String oqlQuery = "select all from " + CurricularCourse.class.getName();
-            oqlQuery += " where name = $1 and code = $2";
-            query.create(oqlQuery);
-            query.bind(name);
-            query.bind(code);
-            List result = (List) query.execute();
-            ListIterator iterator = result.listIterator();           
-            try {
-                while (iterator.hasNext())
-                    super.delete(iterator.next());
-            } catch(ExcepcaoPersistencia ex){
-                return false;
-            }            
-            return true;
-        } catch (QueryException ex) {
-            return false;
-        }
-    }   
 }

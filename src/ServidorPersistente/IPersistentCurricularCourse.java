@@ -27,7 +27,7 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
     public ICurricularCourse readCurricularCourseByNameCode(String name, String code);
     public ArrayList readAllCurricularCourses();
     public boolean writeCurricularCourse(ICurricularCourse curricularCourse);
-    public boolean deleteCurricularCourseByNameCode(String name, String code);
+
     public boolean deleteCurricularCourse(ICurricularCourse curricularCourse);
     public boolean deleteAllCurricularCourse();
 

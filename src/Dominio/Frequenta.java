@@ -84,10 +84,10 @@ public class Frequenta implements IFrequenta {
   }
   
   public String toString() {
-    String result = "[FREQUENTA";
+    String result = "[ATTEND";
     result += ", codigoInterno=" + _codigoInterno;
-    result += ", chaveAluno=" + _chaveAluno;
-    result += ", chaveDisciplinaExecucao=" + _chaveDisciplinaExecucao;
+    result += ", Student=" + _aluno;
+	result += ", ExecutionCourse=" + _disciplinaExecucao;
     result += "]";
     return result;
   }
