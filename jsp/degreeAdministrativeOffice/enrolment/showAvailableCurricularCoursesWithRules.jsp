@@ -10,7 +10,7 @@
 		var i = 0;
 		for (i = 0; i < elements.length ; i++){
 			var element = elements[i];
-			if (element.name == elementName && !element.checked){
+			if (element.name && element.name.indexOf(elementName) == 0 && !element.checked){
 				element.disabled = true;
 			}
 		}
@@ -47,7 +47,7 @@
 				<bean:define id="optionalEnrolmentString" value=""></bean:define>
 				<logic:equal name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
 					<bean:define id="onclick">
-						if (this.checked == true) {this.form.method.value='startEnrolmentInOptional'; document.forms[0].optionalCourseIndex.value='<bean:write name="index"/>'; disableAllElements(this.form,this.name);this.form.submit();}	
+						if (this.checked == true) {this.form.method.value='startEnrolmentInOptional'; document.forms[0].optionalCourseIndex.value='<bean:write name="index"/>'; disableAllElements(this.form,'curricularCourses');this.form.submit();}	
 					</bean:define>
 					<bean:define id="optionalCourse" name="curricularScope" property="infoCurricularCourse"/>
 					<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
@@ -63,7 +63,7 @@
 				</logic:notEqual>
 				<tr>
 					<td>
-						<html:multibox property='<%= "curricularCourses[" + index +"]" %>' onclick="<%= pageContext.findAttribute("onclick").toString() %>">
+						<html:multibox property='<%= "curricularCourses[" + index +"]" %>' onclick="<%= pageContext.findAttribute("onclick").toString() %>" >
 						<%--<html:multibox property="curricularCourses" onclick="<%= pageContext.findAttribute("onclick").toString() %>">--%>
 							<bean:write name="index"/>
 						</html:multibox>

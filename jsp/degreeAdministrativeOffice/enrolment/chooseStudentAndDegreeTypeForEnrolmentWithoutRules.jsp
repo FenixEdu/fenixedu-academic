@@ -5,7 +5,7 @@
 
 <bean:define id="degreeTypeList" name="<%= SessionConstants.DEGREE_TYPE %>"/>
 
-<h2 align="center"><bean:message key="title.student.enrolment.without.rules"/></h2>
+<h2 align="center"><bean:message key="link.student.enrolment.without.rules"/></h2>
 <html:errors/>
 <br/>
 <b><bean:message key="label.first.step.enrolment"/></b>

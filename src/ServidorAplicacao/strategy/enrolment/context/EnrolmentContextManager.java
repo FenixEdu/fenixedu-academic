@@ -672,9 +672,10 @@ public abstract class EnrolmentContextManager {
 		Iterator iterator1 = curricularCoursesFromDegreeCurricularPlan.iterator();
 		while(iterator1.hasNext()) {
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-			if(	!curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) &&
+			// TODO DAVID-RICARDO: Perguntar se tiro este tipo de cadeiras (TFC e Estágios)
+			if(	!curricularCourse.getType().equals(CurricularCourseType.TRAINING_COURSE_OBJ) &&
 				!curricularCourse.getType().equals(CurricularCourseType.TFC_COURSE_OBJ) &&
-				!curricularCourse.getType().equals(CurricularCourseType.TRAINING_COURSE_OBJ) ) {
+				!curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) ) {
 				Iterator iterator2 = curricularCourse.getScopes().iterator();
 				while(iterator2.hasNext()) {
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
@@ -706,7 +707,9 @@ public abstract class EnrolmentContextManager {
 		List studentEnrolmentsWithStateEnrolled = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED) || enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED);
+				return	(enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED) ||
+						enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)) &&
+						!enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
 			}
 		});
 

@@ -27,6 +27,7 @@ import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
@@ -82,7 +83,9 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			List studentEnroledAndTemporarilyEnroledEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 				public boolean evaluate(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
-					return (enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED) || enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED));
+					return	(enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED) ||
+							enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED)) &&
+							!enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
 				}
 			});
 
@@ -165,12 +168,18 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 		IFrequenta attend = persistentAttend.readByEnrolment(enrolment);
 		List enrolmentEvaluationsList = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
 
-		persistentAttend.delete(attend);
+		if(attend != null) {
+			persistentAttend.delete(attend);
+		}
 		
-		Iterator iterator = enrolmentEvaluationsList.iterator();
-		while(iterator.hasNext()) {
-			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-			persistentEnrolmentEvaluation.delete(enrolmentEvaluation);
+		if(enrolmentEvaluationsList != null) {
+			Iterator iterator = enrolmentEvaluationsList.iterator();
+			while(iterator.hasNext()) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+				if(enrolmentEvaluation != null) {
+					persistentEnrolmentEvaluation.delete(enrolmentEvaluation);
+				}
+			}
 		}
 	}
 
