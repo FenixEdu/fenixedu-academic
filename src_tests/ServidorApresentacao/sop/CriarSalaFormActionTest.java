@@ -74,7 +74,7 @@ public class CriarSalaFormActionTest extends TestCasePresentation {
     addRequestParameter("capacityNormal","100");
     addRequestParameter("capacityExame","50");
     actionPerform();
-    verifyForwardPath("/naoExecutado.do");
+    verifyForwardPath("/autenticacaoSOP.jsp");
     
     verifyActionErrors(new String[] {"ServidorAplicacao.FenixServiceException"});
   }
