@@ -17,13 +17,12 @@
                 <tr>
                     <td>
                         <br>
-                        <h2>
+                        <b>
 							<li><html:link page="<%= "/viewSite.do" + "?method=viewProjectStudentGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
-								<bean:write name="infoGroupProperties" property="name"/></h2>
-							</html:link></li>
-							<br>
-							<BLOCKQUOTE><bean:write name="infoGroupProperties" property="projectDescription"/></BLOCKQUOTE>
-							<br>
+								<bean:write name="infoGroupProperties" property="name"/></b>
+							</html:link> - <bean:write name="infoGroupProperties" property="projectDescription"/></BLOCKQUOTE>
+							</li>
+							
                     </td>
                 </tr>
 
