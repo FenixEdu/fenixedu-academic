@@ -347,18 +347,18 @@ insert into ENROLMENT values (12, 1, 12, 1, 1, 'Dominio.Enrolment', null);
 -- -----------------------------
 -- (ID_INTERNAL, KEY_CURRICULAR_COURSE, ENROLMENT_STEP)
 delete from PRECEDENCE;
-insert into PRECEDENCE values (1, 14, 'offline');
-insert into PRECEDENCE values (2, 17, 'offline');
-insert into PRECEDENCE values (3, 22, 'offline');
-insert into PRECEDENCE values (4, 19, 'offline');
-insert into PRECEDENCE values (5, 21, 'offline');
-insert into PRECEDENCE values (6, 26, 'offline');
-insert into PRECEDENCE values (7, 25, 'offline');
-insert into PRECEDENCE values (8, 34, 'offline');
-insert into PRECEDENCE values (9, 24, 'offline');
-insert into PRECEDENCE values (10, 9, 'offline');
-insert into PRECEDENCE values (11, 13, 'offline');
-insert into PRECEDENCE values (12, 20, 'offline');
+insert into PRECEDENCE values (1, 14, 'SP');
+insert into PRECEDENCE values (2, 17, 'SP');
+insert into PRECEDENCE values (3, 22, 'SP');
+insert into PRECEDENCE values (4, 19, 'SP');
+insert into PRECEDENCE values (5, 21, 'SP');
+insert into PRECEDENCE values (6, 26, 'SP');
+insert into PRECEDENCE values (7, 25, 'SP');
+insert into PRECEDENCE values (8, 34, 'SP');
+insert into PRECEDENCE values (9, 24, 'SP');
+insert into PRECEDENCE values (10, 9, 'SP');
+insert into PRECEDENCE values (11, 13, 'SP');
+insert into PRECEDENCE values (12, 20, 'SP');
 
 -- -----------------------------
 -- Data for table 'RESTRICTION'
