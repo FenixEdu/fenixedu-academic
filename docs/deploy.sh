@@ -5,4 +5,5 @@ mysql -Dfenix < insertToCurriculum.sql
 mysql -Dfenix < fixToCurriculum-step3.sql
 mysql -Dfenix < fixToEvaluationMethod-step1.sql
 mysql -Dfenix < fixToEvaluationMethod-step2.sql > insertEvaluationMethod.sql
+mysql -Dfenix < fixToEvaluationMethod-step3.sql
 mysql -Dfenix < insertEvaluationMethod.sql
