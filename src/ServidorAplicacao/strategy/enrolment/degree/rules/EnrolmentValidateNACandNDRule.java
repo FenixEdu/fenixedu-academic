@@ -18,6 +18,8 @@ import ServidorPersistente.ExcepcaoPersistencia;
 public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
+		
+System.out.println("SIZE[" + enrolmentContext.getActualEnrolment().size() + "]");
 
 		List validateMessages = new ArrayList();
 

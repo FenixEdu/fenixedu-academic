@@ -165,6 +165,18 @@ public abstract class EnrolmentContextManager {
 			}
 		}
 
+		List curricularCourseScopeList2 = new ArrayList();
+		List infoCurricularCourseScopeList2 = infoEnrolmentContext.getActualEnrolment();
+		if (infoCurricularCourseScopeList2 != null && !infoCurricularCourseScopeList2.isEmpty()) {
+			Iterator iterator = infoCurricularCourseScopeList2.iterator();
+			while (iterator.hasNext()) {
+				InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterator.next();
+				ICurricularCourseScope curricularCourseScope =
+					Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
+				curricularCourseScopeList2.add(curricularCourseScope);
+			}
+		}
+
 		try {
 			BeanUtils.copyProperties(enrolmentContext, infoEnrolmentContext);
 		} catch (Exception e) {
@@ -174,6 +186,7 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(curricularCourseScopeList);
 		enrolmentContext.setStudent(student);
+		enrolmentContext.setActualEnrolment(curricularCourseScopeList2);
 
 		return enrolmentContext;
 	}
@@ -201,6 +214,18 @@ public abstract class EnrolmentContextManager {
 			}
 		}
 
+		List infoCurricularCourseScopeList2 = new ArrayList();
+		List curricularCourseScopeList2 = enrolmentContext.getActualEnrolment();
+		if (curricularCourseScopeList2 != null && !curricularCourseScopeList2.isEmpty()) {
+			Iterator iterator = curricularCourseScopeList2.iterator();
+			while (iterator.hasNext()) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+				InfoCurricularCourseScope infoCurricularCourseScope =
+					Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+				infoCurricularCourseScopeList2.add(infoCurricularCourseScope);
+			}
+		}
+
 		try {
 			BeanUtils.copyProperties(infoEnrolmentContext, enrolmentContext);
 		} catch (Exception e) {
@@ -210,6 +235,7 @@ public abstract class EnrolmentContextManager {
 		infoEnrolmentContext.setInfoStudentActiveCurricularPlan(infoStudentActiveCurricularPlan);
 		infoEnrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(infoCurricularCourseScopeList);
 		infoEnrolmentContext.setInfoStudent(infoStudent);
+		infoEnrolmentContext.setActualEnrolment(infoCurricularCourseScopeList2);
 
 		return infoEnrolmentContext;
 	}

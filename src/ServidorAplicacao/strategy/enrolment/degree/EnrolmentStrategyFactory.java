@@ -38,14 +38,14 @@ public class EnrolmentStrategyFactory {
 		if (enrolmentContext.getStudentActiveCurricularPlan() == null)
 			throw new IllegalArgumentException("Must initialize StudentActiveCurricularPlan in context!");
 
-		if (strategyInstance == null) {
+//		if (strategyInstance == null) {
 			String degree = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegree().getSigla();
 			
 			if (degree.equals("LERCI")) {
 				strategyInstance = new EnrolmentStrategyLERCI();
 				strategyInstance.setEnrolmentContext(enrolmentContext);
 			}
-		}
+//		}
 		return strategyInstance;
 	}
 
