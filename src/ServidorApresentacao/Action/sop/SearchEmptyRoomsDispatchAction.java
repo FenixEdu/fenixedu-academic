@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
@@ -32,7 +33,6 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
-import ServidorApresentacao.validator.form.FenixDynaValidatorForm;
 import Util.DiaSemana;
 
 /**
@@ -115,7 +115,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		throws Exception {
 
 		try {
-			FenixDynaValidatorForm searchForm = (FenixDynaValidatorForm) form;
+			DynaValidatorForm searchForm = (DynaValidatorForm) form;
 			Integer normalCapacity = new Integer(0);
 			try {
 				normalCapacity =
@@ -151,9 +151,6 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 			infoLesson.setDiaSemana(new DiaSemana(weekDay));
 			infoLesson.setInicio(start);
 			infoLesson.setFim(end);
-
-			//	execution period selection
-			HttpSession session = request.getSession(false);
 
 			Object argsReadExecutionPeriods[] = {
 			};
