@@ -95,16 +95,18 @@ public class CreateGuideDispatchAction extends DispatchAction
                         userView,
                         "ReadMasterDegrees",
                         args);
-            } catch (ExistingServiceException e)
+            }
+            catch (ExistingServiceException e)
             {
                 throw new ExistingActionException(e);
             }
 
-            //BeanComparator nameComparator =  new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+            //BeanComparator nameComparator = new
+			// BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
             //Collections.sort(degreeList, nameComparator);
-			Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
-			List newDegreeList = degreeList;
-			List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
+            Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
+            List newDegreeList = degreeList;
+            List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
 
             session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
             session.removeAttribute(SessionConstants.PRINT_PASSWORD);
@@ -118,7 +120,8 @@ public class CreateGuideDispatchAction extends DispatchAction
                         userView,
                         "ReadAllContributors",
                         null);
-            } catch (ExistingServiceException e)
+            }
+            catch (ExistingServiceException e)
             {
                 throw new ExistingActionException(e);
             }
@@ -137,10 +140,11 @@ public class CreateGuideDispatchAction extends DispatchAction
             session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
 
             session.setAttribute(SessionConstants.GUIDE_REQUESTER_LIST, GuideRequester.toArrayList());
-			session.setAttribute(SessionConstants.EXECUTION_YEAR, executionYear);
+            session.setAttribute(SessionConstants.EXECUTION_YEAR, executionYear);
 
             return mapping.findForward("PrepareSuccess");
-        } else
+        }
+        else
             throw new Exception();
 
     }
@@ -167,7 +171,7 @@ public class CreateGuideDispatchAction extends DispatchAction
             String graduationType = (String) createGuideForm.get("graduationType");
             String degree = (String) createGuideForm.get("degree");
             String numberString = (String) createGuideForm.get("number");
-			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
+            String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 
             Integer number = new Integer(numberString);
             String requesterType = (String) createGuideForm.get("requester");
@@ -186,35 +190,37 @@ public class CreateGuideDispatchAction extends DispatchAction
 
             ArrayList degrees = (ArrayList) session.getAttribute(SessionConstants.DEGREE_LIST);
 
-			List types = new ArrayList();
-			types.add(DocumentType.INSURANCE_TYPE);
-			types.add(DocumentType.CERTIFICATE_TYPE);
-			types.add(DocumentType.ENROLMENT_TYPE);
-			types.add(DocumentType.EMOLUMENT_TYPE);
-			types.add(DocumentType.FINE_TYPE);
-			types.add(DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
-			types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT_TYPE);
-			types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
-			types.add(DocumentType.GRATUITY_TYPE);
-			
-			InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+            List types = new ArrayList();
+            types.add(DocumentType.INSURANCE_TYPE);
+            types.add(DocumentType.CERTIFICATE_TYPE);
+            types.add(DocumentType.ENROLMENT_TYPE);
+            types.add(DocumentType.EMOLUMENT_TYPE);
+            types.add(DocumentType.FINE_TYPE);
+            types.add(DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
+            types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT_TYPE);
+            types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
+            types.add(DocumentType.GRATUITY_TYPE);
 
-			try
-			{
-				Object args[] = { executionYear ,degree  };
-				infoExecutionDegree =
-					(InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-						userView,
-						"ReadDegreeByYearAndCode",
-						args);
+            InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
-			} catch (NonExistingServiceException e)
-			{
-				throw new NonExistingActionException("A lista de guias para estudantes", e);
-			} catch (FenixServiceException e)
-			{
-				throw new FenixActionException(e);
-			}
+            try
+            {
+                Object args[] = { executionYear, degree };
+                infoExecutionDegree =
+                    (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                        userView,
+                        "ReadDegreeByYearAndCode",
+                        args);
+
+            }
+            catch (NonExistingServiceException e)
+            {
+                throw new NonExistingActionException("A lista de guias para estudantes", e);
+            }
+            catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
 
             Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
 
@@ -228,10 +234,12 @@ public class CreateGuideDispatchAction extends DispatchAction
                         "ReadCertificateList",
                         argsAux);
 
-            } catch (NonExistingServiceException e)
+            }
+            catch (NonExistingServiceException e)
             {
                 throw new NonExistingActionException("A lista de guias para estudantes", e);
-            } catch (FenixServiceException e)
+            }
+            catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);
             }
@@ -239,19 +247,19 @@ public class CreateGuideDispatchAction extends DispatchAction
             session.setAttribute(SessionConstants.CERTIFICATE_LIST, studentGuideList);
 
             // Verify the chosen degree
-//            Iterator iterator = degrees.iterator();
-//            InfoExecutionDegree infoExecutionDegree = null;
-//            while (iterator.hasNext())
-//            {
-//			
-//                InfoExecutionDegree infoExecutionDegreeTemp = (InfoExecutionDegree) iterator.next();
-//                if (infoExecutionDegreeTemp
-//                    .getInfoDegreeCurricularPlan()
-//                    .getInfoDegree()
-//                    .getNome()
-//                    .equals(degree))
-//                    infoExecutionDegree = infoExecutionDegreeTemp;
-//            }
+            //            Iterator iterator = degrees.iterator();
+            //            InfoExecutionDegree infoExecutionDegree = null;
+            //            while (iterator.hasNext())
+            //            {
+            //			
+            //                InfoExecutionDegree infoExecutionDegreeTemp = (InfoExecutionDegree) iterator.next();
+            //                if (infoExecutionDegreeTemp
+            //                    .getInfoDegreeCurricularPlan()
+            //                    .getInfoDegree()
+            //                    .getNome()
+            //                    .equals(degree))
+            //                    infoExecutionDegree = infoExecutionDegreeTemp;
+            //            }
             String contributorName = (String) createGuideForm.get("contributorName");
             String contributorAddress = (String) createGuideForm.get("contributorAddress");
 
@@ -279,24 +287,29 @@ public class CreateGuideDispatchAction extends DispatchAction
                         userView,
                         "PrepareCreateGuide",
                         args);
-            } catch (ExistingServiceException e)
+            }
+            catch (ExistingServiceException e)
             {
                 throw new ExistingActionException("O Contribuinte", e);
-            } catch (NoActiveStudentCurricularPlanServiceException e)
+            }
+            catch (NoActiveStudentCurricularPlanServiceException e)
             {
                 throw new NoActiveStudentCurricularPlanActionException(e);
-            } catch (NonExistingContributorServiceException e)
+            }
+            catch (NonExistingContributorServiceException e)
             {
                 session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
                 return mapping.getInputForward();
-            } catch (NonExistingServiceException e)
+            }
+            catch (NonExistingServiceException e)
             {
                 ActionError actionError = new ActionError("error.nonExisting.requester");
                 ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("Unknown", actionError);
                 saveErrors(request, actionErrors);
                 return mapping.getInputForward();
-            } catch (FenixServiceException e)
+            }
+            catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);
             }
@@ -336,7 +349,8 @@ public class CreateGuideDispatchAction extends DispatchAction
                 return mapping.findForward("CreateStudentGuide");
             }
             throw new FenixActionException("Unknown requester type!");
-        } else
+        }
+        else
             throw new FenixActionException();
     }
 
@@ -353,7 +367,8 @@ public class CreateGuideDispatchAction extends DispatchAction
         if (!isTokenValid(request))
         {
             return mapping.findForward("BackError");
-        } else
+        }
+        else
         {
             generateToken(request);
             saveToken(request);
@@ -391,7 +406,8 @@ public class CreateGuideDispatchAction extends DispatchAction
                     throw new NumberFormatException();
                 }
             }
-        } catch (NumberFormatException e)
+        }
+        catch (NumberFormatException e)
         {
             throw new InvalidInformationInFormActionException(new Throwable());
         }
@@ -421,12 +437,14 @@ public class CreateGuideDispatchAction extends DispatchAction
                 { infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide, paymentType };
             newInfoGuide =
                 (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "CreateGuide", args);
-        } catch (InvalidSituationServiceException e)
+        }
+        catch (InvalidSituationServiceException e)
         {
             Object object = new Object();
             object = "Anulada";
             throw new InvalidSituationActionException(object);
-        } catch (NonExistingContributorServiceException e)
+        }
+        catch (NonExistingContributorServiceException e)
         {
             session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
             return mapping.getInputForward();
@@ -453,7 +471,8 @@ public class CreateGuideDispatchAction extends DispatchAction
                         userView,
                         "CreateCandidateSituation",
                         args);
-                } catch (FenixServiceException e)
+                }
+                catch (FenixServiceException e)
                 {
                     throw new FenixActionException();
                 }
@@ -473,7 +492,8 @@ public class CreateGuideDispatchAction extends DispatchAction
                             userView,
                             "CreateCandidateSituation",
                             args);
-                    } catch (FenixServiceException e)
+                    }
+                    catch (FenixServiceException e)
                     {
                         throw new FenixActionException();
                     }
@@ -482,7 +502,8 @@ public class CreateGuideDispatchAction extends DispatchAction
 
                     session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
 
-                } else
+                }
+                else
                 {
                     session.setAttribute(SessionConstants.PRINT_INFORMATION, Boolean.TRUE);
                 }
@@ -494,48 +515,50 @@ public class CreateGuideDispatchAction extends DispatchAction
         return mapping.findForward("CreateSuccess");
 
     }
-	private List buildExecutionDegreeLabelValueBean(List executionDegreeList)
-			{
-				List executionDegreeLabels = new ArrayList();
-				Iterator iterator = executionDegreeList.iterator();
-				while (iterator.hasNext())
-				{
-					InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-					String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+    private List buildExecutionDegreeLabelValueBean(List executionDegreeList)
+    {
+        List executionDegreeLabels = new ArrayList();
+        Iterator iterator = executionDegreeList.iterator();
+        while (iterator.hasNext())
+        {
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-					name =
-						infoExecutionDegree
-							.getInfoDegreeCurricularPlan()
-							.getInfoDegree()
-							.getTipoCurso()
-							.toString()
-							+ " em "
-							+ name;
+            name =
+                infoExecutionDegree
+                    .getInfoDegreeCurricularPlan()
+                    .getInfoDegree()
+                    .getTipoCurso()
+                    .toString()
+                    + " em "
+                    + name;
 
-					name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
-						? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
-						: "";
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
+                ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
+                : "";
 
-					executionDegreeLabels.add(
-						new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getName()));
-				}
-				return executionDegreeLabels;
-		}
-	private boolean duplicateInfoDegree(
-				List executionDegreeList,
-				InfoExecutionDegree infoExecutionDegree)
-			{
-				InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-				Iterator iterator = executionDegreeList.iterator();
+            executionDegreeLabels.add(
+                new LabelValueBean(
+                    name,
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla()));
+        }
+        return executionDegreeLabels;
+    }
+    private boolean duplicateInfoDegree(
+        List executionDegreeList,
+        InfoExecutionDegree infoExecutionDegree)
+    {
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+        Iterator iterator = executionDegreeList.iterator();
 
-				while (iterator.hasNext())
-				{
-					InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-					if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-						&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
-						return true;
+        while (iterator.hasNext())
+        {
+            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+                && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+                return true;
 
-				}
-				return false;
-			}
+        }
+        return false;
+    }
 }

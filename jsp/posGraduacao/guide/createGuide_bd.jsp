@@ -13,7 +13,7 @@
          <td>
             <html:select property="degree">
 			   <option value="" selected="selected"><bean:message key="label.candidate.degree.default"/></option>
-               <html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="infoDegreeCurricularPlan.infoDegree.nome" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
+               <html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="value" labelProperty="label"/>
              </html:select>          
          </td>
         </tr>
