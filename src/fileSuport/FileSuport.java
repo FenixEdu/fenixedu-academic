@@ -46,8 +46,6 @@ import org.apache.slide.structure.ObjectNode;
 import org.apache.slide.structure.Structure;
 import org.apache.slide.structure.SubjectNode;
 
-import slidestore.mysql.MySQLContentStore;
-
 public class FileSuport implements IFileSuport {
 
 	private static FileSuport instance = null;
