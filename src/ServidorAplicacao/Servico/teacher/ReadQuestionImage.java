@@ -50,7 +50,7 @@ public class ReadQuestionImage implements IServico {
 					parse.parseQuestionImage(
 						question.getXmlFile(),
 						imageId.intValue(),
-						path);
+						this.path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}

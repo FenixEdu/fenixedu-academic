@@ -79,7 +79,7 @@ public class ReadTestQuestion implements IServico
             ParseQuestion parse = new ParseQuestion();
             try
             {
-                infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, path);
+                infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, this.path);
             }
             catch (Exception e)
             {

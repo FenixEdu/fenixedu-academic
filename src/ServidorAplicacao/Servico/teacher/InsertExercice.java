@@ -91,7 +91,7 @@ public class InsertExercice implements IServico
             {
                 metadataString =
                     changeDocumentType(new String(metadataFile.getFileData(), "ISO-8859-1"), true);
-                xmls = parseMetadata.parseMetadata(metadataString, path);
+                xmls = parseMetadata.parseMetadata(metadataString, this.path);
             }
             catch (SAXParseException e)
             {
@@ -130,7 +130,7 @@ public class InsertExercice implements IServico
                     IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
                     try
                     {
-                        parseQuestion.parseFile(xmlString, path);
+                        parseQuestion.parseFile(xmlString, this.path);
                         IQuestion question = new Question();
                         question.setMetadata(metadata);
                         question.setXmlFile(xmlString);
@@ -188,7 +188,7 @@ public class InsertExercice implements IServico
         java.io.StringWriter result = new java.io.StringWriter();
         try
         {
-            URL xsl = new URL("file://" + path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
+            URL xsl = new URL("file:///" + path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
             String doctypePublic =
                 new String("-//Technical Superior Institute//DTD Test Metadata 1.1//EN");
             String doctypeSystem =
@@ -243,19 +243,19 @@ public class InsertExercice implements IServico
         java.io.StringWriter result = new java.io.StringWriter();
         try
         {
-            URL xsl = new URL("file://" + path.concat("WEB-INF/ims/changeDocumentType.xsl"));
+            URL xsl = new URL("file:///" + path.concat("WEB-INF/ims/changeDocumentType.xsl"));
             String doctypePublic = null;
             String doctypeSystem = null;
             if (metadata)
             {
                 doctypePublic = new String("-//Technical Superior Institute//DTD Test Metadata 1.1//EN");
-                doctypeSystem = new String("file://" + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
+                doctypeSystem = new String("file:///" + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
             }
             else
             {
                 doctypePublic =
                     new String("-//Technical Superior Institute//DTD Test XmlDocument 1.1//EN");
-                doctypeSystem = new String("file://" + path.concat("WEB-INF/ims/qtiasiv1p2.dtd"));
+                doctypeSystem = new String("file:///" + path.concat("WEB-INF/ims/qtiasiv1p2.dtd"));
             }
 
             String auxFile = new String();

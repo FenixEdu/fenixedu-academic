@@ -109,11 +109,11 @@ public class InsertStudentTestResponses implements IServico {
 										.getQuestion()
 										.getXmlFile(),
 									infoStudentTestQuestion.getQuestion(),
-									path));
+									this.path));
 							infoStudentTestQuestion =
 								parse.getOptionsShuffle(
 									infoStudentTestQuestion,
-									path);
+									this.path);
 						} catch (Exception e) {
 							throw new FenixServiceException(e);
 						}

@@ -37,86 +37,82 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class DeleteExercice implements IServico {
+public class DeleteExercice implements IServico
+{
 	private static DeleteExercice service = new DeleteExercice();
 	private String path = new String();
 
-	public static DeleteExercice getService() {
+	public static DeleteExercice getService()
+	{
 		return service;
 	}
 
-	public DeleteExercice() {
+	public DeleteExercice()
+	{
 	}
 
-	public String getNome() {
+	public String getNome()
+	{
 		return "DeleteExercice";
 	}
 
-	public boolean run(
-		Integer executionCourseId,
-		Integer metadataId,
-		String path)
-		throws FenixServiceException {
+	public boolean run(Integer executionCourseId, Integer metadataId, String path)
+		throws FenixServiceException
+	{
 		this.path = path.replace('\\', '/');
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
+		try
+		{
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentMetadata persistentMetadata =
-				persistentSuport.getIPersistentMetadata();
+			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 			IMetadata metadata = new Metadata(metadataId);
 			metadata = (IMetadata) persistentMetadata.readByOId(metadata, true);
 			if (metadata == null)
 				throw new InvalidArgumentsServiceException();
 
-			List questionList =
-				persistentSuport.getIPersistentQuestion().readByMetadata(
-					metadata);
+			List questionList = persistentSuport.getIPersistentQuestion().readByMetadata(metadata);
 			boolean delete = true;
 			Iterator questionIt = questionList.iterator();
-			IPersistentQuestion persistentQuestion =
-				persistentSuport.getIPersistentQuestion();
-			while (questionIt.hasNext()) {
+			IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
+			while (questionIt.hasNext())
+			{
 				IQuestion question = (IQuestion) questionIt.next();
 
 				List testQuestionList =
-					persistentSuport
-						.getIPersistentTestQuestion()
-						.readByQuestion(
-						question);
+					persistentSuport.getIPersistentTestQuestion().readByQuestion(question);
 				Iterator testQuestionIt = testQuestionList.iterator();
 				while (testQuestionIt.hasNext())
-					removeTestQuestionFromTest(
-						persistentSuport,
-						(ITestQuestion) testQuestionIt.next());
+					removeTestQuestionFromTest(persistentSuport, (ITestQuestion) testQuestionIt.next());
 
 				List studentTestQuestionList =
-					persistentSuport
-						.getIPersistentStudentTestQuestion()
-						.readByQuestion(
-						question);
-				if (studentTestQuestionList == null
-					|| studentTestQuestionList.size() == 0) {
+					persistentSuport.getIPersistentStudentTestQuestion().readByQuestion(question);
+				if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
+				{
 					persistentQuestion.delete(question);
-					metadata.setMetadataFile(
-						removeLocation(
-							metadata.getMetadataFile(),
-							question.getXmlFileName()));
 					persistentMetadata.simpleLockWrite(metadata);
-				} else {
-					question.setVisibility(new Boolean("false"));
+					metadata.setMetadataFile(
+						removeLocation(metadata.getMetadataFile(), question.getXmlFileName()));
+					
+				}
+				else
+				{
 					persistentQuestion.lockWrite(question);
+					question.setVisibility(new Boolean("false"));
 					delete = false;
 				}
 
 			}
 
-			if (delete) {
+			if (delete)
+			{
 				persistentQuestion.deleteByMetadata(metadata);
 				persistentMetadata.delete(metadata);
-			} else
+			}
+			else
 				metadata.setVisibility(new Boolean("false"));
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e);
 		}
 		return true;
@@ -125,72 +121,63 @@ public class DeleteExercice implements IServico {
 	private void removeTestQuestionFromTest(
 		ISuportePersistente persistentSuport,
 		ITestQuestion testQuestion)
-		throws ExcepcaoPersistencia {
+		throws ExcepcaoPersistencia
+	{
 
-		IPersistentTestQuestion persistentTestQuestion =
-			persistentSuport.getIPersistentTestQuestion();
+		IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
 
 		ITest test = new Test(testQuestion.getKeyTest());
-		test =
-			(ITest) persistentSuport.getIPersistentTest().readByOId(test, true);
+		test = (ITest) persistentSuport.getIPersistentTest().readByOId(test, true);
 		if (test == null)
 			throw new ExcepcaoPersistencia();
 
 		List testQuestionList = persistentTestQuestion.readByTest(test);
 		Integer questionOrder = testQuestion.getTestQuestionOrder();
 
-		if (testQuestionList != null) {
+		if (testQuestionList != null)
+		{
 			Iterator it = testQuestionList.iterator();
-			while (it.hasNext()) {
+			while (it.hasNext())
+			{
 				ITestQuestion iterTestQuestion = (ITestQuestion) it.next();
-				Integer iterQuestionOrder =
-					iterTestQuestion.getTestQuestionOrder();
+				Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
 
-				if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
+				if (questionOrder.compareTo(iterQuestionOrder) <= 0)
+				{
 					persistentTestQuestion.simpleLockWrite(iterTestQuestion);
-					iterTestQuestion.setTestQuestionOrder(
-						new Integer(iterQuestionOrder.intValue() - 1));
+					iterTestQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() - 1));
 				}
 			}
 		}
 		persistentTestQuestion.delete(testQuestion);
-		test.setNumberOfQuestions(
-			new Integer(test.getNumberOfQuestions().intValue() - 1));
+		test.setNumberOfQuestions(new Integer(test.getNumberOfQuestions().intValue() - 1));
 		test.setLastModifiedDate(null);
 	}
 
-	private String removeLocation(String metadataFile, String xmlName)
-		throws FenixServiceException {
+	private String removeLocation(String metadataFile, String xmlName) throws FenixServiceException
+	{
 		TransformerFactory tf = TransformerFactory.newInstance();
 		java.io.StringWriter result = new java.io.StringWriter();
-		try {
-			URL xsl =
-				new URL(
-					"file://"
-						+ path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
+		try
+		{
+			URL xsl = new URL("file:///" + path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
 			String doctypePublic =
 				new String("-//Technical Superior Institute//DTD Test Metadata 1.1//EN");
 			String doctypeSystem =
-				new String(
-					"metadataFile://"
-						+ path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
+				new String("metadataFile://" + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
 			String auxFile = new String();
 			int index = metadataFile.indexOf("<!DOCTYPE");
-			if (index != -1) {
+			if (index != -1)
+			{
 				auxFile = metadataFile.substring(0, index);
 				int index2 = metadataFile.indexOf(">", index) + 1;
 				auxFile = metadataFile.substring(index2, metadataFile.length());
 			}
 			metadataFile = auxFile;
 
-			Transformer transformer =
-				tf.newTransformer(new StreamSource(xsl.openStream()));
-			transformer.setOutputProperty(
-				OutputKeys.DOCTYPE_SYSTEM,
-				doctypeSystem);
-			transformer.setOutputProperty(
-				OutputKeys.DOCTYPE_PUBLIC,
-				doctypePublic);
+			Transformer transformer = tf.newTransformer(new StreamSource(xsl.openStream()));
+			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctypeSystem);
+			transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctypePublic);
 			transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-LATIN-1");
 			transformer.setParameter("xmlDocument", xmlName);
 
@@ -198,15 +185,25 @@ public class DeleteExercice implements IServico {
 
 			transformer.transform(source, new StreamResult(result));
 
-		} catch (javax.xml.transform.TransformerConfigurationException e) {
+		}
+		catch (javax.xml.transform.TransformerConfigurationException e)
+		{
 			throw new FenixServiceException(e);
-		} catch (javax.xml.transform.TransformerException e) {
+		}
+		catch (javax.xml.transform.TransformerException e)
+		{
 			throw new FenixServiceException(e);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new FenixServiceException(e);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new FenixServiceException(e);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new FenixServiceException(e);
 		}
 		return result.toString();

@@ -74,7 +74,7 @@ public class ReadMetadatas implements IServico
                 ParseMetadata p = new ParseMetadata();
                 try
                 {
-                    infoMetadata = p.parseMetadata(metadata.getMetadataFile(), infoMetadata, path);
+                    infoMetadata = p.parseMetadata(metadata.getMetadataFile(), infoMetadata, this.path);
                 }
                 catch (Exception e)
                 {

@@ -119,7 +119,7 @@ public class ReadMetadatasByDistributedTest implements IServico
                         try
                         {
                             infoMetadata =
-                                p.parseMetadata(metadata.getMetadataFile(), infoMetadata, path);
+                                p.parseMetadata(metadata.getMetadataFile(), infoMetadata, this.path);
                         }
                         catch (Exception e)
                         {

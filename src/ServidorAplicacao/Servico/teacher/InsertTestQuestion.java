@@ -77,7 +77,7 @@ public class InsertTestQuestion implements IServico {
 					p.parseMetadata(
 						metadata.getMetadataFile(),
 						infoMetadata,
-						path);
+						this.path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}
@@ -128,7 +128,7 @@ public class InsertTestQuestion implements IServico {
 						parseQuestion.parseQuestion(
 							infoQuestion.getXmlFile(),
 							infoQuestion,
-							path);
+							this.path);
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}

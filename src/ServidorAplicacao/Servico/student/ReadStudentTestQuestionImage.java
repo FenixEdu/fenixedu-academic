@@ -85,8 +85,8 @@ public class ReadStudentTestQuestionImage implements IServico
                             parse.parseQuestion(
                                 infoStudentTestQuestion.getQuestion().getXmlFile(),
                                 infoStudentTestQuestion.getQuestion(),
-                                path));
-                        infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion, path);
+                                this.path));
+                        infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion, this.path);
                     } catch (Exception e)
                     {
                         throw new FenixServiceException(e);

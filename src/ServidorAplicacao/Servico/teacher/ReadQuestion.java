@@ -81,7 +81,7 @@ public class ReadQuestion implements IServico {
 					p.parseMetadata(
 						metadata.getMetadataFile(),
 						infoMetadata,
-						path);
+						this.path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}
@@ -110,7 +110,7 @@ public class ReadQuestion implements IServico {
 					parse.parseQuestion(
 						infoQuestion.getXmlFile(),
 						infoQuestion,
-						path);
+						this.path);
 			} catch (Exception e) {
 				throw new FenixServiceException(e);
 			}

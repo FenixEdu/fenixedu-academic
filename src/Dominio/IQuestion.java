@@ -18,4 +18,5 @@ public interface IQuestion extends IDomainObject {
 	public abstract void setXmlFile(String string);
 	public abstract void setXmlFileName(String string);
 	public abstract void setVisibility(Boolean boolean1);
+	public abstract boolean compareTo(Object obj);
 }

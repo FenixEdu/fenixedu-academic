@@ -14,6 +14,7 @@ public class InfoMetadata extends InfoObject {
 	private String metadataFile;
 	private InfoExecutionCourse infoExecutionCourse;
 	private Boolean visibility;
+	private List visibleQuestions;
 
 	private String difficulty;
 	private String level;
@@ -124,6 +125,16 @@ public class InfoMetadata extends InfoObject {
 						&& (getVisibility().equals(infoMetadata.getVisibility())));
 		}
 		return result;
+	}
+
+	public List getVisibleQuestions()
+	{
+		return visibleQuestions;
+	}
+
+	public void setVisibleQuestions(List list)
+	{
+		visibleQuestions = list;
 	}
 
 }

@@ -15,17 +15,16 @@ import Dominio.StudentTestQuestion;
 /**
  * @author Susana Fernandes
  */
-public interface IPersistentStudentTestQuestion extends IPersistentObject {
+public interface IPersistentStudentTestQuestion extends IPersistentObject
+{
 	public abstract List readByStudentAndDistributedTest(
 		IStudent student,
 		IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia;
 	public abstract List readByDistributedTest(IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia;
-	public abstract List readByStudent(IStudent student)
-		throws ExcepcaoPersistencia;
-	public abstract List readByQuestion(IQuestion question)
-		throws ExcepcaoPersistencia;
+	public abstract List readByStudent(IStudent student) throws ExcepcaoPersistencia;
+	public abstract List readByQuestion(IQuestion question) throws ExcepcaoPersistencia;
 	public abstract List readByQuestionAndDistributedTest(
 		IQuestion question,
 		IDistributedTest distributedTest)
@@ -41,6 +40,5 @@ public interface IPersistentStudentTestQuestion extends IPersistentObject {
 		throws ExcepcaoPersistencia;
 	public abstract void deleteByDistributedTest(IDistributedTest distributedTest)
 		throws ExcepcaoPersistencia;
-	public abstract void delete(IStudentTestQuestion studentTestQuestion)
-		throws ExcepcaoPersistencia;
+	public abstract void delete(IStudentTestQuestion studentTestQuestion) throws ExcepcaoPersistencia;
 }

@@ -118,7 +118,7 @@ public class ReadMetadatasByTest implements IServico
                         try
                         {
                             infoMetadata =
-                                p.parseMetadata(metadata.getMetadataFile(), infoMetadata, path);
+                                p.parseMetadata(metadata.getMetadataFile(), infoMetadata, this.path);
                         } catch (Exception e)
                         {
                             throw new FenixServiceException(e);

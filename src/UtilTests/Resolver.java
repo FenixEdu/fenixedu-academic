@@ -28,12 +28,12 @@ public class Resolver implements EntityResolver {
 		if (publicId
 			.equals("-//Technical Superior Institute//DTD Test Metadata 1.1//EN")) {
 			return new InputSource(
-				new String("file://" + path.concat(metadataDtd)));
+				new String("file:///" + path.concat(metadataDtd)));
 		} else if (
 			publicId.equals(
 				"-//Technical Superior Institute//DTD Test XmlDocument 1.1//EN")) {
 			return new InputSource(
-				new String("file://" + path.concat(xmlDocumentDtd)));
+				new String("file:///" + path.concat(xmlDocumentDtd)));
 		} else
 			return null;
 	}

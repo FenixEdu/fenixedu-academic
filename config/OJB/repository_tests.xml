@@ -36,6 +36,14 @@
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
+    <collection-descriptor
+		name="visibleQuestions"
+		element-class-ref="Dominio.Question"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyMetadata"/>
+		<query-customizer class="ServidorPersistente.customQueries.QuestionFilter">
+	    </query-customizer>
+	</collection-descriptor>
 	<foreignkey field-id-ref="2"/>
 	</reference-descriptor>
 	<attribute

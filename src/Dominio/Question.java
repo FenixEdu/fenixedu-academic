@@ -7,56 +7,87 @@ package Dominio;
 /**
  * @author Susana Fernandes
  */
-public class Question extends DomainObject implements IQuestion {
+public class Question extends DomainObject implements IQuestion
+{
 	private String xmlFile;
 	private String xmlFileName;
 	private IMetadata metadata;
 	private Integer keyMetadata;
 	private Boolean visibility;
 
-	public Question() {
+	public Question()
+	{
 	}
-	public Question(Integer questionId) {
+	public Question(Integer questionId)
+	{
 		setIdInternal(questionId);
 	}
-	public Integer getKeyMetadata() {
+	public Integer getKeyMetadata()
+	{
 		return keyMetadata;
 	}
 
-	public IMetadata getMetadata() {
+	public IMetadata getMetadata()
+	{
 		return metadata;
 	}
 
-	public String getXmlFile() {
+	public String getXmlFile()
+	{
 		return xmlFile;
 	}
 
-	public String getXmlFileName() {
+	public String getXmlFileName()
+	{
 		return xmlFileName;
 	}
 
-	public void setKeyMetadata(Integer integer) {
+	public void setKeyMetadata(Integer integer)
+	{
 		keyMetadata = integer;
 	}
 
-	public void setMetadata(IMetadata metadata) {
+	public void setMetadata(IMetadata metadata)
+	{
 		this.metadata = metadata;
 	}
 
-	public void setXmlFile(String string) {
+	public void setXmlFile(String string)
+	{
 		xmlFile = string;
 	}
 
-	public void setXmlFileName(String string) {
+	public void setXmlFileName(String string)
+	{
 		xmlFileName = string;
 	}
 
-	public Boolean getVisibility() {
+	public Boolean getVisibility()
+	{
 		return visibility;
 	}
 
-	public void setVisibility(Boolean boolean1) {
+	public void setVisibility(Boolean boolean1)
+	{
 		visibility = boolean1;
+	}
+
+	public boolean compareTo(Object obj)
+	{
+		boolean resultado = false;
+		if (obj instanceof IQuestion)
+		{
+			IQuestion question = (IQuestion) obj;
+			resultado =
+				(question != null)
+					&& this.getIdInternal().equals(question.getIdInternal())
+					&& this.getKeyMetadata().equals(question.getKeyMetadata())
+					&& this.getVisibility().equals(question.getVisibility())
+					&& this.getXmlFile().equals(question.getXmlFile())
+					&& this.getXmlFileName().equals(question.getXmlFileName());
+		}
+
+		return resultado;
 	}
 
 }

@@ -84,7 +84,7 @@ public class ReadTest implements IServico {
 						parse.parseQuestion(
 							infoTestQuestion.getQuestion().getXmlFile(),
 							infoTestQuestion.getQuestion(),
-							path));
+							this.path));
 				} catch (Exception e) {
 					throw new FenixServiceException(e);
 				}

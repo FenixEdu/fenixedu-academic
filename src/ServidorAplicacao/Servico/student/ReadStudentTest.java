@@ -27,75 +27,85 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTest implements IServico {
+public class ReadStudentTest implements IServico
+{
 	private static ReadStudentTest service = new ReadStudentTest();
 	private String path = new String();
 
-	public static ReadStudentTest getService() {
+	public static ReadStudentTest getService()
+	{
 		return service;
 	}
 
-	public String getNome() {
+	public String getNome()
+	{
 		return "ReadStudentTest";
 	}
 
-	public Object run(
-		String userName,
-		Integer distributedTestId,
-		Boolean log,
-		String path)
-		throws FenixServiceException {
+	public Object run(String userName, Integer distributedTestId, Boolean log, String path)
+		throws FenixServiceException
+	{
 		List infoStudentTestQuestionList = new ArrayList();
 		this.path = path.replace('\\', '/');
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-			IStudent student =
-				persistentSuport.getIPersistentStudent().readByUsername(
-					userName);
+		try
+		{
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
 			if (student == null)
 				throw new FenixServiceException();
-			IDistributedTest distributedTest =
-				new DistributedTest(distributedTestId);
-            distributedTest =
-            (IDistributedTest) persistentSuport
-            .getIPersistentDistributedTest()
-            .readByOId(
-                    distributedTest,
-                    false);
-			if (distributedTest == null) {
-              		throw new FenixServiceException();
-            }
-			
+			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+			distributedTest =
+				(IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
+					distributedTest,
+					false);
+			if (distributedTest == null)
+			{
+				throw new FenixServiceException();
+			}
+
 			List studentTestQuestionList =
-				persistentSuport
-					.getIPersistentStudentTestQuestion()
-					.readByStudentAndDistributedTest(student, distributedTest);
+				persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+					student,
+					distributedTest);
 			if (studentTestQuestionList.size() == 0)
 				throw new FenixServiceException();
 			Iterator it = studentTestQuestionList.iterator();
-			while (it.hasNext()) {
-				IStudentTestQuestion studentTestQuestion =
-					(IStudentTestQuestion) it.next();
-				InfoStudentTestQuestion infoStudentTestQuestion =
-					Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(
-						studentTestQuestion);
+			while (it.hasNext())
+			{
+				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
+				InfoStudentTestQuestion infoStudentTestQuestion;
 				ParseQuestion parse = new ParseQuestion();
-				try {
+				try
+				{
+
+					if (studentTestQuestion.getOptionShuffle() == null)
+					{
+						persistentSuport.getIPersistentStudentTestQuestion().simpleLockWrite(
+							studentTestQuestion);
+						studentTestQuestion.setOptionShuffle(
+							parse.shuffleQuestionOptions(
+								studentTestQuestion.getQuestion().getXmlFile(),
+								this.path));
+					}
+					infoStudentTestQuestion =
+						Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
 					infoStudentTestQuestion.setQuestion(
 						parse.parseQuestion(
 							infoStudentTestQuestion.getQuestion().getXmlFile(),
 							infoStudentTestQuestion.getQuestion(),
-							path));
+							this.path));
 					infoStudentTestQuestion =
-						parse.getOptionsShuffle(infoStudentTestQuestion, path);
-				} catch (Exception e) {
+						parse.getOptionsShuffle(infoStudentTestQuestion, this.path);
+				}
+				catch (Exception e)
+				{
 					throw new FenixServiceException(e);
 				}
 
 				infoStudentTestQuestionList.add(infoStudentTestQuestion);
 			}
-			if (log.booleanValue()) {
+			if (log.booleanValue())
+			{
 				IPersistentStudentTestLog persistentStudentTestLog =
 					persistentSuport.getIPersistentStudentTestLog();
 
@@ -107,7 +117,9 @@ public class ReadStudentTest implements IServico {
 
 				persistentStudentTestLog.simpleLockWrite(studentTestLog);
 			}
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e);
 		}
 		return infoStudentTestQuestionList;
