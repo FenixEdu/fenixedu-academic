@@ -12,7 +12,9 @@ import Dominio.ITeacher;
 /**
  * @author jpvl
  */
-public class TeacherDegreeFinalProjectStudent extends DomainObject implements ITeacherDegreeFinalProjectStudent
+public class TeacherDegreeFinalProjectStudent extends DomainObject
+        implements
+            ITeacherDegreeFinalProjectStudent
 {
     private IExecutionYear executionYear;
     private Integer keyExecutionYear;
@@ -20,6 +22,18 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject implements IT
     private Integer keyTeacher;
     private IStudent student;
     private ITeacher teacher;
+
+    public TeacherDegreeFinalProjectStudent()
+    {
+    }
+
+    /**
+	 * @param teacherDegreeFinalProjectStudentId
+	 */
+    public TeacherDegreeFinalProjectStudent(Integer teacherDegreeFinalProjectStudentId)
+    {
+        super(teacherDegreeFinalProjectStudentId);
+    }
 
     /**
 	 * @return Returns the executionYear.
@@ -132,13 +146,12 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject implements IT
     {
         if (obj instanceof TeacherDegreeFinalProjectStudent)
         {
-            TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
-                (TeacherDegreeFinalProjectStudent) obj;
+            TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) obj;
 
-            return (
-                this.getStudent().equals(teacherDegreeFinalProjectStudent.getStudent().getIdInternal())
-                    && this.getTeacher().equals(teacherDegreeFinalProjectStudent.getTeacher())
-                    && this.getExecutionYear().equals(teacherDegreeFinalProjectStudent.getExecutionYear()));
+            return (this.getStudent()
+                    .equals(teacherDegreeFinalProjectStudent.getStudent().getIdInternal())
+                    && this.getTeacher().equals(teacherDegreeFinalProjectStudent.getTeacher()) && this.getExecutionYear()
+                    .equals(teacherDegreeFinalProjectStudent.getExecutionYear()));
 
         }
         return false;
