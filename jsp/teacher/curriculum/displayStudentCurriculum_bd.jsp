@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.CurricularCourseType" %>
 <%@ page import="Util.EnrollmentState, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 
   <span class="error"><html:errors/></span>
 
@@ -63,6 +64,8 @@
 			    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
 				<% if (pageContext.findAttribute("curriculumElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
 					(<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>)
+				<%} else if (pageContext.findAttribute("curriculumElem") instanceof InfoEnrolmentInExtraCurricularCourse) { %>
+					(<bean:message key="label.enrolment.type.extra" />)
 				<% } %>
 			  </td>
 			  <td class="listClasses">

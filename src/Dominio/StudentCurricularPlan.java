@@ -563,7 +563,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
             ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
         return new CurricularCourse2Enroll(curricularCourse, getCurricularCourseEnrollmentType(
-                curricularCourse, currentExecutionPeriod));
+                curricularCourse, currentExecutionPeriod), new Boolean(false));
     }
 
     protected List initAcumulatedEnrollments(List elements) {

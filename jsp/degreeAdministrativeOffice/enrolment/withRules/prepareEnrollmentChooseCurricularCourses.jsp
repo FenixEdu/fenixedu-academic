@@ -154,16 +154,6 @@
 			<tr>
 				<td class="listClasses">
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
-					<%--<logic:equal name="enrollmentElem" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
-						<% if (pageContext.findAttribute("enrollmentElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
-							<logic:notEmpty name="enrollmentElem" property="infoCurricularCourseForOption">
-								-&nbsp;<bean:write name="enrollmentElem" property="infoCurricularCourseForOption.name"/>
-							</logic:notEmpty>
-							<logic:empty name="enrollmentElem" property="infoCurricularCourseForOption">
-								-&nbsp;<bean:message key="message.not.regular.optional.enrollment"/>
-							</logic:empty>
-						<% } %>
-					</logic:equal>--%>
 				</td>
 				<td  class="listClasses">
 					<% if (pageContext.findAttribute("enrollmentElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
@@ -204,7 +194,6 @@
 		<td class="listClasses-header"><a href="@enrollment.faq.url@" target="_blank"><bean:message key="label.course.enrollment.state" bundle="STUDENT_RESOURCES"/></a></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
-		<bean:define id="curricularCourses2Enroll" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll"/>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="curricularCourses2Enroll">
 			<bean:define id="curricularCourseIndex" name="curricularCourse" property="infoCurricularCourse.idInternal"/>
 			<bean:define id="onclick">
@@ -215,12 +204,12 @@
 					<bean:write name="curricularCourse" property="infoCurricularCourse.name"/>
 				</td>
 				<td class="listClasses">
-					<% if ( ((InfoCurricularCourse2Enroll) curricularCourses2Enroll).isOptionalCurricularCourse() ) {%>
+					<% if ( ((InfoCurricularCourse2Enroll) curricularCourse).isOptionalCurricularCourse() ) {%>
 						<html:hidden property="isOptional" value="true"/>
 						<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>
 					<% } else { %>
 						<html:hidden property="isOptional" value="false"/>
-						<bean:message name="enrollmentElem" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
+						<bean:message name="curricularCourse" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
 					<% } %>
 				</td>
 				<td class="listClasses">

@@ -6,6 +6,7 @@
 <%@ page import="DataBeans.InfoEnrolment" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 
 <span class="error"><html:errors/></span>
 

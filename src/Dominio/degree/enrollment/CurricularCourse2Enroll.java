@@ -27,14 +27,11 @@ public class CurricularCourse2Enroll implements Serializable {
     public CurricularCourse2Enroll() {
     }
 
-    /**
-     * @param curricularCourse
-     * @param enrollmentRuleType
-     */
     public CurricularCourse2Enroll(ICurricularCourse curricularCourse,
-            CurricularCourseEnrollmentType enrollmentRuleType) {
+            CurricularCourseEnrollmentType enrollmentRuleType, Boolean optionalCurricularCourse) {
         this.curricularCourse = curricularCourse;
         this.enrollmentType = enrollmentRuleType;
+        this.optionalCurricularCourse = optionalCurricularCourse;
     }
     
     /**

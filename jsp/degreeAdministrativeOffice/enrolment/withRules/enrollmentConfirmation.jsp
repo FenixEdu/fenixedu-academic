@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="Util.EnrollmentState, Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
+
 <h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -148,6 +150,8 @@
 					<bean:write name="curriculumElem" property="infoCurricularCourse.name"/>
 					<% if (pageContext.findAttribute("curriculumElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
 						(<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>)
+					<%} else if (pageContext.findAttribute("curriculumElem") instanceof InfoEnrolmentInExtraCurricularCourse) { %>
+						(<bean:message key="label.enrolment.type.extra" />)
 					<% } %>
 				</td>
 			  <td class="listClasses">
