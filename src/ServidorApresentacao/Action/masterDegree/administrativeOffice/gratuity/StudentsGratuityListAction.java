@@ -140,7 +140,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		{
 			errors.add(
 				"impossibleOperation",
-				new ActionError("error.masterDegree.gatuyiuty.impossible.operation"));
+				new ActionError("error.masterDegree.gratuity.impossible.operation"));
 			saveErrors(request, errors);
 			return mapping.findForward("choose");
 		}
@@ -245,7 +245,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		{
 			errors.add(
 				"noList",
-				new ActionError("error.masterDegree.gatuyiuty.impossible.studentsGratuityList"));
+				new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
