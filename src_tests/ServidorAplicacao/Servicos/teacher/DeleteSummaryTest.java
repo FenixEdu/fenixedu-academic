@@ -1,37 +1,85 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
- * @author João Mota
- * @author Susana Fernandes
+ * @author Leonor Almeida
+ * @author Sérgio Montelobo
  * 
  */
-public class DeleteSummaryTest extends TestCaseDeleteAndEditServices {
+public class DeleteSummaryTest extends SummaryBelongsExecutionCourseTestCase {
 
 	public DeleteSummaryTest(String testName) {
-		super(testName);		
-	}
-	
-	protected void setUp() {
-		super.setUp();
+		super(testName);
 	}
 
-	protected void tearDown() {
-		super.tearDown();
+	protected String getDataSetFilePath() {
+		return "etc/testEditSummaryDataSet.xml";
 	}
-	
+
 	protected String getNameOfServiceToBeTested() {
 		return "DeleteSummary";
 	}
-	
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] argsDeleteItem = {new Integer(24),new Integer(261)};
-		
-		return argsDeleteItem;		
+
+	protected String[] getAuthorizedUser() {
+
+		String[] args = { "user", "pass", getApplication()};
+		return args;
 	}
-	
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
+
+	protected String[] getUnauthorizedUser() {
+
+		String[] args = { "julia", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getNonTeacherUser() {
+
+		String[] args = { "jccm", "pass", getApplication()};
+		return args;
+	}
+
+	protected Object[] getAuthorizeArguments() {
+
+		Object[] args = { new Integer(24), new Integer(281)};
+		return args;
+	}
+
+	protected Object[] getTestSummarySuccessfullArguments() {
+
+		Object[] args = { new Integer(24), new Integer(281)};
+		return args;
+	}
+
+	protected Object[] getTestSummaryUnsuccessfullArguments() {
+
+		Object[] args = { new Integer(25), new Integer(261)};
+		return args;
+	}
+
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
+	}
+
+	public void testSuccessfull() {
+
+		try {
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				getAuthorizeArguments());
+
+			// TODO: testar a bd a garantir que foi apagado
+			compareDataSet(getDataSetFilePath());
+		} catch (FenixServiceException ex) {
+			fail("Deleting the Summary of a Site" + ex);
+		} catch (Exception ex) {
+			fail("Deleting the Summary of a Site" + ex);
+		}
 	}
 }
