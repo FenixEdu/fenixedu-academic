@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 
@@ -25,10 +27,11 @@ public final class EnrolmentContext {
 
 	private IStudent student;
 	private Integer semester;
+	private IExecutionPeriod executionPeriod;
 	private IStudentCurricularPlan studentActiveCurricularPlan;
 	private EnrolmentValidationResult enrolmentValidationResult;
 	private ICurso chosenOptionalDegree;
-	private ICurricularCourse chosenOptionalCurricularCourse;
+	private ICurricularCourseScope chosenOptionalCurricularCourseScope;
 
 	private List curricularCoursesDoneByStudent;
 	private List actualEnrolment;
@@ -277,16 +280,31 @@ public final class EnrolmentContext {
 	/**
 	 * @return ICurricularCourse
 	 */
-	public ICurricularCourse getChosenOptionalCurricularCourse() {
-		return chosenOptionalCurricularCourse;
+	public ICurricularCourseScope getChosenOptionalCurricularCourseScope() {
+		return chosenOptionalCurricularCourseScope;
 	}
 
 	/**
-	 * Sets the chosenOptionalCurricularCourse.
-	 * @param chosenOptionalCurricularCourse The chosenOptionalCurricularCourse to set
+	 * Sets the chosenOptionalCurricularCourseScope.
+	 * @param chosenOptionalCurricularCourseScope The chosenOptionalCurricularCourseScope to set
 	 */
-	public void setChosenOptionalCurricularCourse(ICurricularCourse chosenOptionalCurricularCourse) {
-		this.chosenOptionalCurricularCourse = chosenOptionalCurricularCourse;
+	public void setChosenOptionalCurricularCourseScope(ICurricularCourseScope chosenOptionalCurricularCourse) {
+		this.chosenOptionalCurricularCourseScope = chosenOptionalCurricularCourse;
+	}
+
+	/**
+	 * @return IExecutionPeriod
+	 */
+	public IExecutionPeriod getExecutionPeriod() {
+		return executionPeriod;
+	}
+
+	/**
+	 * Sets the executionPeriod.
+	 * @param executionPeriod The executionPeriod to set
+	 */
+	public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+		this.executionPeriod = executionPeriod;
 	}
 
 }

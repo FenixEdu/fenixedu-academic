@@ -10,6 +10,7 @@ public class EnrolmentState {
 	public static final int APROVED = 1;
 	public static final int NOT_APROVED = 2;
 	public static final int ENROLED = 3;
+	public static final int TEMPORARILY_ENROLED = 4;
 
 	private Integer state;
 

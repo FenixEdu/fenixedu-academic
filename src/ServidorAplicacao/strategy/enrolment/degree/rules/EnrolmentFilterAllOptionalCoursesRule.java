@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IEquivalence;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -65,6 +67,13 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 
 			List curricularCoursesEnroledByStudent = getDistinctCurricularCoursesOfScopes(enrolmentContext.getCurricularCoursesScopesEnroledByStudent());
 			List curricularCoursesFromFinalSpan = getDistinctCurricularCoursesOfScopes(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
+			List curricularCoursesEquivalentList = (List) CollectionUtils.collect(enrolmentContext.getOptionalCurricularCoursesEquivalences(), new Transformer() {
+				public Object transform(Object obj) {
+					IEquivalence equivalence = (IEquivalence) obj;
+					return equivalence.getEquivalentEnrolment().getCurricularCourse();
+				}
+			});
+
 
 			Iterator iterator3 = curricularCourseScopesFromDegreeList.iterator();
 			while (iterator3.hasNext()) {
@@ -77,34 +86,35 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) &&
 						(!enrolmentContext.getCurricularCoursesDoneByStudent().contains(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCoursesEnroledByStudent.contains(curricularCourseScope.getCurricularCourse())) &&
-						(!curricularCoursesFromFinalSpan.contains(curricularCourseScope.getCurricularCourse()))
+						(!curricularCoursesFromFinalSpan.contains(curricularCourseScope.getCurricularCourse())) &&
+						(!curricularCoursesEquivalentList.contains(curricularCourseScope.getCurricularCourse()))
 					) {
 						finalCurricularCourseList.add(curricularCourseScope.getCurricularCourse());
 				}
 			}
 		}
 		
-		
-		//		TODO: tirar ja inscritas em opcoes anterioes
-
 		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(finalCurricularCourseList);
 		return enrolmentContext;
 	}
 
 	private List getDistinctCurricularCoursesOfScopes(List curricularCoursesScopes) {
 
+		List curricularCoursesScopes2 = new ArrayList();
+		curricularCoursesScopes2.addAll(curricularCoursesScopes);
+
 		List finalCurricularCoursesList = new ArrayList();
 
-		while(!curricularCoursesScopes.isEmpty()) {
-			final ICurricularCourseScope curricularCourseScope1 = (ICurricularCourseScope) curricularCoursesScopes.get(0);
-			List aux = (List) CollectionUtils.select(curricularCoursesScopes, new Predicate() {
+		while(!curricularCoursesScopes2.isEmpty()) {
+			final ICurricularCourseScope curricularCourseScope1 = (ICurricularCourseScope) curricularCoursesScopes2.get(0);
+			List aux = (List) CollectionUtils.select(curricularCoursesScopes2, new Predicate() {
 				public boolean evaluate(Object obj) {
 					ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) obj;
 					return curricularCourseScope2.getCurricularCourse().equals(curricularCourseScope1.getCurricularCourse());
 				}
 			});
 
-			curricularCoursesScopes.removeAll(aux);
+			curricularCoursesScopes2.removeAll(aux);
 			finalCurricularCoursesList.add(( (ICurricularCourseScope) aux.get(0) ).getCurricularCourse());
 		}
 		return finalCurricularCoursesList;

@@ -3,8 +3,9 @@ package ServidorAplicacao.strategy.enrolment.degree;
 import java.util.List;
 import java.util.Map;
 
-import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 
@@ -20,9 +21,10 @@ public class InfoEnrolmentContext {
 	private InfoStudentCurricularPlan infoStudentActiveCurricularPlan;
 	private InfoStudent infoStudent;
 	private Integer semester;
+	private InfoExecutionPeriod infoExecutionPeriod;
 	private EnrolmentValidationResult enrolmentValidationResult;
 	private InfoDegree chosenOptionalInfoDegree;
-	private InfoCurricularCourse infoChosenOptionalCurricularCourse;
+	private InfoCurricularCourseScope infoChosenOptionalCurricularCourseScope;
 
 	private Map acumulatedEnrolments;
 
@@ -267,16 +269,31 @@ public class InfoEnrolmentContext {
 	/**
 	 * @return InfoCurricularCourse
 	 */
-	public InfoCurricularCourse getInfoChosenOptionalCurricularCourse() {
-		return infoChosenOptionalCurricularCourse;
+	public InfoCurricularCourseScope getInfoChosenOptionalCurricularCourseScope() {
+		return infoChosenOptionalCurricularCourseScope;
 	}
 
 	/**
-	 * Sets the infoChosenOptionalCurricularCourse.
-	 * @param infoChosenOptionalCurricularCourse The infoChosenOptionalCurricularCourse to set
+	 * Sets the infoChosenOptionalCurricularCourseScope.
+	 * @param infoChosenOptionalCurricularCourseScope The infoChosenOptionalCurricularCourseScope to set
 	 */
-	public void setInfoChosenOptionalCurricularCourse(InfoCurricularCourse infoChosenOptionalCurricularCourse) {
-		this.infoChosenOptionalCurricularCourse = infoChosenOptionalCurricularCourse;
+	public void setInfoChosenOptionalCurricularCourseScope(InfoCurricularCourseScope infoChosenOptionalCurricularCourse) {
+		this.infoChosenOptionalCurricularCourseScope = infoChosenOptionalCurricularCourse;
+	}
+
+	/**
+	 * @return InfoExecutionPeriod
+	 */
+	public InfoExecutionPeriod getInfoExecutionPeriod() {
+		return infoExecutionPeriod;
+	}
+
+	/**
+	 * Sets the infoExecutionPeriod.
+	 * @param infoExecutionPeriod The infoExecutionPeriod to set
+	 */
+	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+		this.infoExecutionPeriod = infoExecutionPeriod;
 	}
 
 }

@@ -17,6 +17,8 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoEquivalence;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
@@ -25,10 +27,13 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
+import Dominio.IEquivalence;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -46,6 +51,8 @@ public abstract class EnrolmentContextManager {
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
+		
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
@@ -107,6 +114,8 @@ public abstract class EnrolmentContextManager {
 		});
 
 		List studentCurricularPlanCurricularCourses = computeStudentCurricularPlanCurricularCourses(degreeCurricularPlanCurricularCourses, studentActiveCurricularPlan);
+		
+		IExecutionPeriod actualExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod(); 
 
 		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(studentCurricularPlanCurricularCourses);
 		enrolmentContext.setStudent(student);
@@ -117,6 +126,7 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 		enrolmentContext.setEnrolmentValidationResult(new EnrolmentValidationResult());
 		enrolmentContext.setCurricularCoursesScopesEnroledByStudent(studentEnroledCurricularCourseScopes);
+		enrolmentContext.setExecutionPeriod(actualExecutionPeriod);
 
 		return enrolmentContext;
 	}
@@ -243,15 +253,20 @@ public abstract class EnrolmentContextManager {
 		if (infoOptionalCurricularCoursesEquivalencesList != null && !infoOptionalCurricularCoursesEquivalencesList.isEmpty()) {
 			Iterator iterator = infoOptionalCurricularCoursesEquivalencesList.iterator();
 			while (iterator.hasNext()) {
-				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iterator.next();
-				ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurricularCourse);
-				optionalCurricularCoursesEquivalencesList.add(curricularCourse);
+				InfoEquivalence infoEquivalence = (InfoEquivalence) iterator.next();
+				IEquivalence equivalence = Cloner.copyInfoEquivalence2IEquivalence(infoEquivalence);
+				optionalCurricularCoursesEquivalencesList.add(equivalence);
 			}
 		}
 
 		ICurso degree = getDegree(infoEnrolmentContext.getChosenOptionalInfoDegree());
 		
-		ICurricularCourse chosenCurricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoEnrolmentContext.getInfoChosenOptionalCurricularCourse());
+		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
+		
+		ICurricularCourseScope chosenCurricularCourseScope = null;
+		if(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope() != null){
+			chosenCurricularCourseScope = Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope());
+		}
 
 		// Transform list of info curricular courses done by the student:
 		List infoCurricularCoursesDoneByStudentList = infoEnrolmentContext.getInfoCurricularCoursesDoneByStudent();
@@ -281,7 +296,8 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(optionalCurricularCourseList);
 		enrolmentContext.setCurricularCoursesDoneByStudent(curricularCoursesDoneByStudentList);
 		enrolmentContext.setOptionalCurricularCoursesEquivalences(optionalCurricularCoursesEquivalencesList);
-		enrolmentContext.setChosenOptionalCurricularCourse(chosenCurricularCourse);
+		enrolmentContext.setChosenOptionalCurricularCourseScope(chosenCurricularCourseScope);
+		enrolmentContext.setExecutionPeriod(executionPeriod);
 		
 		return enrolmentContext;
 	}
@@ -364,15 +380,20 @@ public abstract class EnrolmentContextManager {
 		if (optionalCurricularCourseEquivalencesList != null && !optionalCurricularCourseEquivalencesList.isEmpty()) {
 			Iterator iterator = optionalCurricularCourseEquivalencesList.iterator();
 			while (iterator.hasNext()) {
-				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-				InfoCurricularCourse infoCurricularCourse =	Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-				infoOptionalCurricularCoursesEquivalencesList.add(infoCurricularCourse);
+				IEquivalence equivalence = (IEquivalence) iterator.next();
+				InfoEquivalence infoEquivalence =	Cloner.copyIEquivalence2InfoEquivalence(equivalence);
+				infoOptionalCurricularCoursesEquivalencesList.add(infoEquivalence);
 			}
 		}
 
 		InfoDegree infoDegree = getInfoDegree(enrolmentContext.getChosenOptionalDegree());
 		
-		InfoCurricularCourse infoChosenCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(enrolmentContext.getChosenOptionalCurricularCourse());
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(enrolmentContext.getExecutionPeriod());
+		
+		InfoCurricularCourseScope infoChosenCurricularCourseScope = null;
+		if(enrolmentContext.getChosenOptionalCurricularCourseScope() != null){
+			infoChosenCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(enrolmentContext.getChosenOptionalCurricularCourseScope());
+		}
 
 		// Transform list of info curricular courses done by the student:
 		List curricularCoursesDoneByStudentList = enrolmentContext.getCurricularCoursesDoneByStudent();
@@ -402,7 +423,9 @@ public abstract class EnrolmentContextManager {
 		infoEnrolmentContext.setOptionalInfoCurricularCoursesToChooseFromDegree(infoOptionalCurricularCourseList);
 		infoEnrolmentContext.setInfoCurricularCoursesDoneByStudent(infoCurricularCoursesDoneByStudentList);
 		infoEnrolmentContext.setInfoOptionalCurricularCoursesEquivalences(infoOptionalCurricularCoursesEquivalencesList);
-		infoEnrolmentContext.setInfoChosenOptionalCurricularCourse(infoChosenCurricularCourse);
+		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(infoChosenCurricularCourseScope);
+		infoEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
+		
 		return infoEnrolmentContext;
 	}
 
