@@ -14,6 +14,7 @@ import ServidorPersistente.IPersistentTeacher;
 /**
  *
  * @author  EP 15
+ * @author Ivo Brandão
  */
 public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
     public ITeacher readTeacherByUsername(String user) throws ExcepcaoPersistencia {
@@ -69,7 +70,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
         String oqlQuery = "select all from " + Teacher.class.getName();
         super.deleteAll(oqlQuery);
     }
-    public List readOwnedSites(String whoOwns) throws ExcepcaoPersistencia {
+    public List readResponsableForExecutionCourses(String whoOwns) throws ExcepcaoPersistencia {
         try {
             ITeacher teacher = null;
             
@@ -84,13 +85,13 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
                 teacher = (ITeacher) result.get(0);
             else
                 return new ArrayList();
-            return teacher.getSitesOwned();
+            return teacher.getResponsableForExecutionCourses();
             
         } catch (Exception ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
-    public List readOwnedSites(Integer teacherNumber) throws ExcepcaoPersistencia {
+    public List readResponsableForExecutionCourses(Integer teacherNumber) throws ExcepcaoPersistencia {
         try {
             ITeacher teacher = null;
             
@@ -104,12 +105,12 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
                 teacher = (ITeacher) result.get(0);
             else
                 return new ArrayList();
-			return teacher.getSitesOwned();
+			return teacher.getResponsableForExecutionCourses();
         } catch (Exception ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
-     public List readProfessorShipsSites(String whoTeaches) throws ExcepcaoPersistencia {
+     public List readProfessorShipsExecutionCourses(String whoTeaches) throws ExcepcaoPersistencia {
         try {
             ITeacher teacher = null;
             String oqlQuery = "select teacher from " + Teacher.class.getName();
@@ -122,12 +123,12 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
                 teacher = (ITeacher) result.get(0);
             else
                 return new ArrayList();
-            return teacher.getProfessorShipsSites();
+            return teacher.getProfessorShipsExecutionCourses();
         } catch (Exception ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
-    public List readProfessorShipsSites(Integer teacherNumber) throws ExcepcaoPersistencia {
+    public List readProfessorShipsExecutionCourses(Integer teacherNumber) throws ExcepcaoPersistencia {
         try {
             ITeacher teacher = null;
             String oqlQuery = "select teacher from " + Teacher.class.getName();
@@ -140,7 +141,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
                 teacher = (ITeacher) result.get(0);
             else
                 return new ArrayList();
-            return teacher.getProfessorShipsSites();
+            return teacher.getProfessorShipsExecutionCourses();
         } catch (Exception ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }

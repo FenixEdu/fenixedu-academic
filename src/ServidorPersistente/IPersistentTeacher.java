@@ -13,10 +13,12 @@ public interface IPersistentTeacher {
 	
     public ITeacher readTeacherByUsername(String user) throws ExcepcaoPersistencia;
     public ITeacher readTeacherByNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
-    public List readOwnedSites(String owner) throws ExcepcaoPersistencia;
-    public List readOwnedSites(Integer teacherNumber)throws ExcepcaoPersistencia;
-    public List readProfessorShipsSites(String whoTeaches) throws ExcepcaoPersistencia;
-    public List readProfessorShipsSites(Integer teacherNumber)throws ExcepcaoPersistencia;
+    
+    public List readResponsableForExecutionCourses(String owner) throws ExcepcaoPersistencia;
+    public List readResponsableForExecutionCourses(Integer teacherNumber)throws ExcepcaoPersistencia;
+    public List readProfessorShipsExecutionCourses(String whoTeaches) throws ExcepcaoPersistencia;
+    public List readProfessorShipsExecutionCourses(Integer teacherNumber)throws ExcepcaoPersistencia;
+    
     public void lockWrite(ITeacher teacher) throws ExcepcaoPersistencia;
     public void delete(ITeacher teacher) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;

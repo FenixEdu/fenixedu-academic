@@ -261,21 +261,21 @@
              
   <!-- Para reflectir a relacao de 1..* entre Docente e Sitio de responsavel -->
   <collection-descriptor
-         name="sitesOwned"
-         element-class-ref="Dominio.Site"
-         indirection-table="OWNS"
+         name="responsableForExecutionCourses"
+         element-class-ref="Dominio.DisciplinaExecucao"
+         indirection-table="RESPONSABLEFOR"
       >
          <fk-pointing-to-this-class column="ID_TEACHER"/>
-         <fk-pointing-to-element-class column="ID_SITE"/>
+         <fk-pointing-to-element-class column="ID_EXECUTIONCOURSE"/>
       </collection-descriptor>
   
       <collection-descriptor
-         name="professorShipsSites"
-         element-class-ref="Dominio.Site"
+         name="professorShipsExecutionCourses"
+         element-class-ref="Dominio.DisciplinaExecucao"
          indirection-table="PROFESSORSHIPS"
       >
          <fk-pointing-to-this-class column="ID_TEACHER"/>
-         <fk-pointing-to-element-class column="ID_SITE"/>
+         <fk-pointing-to-element-class column="ID_EXECUTIONCOURSE"/>
       </collection-descriptor>
   
    </class-descriptor>

@@ -50,13 +50,13 @@ create table item (
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
-# Table structure for owns
+# Table structure for responsablefor
 #----------------------------
-drop table if exists owns;
-create table owns (
+drop table if exists responsablefor;
+create table responsablefor (
    ID_TEACHER int(11) unsigned not null default '0',
-   ID_SITE int(11) unsigned not null default '0',
-   primary key (ID_TEACHER, ID_SITE))
+   ID_EXECUTIONCOURSE int(11) unsigned not null default '0',
+   primary key (ID_TEACHER, ID_EXECUTIONCOURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------
@@ -65,8 +65,8 @@ create table owns (
 drop table if exists professorships;
 create table professorships (
    ID_TEACHER int(11) unsigned not null default '0',
-   ID_SITE int(11) unsigned not null default '0',
-   primary key (ID_TEACHER, ID_SITE))
+   ID_EXECUTIONCOURSE int(11) unsigned not null default '0',
+   primary key (ID_TEACHER, ID_EXECUTIONCOURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------

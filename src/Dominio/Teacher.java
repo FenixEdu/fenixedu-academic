@@ -1,20 +1,19 @@
 /*
- * Docente.java
+ * Teacher.java
  *
- * Created on 26 de Novembro de 2002, 23:22
  */
 package Dominio;
 /**
  *
  * @author  EP15
+ * @author Ivo Brandão
  */
-//import java.util.ArrayList;
-//import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 public class Teacher extends Pessoa implements ITeacher {
     private Integer teacherNumber;
-    private List professorShipsSites;
-    private List sitesOwned;
+    private List professorShipsExecutionCourses;
+    private List responsableForExecutionCourses;
     /** Creates a new instance of Teacher */
     public Teacher() {
     }
@@ -22,58 +21,9 @@ public class Teacher extends Pessoa implements ITeacher {
 		super.setUsername(user);
 		super.setPassword(password);
         setTeacherNumber(teacherNumber);
-        setProfessorShipsSites(null);
-        setSitesOwned(null);
-    }
-    public Integer getTeacherNumber() {
-        return teacherNumber;
-    }
-    public List getSitesOwned() {
-        return sitesOwned;
-    }
-    public List getProfessorShipsSites(){
-        return professorShipsSites;
-    }
-//    public List getListaDeNomesDosSitiosResponsavel(){
-//
-//        List resultado = new ArrayList();
-//        
-//        if(sitesOwned!=null){
-//
-//            Iterator iterador = sitesOwned.iterator();
-//
-//            while (iterador.hasNext())
-//                resultado.add(((ISitio)iterador.next()).getNome());
-//            return resultado;
-//        }
-//        return resultado;
-//    }
-//    public List getListaDeNomesDosSitiosLecciona(){
-//
-//        List resultado = new ArrayList();
-//
-//        if(professorShipsSites!=null){
-//
-//            Iterator iterador = professorShipsSites.iterator();
-//
-//            while (iterador.hasNext())
-//
-//                resultado.add(((ISitio)iterador.next()).getNome());
-//
-//            return resultado;
-//
-//        }
-//
-//        return resultado;
-//    }
-    public void setTeacherNumber(Integer teacherNumber) {
-        this.teacherNumber = teacherNumber;
-    }
-    public void setSitesOwned(List sites) {
-        sitesOwned = sites;
-    }
-    public void setProfessorShipsSites(List sites){
-        professorShipsSites = sites;
+        setProfessorShipsExecutionCourses(new ArrayList());
+        setResponsableForExecutionCourses(new ArrayList());
+
     }
     public boolean equals(Object obj) {
         boolean resultado = false;
@@ -82,7 +32,49 @@ public class Teacher extends Pessoa implements ITeacher {
         }
         return resultado;
     }
-    public int hashCode() {
-        return teacherNumber.hashCode();
-    }
+	/**
+	 * @return List
+	 */
+	public List getProfessorShipsExecutionCourses() {
+		return professorShipsExecutionCourses;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getResponsableForExecutionCourses() {
+		return responsableForExecutionCourses;
+	}
+
+	/**
+	 * @return Integer
+	 */
+	public Integer getTeacherNumber() {
+		return teacherNumber;
+	}
+
+	/**
+	 * Sets the professorShipsExecutionCourses.
+	 * @param professorShipsExecutionCourses The professorShipsExecutionCourses to set
+	 */
+	public void setProfessorShipsExecutionCourses(List professorShipsExecutionCourses) {
+		this.professorShipsExecutionCourses = professorShipsExecutionCourses;
+	}
+
+	/**
+	 * Sets the responsableForExecutionCourses.
+	 * @param responsableForExecutionCourses The responsableForExecutionCourses to set
+	 */
+	public void setResponsableForExecutionCourses(List responsableForExecutionCourses) {
+		this.responsableForExecutionCourses = responsableForExecutionCourses;
+	}
+
+	/**
+	 * Sets the teacherNumber.
+	 * @param teacherNumber The teacherNumber to set
+	 */
+	public void setTeacherNumber(Integer teacherNumber) {
+		this.teacherNumber = teacherNumber;
+	}
+
 }

@@ -11,13 +11,15 @@ package Dominio;
 import java.util.List;
 public interface ITeacher extends IPessoa{
     public Integer getTeacherNumber();
-    public List getSitesOwned();
-    public List getProfessorShipsSites();
-//    public List getListaDeNomesDosSitiosResponsavel();
-//    public List getListaDeNomesDosSitiosLecciona();
+
+//	overseenExecutionCourses
+	public List getResponsableForExecutionCourses();
+	public List getProfessorShipsExecutionCourses();
+
     public void setTeacherNumber(Integer number);
-    public void setSitesOwned(List sites);
-    public void setProfessorShipsSites(List sites);
+
+	public void setResponsableForExecutionCourses(List executionCourses);
+	public void setProfessorShipsExecutionCourses(List executionCourses);
 }
 
 

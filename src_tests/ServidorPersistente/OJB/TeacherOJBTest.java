@@ -74,8 +74,8 @@ public class TeacherOJBTest extends TestCaseOJB {
         assertEquals(teacherRead.getTeacherNumber(), teacher.getTeacherNumber());
 //        assertEquals(teacherRead.getSitesOwned(), teacher.getSitesOwned());
 //        assertEquals(teacherRead.getProfessorShipsSites(), teacher.getProfessorShipsSites());
-		assertEquals(teacherRead.getSitesOwned(), new ArrayList());
-		assertEquals(teacherRead.getProfessorShipsSites(), new ArrayList());
+		assertEquals(teacherRead.getProfessorShipsExecutionCourses(), new ArrayList());
+		assertEquals(teacherRead.getResponsableForExecutionCourses(), new ArrayList());
         
     }
 
@@ -128,8 +128,8 @@ public class TeacherOJBTest extends TestCaseOJB {
         }
         assertNotNull(teacher);
         assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-        assertTrue(teacher.getSitesOwned().equals(new ArrayList()));
-		assertTrue(teacher.getProfessorShipsSites().equals(new ArrayList()));
+        assertTrue(teacher.getResponsableForExecutionCourses().equals(new ArrayList()));
+		assertTrue(teacher.getProfessorShipsExecutionCourses().equals(new ArrayList()));
 
 		//read unexisting
 		try {
@@ -155,8 +155,8 @@ public class TeacherOJBTest extends TestCaseOJB {
 		}
 		assertNotNull(teacher);
 		assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-		assertTrue(teacher.getSitesOwned().equals(new ArrayList()));
-		assertTrue(teacher.getProfessorShipsSites().equals(new ArrayList()));
+		assertTrue(teacher.getProfessorShipsExecutionCourses().equals(new ArrayList()));
+		assertTrue(teacher.getResponsableForExecutionCourses().equals(new ArrayList()));
 
 		//read unexisting
 		try {
