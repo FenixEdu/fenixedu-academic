@@ -6,6 +6,7 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -76,6 +77,15 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 
 	
 	protected void tearDown() {
+		try {
+					dbAcessPoint = new dbaccess();
+					dbAcessPoint.openConnection();					
+					dbAcessPoint.loadDataBase("etc/testBackup.xml");
+					dbAcessPoint.closeConnection();
+				} catch (Exception ex) {
+					System.out.println(ex.toString());
+					fail("Loading Database With backup Data Set!");
+				}
 	}
 
 	public void testReadPosGradStudentCurricularPlans() {
@@ -97,6 +107,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 			fail("Reading the Curricular Plans of a PosGrad Student");
 		}
 		assertEquals(result.size(), 1);
+		assertTrue(result.get(0) instanceof InfoStudentCurricularPlan);
 		System.out.println("test case 1 ok!");
 		System.out.println("test Case 2-ReadPosGradStudentCurricularPlans - non-existing student");	
 		Object args2[] = {new Integer(50)};
