@@ -70,7 +70,7 @@ public class ViewExecutionCourseTimeTableAction extends FenixAction {
 		request.setAttribute("exeCourse.theoPrat",infoExecCourse.getTheoPratHours());
 		request.setAttribute("exeCourse.lab",infoExecCourse.getLabHours());
 
-//TODO: change this to request 
+//TODO: JM: change this to request - do not forget to change the jsps (navbars and others)
 		session.setAttribute(SessionConstants.INFO_SITE,infoSite);		
 		
 		return mapping.findForward("Sucess");
