@@ -383,6 +383,11 @@
               >
               <forward name="showSearchResult" path="/showEmptyRooms.jsp"/>
               <forward name="searchPage" path="/searchEmptyRooms.jsp"/>              
+         <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+         	   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />
+
       </action>
 
       <action attribute="roomForm"
