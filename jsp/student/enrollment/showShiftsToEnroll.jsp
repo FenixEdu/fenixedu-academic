@@ -5,9 +5,6 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <h2><bean:message key="link.shift.enrolment" /></h2>
 <span class="error"><html:errors/></span>
-<div class="infoselected" width="75%">
-A Reserva de Turmas do 1º Ano só será disponibilizada após 15 de Setembro.
-</div>
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <html:form action="/enrollStudentInShifts" >
 	<html:hidden property="studentId"/>
