@@ -1,5 +1,5 @@
 /*
- * Created on 11/Mar/2003 by jpvl
+ * Created on 11/Mar/2003 by jpvl 
  *
  */
 package ServidorPersistente.Conversores;
@@ -56,10 +56,17 @@ public class RoleTypeFieldConversion implements FieldConversion {
 					break;
 				case RoleType.COORDINATOR_TYPE :
 					roleType = RoleType.COORDINATOR;
+					break;
+				case RoleType.EMPLOYEE_TYPE :
+					roleType = RoleType.EMPLOYEE;
+					break;
+				default :
+					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++DEFAULT DO ROLE");
+					throw new IllegalArgumentException(this.getClass().getName() + ": Illegal role type!(" + obj + ")");
 
 			}
-		}else{
-			throw new IllegalArgumentException ("Illegal role type!("+obj+")");
+		} else {
+			throw new IllegalArgumentException("Illegal role type!(" + obj + ")");
 		}
 		return roleType;
 

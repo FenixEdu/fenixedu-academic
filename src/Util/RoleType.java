@@ -2,7 +2,7 @@
  * Created on 11/Mar/2003 by jpvl
  *
  */
-package Util;
+package Util; 
 
 /**
  * @author jpvl
@@ -17,6 +17,7 @@ public class RoleType {
 	public static final int MASTER_DEGREE_ADMINISTRATIVE_OFFICE_TYPE = 6;
 	public static final int TREASURY_TYPE = 7;
 	public static final int COORDINATOR_TYPE = 8;
+	public static final int EMPLOYEE_TYPE = 9;
 	
 	public static final RoleType PERSON = new RoleType(RoleType.PERSON_TYPE);
 	public static final RoleType STUDENT = new RoleType(RoleType.STUDENT_TYPE);
@@ -26,6 +27,7 @@ public class RoleType {
 	public static final RoleType MASTER_DEGREE_ADMINISTRATIVE_OFFICE = new RoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_TYPE);
 	public static final RoleType TREASURY = new RoleType(RoleType.TREASURY_TYPE);
 	public static final RoleType COORDINATOR = new RoleType(RoleType.COORDINATOR_TYPE);
+	public static final RoleType EMPLOYEE =  new RoleType(RoleType.EMPLOYEE_TYPE);
 	
 	private int id;
 

@@ -435,6 +435,35 @@
             </classpath>
         </sql>
     </target>
+    
+    <target name="create-tables_assiduidade"
+            description="Cria as tabelas da base de dados.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+        >
+        DROP DATABASE IF EXISTS AssiduidadeOracle;
+        CREATE DATABASE AssiduidadeOracle;
+        </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/AssiduidadeOracle"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="tables_AssiduidadeASSMARCAS.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
 
     <target name="load-database"
             depends="create-tables"

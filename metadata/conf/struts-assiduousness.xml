@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC       
+	  "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+  <!-- ========== Form Bean Definitions =================================== -->
+  <form-beans type="org.apache.struts.action.ActionFormBean">
+  	
+    <form-bean name="DadosForm" type="ServidorApresentacao.formbeans.person.DadosForm" />
+	<form-bean name="AlterarPasswordForm" type="ServidorApresentacao.formbeans.person.AlterarPasswordForm" />
+		
+    <!-- Nanda e Tania -->
+    <form-bean name="ConsultarFuncionarioMostrarForm" type="ServidorApresentacao.formbeans.assiduousness.ConsultarFuncionarioMostrarForm" />
+
+    <form-bean name="MostrarListaForm" type="ServidorApresentacao.formbeans.assiduousness.MostrarListaForm" />
+
+    <form-bean name="ConsultarMarcacaoPontoForm" type="ServidorApresentacao.formbeans.assiduousness.ConsultarMarcacaoPontoForm" />
+
+    <form-bean name="ImprimirVerbetesForm" type="ServidorApresentacao.formbeans.assiduousness.ImprimirVerbetesForm" />    
+
+  </form-beans>
+
+  <!-- ========== Global Forward Definitions ============================== -->
+  <global-forwards type="org.apache.struts.action.ActionForward">
+	<forward name="Logoff" path="/logoff.do" contextRelative="true"/>
+    <forward name="Logon" path="/logon.jsp" />
+    <forward name="Index" path="/index.jsp" />
+    <forward name="FirstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
+
+    <forward name="forgotPassword" path="/person/forgotPassword.jsp" />
+	<forward name="AlterarPassword" path="/person/alterarPassword.jsp" />
+	<forward name="AlterarPasswordConfirmar" path="/person/alterarPasswordConfirmar.jsp" />
+	 
+    <!-- Nanda e Tania -->
+    <forward name="LogonAcademicaAction" path="/logonAcademica.do" />
+    <forward name="MenuAcademica" path="/menuAcademica.jsp" />
+
+    <forward name="IndexAction" path="/index.do" />    
+    <forward name="MenuAdministrativa" path="/menuAdministrativa.jsp" />    
+    <forward name="PortalAssiduidadeAction" path="/portalAssiduidade.do" />    
+    <forward name="PortalAssiduidade" path="/portalAssiduidade.jsp" />
+    
+    <forward name="ConsultarFuncionarioMostrar" path="/consultarFuncionarioMostrar.jsp" />
+    <forward name="ConsultarFuncionarioMostrarAction" path="/consultarFuncionarioMostrar.do" />
+    <forward name="ConsultarFuncionarioEscolhaAction" path="/consultarFuncionarioEscolha.do" />
+
+    <forward name="MostrarListaAction" path="/mostrarLista.do" />
+ 
+    <forward name="ConsultarMarcacaoPontoAction" path="/consultarMarcacaoPonto.do" />
+    <forward name="ConsultarMarcacaoPontoMostrar" path="/consultarMarcacaoPontoMostrar.jsp" />
+
+    <forward name="ConsultarJustificacoesMostrar" path="/consultarJustificacoesMostrar.jsp" />  
+    <forward name="ConsultarVerbeteMostrar" path="/consultarVerbeteMostrar.jsp" />        
+
+    <forward name="ImprimirVerbetesAction" path="/imprimirVerbetes.do" />
+  </global-forwards>
+
+  <!-- ========== Action Mapping Definitions ============================== -->
+  <action-mappings type="org.apache.struts.action.ActionMapping">
+
+    <action path="/logon"
+            type="Log.LogonAction"
+            name="LogonForm"
+            scope="session"
+            input="/logon.jsp">
+    </action>
+
+    <action path="/logoff"
+            type="Log.LogoffAction">
+            <forward name="sucesso" path="/index.html" />
+    </action>
+            
+    <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
+    
+    <action path="/forgotPassword"
+            type="ServidorApresentacao.Action.person.ForgotPasswordAction"
+            name="DadosForm"
+            scope="request"
+            input="/person/forgotPassword.jsp">
+    </action>
+	
+    <action path="/alterarPassword"
+            type="ServidorApresentacao.Action.person.AlterarPasswordAction"
+            name="AlterarPasswordForm"
+            scope="request"
+            input="/person/alterarPassword.jsp">
+    </action>
+<!-- Nanda e Tania --> 
+	<action path="/topAdministrativa" forward="/topAdministrativa.jsp" />
+	
+    <action path="/index"
+            type="ServidorApresentacao.Action.assiduousness.IndexAction">
+    </action>
+    <action path="/portalAssiduidade"
+            type="ServidorApresentacao.Action.assiduousness.PortalAssiduidadeAction"
+            input="/output.jsp">
+    </action>
+  
+    <action path="/mostrarLista"
+            type="ServidorApresentacao.Action.assiduousness.MostrarListaAction"	    	
+            name="MostrarListaForm"
+            scope="session"
+            validate="false">
+    </action>
+
+    <action path="/consultarFuncionarioMostrar"
+            type="ServidorApresentacao.Action.assiduousness.ConsultarFuncionarioMostrarAction"
+            name="ConsultarFuncionarioMostrarForm"
+            scope="session"
+            validate="false"
+            input="/portalAssiduidade.jsp" >
+    </action>
+    
+    <action path="/consultarFuncionarioEscolha"
+            type="ServidorApresentacao.Action.assiduousness.ConsultarFuncionarioEscolhaAction"
+            name="ConsultarFuncionarioMostrarForm"
+            scope="session"
+            input="/consultarFuncionarioMostrar.do">
+    </action>
+    
+    <action path="/consultarMarcacaoPonto"
+            type="ServidorApresentacao.Action.assiduousness.ConsultarMarcacaoPontoAction"	    	
+            name="ConsultarMarcacaoPontoForm"
+            scope="request"              
+            input="/prepararConsultarMarcacaoPonto.do" >
+    </action>
+
+    <action path="/imprimirVerbetes"
+            type="ServidorApresentacao.Action.assiduousness.ImprimirVerbetesAction"
+            name="ImprimirVerbetesForm"
+            scope="request"
+            input="/imprimirTodosVerbetes.jsp">
+    </action>
+    
+  </action-mappings>
+  
+  <!-- ========== Controller Configuration ================================ -->
+  <!--<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>-->
+
+  <message-resources parameter="ServidorApresentacao.AssiduousnessResources" />
+  
+  <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+    <set-property property="definitions-config"
+	              value="/WEB-INF/tiles-assiduousness-definitions.xml" />
+	<set-property property="moduleAware" value="true" />
+	<set-property property="definitions-parser-validate" value="true" />
+  </plug-in>   
+</struts-config>
