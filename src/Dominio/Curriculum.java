@@ -22,14 +22,27 @@ public class Curriculum implements ICurriculum {
 	/** Creates a new instance of Curriculum */
 	public Curriculum() {
 	}
+	public Curriculum(IDisciplinaExecucao executionCourse, String generalObjectives, String operacionalObjectives, String program) {
+		setGeneralObjectives(generalObjectives);
+		setOperacionalObjectives(operacionalObjectives);
+		setProgram(program);
+		setExecutionCourse(executionCourse);
+	}
 	public Curriculum(
 		IDisciplinaExecucao executionCourse,
 		String generalObjectives,
 		String operacionalObjectives,
-		String program) {
+		String generalObjectivesEn,
+		String operacionalObjectivesEn) {
 		setGeneralObjectives(generalObjectives);
 		setOperacionalObjectives(operacionalObjectives);
+		setGeneralObjectivesEn(generalObjectivesEn);
+		setOperacionalObjectivesEn(operacionalObjectivesEn);
+		setExecutionCourse(executionCourse);
+	}
+	public Curriculum(IDisciplinaExecucao executionCourse, String program, String programEn) {
 		setProgram(program);
+		setProgramEn(programEn);
 		setExecutionCourse(executionCourse);
 	}
 	public Integer getInternalCode() {
@@ -72,8 +85,7 @@ public class Curriculum implements ICurriculum {
 		boolean result = false;
 		if (obj instanceof ICurriculum) {
 			ICurriculum curriculum = (ICurriculum) obj;
-			result =
-				getExecutionCourse().equals(curriculum.getExecutionCourse());
+			result = getExecutionCourse().equals(curriculum.getExecutionCourse());
 		}
 		return result;
 	}

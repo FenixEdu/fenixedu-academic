@@ -50,6 +50,7 @@ public class InfoSiteTeachers implements ISiteComponent {
 			InfoTeacher infoTeacher2 = (InfoTeacher) iter2.next();
 			if (!infoTeacher1.equals(infoTeacher2)) {
 				result = false;
+				break;
 			}
 		}
 		return result;

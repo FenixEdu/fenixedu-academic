@@ -42,6 +42,7 @@ public class InfoSiteCommon implements ISiteComponent {
 				&& ((InfoSiteCommon) objectToCompare).getExecutionCourse().equals(this.getExecutionCourse()))
 				|| ((InfoSiteCommon) objectToCompare).getExecutionCourse() == null
 				&& this.getExecutionCourse() == null))) {
+					
 			result = true;
 		}
 
@@ -51,18 +52,22 @@ public class InfoSiteCommon implements ISiteComponent {
 		if (((InfoSiteCommon) objectToCompare).getSections() == null
 			|| this.getSections() == null
 			|| ((InfoSiteCommon) objectToCompare).getSections().size() != this.getSections().size()) {
-
 			return false;
 		}
+
 		ListIterator iter1 = ((InfoSiteCommon) objectToCompare).getSections().listIterator();
 		ListIterator iter2 = this.getSections().listIterator();
 		while (result && iter1.hasNext()) {
 			InfoSection infoSection1 = (InfoSection) iter1.next();
 			InfoSection infoSection2 = (InfoSection) iter2.next();
 			if (!infoSection1.equals(infoSection2)) {
+				System.out.println(infoSection1.getName());
+				System.out.println(infoSection2.getName());
 				result = false;
+				break;
 			}
 		}
+		
 		return result;
 	}
 

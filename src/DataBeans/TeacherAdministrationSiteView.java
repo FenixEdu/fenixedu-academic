@@ -31,12 +31,15 @@ public class TeacherAdministrationSiteView extends SiteView {
 	}
 
 
-	public boolean equals(Object siteView){
-	return (siteView instanceof TeacherAdministrationSiteView)&&
-	getCommonComponent().equals(((TeacherAdministrationSiteView)siteView).getCommonComponent())
-	&& getComponent().equals(((TeacherAdministrationSiteView)siteView).getComponent());
+	public boolean equals(Object obj){
+		if (obj instanceof TeacherAdministrationSiteView){
+			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) obj;
+			boolean result1 = getCommonComponent().equals(siteView.getCommonComponent());
+			boolean result2 = getComponent().equals(siteView.getComponent()); 
 			
-		
+			return result1 && result2;
+		}
+		return false;
 	}
 
 /**

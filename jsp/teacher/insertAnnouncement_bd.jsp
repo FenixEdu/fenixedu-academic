@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <br />
 <h2><bean:message key="title.insertAnnouncement"/></h2>
+
 <html:form action="/announcementManagementAction" focus="title" >
 <html:hidden property="page" value="1"/>
 <strong><bean:message key="label.title" /></strong>
@@ -24,5 +25,8 @@
 </html:submit>
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
+
 <html:hidden property="method" value="createAnnouncement" />
+<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+
 </html:form>

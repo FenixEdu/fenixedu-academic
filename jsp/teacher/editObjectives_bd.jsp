@@ -3,6 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
+<logic:present name="siteView">
+<bean:define id="objectives" name="siteView" property="component"/>
+
 <h2><bean:message key="title.objectives"/></h2>
 <html:form action="/objectivesManagerDA">
 	<html:hidden property="page" value="1"/>
@@ -12,7 +16,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="generalObjectives" ></html:textarea>
 				</td>
 				<td><span class="error" ><html:errors property="generalObjectives"/></span>	
 				</td>
@@ -22,7 +26,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectivesEn" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="generalObjectivesEn" ></html:textarea>
 				</td>
 				<td><span class="error" ><html:errors property="generalObjectivesEn"/></span>	
 				</td>
@@ -35,7 +39,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="operacionalObjectives" ></html:textarea>
 				</td>
 				<td><span class="error" ><html:errors property="operacionalObjectives"/></span>	
 				</td>
@@ -45,7 +49,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectivesEn" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="operacionalObjectivesEn" ></html:textarea>
 				</td>
 				<td><span class="error" ><html:errors property="operacionalObjectivesEn"/></span>	
 				</td>
@@ -53,6 +57,7 @@
 		</table>
 <br />
 <html:hidden property="method" value="editObjectives"/>
+<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:submit styleClass="inputbutton">
 <bean:message key="button.save"/>
 </html:submit>
@@ -60,3 +65,4 @@
 <bean:message key="label.clear"/>
 </html:reset>
 </html:form>
+</logic:present>

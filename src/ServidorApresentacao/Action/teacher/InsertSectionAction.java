@@ -87,7 +87,4 @@ public class InsertSectionAction extends FenixAction {
 		session.setAttribute(SessionConstants.SECTIONS, sections);
 		return mapping.findForward("viewSite");
 	}
-	
-	
-			
 }

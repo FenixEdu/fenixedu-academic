@@ -17,12 +17,14 @@
 	</tr>
 </table>
 <br />
+
 <html:hidden property="method" value="associateTeacher"/>
-<html:hidden property="method" value="edit"/>
+<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+
 <html:submit styleClass="inputbutton">
-<bean:message key="button.save"/>
+	<bean:message key="button.save"/>
 </html:submit >
 <html:reset styleClass="inputbutton">
-<bean:message key="label.clear"/>
+	<bean:message key="label.clear"/>
 </html:reset>
 </html:form>

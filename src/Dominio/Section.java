@@ -10,24 +10,31 @@ import java.util.List;
 /**
  * @author Ivo Brandão
  */
-public class Section implements ISection {
+public class Section extends DomainObject implements ISection {
 
-	private Integer internalCode;
+	
 	private String name;
 	private Integer sectionOrder;
 	private Date lastModifiedDate;
 	private ISite site;
-	private Integer keySite;	
+	private Integer keySite;
 	private ISection superiorSection;
 	private Integer keySuperiorSection;
-//	private List inferiorSections;
-//	private List items;
-	
+	//	private List inferiorSections;
+	//	private List items;
+
 	/** 
 	 * Construtor
 	 */
-	public Section() {}
+	public Section() {
+	}
 
+	/** 
+	 * Construtor
+	 */
+	public Section(Integer idInternal) {
+		setIdInternal(idInternal);
+	}
 
 	/** 
 	 * Construtor
@@ -37,44 +44,45 @@ public class Section implements ISection {
 		setName(name);
 		setSite(site);
 		setSuperiorSection(superiorSection);
-			
+
 	}
 
 	/** 
 	 * Construtor
 	 */
-	public Section(String name, Integer sectionOrder, Date lastModifiedDate, 
-		ISite site, ISection superiorSection, List inferiorSections, List items) {
+	public Section(
+		String name,
+		Integer sectionOrder,
+		Date lastModifiedDate,
+		ISite site,
+		ISection superiorSection,
+		List inferiorSections,
+		List items) {
 
 		setName(name);
 		setSectionOrder(sectionOrder);
 		setLastModifiedDate(lastModifiedDate);
 		setSite(site);
 		setSuperiorSection(superiorSection);
-//		setInferiorSections(inferiorSections);
-//		setItems(items);
+		//		setInferiorSections(inferiorSections);
+		//		setItems(items);
 	}
 
-//	/**
-//	 * @return List
-//	 */
-//	public List getInferiorSections() {
-//		return inferiorSections;
-//	}
+	//	/**
+	//	 * @return List
+	//	 */
+	//	public List getInferiorSections() {
+	//		return inferiorSections;
+	//	}
 
-	/**
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
+	
 
-//	/**
-//	 * @return List
-//	 */
-//	public List getItems() {
-//		return items;
-//	}
+	//	/**
+	//	 * @return List
+	//	 */
+	//	public List getItems() {
+	//		return items;
+	//	}
 
 	/**
 	 * @return Integer
@@ -118,29 +126,23 @@ public class Section implements ISection {
 		return superiorSection;
 	}
 
-//	/**
-//	 * Sets the inferiorSections.
-//	 * @param inferiorSections The inferiorSections to set
-//	 */
-//	public void setInferiorSections(List inferiorSections) {
-//		this.inferiorSections = inferiorSections;
-//	}
+	//	/**
+	//	 * Sets the inferiorSections.
+	//	 * @param inferiorSections The inferiorSections to set
+	//	 */
+	//	public void setInferiorSections(List inferiorSections) {
+	//		this.inferiorSections = inferiorSections;
+	//	}
 
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
-	}
+	
 
-//	/**
-//	 * Sets the items.
-//	 * @param items The items to set
-//	 */
-//	public void setItems(List items) {
-//		this.items = items;
-//	}
+	//	/**
+	//	 * Sets the items.
+	//	 * @param items The items to set
+	//	 */
+	//	public void setItems(List items) {
+	//		this.items = items;
+	//	}
 
 	/**
 	 * Sets the keySite.
@@ -196,11 +198,13 @@ public class Section implements ISection {
 	public boolean equals(Object arg0) {
 		boolean result = false;
 		if (arg0 instanceof ISection) {
-			result = (getName().equals(((ISection) arg0).getName()))&&
-				(getSite().equals(((ISection) arg0).getSite()))&&				
-				((getSuperiorSection() == null && ((ISection)arg0).getSuperiorSection() == null ) || (getSuperiorSection().equals(((ISection) arg0).getSuperiorSection())));
-		} 
-		return result;		
+			result =
+				(getName().equals(((ISection) arg0).getName()))
+					&& (getSite().equals(((ISection) arg0).getSite()))
+					&& ((getSuperiorSection() == null && ((ISection) arg0).getSuperiorSection() == null)
+						|| (getSuperiorSection().equals(((ISection) arg0).getSuperiorSection())));
+		}
+		return result;
 	}
 
 	/**
@@ -223,13 +227,13 @@ public class Section implements ISection {
 	 */
 	public String toString() {
 		String result = "[SECTION";
-		result += ", codInt=" + getInternalCode();
+		result += ", codInt=" + getIdInternal();
 		result += ", sectionOrder=" + getSectionOrder();
 		result += ", name=" + getName();
 		result += ", lastModifiedDate=" + getLastModifiedDate();
 		result += ", site=" + getSite();
 		result += ", superiorSection=" + getSuperiorSection();
-//		result += ", inferiorSections=" + getInferiorSections();
+		//		result += ", inferiorSections=" + getInferiorSections();
 		//result += ", items=" + getItems();
 		result += "]";
 

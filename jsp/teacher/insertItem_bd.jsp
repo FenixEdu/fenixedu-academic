@@ -6,58 +6,70 @@
 <span class="error"><html:errors property="error.default" /></span>
 <h2><bean:message key="message.insertItem" /></h2>
 <br />
-<table>
+
+<logic:present name="siteView">
+<bean:define id="component" name="siteView" property="component"/>
+<bean:define id="itemsList" name="component" property="items"/>
+	
 <html:form action="/insertItem">
 <html:hidden property="page" value="1"/>
-	<td>
-		<bean:message key="message.itemName"/>
-	</td>
-	<td>
-		<html:text property="name" /><span class="error"><html:errors property="name"/></span>
-	</td>
-</tr>
-<tr>
-	<td>
-		<bean:message key="message.itemInformation"/>
-	</td>
-	<td>
-		<html:textarea rows="2" cols="40" property="information"/>
-		<span class="error"><html:errors property="information"/></span>
-	</td>
-</tr>
-<tr>
-	<td>
-		<bean:message key="message.sectionOrder"/>	
-	</td>
-	<td>
-		<html:select property="itemOrder" size="1">
-			<html:option value="-1"><bean:message key="label.end"/></html:option>
-			<bean:define id="items" name="<%= SessionConstants.INFO_SECTION_ITEMS_LIST %>" />
-			<html:options collection="items" labelProperty="name" property="itemOrder" />
+<table>
+	<tr>
+		<td>
+			<bean:message key="message.itemName"/>
+		</td>
+		<td>
+			<html:text property="name" /><span class="error"><html:errors property="name"/></span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<bean:message key="message.itemInformation"/>
+		</td>
+		<td>
+			<html:textarea rows="2" cols="40" property="information"/>
+			<span class="error"><html:errors property="information"/></span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<bean:message key="message.sectionOrder"/>	
+		</td>
+		<td>
+			<html:select property="itemOrder" size="1">
+				<html:option value="-1"><bean:message key="label.end"/></html:option>
+				<html:options collection="itemsList" labelProperty="name" property="itemOrder" />
 			
-		</html:select>
-		<span class="error"><html:errors property="itemOrder"/></span>
-	</td>
-</tr>
-<tr>
-	<td>
-		<bean:message key="message.itemUrgent"/>
-	</td>
-	<td>
-		<html:select property="urgent" size="1" >	
-			<html:option value="false"><bean:message key="label.no"/></html:option>
-			<html:option value="true"><bean:message key="label.yes"/></html:option>
-		</html:select>
-		<span class="error"><html:errors property="urgent"/></span>
-	</td>
-</tr>
+			</html:select>
+			<span class="error"><html:errors property="itemOrder"/></span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<bean:message key="message.itemUrgent"/>
+		</td>
+		<td>
+			<html:select property="urgent" size="1" >	
+				<html:option value="false"><bean:message key="label.no"/></html:option>
+				<html:option value="true"><bean:message key="label.yes"/></html:option>
+			</html:select>
+			<span class="error"><html:errors property="urgent"/></span>
+		</td>
+	</tr>
 </table>
 <br />
+
+<html:hidden property="method" value="insertItem" />
+<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<bean:define id="section" name="component" property="section"/>	
+<bean:define id="sectionCode" name="section" property="idInternal"/>	
+<html:hidden property="currentSectionCode" value="<%= sectionCode.toString() %>" />
+
 <html:submit styleClass="inputbutton">
-<bean:message key="button.save"/>
+	<bean:message key="button.save"/>
 </html:submit>
 <html:reset  styleClass="inputbutton">
-<bean:message key="label.clear"/>
+	<bean:message key="label.clear"/>
 </html:reset>			
-<html:hidden property="method" value="insert" />
 </html:form>
+</logic:present>

@@ -28,4 +28,14 @@ public abstract class InfoObject implements Serializable {
 		idInternal = integer;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		if (this.idInternal != null)
+			return this.idInternal.intValue();
+		else
+			return super.hashCode();
+	}
+
 }

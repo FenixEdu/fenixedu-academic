@@ -1,0 +1,61 @@
+package ServidorAplicacao.Servico.teacher;
+import Dominio.DisciplinaExecucao;
+import Dominio.IDisciplinaExecucao;
+import Dominio.ITeacher;
+import Dominio.Professorship;
+import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentTeacher;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+/**
+ * @author Fernanda Quitério
+ *
+ */
+public class AssociateTeacher implements IServico {
+	private static AssociateTeacher service = new AssociateTeacher();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static AssociateTeacher getService() {
+		return service;
+	}
+	/**
+	 * The Actor of this class.
+	 **/
+	private AssociateTeacher() {
+	}
+	/**
+	 * returns the service name
+	 **/
+	public final String getNome() {
+		return "AssociateTeacher";
+	}
+	/**
+	 * Executes the service.
+	 *
+	 **/
+	public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber) throws FenixServiceException {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			
+			ITeacher iTeacher = persistentTeacher.readTeacherByNumber(teacherNumber);
+			if (iTeacher == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			DisciplinaExecucao executionCourse = new DisciplinaExecucao(infoExecutionCourseCode);
+			IDisciplinaExecucao iExecutionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+			persistentProfessorship.lockWrite(new Professorship(iTeacher, iExecutionCourse));
+		} catch (ExcepcaoPersistencia ex) {
+			throw new FenixServiceException(ex);
+		}
+		return true;
+	}
+}

@@ -91,8 +91,8 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
 				super.lockWrite(item);
 			// else if (item is mapped to the database then write any existing changes)
 			else if ((item instanceof Item) &&
-					 ((Item) itemFromDB).getInternalCode().equals(
-					  ((Item) item).getInternalCode())) {
+					 itemFromDB.getIdInternal().equals(
+					  item.getIdInternal())) {
 
 						super.lockWrite(item);
 				// No need to werite it because it is already mapped.

@@ -9,9 +9,8 @@ import java.util.Date;
 /**
  * @author Ivo Brandão
  */
-public interface ISection {
+public interface ISection extends IDomainObject{
 	
-	Integer getInternalCode();
 	String getName();
 	Integer getSectionOrder();
 	Date getLastModifiedDate();
@@ -20,7 +19,6 @@ public interface ISection {
 //	List getInferiorSections();
 //	List getItems();
     
-    void setInternalCode(Integer internalCode);
 	void setName(String name);
 	void setSectionOrder(Integer order);
 	void setLastModifiedDate(Date lastModifiedDate);

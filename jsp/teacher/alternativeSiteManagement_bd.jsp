@@ -4,7 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.personalizationOptions"/></h2>
+
+<logic:present name="siteView"> 
+
 <html:form action="/alternativeSite">
+<bean:define id="bodyComponent" name="siteView" property="component"/>
 <br />
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -52,7 +56,7 @@
 	<td width="200px" valign="top">
 		<bean:message key="message.initialStatement"/>
 	</td>	
-	<td><html:textarea name="<%=SessionConstants.INFO_SITE%>" property="initialStatement" rows="4" cols="56"/>
+	<td><html:textarea name="bodyComponent" property="initialStatement" rows="4" cols="56"/> 
 	</td>
 </tr>
 </table>
@@ -72,12 +76,14 @@
 	<td width="200px" valign="top">
 		<bean:message key="message.introduction"/>
 	</td>	
-	<td><html:textarea name="<%=SessionConstants.INFO_SITE%>" property="introduction" rows="4" cols="56"/></td>
+	<td><html:textarea name="bodyComponent" property="introduction" rows="4" cols="56"/></td> 
 </tr>
 </table>
 <h3><table>
-<html:hidden property="method" value="edit"/>
+<html:hidden property="method" value="editCustomizationOptions"/>
 <html:hidden property="page" value="1"/>
+<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+
 <tr align="center">	
 	<td>
 	<html:submit styleClass="inputbutton" property="confirm">
@@ -92,3 +98,4 @@
 </tr>
 </table></h3>
 </html:form>
+</logic:present>

@@ -12,19 +12,23 @@
 </tr>
 </table>
 <br />
+<logic:present name="siteView"> 
+<bean:define id="bodyComponent" name="siteView" property="component"/>
+<bean:define id="announcementsList" name="bodyComponent" property="announcements"/>
 <table width="100%">
     <html:form action="/announcementManagementAction">
             <tr>
                 <td>
-					<div class="gen-button"><html:link page="/announcementManagementAction.do?method=prepareCreateAnnouncement">
-						<bean:message key="label.insertAnnouncement" />
-					</html:link></div>
+					<div class="gen-button">
+						<html:link page="<%= "/announcementManagementAction.do?method=prepareCreateAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+							<bean:message key="label.insertAnnouncement" />
+						</html:link></div>
 					<br />
 					<br />
                 </td>
             </tr>
-            <% int index = 0; %>
-            <logic:iterate id="announcement" name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>" scope="session" >
+            
+            <logic:iterate id="announcement" name="announcementsList" >
                 <tr>
                     <td>
                         <strong><bean:write name="announcement" property="title"/></strong>
@@ -44,15 +48,20 @@
                 </tr>
                 <tr>
                     <td>
-						<div class="gen-button"><html:link page="/announcementManagementAction.do?method=prepareEditAnnouncement" indexId="index" indexed="true"><bean:message key="button.edit" />
-						</html:link></div>
-						<div class="gen-button"><html:link page="/announcementManagementAction.do?method=deleteAnnouncement" indexId="index" indexed="true"><bean:message key="button.delete" />
-						</html:link></div>
+						<div class="gen-button">
+							<bean:define id="announcementCode" name="announcement" property="idInternal" />
+							<html:link page="<%= "/announcementManagementAction.do?method=prepareEditAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>">
+								<bean:message key="button.edit" /> 
+							</html:link></div>
+						<div class="gen-button">
+							<html:link page="<%= "/announcementManagementAction.do?method=deleteAnnouncement&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;announcementCode=" + announcementCode %>">
+								<bean:message key="button.delete" />
+							</html:link></div>
     	                <br />
     	                <br />
                     </td>
                 </tr>
-             <% index++; %>
             </logic:iterate>
     </html:form>
 </table>
+</logic:present> 

@@ -15,7 +15,7 @@ import java.util.List;
 import Dominio.IItem;
 import Dominio.ISection;
 
-public interface IPersistentItem {
+public interface IPersistentItem extends IPersistentObject{
     public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia;
 	public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia;
     public void lockWrite(IItem item) throws ExcepcaoPersistencia;

@@ -64,7 +64,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			
 			if (section != null) {
 			
-				query.bind(section.getInternalCode());			
+				query.bind(section.getIdInternal());			
 			}
 
 			List result = (List) query.execute();
@@ -107,7 +107,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			
 		 
 		if (section != null) {
-			query.bind(section.getInternalCode());			
+			query.bind(section.getIdInternal());			
 		}	
 		
 		List result = (List) query.execute();		
@@ -165,8 +165,8 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 			super.lockWrite(section);
 		}
 		// else If the section is mapped to the database, then write any existing changes.
-		else if ((section instanceof Section) && ((Section) sectionFromDB).getInternalCode().equals(
-			((Section) section).getInternalCode())) {
+		else if ((section instanceof Section) && ((Section) sectionFromDB).getIdInternal().equals(
+			((Section) section).getIdInternal())) {
 										
 					super.lockWrite(section);
 					

@@ -702,7 +702,7 @@ public abstract class Cloner {
 
 		section.setSuperiorSection(fatherSection);
 		section.setSite(site);
-		section.setInternalCode(infoSection.getInternalCode());
+		section.setIdInternal(infoSection.getIdInternal());
 
 		//		section.setInferiorSections(inferiorSections);
 		//		section.setItems(items);
@@ -739,7 +739,7 @@ public abstract class Cloner {
 
 		infoSection.setSuperiorInfoSection(fatherInfoSection);
 		infoSection.setInfoSite(infoSite);
-		infoSection.setInternalCode(section.getInternalCode());
+		infoSection.setIdInternal(section.getIdInternal());
 
 		//		infoSection.setInferiorInfoSections(inferiorInfoSections);
 		//		infoSection.setInfoItems(infoItems);

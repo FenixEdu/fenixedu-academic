@@ -11,9 +11,8 @@ package Dominio;
  * @author  ars
  */
 
-public class Item implements IItem {
+public class Item extends DomainObject implements IItem {
 
-	private Integer internalCode;
 	private String information;
 	private String name;
 	private Integer itemOrder;
@@ -26,6 +25,13 @@ public class Item implements IItem {
 	 * Construtor 
 	 */
 	public Item() {
+	}
+
+	/** 
+	 * Construtor 
+	 */
+	public Item(Integer idInternal) {
+		setIdInternal(idInternal);
 	}
 
 	/** 
@@ -51,7 +57,7 @@ public class Item implements IItem {
 
 	public String toString() {
 		String result = "[ITEM";
-		result += ", codInt=" + internalCode;
+		result += ", codInt=" + getIdInternal();
 		result += ", nome=" + name;
 		result += ", seccao=" + section;
 		result += ", ordem=" + itemOrder;
@@ -67,13 +73,6 @@ public class Item implements IItem {
 	 */
 	public String getInformation() {
 		return information;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
 	}
 
 	/**
@@ -117,14 +116,6 @@ public class Item implements IItem {
 	 */
 	public void setInformation(String information) {
 		this.information = information;
-	}
-
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
 	}
 
 	/**

@@ -91,7 +91,7 @@ public class ReadSite extends FenixAction {
 		//Read last Anouncement
 		Object []args = new Object[1];
 		args[0] = site;
-
+//TODO: the last announcemnet is to be removed
 		InfoAnnouncement lastAnnouncement = null;
 		GestorServicos manager = GestorServicos.manager();
 		try {

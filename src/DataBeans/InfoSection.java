@@ -10,8 +10,7 @@ import java.util.Date;
  * 
  **/
 
-public class InfoSection implements Comparable,ISiteComponent {
-	private Integer internalCode;
+public class InfoSection extends InfoObject implements Comparable,ISiteComponent {
     protected String name;
     protected Integer sectionOrder;
     protected Date lastModifiedDate;
@@ -57,25 +56,6 @@ public class InfoSection implements Comparable,ISiteComponent {
     }
     
 
-	
-	/**
-	* @return Integer
-	*/
-	public Integer getInternalCode() {
-		return internalCode;
-			}
-
-	
-
-	/**
-	* Sets the internalCode.
-	* @param internalCode The internalCode to set
-	*/
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode=internalCode;
-		setSectionDepth(calculateDepth());
-	}
-	
 	
 	/**
 	* @return String
@@ -171,13 +151,13 @@ public class InfoSection implements Comparable,ISiteComponent {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		String result = "[INFOSECTION";
-		result += ", internalCode=" + getInternalCode();
+		String result = "\n[INFOSECTION";
+		result += ", internalCode=" + getIdInternal();
 		result += ", name=" + getName();
-		result += ", sectionOrder=" + getSectionOrder();
-		result += ", sectionDepth=" + getSectionDepth();
-		result += ", superiorInfoSection=" + getSuperiorInfoSection();
-		result += ", infoSite=" + getInfoSite();
+//		result += ", sectionOrder=" + getSectionOrder();
+//		result += ", sectionDepth=" + getSectionDepth();
+		result += ", superiorInfoSection=" + getSuperiorInfoSection()+ "\n";
+		result += ", infoSite=\n\t\t" + (getInfoSite()!= null ? getInfoSite().getIdInternal().toString() : "null");
 		result += "]";
 		return result;
 	}
@@ -187,12 +167,14 @@ public class InfoSection implements Comparable,ISiteComponent {
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoSection) {
-            resultado = getName().equals(((InfoSection) obj).getName())&&
-            getSectionOrder() == ((InfoSection) obj).getSectionOrder();
-            if(getInfoSite() != null && ((InfoSection) obj).getInfoSite() != null)
-                resultado = resultado && getInfoSite().equals(((InfoSection) obj).getInfoSite());
+            InfoSection infoSection = (InfoSection) obj;
+
+            resultado = getName().equals(infoSection.getName())&& getSectionOrder() == infoSection.getSectionOrder();
+
+            if(getInfoSite() != null && (infoSection.getInfoSite() != null))
+                resultado = resultado && getInfoSite().equals(infoSection.getInfoSite());
             else
-                resultado = resultado && getInfoSite() == null && ((InfoSection) obj).getInfoSite() == null;
+                resultado = resultado && (getInfoSite() == null && infoSection.getInfoSite() == null);
         }
         return resultado;
     }

@@ -3,58 +3,9 @@
 <form-validation>
   <formset>
    
-   
-    <!-- validation for the examEnrollment form -->
-   <form name="examEnrollmentForm">
-   	<field property="enrollmentBeginDayFormatted" depends="required,mask,date">
-   		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-   		<arg0 key="message.enrollmentBeginDay" resource="true"/>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
-        </var>
-        <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)</var-value>
-        </var>
-   	</field>
-   	<field property="enrollmentBeginTimeFormatted" depends="required,date">
-   		<msg name="date" key="error.invalid.hour"/>
-   		<arg0 key="message.enrollmentBeginHour" resource="true"/>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
-        </var>
-   	</field>
-   	<field property="enrollmentEndDayFormatted" depends="required,mask,date">
-   		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-   		<arg0 key="message.enrollmentEndDay" resource="true"/>
-   		 <var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
-        </var>
-         <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)</var-value>
-        </var>
-   	</field>
-   	<field property="enrollmentEndTimeFormatted" depends="required,date">
-   		<msg name="date" key="error.invalid.hour"/>
-   		<arg0 key="message.enrollmentEndHour" resource="true"/>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
-        </var>
-   	</field>
-
-   	
-   </form>
-   
    <!-- validation for the evaluation form -->
    <form name="evaluationForm">
-   	<field property="evaluationElements" depends="required">
+   	<field property="evaluationElements" depends="required" page="1">
    		<arg0 key="message.evaluation" resource="true"/>
    	</field>
    	

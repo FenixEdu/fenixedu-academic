@@ -16,7 +16,7 @@ import Dominio.ISite;
  * @author  ars
  * @author lmac1
  */
-public interface IPersistentSection {
+public interface IPersistentSection extends IPersistentObject{
     ISection readBySiteAndSectionAndName(ISite site, ISection superiorSection, String name) throws ExcepcaoPersistencia;
 	List readBySiteAndSection(ISite site,ISection superiorSection)throws ExcepcaoPersistencia;
     void lockWrite(ISection section) throws ExcepcaoPersistencia;

@@ -73,7 +73,6 @@ public class BibliographicReferenceOJB
 
 	public List readBibliographicReference(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-			System.out.println(executionCourse);
 			Criteria crit = new Criteria();
 			crit.addEqualTo("keyExecutionCourse",executionCourse.getIdInternal());
 			List result = queryList(BibliographicReference.class,crit);			

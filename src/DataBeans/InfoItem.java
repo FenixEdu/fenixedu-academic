@@ -9,7 +9,7 @@ package DataBeans;
 /**
  * @author Ivo Brandão
  */
-public class InfoItem implements Comparable {
+public class InfoItem extends InfoObject implements Comparable {
 //Serializable
 	private String information;
 	private String name;

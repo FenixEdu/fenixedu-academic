@@ -14,7 +14,7 @@ import java.util.List;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
 
-public interface IPersistentBibliographicReference {
+public interface IPersistentBibliographicReference extends IPersistentObject{
 
     public IBibliographicReference readBibliographicReference(IDisciplinaExecucao executionCourse,String title,String authors,String reference,String year)throws ExcepcaoPersistencia;
     public void lockWrite(IBibliographicReference  bibliographicReference) throws ExcepcaoPersistencia;
