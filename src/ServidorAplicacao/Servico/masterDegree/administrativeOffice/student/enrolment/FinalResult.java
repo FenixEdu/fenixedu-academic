@@ -49,7 +49,7 @@ public class FinalResult implements IServico {
 
 
 		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
-		
+	
 		IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
 

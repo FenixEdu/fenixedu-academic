@@ -1,3 +1,4 @@
+
 package ServidorApresentacao.Action.certificate;
 
 import java.text.DateFormat;
@@ -290,6 +291,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                         session.setAttribute(
                             SessionConstants.INFO_STUDENT_CURRICULAR_PLAN,
                             infoStudentCurricularPlan);
+
                         session.setAttribute(SessionConstants.DATE, formatedDate);
                         if (infoStudentCurricularPlan.getInfoBranch().getName().length() != 0)
                             session.setAttribute(
@@ -297,6 +299,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                                 infoStudentCurricularPlan.getInfoBranch().getName());
                         session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, anoLectivo);
                         session.setAttribute(SessionConstants.ENROLMENT_LIST, newEnrolmentList);
+                      
                         session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);
                  
 
