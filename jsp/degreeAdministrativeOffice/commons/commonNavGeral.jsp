@@ -1,4 +1,6 @@
-<%@ page language="java" %>
+<%-- FIXME: See what is necessary to remove this file... --%>
+<%@ include file="/commons/commonGeneralNavigationBar.jsp" %>
+<%-- <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -25,3 +27,4 @@
 <logic:notPresent name="<%= Global.MODULE_KEY %>">
 	<span class="error">Não passou pelo RequestProcessor</span>
 </logic:notPresent>
+--%>
