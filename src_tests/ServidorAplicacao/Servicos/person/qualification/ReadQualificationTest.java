@@ -103,10 +103,9 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsGrantOwnerManager();
 
-			SiteView siteView = (SiteView) gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			InfoQualification infoQualification= (InfoQualification) gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
 			//Verify if the data jas been correctly read
-			InfoQualification infoQualification = (InfoQualification) siteView.getComponent();
 			assertEquals(infoQualification.getMark(), "mark");
 			assertEquals(infoQualification.getYear(), new Integer(1999));
 			assertEquals(infoQualification.getSchool(), "ist");
@@ -139,10 +138,8 @@ public class ReadQualificationTest extends QualificationServiceNeedsAuthenticati
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsTeacher();
 
-			SiteView siteView = (SiteView)gestor.executar(user, getNameOfServiceToBeTested(), argserv);
+			InfoQualification infoQualification = (InfoQualification)gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			//Verify if the data jas been correctly read
-			InfoQualification infoQualification = (InfoQualification) siteView.getComponent();
 			assertEquals(infoQualification.getMark(), "mark");
 			assertEquals(infoQualification.getYear(), new Integer(1999));
 			assertEquals(infoQualification.getSchool(), "ist");
