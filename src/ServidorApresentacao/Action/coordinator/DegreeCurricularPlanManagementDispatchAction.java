@@ -18,11 +18,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoBranch;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoCurricularSemester;
-import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegreeCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -33,7 +30,8 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author Fernanda Quitério 06/Nov/2003
+ * @author Fernanda Quitério 
+ * 06/Nov/2003
  */
 public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchAction {
 	public ActionForward showActiveCurricularCourses(
@@ -178,27 +176,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		return mapping.findForward("showCurricularCoursesHistory");
 	}
 
-	private InfoCurricularCourseScope fillccsForHasMapKey(InfoCurricularCourseScope curricularCourseScope) {
-		InfoCurricularCourseScope ccsForHasMapKey = new InfoCurricularCourseScope();
-		InfoBranch branchForccs = new InfoBranch();
-		InfoCurricularSemester curricularSemesterForccs = new InfoCurricularSemester();
-		InfoCurricularYear curricularYearForccs = new InfoCurricularYear();
-		InfoCurricularCourse curricularCourseForccs = new InfoCurricularCourse();
-
-		curricularCourseForccs.setName(curricularCourseScope.getInfoCurricularCourse().getName());
-		ccsForHasMapKey.setInfoCurricularCourse(curricularCourseForccs);
-
-		curricularYearForccs.setYear(curricularCourseScope.getInfoCurricularSemester().getInfoCurricularYear().getYear());
-		curricularSemesterForccs.setInfoCurricularYear(curricularYearForccs);
-		curricularSemesterForccs.setSemester(curricularCourseScope.getInfoCurricularSemester().getSemester());
-		ccsForHasMapKey.setInfoCurricularSemester(curricularSemesterForccs);
-
-		branchForccs.setCode(curricularCourseScope.getInfoBranch().getCode());
-		ccsForHasMapKey.setInfoBranch(branchForccs);
-		System.out.println("curricular course scope for hashmap " + ccsForHasMapKey);
-		return ccsForHasMapKey;
-	}
-
 	private boolean scopesAreEqual(
 		InfoCurricularCourseScope curricularCourseScope,
 		InfoCurricularCourseScope nextCurricularCourseScope) {
@@ -216,7 +193,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 			result = true;
 		}
-		System.out.println("scopes sao iguais? " + result);
 		return result;
 	}
 }
