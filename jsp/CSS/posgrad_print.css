@@ -4,16 +4,21 @@
 	Global Text Proprieties 
 *****************************************/
 
-body, html {
+body {
 	font: 11pt Georgia, sans-serif;
 	color: #fff;
 	text-align: left;
-	margin: 15pt 20pt 15pt 20pt;
+ 	/* margin: 5em 2em 5em 1.5em; */
 	}
 	
 table, p {
 	font: 11pt/1.5em Georgia, sans-serif;
 	color: black;
+}
+
+table {
+	width: 95%;
+	margin: 0 2em 0 1.5em;
 	}
 
 h2	{
