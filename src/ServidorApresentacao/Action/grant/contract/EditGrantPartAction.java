@@ -4,6 +4,8 @@
 
 package ServidorApresentacao.Action.grant.contract;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,10 +24,12 @@ import DataBeans.grant.contract.InfoGrantPart;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import DataBeans.grant.contract.InfoGrantProject;
 import DataBeans.grant.contract.InfoGrantSubsidy;
+import Dominio.grant.contract.GrantCostCenter;
+import Dominio.grant.contract.GrantProject;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
-import ServidorAplicacao.Servico.exceptions.grant.InvalidProjectResponsibleTeacherException;
+import ServidorAplicacao.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -50,63 +54,58 @@ public class EditGrantPartAction extends DispatchAction
 		DynaValidatorForm grantPartForm = (DynaValidatorForm) form;
 
 		Integer idGrantPart = null;
-		Integer edit = null;
+		Integer loaddb = null;
+
+		if (request.getParameter("loaddb") != null)
+			loaddb = new Integer(request.getParameter("loaddb"));
 		if (request.getParameter("idGrantPart") != null)
 			idGrantPart = new Integer(request.getParameter("idGrantPart"));
-		if (request.getParameter("edit") != null)
-			edit = new Integer(request.getParameter("edit"));
 
-		if (edit == null) //Validation error
+		if (loaddb != null && loaddb.equals(new Integer(1))) //load contents from database
 		{
-			request.setAttribute("idSubsidy", request.getParameter("grantSubsidyId"));
-			return mapping.findForward("edit-grant-part");
-		}
+			if (idGrantPart != null)
+			{
+				try
+				{
+					//Read the grant part
+					Object[] args = { idGrantPart };
+					InfoGrantPart infoGrantPart =
+						(InfoGrantPart) ServiceUtils.executeService(userView, "ReadGrantPart", args);
 
-		if (idGrantPart != null) //Read the contract part
-		{
-			try
-			{
-				//Read the contract
-				Object[] args = { idGrantPart };
-				InfoGrantPart infoGrantPart =
-					(InfoGrantPart) ServiceUtils.executeService(userView, "ReadGrantPart", args);
-
-				//Populate the form
-				setFormGrantPart(grantPartForm, infoGrantPart);
-				request.setAttribute("idSubsidy", infoGrantPart.getInfoGrantSubsidy().getIdInternal());
+					//Populate the form
+					setFormGrantPart(grantPartForm, infoGrantPart);
+					request.setAttribute(
+						"idSubsidy",
+						infoGrantPart.getInfoGrantSubsidy().getIdInternal());
+				}
+				catch (FenixServiceException e)
+				{
+					return setError(request,mapping,"errors.grant.part.read","manage-grant-part",null);
+				}
+				catch (Exception e)
+				{
+					return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-part",null);
+				}
 			}
-			catch (FenixServiceException e)
-			{
-				return setError(request, mapping, "errors.grant.part.read", "manage-grant-part", null);
-			}
-			catch (Exception e)
-			{
-				return setError(
-					request,
-					mapping,
-					"errors.grant.unrecoverable",
-					"manage-grant-part",
-					null);
-			}
-		}
-		else //New contract
-			{
-			try
-			{
-				Integer idSubsidy = new Integer(request.getParameter("idSubsidy"));
-				grantPartForm.set("grantSubsidyId", idSubsidy);
-				request.setAttribute("idSubsidy", idSubsidy);
-			}
-			catch (Exception e)
-			{
-				return setError(
-					request,
-					mapping,
-					"errors.grant.unrecoverable",
-					"manage-grant-part",
-					null);
+			else //New grant part
+				{
+				try
+				{
+					Integer idSubsidy = new Integer(request.getParameter("idSubsidy"));
+					grantPartForm.set("grantSubsidyId", idSubsidy);
+					request.setAttribute("idSubsidy", idSubsidy);
+				}
+				catch (Exception e)
+				{
+					return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-part",null);
+				}
 			}
 		}
+        else request.setAttribute("idSubsidy", request.getParameter("grantSubsidyId"));
+        
+		ActionForward result = loadPaymentEntities(request, mapping, userView);
+		if (result != null)
+			return result;
 
 		return mapping.findForward("edit-grant-part");
 	}
@@ -122,14 +121,13 @@ public class EditGrantPartAction extends DispatchAction
 		InfoGrantPart infoGrantPart = null;
 		try
 		{
-			//Verificar se o campo paymentEntityType é diferente null
-			if (editGrantPartForm.get("paymentEntityType") == null)
-				return setError(
-					request,
-					mapping,
-					"errors.grant.part.invalidPaymentEntityType",
-					null,
-					null);
+			//Verificar se foi escolhida UMA E SO UMA entidade pagadora
+			if (editGrantPartForm.get("project").equals("0")
+				&& editGrantPartForm.get("costCenter").equals("0"))
+				return setError(request, mapping, "errors.grant.part.invalidPaymentEntity", null, null);
+			if (!editGrantPartForm.get("project").equals("0")
+				&& !editGrantPartForm.get("costCenter").equals("0"))
+				return setError(request, mapping, "errors.grant.part.mustBeOnePaymentEntity", null, null);
 
 			infoGrantPart = populateInfoFromForm(editGrantPartForm);
 
@@ -139,24 +137,19 @@ public class EditGrantPartAction extends DispatchAction
 
 			request.setAttribute("idSubsidy", editGrantPartForm.get("grantSubsidyId"));
 		}
-		catch (InvalidGrantPaymentEntityException e)
+		catch (InvalidPartResponsibleTeacherException e)
 		{
 			return setError(
 				request,
 				mapping,
-				"errors.grant.part.invalidPaymentEntity",
-				null,
-				infoGrantPart.getInfoGrantPaymentEntity().getNumber());
-		}
-		catch (InvalidProjectResponsibleTeacherException e)
-		{
-			return setError(
-				request,
-				mapping,
-				"errors.grant.part.invalidProjectTeacher",
+				"errors.grant.part.invalidPartTeacher",
 				null,
 				infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber());
 		}
+        catch (ExistingServiceException e)
+        {
+            return setError(request, mapping, "errors.grant.part.duplicateEntry", null, null);
+        }
 		catch (FenixServiceException e)
 		{
 			return setError(request, mapping, "errors.grant.part.edit", null, null);
@@ -203,19 +196,17 @@ public class EditGrantPartAction extends DispatchAction
 	{
 		BeanUtils.copyProperties(form, infoGrantPart);
 		form.set("grantSubsidyId", infoGrantPart.getInfoGrantSubsidy().getIdInternal());
-		if (infoGrantPart.getInfoGrantPaymentEntity().getNumber() != null)
-			form.set(
-				"grantPaymentEntityNumber",
-				infoGrantPart.getInfoGrantPaymentEntity().getNumber().toString());
+
 		if (infoGrantPart.getInfoResponsibleTeacher() != null
 			&& infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber() != null)
 			form.set(
 				"responsibleTeacherNumber",
 				infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber().toString());
+
 		if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter)
-			form.set("paymentEntityType", new Integer(1));
+			form.set("costCenter", infoGrantPart.getInfoGrantPaymentEntity().getIdInternal().toString());
 		else if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantProject)
-			form.set("paymentEntityType", new Integer(2));
+			form.set("project", infoGrantPart.getInfoGrantPaymentEntity().getIdInternal().toString());
 	}
 
 	private InfoGrantPart populateInfoFromForm(DynaValidatorForm editGrantPartForm) throws Exception
@@ -234,15 +225,21 @@ public class EditGrantPartAction extends DispatchAction
 			new Integer((String) editGrantPartForm.get("responsibleTeacherNumber")));
 		infoGrantPart.setInfoResponsibleTeacher(infoTeacher);
 
+		//Set the Payment Entity
 		InfoGrantPaymentEntity infoPaymentEntity = null;
-
-		if (editGrantPartForm.get("grantPaymentEntityNumber").equals("1"))
-			infoPaymentEntity = new InfoGrantCostCenter();
-		else
+		Integer paymentEntityID = null;
+		if (!editGrantPartForm.get("project").equals("0"))
+		{
 			infoPaymentEntity = new InfoGrantProject();
+			paymentEntityID = new Integer((String) editGrantPartForm.get("project"));
+		}
+		else if (!editGrantPartForm.get("costCenter").equals("0"))
+		{
+			infoPaymentEntity = new InfoGrantCostCenter();
+			paymentEntityID = new Integer((String) editGrantPartForm.get("costCenter"));
+		}
 
-		infoPaymentEntity.setNumber(
-			new Integer((String) editGrantPartForm.get("grantPaymentEntityNumber")));
+		infoPaymentEntity.setIdInternal(paymentEntityID);
 		infoGrantPart.setInfoGrantPaymentEntity(infoPaymentEntity);
 
 		//Percentage
@@ -250,6 +247,59 @@ public class EditGrantPartAction extends DispatchAction
 
 		return infoGrantPart;
 	}
+
+	/*
+	 * Loads information about projects and cost centers to the form
+	 */
+	private ActionForward loadPaymentEntities(
+		HttpServletRequest request,
+		ActionMapping mapping,
+		IUserView userView)
+	{
+		try
+		{
+			String projectClass = "Dominio.grant.contract.GrantProject";
+			Object[] args = { projectClass };
+			List projectsList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadAllGrantPaymentEntitiesByClassName",
+					args);
+			//Adding a select project line to the list (presentation reasons)
+			GrantProject selectProject = new GrantProject();
+			selectProject.setIdInternal(new Integer(0));
+			selectProject.setDesignation("[Escolha um projecto]");
+			projectsList.add(0, selectProject);
+			request.setAttribute("projectsList", projectsList);
+		}
+		catch (FenixServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.part.loadingProjects", null, null);
+		}
+
+		try
+		{
+			String costCenterClass = "Dominio.grant.contract.GrantCostCenter";
+			Object[] args2 = { costCenterClass };
+			List costCenterList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadAllGrantPaymentEntitiesByClassName",
+					args2);
+			//Adding a select costCenter line to the list (presentation reasons)
+			GrantCostCenter selectCostCenter = new GrantCostCenter();
+			selectCostCenter.setIdInternal(new Integer(0));
+			selectCostCenter.setDesignation("[Escolha um centro custo]");
+			costCenterList.add(0, selectCostCenter);
+			request.setAttribute("costCenterList", costCenterList);
+		}
+		catch (FenixServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.part.loadingCostCenters", null, null);
+		}
+		return null;
+	}
+
 	/*
 	 * Sets an error to be displayed in the page and sets the mapping forward
 	 */

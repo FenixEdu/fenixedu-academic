@@ -11,24 +11,24 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
  * @author Pica
  */
 
-public class InvalidProjectResponsibleTeacherException extends FenixServiceException
+public class InvalidPartResponsibleTeacherException extends FenixServiceException
 {
 
-    public InvalidProjectResponsibleTeacherException()
+    public InvalidPartResponsibleTeacherException()
     {
     }
 
-    public InvalidProjectResponsibleTeacherException(String message)
+    public InvalidPartResponsibleTeacherException(String message)
     {
         super(message);
     }
 
-    public InvalidProjectResponsibleTeacherException(Throwable cause)
+    public InvalidPartResponsibleTeacherException(Throwable cause)
     {
         super(cause);
     }
 
-    public InvalidProjectResponsibleTeacherException(String message, Throwable cause)
+    public InvalidPartResponsibleTeacherException(String message, Throwable cause)
     {
         super(message, cause);
     }

@@ -1278,13 +1278,13 @@ public abstract class Cloner
 			infoGrantPart = new InfoGrantPart();
 			copyObjectProperties(infoGrantPart, grantPart);
 
-			InfoGrantPaymentEntity infoGrantPaymentEntity =
-				Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPart.getGrantPaymentEntity());
+			
 			InfoGrantSubsidy infoGrantSubsidy =
 				Cloner.copyIGrantSubsidy2InfoGrantSubsidy(grantPart.getGrantSubsidy());
 			InfoTeacher infoResponsibleTeacher =
 				Cloner.copyITeacher2InfoTeacher(grantPart.getResponsibleTeacher());
-
+            InfoGrantPaymentEntity infoGrantPaymentEntity =
+            Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPart.getGrantPaymentEntity());
 			infoGrantPart.setInfoGrantPaymentEntity(infoGrantPaymentEntity);
 			infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
 			infoGrantPart.setInfoResponsibleTeacher(infoResponsibleTeacher);

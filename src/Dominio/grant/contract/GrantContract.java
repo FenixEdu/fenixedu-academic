@@ -19,6 +19,11 @@ public class GrantContract extends DomainObject implements IGrantContract
     private Integer contractNumber;
     private Date dateBeginContract;
     private Date dateEndContract;
+    private Date dateSendDispatchCC;
+    private Date dateDispatchCC;
+    private Date dateSendDispatchCD;
+    private Date dateDispatchCD;
+    private Date dateAcceptTerm;
     private String endContractMotive;
     private IGrantOwner grantOwner;
     private IGrantType grantType;
@@ -174,5 +179,85 @@ public class GrantContract extends DomainObject implements IGrantContract
     {
         this.grantType = grantType;
     }
+
+	/**
+	 * @return Returns the dateAcceptTerm.
+	 */
+	public Date getDateAcceptTerm()
+	{
+		return dateAcceptTerm;
+	}
+
+	/**
+	 * @param dateAcceptTerm The dateAcceptTerm to set.
+	 */
+	public void setDateAcceptTerm(Date dateAcceptTerm)
+	{
+		this.dateAcceptTerm = dateAcceptTerm;
+	}
+
+	/**
+	 * @return Returns the dateDispatchCC.
+	 */
+	public Date getDateDispatchCC()
+	{
+		return dateDispatchCC;
+	}
+
+	/**
+	 * @param dateDispatchCC The dateDispatchCC to set.
+	 */
+	public void setDateDispatchCC(Date dateDispatchCC)
+	{
+		this.dateDispatchCC = dateDispatchCC;
+	}
+
+	/**
+	 * @return Returns the dateDispatchCD.
+	 */
+	public Date getDateDispatchCD()
+	{
+		return dateDispatchCD;
+	}
+
+	/**
+	 * @param dateDispatchCD The dateDispatchCD to set.
+	 */
+	public void setDateDispatchCD(Date dateDispatchCD)
+	{
+		this.dateDispatchCD = dateDispatchCD;
+	}
+
+	/**
+	 * @return Returns the dateSendDispatchCC.
+	 */
+	public Date getDateSendDispatchCC()
+	{
+		return dateSendDispatchCC;
+	}
+
+	/**
+	 * @param dateSendDispatchCC The dateSendDispatchCC to set.
+	 */
+	public void setDateSendDispatchCC(Date dateSendDispatchCC)
+	{
+		this.dateSendDispatchCC = dateSendDispatchCC;
+	}
+
+	/**
+	 * @return Returns the dateSendDispatchCD.
+	 */
+	public Date getDateSendDispatchCD()
+	{
+		return dateSendDispatchCD;
+	}
+
+	/**
+	 * @param dateSendDispatchCD The dateSendDispatchCD to set.
+	 */
+	public void setDateSendDispatchCD(Date dateSendDispatchCD)
+	{
+		this.dateSendDispatchCD = dateSendDispatchCD;
+	}
 
 }

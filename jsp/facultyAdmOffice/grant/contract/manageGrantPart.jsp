@@ -30,7 +30,7 @@
             <bean:message key="label.grant.part.percentage"/>
         </td>
         <td class="listClasses-header">
-            <bean:message key="label.grant.part.grantPaymentEntity.number"/>
+            <bean:message key="label.grant.part.grantPaymentEntity.designation"/>
         </td>
         <td class="listClasses-header">&nbsp;</td>
         <td class="listClasses-header">&nbsp;</td>
@@ -45,13 +45,13 @@
             </td>
             <td class="listClasses">&nbsp;
 	        	<logic:present name="infoGrantPart" property="infoGrantPaymentEntity">
-		            <bean:write name="infoGrantPart" property="infoGrantPaymentEntity.number"/>
+		            <bean:write name="infoGrantPart" property="infoGrantPaymentEntity.designation"/>
 	            </logic:present>
             </td>
             <td class="listClasses">
 	            <%-- Edit a Grant Part --%>
                 <bean:define id="idGrantPart" name="infoGrantPart" property="idInternal"/>
-                <html:link page='<%= "/editGrantPart.do?method=prepareEditGrantPartForm&amp;idGrantPart=" + idGrantPart.toString() + "&amp;edit=" + 1 %>' > 
+                <html:link page='<%= "/editGrantPart.do?method=prepareEditGrantPartForm&amp;idGrantPart=" + idGrantPart.toString() + "&amp;loaddb=" + 1 %>' > 
                 	<bean:message key="link.edit" />
                 </html:link>
             </td>       
@@ -76,7 +76,7 @@
 
 <%-- Create a new Grant Part --%>
 <bean:message key="message.grant.type.creation"/>:&nbsp;
-	<html:link page='<%= "/editGrantPart.do?method=prepareEditGrantPartForm&amp;idSubsidy=" + request.getAttribute("idSubsidy").toString() + "&amp;edit=" + 1 %>' >
+	<html:link page='<%= "/editGrantPart.do?method=prepareEditGrantPartForm&amp;idSubsidy=" + request.getAttribute("idSubsidy").toString() + "&amp;loaddb=" + 1 %>' >
 <bean:message key="link.create.grant.part"/>
 </html:link>
 

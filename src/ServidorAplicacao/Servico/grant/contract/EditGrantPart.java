@@ -16,12 +16,13 @@ import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.grant.contract.GrantCostCenter;
 import Dominio.grant.contract.GrantPart;
+import Dominio.grant.contract.GrantPaymentEntity;
 import Dominio.grant.contract.GrantProject;
 import Dominio.grant.contract.IGrantPart;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
-import ServidorAplicacao.Servico.exceptions.grant.InvalidProjectResponsibleTeacherException;
+import ServidorAplicacao.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -83,7 +84,10 @@ public class EditGrantPart extends EditDomainObjectService
 		{
 			IPersistentGrantPaymentEntity pgp = sp.getIPersistentGrantPaymentEntity();
 
-			paymentEntity = pgp.readByNumber(infoGrantPart.getInfoGrantPaymentEntity().getNumber());
+			paymentEntity =
+				(IGrantPaymentEntity) pgp.readByOID(
+					GrantPaymentEntity.class,
+					infoGrantPart.getInfoGrantPaymentEntity().getIdInternal());
 			if (paymentEntity != null)
 			{
 				if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter)
@@ -93,12 +97,14 @@ public class EditGrantPart extends EditDomainObjectService
 
 				BeanUtils.copyProperties(grantPart.getGrantPaymentEntity(), paymentEntity);
 			}
+			else
+				throw new InvalidGrantPaymentEntityException();
 
 			domainObjectToLock = (IDomainObject) grantPart;
 		}
 		catch (Exception e)
 		{
-			throw new InvalidGrantPaymentEntityException(e.getMessage());
+			throw new FenixServiceException(e.getMessage());
 		}
 
 		//set the teacher
@@ -114,12 +120,18 @@ public class EditGrantPart extends EditDomainObjectService
 				grantPart.setResponsibleTeacher(new Teacher());
 				BeanUtils.copyProperties(grantPart.getResponsibleTeacher(), teacher);
 			}
+			else
+				throw new InvalidPartResponsibleTeacherException();
 
 			domainObjectToLock = (IDomainObject) grantPart;
 		}
+        catch (InvalidPartResponsibleTeacherException e)
+        {
+            throw new InvalidPartResponsibleTeacherException();
+        }
 		catch (Exception e)
 		{
-			throw new InvalidProjectResponsibleTeacherException(e.getMessage());
+			throw new FenixServiceException(e.getMessage());
 		}
 	}
 

@@ -1312,6 +1312,15 @@
         </filterChains>
     </service>
     <service>
+        <name>ReadAllTeachersNumberAndName</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.ReadAllTeachersNumberAndName</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>ReadAllExecutionYears</name>
         <implementationClass> ServidorAplicacao.Servico.manager.ReadAllExecutionYears</implementationClass>
         <description/>
@@ -5450,6 +5459,16 @@
         <name>ReadAllGrantPartsByGrantSubsidy</name>
         <implementationClass>
             ServidorAplicacao.Servico.grant.contract.ReadAllGrantPartsByGrantSubsidy</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAllGrantPaymentEntitiesByClassName</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.grant.contract.ReadAllGrantPaymentEntitiesByClassName</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

@@ -70,7 +70,10 @@
 			</td>
 			<td>
 				<html:text property="grantResponsibleTeacher"/>
-				<bean:message key="label.requiredfield"/>
+				<bean:message key="label.requiredfield"/>&nbsp;
+				<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
+					<bean:message key="link.teacher.showList"/>
+				</html:link>
 			</td>
 		</tr>
 	
@@ -81,6 +84,56 @@
 			<td>
 				<html:text property="grantOrientationTeacher"/>
 				<bean:message key="label.requiredfield"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.dateSendDispatchCC"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateSendDispatchCC"/>
+				&nbsp;
+				<bean:message key="label.dateformat"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.dateDispatchCC"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateDispatchCC"/>
+				&nbsp;
+				<bean:message key="label.dateformat"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.dateSendDispatchCD"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateSendDispatchCD"/>
+				&nbsp;
+				<bean:message key="label.dateformat"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.dateDispatchCD"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateDispatchCD"/>
+				&nbsp;
+				<bean:message key="label.dateformat"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.contract.dateAcceptTerm"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateAcceptTerm"/>
+				&nbsp;
+				<bean:message key="label.dateformat"/>
 			</td>
 		</tr>
 	</table>

@@ -6,7 +6,7 @@
 <p class="infoselected">
 		<b><bean:message key="label.grant.contract.information"/></b><br/>
     	<bean:message key="label.grant.contract.number"/>:&nbsp;<bean:write name="contractNumber"/><br/>
-    	<bean:message key="label.grant.type.name"/>:&nbsp;<bean:write name="grantTypeName"/>
+    	<bean:message key="label.grant.contract.type"/>:&nbsp;<bean:write name="grantTypeName"/>
 	</p>
 	
 <strong><p align="center"><bean:message key="label.grant.subsidy.edition"/></p></strong><br/>

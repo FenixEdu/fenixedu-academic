@@ -13,7 +13,9 @@ public interface IGrantPaymentEntity extends IDomainObject
 {
     public Integer getNumber();
     public String getDesignation();
+    public String getOjbConcreteClass();
     
     public void setNumber(Integer number);
     public void setDesignation(String designation);
+    public void setOjbConcreteClass(String ojbConcreteClass);
 }

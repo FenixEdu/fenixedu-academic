@@ -28,9 +28,17 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantContractEndDateBeforeBeginDateException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
+import ServidorAplicacao
+	.Servico
+	.exceptions
+	.grant
+	.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoundException;
-import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherPeriodNotWithinContractPeriodException;
+import ServidorAplicacao
+	.Servico
+	.exceptions
+	.grant
+	.GrantResponsibleTeacherPeriodNotWithinContractPeriodException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -71,36 +79,55 @@ public class EditGrantContractAction extends DispatchAction
 
 				//Populate the form
 				setFormGrantContract(grantContractForm, infoGrantContract);
-				request.setAttribute("idInternal",infoGrantContract.getGrantOwnerInfo().getIdInternal());
+				request.setAttribute(
+					"idInternal",
+					infoGrantContract.getGrantOwnerInfo().getIdInternal());
 			}
 			catch (FenixServiceException e)
 			{
-				return setError(request, mapping, "errors.grant.contract.read", "manage-grant-contract", null);
+				return setError(
+					request,
+					mapping,
+					"errors.grant.contract.read",
+					"manage-grant-contract",
+					null);
 			}
-            catch (Exception e)
-            {
-                return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-contract", null);
-            }
+			catch (Exception e)
+			{
+				return setError(
+					request,
+					mapping,
+					"errors.grant.unrecoverable",
+					"manage-grant-contract",
+					null);
+			}
 		}
 		else
 		{
 			//New contract
-            try
-            {
+			try
+			{
 				grantContractForm.set("idInternal", new Integer(request.getParameter("idInternal")));
 				request.setAttribute("idInternal", new Integer(request.getParameter("idInternal")));
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
-				return setError(request,mapping,"errors.grant.unrecoverable", "manage-grant-contract", null);
+				return setError(
+					request,
+					mapping,
+					"errors.grant.unrecoverable",
+					"manage-grant-contract",
+					null);
 			}
 		}
 
 		try
 		{
 			//Read grant types for the contract
-			Object[] args2 = { };
-			List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
+			Object[] args2 = {
+			};
+			List grantTypeList =
+				(List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
 			request.setAttribute("grantTypeList", grantTypeList);
 		}
 		catch (FenixServiceException e)
@@ -186,10 +213,10 @@ public class EditGrantContractAction extends DispatchAction
 		{
 			return setError(request, mapping, "errors.grant.contract.bd.create", null, null);
 		}
-        catch (Exception e)
-        {
-            return setError(request, mapping, "errors.grant.unrecoverable", null, null);
-        }
+		catch (Exception e)
+		{
+			return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+		}
 		request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
 
 		return mapping.findForward("manage-grant-contract");
@@ -209,6 +236,18 @@ public class EditGrantContractAction extends DispatchAction
 			form.set("dateBeginContract", sdf.format(infoGrantContract.getDateBeginContract()));
 		if (infoGrantContract.getDateEndContract() != null)
 			form.set("dateEndContract", sdf.format(infoGrantContract.getDateEndContract()));
+
+		if (infoGrantContract.getDateSendDispatchCC() != null)
+			form.set("dateSendDispatchCC", sdf.format(infoGrantContract.getDateSendDispatchCC()));
+		if (infoGrantContract.getDateDispatchCC() != null)
+			form.set("dateDispatchCC", sdf.format(infoGrantContract.getDateDispatchCC()));
+		if (infoGrantContract.getDateSendDispatchCD() != null)
+			form.set("dateSendDispatchCD", sdf.format(infoGrantContract.getDateSendDispatchCD()));
+		if (infoGrantContract.getDateDispatchCD() != null)
+			form.set("dateDispatchCD", sdf.format(infoGrantContract.getDateDispatchCD()));
+		if (infoGrantContract.getDateAcceptTerm() != null)
+			form.set("dateAcceptTerm", sdf.format(infoGrantContract.getDateAcceptTerm()));
+
 		if (infoGrantContract.getEndContractMotive() != null)
 			form.set("endContractMotive", infoGrantContract.getEndContractMotive());
 		form.set("grantType", infoGrantContract.getGrantTypeInfo().getSigla());
@@ -272,6 +311,27 @@ public class EditGrantContractAction extends DispatchAction
 				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
 		}
 
+		//set other dates
+		if (editGrantContractForm.get("dateSendDispatchCC") != null
+			&& !editGrantContractForm.get("dateSendDispatchCC").equals(""))
+			infoGrantContract.setDateSendDispatchCC(
+				sdf.parse((String) editGrantContractForm.get("dateSendDispatchCC")));
+		if (editGrantContractForm.get("dateDispatchCC") != null
+			&& !editGrantContractForm.get("dateDispatchCC").equals(""))
+			infoGrantContract.setDateDispatchCC(
+				sdf.parse((String) editGrantContractForm.get("dateDispatchCC")));
+		if (editGrantContractForm.get("dateSendDispatchCD") != null
+			&& !editGrantContractForm.get("dateSendDispatchCD").equals(""))
+			infoGrantContract.setDateSendDispatchCD(
+				sdf.parse((String) editGrantContractForm.get("dateSendDispatchCD")));
+		if (editGrantContractForm.get("dateDispatchCD") != null
+			&& !editGrantContractForm.get("dateDispatchCD").equals(""))
+			infoGrantContract.setDateDispatchCD(
+				sdf.parse((String) editGrantContractForm.get("dateDispatchCD")));
+		if (editGrantContractForm.get("dateAcceptTerm") != null
+			&& !editGrantContractForm.get("dateAcceptTerm").equals(""))
+			infoGrantContract.setDateAcceptTerm(
+				sdf.parse((String) editGrantContractForm.get("dateAcceptTerm")));
 
 		if (editGrantContractForm.get("idGrantContract") != null)
 			infoGrantContract.setIdInternal((Integer) editGrantContractForm.get("idGrantContract"));

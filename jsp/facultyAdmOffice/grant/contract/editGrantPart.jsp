@@ -32,22 +32,15 @@
 		</tr>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.part.paymentEntity.type"/>:&nbsp;
+				<bean:message key="label.grant.contract.type"/>:&nbsp;
 			</td>
 			<td>
-				<bean:message key="label.grant.part.paymentEntity.costCenter"/>
-				:&nbsp;<html:radio property="paymentEntityType" value="1"/>&nbsp;&nbsp;
-				<bean:message key="label.grant.part.paymentEntity.project"/>
-				:&nbsp;<html:radio property="paymentEntityType" value="2"/>
-				<bean:message key="label.requiredfield"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.grant.part.grantPaymentEntity.number"/>:&nbsp;
-			</td>
-			<td>
-				<html:text property="grantPaymentEntityNumber"/><bean:message key="label.requiredfield"/>
+				<html:select property="project">
+					<html:options collection="projectsList" property="idInternal" labelProperty="designation"/>
+				</html:select>&nbsp;
+				<html:select property="costCenter">
+					<html:options collection="costCenterList" property="idInternal" labelProperty="designation"/>
+				</html:select>&nbsp;*
 			</td>
 		</tr>
 		<tr>

@@ -85,6 +85,13 @@
 				<form-property name="contractNumber" type="java.lang.String"/>
 				<form-property name="dateBeginContract" type="java.lang.String"/>
 				<form-property name="dateEndContract" type="java.lang.String"/>
+
+				<form-property name="dateSendDispatchCC" type="java.lang.String"/>
+				<form-property name="dateDispatchCC" type="java.lang.String"/>
+				<form-property name="dateSendDispatchCD" type="java.lang.String"/>
+				<form-property name="dateDispatchCD" type="java.lang.String"/>
+				<form-property name="dateAcceptTerm" type="java.lang.String"/>
+
 				<form-property name="endContractMotive" type="java.lang.String"/>
 				<form-property name="grantType" type="java.lang.String"/>
 				<form-property name="grantResponsibleTeacher" type="java.lang.String"/>
@@ -144,8 +151,8 @@
 				<form-property name="idInternal" type="java.lang.Integer"/>
 				<form-property name="percentage" type="java.lang.String"/>
 				<form-property name="grantSubsidyId" type="java.lang.Integer"/>
-				<form-property name="paymentEntityType" type="java.lang.Integer"/>
-				<form-property name="grantPaymentEntityNumber" type="java.lang.String"/>
+				<form-property name="project" type="java.lang.String"/>
+				<form-property name="costCenter" type="java.lang.String"/>
 				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
@@ -351,6 +358,16 @@
   			<forward name="manage-grant-part" path="/manageGrantPart.do?method=prepareManageGrantPart"/>
     </action>
 
+    <!-- ===================== USE CASE: SHOW TEACHERS LIST ============================== -->
+	<action path="/showTeachersList" 
+			input="/showTeachersList.do?page=0&amp;method=showForm" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.teacher.ShowAllTeachersAction">
+  			<forward name="show-teachers" path="/grant/contract/showTeachers.jsp"/>
+    </action>
 
 
     <!-- ================================================================================= -->
