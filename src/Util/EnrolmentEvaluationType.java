@@ -1,5 +1,9 @@
 package Util;
 
+import java.util.ArrayList;
+
+import org.apache.struts.util.LabelValueBean;
+
 /**
  * @author dcs-rjao
  *
@@ -7,14 +11,14 @@ package Util;
  */
 public class EnrolmentEvaluationType {
 
-	public static final int NORMAL = 1; 	// primeira avaliacao (engloba 1ª e 2ª época)
-	public static final int IMPROVEMENT = 2;  	// avaliacao por melhoria
+	public static final int NORMAL = 1; // primeira avaliacao (engloba 1ª e 2ª época)
+	public static final int IMPROVEMENT = 2; // avaliacao por melhoria
 	public static final int SPECIAL_SEASON = 3; // avaliacao na epoca especial
-	public static final int EXTERNAL = 4;  		// avaliacao feita fora do IST
-	public static final int EQUIVALENCE = 5;  	// avaliacao feita por equivalencia
-	public static final int CLOSED = 6; 		// inscricao com avaliacao fechada
-	public static final int FIRST_SEASON = 7; 	// só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guarda histórico, não usar para mais nada!
-	public static final int SECOND_SEASON = 8; 	// só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guarda histórico, não usar para mais nada!
+	public static final int EXTERNAL = 4; // avaliacao feita fora do IST
+	public static final int EQUIVALENCE = 5; // avaliacao feita por equivalencia
+	public static final int CLOSED = 6; // inscricao com avaliacao fechada
+	public static final int FIRST_SEASON = 7; // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guarda histórico, não usar para mais nada!
+	public static final int SECOND_SEASON = 8; // só para a classe Enrolment Evaluation, usada apenas na migracao dos Enrolments para guarda histórico, não usar para mais nada!
 
 	public static final EnrolmentEvaluationType NORMAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 	public static final EnrolmentEvaluationType IMPROVEMENT_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
@@ -24,6 +28,11 @@ public class EnrolmentEvaluationType {
 	public static final EnrolmentEvaluationType CLOSED_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED);
 	public static final EnrolmentEvaluationType FIRST_SEASON_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.FIRST_SEASON);
 	public static final EnrolmentEvaluationType SECOND_SEASON_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.SECOND_SEASON);
+
+	public static final String NORMAL_STRING = "Epoca Normal";
+	public static final String IMPROVEMENT_STRING = "Melhoria de Nota";
+	public static final String SPECIAL_STRING = "Epoca Especial";
+	public static final String EQUIVALENCE_STRING = "Por Equivalência";
 
 	private Integer type;
 
@@ -72,10 +81,28 @@ public class EnrolmentEvaluationType {
 			case IMPROVEMENT :
 				valueS = "IMPROVEMENT";
 				break;
-			default:
+			default :
 				break;
 		}
 
 		return "[" + this.getClass().getName() + ": " + valueS + "]\n";
 	}
+
+	public EnrolmentEvaluationType(String type) {
+			if (type.equals(EnrolmentEvaluationType.NORMAL_STRING)) this.type = new Integer(EnrolmentEvaluationType.NORMAL);
+			if (type.equals(EnrolmentEvaluationType.IMPROVEMENT_STRING)) this.type = new Integer(EnrolmentEvaluationType.IMPROVEMENT);
+		if (type.equals(EnrolmentEvaluationType.SPECIAL_STRING)) this.type = new Integer(EnrolmentEvaluationType.SPECIAL_SEASON);
+		if (type.equals(EnrolmentEvaluationType.EQUIVALENCE_STRING)) this.type = new Integer(EnrolmentEvaluationType.EQUIVALENCE);
+		}
+
+	public ArrayList toArrayList() {
+		ArrayList result = new ArrayList();
+		//		   result.add(new LabelValueBean(EnrolmentEvaluationType.DEFAULT, null));
+		result.add(new LabelValueBean(EnrolmentEvaluationType.IMPROVEMENT_STRING, String.valueOf(EnrolmentEvaluationType.IMPROVEMENT)));
+		result.add(new LabelValueBean(EnrolmentEvaluationType.NORMAL_STRING, String.valueOf(EnrolmentEvaluationType.NORMAL)));
+		result.add(new LabelValueBean(EnrolmentEvaluationType.SPECIAL_STRING, String.valueOf(EnrolmentEvaluationType.SPECIAL_SEASON)));
+		result.add(new LabelValueBean(EnrolmentEvaluationType.EQUIVALENCE_STRING, String.valueOf(EnrolmentEvaluationType.EQUIVALENCE)));
+		return result;
+	}
+
 }
