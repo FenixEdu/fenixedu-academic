@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -169,18 +167,7 @@ public class ManipularSalasAction extends FenixAction {
 		catch (notAuthorizedServiceDeleteException e) {
 			Object[] values = {"a sala","as aulas"};
 			throw new notAuthorizedActionDeleteException("errors.invalid.delete.with.objects",values);}
-		catch (Exception e) {
-			//FIXME: a 1º vez que se tenta apagar uma sala ele entra aqui pq apanha uma java.util.ConcurrentModificationException 
-			
-			Object[] values = {"a sala","as aulas"};
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(
-				"invalid.delete",
-				new ActionError("errors.invalid.delete.with.objects",values));
-			saveErrors(request, actionErrors);
-			return mapping.getInputForward();
 
-		}
 
 		/* Actualiza a lista de salas no "scope" de sessao */
 		listaSalasBean.remove(selectedSala);

@@ -57,7 +57,7 @@ public class ApagarSala implements IServico {
 				result = true;
 			}
 		} catch (notAuthorizedPersistentDeleteException ex) {
-			throw new notAuthorizedServiceDeleteException(ex);
+			throw new notAuthorizedServiceDeleteException();
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}

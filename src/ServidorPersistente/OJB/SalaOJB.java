@@ -77,15 +77,16 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 			query.create(oqlQuery);
 			query.bind(sala.getNome());
 			List result = (List) query.execute();
-			lockRead(result);
 			if (result.size() != 0) {
 			throw new notAuthorizedPersistentDeleteException("Cannot delete rooms with classes");
+			} else {
+				super.delete(sala);
 			}
 			
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
-        super.delete(sala);
+       
     }
     
     public void deleteAll() throws ExcepcaoPersistencia {

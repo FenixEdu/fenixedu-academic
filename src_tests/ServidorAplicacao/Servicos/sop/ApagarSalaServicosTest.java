@@ -14,6 +14,7 @@ package ServidorAplicacao.Servicos.sop;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.RoomKey;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 
 public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
@@ -68,8 +69,15 @@ public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteSala);
-			assertEquals("testDeleteExistingSala", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
+			result =
+				_gestor.executar(
+					_userView,
+					getNameOfServiceToBeTested(),
+					argsDeleteSala);
+
+			fail("testDeleteExistingSala");
+		} catch (notAuthorizedServiceDeleteException ex) {
+			assertTrue(true);
 		} catch (Exception ex) {
 			fail("testDeleteExistingSala");
 		}
