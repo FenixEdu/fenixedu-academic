@@ -28,3 +28,5 @@
 </logic:equal>
 
 <bean:write name="number" />
+<bean:write name="curricularCourseToAddPrecedenceID" />
+<bean:write name="precedentCurricularCourseID" />

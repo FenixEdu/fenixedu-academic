@@ -18,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import Dominio.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import Dominio.precedences.RestrictionDoneCurricularCourse;
+import Dominio.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse;
 import Dominio.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import Dominio.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse;
 import Dominio.precedences.RestrictionNotDoneCurricularCourse;
@@ -101,8 +102,8 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
                                 .substring(
                                         RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class
                                                 .getName().lastIndexOf(".") + 1)))
-                || (className.equals(RestrictionNotDoneCurricularCourse.class.getName().substring(
-                        RestrictionNotDoneCurricularCourse.class.getName().lastIndexOf(".") + 1)))) {
+                || (className.equals(RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName().substring(
+                        RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName().lastIndexOf(".") + 1)))) {
             return mapping.findForward("insertRestrictionByCurricularCourse");
         }
 
@@ -111,6 +112,10 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
     public ActionForward insertRestriction(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
+        IUserView userView = SessionUtils.getUserView(request);
+        
+        ActionErrors errors = new ActionErrors();           
+        
         Integer degreeID = new Integer(request.getParameter("degreeId"));
         Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
         
@@ -120,10 +125,22 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
         DynaActionForm insertRestrictionForm = (DynaActionForm) actionForm;
         
         String classeNameRestriction = (String) insertRestrictionForm.get("className");
-        Integer numberOfDoneCurricularCourses = (Integer) insertRestrictionForm.get("numberOfCurricularCourses");
+        Integer number = (Integer) insertRestrictionForm.get("number");
+        Integer curricularCourseToAddPrecedenceID = (Integer) insertRestrictionForm.get("curricularCourseToAddPrecedenceID");
+        Integer precedentCurricularCourseID = (Integer) insertRestrictionForm.get("precedentCurricularCourseID");
         
         request.setAttribute("className", classeNameRestriction);
-        request.setAttribute("number", numberOfDoneCurricularCourses);        
+        request.setAttribute("number", number);       
+        request.setAttribute("curricularCourseToAddPrecedenceID", curricularCourseToAddPrecedenceID);
+        request.setAttribute("precedentCurricularCourseID", precedentCurricularCourseID);        
+                
+		Object[] args = { classeNameRestriction, curricularCourseToAddPrecedenceID,  precedentCurricularCourseID, number};	
+		try {
+		    ServiceManagerServiceFactory.executeService(userView, "InsertSimplePrecedence", args);
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			errors.add("impossibleInsertPrecedence", new ActionError("error.manager.impossible.insertPrecedence"));
+		}        
         
         return mapping.findForward("insertRestrictionConfirmation");
     }

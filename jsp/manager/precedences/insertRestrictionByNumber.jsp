@@ -22,8 +22,8 @@
 	<p />
 	<table>
 		<tr>
-			<th colspan="2"><bean:message key="label.manager.curricularCourseToAddPrecedence" /></th>
-			<th colspan="2"><bean:message key="label.manager.precedentCurricularCourse" /></th>
+			<th colspan="2" align="center"><bean:message key="label.manager.curricularCourseToAddPrecedence" /></th>
+			<th colspan="2" align="center"><bean:message key="label.manager.precedentCurricularCourse" /></th>
 		</tr>
 		<tr>
 			<td colspan="4">&nbsp;</td>
