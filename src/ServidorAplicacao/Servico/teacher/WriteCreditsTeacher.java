@@ -14,7 +14,6 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Tânia Pousão
@@ -37,37 +36,49 @@ public class WriteCreditsTeacher implements IServico {
 		return "WriteCreditsTeacher";
 	}
 
-	public Boolean run(InfoTeacher infoTeacher, Integer tfcStudentNumber) throws FenixServiceException {
+	public Boolean run(InfoTeacher infoTeacher, Integer tfcStudentNumber)
+		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			ITeacher teacherParam = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-			ITeacher teacher = (ITeacher) teacherDAO.readByOId(teacherParam, false);
+			ITeacher teacher =
+				(ITeacher) teacherDAO.readByOId(teacherParam, false);
 
-			IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+			IPersistentExecutionPeriod executionPeriodDAO =
+				sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod executionPeriod =
+				executionPeriodDAO.readActualExecutionPeriod();
 
 			ICredits creditsTeacher = new Credits();
 			creditsTeacher.setTeacher(teacher);
 			creditsTeacher.setExecutionPeriod(executionPeriod);
 
 			// mark teacher's credits for write
-			IPersistentCreditsTeacher creditsTeacherDAO = sp.getIPersistentCreditsTeacher();
+			IPersistentCreditsTeacher creditsTeacherDAO =
+				sp.getIPersistentCreditsTeacher();
 
-			try {
-				if (tfcStudentNumber.intValue() == 0) {
-					//delete credits because is zero
-					creditsTeacher = creditsTeacherDAO.readByUnique(creditsTeacher);
-					if (creditsTeacher != null) {
-						creditsTeacherDAO.delete(creditsTeacher);
-					}
-				} else {
-					creditsTeacherDAO.lockWrite(creditsTeacher);
+			if (tfcStudentNumber.intValue() == 0) {
+				//delete credits because is zero
+				creditsTeacher =
+					(ICredits) creditsTeacherDAO.readByUnique(
+						creditsTeacher,
+						false);
+				if (creditsTeacher != null) {
+					creditsTeacherDAO.delete(creditsTeacher);
 				}
-			} catch (ExistingPersistentException e) {
-				creditsTeacher = creditsTeacherDAO.readByUnique(creditsTeacher);
+			} else {
+				ICredits creditsTeacherReaded =
+					(ICredits) creditsTeacherDAO.readByUnique(
+						creditsTeacher,
+						true);
+				if (creditsTeacherReaded == null) {
+					creditsTeacherDAO.simpleLockWrite(creditsTeacher);
+				} else
+					creditsTeacher = creditsTeacherReaded;
+
 			}
 			creditsTeacher.setTfcStudentsNumber(tfcStudentNumber);
 		} catch (ExcepcaoPersistencia e) {
