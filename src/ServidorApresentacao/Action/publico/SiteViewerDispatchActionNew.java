@@ -41,7 +41,7 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-public class SiteViewerDispatchAction extends FenixContextDispatchAction
+public class SiteViewerDispatchActionNew extends FenixContextDispatchAction
 {
 
     public ActionForward firstPage(
@@ -59,39 +59,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
             objectCodeString = (String) request.getAttribute("objectCode");
         }
 		Integer infoExecutionCourseCode = new Integer(objectCodeString);
-	 /*   InfoExecutionPeriod infoExecutionPeriod =
-		   (InfoExecutionPeriod) request.getAttribute(
-			   SessionConstants.EXECUTION_PERIOD);
-	    InfoExecutionDegree infoExecutionDegree =
-				   (InfoExecutionDegree) request.getAttribute(
-					   SessionConstants.EXECUTION_DEGREE);
-	    if (infoExecutionDegree == null) {
-			HttpSession session = request.getSession();
-			infoExecutionDegree = (InfoExecutionDegree)session.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	    }
-	    
-	    String shift = request.getParameter("shift");
-	    if (shift == null)
-			shift = (String) request.getAttribute("shift");
-	    if (shift == null)
-			shift= new String("false");
-			
-	    	request.setAttribute("shift",shift);
-	
-	    Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-		Integer degreeId = getFromRequest("degreeID", request);
-        if (degreeId == null )
-        	degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
-		request.setAttribute("degreeID", degreeId);
-		
-		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-		if (executionDegreeId == null)
-			executionDegreeId = infoExecutionDegree.getIdInternal();
-		request.setAttribute("executionDegreeID", executionDegreeId);
-		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-		if (degreeCurricularPlanId == null)
-			degreeCurricularPlanId = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
-		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);*/
+
 		setFromRequest(request);
 
         readSiteView(request, firstPageComponent, infoExecutionCourseCode, null, null);
@@ -454,7 +422,33 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
         {
             roomName = (String) request.getAttribute("roomName");
         }
+        // input 
+        
+		InfoExecutionDegree infoExecutionDegree =
+		   (InfoExecutionDegree) request.getAttribute(
+		   SessionConstants.EXECUTION_DEGREE);
+		if (infoExecutionDegree == null) {
+				  HttpSession session = request.getSession();
+				  infoExecutionDegree = (InfoExecutionDegree)session.getAttribute(SessionConstants.EXECUTION_DEGREE);
+			  }
+	    
+			  Integer degreeId = getFromRequest("degreeID", request);
+			  if (degreeId == null )
+				  degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
+			  request.setAttribute("degreeID", degreeId);
+			  Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+			  if (executionDegreeId == null)
+				  executionDegreeId = infoExecutionDegree.getIdInternal();
+			  request.setAttribute("executionDegreeID", executionDegreeId);
+			  Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+			  if (degreeCurricularPlanId == null)
+				  degreeCurricularPlanId = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
+			  request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
+			  request.setAttribute("infoDegreeCurricularPlan",infoExecutionDegree.getInfoDegreeCurricularPlan());
+        
+        //
+        
         RoomKey roomKey = null;
 
         if (roomName != null)
@@ -477,7 +471,8 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
             {
                 SiteView siteView =
                     (SiteView) ServiceUtils.executeService(null, "RoomSiteComponentService", args);
-
+				
+                request.setAttribute("sigla", ((InfoSiteRoomTimeTable) siteView.getComponent()).getInfoRoom().getNome());
                 request.setAttribute("siteView", siteView);
                 request.setAttribute("objectCode", objectCode);
 
@@ -488,6 +483,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
             {
                 throw new FenixActionException(e);
             }
+            
             return mapping.findForward("roomViewer");
         } 
             throw new FenixActionException();
@@ -601,7 +597,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 			
 				   request.setAttribute("shift",shift);
 	
-		/*	   Integer degreeId = getFromRequest("degreeID", request);
+			   Integer degreeId = getFromRequest("degreeID", request);
 			   if (degreeId == null )
 				   degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
 			   request.setAttribute("degreeID", degreeId);
@@ -613,7 +609,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction
 			   Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
 			   if (degreeCurricularPlanId == null)
 				   degreeCurricularPlanId = infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal();
-			   request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);*/
+			   request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 	}
 
 }

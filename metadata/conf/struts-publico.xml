@@ -201,11 +201,30 @@
         <forward name="classSearch" path="/viewClasses.do"/>
         <forward name="executionCourseSearch" path="/prepareSelectExecutionCourseAction.do"/>
       </action>
+      
+      <action input="/chooseContextDANew.do?method=preparePublic&amp;page=0&amp;inputPage=chooseContext"
+              name="chooseSearchContextForm"
+              parameter="method"
+              path="/chooseContextDANew"
+              scope="request"
+              validate="false"
+              type="ServidorApresentacao.Action.commons.ChooseContextDispatchActionNew"
+              >
+        <forward name="chooseContext" path="/chooseContext.jsp"/>
+        <forward name="classSearch" path="/viewClassesNew.do"/>
+        <forward name="executionCourseSearch" path="/prepareSelectExecutionCourseAction.do"/>
+      </action>
 
 
 	<!-- Turmas -->	
 	<action path="/viewClasses"
               type="ServidorApresentacao.Action.publico.ViewClassesAction"
+              >
+          <forward name="Sucess" path="/viewClasses.jsp"/>
+      </action>
+      
+      <action path="/viewClassesNew"
+              type="ServidorApresentacao.Action.publico.ViewClassesActionNew"
               >
           <forward name="Sucess" path="viewClasses"/>
       </action>
@@ -269,9 +288,15 @@
           <forward name="Sucess" path="/chooseSemester.jsp"/>
       </action>
 
-      <action input="viewClassTimeTable"
+      <action input="/viewClassTimeTable.jsp"
       		  path="/viewClassTimeTable"
               type="ServidorApresentacao.Action.publico.ViewClassTimeTableAction"
+              >
+          <forward name="Sucess" path="/viewClassTimeTable.jsp"/>
+      </action>
+      <action input="viewClassTimeTable"
+      		  path="/viewClassTimeTableNew"
+              type="ServidorApresentacao.Action.publico.ViewClassTimeTableActionNew"
               >
           <forward name="Sucess" path="viewClassTimeTable"/>
       </action>
@@ -295,6 +320,16 @@
 		validate="true"
         type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
      <forward name="sucess" path="executionCourseSite"/>   
+   	</action>
+   	
+   	<action 
+		path="/viewSiteNew"
+		name="chooseSummariesForm"
+		input="/executionCourseNotFoundNew.jsp"
+		parameter="method"
+		validate="true"
+        type="ServidorApresentacao.Action.publico.SiteViewerDispatchActionNew">    
+     <forward name="sucess" path="/executionCourseSiteNew.jsp"/>   
    	</action>
    	
 	<!-- Site viewer -->
@@ -369,9 +404,29 @@
         <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
         <forward name="showExamsMap" path="/viewExamsMap.do?method=view"/>
     </action>
+    <action input="/chooseExamsMapContextDANew.do?method=prepare&amp;page=0"
+            name="chooseExamsMapContextForm"
+            parameter="method"
+            path="/chooseExamsMapContextDANew"
+            scope="request"
+            validate="false"
+            type="ServidorApresentacao.Action.publico.ChooseExamsMapContextDANew"
+            >
+        <forward name="chooseExamsMapContext" path="/chooseExamsMapContext.jsp"/>
+        <forward name="showExamsMap" path="/viewExamsMapNew.do?method=view"/>
+    </action>
 
     <action path="/viewExamsMap"
             type="ServidorApresentacao.Action.publico.ViewExamsMapDA"
+            parameter="method"
+            name="examForm"
+            validate="false"
+            >
+        <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
+        <forward name="viewExecutionCourseByCode" path="/siteViewer.do?method=executionCourseViewer"/>
+    </action>
+    <action path="/viewExamsMapNew"
+            type="ServidorApresentacao.Action.publico.ViewExamsMapDANew"
             parameter="method"
             name="examForm"
             validate="false"
@@ -395,10 +450,18 @@
 				scope="request"
 				parameter="method"
 				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+			<forward name="roomViewer" path="/viewRoom.jsp"/>
+			<forward name="executionCourseViewer" path="viewExecutionCourse"/>
+		</action>
+	
+	    <action path="/siteViewerNew"
+				input="/siteViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.publico.SiteViewerDispatchActionNew">
 			<forward name="roomViewer" path="viewRoom"/>
 			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
 		</action>
-	
 	<action name="chooseExecutionCourseForm"
 			input="/prepareSelectExecutionCourse.jsp"
 			path="/viewExecutionCourse"
@@ -424,6 +487,13 @@
      
      <!-- For degrees´s Site-->
     <action path="/showDegrees" 
+     		type="ServidorApresentacao.Action.publico.ShowDegreesAction" 
+     		parameter="method"
+     		>
+	     <forward  name="showDegrees" path="showDegrees"/>  		  
+     </action>	 
+      <!-- For degrees´s Site-->
+    <action path="/showDegreesNew" 
      		type="ServidorApresentacao.Action.publico.ShowDegreesAction" 
      		parameter="method"
      		>

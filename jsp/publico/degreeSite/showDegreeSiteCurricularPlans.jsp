@@ -73,7 +73,7 @@
 		<td class="box_cell">
 			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 			<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
-			<p><html:link page="<%= "/chooseExamsMapContextDA.do?executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&amp;method=choose&amp;index=" + request.getAttribute("index") + "&amp;selectAllCurricularYears=on" %>"><bean:message key="link.exames" /></html:link>
+			<p><html:link page="<%= "/chooseExamsMapContextDANew.do?executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&amp;method=choose&amp;index=" + request.getAttribute("index") + "&amp;selectAllCurricularYears=on" %>"><bean:message key="link.exames" /></html:link>
 			Nesta área encontrará a informação relativa as datas de avaliação (1ª e 2ª época). 
 
 			
@@ -87,7 +87,7 @@
 	<tr>
 		<td class="box_cell">
 			<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
-			<p><html:link page="<%= "/chooseContextDA.do?method=nextPagePublic&nextPage=classSearch&inputPage=chooseContext&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" ><bean:message key="link.turmas" /></html:link>
+			<p><html:link page="<%= "/chooseContextDANew.do?method=nextPagePublic&nextPage=classSearch&inputPage=chooseContext&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" ><bean:message key="link.turmas" /></html:link>
 			Nesta área encontrará informação relativa as turmas. 
 
 			

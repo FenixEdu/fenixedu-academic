@@ -40,11 +40,11 @@
 		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlanEnglish.jsp"/>
 	</definition>
 	<definition name="showCurricularCourseSite" extends="definition.public.mainPageIST">
-		<put name="main_navigation" value="" />	
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showCurricularCourseSite.jsp"/>
 	</definition>	
 	<definition name="showCurricularCourseSiteEnglish" extends="definition.public.mainPageIST">
-		<put name="main_navigation" value="" />	
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showCurricularCourseSiteEnglish.jsp"/>
 	</definition>	
 	<definition name="showExecutionCourseSite" extends="definition.public.mainPageIST">
@@ -52,7 +52,7 @@
 		<put name="body" value="/publico/degreeSite/showExecutionCourseSite.jsp"/>
 	</definition>
 	<definition name="errorExecutionCourseSite" extends="definition.public.mainPageIST">
-		<put name="main_navigation" value="" />	
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/errorExecutionCourseSite.jsp"/>
 	</definition>	
 	<definition name="searchProfessorships" extends="definition.public.mainPageIST">
@@ -75,7 +75,7 @@
 	</definition>
 	<definition name="viewExamsMap" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-		<put name="body" value="/publico/viewExamsMap_bd.jsp"/>
+		<put name="body" value="/publico/viewExamsMap1_bd.jsp"/>
 	</definition>
 	<definition name="executionCourseSite" extends="definition.publico.executionCourseSitePage">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
@@ -83,15 +83,15 @@
 	</definition>
 	<definition name="viewClasses" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-		<put name="body" value="/publico/viewClasses_bd.jsp"/>
+		<put name="body" value="/publico/viewClasses1_bd.jsp"/>
 	</definition>
 	<definition name="viewClassTimeTable" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-		<put name="body" value="/publico/viewClassTimeTable_bd.jsp"/>
+		<put name="body" value="/publico/viewClassTimeTable1_bd.jsp"/>
 	</definition>
 	<definition name="viewRoom" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-		<put name="body" value="/publico/viewRoom_bd.jsp"/>
+		<put name="body" value="/publico/viewRoom1_bd.jsp"/>
 	</definition>
 	
 </tiles-definitions>
