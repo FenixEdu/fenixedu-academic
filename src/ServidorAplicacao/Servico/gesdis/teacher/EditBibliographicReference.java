@@ -10,8 +10,10 @@ import DataBeans.gesdis.InfoBibliographicReference;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
-import ServidorPersistente.*;
-import ServidorPersistente.OJB.*;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentBibliographicReference;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author PTRLV
@@ -30,9 +32,9 @@ public class EditBibliographicReference implements IServico {
 	public final String getNome() {
 		return "Techer.EditBibliographicReference";
 	}    
-
+//TODO: Pedro falta fazeres commit da excepcao
 	private IBibliographicReference validateData(IDisciplinaExecucao executionCourse,InfoBibliographicReference bibliographicReferenceOld, String title, String authors, String reference, String year)
-	throws ReferenciaBibliograficaJaExistenteException, ExcepcaoPersistencia, ReferenciaBibliograficaInexistenteException {        
+	throws /*ReferenciaBibliograficaJaExistenteException,*/ ExcepcaoPersistencia/*, ReferenciaBibliograficaInexistenteException */{        
 		IBibliographicReference bibliographicReferenceRead = null;        
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		IPersistentBibliographicReference persistentBibliographicReference = null;
@@ -46,8 +48,8 @@ public class EditBibliographicReference implements IServico {
 																			authors,
 																			reference,
 																			year);            
-			if (bibliographicReferenceRead != null)
-				throw new ReferenciaBibliograficaJaExistenteException();
+			if (bibliographicReferenceRead != null){}
+			//	throw new ReferenciaBibliograficaJaExistenteException();
 		}        
 		bibliographicReferenceRead = persistentBibliographicReference.readBibliographicReference(executionCourse,
 																		bibliographicReferenceOld.getTitle(),
@@ -55,8 +57,8 @@ public class EditBibliographicReference implements IServico {
 																		bibliographicReferenceOld.getReference(),
 																		bibliographicReferenceOld.getYear()
 																		);
-		if (bibliographicReferenceRead == null)
-			throw new ReferenciaBibliograficaInexistenteException();        
+		if (bibliographicReferenceRead == null){}
+			//throw new ReferenciaBibliograficaInexistenteException();        
 		return bibliographicReferenceRead;        
 	}
     
