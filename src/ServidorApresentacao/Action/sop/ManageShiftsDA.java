@@ -111,10 +111,11 @@ public class ManageShiftsDA
 				(String) createShiftForm.get("courseInitials"));
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 		infoShift.setInfoLessons(null);
-		infoShift.setLotacao(new Integer(0));
+		infoShift.setLotacao((Integer) createShiftForm.get("lotacao"));
 		infoShift.setNome((String) createShiftForm.get("nome"));
 		infoShift.setTipo(
 			new TipoAula((Integer) createShiftForm.get("tipoAula")));
+			
 
 		Object argsCriarTurno[] = { infoShift };
 		try {

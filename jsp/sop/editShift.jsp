@@ -145,6 +145,15 @@
 				</html:select>
 			</td>
 		</tr>
+        <tr>
+            <td class="formTD">
+                <bean:message key="property.turno.capacity"/>
+                :
+            </td>
+            <td class="formTD">
+                <html:text property="lotacao" size="11" maxlength="20"/>
+            </td>
+        </tr>			
 	</table>
 
 	<br />

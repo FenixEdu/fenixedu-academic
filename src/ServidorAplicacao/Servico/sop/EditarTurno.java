@@ -61,12 +61,16 @@ public class EditarTurno implements IServico {
 			newShiftIsValid(
 				infoShiftOld,
 				infoShiftNew.getTipo(),
-				infoShiftNew.getInfoDisciplinaExecucao());
+				infoShiftNew.getInfoDisciplinaExecucao(),
+				infoShiftNew.getLotacao());
 		} catch (InvalidNewShiftExecutionCourse ex) {
 			throw new InvalidNewShiftExecutionCourse();
 		} catch (InvalidNewShiftType ex) {
 			throw new InvalidNewShiftType();
+		} catch (InvalidNewShiftCapacity ex) {
+			throw new InvalidNewShiftCapacity();
 		}
+
 
 		try {
 			ISuportePersistente sp;
@@ -81,6 +85,7 @@ public class EditarTurno implements IServico {
 
 			shift.setNome(infoShiftNew.getNome());
 			shift.setTipo(infoShiftNew.getTipo());
+			shift.setLotacao(infoShiftNew.getLotacao());
 			IDisciplinaExecucao executionCourse =
 				(IDisciplinaExecucao) sp
 					.getIDisciplinaExecucaoPersistente()
@@ -100,7 +105,8 @@ public class EditarTurno implements IServico {
 	private void newShiftIsValid(
 		InfoShift infoShiftOld,
 		TipoAula newShiftType,
-		InfoExecutionCourse newShiftExecutionCourse)
+		InfoExecutionCourse newShiftExecutionCourse,
+		Integer newShiftCapacity)
 		throws FenixServiceException {
 			
 		// 1. Read shift lessons
@@ -118,12 +124,16 @@ public class EditarTurno implements IServico {
 			throw new FenixServiceException(ex);
 		}
 
-		// 2. Count shift total duration
+		// 2. Count shift total duration and get maximum lesson room capacity
+		Integer maxCapacity = new Integer(0);
 		double shiftDuration = 0;
 		for (int i = 0; i < shiftLessons.size(); i++) {
 			IAula lesson = ((IAula) shiftLessons.get(i));
 			shiftDuration
 				+= (getLessonDurationInMinutes(lesson).doubleValue() / 60);
+			if (lesson.getSala().getCapacidadeNormal().intValue() > maxCapacity.intValue()) {
+				maxCapacity = lesson.getSala().getCapacidadeNormal();
+			}
 		}
 
 		// 3a. If NEW shift type is diferent from CURRENT shift type
@@ -144,6 +154,12 @@ public class EditarTurno implements IServico {
 				throw new InvalidNewShiftExecutionCourse();
 			}
 		}
+		
+		// 4. Check if NEW shift capacity is bigger then maximum lesson room capacity
+		if (newShiftCapacity.intValue() > maxCapacity.intValue()) {
+			throw new InvalidNewShiftCapacity();
+		}
+		
 	}
 
 	private boolean newShiftTypeIsValid(
@@ -314,6 +330,52 @@ public class EditarTurno implements IServico {
 		 * @param cause
 		 */
 		private InvalidNewShiftExecutionCourse(
+			String message,
+			Throwable cause) {
+			super(message, cause);
+		}
+
+	}
+
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class InvalidNewShiftCapacity extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private InvalidNewShiftCapacity() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private InvalidNewShiftCapacity(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private InvalidNewShiftCapacity(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private InvalidNewShiftCapacity(Throwable cause) {
+			super(cause);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private InvalidNewShiftCapacity(
 			String message,
 			Throwable cause) {
 			super(message, cause);

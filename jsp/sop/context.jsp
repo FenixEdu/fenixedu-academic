@@ -6,7 +6,7 @@
 
 	
 <logic:present name="executionDegree">
-	<html:form action="/chooseContext" focus="executionDegreeOID">
+	<html:form action="/chooseContext">
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="method" value="choose"/>
 		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
@@ -36,7 +36,7 @@
 			       	</html:select> Ano
 				</td>
 	</html:form>
-	<html:form action="/chooseExecutionPeriod" focus="index">
+	<html:form action="/chooseExecutionPeriod">
 				<td>
 		<html:hidden property="method" value="choose"/>
 		<html:hidden property="page" value="1"/>

@@ -59,6 +59,7 @@
         <form-property name="nome" type="java.lang.String"/>
         <form-property name="courseInitials" type="java.lang.String"/>
         <form-property name="tipoAula" type="java.lang.Integer"/>
+        <form-property name="lotacao" type="java.lang.Integer"/>
       </form-bean>
 
       <!-- Dynamic-FormBean for lesson manipulation -->

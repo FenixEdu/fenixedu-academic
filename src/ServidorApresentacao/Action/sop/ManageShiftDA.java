@@ -21,14 +21,11 @@ import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftCapacity;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftType;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -60,6 +57,7 @@ public class ManageShiftDA
 			infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
 		editShiftForm.set("nome", infoShiftToEdit.getNome());
 		editShiftForm.set("tipoAula", infoShiftToEdit.getTipo().getTipo());
+		editShiftForm.set("lotacao", infoShiftToEdit.getLotacao());
 
 		/* Place list of execution courses in request */
 		SessionUtils.getExecutionCourses(request);
@@ -93,7 +91,7 @@ public class ManageShiftDA
 				(String) editShiftForm.get("courseInitials"));
 		infoShiftNew.setInfoDisciplinaExecucao(infoExecutionCourseNew);
 		infoShiftNew.setInfoLessons(infoShiftOld.getInfoLessons());
-		infoShiftNew.setLotacao(infoShiftOld.getLotacao());
+		infoShiftNew.setLotacao((Integer) editShiftForm.get("lotacao"));
 		infoShiftNew.setNome((String) editShiftForm.get("nome"));
 		infoShiftNew.setTipo(
 			new TipoAula((Integer) editShiftForm.get("tipoAula")));
@@ -119,6 +117,13 @@ public class ManageShiftDA
 			actionErrors.add(
 				"errors.exception.invalid.newExecutionCourse",
 				new ActionError("errors.exception.invalid.newExecutionCourse"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
+		} catch (InvalidNewShiftCapacity e3) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.exception.invalid.newCapacity",
+				new ActionError("errors.exception.invalid.newCapacity"));
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 		}
