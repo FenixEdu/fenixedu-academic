@@ -24,6 +24,7 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 
 public class ReadMasterDegreesServiceTest extends TestCaseServicos {
@@ -55,7 +56,7 @@ public class ReadMasterDegreesServiceTest extends TestCaseServicos {
         List masterDegrees = null;
 
         try {
-            masterDegrees = (List) _gestor.executar(_userView, "ReadMasterDegrees", null);
+            masterDegrees = (List) _gestor.executar(this.getUserViewToBeTested(), "ReadMasterDegrees", null);
         } catch (Exception ex) {
             System.out.println("Service Not Executed: " + ex);
         }   
@@ -65,6 +66,11 @@ public class ReadMasterDegreesServiceTest extends TestCaseServicos {
         assertTrue(!masterDegrees.isEmpty());
         assertEquals(masterDegrees.size(), 1);
 
+   }
+   
+   private UserView getUserViewToBeTested() {
+	   UserView userView = new UserView("nmsn", null);
+	   return userView;
    }
     
 }

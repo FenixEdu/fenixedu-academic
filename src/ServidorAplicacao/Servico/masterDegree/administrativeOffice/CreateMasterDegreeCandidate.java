@@ -80,8 +80,6 @@ public class CreateMasterDegreeCandidate implements IServico {
 			if (person == null) {
 				// Create the new Person
 				
-				System.out.println("############ nOVA pESSOA");
-				
 				person = new Pessoa();
 				person.setNome(newMasterDegreeCandidate.getInfoPerson().getNome());
 				person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
@@ -128,9 +126,6 @@ public class CreateMasterDegreeCandidate implements IServico {
 								masterDegreeCandidate.getSpecialization());
 
 			masterDegreeCandidate.setCandidateNumber(number);
-			
-			System.out.println("numero do candidato" + number);
-			
 			
 			// Write the new Candidate
 			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);		
