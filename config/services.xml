@@ -5762,5 +5762,14 @@
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
         </filterChains>
-    </service>    
+    </service>
+    <service>
+    	<name>UnEnrollStudentFromShift</name>
+    	<description>Deletes a students enrolment in a shift</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.UnEnrollStudentFromShift</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>
