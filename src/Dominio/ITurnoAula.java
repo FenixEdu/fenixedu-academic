@@ -6,11 +6,13 @@
 
 package Dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author  tfc130
  */
-public interface ITurnoAula {
+public interface ITurnoAula extends Serializable,IDomainObject {
   public ITurno getTurno();
   public IAula getAula();  
 

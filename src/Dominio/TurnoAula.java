@@ -11,12 +11,12 @@ package Dominio;
  * @author  tfc130
  */
 
-public class TurnoAula implements ITurnoAula {
+public class TurnoAula extends DomainObject implements ITurnoAula {
   protected ITurno _turno;
   protected IAula _aula;    
     
   // c�digos internos da base de dados
-  private Integer _codigoInterno;
+  //private Integer _codigoInterno;
   private Integer chaveTurno;
   private Integer chaveAula;
   
@@ -28,13 +28,13 @@ public class TurnoAula implements ITurnoAula {
     setAula(aula);
   }
 
-  public Integer getCodigoInterno() {
-    return _codigoInterno;
-  }
-    
-  public void setCodigoInterno(Integer codigoInterno) {
-    _codigoInterno = codigoInterno;
-  }
+//  public Integer getCodigoInterno() {
+//    return _codigoInterno;
+//  }
+
+//  public void setCodigoInterno(Integer codigoInterno) {
+//    _codigoInterno = codigoInterno;
+//  }
   
   public Integer getChaveTurno() {
     return chaveTurno;

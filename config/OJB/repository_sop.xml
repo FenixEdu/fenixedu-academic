@@ -315,7 +315,7 @@
    	  table="SHIFT_LESSON"
    >
       <field-descriptor id="1"
-         name="codigoInterno"
+         name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
