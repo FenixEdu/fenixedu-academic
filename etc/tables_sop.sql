@@ -106,8 +106,8 @@ create table SHIFT_LESSON (
    KEY_LESSON int(11) unsigned not null,
    primary key (ID_INTERNAL),
    unique U1 (KEY_SHIFT, KEY_LESSON),
-   index SHIFT_LESSON_KEY_LESSON (KEY_LESSON);
-   index SHIFT_LESSON_KEY_SHIFT (KEY_SHIFT);
+   index SHIFT_LESSON_KEY_LESSON (KEY_LESSON),
+   index SHIFT_LESSON_KEY_SHIFT (KEY_SHIFT)
 ) type=InnoDB;
 
 #----------------------------
