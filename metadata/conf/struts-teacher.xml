@@ -379,13 +379,7 @@
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>
 	
-	<!-- Exams viewer -->
-	<action		
-		path="/viewExams"
-        type="ServidorApresentacao.Action.teacher.ViewExamsAction"
-        scope="request">    
-     <forward name="Sucess" path="/viewExams.jsp"/>         
-	</action>
+	
 
 	<!-- Delete Section -->
 	<action path="/deleteSection"
@@ -441,7 +435,7 @@
 	<action 
 		path="/viewExams"
 		scope="request"
-		type="ServidorApresentacao.Action.teacher.ShowExamsAction">		
+		type="ServidorApresentacao.Action.teacher.ViewExamsAction">		
        <forward name="viewExams" path="/viewExams.jsp"/>
 	</action>
 	

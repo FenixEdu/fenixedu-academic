@@ -11,10 +11,10 @@ import java.util.Calendar;
  *
  */
 public class ExamEnrollment extends DomainObject implements IExamEnrollment {
-	IExam exam;
-	Integer keyExam;
-	Calendar beginDate;
-	Calendar endDate;
+	private IExam exam;
+	private Integer keyExam;
+	private Calendar beginDate;
+	private Calendar endDate;
 	
 	public boolean equals(Object obj) {
 			if (obj instanceof ExamEnrollment) {

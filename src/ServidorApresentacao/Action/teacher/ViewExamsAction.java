@@ -28,7 +28,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Tânia Nunes
  *
  */
-public class ShowExamsAction extends FenixAction {
+public class ViewExamsAction extends FenixAction {
 
 	public ActionForward execute(
 					ActionMapping mapping,
