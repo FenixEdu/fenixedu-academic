@@ -46,3 +46,10 @@ build.properties.backup1
 FicheiroErros.txt
 pessoasInvalidas.txt
 .checkstyle
+centro-custo-afecto.dat
+docente.dat
+funcionario.dat
+funcionario-correio.dat
+naodocente.dat
+output.doc
+pessoa.dat
