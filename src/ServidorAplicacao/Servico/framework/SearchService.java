@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.framework;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,7 +44,16 @@ public abstract class SearchService implements IServico
             throw new FenixServiceException("Cannot get persistent support!", e);
         }
 
-        List domainList = doSearch(searchParameters, sp);
+        List domainList;
+        try
+        {
+            domainList = doSearch(searchParameters, sp);
+        } catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace(System.out);
+            throw new FenixServiceException("Problems with database!", e);
+        }
+        
         List infoList = (List) CollectionUtils.collect(domainList, new Transformer()
         {
             public Object transform(Object input)
@@ -61,7 +71,7 @@ public abstract class SearchService implements IServico
 	 * @param object
 	 * @return
 	 */
-    abstract InfoObject cloneDomainObject(IDomainObject object);
+    abstract protected InfoObject cloneDomainObject(IDomainObject object);
 
     /**
 	 * Do the search using search using the search parameters.
@@ -69,5 +79,5 @@ public abstract class SearchService implements IServico
 	 * @return 
 	 * 	A list of IDomainObject.
 	 */
-    abstract List doSearch(HashMap searchParameters, ISuportePersistente sp);
+    abstract protected List doSearch(HashMap searchParameters, ISuportePersistente sp)  throws ExcepcaoPersistencia;
 }
