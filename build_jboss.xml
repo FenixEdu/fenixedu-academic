@@ -304,7 +304,7 @@
 			</fileset>
 		</copy>
 		<copy todir="${build.web-client.webinf.libs}">
-			<fileset dir="${libs}" >
+			<fileset dir="${lib}" >
 				<include name="*.*"/>
 				<exclude name="servlet.jar"/>
 			</fileset>
