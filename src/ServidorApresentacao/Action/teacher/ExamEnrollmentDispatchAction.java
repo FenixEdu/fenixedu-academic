@@ -8,7 +8,6 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -38,7 +37,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
+	
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer examIdInternal = new Integer(request.getParameter("examCode"));
@@ -75,7 +74,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 		DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
-		HttpSession session = request.getSession();
+	
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer examIdInternal = new Integer(request.getParameter("examCode"));
@@ -105,7 +104,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(
-			beginYear.intValue(),
+			beginYear.intValue()-1900,
 			beginMonth.intValue() - 1,
 			beginDay.intValue(),
 			beginHour.intValue(),
@@ -113,7 +112,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar endDate = Calendar.getInstance();
 		endDate.set(
-			endYear.intValue(),
+			endYear.intValue()-1900,
 			endMonth.intValue() - 1,
 			endDay.intValue(),
 			endHour.intValue(),
@@ -154,15 +153,14 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 		DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
-		HttpSession session = request.getSession();
+		
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer examIdInternal = new Integer(request.getParameter("examCode"));
 		Integer disciplinaExecucaoIdInternal =
 			new Integer(request.getParameter("objectCode"));
 
-		Integer examEnrollment =
-			new Integer(request.getParameter("examEnrollmentCode"));
+		
 
 		Integer beginDay =
 			new Integer((String) examEnrollmentForm.get("beginDay"));
@@ -187,7 +185,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar beginDate = Calendar.getInstance();
 		beginDate.set(
-			beginYear.intValue(),
+			beginYear.intValue()-1900,
 			beginMonth.intValue() - 1,
 			beginDay.intValue(),
 			beginHour.intValue(),
@@ -195,7 +193,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
 		Calendar endDate = Calendar.getInstance();
 		endDate.set(
-			endYear.intValue(),
+			endYear.intValue()-1900,
 			endMonth.intValue() - 1,
 			endDay.intValue(),
 			endHour.intValue(),
