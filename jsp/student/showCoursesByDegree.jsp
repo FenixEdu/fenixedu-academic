@@ -151,7 +151,8 @@ onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';select
 
 
 <br>
-<html:submit value="Continuar inscrição" onclick="selectAll();document.studentShiftEnrolmentForm.method.value='proceedToShiftEnrolment';document.studentShiftEnrolmentForm.submit();"/>
+<%-- Can't put form.submit into onclick in a submit button --%>
+<html:submit value="Continuar inscrição" onclick="document.studentShiftEnrolmentForm.method.value='proceedToShiftEnrolment';selectAll();return true;"/>
 
 </html:form>
 
