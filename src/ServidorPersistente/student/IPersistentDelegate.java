@@ -23,13 +23,13 @@ public interface IPersistentDelegate extends IPersistentObject
 {
     public List readByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
         throws ExcepcaoPersistencia;
-    public IDelegate readByDegreeAndExecutionYearAndYearType(
+    public List readByDegreeAndExecutionYearAndYearType(
         ICurso degree,
 		IExecutionYear executionYear,
         DelegateYearType type)
         throws ExcepcaoPersistencia;
     public IDelegate readByStudent(IStudent student) throws ExcepcaoPersistencia;
-    public IDelegate readDegreeDelegateByDegreeAndExecutionYear(
+    public List readDegreeDelegateByDegreeAndExecutionYear(
         ICurso degree,
         IExecutionYear executionYear)
         throws ExcepcaoPersistencia;

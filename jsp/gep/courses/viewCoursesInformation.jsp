@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<%@ page import="java.util.HashMap" %>
 <logic:present name="infoSiteCoursesInformation">
 	<logic:present name="infoExecutionDegree">
 		<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
@@ -114,7 +115,36 @@
 			</td>
 		</tr> 
 		
-		<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
+		<% HashMap statistics = new HashMap(); %>
+		<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation" type="DataBeans.gesdis.InfoSiteCourseInformation">
+			<% int numberOfFields = 0; %>
+			<logic:present name="infoSiteCourseInformation" property="infoLecturingTeachers">
+				<% if (infoSiteCourseInformation.getInfoLecturingTeachers().size() > 0)
+					 numberOfFields++; 
+				%>
+			</logic:present>
+			<logic:present name="infoSiteCourseInformation" property="infoCurriculums">
+				<% if (infoSiteCourseInformation.getInfoCurriculums().size() > 0)
+					 numberOfFields += 2; 
+				 %>
+			</logic:present>
+			<logic:present name="infoSiteCourseInformation" property="infoBibliographicReferences">
+				<% if (infoSiteCourseInformation.getInfoBibliographicReferences().size() > 0)
+					numberOfFields++; 
+				%>
+			</logic:present>
+			<logic:present name="infoSiteCourseInformation" property="infoEvaluationMethod">
+				<% numberOfFields++; %>
+			</logic:present>
+			<% if (!statistics.containsKey(new Integer(numberOfFields)))
+					statistics.put(new Integer(numberOfFields), new Integer(1));
+				else
+				{
+					int value = ((Integer) statistics.get(new Integer(numberOfFields))).intValue();
+					value++;
+					statistics.put(new Integer(numberOfFields), new Integer(value));
+				}
+			%>
 			<logic:iterate id="infoCurricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
 				<logic:present name="infoExecutionDegree">
 					<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
@@ -300,11 +330,82 @@
 			<% filled++; %>
 		</logic:present>
 	</logic:iterate>
-	<% int stats = (int) (((double) filled / length.doubleValue()) * 100); %>
 	<br />
-	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
-	<br/>
-	<%--<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%--%>
+	<bean:message key="label.gep.numberOfCoursesTotal" bundle="GEP_RESOURCES"/>: 5
+	<br />
+	<br />
+	<table width="50%" border="0" cellspacing="1" style="margin-top:10px">
+		<tr>
+			<td class="listClasses"><bean:message key="label.gep.numberOfFields" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
+		</tr>
+		<tr>
+			<td class="listClasses">5</td>
+			<td class="listClasses">
+			<%
+				Integer value5 = new Integer(0);
+				if (statistics.containsKey(new Integer(5)))
+					value5 = (Integer) statistics.get(new Integer(5));
+			%>
+			<%= value5 %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">4</td>
+			<td class="listClasses">			
+			<%
+				Integer value4 = new Integer(0);
+				if (statistics.containsKey(new Integer(4)))
+					value4 = (Integer) statistics.get(new Integer(4));
+			%>
+			<%= value4 %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">3</td>
+			<td class="listClasses">
+			<%
+				Integer value3 = new Integer(0);
+				if (statistics.containsKey(new Integer(3)))
+					value3 = (Integer) statistics.get(new Integer(3));
+			%>
+			<%= value3 %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">2</td>
+			<td class="listClasses">
+			<%
+				Integer value2 = new Integer(0);
+				if (statistics.containsKey(new Integer(2)))
+					value2 = (Integer) statistics.get(new Integer(2));
+			%>
+			<%= value2 %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">1</td>
+			<td class="listClasses">
+			<%
+				Integer value1 = new Integer(0);
+				if (statistics.containsKey(new Integer(1)))
+					value1 = (Integer) statistics.get(new Integer(1));
+			%>
+			<%= value1 %>
+			</td>
+		</tr>
+		<tr>
+			<td class="listClasses">0</td>
+			<td class="listClasses">
+			<%
+				Integer value0 = new Integer(0);
+				if (statistics.containsKey(new Integer(0)))
+					value0 = (Integer) statistics.get(new Integer(0));
+			%>
+			<%= value0 %>
+			</td>
+		</tr>
+	</table>
 	<br />
 	<br />
 	<logic:present name="infoExecutionDegree">

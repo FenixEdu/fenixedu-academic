@@ -70,13 +70,14 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
                     false);
 
             IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-            IDelegate degreeDelegate =
+            List degreeDelegates =
                 persistentDelegate.readDegreeDelegateByDegreeAndExecutionYear(
                     curricularCourse.getDegreeCurricularPlan().getDegree(),
                     executionYear);
 
+            IDelegate delegate = persistentDelegate.readByStudent(student);
             // if it's a degree delegate then it's allowed
-            if (degreeDelegate.getStudent().equals(student))
+            if (degreeDelegates.contains(delegate))
                 return true;
 
             List scopes = curricularCourse.getScopes();
@@ -93,13 +94,14 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             while (iter.hasNext())
             {
                 Integer year = (Integer) iter.next();
-                IDelegate delegate =
+                List delegates =
                     persistentDelegate.readByDegreeAndExecutionYearAndYearType(
                         curricularCourse.getDegreeCurricularPlan().getDegree(),
                         executionYear,
                         DelegateYearType.getEnum(year.intValue()));
 
-                return delegate.getStudent().equals(student);
+                if (delegates.contains(delegate))
+                    return true;
             }
             return false;
         } catch (ExcepcaoPersistencia e)

@@ -66,6 +66,7 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
             IStudent student = persistentStudent.readByUsername(id.getUtilizador());
+            IDelegate delegate = persistentDelegate.readByStudent(student);
             IStudentCourseReport studentCourseReport =
                 (IStudentCourseReport) persistentStudentCourseReport.readByOId(
                     new StudentCourseReport(objectId),
@@ -86,16 +87,13 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
             while (iter.hasNext())
             {
                 Integer year = (Integer) iter.next();
-                IDelegate delegate =
+                List delegates =
                     persistentDelegate.readByDegreeAndExecutionYearAndYearType(
                         curricularCourse.getDegreeCurricularPlan().getDegree(),
                         executionYear,
                         DelegateYearType.getEnum(year.intValue()));
 
-                if (delegate == null)
-                    continue;
-
-                if (delegate.getStudent().equals(student))
+                if (delegates.contains(delegate))
                     return true;
             }
             return false;

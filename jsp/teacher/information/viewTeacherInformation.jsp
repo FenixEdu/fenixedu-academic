@@ -102,7 +102,7 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" /></p>
-			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+			<table width="90%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
 					<tr>
 						<td class="listClasses" style="text-align:left">
@@ -115,7 +115,7 @@
 			<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
 			<bean:message key="message.teacherInformation.cientificPublications" /></p>
-			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+			<table width="90%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
 					<tr>
 						<td class="listClasses" style="text-align:left">
