@@ -12,7 +12,7 @@
 				</div>
 				
 				<!-- PÁGINA EM INGLÊS -->
-				<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="/img/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+				<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 			 	<div class="clear"></div> 
 			  
 			  <!-- NOME DO CURSO -->
