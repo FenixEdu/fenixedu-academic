@@ -80,6 +80,13 @@
 				<br/>
 				<br/>
 			</li>
+			<li>
+				<html:link page="/tutorManagement.do?method=prepareChooseTutor" paramId="executionDegreeId" paramName="infoExecutionDegree" paramProperty="idInternal">
+					<bean:message key="label.coordinator.studentInformation"/>
+				</html:link>
+				<br/>
+				<br/>
+			</li>
 		</ul>
 	</logic:notEqual> 
 	

@@ -60,7 +60,7 @@
 	</action>
 	
     <action path="/studentsGratuityList"
-		type="ServidorApresentacao.Action.directiveCouncil.StudentsGratuityListAction"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
 		parameter="method"
 		name="studentsGratuityListForm"
 		scope="request"
@@ -77,7 +77,7 @@
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="ServidorApresentacao.DirectiveCouncilResources" null="false"/>
+	<message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
 	
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

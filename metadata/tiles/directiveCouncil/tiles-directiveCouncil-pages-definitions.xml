@@ -6,9 +6,9 @@
 		<put name="body" value=""/>
 	</definition>
 	<definition name="chooseStudentsGratuityList" extends="definition.directiveCouncil.gratuity">
-		<put name="body" value="/directiveCouncil/chooseStudentsGratuityList.jsp"/>
+		<put name="body" value="/posGraduacao/gratuity/chooseStudentsGratuityList.jsp"/>
 	</definition>
 	<definition name="studentsGratuityList" extends="definition.directiveCouncil.gratuity">
-		<put name="body" value="/directiveCouncil/studentsGratuityList.jsp"/>
-	</definition>	
+		<put name="body" value="/posGraduacao/gratuity/studentsGratuityList.jsp"/>
+	</definition>
 </tiles-definitions>
