@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
@@ -38,9 +37,9 @@ import Util.PeriodState;
 
 /**
  * Created on 11/Fev/2003
- * @author João Mota
- * Package ServidorPersistente.OJB
  * 
+ * @author João Mota Package ServidorPersistente.OJB
+ *  
  */
 public class ExecutionPeriodOJB
 	extends ObjectFenixOJB
@@ -93,7 +92,8 @@ public class ExecutionPeriodOJB
 		// If execution period is not in database, then write it.
 		if (executionPeriodFromDB == null)
 			super.lockWrite(executionPeriodToWrite);
-		// else If the execution period is mapped to the database, then write any existing changes.
+		// else If the execution period is mapped to the database, then write
+		// any existing changes.
 		else if (
 			(executionPeriodToWrite instanceof ExecutionPeriod)
 				&& ((ExecutionPeriod) executionPeriodFromDB)
@@ -175,29 +175,28 @@ public class ExecutionPeriodOJB
 	}
 
 	/**
-	 * 
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#readActualExecutionPeriod()
 	 */
 	public IExecutionPeriod readActualExecutionPeriod()
 		throws ExcepcaoPersistencia {
-//		try {
-//			IExecutionPeriod executionPeriod = null;
-//			String oqlQuery =
-//				"select all from "
-//					+ ExecutionPeriod.class.getName()
-//					+ " where state = $1";
-//
-//			query.create(oqlQuery);
-//			query.bind(PeriodState.CURRENT);
-//
-//			List result = (List) query.execute();
-//			lockRead(result);
-//			if ((result != null) && (!result.isEmpty()))
-//				executionPeriod = (IExecutionPeriod) result.get(0);
-//			return executionPeriod;
-//		} catch (QueryException e) {
-//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
-//		}
+		//		try {
+		//			IExecutionPeriod executionPeriod = null;
+		//			String oqlQuery =
+		//				"select all from "
+		//					+ ExecutionPeriod.class.getName()
+		//					+ " where state = $1";
+		//
+		//			query.create(oqlQuery);
+		//			query.bind(PeriodState.CURRENT);
+		//
+		//			List result = (List) query.execute();
+		//			lockRead(result);
+		//			if ((result != null) && (!result.isEmpty()))
+		//				executionPeriod = (IExecutionPeriod) result.get(0);
+		//			return executionPeriod;
+		//		} catch (QueryException e) {
+		//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		//		}
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("state", PeriodState.CURRENT);
@@ -205,7 +204,8 @@ public class ExecutionPeriodOJB
 
 	}
 	/**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readByNameAndExecutionYear(java.lang.String, Dominio.IExecutionYear)
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#readByNameAndExecutionYear(java.lang.String,
+	 *      Dominio.IExecutionYear)
 	 */
 	public IExecutionPeriod readByNameAndExecutionYear(
 		String executionPeriodName,
@@ -234,8 +234,11 @@ public class ExecutionPeriodOJB
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readBySemesterAndExecutionYear(java.lang.String, Dominio.IExecutionYear)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#readBySemesterAndExecutionYear(java.lang.String,
+	 *      Dominio.IExecutionYear)
 	 */
 	public IExecutionPeriod readBySemesterAndExecutionYear(
 		Integer semester,
@@ -251,7 +254,9 @@ public class ExecutionPeriodOJB
 		return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#readPublic()
 	 */
 	public List readPublic() throws ExcepcaoPersistencia {
@@ -261,140 +266,283 @@ public class ExecutionPeriodOJB
 		return queryList(ExecutionPeriod.class, criteria);
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#transferData(Dominio.IExecutionPeriod, Dominio.IExecutionPeriod)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#transferData(Dominio.IExecutionPeriod,
+	 *      Dominio.IExecutionPeriod)
 	 */
 	public void transferData(
 		IExecutionPeriod executionPeriodToImportDataTo,
 		IExecutionPeriod executionPeriodToExportDataFrom)
 		throws ExcepcaoPersistencia {
 		// Clear all data from executionPeriodToImportDataTo.
-		// TODO : Presume that the execution period is empty
 		deleteAllDataRelatedToExecutionPeriod(executionPeriodToImportDataTo);
 
-		// Transfer data
+		//try {
+		transferExecutionDegrees(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating execution degrees.");
+
+		transferExecutionCourses(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		
+		System.out.println("Finished creating execution courses.");
+
+		transferClasses(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating classes.");
+
+		transferLessons(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating lessons.");
+
+		transferShifts(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating shifts.");
+
+		transferShiftLessonAssociations(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating shiftLessons.");
+
+		transferClassShiftAssociations(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating classLessons.");
+		//		} catch (Exception e) {
+		//			throw new ExcepcaoPersistencia(e.getMessage());
+		//		}
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferClassShiftAssociations(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"turno.disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfClassShiftAssociations = count(TurmaTurno.class, criteria);
+
+		for (int i = 0; i < numberOfClassShiftAssociations; i++) {
+			ITurmaTurno classShiftAssociationToTransfer =
+				(ITurmaTurno) readSpan(
+					TurmaTurno.class,
+					criteria,
+					new Integer(1),
+					new Integer(i)).get(
+					0);
+
+			createClassShift(
+				classShiftAssociationToTransfer,
+				executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferShiftLessonAssociations(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"turno.disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfShiftLessonAssociations = count(TurnoAula.class, criteria);
+
+		for (int i = 0; i < numberOfShiftLessonAssociations; i++) {
+			ITurnoAula shiftLessonAssociationToTransfer =
+				(ITurnoAula) readSpan(
+					TurnoAula.class,
+					criteria,
+					new Integer(1),
+					new Integer(i)).get(
+					0);
+
+			createShiftLesson(
+				shiftLessonAssociationToTransfer,
+				executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferShifts(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfShifts = count(Turno.class, criteria);
+
+		for (int i = 0; i < numberOfShifts; i++) {
+			ITurno shiftToTransfer =
+				(ITurno) readSpan(
+					Turno.class,
+					criteria,
+					new Integer(1),
+					new Integer(i)).get(
+					0);
+
+			createShift(shiftToTransfer, executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferLessons(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfLessons = count(Aula.class, criteria);
+
+		for (int i = 0; i < numberOfLessons; i++) {
+			IAula lessonToTransfer =
+				(IAula) readSpan(
+					Aula.class,
+					criteria,
+					new Integer(1),
+					new Integer(i)).get(
+					0);
+
+			createLesson(lessonToTransfer, executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferClasses(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfClassesToTransfer = count(Turma.class, criteria);
+
+		for (int i = 0; i < numberOfClassesToTransfer; i++) {
+			ITurma schoolClassToTransfer =
+				(ITurma) readSpan(
+					Turma.class,
+					criteria,
+					new Integer(1),
+					new Integer(i)).get(
+					0);
+
+			createClass(schoolClassToTransfer, executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferExecutionCourses(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfExecutionCoursesToTransfer =
+			count(DisciplinaExecucao.class, criteria);
+
+		for (int i = 0; i < numberOfExecutionCoursesToTransfer; i++) {
+			IDisciplinaExecucao executionCourseToTransfer =
+				(IDisciplinaExecucao) readSpan(
+					DisciplinaExecucao.class,
+					criteria,
+					new Integer(1),
+					new Integer(i)).get(
+					0);
+
+			createExecutionCourse(
+				executionCourseToTransfer,
+				executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferExecutionDegrees(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo(
 			"academicYear",
 			executionPeriodToExportDataFrom.getExecutionYear().getIdInternal());
 
-		// Execution Degrees
-		List executionDegreesToTransfer =
-			queryList(CursoExecucao.class, criteria);
-		List executionDegrees = new ArrayList();
-		for (int i = 0; i < executionDegreesToTransfer.size(); i++) {
-			executionDegrees.add(
-				createExecutionDegree(
-					executionDegreesToTransfer.get(i),
-					executionPeriodToImportDataTo));
+		int numberOfExecutionDegreesToTransfer =
+			count(CursoExecucao.class, criteria);
+
+		for (int i = 0; i < numberOfExecutionDegreesToTransfer; i++) {
+			ICursoExecucao executionDegreeToTransfer =
+				(ICursoExecucao) readSpan(
+					CursoExecucao.class,
+					criteria,
+					new Integer(1),
+					new Integer(i)).get(
+					0);
+
+			createExecutionDegree(
+				executionDegreeToTransfer,
+				executionPeriodToImportDataTo);
 		}
 
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		
-		criteria = new Criteria();
-		criteria.addEqualTo(
-			"executionPeriod.idInternal",
-			executionPeriodToExportDataFrom.getIdInternal());
-
-		// Execution Courses
-		List executionCoursesToTransfer =
-			queryList(DisciplinaExecucao.class, criteria);
-		List executionCourses = new ArrayList();
-		for (int i = 0; i < executionCoursesToTransfer.size(); i++) {
-			executionCourses.add(
-				createExecutionCourse(
-					executionCoursesToTransfer.get(i),
-					executionPeriodToImportDataTo));
-		}
-
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-
-		// Classes
-		List classesToTransfer = queryList(Turma.class, criteria);
-		List classes = new ArrayList();
-		for (int i = 0; i < classesToTransfer.size(); i++) {
-			classes.add(
-				createClass(
-					classesToTransfer.get(i),
-					executionPeriodToImportDataTo,
-					executionDegrees));
-		}
-
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-
-		criteria = new Criteria();
-		criteria.addEqualTo(
-			"disciplinaExecucao.executionPeriod.idInternal",
-			executionPeriodToExportDataFrom.getIdInternal());
-
-		// Lessons
-		List lessonsToTransfer = queryList(Aula.class, criteria);
-		List lessons = new ArrayList();
-		for (int i = 0; i < lessonsToTransfer.size(); i++) {
-			lessons.add(
-				createLesson(
-					lessonsToTransfer.get(i),
-					executionPeriodToImportDataTo,
-					executionCourses));
-		}
-
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-
-		// Shifts
-		List shiftsToTransfer = queryList(Turno.class, criteria);
-		List shifts = new ArrayList();
-		for (int i = 0; i < shiftsToTransfer.size(); i++) {
-			shifts.add(
-				createShift(
-					shiftsToTransfer.get(i),
-					executionPeriodToImportDataTo,
-					executionCourses));
-		}
-
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-
-		criteria = new Criteria();
-		criteria.addEqualTo(
-			"turno.disciplinaExecucao.executionPeriod.idInternal",
-			executionPeriodToExportDataFrom.getIdInternal());
-
-		// Shifts-Lessons
-		List shiftsLessonsToTransfer = queryList(TurnoAula.class, criteria);
-		for (int i = 0; i < shiftsLessonsToTransfer.size(); i++) {
-			createShiftLesson(
-				shiftsLessonsToTransfer.get(i),
-				executionPeriodToImportDataTo,
-				shifts,
-				lessons);
-		}
-
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-
-		// Classes-Shifts
-		List classesShiftsToTransfer = queryList(TurmaTurno.class, criteria);
-		for (int i = 0; i < classesShiftsToTransfer.size(); i++) {
-			createClassShift(
-				classesShiftsToTransfer.get(i),
-				executionPeriodToImportDataTo,
-				classes,
-				shifts);
-		}
-
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-
-//		criteria = new Criteria();
-//		criteria.addEqualTo(
-//			"associatedExecutionCourses.executionPeriod.idInternal",
-//			executionPeriodToExportDataFrom.getIdInternal());
-
-		// Whatever else needs to be transfered
 	}
 
 	private void deleteAllDataRelatedToExecutionPeriod(IExecutionPeriod executionPeriod)
@@ -538,29 +686,20 @@ public class ExecutionPeriodOJB
 				executionPeriodToImportDataTo.getExecutionYear());
 			executionDegreeToCreate.setIdInternal(null);
 			executionDegreeToCreate.setTemporaryExamMap(new Boolean(true));
-			executionDegreeToCreate.setKeyCampus(new Integer(1));
+			executionDegreeToCreate.setCampus(
+				executionDegreeToTransfer.getCampus());
 
-			try {
-				// It's Ok to just write it with no verification because:
-				//   - all data from this execution period has been cleared
-				//   - suposedly all data related to the other execution period
-				//     is correct.
-				lockWrite(executionDegreeToCreate);
-				return executionDegreeToCreate;
-			} catch (ExcepcaoPersistencia e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			store(executionDegreeToCreate);
+			return executionDegreeToCreate;
 		} else {
 			return (CursoExecucao) queryObject(CursoExecucao.class, criteria);
 		}
-
-		return null;
 	}
 
 	private DisciplinaExecucao createExecutionCourse(
 		Object arg0,
-		IExecutionPeriod executionPeriodToImportDataTo) throws ExcepcaoPersistencia {
+		IExecutionPeriod executionPeriodToImportDataTo)
+		throws ExcepcaoPersistencia {
 		DisciplinaExecucao executionCourseToTransfer =
 			(DisciplinaExecucao) arg0;
 		DisciplinaExecucao executionCourseToCreate = new DisciplinaExecucao();
@@ -577,33 +716,40 @@ public class ExecutionPeriodOJB
 					.getAssociatedCurricularCourses()
 					.get(i);
 			Criteria criteriaExecutionDegree = new Criteria();
-			criteriaExecutionDegree.addEqualTo("executionYear.idInternal", executionPeriodToImportDataTo.getExecutionYear().getIdInternal());
-			criteriaExecutionDegree.addEqualTo("curricularPlan.degree.idInternal", curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal());
-			CursoExecucao executionDegree = (CursoExecucao) queryObject(CursoExecucao.class, criteriaExecutionDegree);
+			criteriaExecutionDegree.addEqualTo(
+				"executionYear.idInternal",
+				executionPeriodToImportDataTo
+					.getExecutionYear()
+					.getIdInternal());
+			criteriaExecutionDegree.addEqualTo(
+				"curricularPlan.degree.idInternal",
+				curricularCourse
+					.getDegreeCurricularPlan()
+					.getDegree()
+					.getIdInternal());
+			CursoExecucao executionDegree =
+				(CursoExecucao) queryObject(CursoExecucao.class,
+					criteriaExecutionDegree);
 
 			if (executionDegree != null) {
 				Criteria criteriaCurricularCourse = new Criteria();
-				criteriaCurricularCourse.addEqualTo("code", curricularCourse.getCode());
-				criteriaCurricularCourse.addEqualTo("degreeCurricularPlan.idInternal", executionDegree.getDegreeCurricularPlan().getIdInternal());
-				ICurricularCourse curricularCourseInNewExecutionPeriod = (ICurricularCourse) queryObject(CurricularCourse.class, criteriaCurricularCourse);
+				criteriaCurricularCourse.addEqualTo(
+					"code",
+					curricularCourse.getCode());
+				criteriaCurricularCourse.addEqualTo(
+					"degreeCurricularPlan.idInternal",
+					executionDegree.getDegreeCurricularPlan().getIdInternal());
+				ICurricularCourse curricularCourseInNewExecutionPeriod =
+					(ICurricularCourse) queryObject(CurricularCourse.class,
+						criteriaCurricularCourse);
 				if (curricularCourseInNewExecutionPeriod != null) {
 					curricularCourses.add(curricularCourseInNewExecutionPeriod);
 				}
 			}
 		}
 
-		try {
-			// It's Ok to just write it with no verification because:
-			//   - all data from this execution period has been cleared
-			//   - suposedly all data related to the other execution period
-			//     is correct.
-			simpleLockWrite(executionCourseToCreate);
-		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		executionCourseToCreate.setAssociatedCurricularCourses(curricularCourses);
+		executionCourseToCreate.setAssociatedCurricularCourses(
+			curricularCourses);
 		executionCourseToCreate.setAssociatedEvaluations(new ArrayList());
 		executionCourseToCreate.setAssociatedExams(new ArrayList());
 		executionCourseToCreate.setComment(" ");
@@ -621,37 +767,36 @@ public class ExecutionPeriodOJB
 		executionCourseToCreate.setTheoreticalHours(
 			executionCourseToTransfer.getTheoreticalHours());
 
-//		for (int i = 0;
-//			i
-//				< executionCourseToTransfer
-//					.getAssociatedCurricularCourses()
-//					.size();
-//			i++) {
-//			ICurricularCourse curricularCourse =
-//				(ICurricularCourse) executionCourseToTransfer
-//					.getAssociatedCurricularCourses()
-//					.get(i);
-//			executionCourseToCreate.getAssociatedCurricularCourses().add(
-//				curricularCourse);
-//		}
+		store(executionCourseToCreate);
 
 		return executionCourseToCreate;
 	}
 
 	private Turma createClass(
 		Object arg0,
-		IExecutionPeriod executionPeriodToImportDataTo,
-		List executionDegrees)
+		IExecutionPeriod executionPeriodToImportDataTo)
 		throws ExcepcaoPersistencia {
 		Turma classToTransfer = (Turma) arg0;
 		Turma classToCreate = new Turma();
 
+//		System.out.println("Creating Class: " + classToTransfer.getNome());
+//		System.out.println(
+//			"   old execution degree id: "
+//				+ classToTransfer.getExecutionDegree().getIdInternal());
+//		System.out.println(
+//			"   old execution period id: "
+//				+ classToTransfer.getExecutionPeriod().getIdInternal());
+
 		CursoExecucao executionDegree =
-			(CursoExecucao) CollectionUtils.find(
-				executionDegrees,
-				new PREDICATE_EXECUTION_DEGREE(
-					executionPeriodToImportDataTo,
-					classToTransfer.getExecutionDegree().getCurricularPlan()));
+			findCorrespondingExecutionDegree(
+				executionPeriodToImportDataTo,
+				classToTransfer);
+
+//		System.out.println(
+//			"   new execution degree id: " + executionDegree.getIdInternal());
+//		System.out.println(
+//			"   new execution period id: "
+//				+ executionPeriodToImportDataTo.getIdInternal());
 
 		classToCreate.setAnoCurricular(classToTransfer.getAnoCurricular());
 		classToCreate.setExecutionDegree(executionDegree);
@@ -660,33 +805,53 @@ public class ExecutionPeriodOJB
 		classToCreate.setNome(classToTransfer.getNome());
 
 		try {
-			// It's Ok to just write it with no verification because:
-			//   - all data from this execution period has been cleared
-			//   - suposedly all data related to the other execution period
-			//     is correct.
-			lockWrite(classToCreate);
-		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
+			store(classToCreate);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return classToCreate;
 	}
 
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param classToTransfer
+	 * @return
+	 */
+	private CursoExecucao findCorrespondingExecutionDegree(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		Turma classToTransfer)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"curricularPlan.degree.idInternal",
+			classToTransfer
+				.getExecutionDegree()
+				.getCurricularPlan()
+				.getDegree()
+				.getIdInternal());
+		criteria.addEqualTo(
+			"executionYear.idInternal",
+			executionPeriodToImportDataTo.getExecutionYear().getIdInternal());
+		return (CursoExecucao) queryObject(CursoExecucao.class, criteria);
+	}
+
 	private IAula createLesson(
 		Object arg0,
-		IExecutionPeriod executionPeriodToImportDataTo,
-		List executionCourses)
+		IExecutionPeriod executionPeriodToImportDataTo)
 		throws ExcepcaoPersistencia {
 		IAula lessonToTransfer = (IAula) arg0;
 		Aula lessonToCreate = new Aula();
 
 		DisciplinaExecucao executionCourse =
-			(DisciplinaExecucao) CollectionUtils.find(
-				executionCourses,
-				new PREDICATE_EXECUTION_COURSE(
-					lessonToTransfer.getDisciplinaExecucao()));
+			findCorrespondingExecutionCourse(
+				executionPeriodToImportDataTo,
+				lessonToTransfer.getDisciplinaExecucao());
 
+//		System.out.println(
+//			"old execution course: "
+//				+ lessonToTransfer.getDisciplinaExecucao().getIdInternal());
+		
 		lessonToCreate.setDiaSemana(lessonToTransfer.getDiaSemana());
 		lessonToCreate.setDisciplinaExecucao(executionCourse);
 		lessonToCreate.setExecutionPeriod(executionPeriodToImportDataTo);
@@ -697,35 +862,46 @@ public class ExecutionPeriodOJB
 		lessonToCreate.setTipo(lessonToTransfer.getTipo());
 
 		try {
-			// It's Ok to just write it with no verification because:
-			//   - all data from this execution period has been cleared
-			//   - suposedly all data related to the other execution period
-			//     is correct.
-			lockWrite(lessonToCreate);
-		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
+			store(lessonToCreate);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return lessonToCreate;
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param execucao
+	 * @return
+	 */
+	private DisciplinaExecucao findCorrespondingExecutionCourse(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("sigla", executionCourse.getSigla());
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriodToImportDataTo.getIdInternal());
+		return (DisciplinaExecucao) queryObject(
+			DisciplinaExecucao.class,
+			criteria);
 	}
 
 	private ITurno createShift(
 		Object arg0,
-		IExecutionPeriod executionPeriodToImportDataTo,
-		List executionCourses)
+		IExecutionPeriod executionPeriodToImportDataTo)
 		throws ExcepcaoPersistencia {
 		ITurno shiftToTransfer = (ITurno) arg0;
 		ITurno shiftToCreate = new Turno();
 
 		DisciplinaExecucao executionCourse =
-			(DisciplinaExecucao) CollectionUtils.find(
-				executionCourses,
-				new PREDICATE_EXECUTION_COURSE(
-					shiftToTransfer.getDisciplinaExecucao()));
+			findCorrespondingExecutionCourse(
+				executionPeriodToImportDataTo,
+				shiftToTransfer.getDisciplinaExecucao());
 
 		shiftToCreate.setAssociatedLessons(new ArrayList());
-		// TODO : find out what this is, and decide what to do with it.
 		shiftToCreate.setAssociatedTeacherProfessorShipPercentage(
 			new ArrayList());
 		shiftToCreate.setDisciplinaExecucao(executionCourse);
@@ -736,13 +912,8 @@ public class ExecutionPeriodOJB
 		shiftToCreate.setAvailabilityFinal(new Integer(0));
 
 		try {
-			// It's Ok to just write it with no verification because:
-			//   - all data from this execution period has been cleared
-			//   - suposedly all data related to the other execution period
-			//     is correct.
-			lockWrite(shiftToCreate);
-		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
+			store(shiftToCreate);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -751,76 +922,122 @@ public class ExecutionPeriodOJB
 
 	private ITurnoAula createShiftLesson(
 		Object arg0,
-		IExecutionPeriod executionPeriodToImportDataTo,
-		List shifts,
-		List lessons)
+		IExecutionPeriod executionPeriodToImportDataTo)
 		throws ExcepcaoPersistencia {
 		ITurnoAula shiftLessonToTransfer = (ITurnoAula) arg0;
 		ITurnoAula shiftLessonToCreate = new TurnoAula();
 
 		ITurno shift =
-			(ITurno) CollectionUtils.find(
-				shifts,
-				new PREDICATE_SHIFT(shiftLessonToTransfer.getTurno()));
+			findCorrespondingShift(
+				executionPeriodToImportDataTo,
+				shiftLessonToTransfer.getTurno());
 
 		IAula lesson =
-			(IAula) CollectionUtils.find(
-				lessons,
-				new PREDICATE_LESSON(shiftLessonToTransfer.getAula()));
+			findCorrespondingLesson(
+				executionPeriodToImportDataTo,
+				shiftLessonToTransfer.getAula());
 
 		shiftLessonToCreate.setAula(lesson);
 		shiftLessonToCreate.setIdInternal(null);
 		shiftLessonToCreate.setTurno(shift);
 
 		try {
-			// It's Ok to just write it with no verification because:
-			//   - all data from this execution period has been cleared
-			//   - suposedly all data related to the other execution period
-			//     is correct.
-			lockWrite(shiftLessonToCreate);
-		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
+			store(shiftLessonToCreate);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return shiftLessonToCreate;
 	}
 
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param aula
+	 * @return
+	 */
+	private IAula findCorrespondingLesson(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IAula lesson)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToImportDataTo.getIdInternal());
+		criteria.addEqualTo(
+			"disciplinaExecucao.sigla",
+			lesson.getDisciplinaExecucao().getSigla());
+		criteria.addEqualTo("diaSemana", lesson.getDiaSemana());
+		criteria.addEqualTo("inicio", lesson.getInicio());
+		criteria.addEqualTo("fim", lesson.getFim());
+		criteria.addEqualTo("sala.nome", lesson.getSala().getNome());
+		return (IAula) queryObject(Aula.class, criteria);
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param shiftLessonToTransfer
+	 * @return
+	 */
+	private ITurno findCorrespondingShift(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		ITurno shift)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			executionPeriodToImportDataTo.getIdInternal());
+		criteria.addEqualTo(
+			"disciplinaExecucao.sigla",
+			shift.getDisciplinaExecucao().getSigla());
+		criteria.addEqualTo("disciplinaExecucao.sigla", shift.getNome());
+		return (ITurno) queryObject(Turno.class, criteria);
+	}
+
 	private ITurmaTurno createClassShift(
 		Object arg0,
-		IExecutionPeriod executionPeriodToImportDataTo,
-		List classes,
-		List shifts)
+		IExecutionPeriod executionPeriodToImportDataTo)
 		throws ExcepcaoPersistencia {
 		ITurmaTurno classShiftToTransfer = (ITurmaTurno) arg0;
 		ITurmaTurno classShiftToCreate = new TurmaTurno();
 
 		ITurma ourClass =
-			(ITurma) CollectionUtils.find(
-				classes,
-				new PREDICATE_CLASS(classShiftToTransfer.getTurma()));
+			findCorrespondingClass(
+				executionPeriodToImportDataTo,
+				classShiftToTransfer.getTurma());
 
 		ITurno shift =
-			(ITurno) CollectionUtils.find(
-				shifts,
-				new PREDICATE_SHIFT(classShiftToTransfer.getTurno()));
+			findCorrespondingShift(
+				executionPeriodToImportDataTo,
+				classShiftToTransfer.getTurno());
 
 		classShiftToCreate.setIdInternal(null);
 		classShiftToCreate.setTurma(ourClass);
 		classShiftToCreate.setTurno(shift);
 
 		try {
-			// It's Ok to just write it with no verification because:
-			//   - all data from this execution period has been cleared
-			//   - suposedly all data related to the other execution period
-			//     is correct.
-			lockWrite(classShiftToCreate);
-		} catch (ExcepcaoPersistencia e) {
-			// TODO Auto-generated catch block
+			store(classShiftToCreate);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return classShiftToCreate;
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param turno
+	 * @return
+	 */
+	private ITurma findCorrespondingClass(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		ITurma turma)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriodToImportDataTo.getIdInternal());
+		criteria.addEqualTo("nome", turma.getNome());
+		return (ITurma) queryObject(Turma.class, criteria);
 	}
 
 	private class PREDICATE_EXECUTION_DEGREE implements Predicate {
@@ -861,23 +1078,23 @@ public class ExecutionPeriodOJB
 		}
 	}
 
-//	private class PREDICATE_ANY_EXECUTION_COURSE implements Predicate {
-//
-//		private List executionCourses;
-//
-//		public PREDICATE_ANY_EXECUTION_COURSE(List executionCourses) {
-//			this.executionCourses = executionCourses;
-//		}
-//
-//		public boolean evaluate(Object arg0) {
-//			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0;
-//
-//			return CollectionUtils.find(
-//				this.executionCourses,
-//				new PREDICATE_EXECUTION_COURSE(executionCourse))
-//				!= null;
-//		}
-//	}
+	//	private class PREDICATE_ANY_EXECUTION_COURSE implements Predicate {
+	//
+	//		private List executionCourses;
+	//
+	//		public PREDICATE_ANY_EXECUTION_COURSE(List executionCourses) {
+	//			this.executionCourses = executionCourses;
+	//		}
+	//
+	//		public boolean evaluate(Object arg0) {
+	//			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) arg0;
+	//
+	//			return CollectionUtils.find(
+	//				this.executionCourses,
+	//				new PREDICATE_EXECUTION_COURSE(executionCourse))
+	//				!= null;
+	//		}
+	//	}
 
 	private class PREDICATE_LESSON implements Predicate {
 
@@ -941,7 +1158,8 @@ public class ExecutionPeriodOJB
 		}
 	}
 
-	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia {
+	public List readByExecutionYear(IExecutionYear executionYear)
+		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyExecutionYear", executionYear.getIdInternal());
 		return queryList(ExecutionPeriod.class, criteria);
