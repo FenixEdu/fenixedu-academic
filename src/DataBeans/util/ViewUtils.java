@@ -39,7 +39,7 @@ public class ViewUtils {
 		}
 		return result;
 	}
-	
+	//why do i need a list of section names?
     public static List buildQualifiedName(InfoSection sectionView) {
 		ArrayList name = new ArrayList();
 		
