@@ -18,24 +18,6 @@ public class PrecedenceScopeToApplyJava2SqlConversion implements FieldConversion
 	 * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#javaToSql(java.lang.Object)
 	 */
 	public Object javaToSql(Object source) throws ConversionException {
-		if (source instanceof String){
-			String sourceStr = (String) source;
-
-			if (PrecedenceScopeToApply.TO_APPLY_TO_SPAN_STR.equals(sourceStr)){
-				return PrecedenceScopeToApply.TO_APPLY_TO_SPAN;				
-			}else if (PrecedenceScopeToApply.TO_APLLY_DURING_ENROLMENT_STR.equals(sourceStr)){
-				return PrecedenceScopeToApply.TO_APPLY_DURING_ENROLMENT;
-			}else{
-				throw new IllegalArgumentException(this.getClass().getName()+": Unkown type!("+source+")");
-			}
-		}
-		return source;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#sqlToJava(java.lang.Object)
-	 */
-	public Object sqlToJava(Object source) throws ConversionException {
 		if (source instanceof PrecedenceScopeToApply){
 			PrecedenceScopeToApply precedenceScopeToApply = (PrecedenceScopeToApply) source;
 			switch (precedenceScopeToApply.getScope()){
@@ -48,6 +30,25 @@ public class PrecedenceScopeToApplyJava2SqlConversion implements FieldConversion
 			}
 		}
 		return source;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.ojb.broker.accesslayer.conversions.FieldConversion#sqlToJava(java.lang.Object)
+	 */
+	public Object sqlToJava(Object source) throws ConversionException {
+		if (source instanceof String){
+			String sourceStr = (String) source;
+
+			if (PrecedenceScopeToApply.TO_APPLY_TO_SPAN_STR.equals(sourceStr)){
+				return PrecedenceScopeToApply.TO_APPLY_TO_SPAN;				
+			}else if (PrecedenceScopeToApply.TO_APLLY_DURING_ENROLMENT_STR.equals(sourceStr)){
+				return PrecedenceScopeToApply.TO_APPLY_DURING_ENROLMENT;
+			}else{
+				throw new IllegalArgumentException(this.getClass().getName()+": Unkown type!("+source+")");
+			}
+		}
+		return source;
+
 	}
 
 }
