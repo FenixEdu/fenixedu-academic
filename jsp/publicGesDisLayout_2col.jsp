@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -24,9 +25,9 @@
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
 <!-- Navbar Lateral e Body Content -->
-<table width="100%"  height="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td id="barraist"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" />
+     <td id="barraist"><a href="http://www.ist.utl.pt"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></a>
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
       <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324" height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
@@ -36,7 +37,7 @@
       <br />
 	  <tiles:insert attribute="body" />      
     </td>	
-    <td id="barranav" width="150" bgcolor="#EBEFFA" valign="top">
+    <td id="barranav" bgcolor="#EBEFFA" valign="top">
       <div class="blue-bckgr">
         <h3>Navega&ccedil;&atilde;o Geral</h3>
       </div>
