@@ -30,42 +30,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 
-	private IGroupProperties groupProperties = null;
-	private int numberOfStudentsToEnrole;
-	private IStudentGroup studentGroup = null;
-	private ITurno shift = null;
 
-	public IGroupProperties getGroupProperties() {
-		return groupProperties;
-	}
-
-	public void setGroupProperties(IGroupProperties groupProperties) {
-		this.groupProperties = groupProperties;
-	}
-
-	public int getNumberOfStudentsToEnrole() {
-		return numberOfStudentsToEnrole;
-	}
-
-	public void setNumberOfStudentsToEnrole(int numberOfStudentsToEnrole) {
-		this.numberOfStudentsToEnrole = numberOfStudentsToEnrole;
-	}
-
-	public IStudentGroup getStudentGroup() {
-		return studentGroup;
-	}
-
-	public void setStudentGroup(IStudentGroup studentGroup) {
-		this.studentGroup = studentGroup;
-	}
-
-	public ITurno getShift() {
-		return shift;
-	}
-
-	public void setShift(ITurno shift) {
-		this.shift = shift;
-	}
 
 	public boolean checkNumberOfGroups(IGroupProperties groupProperties, ITurno shift) {
 		boolean result = false;
@@ -114,6 +79,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 
 		return false;
 	}
+
 
 	public boolean checkShiftType(IGroupProperties groupProperties, ITurno shift) {
 		boolean result = false;

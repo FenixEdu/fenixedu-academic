@@ -13,9 +13,8 @@ import Util.EnrolmentGroupPolicyType;
  */
 
 public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFactory{
-	//public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory {
-
-		private static GroupEnrolmentStrategyFactory instance = null;
+	
+		private static GroupEnrolmentStrategyFactory instance = null; 
 
 		private GroupEnrolmentStrategyFactory() {
 		}
