@@ -10,30 +10,25 @@ package DataBeans;
  *
  * 
  */
-public class InfoEvaluationMethod implements ISiteComponent{
+public class InfoEvaluationMethod extends InfoObject implements ISiteComponent{
 
-	private InfoCurricularCourse infoCurricularCourse;
+	private InfoExecutionCourse infoExecutionCourse;
 	private String evaluationElements;
 	private String evaluationElementsEn;
 
-	/**
-	 * @return
-	 */
-	public InfoCurricularCourse getInfoCurricularCourse() {
-		return infoCurricularCourse;
-	}
-
-	/**
-	 * @param infoCurricularCourse
-	 */
-	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
-		this.infoCurricularCourse = infoCurricularCourse;
-	}
-
 	public InfoEvaluationMethod() {
 	}
-	
-	
+	public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse) {
+		setInfoExecutionCourse(infoExecutionCourse);
+	}
+	public InfoEvaluationMethod(
+		InfoExecutionCourse infoExecutionCourse,
+		String evaluationElements,
+		String evaluationElementsEn) {
+		setInfoExecutionCourse(infoExecutionCourse);
+		setEvaluationElements(evaluationElements);
+		setEvaluationElementsEn(evaluationElementsEn);
+	}
 
 	/**
 	 * @return
@@ -42,7 +37,12 @@ public class InfoEvaluationMethod implements ISiteComponent{
 		return evaluationElements;
 	}
 
-	
+	/**
+	 * @return
+	 */
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
 
 	/**
 	 * @param string
@@ -51,14 +51,19 @@ public class InfoEvaluationMethod implements ISiteComponent{
 		evaluationElements = string;
 	}
 
-	
+	/**
+	 * @param course
+	 */
+	public void setInfoExecutionCourse(InfoExecutionCourse course) {
+		infoExecutionCourse = course;
+	}
 
 	public String toString() {
 		String result = "[EvaluationMethod";
 
 		result += ", evaluationElements =" + getEvaluationElements();
 		result += ", evaluationElementsEn =" + getEvaluationElementsEn();
-		result += ", curricularCourse =" + getInfoCurricularCourse();
+		result += ", executionCourse =" + getInfoExecutionCourse();
 		result += "]";
 		return result;
 	}
@@ -67,8 +72,8 @@ public class InfoEvaluationMethod implements ISiteComponent{
 		boolean result = false;
 		if (arg0 instanceof InfoEvaluationMethod) {
 			result =
-				getInfoCurricularCourse().equals(
-					((InfoEvaluationMethod) arg0).getInfoCurricularCourse());
+				getInfoExecutionCourse().equals(
+					((InfoEvaluationMethod) arg0).getInfoExecutionCourse());
 		}
 		return result;
 	}

@@ -9,4 +9,23 @@
 	<definition name="addCoordinator" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/coordinationTeam/addCoordinator.jsp" />
 	</definition>
+	<definition name="degreeSiteMenu" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="/coordinator/degreeSite/help.jsp" />
+	</definition>
+	
+	<definition name="editInformation" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="" />
+	</definition>
+	
+	<definition name="viewHistoric" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="" />
+	</definition>
+	
+	<definition name="viewSite" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
+		<put name="body" value="" />
+	</definition>		
 </tiles-definitions>	

@@ -7,60 +7,94 @@
 
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session"/>
+	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegree" property="idInternal"/>
+
 	<%-- Start of Master Degree Coordinator Options --%>
 	<logic:equal name="infoExecutionDegree" 
 		property="infoDegreeCurricularPlan.infoDegree.tipoCurso" 
 		value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
-			<p><strong>&raquo; <bean:message key="link.coordinator.candidate"/></html:link></strong>
+			<p>
+			<strong>&raquo; <bean:message key="link.coordinator.candidate"/></strong>
 			<ul>
 	        	<li>
-	        	<html:link 					page="/candidateOperation.do?method=getCandidates&action=visualize&page=0">
-	        	<bean:message key="link.coordinator.visualizeCandidate" /></html:link></li>
+		        	<html:link page="/candidateOperation.do?method=getCandidates&action=visualize&page=0">
+		        	<bean:message key="link.coordinator.visualizeCandidate" /></html:link>
+		        	<br/>
+					<br/>
+		        </li>
 	        	<li>
-	        	<html:link page="/prepareCandidateApproval.do?method=chooseExecutionDegree&page=0">
-	        	<bean:message key="link.coordinator.approveCandidates" /></html:link></li>
+		        	<html:link page="/prepareCandidateApproval.do?method=chooseExecutionDegree&page=0">
+		        	<bean:message key="link.coordinator.approveCandidates" /></html:link>
+		        	<br/>
+					<br/>		        	
+		        </li>
 				<li>
-				<html:link 					page="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0">
-				<bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link></li>
-			</ul></p>
+					<html:link page="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0">
+					<bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link>
+		        	<br/>
+					<br/>
+				</li>
+			</ul>
+			</p>
 			<p><strong>&raquo; <bean:message key="link.coordinator.student"/></strong>
 			<ul>
-			<li><html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0">
-			<bean:message key="link.coordinator.studentListByDegree" /></html:link><br></li>
-			<li><html:link 		page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0">
-			<bean:message key="link.studentListByCourse" /></html:link></li>
-		</ul></p>	
+				<li>
+					<html:link page="/listStudentsForCoordinator.do?method=getStudentsFromDCP&page=0">
+					<bean:message key="link.coordinator.studentListByDegree" /></html:link><br>
+		        	<br/>
+					<br/>
+				</li>
+				<li>
+					<html:link 		page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0">
+				<	bean:message key="link.studentListByCourse" /></html:link>
+		        	<br/>
+					<br/>
+				</li>
+		</ul>
+		</p>	
 	</logic:equal>
 	
 	<%-- Start of Degree Coordinator Options --%>
-	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" 		value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
-			<%--		<html:link forward="equivalenceForCoordinator">
+	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
+		<ul>
+			<%-- <html:link forward="equivalenceForCoordinator">
 			<bean:message key="link.coordinator.equivalence"/></html:link><br/>
-		  --%>
-		<html:link page="/executionCoursesInformation.do?method=prepareChoice">
-		<bean:message key="link.coordinator.executionCoursesInformation"/></html:link>
-		<br/>
+		  	--%>
+			<li>
+				<html:link page="/executionCoursesInformation.do?method=prepareChoice">
+				<bean:message key="link.coordinator.executionCoursesInformation"/></html:link>
+				<br/>
+				<br/>
+			</li>
+		</ul>
 	</logic:notEqual> 
-	<br/>
+	
 	<%-- Start of Common Options --%>
-	<html:link page="/executionCoursesInformation.do?method=prepareChoice">
-		<%-- <bean:message key="link.coordinator.executionCoursesInformation"/>--%>
-		Gestão de Planos Curriculares
-		</html:link> 
-		<br/>
-	<br/>
-	<bean:define id="infoExecutionDegreeId" name="infoExecutionDegree" property="idInternal"/>
-	<html:link 
-	page="<%= "/viewCoordinationTeam.do?method=viewTeam&infoExecutionDegreeId="+ 
-	infoExecutionDegreeId.toString()  %>" 
-		>
-		Equipa de Coordenação
-		</html:link> 
-	<br/>
-	<br/>
-	<html:link page="/executionCoursesInformation.do?method=prepareChoice">
-		<%-- <bean:message key="link.coordinator.executionCoursesInformation"/>--%>
-		Gestão do Sítio de Curso
-		</html:link> 
-	<br/>
+	<ul>
+		<li>
+			<html:link page="/executionCoursesInformation.do?method=prepareChoice">
+				<%-- <bean:message key="link.coordinator.executionCoursesInformation"/>--%>
+				Gestão de Planos Curriculares
+			</html:link> 
+			<br/>
+			<br/>
+		</li>
+
+		<li>
+			<html:link page="<%= "/viewCoordinationTeam.do?method=viewTeam&infoExecutionDegreeId="+ 
+			infoExecutionDegreeId.toString()  %>" >
+				Equipa de Coordenação
+			</html:link> 
+			<br/>
+			<br/>
+		</li>
+	
+		<li>
+			<html:link page="<%= "/degreeSiteManagement.do?method=subMenu&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+				<bean:message key="link.coordinator.degreeSite.management"/>		
+			</html:link> 
+			<br/>
+			<br/>
+		</li>
+	</ul>
 </logic:present>

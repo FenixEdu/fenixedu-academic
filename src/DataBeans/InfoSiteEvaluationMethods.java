@@ -16,8 +16,9 @@ import java.util.List;
  * 
  */
 public class InfoSiteEvaluationMethods implements ISiteComponent {
-	private List infoEvaluations;
-	private List infoCurricularCourses;
+	private InfoEvaluationMethod infoEvaluationMethod;
+	private List infoEvaluations; //unnecessary
+	private List infoCurricularCourses; //unnecessary
 
 	public int getSize() {
 		return infoEvaluations.size();
@@ -51,5 +52,13 @@ public class InfoSiteEvaluationMethods implements ISiteComponent {
 		this.infoEvaluations = infoEvaluations;
 	}
 
+
+	public InfoEvaluationMethod getInfoEvaluationMethod() {
+		return infoEvaluationMethod;
+	}
+
+	public void setInfoEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod) {
+		this.infoEvaluationMethod = infoEvaluationMethod;
+	}
 
 }

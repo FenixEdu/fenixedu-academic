@@ -13,6 +13,65 @@
 
 <logic:present name="siteView">
 	<bean:define id="component" name="siteView" property="component"/>
+	
+	<blockquote>
+			
+		<h2><bean:message key="title.evaluationMethod"/></h2>				
+		<table>
+			<tr>
+				<td> 
+					<bean:write name="component" property="evaluationElements" filter="false"/>
+	 			</td>
+			</tr>
+		</table>
+		
+		<br />
+		
+		<logic:notEmpty name="component" property="evaluationElementsEn">	
+			<h2><bean:message key="title.evaluationMethod.eng"/></h2>
+			<table>	
+				<tr>
+					<td> 
+						<bean:write name="component" property="evaluationElementsEn" filter="false"/>
+					</td>
+				</tr>
+			</table>
+			<br/>	
+		</logic:notEmpty>
+	
+		<div class="gen-button">
+			<html:link page="<%= "/editEvaluationMethod.do?method=prepareEditEvaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+				<bean:message key="button.edit"/>
+			</html:link>
+		</div>
+		
+		</blockquote>				
+		<br />
+		<br />			
+		<br />		
+
+</logic:present> 
+
+
+
+
+
+<%-- BEFORE
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<br />
+<table width="100%">
+	<tr>
+		<td class="infoop">
+			<bean:message key="label.evaluationMethod.explanation" />
+		</td>
+	</tr>
+</table>
+
+<logic:present name="siteView">
+	<bean:define id="component" name="siteView" property="component"/>
 
 	<bean:define id="infoEvaluations" name="component" property="infoEvaluations"/>
 	<bean:define id="infoCurricularCourses" name="component" property="infoCurricularCourses"/>
@@ -63,4 +122,4 @@
 			<br />			
 		</logic:iterate>
 
-</logic:present>
+</logic:present> --%>

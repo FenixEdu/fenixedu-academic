@@ -396,13 +396,27 @@
     </action>
      	 
     
-      <action path="/fileDownload" 
+    <action path="/fileDownload" 
       		  type="ServidorApresentacao.Action.fileManager.FileRetrievingAction" >
       		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
-     </action>	 	 
-    
+     </action>	 
+     
+     <!-- For degrees´s Site-->
+    <action path="/showDegrees" 
+     		type="ServidorApresentacao.Action.publico.ShowDegreesAction" 
+     		parameter="method"
+     		>
+	     <forward  name="showDegrees" path="showDegrees"/>  		  
+     </action>	 
+   
+    <action path="/showDegreeCurricularPlan" 
+     		type="ServidorApresentacao.Action.publico.ShowDegreeCurricularPlanAction" 
+     		parameter="method"
+     		>
+	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlan"/>  		  
+     </action>	   
+         
      </action-mappings>     
-
     
     <!-- ========== Controller Configuration ================================ -->
 	<!--<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor" />-->
@@ -417,7 +431,7 @@
     </plug-in>
     	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles-public-definitions.xml" />
+					  value="/WEB-INF/tiles/public/tiles-public-definitions.xml,/WEB-INF/tiles/public/tiles-public-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in> 

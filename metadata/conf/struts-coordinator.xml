@@ -339,7 +339,19 @@
 	         <forward name="coordinationTeam" path="coordinationTeam" /> 
 	         <forward name="addCoordinator" path="addCoordinator" /> 
 	         <forward name="sucess" path="/viewCoordinationTeam.do?method=viewTeam" /> 	 	         
-		</action>	
+		</action>		
+		<!-- ======== degree site mappings -->
+		<action path="/degreeSiteManagement" 
+				parameter="method"
+			    scope="request"
+		        type="ServidorApresentacao.Action.coordinator.DegreeSiteManagementAction" 
+		        >
+			<forward name="degreeSiteMenu" path="degreeSiteMenu" />
+			<forward name="editInformation" path="editInformation" />
+			<forward name="viewHistoric" path="viewHistoric" />
+			<forward name="viewSite" path="viewSite" />
+		</action>		
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

@@ -5,6 +5,8 @@
  */
 package DataBeans;
 
+import java.util.Date;
+
 
 /**
  * @author João Mota
@@ -16,12 +18,13 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent{
 	protected String programEn;
 	protected String generalObjectivesEn;
 	protected String operacionalObjectivesEn;
-	protected String evaluationElements;
-	protected String evaluationElementsEn;
+	protected String evaluationElements;//TODO: to delete
+	protected String evaluationElementsEn;//TODO: to delete
+	
+	protected Date lastModificationDate;
+	
 	protected InfoCurricularCourse infoCurricularCourse;
-	/**
-	 * 
-	 */
+	
 	public InfoCurriculum() {
 
 	}
@@ -198,6 +201,14 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent{
 	 */
 	public void setEvaluationElementsEn(String string) {
 		evaluationElementsEn = string;
+	}
+
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
 	}
 
 }
