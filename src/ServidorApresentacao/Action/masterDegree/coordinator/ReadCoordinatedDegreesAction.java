@@ -11,6 +11,8 @@
  
 package ServidorApresentacao.Action.masterDegree.coordinator;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,13 +47,31 @@ public class ReadCoordinatedDegreesAction extends ServidorApresentacao.Action.ba
       Object args[] = new Object[1];
 	  args[0] = userView;
 	  List degrees = null;
-	  
+	  List candidates = new ArrayList();
 	  try {
 	  	degrees = (List) gestor.executar(userView, "ReadCoordinatedDegrees", args);
+	  
 	  } catch (FenixServiceException e) {
 		  throw new FenixActionException(e);
 	  }
+	  
+	  Iterator iterator = degrees.iterator();
+	  
+	  while(iterator.hasNext()){
+	  	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+		try {
+		  Object argsTemp[] = {infoExecutionDegree };
+		  List result = (List) gestor.executar(userView, "ReadDegreeCandidates", argsTemp);
+		  
+		  candidates.add(new Integer(result.size()));
+		  
+		} catch (FenixServiceException e) {
+			candidates.add(new Integer(0));
+		}
+	  }
 
+
+	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT, candidates);
 	  if (degrees.size() == 1) {
 	  	session.setAttribute(SessionConstants.MASTER_DEGREE, (InfoExecutionDegree) degrees.get(0));
 		return mapping.findForward("Success");

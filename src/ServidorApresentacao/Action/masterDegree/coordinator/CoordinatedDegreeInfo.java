@@ -39,6 +39,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	if (session != null) {
 	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	  List degreeList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_LIST);
+	  List candidates = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT);
 			
 	  Integer choosenDegreePosition = Integer.valueOf(request.getParameter("degree"));
 			
@@ -46,6 +47,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) degreeList.get(choosenDegreePosition.intValue());
 		
 	  session.setAttribute(SessionConstants.MASTER_DEGREE, infoExecutionDegree);
+	  session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT, candidates.get(choosenDegreePosition.intValue()));
 	  return mapping.findForward("Success");
 	} else
 	  throw new Exception();   
