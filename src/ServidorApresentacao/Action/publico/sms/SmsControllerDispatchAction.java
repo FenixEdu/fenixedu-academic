@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionMapping;
 
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.utils.SmsUtil;
+import ServidorAplicacao.utils.exceptions.SmsCommandConfigurationException;
+import ServidorAplicacao.utils.smsResponse.SmsCommandManager;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import Util.SmsDeliveryType;
@@ -24,43 +26,17 @@ import Util.SmsDeliveryType;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
  *  
  */
-public class UpdateSmsDeliveryReportDispatchAction extends FenixDispatchAction
+public class SmsControllerDispatchAction extends FenixDispatchAction
 {
 
-	public void update(
+	public void updateDeliveryReport(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 	{
 
-		String host = SmsUtil.getInstance().getHost();
-		String remoteAddress = request.getRemoteAddr();
-		String hostAddress = "";
-
-		//get host ip
-		try
-		{
-			InetAddress address = InetAddress.getByName(host);
-			byte[] ipAddress = address.getAddress();
-
-			// Convert to dot representation
-			for (int i = 0; i < ipAddress.length; i++)
-			{
-				if (i > 0)
-				{
-					hostAddress += ".";
-				}
-				hostAddress += ipAddress[i] & 0xFF;
-			}
-
-		}
-		catch (UnknownHostException e)
-		{
-		}
-
-		//check if the host is accepted
-		if (remoteAddress.equals(hostAddress) == false)
+		if (checkRemoteAddress(request) == false)
 			return;
 
 		//check username/password
@@ -88,6 +64,79 @@ public class UpdateSmsDeliveryReportDispatchAction extends FenixDispatchAction
 		{
 		}
 
+	}
+
+	public void receiveSms(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+	{
+
+		//if(checkRemoteAddress(request) == false)
+		//	return;
+
+		String sender = getFromRequest("sender", request);
+		String text = getFromRequest("text", request);
+
+		System.out.println("SENDER --->" + sender);
+		System.out.println("TEXT   --->" + text);
+
+		try
+		{
+			int indexSeparator = text.indexOf(" ");
+			
+			if (indexSeparator != -1)
+			{
+				String commandText = text.substring(0, indexSeparator);
+				text = commandText.toUpperCase() + text.substring(indexSeparator);
+				
+			}	
+			SmsCommandManager.getInstance().handleCommand(sender, text);
+		}
+		catch (SmsCommandConfigurationException e1)
+		{
+		}
+
+	}
+
+	/**
+	 * @param host
+	 * @param hostAddress
+	 * @return
+	 */
+	private boolean checkRemoteAddress(HttpServletRequest request)
+	{
+		String host = SmsUtil.getInstance().getHost();
+		String remoteAddress = request.getRemoteAddr();
+		String hostAddress = "";
+
+		//get host ip
+		try
+		{
+			InetAddress address = InetAddress.getByName(host);
+			byte[] ipAddress = address.getAddress();
+
+			// Convert to dot representation
+			for (int i = 0; i < ipAddress.length; i++)
+			{
+				if (i > 0)
+				{
+					hostAddress += ".";
+				}
+				hostAddress += ipAddress[i] & 0xFF;
+			}
+
+		}
+		catch (UnknownHostException e)
+		{
+		}
+
+		//check if the host is accepted
+		if (remoteAddress.equals(hostAddress) == false)
+			return false;
+		else
+			return true;
 	}
 
 	private String getFromRequest(String parameter, HttpServletRequest request)
