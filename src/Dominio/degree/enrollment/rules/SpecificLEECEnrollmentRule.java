@@ -51,6 +51,8 @@ public class SpecificLEECEnrollmentRule implements IEnrollmentRule {
                 && (this.studentCurricularPlan.getSecundaryBranch() != null)) {
             try {
                 List result = specificAlgorithm(this.studentCurricularPlan);
+                studentCurricularPlan.setCreditsInSpecializationArea(this.getCreditsInSpecializationArea());
+                studentCurricularPlan.setCreditsInSecundaryArea(this.getCreditsInSecundaryArea());
                 return filter(this.studentCurricularPlan, this.executionPeriod, curricularCoursesToBeEnrolledIn, result);
             } catch (ExcepcaoPersistencia e) {
                 e.printStackTrace();
