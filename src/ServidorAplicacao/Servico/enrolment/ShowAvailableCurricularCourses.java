@@ -1,20 +1,18 @@
 package ServidorAplicacao.Servico.enrolment;
 
-import DataBeans.InfoEnrolmentContext;
 import Dominio.IStudent;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import DataBeans.util.Cloner;
 
 /**
  * @author dcs-rjao
@@ -51,24 +49,18 @@ public class ShowAvailableCurricularCourses implements IServico {
 	 * @throws FenixServiceException
 	 */
 	public InfoEnrolmentContext run(IUserView userView) throws FenixServiceException {
-		
-		try {
-			IEnrolmentStrategy strategy = null;
-		
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentStudent studentDAO = sp.getIPersistentStudent();
 
+		try {
+
+			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+			IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
 			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
 
-			//FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
-			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(student, new Integer(1));
-			
-			strategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
-			
-			enrolmentContext = strategy.getAvailableCurricularCourses();
-			
-			InfoEnrolmentContext infoEnrolmentContext = Cloner.copyEnrolmentContext2InfoEnrolmentContext(enrolmentContext);
-			return infoEnrolmentContext;
+			//			FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
+			IEnrolmentStrategy strategy =
+				EnrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student, new Integer(1)));
+
+			return EnrolmentContextManager.getInfoEnrolmentContext(strategy.getAvailableCurricularCourses());
 
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());

@@ -1,7 +1,9 @@
-package DataBeans;
+package ServidorAplicacao.strategy.enrolment.degree;
 
 import java.util.List;
 import java.util.Map;
+
+import DataBeans.InfoStudentCurricularPlan;
 
 
 /**
@@ -12,21 +14,16 @@ import java.util.Map;
 
 public class InfoEnrolmentContext {
 
-	private InfoStudent infoStudent;
-	private List curricularCoursesDoneByStudent;
 	private Map acumulatedEnrolments;
-	private Integer semester;
 	private InfoStudentCurricularPlan infoStudentActiveCurricularPlan;
 	private List actualEnrolment;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
 	
 	public InfoEnrolmentContext() {
-		setInfoStudent(null);
-		setCurricularCoursesDoneByStudent(null);
 		setAcumulatedEnrolments(null);
-		setSemester(null);
 		setInfoStudentActiveCurricularPlan(null);
 		setActualEnrolment(null);
+		setFinalCurricularCoursesScopesSpanToBeEnrolled(null);
 	}
 
 	public boolean equals(Object obj) {
@@ -34,17 +31,14 @@ public class InfoEnrolmentContext {
 		if (obj instanceof InfoEnrolmentContext) {
 			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) obj;
 			resultado = this.finalCurricularCoursesScopesSpanToBeEnrolled.equals(infoEnrolmentContext.finalCurricularCoursesScopesSpanToBeEnrolled) &&
-									(this.infoStudent.equals(infoEnrolmentContext.infoStudent));
+									(this.infoStudentActiveCurricularPlan.equals(infoEnrolmentContext.infoStudentActiveCurricularPlan));
 		}
 		return resultado;
 	}
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "student = " + this.infoStudent + "; ";
-		result += "curricularCoursesDoneByStudent = " + this.curricularCoursesDoneByStudent + "]";
 		result += "acumulatedEnrolments = " + this.acumulatedEnrolments + "]";
-		result += "semester = " + this.semester + "]";
 		result += "StudentActiveCurricularPlan = " + this.infoStudentActiveCurricularPlan + "]";
 		result += "actualEnrolment = " + this.actualEnrolment + "]";
 		result += "finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "]";
@@ -68,22 +62,8 @@ public class InfoEnrolmentContext {
 	/**
 	 * @return List
 	 */
-	public List getCurricularCoursesDoneByStudent() {
-		return curricularCoursesDoneByStudent;
-	}
-
-	/**
-	 * @return List
-	 */
 	public List getFinalCurricularCoursesScopesSpanToBeEnrolled() {
 		return finalCurricularCoursesScopesSpanToBeEnrolled;
-	}
-
-	/**
-	 * @return InfoStudent
-	 */
-	public InfoStudent getInfoStudent() {
-		return infoStudent;
 	}
 
 	/**
@@ -91,13 +71,6 @@ public class InfoEnrolmentContext {
 	 */
 	public InfoStudentCurricularPlan getInfoStudentActiveCurricularPlan() {
 		return infoStudentActiveCurricularPlan;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getSemester() {
-		return semester;
 	}
 
 	/**
@@ -117,27 +90,11 @@ public class InfoEnrolmentContext {
 	}
 
 	/**
-	 * Sets the curricularCoursesDoneByStudent.
-	 * @param curricularCoursesDoneByStudent The curricularCoursesDoneByStudent to set
-	 */
-	public void setCurricularCoursesDoneByStudent(List curricularCoursesDoneByStudent) {
-		this.curricularCoursesDoneByStudent = curricularCoursesDoneByStudent;
-	}
-
-	/**
 	 * Sets the finalCurricularCoursesScopesSpanToBeEnrolled.
 	 * @param finalCurricularCoursesScopesSpanToBeEnrolled The finalCurricularCoursesScopesSpanToBeEnrolled to set
 	 */
 	public void setFinalCurricularCoursesScopesSpanToBeEnrolled(List finalCurricularCoursesScopesSpanToBeEnrolled) {
 		this.finalCurricularCoursesScopesSpanToBeEnrolled = finalCurricularCoursesScopesSpanToBeEnrolled;
-	}
-
-	/**
-	 * Sets the infoStudent.
-	 * @param infoStudent The infoStudent to set
-	 */
-	public void setInfoStudent(InfoStudent infoStudent) {
-		this.infoStudent = infoStudent;
 	}
 
 	/**
@@ -147,13 +104,4 @@ public class InfoEnrolmentContext {
 	public void setInfoStudentActiveCurricularPlan(InfoStudentCurricularPlan infoStudentActiveCurricularPlan) {
 		this.infoStudentActiveCurricularPlan = infoStudentActiveCurricularPlan;
 	}
-
-	/**
-	 * Sets the semester.
-	 * @param semester The semester to set
-	 */
-	public void setSemester(Integer semester) {
-		this.semester = semester;
-	}
-
 }

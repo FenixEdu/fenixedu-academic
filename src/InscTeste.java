@@ -1,4 +1,3 @@
-import DataBeans.InfoEnrolmentContext;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -6,6 +5,7 @@ import ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 
 /**
  * @author dcs-rjao

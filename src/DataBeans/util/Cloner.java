@@ -3,7 +3,6 @@ package DataBeans.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -18,7 +17,6 @@ import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoEnrolmentContext;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -109,7 +107,6 @@ import Dominio.StudentCurricularPlan;
 import Dominio.Teacher;
 import Dominio.Turma;
 import Dominio.Turno;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 
 /**
  * @author jpvl
@@ -1424,45 +1421,6 @@ public abstract class Cloner {
 		infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
 		return infoStudentCurricularPlan;
-	}
-
-	/**
-		 * @author dcs-rjao
-		 * @param copyEnrolmentContext2InfoEnrolmentContext
-		 * @return InfoEnrolmentContext
-		 */
-	public static InfoEnrolmentContext copyEnrolmentContext2InfoEnrolmentContext(EnrolmentContext enrolmentContext) {
-
-		InfoEnrolmentContext infoEnrolmentContext = new InfoEnrolmentContext();
-
-		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(enrolmentContext.getStudent());
-		InfoStudentCurricularPlan infoStudentActiveCurricularPlan =
-			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan());
-
-		List infoCurricularCourseScopeList = new ArrayList();
-		List curricularCourseScopeList = null;
-
-		curricularCourseScopeList = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
-		if (curricularCourseScopeList != null && !curricularCourseScopeList.isEmpty()) {
-			ListIterator iterator = curricularCourseScopeList.listIterator();
-			while (iterator.hasNext()) {
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-				InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-				infoCurricularCourseScopeList.add(infoCurricularCourseScope);
-			}
-		}
-
-		try {
-			BeanUtils.copyProperties(infoEnrolmentContext, enrolmentContext);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		infoEnrolmentContext.setInfoStudent(infoStudent);
-		infoEnrolmentContext.setInfoStudentActiveCurricularPlan(infoStudentActiveCurricularPlan);
-		infoEnrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(infoCurricularCourseScopeList);
-		
-		return infoEnrolmentContext;
 	}
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 }

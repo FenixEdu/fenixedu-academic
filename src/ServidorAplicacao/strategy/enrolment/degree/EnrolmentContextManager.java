@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
@@ -147,6 +151,38 @@ public abstract class EnrolmentContextManager {
 		}
 
 		return scopesNotDone;
+	}
+
+	public static InfoEnrolmentContext getInfoEnrolmentContext(EnrolmentContext enrolmentContext) {
+
+		InfoEnrolmentContext infoEnrolmentContext = new InfoEnrolmentContext();
+
+		InfoStudentCurricularPlan infoStudentActiveCurricularPlan =
+			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan());
+
+		List infoCurricularCourseScopeList = new ArrayList();
+		List curricularCourseScopeList = null;
+
+		curricularCourseScopeList = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
+		if (curricularCourseScopeList != null && !curricularCourseScopeList.isEmpty()) {
+			Iterator iterator = curricularCourseScopeList.iterator();
+			while (iterator.hasNext()) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+				InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+				infoCurricularCourseScopeList.add(infoCurricularCourseScope);
+			}
+		}
+
+		try {
+			BeanUtils.copyProperties(infoEnrolmentContext, enrolmentContext);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		infoEnrolmentContext.setInfoStudentActiveCurricularPlan(infoStudentActiveCurricularPlan);
+		infoEnrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(infoCurricularCourseScopeList);
+		
+		return infoEnrolmentContext;
 	}
 
 }
