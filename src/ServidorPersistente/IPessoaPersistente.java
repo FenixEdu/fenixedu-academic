@@ -20,7 +20,7 @@ public interface IPessoaPersistente extends IPersistentObject {
     public void apagarPessoa(IPessoa pessoa) throws ExcepcaoPersistencia;
     public void apagarTodasAsPessoas() throws ExcepcaoPersistencia;
     public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia;
-	public List readPersonByName(String name) throws ExcepcaoPersistencia;
+	public List findPersonByName(String name) throws ExcepcaoPersistencia;
     public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
     public ArrayList lerTodasAsPessoas() throws ExcepcaoPersistencia;
 }

@@ -1,6 +1,6 @@
 /*
  * Created on 29/10/2003
- * 
+ *  
  */
 package ServidorAplicacao.Servico.grant.owner;
 
@@ -23,31 +23,29 @@ import ServidorPersistente.grant.IPersistentGrantOwner;
 import Util.RoleType;
 
 /**
- * @author  Barbosa
- * @author  Pica
+ * @author Barbosa
+ * @author Pica
  *  
  */
-public class CreateGrantOwner
-    extends ServidorAplicacao.Servico.person.base.CreatePersonBaseClass
-    implements IServico
+public class CreateGrantOwner extends CreatePersonBaseClass implements IServico
 {
     private static CreateGrantOwner service = new CreateGrantOwner();
     /**
-     * The singleton access method of this class.
-     */
+	 * The singleton access method of this class.
+	 */
     public static CreateGrantOwner getService()
     {
         return service;
     }
     /**
-     * The constructor of this class.
-     */
+	 * The constructor of this class.
+	 */
     private CreateGrantOwner()
     {
     }
     /**
-     * The name of the service
-     */
+	 * The name of the service
+	 */
     public final String getNome()
     {
         return "CreateGrantOwner";
@@ -110,8 +108,8 @@ public class CreateGrantOwner
     }
 
     /**
-     * Executes the service.
-     */
+	 * Executes the service.
+	 */
     public boolean run(InfoGrantOwner infoGrantOwner) throws FenixServiceException
     {
         ISuportePersistente sp = null;

@@ -2,9 +2,24 @@
 <!-- @validation.doctype@ -->
 <form-validation>
     <formset>
-    	<!-- é para apagar este form assim que tivermos um form para inserir -->
-    	<form name="xxxxx">
-    		<field property="x1" depends="required"></field>
+    	<form name="createGrantOwnerForm">
+    		<field property="dateSendCGD" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+   				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="message.dateSendCGD" resource="true"/>
+				<var>
+           		  <var-name>datePattern</var-name>
+           		  <var-value>dd/MM/yyyy</var-value>
+        		</var>
+        		<var>
+           		  <var-name>mask</var-name>
+           		  <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        		</var>
+			</field>
+			<field property="cardCopyNumber" depends="integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="message.cardCopyNumber" resource="true"/>
+			</field>
     	</form>
     </formset>
 </form-validation>

@@ -11,6 +11,18 @@
 	<definition name="teacher-search-form" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/teacherSearch.do?method=searchForm"></put>
 	</definition>
+	<definition name="searchGrantOwnerForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/owner/searchGrantOwnerForm.jsp"></put>
+	</definition>
+	<definition name="searchGrantOwnerResult" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp"></put>
+	</definition>
+	<definition name="editGrantOwnerForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/owner/editGrantOwnerForm.jsp"></put>
+	</definition>
+	<definition name="manageGrantOwnerForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/owner/manageGrantOwnerForm.jsp"></put>
+	</definition>
 
 
 </tiles-definitions>

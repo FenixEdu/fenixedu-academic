@@ -133,12 +133,18 @@ public class CRUDActionByOID extends DispatchAction
     {
         CRUDMapping crudMapping = (CRUDMapping) mapping;
         InfoObject infoObject = populateInfoObjectFromForm(form, crudMapping);
-        Object[] args = { getOIDProperty(crudMapping, form), infoObject };
+        Object[] args = getEditServiceArguments(form, crudMapping, infoObject, request);
         ServiceUtils.executeService(
             SessionUtils.getUserView(request),
             crudMapping.getEditService(),
             args);
         return crudMapping.findForward("successfull-edit");
+    }
+
+    protected Object[] getEditServiceArguments(ActionForm form, CRUDMapping crudMapping, InfoObject infoObject, HttpServletRequest request)
+    {
+        Object[] args = { getOIDProperty(crudMapping, form), infoObject };
+        return args;
     }
 
     /**

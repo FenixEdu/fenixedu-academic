@@ -6,7 +6,11 @@
 	<%-- GRANT OWNER MANAGEMENT APPLICATIONS --%>
 	<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
 	<ul>
-		<li><bean:message key="link.create.grant.owner"/></li>
+		<li>
+			<html:link page="/searchGrantOwner.do?method=searchForm">
+		    	<bean:message key="link.create.grant.owner"/>
+		    </html:link>
+		</li>
 	</ul>
 	<br/>
 </logic:present>

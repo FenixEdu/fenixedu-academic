@@ -112,11 +112,11 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 		return person;
     }
     
-	public List readPersonByName(String name) throws ExcepcaoPersistencia {
+	public List findPersonByName(String name) throws ExcepcaoPersistencia {
 		List personList = null;
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("name",name);
+		criteria.addLike("name",name);
 		personList = queryList(Pessoa.class,criteria);
 		return personList;
 	}    

@@ -13,6 +13,52 @@
 				<form-property name="teacherNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
+			
+			<form-bean name="searchGrantOwnerForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="name" type="java.lang.String"/>
+				<form-property name="idNumber" type="java.lang.String"/>
+				<form-property name="idType" type="java.lang.Integer"/>
+			</form-bean>
+			
+			<form-bean name="editGrantOwnerForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<!-- Dados do bolseiro -->
+				<form-property name="dateSendCGD" type="java.lang.String"/>
+				<form-property name="cardCopyNumber" type="java.lang.String"/>
+				<!-- Dados da pessoa associada a bolseiro -->
+				<form-property name="name" type="java.lang.String"/>
+				<form-property name="idNumber" type="java.lang.String"/>				
+				<form-property name="idType" type="java.lang.Integer"/>				
+				<form-property name="idLocation" type="java.lang.String"/>				
+				<form-property name="idDate" type="java.lang.String"/>				
+				<form-property name="idValidDate" type="java.lang.String"/>				
+				<form-property name="birthdate" type="java.lang.String"/>				
+				<form-property name="fatherName" type="java.lang.String"/>				
+				<form-property name="motherName" type="java.lang.String"/>				
+				<form-property name="nationality" type="java.lang.String"/>												
+				<form-property name="country" type="java.lang.String"/>				
+				<form-property name="parishOfBirth" type="java.lang.String"/>				
+				<form-property name="districtSubBirth" type="java.lang.String"/>				
+				<form-property name="districtBirth" type="java.lang.String"/>				
+				<form-property name="address" type="java.lang.String"/>				
+				<form-property name="area" type="java.lang.String"/>				
+				<form-property name="areaCode" type="java.lang.String"/>				
+				<form-property name="areaOfAreaCode" type="java.lang.String"/>				
+				<form-property name="addressParish" type="java.lang.String"/>				
+				<form-property name="addressDistrictSub" type="java.lang.String"/>				
+				<form-property name="addressDistrict" type="java.lang.String"/>				
+				<form-property name="phone" type="java.lang.String"/>												
+				<form-property name="cellphone" type="java.lang.String"/>				
+				<form-property name="email" type="java.lang.String"/>				
+				<form-property name="homepage" type="java.lang.String"/>				
+				<form-property name="socialSecurityNumber" type="java.lang.String"/>				
+				<form-property name="profession" type="java.lang.String"/>				
+				<form-property name="fiscalCode" type="java.lang.String"/>								
+				<form-property name="sex" type="java.lang.Integer"/>				
+				<form-property name="maritalStatus" type="java.lang.Integer"/>								
+			</form-bean>
+			
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -55,7 +101,38 @@
    			<forward name="search-form" path="teacher-search-form"/>
   			<forward name="list-one" path="view-teacher-credits-sheet"/> 
     		<forward name="list-many" path="view-teachers-for-credits-sheet"/>
-	   	</action>
+    	</action>
+    <!-- ===================== USE CASE: SEARCH GRANT OWNER ============================== -->
+	<action path="/searchGrantOwner" 
+			input="/searchGrantOwner.do?page=0&amp;method=searchForm" 
+			name="searchGrantOwnerForm" 
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.owner.SearchGrantOwnerAction"
+   			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+			<set-property property="serviceName" value="SearchGrantOwner"/>
+  			<set-property property="objectAttribute" value="infoGrantOwner"/>
+  			<set-property property="listAttribute" value="infoGrantOwnerList"/>
+   			<set-property property="notFoundMessageKey" value="errors.grant.owner.not.found"/>
+   			<forward name="search-form" path="searchGrantOwnerForm"/>
+  			<forward name="list-one" path="searchGrantOwnerResult"/> 
+    		<forward name="list-many" path="searchGrantOwnerResult"/>
+    </action>
+	
+    <!-- ================================================================================= -->
+    <!-- ===================== USE CASE: CREATE GRANT OWNER ============================== -->
+	<action path="/editGrantOwner" 
+			input="/editGrantOwner.do?page=0&amp;method=prepareEditGrantOwnerForm" 
+			name="editGrantOwnerForm" 
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.owner.EditGrantOwnerAction">
+   			<forward name="edit-grant-owner-form" path="editGrantOwnerForm"/>
+   			<forward name="grant-owner-main" path="searchGrantOwnerForm"/>
+  			<forward name="manage-grant-owner-form" path="manageGrantOwnerForm"/> 
+    </action>
+
+    <!-- ================================================================================= -->
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

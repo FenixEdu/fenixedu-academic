@@ -77,7 +77,7 @@ public class SearchGrantOwner implements IServico {
 			//Search by name IF search by ID has failed
 			if (person == null) {
 				if (name != null)
-					personList = persistentPerson.readPersonByName(name);
+					personList = persistentPerson.findPersonByName(name);
 			} else
 				personList.add(person);
 
@@ -102,7 +102,6 @@ public class SearchGrantOwner implements IServico {
 					grantOwnerList.add(newInfoGrantOwner);
 				}
 			}
-			else grantOwnerList = null;
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
