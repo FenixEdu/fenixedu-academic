@@ -15,6 +15,12 @@ public class CurricularCourseType {
 	public static final int TFC_COURSE = 4;
 	public static final int TRAINING_COURSE = 5;
 	public static final int LABORATORY_COURSE = 6; 
+	public static final int M_TYPE_COURSE = 7; 
+	public static final int P_TYPE_COURSE = 8; 
+	public static final int DM_TYPE_COURSE = 9; 
+	public static final int A_TYPE_COURSE = 10; 
+	public static final int ML_TYPE_COURSE = 11; 
+	
 
 	public static final CurricularCourseType NORMAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.NORMAL_COURSE);
 	public static final CurricularCourseType OPTIONAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE);
@@ -22,6 +28,11 @@ public class CurricularCourseType {
 	public static final CurricularCourseType TFC_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.TFC_COURSE);
 	public static final CurricularCourseType TRAINING_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.TRAINING_COURSE);
 	public static final CurricularCourseType LABORATORY_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.LABORATORY_COURSE);
+	public static final CurricularCourseType M_TYPE_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.M_TYPE_COURSE);
+	public static final CurricularCourseType P_TYPE_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.P_TYPE_COURSE);
+	public static final CurricularCourseType DM_TYPE_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.DM_TYPE_COURSE);
+	public static final CurricularCourseType A_TYPE_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.A_TYPE_COURSE);
+	public static final CurricularCourseType ML_TYPE_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.ML_TYPE_COURSE);
 
 	private Integer type;
 
@@ -77,6 +88,22 @@ public class CurricularCourseType {
 			case LABORATORY_COURSE:
 				valueS = "LABORATORY_COURSE";
 				break;
+			case M_TYPE_COURSE:
+				valueS = "M_TYPE_COURSE";
+				break;
+			case P_TYPE_COURSE:
+				valueS = "P_TYPE_COURSE";
+				break;
+			case DM_TYPE_COURSE:
+				valueS = "DM_TYPE_COURSE";
+				break;
+			case A_TYPE_COURSE:
+				valueS = "A_TYPE_COURSE";
+				break;
+			case ML_TYPE_COURSE:
+				valueS = "ML_TYPE_COURSE";
+				break;
+				
 			default:
 				break;
 		}
