@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  **/
 
-public class InfoSection {
+public class InfoSection implements Comparable {
 	private Integer internalCode;
     protected String name;
     protected Integer sectionOrder;
@@ -274,6 +274,13 @@ public class InfoSection {
 	 */
 	public void setSectionDepth(Integer depth) {
 		this.sectionDepth = depth;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object arg0) {		
+		return ((InfoSection)arg0).getSectionOrder().intValue();
 	}
 
 }
