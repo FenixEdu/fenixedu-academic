@@ -115,5 +115,13 @@ public class InfoCurriculum {
 		}
 		return result;
 	}
-
+	public String toString() {
+			String result = "[INFOCURRICULUM";
+			result += ", getGeneralObjectives=" + getGeneralObjectives();
+			result += ", getOperacionalObjectives=" + getOperacionalObjectives();
+			result += ", getProgram=" + getProgram();
+			result += ", getInfoExecutionCourse=" + getInfoExecutionCourse();
+			result += "]";
+			return result;
+		}
 }

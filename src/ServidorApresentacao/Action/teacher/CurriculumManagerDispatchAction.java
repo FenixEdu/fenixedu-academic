@@ -77,11 +77,12 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession();
 		DynaActionForm objectivesForm = (DynaActionForm) form;
+		
 		InfoCurriculum oldCurriculum =
 			(InfoCurriculum) session.getAttribute(
 				SessionConstants.EXECUTION_COURSE_CURRICULUM);
 		InfoCurriculum newCurriculum = new InfoCurriculum();
-		BeanUtils.copyProperties(oldCurriculum, newCurriculum);
+		BeanUtils.copyProperties(newCurriculum,oldCurriculum );
 		newCurriculum.setGeneralObjectives(
 			(String) objectivesForm.get("generalObjectives"));
 		newCurriculum.setOperacionalObjectives(
@@ -89,7 +90,10 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		Object args[] = { oldCurriculum, newCurriculum };
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		
+		System.out.println("################################");
+		System.out.println("oldCurriculum: "+oldCurriculum);
+		System.out.println("newCurriculum: "+newCurriculum);
+		System.out.println("################################");
 			GestorServicos serviceManager = GestorServicos.manager();
 			InfoCurriculum curriculumView =
 				(InfoCurriculum) serviceManager.executar(

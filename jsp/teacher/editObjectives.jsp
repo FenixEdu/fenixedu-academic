@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <span class="error"><html:errors/></span>	
-<html:form action="/programManagerDA">
+<html:form action="/objectivesManagerDA">
 		
 	<html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives" >
 	</html:text>
