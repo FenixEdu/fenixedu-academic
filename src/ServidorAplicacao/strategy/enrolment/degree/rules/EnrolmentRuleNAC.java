@@ -10,7 +10,6 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -24,7 +23,6 @@ public class EnrolmentRuleNAC implements IEnrolmentRule {
 
 		SuportePersistenteOJB persistentSupport = null;
 		IPersistentCurricularCourse persistentCurricularCourse = null;
-		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 		IStudentCurricularPlan studentCurricularPlan = null;
 		
 		IBranch branch = null;
@@ -33,12 +31,8 @@ public class EnrolmentRuleNAC implements IEnrolmentRule {
 
 		persistentSupport = SuportePersistenteOJB.getInstance();
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 		
-		studentCurricularPlan =
-					persistentStudentCurricularPlan.readActiveStudentCurricularPlan(
-						enrolmentContext.getStudent().getNumber(),
-						enrolmentContext.getStudent().getDegreeType());
+		studentCurricularPlan = enrolmentContext.getStudentActiveCurricularPlan();
 				
 		branch = studentCurricularPlan.getBranch();
 

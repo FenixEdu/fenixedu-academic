@@ -11,7 +11,6 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -24,7 +23,6 @@ public class EnrolmentRuleBranch implements IEnrolmentRule {
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
 
 		SuportePersistenteOJB persistentSupport = null;
-		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 		IPersistentBranch persistentBranch = null;
 
@@ -37,14 +35,11 @@ public class EnrolmentRuleBranch implements IEnrolmentRule {
 		List curricularCoursesFromStudentCurricularPlan = new ArrayList();
 
 		persistentSupport = SuportePersistenteOJB.getInstance();
-		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
+
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		persistentBranch = persistentSupport.getIPersistentBranch();
 
-		studentCurricularPlan =
-			persistentStudentCurricularPlan.readActiveStudentCurricularPlan(
-				enrolmentContext.getStudent().getNumber(),
-				enrolmentContext.getStudent().getDegreeType());
+		studentCurricularPlan = enrolmentContext.getStudentActiveCurricularPlan();
 				
 		withBranch = studentCurricularPlan.getBranch();
 		coursesWithBranch = persistentCurricularCourse.readAllCurricularCoursesByBranch(withBranch);
