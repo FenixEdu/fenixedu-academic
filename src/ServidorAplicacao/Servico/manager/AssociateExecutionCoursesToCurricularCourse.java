@@ -62,7 +62,7 @@ public class AssociateExecutionCoursesToCurricularCourse implements IServico {
 					throw new NonExistingServiceException();
 					
 				List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-				List curricularCourses;
+		
 				
 				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseId), false);
 				if(executionCourse == null)
