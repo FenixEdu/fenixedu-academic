@@ -1815,7 +1815,6 @@ public class Flexivel implements IStrategyHorarios {
 		MarcacaoPonto saida = null;
 
 		long saldo = ((Long)listaSaldos.get(0)).longValue();
-
 		long intervaloRefeicao = 0;
 
 		ListIterator iterador = listaMarcacoesPonto.listIterator();
@@ -1835,13 +1834,14 @@ public class Flexivel implements IStrategyHorarios {
 			} else if (entrada.getData().getTime() == horario.getFimRefeicao().getTime()) {
 				intervaloRefeicao = entrada.getData().getTime() - horario.getInicioRefeicao().getTime();
 			} else {
-				if (listaMarcacoesPonto.size() >= 3) {
+				if (listaMarcacoesPonto.size() >= 3) { //com mais de três marcações
+					// se no intervalo de uma saida do dia com uma entrada está contida no intervalo de refeicao é como se
+					// a pessoa tivesse feito a refeicao nesse intervalo
 					while (iterador.hasNext()) {
 						saida = (MarcacaoPonto)iterador.next();
-						// se existe uma saida e uma entrada
 						if (iterador.hasNext()) {
-
 							entrada = (MarcacaoPonto)iterador.next();
+							
 							// testar a saida
 							if (saida.getData().getTime() >= horario.getInicioRefeicao().getTime()
 								&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
@@ -1879,10 +1879,9 @@ public class Flexivel implements IStrategyHorarios {
 				} else {
 					// valor que seja diferente de zero para o caso de duas marcacoes que nao estao contidas no intervalo de refeicao.
 					// neste caso nao desconta a hora de refeicao
-					if ((listaMarcacoesPonto.size() == 2)) {
+					if ((listaMarcacoesPonto.size() == 2)) { //apenas com duas marcaçoes
 						saida = (MarcacaoPonto)iterador.next();
-						// se existe uma saida e uma entrada
-
+						
 						if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
 							&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
 							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
@@ -1898,7 +1897,8 @@ public class Flexivel implements IStrategyHorarios {
 				&& intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
 				&& intervaloRefeicao != 0) {
 				saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
-			} else if (
+			}
+			 else if (
 				intervaloRefeicao < horario.getIntervaloMinimoRefeicao().getTime()
 					|| intervaloRefeicao == 0) {
 				if (listaParamJustificacoes.size() > 0) {
@@ -1951,6 +1951,7 @@ public class Flexivel implements IStrategyHorarios {
 			while (iterador.hasNext()) {
 				entrada = (MarcacaoPonto)iterador.next();
 				if (iterador.hasNext()) {
+
 
 					saida = (MarcacaoPonto)iterador.next();
 
@@ -2096,7 +2097,8 @@ public class Flexivel implements IStrategyHorarios {
 			listaSaldos.set(8, new Long(saldoPrimEscalao));
 			listaSaldos.set(9, new Long(saldoSegEscalao));
 			listaSaldos.set(10, new Long(saldoDepoisSegEscalao));
-	
+			
+
 			//calculo do trabalho extraordinário diurno
 			saldoExtraordinario = ((Long)listaSaldos.get(0)).longValue() - saldoExtraordinario;
 
@@ -2125,6 +2127,15 @@ public class Flexivel implements IStrategyHorarios {
 		}
 	} /* calcularHorasExtraorinarias */
 
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+		long saldo = saida - entrada;
+
+//		if (saldo > Constants.MAX_TRABALHO_FLEXIVEL)
+//			return Constants.MAX_TRABALHO_FLEXIVEL;
+//		else
+			return saldo;
+	}/* limitaTrabalhoSeguido */
+	
 	public long duracaoPF(Horario horario, ArrayList listaRegimes) {
 		if (!listaRegimes.contains(Constants.IPF)) {
 			return Constants.PLATAFORMAS_FIXAS_FLEXIVEL;

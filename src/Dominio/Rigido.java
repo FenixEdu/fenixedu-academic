@@ -16,10 +16,7 @@ public class Rigido implements IStrategyHorarios {
 		return null;
 	} /* validateAssociarHorario */
 
-	public ActionErrors validateAssociarHorarioTipo(
-		ActionForm form,
-		HorarioTipo horarioTipo,
-		ArrayList listaRegimes) {
+	public ActionErrors validateAssociarHorarioTipo(ActionForm form, HorarioTipo horarioTipo, ArrayList listaRegimes) {
 		return null;
 	} /* validateAssociarHorarioTipo */
 
@@ -62,10 +59,7 @@ public class Rigido implements IStrategyHorarios {
 		return null;
 	} /* descricaoHorario */
 
-	public String descricaoHorarioTipo(
-		Locale locale,
-		HorarioTipo horarioTipo,
-		ArrayList listaRegimes) {
+	public String descricaoHorarioTipo(Locale locale, HorarioTipo horarioTipo, ArrayList listaRegimes) {
 		return null;
 	} /* descricaoHorarioTipo */
 
@@ -81,18 +75,16 @@ public class Rigido implements IStrategyHorarios {
 		ArrayList listaSaldos) {
 	} /* setSaldosHorarioVerbeteBody */
 
-	public long calcularTrabalhoNocturno(
-		Horario horario,
-		MarcacaoPonto entrada,
-		MarcacaoPonto saida) {
+	public long calcularTrabalhoNocturno(Horario horario, MarcacaoPonto entrada, MarcacaoPonto saida) {
 		return 0;
 	} /* calcularTrabalhoNocturno */
 
-	public void calcularHorasExtraordinarias(
-		Horario horario,
-		ArrayList listaMarcacoesPonto,
-		ArrayList listaSaldos) {
+	public void calcularHorasExtraordinarias(Horario horario, ArrayList listaMarcacoesPonto, ArrayList listaSaldos) {
 	} /* calcularHorasExtraorinarias */
+
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+		return 0;
+	} /* limitaTrabalhoSeguido */
 
 	public long duracaoPF(Horario horario, ArrayList listaRegimes) {
 		return 0;

@@ -74,22 +74,15 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		// Duracao semanal 
 		if (formHorario.getDuracaoSemanal().length() < 1) {
-			errors.add(
-				"DuracaoSemanal-HJornadaContinua",
-				new ActionError("error.duracaoSemanal.obrigatoria"));
+			errors.add("DuracaoSemanal-HJornadaContinua", new ActionError("error.duracaoSemanal.obrigatoria"));
 		} else {
 			try {
-				duracaoSemanal =
-					(new Float(formHorario.getDuracaoSemanal())).floatValue();
+				duracaoSemanal = (new Float(formHorario.getDuracaoSemanal())).floatValue();
 			} catch (java.lang.NumberFormatException e) {
-				errors.add(
-					"numero",
-					new ActionError("error.numero.naoInteiro"));
+				errors.add("numero", new ActionError("error.numero.naoInteiro"));
 			}
 			if (duracaoSemanal != Constants.DURACAO_SEMANAL_JORNADA) {
-				errors.add(
-					"DuracaoSemanal-HJornadaContnua",
-					new ActionError("error.duracaoSemanal"));
+				errors.add("DuracaoSemanal-HJornadaContnua", new ActionError("error.duracaoSemanal"));
 			}
 		}
 
@@ -98,83 +91,41 @@ public class JornadaContinua implements IStrategyHorarios {
 				|| (formHorario.getInicioExpedienteMinutos().length() < 1)
 				|| (formHorario.getFimExpedienteHoras().length() < 1)
 				|| (formHorario.getFimExpedienteMinutos().length() < 1)) {
-				errors.add(
-					"Expediente",
-					new ActionError("error.Expediente.obrigatorio"));
+				errors.add("Expediente", new ActionError("error.Expediente.obrigatorio"));
 			} else {
 				try {
-					inicioExpedienteHoras =
-						(new Integer(formHorario.getInicioExpedienteHoras()))
-							.intValue();
-					inicioExpedienteMinutos =
-						(new Integer(formHorario.getInicioExpedienteMinutos()))
-							.intValue();
-					fimExpedienteHoras =
-						(new Integer(formHorario.getFimExpedienteHoras()))
-							.intValue();
-					fimExpedienteMinutos =
-						(new Integer(formHorario.getFimExpedienteMinutos()))
-							.intValue();
+					inicioExpedienteHoras = (new Integer(formHorario.getInicioExpedienteHoras())).intValue();
+					inicioExpedienteMinutos = (new Integer(formHorario.getInicioExpedienteMinutos())).intValue();
+					fimExpedienteHoras = (new Integer(formHorario.getFimExpedienteHoras())).intValue();
+					fimExpedienteMinutos = (new Integer(formHorario.getFimExpedienteMinutos())).intValue();
 				} catch (java.lang.NumberFormatException e) {
-					errors.add(
-						"numero",
-						new ActionError("error.numero.naoInteiro"));
+					errors.add("numero", new ActionError("error.numero.naoInteiro"));
 				}
 
 				calendar.clear();
 				if (formHorario.getDiaAnteriorExpediente().length() < 1) {
-					calendar.set(
-						1970,
-						0,
-						1,
-						inicioExpedienteHoras,
-						inicioExpedienteMinutos,
-						00);
+					calendar.set(1970, 0, 1, inicioExpedienteHoras, inicioExpedienteMinutos, 00);
 					timeInicioExpediente = calendar.getTimeInMillis();
 				} else {
 					//contagem no dia anterior
-					calendar.set(
-						1969,
-						11,
-						31,
-						inicioExpedienteHoras,
-						inicioExpedienteMinutos,
-						00);
+					calendar.set(1969, 11, 31, inicioExpedienteHoras, inicioExpedienteMinutos, 00);
 					timeInicioExpediente = calendar.getTimeInMillis();
 				}
 
 				calendar.clear();
 				if (formHorario.getDiaSeguinteExpediente().length() < 1) {
-					calendar.set(
-						1970,
-						0,
-						1,
-						fimExpedienteHoras,
-						fimExpedienteMinutos,
-						00);
+					calendar.set(1970, 0, 1, fimExpedienteHoras, fimExpedienteMinutos, 00);
 					timeFimExpediente = calendar.getTimeInMillis();
 				} else {
 					//contagem no dia seguinte
-					calendar.set(
-						1970,
-						0,
-						2,
-						fimExpedienteHoras,
-						fimExpedienteMinutos,
-						00);
+					calendar.set(1970, 0, 2, fimExpedienteHoras, fimExpedienteMinutos, 00);
 					timeFimExpediente = calendar.getTimeInMillis();
 				}
 
 				if (!(timeInicioExpediente < timeFimExpediente)) {
-					errors.add(
-						"Expediente",
-						new ActionError("error.Expediente"));
-				} else if (
-					(timeInicioExpediente < Constants.EXPEDIENTE_MINIMO)
-						|| (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
-					errors.add(
-						"Expediente",
-						new ActionError("error.Expediente"));
+					errors.add("Expediente", new ActionError("error.Expediente"));
+				} else if ((timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
+					errors.add("Expediente", new ActionError("error.Expediente"));
 				}
 			}
 
@@ -182,24 +133,18 @@ public class JornadaContinua implements IStrategyHorarios {
 				|| (formHorario.getInicioRefeicaoMinutos().length() > 0)
 				|| (formHorario.getFimRefeicaoHoras().length() > 0)
 				|| (formHorario.getFimRefeicaoMinutos().length() > 0)) {
-				errors.add(
-					"Intervalo de Refeicao",
-					new ActionError("error.refeicao.naoPermitido"));
+				errors.add("Intervalo de Refeicao", new ActionError("error.refeicao.naoPermitido"));
 			}
 			if ((formHorario.getIntervaloMinimoHoras().length() > 0)
 				|| (formHorario.getIntervaloMinimoMinutos().length() > 0)
 				|| (formHorario.getDescontoObrigatorioHoras().length() > 0)
 				|| (formHorario.getDescontoObrigatorioMinutos().length() > 0)) {
-				errors.add(
-					"Intervalo de Refeicao",
-					new ActionError("error.refeicao.intervaloEDesconto.nãoPermitidos"));
+				errors.add("Intervalo de Refeicao", new ActionError("error.refeicao.intervaloEDesconto.nãoPermitidos"));
 			}
 
 			// regime 
 			if (formHorario.getRegime().length < 0) {
-				errors.add(
-					"regime",
-					new ActionError("error.regime.obrigatorio"));
+				errors.add("regime", new ActionError("error.regime.obrigatorio"));
 			} else {
 				listaRegime = Arrays.asList(formHorario.getRegime());
 
@@ -208,124 +153,67 @@ public class JornadaContinua implements IStrategyHorarios {
 					|| (formHorario.getInicioHN1Minutos().length() < 1)
 					|| (formHorario.getFimHN1Horas().length() < 1)
 					|| (formHorario.getFimHN1Minutos().length() < 1)) {
-					errors.add(
-						"HorarioNormal",
-						new ActionError("error.HorarioNormal1.obrigatorio"));
+					errors.add("HorarioNormal", new ActionError("error.HorarioNormal1.obrigatorio"));
 				} else {
 					if (!((formHorario.getInicioHN2Horas().length() < 1)
 						|| (formHorario.getInicioHN2Minutos().length() < 1)
 						|| (formHorario.getFimHN2Horas().length() < 1)
 						|| (formHorario.getFimHN2Minutos().length() < 1))) {
-						errors.add(
-							"HorarioNormal",
-							new ActionError("error.HorarioNormal2.naoPermitido"));
+						errors.add("HorarioNormal", new ActionError("error.HorarioNormal2.naoPermitido"));
 					}
 					try {
-						inicioHN1Horas =
-							(new Integer(formHorario.getInicioHN1Horas()))
-								.intValue();
-						inicioHN1Minutos =
-							(new Integer(formHorario.getInicioHN1Minutos()))
-								.intValue();
-						fimHN1Horas =
-							(new Integer(formHorario.getFimHN1Horas()))
-								.intValue();
-						fimHN1Minutos =
-							(new Integer(formHorario.getFimHN1Minutos()))
-								.intValue();
+						inicioHN1Horas = (new Integer(formHorario.getInicioHN1Horas())).intValue();
+						inicioHN1Minutos = (new Integer(formHorario.getInicioHN1Minutos())).intValue();
+						fimHN1Horas = (new Integer(formHorario.getFimHN1Horas())).intValue();
+						fimHN1Minutos = (new Integer(formHorario.getFimHN1Minutos())).intValue();
 					} catch (java.lang.NumberFormatException e) {
-						errors.add(
-							"numero",
-							new ActionError("error.numero.naoInteiro"));
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
 					}
 
 					calendar.clear();
 					if (formHorario.getDiaAnteriorHN1().length() < 1) {
-						calendar.set(
-							1970,
-							0,
-							1,
-							inicioHN1Horas,
-							inicioHN1Minutos,
-							00);
+						calendar.set(1970, 0, 1, inicioHN1Horas, inicioHN1Minutos, 00);
 					} else {
 						// contagem no dia anterior
-						calendar.set(
-							1969,
-							11,
-							31,
-							inicioHN1Horas,
-							inicioHN1Minutos,
-							00);
+						calendar.set(1969, 11, 31, inicioHN1Horas, inicioHN1Minutos, 00);
 					}
 					timeInicioHN1 = calendar.getTimeInMillis();
 
 					calendar.clear();
 					if (formHorario.getDiaSeguinteHN1().length() < 1) {
-						calendar.set(
-							1970,
-							0,
-							1,
-							fimHN1Horas,
-							fimHN1Minutos,
-							00);
+						calendar.set(1970, 0, 1, fimHN1Horas, fimHN1Minutos, 00);
 					} else {
 						// contagem no dia seguinte
-						calendar.set(
-							1970,
-							0,
-							2,
-							fimHN1Horas,
-							fimHN1Minutos,
-							00);
+						calendar.set(1970, 0, 2, fimHN1Horas, fimHN1Minutos, 00);
 					}
 					timeFimHN1 = calendar.getTimeInMillis();
 
 					if (timeInicioExpediente != 0) {
 						if (!(timeInicioExpediente < timeInicioHN1)) {
-							errors.add(
-								"ExpedienteHN",
-								new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
+							errors.add("ExpedienteHN", new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
 						}
 					}
 
 					if (timeFimExpediente != 0) {
 						if (!(timeFimExpediente > timeFimHN1)) {
-							errors.add(
-								"ExpedienteHN",
-								new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
+							errors.add("ExpedienteHN", new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
 						}
 					}
 
 					if (!(timeInicioHN1 < timeFimHN1)) {
-						errors.add(
-							"HN",
-							new ActionError("error.HorarioNormal"));
+						errors.add("HN", new ActionError("error.HorarioNormal"));
 					} else {
 						// 1 periodo de trabalho de 6 horas 
 						timeHNPeriodo =
-							((new Float(Constants.DURACAO_SEMANAL_JORNADA
-								/ Constants.SEMANA_TRABALHO_JORNADA)
-								.intValue()
-								* 3600
-								* 1000)
+							((new Float(Constants.DURACAO_SEMANAL_JORNADA / Constants.SEMANA_TRABALHO_JORNADA).intValue() * 3600 * 1000)
 								+ new Float(
-									(new Float(Constants
-										.DURACAO_SEMANAL_JORNADA
-										/ Constants.SEMANA_TRABALHO_JORNADA)
-										.floatValue()
-										- new Float(
-											Constants.DURACAO_SEMANAL_JORNADA
-												/ Constants
-													.SEMANA_TRABALHO_JORNADA)
-											.intValue())
+									(new Float(Constants.DURACAO_SEMANAL_JORNADA / Constants.SEMANA_TRABALHO_JORNADA).floatValue()
+										- new Float(Constants.DURACAO_SEMANAL_JORNADA / Constants.SEMANA_TRABALHO_JORNADA).intValue())
 										* 3600
 										* 1000)
 									.longValue());
 						if (!((timeFimHN1 - timeInicioHN1) == timeHNPeriodo)) {
-							errors.add(
-								"HNPeriodo",
-								new ActionError("error.HorarioNormal.duracao"));
+							errors.add("HNPeriodo", new ActionError("error.HorarioNormal.duracao"));
 						}
 					}
 				}
@@ -340,9 +228,7 @@ public class JornadaContinua implements IStrategyHorarios {
 						|| (formHorario.getInicioPF2Minutos().length() > 0)
 						|| (formHorario.getFimPF2Horas().length() > 0)
 						|| (formHorario.getFimPF2Minutos().length() > 0)) {
-						errors.add(
-							"periodoFixo",
-							new ActionError("error.PeriodoFixo.naoPermitido"));
+						errors.add("periodoFixo", new ActionError("error.PeriodoFixo.naoPermitido"));
 					}
 				} else {
 					// sem isencao de periodo fixo 
@@ -350,93 +236,49 @@ public class JornadaContinua implements IStrategyHorarios {
 						|| (formHorario.getInicioPF2Minutos().length() > 0)
 						|| (formHorario.getFimPF2Horas().length() > 0)
 						|| (formHorario.getFimPF2Minutos().length() > 0)) {
-						errors.add(
-							"HorarioNormal",
-							new ActionError("error.PeriodoFixo2.naoPermitido"));
+						errors.add("HorarioNormal", new ActionError("error.PeriodoFixo2.naoPermitido"));
 					}
 
 					if ((formHorario.getInicioPF1Horas().length() < 1)
 						|| (formHorario.getInicioPF1Minutos().length() < 1)
 						|| (formHorario.getFimPF1Horas().length() < 1)
 						|| (formHorario.getFimPF1Minutos().length() < 1)) {
-						errors.add(
-							"HorarioNormal",
-							new ActionError("error.PeriodoFixo1.obrigatorio"));
+						errors.add("HorarioNormal", new ActionError("error.PeriodoFixo1.obrigatorio"));
 					} else {
 						try {
-							inicioPF1Horas =
-								(new Integer(formHorario.getInicioPF1Horas()))
-									.intValue();
-							inicioPF1Minutos =
-								(new Integer(formHorario
-									.getInicioPF1Minutos()))
-									.intValue();
-							fimPF1Horas =
-								(new Integer(formHorario.getFimPF1Horas()))
-									.intValue();
-							fimPF1Minutos =
-								(new Integer(formHorario.getFimPF1Minutos()))
-									.intValue();
+							inicioPF1Horas = (new Integer(formHorario.getInicioPF1Horas())).intValue();
+							inicioPF1Minutos = (new Integer(formHorario.getInicioPF1Minutos())).intValue();
+							fimPF1Horas = (new Integer(formHorario.getFimPF1Horas())).intValue();
+							fimPF1Minutos = (new Integer(formHorario.getFimPF1Minutos())).intValue();
 						} catch (java.lang.NumberFormatException e) {
-							errors.add(
-								"numero",
-								new ActionError("error.numero.naoInteiro"));
+							errors.add("numero", new ActionError("error.numero.naoInteiro"));
 						}
 
 						calendar.clear();
 						if (formHorario.getDiaAnteriorPF1().length() < 1) {
-							calendar.set(
-								1970,
-								0,
-								1,
-								inicioPF1Horas,
-								inicioPF1Minutos,
-								00);
+							calendar.set(1970, 0, 1, inicioPF1Horas, inicioPF1Minutos, 00);
 						} else {
 							// contagem no dia anterior
-							calendar.set(
-								1969,
-								11,
-								31,
-								inicioPF1Horas,
-								inicioPF1Minutos,
-								00);
+							calendar.set(1969, 11, 31, inicioPF1Horas, inicioPF1Minutos, 00);
 						}
 						timeInicioPF1 = calendar.getTimeInMillis();
 
 						calendar.clear();
 						if (formHorario.getDiaSeguintePF1().length() < 1) {
-							calendar.set(
-								1970,
-								0,
-								1,
-								fimPF1Horas,
-								fimPF1Minutos,
-								00);
+							calendar.set(1970, 0, 1, fimPF1Horas, fimPF1Minutos, 00);
 						} else {
 							// contagem no dia seguinte
-							calendar.set(
-								1970,
-								0,
-								2,
-								fimPF1Horas,
-								fimPF1Minutos,
-								00);
+							calendar.set(1970, 0, 2, fimPF1Horas, fimPF1Minutos, 00);
 						}
 						timeFimPF1 = calendar.getTimeInMillis();
 
 						if (!(timeInicioPF1 < timeFimPF1)) {
-							errors.add(
-								"PF",
-								new ActionError("error.PeriodoFixo"));
+							errors.add("PF", new ActionError("error.PeriodoFixo"));
 						} else {
 							// 1 periodos fixo de 4 horas.
 							timePFPeriodo = Constants.PLATAFORMAS_FIXAS_JORNADA;
-							if (!((timeFimPF1 - timeInicioPF1)
-								== timePFPeriodo)) {
-								errors.add(
-									"PFPeriodo",
-									new ActionError("error.PeriodoFixo.duracao"));
+							if (!((timeFimPF1 - timeInicioPF1) == timePFPeriodo)) {
+								errors.add("PFPeriodo", new ActionError("error.PeriodoFixo.duracao"));
 							}
 
 							/* ATENCAO: no horario da JC pode-se adiar e atrasar
@@ -449,11 +291,8 @@ public class JornadaContinua implements IStrategyHorarios {
 							  errors.add("HNPF",   new ActionError("error.PeriodoFixo.adiamento"));
 							}*/
 
-							if (!((timeInicioHN1 <= timeInicioPF1)
-								&& (timeFimPF1 <= timeFimHN1))) {
-								errors.add(
-									"HNPF",
-									new ActionError("error.HorarioNormalPeriodoFixo.inconsistentes"));
+							if (!((timeInicioHN1 <= timeInicioPF1) && (timeFimPF1 <= timeFimHN1))) {
+								errors.add("HNPF", new ActionError("error.HorarioNormalPeriodoFixo.inconsistentes"));
 							}
 						}
 					}
@@ -473,40 +312,21 @@ public class JornadaContinua implements IStrategyHorarios {
 					|| (formHorario.getDiaFim().length() < 1)
 					|| (formHorario.getMesFim().length() < 1)
 					|| (formHorario.getAnoFim().length() < 1)) {
-					errors.add(
-						"datasValidade",
-						new ActionError("error.dataValidade.obrigatoria"));
+					errors.add("datasValidade", new ActionError("error.dataValidade.obrigatoria"));
 				} else {
 					try {
-						diaInicio =
-							(new Integer(formHorario.getDiaInicio()))
-								.intValue();
-						mesInicio =
-							(new Integer(formHorario.getMesInicio()))
-								.intValue();
-						anoInicio =
-							(new Integer(formHorario.getAnoInicio()))
-								.intValue();
-						diaFim =
-							(new Integer(formHorario.getDiaFim())).intValue();
-						mesFim =
-							(new Integer(formHorario.getMesFim())).intValue();
-						anoFim =
-							(new Integer(formHorario.getAnoFim())).intValue();
+						diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+						mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+						anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+						diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+						mesFim = (new Integer(formHorario.getMesFim())).intValue();
+						anoFim = (new Integer(formHorario.getAnoFim())).intValue();
 					} catch (java.lang.NumberFormatException e) {
-						errors.add(
-							"numero",
-							new ActionError("error.numero.naoInteiro"));
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
 					}
 
 					calendar.clear();
-					calendar.set(
-						anoInicio,
-						mesInicio - 1,
-						diaInicio,
-						00,
-						00,
-						00);
+					calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 					java.util.Date dataInicio = calendar.getTime();
 
 					calendar.clear();
@@ -515,15 +335,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 					if (!formHorario.isExcepcaoHorario()) {
 						if (!(dataInicio.getTime() < dataFim.getTime())) {
-							errors.add(
-								"datasValidade",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datasValidade", new ActionError("error.dataValidade.incorrecta"));
 						}
 					} else {
 						if (!(dataInicio.getTime() <= dataFim.getTime())) {
-							errors.add(
-								"datasValidade",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datasValidade", new ActionError("error.dataValidade.incorrecta"));
 						}
 					}
 				}
@@ -534,10 +350,7 @@ public class JornadaContinua implements IStrategyHorarios {
 		return errors;
 	} /* validateAssociarHorario	*/
 
-	public ActionErrors validateAssociarHorarioTipo(
-		ActionForm form,
-		HorarioTipo horarioTipo,
-		ArrayList listaRegimes) {
+	public ActionErrors validateAssociarHorarioTipo(ActionForm form, HorarioTipo horarioTipo, ArrayList listaRegimes) {
 		ActionErrors errors = new ActionErrors();
 
 		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm) form;
@@ -566,40 +379,21 @@ public class JornadaContinua implements IStrategyHorarios {
 					|| (formHorario.getDiaFim().length() < 1)
 					|| (formHorario.getMesFim().length() < 1)
 					|| (formHorario.getAnoFim().length() < 1)) {
-					errors.add(
-						"datasValidade",
-						new ActionError("error.dataValidade.obrigatoria"));
+					errors.add("datasValidade", new ActionError("error.dataValidade.obrigatoria"));
 				} else {
 					try {
-						diaInicio =
-							(new Integer(formHorario.getDiaInicio()))
-								.intValue();
-						mesInicio =
-							(new Integer(formHorario.getMesInicio()))
-								.intValue();
-						anoInicio =
-							(new Integer(formHorario.getAnoInicio()))
-								.intValue();
-						diaFim =
-							(new Integer(formHorario.getDiaFim())).intValue();
-						mesFim =
-							(new Integer(formHorario.getMesFim())).intValue();
-						anoFim =
-							(new Integer(formHorario.getAnoFim())).intValue();
+						diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+						mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+						anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+						diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+						mesFim = (new Integer(formHorario.getMesFim())).intValue();
+						anoFim = (new Integer(formHorario.getAnoFim())).intValue();
 					} catch (java.lang.NumberFormatException e) {
-						errors.add(
-							"numero",
-							new ActionError("error.numero.naoInteiro"));
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
 					}
 
 					calendar.clear();
-					calendar.set(
-						anoInicio,
-						mesInicio - 1,
-						diaInicio,
-						00,
-						00,
-						00);
+					calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 					java.util.Date dataInicio = calendar.getTime();
 
 					calendar.clear();
@@ -608,23 +402,17 @@ public class JornadaContinua implements IStrategyHorarios {
 
 					if (!formHorario.isExcepcaoHorario()) {
 						if (!(dataInicio.getTime() < dataFim.getTime())) {
-							errors.add(
-								"datasValidade",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datasValidade", new ActionError("error.dataValidade.incorrecta"));
 						}
 					} else {
 						if (!(dataInicio.getTime() <= dataFim.getTime())) {
-							errors.add(
-								"datasValidade",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datasValidade", new ActionError("error.dataValidade.incorrecta"));
 						}
 					}
 				}
 			}
 		} catch (java.lang.IllegalArgumentException e) {
-			errors.add(
-				"horasData",
-				new ActionError("error.dataValidade.incorrecta"));
+			errors.add("horasData", new ActionError("error.dataValidade.incorrecta"));
 		}
 		return errors;
 	} /* validateAssociarHorarioTipo */
@@ -635,8 +423,7 @@ public class JornadaContinua implements IStrategyHorarios {
 		List listaRegime = null;
 
 		horario.setModalidade(formHorario.getModalidade());
-		horario.setDuracaoSemanal(
-			(new Float(formHorario.getDuracaoSemanal())).floatValue());
+		horario.setDuracaoSemanal((new Float(formHorario.getDuracaoSemanal())).floatValue());
 
 		if ((formHorario.getNumDias() == null)
 			|| (formHorario.getPosicao() == null)
@@ -645,10 +432,8 @@ public class JornadaContinua implements IStrategyHorarios {
 			horario.setNumDias(5);
 			horario.setPosicao(2);
 		} else {
-			horario.setNumDias(
-				Integer.valueOf(formHorario.getNumDias()).intValue());
-			horario.setPosicao(
-				Integer.valueOf(formHorario.getPosicao()).intValue());
+			horario.setNumDias(Integer.valueOf(formHorario.getNumDias()).intValue());
+			horario.setPosicao(Integer.valueOf(formHorario.getPosicao()).intValue());
 		}
 
 		// Expediente 
@@ -658,26 +443,20 @@ public class JornadaContinua implements IStrategyHorarios {
 				1970,
 				0,
 				1,
-				(new Integer(formHorario.getInicioExpedienteHoras()))
-					.intValue(),
-				(new Integer(formHorario.getInicioExpedienteMinutos()))
-					.intValue(),
+				(new Integer(formHorario.getInicioExpedienteHoras())).intValue(),
+				(new Integer(formHorario.getInicioExpedienteMinutos())).intValue(),
 				00);
-			horario.setInicioExpediente(
-				new Timestamp(calendar.getTimeInMillis()));
+			horario.setInicioExpediente(new Timestamp(calendar.getTimeInMillis()));
 		} else {
 			//contagem no dia anterior
 			calendar.set(
 				1969,
 				11,
 				31,
-				(new Integer(formHorario.getInicioExpedienteHoras()))
-					.intValue(),
-				(new Integer(formHorario.getInicioExpedienteMinutos()))
-					.intValue(),
+				(new Integer(formHorario.getInicioExpedienteHoras())).intValue(),
+				(new Integer(formHorario.getInicioExpedienteMinutos())).intValue(),
 				00);
-			horario.setInicioExpediente(
-				new Timestamp(calendar.getTimeInMillis()));
+			horario.setInicioExpediente(new Timestamp(calendar.getTimeInMillis()));
 		}
 
 		calendar.clear();
@@ -747,9 +526,7 @@ public class JornadaContinua implements IStrategyHorarios {
 		horario.setFimHN1(new Timestamp(calendar.getTimeInMillis()));
 
 		// Data de Validade 
-		if ((formHorario.getDiaInicio() != null)
-			&& (formHorario.getMesInicio() != null)
-			&& (formHorario.getAnoInicio() != null)) {
+		if ((formHorario.getDiaInicio() != null) && (formHorario.getMesInicio() != null) && (formHorario.getAnoInicio() != null)) {
 			if ((formHorario.getDiaInicio().length() > 0)
 				&& (formHorario.getMesInicio().length() > 0)
 				&& (formHorario.getAnoInicio().length() > 0)) {
@@ -764,9 +541,7 @@ public class JornadaContinua implements IStrategyHorarios {
 				horario.setDataInicio(calendar.getTime());
 			}
 		}
-		if ((formHorario.getDiaFim() != null)
-			&& (formHorario.getMesFim() != null)
-			&& (formHorario.getAnoFim() != null)) {
+		if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
 			if ((formHorario.getDiaFim().length() > 0)
 				&& (formHorario.getMesFim().length() > 0)
 				&& (formHorario.getAnoFim().length() > 0)) {
@@ -863,9 +638,7 @@ public class JornadaContinua implements IStrategyHorarios {
 			00);
 		horario.setDataInicio(calendar.getTime());
 
-		if ((formHorario.getDiaFim().length() > 0)
-			&& (formHorario.getMesFim().length() > 0)
-			&& (formHorario.getAnoFim().length() > 0)) {
+		if ((formHorario.getDiaFim().length() > 0) && (formHorario.getMesFim().length() > 0) && (formHorario.getAnoFim().length() > 0)) {
 			calendar.clear();
 			calendar.set(
 				(new Integer(formHorario.getAnoFim())).intValue(),
@@ -892,26 +665,20 @@ public class JornadaContinua implements IStrategyHorarios {
 		formHorario.setExcepcaoHorario(isExcepcaoHorario);
 
 		formHorario.setNome(pessoa.getNome());
-		formHorario.setNumMecanografico(
-			(new Integer(funcionario.getNumeroMecanografico())).toString());
+		formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
 
-		formHorario.setDuracaoSemanal(
-			(new Integer((new Float(horario.getDuracaoSemanal())).intValue()))
-				.toString());
+		formHorario.setDuracaoSemanal((new Integer((new Float(horario.getDuracaoSemanal())).intValue())).toString());
 		formHorario.setModalidade(horario.getModalidade());
 
 		formHorario.setListaRegimes(listaRegime);
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getInicioExpediente()).getTime());
-		formHorario.setInicioExpedienteHoras(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setInicioExpedienteHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setInicioExpedienteMinutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioExpedienteMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setInicioExpedienteMinutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioExpedienteMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Anterior
@@ -920,14 +687,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getFimExpediente()).getTime());
-		formHorario.setFimExpedienteHoras(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setFimExpedienteHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setFimExpedienteMinutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimExpedienteMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setFimExpedienteMinutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimExpedienteMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Seguinte
@@ -936,14 +700,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getInicioHN1()).getTime());
-		formHorario.setInicioHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setInicioHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setInicioHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setInicioHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Anterior
@@ -952,14 +713,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getFimHN1()).getTime());
-		formHorario.setFimHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setFimHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setFimHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setFimHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Seguinte
@@ -973,36 +731,25 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTime(horario.getDataInicio());
-		formHorario.setDiaInicio(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesInicio(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoInicio(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaInicio((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesInicio((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoInicio((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		calendar.clear();
 		calendar.setTime(horario.getDataFim());
-		formHorario.setDiaFim(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesFim(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoFim(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaFim((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesFim((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoFim((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		if (!listaRegime.contains(Constants.IPF)) {
 			//Regime: new String("isencaoPeriodoFixo")
 			calendar.clear();
 			calendar.setTimeInMillis((horario.getInicioPF1()).getTime());
-			formHorario.setInicioPF1Horas(
-				(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			formHorario.setInicioPF1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
-				formHorario.setInicioPF1Minutos(
-					"0"
-						+ (new Integer(calendar.get(Calendar.MINUTE)))
-							.toString());
+				formHorario.setInicioPF1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 			} else {
-				formHorario.setInicioPF1Minutos(
-					(new Integer(calendar.get(Calendar.MINUTE))).toString());
+				formHorario.setInicioPF1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
 			if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 				//contagem no Dia Anterior
@@ -1011,16 +758,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 			calendar.clear();
 			calendar.setTimeInMillis((horario.getFimPF1()).getTime());
-			formHorario.setFimPF1Horas(
-				(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			formHorario.setFimPF1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
-				formHorario.setFimPF1Minutos(
-					"0"
-						+ (new Integer(calendar.get(Calendar.MINUTE)))
-							.toString());
+				formHorario.setFimPF1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 			} else {
-				formHorario.setFimPF1Minutos(
-					(new Integer(calendar.get(Calendar.MINUTE))).toString());
+				formHorario.setFimPF1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
 			if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 				//contagem no Dia Seguinte
@@ -1058,21 +800,16 @@ public class JornadaContinua implements IStrategyHorarios {
 		Horario horario,
 		ArrayList listaRegime,
 		boolean isExcepcaoHorario) {
-		AssociarHorarioTipoConfirmarForm formHorario =
-			(AssociarHorarioTipoConfirmarForm) form;
+		AssociarHorarioTipoConfirmarForm formHorario = (AssociarHorarioTipoConfirmarForm) form;
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
 
 		formHorario.setExcepcaoHorario(isExcepcaoHorario);
 
 		formHorario.setNome(pessoa.getNome());
-		formHorario.setNumMecanografico(
-			(new Integer(funcionario.getNumeroMecanografico())).toString());
+		formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
 
-		formHorario.setDuracaoSemanal(
-			(new Integer((new Float(horarioTipo.getDuracaoSemanal()))
-				.intValue()))
-				.toString());
+		formHorario.setDuracaoSemanal((new Integer((new Float(horarioTipo.getDuracaoSemanal())).intValue())).toString());
 		formHorario.setModalidade(horarioTipo.getModalidade());
 		formHorario.setSigla(horarioTipo.getSigla());
 
@@ -1080,14 +817,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getInicioHN1()).getTime());
-		formHorario.setInicioHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setInicioHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setInicioHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setInicioHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Anterior
@@ -1096,14 +830,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getFimHN1()).getTime());
-		formHorario.setFimHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setFimHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setFimHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setFimHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Seguinte
@@ -1117,36 +848,25 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTime(horario.getDataInicio());
-		formHorario.setDiaInicio(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesInicio(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoInicio(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaInicio((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesInicio((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoInicio((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		calendar.clear();
 		calendar.setTime(horario.getDataFim());
-		formHorario.setDiaFim(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesFim(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoFim(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaFim((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesFim((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoFim((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		if (!listaRegime.contains(Constants.IPF)) {
 			//Regime: new String("isencaoPeriodoFixo")
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getInicioPF1()).getTime());
-			formHorario.setInicioPF1Horas(
-				(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			formHorario.setInicioPF1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
-				formHorario.setInicioPF1Minutos(
-					"0"
-						+ (new Integer(calendar.get(Calendar.MINUTE)))
-							.toString());
+				formHorario.setInicioPF1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 			} else {
-				formHorario.setInicioPF1Minutos(
-					(new Integer(calendar.get(Calendar.MINUTE))).toString());
+				formHorario.setInicioPF1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
 			if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 				//contagem no Dia Anterior
@@ -1155,16 +875,11 @@ public class JornadaContinua implements IStrategyHorarios {
 
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getFimPF1()).getTime());
-			formHorario.setFimPF1Horas(
-				(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			formHorario.setFimPF1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
-				formHorario.setFimPF1Minutos(
-					"0"
-						+ (new Integer(calendar.get(Calendar.MINUTE)))
-							.toString());
+				formHorario.setFimPF1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 			} else {
-				formHorario.setFimPF1Minutos(
-					(new Integer(calendar.get(Calendar.MINUTE))).toString());
+				formHorario.setFimPF1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
 			if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 				//contagem no Dia Seguinte
@@ -1193,13 +908,9 @@ public class JornadaContinua implements IStrategyHorarios {
 		formHorario.setFimRefeicaoMinutos("--");
 	} /* setFormAssociarHorarioTipoConfirmar */
 
-	public String descricaoHorario(
-		Locale locale,
-		Horario horario,
-		ArrayList listaRegimes) {
+	public String descricaoHorario(Locale locale, Horario horario, ArrayList listaRegimes) {
 		String descricao = null;
-		ResourceBundle bundle =
-			ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
+		ResourceBundle bundle = ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
 		Calendar calendar = Calendar.getInstance();
 
 		String inicioHN1Horas = null;
@@ -1234,46 +945,28 @@ public class JornadaContinua implements IStrategyHorarios {
 		// Periodos Normais 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getInicioHN1()).getTime());
-		inicioHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		inicioHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			inicioHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			inicioHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getFimHN1()).getTime());
-		fimHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		fimHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			fimHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			fimHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
-		descricao =
-			descricao.concat(
-				" "
-					+ inicioHN1Horas
-					+ ":"
-					+ inicioHN1Minutos
-					+ " - "
-					+ fimHN1Horas
-					+ ":"
-					+ fimHN1Minutos);
+		descricao = descricao.concat(" " + inicioHN1Horas + ":" + inicioHN1Minutos + " - " + fimHN1Horas + ":" + fimHN1Minutos);
 
 		return descricao;
 	} /* descricaoHorario */
 
-	public String descricaoHorarioTipo(
-		Locale locale,
-		HorarioTipo horarioTipo,
-		ArrayList listaRegimes) {
+	public String descricaoHorarioTipo(Locale locale, HorarioTipo horarioTipo, ArrayList listaRegimes) {
 		String descricao = null;
 		Calendar calendar = Calendar.getInstance();
 		String inicioPF1Horas = null;
@@ -1281,56 +974,32 @@ public class JornadaContinua implements IStrategyHorarios {
 		String fimPF1Horas = null;
 		String fimPF1Minutos = null;
 
-		descricao =
-			new String(
-				(new Float(horarioTipo.getDuracaoSemanal())).intValue()
-					+ " horas ");
+		descricao = new String((new Float(horarioTipo.getDuracaoSemanal())).intValue() + " horas ");
 
 		if (!listaRegimes.contains(Constants.IPF)) {
 			//Regime: new String("isencaoPeriodoFixo")
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getInicioPF1()).getTime());
-			inicioPF1Horas =
-				((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			inicioPF1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
-				inicioPF1Minutos =
-					("0"
-						+ (new Integer(calendar.get(Calendar.MINUTE)))
-							.toString());
+				inicioPF1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 			} else {
-				inicioPF1Minutos =
-					((new Integer(calendar.get(Calendar.MINUTE))).toString());
+				inicioPF1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
 
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getFimPF1()).getTime());
-			fimPF1Horas =
-				((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			fimPF1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
-				fimPF1Minutos =
-					("0"
-						+ (new Integer(calendar.get(Calendar.MINUTE)))
-							.toString());
+				fimPF1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 			} else {
-				fimPF1Minutos =
-					((new Integer(calendar.get(Calendar.MINUTE))).toString());
+				fimPF1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
 
-			descricao =
-				descricao.concat(
-					" ("
-						+ inicioPF1Horas
-						+ ":"
-						+ inicioPF1Minutos
-						+ " - "
-						+ fimPF1Horas
-						+ ":"
-						+ fimPF1Minutos
-						+ ")");
+			descricao = descricao.concat(" (" + inicioPF1Horas + ":" + inicioPF1Minutos + " - " + fimPF1Horas + ":" + fimPF1Minutos + ")");
 		}
 
-		ResourceBundle bundle =
-			ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
+		ResourceBundle bundle = ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
 		ListIterator iterListaRegimes = listaRegimes.listIterator();
 		String regime = null;
 		String auxRegime = null;
@@ -1359,36 +1028,23 @@ public class JornadaContinua implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getInicioHN1()).getTime());
-		inicioHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		inicioHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			inicioHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			inicioHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getFimHN1()).getTime());
-		fimHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		fimHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			fimHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			fimHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
-		periodoTrabalho =
-			inicioHN1Horas
-				+ ":"
-				+ inicioHN1Minutos
-				+ " - "
-				+ fimHN1Horas
-				+ ":"
-				+ fimHN1Minutos;
+		periodoTrabalho = inicioHN1Horas + ":" + inicioHN1Minutos + " - " + fimHN1Horas + ":" + fimHN1Minutos;
 
 		return periodoTrabalho;
 	} /* periodoTrabalhoHorarioTipo */
@@ -1400,18 +1056,11 @@ public class JornadaContinua implements IStrategyHorarios {
 		ArrayList listaMarcacoesPonto,
 		ArrayList listaSaldos) {
 		// saldo do horario normal 
-		Float duracaoDiaria =
-			new Float(
-				horario.getDuracaoSemanal()
-					/ Constants.SEMANA_TRABALHO_JORNADA);
+		Float duracaoDiaria = new Float(horario.getDuracaoSemanal() / Constants.SEMANA_TRABALHO_JORNADA);
 		long saldo =
 			((Long) listaSaldos.get(0)).longValue()
 				- (duracaoDiaria.intValue() * 3600 * 1000
-					+ new Float(
-						(duracaoDiaria.floatValue() - duracaoDiaria.intValue())
-							* 3600
-							* 1000)
-						.longValue());
+					+ new Float((duracaoDiaria.floatValue() - duracaoDiaria.intValue()) * 3600 * 1000).longValue());
 
 		listaSaldos.set(0, new Long(saldo));
 
@@ -1429,96 +1078,49 @@ public class JornadaContinua implements IStrategyHorarios {
 					saida = (MarcacaoPonto) iterador.next();
 
 					// primeiro periodo fixo
-					if (entrada.getData().getTime()
-						>= horario.getInicioPF1().getTime()
-						&& entrada.getData().getTime()
-							<= horario.getFimPF1().getTime()) {
-						trabalhouPF =
-							trabalhouPF
-								+ (horario.getFimPF1().getTime()
-									- entrada.getData().getTime());
-					} else if (
-						entrada.getData().getTime()
-							< horario.getInicioPF1().getTime()) {
-						trabalhouPF =
-							trabalhouPF
-								+ (horario.getFimPF1().getTime()
-									- horario.getInicioPF1().getTime());
+					if (entrada.getData().getTime() >= horario.getInicioPF1().getTime()
+						&& entrada.getData().getTime() <= horario.getFimPF1().getTime()) {
+						trabalhouPF = trabalhouPF + (horario.getFimPF1().getTime() - entrada.getData().getTime());
+					} else if (entrada.getData().getTime() < horario.getInicioPF1().getTime()) {
+						trabalhouPF = trabalhouPF + (horario.getFimPF1().getTime() - horario.getInicioPF1().getTime());
 					}
-					if (saida.getData().getTime()
-						>= horario.getInicioPF1().getTime()
-						&& saida.getData().getTime()
-							<= horario.getFimPF1().getTime()) {
-						trabalhouPF =
-							trabalhouPF
-								+ (saida.getData().getTime()
-									- horario.getFimPF1().getTime());
-					} else if (
-						saida.getData().getTime()
-							< horario.getInicioPF1().getTime()) {
-						trabalhouPF =
-							trabalhouPF
-								- (horario.getFimPF1().getTime()
-									- horario.getInicioPF1().getTime());
+					if (saida.getData().getTime() >= horario.getInicioPF1().getTime()
+						&& saida.getData().getTime() <= horario.getFimPF1().getTime()) {
+						trabalhouPF = trabalhouPF + (saida.getData().getTime() - horario.getFimPF1().getTime());
+					} else if (saida.getData().getTime() < horario.getInicioPF1().getTime()) {
+						trabalhouPF = trabalhouPF - (horario.getFimPF1().getTime() - horario.getInicioPF1().getTime());
 					}
 				}
 			}
 
-			long saldoInjust =
-				trabalhouPF
-					- (horario.getFimPF1().getTime()
-						- horario.getInicioPF1().getTime());
+			long saldoInjust = trabalhouPF - (horario.getFimPF1().getTime() - horario.getInicioPF1().getTime());
 
 			listaSaldos.set(1, new Long(saldoInjust));
 		}
 	} /* setSaldosHorarioVerbeteBody */
 
-	public long calcularTrabalhoNocturno(
-		Horario horario,
-		MarcacaoPonto entrada,
-		MarcacaoPonto saida) {
+	public long calcularTrabalhoNocturno(Horario horario, MarcacaoPonto entrada, MarcacaoPonto saida) {
 		long saldoNocturno = 0;
 
 		// calculo do trabalho nocturno normal para os horario que ultrapassem o inicio do trabalho nocturno
-		if (horario.getFimHN1().getTime()
-			>= Constants.INICIO_TRABALHO_NOCTURNO) {
-			if (entrada.getData().getTime()
-				>= Constants.INICIO_TRABALHO_NOCTURNO
+		if (horario.getFimHN1().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO) {
+			if (entrada.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
 				&& entrada.getData().getTime() <= horario.getFimHN1().getTime()) {
-				saldoNocturno =
-					saldoNocturno
-						+ (horario.getFimHN1().getTime()
-							- entrada.getData().getTime());
-			} else if (
-				entrada.getData().getTime()
-					< Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno =
-					saldoNocturno
-						+ (horario.getFimHN1().getTime()
-							- Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno + (horario.getFimHN1().getTime() - entrada.getData().getTime());
+			} else if (entrada.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno + (horario.getFimHN1().getTime() - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
 			if (saida.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
 				&& saida.getData().getTime() <= horario.getFimHN1().getTime()) {
-				saldoNocturno =
-					saldoNocturno
-						+ (saida.getData().getTime()
-							- horario.getFimHN1().getTime());
-			} else if (
-				saida.getData().getTime()
-					< Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno =
-					saldoNocturno
-						- (horario.getFimHN1().getTime()
-							- Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno + (saida.getData().getTime() - horario.getFimHN1().getTime());
+			} else if (saida.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno - (horario.getFimHN1().getTime() - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
 		}
 		return saldoNocturno;
 	} /* calcularTrabalhoNocturno */
 
-	public void calcularHorasExtraordinarias(
-		Horario horario,
-		ArrayList listaMarcacoesPonto,
-		ArrayList listaSaldos) {
+	public void calcularHorasExtraordinarias(Horario horario, ArrayList listaMarcacoesPonto, ArrayList listaSaldos) {
 		if (listaMarcacoesPonto.size() > 0) {
 			ListIterator iteradorMarcacoes = listaMarcacoesPonto.listIterator();
 			MarcacaoPonto entrada = null;
@@ -1536,62 +1138,38 @@ public class JornadaContinua implements IStrategyHorarios {
 				if (iteradorMarcacoes.hasNext()) {
 					saida = (MarcacaoPonto) iteradorMarcacoes.next();
 
-					if (horario.getFimHN1().getTime()
-						> Constants.INICIO_TRABALHO_NOCTURNO) {
+					if (horario.getFimHN1().getTime() > Constants.INICIO_TRABALHO_NOCTURNO) {
 						fimHorario = horario.getFimHN1().getTime();
 					} else {
 						fimHorario = Constants.INICIO_TRABALHO_NOCTURNO;
 					}
 
 					// calculo do trabalho extraordinário nocturno
-					if (entrada.getData().getTime() >= fimHorario
-						&& entrada.getData().getTime()
-							<= Constants.FIM_TRABALHO_NOCTURNO) {
-						saldoExtraordinario =
-							saldoExtraordinario
-								+ (Constants.FIM_TRABALHO_NOCTURNO
-									- entrada.getData().getTime());
+					if (entrada.getData().getTime() >= fimHorario && entrada.getData().getTime() <= Constants.FIM_TRABALHO_NOCTURNO) {
+						saldoExtraordinario = saldoExtraordinario + (Constants.FIM_TRABALHO_NOCTURNO - entrada.getData().getTime());
 					} else if (entrada.getData().getTime() < fimHorario) {
-						saldoExtraordinario =
-							saldoExtraordinario
-								+ (Constants.FIM_TRABALHO_NOCTURNO - fimHorario);
+						saldoExtraordinario = saldoExtraordinario + (Constants.FIM_TRABALHO_NOCTURNO - fimHorario);
 					}
-					if (saida.getData().getTime() >= fimHorario
-						&& saida.getData().getTime()
-							<= Constants.FIM_TRABALHO_NOCTURNO) {
-						saldoExtraordinario =
-							saldoExtraordinario
-								+ (saida.getData().getTime()
-									- Constants.FIM_TRABALHO_NOCTURNO);
+					if (saida.getData().getTime() >= fimHorario && saida.getData().getTime() <= Constants.FIM_TRABALHO_NOCTURNO) {
+						saldoExtraordinario = saldoExtraordinario + (saida.getData().getTime() - Constants.FIM_TRABALHO_NOCTURNO);
 					} else if (saida.getData().getTime() < fimHorario) {
-						saldoExtraordinario =
-							saldoExtraordinario
-								- (Constants.FIM_TRABALHO_NOCTURNO - fimHorario);
+						saldoExtraordinario = saldoExtraordinario - (Constants.FIM_TRABALHO_NOCTURNO - fimHorario);
 					}
 				}
 			}
-			if (saldoExtraordinario
-				> ((Long) listaSaldos.get(0)).longValue()) {
+			if (saldoExtraordinario > ((Long) listaSaldos.get(0)).longValue()) {
 				saldoExtraordinario = ((Long) listaSaldos.get(0)).longValue();
 			}
 			//calculo dos escalões do trabalho extraordinário nocturno
 			if (saldoExtraordinario <= Constants.PRIMEIRO_ESCALAO) {
 				saldoPrimEscalao = saldoPrimEscalao + saldoExtraordinario;
 			} else {
-				saldoPrimEscalao =
-					saldoPrimEscalao + Constants.PRIMEIRO_ESCALAO;
+				saldoPrimEscalao = saldoPrimEscalao + Constants.PRIMEIRO_ESCALAO;
 				if (saldoExtraordinario <= Constants.SEGUNDO_ESCALAO) {
-					saldoSegEscalao =
-						saldoSegEscalao
-							+ (saldoExtraordinario - Constants.PRIMEIRO_ESCALAO);
+					saldoSegEscalao = saldoSegEscalao + (saldoExtraordinario - Constants.PRIMEIRO_ESCALAO);
 				} else {
-					saldoSegEscalao =
-						saldoSegEscalao
-							+ (Constants.SEGUNDO_ESCALAO
-								- Constants.PRIMEIRO_ESCALAO);
-					saldoDepoisSegEscalao =
-						saldoDepoisSegEscalao
-							+ (saldoExtraordinario - Constants.SEGUNDO_ESCALAO);
+					saldoSegEscalao = saldoSegEscalao + (Constants.SEGUNDO_ESCALAO - Constants.PRIMEIRO_ESCALAO);
+					saldoDepoisSegEscalao = saldoDepoisSegEscalao + (saldoExtraordinario - Constants.SEGUNDO_ESCALAO);
 				}
 			}
 
@@ -1600,8 +1178,7 @@ public class JornadaContinua implements IStrategyHorarios {
 			listaSaldos.set(10, new Long(saldoDepoisSegEscalao));
 
 			//calculo do trabalho extraordinário diurno
-			saldoExtraordinario =
-				((Long) listaSaldos.get(0)).longValue() - saldoExtraordinario;
+			saldoExtraordinario = ((Long) listaSaldos.get(0)).longValue() - saldoExtraordinario;
 
 			saldoPrimEscalao = 0;
 			saldoSegEscalao = 0;
@@ -1610,20 +1187,12 @@ public class JornadaContinua implements IStrategyHorarios {
 			if (saldoExtraordinario <= Constants.PRIMEIRO_ESCALAO) {
 				saldoPrimEscalao = saldoPrimEscalao + saldoExtraordinario;
 			} else {
-				saldoPrimEscalao =
-					saldoPrimEscalao + Constants.PRIMEIRO_ESCALAO;
+				saldoPrimEscalao = saldoPrimEscalao + Constants.PRIMEIRO_ESCALAO;
 				if (saldoExtraordinario <= Constants.SEGUNDO_ESCALAO) {
-					saldoSegEscalao =
-						saldoSegEscalao
-							+ (saldoExtraordinario - Constants.PRIMEIRO_ESCALAO);
+					saldoSegEscalao = saldoSegEscalao + (saldoExtraordinario - Constants.PRIMEIRO_ESCALAO);
 				} else {
-					saldoSegEscalao =
-						saldoSegEscalao
-							+ (Constants.SEGUNDO_ESCALAO
-								- Constants.PRIMEIRO_ESCALAO);
-					saldoDepoisSegEscalao =
-						saldoDepoisSegEscalao
-							+ (saldoExtraordinario - Constants.SEGUNDO_ESCALAO);
+					saldoSegEscalao = saldoSegEscalao + (Constants.SEGUNDO_ESCALAO - Constants.PRIMEIRO_ESCALAO);
+					saldoDepoisSegEscalao = saldoDepoisSegEscalao + (saldoExtraordinario - Constants.SEGUNDO_ESCALAO);
 				}
 			}
 
@@ -1632,6 +1201,12 @@ public class JornadaContinua implements IStrategyHorarios {
 			listaSaldos.set(4, new Long(saldoDepoisSegEscalao));
 		}
 	} /* calcularHorasExtraorinarias */
+
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+		long saldo = saida - entrada;
+
+		return saldo;
+	} /* limitaTrabalhoSeguido */
 
 	public long duracaoPF(Horario horario, ArrayList listaRegimes) {
 		if (!listaRegimes.contains(Constants.IPF)) {
@@ -1642,19 +1217,10 @@ public class JornadaContinua implements IStrategyHorarios {
 
 	public long duracaoDiaria(Horario horario) {
 		return (
-			(new Float(Constants.DURACAO_SEMANAL_JORNADA
-				/ Constants.SEMANA_TRABALHO_JORNADA)
-				.intValue()
-				* 3600
-				* 1000)
+			(new Float(Constants.DURACAO_SEMANAL_JORNADA / Constants.SEMANA_TRABALHO_JORNADA).intValue() * 3600 * 1000)
 				+ new Float(
-					(new Float(Constants.DURACAO_SEMANAL_JORNADA
-						/ Constants.SEMANA_TRABALHO_JORNADA)
-						.floatValue()
-						- new Float(
-							Constants.DURACAO_SEMANAL_JORNADA
-								/ Constants.SEMANA_TRABALHO_JORNADA)
-							.intValue())
+					(new Float(Constants.DURACAO_SEMANAL_JORNADA / Constants.SEMANA_TRABALHO_JORNADA).floatValue()
+						- new Float(Constants.DURACAO_SEMANAL_JORNADA / Constants.SEMANA_TRABALHO_JORNADA).intValue())
 						* 3600
 						* 1000)
 					.longValue());

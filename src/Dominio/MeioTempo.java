@@ -65,22 +65,15 @@ public class MeioTempo implements IStrategyHorarios {
 		int anoFim = 0;
 
 		if (formHorario.getDuracaoSemanal().length() < 1) {
-			errors.add(
-				"DuracaoSemanal-MeioTempo",
-				new ActionError("error.duracaoSemanal.obrigatoria"));
+			errors.add("DuracaoSemanal-MeioTempo", new ActionError("error.duracaoSemanal.obrigatoria"));
 		} else {
 			try {
-				duracaoSemanal =
-					(new Float(formHorario.getDuracaoSemanal())).floatValue();
+				duracaoSemanal = (new Float(formHorario.getDuracaoSemanal())).floatValue();
 			} catch (java.lang.NumberFormatException e) {
-				errors.add(
-					"numero",
-					new ActionError("error.numero.naoInteiro"));
+				errors.add("numero", new ActionError("error.numero.naoInteiro"));
 			}
 			if (duracaoSemanal != Constants.DURACAO_SEMANAL_MEIOTEMPO) {
-				errors.add(
-					"DuracaoSemanal-MeioTempo",
-					new ActionError("error.duracaoSemanal"));
+				errors.add("DuracaoSemanal-MeioTempo", new ActionError("error.duracaoSemanal"));
 			}
 		}
 
@@ -89,83 +82,41 @@ public class MeioTempo implements IStrategyHorarios {
 				|| (formHorario.getInicioExpedienteMinutos().length() < 1)
 				|| (formHorario.getFimExpedienteHoras().length() < 1)
 				|| (formHorario.getFimExpedienteMinutos().length() < 1)) {
-				errors.add(
-					"Expediente",
-					new ActionError("error.Expediente.obrigatorio"));
+				errors.add("Expediente", new ActionError("error.Expediente.obrigatorio"));
 			} else {
 				try {
-					inicioExpedienteHoras =
-						(new Integer(formHorario.getInicioExpedienteHoras()))
-							.intValue();
-					inicioExpedienteMinutos =
-						(new Integer(formHorario.getInicioExpedienteMinutos()))
-							.intValue();
-					fimExpedienteHoras =
-						(new Integer(formHorario.getFimExpedienteHoras()))
-							.intValue();
-					fimExpedienteMinutos =
-						(new Integer(formHorario.getFimExpedienteMinutos()))
-							.intValue();
+					inicioExpedienteHoras = (new Integer(formHorario.getInicioExpedienteHoras())).intValue();
+					inicioExpedienteMinutos = (new Integer(formHorario.getInicioExpedienteMinutos())).intValue();
+					fimExpedienteHoras = (new Integer(formHorario.getFimExpedienteHoras())).intValue();
+					fimExpedienteMinutos = (new Integer(formHorario.getFimExpedienteMinutos())).intValue();
 				} catch (java.lang.NumberFormatException e) {
-					errors.add(
-						"numero",
-						new ActionError("error.numero.naoInteiro"));
+					errors.add("numero", new ActionError("error.numero.naoInteiro"));
 				}
 
 				calendar.clear();
 				if (formHorario.getDiaAnteriorExpediente().length() < 1) {
-					calendar.set(
-						1970,
-						0,
-						1,
-						inicioExpedienteHoras,
-						inicioExpedienteMinutos,
-						00);
+					calendar.set(1970, 0, 1, inicioExpedienteHoras, inicioExpedienteMinutos, 00);
 					timeInicioExpediente = calendar.getTimeInMillis();
 				} else {
 					//contagem no dia anterior
-					calendar.set(
-						1969,
-						11,
-						31,
-						inicioExpedienteHoras,
-						inicioExpedienteMinutos,
-						00);
+					calendar.set(1969, 11, 31, inicioExpedienteHoras, inicioExpedienteMinutos, 00);
 					timeInicioExpediente = calendar.getTimeInMillis();
 				}
 
 				calendar.clear();
 				if (formHorario.getDiaSeguinteExpediente().length() < 1) {
-					calendar.set(
-						1970,
-						0,
-						1,
-						fimExpedienteHoras,
-						fimExpedienteMinutos,
-						00);
+					calendar.set(1970, 0, 1, fimExpedienteHoras, fimExpedienteMinutos, 00);
 					timeFimExpediente = calendar.getTimeInMillis();
 				} else {
 					//contagem no dia seguinte
-					calendar.set(
-						1970,
-						0,
-						2,
-						fimExpedienteHoras,
-						fimExpedienteMinutos,
-						00);
+					calendar.set(1970, 0, 2, fimExpedienteHoras, fimExpedienteMinutos, 00);
 					timeFimExpediente = calendar.getTimeInMillis();
 				}
 
 				if (!(timeInicioExpediente < timeFimExpediente)) {
-					errors.add(
-						"Expediente",
-						new ActionError("error.Expediente"));
-				} else if (
-					(timeInicioExpediente < Constants.EXPEDIENTE_MINIMO)
-						|| (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
-					errors.add(
-						"Expediente",
-						new ActionError("error.Expediente"));
+					errors.add("Expediente", new ActionError("error.Expediente"));
+				} else if ((timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
+					errors.add("Expediente", new ActionError("error.Expediente"));
 				}
 			}
 
@@ -177,9 +128,7 @@ public class MeioTempo implements IStrategyHorarios {
 				|| (formHorario.getIntervaloMinimoMinutos().length() > 0)
 				|| (formHorario.getDescontoObrigatorioHoras().length() > 0)
 				|| (formHorario.getDescontoObrigatorioMinutos().length() > 0)) {
-				errors.add(
-					"Intervalo de Refeicao",
-					new ActionError("error.refeicao.naoObrigatorio"));
+				errors.add("Intervalo de Refeicao", new ActionError("error.refeicao.naoObrigatorio"));
 			}
 
 			// Horario normal	
@@ -187,46 +136,23 @@ public class MeioTempo implements IStrategyHorarios {
 				|| (formHorario.getInicioHN1Minutos().length() < 1)
 				|| (formHorario.getFimHN1Horas().length() < 1)
 				|| (formHorario.getFimHN1Minutos().length() < 1)) {
-				errors.add(
-					"HorarioNormal",
-					new ActionError("error.HorarioNormal1.obrigatorio"));
+				errors.add("HorarioNormal", new ActionError("error.HorarioNormal1.obrigatorio"));
 			} else {
 				try {
-					inicioHN1Horas =
-						(new Integer(formHorario.getInicioHN1Horas()))
-							.intValue();
-					inicioHN1Minutos =
-						(new Integer(formHorario.getInicioHN1Minutos()))
-							.intValue();
-					fimHN1Horas =
-						(new Integer(formHorario.getFimHN1Horas())).intValue();
-					fimHN1Minutos =
-						(new Integer(formHorario.getFimHN1Minutos()))
-							.intValue();
+					inicioHN1Horas = (new Integer(formHorario.getInicioHN1Horas())).intValue();
+					inicioHN1Minutos = (new Integer(formHorario.getInicioHN1Minutos())).intValue();
+					fimHN1Horas = (new Integer(formHorario.getFimHN1Horas())).intValue();
+					fimHN1Minutos = (new Integer(formHorario.getFimHN1Minutos())).intValue();
 				} catch (java.lang.NumberFormatException e) {
-					errors.add(
-						"numero",
-						new ActionError("error.numero.naoInteiro"));
+					errors.add("numero", new ActionError("error.numero.naoInteiro"));
 				}
 
 				calendar.clear();
 				if (formHorario.getDiaAnteriorHN1().length() < 1) {
-					calendar.set(
-						1970,
-						0,
-						1,
-						inicioHN1Horas,
-						inicioHN1Minutos,
-						00);
+					calendar.set(1970, 0, 1, inicioHN1Horas, inicioHN1Minutos, 00);
 				} else {
 					// contagem no dia anterior
-					calendar.set(
-						1969,
-						11,
-						31,
-						inicioHN1Horas,
-						inicioHN1Minutos,
-						00);
+					calendar.set(1969, 11, 31, inicioHN1Horas, inicioHN1Minutos, 00);
 				}
 				timeInicioHN1 = calendar.getTimeInMillis();
 
@@ -241,17 +167,13 @@ public class MeioTempo implements IStrategyHorarios {
 
 				if (timeInicioExpediente != 0) {
 					if (!(timeInicioExpediente < timeInicioHN1)) {
-						errors.add(
-							"ExpedienteHN",
-							new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
+						errors.add("ExpedienteHN", new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
 					}
 				}
 
 				if (timeFimExpediente != 0) {
 					if (!(timeFimExpediente > timeFimHN1)) {
-						errors.add(
-							"ExpedienteHN",
-							new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
+						errors.add("ExpedienteHN", new ActionError("error.ExpedienteHorarioNormal.inconsistentes"));
 					}
 				}
 
@@ -260,27 +182,15 @@ public class MeioTempo implements IStrategyHorarios {
 				} else {
 					// 1 periodo de trabalho de 3,5 horas 
 					timeHNPeriodo =
-						((new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO
-							/ Constants.SEMANA_TRABALHO_MEIOTEMPO)
-							.intValue()
-							* 3600
-							* 1000)
+						((new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO / Constants.SEMANA_TRABALHO_MEIOTEMPO).intValue() * 3600 * 1000)
 							+ new Float(
-								(new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO
-									/ Constants.SEMANA_TRABALHO_MEIOTEMPO)
-									.floatValue()
-									- new Float(
-										Constants.DURACAO_SEMANAL_MEIOTEMPO
-											/ Constants
-												.SEMANA_TRABALHO_MEIOTEMPO)
-										.intValue())
+								(new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO / Constants.SEMANA_TRABALHO_MEIOTEMPO).floatValue()
+									- new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO / Constants.SEMANA_TRABALHO_MEIOTEMPO).intValue())
 									* 3600
 									* 1000)
 								.longValue());
 					if (!((timeFimHN1 - timeInicioHN1) == timeHNPeriodo)) {
-						errors.add(
-							"HNPeriodo",
-							new ActionError("error.HorarioNormal.duracao"));
+						errors.add("HNPeriodo", new ActionError("error.HorarioNormal.duracao"));
 					}
 				}
 			}
@@ -289,9 +199,7 @@ public class MeioTempo implements IStrategyHorarios {
 				|| (formHorario.getInicioHN2Minutos().length() < 1)
 				|| (formHorario.getFimHN2Horas().length() < 1)
 				|| (formHorario.getFimHN2Minutos().length() < 1))) {
-				errors.add(
-					"HorarioNormal",
-					new ActionError("error.HorarioNormal2.naoPermitido"));
+				errors.add("HorarioNormal", new ActionError("error.HorarioNormal2.naoPermitido"));
 			}
 
 			// Periodos fixos 
@@ -303,29 +211,21 @@ public class MeioTempo implements IStrategyHorarios {
 				|| (formHorario.getInicioPF2Minutos().length() > 0)
 				|| (formHorario.getFimPF2Horas().length() > 0)
 				|| (formHorario.getFimPF2Minutos().length() > 0)) {
-				errors.add(
-					"periodoFixo",
-					new ActionError("error.PF.desnecessario"));
+				errors.add("periodoFixo", new ActionError("error.PF.desnecessario"));
 			}
 
 			// regime 
 			if (formHorario.getRegime().length < 0) {
-				errors.add(
-					"regime",
-					new ActionError("error.regime.obrigatorio"));
+				errors.add("regime", new ActionError("error.regime.obrigatorio"));
 			} else {
 				listaRegime = Arrays.asList(formHorario.getRegime());
 
 				if (listaRegime.contains(Constants.NORMAL)) { //Regime: Normal
-					errors.add(
-						"regime",
-						new ActionError("error.regime.naoPermitido"));
+					errors.add("regime", new ActionError("error.regime.naoPermitido"));
 				}
 
 				if (!listaRegime.contains(Constants.IPF)) { //Regime: IPF
-					errors.add(
-						"periodoFixo",
-						new ActionError("error.regime.IPFobrigatorio"));
+					errors.add("periodoFixo", new ActionError("error.regime.IPFobrigatorio"));
 				}
 			}
 
@@ -342,40 +242,21 @@ public class MeioTempo implements IStrategyHorarios {
 					|| (formHorario.getDiaFim().length() < 1)
 					|| (formHorario.getMesFim().length() < 1)
 					|| (formHorario.getAnoFim().length() < 1)) {
-					errors.add(
-						"dates",
-						new ActionError("error.dataValidade.obrigatoria"));
+					errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
 				} else {
 					try {
-						diaInicio =
-							(new Integer(formHorario.getDiaInicio()))
-								.intValue();
-						mesInicio =
-							(new Integer(formHorario.getMesInicio()))
-								.intValue();
-						anoInicio =
-							(new Integer(formHorario.getAnoInicio()))
-								.intValue();
-						diaFim =
-							(new Integer(formHorario.getDiaFim())).intValue();
-						mesFim =
-							(new Integer(formHorario.getMesFim())).intValue();
-						anoFim =
-							(new Integer(formHorario.getAnoFim())).intValue();
+						diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+						mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+						anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+						diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+						mesFim = (new Integer(formHorario.getMesFim())).intValue();
+						anoFim = (new Integer(formHorario.getAnoFim())).intValue();
 					} catch (java.lang.NumberFormatException e) {
-						errors.add(
-							"numero",
-							new ActionError("error.numero.naoInteiro"));
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
 					}
 
 					calendar.clear();
-					calendar.set(
-						anoInicio,
-						mesInicio - 1,
-						diaInicio,
-						00,
-						00,
-						00);
+					calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 					java.util.Date dataInicio = calendar.getTime();
 
 					calendar.clear();
@@ -384,26 +265,18 @@ public class MeioTempo implements IStrategyHorarios {
 
 					if (!formHorario.isExcepcaoHorario()) {
 						if (!(dataInicio.getTime() < dataFim.getTime())) {
-							errors.add(
-								"datas",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
 						} else {
 							//se o horário não for uma excepcao
 							//existe limite na validade do horário
-							if (!(((dataFim.getTime() - dataInicio.getTime())
-								> (Constants.VALIDADE_MINIMA * 1000))
-								&& ((dataFim.getTime() - dataInicio.getTime())
-									< (Constants.VALIDADE_MAXIMA * 1000)))) {
-								errors.add(
-									"datasValidade",
-									new ActionError("error.validadeHorarioMeioTempo"));
+							if (!(((dataFim.getTime() - dataInicio.getTime()) > (Constants.VALIDADE_MINIMA * 1000))
+								&& ((dataFim.getTime() - dataInicio.getTime()) < (Constants.VALIDADE_MAXIMA * 1000)))) {
+								errors.add("datasValidade", new ActionError("error.validadeHorarioMeioTempo"));
 							}
 						}
 					} else {
 						if (!(dataInicio.getTime() <= dataFim.getTime())) {
-							errors.add(
-								"datas",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
 						}
 					}
 				}
@@ -414,10 +287,7 @@ public class MeioTempo implements IStrategyHorarios {
 		return errors;
 	} /* validateAssociarHorario */
 
-	public ActionErrors validateAssociarHorarioTipo(
-		ActionForm form,
-		HorarioTipo horarioTipo,
-		ArrayList listaRegimes) {
+	public ActionErrors validateAssociarHorarioTipo(ActionForm form, HorarioTipo horarioTipo, ArrayList listaRegimes) {
 		ActionErrors errors = new ActionErrors();
 		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm) form;
 
@@ -445,40 +315,21 @@ public class MeioTempo implements IStrategyHorarios {
 					|| (formHorario.getDiaFim().length() < 1)
 					|| (formHorario.getMesFim().length() < 1)
 					|| (formHorario.getAnoFim().length() < 1)) {
-					errors.add(
-						"dates",
-						new ActionError("error.dataValidade.obrigatoria"));
+					errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
 				} else {
 					try {
-						diaInicio =
-							(new Integer(formHorario.getDiaInicio()))
-								.intValue();
-						mesInicio =
-							(new Integer(formHorario.getMesInicio()))
-								.intValue();
-						anoInicio =
-							(new Integer(formHorario.getAnoInicio()))
-								.intValue();
-						diaFim =
-							(new Integer(formHorario.getDiaFim())).intValue();
-						mesFim =
-							(new Integer(formHorario.getMesFim())).intValue();
-						anoFim =
-							(new Integer(formHorario.getAnoFim())).intValue();
+						diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+						mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+						anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+						diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+						mesFim = (new Integer(formHorario.getMesFim())).intValue();
+						anoFim = (new Integer(formHorario.getAnoFim())).intValue();
 					} catch (java.lang.NumberFormatException e) {
-						errors.add(
-							"numero",
-							new ActionError("error.numero.naoInteiro"));
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
 					}
 
 					calendar.clear();
-					calendar.set(
-						anoInicio,
-						mesInicio - 1,
-						diaInicio,
-						00,
-						00,
-						00);
+					calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 					java.util.Date dataInicio = calendar.getTime();
 
 					calendar.clear();
@@ -487,34 +338,24 @@ public class MeioTempo implements IStrategyHorarios {
 
 					if (!formHorario.isExcepcaoHorario()) {
 						if (!(dataInicio.getTime() < dataFim.getTime())) {
-							errors.add(
-								"datas",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
 						} else {
 							//se o horário não for uma excepcao
 							//existe limite na validade do horário
-							if (!(((dataFim.getTime() - dataInicio.getTime())
-								> (Constants.VALIDADE_MINIMA * 1000))
-								&& ((dataFim.getTime() - dataInicio.getTime())
-									< (Constants.VALIDADE_MAXIMA * 1000)))) {
-								errors.add(
-									"datasValidade",
-									new ActionError("error.validadeHorarioMeioTempo"));
+							if (!(((dataFim.getTime() - dataInicio.getTime()) > (Constants.VALIDADE_MINIMA * 1000))
+								&& ((dataFim.getTime() - dataInicio.getTime()) < (Constants.VALIDADE_MAXIMA * 1000)))) {
+								errors.add("datasValidade", new ActionError("error.validadeHorarioMeioTempo"));
 							}
 						}
 					} else {
 						if (!(dataInicio.getTime() <= dataFim.getTime())) {
-							errors.add(
-								"datas",
-								new ActionError("error.dataValidade.incorrecta"));
+							errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
 						}
 					}
 				}
 			}
 		} catch (java.lang.IllegalArgumentException e) {
-			errors.add(
-				"horasData",
-				new ActionError("error.dataValidade.incorrecta"));
+			errors.add("horasData", new ActionError("error.dataValidade.incorrecta"));
 		}
 		return errors;
 	} /* validateAssociarHorarioTipo */
@@ -524,8 +365,7 @@ public class MeioTempo implements IStrategyHorarios {
 		Calendar calendar = Calendar.getInstance();
 
 		horario.setModalidade(formHorario.getModalidade());
-		horario.setDuracaoSemanal(
-			(new Float(formHorario.getDuracaoSemanal())).floatValue());
+		horario.setDuracaoSemanal((new Float(formHorario.getDuracaoSemanal())).floatValue());
 
 		if ((formHorario.getNumDias() == null)
 			|| (formHorario.getPosicao() == null)
@@ -534,10 +374,8 @@ public class MeioTempo implements IStrategyHorarios {
 			horario.setNumDias(Constants.NUMDIAS_ROTACAO);
 			horario.setPosicao(Constants.INICIO_ROTACAO);
 		} else {
-			horario.setNumDias(
-				Integer.valueOf(formHorario.getNumDias()).intValue());
-			horario.setPosicao(
-				Integer.valueOf(formHorario.getPosicao()).intValue());
+			horario.setNumDias(Integer.valueOf(formHorario.getNumDias()).intValue());
+			horario.setPosicao(Integer.valueOf(formHorario.getPosicao()).intValue());
 		}
 
 		// Expediente 
@@ -547,26 +385,20 @@ public class MeioTempo implements IStrategyHorarios {
 				1970,
 				0,
 				1,
-				(new Integer(formHorario.getInicioExpedienteHoras()))
-					.intValue(),
-				(new Integer(formHorario.getInicioExpedienteMinutos()))
-					.intValue(),
+				(new Integer(formHorario.getInicioExpedienteHoras())).intValue(),
+				(new Integer(formHorario.getInicioExpedienteMinutos())).intValue(),
 				00);
-			horario.setInicioExpediente(
-				new Timestamp(calendar.getTimeInMillis()));
+			horario.setInicioExpediente(new Timestamp(calendar.getTimeInMillis()));
 		} else {
 			//contagem no dia anterior
 			calendar.set(
 				1969,
 				11,
 				31,
-				(new Integer(formHorario.getInicioExpedienteHoras()))
-					.intValue(),
-				(new Integer(formHorario.getInicioExpedienteMinutos()))
-					.intValue(),
+				(new Integer(formHorario.getInicioExpedienteHoras())).intValue(),
+				(new Integer(formHorario.getInicioExpedienteMinutos())).intValue(),
 				00);
-			horario.setInicioExpediente(
-				new Timestamp(calendar.getTimeInMillis()));
+			horario.setInicioExpediente(new Timestamp(calendar.getTimeInMillis()));
 		}
 
 		calendar.clear();
@@ -636,9 +468,7 @@ public class MeioTempo implements IStrategyHorarios {
 		horario.setFimHN1(new Timestamp(calendar.getTimeInMillis()));
 
 		// Data de Validade 
-		if ((formHorario.getDiaInicio() != null)
-			&& (formHorario.getMesInicio() != null)
-			&& (formHorario.getAnoInicio() != null)) {
+		if ((formHorario.getDiaInicio() != null) && (formHorario.getMesInicio() != null) && (formHorario.getAnoInicio() != null)) {
 			if ((formHorario.getDiaInicio().length() > 0)
 				&& (formHorario.getMesInicio().length() > 0)
 				&& (formHorario.getAnoInicio().length() > 0)) {
@@ -653,9 +483,7 @@ public class MeioTempo implements IStrategyHorarios {
 				horario.setDataInicio(calendar.getTime());
 			}
 		}
-		if ((formHorario.getDiaFim() != null)
-			&& (formHorario.getMesFim() != null)
-			&& (formHorario.getAnoFim() != null)) {
+		if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
 			if ((formHorario.getDiaFim().length() > 0)
 				&& (formHorario.getMesFim().length() > 0)
 				&& (formHorario.getAnoFim().length() > 0)) {
@@ -706,9 +534,7 @@ public class MeioTempo implements IStrategyHorarios {
 			00);
 		horario.setDataInicio(calendar.getTime());
 
-		if ((formHorario.getDiaFim().length() > 0)
-			&& (formHorario.getMesFim().length() > 0)
-			&& (formHorario.getAnoFim().length() > 0)) {
+		if ((formHorario.getDiaFim().length() > 0) && (formHorario.getMesFim().length() > 0) && (formHorario.getAnoFim().length() > 0)) {
 			calendar.clear();
 			calendar.set(
 				(new Integer(formHorario.getAnoFim())).intValue(),
@@ -737,25 +563,20 @@ public class MeioTempo implements IStrategyHorarios {
 		formHorario.setExcepcaoHorario(isExcepcaoHorario);
 
 		formHorario.setNome(pessoa.getNome());
-		formHorario.setNumMecanografico(
-			(new Integer(funcionario.getNumeroMecanografico())).toString());
+		formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
 
-		formHorario.setDuracaoSemanal(
-			(new Float(horario.getDuracaoSemanal())).toString());
+		formHorario.setDuracaoSemanal((new Float(horario.getDuracaoSemanal())).toString());
 		formHorario.setModalidade(horario.getModalidade());
 
 		formHorario.setListaRegimes(listaRegime);
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getInicioExpediente()).getTime());
-		formHorario.setInicioExpedienteHoras(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setInicioExpedienteHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setInicioExpedienteMinutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioExpedienteMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setInicioExpedienteMinutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioExpedienteMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Anterior
@@ -764,14 +585,11 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getFimExpediente()).getTime());
-		formHorario.setFimExpedienteHoras(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setFimExpedienteHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setFimExpedienteMinutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimExpedienteMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setFimExpedienteMinutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimExpedienteMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Seguinte
@@ -780,14 +598,11 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getInicioHN1()).getTime());
-		formHorario.setInicioHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setInicioHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setInicioHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setInicioHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Anterior
@@ -796,14 +611,11 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getFimHN1()).getTime());
-		formHorario.setFimHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setFimHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setFimHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setFimHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Seguinte
@@ -817,21 +629,15 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTime(horario.getDataInicio());
-		formHorario.setDiaInicio(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesInicio(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoInicio(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaInicio((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesInicio((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoInicio((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		calendar.clear();
 		calendar.setTime(horario.getDataFim());
-		formHorario.setDiaFim(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesFim(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoFim(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaFim((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesFim((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoFim((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		// periodo fixo 
 		formHorario.setInicioPF1Horas("--");
@@ -867,8 +673,7 @@ public class MeioTempo implements IStrategyHorarios {
 		Horario horario,
 		ArrayList listaRegime,
 		boolean isExcepcaoHorario) {
-		AssociarHorarioTipoConfirmarForm formHorario =
-			(AssociarHorarioTipoConfirmarForm) form;
+		AssociarHorarioTipoConfirmarForm formHorario = (AssociarHorarioTipoConfirmarForm) form;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -876,11 +681,9 @@ public class MeioTempo implements IStrategyHorarios {
 		formHorario.setExcepcaoHorario(isExcepcaoHorario);
 
 		formHorario.setNome(pessoa.getNome());
-		formHorario.setNumMecanografico(
-			(new Integer(funcionario.getNumeroMecanografico())).toString());
+		formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
 
-		formHorario.setDuracaoSemanal(
-			(new Float(horarioTipo.getDuracaoSemanal())).toString());
+		formHorario.setDuracaoSemanal((new Float(horarioTipo.getDuracaoSemanal())).toString());
 		formHorario.setModalidade(horarioTipo.getModalidade());
 		formHorario.setSigla(horarioTipo.getSigla());
 
@@ -888,14 +691,11 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getInicioHN1()).getTime());
-		formHorario.setInicioHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setInicioHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setInicioHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setInicioHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setInicioHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Anterior
@@ -904,14 +704,11 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getFimHN1()).getTime());
-		formHorario.setFimHN1Horas(
-			(new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		formHorario.setFimHN1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			formHorario.setFimHN1Minutos(
-				"0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			formHorario.setFimHN1Minutos(
-				(new Integer(calendar.get(Calendar.MINUTE))).toString());
+			formHorario.setFimHN1Minutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 		if (calendar.get(Calendar.DAY_OF_MONTH) != 1) {
 			//contagem no Dia Seguinte
@@ -925,21 +722,15 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTime(horario.getDataInicio());
-		formHorario.setDiaInicio(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesInicio(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoInicio(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaInicio((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesInicio((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoInicio((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		calendar.clear();
 		calendar.setTime(horario.getDataFim());
-		formHorario.setDiaFim(
-			(new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesFim(
-			(new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoFim(
-			(new Integer(calendar.get(Calendar.YEAR))).toString());
+		formHorario.setDiaFim((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+		formHorario.setMesFim((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+		formHorario.setAnoFim((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		// periodo fixo 
 		formHorario.setInicioPF1Horas("--");
@@ -965,13 +756,9 @@ public class MeioTempo implements IStrategyHorarios {
 		formHorario.setFimRefeicaoMinutos("--");
 	} /* setFormAssociarHorarioTipoConfirmar */
 
-	public String descricaoHorario(
-		Locale locale,
-		Horario horario,
-		ArrayList listaRegimes) {
+	public String descricaoHorario(Locale locale, Horario horario, ArrayList listaRegimes) {
 		String descricao = null;
-		ResourceBundle bundle =
-			ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
+		ResourceBundle bundle = ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
 		Calendar calendar = Calendar.getInstance();
 
 		String inicioHN1Horas = null;
@@ -1006,55 +793,33 @@ public class MeioTempo implements IStrategyHorarios {
 		// Periodos Normais 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getInicioHN1()).getTime());
-		inicioHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		inicioHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			inicioHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			inicioHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
 		calendar.clear();
 		calendar.setTimeInMillis((horario.getFimHN1()).getTime());
-		fimHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		fimHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			fimHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			fimHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
-		descricao =
-			descricao.concat(
-				" "
-					+ inicioHN1Horas
-					+ ":"
-					+ inicioHN1Minutos
-					+ " - "
-					+ fimHN1Horas
-					+ ":"
-					+ fimHN1Minutos);
+		descricao = descricao.concat(" " + inicioHN1Horas + ":" + inicioHN1Minutos + " - " + fimHN1Horas + ":" + fimHN1Minutos);
 
 		return descricao;
 	} /* descricaoHorario */
 
-	public String descricaoHorarioTipo(
-		Locale locale,
-		HorarioTipo horarioTipo,
-		ArrayList listaRegimes) {
+	public String descricaoHorarioTipo(Locale locale, HorarioTipo horarioTipo, ArrayList listaRegimes) {
 		String descricao = null;
 
-		descricao =
-			new String(
-				new Float(horarioTipo.getDuracaoSemanal()).floatValue()
-					+ " horas ");
+		descricao = new String(new Float(horarioTipo.getDuracaoSemanal()).floatValue() + " horas ");
 
-		ResourceBundle bundle =
-			ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
+		ResourceBundle bundle = ResourceBundle.getBundle(Constants.APPLICATION_RESOURCES, locale);
 		ListIterator iterListaRegimes = listaRegimes.listIterator();
 		String regime = null;
 		String auxRegime = null;
@@ -1083,36 +848,23 @@ public class MeioTempo implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getInicioHN1()).getTime());
-		inicioHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		inicioHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			inicioHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			inicioHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			inicioHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getFimHN1()).getTime());
-		fimHN1Horas =
-			((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		fimHN1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
-			fimHN1Minutos =
-				("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
-			fimHN1Minutos =
-				((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			fimHN1Minutos = ((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
-		periodoTrabalho =
-			inicioHN1Horas
-				+ ":"
-				+ inicioHN1Minutos
-				+ " - "
-				+ fimHN1Horas
-				+ ":"
-				+ fimHN1Minutos;
+		periodoTrabalho = inicioHN1Horas + ":" + inicioHN1Minutos + " - " + fimHN1Horas + ":" + fimHN1Minutos;
 		return periodoTrabalho;
 	} /* periodoTrabalhoHorarioTipo */
 
@@ -1124,70 +876,45 @@ public class MeioTempo implements IStrategyHorarios {
 		ArrayList listaSaldos) {
 		// saldo do horario normal 
 		// 3.5 horas diarias de trabalho 	
-		Float duracaoDiaria =
-			new Float(
-				horario.getDuracaoSemanal()
-					/ Constants.SEMANA_TRABALHO_MEIOTEMPO);
+		Float duracaoDiaria = new Float(horario.getDuracaoSemanal() / Constants.SEMANA_TRABALHO_MEIOTEMPO);
 		long saldo =
 			((Long) listaSaldos.get(0)).longValue()
 				- (duracaoDiaria.intValue() * 3600 * 1000
-					+ new Float(
-						(duracaoDiaria.floatValue() - duracaoDiaria.intValue())
-							* 3600
-							* 1000)
-						.longValue());
+					+ new Float((duracaoDiaria.floatValue() - duracaoDiaria.intValue()) * 3600 * 1000).longValue());
 
 		listaSaldos.set(0, new Long(saldo));
 	} /* setSaldosHorarioVerbeteBody */
 
-	public long calcularTrabalhoNocturno(
-		Horario horario,
-		MarcacaoPonto entrada,
-		MarcacaoPonto saida) {
+	public long calcularTrabalhoNocturno(Horario horario, MarcacaoPonto entrada, MarcacaoPonto saida) {
 		long saldoNocturno = 0;
 
 		// calculo do trabalho nocturno normal para os horario que ultrapassem o inicio do trabalho nocturno
-		if (horario.getFimHN1().getTime()
-			>= Constants.INICIO_TRABALHO_NOCTURNO) {
-			if (entrada.getData().getTime()
-				>= Constants.INICIO_TRABALHO_NOCTURNO
+		if (horario.getFimHN1().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO) {
+			if (entrada.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
 				&& entrada.getData().getTime() <= horario.getFimHN1().getTime()) {
-				saldoNocturno =
-					saldoNocturno
-						+ (horario.getFimHN1().getTime()
-							- entrada.getData().getTime());
-			} else if (
-				entrada.getData().getTime()
-					< Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno =
-					saldoNocturno
-						+ (horario.getFimHN1().getTime()
-							- Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno + (horario.getFimHN1().getTime() - entrada.getData().getTime());
+			} else if (entrada.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno + (horario.getFimHN1().getTime() - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
 			if (saida.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
 				&& saida.getData().getTime() <= horario.getFimHN1().getTime()) {
-				saldoNocturno =
-					saldoNocturno
-						+ (saida.getData().getTime()
-							- horario.getFimHN1().getTime());
-			} else if (
-				saida.getData().getTime()
-					< Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno =
-					saldoNocturno
-						- (horario.getFimHN1().getTime()
-							- Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno + (saida.getData().getTime() - horario.getFimHN1().getTime());
+			} else if (saida.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno - (horario.getFimHN1().getTime() - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
 		}
 		return saldoNocturno;
 	} /* calcularTrabalhoNocturno */
 
-	public void calcularHorasExtraordinarias(
-		Horario horario,
-		ArrayList listaMarcacoesPonto,
-		ArrayList listaSaldos) {
+	public void calcularHorasExtraordinarias(Horario horario, ArrayList listaMarcacoesPonto, ArrayList listaSaldos) {
 		//não tem direito a trabalho extraordinário
 	} /* calcularHorasExtraorinarias */
+
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+		long saldo = saida - entrada;
+
+		return saldo;
+	} /* limitaTrabalhoSeguido */
 
 	public long duracaoPF(Horario horario, ArrayList listaRegimes) {
 		//não tem periodos fixos
@@ -1196,19 +923,10 @@ public class MeioTempo implements IStrategyHorarios {
 
 	public long duracaoDiaria(Horario horario) {
 		return (
-			(new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO
-				/ Constants.SEMANA_TRABALHO_MEIOTEMPO)
-				.intValue()
-				* 3600
-				* 1000)
+			(new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO / Constants.SEMANA_TRABALHO_MEIOTEMPO).intValue() * 3600 * 1000)
 				+ new Float(
-					(new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO
-						/ Constants.SEMANA_TRABALHO_MEIOTEMPO)
-						.floatValue()
-						- new Float(
-							Constants.DURACAO_SEMANAL_MEIOTEMPO
-								/ Constants.SEMANA_TRABALHO_MEIOTEMPO)
-							.intValue())
+					(new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO / Constants.SEMANA_TRABALHO_MEIOTEMPO).floatValue()
+						- new Float(Constants.DURACAO_SEMANAL_MEIOTEMPO / Constants.SEMANA_TRABALHO_MEIOTEMPO).intValue())
 						* 3600
 						* 1000)
 					.longValue());

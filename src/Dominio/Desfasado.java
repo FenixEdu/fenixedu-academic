@@ -103,6 +103,10 @@ public class Desfasado implements IStrategyHorarios {
 		ArrayList listaSaldos) {
 	} /* calcularHorasExtraorinarias */
 
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+		return 0;
+	}
+	
 	public long duracaoPF(Horario horario, ArrayList listaRegimes) {
 		return 0;
 	} /* duracaoPF */
