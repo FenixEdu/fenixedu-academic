@@ -2,7 +2,7 @@
 <%@ page import ="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DataBeans.InfoExam" %>
+<%@ page import="DataBeans.InfoViewExamByDayAndShift" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -15,7 +15,7 @@
           </tr>
         </table>
         <br/>
-   		<% ArrayList iE = (ArrayList) session.getAttribute(SessionConstants.INFO_EXAMS_KEY); %>
+   		<% ArrayList iVE = (ArrayList) session.getAttribute(SessionConstants.INFO_EXAMS_KEY); %>
         <h2><bean:message key="title.exams.list"/></h2>
         <span class="error"><html:errors/></span>
 		<logic:notPresent name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
@@ -48,24 +48,24 @@
 					</td>
 				</tr>
 	            <% int i = 0; %>
-				<logic:iterate id="infoExam" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
-                       <% Integer iH = new Integer(((InfoExam) iE.get(i)).getBeginning().get(Calendar.HOUR_OF_DAY)); %>
-                       <% Integer iM = new Integer(((InfoExam) iE.get(i)).getBeginning().get(Calendar.MINUTE)); %>
-                       <% Integer fH = new Integer(((InfoExam) iE.get(i)).getEnd().get(Calendar.HOUR_OF_DAY)); %>
-                       <% Integer fM = new Integer(((InfoExam) iE.get(i)).getEnd().get(Calendar.MINUTE)); %>
+				<logic:iterate id="infoViewExam" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
+                       <% Integer iH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
+                       <% Integer iM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.MINUTE)); %>
+                       <% Integer fH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getEnd().get(Calendar.HOUR_OF_DAY)); %>
+                       <% Integer fM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getEnd().get(Calendar.MINUTE)); %>
 				
 					<tr align="center">
 						<td>
-							<bean:write name="infoExam" property="infoExecutionCourse.sigla"/>
+							<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.sigla"/>
 						</td>
 						<td>
-							<bean:write name="infoExam" property="infoExecutionCourse.nome"/>
+							<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.nome"/>
 						</td>
 						<td>
-							TBA
+							<bean:write name="infoViewExam" property="numberStudentesAttendingCourse"/>
 						</td>
 						<td>
-							<bean:write name="infoExam" property="day"/>
+							<bean:write name="infoViewExam" property="infoExam.day"/>
                            	<%= iH.toString()%> : <%= iM.toString()%>
 						</td>
 						<td>

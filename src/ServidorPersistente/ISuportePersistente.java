@@ -65,7 +65,7 @@ public interface ISuportePersistente {
 	public IPersistentCurricularYear getIPersistentCurricularYear();
 	public IPersistentContributor getIPersistentContributor();
 
-	public IPersistentCurricularSemester getIPersistentCurricularSemester();
+//	public IPersistentCurricularSemester getIPersistentCurricularSemester();
 	
-	public IPersistentEquivalence getIPersistentEquivalence();
+//	public IPersistentEquivalence getIPersistentEquivalence();
 }

@@ -55,21 +55,19 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 					"LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular",
 					argsReadCourses);
 
-			System.out.println("Disciplinas Execução lidas = " + infoCoursesList.size());
 			// read exams of each of the execution courses previouly read
 			InfoExecutionCourse infoExecutionCourse = null;
 			InfoExam infoExam = null;
 			Object argsReadExams[] = new Object[1];
 			List infoExamsOfExecutionCourse = null;
-			ArrayList infoExams = new ArrayList();
+			ArrayList infoViewExams = new ArrayList();
 			for (int i = 0; i < infoCoursesList.size(); i++) {
 				infoExecutionCourse =
 					(InfoExecutionCourse) infoCoursesList.get(i);
 				argsReadExams[0] = infoExecutionCourse;
 				infoExamsOfExecutionCourse =
 					(List) gestor.executar(userView, "ReadExamsByExecutionCourse", argsReadExams);
-				System.out.println("Exames lidos = " + infoExamsOfExecutionCourse.size());
-				infoExams.addAll(infoExamsOfExecutionCourse);
+				infoViewExams.addAll(infoExamsOfExecutionCourse);
 				/*				for(int j = 0; j < infoExamsOfExecutionCourse.size(); j++) {
 									infoExam = (InfoExam) infoExamsOfExecutionCourse.get(j);
 									if(!(infoExams.contains(infoExam)))
@@ -78,11 +76,10 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 				*/
 			}
 
-			if (infoExams != null && infoExams.isEmpty()) {
+			if (infoViewExams != null && infoViewExams.isEmpty()) {
 				session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
 			} else {
-				System.out.println("Pos em sessao!!");
-				session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoExams);
+				session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExams);
 			}
 
 			return mapping.findForward("Sucess");

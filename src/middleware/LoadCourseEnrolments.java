@@ -322,9 +322,9 @@ public class LoadCourseEnrolments extends DataFileLoader {
 		//        }
 		//CurricularCourse disciplinaCurricular = iDisciplinaCurricularPersistente.lerDisciplinaCurricular(codigoDisciplinaCurricular.trim(), Integer.parseInt(anoCurricular.trim()), Integer.parseInt(semestre.trim()), Integer.parseInt(chaveLicenciatura.trim()), intChaveRamo);
 		ICurricularCourse disciplinaCurricularTemp = new CurricularCourse();
-		disciplinaCurricularTemp.setCurricularYear(
-			new Integer(anoCurricular.trim()));
-		disciplinaCurricularTemp.setSemester(new Integer(semestre.trim()));
+//		disciplinaCurricularTemp.setCurricularYear(
+//			new Integer(anoCurricular.trim()));
+//		disciplinaCurricularTemp.setSemester(new Integer(semestre.trim()));
 		disciplinaCurricularTemp.setCode(codigoDisciplinaCurricular.trim());
 		IDegreeCurricularPlan planoCurricularCursoTemp =
 			new DegreeCurricularPlan();

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
@@ -45,21 +46,27 @@ public class ReadExamsByExecutionCourse implements IServico {
   }
 
   public List run(InfoExecutionCourse infoExecutionCourse) {
-    ArrayList infoExams = new ArrayList();
+    ArrayList infoViewExams = new ArrayList();
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
       List exams = sp.getIPersistentExam().readBy(executionCourse);
 	  IExam exam = null;
+	  InfoViewExamByDayAndShift infoViewExam = new InfoViewExamByDayAndShift();
+	  Integer numberStudentsAttendingCourse = null; 
 	  for (int i = 0; i < exams.size(); i++) {
 		exam = (IExam)exams.get(i);
-		infoExams.add(Cloner.copyIExam2InfoExam(exam));
+		infoViewExam.setInfoExam(Cloner.copyIExam2InfoExam(exam));
+		// determine number of students attending course
+		numberStudentsAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(exam.getExecutionCourse());
+		infoViewExam.setNumberStudentesAttendingCourse(numberStudentsAttendingCourse);		
+		infoViewExams.add(infoViewExam);
 	}
 
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
     }
-     return infoExams;
+     return infoViewExams;
   }
 }
