@@ -4,16 +4,18 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
+
+<h2><bean:write name="<%=SessionConstants.INFO_SECTION %>" property="name"/></h2>
 <html:link page="/deleteSection.do">
-	<bean:message key="button.delete"/>
+	<bean:message key="button.deleteSection"/>
 </html:link>
 
 <html:link page="/prepareInsertSection.do">
-	<bean:message key="button.insert"/>
+	<bean:message key="button.insertSubSection"/>
 </html:link>
 
 <html:link page="/editSection.do?method=prepareEdit">
-	<bean:message key="button.edit"/>
+	<bean:message key="button.editSection"/>
 </html:link>
 <br>   
 <br>
