@@ -72,7 +72,7 @@ public final class Constants {
 	public static final String DSC = "DSC"; //sábado
 	
 	/* Sigla de dia Injustificado */
-	public static final String INJUSTIFICADO = "INJUS";
+	public static final String INJUSTIFICADO = "FINJUST";
 
 	/* Regimes de Horários */
 	public static final String NORMAL = new String("normal");
@@ -166,4 +166,6 @@ public final class Constants {
 	public static final String ASSIDUIDADE_INACTIVO = "inactivo";
 	public static final String ASSIDUIDADE_PENDENTE = "pendente";
 
+	/* Servidor de FTP */
+	public static final String SERVIDOR_FTP = "ftp://fernanda@salad22.ist.utl.pt";
 }
