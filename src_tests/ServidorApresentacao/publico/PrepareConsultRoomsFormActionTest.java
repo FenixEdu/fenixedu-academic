@@ -23,7 +23,7 @@ public class PrepareConsultRoomsFormActionTest extends TestCasePresentation {
   public void setUp() {
     super.setUp();
     // define ficheiro de configuração Struts a utilizar
-    setServletConfigFile("/WEB-INF/tests/web-publico.xml");
+    setServletConfigFile("/WEB-INF/web.xml");
   }
   
   
@@ -38,8 +38,6 @@ public class PrepareConsultRoomsFormActionTest extends TestCasePresentation {
 
 	// colocar qq coisa na sessão.
 	// O simulator tem que lá ter qq coisa para funcionar.
-	String xpto = "This is strange, I cannot explain it!";
-	//getSession().setAttribute(SessionConstants.U_VIEW, xpto);
 	getSession();
 
     // invoca acção
