@@ -14,6 +14,7 @@ import DataBeans.InfoExecutionYear;
 import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoCurso;
 
 /**
  * ChooseExecutionCourseActionTest.java
@@ -78,7 +79,7 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentationSopPort
 		items.put(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
 
 		// execution degree
-		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
+		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores",TipoCurso.LICENCIATURA_STRING);
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
@@ -87,11 +88,11 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentationSopPort
 		// list of EXECUTION_COURSE_LIST_KEY
 		try {
 			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-			ArrayList infoCourseList = (ArrayList) ServiceUtils.executeService(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
+			ArrayList infoCourseList = (ArrayList) ServiceUtils.executeService(getAuthorizedUser(), "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
 			items.put(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 		} catch (Exception exception){
 			exception.printStackTrace(System.out);
-			fail("testSuccessfulChooseExecutionCourse - executing service");
+			fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
 		}
 
 		return items;
@@ -117,7 +118,7 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentationSopPort
 		items.put(SessionConstants.CURRICULAR_YEAR_KEY, curricularYear);
 
 		// execution degree
-		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
+		InfoDegree infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
 		
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
@@ -126,11 +127,11 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentationSopPort
 		// list of EXECUTION_COURSE_LIST_KEY
 		try {
 			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
-			ArrayList infoCourseList = (ArrayList) ServiceUtils.executeService(userView, "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
+			ArrayList infoCourseList = (ArrayList) ServiceUtils.executeService(getAuthorizedUser(), "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
 			items.put(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
 		} catch (Exception exception){
 			exception.printStackTrace(System.out);
-			fail("testUnSuccessfulChooseExecutionCourse - executing service");
+			fail("testUnSuccessfulChooseExecutionCourse - executing service at getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()!");
 		}
 
 		return items;
@@ -182,7 +183,7 @@ public class ChooseExecutionCourseActionTest extends TestCasePresentationSopPort
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-sop.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/**

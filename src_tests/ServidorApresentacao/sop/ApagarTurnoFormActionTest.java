@@ -33,7 +33,7 @@ public class ApagarTurnoFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-sop.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/**
@@ -102,26 +102,17 @@ public class ApagarTurnoFormActionTest extends TestCasePresentationSopPortal {
     	
 			Object argsReadShifts[] = new Object[1];
 			argsReadShifts[0] = iDE;
-			ArrayList infoShifts = (ArrayList) manager.executar(userView, "LerTurnosDeDisciplinaExecucao", argsReadShifts);
+			ArrayList infoShifts = (ArrayList) manager.executar(getAuthorizedUser(), "LerTurnosDeDisciplinaExecucao", argsReadShifts);
 			result.put("infoTurnosDeDisciplinaExecucao", infoShifts);
-
-			InfoExecutionCourse iDE1 = 
-			new InfoExecutionCourse("Trabalho Final de Curso I","TFCI",
-						"programa1",
-						new Double(0),
-						new Double(0),
-						new Double(0),
-						new Double(0),
-						new InfoExecutionPeriod("2º Semestre",new InfoExecutionYear("2002/2003")));
 
 			InfoShift infoShift1 = new InfoShift("turno1", new TipoAula(2),new Integer(100), iDE);
 			InfoShift infoShift = (InfoShift) infoShifts.get(infoShifts.indexOf((InfoShift) infoShift1));
 			result.put("infoTurno", infoShift);
 
 		} catch (Exception exception) {
-			String message = "Failed while executing the service";
-			System.out.println(message + " " + exception);
-			fail(message);
+			exception.printStackTrace(System.out);
+			fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
+
 		}
 		
 		return result;
