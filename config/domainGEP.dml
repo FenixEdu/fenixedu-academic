@@ -1,3 +1,8 @@
+class net.sourceforge.fenixedu.domain.DomainObject {
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
