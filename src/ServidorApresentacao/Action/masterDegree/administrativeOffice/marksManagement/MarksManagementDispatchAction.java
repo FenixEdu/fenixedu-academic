@@ -81,6 +81,8 @@ public class MarksManagementDispatchAction extends DispatchAction {
 			DynaActionForm chooseMasterDegreeForm = (DynaActionForm) form;
 			String degree = (String) chooseMasterDegreeForm.get("degree");
 
+			request.setAttribute("degree", degree);
+
 			// Get the Execution Course List			
 			Object args[] = { executionYear, degree };
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -130,6 +132,9 @@ public class MarksManagementDispatchAction extends DispatchAction {
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
+			
+			request.setAttribute("curricularCourse", executionCourse.getNome());
+			request.setAttribute("degree", request.getParameter("degree"));
 			request.setAttribute("objectCode", executionCourse.getIdInternal());
 
 			return mapping.findForward("ShowMarksManagementMenu");

@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.MessageResources;
 
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -35,6 +36,7 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
+		MessageResources messages = getResources(request);
 
 		if (session != null) {
 			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
@@ -50,7 +52,7 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction {
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
-
+			request.setAttribute("jspTitle", messages.getMessage((String) request.getParameter("jspTitle")));
 			request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearList);
 						
 			return mapping.findForward("PrepareSuccess");
@@ -72,7 +74,9 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction {
 		if (session != null) {
 			
 			session.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
-						
+
+			request.setAttribute("jspTitle", request.getParameter("jspTitle"));
+
 			return mapping.findForward("ChooseSuccess");
 		  } else
 			throw new Exception();   

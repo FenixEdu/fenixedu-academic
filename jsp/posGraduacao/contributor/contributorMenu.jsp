@@ -12,5 +12,5 @@
 <ul>	
 	<li><html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" /></html:link></li>
 	<li><html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" /></html:link></li>
-    <li><html:link page="/chooseExecutionYearToManageMarks.do?method=prepareChooseExecutionYear"><bean:message key="link.masterDegree.administrativeOffice.marksManagement" /></html:link></li>
+    <li><html:link page="/chooseExecutionYearToManageMarks.do?method=prepareChooseExecutionYear&jspTitle=title.masterDegree.administrativeOffice.marksManagement"><bean:message key="link.masterDegree.administrativeOffice.marksManagement" /></html:link></li>
 </ul>
