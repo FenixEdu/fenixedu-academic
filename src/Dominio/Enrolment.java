@@ -12,23 +12,21 @@ public class Enrolment implements IEnrolment {
 
 	private IStudentCurricularPlan studentCurricularPlan;
 	private ICurricularCourse curricularCourse;
+	private IExecutionPeriod executionPeriod;
 	private EnrolmentState state;
 
 	private Integer internalID;
 	private Integer studentCurricularPlanKey;
 	private Integer curricularCourseKey;
+	private Integer keyExecutionPeriod;
 
 	public Enrolment() {
-		setCurricularCourse(null);
-		setStudentCurricularPlan(null);
-		setState(null);
-
-		setInternalID(null);
-		setStudentCurricularPlanKey(null);
-		setCurricularCourseKey(null);
 	}
 
-	public Enrolment(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, EnrolmentState state) {
+	public Enrolment(
+		IStudentCurricularPlan studentCurricularPlan,
+		ICurricularCourse curricularCourse,
+		EnrolmentState state) {
 		this();
 		setCurricularCourse(curricularCourse);
 		setStudentCurricularPlan(studentCurricularPlan);
@@ -41,15 +39,21 @@ public class Enrolment implements IEnrolment {
 		if (obj instanceof IEnrolment) {
 			IEnrolment enrolment = (IEnrolment) obj;
 
-			resultado = this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan()) &&
-									this.getCurricularCourse().equals(enrolment.getCurricularCourse());
+			resultado =
+				this.getStudentCurricularPlan().equals(
+					enrolment.getStudentCurricularPlan())
+					&& this.getCurricularCourse().equals(
+						enrolment.getCurricularCourse())
+					&& getExecutionPeriod().equals(enrolment.getExecutionPeriod());
 		}
 		return resultado;
 	}
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
-		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
+		result += "studentCurricularPlan = "
+			+ this.studentCurricularPlan
+			+ "; ";
 		result += "curricularCourse = " + this.curricularCourse + "]\n";
 		return result;
 	}
@@ -147,6 +151,34 @@ public class Enrolment implements IEnrolment {
 	 */
 	public void setState(EnrolmentState state) {
 		this.state = state;
+	}
+
+	/**
+	 * @return
+	 */
+	public IExecutionPeriod getExecutionPeriod() {
+		return executionPeriod;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyExecutionPeriod() {
+		return keyExecutionPeriod;
+	}
+
+	/**
+	 * @param period
+	 */
+	public void setExecutionPeriod(IExecutionPeriod period) {
+		executionPeriod = period;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setKeyExecutionPeriod(Integer integer) {
+		keyExecutionPeriod = integer;
 	}
 
 }
