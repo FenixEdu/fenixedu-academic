@@ -109,47 +109,33 @@
          class-ref="Dominio.Pessoa">
          <foreignkey field-ref="chavePessoa"/>
   </reference-descriptor>
+
+  <reference-descriptor
+         name="workingPlaceCostCenter"
+         class-ref="Dominio.CentroCusto"
+         proxy="true">
+         <foreignkey field-ref="chaveCCLocalTrabalho"/>
+  </reference-descriptor>
+
+  <reference-descriptor
+         name="mailingCostCenter"
+         class-ref="Dominio.CentroCusto"
+         proxy="true">
+         <foreignkey field-ref="chaveCCCorrespondencia"/>
+  </reference-descriptor>   
+
+<!--  <reference-descriptor
+         name="salaryCostCenter"
+         class-ref="Dominio.CentroCusto">
+         <foreignkey field-ref="chaveCCVencimento"/>
+  </reference-descriptor>    -->
 </class-descriptor>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<class-descriptor class="Dominio.CentroCusto" table="ass_CENTRO_CUSTO">
+  <field-descriptor name="codigoInterno" column="codigoInterno" jdbc-type="INTEGER"
+				    primarykey="true" autoincrement="true"/>
+  <field-descriptor name="sigla" column="sigla" jdbc-type="VARCHAR"/>
+  <field-descriptor name="departamento" column="departamento" jdbc-type="VARCHAR"/>
+  <field-descriptor name="seccao1" column="seccao1" jdbc-type="VARCHAR"/>
+  <field-descriptor name="seccao2" column="seccao2" jdbc-type="VARCHAR"/>
+</class-descriptor>
