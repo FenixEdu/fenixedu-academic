@@ -69,6 +69,11 @@
 	     column="SUBSTITUTE_ORDER"
 	     jdbc-type="INTEGER"
 	  />
+	 <field-descriptor id="12"
+	     name="givenCredits"
+	     column="GIVEN_CREDITS"
+	     jdbc-type="DOUBLE"
+	  />
 
       	  <reference-descriptor
          	name="person"
@@ -548,6 +553,51 @@
  
  
  <!-- End of definitions for class QUALIFICATION -->
+
+<!-- Definitions for class CANDIDATE_ENROLMENT -->
+
+      <class-descriptor
+              class="Dominio.CandidateEnrolment"
+              table="CANDIDATE_ENROLMENT"
+      >
+        <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />
+        
+        <field-descriptor 
+           name="masterDegreeCandidateKey"
+           column="KEY_MASTER_DEGREE_CANDIDATE"
+           jdbc-type="INTEGER"
+        />
+		
+		<field-descriptor 
+           name="curricularCourseScopeKey"
+           column="KEY_CURRICULAR_COURSE_SCOPE"
+           jdbc-type="INTEGER"
+        />
+        
+	   <reference-descriptor
+         	name="masterDegreeCandidate"
+         	class-ref="Dominio.MasterDegreeCandidate"
+      	  >
+          <foreignkey field-ref="masterDegreeCandidateKey"/>
+       </reference-descriptor>
+		
+        <reference-descriptor
+         	name="curricularCourseScope"
+         	class-ref="Dominio.CurricularCourseScope"
+      	  >
+          <foreignkey field-ref="curricularCourseScopeKey"/>
+         </reference-descriptor>
+ 
+  </class-descriptor>
+ 
+ 
+ <!-- End of definitions for class CANDIDATE_ENROLMENT -->
 
    
 <!-- Mapping of User defined classes ends here -->
