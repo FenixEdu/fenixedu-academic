@@ -32,6 +32,39 @@ public class InfoExecutionCourse implements Serializable {
 	public InfoExecutionCourse() {
 	}
 
+/**
+ * 
+ * @param nome
+ * @param sigla
+ * @param programa
+ * @param infoLicenciaturaExecucao
+ * @param theoreticalHours
+ * @param praticalHours
+ * @param theoPratHours
+ * @param labHours
+ * @deprecated
+ */
+	public InfoExecutionCourse(
+			String nome,
+			String sigla,
+			String programa,
+			InfoExecutionDegree infoLicenciaturaExecucao,
+			Double theoreticalHours,
+			Double praticalHours,
+			Double theoPratHours,
+			Double labHours) {
+			setNome(nome);
+			setSigla(sigla);
+			setPrograma(programa);
+			setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
+			setTheoreticalHours(theoreticalHours);
+			setPraticalHours(praticalHours);
+			setTheoPratHours(theoPratHours);
+			setLabHours(labHours);
+			
+		}
+
+
 	public InfoExecutionCourse(
 		String nome,
 		String sigla,
@@ -40,7 +73,8 @@ public class InfoExecutionCourse implements Serializable {
 		Double theoreticalHours,
 		Double praticalHours,
 		Double theoPratHours,
-		Double labHours) {
+		Double labHours,
+		InfoExecutionPeriod infoExecutionPeriod) {
 		setNome(nome);
 		setSigla(sigla);
 		setPrograma(programa);
@@ -49,6 +83,7 @@ public class InfoExecutionCourse implements Serializable {
 		setPraticalHours(praticalHours);
 		setTheoPratHours(theoPratHours);
 		setLabHours(labHours);
+		setInfoExecutionPeriod(infoExecutionPeriod);
 	}
 
 	public InfoExecutionCourse(
