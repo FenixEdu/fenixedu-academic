@@ -100,7 +100,7 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 			}
 			else
 			{
-				errors.add("errors", new ActionError("error.tutor.impossibleOperation"));
+				errors.add("errors", new ActionError("error.tutor.impossibleOperation.studentAlreadyWithTutor"));
 			}
 		}
 		if (!errors.isEmpty())
