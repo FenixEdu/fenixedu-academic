@@ -19,23 +19,26 @@ import org.apache.slide.common.SlideException;
  */
 public interface IFileSuport {
 
+	public void deleteFolder(String path) throws SlideException;
+
+	public FileSuportObject retrieveFile(String path) throws SlideException;
+
 	public List getSubDirectories(String path) throws SlideException;
 
 	public void deleteFile(String filepath) throws SlideException;
 
 	public List getDirectoryFiles(String path) throws SlideException;
 
-	
+	public boolean isStorageAllowed(FileSuportObject file);
 	
 	/**
 	 * @param fileName
 	 * @param fileData
 	 */
-	public abstract void storeFile(
-		String fileName,
-		byte[] fileData,
-		String contentType)
-		throws SlideException;
+		public abstract void storeFile(
+			FileSuportObject file)
+			throws SlideException;
+	
 	/**
 	 * @param string
 	 */

@@ -18,6 +18,7 @@ package fileSuport;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -47,7 +48,9 @@ public class FileSuport implements IFileSuport {
 	private Lock lock;
 	private Content content;
 	private SlideToken slideToken;
-	public static final String CONFIG_SLIDE = "/slide.properties";
+	private static final String CONFIG_SLIDE = "/slide.properties";
+	private String MAX_FILE_SIZE = "";
+	private String MAX_STORAGE_SIZE = "";
 
 	public static synchronized FileSuport getInstance() {
 		if (instance == null) {
@@ -63,12 +66,10 @@ public class FileSuport implements IFileSuport {
 
 	private void init() {
 		try {
-
 			Domain.init(getConfigLocation());
 		} catch (Exception e) {
 			System.out.println("INIT FAILED");
 		}
-
 		String namespace = Domain.getDefaultNamespace();
 		this.token =
 			Domain.accessNamespace(new SecurityToken(new String()), namespace);
@@ -78,8 +79,64 @@ public class FileSuport implements IFileSuport {
 		this.content = token.getContentHelper();
 		this.slideToken =
 			new SlideTokenImpl(new CredentialsToken(new String("root")));
+		this.MAX_FILE_SIZE = getMaxFileSize();
+		this.MAX_STORAGE_SIZE = getMaxStorageSize();
 	}
 
+	/**
+	 * @return
+	 */
+	private String getMaxFileSize() {
+		Properties properties = new Properties();
+		String maxFileSize = null;
+		try {
+			properties.load(
+				getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
+			maxFileSize = properties.getProperty("maxFileSize");
+		} catch (IOException e) {
+			System.out.println("maxFileSize->NOT FOUND");
+		}
+		return maxFileSize;
+	}
+
+	/**
+	 * @return
+	 */
+	private String getMaxStorageSize() {
+		Properties properties = new Properties();
+		String maxStorageSize = null;
+		try {
+			properties.load(
+				getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
+			maxStorageSize = properties.getProperty("maxStorageSize");
+		} catch (IOException e) {
+			System.out.println("maxStorageSize->NOT FOUND");
+		}
+		return maxStorageSize;
+	}
+	public boolean isStorageAllowed(FileSuportObject file) {
+		boolean result = isFileSizeAllowed(file);
+		long sizeInByte = getDirectorySize("/files" + file.getRootUri());
+		float dirSize = sizeInByte / (1024 * 1024);
+		float fileSize = file.getContent().length / (1024 * 1024);
+		if (result
+			&& (dirSize + fileSize
+				< (new Float(MAX_STORAGE_SIZE)).floatValue())) {
+			result = true;
+		}else {
+			result=false;
+		}
+		return result;
+	}
+	
+
+	public boolean isFileSizeAllowed(FileSuportObject file) {
+		float size = file.getContent().length / (1024 * 1024);
+		if (size < (new Float(MAX_FILE_SIZE)).floatValue()) {
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * @return
 	 */
@@ -106,15 +163,11 @@ public class FileSuport implements IFileSuport {
 		slideToken = new SlideTokenImpl(credToken);
 	}
 
-	private void addContents(byte[] fileData, String path)
-		throws SlideException {
-		addContents(fileData, path, "1");
-	}
-
 	private void addContents(
 		byte[] fileData,
 		String path,
-		String contenType)
+		String contenType,
+		String linkName)
 		throws SlideException {
 		try {
 
@@ -127,6 +180,10 @@ public class FileSuport implements IFileSuport {
 			NodeRevisionDescriptor currentRevisionDescriptor =
 				new NodeRevisionDescriptor(-1);
 			currentRevisionDescriptor.setContentType(contenType);
+			if (linkName == null || linkName.trim().equals("")) {
+				linkName = path.split("/")[path.split("/").length - 1];
+			}
+			currentRevisionDescriptor.setProperty("linkName", linkName);
 			NodeRevisionContent currentRevisionContent =
 				new NodeRevisionContent();
 			currentRevisionContent.setContent(fileData);
@@ -158,7 +215,14 @@ public class FileSuport implements IFileSuport {
 			*/
 	public void makeFolder(SlideToken slideToken, String folder)
 		throws SlideException {
-		structure.create(slideToken, new SubjectNode(), folder);
+		try {
+
+			token.begin();
+			structure.create(slideToken, new SubjectNode(), folder);
+			token.commit();
+		} catch (Exception e) {
+			throw new SlideException("");
+		}
 	}
 
 	/**
@@ -325,24 +389,72 @@ public class FileSuport implements IFileSuport {
 	/* (non-Javadoc)
 	 * @see fileSuport.IFileSuport#storeFile(java.lang.String, byte[])
 	 */
-	public void storeFile(String fileName, byte[] fileData, String contentType)
+	public void storeFile(
+		String fileName,
+		String path,
+		byte[] fileData,
+		String contentType,
+		String linkName)
 		throws SlideException {
-			addContents(fileData, "/files/" + fileName, contentType);
+		if (!existsPath("/files" + path)) {
+			createPath("/files" + path);
+		}
+		addContents(
+			fileData,
+			"/files" + path + "/" + fileName,
+			contentType,
+			linkName);
 	}
 
-	public void deleteFile(String filepath) throws SlideException {
+	/**
+	 * @param string
+	 */
+	private void createPath(String path) throws SlideException {
+		String[] pathArray = path.split("/");
+		String fullPath = "";
+		for (int i = 0; i < pathArray.length; i++) {
+			String folder = pathArray[i];
+			fullPath += "/" + folder;
+			if (!existsPath(fullPath)) {
+				makeFolder(fullPath);
+			}
+		}
+
+	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	private boolean existsPath(String path) {
+		try {
+			ObjectNode objectNode = structure.retrieve(getSlideToken(), path);
+			if (objectNode == null) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (SlideException e) {
+			return false;
+		}
+
+	}
+
+	public void deleteFile(String filePath) throws SlideException {
 		Structure structure = getStructure();
 		Content content = getContent();
-
+		if (!filePath.startsWith("/files")) {
+			filePath="/files"+filePath;
+		}
 		try {
 			token.begin();
 			ObjectNode objectNode =
-				structure.retrieve(getSlideToken(), filepath);
+				structure.retrieve(getSlideToken(), filePath);
 			NodeRevisionDescriptors nodeRevisionDescriptors =
-				content.retrieve(getSlideToken(), filepath);
+				content.retrieve(getSlideToken(), filePath);
 			NodeRevisionDescriptor nodeRevisionDescriptor =
 				content.retrieve(getSlideToken(), nodeRevisionDescriptors);
-			content.remove(getSlideToken(), filepath, nodeRevisionDescriptor);
+			content.remove(getSlideToken(), filePath, nodeRevisionDescriptor);
 			content.remove(getSlideToken(), nodeRevisionDescriptors);
 			structure.remove(getSlideToken(), objectNode);
 			token.commit();
@@ -388,27 +500,66 @@ public class FileSuport implements IFileSuport {
 		return revDescriptor.getContentType();
 	}
 
+	public NodeRevisionDescriptor getRevisionDescriptor(String path)
+		throws SlideException {
+
+		NodeRevisionDescriptors revDescriptors =
+			content.retrieve(slideToken, path);
+		NodeRevisionDescriptor revDescriptor =
+			content.retrieve(slideToken, revDescriptors);
+		return revDescriptor;
+	}
+
 	/**
-			* Contents of the Folder are printed. (debug Method)
-			* @param out print stream
-			* @param path folder path
-			* @throws SlideException
-			*/
+	 *	
+	 * @param path folder path
+	 * @throws SlideException
+	 **/
 	public List getDirectoryFiles(String path) throws SlideException {
+		ObjectNode folder;
 		List files = new ArrayList();
-		Enumeration lists = this.getChildrenList(path);
-		while (lists.hasMoreElements()) {
-			ObjectNode list = (ObjectNode) lists.nextElement();
-			if (isFile(list)) {
-				files.add(list.getUri());
+		try {
+			if (path.startsWith("/files")) {
+				folder = structure.retrieve(slideToken, path);
+			} else {				
+				folder = structure.retrieve(slideToken, "/files" + path);				
+			}
+		} catch (SlideException e) {
+			return files;
+		}
+		Enumeration children = folder.enumerateChildren();
+		while (children.hasMoreElements()) {
+			String objectUri = (String) children.nextElement();
+			ObjectNode object = structure.retrieve(slideToken, objectUri);
+			if (isFile(object)) {
+				FileSuportObject file = new FileSuportObject();
+				NodeRevisionDescriptor nodeRevisionDescriptor =
+					getRevisionDescriptor(objectUri);
+				file.setFileName(
+					object.getUri().split("/")[object.getUri().split(
+						"/").length
+						- 1]);
+				file.setUri(object.getUri());
+				file.setLinkName(
+					(String) nodeRevisionDescriptor
+						.getProperty("linkName")
+						.getValue());
+				files.add(file);
+
 			}
 		}
+
 		return files;
 	}
 
 	public List getSubDirectories(String path) throws SlideException {
 		List directories = new ArrayList();
-		Enumeration lists = this.getChildrenList(path);
+		Enumeration lists;
+		if (path.startsWith("/files")) {
+			lists = this.getChildrenList(path);
+		} else {
+			lists = this.getChildrenList("/files" + path);
+		}
 		while (lists.hasMoreElements()) {
 			ObjectNode list = (ObjectNode) lists.nextElement();
 			if (isDirectory(list)) {
@@ -418,19 +569,28 @@ public class FileSuport implements IFileSuport {
 		return directories;
 	}
 
-	public long getDirectorySize(String path) throws SlideException {
+	public long getDirectorySize(String path) {
 		long size = 0;
-
-		Enumeration lists = this.getChildrenList(path);
-		while (lists.hasMoreElements()) {
-			ObjectNode list = (ObjectNode) lists.nextElement();
-			if (isDirectory(list)) {
-				size = size + getDirectorySize(list.getUri());
+		try {
+			ObjectNode folder = null;
+			if (path.startsWith("/files")) {
+				folder = structure.retrieve(slideToken, path);
 			} else {
-				size = size + getFileSize(list);
+				folder = structure.retrieve(slideToken, "/files" + path);
 			}
-		}
+			Enumeration children = folder.enumerateChildren();
+			while (children.hasMoreElements()) {
 
+				String objectUri = (String) children.nextElement();
+				ObjectNode object = structure.retrieve(slideToken, objectUri);
+				if (isDirectory(object)) {
+					size = size + getDirectorySize(object.getUri());
+				} else {
+					size = size + getFileSize(object);
+				}
+			}
+		} catch (SlideException e) {
+		}
 		return size;
 	}
 
@@ -444,6 +604,66 @@ public class FileSuport implements IFileSuport {
 		NodeRevisionDescriptor revDescriptor =
 			content.retrieve(slideToken, revDescriptors);
 		return revDescriptor.getContentLength();
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.IFileSuport#retrieveFile(java.lang.String)
+	 */
+	public FileSuportObject retrieveFile(String path) throws SlideException {
+		if (!path.startsWith("/files")) {
+			path="/files"+path;
+		}
+		FileSuportObject file = new FileSuportObject();
+		NodeRevisionContent nodeRevisionContent = getRevContentData(path);
+		file.setContent(nodeRevisionContent.getContentBytes());
+		NodeRevisionDescriptor nodeRevisionDescriptor =
+			getRevisionDescriptor(path);
+
+		file.setContentType(nodeRevisionDescriptor.getContentType());
+		file.setFileName(path.split("/")[path.split("/").length - 1]);
+		file.setLinkName(
+			(String) nodeRevisionDescriptor.getProperty("linkName").getValue());
+		return file;
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.IFileSuport#storeFile(fileSuport.FileSuportObject)
+	 */
+	public void storeFile(FileSuportObject file) throws SlideException {
+		storeFile(
+			file.getFileName(),
+			file.getUri(),
+			file.getContent(),
+			file.getContentType(),
+			file.getLinkName());
+
+	}
+
+	/* (non-Javadoc)
+	 * @see fileSuport.IFileSuport#deleteFolder(java.lang.String)
+	 */
+	public void deleteFolder(String path) throws SlideException {
+		List files;
+		List subFolders;
+		if (path.startsWith("/files")) {
+			 files = getDirectoryFiles(path);
+			 subFolders = getSubDirectories(path);
+		} else {
+			 files = getDirectoryFiles("/files" + path);
+			 subFolders = getSubDirectories("/files" + path);
+		}
+		Iterator iterFiles = files.iterator();
+		while (iterFiles.hasNext()) {
+			FileSuportObject file = (FileSuportObject) iterFiles.next();
+			deleteFile(file.getUri());
+		}
+		Iterator iterFolders = subFolders.iterator();
+		while (iterFolders.hasNext()) {
+
+			deleteFolder((String) iterFolders.next());
+
+		}
+
 	}
 
 }
