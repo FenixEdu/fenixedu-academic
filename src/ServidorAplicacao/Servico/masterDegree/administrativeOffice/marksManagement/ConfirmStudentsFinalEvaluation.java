@@ -27,6 +27,7 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStra
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
@@ -36,6 +37,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.EnrolmentEvaluationState;
+import Util.EnrolmentState;
 
 /**
  * @author Fernanda Quitério
@@ -73,6 +75,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
+			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
 			//			employee
@@ -110,6 +113,18 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 					enrolmentEvaluationElem.setEmployee(employee);
 //					TODO: checksum
 					enrolmentEvaluationElem.setCheckSum("");
+
+					// update state of enrolment: aproved or notAproved
+					IEnrolment enrolmentToEdit = enrolmentEvaluation.getEnrolment();
+					persistentEnrolment.simpleLockWrite(enrolmentToEdit);
+					
+					EnrolmentState newEnrolmentState = EnrolmentState.APROVED_OBJ;
+					try{
+						Integer grade = new Integer(enrolmentEvaluation.getGrade()); 
+					} catch(NumberFormatException e){
+						newEnrolmentState = EnrolmentState.NOT_APROVED_OBJ;
+					}
+					enrolmentToEdit.setEnrolmentState(newEnrolmentState);
 				}
 			}
 		} catch (ExcepcaoPersistencia ex) {
