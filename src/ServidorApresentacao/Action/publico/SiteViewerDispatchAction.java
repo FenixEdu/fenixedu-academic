@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
+import DataBeans.InfoShift;
 import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -117,7 +118,16 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if(infoExecCourse != null) {
-				session.setAttribute("publico.infoExecCourse", infoExecCourse);
+				InfoShift infoShift = new InfoShift();
+				infoShift.setInfoDisciplinaExecucao(infoExecCourse);
+
+				Object argsSelectShifts[] = { infoShift	};
+				List infoShifts = (List) gestor.executar(null, "SelectShifts", argsSelectShifts);
+
+				if(infoShifts != null && !infoShifts.isEmpty()) {
+					request.setAttribute("publico.infoShifts", infoShifts);
+					session.setAttribute("publico.infoExecCourse", infoExecCourse);
+				}
 			}
 
 			return mapping.findForward("executionCourseViewer");

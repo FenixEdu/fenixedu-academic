@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 
 	<br/>
 	<center><font color='#034D7A' size='5'> <b> <bean:message key="title.view.room"/> </b> </font></center>
@@ -66,7 +67,7 @@
 		<br/>
 		<br/>
 
-	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"/> 
+	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.ROOM_TIMEBABLE %>"/> 
 
 	</logic:present>
 
