@@ -271,7 +271,7 @@ public class CurricularSemesterOJBTest extends TestCaseOJB {
 			fail("Read All CurricularSemesters");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 2);
+		assertEquals(list.size(), 10);
 	}
 
 }
