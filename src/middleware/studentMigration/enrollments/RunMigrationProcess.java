@@ -19,7 +19,7 @@ public class RunMigrationProcess
 		try
 		{
 			String curriculum = args[0];
-//			String curriculum = "current";
+//			String curriculum = "past";
 			
 			persistentSuport = SuportePersistenteOJB.getInstance();
 			persistentSuport.iniciarTransaccao();

@@ -183,7 +183,7 @@
 		</exec>
 	</target>
 
-	<target name="migrate-all-past-curriculums" depends="compile-proj, load-data-from-old-system">
+	<target name="migrate-all-past-curriculums" depends="compile-proj">
 		<exec executable="${sql}/middleware/commands/migrateAllPastCurriculums.sh" os="Linux, Unix">
 			<arg value="stop"/>
 		</exec>
