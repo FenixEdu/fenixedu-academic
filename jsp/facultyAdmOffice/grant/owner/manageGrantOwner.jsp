@@ -3,12 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
-
-<strong><p align="center">Gestão de Bolseiro</p></strong>
+<strong><p align="center"><bean:message key="label.grant.owner.management"/></p></strong>
 <table class="listClasses" align="center">
-<tr><td>Esta é a página principal para gestão de informação do bolseiro.</td></tr></table>
+	<tr><td><bean:message key="message.grant.owner.managementHelp"/></td></tr></table>
 <br/><br/>
-
 <table>
 	<tr>
 		<td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td>
@@ -474,7 +472,7 @@
 	
 <%-- If there are no contracts --%>
 <logic:notPresent name="infoGrantContractList">
-	<p align="center">Não existem contractos</p>
+	<p align="center"><bean:message key="message.grant.contract.nonExistentContracts" /></p>
 </logic:notPresent>
 	
 <br/>

@@ -2,13 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-
+<strong><p align="center"><bean:message key="label.grant.contract.edition"/></p></strong>
 <table class="listClasses" align="center">
-<tr><td>Preencha correctamente o formulário (não deixando campos obrigatórios em branco).</td></tr></table>
-<br/><strong><p align="center">Edição de Contracto</p></strong><br/>
-
+<tr><td><bean:message key="message.grant.editionHelp"/></td></tr></table>
+<br/><br/>
 <html:form action="/editGrantContract" style="display:inline">
-
 	<%-- Presenting errors --%>
 	<logic:messagesPresent>
 	<span class="error">

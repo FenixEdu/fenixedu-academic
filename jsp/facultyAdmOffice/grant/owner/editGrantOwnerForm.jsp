@@ -2,10 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-
-<br/><strong><p align="center">Edição de Bolseiro</p></strong>
+<br/><strong><p align="center"><bean:message key="label.grant.owner.edition"/></p></strong>
 <table class="listClasses" align="center">
-<tr><td>Preencha correctamente o formulário (não deixando campos obrigatórios em branco).</td></tr></table>
+<tr><td><bean:message key="message.grant.editionHelp"/></td></tr></table>
 <br/><br/>
 <html:form action="/editGrantOwner" style="display:inline">
 
