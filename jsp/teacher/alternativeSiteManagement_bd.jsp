@@ -17,7 +17,7 @@
 </table>
 <br />
 <table width="100%">
-	<td height="21">
+	<td width="200px">
 		<bean:message key="message.siteAddress"/>
 	</td>
 	<td><html:text property="siteAddress" size="30"/>
@@ -26,7 +26,7 @@
 	</td>
 </tr>
 <tr>
-	<td>
+	<td width="200px">
 	  <bean:message key="message.mailAddress"/>
 	<td>
 	  <html:text property="mail" size="30"/>
@@ -49,7 +49,7 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td valign="top">
+	<td width="200px" valign="top">
 		<bean:message key="message.initialStatement"/>
 	</td>	
 	<td><html:textarea name="<%=SessionConstants.INFO_SITE%>" property="initialStatement" rows="4" cols="56"/>
@@ -69,7 +69,7 @@
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td valign="top">
+	<td width="200px" valign="top">
 		<bean:message key="message.introduction"/>
 	</td>	
 	<td><html:textarea name="<%=SessionConstants.INFO_SITE%>" property="introduction" rows="4" cols="56"/></td>
