@@ -66,7 +66,11 @@ public class AccessAlternativeSiteActionTest extends TestCaseActionExecution {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		//should be alternativeSite and mail
+//		Map items = new HashMap();
+//		items.put(SessionConstants.ALTERNATIVE_SITE, (String)this.infoSite.getAlternativeSite());
+//		items.put(SessionConstants.MAIL, (String)this.infoSite.getMail());
+//		
+//		return items;
 		return null;
 	}
 
@@ -81,10 +85,6 @@ public class AccessAlternativeSiteActionTest extends TestCaseActionExecution {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		Map items = new HashMap();
-		items.put(SessionConstants.ALTERNATIVE_SITE, this.infoSite.getAlternativeSite());
-		items.put(SessionConstants.MAIL, this.infoSite.getMail());
-		
 		return null;
 	}
 
