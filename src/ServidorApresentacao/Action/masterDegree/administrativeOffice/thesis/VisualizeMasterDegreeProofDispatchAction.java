@@ -1,5 +1,8 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -115,12 +118,16 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
 			request.setAttribute(SessionConstants.JURIES_LIST, infoMasterDegreeProofVersion.getInfoJuries());
 
 		int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
-		
+
+		SimpleDateFormat sdtf = new SimpleDateFormat("EEE, d MMMM yyyy", Locale.getDefault());
+		String proofDate = sdtf.format(infoMasterDegreeProofVersion.getProofDate());
+		String thesisDeliveryDate = sdtf.format(infoMasterDegreeProofVersion.getThesisDeliveryDate());
+
 		request.setAttribute(SessionConstants.DISSERTATION_TITLE, infoMasterDegreeThesisDataVersion.getDissertationTitle());
 		request.setAttribute(SessionConstants.FINAL_RESULT, MasterDegreeClassification.getClassificationString(classification));
 		request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, infoMasterDegreeProofVersion.getAttachedCopiesNumber());
-		request.setAttribute(SessionConstants.PROOF_DATE, infoMasterDegreeProofVersion.getProofDate());
-		request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, infoMasterDegreeProofVersion.getThesisDeliveryDate());
+		request.setAttribute(SessionConstants.PROOF_DATE, proofDate);
+		request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
 		request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, infoMasterDegreeThesisDataVersion.getInfoResponsibleEmployee());
 		request.setAttribute(SessionConstants.LAST_MODIFICATION, infoMasterDegreeThesisDataVersion.getLastModification());
 
