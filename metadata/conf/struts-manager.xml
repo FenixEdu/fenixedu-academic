@@ -82,7 +82,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
       	  <forward name="viewDegree" path="df.page.read-degree"/>  
-      	  <forward name="readDegrees" path="df.page.read-degrees"/> 	      
+      	  <forward name="readDegrees" path="/readDegrees.do"/> 	      
       </action>
          
      <!-- Action for inserting a degree -->
@@ -105,7 +105,7 @@
       		 input="/readDegreesInput.do"
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreesAction">
-      	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
+      	  <forward name="readDegrees" path="/readDegrees.do"/>      	      
       </action>
       
       <!-- Action for editing a degree -->
@@ -123,6 +123,8 @@
      
      <!-- Action for reading all degree curricular plans  -->
       <action path="/readDegreeCurricularPlans"
+      		 name="readDegreeForm"
+      		 scope="request"
       	     type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlansAction">
       	  <forward name="readDegreeCurricularPlans" path="df.page.read-degreeCurricularPlans"/>      	      
       </action>

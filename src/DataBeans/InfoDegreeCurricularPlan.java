@@ -12,7 +12,7 @@ import Util.MarkType;
  * 19/Mar/2003
  */
 
-public class InfoDegreeCurricularPlan extends InfoObject implements Serializable {
+public class InfoDegreeCurricularPlan extends InfoObject implements Serializable, Comparable {
 
 	private InfoDegree infoDegree;
 	private String name;
@@ -195,6 +195,12 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 	 */
 	public void setNumerusClausus(Integer integer) {
 		numerusClausus = integer;
+	}
+	
+		//	alphabetical order
+    public int compareTo(Object arg0) {	
+		InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
+		return this.getName().compareTo(degreeCurricularPlan.getName());
 	}
 
 }

@@ -45,8 +45,8 @@ public class ReadDegreeAction extends FenixAction  {
 						
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
-				Integer internalId = (Integer)readDegreeForm.get("idInternal");
-				Object args[] = { internalId };
+				Integer degreeId = (Integer) readDegreeForm.get("idInternal");
+				Object args[] = { degreeId };
 				
 				GestorServicos manager = GestorServicos.manager();
 				InfoDegree degree = null;
@@ -59,27 +59,30 @@ public class ReadDegreeAction extends FenixAction  {
 			    
 			    //Caso em que se tenta ler 1 curso que não existe na base de dados
 				if(degree == null) {
-					try {
-							List degrees = null;
-							degrees = (List) manager.executar(
-										userView,
-										"ReadDegreesService",
-										null);
-							Collections.sort(degrees);
-							request.setAttribute(SessionConstants.INFO_DEGREES_LIST, degrees);
-							ActionErrors actionErrors = new ActionErrors();
-							ActionError error = new ActionError("message.nonExistingDegree");
-						    actionErrors.add("message.nonExistingDegree", error);
-							saveErrors(request, actionErrors);
-					} catch (FenixServiceException e) {
-						throw new FenixActionException(e);
-					}
-					return mapping.findForward("readDegrees");
+						ActionErrors actionErrors = new ActionErrors();
+						ActionError error = new ActionError("message.nonExistingDegree");
+						actionErrors.add("message.nonExistingDegree", error);
+						saveErrors(request, actionErrors);
+						return mapping.findForward("readDegrees");
 				}
 				
 				//Caso tudo corra como esperado, i.e., o curso existe mesmo
-				request.setAttribute(SessionConstants.INFO_DEGREE, degree);
-				request.setAttribute("internalId", internalId);
+				List degreeCurricularPlans = null;
+		
+				try {		
+						GestorServicos serviceManager = GestorServicos.manager();
+						degreeCurricularPlans = (List) serviceManager.executar(
+									userView,
+									"ReadDegreeCurricularPlansService",
+									args);	
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+				
+				Collections.sort(degreeCurricularPlans);
+				
+				request.setAttribute(SessionConstants.INFO_DEGREE, degree);					
+				request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST, degreeCurricularPlans);
 				return mapping.findForward("viewDegree");
 	}
 }

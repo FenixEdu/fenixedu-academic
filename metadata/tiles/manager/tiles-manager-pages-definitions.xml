@@ -8,7 +8,7 @@
 	</definition>
 	<definition name="df.page.read-degree" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readDegree_bd.jsp" />
-		<put name="navLocal" value="/manager/readDegree_general.jsp" />
+		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.main-page" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/welcomScreen.jsp" />

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
+import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -45,12 +46,13 @@ public class ReadDegreeCurricularPlansService implements IServico {
   /**
    * Executes the service. Returns the current collection of infoDegreeCurricularPlans.
    */
-  public List run() throws FenixServiceException {
+  public List run(Integer idDegree) throws FenixServiceException {
 	ISuportePersistente sp;
 	List allDegreeCurricularPlans = null;
 	try {
 			sp = SuportePersistenteOJB.getInstance();
-			allDegreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readAll();
+			ICurso degree = sp.getICursoPersistente().readByIdInternal(idDegree);
+			allDegreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readByDegree(degree);
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}

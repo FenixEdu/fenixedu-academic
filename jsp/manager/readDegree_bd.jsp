@@ -18,5 +18,9 @@
 </logic:present>
 </tr>
 </table>
-<tr>
-</tr>
+<br>
+<logic:iterate id="infoDCP" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">			
+	<html:link page="/readDegreeCurricularPlan.do" paramId="idInternal" paramName="infoDCP" paramProperty="idInternal"><bean:write name="infoDCP" property="name"/></html:link>
+	<br>
+	<br>
+</logic:iterate>

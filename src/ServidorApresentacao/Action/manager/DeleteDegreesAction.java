@@ -2,7 +2,6 @@ package ServidorApresentacao.Action.manager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -62,17 +61,6 @@ public class DeleteDegreesAction extends FenixAction {
 				}
 				saveErrors(request, actionErrors);
 		}
-
-		List allInfoDegrees;
-		try {
-				allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService", null);	
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-
-		Collections.sort(allInfoDegrees);
-		request.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
-
 		return mapping.findForward("readDegrees");
 	}
 
