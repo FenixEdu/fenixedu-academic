@@ -233,7 +233,7 @@ public class GroupSiteComponentBuilder {
 		return component;
 	}
 
-	public List readStudentGroupInformation(Integer studentGroupCode) {
+	public List readStudentGroupInformation(Integer studentGroupCode) throws FenixServiceException{
 
 		List studentGroupAttendInformationList = null;
 		try {
@@ -272,6 +272,7 @@ public class GroupSiteComponentBuilder {
 
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
+			throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
 		}
 		return studentGroupAttendInformationList;
 	}
