@@ -226,7 +226,16 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>       
     </form-bean>
       
-      
+    <!-- ================= FIND PERSON FORM ===================-->
+    <form-bean name="findPersonForm"
+    	type="org.apache.struts.validator.DynaValidatorForm"
+    	dynamic="true">
+    		<form-property name="name" type="java.lang.String"/>	
+    		<form-property name="email" type="java.lang.String"/>
+    		<form-property name="username" type="java.lang.String"/>
+    		<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
+    </form-bean>  
+    
     </form-beans>
     
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -1030,6 +1039,36 @@
 		<forward name="insertExecutionCourse" path="df.executionCourseManagement.page.insertExecutionCourse"/>
 		<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
 	</action>
+	
+	<!-- ========== PERSON MANAGEMENT MANAGEMENT ========== -->
+	<action path="/personManagement"
+	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
+	parameter="method"
+	scope="request"
+	input="findPerson"
+	>
+		<forward name="firstPage" path="firstPage"/>
+	</action>
+	
+	<action path="/findPerson"
+	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
+	parameter="method"
+	scope="request"
+	name="findPersonForm"
+	input="findPerson"
+	>
+		<forward name="findPerson" path="findPerson"/>
+		<forward name="displayPerson" path="displayPerson"/>
+	</action>
+	<action path="/displayEmployee"	
+	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
+	parameter="method"
+	scope="request"
+	name="findEmployeeForm"
+	>
+		<forward name="displayEmployee" path="displayEmployee"/>
+	</action>
+	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

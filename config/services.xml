@@ -5255,4 +5255,13 @@
         <isTransactional>true</isTransactional>
         <filterChains/>
     </service>
+    <service>
+    	<name>SearchPerson</name>
+    	<description>Service that find a person by number, name and/or email</description>
+    	<implementationClass>ServidorAplicacao.Servico.person.SearchPerson</implementationClass>
+    	<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>            	
+    </service>
 </serviceDefinitions>

@@ -269,7 +269,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 			try
 			{
 				infoExecutionDegree =
-				(InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+					(InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
 						null,
 						"ReadExecutionDegreeByOID",
 						args);
@@ -279,7 +279,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
 			}
 			if (infoExecutionDegree == null
-					|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null)
+				|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null)
 			{
 				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
 			}
@@ -288,7 +288,9 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 				saveErrors(request, errors);
 				return (new ActionForward(mapping.getInput()));
 			}
-			request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree.getInfoDegreeCurricularPlan());
+			request.setAttribute(
+				"infoDegreeCurricularPlan",
+				infoExecutionDegree.getInfoDegreeCurricularPlan());
 		}
 		else
 		{
@@ -332,7 +334,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 				while (iterator.hasNext())
 				{
 					InfoDegreeCurricularPlan infoDegreeCurricularPlanElem =
-					(InfoDegreeCurricularPlan) iterator.next();
+						(InfoDegreeCurricularPlan) iterator.next();
 
 					if (infoDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlanId))
 					{
@@ -342,7 +344,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 				}
 			}
 		}
-		
+
 		if (inEnglish == null || inEnglish.booleanValue() == false)
 		{
 			return mapping.findForward("showCurricularPlans");
@@ -363,7 +365,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		}
 		if (parameterCodeString != null)
 		{
-			parameterCode = new Integer(parameterCodeString);
+			try
+			{
+				parameterCode = new Integer(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
 		}
 		return parameterCode;
 	}
@@ -379,7 +388,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 		}
 		if (parameterCodeString != null)
 		{
-			parameterBoolean = new Boolean(parameterCodeString);
+			try
+			{
+				parameterBoolean = new Boolean(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
 		}
 
 		return parameterBoolean;

@@ -111,9 +111,11 @@
 	</definition>	
 	<definition name="df.page.choosePerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/choosePersonPage_bd.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.confirmPasswordChange" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/confirmPasswordChange_bd.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.insert-execution-course" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/insertExecutionCourse_bd.jsp" />
@@ -160,6 +162,7 @@
 	<!-- ========== ROLES MANIPULATION ========== -->
 	<definition name="df.page.manage-roles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageRoles_bd.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
 
 	<!-- ========== EXECUTION COURSE MERGE ========== -->
@@ -192,4 +195,21 @@
 		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>	
 	
+	<!-- ========== FIND PERSON MANAGEMENT ========== -->
+	<definition name="firstPage" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/welcomeScreen.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+	</definition>
+	<definition name="findPerson" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/findPerson.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+	</definition>
+	<definition name="displayPerson" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/displayPerson.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+	</definition>	
+	<definition name="displayEmployee" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/displayEmployee.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+	</definition>
 </tiles-definitions>

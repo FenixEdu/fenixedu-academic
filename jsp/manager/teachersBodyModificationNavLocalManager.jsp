@@ -52,15 +52,20 @@
 	</html:link>
 </strong></p>
 
+<p><strong>&raquo;
+	<html:link page="/findPerson.do?method=prepareFindPerson&page=0">
+		<bean:message key="label.manager.personManagement" />
+	</html:link>
+</strong></p>
+
+<p><strong>&raquo; 
+	<html:link page="/manageAdvisories.do?method=prepare">
+		Gest&atilde;o da Avisos
+	</html:link>
+</strong></p>
+
 <p><strong>&raquo; 
 	<html:link page="/manageCache.do?method=prepare">
 		Gest&atilde;o da Cache
 	</html:link>
 </strong></p>
-
-<%--
-<p><strong>&raquo; Gest&atilde;o de Privilégios</strong></p>
-<ul>
-  <li>Criar Role</html:link></li>
-  <li>Atribuir Roles</li>
-</ul>--%>

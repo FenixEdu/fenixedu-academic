@@ -34,6 +34,12 @@
 	</html:link>
 </strong></p>
 
+<p><strong>&raquo;
+	<html:link page="/findPerson.do?method=prepareFindPerson&page=0">
+		<bean:message key="label.manager.personManagement" />
+	</html:link>
+</strong></p>
+
 <%--
 <p><strong>&raquo; 
 	<html:link page="/readExecutionPeriods.do">
@@ -59,22 +65,3 @@
 		Gest&atilde;o da Avisos
 	</html:link>
 </strong></p>
-
-<p><strong>&raquo;
-	<html:link page="/manageRoles.do?method=prepare">
-		Gest&atilde;o de Privilégios
-	</html:link>
-</strong></p>
-
-
-<p><strong>&raquo;
-	<html:link page="/generateNewPassword.do?method=prepare&page=0"><bean:message key="link.operator.newPassword" /></html:link>
-   </strong>	
-</p>
-
-<%--
-<p><strong>&raquo; Gest&atilde;o de Privilégios</strong></p>
-<ul>
-  <li>Criar Role</html:link></li>
-  <li>Atribuir Roles</li>
-</ul>--%>

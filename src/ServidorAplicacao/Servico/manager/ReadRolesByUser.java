@@ -57,6 +57,11 @@ public class ReadRolesByUser implements IServico
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+			if (person == null)
+			{
+				throw new FenixServiceException("error.noUsername");
+			}
+			
 			result = (List) CollectionUtils.collect(person.getPersonRoles(), new Transformer()
 			{
 				public Object transform(Object arg0)
@@ -64,9 +69,10 @@ public class ReadRolesByUser implements IServico
 					return Cloner.copyIRole2InfoRole((IRole) arg0);
 				}
 			});
-		} catch (ExcepcaoPersistencia excepcaoPersistencia)
+		}
+		catch (ExcepcaoPersistencia excepcaoPersistencia)
 		{
-			throw new FenixServiceException(excepcaoPersistencia);
+			throw new FenixServiceException("error.noRoles", excepcaoPersistencia);
 		}
 
 		return result;

@@ -27,6 +27,12 @@
 	</html:link>
 </strong></p>
 
+<p><strong>&raquo;
+	<html:link page="/personManagement.do?method=firstPage">
+		<bean:message key="label.manager.personManagement" />
+	</html:link>
+</strong></p>
+
 <p><strong>&raquo; 
 
 	<html:link page="/manageCache.do?method=prepare">
@@ -40,15 +46,3 @@
 	</html:link>
 </strong></p>
 
-<p><strong>&raquo;
-	<html:link page="/manageRoles.do?method=prepare">
-		Gest&atilde;o de Privilégios
-	</html:link>
-</strong></p>
-
-
-<p><strong>&raquo;
-	<html:link page="/generateNewPassword.do?method=prepare&page=0">
-		<bean:message key="link.operator.newPassword" />
-	</html:link>
-</strong></p>

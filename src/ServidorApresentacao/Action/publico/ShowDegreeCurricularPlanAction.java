@@ -35,7 +35,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 		ActionErrors errors = new ActionErrors();
 
 		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-		
+
 		Integer degreeId = getFromRequest("degreeID", request);
 		request.setAttribute("degreeID", degreeId);
 
@@ -48,7 +48,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
 		request.setAttribute("inEnglish", inEnglish);
 
-		Object[] args = { degreeCurricularPlanId, executionPeriodOId};
+		Object[] args = { degreeCurricularPlanId, executionPeriodOId };
 
 		List activeCurricularCourseScopes = null;
 		try
@@ -65,12 +65,10 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 			saveErrors(request, errors);
 			return (new ActionForward(mapping.getInput()));
 		}
-		
+
 		if (activeCurricularCourseScopes == null || activeCurricularCourseScopes.size() <= 0)
 		{
-			errors.add(
-				"noDegreeCurricularPlan",
-				new ActionError("error.impossibleCurricularPlan"));
+			errors.add("noDegreeCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
 			saveErrors(request, errors);
 		}
 
@@ -117,7 +115,14 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 		}
 		if (parameterCodeString != null)
 		{
-			parameterCode = new Integer(parameterCodeString);
+			try
+			{
+				parameterCode = new Integer(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
 		}
 		return parameterCode;
 	}
@@ -133,9 +138,15 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 		}
 		if (parameterCodeString != null)
 		{
-			parameterBoolean = new Boolean(parameterCodeString);
+			try
+			{
+				parameterBoolean = new Boolean(parameterCodeString);
+			}
+			catch (Exception exception)
+			{
+				return null;
+			}
 		}
-
 		return parameterBoolean;
 	}
 }
