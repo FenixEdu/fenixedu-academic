@@ -15,8 +15,8 @@
         &nbsp;&nbsp;- <html:link page="/chooseGuideDispatchAction.do?method=prepareChoose&page=0&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /></html:link><br>
         &nbsp;&nbsp;- <html:link page="/guideListingSection.do"><bean:message key="link.masterDegree.administrativeOffice.guideListing" /></html:link><br>
 	<br>
-	
+	<%--
 	 <html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" />
     </html:link><br>
-
+--%>
    
