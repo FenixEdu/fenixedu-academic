@@ -70,7 +70,7 @@
 			<tr>
 				<td colspan="7" class="listClasses-subheader">
 					<bean:message key="label.teacherCreditsSheet.shiftProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-						<logic:present role="role.department.credits.manager">
+						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 							(<html:link page='<%= "/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm&amp;executionCourseId="+ executionCourseId + "&amp;teacherId=" + teacherId + "&amp;executionPeriodId=" + executionPeriodId %>'>
 								<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
 							</html:link>)
@@ -173,7 +173,7 @@
 			<tr>
 				<td colspan="4" class="listClasses-subheader">
 					<bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
-					<logic:present role="role.department.credits.manager">
+					<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 						(<html:link page='<%= "/manageTeacherExecutionCourseSupportLessons.do?page=0&amp;method=showForm&amp;executionCourseId="+ executionCourseId + "&amp;teacherId=" + teacherId + "&amp;executionPeriodId=" + executionPeriodId %>'>
 							<bean:message key="link.teacherCreditsTeacher.supportLessons.management" />
 						</html:link>)
@@ -234,7 +234,7 @@
 	<tr>
 		<td colspan="3" class="listClasses-subheader">
 			<bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-			<logic:present role="role.department.credits.manager">
+			<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 				(<html:link page='<%= "/manageTeacherDFPStudent.do?method=list&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="infoTeacher" paramProperty="idInternal">
 					<bean:message key="link.teacherCreditsTeacher.manageDegreeFinalProjectStudents"/>
 				</html:link>)
@@ -289,7 +289,7 @@
 	<tr>
 		<td colspan="3" class="listClasses-subheader">
 			<bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-			<logic:present role="role.department.credits.manager">
+			<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 				(<html:link page='<%= "/manageTeacherInstitutionWorkingTime.do?method=list&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="infoTeacher" paramProperty="idInternal">
 					<bean:message key="link.teacherCreditsTeacher.manageInstitutionWorkingTime"/>
 				</html:link>)
@@ -341,7 +341,7 @@
 	<tr>
 		<td colspan="2" class="listClasses-subheader">
 				<bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-				<logic:present role="role.department.credits.manager">
+				<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 					(<html:link page='<%= "/teacherSearchForOtherTypeCreditLine.do?page=0&amp;method=doSearch&amp;teacherNumber=" + teacherNumber + "&amp;executionPeriodId=" + executionPeriodId %>'>
 						<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
@@ -386,7 +386,7 @@
 	<tr>
 		<td colspan="4" class="listClasses-subheader">
 				<bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-<%--				<logic:present role="role.credits.manager">
+<%--				<logic:present role="CREDITS_MANAGER">
 					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 					(<html:link page='<%= "/teacherSearchForOtherTypeCreditLine.do?page=0&amp;method=doSearch&amp;teacherNumber=" + teacherNumber + "&amp;executionPeriodId=" + executionPeriodId %>'>
 						<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
@@ -443,7 +443,7 @@
 	<tr>
 		<td colspan="3" class="listClasses-subheader">
 				<bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-<%--				<logic:present role="role.credits.manager">
+<%--				<logic:present role="CREDITS_MANAGER">
 					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 					(<html:link page='<%= "/teacherSearchForOtherTypeCreditLine.do?page=0&amp;method=doSearch&amp;teacherNumber=" + teacherNumber + "&amp;executionPeriodId=" + executionPeriodId %>'>
 						<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />

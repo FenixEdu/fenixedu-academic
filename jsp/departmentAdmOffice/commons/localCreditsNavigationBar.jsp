@@ -14,8 +14,8 @@
 	</logic:notPresent>
 </logic:equal>
 
-<logic:present role="role.department.member">
-	<logic:present role="role.department.credits.manager">
+<logic:present role="DEPARTMENT_MEMBER">
+	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 		<strong>&raquo; <html:link action="/creditsManagementIndex"><bean:message key="link.group.creditsManagement"/></html:link></strong>
 		<br />
 		<br />

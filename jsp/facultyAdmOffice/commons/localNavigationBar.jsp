@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<logic:present role="grantOwnerManager">
+<logic:present role="GRANT_OWNER_MANAGER">
 	<%-- GRANT OWNER MANAGEMENT APPLICATIONS  --%>
 	
 	<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
@@ -105,7 +105,7 @@
 	<br/>
 </logic:present>
 
-<logic:present role="creditsManager">
+<logic:present role="CREDITS_MANAGER">
 	<%-- TEACHER CREDITS MANAGEMENT APPLICATIONS --%>
 	<strong>&raquo; <bean:message key="link.group.creditsManagement.title"/></strong>
 	<ul>
