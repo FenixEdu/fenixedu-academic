@@ -196,25 +196,25 @@ INSERT INTO CURRICULAR_COURSE  ( ID_INTERNAL,KEY_DEPARTMENT_COURSE,KEY_DEGREE_CU
 #-----------------------------
 ;
 DELETE FROM CURRICULAR_COURSE_SCOPE;
-INSERT INTO CURRICULAR_COURSE_SCOPE values (1, 3, 14, 2,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (2, 3, 14, 3,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (3, 10, 23, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (4, 1, 16, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (5, 3, 23, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (6, 5, 18, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (7, 7, 23, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (8, 2, 20, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (9, 4, 23, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (10, 6, 23, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (11, 8, 23, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (12, 1, 1, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (13, 2, 2, 1,0,0,0,0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (14, 3, 3, 1,0,0,0,0, 2, 1, 1, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (1, 3, 14, 2,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (2, 3, 14, 3,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (3, 10, 23, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (4, 1, 16, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (5, 3, 23, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (6, 5, 18, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (7, 7, 23, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (8, 2, 20, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (9, 4, 23, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (10, 6, 23, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (11, 8, 23, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (12, 1, 1, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (13, 2, 2, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (14, 3, 3, 1,0,0,0,0, 2, 1, 1, null, null, 0, null);
 
-INSERT INTO CURRICULAR_COURSE_SCOPE values (15, 1, 24, 1, 0, 0, 0, 0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (16, 1, 25, 1, 0, 0, 0, 0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (17, 1, 26, 1, 0, 0, 0, 0, 2, 1, 1, null);
-INSERT INTO CURRICULAR_COURSE_SCOPE values (18, 1, 27, 1, 0, 0, 0, 0, 2, 1, 1, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (15, 1, 24, 1, 0, 0, 0, 0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (16, 1, 25, 1, 0, 0, 0, 0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (17, 1, 26, 1, 0, 0, 0, 0, 2, 1, 1, null, null, 0, null);
+INSERT INTO CURRICULAR_COURSE_SCOPE values (18, 1, 27, 1, 0, 0, 0, 0, 2, 1, 1, null, null, 0, null);
 
 -- -----------------------------
 -- Data for table 'STUDENT_KIND'
