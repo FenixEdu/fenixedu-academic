@@ -1,90 +1,58 @@
 package Util;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.enum.ValuedEnum;
+
 /**
  * @author dcs-rjao
  *
  * 2/Abr/2003
  */
-public class EnrolmentState {
+public class EnrolmentState extends ValuedEnum {
 
-	public static final int APROVED = 1;
-	public static final int NOT_APROVED = 2;
-	public static final int ENROLED = 3;
-	public static final int TEMPORARILY_ENROLED = 4;
-	public static final int ANNULED = 5;
-	public static final int NOT_EVALUATED = 6;
+	public static final int APROVED_TYPE = 1;
+	public static final int NOT_APROVED_TYPE = 2;
+	public static final int ENROLED_TYPE = 3;
+	public static final int TEMPORARILY_ENROLED_TYPE = 4;
+	public static final int ANNULED_TYPE = 5;
+	public static final int NOT_EVALUATED_TYPE = 6;
 
-	public static final EnrolmentState APROVED_OBJ = new EnrolmentState(EnrolmentState.APROVED);
-	public static final EnrolmentState NOT_APROVED_OBJ = new EnrolmentState(EnrolmentState.NOT_APROVED);
-	public static final EnrolmentState ENROLED_OBJ = new EnrolmentState(EnrolmentState.ENROLED);
-	public static final EnrolmentState TEMPORARILY_ENROLED_OBJ = new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED);
-	public static final EnrolmentState ANNULED_OBJ = new EnrolmentState(EnrolmentState.ANNULED);
-	public static final EnrolmentState NOT_EVALUATED_OBJ = new EnrolmentState(EnrolmentState.NOT_EVALUATED);
+	public static final EnrolmentState APROVED = new EnrolmentState("msg.approved", EnrolmentState.APROVED_TYPE);
+	public static final EnrolmentState NOT_APROVED = new EnrolmentState("msg.notApproved", EnrolmentState.NOT_APROVED_TYPE);
+	public static final EnrolmentState ENROLED = new EnrolmentState("msg.enroled", EnrolmentState.ENROLED_TYPE);
+	public static final EnrolmentState TEMPORARILY_ENROLED = new EnrolmentState("msg.temporarilyEnroled", EnrolmentState.TEMPORARILY_ENROLED_TYPE);
+	public static final EnrolmentState ANNULED = new EnrolmentState("msg.annuled", EnrolmentState.ANNULED_TYPE);
+	public static final EnrolmentState NOT_EVALUATED = new EnrolmentState("msg.notEvaluated", EnrolmentState.NOT_EVALUATED_TYPE);
 
-	private Integer state;
+	private EnrolmentState(String name, int value) {
+		super(name, value);
+	}
+	
+	public static EnrolmentState getEnum(String state) {
+	  return (EnrolmentState) getEnum(EnrolmentState.class, state);
+	}
+	 
+	public static EnrolmentState getEnum(int state) {
+	  return (EnrolmentState) getEnum(EnrolmentState.class, state);
+	}
+	 
+	public static Map getEnumMap() {
+	  return getEnumMap(EnrolmentState.class);
+	}
+	 
+	public static List getEnumList() {
+	  return getEnumList(EnrolmentState.class);
+	}
+	 
+	public static Iterator iterator() {
+	  return iterator(EnrolmentState.class);
+	}	
 
-	public EnrolmentState() {
+	public String toString(){
+		return this.getName();
 	}
 
-	public EnrolmentState(int state) {
-		this.state = new Integer(state);
-	}
-
-	public EnrolmentState(Integer state) {
-		this.state = state;
-	}
-
-	/** Getter for property state.
-	 * @return Value of property state.
-	 *
-	 */
-	public java.lang.Integer getState() {
-		return state;
-	}
-
-	/** Setter for property state.
-	 * @param state New value of property state.
-	 *
-	 */
-	public void setState(Integer state) {
-		this.state = state;
-	}
-
-	public boolean equals(Object o) {
-		if (o instanceof EnrolmentState) {
-			EnrolmentState aux = (EnrolmentState) o;
-			return this.state.equals(aux.getState());
-		} else {
-			return false;
-		}
-	}
-
-	public String toString() {
-
-		int value = this.state.intValue();
-		String valueS = null;
-
-		switch (value) {
-			case NOT_APROVED :
-				valueS = "NOT_APROVED";
-				break;
-			case APROVED :
-				valueS = "APROVED";
-				break;
-			case ENROLED :
-				valueS = "ENROLED";
-				break;
-			case TEMPORARILY_ENROLED :
-				valueS = "TEMPORARILY_ENROLED";
-				break;
-			case ANNULED :
-				valueS = "ANNULED";
-			case NOT_EVALUATED :
-				valueS = "NOT_EVALUATED";
-			default:
-				break;
-		}
-
-		return "[" + this.getClass().getName() + ": " + valueS + "]\n";
-	}
 }
