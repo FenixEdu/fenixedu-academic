@@ -16,7 +16,6 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.ITest;
 import Dominio.ITestQuestion;
 import Dominio.Test;
 import Dominio.TestQuestion;
