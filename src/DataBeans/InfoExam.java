@@ -157,6 +157,9 @@ public class InfoExam {
 
 
 	public String getDate() {
+		if (getDay()==null){
+			return "0/0/0";
+		}
 		String result = String.valueOf(getDay().get(Calendar.DAY_OF_MONTH));
 		result += "/";
 		result += String.valueOf(getDay().get(Calendar.MONTH)+1);
@@ -166,6 +169,9 @@ public class InfoExam {
 	}
 	
 	public String getBeginningHour(){
+		if (getBeginning()==null){
+			return "00:00";
+		}
 		String result = format(String.valueOf(getBeginning().get(Calendar.HOUR_OF_DAY)));
 				result += ":";
 				result += format(String.valueOf(getBeginning().get(Calendar.MINUTE)));
