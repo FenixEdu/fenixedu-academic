@@ -14,6 +14,7 @@ import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentSection;
+import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -36,6 +37,8 @@ public Boolean run(InfoSection infoSection) throws FenixServiceException {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
+			IPersistentSite persistentSite = sp.getIPersistentSite();
+			site=persistentSite.readByExecutionCourse(site.getExecutionCourse());
 
 			/* we may only delete non-initial sections */
 //			ISite completeSite = sp.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
@@ -45,25 +48,32 @@ public Boolean run(InfoSection infoSection) throws FenixServiceException {
 //			}
 			
 			ISection superiorSection = null;
-			if (infoSection.getSuperiorInfoSection()!=null) {
-				superiorSection = Cloner.copyInfoSection2ISection(infoSection.getSuperiorInfoSection());
-			}
-			String name = infoSection.getName();
+						if (infoSection.getSuperiorInfoSection()!=null) {
+							superiorSection = Cloner.copyInfoSection2ISection(infoSection.getSuperiorInfoSection());
+							superiorSection.setSite(site);
+						}
+			
 			
 			IPersistentSection persistentSection = sp.getIPersistentSection();
 			
-			ISection deletedSection = persistentSection.readBySiteAndSectionAndName(site, superiorSection, name);
-			
-			if (deletedSection == null) throw new FenixServiceException("non existing section");
+			ISection deletedSection = Cloner.copyInfoSection2ISection(infoSection);
+			deletedSection.setSite(site);			
+//			if (deletedSection == null) throw new FenixServiceException("non existing section");
 			
 			Integer deletedSectionOrder = deletedSection.getSectionOrder();
 			
 		    persistentSection.delete(deletedSection);
-				
+			sp.confirmarTransaccao();
+			sp.iniciarTransaccao();
+			
+			
 			List sectionsReordered = persistentSection.readBySiteAndSection(site, superiorSection);
 			// persistentItem.readAllItemsBySection(section);
 			
-			Iterator iterSections = sectionsReordered.iterator();
+		//only necessary if we reomve the open/close transaction from the service
+		//sectionsReordered.remove(deletedSection);
+			
+			Iterator iterSections = sectionsReordered.iterator(); 
 			
 			ISection section = null;
 			Integer sectionOrder = null;
