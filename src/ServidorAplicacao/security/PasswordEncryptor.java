@@ -35,11 +35,8 @@ public abstract class PasswordEncryptor {
 
 	static public boolean areEquals(
 		String encryptedPassword,
-		String notEncryptedPassword) {
-		System.out.println("Pass:"+notEncryptedPassword);
+		String notEncryptedPassword) {		
 		String digest = encryptPassword(notEncryptedPassword);
-		System.out.println("Enc:"+encryptedPassword);
-		System.out.println("Dig:"+digest);
 		return digest.equals(encryptedPassword);
 	}
 
