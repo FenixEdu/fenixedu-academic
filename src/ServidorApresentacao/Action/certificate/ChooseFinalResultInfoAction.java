@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoExecutionYear;
@@ -173,10 +174,13 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						
 						//get the last enrolmentEvaluation
 						Iterator iterator1 = enrolmentList.iterator();
-						
-						while(iterator1.hasNext()) {	
+						double sum = 0;
+						while(iterator1.hasNext()) {	 
 							result = iterator1.next();
 							InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
+							InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolment2.getInfoCurricularCourseScope();
+							sum = sum + Double.parseDouble(String.valueOf(infoCurricularCourseScope.getInfoCurricularCourse().getCredits()));
+
 							List aux = (List) infoEnrolment2.getInfoEvaluations();
 
 							if (aux.size() > 1){
@@ -189,6 +193,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 							newEnrolmentList.add(infoEnrolment2);
 
 						}
+						session.setAttribute("total",String.valueOf(sum));
 					
 					
 						session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
@@ -198,6 +203,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						} catch (RuntimeException e) {
 							throw new RuntimeException("Error", e);
 						}
+						
 						Locale locale = new Locale("pt", "PT");
 						Date date = new Date();
 						String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);

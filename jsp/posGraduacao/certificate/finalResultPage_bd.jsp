@@ -37,9 +37,9 @@
 	<tr>
 		<td class="results" align="right"><b>Total de créditos:</b></td>
 		<td class="results">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-		<td class="results" align="center"><b>Total</b></td>
+		<td class="results" align="center"><b><bean:write name="total"/></b></td>
 	</tr>
 	</table>
-	<%-- BRUNO ESTA PARTE DEVERÁ SER IMPRESSA NO VERSO DA ÚLTIMA PAGINA --%> 	
+	
 	<%--The Final Result --%>
 	<jsp:include page="./finalResultTemplate1.jsp" flush="true" />
