@@ -83,7 +83,7 @@ public class ExamsMap {
 
         days = new ArrayList();
         if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
-            for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < makeLastDayOfYear(
+            for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day <= makeLastDayOfYear(
                     firstDayOfSeason).get(Calendar.DAY_OF_YEAR); day++) {
                 Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
                         - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));

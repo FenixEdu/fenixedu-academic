@@ -94,7 +94,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			// Generate Exam Map Side Lable
 			strBuffer.append("<td class='courseList'>");
 			if (mapType.equals("DegreeAndYear")) {
-				strBuffer.append("<h2>Calend·rio de Exames</h2><br />");
+				strBuffer.append("<h2>Calend&aacute;rio de Exames</h2><br />");
 				renderExamsExecutionCourseTableForYear(strBuffer, year1);
 			} else {
 				renderExecutionCourseListForYear(strBuffer, year1);
@@ -107,7 +107,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				strBuffer.append("<td class='courseList'>");
 				strBuffer.append("<br style='page-break-before:always;' />");
 				if (mapType.equals("DegreeAndYear")) {
-					strBuffer.append("<h2>Calend·rio de Exames</h2><br />");
+					strBuffer.append("<h2>Calend&aacute;rio de Exames</h2><br />");
 					renderExamsExecutionCourseTableForYear(strBuffer, year2);
 				} else {
 					renderExecutionCourseListForYear(strBuffer, year2);
@@ -223,7 +223,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				strBuffer.append(" - ");
 				strBuffer.append(infoExecutionCourse.getNome());
 				
-				if (showCreateExamLink || user.equals("public")) {
+				if (user.equals("public")) {
 					strBuffer.append("</a>");
 					strBuffer.append("</td>");
 				}
@@ -281,7 +281,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 								+ examsMap.getInfoExecutionDegree().getIdInternal()
 								+ getCurricularYearsArgs());
 						strBuffer.append("'>");
-						strBuffer.append("Definir coment·rio");
+						strBuffer.append("Definir coment&aacute;rio");
 						strBuffer.append("</a>");
 					}
 				}
@@ -632,10 +632,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
 			ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
 					week * daysOfWeek.length + slot);
-			
+						
 			String classCSS = "exam_cell_day";
 			if (examsMapSlot.getDay().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-				classCSS += "_first";
+			    classCSS += "_first";
 			}
 			
 			strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
@@ -663,7 +663,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		strBuffer.append("<strong>" + year + "&ordm; ano</strong>");
 		strBuffer.append(" - <strong>"
 				+ ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
-				.getSemester() + "? semestre</strong>");
+				.getSemester() + "&ordm; semestre</strong>");
 		strBuffer.append(" - <strong>"
 				+ ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
 				.getInfoExecutionYear().getYear() + "</strong><br />");
@@ -702,7 +702,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		for (int j = 0; j < infoExecutionCourse.getAssociatedInfoExams().size(); j++) {
 			InfoExam infoExam = (InfoExam) infoExecutionCourse.getAssociatedInfoExams().get(j);
 			if (infoExam.getSeason().getSeason().intValue() == season) {
-				strBuffer.append("<td>" + season + "? </td>");
+				strBuffer.append("<td>" + season + "&ordf; </td>");
 				strBuffer.append("<td>" + infoExam.getDate() + "</td>");
 				strBuffer.append("<td>" + infoExam.getBeginningHour() + "</td>");
 				strBuffer.append("<td>" + infoExam.getEndHour() + "</td>");

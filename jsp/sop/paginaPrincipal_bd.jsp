@@ -14,6 +14,16 @@ dispon&iacute;veis.</p>
   <tr>
     <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
     </td>
+    <td class="infoop"><html:link page="/manageExecutionCourses.do?method=prepareSearch&page=0&"><strong>Gest&atilde;o de Disciplinas</strong></html:link></td>
+  </tr>
+</table>
+<p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
+	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas horárias).</p>
+<br />
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="<%= request.getContextPath() %>/images/info.gif" width="15"> 
+    </td>
     <td class="infoop"><html:link page="/chooseExecutionPeriod.do?method=prepare"><strong>Gest&atilde;o de Hor&aacute;rios</strong></html:link></td>
   </tr>
 </table>

@@ -24,10 +24,8 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -151,7 +149,6 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
         if (index != -1) {
-
             infoExecutionDegree = (InfoExecutionDegree) executionDegreeList.get(index);
             request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
             request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree
@@ -173,9 +170,10 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
      * @param curricularYears
      * @param infoExecutionDegree
      * @return
+     * @throws FenixServiceException
      */
     private InfoExamsMap getExamsMap(HttpServletRequest request, List curricularYears,
-            InfoExecutionDegree infoExecutionDegree) throws FenixActionException {
+            InfoExecutionDegree infoExecutionDegree) throws FenixActionException, FenixServiceException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
@@ -183,21 +181,9 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 
         InfoExamsMap infoRoomExamsMaps = null;
 
-        //        for (Iterator iter = curricularYears.iterator(); iter.hasNext();)
-        //        {
-        //            Integer year = (Integer) iter.next();
         Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-        try {
-            infoRoomExamsMaps = (InfoExamsMap) ServiceUtils.executeService(userView,
-                    "ReadFilteredExamsMap", args);
-
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-        //        }
+        infoRoomExamsMaps = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadFilteredExamsMap",
+                args);
 
         return infoRoomExamsMaps;
     }
@@ -206,9 +192,10 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
      * @param request
      * @param curricularYears
      * @return
+     * @throws FenixServiceException
      */
     private List getExamsMap(HttpServletRequest request, List curricularYears, List executionDegreeList)
-            throws FenixActionException {
+            throws FenixActionException, FenixServiceException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
@@ -221,15 +208,9 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
             InfoExamsMap infoRoomExamsMap = null;
 
             Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-            try {
-                infoRoomExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
-                        "ReadFilteredExamsMap", args);
 
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException(e);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
+            infoRoomExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView,
+                    "ReadFilteredExamsMap", args);
 
             infoExamsMaps.add(infoRoomExamsMap);
         }

@@ -1197,7 +1197,7 @@
             name="examForm"
             validate="false"
             >
-        <forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
+		<forward name="viewExamsMap" path="/viewExamsMap.jsp"/>
         <forward name="createExam" path="/createExam.do?method=prepare&amp;page=0&amp;nextPage=viewExamsMap"/>
         <forward name="editExam" path="/editExam.jsp"/>
     </action>
@@ -1549,6 +1549,10 @@
             scope="request"
             validate="false"
             >
+		<exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+            key="error.exams.period.undefined" 
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+		<!--<forward name="viewExamsMap" path="viewExamsMapOld"/>-->
         <forward name="viewExamsMap" path="df.page.viewExamsMap"/>
         <forward name="createExamByCourse" path="/createExamNew.do?method=prepare&amp;page=0&amp;nextPage=showExamsManagement"/>
         <forward name="createExamByDay" path="/chooseExecutionCourseForExams.do?method=prepare&amp;page=0"/>
@@ -1678,6 +1682,9 @@
             scope="request"
             validate="true"
             >
+		<exception type="ServidorAplicacao.Servico.sop.exams.ReadFilteredExamsMap$ExamsPeriodUndefined" 
+            key="error.exams.period.undefined" 
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
     	<forward name="show" path="df.page.selectDegreeAndYear"/>
     	<forward name="showExamsMap" path="df.page.degreeYearExamsMap"/>
    	</action>  

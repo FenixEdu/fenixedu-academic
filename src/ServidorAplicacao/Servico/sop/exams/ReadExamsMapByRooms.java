@@ -118,7 +118,7 @@ public class ReadExamsMapByRooms implements IService {
             List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
             ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesList.get(0);
-
+            
             Calendar startSeason1 = null;
             Calendar endSeason2 = null;
             if (semester == 1) {
@@ -150,7 +150,7 @@ public class ReadExamsMapByRooms implements IService {
             }
             return new Period(startSeason1, endSeason2);
         } catch (Exception e) {
-            throw new FenixServiceException("Error calculating exams season");
+            throw new FenixServiceException("Error calculating exams season", e);
         }
     }
 }

@@ -29,11 +29,9 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.utils.ContextUtils;
@@ -63,7 +61,8 @@ public class ShowExamsManagement
         return mapping.findForward("viewExamsMap");
     }
 
-    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException {
+    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException,
+            FenixServiceException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
@@ -82,14 +81,10 @@ public class ShowExamsManagement
 
         Object[] args = { infoExecutionDegree, curricularYearsList, infoExecutionPeriod };
         InfoExamsMap infoExamsMap;
-        try {
-            infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadFilteredExamsMap",
-                    args);
-        } catch (NonExistingServiceException e) {
-            throw new NonExistingActionException(e);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+
+        infoExamsMap = (InfoExamsMap) ServiceUtils
+                .executeService(userView, "ReadFilteredExamsMap", args);
+
         return infoExamsMap;
     }
 
