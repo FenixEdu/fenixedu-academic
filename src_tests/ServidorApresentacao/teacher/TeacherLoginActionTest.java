@@ -18,10 +18,13 @@ import DataBeans.gesdis.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IPessoa;
+import Dominio.IProfessorship;
 import Dominio.ISite;
+import Dominio.ITeacher;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPessoaPersistente;
@@ -85,6 +88,7 @@ public class TeacherLoginActionTest extends TestCasePresentationTeacherPortal {
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 			IPersistentTeacher persistentTeacher=sp.getIPersistentTeacher();
 			IPersistentSite persistentSite=sp.getIPersistentSite();
+			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			sp.iniciarTransaccao();
 			person = persistentPerson.lerPessoaPorUsername("user");
 			sp.confirmarTransaccao();
@@ -92,10 +96,12 @@ public class TeacherLoginActionTest extends TestCasePresentationTeacherPortal {
 			infoTeacher.setInfoPerson(infoPerson);
 			infoTeacher.setTeacherNumber(new Integer(1));
 			sp.iniciarTransaccao();
-			List executionCourseList=persistentTeacher.readProfessorShipsExecutionCoursesByNumber(infoTeacher.getTeacherNumber());
-			Iterator iter = executionCourseList.iterator();
+			ITeacher teacher = persistentTeacher.readTeacherByNumber(infoTeacher.getTeacherNumber());
+			List professorships = persistentProfessorship.readByTeacher(teacher);
+			Iterator iter = professorships.iterator();
 			while (iter.hasNext()){
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iter.next();
+				IProfessorship professorship=(IProfessorship) iter.next();
+				IDisciplinaExecucao executionCourse = professorship.getExecutionCourse();
 				ISite site = persistentSite.readByExecutionCourse(executionCourse);
 				InfoSite infoSite = Cloner.copyISite2InfoSite(site);
 				infoSites.add(infoSite);

@@ -331,27 +331,7 @@
       >
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>       
-  <!-- Para reflectir a relacao de 1..* entre Docente e Sitio de responsavel -->
-  <collection-descriptor
-         name="responsibleForExecutionCourses"
-         element-class-ref="Dominio.DisciplinaExecucao"
-         indirection-table="RESPONSIBLEFOR"
-         auto-retrieve="true"
-      >
-         <fk-pointing-to-this-class column="ID_TEACHER"/>
-         <fk-pointing-to-element-class column="ID_EXECUTIONCOURSE"/>
-      </collection-descriptor>
-  
-      <collection-descriptor
-         name="professorShipsExecutionCourses"
-         element-class-ref="Dominio.DisciplinaExecucao"
-         indirection-table="PROFESSORSHIPS"
-         auto-retrieve="true"
-      >
-         <fk-pointing-to-this-class column="ID_TEACHER"/>
-         <fk-pointing-to-element-class column="ID_EXECUTIONCOURSE"/>
-      </collection-descriptor>
-  
+    
    </class-descriptor>
 
 <!-- Definitions for Dominio.Privilegio -->

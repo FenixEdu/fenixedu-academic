@@ -1,21 +1,14 @@
 package ServidorPersistente.OJB;
 
-import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.IDisciplinaExecucao;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import Dominio.Pessoa;
 import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentTeacher;
 import Util.TipoDocumentoIdentificacao;
 
@@ -91,12 +84,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 			assertEquals(
 				teacherRead.getTeacherNumber(),
 				teacher.getTeacherNumber());
-			assertEquals(
-				teacherRead.getResponsibleForExecutionCourses(),
-				teacher.getResponsibleForExecutionCourses());
-			assertEquals(
-				teacherRead.getProfessorShipsExecutionCourses(),
-				teacher.getProfessorShipsExecutionCourses());
+			
 	
 		}
 	
@@ -149,8 +137,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 			}
 			assertNotNull(teacher);
 			assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-			assertEquals(teacher.getResponsibleForExecutionCourses().size(), 3);
-			assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
+			
 	
 			//read unexisting
 			try {
@@ -176,8 +163,7 @@ public class TeacherOJBTest extends TestCaseOJB {
 			}
 			assertNotNull(teacher);
 			assertTrue(teacher.getTeacherNumber().equals(new Integer("1")));
-			assertEquals(teacher.getResponsibleForExecutionCourses().size(), 3);
-			assertEquals(teacher.getProfessorShipsExecutionCourses().size(), 3);
+		
 	
 			//read unexisting
 			try {
@@ -238,234 +224,10 @@ public class TeacherOJBTest extends TestCaseOJB {
 			assertNotNull(list);
 		}
 	
-		public void testReadResponsableForExecutionCoursesByTeacherNumber() {
-			List result = null;
-	
-			//read existing
-			try {
-				persistentSupport.iniciarTransaccao();
-				result =
-					persistentTeacher.readResponsibleForExecutionCoursesByNumber(
-						new Integer("1"));
-				persistentSupport.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-				fail("testReadResponsableForExecutionCoursesByTeacherNumber: readResponsableForExecutionCourses");
-			}
-			assertNotNull(result);
-			assertEquals(result.size(), 3);
-	
-			//read unexisting
-			result = null;
-			try {
-				persistentSupport.iniciarTransaccao();
-				result =
-					persistentTeacher.readResponsibleForExecutionCoursesByNumber(
-						new Integer("222"));
-				persistentSupport.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-				fail("testReadResponsableForExecutionCoursesByTeacherNumber: readResponsableForExecutionCourses");
-			}
-			assertNotNull(result);
-			assertEquals(result.isEmpty(), true);
-		}
-	
-		public void testReadProfessorShipsExecutionCoursesByTeacherNumber() {
-			List result = null;
-	
-			//read existing
-			try {
-				persistentSupport.iniciarTransaccao();
-				result =
-					persistentTeacher.readProfessorShipsExecutionCoursesByNumber(
-						new Integer("1"));
-				persistentSupport.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-				fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
-			}
-			assertNotNull(result);
-			assertEquals(result.size(), 3);
-	
-			//read unexisting
-			result = null;
-			try {
-				persistentSupport.iniciarTransaccao();
-				result =
-					persistentTeacher.readProfessorShipsExecutionCoursesByNumber(
-						new Integer("5"));
-				persistentSupport.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-				fail("testReadProfessorShipsExecutionCoursesByUsername: readProfessorShipsExecutionCourses");
-			}
-			assertNotNull(result);
-			assertEquals(result.isEmpty(), true);
-		}
-	public void testReadTeacherByExecutionCourseProfessorship() {
-		List result = null;
-		IDisciplinaExecucao executionCourse = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionYear executionYear = null;
-		//setup
-		try {
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSupport.getIDisciplinaExecucaoPersistente();
-			IPersistentExecutionYear persistentExecutionYear =
-				persistentSupport.getIPersistentExecutionYear();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				persistentSupport.getIPersistentExecutionPeriod();
-			persistentSupport.iniciarTransaccao();
-			executionYear =
-				persistentExecutionYear.readExecutionYearByName("2002/2003");
-			executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					"2º Semestre",
-					executionYear);
-			executionCourse =
-				persistentExecutionCourse
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCI",
-					executionPeriod);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			fail("failed in the test setup");
-		}
-
-		//read existing
-		try {
-			persistentSupport.iniciarTransaccao();
-			result =
-				persistentTeacher.readTeacherByExecutionCourseProfessorship(
-					executionCourse);
-			persistentSupport.confirmarTransaccao();
 		
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testReadTeacherByExecutionCourseProfessorship: ReadTeacherByExecutionCourseProfessorship");
-		}
-		assertNotNull(result);
-		assertEquals(result.size(), 3);
+	
+		
+	
 
-		//read unexisting
-		result = null;
-		//		setup
-		try {
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSupport.getIDisciplinaExecucaoPersistente();
-			IPersistentExecutionYear persistentExecutionYear =
-				persistentSupport.getIPersistentExecutionYear();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				persistentSupport.getIPersistentExecutionPeriod();
-			persistentSupport.iniciarTransaccao();
-			executionYear =
-				persistentExecutionYear.readExecutionYearByName("2002/2003");
-			executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					"2º Semestre",
-					executionYear);
-			executionCourse =
-				persistentExecutionCourse
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					"PO",
-					executionPeriod);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			fail("failed in the test setup");
-		}
-
-		try {
-			persistentSupport.iniciarTransaccao();
-			result =
-				persistentTeacher.readTeacherByExecutionCourseProfessorship(
-					executionCourse);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testReadTeacherByExecutionCourseProfessorship: ReadTeacherByExecutionCourseProfessorship");
-		}
-		assertNotNull(result);
-		assertEquals(result.isEmpty(), true);
-
-	}
-
-	public void testReadTeacherByExecutionCourseResponsibility() {
-		List result = null;
-		IDisciplinaExecucao executionCourse = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionYear executionYear = null;
-		//setup
-		try {
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSupport.getIDisciplinaExecucaoPersistente();
-			IPersistentExecutionYear persistentExecutionYear =
-				persistentSupport.getIPersistentExecutionYear();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				persistentSupport.getIPersistentExecutionPeriod();
-			persistentSupport.iniciarTransaccao();
-			executionYear =
-				persistentExecutionYear.readExecutionYearByName("2002/2003");
-			executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					"2º Semestre",
-					executionYear);
-			executionCourse =
-				persistentExecutionCourse
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCI",
-					executionPeriod);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			fail("failed in the test setup");
-		}
-
-		//read existing
-		try {
-			persistentSupport.iniciarTransaccao();
-			result =
-				persistentTeacher.readTeacherByExecutionCourseResponsibility(
-					executionCourse);
-			persistentSupport.confirmarTransaccao();
-			Iterator iter = result.iterator();
-			
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testReadTeacherByExecutionCourseResponsability readTeacherByExecutionCourseResponsibility");
-		}
-		assertNotNull(result);
-		assertEquals(result.size(), 1);
-
-		//read unexisting
-		result = null;
-		//		setup
-		try {
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSupport.getIDisciplinaExecucaoPersistente();
-			IPersistentExecutionYear persistentExecutionYear =
-				persistentSupport.getIPersistentExecutionYear();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-				persistentSupport.getIPersistentExecutionPeriod();
-			persistentSupport.iniciarTransaccao();
-			executionYear =
-				persistentExecutionYear.readExecutionYearByName("2002/2003");
-			executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					"2º Semestre",
-					executionYear);
-			executionCourse =
-				persistentExecutionCourse
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					"PO",
-					executionPeriod);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			fail("failed in the test setup");
-		}
-
-		try {
-			persistentSupport.iniciarTransaccao();
-			result =
-				persistentTeacher.readTeacherByExecutionCourseResponsibility(
-					executionCourse);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			fail("testreadTeacherByExecutionCourseResponsibility: readTeacherByExecutionCourseResponsibility");
-		}
-		assertNotNull(result);
-		assertEquals(result.isEmpty(), true);
-	}
+	
 }

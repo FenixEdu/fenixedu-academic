@@ -29,6 +29,12 @@
 	<td>
 	<bean:write name="infoTeacher" property="infoPerson.nome" /> 
 	</td>
+	<logic:equal name="<%= SessionConstants.IS_RESPONSIBLE %>" value="true">
+	<td><html:link page="/teachersManagerDA.do?method=removeTeacher" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	<bean:message key="link.removeTeacher"/>
+</html:link>
+	</td>
+	</logic:equal>
 </tr>
 </logic:iterate>	
 </table>
@@ -41,10 +47,6 @@
 	<bean:message key="link.addTeacher"/>
 </html:link>
 </tr>
-<tr><td>
-	<html:link page="/viewSite.do">
-	<bean:message key="link.removeTeacher"/>
-</html:link>
-</tr>
+
 </table>
 </logic:equal>

@@ -46,6 +46,8 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
+import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
@@ -337,6 +339,20 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public IPersistentEquivalence getIPersistentEquivalence() {
 		return new EquivalenceOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentProfessorship()
+	 */
+	public IPersistentProfessorship getIPersistentProfessorship() {
+		return new ProfessorshipOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentResponsibleFor()
+	 */
+	public IPersistentResponsibleFor getIPersistentResponsibleFor() {
+		return new ResponsibleForOJB();
 	}
 
 }

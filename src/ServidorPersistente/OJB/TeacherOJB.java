@@ -2,7 +2,6 @@
  * TeacherOJB.java
  */
 package ServidorPersistente.OJB;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -90,51 +89,8 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentTeacher#readResponsibleForExecutionCoursesByNumber(java.lang.Integer)
-	 */
-	public List readResponsibleForExecutionCoursesByNumber(Integer teacherNumber)
-		throws ExcepcaoPersistencia {
-		try {
-			ITeacher teacher = null;
-			String oqlQuery = "select teacher from " + Teacher.class.getName();
-			oqlQuery += " where teacherNumber = $1";
-			query.create(oqlQuery);
-			query.bind(teacherNumber);
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				teacher = (ITeacher) result.get(0);
-			else
-				return new ArrayList();
-			return teacher.getResponsibleForExecutionCourses();
-		} catch (Exception ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentTeacher#readProfessorShipsExecutionCoursesByNumber(java.lang.Integer)
-	 */
-	public List readProfessorShipsExecutionCoursesByNumber(Integer teacherNumber)
-		throws ExcepcaoPersistencia {
-		try {
-			ITeacher teacher = null;
-			String oqlQuery = "select teacher from " + Teacher.class.getName();
-			oqlQuery += " where teacherNumber = $1";
-			query.create(oqlQuery);
-			query.bind(teacherNumber);
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				teacher = (ITeacher) result.get(0);
-			else
-				return new ArrayList();
-			return teacher.getProfessorShipsExecutionCourses();
-		} catch (Exception ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-
-	}
+	
+	
 	/* (non-Javadoc)
 	 * @see ServidorPersistente.IPersistentTeacher#readTeacherByExecutionCourse()
 	 */

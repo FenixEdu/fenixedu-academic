@@ -13,7 +13,7 @@ import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -24,7 +24,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jmota
  */
-public class RemoveTeacherTest extends TestCaseCreateServices {
+public class RemoveTeacherTest extends TestCaseDeleteAndEditServices {
 
 	/**
 	 * @param testName

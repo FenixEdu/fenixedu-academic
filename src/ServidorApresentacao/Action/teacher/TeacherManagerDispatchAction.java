@@ -21,10 +21,11 @@ import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author jmota
@@ -42,7 +43,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		try {
-			SessionUtils.validSessionVerification(request, mapping);
+			
 			HttpSession session = getSession(request);
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -50,7 +51,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 				(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 			Object args[] = { infoSite.getInfoExecutionCourse()};
 			GestorServicos serviceManager = GestorServicos.manager();
-			boolean result=false;
+			boolean result = false;
 			List teachers =
 				(List) serviceManager.executar(
 					userView,
@@ -65,25 +66,59 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 					userView,
 					"ReadTeachersByExecutionCourseResponsibility",
 					args);
+					//TODO: refazer!! Está Mal! pelo userView ir buscar o teacher e ver se está dentro do responsible teachers
 			if (responsibleTeachers != null
-				&& !responsibleTeachers.isEmpty()&& teachers!=null) {
-			 Iterator iter = responsibleTeachers.iterator();
-			 result=true;
-			 while (iter.hasNext()){
-			 	result=result && teachers.contains(iter.next());		
-			 }
-			 session.setAttribute(SessionConstants.IS_RESPONSIBLE,new Boolean(result));
-			 
-				}	
-					
-			
-			
-
+				&& !responsibleTeachers.isEmpty()
+				&& teachers != null) {
+				Iterator iter = responsibleTeachers.iterator();
+				result = true;
+				while (iter.hasNext()) {
+					result = result && teachers.contains(iter.next());
+				}
+				session.setAttribute(
+					SessionConstants.IS_RESPONSIBLE,
+					new Boolean(result));
+			}
 			return mapping.findForward("viewTeachers");
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
+	}
+
+	public ActionForward removeTeacher(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		
+		HttpSession session = getSession(request);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		GestorServicos serviceManager = GestorServicos.manager();
+		InfoSite infoSite =
+			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+		String teacherNumberString =
+			(String) request.getParameter("teacherNumber");
+		System.out.println(teacherNumberString);	
+		Integer teacherNumber= new Integer(teacherNumberString);	
+		Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
+		try {
+			Boolean result =
+				(Boolean) serviceManager.executar(
+					userView,
+					"RemoveTeacher",
+					args);
+            
+		} 
+		catch (notAuthorizedServiceDeleteException e) {
+			throw new notAuthorizedActionDeleteException("error.invalidTeacherRemoval");
+		}
+		catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		return viewTeachersByProfessorship(mapping, form, request, response);
 	}
 
 }

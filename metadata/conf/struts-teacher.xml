@@ -162,10 +162,15 @@
 	
 	<!-- Actions For Teachers  -->
 	<action 
+		input="/viewTeachers.jsp"
 		parameter="method"
 		path="/teachersManagerDA"
         type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
 		>    
+	<exception type="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+         	   key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />   	
     <forward name="viewTeachers" path="/viewTeachers.jsp"/>    
     
 	</action>

@@ -68,4 +68,7 @@ public interface ISuportePersistente {
 	public IPersistentCurricularSemester getIPersistentCurricularSemester();
 	
 	public IPersistentEquivalence getIPersistentEquivalence();
+	
+	public IPersistentProfessorship getIPersistentProfessorship();
+	public IPersistentResponsibleFor getIPersistentResponsibleFor();
 }
