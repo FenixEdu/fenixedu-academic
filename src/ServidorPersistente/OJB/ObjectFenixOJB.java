@@ -588,4 +588,62 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		return (IDomainObject) queryObject(classToQuery,criteria);
 	}
 
+	/**
+	 * Use this method to return numberOfElementsInSpan elements starting at index spanNumber * numberOfElementsInSpan
+	 * @param classToQuery class that is to be queried
+	 * @param criteria criteria used to query class
+	 * @param numberOfElementsInSpan number of elements to return
+	 * @param spanNumber starts at 0
+	 * @return numberOfElementsInSpan elements 
+	 * @throws ExcepcaoPersistencia @see ObjectFenixOJB#lockRead(List)
+	 * @throws IllegalArgumentException if numberOfElementsInSpan is null or is equal to 0 
+	 */
+	protected List readSpan(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan, Integer spanNumber) throws ExcepcaoPersistencia {
+		if (numberOfElementsInSpan == null || numberOfElementsInSpan.intValue() == 0) {
+			throw new IllegalArgumentException("Invalid numberOfElementsInSpan!");
+		}
+		PersistenceBroker pb = getCurrentPersistenceBroker();
+		Query query = getQuery(classToQuery, criteria);
+	
+		int startIndex = spanNumber.intValue() * numberOfElementsInSpan.intValue();
+		query.setStartAtIndex(startIndex);
+		query.setEndAtIndex(startIndex + numberOfElementsInSpan.intValue());
+		List list = (List) pb.getCollectionByQuery(query);
+		lockRead(list);					
+		return list;
+	}
+
+	/**
+	 * @see ObjectFenixOJB#count(PersistenceBroker, Query)
+	 */
+	protected int count(Class classToQuery, Criteria criteria) {
+		return count(getCurrentPersistenceBroker(), getQuery(classToQuery, criteria));
+	}
+	
+	/**
+	 * Do a count(*) with the parameter query 
+	 * @param pb current persistent broker
+	 * @param query query to count
+	 * @return number of elements returned by count(*)
+	 */
+	private int count (PersistenceBroker pb, Query query) {
+		return pb.getCount(query);
+	}
+	/**
+	 * Gets the persistenceBroker associated with current transaction
+	 * @return PersistenceBroker associated with current transaction
+	 */
+	private PersistenceBroker getCurrentPersistenceBroker() {
+		PersistenceBroker pb =
+			((HasBroker) odmg.currentTransaction()).getBroker();
+		return pb;
+	}
+	
+	/**
+	 * Returns a QueryByCriteria instance. @see Query and @see QueryByCriteria
+	 */
+	private Query getQuery(Class classToQuery, Criteria criteria) {
+		return new QueryByCriteria(classToQuery, criteria);
+	}
+
 }
