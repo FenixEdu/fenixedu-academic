@@ -1,7 +1,6 @@
 /*
- * ApagarAnuncio.java
+ * DeleteAnnouncement.java
  *
- * Created on January 6, 2003, 11:01 PM
  */
 
 package ServidorAplicacao.Servico.gesdis.teacher;
@@ -11,6 +10,7 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  * @author  EP15
  * @author jmota
  */
+
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -31,39 +31,34 @@ public class DeleteAnnouncement implements IServico {
 	private static DeleteAnnouncement service = new DeleteAnnouncement();
 
 	public static DeleteAnnouncement getService() {
-
 		return service;
-
 	}
 
 	private DeleteAnnouncement() {
 	}
 
 	public final String getNome() {
-
-		return "gesdis.teacher.DeleteAnnouncement";
-
+		return "DeleteAnnouncement";
 	}
 
-	public void run(InfoSite siteView, InfoAnnouncement announcementView)
+	public void run(InfoSite infoSite, InfoAnnouncement infoAnnouncement)
 		throws FenixServiceException {
 
 		try {
-			String announcementTitle = announcementView.getTitle();
+			String announcementTitle = infoAnnouncement.getTitle();
 			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
 			ISite site = null;
-			BeanUtils.copyProperties(site, siteView);
+			BeanUtils.copyProperties(site, infoSite);
 			
-			IPersistentAnnouncement persistentAnnouncement =
-				sp.getIPersistentAnnouncement();
+			IPersistentAnnouncement persistentAnnouncement = sp.getIPersistentAnnouncement();
 			
 			
 			IAnnouncement announcement =
 				persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(
 					announcementTitle,
-					announcementView.getCreationDate(),
+					infoAnnouncement.getCreationDate(),
 					site);
 			
 			if (announcement != null)
