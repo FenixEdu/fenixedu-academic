@@ -25,3 +25,20 @@ genObjectives -> curriculum generalObjectives
 opObjectives -> curriculum operationalObjectives
 
 lessonList -> list of lesson to the gerarHorario Tag
+
+sections -> list of site sections to the sections tag
+infoSection -> infoSection
+
+publico.infoCurricularCourses -> list of curricular Courses
+
+resTeacherList -> responsible Teachers List
+lecTeacherList -> lecturing Teachers List
+
+lastAnnouncement -> last Announcement
+announcementList -> annoucements list
+
+exeCourseList -> executionCourseList 
+
+itemList-> item list
+
+shift -> infoShift
