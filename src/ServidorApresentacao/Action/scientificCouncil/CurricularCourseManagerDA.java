@@ -424,7 +424,6 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 								 request,
 								 response);
 				} else {
-					System.out.println("############error");
 					return null;
 				}
 			

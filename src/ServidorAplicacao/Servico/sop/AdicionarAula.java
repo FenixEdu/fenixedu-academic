@@ -82,7 +82,6 @@ public class AdicionarAula implements IServico {
 				lesson = (IAula) sp.getIAulaPersistente().readByOId(lesson,false);
 				if (lesson != null) {
 					turnoAula = new TurnoAula(turno1, lesson);
-					System.out.println("#################lesson->"+lesson);
 					result = valid(turno1, lesson);
 					serviceResult.add(result);
 					if (result.isSUCESS()) {
