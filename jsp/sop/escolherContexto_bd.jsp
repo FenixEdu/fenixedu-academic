@@ -19,7 +19,7 @@
 	 <br />
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td bgcolor="#FFFFFF" class="infoop"><bean:message key="label.chooseYearAndSemester" /></td>
+            <td bgcolor="#FFFFFF" class="infoop"><bean:message key="label.chooseYear" /></td>
           </tr>
     </table>
 	 <br />
@@ -31,12 +31,12 @@
        		<html:options collection="anosCurriculares" property="value" labelProperty="label"/>
        </html:select></td>
        </tr>
-	   <tr>
+<%--	   <tr>
 	     <td nowrap class="formTD"><bean:message key="property.context.semester"/>:</td>
 	     <td nowrap class="formTD"><html:select property="semestre" size="1">
             <html:options collection="semestres" property="value" labelProperty="label"/>
        </html:select></td>
-       </tr>
+       </tr> --%>
 	   </table>
 	   <br />
 	   <p><html:submit value="Submeter" styleClass="inputbutton">
