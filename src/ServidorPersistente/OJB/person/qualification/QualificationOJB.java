@@ -25,7 +25,7 @@ public class QualificationOJB extends ObjectFenixOJB implements IPersistentQuali
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("person.idInternal", person.getIdInternal());
-		List result = (List) queryList(Qualification.class, criteria);
+		List result = queryList(Qualification.class, criteria);
 		return result;
 	}
 
