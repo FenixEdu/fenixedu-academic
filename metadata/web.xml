@@ -57,8 +57,8 @@
             <param-value>/WEB-INF/conf/struts-masterDegreeAdministrativeOffice.xml</param-value>
         </init-param>
         <init-param>
-            <param-name>config/gesdis</param-name>
-            <param-value>/WEB-INF/conf/struts-gesdis.xml</param-value>
+            <param-name>config/teacher</param-name>
+            <param-value>/WEB-INF/conf/struts-teacher.xml</param-value>
         </init-param>        
         <init-param>
             <param-name>config/person</param-name>

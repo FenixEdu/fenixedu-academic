@@ -597,8 +597,8 @@
 		path="/objectivesManagerDA"
         type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
 		>    
-     <forward name="viewProgram" path="/viewProgram.jsp"/>
-     <forward name="editProgram" path="/editProgram.jsp"/>
+    <forward name="viewObjectives" path="/viewObjectives.jsp"/>
+    <forward name="editObjectives" path="/editObjectives.jsp"/>
      
 	</action>
 	
@@ -607,9 +607,7 @@
 		parameter="method"
 		path="/programManagerDA"
         type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-		>
-     <forward name="viewObjectives" path="/viewObjectives.jsp"/>
-     <forward name="editObjectives" path="/editObjectives.jsp"/>
+		>    
      <forward name="viewProgram" path="/viewProgram.jsp"/>
      <forward name="editProgram" path="/editProgram.jsp"/>
      
@@ -626,7 +624,7 @@
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
-		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-gesdis.xml"/>
+		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-teacher.xml"/>
 	</plug-in>
 
 	<!--
