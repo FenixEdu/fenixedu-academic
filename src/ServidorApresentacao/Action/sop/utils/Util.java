@@ -39,7 +39,7 @@ public class Util {
 			new LabelValueBean(
 				"Pavilhão Novas Licenciaturas",
 				"Pavilhão Novas Licenciaturas"));
-		edificios.add(new LabelValueBean("Pavilhão de Pós-Graduação", "Pavilhão de Pós-Graduação"));
+		edificios.add(new LabelValueBean("Pavilhão Pós-Graduação", "Pavilhão Pós-Graduação"));
 		edificios.add(new LabelValueBean("Torre Norte", "Torre Norte"));
 		edificios.add(new LabelValueBean("Torre Sul", "Torre Sul"));
 		edificios.add(

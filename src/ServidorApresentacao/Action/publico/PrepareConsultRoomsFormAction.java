@@ -37,7 +37,7 @@ public class PrepareConsultRoomsFormAction extends Action {
         buildings.add(new LabelValueBean("Pavilhão Mecânica II", "Pavilhão Mecânica II"));
         buildings.add(new LabelValueBean("Pavilhão Minas", "Pavilhão Minas"));
 		buildings.add(new LabelValueBean("Pavilhão Novas Licenciaturas", "Pavilhão Novas Licenciaturas"));
-		buildings.add(new LabelValueBean("Pavilhão de Pós-Graduação", "Pavilhão de Pós-Graduação"));
+		buildings.add(new LabelValueBean("Pavilhão Pós-Graduação", "Pavilhão Pós-Graduação"));
         buildings.add(new LabelValueBean("Torre Norte", "Torre Norte"));
         buildings.add(new LabelValueBean("Torre Sul", "Torre Sul"));
         buildings.add(new LabelValueBean("TagusPark - Bloco A - Poente", "TagusPark - Bloco A - Poente"));        
