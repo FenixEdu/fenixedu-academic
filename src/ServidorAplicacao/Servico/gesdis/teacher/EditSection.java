@@ -197,7 +197,7 @@ public class EditSection implements IServico {
 			
 			ISection section = persistentSection.readBySiteAndSectionAndName(site, superiorSection, oldInfoSection.getName());
 			
-			section.setLastModifiedDate(newInfoSection.getLastModifiedDate());
+	//		section.setLastModifiedDate(newInfoSection.getLastModifiedDate());
 			section.setName(newInfoSection.getName());
 			
 			int newOrder = newInfoSection.getSectionOrder().intValue();
