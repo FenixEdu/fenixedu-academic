@@ -1,174 +1,71 @@
 /*
  * CursoOJB.java
- *
+ * 
  * Created on 1 de Novembro de 2002, 12:37
  */
 
 package ServidorPersistente.OJB;
 
 /**
- *
- * @author  rpfi
+ * @author rpfi
+ * @author jpvl
  */
 
 import java.util.List;
 
-import org.odmg.QueryException;
+import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Curso;
 import Dominio.ICurso;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
-public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
+public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente
+{
 
-	/** Creates a new instance of CursoOJB */
-	public CursoOJB() {
-	}
+    /** Creates a new instance of CursoOJB */
+    public CursoOJB()
+    {
+    }
 
-	public ICurso readBySigla(String sigla) throws ExcepcaoPersistencia {
-		try {
-			ICurso curso = null;
-			String oqlQuery = "select curso from " + Curso.class.getName();
-			oqlQuery += " where sigla = $1 ";
-			query.create(oqlQuery);
-			query.bind(sigla);
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0) {
-				curso = (ICurso) result.get(0);
-			}
-			return curso;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-	
-	public ICurso readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia {
-			try {
-				ICurso degree = null;
-				String oqlQuery = "select curso from " + Curso.class.getName();
-				oqlQuery += " where idInternal = $1 ";
-				query.create(oqlQuery);
-				query.bind(idInternal);
-				List result = (List) query.execute();	
-				lockRead(result);
-				
-				if (result.size() != 0) {
-					degree = (ICurso) result.get(0);
-				}
-				
-				return degree;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
-		}
-		
+    public ICurso readBySigla(String sigla) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("sigla", sigla);
+        return (ICurso) queryObject(Curso.class, criteria);
+    }
 
-	public void lockWrite(ICurso degreeToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException {
+    public ICurso readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia
+    {
+        return (ICurso) readByOId(new Curso(idInternal), false);
+    }
 
-		ICurso degreeFromDB = null;
-		// If there is nothing to write, simply return.
-		if (degreeToWrite == null)
-			return;
+    public void delete(ICurso degree) throws ExcepcaoPersistencia
+    {
+        super.delete(degree);
+    }
 
-		// Read degree from database.
-		ICurso degreeFromDB1 = this.readBySigla(degreeToWrite.getSigla());
-		ICurso degreeFromDB2 = this.readByNameAndDegreeType(degreeToWrite.getNome(),degreeToWrite.getTipoCurso());
-		if(degreeFromDB1 == null )
-			degreeFromDB = degreeFromDB2;
-		else
-			degreeFromDB = degreeFromDB1;
-		
-		
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        return queryList(Curso.class, criteria);
+    }
 
-		// If degree is not in database, then write it.
-		if (degreeFromDB == null)
-			super.lockWrite(degreeToWrite);
-		// else If the degree is mapped to the database, then write any existing changes.
-		else if (
-			degreeFromDB.getIdInternal().equals(
-				degreeToWrite.getIdInternal()) && (degreeFromDB2 == null || degreeFromDB1.getIdInternal().equals(degreeFromDB2.getIdInternal()))) {
-			super.lockWrite(degreeToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+    public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("tipoCurso", degreeType);
+        criteria.addOrderBy("nome", true);
+        return queryList(Curso.class, criteria);
+    }
 
+    public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("nome", name);
+        criteria.addEqualTo("tipoCurso", degreeType);
+        return (ICurso) queryObject(Curso.class, criteria);
+    }
 
-	public void delete(ICurso degree) throws ExcepcaoPersistencia{
-		
-		super.delete(degree);
-   
-	}
-		
-		
-
-	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + Curso.class.getName();
-		super.deleteAll(oqlQuery);
-	}
-
-	public List readAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select degree from " + Curso.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia {
-		try {
-//			ICurso degree = null;
-			String oqlQuery = "select curso from " + Curso.class.getName();
-			oqlQuery += " where tipoCurso = $1 "
-							+ " order by nome asc";
-			query.create(oqlQuery);
-			query.bind(degreeType);
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-	
-	
-	public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia {
-			try {
-				ICurso degree = null;
-				String oqlQuery = "select curso from " + Curso.class.getName();
-				oqlQuery += " where nome = $1 ";
-				oqlQuery += " and tipoCurso = $2 ";		
-				query.create(oqlQuery);
-				query.bind(name);
-				query.bind(degreeType);
-				List result = (List) query.execute();				
-				lockRead(result);
-				
-				if (result.size() != 0) {
-					degree = (ICurso) result.get(0);
-				}
-				
-				return degree;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
-		}
-	
 }
