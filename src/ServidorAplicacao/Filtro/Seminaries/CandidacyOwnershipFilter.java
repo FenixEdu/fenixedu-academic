@@ -4,10 +4,12 @@
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Filtro.Seminaries;
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IStudent;
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.ICandidacy;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ISuportePersistente;
@@ -22,28 +24,24 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
  */
 public class CandidacyOwnershipFilter extends Filtro
 {
-	public final static CandidacyOwnershipFilter instance= new CandidacyOwnershipFilter();
-	/**
-	 * The singleton access method of this class.
-	 *
-	 * @return Returns the instance of this class responsible for the
-	 * authorization access to services.
-	 **/
-	public static Filtro getInstance()
-	{
-		return instance;
-	}
-	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
-	{
-		Integer candidacyID= (Integer) argumentos[0];
-		ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
-		IPersistentSeminaryCandidacy persistentCandidacy= persistenceSupport.getIPersistentSeminaryCandidacy();
-		//
-		IStudent student= persistenceSupport.getIPersistentStudent().readByUsername(id.getUtilizador());
-		ICandidacy candidacy= (ICandidacy) persistentCandidacy.readByOID(Candidacy.class, candidacyID);
-		//
-		if ((candidacy != null)
-			&& (candidacy.getStudentIdInternal().intValue() != student.getIdInternal().intValue()))
-			throw new NotAuthorizedException();
-	}
+	public CandidacyOwnershipFilter() {}
+
+	/* (non-Javadoc)
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        Integer candidacyID= (Integer) getServiceCallArguments(request)[0];
+        ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
+        IPersistentSeminaryCandidacy persistentCandidacy= persistenceSupport.getIPersistentSeminaryCandidacy();
+        //
+        IStudent student= persistenceSupport.getIPersistentStudent().readByUsername(getRemoteUser(request).getUtilizador());
+        ICandidacy candidacy= (ICandidacy) persistentCandidacy.readByOID(Candidacy.class, candidacyID);
+        //
+        if ((candidacy != null)
+        && (candidacy.getStudentIdInternal().intValue() != student.getIdInternal().intValue()))
+            throw new NotAuthorizedException();
+        
+    }
 }

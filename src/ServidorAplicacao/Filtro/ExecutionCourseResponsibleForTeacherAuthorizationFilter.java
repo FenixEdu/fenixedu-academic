@@ -5,6 +5,9 @@
  */
 package ServidorAplicacao.Filtro;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
@@ -24,98 +27,98 @@ import Util.RoleType;
  * @author João Mota
  *  
  */
-public class ExecutionCourseResponsibleForTeacherAuthorizationFilter
-	extends AuthorizationByRoleFilter {
+public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends AuthorizationByRoleFilter
+{
 
-	public final static ExecutionCourseResponsibleForTeacherAuthorizationFilter instance =
-		new ExecutionCourseResponsibleForTeacherAuthorizationFilter();
+    public ExecutionCourseResponsibleForTeacherAuthorizationFilter()
+    {
 
-	/**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the
-	 *         authorization access to services.
-	 */
-	public static Filtro getInstance() {
-		return instance;
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	protected RoleType getRoleType() {
-		return RoleType.TEACHER;
-	}
+    }
 
-	public void preFiltragem(
-		IUserView id,
-		Object[] argumentos)
-		throws Exception {
-		if (((id != null
-			&& id.getRoles() != null
-			&& !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-			&& !isResponsibleForExecutionCourse(id, argumentos)))
-			|| (id == null)
-			|| (id.getRoles() == null)) {
-			throw new NotAuthorizedException();
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType()
+    {
+        return RoleType.TEACHER;
+    }
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
 
-	private boolean isResponsibleForExecutionCourse(
-		IUserView id,
-		Object[] argumentos) {
+        if (((id != null && id.getRoles() != null
+                        && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType()) && !isResponsibleForExecutionCourse(
+                        id, arguments)))
+                        || (id == null) || (id.getRoles() == null))
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
-		InfoExecutionCourse infoExecutionCourse = null;
-		IExecutionCourse executionCourse = null;
-		ISuportePersistente sp;
-		IResponsibleFor responsibleFor = null;
-		if (argumentos == null) {
-			return false;
-		}
-		try {
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    private boolean isResponsibleForExecutionCourse(IUserView id, Object[] argumentos)
+    {
 
-			sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIPersistentExecutionCourse();
-			if (argumentos[0] instanceof InfoExecutionCourse) {
-				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-				executionCourse =
-					Cloner.copyInfoExecutionCourse2ExecutionCourse(
-						infoExecutionCourse);
-			} else {
-				executionCourse =
-					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new ExecutionCourse((Integer) argumentos[0]),
-						false);
-			}
+        InfoExecutionCourse infoExecutionCourse = null;
+        IExecutionCourse executionCourse = null;
+        ISuportePersistente sp;
+        IResponsibleFor responsibleFor = null;
+        if (argumentos == null)
+        {
+            return false;
+        }
+        try
+        {
 
-			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			ITeacher teacher =
-				persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            if (argumentos[0] instanceof InfoExecutionCourse)
+            {
+                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
+                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+            }
+            else
+            {
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
+                                new ExecutionCourse((Integer) argumentos[0]), false);
+            }
 
-			IPersistentResponsibleFor persistentResponsibleFor =
-				sp.getIPersistentResponsibleFor();
-			responsibleFor =
-				persistentResponsibleFor.readByTeacherAndExecutionCoursePB(
-					teacher,
-					executionCourse);
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
 
-		} catch (Exception e) {
-			return false;
-		}
-		if (responsibleFor == null) {
-			return false;
-		} else {
-			return true;
-		}
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCoursePB(
+                            teacher, executionCourse);
 
-	}
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        if (responsibleFor == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
 
 }

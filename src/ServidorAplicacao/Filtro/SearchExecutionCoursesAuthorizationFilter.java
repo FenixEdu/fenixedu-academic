@@ -8,6 +8,10 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
@@ -27,29 +31,23 @@ import Util.RoleType;
  */
 public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
 
-	public final static SearchExecutionCoursesAuthorizationFilter instance =
-		new SearchExecutionCoursesAuthorizationFilter();
+	public SearchExecutionCoursesAuthorizationFilter() {}
 
-	/**
-	 * The singleton access method of this class.
-	 *
-	 * @return Returns the instance of this class responsible for the
-	 * authorization access to services.
-	 **/
-	public static Filtro getInstance() {
-		return instance;
-	}
-
-
-	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception {
-
-		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
+	/* (non-Javadoc)
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        IUserView id = getRemoteUser(request);
+        Object[] argumentos = getServiceCallArguments(request);
+        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
 			|| (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
 			|| (id == null)
 			|| (id.getRoles() == null)) {
 			throw new NotAuthorizedException();
 		}
-	}
+    }
 
 	/**
 	 * @param collection

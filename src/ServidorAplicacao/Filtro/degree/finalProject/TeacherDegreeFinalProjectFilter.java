@@ -6,12 +6,14 @@ package ServidorAplicacao.Filtro.degree.finalProject;
 
 import java.util.List;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IDepartment;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
-import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -28,85 +30,81 @@ import Util.RoleType;
  */
 public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter
 {
-	// the singleton of this class
-	public final static TeacherDegreeFinalProjectFilter instance =
-		new TeacherDegreeFinalProjectFilter();
 
-	/**
-	 * The singleton access method of this class.
-	 *
-	 * @return Returns the instance of this class responsible for the
-	 * authorization access to services.
-	 **/
-	public static Filtro getInstance() {
-		return instance;
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	protected RoleType getRoleType()
-	{
-		// TODO Auto-generated method stub
-		return RoleType.DEPARTMENT_CREDITS_MANAGER;
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.Filtro#preFiltragem(ServidorAplicacao.IUserView,
-	 *          ServidorAplicacao.IServico, java.lang.Object[])
-	 */
-	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
-	{
+    public TeacherDegreeFinalProjectFilter()
+    {
+    }
 
-		super.preFiltragem(id, argumentos);
-		verifyTeacherPermission(id, (Integer) argumentos[0]);
-	}
-	/**
-	 * @param integer
-	 */
-	private void verifyTeacherPermission(IUserView requester, Integer teacherNumber) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType()
+    {
+        return RoleType.DEPARTMENT_CREDITS_MANAGER;
+    }
 
-			ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
-			if (teacher == null)
-			{
-				throw new NonExistingServiceException("Teacher doesn't exists");
-			}
+    /**
+     * @param integer
+     */
+    private void verifyTeacherPermission(IUserView requester, Integer teacherNumber)
+                    throws FenixServiceException
+    {
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-			IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-			IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
-			if (requesterPerson == null)
-			{
-				throw new NotAuthorizedException("No person with that userView");
-			}
+            ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
+            if (teacher == null)
+            {
+                throw new NonExistingServiceException("Teacher doesn't exists");
+            }
 
-			List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
-			IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
+            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+            IPessoa requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            if (requesterPerson == null)
+            {
+                throw new NotAuthorizedException("No person with that userView");
+            }
 
-			IDepartment department = departmentDAO.readByTeacher(teacher);
+            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+            IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
 
-			if (department == null)
-			{
-				throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber() + " doesn't have department!");
-			}
+            IDepartment department = departmentDAO.readByTeacher(teacher);
 
-			if (!departmentsWithAccessGranted.contains(department))
-			{
-				throw new NotAuthorizedException("Not authorized to run the service!");
-			}
+            if (department == null)
+            {
+                throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()
+                                + " doesn't have department!");
+            }
 
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException("Problems with database!", e);
+            if (!departmentsWithAccessGranted.contains(department))
+            {
+                throw new NotAuthorizedException("Not authorized to run the service!");
+            }
 
-		}
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException("Problems with database!", e);
 
-	}
+        }
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        super.execute(request, response);
+        verifyTeacherPermission(getRemoteUser(request), (Integer) getServiceCallArguments(request)[0]);
+    }
 
 }

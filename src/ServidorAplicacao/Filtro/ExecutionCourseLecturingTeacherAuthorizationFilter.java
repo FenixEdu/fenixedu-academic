@@ -1,10 +1,13 @@
 /*
  * Created on 19/Mai/2003
- *
  * 
+ *  
  */
 package ServidorAplicacao.Filtro;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
@@ -22,94 +25,98 @@ import Util.RoleType;
 
 /**
  * @author João Mota
- *
+ *  
  */
-public class ExecutionCourseLecturingTeacherAuthorizationFilter
-	extends AuthorizationByRoleFilter {
+public class ExecutionCourseLecturingTeacherAuthorizationFilter extends AuthorizationByRoleFilter
+{
 
-	public final static ExecutionCourseLecturingTeacherAuthorizationFilter instance =
-		new ExecutionCourseLecturingTeacherAuthorizationFilter();
+    public ExecutionCourseLecturingTeacherAuthorizationFilter()
+    {
 
-	/**
-	 * The singleton access method of this class.
-	 *
-	 * @return Returns the instance of this class responsible for the
-	 * authorization access to services.
-	 **/
-	public static Filtro getInstance() {
-		return instance;
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	protected RoleType getRoleType() {
-		return RoleType.TEACHER;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType()
+    {
+        return RoleType.TEACHER;
+    }
 
-	public void preFiltragem(
-		IUserView id,
-		Object[] argumentos)
-		throws Exception {
-		try {
-			if ((id == null)
-				|| (id.getRoles() == null)
-				|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-				|| !lecturesExecutionCourse(id, argumentos)) {
-				throw new NotAuthorizedException();
-			}
-		} catch (RuntimeException e) {
-			throw new NotAuthorizedException();
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
-	private boolean lecturesExecutionCourse(
-		IUserView id,
-		Object[] argumentos) {
-		InfoExecutionCourse infoExecutionCourse = null;
-		IExecutionCourse executionCourse = null;
-		ISuportePersistente sp;
-		IProfessorship professorship = null;
-		if (argumentos == null) {
-			return false;
-		}
-		try {
+        try
+        {
+            if ((id == null) || (id.getRoles() == null)
+                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                            || !lecturesExecutionCourse(id, arguments))
+            {
+                throw new NotAuthorizedException();
+            }
+        }
+        catch (RuntimeException e)
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
-			sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIPersistentExecutionCourse();
-			if (argumentos[0] instanceof InfoExecutionCourse) {
-				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-				executionCourse =
-					Cloner.copyInfoExecutionCourse2ExecutionCourse(
-						infoExecutionCourse);
-			} else {
-				executionCourse =
-					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new ExecutionCourse((Integer) argumentos[0]),
-						false);
-			}
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos)
+    {
+        InfoExecutionCourse infoExecutionCourse = null;
+        IExecutionCourse executionCourse = null;
+        ISuportePersistente sp;
+        IProfessorship professorship = null;
+        if (argumentos == null)
+        {
+            return false;
+        }
+        try
+        {
 
-			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			ITeacher teacher =
-				persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
-			if (teacher != null && executionCourse != null) {
-				IPersistentProfessorship persistentProfessorship =
-					sp.getIPersistentProfessorship();
-				professorship =
-					persistentProfessorship.readByTeacherAndExecutionCoursePB(
-						teacher,
-						executionCourse);
-			}
-		} catch (Exception e) {
-			return false;
-		}
-		return professorship != null;
-	}
+            sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            if (argumentos[0] instanceof InfoExecutionCourse)
+            {
+                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
+                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+            }
+            else
+            {
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
+                                new ExecutionCourse((Integer) argumentos[0]), false);
+            }
+
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            if (teacher != null && executionCourse != null)
+            {
+                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(
+                                teacher, executionCourse);
+            }
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return professorship != null;
+    }
 
 }

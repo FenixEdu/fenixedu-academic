@@ -1,10 +1,13 @@
 /*
  * Created on 19/Mai/2003
- *
  * 
+ *  
  */
 package ServidorAplicacao.Filtro;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.ICoordinator;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
@@ -17,76 +20,89 @@ import Util.RoleType;
 
 /**
  * @author João Mota
- *
+ *  
  */
-public class ResponsibleDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter {
+public class ResponsibleDegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFilter
+{
 
-	public final static ResponsibleDegreeCoordinatorAuthorizationFilter instance =
-		new ResponsibleDegreeCoordinatorAuthorizationFilter();
+    public ResponsibleDegreeCoordinatorAuthorizationFilter()
+    {
 
-	/**
-	 * The singleton access method of this class.
-	 *
-	 * @return Returns the instance of this class responsible for the
-	 * authorization access to services.
-	 **/
-	public static Filtro getInstance() {
-		return instance;
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
-	protected RoleType getRoleType() {
-		return RoleType.COORDINATOR;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
+    protected RoleType getRoleType()
+    {
+        return RoleType.COORDINATOR;
+    }
 
-	public void preFiltragem(IUserView id, Object[] argumentos)
-		throws NotAuthorizedException {
-		try {
-			if ((id == null)
-				|| (id.getRoles() == null)
-				|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-				|| !isResponsibleCoordinatorOfExecutionDegree(id, argumentos)) {
-				throw new NotAuthorizedException();
-			}
-		} catch (RuntimeException e) {
-			throw new NotAuthorizedException();
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
-	private boolean isResponsibleCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos) {
+        try
+        {
+            if ((id == null) || (id.getRoles() == null)
+                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                            || !isResponsibleCoordinatorOfExecutionDegree(id, arguments))
+            {
+                throw new NotAuthorizedException();
+            }
+        }
+        catch (RuntimeException e)
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
-		ISuportePersistente sp;
-		boolean result = false;
-		if (argumentos == null) {
-			return result;
-		}
-		try {
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    private boolean isResponsibleCoordinatorOfExecutionDegree(IUserView id, Object[] argumentos)
+    {
 
-			sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp;
+        boolean result = false;
+        if (argumentos == null)
+        {
+            return result;
+        }
+        try
+        {
 
-			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
-			IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+            sp = SuportePersistenteOJB.getInstance();
 
-			ICoordinator coordinator =
-				persistentCoordinator.readCoordinatorByTeacherAndExecutionDegreeId(
-					teacher,
-					(Integer) argumentos[0]);
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 
-			result = (coordinator != null) && coordinator.getResponsible().booleanValue();
+            ICoordinator coordinator = persistentCoordinator
+                            .readCoordinatorByTeacherAndExecutionDegreeId(
+                                            teacher, (Integer) argumentos[0]);
 
-		} catch (Exception e) {
-			return false;
-		}
+            result = (coordinator != null) && coordinator.getResponsible().booleanValue();
 
-		return result;
-	}
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return result;
+    }
 
 }

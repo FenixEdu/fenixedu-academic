@@ -3,6 +3,9 @@
  */
 package ServidorAplicacao.Filtro.person;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IPessoa;
 import Dominio.IQualification;
 import Dominio.Qualification;
@@ -27,17 +30,8 @@ import Util.RoleType;
 public class ReadQualificationAuthorizationFilter extends Filtro
 {
 
-    public final static ReadQualificationAuthorizationFilter instance =
-        new ReadQualificationAuthorizationFilter();
-
-    /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-    public static Filtro getInstance()
+    public ReadQualificationAuthorizationFilter()
     {
-        return instance;
     }
 
     //Role Type of teacher
@@ -52,16 +46,17 @@ public class ReadQualificationAuthorizationFilter extends Filtro
         return RoleType.GRANT_OWNER_MANAGER;
     }
 
-    /**
-	 * Runs the filter
-	 * 
-	 * @param id
-	 * @param service
-	 * @param arguments
-	 */
-    public void preFiltragem(IUserView id, Object[] arguments)
-        throws NotAuthorizedException
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
     {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
         try
         {
             boolean isNew = ((arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0)));
@@ -75,71 +70,69 @@ public class ReadQualificationAuthorizationFilter extends Filtro
             Integer objectId = (Integer) arguments[0];
 
             //Verify if:
-            // 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
+            // 1: The user ir a Grant Owner Manager and the qualification
+            // belongs to a Grant Owner
             // 2: The user ir a Teacher and the qualification is his own
             if (!isNew)
             {
                 boolean valid = false;
 
                 if ((AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
-                    && isGrantOwner(objectId))
+                                && isGrantOwner(objectId))
                 {
                     valid = true;
                 }
 
                 if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
-                    && isOwnQualification(id.getUtilizador(), objectId))
+                                && isOwnQualification(id.getUtilizador(), objectId))
                 {
                     valid = true;
                 }
 
-                if (!valid)
-                    throw new NotAuthorizedException();
-            } else
+                if (!valid) throw new NotAuthorizedException();
+            }
+            else
             {
                 if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-                    && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
-                    throw new NotAuthorizedException();
+                                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
+                                throw new NotAuthorizedException();
             }
-        } catch (RuntimeException e)
+        }
+        catch (RuntimeException e)
         {
             throw new NotAuthorizedException();
         }
     }
 
     /**
-	 * Verifies if the qualification user ir a grant owner
-	 * 
-	 * @param arguments
-	 * @return true or false
-	 */
-    /**
-	 * Verifies if the qualification user is a grant owner
-	 * 
-	 * @param arguments
-	 * @return true or false
-	 */
+     * Verifies if the qualification user is a grant owner
+     * 
+     * @param arguments
+     * @return true or false
+     */
     private boolean isGrantOwner(Integer objectId)
     {
         try
         {
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentQualification persistentQualification =
-                persistentSuport.getIPersistentQualification();
-            IQualification qualification =
-                (IQualification) persistentQualification.readByOID(Qualification.class, objectId);
+            IPersistentQualification persistentQualification = persistentSuport
+                            .getIPersistentQualification();
+            IQualification qualification = (IQualification) persistentQualification.readByOID(
+                            Qualification.class, objectId);
 
             IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
             //Try to read the grant owner from the database
-            IGrantOwner grantOwner =
-                persistentGrantOwner.readGrantOwnerByPerson(qualification.getPerson().getIdInternal());
+            IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(qualification
+                            .getPerson().getIdInternal());
 
             return grantOwner != null;
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();
@@ -148,11 +141,12 @@ public class ReadQualificationAuthorizationFilter extends Filtro
     }
 
     /**
-	 * Verifies if the qualification to be changed is owned by the user that is running the service
-	 * 
-	 * @param arguments
-	 * @return true or false
-	 */
+     * Verifies if the qualification to be changed is owned by the user that is
+     * running the service
+     * 
+     * @param arguments
+     * @return true or false
+     */
     private boolean isOwnQualification(String username, Integer objectId)
     {
         try
@@ -162,15 +156,17 @@ public class ReadQualificationAuthorizationFilter extends Filtro
             IPessoa person = persistentPerson.lerPessoaPorUsername(username);
 
             IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-            IQualification qualification =
-                (IQualification) persistentQualification.readByOID(Qualification.class, objectId);
+            IQualification qualification = (IQualification) persistentQualification.readByOID(
+                            Qualification.class, objectId);
 
             return qualification.getPerson().equals(person);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();

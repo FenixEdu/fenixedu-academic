@@ -10,6 +10,10 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+
 import DataBeans.InfoExam;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
@@ -31,30 +35,36 @@ import Util.RoleType;
 public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    public final static ExamStudentAuthorizationFilter instance = new ExamStudentAuthorizationFilter();
+    public ExamStudentAuthorizationFilter()
+    {
+    }
 
     protected RoleType getRoleType()
     {
         return RoleType.STUDENT;
     }
 
-    public static Filtro getInstance()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
     {
-        return instance;
-    }
-
-    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
-    {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
         try
         {
-            if ((id == null)
-                || (id.getRoles() == null)
-                || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                || !attendsExamExecutionCourse(id, argumentos))
+            if ((id == null) || (id.getRoles() == null)
+                            || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                            || !attendsExamExecutionCourse(id, arguments))
             {
                 throw new NotAuthorizedException();
             }
-        } catch (RuntimeException e)
+        }
+        catch (RuntimeException e)
         {
             throw new NotAuthorizedException();
         }
@@ -79,27 +89,29 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
 
             if (argumentos[1] instanceof InfoExam)
             {
-                infoExam = (InfoExam)argumentos[1];
+                infoExam = (InfoExam) argumentos[1];
                 exam = Cloner.copyInfoExam2IExam(infoExam);
-            } else
+            }
+            else
             {
-                exam = (IExam)persistentExam.readByOId(new Exam((Integer)argumentos[1]), false);
+                exam = (IExam) persistentExam.readByOId(new Exam((Integer) argumentos[1]), false);
             }
 
-            List frequentaList = persistentFrequenta.readByUsername((String)argumentos[0]);
+            List frequentaList = persistentFrequenta.readByUsername((String) argumentos[0]);
             List executionCourses = exam.getAssociatedExecutionCourses();
             List frequentaExecutionCourses = new ArrayList();
             Iterator iter = frequentaList.iterator();
             while (iter.hasNext())
             {
-                IFrequenta frequenta = (IFrequenta)iter.next();
+                IFrequenta frequenta = (IFrequenta) iter.next();
                 IExecutionCourse disciplinaExecucao = frequenta.getDisciplinaExecucao();
                 frequentaExecutionCourses.add(disciplinaExecucao);
             }
-            intersection =
-                (List)CollectionUtils.intersection(frequentaExecutionCourses, executionCourses);
+            intersection = (List) CollectionUtils.intersection(
+                            frequentaExecutionCourses, executionCourses);
 
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             return false;
         }

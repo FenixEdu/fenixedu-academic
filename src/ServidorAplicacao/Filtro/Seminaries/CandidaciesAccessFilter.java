@@ -4,11 +4,16 @@
  * By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Filtro.Seminaries;
+
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import Util.RoleType;
+
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
@@ -18,24 +23,29 @@ import Util.RoleType;
  */
 public class CandidaciesAccessFilter extends Filtro
 {
-    //  the singleton of this class
-    public final static CandidaciesAccessFilter filter = new CandidaciesAccessFilter();
-    public static CandidaciesAccessFilter getInstance()
+    public CandidaciesAccessFilter()
     {
-        return filter;
     }
-    //  the singleton of this class
-    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
     {
-        if (((id != null
-            && id.getRoles() != null
-            && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
-            || (id == null)
-            || (id.getRoles() == null))
+        IUserView id = getRemoteUser(request);
+        if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(
+                        id.getRoles(), getRoleType())))
+                        || (id == null) || (id.getRoles() == null))
         {
             throw new NotAuthorizedException();
         }
+
     }
+
     private RoleType getRoleType()
     {
         return RoleType.SEMINARIES_COORDINATOR;

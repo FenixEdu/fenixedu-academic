@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+
 import DataBeans.InfoRole;
 import Dominio.ICoordinator;
 import Dominio.IMasterDegreeCandidate;
@@ -25,150 +29,146 @@ import Util.RoleType;
 public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro
 {
 
-	public final static ReadExecutionDegreeByCandidateIDAuthorizationFilter instance =
-		new ReadExecutionDegreeByCandidateIDAuthorizationFilter();
+    public ReadExecutionDegreeByCandidateIDAuthorizationFilter()
+    {
+    }
 
-	/**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-	public static Filtro getInstance()
-	{
-		return instance;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        IUserView id = getRemoteUser(request);
+        Object[] argumentos = getServiceCallArguments(request);
+        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
+                        || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
+                        || (id == null) || (id.getRoles() == null))
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
-	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
-	{
+    /**
+     * @param collection
+     * @return boolean
+     */
+    private boolean containsRole(Collection roles)
+    {
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-			|| (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-			|| (id == null)
-			|| (id.getRoles() == null))
-		{
-			throw new NotAuthorizedException();
-		}
-	}
+        if (roles.size() != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**
-	 * @param collection
-	 * @return boolean
-	 */
-	private boolean containsRole(Collection roles)
-	{
-		CollectionUtils.intersection(roles, getNeededRoles());
+    /**
+     * @return The Needed Roles to Execute The Service
+     */
+    private Collection getNeededRoles()
+    {
+        List roles = new ArrayList();
 
-		if (roles.size() != 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-	/**
-	 * @return The Needed Roles to Execute The Service
-	 */
-	private Collection getNeededRoles()
-	{
-		List roles = new ArrayList();
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.COORDINATOR);
+        roles.add(infoRole);
 
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
+        return roles;
+    }
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.COORDINATOR);
-		roles.add(infoRole);
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia
+    {
 
-		return roles;
-	}
+        List roles = getRoleList((List) id.getRoles());
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
-	private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia
-	{
+        SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 
-		List roles = getRoleList((List) id.getRoles());
-		CollectionUtils.intersection(roles, getNeededRoles());
+        List roleTemp = new ArrayList();
+        roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+            return true;
+        }
 
-		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+        roleTemp = new ArrayList();
+        roleTemp.add(RoleType.COORDINATOR);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
 
-		List roleTemp = new ArrayList();
-		roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
-			return true;
-		}
+            ITeacher teacher = null;
+            // Read The ExecutionDegree
+            try
+            {
 
-		roleTemp = new ArrayList();
-		roleTemp.add(RoleType.COORDINATOR);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
+                Integer candidateID = (Integer) arguments[0];
 
-			ITeacher teacher = null;
-			// Read The ExecutionDegree
-			try
-			{
+                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
-				Integer candidateID = (Integer) arguments[0];
+                IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
+                mdcTemp.setIdInternal(candidateID);
+                IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                                .getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
 
-				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                if (masterDegreeCandidate == null)
+                {
+                    return false;
+                }
 
-				IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-				mdcTemp.setIdInternal(candidateID);
-				IMasterDegreeCandidate masterDegreeCandidate =
-					(IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(
-						mdcTemp,
-						false);
+                //modified by Tânia Pousão
+                ICoordinator coordinator = sp.getIPersistentCoordinator()
+                                .readCoordinatorByTeacherAndExecutionDegree(teacher,
+                                                masterDegreeCandidate.getExecutionDegree());
+                if (coordinator != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                //				if
+                // (masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher)){
+                //					return true;
+                //				} else {
+                //					return false;
+                //				}
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
-				if (masterDegreeCandidate == null)
-				{
-					return false;
-				}
+    private List getRoleList(List roles)
+    {
+        List result = new ArrayList();
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext())
+        {
+            result.add(((InfoRole) iterator.next()).getRoleType());
+        }
 
-				//modified by Tânia Pousão
-				ICoordinator coordinator =
-					sp.getIPersistentCoordinator().readCoordinatorByTeacherAndExecutionDegree(
-						teacher,
-						masterDegreeCandidate.getExecutionDegree());
-				if (coordinator != null)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-				//				if (masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher)){
-				//					return true;
-				//				} else {
-				//					return false;
-				//				}
-			}
-			catch (Exception e)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private List getRoleList(List roles)
-	{
-		List result = new ArrayList();
-		Iterator iterator = roles.iterator();
-		while (iterator.hasNext())
-		{
-			result.add(((InfoRole) iterator.next()).getRoleType());
-		}
-
-		return result;
-	}
+        return result;
+    }
 
 }

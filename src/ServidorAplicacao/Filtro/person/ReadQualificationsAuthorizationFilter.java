@@ -4,6 +4,9 @@
 
 package ServidorAplicacao.Filtro.person;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IPessoa;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.IUserView;
@@ -24,17 +27,8 @@ import Util.RoleType;
 public class ReadQualificationsAuthorizationFilter extends Filtro
 {
 
-    public final static ReadQualificationsAuthorizationFilter instance =
-        new ReadQualificationsAuthorizationFilter();
-
-    /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-    public static Filtro getInstance()
+    public ReadQualificationsAuthorizationFilter()
     {
-        return instance;
     }
 
     //Role Type of teacher
@@ -49,16 +43,17 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
         return RoleType.GRANT_OWNER_MANAGER;
     }
 
-    /**
-	 * Runs the filter
-	 * 
-	 * @param id
-	 * @param service
-	 * @param arguments
-	 */
-    public void preFiltragem(IUserView id, Object[] arguments)
-        throws NotAuthorizedException
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
     {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
         try
         {
             //Verify if needed fields are null
@@ -68,12 +63,13 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
             }
 
             //Verify if:
-            // 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
+            // 1: The user ir a Grant Owner Manager and the qualification
+            // belongs to a Grant Owner
             // 2: The user ir a Teacher and the qualification is his own
             boolean valid = false;
 
             if ((AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager()))
-                && isGrantOwner((String) arguments[0]))
+                            && isGrantOwner((String) arguments[0]))
             {
                 valid = true;
             }
@@ -83,20 +79,20 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
                 valid = true;
             }
 
-            if (!valid)
-                throw new NotAuthorizedException();
-        } catch (RuntimeException e)
+            if (!valid) throw new NotAuthorizedException();
+        }
+        catch (RuntimeException e)
         {
             throw new NotAuthorizedException();
         }
     }
 
     /**
-	 * Verifies if the qualification user ir a grant owner
-	 * 
-	 * @param arguments
-	 * @return true or false
-	 */
+     * Verifies if the qualification user ir a grant owner
+     * 
+     * @param arguments
+     * @return true or false
+     */
     private boolean isGrantOwner(String user)
     {
         try
@@ -110,11 +106,13 @@ public class ReadQualificationsAuthorizationFilter extends Filtro
             IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(person.getIdInternal());
 
             return grantOwner != null;
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();

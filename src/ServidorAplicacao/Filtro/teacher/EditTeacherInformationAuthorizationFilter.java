@@ -4,13 +4,15 @@
  */
 package ServidorAplicacao.Filtro.teacher;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
-import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
@@ -26,55 +28,49 @@ import Util.RoleType;
 public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    private static EditTeacherInformationAuthorizationFilter instance =
-        new EditTeacherInformationAuthorizationFilter();
-
-    /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-    public static Filtro getInstance()
+    private EditTeacherInformationAuthorizationFilter()
     {
-        return instance;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
     protected RoleType getRoleType()
     {
         return RoleType.TEACHER;
     }
-
-    public void preFiltragem(IUserView id, Object[] arguments)
-        throws NotAuthorizedException
+    /* (non-Javadoc)
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
     {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);        
         try
         {
-            if (((id != null
-                && id.getRoles() != null
-                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
-                || (id == null)
-                || (id.getRoles() == null)
-                || (!argumentsBelongToTeacher(id,
-                    (InfoServiceProviderRegime) arguments[0],
-                    (InfoWeeklyOcupation) arguments[1])))
+            if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(
+                            id.getRoles(), getRoleType())))
+            || (id == null)
+            || (id.getRoles() == null)
+            || (!argumentsBelongToTeacher(
+                            id, (InfoServiceProviderRegime) arguments[0],
+                            (InfoWeeklyOcupation) arguments[1])))
             {
                 throw new NotAuthorizedException();
             }
-        } catch (RuntimeException e)
+        }
+        catch (RuntimeException e)
         {
             throw new NotAuthorizedException(e.getMessage());
         }
     }
 
-    private boolean argumentsBelongToTeacher(
-        IUserView id,
-        InfoServiceProviderRegime infoServiceProviderRegime,
-        InfoWeeklyOcupation infoWeeklyOcupation)
+    private boolean argumentsBelongToTeacher(IUserView id,
+                    InfoServiceProviderRegime infoServiceProviderRegime,
+                    InfoWeeklyOcupation infoWeeklyOcupation)
     {
         try
         {
@@ -85,16 +81,17 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
             Integer teacherId = teacher.getIdInternal();
 
             if (!infoServiceProviderRegime.getInfoTeacher().getIdInternal().equals(teacherId))
-                return false;
+                            return false;
 
-            if (!infoWeeklyOcupation.getInfoTeacher().getIdInternal().equals(teacherId))
-                return false;
+            if (!infoWeeklyOcupation.getInfoTeacher().getIdInternal().equals(teacherId)) return false;
             return true;
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;

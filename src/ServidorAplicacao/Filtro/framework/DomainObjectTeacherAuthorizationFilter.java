@@ -4,6 +4,9 @@
  */
 package ServidorAplicacao.Filtro.framework;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
@@ -18,35 +21,42 @@ import Util.RoleType;
 public abstract class DomainObjectTeacherAuthorizationFilter extends AuthorizationByRoleFilter
 {
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
+     */
     protected RoleType getRoleType()
     {
         return RoleType.TEACHER;
     }
 
-    /**
-	 * Executes the filtering
-	 */
-    public void preFiltragem(IUserView id, Object[] arguments) throws NotAuthorizedException
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
     {
+        IUserView id = getRemoteUser(request);
+        Object[] arguments = getServiceCallArguments(request);
+
         try
         {
             Integer idInternal = (Integer) arguments[0];
             boolean isNew = ((idInternal == null) || idInternal.equals(new Integer(0)));
 
-            if (((id != null
-                && id.getRoles() != null
-                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
-                || (id == null)
-                || (id.getRoles() == null)
-                || ((!isNew) && (!domainObjectBelongsToTeacher(id, (Integer) arguments[0]))))
+            if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(
+                            id.getRoles(), getRoleType())))
+                            || (id == null)
+                            || (id.getRoles() == null)
+                            || ((!isNew) && (!domainObjectBelongsToTeacher(id, (Integer) arguments[0]))))
             {
                 throw new NotAuthorizedException();
             }
-        } catch (RuntimeException e)
+        }
+        catch (RuntimeException e)
         {
             throw new NotAuthorizedException(e.getMessage());
         }

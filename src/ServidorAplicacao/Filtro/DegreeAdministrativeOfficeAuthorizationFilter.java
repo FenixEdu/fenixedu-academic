@@ -1,5 +1,8 @@
 package ServidorAplicacao.Filtro;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import Util.RoleType;
 
@@ -31,16 +34,17 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
     }
 
     /* (non-Javadoc)
-     * @see ServidorAplicacao.Filtro.Filtro#preFiltragem(ServidorAplicacao.IUserView, ServidorAplicacao.IServico, java.lang.Object[])
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
-    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception
     {
-
+        IUserView userView = (IUserView) request.getRequester();
         if (!AuthorizationUtils
-            .containsRole(id.getRoles(), RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
+                        .containsRole(userView.getRoles(), RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
         {
-            super.preFiltragem(id, argumentos);
+            super.execute(request, response);
         }
+        
     }
 
 }

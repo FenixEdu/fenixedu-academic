@@ -5,6 +5,9 @@
  */
 package ServidorAplicacao.Filtro;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import Util.RoleType;
@@ -19,26 +22,25 @@ import Util.RoleType;
 public class SeminaryCoordinatorOrStudentFilter extends Filtro
 {
 
-    public final static SeminaryCoordinatorOrStudentFilter instance =
-        new SeminaryCoordinatorOrStudentFilter();
-    /**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-    public static Filtro getInstance()
+    public SeminaryCoordinatorOrStudentFilter()
     {
-        return instance;
     }
 
-    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
     {
-        if (((id != null
-            && id.getRoles() != null
-            && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1())
-            && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType2())))
-            || (id == null)
-            || (id.getRoles() == null))
+        IUserView id = getRemoteUser(request);
+
+        if (((id != null && id.getRoles() != null
+                        && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType1()) && !AuthorizationUtils
+                        .containsRole(id.getRoles(), getRoleType2())))
+                        || (id == null) || (id.getRoles() == null))
         {
             throw new NotAuthorizedException();
         }

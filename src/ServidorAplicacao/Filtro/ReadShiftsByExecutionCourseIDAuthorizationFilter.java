@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
@@ -37,216 +41,211 @@ import Util.RoleType;
 public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro
 {
 
-	public final static ReadShiftsByExecutionCourseIDAuthorizationFilter instance =
-		new ReadShiftsByExecutionCourseIDAuthorizationFilter();
+    public ReadShiftsByExecutionCourseIDAuthorizationFilter()
+    {
+    }
 
-	/**
-	 * The singleton access method of this class.
-	 * 
-	 * @return Returns the instance of this class responsible for the authorization access to services.
-	 */
-	public static Filtro getInstance()
-	{
-		return instance;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *          pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
+                    Exception
+    {
+        IUserView id = getRemoteUser(request);
+        Object[] argumentos = getServiceCallArguments(request);
+        if ((((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
+                        || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
+                        || (id == null) || (id.getRoles() == null)))
+                        && (!lecturesExecutionCourse(id, argumentos)))
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
-	public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
-	{
+    /**
+     * @param collection
+     * @return boolean
+     */
+    private boolean containsRole(Collection roles)
+    {
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-		if ((((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-			|| (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-			|| (id == null)
-			|| (id.getRoles() == null)))
-			&& (!lecturesExecutionCourse(id, argumentos)))
-		{
-			throw new NotAuthorizedException();
-		}
-	}
+        if (roles.size() != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**
-	 * @param collection
-	 * @return boolean
-	 */
-	private boolean containsRole(Collection roles)
-	{
-		CollectionUtils.intersection(roles, getNeededRoles());
+    /**
+     * @return The Needed Roles to Execute The Service
+     */
+    private Collection getNeededRoles()
+    {
+        List roles = new ArrayList();
 
-		if (roles.size() != 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.TIME_TABLE_MANAGER);
+        roles.add(infoRole);
 
-	/**
-	 * @return The Needed Roles to Execute The Service
-	 */
-	private Collection getNeededRoles()
-	{
-		List roles = new ArrayList();
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.COORDINATOR);
+        roles.add(infoRole);
 
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.TIME_TABLE_MANAGER);
-		roles.add(infoRole);
+        return roles;
+    }
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.COORDINATOR);
-		roles.add(infoRole);
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia
+    {
 
-		return roles;
-	}
+        List roles = getRoleList((List) id.getRoles());
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
-	private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia
-	{
+        SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 
-		List roles = getRoleList((List) id.getRoles());
-		CollectionUtils.intersection(roles, getNeededRoles());
+        List roleTemp = new ArrayList();
+        roleTemp.add(RoleType.TIME_TABLE_MANAGER);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+            return true;
+        }
 
-		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+        roleTemp = new ArrayList();
+        roleTemp.add(RoleType.COORDINATOR);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
 
-		List roleTemp = new ArrayList();
-		roleTemp.add(RoleType.TIME_TABLE_MANAGER);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
-			return true;
-		}
+            ITeacher teacher = null;
+            // Read The ExecutionDegree
+            try
+            {
 
-		roleTemp = new ArrayList();
-		roleTemp.add(RoleType.COORDINATOR);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
+                Integer executionCourseID = (Integer) arguments[0];
 
-			ITeacher teacher = null;
-			// Read The ExecutionDegree
-			try
-			{
+                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
-				Integer executionCourseID = (Integer) arguments[0];
+                IExecutionCourse executionCourseTemp = new ExecutionCourse();
+                executionCourseTemp.setIdInternal(executionCourseID);
 
-				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                                .readByOId(executionCourseTemp, false);
 
-				IExecutionCourse executionCourseTemp = new ExecutionCourse();
-				executionCourseTemp.setIdInternal(executionCourseID);
+                // For all Associated Curricular Courses
+                Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses()
+                                .iterator();
+                while (curricularCourseIterator.hasNext())
+                {
+                    ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseIterator
+                                    .next();
 
-				IExecutionCourse executionCourse =
-					(IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-						executionCourseTemp,
-						false);
+                    // Read All Execution Degrees for this Degree Curricular
+                    // Plan
 
-				// For all Associated Curricular Courses
-				Iterator curricularCourseIterator =
-					executionCourse.getAssociatedCurricularCourses().iterator();
-				while (curricularCourseIterator.hasNext())
-				{
-					ICurricularCourse curricularCourse =
-						(ICurricularCourse) curricularCourseIterator.next();
+                    List executionDegrees = sp.getICursoExecucaoPersistente()
+                                    .readByDegreeCurricularPlan(
+                                                    curricularCourse.getDegreeCurricularPlan());
 
-					// Read All Execution Degrees for this Degree Curricular Plan
+                    // Check if the Coordinator is the logged one
+                    Iterator executionDegreesIterator = executionDegrees.iterator();
+                    while (executionDegreesIterator.hasNext())
+                    {
+                        ICursoExecucao executionDegree = (ICursoExecucao) executionDegreesIterator
+                                        .next();
 
-					List executionDegrees =
-						sp.getICursoExecucaoPersistente().readByDegreeCurricularPlan(
-							curricularCourse.getDegreeCurricularPlan());
+                        //modified by Tânia Pousão
+                        ICoordinator coordinator = sp.getIPersistentCoordinator()
+                                        .readCoordinatorByTeacherAndExecutionDegree(teacher,
+                                                        executionDegree);
+                        if (coordinator != null)
+                        {
+                            return true;
+                        }
 
-					// Check if the Coordinator is the logged one
-					Iterator executionDegreesIterator = executionDegrees.iterator();
-					while (executionDegreesIterator.hasNext())
-					{
-						ICursoExecucao executionDegree =
-							(ICursoExecucao) executionDegreesIterator.next();
-						
-						//modified by Tânia Pousão
-						ICoordinator coordinator =
-							sp.getIPersistentCoordinator().readCoordinatorByTeacherAndExecutionDegree(
-								teacher,
-								executionDegree);
-						if (coordinator != null)
-						{
-							return true;
-						}
+                        //						if ((executionDegree.getCoordinator() != null)
+                        //							&&
+                        // (executionDegree.getCoordinator().equals(teacher)))
+                        //						{
+                        //							return true;
+                        //						}
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        return false;
+    }
 
-						//						if ((executionDegree.getCoordinator() != null)
-						//							&& (executionDegree.getCoordinator().equals(teacher)))
-						//						{
-						//							return true;
-						//						}
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				return false;
-			}
-		}
-		return false;
-	}
+    private List getRoleList(List roles)
+    {
+        List result = new ArrayList();
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext())
+        {
+            result.add(((InfoRole) iterator.next()).getRoleType());
+        }
 
-	private List getRoleList(List roles)
-	{
-		List result = new ArrayList();
-		Iterator iterator = roles.iterator();
-		while (iterator.hasNext())
-		{
-			result.add(((InfoRole) iterator.next()).getRoleType());
-		}
+        return result;
+    }
 
-		return result;
-	}
+    /**
+     * @param id
+     * @param argumentos
+     * @return
+     */
+    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos)
+    {
+        InfoExecutionCourse infoExecutionCourse = null;
+        IExecutionCourse executionCourse = null;
+        ISuportePersistente sp;
+        IProfessorship professorship = null;
+        if (argumentos == null)
+        {
+            return false;
+        }
+        try
+        {
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return
-	 */
-	private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos)
-	{
-		InfoExecutionCourse infoExecutionCourse = null;
-		IExecutionCourse executionCourse = null;
-		ISuportePersistente sp;
-		IProfessorship professorship = null;
-		if (argumentos == null)
-		{
-			return false;
-		}
-		try
-		{
+            sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            if (argumentos[0] instanceof InfoExecutionCourse)
+            {
+                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
+                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+            }
+            else
+            {
+                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(
+                                new ExecutionCourse((Integer) argumentos[0]), false);
+            }
 
-			sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-			if (argumentos[0] instanceof InfoExecutionCourse)
-			{
-				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-				executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-			}
-			else
-			{
-				executionCourse =
-					(IExecutionCourse) persistentExecutionCourse.readByOId(
-						new ExecutionCourse((Integer) argumentos[0]),
-						false);
-			}
-
-			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
-			if (teacher != null && executionCourse != null)
-			{
-				IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-				professorship =
-					persistentProfessorship.readByTeacherAndExecutionCoursePB(teacher, executionCourse);
-			}
-		}
-		catch (Exception e)
-		{
-			return false;
-		}
-		return professorship != null;
-	}
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readTeacherByUsernamePB(id.getUtilizador());
+            if (teacher != null && executionCourse != null)
+            {
+                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(
+                                teacher, executionCourse);
+            }
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return professorship != null;
+    }
 
 }
