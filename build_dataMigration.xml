@@ -834,7 +834,7 @@
 	</target>
 
 	<target name="update-students"
-	        depends="compile-proj, clean-persons-with-duplicate-id, update-students-with-new-ID, update-existing-students, create-new-students">
+	        depends="compile-proj, update-students-with-new-ID, update-existing-students, create-new-students">
 	</target>
 
 
@@ -1026,19 +1026,19 @@
 
 	<!-- ***************** ADDED BY DAVID SANTOS ***************** -->
 
-	<target name="load-universitys" depends="">
-		<exec executable="${sql}/middleware/commands/loadUniversitys.sh" os="Linux, Unix">
+	<target name="create-past-execution-periods-and-execution-years" depends="">
+		<exec executable="${sql}/middleware/commands/createPastExecutionPeriodsAndExecutionYears.sh" os="Linux, Unix">
 			<arg value="stop"/>
 		</exec>
-		<exec executable="${sql}/middleware/commands/loadUniversitys.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
+		<exec executable="${sql}/middleware/commands/createPastExecutionPeriodsAndExecutionYears.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
 		</exec>
 	</target>
 
-	<target name="load-mw-tables-with-data-for-all-enrollment-migration" depends="compile-proj, load-data-from-old-system" description="Loads tables mw_ENROLMENT, mw_CURRICULAR_COURSE_SCOPE and mw_ALUNO with data for all enrollment migration">
+	<target name="load-mw-tables-with-data-for-all-enrollment-migration" depends="compile-proj, load-data-from-old-system, create-past-execution-periods-and-execution-years" description="Loads tables mw_ENROLMENT, mw_CURRICULAR_COURSE_SCOPE and mw_ALUNO with data for all enrollment migration">
 		<sequential>
 			<sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 				<fileset dir="${sql}">
-					<include name="middleware/loadMWTablesWithDataForAllEnrollmentMigration.sql"/>
+					<include name="middleware/allEnrollmentsMigration/loadMWTablesWithDataForAllEnrollmentMigration.sql"/>
 				</fileset>
 				<classpath>
 					<fileset dir="${lib}">
@@ -1063,7 +1063,7 @@
 		</java>
 	</target>
 
-	<!--<target name="create-and-update-all-students-enrolments" depends="create-and-update-all-past-curriculums, load-universitys">-->
+	<!--<target name="create-and-update-all-students-enrolments" depends="create-and-update-all-past-curriculums">-->
 	<target name="create-and-update-all-students-enrolments" depends="compile-proj">
 		<java classname="middleware.studentMigration.CreateAndUpdateAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>

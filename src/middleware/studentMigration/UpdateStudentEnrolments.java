@@ -68,13 +68,10 @@ public class UpdateStudentEnrolments
 		IPersistentMWEnrolment persistentEnrolment = mws.getIPersistentMWEnrolment();
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-//		System.out.println("[INFO] Reading all MWStudents...");
-
 		sp.iniciarTransaccao();
 
 		executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
 
-//------------------------------------------------------------------------------------------------------------------------
 		Integer numberOfStudents = persistentMWAluno.countAll();
 		sp.confirmarTransaccao();
 
@@ -87,9 +84,6 @@ public class UpdateStudentEnrolments
 			sp.clearCache();	
 			System.out.println("[INFO] Reading MWStudents...");
 			List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-//------------------------------------------------------------------------------------------------------------------------
-
-//			List result = persistentMWAluno.readAll();
 	
 			sp.confirmarTransaccao();
 	
@@ -109,9 +103,7 @@ public class UpdateStudentEnrolments
 				} catch (Exception e)
 				{}
 			}
-//------------------------------------------------------------------------------------------------------------------------
 		}
-//------------------------------------------------------------------------------------------------------------------------
 
 		ReportEnrolment.report(new PrintWriter(System.out, true));
 	}
@@ -207,58 +199,6 @@ public class UpdateStudentEnrolments
 				continue;
 			}
 
-//			// Get the list of Fenix CurricularCourses with that code for the selected DegreeCurricularPlan.
-//			List curricularCourses =
-//				sp.getIPersistentCurricularCourse().readbyCourseCodeAndDegreeCurricularPlan(
-//					StringUtils.trim(mwEnrolment.getCoursecode()),
-//					degreeCurricularPlan);
-//
-//			ICurricularCourse curricularCourse = null;
-//
-//			// Ideally we find only one CurricularCourse but we never know, we may find more or even less.
-//			if (curricularCourses.size() != 1)
-//			{
-//				if (curricularCourses.size() > 1)
-//				{
-//					System.out.println("[ERROR 05] Several Fenix CurricularCourses with code [" + mwEnrolment.getCoursecode() + "] were found for Degree [" + mwEnrolment.getDegreecode() + "]!");
-//					continue;
-//				} else // size == 0
-//				{
-//					// We did not find any CurricularCourse with that code in that DegreeCurricularPlan.
-//					// Now we try to read by the CurricularCourse code only.
-//					IPersistentCurricularCourse curricularCourseDAO = sp.getIPersistentCurricularCourse();
-//					curricularCourses = curricularCourseDAO.readbyCourseCode(StringUtils.trim(mwEnrolment.getCoursecode()));
-//
-//					if (curricularCourses.size() == 1)
-//					{
-//						curricularCourse = (ICurricularCourse) curricularCourses.get(0);
-//					} else if (curricularCourses.size() > 1)
-//					{
-//						if (hasDiferentDegrees(curricularCourses))
-//						{
-//							curricularCourse = getCurricularCourseFromAnotherDegree(mwEnrolment, sp);
-//							if (curricularCourse == null)
-//							{
-//								// NOTE [DAVID]: This is for information only.
-//								ReportEnrolment.addReplicatedCurricularCourses(mwEnrolment.getCoursecode(), curricularCourses);
-//								continue;
-//							}
-//						} else
-//						{
-//							curricularCourse = (ICurricularCourse) curricularCourses.get(0);
-//						}
-//					} else
-//					{
-//						ReportEnrolment.addCurricularCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
-//						continue;
-//					}
-//				}
-//			} else // curricularCourses.size() == 1
-//			{
-//				curricularCourse = (ICurricularCourse) curricularCourses.get(0);
-//			}
-
-
 			ICurricularCourse curricularCourse = getCurricularCourse(mwEnrolment, degreeCurricularPlan, sp);
 
 			if (curricularCourse == null)
@@ -326,11 +266,6 @@ public class UpdateStudentEnrolments
 		IFrequenta attend = null;
 		if (executionCourse == null)
 		{
-			// NOTE [DAVID]: This kind of report is only pesented the first time the migration process is executed.
-			// This happens because although this is a situation of error report, this kind of error doesn't
-			// forbid the enrolment to be created in the Fenix DB. Thus the second time the process is executed, the
-			// enrolment for this particular CurricularCourse will have already been created in the DB so this
-			// CurricularCourse is no longer considered for this execution of the process.
 			// NOTE [DAVID]: This should not happen at this point.
 			ReportEnrolment.addExecutionCourseNotFound(mwEnrolment.getCoursecode(), mwEnrolment.getDegreecode().toString(), mwEnrolment.getNumber().toString());
 		} else
@@ -415,10 +350,9 @@ public class UpdateStudentEnrolments
 		// ExecuitonCourse in the given period.
 		} else if(curricularCourseHasOnlyOneExecutionInGivenPeriod(executionPeriod, mwEnrolment, sp)) {
 
-			// FIXME [DAVID]: Passar comentário para inglês.
-			// Se existe apenas uma execução para todas as curriculares então pode escolher-se uma curricular
-			// qualquer mas essa escolha é registada na tabela MWCurricularCourseOutsideStudentDegree para
-			// que se mantenha a coerência e para que da proxima vêz a solução seja mais rápida.
+			// If there is only one ExecutionCourse for all the existing CurricularCourses then we can choose
+			// any CurricularCourse but this choice is registred in table MWCurricularCourseOutsideStudentDegree
+			// to keep coherence of choice and to make the next similar choice quicker.
 			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 			List curricularCourses = persistentCurricularCourse.readbyCourseCode(mwEnrolment.getCoursecode());
 			curricularCourse = (ICurricularCourse) curricularCourses.get(0);
@@ -532,9 +466,8 @@ public class UpdateStudentEnrolments
 
 			if ((curricularCourseScopes == null) || (curricularCourseScopes.isEmpty()))
 			{
-				// FIXME [DAVID]: Passar comentário para inglês.
-				// A curricular é do mesmo curso. Se não se consegue encontrar por ano e semestre tenta-se só por ano
-				// e se mesmo assim não se encontra tenta-se só por semestre.
+				// The CurricularCourse is from the same Degree that the StudentCurricularPlan. If we cannot find it
+				// by year and semester than we'll try only by year and if still it can't be found we'll try only by semester.
 				curricularCourseScopes = curricularCourseScopeDAO.readByCurricularCourseAndSemester(curricularCourse, mwEnrolment.getCurricularcoursesemester());
 
 				if( (curricularCourseScopes != null) && (!curricularCourseScopes.isEmpty()) )
@@ -855,8 +788,10 @@ public class UpdateStudentEnrolments
 		{
 			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
 			{
-				System.out.println("[ERROR 07] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
-				return null;
+				System.out.println("[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
+				return studentCurricularPlan.getDegreeCurricularPlan();
+//				System.out.println("[ERROR 07] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree!");
+//				return null;
 			} else
 			{
 				return executionDegree.getCurricularPlan();

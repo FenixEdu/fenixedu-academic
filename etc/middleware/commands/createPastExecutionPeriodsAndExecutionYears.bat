@@ -1,1 +1,1 @@
-mysql ciapl < etc\middleware\createPastExecutionPeriodsAndExecutionYears.sql | mysql ciapl
+mysql ciapl < etc\middleware\allEnrollmentsMigration\createPastExecutionPeriodsAndExecutionYears.sql | mysql ciapl

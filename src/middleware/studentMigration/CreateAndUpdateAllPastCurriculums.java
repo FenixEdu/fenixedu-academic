@@ -59,11 +59,12 @@ public class CreateAndUpdateAllPastCurriculums
 	private static int totalCurricularCourseScopesCreated = 0;
 	private static int totalBranchesCreated = 0;
 	private static int totalMWCurricularCourseScopesRead = 0;
+	private static int totalUniversitysCreated = 0;
 
 	public static void main(String args[])
 	{
 		try {
-			SuportePersistenteOJB fenixPersistentSuport = SuportePersistenteOJB.getInstance();
+			ISuportePersistente fenixPersistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 			IPersistentMWCurricularCourseScope persistentMWCurricularCourseScope = mws.getIPersistentMWCurricularCourseScope();
 	
@@ -113,6 +114,7 @@ public class CreateAndUpdateAllPastCurriculums
 		System.out.println("[INFO] Total CurricularCourses created: [" + CreateAndUpdateAllPastCurriculums.totalCurricularCoursesCreated + "].");
 		System.out.println("[INFO] Total CurricularCourseScopes created: [" + CreateAndUpdateAllPastCurriculums.totalCurricularCourseScopesCreated + "].");
 		System.out.println("[INFO] Total Branches created: [" + CreateAndUpdateAllPastCurriculums.totalBranchesCreated + "].");
+		System.out.println("[INFO] Total Universitys created: [" + CreateAndUpdateAllPastCurriculums.totalUniversitysCreated + "].");
 		System.out.println("[INFO] Total MWCurricularCourseScopes read: [" + CreateAndUpdateAllPastCurriculums.totalMWCurricularCourseScopesRead + "].");
 
 	}
@@ -122,7 +124,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @param fenixPersistentSuport
 	 * @throws Exception
 	 */
-	private static void writeAndUpdate(MWCurricularCourseScope mwCurricularCourseScope, SuportePersistenteOJB fenixPersistentSuport) throws Exception
+	private static void writeAndUpdate(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		try {
 			IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllPastCurriculums.getDegreeCurricularPlan(mwCurricularCourseScope.getDegreecode(), fenixPersistentSuport);
@@ -134,9 +136,12 @@ public class CreateAndUpdateAllPastCurriculums
 
 			IBranch branch = CreateAndUpdateAllPastCurriculums.getBranch(mwCurricularCourseScope.getDegreecode(), mwCurricularCourseScope.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
 			if (branch == null) {
-				// This should NEVER happen!
-				System.out.println("[ERROR 02] No record of Branch with code: [" + mwCurricularCourseScope.getBranchcode() + "] for Degree with code: [" + mwCurricularCourseScope.getDegreecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
-				return;
+				branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees6And1(mwCurricularCourseScope, degreeCurricularPlan, fenixPersistentSuport);
+				if (branch == null) {
+					// This should NEVER happen!
+					System.out.println("[ERROR 02] No record of Branch with code: [" + mwCurricularCourseScope.getBranchcode() + "] for Degree with code: [" + mwCurricularCourseScope.getDegreecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
+					return;
+				}
 			}
 
 			ICurricularCourse curricularCourse = CreateAndUpdateAllPastCurriculums.getCurricularCourse(mwCurricularCourseScope.getCoursecode(), degreeCurricularPlan, fenixPersistentSuport);
@@ -178,7 +183,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Exception
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode, SuportePersistenteOJB fenixPersistentSuport) throws Exception
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws.getIPersistentMWDegreeTranslation();
@@ -241,7 +246,7 @@ public class CreateAndUpdateAllPastCurriculums
 			branch = persistentBranch.readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwBranch.getDescription());
 
 			if (branch == null) {
-				branch = fenixPersistentSuport.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+				branch = persistentBranch.readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
 			}
 
 			if (branch == null) {
@@ -249,14 +254,15 @@ public class CreateAndUpdateAllPastCurriculums
 			
 				persistentBranch.simpleLockWrite(branch);
 
-				branch.setCode(new String("" + mwBranch.getDegreecode() + mwBranch.getBranchcode() + mwBranch.getOrientationcode()));
-				branch.setDegreeCurricularPlan(degreeCurricularPlan);
 				if (mwBranch.getDescription().startsWith("CURSO DE ")) {
 					branch.setName(new String(""));
+					branch.setCode(new String(""));
 				} else {
 					branch.setName(mwBranch.getDescription());
+					branch.setCode(new String("" + mwBranch.getDegreecode() + mwBranch.getBranchcode() + mwBranch.getOrientationcode()));
 				}
 
+				branch.setDegreeCurricularPlan(degreeCurricularPlan);
 				branch.setScopes(null);
 
 				CreateAndUpdateAllPastCurriculums.totalBranchesCreated++;
@@ -430,10 +436,36 @@ public class CreateAndUpdateAllPastCurriculums
 					persistentUniversity.simpleLockWrite(university);
 					university.setCode(mwUniversity.getUniversityCode());
 					university.setName(mwUniversity.getUniversityName());
+					CreateAndUpdateAllPastCurriculums.totalUniversitysCreated++;
 				}
 			}
 		}
 
 		fenixPersistentSuport.confirmarTransaccao();
+	}
+
+//	----------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
+// ------------------------------- METHODS TO SOLVE SPECIFIC PROBLEMS ---------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------------
+
+	private static IBranch solveBranchesProblemsForDegrees6And1(MWCurricularCourseScope mwCurricularCourseScope, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Exception
+	{
+		if ((mwCurricularCourseScope.getDegreecode().intValue() == 6) ||
+			(mwCurricularCourseScope.getDegreecode().intValue() == 1) ) {
+			IPersistentBranch persistentBranch = fenixPersistentSuport.getIPersistentBranch();
+
+			IBranch branch = new Branch();
+			persistentBranch.simpleLockWrite(branch);
+			branch.setName(new String("BRANCH THAT NO LONGER EXISTS"));
+			branch.setCode(new String("" + mwCurricularCourseScope.getDegreecode() + mwCurricularCourseScope.getBranchcode() + 0));
+			branch.setDegreeCurricularPlan(degreeCurricularPlan);
+			branch.setScopes(null);
+			CreateAndUpdateAllPastCurriculums.totalBranchesCreated++;
+			return branch;
+		} else {
+			return null;
+		}
 	}
 }
