@@ -256,7 +256,7 @@ drop table if exists PRECEDENCE;
 create table PRECEDENCE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_CURRICULAR_COURSE int(11) not null,
-   ENROLMENT_STEP enum ('online','offline') not null,
+   SCOPE_TO_APPLY varchar(3) not null,
    primary key (ID_INTERNAL))
    type=InnoDB;
 

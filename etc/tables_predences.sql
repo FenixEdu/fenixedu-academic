@@ -1,17 +1,20 @@
-#----------------------------
-# Table structure for PRECEDENCE
-#----------------------------
+------------------------------
+-- Table structure for PRECEDENCE
+-- Column :SCOPE_TO_APPLY tells in which step of the enrolment this precedence is to be applied
+--			"SP" means that precedence is to be applied in calculation
+--			"ENR" means that precedence is to be applied during student enrolment
+------------------------------
 drop table if exists PRECEDENCE;
 create table PRECEDENCE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_CURRICULAR_COURSE int(11) not null,
-   ENROLMENT_STEP enum ('online','offline') not null,
+   SCOPE_TO_APPLY varchar(3) not null,
    primary key (ID_INTERNAL))
    type=InnoDB;
 
-#----------------------------
-# Table structure for RESTRICTION
-#----------------------------
+------------------------------
+-- Table structure for RESTRICTION
+------------------------------
 DROP TABLE IF EXISTS RESTRICTION;
 CREATE TABLE RESTRICTION (
   ID_INTERNAL int(11) NOT NULL auto_increment,
