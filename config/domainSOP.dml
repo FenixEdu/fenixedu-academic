@@ -1,13 +1,13 @@
 
 
-class Dominio.EvaluationExecutionCourse {
+class domain.EvaluationExecutionCourse {
 	Integer keyExecutionCourse;
 	Integer ackOptLock;
 	Integer idInternal;
 	Integer keyEvaluation;
 }
 
-class Dominio.ExecutionDegree {
+class domain.ExecutionDegree {
 	Integer keyPeriodExamsSecondSemester;
 	Integer keyPeriodLessonsSecondSemester;
 	Boolean temporaryExamMap;
@@ -20,7 +20,7 @@ class Dominio.ExecutionDegree {
 	Integer keyCampus;
 }
 
-class Dominio.Room {
+class domain.Room {
 	Integer keyBuilding;
 	String name;
 	Integer ackOptLock;
@@ -31,14 +31,14 @@ class Dominio.Room {
 	Integer floor;
 }
 
-class Dominio.Exam {
+class domain.Exam {
 	Integer ackOptLock;
 	Integer idInternal;
 	String ojbConcreteClass;
 	String publishmentMessage;
 }
 
-class Dominio.ExamStudentRoom {
+class domain.ExamStudentRoom {
 	Integer keyRoom;
 	Integer ackOptLock;
 	Integer keyStudent;
@@ -46,35 +46,35 @@ class Dominio.ExamStudentRoom {
 	Integer keyExam;
 }
 
-class Dominio.WrittenTest {
+class domain.WrittenTest {
 	Integer ackOptLock;
 	Integer idInternal;
 	String ojbConcreteClass;
 	String publishmentMessage;
 }
 
-class Dominio.WrittenEvaluationCurricularCourseScope {
+class domain.WrittenEvaluationCurricularCourseScope {
 	Integer keyWrittenEvaluation;
 	Integer keyCurricularCourseScope;
 	Integer ackOptLock;
 	Integer idInternal;
 }
 
-class Dominio.ShiftStudent {
+class domain.ShiftStudent {
 	Integer keyShift;
 	Integer ackOptLock;
 	Integer idInternal;
 	Integer keyStudent;
 }
 
-class Dominio.ExamExecutionCourse {
+class domain.ExamExecutionCourse {
 	Integer keyExecutionCourse;
 	Integer ackOptLock;
 	Integer idInternal;
 	Integer keyExam;
 }
 
-class Dominio.Shift {
+class domain.Shift {
 	String name;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -83,7 +83,7 @@ class Dominio.Shift {
 	Integer capacity;
 }
 
-class Dominio.RoomOccupation {
+class domain.RoomOccupation {
 	Integer weekOfBiweeklyStart;
 	Integer keyRoom;
 	Integer ackOptLock;
@@ -92,7 +92,7 @@ class Dominio.RoomOccupation {
 	Integer keyPeriod;
 }
 
-class Dominio.Lesson {
+class domain.Lesson {
 	Integer ackOptLock;
 	Integer idInternal;
 	Integer keyExecutionPeriod;
@@ -101,20 +101,20 @@ class Dominio.Lesson {
 	Integer keyRoom;
 }
 
-class Dominio.SchoolClassShift {
+class domain.SchoolClassShift {
 	Integer ackOptLock;
 	Integer idInternal;
 	Integer keyClass;
 	Integer keyShift;
 }
 
-class Dominio.Period {
+class domain.Period {
 	Integer keyPeriod;
 	Integer ackOptLock;
 	Integer idInternal;
 }
 
-class Dominio.ExecutionCourse {
+class domain.ExecutionCourse {
 	String name;
 	Double theoreticalHours;
 	String code;
@@ -127,7 +127,7 @@ class Dominio.ExecutionCourse {
 	Double theoPratHours;
 }
 
-class Dominio.SchoolClass {
+class domain.SchoolClass {
 	Integer keyExecutionDegree;
 	String name;
 	Integer ackOptLock;
@@ -136,14 +136,14 @@ class Dominio.SchoolClass {
 	Integer curricularYear;
 }
 
-class Dominio.FinalEvaluation {
+class domain.FinalEvaluation {
 	String ojbConcreteClass;
 	Integer ackOptLock;
 	Integer idInternal;
 	String publishmentMessage;
 }
 
-class Dominio.ExecutionPeriod {
+class domain.ExecutionPeriod {
 	Integer keyExecutionYear;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -152,19 +152,19 @@ class Dominio.ExecutionPeriod {
 	Integer semester;
 }
 
-class Dominio.ExecutionYear {
+class domain.ExecutionYear {
 	Integer ackOptLock;
 	String year;
 	Integer idInternal;
 }
 
-class Dominio.Building {
+class domain.Building {
 	Integer ackOptLock;
 	String name;
 	Integer idInternal;
 }
 
-class Dominio.Attends {
+class domain.Attends {
 	Integer keyExecutionCourse;
 	Integer keyStudent;
 	Integer ackOptLock;
@@ -172,13 +172,13 @@ class Dominio.Attends {
 	Integer keyEnrolment;
 }
 
-class Dominio.Evaluation {
+class domain.Evaluation {
 	Integer ackOptLock;
 	String ojbConcreteClass;
 	Integer idInternal;
 }
 
-class Dominio.WrittenEvaluation {
+class domain.WrittenEvaluation {
 	Integer ackOptLock;
 	Integer idInternal;
 	String ojbConcreteClass;
@@ -186,537 +186,537 @@ class Dominio.WrittenEvaluation {
 }
 
 relation ExecutionCourseCurricularCourse {
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	Dominio.CurricularCourse playsRole associatedCurricularCourses {
+	domain.CurricularCourse playsRole associatedCurricularCourses {
 		multiplicity *;
 	}
 }
 
 relation ExecutionPeriodExecutionYear {
-	Dominio.ExecutionPeriod playsRole executionPeriods {
+	domain.ExecutionPeriod playsRole executionPeriods {
 		multiplicity *;
 	}
-	Dominio.ExecutionYear playsRole executionYear;
+	domain.ExecutionYear playsRole executionYear;
 }
 
 relation SchoolClassShiftShift {
-	Dominio.SchoolClassShift playsRole schoolClassShifts {
+	domain.SchoolClassShift playsRole schoolClassShifts {
 		multiplicity *;
 	}
-	Dominio.Shift playsRole shift;
+	domain.Shift playsRole shift;
 }
 
 relation LessonRoom {
-	Dominio.Lesson playsRole roomOccupations {
+	domain.Lesson playsRole roomOccupations {
 		multiplicity *;
 	}
-	Dominio.Room playsRole room;
+	domain.Room playsRole room;
 }
 
 relation AttendsAttendInAttendsSet {
-	Dominio.Attends playsRole attend;
-	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+	domain.Attends playsRole attend;
+	domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
 }
 
 relation StudentGroupShift {
-	Dominio.StudentGroup playsRole studentGroups {
+	domain.StudentGroup playsRole studentGroups {
 		multiplicity *;
 	}
-	Dominio.Shift playsRole shift;
+	domain.Shift playsRole shift;
 }
 
 relation ShiftExecutionCourse {
-	Dominio.Shift playsRole shifts {
+	domain.Shift playsRole shifts {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse;
+	domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExecutionPeriodSchoolClass {
-	Dominio.ExecutionPeriod playsRole executionPeriod;
-	Dominio.SchoolClass playsRole schoolClasses {
+	domain.ExecutionPeriod playsRole executionPeriod;
+	domain.SchoolClass playsRole schoolClasses {
 		multiplicity *;
 	}
 }
 
 relation EnrolmentPeriodExecutionPeriod {
-	Dominio.EnrolmentPeriod playsRole enrolmentPeriod {
+	domain.EnrolmentPeriod playsRole enrolmentPeriod {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
+	domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ShiftStudentShift {
-	Dominio.ShiftStudent playsRole shiftStudents {
+	domain.ShiftStudent playsRole shiftStudents {
 		multiplicity *;
 	}
-	Dominio.Shift playsRole shift;
+	domain.Shift playsRole shift;
 }
 
 relation ShiftLesson {
-	Dominio.Shift playsRole shift;
-	Dominio.Lesson playsRole associatedLessons {
+	domain.Shift playsRole shift;
+	domain.Lesson playsRole associatedLessons {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreeCoordinator {
-	Dominio.ExecutionDegree playsRole executionDegree;
-	Dominio.Coordinator playsRole coordinatorsList {
+	domain.ExecutionDegree playsRole executionDegree;
+	domain.Coordinator playsRole coordinatorsList {
 		multiplicity *;
 	}
 }
 
 relation ExamExecutionCourseExam {
-	Dominio.ExamExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExamExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	Dominio.Exam playsRole exam;
+	domain.Exam playsRole exam;
 }
 
 relation WrittenTestRoomOccupation {
-	Dominio.WrittenTest playsRole writtenTests {
+	domain.WrittenTest playsRole writtenTests {
 		multiplicity 0..1;
 	}
-	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+	domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
 }
 
 relation RoomBuilding {
-	Dominio.Room playsRole rooms {
+	domain.Room playsRole rooms {
 		multiplicity *;
 	}
-	Dominio.Building playsRole building;
+	domain.Building playsRole building;
 }
 
 relation ExecutionCourseAttends {
-	Dominio.ExecutionCourse playsRole executionCourse;
-	Dominio.Attends playsRole attends {
+	domain.ExecutionCourse playsRole executionCourse;
+	domain.Attends playsRole attends {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseExecutionPeriod {
-	Dominio.ExecutionCourse playsRole executionCourses {
+	domain.ExecutionCourse playsRole executionCourses {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
+	domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation SchoolClassShift {
-	Dominio.SchoolClass playsRole associatedClasses {
+	domain.SchoolClass playsRole associatedClasses {
 		multiplicity *;
 	}
-	Dominio.Shift playsRole associatedShifts {
+	domain.Shift playsRole associatedShifts {
 		multiplicity *;
 	}
 }
 
 relation LessonExecutionPeriod {
-	Dominio.Lesson playsRole lessons {
+	domain.Lesson playsRole lessons {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
+	domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation WrittenEvaluationRoomOccupation {
-	Dominio.WrittenEvaluation playsRole writtenEvaluation {
+	domain.WrittenEvaluation playsRole writtenEvaluation {
 		multiplicity 0..1;
 	}
-	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+	domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseEvaluation {
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	Dominio.Evaluation playsRole associatedEvaluations {
+	domain.Evaluation playsRole associatedEvaluations {
 		multiplicity *;
 	}
 }
 
 relation AttendsStudent {
-	Dominio.Attends playsRole attends {
+	domain.Attends playsRole attends {
 		multiplicity *;
 	}
-	Dominio.Student playsRole student;
+	domain.Student playsRole student;
 }
 
 relation SchoolClassExecutionDegree {
-	Dominio.SchoolClass playsRole schoolClasses {
+	domain.SchoolClass playsRole schoolClasses {
 		multiplicity *;
 	}
-	Dominio.ExecutionDegree playsRole executionDegree;
+	domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation ExamStudentRoomStudent {
-	Dominio.ExamStudentRoom playsRole examStudentRoom {
+	domain.ExamStudentRoom playsRole examStudentRoom {
 		multiplicity *;
 	}
-	Dominio.Student playsRole student;
+	domain.Student playsRole student;
 }
 
 relation RoomOccupationRoom {
-	Dominio.RoomOccupation playsRole roomOccupations {
+	domain.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
-	Dominio.Room playsRole room;
+	domain.Room playsRole room;
 }
 
 relation PeriodRoomOccupation {
-	Dominio.Period playsRole period;
-	Dominio.RoomOccupation playsRole roomOccupations {
+	domain.Period playsRole period;
+	domain.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreePeriodExamsSecondSemester {
-	Dominio.ExecutionDegree playsRole executionDegree {
+	domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	Dominio.Period playsRole periodExamsSecondSemester;
+	domain.Period playsRole periodExamsSecondSemester;
 }
 
 relation EvaluationExecutionCourseExecutionCourse {
-	Dominio.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+	domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse;
+	domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExecutionDegreeDegreeCurricularPlan {
-	Dominio.ExecutionDegree playsRole executionDegrees {
+	domain.ExecutionDegree playsRole executionDegrees {
 		multiplicity *;
 	}
-	Dominio.DegreeCurricularPlan playsRole degreeCurricularPlan;
+	domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
 relation ExecutionCourseProfessorship {
-	Dominio.ExecutionCourse playsRole executionCourse;
-	Dominio.Professorship playsRole professorships {
+	domain.ExecutionCourse playsRole executionCourse;
+	domain.Professorship playsRole professorships {
 		multiplicity *;
 	}
 }
 
 relation OldInquiriesCoursesResExecutionPeriod {
-	Dominio.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+	domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
+	domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation SiteExecutionCourse {
-	Dominio.Site playsRole site;
-	Dominio.ExecutionCourse playsRole executionCourse;
+	domain.Site playsRole site;
+	domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExecutionCourseResponsible {
-	Dominio.ExecutionCourse playsRole executionCourse;
-	Dominio.ResponsibleFor playsRole responsibleTeachers {
+	domain.ExecutionCourse playsRole executionCourse;
+	domain.ResponsibleFor playsRole responsibleTeachers {
 		multiplicity *;
 	}
 }
 
 relation AttendsEnrolment {
-	Dominio.Attends playsRole attends {
+	domain.Attends playsRole attends {
 		multiplicity *;
 	}
-	Dominio.Enrolment playsRole enrolment;
+	domain.Enrolment playsRole enrolment;
 }
 
 relation WrittenTestExecutionCourse {
-	Dominio.WrittenTest playsRole writtenTests {
+	domain.WrittenTest playsRole writtenTests {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation FinalDegreeWorkProposalExecutionDegree {
-	Dominio.finalDegreeWork.Proposal playsRole proposal {
+	domain.finalDegreeWork.Proposal playsRole proposal {
 		multiplicity *;
 	}
-	Dominio.ExecutionDegree playsRole executionDegree;
+	domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation WrittenEvaluationCurricularCourseScopeWrittenEvaluation {
-	Dominio.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
+	domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
 		multiplicity *;
 	}
-	Dominio.WrittenEvaluation playsRole writtenEvaluation;
+	domain.WrittenEvaluation playsRole writtenEvaluation;
 }
 
 relation ExamStudentRoomExam {
-	Dominio.ExamStudentRoom playsRole examStudentRoom {
+	domain.ExamStudentRoom playsRole examStudentRoom {
 		multiplicity *;
 	}
-	Dominio.Exam playsRole exam;
+	domain.Exam playsRole exam;
 }
 
 relation InsuranceTransactionExecutionYear {
-	Dominio.transactions.InsuranceTransaction playsRole insuranceTransactions {
+	domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
-	Dominio.ExecutionYear playsRole executionYear;
+	domain.ExecutionYear playsRole executionYear;
 }
 
 relation SummaryRoom {
-	Dominio.Summary playsRole summaries {
+	domain.Summary playsRole summaries {
 		multiplicity *;
 	}
-	Dominio.Room playsRole room;
+	domain.Room playsRole room;
 }
 
 relation OnlineTestExecutionCourse {
-	Dominio.OnlineTest playsRole onlinesTests {
+	domain.OnlineTest playsRole onlinesTests {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation LessonRoomOccupation {
-	Dominio.Lesson playsRole lesson {
+	domain.Lesson playsRole lesson {
 		multiplicity 0..1;
 	}
-	Dominio.RoomOccupation playsRole roomOccupation;
+	domain.RoomOccupation playsRole roomOccupation;
 }
 
 relation InsuranceValueExecutionYear {
-	Dominio.InsuranceValue playsRole insuranceValue;
-	Dominio.ExecutionYear playsRole executionYear;
+	domain.InsuranceValue playsRole insuranceValue;
+	domain.ExecutionYear playsRole executionYear;
 }
 
 relation ExecutionDegreePeriodExamsFirstSemester {
-	Dominio.ExecutionDegree playsRole executionDegree {
+	domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	Dominio.Period playsRole periodExamsFirstSemester;
+	domain.Period playsRole periodExamsFirstSemester;
 }
 
 relation ExamStudentRoomRoom {
-	Dominio.ExamStudentRoom playsRole examStudentRoom {
+	domain.ExamStudentRoom playsRole examStudentRoom {
 		multiplicity *;
 	}
-	Dominio.Room playsRole room;
+	domain.Room playsRole room;
 }
 
 relation EvaluationExecutionCourseEvaluation {
-	Dominio.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+	domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
 		multiplicity *;
 	}
-	Dominio.Evaluation playsRole evaluation;
+	domain.Evaluation playsRole evaluation;
 }
 
 relation WrittenEvaluationExecutionCourse {
-	Dominio.WrittenEvaluation playsRole writtenEvaluations {
+	domain.WrittenEvaluation playsRole writtenEvaluations {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation ExamExecutionCourse {
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	Dominio.Exam playsRole associatedExams {
+	domain.Exam playsRole associatedExams {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseBibliographicReference {
-	Dominio.BibliographicReference playsRole bibliographicReferences {
+	domain.BibliographicReference playsRole bibliographicReferences {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse;
+	domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation SchoolClassShiftSchoolClass {
-	Dominio.SchoolClassShift playsRole schoolClassShifts {
+	domain.SchoolClassShift playsRole schoolClassShifts {
 		multiplicity *;
 	}
-	Dominio.SchoolClass playsRole schoolClass;
+	domain.SchoolClass playsRole schoolClass;
 }
 
 relation ShiftStudentStudent {
-	Dominio.ShiftStudent playsRole shiftStudents {
+	domain.ShiftStudent playsRole shiftStudents {
 		multiplicity *;
 	}
-	Dominio.Student playsRole student;
+	domain.Student playsRole student;
 }
 
 relation SummaryShift {
-	Dominio.Summary playsRole summaries {
+	domain.Summary playsRole summaries {
 		multiplicity *;
 	}
-	Dominio.Turno playsRole shift;
+	domain.Turno playsRole shift;
 }
 
 relation FinalEvaluationExecutionCourse {
-	Dominio.FinalEvaluation playsRole finalEvaluations {
+	domain.FinalEvaluation playsRole finalEvaluations {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole associatedExecutionCourses {
+	domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreePeriodLessonsFirstSemester {
-	Dominio.ExecutionDegree playsRole executionDegree {
+	domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	Dominio.Period playsRole periodLessonsFirstSemester;
+	domain.Period playsRole periodLessonsFirstSemester;
 }
 
 relation MasterDegreeCandidateExecutionDegree {
-	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidates {
+	domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
 		multiplicity *;
 	}
-	Dominio.ExecutionDegree playsRole executionDegree;
+	domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation ExecutionPeriodExecutionPeriod {
-	Dominio.ExecutionPeriod playsRole nextExecutionPeriod;
-	Dominio.ExecutionPeriod playsRole previousExecutionPeriod;
+	domain.ExecutionPeriod playsRole nextExecutionPeriod;
+	domain.ExecutionPeriod playsRole previousExecutionPeriod;
 }
 
 relation ShiftShiftProfessorship {
-	Dominio.Shift playsRole shift;
-	Dominio.ShiftProfessorship playsRole associatedShiftProfessorship {
+	domain.Shift playsRole shift;
+	domain.ShiftProfessorship playsRole associatedShiftProfessorship {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreeCampus {
-	Dominio.ExecutionDegree playsRole executionDegrees {
+	domain.ExecutionDegree playsRole executionDegrees {
 		multiplicity *;
 	}
-	Dominio.Campus playsRole campus;
+	domain.Campus playsRole campus;
 }
 
 relation OldInquiriesSummaryExecutionPeriod {
-	Dominio.inquiries.OldInquiriesSummary playsRole oldInquiriesSummaries {
+	domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummaries {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
+	domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ExecutionCourseExecutionCourseProperty {
-	Dominio.ExecutionCourse playsRole executionCourse;
-	Dominio.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
+	domain.ExecutionCourse playsRole executionCourse;
+	domain.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
 		multiplicity *;
 	}
 }
 
 relation StudentExecutionYear {
-	Dominio.Student playsRole students {
+	domain.Student playsRole students {
 		multiplicity *;
 	}
-	Dominio.ExecutionYear playsRole registrationYear;
+	domain.ExecutionYear playsRole registrationYear;
 }
 
 relation MarkAttends {
-	Dominio.Mark playsRole mark;
-	Dominio.Attends playsRole attend;
+	domain.Mark playsRole mark;
+	domain.Attends playsRole attend;
 }
 
 relation ExecutionCourseGroupPropertiesExecutionCourse {
-	Dominio.ExecutionCourse playsRole executionCourse;
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	domain.ExecutionCourse playsRole executionCourse;
+	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
 }
 
 relation ExamExecutionCourseExecutionCourse {
-	Dominio.ExamExecutionCourse playsRole examExecutionCourse {
+	domain.ExamExecutionCourse playsRole examExecutionCourse {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse;
+	domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation DelegateExecutionYear {
-	Dominio.student.Delegate playsRole delegates {
+	domain.student.Delegate playsRole delegates {
 		multiplicity *;
 	}
-	Dominio.ExecutionYear playsRole executionYear;
+	domain.ExecutionYear playsRole executionYear;
 }
 
 relation OldInquiriesTeachersResExecutionPeriod {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+	domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
+	domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ExecutionDegreePeriodLessonsSecondSemester {
-	Dominio.ExecutionDegree playsRole executionDegree {
+	domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	Dominio.Period playsRole periodLessonsSecondSemester;
+	domain.Period playsRole periodLessonsSecondSemester;
 }
 
 relation SummaryExecutionCourse {
-	Dominio.Summary playsRole summaries {
+	domain.Summary playsRole summaries {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse;
+	domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExamCurricularCourseScope {
-	Dominio.Exam playsRole exams {
+	domain.Exam playsRole exams {
 		multiplicity *;
 	}
-	Dominio.CurricularCourseScope playsRole associatedCurricularCourseScope {
+	domain.CurricularCourseScope playsRole associatedCurricularCourseScope {
 		multiplicity *;
 	}
 }
 
 relation EnrolmentExecutionPeriod {
-	Dominio.Enrolment playsRole enrolments {
+	domain.Enrolment playsRole enrolments {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod;
+	domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ExamRoomOccupation {
-	Dominio.Exam playsRole exam {
+	domain.Exam playsRole exam {
 		multiplicity 0..1;
 	}
-	Dominio.RoomOccupation playsRole associatedRoomOccupation {
+	domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseStudent {
-	Dominio.ExecutionCourse playsRole executionCourses {
+	domain.ExecutionCourse playsRole executionCourses {
 		multiplicity *;
 	}
-	Dominio.Student playsRole attendingStudents {
+	domain.Student playsRole attendingStudents {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreeExecutionYear {
-	Dominio.ExecutionDegree playsRole executionDegrees {
+	domain.ExecutionDegree playsRole executionDegrees {
 		multiplicity *;
 	}
-	Dominio.ExecutionYear playsRole executionYear;
+	domain.ExecutionYear playsRole executionYear;
 }
 
 relation MarkEvaluation {
-	Dominio.Mark playsRole marks {
+	domain.Mark playsRole marks {
 		multiplicity *;
 	}
-	Dominio.Evaluation playsRole evaluation;
+	domain.Evaluation playsRole evaluation;
 }

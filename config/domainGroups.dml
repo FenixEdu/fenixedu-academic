@@ -1,4 +1,4 @@
-class Dominio.ExecutionCourse {
+class domain.ExecutionCourse {
 	String nome;
 	Double theoreticalHours;
 	String sigla;
@@ -12,7 +12,7 @@ class Dominio.ExecutionCourse {
 }
 
 
-class Dominio.GroupPropertiesExecutionCourse {
+class domain.GroupPropertiesExecutionCourse {
 	Integer keySenderExecutionCourse;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -23,7 +23,7 @@ class Dominio.GroupPropertiesExecutionCourse {
 }
 
 
-class Dominio.GroupProperties {
+class domain.GroupProperties {
 	String projectDescription;
 	Integer idInternal;
 	Integer keyAttendsSet;
@@ -36,14 +36,14 @@ class Dominio.GroupProperties {
 }
 
 
-class Dominio.AttendsSet {
+class domain.AttendsSet {
 	Integer ackOptLock;
 	Integer idInternal;
 	String name;
 	Integer keyGroupProperties;
 }
 
-class Dominio.AttendInAttendsSet {
+class domain.AttendInAttendsSet {
 	Integer ackOptLock;
 	Integer idInternal;
 	Integer keyAttend;
@@ -51,7 +51,7 @@ class Dominio.AttendInAttendsSet {
 }
 
 
-class Dominio.Frequenta {
+class domain.Frequenta {
 	Integer chaveDisciplinaExecucao;
 	Integer chaveAluno;
 	Integer ackOptLock;
@@ -60,7 +60,7 @@ class Dominio.Frequenta {
 }
 
 
-class Dominio.StudentGroup {
+class domain.StudentGroup {
 	Integer keyShift;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -69,7 +69,7 @@ class Dominio.StudentGroup {
 }
 
 
-class Dominio.Turno {
+class domain.Turno {
 	String nome;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -78,7 +78,7 @@ class Dominio.Turno {
 	Integer lotacao;
 }
 
-class Dominio.StudentGroupAttend {
+class domain.StudentGroupAttend {
 	Integer keyStudentGroup;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -87,100 +87,100 @@ class Dominio.StudentGroupAttend {
 
 
 relation sendProposal {
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole senderExecutionCourse;
+	domain.ExecutionCourse playsRole senderExecutionCourse;
 }
 
 
 
 relation goalExecutionCourse {
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse;
+	domain.ExecutionCourse playsRole executionCourse;
 }
 
 
 --->>relation ??? {
-	Dominio.ExecutionCourse playsRole senderExecutionCourse
+	domain.ExecutionCourse playsRole senderExecutionCourse
 
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
 }
 
 
 relation permission {
-	Dominio.AttendsSet playsRole attendsSet;
-	Dominio.GroupProperties playsRole groupProperties;
+	domain.AttendsSet playsRole attendsSet;
+	domain.GroupProperties playsRole groupProperties;
 }
 
 
 relation belongsTo {
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	Dominio.GroupProperties playsRole groupProperties;
+	domain.GroupProperties playsRole groupProperties;
 }
 
 relation answerExportProposal {
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	Dominio.Pessoa playsRole receiverPerson;
+	domain.Pessoa playsRole receiverPerson;
 }
 
 
 relation makeExportProposal {
-	Dominio.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	Dominio.Pessoa playsRole senderPerson;
+	domain.Pessoa playsRole senderPerson;
 }
 
 relation studentGroupBelongsToGroupProperties {
-	Dominio.StudentGroup playsRole studentGroups {
+	domain.StudentGroup playsRole studentGroups {
 		multiplicity *;
 	}
-	Dominio.AttendsSet playsRole attendsSet;
+	domain.AttendsSet playsRole attendsSet;
 }
 
 relation attendsSetHasAttend {
-	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+	domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
-	Dominio.AttendsSet playsRole attendsSet;
+	domain.AttendsSet playsRole attendsSet;
 }
 
 relation attendBelongsToAttendsSet {
-	Dominio.AttendInAttendsSet playsRole attendInAttendsSet {
+	domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
-	Dominio.Frequenta playsRole attend;
+	domain.Frequenta playsRole attend;
 }
 
 
 relation StudentGroupAttendFrequenta {
-	Dominio.StudentGroupAttend playsRole studentGroupAttends {
+	domain.StudentGroupAttend playsRole studentGroupAttends {
 		multiplicity *;
 	}
-	Dominio.Frequenta playsRole attend;
+	domain.Frequenta playsRole attend;
 }
 
 relation StudentGroupAttendStudentGroup {
-	Dominio.StudentGroupAttend playsRole studentGroupAttends {
+	domain.StudentGroupAttend playsRole studentGroupAttends {
 		multiplicity *;
 	}
-	Dominio.StudentGroup playsRole studentGroup;
+	domain.StudentGroup playsRole studentGroup;
 }
 
 relation StudentGroup {
-	Dominio.StudentGroup playsRole associatedStudentGroups {
+	domain.StudentGroup playsRole associatedStudentGroups {
 		multiplicity *;
 	}
-	Dominio.Turno playsRole shift;
+	domain.Turno playsRole shift;
 }
 
 
