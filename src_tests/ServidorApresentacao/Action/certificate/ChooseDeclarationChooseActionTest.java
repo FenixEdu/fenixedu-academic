@@ -1,27 +1,16 @@
 
 package ServidorApresentacao.Action.certificate;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoPerson;
-import DataBeans.InfoStudent;
-import DataBeans.InfoStudentCurricularPlan;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.StudentCurricularPlanState;
-import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * 
@@ -61,38 +50,39 @@ public class ChooseDeclarationChooseActionTest
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 				
-		InfoPerson infoPerson = new InfoPerson();
-		infoPerson.setNumeroDocumentoIdentificacao("7712345");
-		infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-		infoPerson.setUsername("jccm");
-		
-		InfoStudent infoStudent = new InfoStudent();
-		infoStudent.setNumber(new Integer(46865));
-		infoStudent.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
-		infoStudent.setInfoPerson(infoPerson);
-		
-		InfoDegree infoDegree = new InfoDegree();
-		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.MESTRADO));
-		infoDegree.setNome("Engenharia Electrotecnica e de Computadores");
-		
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-		
-		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
-		infoStudentCurricularPlan.setInfoStudent(infoStudent);
-		infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-	    infoStudentCurricularPlan.setCurrentState(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
-				
-		Locale locale = new Locale("pt", "PT");
-		Date date = new Date();
-		String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
-						
-		HashMap parameters = new HashMap();
-		
-		parameters.put(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
-		parameters.put(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
-		parameters.put(SessionConstants.DATE, formatedDate);
-		return parameters;
+//		InfoPerson infoPerson = new InfoPerson();
+//		infoPerson.setNumeroDocumentoIdentificacao("7712345");
+//		infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
+//		infoPerson.setUsername("jccm");
+//		
+//		InfoStudent infoStudent = new InfoStudent();
+//		infoStudent.setNumber(new Integer(46865));
+//		infoStudent.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
+//		infoStudent.setInfoPerson(infoPerson);
+//		
+//		InfoDegree infoDegree = new InfoDegree();
+//		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.MESTRADO));
+//		infoDegree.setNome("Engenharia Electrotecnica e de Computadores");
+//		
+//		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+//		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+//		
+//		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+//		infoStudentCurricularPlan.setInfoStudent(infoStudent);
+//		infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+//	    infoStudentCurricularPlan.setCurrentState(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE));
+//				
+//		Locale locale = new Locale("pt", "PT");
+//		Date date = new Date();
+//		String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
+//						
+//		HashMap parameters = new HashMap();
+//		
+//		parameters.put(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
+//		parameters.put(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+//		parameters.put(SessionConstants.DATE, formatedDate);
+//		return parameters;
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -130,7 +120,12 @@ public class ChooseDeclarationChooseActionTest
 		HashMap attributes = new HashMap();
 		List requestAttributes = new ArrayList();
 		requestAttributes.add(SessionConstants.DOCUMENT_REASON_LIST);
+		requestAttributes.add(SessionConstants.DEGREE_TYPE);
+		requestAttributes.add(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
+		requestAttributes.add(SessionConstants.DATE);
+		requestAttributes.add(SessionConstants.INFO_EXECUTION_YEAR);
 		attributes.put(new Integer(ScopeConstants.SESSION), requestAttributes);
+		
 		return attributes;
 	
 	}

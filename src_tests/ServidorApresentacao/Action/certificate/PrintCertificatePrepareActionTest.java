@@ -11,8 +11,6 @@ import junit.framework.TestSuite;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import Util.DocumentReason;
-import Util.Specialization;
 
 /**
  * 
@@ -20,7 +18,7 @@ import Util.Specialization;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  *
  */
-public class ChooseDeclarationPrepareActionTest
+public class PrintCertificatePrepareActionTest
 	extends TestCasePresentationMDAdministrativeOffice {
 	/**
 	 * Main method 
@@ -35,14 +33,14 @@ public class ChooseDeclarationPrepareActionTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ChooseDeclarationPrepareActionTest.class);
+		TestSuite suite = new TestSuite(PrintCertificatePrepareActionTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ChooseDeclarationPrepareActionTest(String testName) {
+	public PrintCertificatePrepareActionTest(String testName) {
 		super(testName);
 	}
 
@@ -51,11 +49,11 @@ public class ChooseDeclarationPrepareActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-				
-		HashMap parameters = new HashMap();
-		parameters.put(SessionConstants.SPECIALIZATIONS, Specialization.toArrayList());
-		parameters.put(SessionConstants.DOCUMENT_REASON, DocumentReason.toArrayList());
-		return parameters;
+		HashMap attributes = new HashMap();
+		
+		attributes.put(SessionConstants.CERTIFICATE_TYPE, "Matrícula");
+	
+		return attributes;
 	}
 
 	/* (non-Javadoc)
@@ -71,7 +69,6 @@ public class ChooseDeclarationPrepareActionTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		HashMap parameters = new HashMap();
-		
 		parameters.put("method","prepare");
 		return parameters;
 	}
@@ -89,13 +86,16 @@ public class ChooseDeclarationPrepareActionTest
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		HashMap attributes = new HashMap();
 		List requestAttributes = new ArrayList();
-		requestAttributes.add(SessionConstants.SPECIALIZATIONS);
-		requestAttributes.add(SessionConstants.DOCUMENT_REASON);
+		requestAttributes.add(SessionConstants.MATRICULA);
+		requestAttributes.add(SessionConstants.DATE);
 
 		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
 		
 		return attributes;
 	}
+	
+
+	
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
@@ -122,14 +122,14 @@ public class ChooseDeclarationPrepareActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/chooseDeclarationInfoAction";
+		return "/printCertificate";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "PrepareReady";
+		return "PrintReady";
 	}
 
 

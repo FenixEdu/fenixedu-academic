@@ -20,7 +20,7 @@ import Util.Specialization;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  *
  */
-public class ChooseDeclarationPrepareActionTest
+public class ChooseCertificatePrepareActionTest
 	extends TestCasePresentationMDAdministrativeOffice {
 	/**
 	 * Main method 
@@ -35,14 +35,14 @@ public class ChooseDeclarationPrepareActionTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ChooseDeclarationPrepareActionTest.class);
+		TestSuite suite = new TestSuite(ChooseCertificatePrepareActionTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ChooseDeclarationPrepareActionTest(String testName) {
+	public ChooseCertificatePrepareActionTest(String testName) {
 		super(testName);
 	}
 
@@ -53,8 +53,12 @@ public class ChooseDeclarationPrepareActionTest
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 				
 		HashMap parameters = new HashMap();
+		
+		List certificateList = null;
 		parameters.put(SessionConstants.SPECIALIZATIONS, Specialization.toArrayList());
 		parameters.put(SessionConstants.DOCUMENT_REASON, DocumentReason.toArrayList());
+		parameters.put(SessionConstants.CERTIFICATE_LIST, certificateList);
+		
 		return parameters;
 	}
 
@@ -91,6 +95,7 @@ public class ChooseDeclarationPrepareActionTest
 		List requestAttributes = new ArrayList();
 		requestAttributes.add(SessionConstants.SPECIALIZATIONS);
 		requestAttributes.add(SessionConstants.DOCUMENT_REASON);
+		requestAttributes.add(SessionConstants.CERTIFICATE_LIST);
 
 		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
 		
@@ -101,6 +106,7 @@ public class ChooseDeclarationPrepareActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
+		
 		return null;
 	}
 
@@ -122,7 +128,7 @@ public class ChooseDeclarationPrepareActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/chooseDeclarationInfoAction";
+		return "/chooseCertificateInfoAction";
 	}
 
 	/* (non-Javadoc)

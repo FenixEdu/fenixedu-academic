@@ -20,7 +20,7 @@ import Util.Specialization;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  *
  */
-public class ChooseDeclarationPrepareActionTest
+public class ChooseFinalResultActionTest
 	extends TestCasePresentationMDAdministrativeOffice {
 	/**
 	 * Main method 
@@ -35,14 +35,14 @@ public class ChooseDeclarationPrepareActionTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ChooseDeclarationPrepareActionTest.class);
+		TestSuite suite = new TestSuite(ChooseFinalResultActionTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ChooseDeclarationPrepareActionTest(String testName) {
+	public ChooseFinalResultActionTest(String testName) {
 		super(testName);
 	}
 
@@ -54,7 +54,6 @@ public class ChooseDeclarationPrepareActionTest
 				
 		HashMap parameters = new HashMap();
 		parameters.put(SessionConstants.SPECIALIZATIONS, Specialization.toArrayList());
-		parameters.put(SessionConstants.DOCUMENT_REASON, DocumentReason.toArrayList());
 		return parameters;
 	}
 
@@ -90,7 +89,6 @@ public class ChooseDeclarationPrepareActionTest
 		HashMap attributes = new HashMap();
 		List requestAttributes = new ArrayList();
 		requestAttributes.add(SessionConstants.SPECIALIZATIONS);
-		requestAttributes.add(SessionConstants.DOCUMENT_REASON);
 
 		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
 		
@@ -122,7 +120,7 @@ public class ChooseDeclarationPrepareActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/chooseDeclarationInfoAction";
+		return "/chooseFinalResultInfoAction";
 	}
 
 	/* (non-Javadoc)

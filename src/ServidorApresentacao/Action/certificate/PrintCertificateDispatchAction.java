@@ -19,14 +19,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoFinalResult;
-import DataBeans.InfoPerson;
-import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -54,13 +50,13 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
-		String[] destination = null;
-		InfoStudent infoStudent = new InfoStudent();
-		InfoDegree infoDegree = new InfoDegree();
-		InfoPerson infoPerson = new InfoPerson();
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-		InfoEnrolment infoEnrolment = new InfoEnrolment();
-		InfoStudentCurricularPlan newInfoStudentCurricularPlan = new InfoStudentCurricularPlan();
+//		String[] destination = null;
+//		InfoStudent infoStudent = new InfoStudent();
+//		InfoDegree infoDegree = new InfoDegree();
+//		InfoPerson infoPerson = new InfoPerson();
+//		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+//		InfoEnrolment infoEnrolment = new InfoEnrolment();
+//		InfoStudentCurricularPlan newInfoStudentCurricularPlan = new InfoStudentCurricularPlan();
 		
 		if (session != null) {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

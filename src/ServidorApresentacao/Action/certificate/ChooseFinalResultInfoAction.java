@@ -56,15 +56,10 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 		if (session != null) {
 			
 			session.removeAttribute(SessionConstants.SPECIALIZATIONS);
-//			session.removeAttribute(SessionConstants.DOCUMENT_REASON);
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			ArrayList specializations = Specialization.toArrayList();
-//			ArrayList documentReason = DocumentReason.toArrayList();
-			
-
-//			session.setAttribute(SessionConstants.DOCUMENT_REASON,documentReason);
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
 					
 			return mapping.findForward("PrepareReady");
