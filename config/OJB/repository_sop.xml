@@ -131,13 +131,13 @@
          name="executionDegree"
          class-ref="Dominio.CursoExecucao"
       >
-         <foreignkey field-id-ref="4"/>
+         <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
       <reference-descriptor
          name="executionPeriod"
          class-ref="Dominio.ExecutionPeriod"
       >
-         <foreignkey field-id-ref="5"/>
+         <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>      
      <collection-descriptor
 			name="associatedShifts"
@@ -204,7 +204,7 @@
 		 refresh="true"
 		 auto-retrieve="true"
 		 >
-         <foreignkey field-id-ref="3"/>
+         <foreignkey field-ref="chaveDisciplinaExecucao"/>
       </reference-descriptor>
      <collection-descriptor
 			name="associatedShiftProfessorship"
@@ -317,15 +317,8 @@
          name="sala"
          class-ref="Dominio.Sala"
       >
-         <foreignkey field-id-ref="5"/>
+         <foreignkey field-ref="chaveSala"/>
       </reference-descriptor>
-<!--     <reference-descriptor
-         name="disciplinaExecucao"
-         class-ref="Dominio.ExecutionCourse"
-      >
-         <foreignkey field-id-ref="6"/>
-      </reference-descriptor>      
--->      
       <reference-descriptor
          name="shift"
          class-ref="Dominio.Turno"
@@ -336,13 +329,13 @@
          name="executionPeriod"
          class-ref="Dominio.ExecutionPeriod"
       >
-         <foreignkey field-id-ref="8"/>
+         <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor>     
    	  <reference-descriptor
          name="roomOccupation"
          class-ref="Dominio.RoomOccupation"
       >
-         <foreignkey field-id-ref="9"/>
+         <foreignkey field-ref="keyRoomOccupation"/>
       </reference-descriptor>     
 </class-descriptor>
 
@@ -379,14 +372,14 @@
          class-ref="Dominio.Turma"
          proxy="true"
       >
-         <foreignkey field-id-ref="2"/>
+         <foreignkey field-ref="chaveTurma"/>
       </reference-descriptor>      
       <reference-descriptor
          name="turno"
          class-ref="Dominio.Turno"
          proxy="true"
       >
-         <foreignkey field-id-ref="3"/>
+         <foreignkey field-ref="chaveTurno"/>
       </reference-descriptor>      
    </class-descriptor>      
 
@@ -430,53 +423,6 @@
       </reference-descriptor>      
    </class-descriptor>         
 
-
-
-
-   <!-- Definitions for Dominio.TurnoAula -->
-<!--   <class-descriptor
-   	  class="Dominio.TurnoAula"
-   	  table="SHIFT_LESSON"
-   >
-      <field-descriptor id="1"
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="chaveTurno"
-         column="KEY_SHIFT"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="chaveAula"
-         column="KEY_LESSON"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-      <reference-descriptor
-         name="turno"
-         class-ref="Dominio.Turno"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="2"/>
-      </reference-descriptor>      
-      <reference-descriptor
-         name="aula"
-         class-ref="Dominio.Aula"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="3"/>
-      </reference-descriptor>      
-   </class-descriptor>
--->   
 <!-- Definitions for Dominio.Frequenta -->
    <class-descriptor
    	  class="Dominio.Frequenta"
@@ -515,21 +461,21 @@
          class-ref="Dominio.Student"
          proxy="false"
       >
-         <foreignkey field-id-ref="2"/>
+         <foreignkey field-ref="chaveAluno"/>
       </reference-descriptor> 
       <reference-descriptor
          name="disciplinaExecucao"
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
       >
-         <foreignkey field-id-ref="3"/>
+         <foreignkey field-ref="chaveDisciplinaExecucao"/>
       </reference-descriptor> 
       <reference-descriptor
          name="enrolment"
          class-ref="Dominio.Enrolment"
          proxy="true"
       >
-         <foreignkey field-id-ref="4"/>
+         <foreignkey field-ref="keyEnrolment"/>
       </reference-descriptor> 
 
 	  <collection-descriptor 
@@ -805,13 +751,13 @@
          name="room"
          class-ref="Dominio.Sala"
       >
-         <foreignkey field-id-ref="5"/>
+         <foreignkey field-ref="keyRoom"/>
       </reference-descriptor>
       <reference-descriptor
          name="period"
          class-ref="Dominio.Period"
       >
-         <foreignkey field-id-ref="6"/>
+         <foreignkey field-ref="keyPeriod"/>
       </reference-descriptor>
    </class-descriptor>
 
@@ -855,7 +801,7 @@
          name="nextPeriod"
          class-ref="Dominio.Period"
       >
-         <foreignkey field-id-ref="4"/>
+         <foreignkey field-ref="keyPeriod"/>
       </reference-descriptor>
       <collection-descriptor
          name="roomOccupations"

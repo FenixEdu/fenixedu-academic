@@ -87,7 +87,7 @@
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-    <foreignkey field-id-ref="2"/>
+    <foreignkey field-ref="keyExecutionCourse"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -135,7 +135,7 @@
          class-ref="Dominio.Metadata"
          proxy="true"
     > 
-	<foreignkey field-id-ref="4"/>
+	<foreignkey field-ref="keyMetadata"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -195,7 +195,7 @@
          class-ref="Dominio.TestScope"
          proxy="true"
     > 
-	<foreignkey field-id-ref="7"/>
+	<foreignkey field-ref="keyTestScope"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -249,14 +249,14 @@
          class-ref="Dominio.Question"
          proxy="true"
     > 
-	<foreignkey field-id-ref="4"/>
+	<foreignkey field-ref="keyQuestion"/>
 	</reference-descriptor>
 	<reference-descriptor
          name="test"
          class-ref="Dominio.Test"
          proxy="true"
     > 
-	<foreignkey field-id-ref="5"/>
+	<foreignkey field-ref="keyTest"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -360,7 +360,7 @@
          class-ref="Dominio.TestScope"
          proxy="true"
     > 
-	<foreignkey field-id-ref="12"/>
+	<foreignkey field-ref="keyTestScope"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -489,14 +489,14 @@
          class-ref="Dominio.Student"
          proxy="true"
     >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>
 	<reference-descriptor
          name="distributedTest"
          class-ref="Dominio.DistributedTest"
          proxy="true"
     >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyDistributedTest"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -626,13 +626,13 @@
          class-ref="Dominio.DistributedTest"
          proxy="true"
     >
-    <foreignkey field-id-ref="2"/>
+    <foreignkey field-ref="keyDistributedTest"/>
     </reference-descriptor>
     <reference-descriptor
          name="advisory"
          class-ref="Dominio.Advisory"
          proxy="true"
     >
-    <foreignkey field-id-ref="3"/>
+    <foreignkey field-ref="keyAdvisory"/>
     </reference-descriptor>
 </class-descriptor>

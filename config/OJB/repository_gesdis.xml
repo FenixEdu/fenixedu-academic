@@ -58,7 +58,7 @@
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyExecutionCourse"/>
 	
 	</reference-descriptor>
 </class-descriptor>
@@ -113,7 +113,7 @@
          class-ref="Dominio.Site"
          proxy="true"
     >
-	<foreignkey field-id-ref="6"/>
+	<foreignkey field-ref="keySite"/>
     </reference-descriptor>
     
 </class-descriptor>
@@ -174,14 +174,14 @@
          class-ref="Dominio.Site"
          proxy="false"
       >
-         <foreignkey field-id-ref="4"/>
+         <foreignkey field-ref="keySite"/>
       </reference-descriptor>
       <reference-descriptor
          name="superiorSection"
          class-ref="Dominio.Section"
          proxy="false"
       >   
-         <foreignkey field-id-ref="5"/>
+         <foreignkey field-ref="keySuperiorSection"/>
       </reference-descriptor>
       
     </class-descriptor>
@@ -241,7 +241,7 @@
          class-ref="Dominio.Section"
          proxy="true"
       >
-         <foreignkey field-id-ref="6"/>
+         <foreignkey field-ref="keySection"/>
       </reference-descriptor>
    </class-descriptor>
 
@@ -309,7 +309,7 @@
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-	<foreignkey field-id-ref="7"/>
+	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
     
 </class-descriptor>
@@ -388,7 +388,7 @@
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-		<foreignkey field-id-ref="2"/>	
+		<foreignkey field-ref="keyExecutionCourse"/>	
 	</reference-descriptor>
 </class-descriptor>
 
@@ -487,13 +487,13 @@
          name="teacher"
          class-ref="Dominio.Teacher"
          >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyTeacher"/>
     </reference-descriptor>
 	<reference-descriptor
          name="executionCourse"
          class-ref="Dominio.ExecutionCourse"
          >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
 </class-descriptor>	
 
@@ -594,7 +594,7 @@
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-    	<foreignkey field-id-ref="7"/>
+    	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
     <reference-descriptor
          name="shift"
@@ -669,7 +669,7 @@
          proxy="true"
 		refresh="true"
     >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyShift"/>
 	
 	</reference-descriptor>
 
@@ -680,7 +680,7 @@
          proxy="true"
 		refresh="true"
     >
-	<foreignkey field-id-ref="4"/>
+	<foreignkey field-ref="keyAttendsSet"/>
 	
 	</reference-descriptor>
 
@@ -724,7 +724,7 @@
          class-ref="Dominio.Frequenta"
          proxy="true"
     >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyAttend"/>
 	</reference-descriptor>
 
     
@@ -734,7 +734,7 @@
          proxy="true"
 		refresh="true"
     >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyStudentGroup"/>
 	
 	</reference-descriptor>
 
@@ -835,7 +835,7 @@
          class-ref="Dominio.AttendsSet"
          proxy="true"
     >
-	<foreignkey field-id-ref="12"/>
+	<foreignkey field-ref="keyAttendsSet"/>
 	
 	</reference-descriptor>
 
@@ -1021,7 +1021,7 @@
          class-ref="Dominio.GroupProperties"
          proxy="true"
     >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyGroupProperties"/>
 	</reference-descriptor>
 			
 </class-descriptor>
@@ -1061,7 +1061,7 @@
          class-ref="Dominio.Frequenta"
          proxy="true"
     >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyAttend"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
@@ -1069,7 +1069,7 @@
          class-ref="Dominio.AttendsSet"
          proxy="true"
     >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyAttendsSet"/>
 	</reference-descriptor>
 </class-descriptor>
 
@@ -1130,7 +1130,7 @@
          class-ref="Dominio.GroupProperties"
          proxy="true"
     >
-	<foreignkey field-id-ref="2"/>
+	<foreignkey field-ref="keyGroupProperties"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
@@ -1138,7 +1138,7 @@
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-	<foreignkey field-id-ref="3"/>
+	<foreignkey field-ref="keyExecutionCourse"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
@@ -1146,7 +1146,7 @@
          class-ref="Dominio.Pessoa"
          proxy="true"
     >
-	<foreignkey field-id-ref="5"/>
+	<foreignkey field-ref="keySenderPerson"/>
 	</reference-descriptor>
 	
 	<reference-descriptor
@@ -1154,14 +1154,14 @@
          class-ref="Dominio.Pessoa"
          proxy="true"
     >
-	<foreignkey field-id-ref="6"/>
+	<foreignkey field-ref="keyReceiverPerson"/>
 	</reference-descriptor>
 	<reference-descriptor
          name="senderExecutionCourse"
          class-ref="Dominio.ExecutionCourse"
          proxy="true"
     >
-	<foreignkey field-id-ref="7"/>
+	<foreignkey field-ref="keySenderExecutionCourse"/>
 	</reference-descriptor>
 	
 </class-descriptor>

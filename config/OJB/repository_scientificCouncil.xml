@@ -55,7 +55,7 @@
          class-ref="Dominio.Curso"
          proxy="true"
     >    
-	<foreignkey field-id-ref="4"/>
+	<foreignkey field-ref="keyDegree"/>
     </reference-descriptor>
    </class-descriptor>
 

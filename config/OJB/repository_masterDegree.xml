@@ -92,7 +92,7 @@
          	class-ref="Dominio.Pessoa"
 			refresh="true"
       	  >
-          <foreignkey field-id-ref="2"/>
+          <foreignkey field-ref="personKey"/>
           </reference-descriptor>
 	  
 	  
@@ -102,7 +102,7 @@
          	proxy="true"
 			refresh="true"
       	  >
-          <foreignkey field-id-ref="3"/>
+          <foreignkey field-ref="executionDegreeKey"/>
           </reference-descriptor>
           
          <collection-descriptor
