@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,8 +24,10 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularSemester;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -76,10 +76,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 				request.setAttribute("branchesList", branchesList);
 			}
 			
-//			request.setAttribute("degreeId", degreeId);
-//			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
-//			request.setAttribute("curricularCourseId", curricularCourseId);
-			
 			return mapping.findForward("insertCurricularCourseScope");
 		}
 		
@@ -93,10 +89,9 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
 			HttpSession session = request.getSession(false);
 			UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-//			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
     	
 			DynaActionForm dynaForm = (DynaValidatorForm) form;
+			
 			InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();
 			
 			InfoBranch infoBranch = new InfoBranch();
@@ -139,20 +134,16 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			Object args[] = { infoCurricularCourseScope };
 							
 			GestorServicos manager = GestorServicos.manager();
-			List serviceResult = null;
 		
 			try {
-					serviceResult = (List) manager.executar(userView, "InsertCurricularCourseScopeAtCurricularCourse", args);
+				 	manager.executar(userView, "InsertCurricularCourseScopeAtCurricularCourse", args);
+				 	
+			} catch (ExistingServiceException ex) {
+				throw new ExistingActionException(ex.getMessage(), ex);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-		
-			if(serviceResult != null) {
-				ActionErrors actionErrors = new ActionErrors();
-				ActionError error = new ActionError("message.existingCurricularCourseScope", serviceResult.get(0), serviceResult.get(1), serviceResult.get(2));
-				actionErrors.add("message.existingCurricularCourseScope", error);			
-				saveErrors(request, actionErrors);
-			}
+			
 			return mapping.findForward("readCurricularCourse");
 		}			
 	}

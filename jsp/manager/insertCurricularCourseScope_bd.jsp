@@ -5,14 +5,14 @@
 
 <br>
 
-<html:form action="/insertCurricularCourseScope" method="get">
+<span class="error"><html:errors/></span>
 
+<html:form action="/insertCurricularCourseScope" method="get">
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insert"/>
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
-	
     <table>
 		<tr>
 			<td>
@@ -50,9 +50,6 @@
 			<td>
 				<html:text size="5" property="theoreticalHours" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="theoreticalHours"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -60,9 +57,6 @@
 			</td>
 			<td>
 				<html:text size="5" property="praticalHours" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="praticalHours"/></span>
 			</td>
 		</tr>
 		<tr>
@@ -72,9 +66,6 @@
 			<td>
 				<html:text size="5" property="theoPratHours" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="theoPratHours"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -82,9 +73,6 @@
 			</td>
 			<td>
 				<html:text size="5" property="labHours" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="labHours"/></span>
 			</td>
 		</tr>
 		<tr>
@@ -94,9 +82,6 @@
 			<td>
 				<html:text size="5" property="credits" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="credits"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -104,9 +89,6 @@
 			</td>
 			<td>
 				<html:text size="5" property="maxIncrementNac" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="maxIncrementNac"/></span>
 			</td>
 		</tr>
 		<tr>
@@ -116,9 +98,6 @@
 			<td>
 				<html:text size="5" property="minIncrementNac" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="minIncrementNac"/></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -126,9 +105,6 @@
 			</td>
 			<td>
 				<html:text size="5" property="weight" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="weight"/></span>
 			</td>
 		</tr>
 	</table>

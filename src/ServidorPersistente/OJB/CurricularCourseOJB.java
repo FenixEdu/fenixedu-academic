@@ -105,8 +105,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 
 		// Read branch from database.
-		curricularCourseFromBD = this.readCurricularCourseByNameAndCode(curricularCourseToWrite.getName(), curricularCourseToWrite.getCode());
-
+		curricularCourseFromBD = this.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(curricularCourseToWrite.getDegreeCurricularPlan().getIdInternal(), curricularCourseToWrite.getName(), curricularCourseToWrite.getCode());
 		// If branch is not in database, then write it.
 		if (curricularCourseFromBD == null) {
 			super.lockWrite(curricularCourseToWrite);

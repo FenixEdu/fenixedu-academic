@@ -3,9 +3,6 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import DataBeans.InfoCurricularCourseScope;
 import Dominio.Branch;
 import Dominio.CurricularCourse;
@@ -16,6 +13,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
@@ -24,6 +22,7 @@ import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac1
@@ -45,17 +44,18 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IServico {
 	}
 	
 
-	public List run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException {
-
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
+	public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException {
 	
+		IBranch branch = null;
+		ICurricularSemester curricularSemester = null;
+		
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			
 				IPersistentCurricularSemester persistentCurricularSemester = persistentSuport.getIPersistentCurricularSemester();
 				ICurricularSemester semester = new CurricularSemester();
 				semester.setIdInternal(infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
-				ICurricularSemester curricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(semester, false);
+				curricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(semester, false);
 			
 				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal()), false);
@@ -63,35 +63,27 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IServico {
 				IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
 				IBranch temporaryBranch = new Branch();
 				temporaryBranch.setIdInternal(infoCurricularCourseScope.getInfoBranch().getIdInternal());
-				IBranch branch = (IBranch) persistentBranch.readByOId(temporaryBranch, false);
+				branch = (IBranch) persistentBranch.readByOId(temporaryBranch, false);
 			
-				persistentCurricularCourseScope = persistentSuport.getIPersistentCurricularCourseScope();
-				ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
-//				check if the scope can be written in database
-				if(curricularCourseScope == null) {
-					curricularCourseScope = new CurricularCourseScope();
-					curricularCourseScope.setBranch(branch);
-					curricularCourseScope.setCredits(infoCurricularCourseScope.getCredits());
-					curricularCourseScope.setCurricularCourse(curricularCourse);
-					curricularCourseScope.setCurricularSemester(curricularSemester);
-					curricularCourseScope.setLabHours(infoCurricularCourseScope.getLabHours());
-					curricularCourseScope.setMaxIncrementNac(infoCurricularCourseScope.getMaxIncrementNac());
-					curricularCourseScope.setMinIncrementNac(infoCurricularCourseScope.getMinIncrementNac());
-					curricularCourseScope.setPraticalHours(infoCurricularCourseScope.getPraticalHours());
-					curricularCourseScope.setTheoPratHours(infoCurricularCourseScope.getTheoPratHours());
-					curricularCourseScope.setTheoreticalHours(infoCurricularCourseScope.getTheoreticalHours());
-					curricularCourseScope.setWeigth(infoCurricularCourseScope.getWeigth());
-					persistentCurricularCourseScope.simpleLockWrite(curricularCourseScope);
-					return null;
-				}
-			
-//				if the scope already exists
-				List resultErrors = new ArrayList(3);
-				resultErrors.add(branch.getCode());
-				resultErrors.add(curricularSemester.getCurricularYear().getYear());
-				resultErrors.add(curricularSemester.getSemester());
-				return resultErrors;
-			
+				IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSuport.getIPersistentCurricularCourseScope();
+				
+				ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+				curricularCourseScope.setBranch(branch);
+				curricularCourseScope.setCredits(infoCurricularCourseScope.getCredits());
+				curricularCourseScope.setCurricularCourse(curricularCourse);
+				curricularCourseScope.setCurricularSemester(curricularSemester);
+				curricularCourseScope.setLabHours(infoCurricularCourseScope.getLabHours());
+				curricularCourseScope.setMaxIncrementNac(infoCurricularCourseScope.getMaxIncrementNac());
+				curricularCourseScope.setMinIncrementNac(infoCurricularCourseScope.getMinIncrementNac());
+				curricularCourseScope.setPraticalHours(infoCurricularCourseScope.getPraticalHours());
+				curricularCourseScope.setTheoPratHours(infoCurricularCourseScope.getTheoPratHours());
+				curricularCourseScope.setTheoreticalHours(infoCurricularCourseScope.getTheoreticalHours());
+				curricularCourseScope.setWeigth(infoCurricularCourseScope.getWeigth());
+					
+				persistentCurricularCourseScope.lockWrite(curricularCourseScope);
+					
+		} catch (ExistingPersistentException existingException) {
+			throw new ExistingServiceException("O âmbito com ramo " + branch.getCode() + ", do " + curricularSemester.getCurricularYear().getYear() + "º ano, " + curricularSemester.getSemester() + "º semestre", existingException); 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

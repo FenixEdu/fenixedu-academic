@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,8 +24,10 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -95,8 +95,6 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 					request.setAttribute("infoExecutionYearsList", infoExecutionYearsList);
 				}
 				
-//				request.setAttribute("degreeId", degreeId);
-//				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				return mapping.findForward("insertExecutionDegree");
 	}
 
@@ -134,16 +132,12 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		String serviceResult = null;
 		
 		try {
-				serviceResult = (String) manager.executar(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
+				 manager.executar(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
+				 
+		} catch (ExistingServiceException ex) {
+			throw new ExistingActionException(ex.getMessage(), ex);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
-		}
-		
-		if(serviceResult != null) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = new ActionError("message.existingExecutionDegree", serviceResult);
-			actionErrors.add("message.existingExecutionDegree", error);			
-			saveErrors(request, actionErrors);
 		}
 		
 		return mapping.findForward("readDegreeCurricularPlan");

@@ -4,7 +4,6 @@
 package ServidorAplicacao.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
 import Dominio.CurricularCourse;
@@ -12,13 +11,14 @@ import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac1
@@ -40,9 +40,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 	}
 	
 
-	public List run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException {
-
-		IPersistentCurricularCourse persistentCurricularCourse = null;
+	public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException {
 	
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -55,32 +53,21 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 				String name = infoCurricularCourse.getName();
 				String code = infoCurricularCourse.getCode();
 				
-				persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
+				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
+				
+				ICurricularCourse curricularCourse = new CurricularCourse();
+				curricularCourse.setBasic(infoCurricularCourse.getBasic());		
+				curricularCourse.setCode(code);
+				curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
+				curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
+				curricularCourse.setName(name);
+				curricularCourse.setType(infoCurricularCourse.getType());
+				curricularCourse.setAssociatedExecutionCourses(new ArrayList());							
 
-				ICurricularCourse curricularCourse = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(degreeCurricularPlanId, name, code);
-//				if it doesn´t exist in the database yet
-				if(curricularCourse == null) {
-					curricularCourse = new CurricularCourse();
-					curricularCourse.setBasic(infoCurricularCourse.getBasic());		
-					curricularCourse.setCode(code);
-					curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
-					curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
-					curricularCourse.setName(name);
-					curricularCourse.setType(infoCurricularCourse.getType());
-					curricularCourse.setAssociatedExecutionCourses(new ArrayList());
-					IDisciplinaDepartamentoPersistente persistentDepartmentCourse = persistentSuport.getIDisciplinaDepartamentoPersistente();
-//					department???
-//					university???								
-
-					persistentCurricularCourse.simpleLockWrite(curricularCourse);
-					return null;
-				}
-
-//				if already exists
-				List errors = new ArrayList(2);
-				errors.add(name);
-				errors.add(code);
-				return errors;
+				persistentCurricularCourse.lockWrite(curricularCourse);
+					
+		} catch(ExistingPersistentException existingException) {
+			throw new ExistingServiceException("A disciplina curricular " + infoCurricularCourse.getName() + ", com código " + infoCurricularCourse.getCode(), existingException); 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

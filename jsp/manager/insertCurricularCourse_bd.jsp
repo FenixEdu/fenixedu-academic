@@ -5,13 +5,13 @@
 
 <br>
 
-<html:form action="/insertCurricularCourse" method ="get">
-	    
+<span class="error"><html:errors/></span>
+
+<html:form action="/insertCurricularCourse" method ="get">  
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insert"/>
 	<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
-	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
-	
+	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>	
 	<table>
 		<tr>
 			<td>
@@ -20,20 +20,13 @@
 			<td>
 				<html:text size="60" property="name" />
 			</td>
-			<td>
-				<span class="error"><html:errors property="name"/></span>
-			</td>
 		</tr>
-
 		<tr>
 			<td>
 				<bean:message key="label.manager.curricularCourse.code"/>
 			</td>
 			<td>
 				<html:text size="60" property="code" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="code"/></span>
 			</td>
 		</tr>
 		<tr>

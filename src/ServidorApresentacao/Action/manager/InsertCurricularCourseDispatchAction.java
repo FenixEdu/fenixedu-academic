@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -25,8 +23,10 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDepartmentCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.CurricularCourseType;
@@ -73,8 +73,6 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 					request.setAttribute("departmentCoursesList", departmentCoursesList);
 				}
 				
-//				request.setAttribute("degreeId", degreeId);
-//				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				return mapping.findForward("insertCurricularCourse");
 	}
 
@@ -114,20 +112,16 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		Object args[] = { infoCurricularCourse };
 							
 		GestorServicos manager = GestorServicos.manager();
-		List serviceResult = null;
 		
 		try {
-				serviceResult = (List) manager.executar(userView, "InsertCurricularCourseAtDegreeCurricularPlan", args);
+				manager.executar(userView, "InsertCurricularCourseAtDegreeCurricularPlan", args);
+				
+		} catch (ExistingServiceException ex) {
+			throw new ExistingActionException(ex.getMessage(), ex);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 		
-		if(serviceResult != null) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = new ActionError("message.existingCurricularCourse", serviceResult.get(0), serviceResult.get(1));
-			actionErrors.add("message.existingCurricularCourse", error);			
-			saveErrors(request, actionErrors);
-		}
 		return mapping.findForward("readDegreeCurricularPlan");
 	}			
 }
