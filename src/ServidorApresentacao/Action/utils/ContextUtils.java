@@ -149,6 +149,9 @@ public class ContextUtils {
 				request.setAttribute(
 					SessionConstants.EXECUTION_DEGREE,
 					infoExecutionDegree);
+				request.setAttribute(
+					SessionConstants.EXECUTION_DEGREE_OID,
+					infoExecutionDegree.getIdInternal().toString());
 			} else {
 				System.out.println(
 					"#### ERROR: Unexisting or invalid executionDegree - throw proper exception: Someone was playing with the links");
@@ -192,6 +195,9 @@ public class ContextUtils {
 				request.setAttribute(
 					SessionConstants.CURRICULAR_YEAR,
 					infoCurricularYear);
+				request.setAttribute(
+					SessionConstants.CURRICULAR_YEAR_OID,
+					infoCurricularYear.getIdInternal().toString());
 			} else {
 				System.out.println(
 					"#### ERROR: Unexisting or invalid curricularYear - throw proper exception: Someone was playing with the links");

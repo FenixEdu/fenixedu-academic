@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,11 @@ import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException;
 import ServidorApresentacao.Action.sop.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.utils.RequestContextUtil;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.sop.utils.Util;
 import ServidorApresentacao.Action.utils.ContextUtils;
 import Util.Season;
 
@@ -37,8 +40,12 @@ public class EditExamAction extends FenixCurricularYearsAndExecutionCourseAndExe
 		HttpServletResponse response)
 		throws Exception {
 
+		super.execute(mapping, form, request, response);
+		
 			HttpSession session = request.getSession(false);
 			IUserView userView = SessionUtils.getUserView(request);
+
+			String input = (String) request.getParameter("input");
 
 			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
 
@@ -80,6 +87,27 @@ public class EditExamAction extends FenixCurricularYearsAndExecutionCourseAndExe
 					args);
 			System.out.println("infoViewOldExam" + infoViewOldExam);
 
+
+			// Put everything back in request in case an exception occores so the
+			// edit exams page can be viewed again.
+			request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewOldExam);
+			ArrayList horas = Util.getExamShifts();
+			request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+			ArrayList daysOfMonth = Util.getDaysOfMonth();
+			request.setAttribute(
+				SessionConstants.LABLELIST_DAYSOFMONTH,
+				daysOfMonth);
+			ArrayList monthsOfYear = Util.getMonthsOfYear();
+			request.setAttribute(
+				SessionConstants.LABLELIST_MONTHSOFYEAR,
+				monthsOfYear);
+			ArrayList examSeasons = Util.getExamSeasons();
+			request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+			request.setAttribute(SessionConstants.NEXT_PAGE, input);
+			RequestContextUtil.setExamDateAndTimeContext(request);
+			////////////////////////////////////////////////////////////////////////
+
+
 			// Create an exam with season, examDateAndTime and executionCourse
 			Object argsCreateExam[] = { examDate, examTime, season, infoViewOldExam};
 			try {
@@ -91,7 +119,7 @@ public class EditExamAction extends FenixCurricularYearsAndExecutionCourseAndExe
 			}
 			
 
-			String input = (String) request.getParameter("input");
+			
 			System.out.println("input=" + input);
 			return mapping.findForward(input);
 	}

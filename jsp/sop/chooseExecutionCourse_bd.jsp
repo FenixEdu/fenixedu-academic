@@ -4,18 +4,31 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
+<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+        
 	   	<table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td class="infoselected"><p>O curso seleccionado
               &eacute;:</p>
-			  <strong><jsp:include page="context.jsp"/></strong>
+			  <strong>
+			  <%--
+				<logic:match name="path" value="Exam">
+			  --%>
+    	    		<jsp:include page="contextNotSelectable.jsp"/>
+    	      <%--
+		        </logic:match>
+				<logic:notMatch name="path" value="Exam">
+    	    		<jsp:include page="context.jsp"/>
+		        </logic:notMatch>
+		      --%>
+	          </strong>
             </td>
           </tr>
         </table>
         <br/>
         <h2><bean:message key="title.choose.discipline"/></h2>
         <span class="error"><html:errors /></span>
-        <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%= path %>">        
         	<html:hidden property="page" value="1"/>
 

@@ -6,21 +6,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
+import org.apache.log4j.helpers.CyclicBuffer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.utils.ContextUtils;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
  */
-public class ViewExamsByDegreeAndCurricularYearAction extends Action {
+public class ViewExamsByDegreeAndCurricularYearAction extends FenixExecutionDegreeAndCurricularYearContextAction {
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
@@ -37,14 +40,18 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) request.getAttribute(
-					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+					SessionConstants.EXECUTION_PERIOD);
+			System.out.println("infoExecutionPeriod=" + infoExecutionPeriod);
 			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) request.getAttribute(
-					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+					SessionConstants.EXECUTION_DEGREE);
+			System.out.println("infoExecutionDegree=" + infoExecutionDegree);
 
 			Integer curricularYear =
 				(Integer) request.getAttribute(
 					SessionConstants.CURRICULAR_YEAR_KEY);
+			request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
+			ContextUtils.setCurricularYearContext(request);
 
 			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
 			List infoExecutionCourseAndExamsList =

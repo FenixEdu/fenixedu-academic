@@ -11,7 +11,7 @@
           <tr>
             <td class="infoselected"><p>O curso seleccionado
               &eacute;:</p>
-			  <strong><jsp:include page="context.jsp"/></strong>
+			  <strong><jsp:include page="contextNotSelectable.jsp"/></strong>
             </td>
           </tr>
         </table>
