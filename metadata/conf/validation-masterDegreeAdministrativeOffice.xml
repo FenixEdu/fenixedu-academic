@@ -632,7 +632,55 @@
 			<arg0 key="label.masterDegree.administrativeOffice.guideYear" resource="true"/>
 		</field>
 	</form>
-
+	
+	<!-- create master degree thesis form bean validation -->
+	<form name="createMasterDegreeThesisForm">
+			<field property="dissertationTitle" depends="required" page="1">
+			        <arg0 key="label.masterDegree.administrativeOffice.dissertationTitle" />
+			</field>	
+	</form>
+	
+	<!-- change master degree thesis form bean validation -->
+	<form name="changeMasterDegreeThesisForm">
+			<field property="dissertationTitle" depends="required" page="1">
+			        <arg0 key="label.masterDegree.administrativeOffice.dissertationTitle" />
+			</field>
+	</form>
+	
+	<!-- change master degree proof form bean validation -->
+	<form name="changeMasterDegreeProofForm">
+		<field 	property="proofDateYear"
+	       		depends="required, validateDate" page="1">
+	       	<arg0 key="label.masterDegree.administrativeOffice.proofDate" resource="true" />
+	        <var>
+	        	<var-name>month</var-name>
+	        	<var-value>proofDateMonth</var-value>
+	        </var>
+	        <var>
+	        	<var-name>day</var-name>
+	        	<var-value>proofDateDay</var-value>
+	        </var>
+        </field>
+        <field 	property="thesisDeliveryDateYear"
+	       		depends="required, validateDate" page="1">
+	       	<arg0 key="label.masterDegree.administrativeOffice.thesisDeliveryDate" resource="true" />
+	        <var>
+	        	<var-name>month</var-name>
+	        	<var-value>thesisDeliveryDateMonth</var-value>
+	        </var>
+	        <var>
+	        	<var-name>day</var-name>
+	        	<var-value>thesisDeliveryDateDay</var-value>
+	        </var>
+        </field>
+		<field property="finalResult" depends="integer" page="1">
+	        <arg0 key="label.masterDegree.administrativeOffice.finalResult" />
+		</field>
+		<field property="attachedCopiesNumber" depends="integer" page="1">
+	        <arg0 key="label.masterDegree.administrativeOffice.attachedCopiesNumber" />
+		</field>
+	</form>
+	
   </formset>
 
 
