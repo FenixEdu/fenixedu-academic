@@ -1,0 +1,83 @@
+#######################
+# Destination Dataset #
+#######################
+destination.dataset = <YOUR_PROJECT_PATH_HERE>/etc/datasets_templates/testSomeDataSet.xml
+
+#######################
+# Database Settings   #
+#######################
+db.driver = com.mysql.jdbc.Driver
+db.url = jdbc:mysql://localhost/ciapl
+db.user = root
+db.pass =
+
+#################################################################################################
+# IMPORTANT LIMITATIONS: 																		#
+#       - CATALOGS AND SCHEMAS ARE NOT SUPPORTED. EMPTY CATALOGS AND SCHEMAS ARE USED FOR NOW  	#
+#		- PRIMARY KEYS MUST BE INTEGERS															#
+#		- PRIMARY KEYS CAN ONLY BE COMPOSED BY ONE FIELD										#
+#		- FOREIGN KEYS MUST BE INTEGERS															#
+#		- FOREIGN KEYS CAN ONLY BE COMPOSED BY ONE FIELD										#
+#		- FIELDS IN MAIN TABLE CAN ONLY BELONG TO MAIN TABLE, ALTHOUGH THE WHERE CONDITION		#
+#			CAN USE JOINS 																		#
+#################################################################################################
+
+#####################
+# Main Table Format #
+#####################
+# mainTable.name = YOUR_TABLE_NAME 
+# mainTable.columns = COLUMNS_TO_INCLUDE - comma "," separated, use * for all columns
+# mainTable.whereCondition = WHERE_CLAUSE - where clause for your table, for example: ID_INTERNAL = 1
+
+
+##############
+# Main table #
+##############
+mainTable.name = MASTER_DEGREE_THESIS_DATA_VERSION
+mainTable.columns = *
+mainTable.whereCondition = ID_INTERNAL IN (1)
+
+
+##############################
+# Many-To-Many Tables Format #
+##############################
+#manyToManyTables = TABLE1,TABLE2,....,TABLEn
+
+#######################
+# Many-To-Many tables #
+#######################
+manyToManyTables = PERSON_ROLE,\
+MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER,MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER,\
+MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER,MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER
+
+
+
+#####################################################################################################	
+# Many-To-Many Tables Valid References 																#
+# This should be defined to avoid reading of undesired records many-to-many-records					#
+# For example if we have a many-to-many table called LECTURE and this table represents				#
+# the many-to-many relation between TEACHER and COURSE, we don't want in this particular table		#
+# to read records that wasn't referenced by COURSE table. We may want to limit it, so we use		#
+# the validReferences property that indicates which tables can reference this table					#
+# NOTES: 																							#
+#		- At least one valid reference is required													#
+#																									#
+#####################################################################################################
+
+#####################################################################################################
+# One-To-Many Tables																				#
+#																									#	
+# To configure one-to-many tables that cannot be reached by the graph, configure them as			#
+#		many-to-many tables, because they can be seen as a particular case of many-to-many tables	#
+#####################################################################################################
+
+PERSON_ROLE.validReferences = PERSON
+MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER.validReferences = MASTER_DEGREE_THESIS_DATA_VERSION
+MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER.validReferences = MASTER_DEGREE_THESIS_DATA_VERSION
+MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER.validReferences = MASTER_DEGREE_THESIS_DATA_VERSION
+MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER.validReferences = MASTER_DEGREE_THESIS_DATA_VERSION
+MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER.validReferences = MASTER_DEGREE_THESIS_DATA_VERSION
+MASTER_DEGREE_PROOF_VERSION_JURY.validReferences = MASTER_DEGREE_PROOF_VERSION
+MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY.validReferences = MASTER_DEGREE_PROOF_VERSION
+
+
