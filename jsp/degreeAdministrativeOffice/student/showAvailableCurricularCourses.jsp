@@ -3,67 +3,62 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.CurricularCourseType" %>
-<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" />
+
+<script type="text/javascript" language="JavaScript">
+	function disableAllElements(form, elementName){
+		var elements = form.elements;
+		var i = 0;
+		for (i = 0; i < elements.length ; i++){
+			var element = elements[i];
+			if (element.name == elementName && !element.checked){
+				element.disabled = true;
+			}
+		}
+	}
+</script>
+
+<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>"/>
 <bean:define id="actualEnrolment" name="infoEnrolmentContext" property="actualEnrolment"/>
-<bean:size id="sizeAutomaticalyEnroled" name="infoEnrolmentContext" property="infoCurricularCoursesScopesAutomaticalyEnroled" />
+<bean:size id="sizeAutomaticalyEnroled" name="infoEnrolmentContext" property="infoCurricularCoursesScopesAutomaticalyEnroled"/>
 <bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled"/>
 
 <logic:notEqual name="sizeAutomaticalyEnroled" value="0">
-	<bean:message key="label.mandatory.enrolment.curricular.courses"/> <br />
+	<b><bean:message key="label.mandatory.enrolment.curricular.courses"/>:</b><br/>
 	<logic:iterate id="curricularCourseScope" name="infoEnrolmentContext" property="infoCurricularCoursesScopesAutomaticalyEnroled">
-		<bean:write name="curricularCourseScope" property="infoCurricularCourse.name"/> <br />
+		<bean:write name="curricularCourseScope" property="infoCurricularCourse.name"/><br/>
 	</logic:iterate>
 </logic:notEqual>
+
 <logic:notEqual name="sizeToBeEnroled" value="0">
 	<html:form action="curricularCourseEnrolmentWithRulesManager">
 		<html:hidden property="step" value="0"/>
-		<html:hidden property="method" value="verifyEnrolment" />
-		<html:hidden property="optionalCourseIndex" value="" />
-		<bean:message key="label.enrolment.curricular.courses"/>
-			<script type="text/javascript" language="JavaScript">
-				function disableAllElements(form, elementName){
-					var elements = form.elements;
-					var i = 0;
-					for (i = 0; i < elements.length ; i++){
-						var element = elements[i];
-						if (element.name == elementName && !element.checked){
-							element.disabled = true;
-						}
-					}
-				}
-			</script>
+		<html:hidden property="method" value="verifyEnrolment"/>
+		<html:hidden property="optionalCourseIndex" value=""/>
 		<table>
 			<tr>
-				<th>&nbsp;</th>	
-				<th>Nome da disciplina</th>
-				<th>Ano</th>
+				<td colspan="3"><b><bean:message key="label.enrolment.curricular.courses"/>:</b></td>
 			</tr>
-			
-			
+			<tr>
+				<td>&nbsp;</td>
+				<td><u>Nome da disciplina</u></td>
+				<td align="right"><u>Ano</u></td>
+			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
-				<bean:define id="optionalEnrolmentString" value="" />
-
-				<logic:equal name="curricularScope" property="infoCurricularCourse.type" 
-								value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
+				<logic:equal name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
 					<bean:define id="onclick">
 						if (this.checked == true) {this.form.method.value='startEnrolmentInOptional'; document.forms[0].optionalCourseIndex.value='<bean:write name="index"/>'; disableAllElements(this.form,this.name);this.form.submit();}	
 					</bean:define>
-
-
 					<bean:define id="optionalCourse" name="curricularScope" property="infoCurricularCourse"/>
-
 					<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
 						<logic:equal name="optionalEnrolment" property="infoCurricularCourseScope.infoCurricularCourse" value="<%= pageContext.findAttribute("optionalCourse").toString() %>">
 							<bean:define id="optionalEnrolmentString">
-								<br/> &nbsp;&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
+								<br/>&nbsp;&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
 							</bean:define>
 						</logic:equal> 
 					</logic:iterate>
-					
 				</logic:equal>
-				<logic:notEqual name="curricularScope" property="infoCurricularCourse.type" 
-								value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
-					<bean:define id="onclick" value=" "></bean:define>
+				<logic:notEqual name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
+					<bean:define id="onclick" value=""></bean:define>
 				</logic:notEqual>
 				<tr>
 					<td>
@@ -85,9 +80,10 @@
 			</logic:iterate>
 			<tr>
 				<td colspan="3" align="center">
-						<html:submit styleClass="inputbutton">
-							<bean:message key="button.continue.enrolment"/>
-						</html:submit>
+					<p>&nbsp;</p>
+					<html:submit styleClass="inputbutton">
+						<bean:message key="button.continue.enrolment"/>
+					</html:submit>
 				</td>
 			</tr>
 		</table>
