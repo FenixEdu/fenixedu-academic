@@ -24,6 +24,7 @@ import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.InvalidSessionActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -62,14 +63,23 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 		HttpSession session = request.getSession(false);
 		
-		if(session == null || request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
+//		if(session == null || request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
+//			ActionErrors errors = new ActionErrors();
+//			error = new ActionError("error.invalid.session");
+//			errors.add("error.invalid.session", error);
+//			request.setAttribute(Globals.ERROR_KEY, errors);
+//			return mapping.findForward("firstPage");
+//		}
+
+		if (ex instanceof InvalidSessionActionException){
+			
 			ActionErrors errors = new ActionErrors();
 			error = new ActionError("error.invalid.session");
 			errors.add("error.invalid.session", error);
 			request.setAttribute(Globals.ERROR_KEY, errors);
 			return mapping.findForward("firstPage");
-		}
 		
+		}
 
 		request.getSession(false).setAttribute(
 			SessionConstants.ORIGINAL_MAPPING_KEY,

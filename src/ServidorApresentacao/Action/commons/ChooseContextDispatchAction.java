@@ -50,6 +50,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 			
 			HttpSession session = request.getSession(false);
 			if (session != null) {
@@ -136,6 +137,9 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			
+			SessionUtils.validSessionVerification(request, mapping);
+			
 			HttpSession session = request.getSession(false);
 			DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
