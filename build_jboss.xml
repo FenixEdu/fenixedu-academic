@@ -135,6 +135,7 @@
 			<include name="**/oscache.properties"/>
 			<include name="**/OJB.properties"/>
 			<include name="**/SMSConfiguration.properties"/>
+			<include name="**/**/logAnalyser.properties"/>
 
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
@@ -227,8 +228,12 @@
 			<replacefilter token="@verify_serializable@" 
 		    			   property="verify_serializable"/>
 
-			<replacefilter token="@log.profile.filename@"
-			   			   value="${log.profile.filename}"/>
+		  	<replacefilter token="@log.image.directory@"
+		  				   property="log.image.directory"/>
+		  	<replacefilter token="@log.profile.dir@"
+		  				   property="log.profile.dir"/>
+		  	<replacefilter token="@log.profile.filename@"
+		  				   property="log.profile.filename"/>
 
 			<replacefilter token="@ObjectCacheClass@"
 		    			   property="ObjectCacheClass"/>
@@ -418,10 +423,10 @@
 		<replacefilter 
 		    token="@index.html.link@" 
 		    property="index.html.link"/>
-            
+
              <replacefilter token="@enrollment.faq.url@"
 		    			   property="enrollment.faq.url"/>    
-			
+
 		</replace>
 	</target>
 

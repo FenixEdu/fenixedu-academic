@@ -46,7 +46,10 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 
 	private static String logImageDir = null;
 
-	private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+	private static final DateFormat dateFormat = new SimpleDateFormat(
+			"HH:mm:ss");
+
+	private static String logFileName = null;
 
 	public ActionForward listFiles(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -57,8 +60,28 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 
 		DynaActionForm actionForm = (DynaActionForm) form;
 		String logDirName = (String) actionForm.get("logDirName");
-		if (logDirName == null || logDirName.length() == 0) {
-			logDirName = "./";
+		if (logDirName == null || logDirName.length() == 0
+				|| logFileName == null || logFileName.length() == 0) {
+			InputStream inputStream = getClass().getResourceAsStream(
+					"/logAnalyser.properties");
+
+			if (inputStream != null) {
+				Properties serProps = new Properties();
+				serProps.load(inputStream);
+
+				if (logDirName == null || logDirName.length() == 0) {
+					logDirName = serProps.getProperty("log.profile.dir");
+				}
+				if (logFileName == null || logFileName.length() == 0) {
+					logFileName = serProps.getProperty("log.profile.filename");
+				}
+			} else {
+				System.out
+						.println("Failled to obtain properties for log analyser.");
+				System.out.println("Using default values.");
+				logDirName = "./";
+				logFileName = "profileing.log";
+			}
 		}
 
 		File logDir = new File(logDirName);
@@ -66,7 +89,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		File[] logProfileFiles = logDir.listFiles();
 		for (int i = 0; i < logProfileFiles.length; i++) {
 			File fileOfDir = logProfileFiles[i];
-			if (fileOfDir.isFile()) {
+			if (fileOfDir.isFile()
+					&& fileOfDir.getName().startsWith(logFileName)) {
 				fileNames.add(fileOfDir.getName());
 			}
 		}
@@ -130,22 +154,24 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		}
 
 		SortedSet sortedProfileSet = sortProfileMap(profileMap);
-		BarChart barChart = new BarChart(sortedProfileSet, "Average Execution Time",
-				logImageDir + "/" + filename + ".bar.png", 20);
-		TimeLineChart timeLineChart = new TimeLineChart(sortedProfileSet, logImageDir + "/" + filename + ".timeline.png");
+		new BarChart(sortedProfileSet, "Average Execution Time", logImageDir
+				+ "/" + filename + ".bar.png", 20);
+		new TimeLineChart(sortedProfileSet, logImageDir + "/" + filename
+				+ ".timeline.png");
 		return sortedProfileSet;
 	}
 
 	private void setLogImageDir() {
-        InputStream inputStream = getClass().getResourceAsStream("/logAnalyser.properties");
-        if (inputStream != null) {
-        	Properties properties = new Properties();
-        	try {
+		InputStream inputStream = getClass().getResourceAsStream(
+				"/logAnalyser.properties");
+		if (inputStream != null) {
+			Properties properties = new Properties();
+			try {
 				properties.load(inputStream);
 				logImageDir = properties.getProperty("log.image.directory");
 			} catch (IOException e) {
 			}
-        }
+		}
 	}
 
 	private SortedSet sortProfileMap(Map profileMap) {
@@ -165,7 +191,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		StringTokenizer stringTokenizer = new StringTokenizer(line, " \t[]-");
 		Date logTime = parseTime(stringTokenizer.nextToken());
 		String executionTimeString = stringTokenizer.nextToken();
-		Integer executionTime = new Integer(executionTimeString.substring(0, executionTimeString.length() - 2));
+		Integer executionTime = new Integer(executionTimeString.substring(0,
+				executionTimeString.length() - 2));
 		String requestPath = stringTokenizer.nextToken();
 
 		RequestEntry requestEntry = (RequestEntry) profileMap.get(requestPath);
@@ -177,7 +204,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 	}
 
 	private Date parseTime(String timeString) {
-		Date result = null; 
+		Date result = null;
 		try {
 			result = dateFormat.parse(timeString);
 		} catch (ParseException e) {
