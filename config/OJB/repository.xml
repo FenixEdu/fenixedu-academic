@@ -10,6 +10,7 @@
 <!ENTITY inscricoes SYSTEM "repository_inscricoes.xml">
 <!ENTITY sop SYSTEM "repository_sop.xml">
 <!ENTITY masterDegree SYSTEM "repository_masterDegree.xml">
+<!ENTITY treasury SYSTEM "repository_treasury.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY gesdis SYSTEM "repository_gesdis.xml">
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
@@ -29,6 +30,7 @@
     &inscricoes;
     &sop;
     &masterDegree;
+    &treasury;
     &sopload;
     &gesdis;
     &authentication-roles;

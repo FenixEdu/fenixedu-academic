@@ -8,6 +8,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import DataBeans.InfoBranch;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoClass;
+import DataBeans.InfoContributor;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegree;
@@ -36,6 +37,7 @@ import Dominio.Aula;
 import Dominio.BibliographicReference;
 import Dominio.Branch;
 import Dominio.CandidateSituation;
+import Dominio.Contributor;
 import Dominio.Country;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
@@ -51,6 +53,7 @@ import Dominio.IAula;
 import Dominio.IBibliographicReference;
 import Dominio.IBranch;
 import Dominio.ICandidateSituation;
+import Dominio.IContributor;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
@@ -1145,6 +1148,7 @@ public abstract class Cloner {
 	  * @param ICurricularCourse
 	  * @return InfoCurricularCourse
 	  */
+	 
 	 public static InfoCurricularCourse copyICurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
 
 		 InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
@@ -1158,4 +1162,30 @@ public abstract class Cloner {
 		 return infoCurricularCourse;
 	 }
 //	---------------------------------------------- DCS-RJAO -----------------------------------------------
+
+	/**
+	 * @author joana-nuno
+	 * @param IContributor
+	 * @return InfoContributor
+	 */
+	 
+	public static InfoContributor copyIContributor2InfoContributor(IContributor contributor) {
+
+		InfoContributor infoContributor = new InfoContributor();
+		copyObjectProperties(infoContributor, contributor);
+		return infoContributor;
+	}
+	
+	/**
+	 * 
+	 * @param contributor
+	 * @return
+	 */
+	public static IContributor copyInfoContributor2IContributor(InfoContributor infoContributor) {
+
+		IContributor contributor = new Contributor();
+		copyObjectProperties(contributor, infoContributor);
+		return contributor;
+	}
+	
 }

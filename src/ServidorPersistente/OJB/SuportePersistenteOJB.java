@@ -32,6 +32,7 @@ import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCandidateSituation;
+import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurriculum;
@@ -317,5 +318,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public IPersistentBranch getIPersistentBranch() {
 		return new BranchOJB();
+	}
+	
+	public IPersistentContributor getIPersistentContributor() {
+		return new ContributorOJB();
 	}
 }
