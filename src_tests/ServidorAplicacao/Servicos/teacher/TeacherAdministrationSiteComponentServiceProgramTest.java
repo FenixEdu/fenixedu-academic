@@ -101,8 +101,8 @@ public class TeacherAdministrationSiteComponentServiceProgramTest extends TestCa
 		}
 
 		InfoSiteProgram infoSiteProgram = new InfoSiteProgram();
-		infoSiteProgram.setProgram(curriculum.getProgram());
-		infoSiteProgram.setProgramEn(curriculum.getProgramEn());
+	//	infoSiteProgram.setProgram(curriculum.getProgram());
+	//	infoSiteProgram.setProgramEn(curriculum.getProgramEn());
 		
 		InfoSite infoSite = Cloner.copyISite2InfoSite(site);
  

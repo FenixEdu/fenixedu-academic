@@ -61,8 +61,8 @@ public class EditProgramTest extends TestCaseDeleteAndEditServices {
 			e.printStackTrace();
 		}
 		InfoSiteProgram infoSiteProgram = new InfoSiteProgram();
-		infoSiteProgram.setProgram("program");
-		infoSiteProgram.setProgramEn("programEn");
+	//	infoSiteProgram.setProgram("program");
+	//	infoSiteProgram.setProgramEn("programEn");
 
 		Object[] args = { infoExecutionCourse.getIdInternal(), infoSiteProgram };
 		return args;

@@ -5,6 +5,11 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
+
+<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
+<html:link href='<%= link %>'>Sair do processo de inscrição</html:link>
+<br/>
+<br/>
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
 <logic:present name="infoStudentShiftEnrolment" property="allowedClasses">
 <br />	

@@ -81,17 +81,33 @@
 	
 	//-->
 </script>
-<center>
+
+
+<div  align="center" >
 	<span class="error">
 		<html:errors />
 	</span>
+<br/>
+<table >
+		<tr>
+			<td colspan="3"><h2 class="redtxt">Informações de utilização:</h2>
+			
+			<ul style="text-align:left;">
+			<li>Na primeira caixa estão presentes as disciplinas disponíveis para se inscrever, na segunda caixa estão presentes as disciplinas que deseja frequentar. 
+			Utilize os botões de adicionar disciplina e remover disciplina para actualizar a segunda caixa.</li>
+			<li>As disciplinas que deseja frequentar devem corresponder às disciplinas em que se inscreveu (ou vai inscrever) na aplicação habitual da secretaria.</li>
+			<li>Uma vez indicadas as disciplinas que pretende frequentar prossiga a inscrição em turmas utilizando o botão "Continuar inscrição".</li>
+			</ul></td>
+		</tr>
+</table>
 	<html:form  action="studentShiftEnrolmentManager" method="POST">
+		<div class="infotable" style="width:70%;">
 		<html:hidden property="method" value="proceedToShiftEnrolment" />
 		<strong>
 			Escolha o curso das cadeiras que quer frequentar:
 		</strong>
 		<br/>
-		<html:select property="degree" size="1"onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';selectAll();document.studentShiftEnrolmentForm.submit();" >
+		<html:select  property="degree" size="1"onchange="document.studentShiftEnrolmentForm.method.value='enrollCourses';selectAll();document.studentShiftEnrolmentForm.submit();" >
 			<logic:iterate  id="executionDegree" name="degreeList">
 				<bean:define id="deg" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree"/>
 				<option value="<%= ((InfoDegree)deg).getSigla() %>">
@@ -99,7 +115,7 @@
 				</option>
 			</logic:iterate>
 		</html:select>
-		<p style="text-align:left; margin-bottom:0px">
+		<p style="text-align:left;margin-bottom:0px">
 			<b>
 				Disciplinas do curso selecionado:
 			</b>
@@ -110,7 +126,11 @@
 		<p style="margin-top:1px">
 			<input type="button" value="Adicionar Disciplina" onclick="addToList(wantedCourse,course[course.selectedIndex].text,course[course.selectedIndex].value);" style="width:100%"/>
 		</p>
-		<p style="text-align:left;margin-bottom:0px">
+		</div>
+		<br/>
+		<br/>
+		<div class="infotable" style="width:70%;">
+		<p style="text-align:left; margin-bottom:0px">
 			<b>
 				Disciplinas que vai frequentar:
 			</b>
@@ -121,6 +141,9 @@
 		<p style="margin-top:1px">
 			<input type="button"  value="Remover Disciplina" onclick="removeFromList(wantedCourse);selectFirst();" size="12" style="width:100%"/>
 		</p>
+		</div>
+		<br/>
+		<br/>
 		<html:submit value="Continuar inscrição" onclick="document.studentShiftEnrolmentForm.method.value='proceedToShiftEnrolment';selectAll();return true;"/>
 	</html:form>
-</center>
+</div>

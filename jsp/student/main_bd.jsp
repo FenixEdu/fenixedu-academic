@@ -21,23 +21,24 @@
 	<tr>
 		<td>
 			<html:link page="/studentShiftEnrolmentManager.do?method=enrollCourses&amp;firstTime=yes">
-				<bean:message key="link.shift.enrolment"/>
+				Inscrição em Turmas
 			</html:link>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<html:link page="/examEnrollmentManager.do?method=viewExamsToEnroll" >
-				<bean:message key="link.exams.enrolment"/>
-			</html:link>
-		</td>
-	</tr>
+	
              <tr>
                 <td>
                     <html:link page="/listAllSeminaries.do"> <bean:message key="link.seminaries.enrolment"/> </html:link> 
 					<a href=<bean:message key="link.seminaries.rules" />target="_blank"> <bean:message key="label.seminairies.seeRules"/> </a>
                 </td>
             </tr>
+		<tr>
+		<td><br/>
+			<html:link page="/examEnrollmentManager.do?method=viewExamsToEnroll" >
+				<bean:message key="link.exams.enrolment"/>
+			</html:link>
+		</td>
+	</tr>
 </table>
 <br />
 <br />
