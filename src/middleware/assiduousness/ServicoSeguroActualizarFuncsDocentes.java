@@ -16,8 +16,10 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.Funcionario;
 import Dominio.IPersonRole;
+import Dominio.IRole;
 import Dominio.ITeacher;
 import Dominio.Pessoa;
+import Dominio.Role;
 import Dominio.Teacher;
 import Util.LeituraFicheiroFuncDocente;
 import Util.RoleType;
@@ -128,13 +130,26 @@ public class ServicoSeguroActualizarFuncsDocentes {
 				teacher.setTeacherNumber(numeroMecanografico); 
 				broker.store(teacher);
 				newTeachers++;
-				
-				IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.TEACHER, broker);
-				if (personRole == null){
-					RoleFunctions.giveRole(person, RoleType.TEACHER, broker);
-					newRoles++;
-				}
 			}
+
+			IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.TEACHER, broker);
+			if (personRole == null){
+//				RoleFunctions.giveRole(person, RoleType.TEACHER, broker);
+					
+				criteria = new Criteria();
+				criteria.addEqualTo("roleType", RoleType.TEACHER);
+		
+				query = new QueryByCriteria(Role.class, criteria);
+				List result = (List) broker.getCollectionByQuery(query);
+		
+				if (result.size() == 0){
+					throw new Exception("Unknown Role !!!");
+				} else {
+					 person.getPersonRoles().add((IRole) result.get(0));
+				} 
+				newRoles++;
+			}
+			broker.store(person);
 		}
 		broker.commitTransaction();
 		System.out.println("New Teachers added : " + newTeachers);
