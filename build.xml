@@ -32,6 +32,7 @@
     <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
     <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
     <property name="webapp.lib"      value="${webapp.metadata}/lib"/>    
+    <property name="webapp.standalone.classes"  value="${build.home}/standalone/WEB-INF/classes"/>
 
     
 	<!-- Directorys for deploy -->
@@ -550,9 +551,9 @@
                	<include name="**/Upgrade*.java"/> 
 	 <!--			<include name="**/CreateAnnouncementTest.java"/>
 					<include name="**/ReadSiteAnnouncementTest.java"/>
-					<include name="**/ReadAnnouncementTest.java"/>
+					<include name="**/ReadAnnouncementTest.java"/>-->
 					<include name="**/CreateGrantOwnerTest.java"/>
-                    <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
+	<!--            <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
                     <exclude name="**/ReadActualExecutionPeriodTest.java"/>
@@ -563,7 +564,7 @@
                 </fileset>
             </batchtest>
             <classpath>
-              
+              	<!--<pathelement path="${webapp.standalone.classes}"/>-->
                 <pathelement path="${webapp.classes}"/>
                 <pathelement path="${tests.classes}"/>
                 <pathelement path="${config}"/>
