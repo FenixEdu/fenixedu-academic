@@ -85,4 +85,10 @@
 	<definition name="edit-old-didactic-publication" extends="teacher-information">
 		<put name="body" value="/teacher/information/editOldDidacticPublication.jsp"></put>
 	</definition>
+
+	<definition name="showTeacherCreditsSheet" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/credits/showTeacherCreditsSheet.jsp"></put>
+	</definition>
+
 </tiles-definitions>
