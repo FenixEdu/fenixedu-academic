@@ -46,6 +46,8 @@ import org.apache.slide.structure.ObjectNode;
 import org.apache.slide.structure.Structure;
 import org.apache.slide.structure.SubjectNode;
 
+import slidestore.mysql.MySQLContentStore;
+
 public class FileSuport implements IFileSuport {
 
 	private static FileSuport instance = null;
@@ -191,9 +193,9 @@ public class FileSuport implements IFileSuport {
 		throws SlideException {
 		try {
 			beginTransaction();
-			SubjectNode rootuser =
-				(SubjectNode) structure.retrieve(slideToken, "/users/root");
-			structure.create(slideToken, rootuser, path);
+			
+			SubjectNode file = 	new SubjectNode();
+			structure.create(slideToken, file, path);
 			content.create(slideToken, path, true);
 
 			NodeRevisionDescriptor currentRevisionDescriptor =
