@@ -6,6 +6,8 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IMasterDegreeThesis;
@@ -33,8 +35,8 @@ public class MasterDegreeThesisDataVersionOJB extends ObjectFenixOJB implements 
 
 		criteria.addEqualTo("masterDegreeThesis.idInternal", masterDegreeThesis.getIdInternal());
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
-			(IMasterDegreeThesisDataVersion) queryObject(MasterDegreeThesisDataVersion.class, criteria);
+		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
+				MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeThesisDataVersion;
 	}
@@ -44,9 +46,21 @@ public class MasterDegreeThesisDataVersionOJB extends ObjectFenixOJB implements 
 
 		criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion =
-			(IMasterDegreeThesisDataVersion) queryObject(MasterDegreeThesisDataVersion.class, criteria);
+		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
+				MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeThesisDataVersion;
 	}
+
+	public IMasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo("dissertationTitle", dissertationTitle);
+		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
+		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
+				MasterDegreeThesisDataVersion.class, criteria);
+
+		return storedMasterDegreeThesisDataVersion;
+	}
+
 }

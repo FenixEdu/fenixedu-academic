@@ -15,6 +15,7 @@ import Dominio.IStudentCurricularPlan;
  *
  */
 public interface IPersistentMasterDegreeThesisDataVersion extends IPersistentObject {
-	public abstract IMasterDegreeThesisDataVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) throws ExcepcaoPersistencia;
+	public IMasterDegreeThesisDataVersion readActiveByMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) throws ExcepcaoPersistencia;
 	public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+	public IMasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle) throws ExcepcaoPersistencia;
 }
