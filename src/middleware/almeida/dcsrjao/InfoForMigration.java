@@ -12,10 +12,6 @@ public class InfoForMigration {
 
 	private String type;
 	
-	private InfoForMigration(String name) {
-		this.type = new String(name);
-	}
-	
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof InfoForMigration) {
