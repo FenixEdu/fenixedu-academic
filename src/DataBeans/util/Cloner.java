@@ -417,6 +417,23 @@ public abstract class Cloner
 		{
 			return null;
 		}
+
+		try {
+			// Temporary bug fix.
+			// Try to materialize the proxy... if it fails return null.
+			// Should look into this further... but I don't have the time
+			// at the moment. This situation occores constantly when
+			// viewing Class 05102 of the execution period 80.
+			//System.out.println("lesson= " + lesson);
+			//System.out.println("lesson.id= " + lesson.getIdInternal() + "\n\n");
+			lesson.getIdInternal();
+		} catch (Throwable nex)
+		{
+			//nex.printStackTrace();
+			//System.out.println("Returning null in the lessons place\n\n\n\n");
+			return null;
+		}
+		
 		InfoLesson infoLesson = new InfoLesson();
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) Cloner.get(lesson.getDisciplinaExecucao());
