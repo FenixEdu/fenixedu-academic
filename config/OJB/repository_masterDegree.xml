@@ -180,10 +180,6 @@
           <foreignkey field-ref="candidateKey"/>
       </reference-descriptor>
 		
- <!--     	<attribute
-     	attribute-name="cacheable"
-     	attribute-value="false" />
-     --> 
 	</class-descriptor>
           
 <!-- End of Definitions for class CANDIDATE_SITUATION -->
