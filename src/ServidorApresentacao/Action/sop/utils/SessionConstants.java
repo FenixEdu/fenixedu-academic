@@ -75,8 +75,6 @@ public abstract class SessionConstants {
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
 	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
-	
-	
 	// Master Degree 
 	public static final String SPECIALIZATIONS = "specializations"; 
 	public static final String DEGREE_LIST = "degree_list";
@@ -84,7 +82,21 @@ public abstract class SessionConstants {
 	public static final String APPLICATION_INFO = "application_info";
 	
 
-    // Person constants
+	// Person constants
 	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";
-	
+
+
+	public static final String PERSONAL_INFO_KEY = "PERSONAL_INFO_KEY";
+	public static final String EXPIRATION_YEARS_KEY = "EXPIRATION_YEARS_KEY";
+	public static final String YEARS_KEY = "YEARS_KEY";
+	public static final String MONTH_LIST_KEY = "MONTH_LIST_KEY";
+	public static final String MONTH_DAYS_KEY = "MONTH_DAYS_KEY";
+
+	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY =
+		"IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY";
+
+	public static final String MARITAL_STATUS_LIST_KEY =
+		"MARITAL_STATUS_LIST_KEY";
+
+	public static final String NATIONALITY_LIST_KEY = "NATIONALITY_LIST_KEY";
 }
