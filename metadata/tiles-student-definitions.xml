@@ -17,4 +17,7 @@
 	<definition name="definition.student.choose.optional.curricular.course.enrolment" extends="definition.student.masterPage">
 		<put name="contextBody" value="/student/enrolmentInOptionalCurricularCourseContext.jsp"/>
 	</definition>
+	<definition name="definition.out.of.period" extends="definition.student.masterPage">
+		<put name="body" value="/outOfPeriod.jsp"/>
+	</definition>
 </tiles-definitions>
