@@ -1,0 +1,51 @@
+package ServidorPersistente.OJB.grant.owner;
+
+import org.apache.ojb.broker.query.Criteria;
+
+import DataBeans.InfoPerson;
+import Dominio.grant.owner.GrantOwner;
+import Dominio.grant.owner.IGrantOwner;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.grant.IPersistentGrantOwner;
+/**
+ *
+ * @author  Barbosa
+ * @author  Pica
+ */
+
+public class GrantOwnerOJB
+	extends ServidorPersistente.OJB.ObjectFenixOJB
+	implements IPersistentGrantOwner {
+
+	public GrantOwnerOJB() {
+	};
+
+	public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber)
+		throws ExcepcaoPersistencia {
+		IGrantOwner grantOwner = null;
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("number", grantOwnerNumber);
+		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+		return grantOwner;
+	}
+
+	public IGrantOwner readGrantOwnerByPerson(InfoPerson infoPerson)
+		throws ExcepcaoPersistencia {
+		IGrantOwner grantOwner = null;
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("key_person", infoPerson.getIdInternal());
+		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+		return grantOwner;
+	}
+
+	public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia{
+		Integer maxGrantOwnerNumber = null;
+
+		Criteria criteria = new Criteria();
+		criteria.addOrderBy("number", false);
+		maxGrantOwnerNumber = (Integer) queryObject(GrantOwner.class, criteria);
+		return maxGrantOwnerNumber;
+	}
+}

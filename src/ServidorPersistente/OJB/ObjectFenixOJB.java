@@ -256,7 +256,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 		tx = odmg.currentTransaction();
 		PersistenceBroker broker = ((HasBroker) tx).getBroker();
-
 		Identity identity = new Identity(obj, broker);
 		IDomainObject domainObject =
 			(IDomainObject) broker.getObjectByIdentity(identity);

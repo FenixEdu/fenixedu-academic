@@ -126,6 +126,8 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
+import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
 
 public class SuportePersistenteOJB implements ISuportePersistente {
 	Implementation _odmg = null;
@@ -158,17 +160,29 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			if (hasBroker != null) {
 				PersistenceBroker broker = hasBroker.getBroker();
 
-				System.out.println("###########################################33");
-				System.out.println("broker.serviceObjectCache().class= " + broker.serviceObjectCache().getClass());
-
-				CacheFilterRegistry cacheFilter = (CacheFilterRegistry) broker.serviceObjectCache();
-
-				System.out.println("###########################################33");
 				System.out.println(
-					"broker.serviceObjectCache().class= " + cacheFilter.getCache(null, null, CacheFilterRegistry.METHOD_LOOKUP));
+					"###########################################33");
+				System.out.println(
+					"broker.serviceObjectCache().class= "
+						+ broker.serviceObjectCache().getClass());
+
+				CacheFilterRegistry cacheFilter =
+					(CacheFilterRegistry) broker.serviceObjectCache();
+
+				System.out.println(
+					"###########################################33");
+				System.out.println(
+					"broker.serviceObjectCache().class= "
+						+ cacheFilter.getCache(
+							null,
+							null,
+							CacheFilterRegistry.METHOD_LOOKUP));
 
 				FenixObjectCacheDefaultImpl cache =
-					(FenixObjectCacheDefaultImpl) cacheFilter.getCache(null, null, CacheFilterRegistry.METHOD_LOOKUP);
+					(FenixObjectCacheDefaultImpl) cacheFilter.getCache(
+						null,
+						null,
+						CacheFilterRegistry.METHOD_LOOKUP);
 
 				numberCachedObjects = cache.getNumberOfCachedObjects();
 			}
@@ -177,7 +191,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return numberCachedObjects;
 	}
 
-	public static synchronized SuportePersistenteOJB getInstance() throws ExcepcaoPersistencia {
+	public static synchronized SuportePersistenteOJB getInstance()
+		throws ExcepcaoPersistencia {
 		if (_instance == null) {
 			_instance = new SuportePersistenteOJB();
 		}
@@ -186,7 +201,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public static synchronized void resetInstance() {
 		if (_instance != null) {
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			PersistenceBroker broker =
+				PersistenceBrokerFactory.defaultPersistenceBroker();
 			broker.clearCache();
 			_instance = null;
 		}
@@ -198,7 +214,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	private void init() throws ExcepcaoPersistencia {
-
+		
 		_odmg = OJB.getInstance();
 		try {
 			openDatabase();
@@ -216,9 +232,13 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			Transaction tx = _odmg.newTransaction();
 			tx.begin();
 		} catch (ODMGException ex1) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.OPEN_DATABASE, ex1);
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.OPEN_DATABASE,
+				ex1);
 		} catch (ODMGRuntimeException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.BEGIN_TRANSACTION, ex);
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.BEGIN_TRANSACTION,
+				ex);
 		}
 	}
 
@@ -236,16 +256,21 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			Transaction tx = _odmg.currentTransaction();
 
 			if (tx == null)
-				System.out.println("SuportePersistente.OJB - Nao ha transaccao activa");
+				System.out.println(
+					"SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
 				tx.commit();
 				//				Database db =_odmg.getDatabase(null); 
 				//				if (db!= null) db.close();
 			}
 		} catch (ODMGException ex1) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.CLOSE_DATABASE,
+				ex1);
 		} catch (ODMGRuntimeException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.COMMIT_TRANSACTION, ex);
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.COMMIT_TRANSACTION,
+				ex);
 		}
 	}
 
@@ -260,9 +285,13 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 			}
 
 		} catch (ODMGException ex1) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.CLOSE_DATABASE,
+				ex1);
 		} catch (ODMGRuntimeException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.ABORT_TRANSACTION, ex);
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.ABORT_TRANSACTION,
+				ex);
 		}
 	}
 
@@ -528,7 +557,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEmployee getIPersistentEmployee() {
 		return new EmployeeOJB();
 	}
-
+	
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction() {
 		return new EnrolmentEquivalenceRestrictionOJB();
 	}
@@ -543,7 +572,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentQualification getIPersistentQualification() {
 		return new QualificationOJB();
 	}
-
+	
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment() {
 		return new CandidateEnrolmentOJB();
 	}
@@ -572,40 +601,48 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new CurricularCourseEquivalenceRestrictionOJB();
 	}
 
-	//by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003) 
-	public IPersistentSeminaryModality getIPersistentSeminaryModality() {
-		return new ModalityOJB();
-	}
+	   //by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003) 
+    public IPersistentSeminaryModality getIPersistentSeminaryModality()
+    {
+        return new ModalityOJB();
+    }
+    
+    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminaryTheme getIPersistentSeminaryTheme()
+     {
+         return new ThemeOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminary getIPersistentSeminary()
+     {
+         return new ServidorPersistente.OJB.Seminaries.SeminaryOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()
+     {
+         return new CaseStudyOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+     public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
+     {
+         return new CandidacyOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+     public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice()
+     {
+         return new CaseStudyChoiceOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003) 
+     public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency()
+     {
+         return new EquivalencyOJB();
+     }
 
-	//by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
-	public IPersistentSeminaryTheme getIPersistentSeminaryTheme() {
-		return new ThemeOJB();
-	}
-
-	//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
-	public IPersistentSeminary getIPersistentSeminary() {
-		return new ServidorPersistente.OJB.Seminaries.SeminaryOJB();
-	}
-
-	//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
-	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy() {
-		return new CaseStudyOJB();
-	}
-
-	//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
-	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy() {
-		return new CandidacyOJB();
-	}
-
-	//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
-	public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice() {
-		return new CaseStudyChoiceOJB();
-	}
-
-	//  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003) 
-	public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency() {
-		return new EquivalencyOJB();
-	}
 
 	public IPersistentMetadata getIPersistentMetadata() {
 		return new MetadataOJB();
@@ -622,19 +659,25 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentTestQuestion getIPersistentTestQuestion() {
 		return new TestQuestionOJB();
 	}
-
-	public IPersistentDistributedTest getIPersistentDistributedTest() {
+	
+	public IPersistentDistributedTest getIPersistentDistributedTest(){
 		return new DistributedTestOJB();
 	}
-
-	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
+	
+	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion(){
 		return new StudentTestQuestionOJB();
 	}
-
-	public IPersistentStudentTestLog getIPersistentStudentTestLog() {
+	
+	public IPersistentStudentTestLog getIPersistentStudentTestLog(){
 		return new StudentTestLogOJB();
 	}
-
+	
+// by Barbosa (October 28th, 2003)
+	public IPersistentGrantOwner getIPersistentGrantOwner() {
+		return new GrantOwnerOJB();
+	}	
+	
+	
 	public IPersistentAdvisory getIPersistentAdvisory() {
 		return new AdvisoryOJB();
 	}
@@ -648,7 +691,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentWebSiteItem getIPersistentWebSiteItem() {
 		return new WebSiteItemOJB();
 	}
-
+	
 	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis() {
 		return new MasterDegreeThesisOJB();
 	}
@@ -658,7 +701,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {
 		return new MasterDegreeProofVersionOJB();
 	}
-
+	
 	public IPersistentExternalPerson getIPersistentExternalPerson() {
 		return new ExternalPersonOJB();
 	}

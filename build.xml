@@ -23,7 +23,7 @@
     <property name="etc" location="etc"/>
     <property name="etc.datasets" location="${etc}/datasets" />
     <property name="etc.datasets_templates" location="${etc}/datasets_templates" />
-    
+     
 	<property name="build.home" location="build"/>
 
     <!--Directorios destino da compilacao do projecto-->
@@ -226,7 +226,7 @@
 		    property="ftp.IST.server.pass"/>
 		  <replacefilter 
 		    token="@ftp.IST.server.address@" 
-		    property="ftp.IST.server.address"/>   
+		    property="ftp.IST.server.address"/>
 		</replace>
 		<antcall target="validate-xml"/>
     </target>
@@ -367,7 +367,6 @@
     <target depends="compile-tests, load-dump-db"
             description="Executa todos os testes"
             name="run-tests">
-
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
 <!--
            	<jvmarg value="-DproxySet=true"/>
@@ -505,7 +504,10 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/InsertSummaryTest.java"/>
+                  <!--  <include name="**/CreateAnnouncementTest.java"/> -->
+                 <!--   <include name="**/ReadSiteAnnouncementTest.java"/> -->
+				<!--	<include name="**/ReadAnnouncementTest.java"/> -->
+					<include name="**/CreateGrantOwnerTest.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>
@@ -1213,7 +1215,6 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
     	  <export dest="${metadata}/dtds/fenix-database.dtd" format="dtd"/> 
 	  </dbunit>
 	</target>
-	
 	<target name="generate-dataset" description="Generates a dataset using the parameters specified in DataSetGenerator.properties" depends="compile-proj">
 		<java classname="Tools.DataSetGeneratorMain" fork="true">
 			<classpath refid="runtime-classpath" />

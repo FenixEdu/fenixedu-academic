@@ -13,6 +13,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
+import ServidorPersistente.grant.IPersistentGrantOwner;
 
 
 /**
@@ -161,6 +162,10 @@ public interface ISuportePersistente {
 	public IPersistentDistributedTest getIPersistentDistributedTest();
 	public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
 	public IPersistentStudentTestLog getIPersistentStudentTestLog();
+	
+// by Barbosa (October 28th, 2003)	
+	public IPersistentGrantOwner getIPersistentGrantOwner();
+	
 	
 	public IPersistentAdvisory getIPersistentAdvisory();
 	
