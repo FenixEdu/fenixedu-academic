@@ -18,6 +18,7 @@ import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
@@ -60,6 +61,7 @@ public class DeleteStudentGroupMembers implements IServico {
     public final String getNome() {
         return "DeleteStudentGroupMembers";
     }
+    
 
     /**
      * Executes the service.
@@ -103,6 +105,20 @@ public class DeleteStudentGroupMembers implements IServico {
                 throw new ExistingServiceException();
             }
             
+            
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+            .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+            .getGroupEnrolmentStrategyInstance(groupProperties);
+            
+            if(!strategy.checkStudentsUserNamesInAttendsSet(studentUsernames,groupProperties)){
+                throw new InvalidArgumentsServiceException();
+            }
+            
+           if(!checkStudentsInStudentGroup( studentUsernames, studentGroup)){
+            throw new InvalidSituationServiceException();
+           }
+            
             Iterator iterator = studentUsernames.iterator();
 
             IAttendsSet attendsSet = studentGroup.getAttendsSet();
@@ -114,17 +130,40 @@ public class DeleteStudentGroupMembers implements IServico {
                 
                  IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
                         .readBy(studentGroup, attend);
-                if (oldStudentGroupAttend != null) {
-
-                    persistentStudentGroupAttend.delete(oldStudentGroupAttend);
-                } else {
-                    throw new InvalidSituationServiceException();
-                }
+                 persistentStudentGroupAttend.delete(oldStudentGroupAttend);
             }
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
         return true;
+    }
+    
+    
+    
+    private boolean checkStudentsInStudentGroup(List studentsUserNames, IStudentGroup studentGroup) throws ExcepcaoPersistencia{
+    	IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+    	IPersistentStudent persistentStudent = null;
+    	ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
+    	persistentStudent = persistentSupport.getIPersistentStudent();
+    	persistentStudentGroupAttend = persistentSupport
+                    .getIPersistentStudentGroupAttend();
+            
+    	Iterator iterator = studentsUserNames.iterator();
+    	IAttendsSet attendsSet = studentGroup.getAttendsSet();
+    	while (iterator.hasNext()) {
+
+    		IStudent student = persistentStudent.readByUsername(iterator
+    				.next().toString());
+    		IFrequenta attend = attendsSet.getStudentAttend(student);
+    		IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                    .readBy(studentGroup, attend);
+    		if (oldStudentGroupAttend == null) {
+    			return false;
+    		}
+    	}
+    	return true;
+    	 
     }
 }

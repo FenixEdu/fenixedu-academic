@@ -2542,7 +2542,16 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			actionErrors.add("errors.notExisting.studentInGroup", error);
 			saveErrors(request, actionErrors);
 			return prepareEditStudentGroupMembers(mapping, form, request, response);
-		} catch (FenixServiceException e)
+		}catch (InvalidArgumentsServiceException e)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("errors.notExisting.studentInAttendsSet");
+			actionErrors.add("errors.notExisting.studentInAttendsSet", error);
+			saveErrors(request, actionErrors);
+			return prepareEditStudentGroupMembers(mapping, form, request, response);
+		} 
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}

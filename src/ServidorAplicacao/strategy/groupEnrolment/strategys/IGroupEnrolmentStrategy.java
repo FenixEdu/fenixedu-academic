@@ -32,4 +32,5 @@ public interface IGroupEnrolmentStrategy {
 	public boolean checkStudentInAttendsSet (IGroupProperties groupProperties, String username)throws ExcepcaoPersistencia;
 	public boolean checkStudentsInAttendsSet (List studentCodes, IGroupProperties groupProperties)throws ExcepcaoPersistencia;
 	public boolean checkHasShift(IGroupProperties groupProperties);
+	public boolean checkStudentsUserNamesInAttendsSet (List studentUsernames, IGroupProperties groupProperties)throws ExcepcaoPersistencia;
 }

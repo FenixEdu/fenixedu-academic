@@ -11,12 +11,16 @@ import Dominio.AttendsSet;
 import Dominio.IAttendInAttendsSet;
 import Dominio.IAttendsSet;
 import Dominio.IFrequenta;
+import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentAttendInAttendsSet;
@@ -68,7 +72,7 @@ public class DeleteAttendsSetMembers implements IServico {
         IPersistentAttendInAttendsSet persistentAttendInAttendsSet = null;
         IPersistentStudent persistentStudent = null;
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-
+        
         try {
 
             ISuportePersistente persistentSupport = SuportePersistenteOJB
@@ -86,25 +90,34 @@ public class DeleteAttendsSetMembers implements IServico {
             if (attendsSet == null) {
                 throw new ExistingServiceException();
             }
+            
+            IGroupProperties groupProperties = attendsSet.getGroupProperties();
+            
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+            .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+            .getGroupEnrolmentStrategyInstance(groupProperties);
+            
+            if(!strategy.checkStudentsUserNamesInAttendsSet(studentUsernames,groupProperties)){
+                throw new InvalidSituationServiceException();
+            }
+            
 
             Iterator iterator = studentUsernames.iterator();
             while (iterator.hasNext()) {
             	String username = (String)iterator.next();
-            	boolean found1 = false;
             	List attendInAttendsSetList = attendsSet.getAttendInAttendsSet();
 				Iterator iterAttendInAttendsSet = attendInAttendsSetList.iterator();
 				IAttendInAttendsSet attendInAttendsSet=null;
+				boolean found1 = false;
             	while(iterAttendInAttendsSet.hasNext() && !found1){
             	 	attendInAttendsSet = (IAttendInAttendsSet)iterAttendInAttendsSet.next();
             	 	if(attendInAttendsSet.getAttend().getAluno().getPerson().getUsername().equals(username)){
-            	 		found1 = true;
+            	 		found1= true;
             	 	}
             	 }
-                if(found1==false){
-                    throw new InvalidSituationServiceException();
-                }     
-           	    
-                IFrequenta attend = attendInAttendsSet.getAttend();
+                     
+           	    IFrequenta attend = attendInAttendsSet.getAttend();
                 
                 boolean found = false;
                 Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();

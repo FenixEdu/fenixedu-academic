@@ -351,6 +351,37 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     	return found;
 	}
 
+    
+    public boolean checkStudentsUserNamesInAttendsSet (List studentUsernames, IGroupProperties groupProperties)
+    throws ExcepcaoPersistencia
+	{
+    	boolean found = true;
+    	try {
+    		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    		IPersistentStudent persistentStudent = sp
+			.getIPersistentStudent();
+	
+    		List attends = groupProperties.getAttendsSet().getAttends();
+    		List students =  new ArrayList();
+    		Iterator iterAttends = attends.iterator();
+    		while(iterAttends.hasNext()){
+    			IFrequenta frequenta = (IFrequenta)iterAttends.next();
+    			students.add(frequenta.getAluno());
+    		}
+    		Iterator iterator = studentUsernames.iterator();
+    		while (iterator.hasNext()) {
+    			String userName = (String) iterator.next();
+    			IStudent student = (IStudent) persistentStudent.readByUsername(userName);
+    			if(!students.contains(student))return false;
+    		}           		
+    	} catch (ExcepcaoPersistencia ex)
+		{
+    		ex.printStackTrace();
+		}
+    	return found;
+	}
+
+    
     public boolean checkHasShift(IGroupProperties groupProperties){
     	if(groupProperties.getShiftType()!=null){
     		return true;
