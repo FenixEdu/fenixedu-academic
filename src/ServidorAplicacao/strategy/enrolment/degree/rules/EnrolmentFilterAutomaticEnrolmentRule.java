@@ -67,7 +67,7 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 				
 		// ---------------------------------------------------------------------------- //
 
-		//	Alternative curricular course filter
+		//	Mandatory curricular course filter
 		final Integer semester = enrolmentContext.getSemester();
 		List alternativeSemesterScopes = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
 			public boolean evaluate(Object obj) {

@@ -23,7 +23,7 @@ public class InscTeste {
 		try {
 			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
 
-			Object serviceArgs1[] = {userView, new Integer(1)};
+			Object serviceArgs1[] = {userView, new Integer(2)};
 			result = gestor.executar(userView, "ShowAvailableCurricularCourses", serviceArgs1);
 			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) result;
 			System.out.println("TO CHOOSE (FINAL SPAN):");
