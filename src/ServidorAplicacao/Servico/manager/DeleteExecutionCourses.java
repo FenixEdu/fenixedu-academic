@@ -9,11 +9,15 @@ import java.util.List;
 
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -46,10 +50,15 @@ public class DeleteExecutionCourses implements IServico {
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+			IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
+			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
 
 			Iterator iter = internalIds.iterator();
-			List shifts, attends;
+			Iterator iterator;
+			List shifts, attends, professorShips, responsibles;
 			Integer internalId;
+			IProfessorship professorShip;
+			IResponsibleFor responsibleFor;
 			List undeletedExecutionCoursesCodes = new ArrayList();
 
 			while(iter.hasNext()) {
@@ -61,8 +70,21 @@ public class DeleteExecutionCourses implements IServico {
 						undeletedExecutionCoursesCodes.add((String) executionCourse.getSigla());
 					else {
 						attends = persistentAttend.readByExecutionCourse(executionCourse);
-						if(attends.isEmpty())
+						if(attends.isEmpty()) {
 							persistentExecutionCourse.deleteExecutionCourse(executionCourse);
+							professorShips = persistentProfessorShip.readByExecutionCourse(executionCourse);
+							iterator = professorShips.iterator();
+							while(iterator.hasNext()) {
+								professorShip = (IProfessorship) iterator.next();
+								persistentProfessorShip.delete(professorShip);
+							}
+							responsibles = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+							iterator = responsibles.iterator();
+							while(iterator.hasNext()) {
+								responsibleFor = (IResponsibleFor) iterator.next();
+								persistentResponsibleFor.delete(responsibleFor);
+							}
+						} 
 						else
 							undeletedExecutionCoursesCodes.add((String) executionCourse.getSigla());
 					}				
