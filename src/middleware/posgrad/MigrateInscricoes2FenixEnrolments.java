@@ -345,14 +345,17 @@ public class MigrateInscricoes2FenixEnrolments {
 
 				broker.commitTransaction();
 
-				if (evaluationNeeded){
-					broker.beginTransaction();
+				
+				broker.beginTransaction();
 
-					broker.clearCache();
-					
-					IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-					enrolmentEvaluation.setEnrolment(enrolment2Write);
-					enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+				broker.clearCache();
+				
+				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+				enrolmentEvaluation.setEnrolment(enrolment2Write);
+				enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+			
+			
+				if (evaluationNeeded){
 					enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 					enrolmentEvaluation.setExamDate(inscricao.getDataexame());
 					enrolmentEvaluation.setGradeAvailableDate(inscricao.getDatalancamento());
@@ -366,24 +369,24 @@ public class MigrateInscricoes2FenixEnrolments {
 
 					criteria = new Criteria();
 					criteria.addEqualTo("numeroMecanografico", inscricao.getCreditos());
-					query = new QueryByCriteria(Funcionario.class,criteria);
+						query = new QueryByCriteria(Funcionario.class,criteria);
 
-					result = (List) broker.getCollectionByQuery(query);		
+						result = (List) broker.getCollectionByQuery(query);		
 
-					if (result.size() != 1) {
+						if (result.size() != 1) {
 
-System.out.println("TEMPORARIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 [" + inscricao.getCreditos() + "]");
-broker.commitTransaction();
-continue;
+	System.out.println("TEMPORARIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 [" + inscricao.getCreditos() + "]");
+	broker.commitTransaction();
+	continue;
 
 
 
-//						throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
-						
+//							throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
+					
 					}
 
 					Funcionario funcionario = (Funcionario) result.get(0);
-					
+				
 					criteria = new Criteria();
 					criteria.addEqualTo("id_internal", new Integer(String.valueOf(funcionario.getChavePessoa())));
 					query = new QueryByCriteria(Pessoa.class,criteria);
@@ -395,19 +398,31 @@ continue;
 					}
 
 					IPessoa person = (IPessoa) result.get(0);
-					
+				
 					enrolmentEvaluation.setPersonResponsibleForGrade(person);
 
-
-					// Check if the grade Already Exists
-
-					IEnrolmentEvaluation enrolmentEvaluation2Write = getEnrolmentEvaluation2Write(enrolmentEvaluation, broker);
-
-					broker.store(enrolmentEvaluation2Write);
-					evaluationsWritten++;
-
-					broker.commitTransaction();
+				} else {
+					enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+					enrolmentEvaluation.setCheckSum(null);
+					enrolmentEvaluation.setEmployee(null);
+					enrolmentEvaluation.setExamDate(null);
+					enrolmentEvaluation.setGrade(null);
+					enrolmentEvaluation.setGradeAvailableDate(null);
+					enrolmentEvaluation.setObservation(null);
+					enrolmentEvaluation.setPersonResponsibleForGrade(null);
+					enrolmentEvaluation.setWhen(null);
 				}
+				
+
+				// Check if the grade Already Exists
+
+				IEnrolmentEvaluation enrolmentEvaluation2Write = getEnrolmentEvaluation2Write(enrolmentEvaluation, broker);
+
+				broker.store(enrolmentEvaluation2Write);
+				evaluationsWritten++;
+
+				broker.commitTransaction();
+
 			}
 				
 				
