@@ -1,4 +1,5 @@
 <%@ page language="java" %>
+<%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -6,11 +7,6 @@
 <bean:define id="component" name="siteView" property="commonComponent" />
 <bean:define id="executionCourse" name="component" property="executionCourse" />
 
-<br/>
-<br/>
-<ul>
-<li><html:link page="/testsManagement.do?method=testsFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.home"/></html:link></li>
-</ul>
 <p class="invisible"><strong><bean:message key="title.tests"/></strong></p>
 <ul>
 <li><html:link page="/testsManagement.do?method=prepareCreateTest" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.createTest"/></html:link></li>
@@ -19,10 +15,10 @@
 <li><html:link page="/testDistribution.do?method=showDistributedTests" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.showDistributedTests"/></html:link></li>
 </ul>
 <br/>
-<p class="invisible"><strong><bean:message key="title.exercises"/></strong></p>
+<p class="invisible"><strong><bean:message key="title.exercices"/></strong></p>
 <ul>
-<li><html:link page="/exercisesManagement.do?method=insertNewExercise" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.importExercise"/></html:link></li>
-<li><html:link page="/exercisesManagement.do?method=exercisesFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.showExercises"/></html:link></li>
+<li><html:link page="/exercicesManagement.do?method=insertNewExercice" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.importExercice"/></html:link></li>
+<li><html:link page="/exercicesManagement.do?method=exercicesFirstPage" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.showExercices"/></html:link></li>
 </ul>
 <br/>
 <br/>

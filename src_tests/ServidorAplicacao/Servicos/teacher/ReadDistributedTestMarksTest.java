@@ -1,166 +1,127 @@
 /*
- * Created on 18/Fev/2004
- *
+ * Created on Oct 15, 2003
+ *  
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import java.util.Iterator;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
-import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
-
-import DataBeans.InfoDistributedTest;
+import DataBeans.ExecutionCourseSiteView;
+import DataBeans.InfoDistributedTestMarks;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoSiteStudentsTestMarks;
-import DataBeans.InfoStudentTestQuestionMark;
+import DataBeans.InfoSiteDistributedTestMarks;
+import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import DataBeans.util.CopyUtils;
 import Dominio.ExecutionCourse;
-import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
 import Dominio.IStudentTestQuestion;
 import Dominio.StudentTestQuestion;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- *
  * @author Susana Fernandes
- *
+ *  
  */
-public class ReadDistributedTestMarksTest extends ServiceNeedsAuthenticationTestCase
+public class ReadDistributedTestMarksTest extends TestCaseReadServices
 {
-	public ReadDistributedTestMarksTest(String testName)
-	{
-		super(testName);
-	}
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testEditDistributedTestDataSet.xml";
-	}
+    public ReadDistributedTestMarksTest(String testName)
+    {
+        super(testName);
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadDistributedTestMarks";
-	}
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadDistributedTestMarks";
+    }
 
-		String[] args = { "D2543", "pass", getApplication()};
-		return args;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
+        return null;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
+        Object[] args = { new Integer(26), new Integer(1)};
+        return args;
+    }
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 0;
+    }
 
-	protected String[] getNotAuthenticatedUser()
-	{
+    protected Object getObjectToCompare()
+    {
+        InfoSiteDistributedTestMarks infoSiteDistributedTestMarks = new InfoSiteDistributedTestMarks();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+            IStudentTestQuestion studentTestQuestion = new StudentTestQuestion(new Integer(1));
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+            studentTestQuestion =
+                (IStudentTestQuestion) sp.getIPersistentStudentTestQuestion().readByOId(
+                    studentTestQuestion,
+                    false);
+            assertNotNull("studentTestQuestion null", studentTestQuestion);
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
 
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer executionCourseId = new Integer(34882);
-		Integer distributedTestId = new Integer(1);
-		Object[] args = { executionCourseId, distributedTestId };
+            executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+            assertNotNull("executionCourse null", executionCourse);
 
-		return args;
-	}
+            sp.confirmarTransaccao();
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+            InfoStudentTestQuestion infoStudentTestQuestion =
+                Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+            DecimalFormat df = new DecimalFormat("#0.##");
+            infoStudentTestQuestion.setTestQuestionMark(new Double(0.33));
+            List infoStudentTestQuestionList = new ArrayList();
+            infoStudentTestQuestionList.add(infoStudentTestQuestion);
+            InfoDistributedTestMarks infoDistributedTestMarks = new InfoDistributedTestMarks();
+            infoDistributedTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
+            infoDistributedTestMarks.setStudentTestMark(
+                new Double(df.format(infoStudentTestQuestion.getTestQuestionMark())));
+            List infoDistributedTestMarksList = new ArrayList();
+            infoDistributedTestMarksList.add(infoDistributedTestMarks);
 
-	public void testSuccessfull()
-	{
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
+            infoSiteDistributedTestMarks.setInfoDistributedTestMarks(infoDistributedTestMarksList);
+            df = new DecimalFormat("%");
+            List correctAnswersList = new ArrayList(),
+                wrongAnswersList = new ArrayList(),
+                notAnsweredList = new ArrayList();
+            correctAnswersList.add(df.format(0));
+            wrongAnswersList.add(df.format(java.lang.Math.pow(1, -1)));
+            notAnsweredList.add(df.format(0));
 
-			SiteView siteView =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
-			InfoSiteStudentsTestMarks infoSiteStudentsTestMarks =
-				(InfoSiteStudentsTestMarks) siteView.getComponent();
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("idInternal", args[0]);
-			Query queryCriteria = new QueryByCriteria(ExecutionCourse.class, criteria);
-			IExecutionCourse executionCourse = (IExecutionCourse) broker.getObjectByQuery(queryCriteria);
+            infoSiteDistributedTestMarks.setCorrectAnswersPercentage(correctAnswersList);
+            infoSiteDistributedTestMarks.setWrongAnswersPercentage(wrongAnswersList);
+            infoSiteDistributedTestMarks.setNotAnsweredPercentage(notAnsweredList);
 
-			criteria = new Criteria();
-			criteria.addEqualTo("keyDistributedTest", args[1]);
-			criteria.addOrderBy("keyStudent", true);
-			criteria.addOrderBy("testQuestionOrder", true);
-			queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
-			List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
-			broker.close();
-			assertEquals(
-				studentTestQuestionList.size(),
-				infoSiteStudentsTestMarks.getInfoStudentTestQuestionList().size());
-			assertEquals(
-				(InfoExecutionCourse) Cloner.get(executionCourse),
-				infoSiteStudentsTestMarks.getExecutionCourse());
-			assertEquals(
-				copyIDistributedTest2InfoDistributedTest(
-					((IStudentTestQuestion) studentTestQuestionList.get(0)).getDistributedTest()),
-				infoSiteStudentsTestMarks.getInfoDistributedTest());
-			Iterator it = infoSiteStudentsTestMarks.getInfoStudentTestQuestionList().iterator();
-			int i = 0;
-			while (it.hasNext())
-			{
-				InfoStudentTestQuestionMark infoStudentTestQuestionMark =
-					(InfoStudentTestQuestionMark) it.next();
-				IStudentTestQuestion studentTestQuestion =
-					(IStudentTestQuestion) studentTestQuestionList.get(i);
-				assertEquals(
-					infoStudentTestQuestionMark,
-					Cloner.copyIStudentTestQuestion2InfoStudentTestQuestionMark(studentTestQuestion));
-				i++;
-			}
+            infoSiteDistributedTestMarks.setExecutionCourse(
+                (InfoExecutionCourse) Cloner.get(executionCourse));
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            fail("exception: ExcepcaoPersistencia ");
+        }
+        SiteView siteView =
+            new ExecutionCourseSiteView(infoSiteDistributedTestMarks, infoSiteDistributedTestMarks);
+        return siteView;
+    }
 
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("ReadDistributedTestMarksTest " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("ReadDistributedTestMarksTest " + ex);
-		}
-	}
-
-	private static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
-	{
-		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-		try
-		{
-			CopyUtils.copyProperties(infoDistributedTest, distributedTest);
-		}
-		catch (Exception e)
-		{
-			fail("ReadStudentTestsToDoTest " + "cloner");
-		}
-		return infoDistributedTest;
-	}
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
 }

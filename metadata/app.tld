@@ -137,29 +137,6 @@
   </tag>
    <tag>
 
-    <name>generateNewExamsMap</name>
-    <tagclass>ServidorApresentacao.TagLib.sop.examsMapNew.RenderExamsMapTag</tagclass>
-    <bodycontent>empty</bodycontent>
-    
-    <info>
-        Generates a schedule of exams in a calender sort of format.
-    </info>
-
-    <attribute>
-      <name>name</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-    	<name>user</name>
-    	<required>true</required>
-    	<rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-  </tag>
-   <tag>
-
     <name>generateSectionMenu</name>
     <tagclass>ServidorApresentacao.TagLib.publico.sectionMenu.RenderSectionMenuTag</tagclass>
     <bodycontent>empty</bodycontent>

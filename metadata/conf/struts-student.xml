@@ -528,13 +528,23 @@
 			parameter="method"
 			type="ServidorApresentacao.Action.student.StudentTestsAction"
 			validate="true">
-			<forward name="testsFirstPage" path="tests-First-Page"/>
+			<forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
+			<forward name="viewTestsToDo" path="/viewTestsToDo.jsp"/>
+			<forward name="viewDoneTests" path="/viewDoneTests.jsp"/>
 			<forward name="doTest" path="do-Test"/>
-			<forward name="studentFeedback" path="show-Student-Test-Feedback"/>
+			<forward name="studentFeedback" path="/showStudentTestFeedback.jsp"/>
 			<forward name="showTestCorrection" path="show-Test-Correction"/>
-			<forward name="viewStudentExecutionCoursesWithTests" path="view-Student-ExecutionCourses-With-Tests"/>
 		</action>
 		
+		<!-- STUDENT EXECUTION COURSES -->
+		<action path="/studentExecutionCourse"
+			scope="request"
+			parameter="method"
+			type="ServidorApresentacao.Action.student.StudentExecutionCourseDispatchAction"
+			validate="true">
+			<forward name="viewStudentExecutionCourses" path="view-Student-ExecutionCourses"/>
+			<forward name="studentExecutionCoursePage" path="/studentExecutionCoursePage.jsp"/>
+		</action>  
       <action path="/studentGaugingTestResults"
 			scope="request"
 			type="ServidorApresentacao.Action.student.gaugingTests.physics.ViewGaugingTestsResults"

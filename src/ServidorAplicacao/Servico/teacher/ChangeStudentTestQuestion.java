@@ -25,16 +25,9 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
-import Dominio.Advisory;
 import Dominio.DistributedTest;
-import Dominio.ExecutionCourse;
-import Dominio.IAdvisory;
 import Dominio.IDistributedTest;
-import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
-import Dominio.IMark;
 import Dominio.IMetadata;
-import Dominio.IOnlineTest;
 import Dominio.IQuestion;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
@@ -55,7 +48,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TestQuestionChangesType;
 import Util.TestQuestionStudentsChangesType;
-import Util.TestType;
 
 /**
  * @author Susana Fernandes
@@ -98,45 +90,46 @@ public class ChangeStudentTestQuestion implements IServico
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-			executionCourse =
-				(IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
-					executionCourse,
-					false);
-			if (executionCourse == null)
-				throw new InvalidArgumentsServiceException();
-
 			IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
+
 			IQuestion oldQuestion = new Question(oldQuestionId);
 			oldQuestion = (IQuestion) persistentQuestion.readByOId(oldQuestion, true);
 			if (oldQuestion == null)
 				throw new InvalidArgumentsServiceException();
 
-			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
-			distributedTest =
-				(IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
-					distributedTest,
-					false);
-			if (distributedTest == null)
-				throw new InvalidArgumentsServiceException();
+			boolean canDelete = true;
 
 			List studentsTestQuestionList = new ArrayList();
 			IPersistentStudentTestQuestion persistentStudentTestQuestion =
 				persistentSuport.getIPersistentStudentTestQuestion();
-			if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS)
+			if (studentsType.getType().intValue() == 3)
 				studentsTestQuestionList = persistentStudentTestQuestion.readByQuestion(oldQuestion);
-			else if (
-				studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST)
+			else if (studentsType.getType().intValue() == 2)
+			{
+				IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+				distributedTest =
+					(IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
+						distributedTest,
+						false);
+				if (distributedTest == null)
+					throw new InvalidArgumentsServiceException();
 				studentsTestQuestionList =
 					persistentStudentTestQuestion.readByQuestionAndDistributedTest(
 						oldQuestion,
 						distributedTest);
-
-			else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT)
+			}
+			else if (studentsType.getType().intValue() == 1)
 			{
 				IStudent student = new Student(studentId);
 				student = (IStudent) persistentSuport.getIPersistentStudent().readByOId(student, false);
 				if (student == null)
+					throw new InvalidArgumentsServiceException();
+				IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+				distributedTest =
+					(IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
+						distributedTest,
+						false);
+				if (distributedTest == null)
 					throw new InvalidArgumentsServiceException();
 				studentsTestQuestionList.add(
 					persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(
@@ -156,8 +149,6 @@ public class ChangeStudentTestQuestion implements IServico
 					throw new InvalidArgumentsServiceException();
 			}
 
-			boolean canDelete = true;
-			List group = new ArrayList();
 			while (studentsTestQuestionIt.hasNext())
 			{
 				IStudentTestQuestion studentTestQuestion =
@@ -209,41 +200,10 @@ public class ChangeStudentTestQuestion implements IServico
 							+ studentTestQuestion.getTestQuestionMark());
 					studentTestQuestion.setQuestion(newQuestion);
 					studentTestQuestion.setResponse(new Integer(0));
-					double oldMark = studentTestQuestion.getTestQuestionMark().doubleValue();
 					studentTestQuestion.setTestQuestionMark(new Double(0));
 					persistentStudentTestQuestion.simpleLockWrite(studentTestQuestion);
-					if (!group.contains(studentTestQuestion.getStudent().getPerson()))
-						group.add(studentTestQuestion.getStudent().getPerson());
-					if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION)))
-					{
-						IOnlineTest onlineTest =
-							(IOnlineTest) persistentSuport
-								.getIPersistentOnlineTest()
-								.readByDistributedTest(
-								distributedTest);
-						IFrequenta attend =
-							persistentSuport
-								.getIFrequentaPersistente()
-								.readByAlunoAndDisciplinaExecucao(
-								studentTestQuestion.getStudent(),
-								executionCourse);
-						IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
-						System.out.println("vou mudar a nota final");
-						if (mark != null)
-						{
-							persistentSuport.getIPersistentMark().simpleLockWrite(mark);
-							mark.setMark(
-								getNewStudentMark(
-									persistentSuport,
-									distributedTest,
-									studentTestQuestion.getStudent(),
-									oldMark));
-						}
-					}
 				}
 			}
-			//create Advisory
-			persistentSuport.getIPersistentAdvisory().write(createTestAdvisory(distributedTest), group);
 
 			if (delete.booleanValue())
 			{
@@ -432,75 +392,7 @@ public class ChangeStudentTestQuestion implements IServico
 				oldTestQuestion.setQuestion(newQuestion);
 			}
 		}
+
 	}
 
-	private String getNewStudentMark(
-		ISuportePersistente sp,
-		IDistributedTest dt,
-		IStudent s,
-		double mark2Remove)
-		throws ExcepcaoPersistencia
-	{
-		double totalMark = 0;
-		List studentTestQuestionList =
-			(List) sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(s, dt);
-
-		Iterator it = studentTestQuestionList.iterator();
-		while (it.hasNext())
-		{
-			IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
-			totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
-		}
-		return (new java.text.DecimalFormat("#0.##").format(totalMark));
-	}
-
-	private IAdvisory createTestAdvisory(IDistributedTest distributedTest)
-	{
-		IAdvisory advisory = new Advisory();
-		advisory.setCreated(null);
-		advisory.setExpires(distributedTest.getEndDate().getTime());
-		advisory.setSender(
-			"Docente da disciplina "
-				+ ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getNome());
-
-		advisory.setSubject(distributedTest.getTitle() + ": Alteração na ficha");
-		String msgBeginning;
-		if (distributedTest.getTestType().equals(new TestType(TestType.INQUIRY)))
-			msgBeginning =
-				new String("Uma pergunta do seu Questionário foi alterada. Deverá realizar o Questionário");
-		else
-			msgBeginning =
-				new String("Uma pergunta da sua Ficha de Trabalho foi alterada. Deverá realizar a Ficha de Trabalho");
-
-		advisory.setMessage(
-			msgBeginning
-				+ " até às "
-				+ getHourFormatted(distributedTest.getEndHour())
-				+ " de "
-				+ getDateFormatted(distributedTest.getEndDate()));
-		advisory.setOnlyShowOnce(new Boolean(false));
-		return advisory;
-	}
-
-	private String getDateFormatted(Calendar date)
-	{
-		String result = new String();
-		result += date.get(Calendar.DAY_OF_MONTH);
-		result += "/";
-		result += date.get(Calendar.MONTH) + 1;
-		result += "/";
-		result += date.get(Calendar.YEAR);
-		return result;
-	}
-
-	private String getHourFormatted(Calendar hour)
-	{
-		String result = new String();
-		result += hour.get(Calendar.HOUR_OF_DAY);
-		result += ":";
-		if (hour.get(Calendar.MINUTE) < 10)
-			result += "0";
-		result += hour.get(Calendar.MINUTE);
-		return result;
-	}
 }

@@ -23,32 +23,12 @@
             <form-property name="studentsType" type="java.lang.String"/>
             <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="deleteVariation" type="java.lang.String"/>
-            <form-property name="order" type="java.lang.String"/>
-            <form-property name="asc" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
-        <form-bean name="exerciseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+        <form-bean name="exerciceForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="metadataFile" type="org.apache.struts.upload.FormFile"/>
             <form-property name="xmlZipFile" type="org.apache.struts.upload.FormFile"/>
             <form-property name="objectCode" type="java.lang.String"/>
-            <form-property name="order" type="java.lang.String"/>
-            <form-property name="asc" type="java.lang.String"/>
-            <form-property name="page" type="java.lang.Integer" initial="0"/>
-        </form-bean>
-        <form-bean name="exerciseEditionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="objectCode" type="java.lang.String"/>
-            <form-property name="exerciseCode" type="java.lang.String"/>
-            <form-property name="variationCode" type="java.lang.String"/>
-            <form-property name="author" type="java.lang.String"/>
-			<form-property name="description" type="java.lang.String"/>
-			<form-property name="difficulty" type="java.lang.String"/>
-			<form-property name="learningTimeFormatted" type="java.lang.String"/>
-			<form-property name="level" type="java.lang.String"/>
-			<form-property name="mainSubject" type="java.lang.String"/>
-            <form-property name="secondarySubject" type="java.lang.String"/>
-            <form-property name="option" type="java.lang.String[]"/>
-            <form-property name="order" type="java.lang.String"/>
-            <form-property name="asc" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
         <form-bean name="questionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -57,8 +37,6 @@
             <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="questionOrder" type="java.lang.String"/>
             <form-property name="option" type="java.lang.String"/>
-            <form-property name="order" type="java.lang.String"/>
-            <form-property name="asc" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
@@ -814,25 +792,17 @@
             <forward name="showStudentTest" path="/showStudentTest.jsp"/>
             <forward name="showStudentTestLog" path="/showStudentTestLog.jsp"/>
             <forward name="changeStudentTestQuestion" path="/changeStudentTestQuestion.jsp"/>
-            <forward name="chooseAnotherExercise" path="/chooseAnotherExercice.jsp"/>
+            <forward name="chooseAnotherExercice" path="/chooseAnotherExercice.jsp"/>
             <forward name="showTestMarks" path="/showTestMarks.jsp"/>
         </action>
-        <action path="/exercisesManagement" name="exerciseForm"
-            input="/exercisesManagement.do?method=insertNewExercise&amp;page=0" scope="request" 
+        <action path="/exercicesManagement" name="exerciceForm" 
+            input="/exercicesManagement.do?method=insertNewExercice&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
             <forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
-            <forward name="exercisesFirstPage" path="/exercicesFirstPage.jsp"/>
-            <forward name="insertNewExercise" path="/insertNewExercice.jsp"/>
-            <forward name="prepareRemoveExercise" path="/prepareRemoveExercice.jsp"/>
-            <forward name="editExercise" path="/editExercise.jsp"/>
-        </action>
-        <action path="/exercisesEdition" name="exerciseEditionForm"
-            input="/exercisesManagement.do?method=prepareEditExercise&amp;page=0" scope="request" 
-            parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
-            validate="true">
-            <forward name="editExercise" path="/editExercise.jsp"/>
-            <forward name="exercisesFirstPage" path="/exercicesFirstPage.jsp"/>
+            <forward name="exercicesFirstPage" path="/exercicesFirstPage.jsp"/>
+            <forward name="insertNewExercice" path="/insertNewExercice.jsp"/>
+            <forward name="prepareRemoveExercice" path="/prepareRemoveExercice.jsp"/>
         </action>
         <action path="/questionsManagement" name="questionForm" 
             input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" scope="request" 
@@ -840,7 +810,6 @@
             validate="true">
             <forward name="showAvailableQuestions" path="/showAvailableQuestions.jsp"/>
             <forward name="insertTestQuestion" path="/insertTestQuestion.jsp"/>
-            <forward name="editExercise" path="/editExercise.jsp"/>
         </action>
         <action path="/testEdition" name="testForm" 
             input="/testEdition.do?method=prepareEditTestHeader&amp;page=0" scope="request" 
@@ -868,8 +837,6 @@
             <forward name="distributeTestByShifts" path="/distributeTestByShifts.jsp"/>
             <forward name="distributeTestByStudents" path="/distributeTestByStudents.jsp"/>
             <forward name="showTestMarks" path="/showTestMarks.jsp"/>
-            <forward name="showTestMarksStatistics" path="/showTestMarksStatistics.jsp"/>
-            <forward name="showTestStatistics" path="/showTestStatistics.jsp"/>
         </action>
         <action path="/testDistributionByShifts" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseShifts&amp;page=1" scope="request" parameter="method" 

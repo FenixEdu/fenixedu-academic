@@ -29,7 +29,7 @@ public class ReadQuestionImage implements IServico {
 		return "ReadQuestionImage";
 	}
 
-	public String run(Integer exerciseId, Integer imageId, String path)
+	public String run(Integer exerciceId, Integer imageId, String path)
 		throws FenixServiceException {
 		this.path = path.replace('\\', '/');
 		ISuportePersistente persistentSuport;
@@ -39,7 +39,7 @@ public class ReadQuestionImage implements IServico {
 			IPersistentQuestion persistentQuestion =
 				persistentSuport.getIPersistentQuestion();
 
-			IQuestion question = new Question(exerciseId);
+			IQuestion question = new Question(exerciceId);
 
 			question =
 				(IQuestion) persistentQuestion.readByOId(question, false);

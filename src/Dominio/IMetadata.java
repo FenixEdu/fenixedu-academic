@@ -1,6 +1,5 @@
 package Dominio;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ public interface IMetadata extends IDomainObject
 	public abstract String getAuthor();
 	public abstract String getDescription();
 	public abstract String getDifficulty();
-	public abstract Calendar getLearningTime();
+	public abstract String getLearningTime();
 	public abstract String getLevel();
 	public abstract String getMainSubject();
 	public abstract Integer getNumberOfMembers();
@@ -31,7 +30,7 @@ public interface IMetadata extends IDomainObject
 	public abstract void setAuthor(String string);
 	public abstract void setDescription(String string);
 	public abstract void setDifficulty(String string);
-	public abstract void setLearningTime(Calendar calendar);
+	public abstract void setLearningTime(String string);
 	public abstract void setLevel(String string);
 	public abstract void setMainSubject(String string);
 	public abstract void setNumberOfMembers(Integer integer);

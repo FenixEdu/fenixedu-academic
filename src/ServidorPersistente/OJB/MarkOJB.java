@@ -1,6 +1,6 @@
 package ServidorPersistente.OJB;
 
-import java.util.Iterator;import java.util.List;
+import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -105,12 +105,4 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark
         }
         return queryList(Mark.class, criteria);
     }
-	public void deleteByEvaluation(IEvaluation evaluation) throws ExcepcaoPersistencia
-	{
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyEvaluation", evaluation.getIdInternal());
-		List marks = queryList(Mark.class, criteria);
-		Iterator it = marks.iterator();
-		while (it.hasNext())
-			delete((Mark) it.next());
-	}}
+}

@@ -676,7 +676,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
     <target name="load-database"
             depends="create-tables"
             description="Cria as tabelas da base de dados.">
-        <sql
+        <!--<sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
@@ -689,7 +689,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
-        </sql>
+        </sql>-->
 
         <sql
             driver="com.mysql.jdbc.Driver"
@@ -754,7 +754,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
             </classpath>
         </sql>
 
-       <sql
+       <!--<sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
@@ -767,9 +767,9 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
-        </sql>
+        </sql>-->
         
-        <!-- <sql
+       <!-- <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
@@ -782,7 +782,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
-        </sql> -->
+        </sql>-->
         
         <sql
             driver="com.mysql.jdbc.Driver"

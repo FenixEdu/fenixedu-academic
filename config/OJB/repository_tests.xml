@@ -33,8 +33,7 @@
 	<field-descriptor id="6"
 		name="learningTime"
  		column="LEARNINGTIME"
-		jdbc-type="TIME"
-        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+		jdbc-type="VARCHAR"
     />
     <field-descriptor id="7"
 		name="level"
@@ -181,9 +180,9 @@
         jdbc-type="TIMESTAMP"
         conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
 	/>
-   <field-descriptor id="7"
-        name="keyTestScope"
-        column="KEY_TEST_SCOPE"
+    <field-descriptor id="7"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
       <field-descriptor
@@ -193,8 +192,8 @@
       	locking="true"
       />
 	<reference-descriptor
-         name="testScope"
-         class-ref="Dominio.TestScope"
+         name="executionCourse"
+         class-ref="Dominio.ExecutionCourse"
          proxy="true"
     > 
 	<foreignkey field-id-ref="7"/>
@@ -330,20 +329,20 @@
          column="NUMBER_OF_QUESTIONS"
     	 jdbc-type="INTEGER"
     />
-	<field-descriptor id="12"
-        name="keyTestScope"
-        column="KEY_TEST_SCOPE"
+ 	<field-descriptor id="12"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
-	<field-descriptor
+      <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
       />
 	<reference-descriptor
-         name="testScope"
-         class-ref="Dominio.TestScope"
+         name="executionCourse"
+         class-ref="Dominio.ExecutionCourse"
          proxy="true"
     > 
 	<foreignkey field-id-ref="12"/>
@@ -358,7 +357,6 @@
 <!-- Definitions for Dominio.StudentTestQuestion -->
 <!-- ******************************************* -->
 <class-descriptor class="Dominio.StudentTestQuestion"
-				  proxy="dynamic"
                   table="STUDENT_TEST_QUESTION">
     <field-descriptor
         name="idInternal"
@@ -480,100 +478,4 @@
 	 <attribute
 		attribute-name="cacheable"
      	attribute-value="false" />
-</class-descriptor>
-
-<!-- ********************************** -->
-<!-- Definitions for Dominio.OnLineTest -->
-<!-- ********************************** -->
-   <class-descriptor
-   	  class="Dominio.OnlineTest"
-   	  table="EVALUATION"
-   >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-         name="ojbConcreteClass"
-         column="CLASS_NAME"
-         jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="publishmentMessage"
-         column="PUBLISHMENT_MESSAGE"
-        jdbc-type="VARCHAR"
-      />
-      <field-descriptor
-         name="keyDistributedTest"
-         column="KEY_DISTRIBUTED_TEST"
-        jdbc-type="INTEGER"
-      />
-       <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-	  <collection-descriptor
-			name="associatedExecutionCourses"
-			element-class-ref="Dominio.ExecutionCourse"
-			indirection-table="EXAM_EXECUTION_COURSE"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
-			refresh="true"
-			>
-		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
-	</collection-descriptor>
-	<reference-descriptor
-         name="distributedTest"
-         class-ref="Dominio.DistributedTest"
-         proxy="true"
-    >
-		<foreignkey field-ref="keyDistributedTest"/>
-	</reference-descriptor>
-	
-</class-descriptor>
-
-<!-- ******************************************** -->
-<!-- Definitions for Dominio.TestScope -->
-<!-- ******************************************** -->
-<!--  -->
-<class-descriptor class="Dominio.TestScope"
-                  table="TEST_SCOPE"
-                  row-reader="ServidorPersistente.rowReaders.TestScopeRowReader" 
-                  >
-    <field-descriptor id="1"
-        name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
- 	<field-descriptor id="2"
-         name="className"
-         column="CLASS_NAME"
-    	 jdbc-type="VARCHAR"
-    />
-    <field-descriptor id="3"
-         name="keyClass"
-         column="KEY_CLASS"
-    	 jdbc-type="INTEGER"
-    />
-	<field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-	
-	<attribute
-		attribute-name="cacheable"
-    	attribute-value="false" 
-    />
 </class-descriptor>

@@ -1649,8 +1649,27 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     }
 
-  
-   
+    //	======================== Tests Management ========================
+    public ActionForward testsFirstPage(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        readSiteView(request, null, null, null, null);
+        return mapping.findForward("testsFirstPage");
+    }
+    public ActionForward createTest(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        readSiteView(request, null, null, null, null);
+        return mapping.findForward("createTest");
+    }
     public ActionForward showSummaries(
         ActionMapping mapping,
         ActionForm form,

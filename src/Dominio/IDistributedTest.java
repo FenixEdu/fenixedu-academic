@@ -12,8 +12,7 @@ import Util.TestType;
 /**
  * @author Susana Fernandes
  */
-public interface IDistributedTest extends IDomainObject
-{
+public interface IDistributedTest extends IDomainObject {
 	public abstract String getTitle();
 	public abstract String getTestInformation();
 	public abstract Calendar getBeginDate();
@@ -23,9 +22,9 @@ public interface IDistributedTest extends IDomainObject
 	public abstract CorrectionAvailability getCorrectionAvailability();
 	public abstract Boolean getStudentFeedback();
 	public abstract TestType getTestType();
-	public abstract Integer getNumberOfQuestions();
-	public abstract ITestScope getTestScope();
-	public abstract Integer getKeyTestScope();
+	public abstract Integer getNumberOfQuestions() ;
+	public abstract IExecutionCourse getExecutionCourse();
+	public abstract Integer getKeyExecutionCourse();
 	public abstract void setTitle(String string);
 	public abstract void setTestInformation(String string);
 	public abstract void setBeginDate(Calendar calendar);
@@ -36,6 +35,6 @@ public interface IDistributedTest extends IDomainObject
 	public abstract void setStudentFeedback(Boolean feedback);
 	public abstract void setTestType(TestType type);
 	public abstract void setNumberOfQuestions(Integer integer);
-	public abstract void setTestScope(ITestScope scope);
-	public abstract void setKeyTestScope(Integer integer);
+	public abstract void setExecutionCourse(IExecutionCourse execucao);
+	public abstract void setKeyExecutionCourse(Integer integer);
 }

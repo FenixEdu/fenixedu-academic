@@ -33,37 +33,6 @@
 	</field>
    </form>
    
-   <form name="exerciseEditionForm">
-	<field property="learningTimeFormatted" depends="mask, date" page="1">
-		<msg name="date" key="error.invalid.hour"/>
-   		<msg name="mask" key="error.invalid.hour"/>   		
-   		<arg0 key="message.testBeginHour" resource="true"/>
-		<var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..):(.||..))$</var-value>
-        </var>
-   		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
-        </var>
-	</field>
-	<field property="level" depends="integer, range" page="1">
-		<msg name="integer" key="errors.integer"/>
-		<msg name="range" key="errors.range"/>
-        <arg0 key="label.exam.enrollment.year" />
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>12</var-value>
-        </var>
-      </field>
-   </form>
-
    <form name="distributedTestForm">
    	<field property="selected" depends="required" page="2">
     	<arg0 key="message.shiftsOrStudents" resource="true"/>

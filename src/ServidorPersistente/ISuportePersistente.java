@@ -103,7 +103,7 @@ public interface ISuportePersistente
     public IPersistentTeacher getIPersistentTeacher();
 
     public IPersistentExam getIPersistentExam();
-	public IPersistentWrittenTest getIPersistentWrittenTest();    public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
+    public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
 
     public IPersistentBranch getIPersistentBranch();
 
@@ -187,8 +187,8 @@ public interface ISuportePersistente
     public IPersistentDistributedTest getIPersistentDistributedTest();
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
     public IPersistentStudentTestLog getIPersistentStudentTestLog();
-	public IPersistentOnlineTest getIPersistentOnlineTest();
-	public IPersistentTestScope getIPersistentTestScope();    // by Barbosa (October 28th, 2003)
+
+    // by Barbosa (October 28th, 2003)
     public IPersistentGrantOwner getIPersistentGrantOwner();
     //by Barbosa (November 18th, 2003)
     public IPersistentGrantContract getIPersistentGrantContract();
@@ -264,8 +264,7 @@ public interface ISuportePersistente
     public IPersistentStudentCourseReport getIPersistentStudentCourseReport();
     public IPersistentDelegate getIPersistentDelegate();
     
-	//	Ana e Ricardo
-	public IPersistentRoomOccupation getIPersistentRoomOccupation();	public IPersistentPeriod getIPersistentPeriod();    public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine();
+    public IPersistentOtherTypeCreditLine getIPersistentOtherTypeCreditLine();
     
     public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine();
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();

@@ -33,7 +33,7 @@
 </logic:equal>
 
 <html:form action="/studentTests">
-<html:hidden property="method" value="testsFirstPage"/>
+<html:hidden property="method" value="viewTestsToDo"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 
@@ -70,7 +70,7 @@
 				
 				<% if (((String)questionLabel).startsWith("image/")){%>
 					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
+					<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
 					
 					<logic:equal name="imageLabel" value="true">
 						</td><td>
@@ -103,6 +103,7 @@
 				<td>
 					<bean:define id="cardinality" name="question" property="questionCardinality"/>
 			<table><td>
+				<bean:define id="index" value="0"/>
 				<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 				<bean:define id="indexOption" value="0"/>
 				<bean:define id="correct" value="false"/>
@@ -110,7 +111,7 @@
 					<bean:define id="optionLabel" name="optionBody" property="label"/>
 					<% if (((String)optionLabel).startsWith("image/")){ %>
 						<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-						<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+						<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
 					<% } else if (((String)optionLabel).equals("image_label")){%>
 						<bean:write name="optionBody" property="value"/>
 						<br/>
@@ -122,23 +123,20 @@
 							<bean:define id="responsed" name="testQuestion" property="response"/>
 							<logic:notEqual name="responsed" value="0">
 								<logic:notEqual name="indexOption" value="1">
-									<bean:size id="correctResponseSize" name="question" property="correctResponse"/>
-									<logic:notEqual name="correctResponseSize" value="0">
-										<logic:iterate id="correctResponse" name="question" property="correctResponse">
-											<logic:equal name="correctResponse" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
+									<logic:iterate id="correctResponse" name="question" property="correctResponse">
+										<logic:equal name="correctResponse" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
 												<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
 													<td><img src="<%= request.getContextPath() %>/images/correct.gif" alt="" /></td>
 													<bean:define id="correct" value="true"/>
 												</logic:equal>
-											</logic:equal>
-										</logic:iterate>
-										<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
-											<logic:equal name="correct" value="false">
-												<td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="" /></td>
-												<bean:define id="correct" value="true"/>
-											</logic:equal>
 										</logic:equal>
-									</logic:notEqual>
+									</logic:iterate>
+									<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
+										<logic:equal name="correct" value="false">
+											<td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="" /></td>
+											<bean:define id="correct" value="true"/>
+										</logic:equal>
+									</logic:equal>
 								</logic:notEqual>
 								</tr><tr><td>
 								<html:radio property='<%="option["+ optionOrder+"]"%>' value="<%= indexOption.toString() %>" disabled="true"/>

@@ -15,9 +15,16 @@ import java.util.List;
 
 import Util.Season;
 
-public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
-
+public class InfoExam extends InfoEvaluation implements ISiteComponent
+{
+    protected Calendar day;
+    protected Calendar beginning;
+    protected Calendar end;
     protected Season season;
+    protected Calendar enrollmentBeginDay;
+    protected Calendar enrollmentEndDay;
+    protected Calendar enrollmentBeginTime;
+    protected Calendar enrollmentEndTime;
     protected List associatedRooms;
     protected String publishmentMessage;
     protected Integer enrolledStudents;
@@ -59,6 +66,63 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
             + this.getSeason()
             + "'"
             + "";
+    }
+
+    /**
+	 * @return Calendar
+	 */
+    public Calendar getBeginning()
+    {
+        return beginning;
+    }
+
+    /**
+	 * @return Date
+	 */
+    public Calendar getDay()
+    {
+        return day;
+    }
+
+    /**
+	 * @return Calendar
+	 */
+    public Calendar getEnd()
+    {
+        return end;
+    }
+
+    /**
+	 * Sets the beginning.
+	 * 
+	 * @param beginning
+	 *            The beginning to set
+	 */
+    public void setBeginning(Calendar beginning)
+    {
+        this.beginning = beginning;
+    }
+
+    /**
+	 * Sets the day.
+	 * 
+	 * @param day
+	 *            The day to set
+	 */
+    public void setDay(Calendar day)
+    {
+        this.day = day;
+    }
+
+    /**
+	 * Sets the end.
+	 * 
+	 * @param end
+	 *            The end to set
+	 */
+    public void setEnd(Calendar end)
+    {
+        this.end = end;
     }
 
     /**
@@ -151,18 +215,6 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         return result;
     }
 
-	public String getEndHour() {
-		if (getEnd() == null) {
-			return "00:00";
-		}
-		String result =
-			format(String.valueOf(getEnd().get(Calendar.HOUR_OF_DAY)));
-		result += ":";
-		result += format(String.valueOf(getEnd().get(Calendar.MINUTE)));
-		return result;
-	}
-	
-
     /**
 	 * @param string
 	 * @return
@@ -176,6 +228,69 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         return string;
     }
 
+    /**
+	 * @return
+	 */
+    public Calendar getEnrollmentBeginDay()
+    {
+        return enrollmentBeginDay;
+    }
+
+    /**
+	 * @return
+	 */
+    public Calendar getEnrollmentEndDay()
+    {
+        return enrollmentEndDay;
+    }
+
+    /**
+	 * @param calendar
+	 */
+    public void setEnrollmentBeginDay(Calendar calendar)
+    {
+        enrollmentBeginDay = calendar;
+    }
+
+    /**
+	 * @param calendar
+	 */
+    public void setEnrollmentEndDay(Calendar calendar)
+    {
+        enrollmentEndDay = calendar;
+    }
+
+    /**
+	 * @return
+	 */
+    public Calendar getEnrollmentBeginTime()
+    {
+        return enrollmentBeginTime;
+    }
+
+    /**
+	 * @return
+	 */
+    public Calendar getEnrollmentEndTime()
+    {
+        return enrollmentEndTime;
+    }
+
+    /**
+	 * @param calendar
+	 */
+    public void setEnrollmentBeginTime(Calendar calendar)
+    {
+        enrollmentBeginTime = calendar;
+    }
+
+    /**
+	 * @param calendar
+	 */
+    public void setEnrollmentEndTime(Calendar calendar)
+    {
+        enrollmentEndTime = calendar;
+    }
 
     /**
 	 * @return Returns the enrolledStudents.

@@ -6,15 +6,14 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.IDomainObject;
+import Dominio.IExecutionCourse;
 import Dominio.ITest;
 
 /**
  * @author Susana Fernandes
  */
-public interface IPersistentTest extends IPersistentObject
-{
-	public List readByTestScopeObject(IDomainObject object) throws ExcepcaoPersistencia;
-	public List readAll() throws ExcepcaoPersistencia;
+public interface IPersistentTest extends IPersistentObject {
+	public abstract List readByExecutionCourse(IExecutionCourse executionCourse)
+		throws ExcepcaoPersistencia;
 	public void delete(ITest test) throws ExcepcaoPersistencia;
 }

@@ -4,112 +4,47 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
-import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
-
-import Dominio.ITest;
-import Dominio.Test;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import framework.factory.ServiceManagerServiceFactory;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 /**
  * @author Susana Fernandes
  */
-public class InsertTestAsNewTestTest extends ServiceNeedsAuthenticationTestCase
-{
+public class InsertTestAsNewTestTest extends TestCaseReadServices {
 
-	public InsertTestAsNewTestTest(String testName)
-	{
+	public InsertTestAsNewTestTest(String testName) {
 		super(testName);
 	}
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testInsertDistributedTestDataSet.xml";
+	protected void setUp() {
+		super.setUp();
 	}
 
-	protected String getNameOfServiceToBeTested()
-	{
+	protected void tearDown() {
+		super.tearDown();
+	}
+
+	protected String getNameOfServiceToBeTested() {
 		return "InsertTestAsNewTest";
 	}
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+	protected boolean needsAuthorization() {
+		return true;
+	}
 
-		String[] args = { "D2543", "pass", getApplication()};
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		Object[] args = { new Integer(26), new Integer(3)};
 		return args;
 	}
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
-
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		return null;
 	}
 
-	protected String[] getNotAuthenticatedUser()
-	{
-
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
+	protected int getNumberOfItemsToRetrieve() {
+		return 0;
 	}
 
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer executionCourseId = new Integer(34882);
-		Integer testId = new Integer(108);
-		Object[] args = { executionCourseId, testId };
-		return args;
-	}
-
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
-
-	public void testSuccessfull()
-	{
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
-
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-
-			Criteria criteria = new Criteria();
-
-			criteria = new Criteria();
-			criteria.addEqualTo("idInternal", args[1]);
-			Query queryCriteria = new QueryByCriteria(Test.class, criteria);
-			ITest oldTest = (ITest) broker.getObjectByQuery(queryCriteria);
-
-			criteria = new Criteria();
-			criteria.addOrderBy("idInternal", false);
-			queryCriteria = new QueryByCriteria(Test.class, criteria);
-			ITest newTest = (ITest) broker.getObjectByQuery(queryCriteria);
-			broker.close();
-
-			assertEquals(oldTest.getTitle().concat(" (Duplicado)"), newTest.getTitle());
-			assertEquals(oldTest.getInformation(), newTest.getInformation());
-			assertEquals(oldTest.getNumberOfQuestions(), newTest.getNumberOfQuestions());
-			//assertEquals(oldTest.getTestScope().getIdInternal(), newTest.getTestScope().getIdInternal());
-
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("InsertTestAsNewTestTest " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("InsertTestAsNewTestTest " + ex);
-		}
+	protected Object getObjectToCompare() {
+		return new Integer(6);
 	}
 }

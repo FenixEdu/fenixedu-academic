@@ -1,4 +1,5 @@
 <%@ page language="java" %>
+<%@ page import="javax.swing.ImageIcon" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -8,18 +9,11 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
-
 <logic:present name="successfulDistribution">
 	<logic:equal name="successfulDistribution" value="true">
 		<span class="error"><bean:message key="message.successfulDistribution"/></span>
 	</logic:equal>
 </logic:present>
-<logic:present name="successfulEdition">
-	<logic:equal name="successfulEdition" value="true">
-		<span class="error"><bean:message key="message.successfulTestEdition"/></span>
-	</logic:equal>
-</logic:present>
-
 <br/>
 <br/>
 <bean:size id="distrubutedTestsSize" name="component" property="infoDistributedTests"/>
@@ -49,29 +43,12 @@
 		</td>
 		<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>
 		<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
-		
-		<bean:define id="testType" name="distributedTest" property="testType.type"/>
-		<%if(((Integer)testType).intValue()!=3){%>
-			<td><div class="gen-button">
-			<html:link page="<%= "/testDistribution.do?method=showTestMarksStatistics&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
-			<bean:message key="label.test.statistics" />
-			</html:link></div></td>
-			<td><div class="gen-button">
-			<html:link page="<%= "/testDistribution.do?method=showTestMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
-			<bean:message key="label.test.marks" />
-			</html:link></div></td>
-			<td><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +distributedTestCode+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>">
-			<bean:message key="link.export"/>
-			</html:link></div></td>
-		<%} else {%>
-			<td><div class="gen-button">
-			<html:link page="<%= "/testDistribution.do?method=showTestStatistics&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
-			<bean:message key="label.test.statistics" />
-			</html:link></div></td>
-			<td></td>
-		<%}%>
-		
+		<td>
+		<div class="gen-button">
+		<html:link page="<%= "/testDistribution.do?method=showTestMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+		<bean:message key="label.test.marks" />
+		</html:link></div>
+		</td>
 	</tr>
 	</logic:iterate>
 </table>

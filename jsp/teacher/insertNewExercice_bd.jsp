@@ -3,22 +3,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
  
-<h2><bean:message key="title.importExercises"/></h2>
+<h2><bean:message key="title.importExercices"/></h2>
 <br/>
 <table>
-	<tr><td class="infoop"><bean:message key="message.insertNewExercise.information" /></td></tr>
+	<tr><td class="infoop"><bean:message key="message.insertNewExercice.information" /></td></tr>
 </table>
 <br/>
-<html:form action="/exercisesManagement" enctype="multipart/form-data">
+<html:form action="/exercicesManagement" enctype="multipart/form-data">
 <html:hidden property="page" value="0"/>
-<html:hidden property="method" value="loadExerciseFiles"/>
-<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>"/>
-<logic:present name="order">
-	<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>"/>
-</logic:present>
-<logic:present name="asc">
-	<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>"/>
-</logic:present>
+<html:hidden property="method" value="loadExerciceFiles"/>
+<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <span class="error"><html:errors/></span>
 	<table>
 		<tr>

@@ -40,12 +40,6 @@
 					<bean:message key="label.finalEvaluation"/><br />
 					</h2>
 				</logic:equal>
-				<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.ONLINE_TEST_STRING %>">
-					<h2>
-						<bean:define id="distributedTest" name="evaluation" property="infoDistributedTest"/>
-						<bean:write name="distributedTest" property="title"/>
-					</h2>
-				</logic:equal>
 		   </logic:present>
 		   </td>
 		</tr>

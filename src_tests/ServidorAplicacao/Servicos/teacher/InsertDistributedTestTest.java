@@ -16,6 +16,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
+import Dominio.IStudentTestQuestion;
 import Dominio.StudentTestQuestion;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -75,7 +76,7 @@ public class InsertDistributedTestTest extends ServiceNeedsAuthenticationTestCas
 	protected Object[] getAuthorizeArguments()
 	{
 		Integer executionCourseId = new Integer(34882);
-		Integer testId = new Integer(108);
+		Integer testId = new Integer(129);
 		String info = new String("informação da ficha");
 
 		Calendar beginDate = Calendar.getInstance();
@@ -101,7 +102,7 @@ public class InsertDistributedTestTest extends ServiceNeedsAuthenticationTestCas
 		Boolean studentFeedback = new Boolean(true);
 		String[] selected = { new String("3701")};
 		Boolean shifts = new Boolean(false);
-		String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
+		String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
 		Object[] args =
 			{
 				executionCourseId,
@@ -147,7 +148,7 @@ public class InsertDistributedTestTest extends ServiceNeedsAuthenticationTestCas
 			Calendar expectedDistributedTestEndDate = (Calendar) args[5];
 			Calendar expectedDistributedTestEndHour = (Calendar) args[6];
 
-			//assertEquals(distributedTest.getTestScope().getDomainObject().getIdInternal(), args[0]);
+			assertEquals(distributedTest.getExecutionCourse().getIdInternal(), args[0]);
 
 			assertEquals(
 				distributedTest.getBeginDate().get(Calendar.DAY_OF_MONTH),
@@ -200,29 +201,16 @@ public class InsertDistributedTestTest extends ServiceNeedsAuthenticationTestCas
 			List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
 			broker.close();
 
-			assertEquals(studentTestQuestionList.size(), 6);
+			assertEquals(studentTestQuestionList.size(), 1);
 			Iterator it = studentTestQuestionList.iterator();
-
-			//			if (distributedTest.getTestType().getType().intValue() == (TestType.EVALUATION))
-			//			{	
-			//				broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			//				criteria = new Criteria();
-			//				criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-			//				queryCriteria = new QueryByCriteria(OnlineTest.class, criteria);
-			//				IOnlineTest onlineTest = (IOnlineTest) broker.getObjectByQuery(queryCriteria);
-			//				
-			//				assertNotNull("onlineTest null", onlineTest);
-			//
-			//				criteria = new Criteria();
-			//				criteria.addEqualTo("keyEvaluation", onlineTest.getIdInternal());
-			//				queryCriteria = new QueryByCriteria(Mark.class, criteria);
-			//				List marksList = (List) broker.getCollectionByQuery(queryCriteria);
-			//				broker.close();
-			//				
-			//				assertEquals(marksList.size(), 1);
-			//
-			//			}
-
+			while (it.hasNext())
+			{
+				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
+				assertEquals(
+					studentTestQuestion.getKeyDistributedTest(),
+					distributedTest.getIdInternal());
+				assertEquals(studentTestQuestion.getKeyStudent(), new Integer(((String[]) args[10])[0]));
+			}
 		}
 		catch (FenixServiceException ex)
 		{

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -39,6 +38,34 @@ public class ParseMetadata extends DefaultHandler
 	private Vector vector = new Vector();
 	private Element current = null;
 
+	public void MySAXParserBean()
+	{//
+	}
+
+	public XMLReader getXMLReader(String path) throws Exception
+	{
+		try
+		{
+
+			SAXParserFactory spf = SAXParserFactory.newInstance();
+			SAXParser saxParser = spf.newSAXParser();
+			XMLReader reader = saxParser.getXMLReader();
+			reader.setContentHandler(this);
+			reader.setErrorHandler(this);
+			Resolver resolver = new Resolver(path);
+			reader.setEntityResolver(resolver);
+			return reader;
+		}
+		catch (SAXParseException e)
+		{
+			throw e;
+		}
+		catch (SAXException e)
+		{
+			throw e;
+		}
+	}
+
 	public List parseMetadata(String file, String path) throws Exception
 	{
 		SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -51,7 +78,7 @@ public class ParseMetadata extends DefaultHandler
 		{
 			StringReader sr = new StringReader(file);
 			InputSource input = new InputSource(sr);
-			MetadataResolver resolver = new MetadataResolver(path);
+			Resolver resolver = new Resolver(path);
 			reader.setEntityResolver(resolver);
 			reader.parse(input);
 		}
@@ -83,7 +110,7 @@ public class ParseMetadata extends DefaultHandler
 		{
 			StringReader sr = new StringReader(file);
 			InputSource input = new InputSource(sr);
-			MetadataResolver resolver = new MetadataResolver(path);
+			Resolver resolver = new Resolver(path);
 			reader.setEntityResolver(resolver);
 			reader.parse(input);
 		}
@@ -275,12 +302,7 @@ public class ParseMetadata extends DefaultHandler
 
 			else if ((tag.equals("datetime")) && typicallearningtime == true)
 			{
-				String[] hourTokens = element.getValue().split(":");
-				Calendar result = Calendar.getInstance();
-				result.set(Calendar.HOUR_OF_DAY, (new Integer(hourTokens[0])).intValue());
-				result.set(Calendar.MINUTE, (new Integer(hourTokens[1])).intValue());
-				result.set(Calendar.SECOND, new Integer(0).intValue());
-				metadata.setLearningTime(result);
+				metadata.setLearningTime(element.getValue());
 				typicallearningtime = false;
 			}
 		}

@@ -16,13 +16,13 @@ public class InfoTest extends InfoObject {
 	private Integer numberOfQuestions;
 	private Date creationDate;
 	private Date lastModifiedDate;
-	private InfoTestScope infoTestScope;
+	private InfoExecutionCourse infoExecutionCourse;
 
 	public InfoTest() {
 	}
 
-	public InfoTestScope getInfoTestScope() {
-		return infoTestScope;
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
 	}
 
 	public Integer getNumberOfQuestions() {
@@ -33,8 +33,8 @@ public class InfoTest extends InfoObject {
 		return title;
 	}
 
-	public void setInfoTestScope(InfoTestScope infoTestScope) {
-		this.infoTestScope = infoTestScope;
+	public void setInfoExecutionCourse(InfoExecutionCourse course) {
+		infoExecutionCourse = course;
 	}
 
 	public void setNumberOfQuestions(Integer integer) {
@@ -118,8 +118,8 @@ public class InfoTest extends InfoObject {
 			result = getIdInternal().equals(infoTest.getIdInternal());
 			result =
 				result
-					|| (getInfoTestScope()
-						.equals(infoTest.getInfoTestScope()))
+					|| (getInfoExecutionCourse()
+						.equals(infoTest.getInfoExecutionCourse()))
 					&& (getTitle().equals(infoTest.getTitle()))
 					&& (getInformation().equals(infoTest.getInformation()))
 					&& (getNumberOfQuestions()

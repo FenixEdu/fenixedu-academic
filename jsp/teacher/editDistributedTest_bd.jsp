@@ -5,43 +5,40 @@
 
 <script language="Javascript" type="text/javascript">
 <!--
+var select = false;
+var disable = false;
 
-function selectAvailableCorrection(){
-	var availableCorrection = document.forms[0].availableCorrection;
-	var testType = document.forms[0].testType;
-	if(availableCorrection[0].checked==false && testType[2].checked==true){
-		testType[0].checked=true;
+function invertSelect(){
+	if ( select == false ) { 
+		select = true; 
+	} else { 
+		select = false;
+	}
+	for (var i=1;i<document.distributedTestForm.selected.length;i++){
+		var e = document.distributedTestForm.selected[i];
+		if (select == true) { e.checked = true; } else { e.checked = false; }
 	}
 }
-function selectStudentFeedback(){
-	var studentFeedback = document.forms[0].studentFeedback;
-	var testType = document.forms[0].testType;
-	if(studentFeedback[1].checked==false && testType[2].checked==true){
-		testType[0].checked=true;
+
+function disableSelects() { 
+	if ( disable == false ) { 
+		disable = true; 
+	} else { 
+		disable = false;
+	}
+	var e0 = document.distributedTestForm.selected[0];
+	for (var i=1;i<document.distributedTestForm.selected.length;i++){
+		var e = document.distributedTestForm.selected[i];
+		if (disable == true) { e0.checked=true; e.disabled = true;} else { e.disabled = false; e0.checked=false; }
 	}
 }
-function selectInquiry() { 
-	var testType = document.forms[0].testType;
-	var availableCorrection = document.forms[0].availableCorrection;
-	var studentFeedback = document.forms[0].studentFeedback;
-	var disable=false;
-	if(testType[2].checked==true){
-		availableCorrection[0].checked=true;
-		studentFeedback[1].checked=true;
-		disable=true;
-	}
-	for (var i=0; i<document.forms[0].availableCorrection.length; i++){
-		var e = document.forms[0].availableCorrection[i];
-		if(disable == true) e.disabled=true; else e.disabled=false;
-	}
-	for (var i=0; i<document.forms[0].studentFeedback.length; i++){
-		var e = document.forms[0].studentFeedback[i];
-		if(disable == true) e.disabled=true; else e.disabled=false;
-	}
+
+
+function cleanSelect() { 
+	select = false; 
+	document.distributedTestForm.selected[1].checked = false; 
 }
-function changeMethod(){
-	document.forms[0].method.value="showDistributedTests";
-}
+
 // -->
 </script>
 
@@ -105,7 +102,7 @@ function changeMethod(){
 	<logic:iterate id="testType" name="testTypeList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="testType" property="label"/></td>
-			<td><html:radio property="testType" value="<%=testType.getValue()%>" onclick="selectInquiry()"/></td>
+			<td><html:radio property="testType" value="<%=testType.getValue()%>"/></td>
 		</tr>
 	</logic:iterate>
 </table>
@@ -117,7 +114,7 @@ function changeMethod(){
 	<logic:iterate id="correctionAvailability" name="correctionAvailabilityList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="correctionAvailability" property="label"/></td>
-			<td><html:radio property="availableCorrection" value="<%=correctionAvailability.getValue()%>" onclick="selectAvailableCorrection()"/></td>
+			<td><html:radio property="availableCorrection" value="<%=correctionAvailability.getValue()%>"/></td>
 		</tr>
 	</logic:iterate>
 </table>
@@ -127,7 +124,7 @@ function changeMethod(){
 		<td><b><bean:message key="message.studentFeedback"/></b></td>
 	</tr>
 	<tr><td></td>
-		<td><bean:message key="option.manager.true"/></td><td><html:radio property="studentFeedback" value="true" onclick="selectStudentFeedback()"/></td>
+		<td><bean:message key="option.manager.true"/></td><td><html:radio property="studentFeedback" value="true"/></td>
 	</tr>
 	<tr><td></td>
 		<td><bean:message key="option.manager.false"/></td><td><html:radio property="studentFeedback" value="false"/></td>
@@ -143,12 +140,14 @@ function changeMethod(){
 </table>
 <br/>
 <br/>
-
 <table align="center">
 <tr>
 	<td><html:submit styleClass="inputbutton" property="save"><bean:message key="button.save"/></html:submit></td>
-	<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td>
-	<td><html:submit styleClass="inputbutton" onclick="changeMethod()"><bean:message key="label.back"/></html:submit></td>
+	<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td></html:form>
+	<html:form action="/testDistribution">
+	<html:hidden property="page" value="0"/>
+	<html:hidden property="method" value="showDistributedTests"/>
+	<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>			
+	<td><html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td></html:form>
 </tr>
 </table>
-</html:form>

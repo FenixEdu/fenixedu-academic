@@ -80,7 +80,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IFinalEvaluation;
 import Dominio.IGroupProperties;
 import Dominio.IItem;
-import Dominio.IOnlineTest;import Dominio.IProfessorship;
+import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -795,8 +795,6 @@ public class TeacherAdministrationSiteComponentBuilder
         boolean hasFinalEvaluation = false;
         List infoEvaluations = new ArrayList();
         List infoFinalEvaluations = new ArrayList();
-		List infoOnlineTests = new ArrayList();
-		
         while (iter.hasNext())
         {
             IEvaluation evaluation = (IEvaluation) iter.next();
@@ -810,11 +808,7 @@ public class TeacherAdministrationSiteComponentBuilder
                 hasFinalEvaluation = true;
                 infoFinalEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
             }
-			else if (evaluation instanceof IOnlineTest)
-			{
-				infoOnlineTests.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
         }
-		}
 
         if (!hasFinalEvaluation)
         {
@@ -852,8 +846,8 @@ public class TeacherAdministrationSiteComponentBuilder
         comparatorChain.addComparator(new BeanComparator("beginning.time"));
 
         Collections.sort(infoEvaluations, comparatorChain);
-		//merge lists
-		infoEvaluations.addAll(infoOnlineTests);
+
+        //merge two list
         infoEvaluations.addAll(infoFinalEvaluations);
 
         component.setInfoEvaluations(infoEvaluations);

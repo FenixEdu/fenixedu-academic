@@ -7,9 +7,9 @@ DELETE FROM BRANCH;
 # 									NA TABELA 'CURRICULAR_COURSE_SCOPE'
 #-------------------------------
 ;
-INSERT INTO BRANCH values (1, 'C', 'Computação', 1,'', 0, 0);
-INSERT INTO BRANCH values (2, 'IA', 'Inteligencia Artificial', 1,'', 0, 0);
-INSERT INTO BRANCH values (3, 'II', 'Informatica Industrial', 1,'', 0, 0);
+INSERT INTO BRANCH values (1, 'C', 'Computação', 1,'');
+INSERT INTO BRANCH values (2, 'IA', 'Inteligencia Artificial', 1,'');
+INSERT INTO BRANCH values (3, 'II', 'Informatica Industrial', 1,'');
 
 #-----------------------------
 # Data for table 'CURRICULAR_YEAR'
@@ -137,7 +137,7 @@ INSERT INTO DEPARTMENT_COURSE VALUES (2, 'Nao sei', 'mvt', 1);
 #-----------------------------
 ;
 DELETE FROM DEGREE;
-INSERT INTO DEGREE VALUES (8,'LEIC','Engenharia Informatica e de Computadores',1);
+INSERT INTO DEGREE VALUES (8,'LEIC','Licenciatura de Engenharia Informatica e de Computadores',1);
 INSERT INTO DEGREE VALUES (9,'MEEC','Engenharia Electrotecnica e de Computadores',2);
 INSERT INTO DEGREE VALUES (10,'MIC','Informatica e Computadores',2);
 INSERT INTO DEGREE VALUES (11,'MEM','Engenharia Mecanica',2);
@@ -215,8 +215,6 @@ INSERT INTO CURRICULAR_COURSE_SCOPE values (15, 1, 24, 1, 0, 0, 0, 0, 2, 1, 1, n
 INSERT INTO CURRICULAR_COURSE_SCOPE values (16, 1, 25, 1, 0, 0, 0, 0, 2, 1, 1, null, null, 0, null);
 INSERT INTO CURRICULAR_COURSE_SCOPE values (17, 1, 26, 1, 0, 0, 0, 0, 2, 1, 1, null, null, 0, null);
 INSERT INTO CURRICULAR_COURSE_SCOPE values (18, 1, 27, 1, 0, 0, 0, 0, 2, 1, 1, null, null, 0, null);
-
-INSERT INTO CURRICULAR_COURSE_SCOPE values (19, 3, 20, 1, 0, 0, 0, 0, 2, 1, 1, NULL, NULL, 0, NULL);
 
 -- -----------------------------
 -- Data for table 'STUDENT_KIND'

@@ -2,47 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-
-<script language="Javascript" type="text/javascript">
-<!--
-
-function selectAvailableCorrection(){
-	var availableCorrection = document.distributedTestForm.availableCorrection;
-	var testType = document.distributedTestForm.testType;
-	if(availableCorrection[0].checked==false && testType[2].checked==true){
-		testType[0].checked=true;
-	}
-}
-function selectStudentFeedback(){
-	var studentFeedback = document.distributedTestForm.studentFeedback;
-	var testType = document.distributedTestForm.testType;
-	if(studentFeedback[1].checked==false && testType[2].checked==true){
-		testType[0].checked=true;
-	}
-}
-function selectInquiry() { 
-	var testType = document.distributedTestForm.testType;
-	var availableCorrection = document.distributedTestForm.availableCorrection;
-	var studentFeedback = document.distributedTestForm.studentFeedback;
-	var disable=false;
-	if(testType[2].checked==true){
-		availableCorrection[0].checked=true;
-		studentFeedback[1].checked=true;
-		disable=true;
-	}
-	for (var i=0; i<document.distributedTestForm.availableCorrection.length; i++){
-		var e = document.distributedTestForm.availableCorrection[i];
-		if(disable == true) e.disabled=true; else e.disabled=false;
-	}
-	for (var i=0; i<document.distributedTestForm.studentFeedback.length; i++){
-		var e = document.distributedTestForm.studentFeedback[i];
-		if(disable == true) e.disabled=true; else e.disabled=false;
-	}
-}
-
-// -->
-</script>
-
 <h2><bean:message key="title.distributeTest"/></h2>
 <table>
 	<tr>
@@ -97,7 +56,7 @@ function selectInquiry() {
 	<logic:iterate id="testType" name="testTypeList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="testType" property="label"/></td>
-			<td><html:radio property="testType" value="<%=testType.getValue()%>" onclick="selectInquiry()"/></td>
+			<td><html:radio property="testType" value="<%=testType.getValue()%>"/></td>
 		</tr>
 	</logic:iterate>
 </table>
@@ -109,7 +68,7 @@ function selectInquiry() {
 	<logic:iterate id="correctionAvailability" name="correctionAvailabilityList" type="org.apache.struts.util.LabelValueBean">
 		<tr><td></td>
 			<td><bean:write name="correctionAvailability" property="label"/></td>
-			<td><html:radio property="availableCorrection" value="<%=correctionAvailability.getValue()%>" onclick="selectAvailableCorrection()"/></td>
+			<td><html:radio property="availableCorrection" value="<%=correctionAvailability.getValue()%>"/></td>
 		</tr>
 	</logic:iterate>
 </table>
@@ -119,10 +78,10 @@ function selectInquiry() {
 		<td><b><bean:message key="message.studentFeedback"/></b></td>
 	</tr>
 	<tr><td></td>
-		<td><bean:message key="option.manager.true"/></td><td><html:radio property="studentFeedback" value="true" onclick="selectStudentFeedback()"/></td>
+		<td><bean:message key="option.manager.true"/></td><td><html:radio property="studentFeedback" value="true"/></td>
 	</tr>
 	<tr><td></td>
-		<td><bean:message key="option.manager.false"/></td><td><html:radio property="studentFeedback" value="false" /></td>
+		<td><bean:message key="option.manager.false"/></td><td><html:radio property="studentFeedback" value="false"/></td>
 	</tr>
 </table>
 <br/>
