@@ -132,7 +132,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
 					userView,
-					"ReadStudentTest",
+					"ReadStudentTestToDo",
 					new Object[] {
 						userView.getUtilizador(),
 						new Integer(testCode),
@@ -245,7 +245,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
 					userView,
-					"ReadStudentTest",
+					"ReadStudentTestToDo",
 					new Object[] {
 						userView.getUtilizador(),
 						new Integer(testCode),
@@ -356,7 +356,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 			infoStudentTestQuestionList =
 				(List) ServiceUtils.executeService(
 					userView,
-					"ReadStudentTest",
+					"ReadStudentTestForCorrection",
 					new Object[] {
 						userView.getUtilizador(),
 						new Integer(testCode),
