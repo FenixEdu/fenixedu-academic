@@ -113,7 +113,7 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 		} catch (Exception e) {
 			return false;
 		}
-		return bibReference.getExecutionCourse().equals(executionCourse);
+		return ((bibReference != null) && (bibReference.getExecutionCourse().equals(executionCourse)));
 	}
 
 	/**
