@@ -6,6 +6,8 @@
  */
 package middleware.posgrad;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -304,6 +306,8 @@ public class MigrateInscricoes2FenixEnrolments {
 				result = (List) broker.getCollectionByQuery(query);		
 
 				if (result.size() != 1) {
+					System.out.println(student.getIdInternal());
+					System.out.println(curricularCourse.getDegreeCurricularPlan().getIdInternal());
 					throw new Exception("Error Reading Student Curricular Plan [" + result.size() + "]");
 				}
 
@@ -353,7 +357,9 @@ public class MigrateInscricoes2FenixEnrolments {
 				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 				enrolmentEvaluation.setEnrolment(enrolment2Write);
 				enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-			
+				
+				enrolmentEvaluation.setWhen(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+				
 			
 				if (evaluationNeeded){
 					enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
@@ -369,11 +375,11 @@ public class MigrateInscricoes2FenixEnrolments {
 
 					criteria = new Criteria();
 					criteria.addEqualTo("numeroMecanografico", inscricao.getCreditos());
-						query = new QueryByCriteria(Funcionario.class,criteria);
+					query = new QueryByCriteria(Funcionario.class,criteria);
 
-						result = (List) broker.getCollectionByQuery(query);		
+					result = (List) broker.getCollectionByQuery(query);		
 
-						if (result.size() != 1) {
+					if (result.size() != 1) {
 
 	System.out.println("TEMPORARIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 [" + inscricao.getCreditos() + "]");
 	broker.commitTransaction();
@@ -410,7 +416,7 @@ public class MigrateInscricoes2FenixEnrolments {
 					enrolmentEvaluation.setGradeAvailableDate(null);
 					enrolmentEvaluation.setObservation(null);
 					enrolmentEvaluation.setPersonResponsibleForGrade(null);
-					enrolmentEvaluation.setWhen(null);
+					
 				}
 				
 

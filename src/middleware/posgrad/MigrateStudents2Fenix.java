@@ -173,86 +173,86 @@ public class MigrateStudents2Fenix {
 					
 					studentsWritten++;
 				} else if (resultStudent.size() == 1) {
-				
 					student2Write = (IStudent) resultStudent.get(0);
+				}
 					
-					IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-					studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
-					if ((student2Convert.getEspecializacao().equalsIgnoreCase("Mestrado"))){
-						studentCurricularPlan.setSpecialization(new Specialization(Specialization.MESTRADO));
-					} else {
-						studentCurricularPlan.setSpecialization(new Specialization(Specialization.ESPECIALIZACAO));
-					}
-					studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
-					studentCurricularPlan.setStudent(student2Write);
-					
-					
-					criteria = new Criteria();
-					criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(student2Convert.getCodigocursomestrado())));
-					query = new QueryByCriteria(Posgrad_curso_mestrado.class,criteria);
-					result = (List) broker.getCollectionByQuery(query);		
-		
-					if (result.size() == 0){
-						throw new Exception("Error Reading Curso Mestrado (" + student2Convert.getCodigocursomestrado() + ")");
-					}
+				IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+				studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
+				if ((student2Convert.getEspecializacao().equalsIgnoreCase("Mestrado"))){
+					studentCurricularPlan.setSpecialization(new Specialization(Specialization.MESTRADO));
+				} else {
+					studentCurricularPlan.setSpecialization(new Specialization(Specialization.ESPECIALIZACAO));
+				}
+				studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
+				studentCurricularPlan.setStudent(student2Write);
+				
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(student2Convert.getCodigocursomestrado())));
+				query = new QueryByCriteria(Posgrad_curso_mestrado.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+	
+				if (result.size() == 0){
+					throw new Exception("Error Reading Curso Mestrado (" + student2Convert.getCodigocursomestrado() + ")");
+				}
 
-					Posgrad_curso_mestrado posgrad_curso_mestrado = (Posgrad_curso_mestrado) result.get(0);
-					
-					// Get the Degree											
+				Posgrad_curso_mestrado posgrad_curso_mestrado = (Posgrad_curso_mestrado) result.get(0);
+				
+				// Get the Degree											
 
-					criteria = new Criteria();
-					criteria.addEqualTo("nome", posgrad_curso_mestrado.getNomemestrado());
-					criteria.addEqualTo("tipoCurso", new Integer(TipoCurso.MESTRADO));
-					query = new QueryByCriteria(Curso.class,criteria);
-					result = (List) broker.getCollectionByQuery(query);		
-		
-					if (result.size() == 0){
-						throw new Exception("Error Reading Degree (" + posgrad_curso_mestrado.getNomemestrado() + ")");
-					}
+				criteria = new Criteria();
+				criteria.addEqualTo("nome", posgrad_curso_mestrado.getNomemestrado());
+				criteria.addEqualTo("tipoCurso", new Integer(TipoCurso.MESTRADO));
+				query = new QueryByCriteria(Curso.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+	
+				if (result.size() == 0){
+					throw new Exception("Error Reading Degree (" + posgrad_curso_mestrado.getNomemestrado() + ")");
+				}
 
-					Curso degree = (Curso) result.get(0);
+				Curso degree = (Curso) result.get(0);
 
-					// Get the Degree Curricular Plan
-					
-					criteria = new Criteria();
-					criteria.addEqualTo("degreeKey", degree.getIdInternal());
-					query = new QueryByCriteria(DegreeCurricularPlan.class,criteria);
-					result = (List) broker.getCollectionByQuery(query);		
-		
-					if (result.size() == 0){
-						throw new Exception("Error Reading Degree Curricular Plan (" + degree.getNome() + ")");
-					}
+				// Get the Degree Curricular Plan
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("degreeKey", degree.getIdInternal());
+				query = new QueryByCriteria(DegreeCurricularPlan.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+	
+				if (result.size() == 0){
+					throw new Exception("Error Reading Degree Curricular Plan (" + degree.getNome() + ")");
+				}
 
-					DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0);
+				DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0);
 
-					// Get the Branch
-					
-					criteria = new Criteria();
-					criteria.addEqualTo("code", "");
-					criteria.addEqualTo("name", "");
-					criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
-					query = new QueryByCriteria(Branch.class,criteria);
-					result = (List) broker.getCollectionByQuery(query);		
+				// Get the Branch
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("code", "");
+				criteria.addEqualTo("name", "");
+				criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
+				query = new QueryByCriteria(Branch.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
 
-					if (result.size() == 0){
-						throw new Exception("Error Reading Branch (Curricular Plan Key: " + degreeCurricularPlan.getIdInternal() + ")");
-					}
+				if (result.size() == 0){
+					throw new Exception("Error Reading Branch (Curricular Plan Key: " + degreeCurricularPlan.getIdInternal() + ")");
+				}
 
 
-					studentCurricularPlan.setDegreeCurricularPlan((IDegreeCurricularPlan) degreeCurricularPlan);
-					studentCurricularPlan.setBranch((IBranch) result.get(0));
-					
-					
-					if ((student2Convert.getCreditos() != null) && (student2Convert.getCreditos().length() != 0)){
-						studentCurricularPlan.setGivenCredits(new Double(student2Convert.getCreditos()));
-					}
+				studentCurricularPlan.setDegreeCurricularPlan((IDegreeCurricularPlan) degreeCurricularPlan);
+				studentCurricularPlan.setBranch((IBranch) result.get(0));
+				
+				
+				if ((student2Convert.getCreditos() != null) && (student2Convert.getCreditos().length() != 0)){
+					studentCurricularPlan.setGivenCredits(new Double(student2Convert.getCreditos()));
+				}
 
-					try {
-						broker.store(studentCurricularPlan);
-					} catch(Exception e) { 
-						throw new Exception(e);
-					}
-				} 
+				try {
+					broker.store(studentCurricularPlan);
+				} catch(Exception e) { 
+					throw new Exception(e);
+				}
+ 
 
 				// Give the Student Role (This student may not exist but the person may already be a 
 				// Graduate Student) 

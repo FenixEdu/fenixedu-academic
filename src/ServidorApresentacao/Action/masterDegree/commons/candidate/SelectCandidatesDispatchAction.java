@@ -195,7 +195,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(e);
 		}
-		if(candidatesAdmited.size() > 0 /*numerusClausus.intValue()*/) {
+		if(candidatesAdmited.size() > numerusClausus.intValue()) {
 			generateToken(request);
 			saveToken(request);
 			return mapping.findForward("RequestConfirmation");
