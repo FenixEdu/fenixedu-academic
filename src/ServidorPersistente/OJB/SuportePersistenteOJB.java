@@ -84,6 +84,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	Implementation _odmg = null;
 	private static SuportePersistenteOJB _instance = null;
 
+	protected Implementation getImplementation() {
+		return _odmg;
+	}
+
 	public static synchronized SuportePersistenteOJB getInstance()
 		throws ExcepcaoPersistencia {
 		if (_instance == null) {
@@ -114,29 +118,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	public void iniciarTransaccao() throws ExcepcaoPersistencia {
-
 		try {
-			//System.out.println("SuportePersistente.OJB::iniciarTransaccao()");
-
-			///////////////////////////////////////////////////////////////////
-			// Removed Code due to Upgrade from OJB 0.9.5 to OJB rc1
-			///////////////////////////////////////////////////////////////////
-			//Database db = _odmg.newDatabase();
-			///////////////////////////////////////////////////////////////////
-			// End of Removed Code
-			///////////////////////////////////////////////////////////////////
-
-			///////////////////////////////////////////////////////////////////
-			// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
-			///////////////////////////////////////////////////////////////////
-
-
 				openDatabase();
-
 				Transaction tx = _odmg.newTransaction();
 				tx.begin();
-
-
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.OPEN_DATABASE,
@@ -151,9 +136,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	private void openDatabase() throws ODMGException {
 		Database db = _odmg.getDatabase(null);
 		if (db == null) {
-			///////////////////////////////////////////////////////////////////
-			// End of Added Code
-			///////////////////////////////////////////////////////////////////				
 			db = _odmg.newDatabase();
 			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
 		}
@@ -169,8 +151,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 					"SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
 				tx.commit();
-				Database db =_odmg.getDatabase(null); 
-				if (db!= null) db.close();
+//				Database db =_odmg.getDatabase(null); 
+//				if (db!= null) db.close();
 			}
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
@@ -190,7 +172,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 				if (tx != null) {
 					tx.abort();
-					_odmg.getDatabase(null).close();
+//					_odmg.getDatabase(null).close();
 				}
 
 		} catch (ODMGException ex1) {

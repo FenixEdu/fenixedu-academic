@@ -62,17 +62,25 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	/** Creates a new instance of ObjectFenixOJB */
 	public ObjectFenixOJB() {
-		odmg = OJB.getInstance();
-
-		db = odmg.newDatabase();
-
 		try {
-			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-		} catch (ODMGException e) {
-			e.printStackTrace();
+			odmg = SuportePersistenteOJB.getInstance().getImplementation();
+		} catch (ExcepcaoPersistencia e1) {
+			e1.printStackTrace();
+		}
+
+		db = odmg.getDatabase(null);
+		if (db == null) {
+			System.out.println("Openiing a new database connection in Object Fenix!!!");
+			db = odmg.newDatabase();
+			try {
+				db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
+			} catch (ODMGException e) {
+				e.printStackTrace();
+			}
 		}
 
 		query = odmg.newOQLQuery();
+
 	}
 
 	public void lockRead(List list) throws ExcepcaoPersistencia {
