@@ -13,7 +13,7 @@
   <logic:equal name="item" property="urgent" value="true"></font></logic:equal>
 </logic:iterate>
 
-<html:link page="/deleteSection">
+<html:link page="/deleteSection.do">
 	<bean:message key="button.delete"/>
 </html:link>
 
