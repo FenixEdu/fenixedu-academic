@@ -11,6 +11,7 @@ import java.util.HashMap;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.Servicos.TestCaseCreateServices;
 
 /**
@@ -22,33 +23,47 @@ import ServidorAplicacao.Servicos.TestCaseCreateServices;
 public class InsertBibliographicReferenceTest extends TestCaseCreateServices {
 
 	public InsertBibliographicReferenceTest(String testName) {
-		super(testName);
-		// TODO Auto-generated constructor stub
+		super(testName);		
 	}
 
 	protected String getNameOfServiceToBeTested() {
 		return "InsertBibliographicReference";
 	}
 	
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {	
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-		infoExecutionYear.setYear("2003");
-		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
-		infoExecutionCourse.setLabHours(new Double(45));
-		infoExecutionCourse.setNome("so");
-		infoExecutionCourse.setPraticalHours(new Double(578));
-		infoExecutionCourse.setSigla("so");
-		infoExecutionCourse.setTheoPratHours(new Double(57));
-		infoExecutionCourse.setTheoreticalHours(new Double(12));					
-		Object[] args = {infoExecutionCourse, "xpto2","joao","fr","2007",new Boolean(true)}; 		
-		return args; 
-		}
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		IDisciplinaExecucao executionCourse = null;
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
+				InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+				InfoExecutionCourse infoExecutionCourse =
+					new InfoExecutionCourse(
+						"Trabalho Final de Curso I",
+						"TFCI",
+						"programa1",
+						new Double(1.5),
+						new Double(2),
+						new Double(1.5),
+						new Double(2),
+						infoExecutionPeriod);						 
+		Object[] args = {infoExecutionCourse, "xpto","pedrorg","ref","2002",new Boolean("false")};																										
+		return args;								 
+	}
 			
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {		
-		return null;
+		IDisciplinaExecucao executionCourse = null;
+				InfoExecutionYear infoExecutionYear = new InfoExecutionYear("2002/2003");
+						InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+						InfoExecutionCourse infoExecutionCourse =
+							new InfoExecutionCourse(
+								"Trabalho Final de Curso I",
+								"TFCI",
+								"programa1",
+								new Double(1.5),
+								new Double(2),
+								new Double(1.5),
+								new Double(2),
+								infoExecutionPeriod);						 
+				Object[] args = {infoExecutionCourse, "xpto","pedro","ref","2002",new Boolean("false")};																										
+				return args;						
 	}
 	
 	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
