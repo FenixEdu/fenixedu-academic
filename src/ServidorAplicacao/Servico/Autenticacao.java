@@ -119,9 +119,7 @@ public class Autenticacao implements IServico {
             } else
                 userView.setCandidateView(null);
 
-            filterEmployeeRoleFromTeacher(userView);
-            //return filterUserView(userView, application);
-            return userView;
+            return filterUserView(userView, application);
         }
         throw new ExcepcaoAutenticacao("Autenticacao incorrecta");
     }
