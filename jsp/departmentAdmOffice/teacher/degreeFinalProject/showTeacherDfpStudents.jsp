@@ -25,8 +25,15 @@
 	<html:hidden property="executionYearId"/>		
 	<html:errors />
 	<p>
+	
 		<bean:message key="label.teacher-dfp-student.student-number"/>
-		<html:text property="studentNumber" value=""/>
+		<logic:messagesPresent>
+			<html:text property="studentNumber"/>		
+		</logic:messagesPresent>
+		<logic:messagesNotPresent>
+			<html:text property="studentNumber" value=""/>		
+		</logic:messagesNotPresent>		
+
 		<html:submit styleClass="inputbutton">
 			<bean:message key="button.ok"/>
 		</html:submit>
