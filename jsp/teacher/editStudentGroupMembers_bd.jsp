@@ -34,6 +34,7 @@
 		</td>
 		<td class="listClasses-header"><bean:message key="label.teacher.StudentEmail" />
 		</td>
+		
 	</tr>
 	
 	<logic:iterate id="infoSiteStudentInformation" name="component" property="infoSiteStudentInformationList">			
@@ -51,6 +52,7 @@
 			</td>	
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="email"/>
 			</td>
+		
 	 	</tr>	
 	 </logic:iterate>
  

@@ -14,6 +14,7 @@ import Dominio.GroupProperties;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
+import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -98,11 +99,31 @@ public class EditGroupProperties implements IServico{
 			
 			if(groupMaximumNumber!=null)
 			{
-				if(allStudentsGroup.size()>groupMaximumNumber.intValue())
-				{
-					errors.add(new NonValidChangeServiceException());
-					return errors;
-				}
+				ITurno shift = null;
+				List shiftsInternalList = new ArrayList();
+				Iterator iterator = allStudentsGroup.iterator();
+
+				while (iterator.hasNext()) {
+						shift = ((IStudentGroup) iterator.next()).getShift();
+						if (!shiftsInternalList.contains(shift))
+							shiftsInternalList.add(shift);
+						}
+						
+				Iterator iterator2 = shiftsInternalList.iterator();
+				List studentGroupsList = null;
+				shift = null;
+			
+				while (iterator2.hasNext()) {
+					shift = (ITurno) iterator2.next();
+					studentGroupsList = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
+					if(studentGroupsList.size()>groupMaximumNumber.intValue())
+						{
+							errors.add(new NonValidChangeServiceException());
+							return errors;
+						}
+						
+					}
+				
 			}	
 			
 			if(maximumCapacity==null && minimumCapacity==null)

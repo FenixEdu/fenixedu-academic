@@ -26,7 +26,7 @@
             
             </tbody>
 </table>
-<h2><li><html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefintion"/></html:link></li></h2>
+<h2><li><html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link></li></h2>
        
 </logic:present>
 

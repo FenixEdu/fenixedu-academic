@@ -85,10 +85,12 @@ public class InsertStudentGroupMembers implements IServico {
 				IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iterator.next()), false);
 
 				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);
-			
-				IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(studentGroup, attend);
-				persistentStudentGroupAttend.lockWrite(newStudentGroupAttend);
-			
+				IStudentGroupAttend existingStudentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup,attend);
+				if(existingStudentGroupAttend==null)
+				{
+					IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(studentGroup, attend);
+					persistentStudentGroupAttend.lockWrite(newStudentGroupAttend);
+				}
 			}
 
 		}

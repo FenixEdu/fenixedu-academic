@@ -38,7 +38,7 @@
  
 </table>
 <br>
-<html:submit styleClass="inputbutton"><bean:message key="button.edit"/>                    		         	
+<html:submit styleClass="inputbutton"><bean:message key="button.change"/>                    		         	
 </html:submit>
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>

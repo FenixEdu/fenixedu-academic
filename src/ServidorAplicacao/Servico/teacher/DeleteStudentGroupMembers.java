@@ -88,8 +88,11 @@ public class DeleteStudentGroupMembers implements IServico {
 				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, executionCourse);
 				
 				IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup,attend); 
+				if(oldStudentGroupAttend!=null)
+				{
+				
 				persistentStudentGroupAttend.delete(oldStudentGroupAttend);
-
+				}
 			}
 
 		}
