@@ -68,14 +68,14 @@
 							</html:link><br />
 						</td>
 					</tr> 
-<%--					<tr>
+					<%--<tr>
 						<td colspan="3">
 							<html:link page="<%= "/marksList.do?method=prepareSubmitMarks&amp;objectCode="+ pageContext.findAttribute("objectCode")+"&amp;evaluationCode=" +pageContext.findAttribute("evaluationCode") %>" >
 								<b><bean:message key="label.submit.listMarks"/></b>
 							</html:link><br />
 						</td>
-					</tr> 
---%>
+					</tr>--%> 
+
 				</table>					
 			</logic:equal>				
 		</logic:iterate>

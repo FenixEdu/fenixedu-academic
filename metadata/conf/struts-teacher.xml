@@ -224,6 +224,7 @@
             <form-property name="year" type="java.lang.Integer" />
             <form-property name="month" type="java.lang.Integer" />
             <form-property name="day" type="java.lang.Integer" />
+            <form-property name="hashMarks" type="java.util.HashMap" />
         </form-bean>
         <form-bean name="voidForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
         </form-bean>
@@ -830,7 +831,7 @@
             <forward name="submitMarksOK" path="/submitMarksOK.jsp" />
             <forward name="impossibleSubmitMarks" path="/viewEvaluation.do?method=viewEvaluation" />
         </action>
-        <action path="/writeMarks" input="/marksList.jsp" name="marksForm" scope="request" 
+        <action path="/writeMarks" input="/marksList.do?method=loadMarksOnline" name="marksForm" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.WriteMarksAction" >
             <forward name="marksList" path="/marksList.jsp" />
             <forward name="viewMarksOptions" path="/showMarksListOptions.do"/>

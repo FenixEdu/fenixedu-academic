@@ -16,72 +16,109 @@ import Util.TipoCurso;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
-public class CreateFile {
+public class CreateFile
+{
 
-	//«««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
-	// fileWithMarksList
-	//»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
-	public static void fileWithMarksList(List curricularCoursesList, List enrolmentEvaluationList) throws Exception {
-		Iterator iterador = curricularCoursesList.listIterator();
-		while (iterador.hasNext()) {
-			final ICurricularCourse curricularCourse = (ICurricularCourse) iterador.next();
+    //«««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
+    // fileWithMarksList
+    //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
+    public static List fileWithMarksList(List curricularCoursesList, List enrolmentEvaluationList)
+        throws Exception
+    {
+        List fileList = new ArrayList();
+        Iterator iterador = curricularCoursesList.listIterator();
+        while (iterador.hasNext())
+        {
+            final ICurricularCourse curricularCourse = (ICurricularCourse)iterador.next();
 
-			if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) {
-				List enrolmentEvaluationCurricularCourseList = new ArrayList();
+            if (curricularCourse
+                .getDegreeCurricularPlan()
+                .getDegree()
+                .getTipoCurso()
+                .equals(TipoCurso.LICENCIATURA_OBJ))
+            {
+                List enrolmentEvaluationCurricularCourseList = new ArrayList();
 
-				enrolmentEvaluationCurricularCourseList = (List) CollectionUtils.select(enrolmentEvaluationList, new Predicate() {
-					public boolean evaluate(Object obj) {
-						IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-						return enrolmentEvaluation.getEnrolment().getCurricularCourseScope().getCurricularCourse().equals(curricularCourse);
-					}
-				});
-				buildFile(enrolmentEvaluationCurricularCourseList);
-			}
-		}
-	}
+                enrolmentEvaluationCurricularCourseList =
+                    (List)CollectionUtils.select(enrolmentEvaluationList, new Predicate()
+                {
+                    public boolean evaluate(Object obj)
+                    {
+                        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation)obj;
+                        return enrolmentEvaluation
+                            .getEnrolment()
+                            .getCurricularCourseScope()
+                            .getCurricularCourse()
+                            .equals(
+                            curricularCourse);
+                    }
+                });
+                File file = buildFile(enrolmentEvaluationCurricularCourseList);
+                if (file != null)
+                {
+                    fileList.add(file);
+                }
+            }
+        }
+        return fileList;
+    }
 
-	private static void buildFile(List enrolmentEvaluationList) throws Exception {
+    public static File buildFile(List enrolmentEvaluationList) throws Exception
+    {
 
-		if (enrolmentEvaluationList == null) {
-			return;
-		}
+        if (enrolmentEvaluationList == null)
+        {
+            return null;
+        }
+        String fileName = null;
+        File file = null;
+        BufferedWriter writer = null;
+        try
+        {
+            fileName = nameFileMarks((IEnrolmentEvaluation)enrolmentEvaluationList.get(0));
+            file = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
+            writer = new BufferedWriter(new FileWriter(file));
 
-		String fileName = null;
-		File file = null;
-		BufferedWriter writer = null;
-		try {
-			fileName = nameFileMarks((IEnrolmentEvaluation) enrolmentEvaluationList.get(0));
-			file = new File(fileName);
-			writer = new BufferedWriter(new FileWriter(file));
+            writer.write(
+                ((IEnrolmentEvaluation)enrolmentEvaluationList.get(0))
+                    .getPersonResponsibleForGrade()
+                    .getEmail());
+            writer.newLine();
 
-			Iterator iterator = enrolmentEvaluationList.listIterator();
-			while (iterator.hasNext()) {
-				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+            Iterator iterator = enrolmentEvaluationList.listIterator();
+            while (iterator.hasNext())
+            {
+                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation)iterator.next();
 
-				RowMarksFile rowMarksFile = new RowMarksFile();
-				rowMarksFile.transform(enrolmentEvaluation);
+                RowMarksFile rowMarksFile = new RowMarksFile(enrolmentEvaluation);
 
-				writer.write(rowMarksFile.toWriteInFile());
-				writer.newLine();
-			}
+                writer.write(rowMarksFile.toWriteInFile());
+                writer.newLine();
+            }
 
-			writer.close();
-		} catch (Exception exception) {
-			exception.printStackTrace();
-			throw new Exception();
-		}
-	}
+            System.out.println("file " + file.getAbsolutePath());
 
-	private static String nameFileMarks(IEnrolmentEvaluation enrolmentEvaluation) {
-		String fileName = new String();
+            writer.close();
 
-		RowMarksFile rowMarksFile = new RowMarksFile();
-		rowMarksFile.transform(enrolmentEvaluation);
+            return file;
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+            throw new Exception();
+        }
+    }
 
-		fileName = rowMarksFile.fileName();
+    private static String nameFileMarks(IEnrolmentEvaluation enrolmentEvaluation)
+    {
+        String fileName = new String();
 
-		return fileName;
-	}
+        RowMarksFile rowMarksFile = new RowMarksFile(enrolmentEvaluation);
+
+        fileName = rowMarksFile.fileName();
+
+        return fileName;
+    }
 }

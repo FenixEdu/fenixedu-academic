@@ -23,4 +23,6 @@ public interface IPersistentEnrolmentEvaluation extends IPersistentObject {
 	public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia; 
 
 	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(IEnrolment enrolment,EnrolmentEvaluationType evaluationType,String grade,Date whenAltered) throws ExcepcaoPersistencia;
+	
+	public List readAlreadySubmitedMarks(List enrolmentIds) throws ExcepcaoPersistencia;
 }

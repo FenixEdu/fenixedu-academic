@@ -12,27 +12,9 @@
 	<bean:message key="label.submitMarksNumber.marks" /></h2></p>
 </logic:greaterThan>
 
-<logic:equal name="submitMarksComponent" property="noMarks" value="true" >
-	<p><h2><bean:message key="label.submitMarksErrors" /></h2></p>
-</logic:equal>
+<logic:messagesPresent>
+	<p><h2><bean:message key="label.errors.notSubmited"/><br/><br/>
+	<span class="error"><html:errors/></span>
+</logic:messagesPresent>
 
-<logic:notEqual name="submitMarksComponent" property="noMarks" value="true" >
-	<logic:equal name="submitMarksComponent" property="allMarksNotPublished" value="true" >
-		<p><h2><bean:message key="label.submitMarksErrors" /></h2></p>
-	</logic:equal>
-	
-	<logic:notEqual name="submitMarksComponent" property="allMarksNotPublished" value="true" >
-		<logic:notEmpty name="submitMarksComponent" property="errorsNotEnrolmented" >
-			<p><h2><bean:message key="label.submitMarksErrors" /></h2></p>
-		</logic:notEmpty>
-		
-		<logic:empty name="submitMarksComponent" property="errorsNotEnrolmented" >
-			<logic:notEmpty name="submitMarksComponent" property="errorsMarkNotPublished" >
-				<p><h2><bean:message key="label.submitMarksErrors" /></h2></p>
-			</logic:notEmpty>
-		</logic:empty>	
-	</logic:notEqual>
-</logic:notEqual>
-
-<span class="error"><html:errors/></span>
 

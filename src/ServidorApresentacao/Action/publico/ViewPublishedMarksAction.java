@@ -44,7 +44,7 @@ public class ViewPublishedMarksAction extends FenixContextDispatchAction {
 		}
 
 		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
-		Collections.sort(infoSiteMarks.getMarksList(), new BeanComparator("infoFrequenta.aluno.number"));
+		Collections.sort(infoSiteMarks.getInfoAttends(), new BeanComparator("aluno.number"));
 
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", objectCode);

@@ -640,6 +640,11 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+      <field-descriptor
+        name="publishmentMessage"
+        column="PUBLISHMENT_MESSAGE"
+        jdbc-type="VARCHAR"
+      />
 	  <collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.ExecutionCourse"

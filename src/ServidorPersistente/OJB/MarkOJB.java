@@ -1,11 +1,8 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.IEvaluation;
 import Dominio.IFrequenta;
@@ -81,106 +78,30 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark
 
     public List readBy(IFrequenta attend) throws ExcepcaoPersistencia
     {
-        try
-        {
-
-            String oqlQuery = "select all from " + Mark.class.getName();
-            oqlQuery += " where attend = $1";
-            query.create(oqlQuery);
-            query.bind(attend.getIdInternal());
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("attend.idInternal", attend.getIdInternal());
+		return queryList(Mark.class, criteria);
     }
 
     public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia
     {
-
-        try
-        {
-
-            String oqlQuery = "select all from " + Mark.class.getName();
-            oqlQuery += " where evaluation = $1";
-            query.create(oqlQuery);
-            query.bind(evaluation.getIdInternal());
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("evaluation.idInternal", evaluation.getIdInternal());
+        return queryList(Mark.class, criteria);
     }
 
     public IMark readBy(IEvaluation evaluation, IFrequenta attend) throws ExcepcaoPersistencia
     {
-
-        try
-        {
-            IMark mark = null;
-            String oqlQuery = "select all from " + Mark.class.getName();
-            oqlQuery += " where evaluation = $1";
-            oqlQuery += " and attend = $2";
-
-            query.create(oqlQuery);
-            query.bind(evaluation.getIdInternal());
-            query.bind(attend.getIdInternal());
-            List result = (List) query.execute();
-            try
-            {
-                lockRead(result);
-            } catch (ExcepcaoPersistencia ex)
-            {
-                throw ex;
-            }
-
-            if ((result != null) && (result.size() != 0))
-            {
-                mark = (IMark) result.get(0);
-            }
-            return mark;
-
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("evaluation.idInternal", evaluation.getIdInternal());
+		criteria.addEqualTo("attend.idInternal", attend.getIdInternal());		
+		return (IMark)queryObject(Mark.class, criteria);
     }
 
     public List readAll() throws ExcepcaoPersistencia
     {
-
-        try
-        {
-            ArrayList list = new ArrayList();
-            String oqlQuery = "select all from " + Mark.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-
-            try
-            {
-                lockRead(result);
-            } catch (ExcepcaoPersistencia ex)
-            {
-                throw ex;
-            }
-
-            if ((result != null) && (result.size() != 0))
-            {
-                ListIterator iterator = result.listIterator();
-                while (iterator.hasNext())
-                    list.add(iterator.next());
-            }
-            return list;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        return queryList(Mark.class, criteria);
     }
 
     public List readBy(IEvaluation evaluation, boolean published) throws ExcepcaoPersistencia

@@ -34,14 +34,14 @@ public class ShowMarksListOptionsAction extends DispatchAction {
 		Integer executionCourseCode = null;
 		String executionCourseCodeString = request.getParameter("objectCode");
 		if (executionCourseCodeString == null) {
-			executionCourseCodeString = (String) request.getAttribute("objectCode");
+			executionCourseCodeString = request.getAttribute("objectCode").toString();
 		}
 		executionCourseCode = new Integer(executionCourseCodeString);
 
 		Integer evaluationCode = null;
 		String evaluationCodeString = request.getParameter("evaluationCode");
 		if (evaluationCodeString == null) {
-			evaluationCodeString = (String) request.getAttribute("evaluationCode");
+			evaluationCodeString = request.getAttribute("evaluationCode").toString();
 		}
 		evaluationCode = new Integer(evaluationCodeString);
 

@@ -252,4 +252,38 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 
         return enrolmentEvaluation;
     }
+    
+    public List readAlreadySubmitedMarks(List enrolmentIds) throws ExcepcaoPersistencia
+    {
+        Criteria finalCriteria = new Criteria();
+        Criteria firstCriteria = new Criteria();
+		Criteria secondCriteria = new Criteria();
+		
+		Criteria markNotEmptyCriteria = new Criteria();
+		Criteria markNotNullCriteria = new Criteria();
+		
+		markNotEmptyCriteria.addNotEqualTo("grade", "");
+
+		markNotNullCriteria.addNotNull("grade");
+		
+		Criteria markCriteria = new Criteria();
+		markCriteria.addAndCriteria(markNotNullCriteria);
+		markCriteria.addOrCriteria(markNotEmptyCriteria);
+		
+		firstCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.FINAL_OBJ);
+		
+		Criteria anulledCriteria = new Criteria();
+		anulledCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.ANNULED_OBJ);
+		firstCriteria.addOrCriteria(anulledCriteria);
+        
+		secondCriteria.addEqualTo("enrolmentEvaluationState", EnrolmentEvaluationState.TEMPORARY_OBJ);
+        secondCriteria.addAndCriteria(markCriteria);
+        
+        firstCriteria.addOrCriteria(secondCriteria);
+        
+        finalCriteria.addIn("enrolment.idInternal", enrolmentIds);
+        finalCriteria.addAndCriteria(firstCriteria);
+        
+        return queryList(EnrolmentEvaluation.class, finalCriteria);
+    }
 }

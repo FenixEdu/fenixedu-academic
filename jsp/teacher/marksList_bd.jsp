@@ -3,8 +3,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="Util.EvaluationType" %> 
-
-<span class="error"><html:errors/></span>
+<logic:messagesPresent>
+	<span class="error"><html:errors/></span>
+</logic:messagesPresent>
  
 <html:form action="/writeMarks" >  
 	<logic:present name="siteView">
@@ -64,48 +65,51 @@
 			</logic:present>
 		</tr>    		
 		
-		<logic:present name="marksListComponent" property="marksList">  
-			<bean:size id="size" name="marksListComponent" property="marksList" />	
+		<logic:present name="marksListComponent" property="infoAttends">  
+			<bean:size id="size" name="marksListComponent" property="infoAttends" />	
 			<html:hidden property="sizeList" value="<%= size.toString() %>" /> 
 				    			    		
-	    	<logic:iterate id="markElem" name="marksListComponent" property="marksList" indexId="markId" type="DataBeans.InfoMark" > 
+	    	<logic:iterate id="markElem" name="marksListComponent" property="infoAttends"  indexId="markId"  type="DataBeans.InfoFrequenta" > 
 	    	
-		    	<bean:define id="studentCode" name="markElem" property="infoFrequenta.aluno.idInternal" />
-		    	<bean:define id="studentNumber" name="markElem" property="infoFrequenta.aluno.number" />
-		    	<bean:define id="infoFrequenta" name="markElem" property="infoFrequenta"/>
-		    	<logic:notEmpty name="infoFrequenta" property="infoEnrolment">
-		      		<bean:define id="infoEnrolment" name="infoFrequenta" property="infoEnrolment"/>					
-			  		<bean:define id="evaluationType" name="infoEnrolment" property="evaluationType"/>
-		  		</logic:notEmpty>
+		    	<bean:define id="studentCode" name="markElem" property="aluno.idInternal" />
+		    	<bean:define id="studentNumber" name="markElem" property="aluno.number" />
 
-	    		<bean:define id="studentMark" name="markElem" property="mark" />
+		    	<logic:notEmpty name="markElem" property="infoEnrolment">
+		      		<bean:define id="infoEnrolment" name="markElem" property="infoEnrolment"/>					
+					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType"/>
+		  		</logic:notEmpty>
+				<bean:define id="studentMark" value=""/>
+				<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>
+		    		<bean:define id="studentMark" name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>' type="java.lang.String"/>
+	    		</logic:notEmpty>
 	    		
-	    		<tr>
-	    		<logic:present name="markElem" property="infoFrequenta"/>	
+	    		<tr>	
 					<td class="listClasses">
-						<bean:write name="markElem" property="infoFrequenta.aluno.number"/>&nbsp;
+						<bean:write name="studentNumber" />&nbsp;
 					</td>
 					<td class="listClasses">
-						<bean:write name="markElem" property="infoFrequenta.aluno.infoPerson.nome"/>
+						<bean:write name="markElem" property="aluno.infoPerson.nome"/>
 					</td>
-				</logic:present>	
-				<td class="listClasses">
-					<logic:empty name="markElem" property="infoFrequenta.infoEnrolment" >
-						<bean:message key="message.notEnroled"/>
-					</logic:empty>	
-					<logic:notEmpty name="markElem" property="infoFrequenta.infoEnrolment">
+					<td class="listClasses">
+						<logic:empty name="markElem" property="infoEnrolment" >
+							<bean:message key="message.notEnroled"/>
+						</logic:empty>	
+						<logic:notEmpty name="markElem" property="infoEnrolment">
 							<bean:write name="evaluationType"/>
-					</logic:notEmpty>
-				</td>
+						</logic:notEmpty>
+					</td>
 				
-				<td class="listClasses">
-					<html:text name="markElem" property="mark" size="4" indexed="true" />
-					<html:hidden name="markElem" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
-					<html:hidden name="markElem" property="studentNumber" value="<%= studentNumber.toString() %>" indexed="true" />
-				</td>
+					<td class="listClasses">
+						<logic:empty name="studentMark">
+							<html:text property='<%="hashMarks(" + studentNumber + ")" %>' size="4" value=""/>
+						</logic:empty>
+						<logic:notEmpty name="studentMark">
+							<html:text property='<%="hashMarks(" + studentNumber + ")" %>' value="<%=studentMark %>" size="4" />
+						</logic:notEmpty>						
+					</td>
 				</tr>
 				
-	    	</logic:iterate>	    	
+	    	</logic:iterate>	    	  	
 		</logic:present>
 		
     </table>    

@@ -39,16 +39,16 @@ public class Mark extends DomainObject implements IMark {
 		boolean resultado = false;
 		if (obj instanceof Mark) {
 			Mark mark = (Mark) obj;
-			resultado =
-				(this.getMark() == null
-					&& mark == null
-					&& this.getPublishedMark() == null
-					&& mark.getPublishedMark() == null)
-					|| (this.getMark() != null
-						&& this.getPublishedMark() != null
-						&& this.getMark().equals(mark.getMark())
-						&& this.getPublishedMark().equals(
-							mark.getPublishedMark()));
+			resultado = this.getAttend().equals(mark.getAttend()) && this.getEvaluation().equals(mark.getEvaluation());
+//				(this.getMark() == null
+//					&& mark == null
+//					&& this.getPublishedMark() == null
+//					&& mark.getPublishedMark() == null)
+//					|| (this.getMark() != null
+//						&& this.getPublishedMark() != null
+//						&& this.getMark().equals(mark.getMark())
+//						&& this.getPublishedMark().equals(
+//							mark.getPublishedMark()));
 		}
 		return resultado;
 	}

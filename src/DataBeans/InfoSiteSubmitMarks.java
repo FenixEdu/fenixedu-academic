@@ -13,10 +13,10 @@ public class InfoSiteSubmitMarks implements ISiteComponent {
 	private List marksList;
 
 	//errors		
-	private List errorsNotEnrolmented = null;
+	private List notEnrolmented = null;
 	private List errorsMarkNotPublished = null;
-	private boolean noMarks = false;
-	private boolean allMarksNotPublished = false;
+	private List mestrado = null;
+
 	
 
 	public boolean equals(Object objectToCompare) {
@@ -86,13 +86,6 @@ public class InfoSiteSubmitMarks implements ISiteComponent {
 	/**
 	 * @return
 	 */
-	public boolean getAllMarksNotPublished() {
-		return allMarksNotPublished;
-	}
-
-	/**
-	 * @return
-	 */
 	public List getErrorsMarkNotPublished() {
 		return errorsMarkNotPublished;
 	}
@@ -100,15 +93,8 @@ public class InfoSiteSubmitMarks implements ISiteComponent {
 	/**
 	 * @return
 	 */
-	public List getErrorsNotEnrolmented() {
-		return errorsNotEnrolmented;
-	}
-
-	/**
-	 * @param boolean1
-	 */
-	public void setAllMarksNotPublished(boolean boolean1) {
-		allMarksNotPublished = boolean1;
+	public List getNotEnrolmented() {
+		return notEnrolmented;
 	}
 
 	/**
@@ -121,22 +107,24 @@ public class InfoSiteSubmitMarks implements ISiteComponent {
 	/**
 	 * @param list
 	 */
-	public void setErrorsNotEnrolmented(List list) {
-		errorsNotEnrolmented = list;
+	public void setNotEnrolmented(List list) {
+		notEnrolmented = list;
 	}
 
-	/**
-	 * @return
-	 */
-	public boolean getNoMarks() {
-		return noMarks;
-	}
+    /**
+     * @return Returns the mestrado.
+     */
+    public List getMestrado()
+    {
+        return mestrado;
+    }
 
-	/**
-	 * @param boolean1
-	 */
-	public void setNoMarks(boolean boolean1) {
-		noMarks = boolean1;
-	}
+    /**
+     * @param mestrado The mestrado to set.
+     */
+    public void setMestrado(List mestrado)
+    {
+        this.mestrado = mestrado;
+    }
 
 }

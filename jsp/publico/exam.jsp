@@ -7,9 +7,9 @@
 <bean:define id="evaluations" name="component" property="infoEvaluations" />
 <bean:define id="hasPublishedMarks">false</bean:define>
 <logic:iterate id="evaluation" name="evaluations">
-	<logic:notEmpty name="evaluation" property="publishmentMessage">
+	<logic:present name="evaluation" property="publishmentMessage">
 		<bean:define id="hasPublishedMarks">true</bean:define>
-	</logic:notEmpty>	
+	</logic:present>	
 </logic:iterate>
 <table width="90%" align="center">
 <tr>
@@ -35,17 +35,17 @@
 			<td class="listClasses">&nbsp;</td>
 		</logic:equal>
 		<logic:equal name="hasPublishedMarks" value="true">
-			<logic:notEmpty name="evaluation" property="publishmentMessage">
+			<logic:present name="evaluation" property="publishmentMessage">
 				<bean:define id="evaluationCode" name="evaluation" property="idInternal"/>
 				<td class="listClasses" >
 					<html:link page="<%= "/viewPublishedMarks.do?method=viewPublishedMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationCode=" + evaluationCode %>">
 						<bean:message key="link.view" />
 					</html:link>
 				</td>
-			</logic:notEmpty>
-			<logic:empty name="evaluation" property="publishmentMessage">
+			</logic:present>
+			<logic:notPresent name="evaluation" property="publishmentMessage">
 				<td class="listClasses" >&nbsp;</td>
-			</logic:empty>
+			</logic:notPresent>
 		</logic:equal>	
 	</tr>
 </logic:iterate>   

@@ -16,7 +16,7 @@ public class InfoEnrolment extends InfoObject
     //	private InfoCurricularCourse infoCurricularCourse;
     private InfoExecutionPeriod infoExecutionPeriod;
     private EnrolmentState enrolmentState;
-    private EnrolmentEvaluationType evaluationType;
+    private EnrolmentEvaluationType enrolmentEvaluationType;
     private InfoCurricularCourseScope infoCurricularCourseScope;
 
     // to be used to keep the actual enrolment evaluation
@@ -66,7 +66,7 @@ public class InfoEnrolment extends InfoObject
         result += "state = " + this.enrolmentState + "; ";
         //		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
         result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
-        result += "enrolmentEvaluationType = " + this.evaluationType + "; ";
+        result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
         result += "infoEvaluations = " + this.infoEvaluations + "]\n";
 
         return result;
@@ -137,14 +137,14 @@ public class InfoEnrolment extends InfoObject
         this.enrolmentState = state;
     }
 
-    public EnrolmentEvaluationType getEvaluationType()
+    public EnrolmentEvaluationType getEnrolmentEvaluationType()
     {
-        return this.evaluationType;
+        return this.enrolmentEvaluationType;
     }
 
-    public void setEvaluationType(EnrolmentEvaluationType type)
+    public void setEnrolmentEvaluationType(EnrolmentEvaluationType type)
     {
-        this.evaluationType = type;
+        this.enrolmentEvaluationType = type;
     }
 
     public List getInfoEvaluations()

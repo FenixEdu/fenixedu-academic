@@ -3,6 +3,7 @@ package ServidorApresentacao.Action.teacher;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -23,11 +24,10 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoExam;
+import DataBeans.InfoFrequenta;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
@@ -116,7 +116,7 @@ public class MarksListAction extends DispatchAction
         try
         {
             siteView =
-                (TeacherAdministrationSiteView)ServiceManagerServiceFactory.executeService(
+                (TeacherAdministrationSiteView)ServiceUtils.executeService(
                     userView,
                     "ReadStudentsAndMarksByEvaluation",
                     args);
@@ -128,7 +128,7 @@ public class MarksListAction extends DispatchAction
         }
 
         InfoSiteMarks infoSiteMarks = (InfoSiteMarks)siteView.getComponent();
-        Collections.sort(infoSiteMarks.getMarksList(), new BeanComparator("infoFrequenta.aluno.number"));
+        Collections.sort(infoSiteMarks.getInfoAttends(), new BeanComparator("aluno.number"));
 
         request.setAttribute("siteView", siteView);
         request.setAttribute("objectCode", executionCourseCode);
@@ -218,7 +218,7 @@ public class MarksListAction extends DispatchAction
         UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
         try
         {
-            ServiceManagerServiceFactory.executeService(userView, "PublishMarks", args);
+            ServiceUtils.executeService(userView, "PublishMarks", args);
         }
         catch (FenixServiceException e)
         {
@@ -257,7 +257,7 @@ public class MarksListAction extends DispatchAction
         try
         {
             infoSiteSubmitMarks =
-                (InfoSiteSubmitMarks)ServiceManagerServiceFactory.executeService(
+                (InfoSiteSubmitMarks)ServiceUtils.executeService(
                     userView,
                     "ValidateSubmitMarks",
                     args);
@@ -316,7 +316,7 @@ public class MarksListAction extends DispatchAction
         Calendar calendar = Calendar.getInstance();
 
         //fill date with last evaluation date or now if evalaution date is after now
-        if (evaluationDate.before(calendar.getTime()))
+        if (evaluationDate != null && evaluationDate.before(calendar.getTime()))
         {
             calendar.setTime(evaluationDate);
         }
@@ -353,7 +353,7 @@ public class MarksListAction extends DispatchAction
 
         Collections.sort(infoEvaluationsListWithoutFinal, comparatorChain);
 
-        if (infoEvaluationsListWithoutFinal.get(infoEvaluationsListWithoutFinal.size() - 1)
+        if ( infoEvaluationsListWithoutFinal.size()!=0 && infoEvaluationsListWithoutFinal.get(infoEvaluationsListWithoutFinal.size() - 1)
             instanceof InfoExam)
         {
             InfoExam lastEvaluation =
@@ -409,7 +409,7 @@ public class MarksListAction extends DispatchAction
         try
         {
             administrationSiteView =
-                (TeacherAdministrationSiteView)ServiceManagerServiceFactory.executeService(
+                (TeacherAdministrationSiteView)ServiceUtils.executeService(
                     userView,
                     "SubmitMarks",
                     args);
@@ -420,22 +420,48 @@ public class MarksListAction extends DispatchAction
             exception.printStackTrace();
 
             actionErrors.add("impossibleSubmit", new ActionError(exception.getMessage()));
+            System.out.println(exception.getMessage());
             saveErrors(request, actionErrors);
-
+            //request.setAttribute("actionErrors", actionErrors);
             return mapping.findForward("impossibleSubmitMarks");
         }
 
+        InfoSiteSubmitMarks infoSiteSubmitMarks = (InfoSiteSubmitMarks) administrationSiteView.getComponent();
+        
         request.setAttribute("siteView", administrationSiteView);
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("evaluationCode", evaluationCode);
-
-        InfoSiteSubmitMarks infoSiteSubmitMarks =
-            (InfoSiteSubmitMarks)administrationSiteView.getComponent();
-        actionErrors = sendErrors(infoSiteSubmitMarks);
-        if (actionErrors.size() > 0)
+        
+        if (infoSiteSubmitMarks.getNotEnrolmented() != null
+            && !(infoSiteSubmitMarks.getNotEnrolmented().isEmpty()))
         {
-            saveErrors(request, actionErrors);
-            return mapping.findForward("submitMarksOK");
+            Iterator iter = infoSiteSubmitMarks.getNotEnrolmented().iterator();
+            while (iter.hasNext())
+            {
+                InfoFrequenta infoFrequenta = (InfoFrequenta)iter.next();
+                actionErrors.add(
+                    "notEnrolled",
+                    new ActionError("errors.notEnrolled", infoFrequenta.getAluno().getNumber().toString()));
+            }
+        }
+        
+		if (infoSiteSubmitMarks.getMestrado() != null
+            && !(infoSiteSubmitMarks.getMestrado().isEmpty()))
+        {
+
+            Iterator iter = infoSiteSubmitMarks.getMestrado().iterator();
+            while (iter.hasNext())
+            {
+                InfoFrequenta infoFrequenta = (InfoFrequenta)iter.next();
+                actionErrors.add(
+                    "mestrado",
+                    new ActionError("errors.mestrado", infoFrequenta.getAluno().getNumber().toString()));
+            }
+        }
+
+        if(!actionErrors.isEmpty())
+        {
+			saveErrors(request, actionErrors); 
         }
 
         return mapping.findForward("submitMarksOK");
@@ -445,31 +471,18 @@ public class MarksListAction extends DispatchAction
     {
         ActionErrors actionErrors = new ActionErrors();
 
-        //	Check if ocurr errors in service
-        if (infoSiteSubmitMarks.getNoMarks())
-        {
-            actionErrors.add("noMarks", new ActionError("errors.submitMarks.noMarks"));
-        }
-        else if (infoSiteSubmitMarks.getAllMarksNotPublished())
-        {
-            actionErrors.add(
-                "allMarksNotPublished",
-                new ActionError("errors.submitMarks.allMarksNotPublished"));
-        }
-        else
-        {
 
-            if ((infoSiteSubmitMarks.getErrorsNotEnrolmented() != null
-                && infoSiteSubmitMarks.getErrorsNotEnrolmented().size() > 0)
+            if ((infoSiteSubmitMarks.getNotEnrolmented() != null
+                && infoSiteSubmitMarks.getNotEnrolmented().size() > 0)
                 || (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null
                     && infoSiteSubmitMarks.getErrorsMarkNotPublished().size() > 0))
             {
 
-                if (infoSiteSubmitMarks.getErrorsNotEnrolmented() != null
-                    && infoSiteSubmitMarks.getErrorsNotEnrolmented().size() > 0)
+                if (infoSiteSubmitMarks.getNotEnrolmented() != null
+                    && infoSiteSubmitMarks.getNotEnrolmented().size() > 0)
                 {
                     //list with errors Student Not Enrolmented
-                    ListIterator iterator = infoSiteSubmitMarks.getErrorsNotEnrolmented().listIterator();
+                    ListIterator iterator = infoSiteSubmitMarks.getNotEnrolmented().listIterator();
                     while (iterator.hasNext())
                     {
                         InfoMark infoMark = (InfoMark)iterator.next();
@@ -501,7 +514,7 @@ public class MarksListAction extends DispatchAction
                     }
                 }
             }
-        }
+
         return actionErrors;
     }
 
@@ -511,7 +524,7 @@ public class MarksListAction extends DispatchAction
         String parameterCodeString = request.getParameter(parameter);
         if (parameterCodeString == null)
         {
-            parameterCodeString = (String)request.getAttribute(parameter);
+            parameterCodeString = request.getAttribute(parameter).toString();
         }
         if (parameterCodeString != null)
         {

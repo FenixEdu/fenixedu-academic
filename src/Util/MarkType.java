@@ -112,7 +112,7 @@ public class MarkType implements Serializable {
 	
 	private static Collection getType20EvaluationMarks(){
 	    Collection result = new ArrayList();
-	    
+	    result.addAll(Arrays.asList(MarkType.REP_MARKS));
 	    result.addAll(Arrays.asList(MarkType.NA_MARKS));
 		result.addAll(Arrays.asList(MarkType.TYPE20EVALUATION_MARKS));
 		result.addAll(Arrays.asList(MarkType.TYPE20_MARKS));

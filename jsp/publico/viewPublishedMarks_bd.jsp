@@ -37,32 +37,35 @@
 	    </td>
 		<td class="listClasses-header">
 			<bean:message key="label.name" />
+		</td>					
+		<td class="listClasses-header">
+			<bean:message key="label.mark" />
 		</td>
-		<logic:present name="marksListComponent" property="marksList">  						
-			<td class="listClasses-header">
-				<bean:message key="label.mark" />
-			</td>
 		</logic:present>
 	</tr>    		
 		
-	<logic:present name="marksListComponent" property="marksList">  								
-	   	<logic:iterate id="markElem" name="marksListComponent" property="marksList"> 
-	   		<bean:define id="studentNumber" name="markElem" property="infoFrequenta.aluno.number" />
+	<logic:present name="marksListComponent" property="infoAttends">  								
+	   	<logic:iterate id="attendElem" name="marksListComponent" property="infoAttends" type="DataBeans.InfoFrequenta"> 
+	   		<bean:define id="studentNumber" name="attendElem" property="aluno.number" />
+	   		<bean:define id="studentMark" value=""/>
+			<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>
+		    	<bean:define id="studentMark" name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>' type="java.lang.String"/>
+	    	</logic:notEmpty>
+	    	
 			<tr>
 				<td class="listClasses">
-					<bean:write name="markElem" property="infoFrequenta.aluno.number"/>&nbsp;
+					<bean:write name="attendElem" property="aluno.number"/>&nbsp;
 				</td>
 				<td class="listClasses">
-					<bean:write name="markElem" property="infoFrequenta.aluno.infoPerson.nome"/>
+					<bean:write name="attendElem" property="aluno.infoPerson.nome"/>
 				</td>											
 				<td class="listClasses">
-					<logic:empty name="markElem" property="publishedMark" >
+					<logic:notEmpty name="studentMark">
+						<bean:write name="studentMark"/>
+					</logic:notEmpty>
+					<logic:empty name="studentMark">
 						&nbsp;
 					</logic:empty>
-					<logic:notEmpty name="markElem" property="publishedMark" >
-						<bean:write name="markElem" property="publishedMark"/>
-					</logic:notEmpty>
-
 				</td>
 			</tr>
 	   	</logic:iterate>

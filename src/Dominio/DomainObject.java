@@ -1,58 +1,70 @@
 /*
  * Created on 11/Mar/2003 by jpvl
- *
+ *  
  */
 package Dominio;
-
 
 /**
  * @author jpvl
  */
-abstract public class DomainObject implements IDomainObject {
+abstract public class DomainObject implements IDomainObject
+{
 
-	private Integer idInternal;
-	private Integer ackOptLock;
+    private Integer idInternal;
+    private Integer ackOptLock;
 
-	public DomainObject() {
-	}
-	
-	public DomainObject(Integer idInternal) {
-	    setIdInternal(idInternal);
-	}	
+    public DomainObject()
+    {
+    }
 
-	/**
+    public DomainObject(Integer idInternal)
+    {
+        setIdInternal(idInternal);
+    }
+
+    /**
 	 * @return Integer
 	 */
-	public Integer getIdInternal() {
-		return idInternal;
-	}
+    public Integer getIdInternal()
+    {
+        return idInternal;
+    }
 
-	/**
+    /**
 	 * Sets the idInternal.
-	 * @param idInternal The idInternal to set
+	 * 
+	 * @param idInternal
+	 *            The idInternal to set
 	 */
-	public void setIdInternal(Integer idInternal) {
-		this.idInternal = idInternal;
-	}
+    public void setIdInternal(Integer idInternal)
+    {
+        this.idInternal = idInternal;
+    }
 
-	public Integer getAckOptLock()
-	{
-		return ackOptLock;
-	}
+    public Integer getAckOptLock()
+    {
+        return ackOptLock;
+    }
 
-	public void setAckOptLock(Integer ackOptLock)
-	{
-		this.ackOptLock = ackOptLock;
-	}
-        
-	/* (non-Javadoc)
+    public void setAckOptLock(Integer ackOptLock)
+    {
+        this.ackOptLock = ackOptLock;
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
-	public int hashCode() {
-		if (idInternal != null) {
-			return this.idInternal.intValue();
-		} else {
-			return super.hashCode();
-		}
-	}
+    public int hashCode()
+    {
+        if (idInternal != null)
+        {
+            return this.idInternal.intValue();
+        }
+        else
+        {
+            return super.hashCode();
+        }
+    }
 }
