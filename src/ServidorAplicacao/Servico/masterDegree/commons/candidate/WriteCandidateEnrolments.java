@@ -52,6 +52,13 @@ public class WriteCandidateEnrolments implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
+//			FIXME 
+//			FIXME 
+//			FIXME 
+sp.confirmarTransaccao();
+sp.iniciarTransaccao();
+
+
 			IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
 			mdcTemp.setIdInternal(candidateID);
 			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, true);
@@ -59,16 +66,13 @@ public class WriteCandidateEnrolments implements IServico {
 			if (masterDegreeCandidate == null){
 				throw new NonExistingServiceException();
 			}
-			
+
 			masterDegreeCandidate.setGivenCredits(credits);
 			
 			if (credits.floatValue() != 0){
 				masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);	
 			}
 
-			System.out.println("Servico Creditos " + masterDegreeCandidate.getGivenCredits());
-			System.out.println("Servico Creditos OBS" + masterDegreeCandidate.getGivenCreditsRemarks());
-			
 
 			// Clean the Enrolment Information
 			sp.getIPersistentCandidateEnrolment().deleteAllByCandidateID(masterDegreeCandidate);

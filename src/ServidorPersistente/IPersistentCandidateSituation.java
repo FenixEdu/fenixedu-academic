@@ -19,7 +19,7 @@ import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
 
-public interface IPersistentCandidateSituation {
+public interface IPersistentCandidateSituation extends IPersistentObject {
 	/**
 	 * 
 	 * @param masterDegreeCandidate
@@ -64,6 +64,15 @@ public interface IPersistentCandidateSituation {
      * @throws ExcepcaoPersistencia
      */
     public void deleteAll() throws ExcepcaoPersistencia;
+
+	/**
+	 * 
+	 * @param executionDegree
+	 * @return A List of Candidates with Registration status for this Execution Degree	 
+	 */
+	public List readCandidateListforRegistration(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+	
+	
 
 } // End of class definition
 

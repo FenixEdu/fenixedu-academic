@@ -7,6 +7,7 @@
  <li><html:link page="/chooseExecutionYearToEditCandidates.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.editCandidateInformations" /></html:link></li>
  <li><html:link page="/chooseExecutionYearToSelectCandidates.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.selectCandidates" /></html:link></li>
  <li><html:link page="/chooseExecutionYearToCandidateStudyPlan.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.makeStudyPlan" /></html:link></li>
+ <li><html:link page="/chooseExecutionYearToCandidateRegistration.do?method=prepareChooseExecutionYear&page=0"><bean:message key="link.masterDegree.administrativeOffice.candidateRegistration" /></html:link></li>
 </ul>
 <ul>
  <li><html:link page="/contributorSection.do"><bean:message key="link.masterDegree.administrativeOffice.contributor" /></html:link></li>

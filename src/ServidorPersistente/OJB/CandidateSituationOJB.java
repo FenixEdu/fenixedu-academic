@@ -126,6 +126,36 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         String oqlQuery = "select all from " + CandidateSituation.class.getName();
         super.deleteAll(oqlQuery);
     }    
+
+
+
+	public List readCandidateListforRegistration(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+	
+		Criteria criteria = new Criteria();
+		Criteria criteriaDocs = new Criteria();
+		criteria.addEqualTo("validation", new State(State.ACTIVE));
+		criteria.addEqualTo("masterDegreeCandidate.executionDegree.idInternal", executionDegree.getIdInternal());
+		List situations = new ArrayList();
+
+		situations.add(new Integer(SituationName.ADMITED_CONDICIONAL_CURRICULAR));
+		situations.add(new Integer(SituationName.ADMITED_CONDICIONAL_FINALIST));
+		situations.add(new Integer(SituationName.ADMITED_CONDICIONAL_OTHER));
+		situations.add(new Integer(SituationName.ADMITIDO));
+		situations.add(new Integer(SituationName.ADMITED_SPECIALIZATION));
+
+		criteriaDocs.addIn("situation", situations);		
+		criteria.addAndCriteria(criteriaDocs);
+		
+		List result = queryList(CandidateSituation.class, criteria);
+		if ((result == null) || (result.size() == 0)){
+			return null;
+		}
+		return result;
+
+	}			
+
+
     
 } // End of class definition
 

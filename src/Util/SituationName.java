@@ -16,14 +16,14 @@ import org.apache.struts.util.LabelValueBean;
 
 public class SituationName {
  
-    public static final int PENDENTE = 1;
-    public static final int ADMITIDO = 2;
-    public static final int SUPLENTE = 3;
-    public static final int NAO_ACEITE = 4;
-    public static final int DESISTIU = 5;
-    public static final int SUPRA_NUMERARIO = 6;
-    public static final int EXTRAORDINARIO = 7;
-    public static final int DOCENTE_ENSINO_SUPERIOR = 8;
+	public static final int PENDENTE = 1;
+	public static final int ADMITIDO = 2;
+	public static final int SUPLENTE = 3;
+	public static final int NAO_ACEITE = 4;
+	public static final int DESISTIU = 5;
+	public static final int SUPRA_NUMERARIO = 6;
+	public static final int EXTRAORDINARIO = 7;
+	public static final int DOCENTE_ENSINO_SUPERIOR = 8;
 	public static final int PRE_CANDIDATO = 9;
 	public static final int FALTA_CERTIFICADO = 10;
 	public static final int PENDENT_COM_DADOS = 11;
@@ -35,16 +35,41 @@ public class SituationName {
 	public static final int SUBSTITUTE_CONDICIONAL_CURRICULAR= 17;
 	public static final int SUBSTITUTE_CONDICIONAL_FINALIST= 18;
 	public static final int SUBSTITUTE_CONDICIONAL_OTHER= 19;
+	public static final int ADMITED_SPECIALIZATION = 20;
+	public static final int ENROLLED = 21;
+	
+	
+	public static final SituationName PENDENTE_OBJ = new SituationName(SituationName.PENDENTE);
+	public static final SituationName ADMITIDO_OBJ = new SituationName(SituationName.ADMITIDO);
+	public static final SituationName SUPLENTE_OBJ = new SituationName(SituationName.SUPLENTE);
+	public static final SituationName NAO_ACEITE_OBJ = new SituationName(SituationName.NAO_ACEITE);
+	public static final SituationName DESISTIU_OBJ = new SituationName(SituationName.DESISTIU);
+	public static final SituationName SUPRA_NUMERARIO_OBJ = new SituationName(SituationName.SUPRA_NUMERARIO);
+	public static final SituationName EXTRAORDINARIO_OBJ = new SituationName(SituationName.EXTRAORDINARIO);
+	public static final SituationName DOCENTE_ENSINO_SUPERIOR_OBJ = new SituationName(SituationName.DOCENTE_ENSINO_SUPERIOR);
+	public static final SituationName PRE_CANDIDATO_OBJ = new SituationName(SituationName.PRE_CANDIDATO);
+	public static final SituationName FALTA_CERTIFICADO_OBJ = new SituationName(SituationName.FALTA_CERTIFICADO);
+	public static final SituationName PENDENT_COM_DADOS_OBJ = new SituationName(SituationName.PENDENT_COM_DADOS);
+	public static final SituationName PENDENT_CONFIRMADO_OBJ = new SituationName(SituationName.PENDENT_CONFIRMADO);
+	public static final SituationName ANNULLED_OBJ = new SituationName(SituationName.ANNULLED);
+	public static final SituationName ADMITED_CONDICIONAL_CURRICULAR_OBJ = new SituationName(SituationName.ADMITED_CONDICIONAL_CURRICULAR);
+	public static final SituationName ADMITED_CONDICIONAL_FINALIST_OBJ = new SituationName(SituationName.ADMITED_CONDICIONAL_FINALIST);
+	public static final SituationName ADMITED_CONDICIONAL_OTHER_OBJ = new SituationName(SituationName.ADMITED_CONDICIONAL_OTHER);
+	public static final SituationName SUBSTITUTE_CONDICIONAL_CURRICULAR_OBJ = new SituationName(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR);
+	public static final SituationName SUBSTITUTE_CONDICIONAL_FINALIST_OBJ = new SituationName(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST);
+	public static final SituationName SUBSTITUTE_CONDICIONAL_OTHER_OBJ = new SituationName(SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
+	public static final SituationName ADMITED_SPECIALIZATION_OBJ = new SituationName(SituationName.ADMITED_SPECIALIZATION);
+	public static final SituationName ENROLLED_OBJ = new SituationName(SituationName.ENROLLED);
 	
     
-    public static final String PENDENTE_STRING = "Pendente";
-    public static final String ADMITIDO_STRING = "Admitido";
-    public static final String SUPLENTE_STRING = "Suplente";
-    public static final String NAO_ACEITE_STRING = "Não Admitido";
-    public static final String DESISTIU_STRING = "Desistiu";
-    public static final String SUPRA_NUMERARIO_STRING = "Supra Numerário";
-    public static final String EXTRAORDINARIO_STRING = "Extraordinário";
-    public static final String DOCENTE_ENSINO_SUPERIOR_STRING = "Docente do Ensino Superior";
+	public static final String PENDENTE_STRING = "Pendente";
+	public static final String ADMITIDO_STRING = "Admitido";
+	public static final String SUPLENTE_STRING = "Suplente";
+	public static final String NAO_ACEITE_STRING = "Não Admitido";
+	public static final String DESISTIU_STRING = "Desistiu";
+	public static final String SUPRA_NUMERARIO_STRING = "Supra Numerário";
+	public static final String EXTRAORDINARIO_STRING = "Extraordinário";
+	public static final String DOCENTE_ENSINO_SUPERIOR_STRING = "Docente do Ensino Superior";
 	public static final String PRE_CANDIDATO_STRING = "Pré-Candidato";
 	public static final String FALTA_CERTIFICADO_STRING = "Falta Certificado";
 	public static final String DEFAULT = "[Escolha uma Situação]";
@@ -52,38 +77,40 @@ public class SituationName {
 	public static final String PENDENTE_CONFIRMADO_STRING = "Pendente com dados confirmados";
 	public static final String ANNULLED_STRING = "Anulada";
 	public static final String ADMITED_CONDICIONAL_CURRICULAR_STRING = "Admitido Condicional - Apreciação Curricular";
+	public static final String ADMITED_SPECIALIZATION_STRING = "Admitido Para Especialização";
 	public static final String ADMITED_CONDICIONAL_FINALIST_STRING = "Admitido Condicional - Finalista";
 	public static final String ADMITED_CONDICIONAL_OTHER_STRING = "Admitido Condicional - Outro";
 	public static final String SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING = "Suplente Condicional - Apreciação Curricular";
 	public static final String SUBSTITUTE_CONDICIONAL_FINALIST_STRING = "Suplente Condicional - Finalista";
 	public static final String SUBSTITUTE_CONDICIONAL_OTHER_STRING = "Suplente Condicional - Outro";
+	public static final String ENROLLED_STRING = "Inscrito";
 
     
     
-    private Integer situationName;
+	private Integer situationName;
 
-    /** Creates a new instance of SituationName */
-    public SituationName() {
-    }
+	/** Creates a new instance of SituationName */
+	public SituationName() {
+	}
     
-    public SituationName(int nomeSituacao) {
-        this.situationName = new Integer(nomeSituacao);
-    }
+	public SituationName(int nomeSituacao) {
+		this.situationName = new Integer(nomeSituacao);
+	}
 
-    public SituationName(Integer nomeSituacao) {
-        this.situationName = nomeSituacao;
-    }
+	public SituationName(Integer nomeSituacao) {
+		this.situationName = nomeSituacao;
+	}
 
 
-    public boolean equals(Object o) {
-        if(o instanceof SituationName) {
-            SituationName aux = (SituationName) o;
-            return this.situationName.equals(aux.getSituationName());
-        }
-        else {
-            return false;
-        }
-    }
+	public boolean equals(Object o) {
+		if(o instanceof SituationName) {
+			SituationName aux = (SituationName) o;
+			return this.situationName.equals(aux.getSituationName());
+		}
+		else {
+			return false;
+		}
+	}
     
 	
 	public static boolean checkIfSubstitute(String situationName) {
@@ -97,30 +124,32 @@ public class SituationName {
 	}
     
     
-    public SituationName(String nomeSituacao) {
-    	if (nomeSituacao.equals(SituationName.PENDENTE_STRING)) this.situationName = new Integer(SituationName.PENDENTE);
-    	if (nomeSituacao.equals(SituationName.ADMITIDO_STRING)) this.situationName = new Integer(SituationName.ADMITIDO);
-    	if (nomeSituacao.equals(SituationName.SUPLENTE_STRING)) this.situationName = new Integer(SituationName.SUPLENTE);
-    	if (nomeSituacao.equals(SituationName.NAO_ACEITE_STRING)) this.situationName = new Integer(SituationName.NAO_ACEITE);
-    	if (nomeSituacao.equals(SituationName.DESISTIU_STRING)) this.situationName = new Integer(SituationName.DESISTIU);
-    	if (nomeSituacao.equals(SituationName.SUPRA_NUMERARIO_STRING)) this.situationName = new Integer(SituationName.SUPRA_NUMERARIO);
-    	if (nomeSituacao.equals(SituationName.EXTRAORDINARIO_STRING)) this.situationName = new Integer(SituationName.EXTRAORDINARIO);
+	public SituationName(String nomeSituacao) {
+		if (nomeSituacao.equals(SituationName.PENDENTE_STRING)) this.situationName = new Integer(SituationName.PENDENTE);
+		if (nomeSituacao.equals(SituationName.ADMITIDO_STRING)) this.situationName = new Integer(SituationName.ADMITIDO);
+		if (nomeSituacao.equals(SituationName.SUPLENTE_STRING)) this.situationName = new Integer(SituationName.SUPLENTE);
+		if (nomeSituacao.equals(SituationName.NAO_ACEITE_STRING)) this.situationName = new Integer(SituationName.NAO_ACEITE);
+		if (nomeSituacao.equals(SituationName.DESISTIU_STRING)) this.situationName = new Integer(SituationName.DESISTIU);
+		if (nomeSituacao.equals(SituationName.SUPRA_NUMERARIO_STRING)) this.situationName = new Integer(SituationName.SUPRA_NUMERARIO);
+		if (nomeSituacao.equals(SituationName.EXTRAORDINARIO_STRING)) this.situationName = new Integer(SituationName.EXTRAORDINARIO);
 		if (nomeSituacao.equals(SituationName.DOCENTE_ENSINO_SUPERIOR_STRING)) this.situationName = new Integer(SituationName.DOCENTE_ENSINO_SUPERIOR);
 		if (nomeSituacao.equals(SituationName.PRE_CANDIDATO_STRING)) this.situationName = new Integer(SituationName.PRE_CANDIDATO);
 		if (nomeSituacao.equals(SituationName.FALTA_CERTIFICADO_STRING)) this.situationName = new Integer(SituationName.FALTA_CERTIFICADO);
 		if (nomeSituacao.equals(SituationName.PENDENTE_COM_DADOS_STRING)) this.situationName = new Integer(SituationName.PENDENT_COM_DADOS);
 		if (nomeSituacao.equals(SituationName.PENDENTE_CONFIRMADO_STRING)) this.situationName = new Integer(SituationName.PENDENT_CONFIRMADO);
 		if (nomeSituacao.equals(SituationName.ANNULLED_STRING)) this.situationName = new Integer(SituationName.ANNULLED);
+		if (nomeSituacao.equals(SituationName.ADMITED_SPECIALIZATION_STRING)) this.situationName = new Integer(SituationName.ADMITED_SPECIALIZATION);
 		if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING)) this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_CURRICULAR);
 		if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)) this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_FINALIST);
 		if (nomeSituacao.equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) this.situationName = new Integer(SituationName.ADMITED_CONDICIONAL_OTHER);
 		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR);
 		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST);
 		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
+		if (nomeSituacao.equals(SituationName.ENROLLED_STRING)) this.situationName = new Integer(SituationName.ENROLLED);
 
-    }
+	}
     
-    public String toString() {
+	public String toString() {
 		if (situationName.intValue()== SituationName.PENDENTE) return SituationName.PENDENTE_STRING;
 		if (situationName.intValue()== SituationName.ADMITIDO) return SituationName.ADMITIDO_STRING;
 		if (situationName.intValue()== SituationName.SUPLENTE) return SituationName.SUPLENTE_STRING;
@@ -135,19 +164,22 @@ public class SituationName {
 		if (situationName.intValue()== SituationName.PENDENT_CONFIRMADO) return SituationName.PENDENTE_CONFIRMADO_STRING;
 		if (situationName.intValue()== SituationName.ANNULLED) return SituationName.ANNULLED_STRING;
 		if (situationName.intValue()== SituationName.ADMITED_CONDICIONAL_CURRICULAR) return SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING;
+		if (situationName.intValue()== SituationName.ADMITED_SPECIALIZATION) return SituationName.ADMITED_SPECIALIZATION_STRING;
 		if (situationName.intValue()== SituationName.ADMITED_CONDICIONAL_FINALIST) return SituationName.ADMITED_CONDICIONAL_OTHER_STRING;
 		if (situationName.intValue()== SituationName.ADMITED_CONDICIONAL_OTHER) return SituationName.ADMITED_CONDICIONAL_OTHER_STRING;
 		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR) return SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING;
 		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_FINALIST) return SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING;
 		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_OTHER) return SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING;
-	    return "ERRO!"; // Nunca e atingido
-    }
+		if (situationName.intValue()== SituationName.ENROLLED) return SituationName.ENROLLED_STRING;
+		return "ERRO!"; // Nunca e atingido
+	}
     
-    public static ArrayList toArrayList() {
+	public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
 		result.add(new LabelValueBean(SituationName.DEFAULT, null));
-	    result.add(new LabelValueBean(SituationName.PENDENTE_STRING , SituationName.PENDENTE_STRING));
+		result.add(new LabelValueBean(SituationName.PENDENTE_STRING , SituationName.PENDENTE_STRING));
 		result.add(new LabelValueBean(SituationName.ADMITIDO_STRING , SituationName.ADMITIDO_STRING));
+		result.add(new LabelValueBean(SituationName.ADMITED_SPECIALIZATION_STRING, SituationName.ADMITED_SPECIALIZATION_STRING));
 		result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING, SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING));
 		result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING, SituationName.ADMITED_CONDICIONAL_FINALIST_STRING));
 		result.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_OTHER_STRING, SituationName.ADMITED_CONDICIONAL_OTHER_STRING));
@@ -165,9 +197,10 @@ public class SituationName {
 		result.add(new LabelValueBean(SituationName.PENDENTE_CONFIRMADO_STRING , SituationName.PENDENTE_CONFIRMADO_STRING));
 		result.add(new LabelValueBean(SituationName.PENDENTE_COM_DADOS_STRING , SituationName.PENDENTE_COM_DADOS_STRING));
 		result.add(new LabelValueBean(SituationName.ANNULLED_STRING , SituationName.ANNULLED_STRING));
+		result.add(new LabelValueBean(SituationName.ENROLLED_STRING , SituationName.ENROLLED_STRING));
 		
 		return result;	
-    }
+	}
 
 
 	/**

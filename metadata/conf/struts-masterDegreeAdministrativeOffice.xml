@@ -328,6 +328,20 @@
             <form-property name="degreeType" type="java.lang.Integer"/>
        </form-bean>
 
+	  <!-- Bean to Choose the Situation for the Candidate  -->
+      <form-bean name="candidateRegistrationForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="candidateID" type="java.lang.Integer"/>
+            <form-property name="executionYear" type="java.lang.String"/>
+            <form-property name="degreeCode" type="java.lang.String"/>
+            <form-property name="branchID" type="java.lang.Integer"/>
+            <form-property name="studentCurricularPlanID" type="java.lang.Integer"/>
+       </form-bean>
+
+
 
 
       
@@ -1335,10 +1349,55 @@
 	         
       </action>
       
+      <!-- Choose Execution Year to Register Candidates -->
+      <action path="/chooseExecutionYearToCandidateRegistration"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
+	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCandidateRegistration.do?method=prepareChooseMasterDegree"/> 
+      </action>
       
       
       
-      
+
+      <!-- Choose Master Degree To Candidate Registration -->
+      <action path="/chooseMasterDegreeToCandidateRegistration"
+      		  input="/candidate/chooseMasterDegreeToSelectCandidates.jsp"
+		      attribute="chooseMasterDegreeForm"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/candidate/chooseMasterDegreeToSelectCandidates.jsp"/>  
+	         <forward name="ChooseSuccess"  path="/candidateRegistration.do?method=getCandidateList"/>
+      </action>
+
+
+        <action path="/candidateRegistration"
+      		  input="/candidate/chooseMasterDegreeToSelectCandidates.jsp"
+      	      name="candidateRegistrationForm"
+		      parameter="method"
+		      scope="session"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
+
+			<exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
+		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="ListCandidates" path="candidate/displayCandidateListForRegistration.jsp"/> 
+	         <forward name="ShowConfirmation" path="candidate/confirmCandidateRegistration.jsp"/> 
+	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
+	         <forward name="ShowResult" path="candidate/candidateRegistered.jsp"/> 
+	         <forward name="Print" path="candidate/candidateRegistrationTemplate.jsp"/> 
+	         
+      </action>
+
+
+
       
       
     </action-mappings>

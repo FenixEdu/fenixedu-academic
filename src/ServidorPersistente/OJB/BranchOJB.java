@@ -8,6 +8,7 @@ import org.odmg.QueryException;
 
 import Dominio.Branch;
 import Dominio.IBranch;
+import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBranch;
@@ -49,7 +50,7 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		if (branchFromDB == null) {
 			super.lockWrite(branchToWrite);
 		// else If the branch is mapped to the database, then write any existing changes.
-		} else if ((branchToWrite instanceof Branch) && ((Branch) branchFromDB).getInternalID().equals(((Branch) branchToWrite).getInternalID())) {
+		} else if ((branchToWrite instanceof Branch) && ((Branch) branchFromDB).getIdInternal().equals(((Branch) branchToWrite).getIdInternal())) {
 			super.lockWrite(branchToWrite);
 			// else Throw an already existing exception
 		} else
@@ -149,4 +150,26 @@ public class BranchOJB extends ObjectFenixOJB implements IPersistentBranch {
 		}
 	}
 
+	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + Branch.class.getName()
+							+ " where degreeCurricularPlan.idInternal = $1";
+			query.create(oqlQuery);
+			query.bind(executionDegree.getCurricularPlan().getIdInternal());
+			List result = (List) query.execute();
+
+			try {
+				lockRead(result);
+			} catch (ExcepcaoPersistencia ex) {
+				throw ex;
+			}
+
+			if( (result != null) && (result.size() != 0) ) {
+				return result;
+			}
+			return null;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 }

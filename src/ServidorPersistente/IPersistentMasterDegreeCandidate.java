@@ -165,5 +165,5 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia;
 	
 	
-			
+		
 } // End of class definition

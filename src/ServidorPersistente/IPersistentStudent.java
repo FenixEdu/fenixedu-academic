@@ -41,4 +41,19 @@ public interface IPersistentStudent extends IPersistentObject {
 //	public void deleteByNumeroAndEstado(Integer numero,Integer estado) throws ExcepcaoPersistencia;
 //	public void deleteAll() throws ExcepcaoPersistencia;
 
+	/**
+	 * @param IPessoa
+	 * @param TipoCurso
+	 * @return IStudent
+	 */
+	public IStudent readByPersonAndDegreeType(IPessoa person, TipoCurso degreeType) throws ExcepcaoPersistencia;
+	
+	
+	/**
+	 * @param curso
+	 * @return
+	 */
+	public Integer generateStudentNumber(TipoCurso curso) throws ExcepcaoPersistencia;
+
+
 }

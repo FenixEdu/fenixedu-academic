@@ -357,7 +357,7 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 					+ " Ano = 2003 Ramo = "
 					+ branch.getCode()
 					+ "["
-					+ branch.getInternalID()
+					+ branch.getIdInternal()
 					+ "]"
 					+ "!";
 			errorDBID = "";

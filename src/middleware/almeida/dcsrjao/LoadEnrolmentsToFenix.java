@@ -562,7 +562,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 							+ " Ramo = "
 							+ this.oldBranch.getCode()
 							+ "["
-							+ this.oldBranch.getInternalID()
+							+ this.oldBranch.getIdInternal()
 							+ "]"
 							+ ". Registos: ";
 					errorDBID = almeida_enrolment.getId_internal() + ", ";

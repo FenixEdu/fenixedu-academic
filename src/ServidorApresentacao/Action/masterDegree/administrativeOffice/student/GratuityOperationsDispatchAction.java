@@ -79,6 +79,8 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 				try {
 					Object args[] = { studentCPID };
 					gratuityInformationFromGuide = (List) serviceManager.executar(userView, "ReadGratuityInformationByStudentCurricularPlanID", args);
+				} catch (NonExistingServiceException e) {
+
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}

@@ -18,7 +18,7 @@ import java.util.Date;
 import Util.SituationName;
 import Util.State;
 
-public interface ICandidateSituation {
+public interface ICandidateSituation extends IDomainObject {
     
     // Set Methods
     void setDate(Date date);

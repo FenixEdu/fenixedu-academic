@@ -9,14 +9,12 @@ import java.util.List;
  * 19/Mar/2003
  */
 
-public interface IBranch {
+public interface IBranch extends IDomainObject {
 
 	public String getCode();
 	public String getName();
 	public List getScopes();
-	public Integer getInternalID();
 	public IDegreeCurricularPlan getDegreeCurricularPlan();
-	public void setInternalID(Integer internalID);
 
 	public void setCode(String code);
 	public void setName(String name);

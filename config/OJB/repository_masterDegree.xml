@@ -122,7 +122,7 @@
 		table="CANDIDATE_SITUATION">
 
       <field-descriptor
-	     name="internalCode"    
+	     name="idInternal"    
 	     column="ID_INTERNAL"  
 	     jdbc-type="INTEGER"
 	     primarykey="true"

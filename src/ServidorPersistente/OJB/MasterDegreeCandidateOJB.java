@@ -425,7 +425,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
-	}			
+	}
 
     
 } // End of class definition

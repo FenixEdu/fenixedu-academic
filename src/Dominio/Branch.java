@@ -9,9 +9,8 @@ import java.util.List;
  * 19/Mar/2003
  */
 
-public class Branch implements IBranch {
+public class Branch extends DomainObject implements IBranch {
 
-	private Integer internalID;
 	private Integer keyDegreeCurricularPlan;
 	
 	private String name;
@@ -22,7 +21,6 @@ public class Branch implements IBranch {
 	public Branch() {
 		setName(null);
 		setCode(null);
-		setInternalID(null);
 		setScopes(null);
 		setDegreeCurricularPlan(null);
 	}
@@ -46,7 +44,7 @@ public class Branch implements IBranch {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.internalID + "; ";
+		result += "idInternal = " + getIdInternal() + "; ";
 		result += "name = " + this.name + "; ";
 		result += "code = " + this.code + "]\n";
 		return result;
@@ -58,13 +56,6 @@ public class Branch implements IBranch {
 	 */
 	public String getCode() {
 		return code;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getInternalID() {
-		return internalID;
 	}
 
 	/**
@@ -82,13 +73,6 @@ public class Branch implements IBranch {
 		this.code = code;
 	}
 
-	/**
-	 * Sets the internalID.
-	 * @param internalID The internalID to set
-	 */
-	public void setInternalID(Integer internalID) {
-		this.internalID = internalID;
-	}
 
 	/**
 	 * Sets the name.

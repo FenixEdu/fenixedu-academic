@@ -8,7 +8,7 @@ package DataBeans;
  * 19/Mar/2003
  */
 
-public class InfoBranch {
+public class InfoBranch extends InfoObject {
 
 	private String name;
 	private String code;

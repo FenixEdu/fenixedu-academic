@@ -1,8 +1,10 @@
 package ServidorPersistente;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.IBranch;
+import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -20,4 +22,11 @@ public interface IPersistentBranch extends IPersistentObject {
     public void lockWrite(IBranch branch) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(IBranch branch) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
+	
+	
+	/**
+	 * @param execucao
+	 * @return
+	 */
+	public List readByExecutionDegree(ICursoExecucao execucao) throws ExcepcaoPersistencia;
 }

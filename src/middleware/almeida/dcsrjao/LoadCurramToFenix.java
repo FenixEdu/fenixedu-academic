@@ -69,7 +69,7 @@ public class LoadCurramToFenix extends LoadDataToFenix {
 				branch.setDegreeCurricularPlan(degreeCurricularPlan);
 				branch.setName(name);
 				branch.setScopes(null);
-				branch.setInternalID(new Integer(this.branchID));
+				branch.setIdInternal(new Integer(this.branchID));
 				this.branchID++;
 				writeElement(branch);
 			} else {

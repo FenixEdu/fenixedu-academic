@@ -155,7 +155,7 @@ public class MigrateAreasCientificas2FenixBranch {
 				} else {
 					broker.store(branch2Write);
 				
-					areaCientifica.setCodigoInternoRamo(branch2Write.getInternalID());
+					areaCientifica.setCodigoInternoRamo(branch2Write.getIdInternal());
 				}
 				broker.store(areaCientifica);
 				broker.commitTransaction();
@@ -181,17 +181,17 @@ public class MigrateAreasCientificas2FenixBranch {
 		Branch branchAux = new Branch();
 		BeanUtils.copyProperties(branchAux, branch2Write);
 		
-		branchAux.setInternalID(null);
+		branchAux.setIdInternal(null);
 		branchAux.setName(branch2Write.getName() + " (Perfil A)");
 		branchAux.setCode(branch2Write.getCode() + " (A)");
 		broker.store(branchAux);
-		posgrad_area_cientifica.setCodigoInternoRamo(branchAux.getInternalID());
+		posgrad_area_cientifica.setCodigoInternoRamo(branchAux.getIdInternal());
 		
 		
 		branchAux = new Branch();
 		BeanUtils.copyProperties(branchAux, branch2Write);
 		
-		branchAux.setInternalID(null);
+		branchAux.setIdInternal(null);
 		branchAux.setName(branch2Write.getName() + " (Perfil B)");
 		branchAux.setCode(branch2Write.getCode() + " (B)");
 		broker.store(branchAux);
@@ -199,7 +199,7 @@ public class MigrateAreasCientificas2FenixBranch {
 		branchAux = new Branch();
 		BeanUtils.copyProperties(branchAux, branch2Write);
 
-		branchAux.setInternalID(null);
+		branchAux.setIdInternal(null);
 		branchAux.setName(branch2Write.getName() + " (Perfil C)");
 		branchAux.setCode(branch2Write.getCode() + " (C)");
 		broker.store(branchAux);

@@ -422,7 +422,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("student.idInternal", student.getIdInternal());
 		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
-		criteria.addEqualTo("branch.internalID", branch.getInternalID());
+		criteria.addEqualTo("branch.internalID", branch.getIdInternal());
 		criteria.addEqualTo("currentState", studentCurricularPlanState);
 		List result = query(StudentCurricularPlan.class, criteria);
 		if (result.size() == 1) {
@@ -808,7 +808,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
-		criteria.addEqualTo("branch.internalID", branch.getInternalID());
+		criteria.addEqualTo("branch.internalID", branch.getIdInternal());
 		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getInternalID());
 
 		List result = query(CurricularCourseScope.class, criteria);
@@ -823,7 +823,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndBranch(ICurricularCourse course, IBranch branch) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("curricularCourse.idInternal", course.getIdInternal());
-		criteria.addEqualTo("branch.internalID", branch.getInternalID());
+		criteria.addEqualTo("branch.internalID", branch.getIdInternal());
 
 		List result = query(CurricularCourseScope.class, criteria);
 		if (result.size() < 1) {

@@ -19,7 +19,7 @@ import java.util.Date;
 import Util.SituationName;
 import Util.State;
 
-public class CandidateSituation implements ICandidateSituation {
+public class CandidateSituation extends DomainObject implements ICandidateSituation {
  
     private Date date = null;                        // Candidate Situation Date
     private String remarks = null;              // Candidate Situation Remarks
@@ -29,7 +29,6 @@ public class CandidateSituation implements ICandidateSituation {
     private IMasterDegreeCandidate masterDegreeCandidate = null;    // Instance from MasterDegreeCandidate
     
     // Internal Keys in Tables
-    private Integer internalCode;      // Internal Code for CandidateSituation
     private Integer candidateKey;      // Internal Code for MasterDegreeCandidate
     private Integer situationKey;      // Internal Code for Situation
     
@@ -52,7 +51,7 @@ public class CandidateSituation implements ICandidateSituation {
 
     public String toString() {
         String result = "Candidate Situation:\n";
-        result += "\n  - Internal Code : " + internalCode;
+        result += "\n  - Internal Code : " + getIdInternal();
         result += "\n  - Date : " + date;
         result += "\n  - Remarks : " + remarks;
         result += "\n  - Validation : " + validation;
@@ -63,7 +62,10 @@ public class CandidateSituation implements ICandidateSituation {
     }
     
 	public boolean equals(Object o) {
-		return this.getInternalCode().equals(((CandidateSituation) o).getInternalCode());	
+		if (o instanceof ICandidateSituation){
+			return this.getIdInternal().equals(((CandidateSituation) o).getIdInternal());
+		}
+		return false;	
 	}
 
 	/**
@@ -80,14 +82,6 @@ public class CandidateSituation implements ICandidateSituation {
 	 */
 	public Date getDate() {
 		return date;
-	}
-
-	/**
-	 * Returns the internalCode.
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
 	}
 
 	/**
@@ -144,14 +138,6 @@ public class CandidateSituation implements ICandidateSituation {
 	 */
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
 	}
 
 	/**

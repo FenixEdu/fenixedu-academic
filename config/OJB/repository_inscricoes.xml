@@ -638,7 +638,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.Branch" table="BRANCH">
 	<field-descriptor
-		name="internalID"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
