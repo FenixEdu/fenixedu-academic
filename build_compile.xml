@@ -371,35 +371,6 @@
 		</parallel>
 	</target>
 
-	<target name="generate"
-	                description="Generate java code from a DML file">
-		<echo message="Processing ${dml.definition.file} ..."/>
-		<mkdir dir="${src_gen}"/>
-		<java classname="dml.DmlCompiler" fork="true">
-			<arg value="-f"/>
-			<arg value="-d"/>
-			<arg value="${src_gen}"/>
-			<arg value="${config}/${dml.definition.file}"/>
-			<classpath>
-				<fileset dir="${lib}">
-					<include name="dml.jar"/>
-					<include name="antlr.jar"/>
-				</fileset>
-			</classpath>
-		</java>
-		<delete includeEmptyDirs="true">
-			<fileset dir="${src_gen}">
-				<include name="**/*.java"/>
-				<include name="**/Item.java"/>
-				<include name="**/InsuranceValue.java"/>
-				<include name="**/InsuranceTransaction.java"/>
-				<exclude name="**/*_Base.java"/>
-				<exclude name="**/I*.java"/>
-			</fileset>
-	    </delete>
-		<echo level="info" message="Processing of ${dml.definition.file} finished."/>
-	</target>
-
     <target name="write-filter-hostnames-configuration-file">
     	<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
     	<delete file="${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties"/>
@@ -410,7 +381,13 @@
 				<tokenfilter>
 					<ignoreblank/>
 					<trim/>
-					<replacestring from="," to="${line.seperator}"/>
+					<stringtokenizer delims="," delimsaretokens="true" includeDelims="false"/>
+					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
+				</tokenfilter>
+				<tokenfilter>
+				    <replacestring from="," to=""/>
+					<trim/>
+					<ignoreblank/>
 				</tokenfilter>
 				<prefixlines prefix="@filter.hostname."/>
 				<prefixlines prefix="file='${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties'>"/>
@@ -439,6 +416,35 @@
 		</concat>
 		<ant antfile=".authenticationServiceHostnamesFiltering.properties.xml"/>
     	<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
+	</target>
+
+	<target name="generate"
+	                description="Generate java code from a DML file">
+		<echo message="Processing ${dml.definition.file} ..."/>
+		<mkdir dir="${src_gen}"/>
+		<java classname="dml.DmlCompiler" fork="true">
+			<arg value="-f"/>
+			<arg value="-d"/>
+			<arg value="${src_gen}"/>
+			<arg value="${config}/${dml.definition.file}"/>
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="dml.jar"/>
+					<include name="antlr.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+		<delete includeEmptyDirs="true">
+			<fileset dir="${src_gen}">
+				<include name="**/*.java"/>
+				<include name="**/Item.java"/>
+				<include name="**/InsuranceValue.java"/>
+				<include name="**/InsuranceTransaction.java"/>
+				<exclude name="**/*_Base.java"/>
+				<exclude name="**/I*.java"/>
+			</fileset>
+	    </delete>
+		<echo level="info" message="Processing of ${dml.definition.file} finished."/>
 	</target>
 
     <target name="compile"
