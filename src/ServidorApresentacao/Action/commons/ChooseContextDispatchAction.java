@@ -320,8 +320,15 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
         Integer semestre = infoExecutionPeriod.getSemester();
         Integer anoCurricular = (Integer) escolherContextoForm.get("curYear");
+        
+		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Integer index = new Integer((String) escolherContextoForm.get("index"));
+		Integer degreeId = getFromRequest("degreeID", request);
+		request.setAttribute("degreeID", degreeId);
+
+
+//        Integer index = new Integer((String) escolherContextoForm.get("index"));
 
         request.setAttribute("curYear", anoCurricular);
         request.setAttribute("semester", semestre);
@@ -341,8 +348,23 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
         Collections.sort(infoExecutionDegreeList,
                 new ComparatorByNameForInfoExecutionDegree());
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList
-                .get(index.intValue());
+       /* InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList
+                .get(index.intValue());*/
+		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+	    Iterator iterator = infoExecutionDegreeList.iterator();
+	    while (iterator.hasNext())
+	    {
+			infoExecutionDegree=
+			   (InfoExecutionDegree) iterator.next();
+		   if (infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanId))
+		   {
+			request.setAttribute(SessionConstants.EXECUTION_DEGREE,
+									infoExecutionDegree);
+			request.setAttribute("executionDegreeID",infoExecutionDegree.getIdInternal().toString());
+	   		request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree);
+			   break;
+		   }
+	   }
 
         if (infoExecutionDegree == null) {
             return mapping.findForward("Licenciatura execucao inexistente");
@@ -410,5 +432,48 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
         }
         return infoExecutionPeriod;
     }
+	private Integer getFromRequest(String parameter, HttpServletRequest request)
+		{
+			Integer parameterCode = null;
+			String parameterCodeString = request.getParameter(parameter);
+			if (parameterCodeString == null)
+			{
+				parameterCodeString = (String) request.getAttribute(parameter);
+			}
+			if (parameterCodeString != null)
+			{
+				try
+				{
+					parameterCode = new Integer(parameterCodeString);
+				}
+				catch (Exception exception)
+				{
+					return null;
+				}
+			}
+			return parameterCode;
+		}
+		private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
+		{
+			Boolean parameterBoolean = null;
+
+			String parameterCodeString = request.getParameter(parameter);
+			if (parameterCodeString == null)
+			{
+				parameterCodeString = (String) request.getAttribute(parameter);
+			}
+			if (parameterCodeString != null)
+			{
+				try
+				{
+					parameterBoolean = new Boolean(parameterCodeString);
+				}
+				catch (Exception exception)
+				{
+					return null;
+				}
+			}
+			return parameterBoolean;
+		}
 
 }
