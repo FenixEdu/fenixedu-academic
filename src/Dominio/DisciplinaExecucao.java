@@ -70,12 +70,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
         if (obj instanceof IDisciplinaExecucao ) {
             IDisciplinaExecucao de = (IDisciplinaExecucao) obj;
 
-            resultado = (getNome().equals(de.getNome())) &&
-                        (getSigla().equals(de.getSigla())) &&            
-                        (getTheoreticalHours().equals(de.getTheoreticalHours())) &&
-                        (getPraticalHours().equals(de.getPraticalHours())) &&
-                        (getTheoPratHours().equals(de.getTheoPratHours())) &&            
-                        (getLabHours().equals(de.getLabHours()))&&
+            resultado = (getSigla().equals(de.getSigla())) &&            
                         (getExecutionPeriod().equals(de.getExecutionPeriod()));
         }
         return resultado;
