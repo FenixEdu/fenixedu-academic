@@ -193,13 +193,13 @@ public class ResponsiblesDataLoader {
 		Iterator iter = siglaResponsibles.iterator();
 		while (iter.hasNext()) {
 			Responsavel element = (Responsavel) iter.next();
-			if (element.getNo_mec().intValue() != 0) {
+			
 				loader.writeResponsible(
 					executionCourse,
 					element,
 					broker,
 					loader);
-			}
+			
 		}
 	}
 
@@ -415,7 +415,7 @@ public class ResponsiblesDataLoader {
 					siglaResponsibles,
 					(List) CollectionUtils.select(
 						loader.getSiglaResponsibles(),
-						new PredicateForSiglaResponsible(curricularCourse)));
+						new PredicateForSiglaResponsible(curricularCourse)));			
 			loader.setSiglaAddedResponsibles(
 				loader.addAllToListWithoutRepetitions(
 					loader.getSiglaAddedResponsibles(),

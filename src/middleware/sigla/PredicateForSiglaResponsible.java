@@ -24,6 +24,7 @@ public class PredicateForSiglaResponsible implements Predicate {
 	 */
 	public boolean evaluate(Object arg0) {
 		Responsavel siglaResponsible = (Responsavel) arg0;
+		
 		ICurricularCourse curricularCourse = getCurricularCourse();
 		return (
 			(curricularCourse.getCode().equals(siglaResponsible.getCod_disc()))
@@ -33,7 +34,7 @@ public class PredicateForSiglaResponsible implements Predicate {
 					.getIdInternal()
 					.equals(
 						sigla2FenixDegreeNumbers(
-							siglaResponsible.getCod_curso())))&&(siglaResponsible.getNo_mec().intValue()!=0));
+							siglaResponsible.getCod_curso()))));
 	}
 
 	private Integer sigla2FenixDegreeNumbers(Integer siglaDegreeNumber) {
