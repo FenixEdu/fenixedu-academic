@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.gesdis.SectionView;
-import Dominio.ISection;
-import Dominio.ITeacher;
+import DataBeans.gesdis.TeacherView;
+
 
 
 public class ViewUtils {
@@ -19,7 +19,7 @@ public class ViewUtils {
 		Iterator iter = sections.iterator();
 		
 		while (iter.hasNext()) {
-			ISection section = (ISection) iter.next();
+			SectionView section = (SectionView) iter.next();
 			ArrayList sonNode = (ArrayList) fatherNode.clone();
 			sonNode.add(section.getName());
 			result.add(sonNode);
@@ -34,8 +34,8 @@ public class ViewUtils {
 		Iterator iter = teachers.iterator();
 		
 		while (iter.hasNext()) {
-			ITeacher teacher = (ITeacher) iter.next();
-			result.add(teacher.getUsername());
+			TeacherView teacher =  (TeacherView) iter.next();
+			result.add(teacher.getNome());
 		}
 		return result;
 	}
