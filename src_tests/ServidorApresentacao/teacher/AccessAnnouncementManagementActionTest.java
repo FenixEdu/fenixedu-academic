@@ -11,6 +11,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
 import ServidorApresentacao.TestCasePresentationTeacherPortal;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * AccessAnnouncementManagementTest.java
@@ -67,7 +68,7 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 		infoSection.setInfoSite(infoSite);
 		infoSite.setInitialInfoSection(infoSection);
 
-		items.put("Site", infoSite);
+		items.put(SessionConstants.INFO_SITE, infoSite);
 
 		return items;
 	}

@@ -61,7 +61,6 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-			
 			HttpSession session = request.getSession(false);
 
 			//retrieve announcement
