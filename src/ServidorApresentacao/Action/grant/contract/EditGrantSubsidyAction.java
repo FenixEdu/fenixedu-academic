@@ -4,12 +4,16 @@
 
 package ServidorApresentacao.Action.grant.contract;
 
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantSubsidy;
 import ServidorAplicacao.IUserView;
@@ -141,6 +145,8 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 	private void setFormGrantSubsidy(DynaValidatorForm form, InfoGrantSubsidy infoGrantSubsidy)
 			throws Exception
 	{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
 		form.set("idGrantSubsidy", infoGrantSubsidy.getIdInternal());
 		if (infoGrantSubsidy.getValue() != null)
 			form.set("value", infoGrantSubsidy.getValue().toString());
@@ -148,10 +154,16 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 			form.set("valueFullName", infoGrantSubsidy.getValueFullName());
 		if (infoGrantSubsidy.getTotalCost() != null)
 			form.set("totalCost", infoGrantSubsidy.getTotalCost().toString());
+		if (infoGrantSubsidy.getDateBeginSubsidy() != null)
+			form.set("dateBeginSubsidy", sdf.format(infoGrantSubsidy.getDateBeginSubsidy()));
+		if (infoGrantSubsidy.getDateEndSubsidy() != null)
+			form.set("dateEndSubsidy", sdf.format(infoGrantSubsidy.getDateEndSubsidy()));
 	}
 	private InfoGrantSubsidy populateInfoFromForm(DynaValidatorForm editGrantSubsidyForm)
 			throws Exception
 	{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
 		InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
 		InfoGrantContract infoGrantContract = new InfoGrantContract();
 		if (verifyStringParameterInForm(editGrantSubsidyForm, "idGrantSubsidy"))
@@ -163,6 +175,13 @@ public class EditGrantSubsidyAction extends FenixDispatchAction
 		if (verifyStringParameterInForm(editGrantSubsidyForm, "totalCost"))
 			infoGrantSubsidy.setTotalCost(new Double((String) editGrantSubsidyForm.get("totalCost")));
 		infoGrantContract.setIdInternal((Integer) editGrantSubsidyForm.get("idContract"));
+		
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "dateBeginSubsidy"))
+			infoGrantSubsidy.setDateBeginSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateBeginSubsidy")));
+		
+		if (verifyStringParameterInForm(editGrantSubsidyForm, "dateEndSubsidy"))
+			infoGrantSubsidy.setDateEndSubsidy(sdf.parse((String) editGrantSubsidyForm.get("dateEndSubsidy")));
+		
 		infoGrantSubsidy.setInfoGrantContract(infoGrantContract);
 		return infoGrantSubsidy;
 	}

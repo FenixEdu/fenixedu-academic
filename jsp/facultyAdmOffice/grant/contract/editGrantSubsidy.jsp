@@ -60,6 +60,23 @@
 				<html:text property="totalCost"/><bean:message key="label.requiredfield"/>
 			</td>
 		</tr>
+		
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.subsidy.dateBeginSubsidy"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateBeginSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<bean:message key="label.grant.subsidy.dateEndSubsidy"/>:&nbsp;
+			</td>
+			<td>
+				<html:text property="dateEndSubsidy" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
+			</td>
+		</tr>
 	</table>
 
 	<br/>

@@ -161,6 +161,8 @@
 				<form-property name="value" type="java.lang.String"/>
 				<form-property name="valueFullName" type="java.lang.String"/>
 				<form-property name="totalCost" type="java.lang.String"/>
+				<form-property name="dateBeginSubsidy" type="java.lang.String"/>
+				<form-property name="dateEndSubsidy" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 

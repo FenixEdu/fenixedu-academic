@@ -76,7 +76,7 @@
 				</var>
 				<var>
 					<var-name>mask</var-name>
-					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
 				</var>
 		    </field>
             <field property="dateEndContract" depends="required, mask, date" page="1">
@@ -245,6 +245,32 @@
 		    <field property="totalCost" depends="required, double" page="1">
 				<msg name="number" key="errors.double"/>
 				<arg0 key="label.grant.subsidy.totalCost" resource="true"/>
+		    </field>
+		    <field property="dateBeginSubsidy" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.subsidy.dateBeginSubsidy" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-....)$</var-value>
+	        	</var>
+		    </field>
+		    <field property="dateEndSubsidy" depends="mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.subsidy.dateEndSubsidy" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd-MM-yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)-(.||..)-2...)$</var-value>
+	        	</var>
 		    </field>
 		</form>
 

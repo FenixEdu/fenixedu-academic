@@ -13,15 +13,26 @@ NEW FEATURES:
 - task [#181] View of Student Candidacies
 - task [#175] Fénix Error Page - don't kill session when showing the error page.
 - task [#175] Attribution of final degree work (and confirmation)
+- Create a new Person as a Grant Owner
+- Create a new Grant Owner related to an already existent person.
+- Manage Grant Contracts of an Grant Owner (Create and edit). All contracts are showned in a table.
+- Manage Grant Subsidys of Grant Contracts (Create and Edit). All subsidys are showned in a table.
+- Manage Grant Parts of Grant Subsidys (Create, Edit, Delete). All parts are showned in a table.
+- Manage Grant Types (Create and edit).
+- Manage Grant Cost Center (Create and edit).
+- Manage Grant Projects (Create and edit).
+- Manage Qualifications of a grant owner (Create, Edit, Delete). All qualifications are showned in a table.
+
 
 NOTES:
 - updateWebSiteItem-14-04-2004.sql: 
-  - added field ftpName in website_item table
-  - updated items that have erroneous item begin day filled
-  - updated name of sections that have accents
-  - updated number of posts for all sections
+- added field ftpName in website_item table
+- updated items that have erroneous item begin day filled
+- updated name of sections that have accents
+- updated number of posts for all sections
 - updateGuideEntry-20-04-2004.sql: data fix in database about guide entries
-  - insert of guide entry for guide with id_internal 3822
+- insert of guide entry for guide with id_internal 3822
+- First deploy of sub aplication Grant Owner Management in facultyAdmOffice portal.
  	
 CHANGES:
 - webSiteManager: changed interface for adding and editing an item. Only the relevant dates appear for each section:
@@ -33,7 +44,6 @@ CHANGES:
 - the service ReadCoursesInformation no longer sorts the result, that is now done in the corresponding action SearchCoursesI$
 - the statistics about the CoursesInformation are no longer calculated in the jsp, that is now done at InfoSiteCourseInforma$
 - the DomainObjects associated with the TeacherInformation are now not cacheable
-
 
 BUG FIXES:
 - websiteManager: fixed sections that have accent in word and it was not shown
@@ -53,6 +63,7 @@ KNOWN ISSUES:
   are proposed for. This is due to not yet having information regarding the next execution
   year. This must be resolved by establishing dates when the information must be introduced
   into the database.
+
 
 
 ---------------------------------------------------------------------
