@@ -34,20 +34,10 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditGroupShift implements IServico {
 
-	private IPersistentStudentGroup persistentStudentGroup = null;
-
-	private static EditGroupShift service = new EditGroupShift();
-
-	/**
-		* The singleton access method of this class.
-		*/
-	public static EditGroupShift getService() {
-		return service;
-	}
 	/**
 	 * The constructor of this class.
 	 */
-	private EditGroupShift() {
+	public EditGroupShift() {
 	}
 	/**
 	 * The name of the service
