@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoClass;
+import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -21,6 +22,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.Season;
 
 /**
  * @author jpvl
@@ -32,20 +34,26 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			SessionUtils.validSessionVerification(request, mapping);
-			
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				GestorServicos gestor = GestorServicos.manager();
-				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);				
-				InfoClass infoClass = new InfoClass();
-			
-				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY); 
-			
-				Integer curricularYear=(Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
+		SessionUtils.validSessionVerification(request, mapping);
 
-			
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			GestorServicos gestor = GestorServicos.manager();
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			InfoClass infoClass = new InfoClass();
+
+			InfoExecutionPeriod infoExecutionPeriod =
+				(InfoExecutionPeriod) session.getAttribute(
+					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			InfoExecutionDegree infoExecutionDegree =
+				(InfoExecutionDegree) session.getAttribute(
+					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+
+			Integer curricularYear =
+				(Integer) session.getAttribute(
+					SessionConstants.CURRICULAR_YEAR_KEY);
+
 			// read execution courses of executionDegree, executionPeriof and CurricularYear
 			Object[] argsReadCourses =
 				{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
@@ -66,36 +74,52 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 					(InfoExecutionCourse) infoCoursesList.get(i);
 				argsReadExams[0] = infoExecutionCourse;
 				infoExamsOfExecutionCourse =
-					(List) gestor.executar(userView, "ReadExamsByExecutionCourse", argsReadExams);
+					(List) gestor.executar(
+						userView,
+						"ReadExamsByExecutionCourse",
+						argsReadExams);
 
-/*				if (infoExamsOfExecutionCourse.size() == 1) {
-					infoViewExam = (InfoViewExamByDayAndShift) infoExamsOfExecutionCourse.get(0);
-					InfoViewExamByDayAndShift notScheduledExam = ;					
-					if (infoViewExam.getInfoExam().getSeason().equals(new Season(Season.SEASON1))) {
-						infoViewExams.add(infoViewExam);					
-						infoViewExams.add();
-					}
-					else {
-						infoViewExams.add();
+				InfoViewExamByDayAndShift notScheduledExam = 
+					new InfoViewExamByDayAndShift(
+						new InfoExam(
+							null,
+							null,
+							null,
+							null,
+							new InfoExecutionCourse()),
+						null,
+						null);
+						
+				if (infoExamsOfExecutionCourse.size() == 1) {
+					infoViewExam =
+						(InfoViewExamByDayAndShift) infoExamsOfExecutionCourse.get(0);
+					notScheduledExam.setNumberStudentesAttendingCourse(infoViewExam.getNumberStudentesAttendingCourse());
+					notScheduledExam.getInfoExam().setInfoExecutionCourse(infoViewExam.getInfoExam().getInfoExecutionCourse());
+					if (infoViewExam
+						.getInfoExam()
+						.getSeason()
+						.equals(new Season(Season.SEASON1))) {
 						infoViewExams.add(infoViewExam);
-					}								
-				}
-				else
-*/				
-					infoViewExams.addAll(infoExamsOfExecutionCourse);								
-				
+						infoViewExams.add(notScheduledExam);
+					} else {
+						infoViewExams.add(notScheduledExam);
+						infoViewExams.add(infoViewExam);
+					}
+				} else
+					infoViewExams.addAll(infoExamsOfExecutionCourse);
 			}
 
 			if (infoViewExams != null && infoViewExams.isEmpty()) {
 				session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
 			} else {
-				session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExams);
+				session.setAttribute(
+					SessionConstants.INFO_EXAMS_KEY,
+					infoViewExams);
 			}
 
 			return mapping.findForward("Sucess");
-			} else
-				throw new Exception();
-			// nao ocorre... pedido passa pelo filtro Autorizacao
-		}
+		} else
+			throw new Exception();
+		// nao ocorre... pedido passa pelo filtro Autorizacao
+	}
 }
-

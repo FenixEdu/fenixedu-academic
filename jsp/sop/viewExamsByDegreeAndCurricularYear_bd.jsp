@@ -49,11 +49,7 @@
 				</tr>
 	            <% int i = 0; %>
 				<logic:iterate id="infoViewExam" name="<%= SessionConstants.INFO_EXAMS_KEY %>" scope="session">
-                       <% Integer iH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
-                       <% Integer iM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.MINUTE)); %>
-                       <% Integer fH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getEnd().get(Calendar.HOUR_OF_DAY)); %>
-                       <% Integer fM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getEnd().get(Calendar.MINUTE)); %>
-				
+					<%if((i%2) == 0) { %>
 					<tr align="center">
 						<td>
 							<bean:write name="infoViewExam" property="infoExam.infoExecutionCourse.sigla"/>
@@ -65,14 +61,35 @@
 							<bean:write name="infoViewExam" property="numberStudentesAttendingCourse"/>
 						</td>
 						<td>
-							<bean:write name="infoViewExam" property="infoExam.day"/>
-							<br/>
-                           	<%= iH.toString()%> : <%= iM.toString()%>
+							<logic:notEmpty name="infoViewExam" property="infoExam.beginning">
+	                    	<% Integer iH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
+	                    	<% Integer iM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.MINUTE)); %>
+								<bean:write name="infoViewExam" property="infoExam.day"/>
+								<br/>
+								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
+							</logic:notEmpty>
+							
+							<logic:empty name="infoViewExam" property="infoExam.beginning">
+								Não disponivel
+							</logic:empty>
 						</td>
+					<%} else {%>
 						<td>
-							TBA
+							<logic:notEmpty name="infoViewExam" property="infoExam.beginning">
+		                       <% Integer iH = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY)); %>
+		                       <% Integer iM = new Integer(((InfoViewExamByDayAndShift)iVE.get(i)).getInfoExam().getBeginning().get(Calendar.MINUTE)); %>
+								<bean:write name="infoViewExam" property="infoExam.day"/>
+								<br/>
+								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
+							</logic:notEmpty>
+							
+							<logic:empty name="infoViewExam" property="infoExam.beginning">
+								Não disponivel
+							</logic:empty>
 						</td>
 					</tr>
+					<%} %>
+                    <% i++; %>
 						</logic:iterate>
 			</table>
 				
