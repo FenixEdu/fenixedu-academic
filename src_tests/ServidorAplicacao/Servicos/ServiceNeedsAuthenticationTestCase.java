@@ -6,7 +6,6 @@
  */
 package ServidorAplicacao.Servicos;
 
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -26,9 +25,6 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 	protected ServiceNeedsAuthenticationTestCase(String name) {
 		super(name);
-		userView = authenticateUser(getAuthorizedUser());
-		userView2 = authenticateUser(getUnauthorizedUser());
-		userView3 = authenticateUser(getNonTeacherUser());
 	}
 
 	protected void setUp() {
@@ -122,7 +118,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 		}
 	}
 
-	protected IUserView authenticateUser(String arguments[]) {
+	protected IUserView authenticateUser(String[] arguments) {
 		SuportePersistenteOJB.resetInstance();
 		String args[] = arguments;
 
