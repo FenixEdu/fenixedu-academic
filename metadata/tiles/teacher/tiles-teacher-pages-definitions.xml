@@ -28,14 +28,21 @@
 		<put name="body" value="/teacher/credits/creditsManagement.jsp" />
 	</definition>
 	<definition name="candidaciesGrid" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/showSeminariesIndex_bd.jsp"/>
 		<put name="body" value="/teacher/candidaciesGrid.jsp" />
 	</definition>
 	<definition name="definition.showCandidacyDetails" extends="definition.teacher.two-column">
 		<put name="body" value="/teacher/showCandidacyDetails_bd.jsp"/>
 	</definition>
 	<definition name="definition.showSeminariesIndex" extends="definition.teacher.two-column">
-		<put name="body" value="/teacher/showSeminariesIndex_bd.jsp"/>
+		<put name="navLocal" value="/teacher/showSeminariesIndex_bd.jsp"/>
 	</definition>
+	<!-- by gedl 1 feb, 2004-->
+	<definition name="definition.viewCandidateCurriculum" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/showSeminariesIndex_bd.jsp"/>
+		<put name="body" value="/teacher/viewCandidateCurriculum.jsp"/>
+	</definition>
+
 	<definition name="showEmailForm" extends="definition.teacher.two-column">
 		<put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 		<put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
@@ -43,6 +50,7 @@
 		<put name="body" value="/teacher/sendEmailForm.jsp"/>
 	</definition>
 	<definition name="showSelectCandidacies" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/showSeminariesIndex_bd.jsp"/>
 		<put name="body" value="/teacher/showSelectCandidacies.jsp"/>
 	</definition>
 	<definition name="course-information-management" extends="course-information">
