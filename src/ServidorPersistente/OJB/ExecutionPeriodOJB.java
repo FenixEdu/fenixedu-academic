@@ -1160,7 +1160,7 @@ public class ExecutionPeriodOJB
 			shift.getDisciplinaExecucao().getIdInternal());
 		criteria.addEqualTo(
 			"disciplinaExecucao.sigla",
-			shift.getDisciplinaExecucao().getSigla());
+			shift.getNome());
 		criteria.addEqualTo("nome", shift.getNome());
 		return (ITurno) queryObject(Turno.class, criteria);
 	}
