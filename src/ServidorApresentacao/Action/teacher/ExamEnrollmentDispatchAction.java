@@ -187,6 +187,14 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		endTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentEndHourArray[0]).intValue());
 		endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
 
+		Calendar presentDay = Calendar.getInstance();
+		Calendar presentTime = Calendar.getInstance();
+
+		if (!verifyDates(presentDay, presentTime, beginDate, beginTime)) {
+					setErrorMessage(request, "error.beginDate.sooner.today");
+					return mapping.getInputForward();
+		}
+		
 		if (!verifyDates(beginDate, beginTime, endDate, endTime)) {
 			setErrorMessage(request, "error.endDate.sooner.beginDate");
 			return mapping.getInputForward();
