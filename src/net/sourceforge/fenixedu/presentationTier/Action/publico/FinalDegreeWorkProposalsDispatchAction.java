@@ -210,9 +210,12 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             String year1 = infoExecutionYear.getYear().substring(0, seperatorIndex);
             String year2 = infoExecutionYear.getYear().substring(seperatorIndex + 1,
                     infoExecutionYear.getYear().length());
-            infoExecutionYear.setYear("" + ((new Integer(year1)).intValue() + 1) + "/"
+
+            InfoExecutionYear transformedInfoExecutionYear = new InfoExecutionYear();
+            transformedInfoExecutionYear.setIdInternal(infoExecutionYear.getIdInternal());
+            transformedInfoExecutionYear.setYear("" + ((new Integer(year1)).intValue() + 1) + "/"
                     + ((new Integer(year2)).intValue() + 1));
-            return infoExecutionYear;
+            return transformedInfoExecutionYear;
         }
     }
 

@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +34,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.FinalDegreeWorkProposalsDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -209,11 +211,11 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 				.findForward("SubmitionOfFinalDegreeWorkProposalSucessful");
 	}
 
-	public ActionForward changeExecutionYear(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException, FenixFilterException,
-			FenixServiceException, IllegalAccessException,
-			InstantiationException {
+	public ActionForward changeExecutionYear(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException,
+			FenixFilterException, FenixServiceException,
+			IllegalAccessException, InstantiationException {
 		final DynaActionForm finalWorkForm = (DynaActionForm) form;
 		finalWorkForm.set("degree", "");
 		return chooseDegree(mapping, form, request, response);
@@ -233,7 +235,11 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 		final List infoExecutionYears = CommonServiceRequests
 				.getInfoExecutionYears();
-		request.setAttribute("infoExecutionYears", infoExecutionYears);
+		final Collection transformedInfoExecutionYears = CollectionUtils
+				.collect(
+						infoExecutionYears,
+						new FinalDegreeWorkProposalsDispatchAction().new INFO_EXECUTION_YEAR_INCREMENTER());
+		request.setAttribute("infoExecutionYears", transformedInfoExecutionYears);
 
 		final String executionYear = (String) finalWorkForm
 				.get("executionYear");
@@ -245,8 +251,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 						.getIdInternal().toString());
 			}
 		} else {
-			infoExecutionYear = findExecutionDegreeByID(infoExecutionYears, new Integer(
-					executionYear));
+			infoExecutionYear = findExecutionDegreeByID(infoExecutionYears,
+					new Integer(executionYear));
 		}
 
 		final List executionDegreeList = (List) ServiceUtils.executeService(
@@ -306,7 +312,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		return mapping.findForward("chooseDegreeForFinalWorkProposal");
 	}
 
-	private InfoExecutionYear findExecutionDegreeByID(final List infoExecutionYears, final Integer executionYearId) {
+	private InfoExecutionYear findExecutionDegreeByID(
+			final List infoExecutionYears, final Integer executionYearId) {
 		for (final Iterator iterator = infoExecutionYears.iterator(); iterator
 				.hasNext();) {
 			final InfoExecutionYear infoExecutionYear = (InfoExecutionYear) iterator
