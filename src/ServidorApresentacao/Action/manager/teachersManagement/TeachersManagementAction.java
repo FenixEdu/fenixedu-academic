@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.manager.teachersManagement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -148,12 +149,12 @@ public class TeachersManagementAction extends FenixDispatchAction
 				"toDelete");
 
 		ActionErrors errors = new ActionErrors();
-		List professorshipsWithSupportLessons = null;
+		HashMap professorshipsNotRemoved = null;
 		Object[] args = { teacherNumber, professorshipsToDelete, responsibleForsToDelete };
 		try
 		{
-			professorshipsWithSupportLessons =
-				(List) ServiceUtils.executeService(
+			professorshipsNotRemoved =
+				(HashMap) ServiceUtils.executeService(
 					userView,
 					"DissociateProfessorShipsAndResponsibleFor",
 					args);
@@ -201,19 +202,22 @@ public class TeachersManagementAction extends FenixDispatchAction
 			return mapping.findForward("errorPageForDissociation");
 		}
 
-		if (professorshipsWithSupportLessons != null && professorshipsWithSupportLessons.size() > 0)
+		if (professorshipsNotRemoved != null && professorshipsNotRemoved.size() > 0)
 		{
-			Iterator iterProfessorships = professorshipsWithSupportLessons.iterator();
-			while (iterProfessorships.hasNext())
-			{
-				InfoProfessorship infoProfessorship = (InfoProfessorship) iterProfessorships.next();
-				errors.add(
+			errors =
+				createErrors(
+					professorshipsNotRemoved,
+					new String("supportLessons"),
 					"PSWithSL",
-					new ActionError(
-						"error.manager.teachersManagement.PSWithSL",
-						infoProfessorship.getInfoExecutionCourse().getNome()));
-
-			}
+					"error.manager.teachersManagement.PSWithSL",
+					errors);
+			errors =
+				createErrors(
+					professorshipsNotRemoved,
+					new String("shifts"),
+					"PSWithS",
+					"error.manager.teachersManagement.PSWithS",
+					errors);
 			saveErrors(request, errors);
 			return prepareDissociateECShowProfShipsAndRespFor(mapping, form, request, response);
 		}
@@ -221,6 +225,29 @@ public class TeachersManagementAction extends FenixDispatchAction
 		return prepareDissociateEC(mapping, form, request, response);
 	}
 
+	private ActionErrors createErrors(
+		HashMap hash,
+		String hashKey,
+		String errorKey,
+		String message,
+		ActionErrors errors)
+	{
+		List professorships = (List) hash.get(hashKey);
+
+		if (professorships != null)
+		{
+			Iterator iterProfessorships = professorships.iterator();
+			while (iterProfessorships.hasNext())
+			{
+				InfoProfessorship infoProfessorship = (InfoProfessorship) iterProfessorships.next();
+				errors.add(
+					errorKey,
+					new ActionError(message, infoProfessorship.getInfoExecutionCourse().getNome()));
+			}
+		}
+		return errors;
+	}
+	
 	private List getInformationToDissociate(
 		HttpServletRequest request,
 		Integer professorshipsListSize,
@@ -250,8 +277,10 @@ public class TeachersManagementAction extends FenixDispatchAction
 		Integer itemToDelete = null;
 		String checkbox = request.getParameter(what + "[" + index + "]." + formProperty);
 		String toDelete = null;
-		if(checkbox != null && (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true"))) {
-			toDelete = request.getParameter(what + "[" + index + "]." + property);	
+		if (checkbox != null
+			&& (checkbox.equals("on") || checkbox.equals("yes") || checkbox.equals("true")))
+		{
+			toDelete = request.getParameter(what + "[" + index + "]." + property);
 		}
 		if (toDelete != null)
 		{

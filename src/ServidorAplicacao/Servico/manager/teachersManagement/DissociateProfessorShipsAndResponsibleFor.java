@@ -1,6 +1,7 @@
 package ServidorAplicacao.Servico.manager.teachersManagement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
+import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -45,11 +47,13 @@ public class DissociateProfessorShipsAndResponsibleFor implements IServico
 		return "DissociateProfessorShipsAndResponsibleFor";
 	}
 
-	public List run(Integer teacherNumber, List professorships, List responsibleFors)
+	public HashMap run(Integer teacherNumber, List professorships, List responsibleFors)
 		throws FenixServiceException
 	{
-
 		List professorshipsWithSupportLessons = new ArrayList();
+		List professorshipsWithShifts = new ArrayList();
+		HashMap professorshipsNotRemoved = new HashMap();
+
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -57,6 +61,8 @@ public class DissociateProfessorShipsAndResponsibleFor implements IServico
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
 			IPersistentSupportLesson persistentSupportLesson = sp.getIPersistentSupportLesson();
+			IPersistentShiftProfessorship persistentShiftProfessorship =
+				sp.getIPersistentShiftProfessorship();
 
 			if (teacherNumber == null)
 			{
@@ -115,21 +121,35 @@ public class DissociateProfessorShipsAndResponsibleFor implements IServico
 					newResponsibleFor.add(responsibleFor);
 				}
 
-				//			everithing is ok for removal
+				//			everithing is ok for removal, but first check
+				//			professorships with support lessons and shifts
 				iterProfessorships = newProfessorships.iterator();
 				while (iterProfessorships.hasNext())
 				{
 					IProfessorship professorship = (IProfessorship) iterProfessorships.next();
 
 					List supportLessons = persistentSupportLesson.readByProfessorship(professorship);
-					if (supportLessons != null && supportLessons.size() > 0)
-					{
-						professorshipsWithSupportLessons.add(
-							Cloner.copyIProfessorship2InfoProfessorship(professorship));
-					} else
+					List shiftProfessorships =
+						persistentShiftProfessorship.readByProfessorship(professorship);
+					
+					if ((shiftProfessorships == null || shiftProfessorships.size() == 0)
+						&& (supportLessons == null || supportLessons.size() == 0))
 					{
 						persistentProfessorship.delete(professorship);
+					} else
+					{
+						if (supportLessons.size() > 0)
+						{
+							professorshipsWithSupportLessons.add(
+								Cloner.copyIProfessorship2InfoProfessorship(professorship));
+						}
+						if (shiftProfessorships.size() > 0)
+						{
+							professorshipsWithShifts.add(
+								Cloner.copyIProfessorship2InfoProfessorship(professorship));
+						}
 					}
+
 				}
 
 				iterResponsibleFor = newResponsibleFor.iterator();
@@ -144,6 +164,10 @@ public class DissociateProfessorShipsAndResponsibleFor implements IServico
 		{
 			throw new RuntimeException(ex);
 		}
-		return professorshipsWithSupportLessons;
+		
+		professorshipsNotRemoved.put(new String("supportLessons"), professorshipsWithSupportLessons);
+		professorshipsNotRemoved.put(new String("shifts"), professorshipsWithShifts);
+		
+		return professorshipsNotRemoved;
 	}
 }
