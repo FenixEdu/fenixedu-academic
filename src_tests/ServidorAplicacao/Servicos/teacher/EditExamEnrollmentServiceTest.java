@@ -1,89 +1,238 @@
-/*
- * Created on 28/Mai/2003
- *
- */
 package ServidorAplicacao.Servicos.teacher;
 
 import java.util.Calendar;
 
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
- * @author Tânia Nunes
+ * @author  Luis Egidio, lmre@mega.ist.utl.pt
+ * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
  */
-public class EditExamEnrollmentServiceTest
-	extends TestCaseDeleteAndEditServices {
+public class EditExamEnrollmentServiceTest extends ServiceNeedsAuthenticationTestCase
+{
 
-	/**
-	 * @param testName
-	 */
-	public EditExamEnrollmentServiceTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public EditExamEnrollmentServiceTest(String name)
+    {
+        super(name);
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "EditExamEnrollment";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "EditExamEnrollment";
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+    protected String getDataSetFilePath()
+    {
+        return "etc/datasets/servicos/teacher/testEditExamEnrollmentDataSet.xml";
+    }
+
+    protected String[] getAuthenticatedAndAuthorizedUser()
+    {
+        String[] args = { "nmsn", "pass", getApplication()};
+        return args;
+    }
+
+    protected String[] getAuthenticatedAndUnauthorizedUser()
+    {
+        String[] args = { "13", "pass", getApplication()};
+        return args;
+    }
+
+    protected String[] getNotAuthenticatedUser()
+    {
+        String[] args = { "fiado", "pass", getApplication()};
+        return args;
+    }
+
+    protected Object[] getAuthorizeArguments()
+    {
+        Calendar beginDate = Calendar.getInstance();
+        beginDate.set(Calendar.YEAR, 2004);
+        beginDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+        beginDate.set(Calendar.DATE, 15);
+        beginDate.set(Calendar.HOUR_OF_DAY, 9);
+        beginDate.set(Calendar.MINUTE, 0);
+        beginDate.set(Calendar.SECOND, 0);
+        beginDate.set(Calendar.MILLISECOND, 0);
+
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(Calendar.YEAR, 2004);
+        endDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+        endDate.set(Calendar.DATE, 22);
+        endDate.set(Calendar.HOUR_OF_DAY, 11);
+        endDate.set(Calendar.MINUTE, 0);
+        endDate.set(Calendar.SECOND, 0);
+        endDate.set(Calendar.MILLISECOND, 0);
+
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.setTimeInMillis(beginDate.getTimeInMillis());
+
+        Calendar endTime = Calendar.getInstance();
+        endTime.setTimeInMillis(endDate.getTimeInMillis());
+
+        Object[] args = { new Integer(24), // executionCourseCode
+            new Integer(1), // examCode
+            beginDate, endDate, beginTime, endTime };
+        return args;
+    }
+
+    protected String getApplication()
+    {
+        return Autenticacao.EXTRANET;
+    }
+
+    public void testEditNonExistingExamEnrollment()
+    {
+        Object[] args = getAuthorizeArguments();
+        args[1] = new Integer(7); // non-existing exam
+
+        try
+        {
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            System.out.println(
+                "testEditNonExistingExamEnrollment was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testEditNonExistingExamEnrollment");
+
+        }
+        catch (InvalidArgumentsServiceException ex)
+        {
+            compareDataSetUsingExceptedDataSetTableColumns(
+                "etc/datasets/servicos/teacher/" + "testExpectedTestEditExamEnrollmentDataSet.xml");
+            ex.printStackTrace();
+            System.out.println(
+                "testEditNonExistingExamEnrollment was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            System.out.println(
+                "testEditNonExistingExamEnrollment was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testEditNonExistingExamEnrollment");
+        }
+    }
+
+    public void testUpdateInvalidEnrollmentBeginDate()
+    {
+		Object[] args = getAuthorizeArguments();
 
 		Calendar beginDate = Calendar.getInstance();
-		beginDate.set(Calendar.YEAR, 2003);
-		beginDate.set(Calendar.MONTH, Calendar.MAY);
-		beginDate.set(Calendar.DATE, 01);
-		beginDate.set(Calendar.HOUR_OF_DAY, 0);
+		beginDate.set(Calendar.YEAR, 2004);
+		beginDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+		beginDate.set(Calendar.DATE, 23);
+		beginDate.set(Calendar.HOUR_OF_DAY, 9);
 		beginDate.set(Calendar.MINUTE, 0);
 		beginDate.set(Calendar.SECOND, 0);
 		beginDate.set(Calendar.MILLISECOND, 0);
+		args[2] = beginDate;
 
-		Calendar endDate = Calendar.getInstance();
-		endDate.set(Calendar.YEAR, 2003);
-		endDate.set(Calendar.MONTH, Calendar.MAY);
-		endDate.set(Calendar.DATE, 31);
-		endDate.set(Calendar.HOUR_OF_DAY, 0);
-		endDate.set(Calendar.MINUTE, 0);
-		endDate.set(Calendar.SECOND, 0);
-		endDate.set(Calendar.MILLISECOND, 0);
+		try
+		{
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			System.out.println(
+				"testUpdateInvalidEnrollmentBeginDate was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testUpdateInvalidEnrollmentBeginDate");
 
-		Object[] result =
-			{ new Integer("27"), new Integer("3"), beginDate, endDate };
-		return result;
+		}
+		catch (InvalidTimeIntervalServiceException ex)
+		{
+			compareDataSetUsingExceptedDataSetTableColumns(
+				"etc/datasets/servicos/teacher/" + "testExpectedTestEditExamEnrollmentDataSet.xml");
+			ex.printStackTrace();
+			System.out.println(
+				"testUpdateInvalidEnrollmentBeginDate was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
 
-	}
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			System.out.println(
+				"testUpdateInvalidEnrollmentBeginDate was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testUpdateInvalidEnrollmentBeginDate");
+		}
+}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		
-		Calendar beginDate = Calendar.getInstance();
-		beginDate.set(Calendar.YEAR, 2003);
-		beginDate.set(Calendar.MONTH, Calendar.MAY);
-		beginDate.set(Calendar.DATE, 01);
-		beginDate.set(Calendar.HOUR_OF_DAY, 0);
-		beginDate.set(Calendar.MINUTE, 0);
-		beginDate.set(Calendar.SECOND, 0);
-		beginDate.set(Calendar.MILLISECOND, 0);
+    public void testUpdateInvalidEnrollmentEndDate()
+    {
+        Object[] args = getAuthorizeArguments();
 
-		Calendar endDate = Calendar.getInstance();
-		endDate.set(Calendar.YEAR, 2003);
-		endDate.set(Calendar.MONTH, Calendar.MAY);
-		endDate.set(Calendar.DATE, 31);
-		endDate.set(Calendar.HOUR_OF_DAY, 0);
-		endDate.set(Calendar.MINUTE, 0);
-		endDate.set(Calendar.SECOND, 0);
-		endDate.set(Calendar.MILLISECOND, 0);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(Calendar.YEAR, 2004);
+        endDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+        endDate.set(Calendar.DATE, 28);
+        endDate.set(Calendar.HOUR_OF_DAY, 11);
+        endDate.set(Calendar.MINUTE, 0);
+        endDate.set(Calendar.SECOND, 0);
+        endDate.set(Calendar.MILLISECOND, 0);
+        args[3] = endDate;
 
-		Object[] result =
-			{ new Integer("24"), new Integer("1"), beginDate, endDate };
-		return result;
-	}
+        try
+        {
+            gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            System.out.println(
+                "testUpdateInvalidEnrollmentEndDate was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testUpdateInvalidEnrollmentEndDate");
+
+        }
+        catch (InvalidTimeIntervalServiceException ex)
+        {
+            compareDataSetUsingExceptedDataSetTableColumns(
+                "etc/datasets/servicos/teacher/" + "testExpectedTestEditExamEnrollmentDataSet.xml");
+            ex.printStackTrace();
+            System.out.println(
+                "testUpdateInvalidEnrollmentEndDate was SUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            System.out.println(
+                "testUpdateInvalidEnrollmentEndDate was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testUpdateInvalidEnrollmentEndDate");
+        }
+    }
+
+    public void testEditExamEnrollment()
+    {
+        Boolean result;
+        try
+        {
+            result =
+                (Boolean) gestor.executar(
+                    userView,
+                    getNameOfServiceToBeTested(),
+                    getAuthorizeArguments());
+            compareDataSetUsingExceptedDataSetTableColumns(
+                "etc/datasets/servicos/teacher/" + "testExpectedEditExamEnrollmentDataSet.xml");
+            assertTrue(result.booleanValue());
+            System.out.println(
+                "testEditExamEnrollment was SUCCESSFULY runned by class: " + this.getClass().getName());
+
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            System.out.println(
+                "testEditExamEnrollment was UNSUCCESSFULY runned by class: "
+                    + this.getClass().getName());
+            fail("testEditExamEnrollment");
+        }
+    }
 
 }
