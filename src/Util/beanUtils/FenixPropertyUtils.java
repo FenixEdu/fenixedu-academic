@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import DataBeans.InfoObject;
 import Dominio.IDomainObject;
 
 /**
@@ -46,7 +47,7 @@ public class FenixPropertyUtils extends PropertyUtils {
 	}
 
 	private static boolean notADomainObject(Object value) {
-		return !(value instanceof IDomainObject);
+		return !((value instanceof IDomainObject) || value instanceof InfoObject);
 	}
 
 	public static boolean canBeCopied(String name) {
