@@ -44,12 +44,14 @@ public class RoleFunctions {
 			throw new Exception("Unknown Role !!!");
 		else roleBD = (Role) result.get(0);
 		 
-		IPersonRole newRole = new PersonRole();
-		newRole.setPerson((IPessoa) person);
-		newRole.setRole(roleBD);
-
-		broker.store(newRole);
+//		PersonRole newRole = new PersonRole();
+//		newRole.setPerson(person);
+//		newRole.setRole(roleBD);
 		
+		person.getPersonRoles().add(roleBD);
+		broker.store(person);
+
+//		broker.store(newRole);
 	}
 
 	public static void giveEmployeeRole(IPessoa person, PersistenceBroker broker) throws Exception {
