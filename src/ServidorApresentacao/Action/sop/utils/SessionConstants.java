@@ -15,6 +15,8 @@ package ServidorApresentacao.Action.sop.utils;
  */
 public abstract class SessionConstants {
 
+	
+
 	public static final String CONTEXT_PREFIX = "context.";
 
 	public static final String CONTEXT_KEY =
@@ -100,4 +102,5 @@ public abstract class SessionConstants {
 		"MARITAL_STATUS_LIST_KEY";
 
 	public static final String NATIONALITY_LIST_KEY = "NATIONALITY_LIST_KEY";
+	public static final String SEX_LIST_KEY ="SEX_LIST_KEY";	
 }
