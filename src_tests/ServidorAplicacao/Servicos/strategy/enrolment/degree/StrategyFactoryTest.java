@@ -142,6 +142,8 @@ public class StrategyFactoryTest extends TestCaseServicos {
 		assertEquals("Final span is wrong!",
 		true,
 		CollectionUtils.isEqualCollection(studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses(), finalSpan));
+		
+		assertNotNull(enrolmentContext.getStudentActiveCurricularPlan());
 	}
 
 	public static void main(java.lang.String[] args) {
