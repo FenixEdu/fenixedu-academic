@@ -68,7 +68,17 @@ public class CandidacyOJB extends ObjectFenixOJB implements IPersistentSeminaryC
 		if (curricularCourseID.intValue() != -1)
 			criteria.addEqualTo("curricular_course_id_internal", curricularCourseID);
 		if (themeID.intValue() != -1)
-			criteria.addEqualTo("seminary_theme_id_internal", themeID);
+		{
+			Criteria orCriteria = new Criteria();
+			Criteria themeCriteria = new Criteria();
+			Criteria completeCriteria = new Criteria();
+			themeCriteria.addEqualTo("seminary_theme_id_internal", themeID);
+			completeCriteria.addEqualTo("seminary_modality_id_internal",new Integer(1));
+			orCriteria.addOrCriteria(themeCriteria);
+			orCriteria.addOrCriteria(completeCriteria);
+			criteria.addAndCriteria(orCriteria);
+			
+		}
 		if (approved != null)
 			criteria.addEqualTo("approved", approved);
 		if (degreeID.intValue() != -1)
@@ -84,6 +94,8 @@ public class CandidacyOJB extends ObjectFenixOJB implements IPersistentSeminaryC
 			}
 			criteria.addIn("curricular_course_id_internal", curricularCoursesIds);
 		}
+		criteria.addOrderBy("seminary_modality_id_internal",true);
+		criteria.addOrderBy("student_id_internal",true);		
 		List candidacies= super.queryList(Candidacy.class, criteria);
 		List filteredCandidacies= new LinkedList();
 		for (Iterator iterator= candidacies.iterator(); iterator.hasNext();)
