@@ -4,10 +4,20 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-<h2><bean:message key="title.chooseRoom"/></h2>
-<br/>
-	<logic:present name="publico.infoRooms" >
+
+<logic:present name="publico.infoRooms" >
+  <h2><bean:message key="title.chooseRoom"/></h2>
+  <br/>
+  <span class="error"><html:errors/></span>	
 			<html:form action="/viewRoom.do" method="GET">
+
+			<html:hidden name="roomForm" property="name"/>
+			<html:hidden name="roomForm" property="building"/>
+			<html:hidden name="roomForm" property="floor"/>
+			<html:hidden name="roomForm" property="type"/>
+			<html:hidden name="roomForm" property="capacityNormal"/>
+			<html:hidden name="roomForm" property="capacityExame"/>
+
 			<table border='0' cellpadding='10' cellspacing='0'>		
 			<logic:iterate id="infoRoom" name="publico.infoRooms" indexId="i_index">
 			<bean:define id="i" value="i_index" />

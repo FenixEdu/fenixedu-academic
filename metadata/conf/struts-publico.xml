@@ -21,7 +21,7 @@
       <form-bean name="chooseSearchContextForm"
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-        <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="index" type="java.lang.String"/>
 
         <form-property name="curYear" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/> 
@@ -219,7 +219,7 @@
       </action>
 
       <action 
-              input="/chooseRoom.jsp"
+              input="/chooseRoomsForm.do"
               parameter="method"
               name="indexForm"
               path="/viewRoom"

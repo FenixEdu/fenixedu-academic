@@ -6,7 +6,7 @@
     <!-- Validation for Index Form -->
     <form name="indexForm">
       <field property="roomName" depends="required">
-        <arg0 key="roomName" resource="false"/>
+        <arg0 key="property.room" resource="true"/>
       </field>
     </form>
 

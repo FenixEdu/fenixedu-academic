@@ -345,7 +345,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("curYear");
 
-			Integer index = (Integer) escolherContextoForm.get("index");
+			Integer index = new Integer((String) escolherContextoForm.get("index"));
 
 			request.setAttribute("curYear", anoCurricular);
 			request.setAttribute("semester", semestre);
