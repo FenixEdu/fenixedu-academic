@@ -77,7 +77,7 @@ public class CreateDeclaration implements IServico {
 			throw newEx;
 		}
 
-		if (studentCurricularPlan.getIdInternal() == null) 
+		if (studentCurricularPlan == null || studentCurricularPlan.getIdInternal() == null) 
 			return null;
 		 
 		else

@@ -7,7 +7,7 @@
 	<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.ENROLMENT_LIST%>" />
 		<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">		
 		<br/>
- 		<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
+ 		<bean:write name="itr" property="infoCurricularCourse.name" />
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com
  		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />

@@ -14,21 +14,21 @@
 	nas seguintes disciplinas:<br />
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 	<br />
-		<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
+		<bean:write name="itr" property="infoCurricularCourse.name" />
 	</logic:iterate>
 	</logic:present>
 	<logic:present name="<%= SessionConstants.EXTRA_ENROLMENT_LIST%>">
 	nas seguintes disciplinas Extra-Curriculares:<br />
 	<logic:iterate id="itr" name="infoEnrolmentExtraCurricularPlan">
 	<br />
-	<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
+	<bean:write name="itr" property="infoCurricularCourse.name" />
 	</logic:iterate>
 		</logic:present>
 	</logic:present>
 		<logic:present name="<%= SessionConstants.APROVMENT%>">
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 	<br />
-		<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
+		<bean:write name="itr" property="infoCurricularCourse.name" />
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com 
   		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
@@ -39,7 +39,7 @@
 			<bean:define id="infoEnrolmentStudentCurricularPlan" name="<%= SessionConstants.EXTRA_ENROLMENT_LIST%>" />
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
 <br />
- 		<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
+ 		<bean:write name="itr" property="infoCurricularCourse.name" />
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com 
  		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
