@@ -5,9 +5,9 @@ Source Server Version: 3.23.49-max-nt
 Source Database:       AssiduidadeOracle
 Date:                  2003-03-20 18:20:46
 */
-#----------------------------
-# Table structure for ass_marcas
-#----------------------------
+------------------------------
+-- Table structure for ass_marcas
+------------------------------
 drop table if exists ass_marcas;
 create table ass_marcas (
    ASS_MARPESSOA int(10),
@@ -25,9 +25,9 @@ create table ass_marcas (
    primary key (ASS_MARSEQ))
    type=InnoDB comment="InnoDB free: 378880 kB";
 
-#----------------------------
-# Records for table ass_marcas
-#----------------------------
+------------------------------
+-- Records for table ass_marcas
+------------------------------
 INSERT INTO ASS_MARCAS VALUES(5592,900889,'2003-059008898 08:30:00','TM_MEST','N','N','S','N','V',1361286,'2003-02-26 16:02:25',2997);
 INSERT INTO ASS_MARCAS VALUES(5592,900889,'2003-059008898 10:30:00','TM_MEST','N','N','S','N','V',1361287,'2003-05-26 16:02:25',2997);
 INSERT INTO ASS_MARCAS VALUES(5592,900889,'2003-059008898 11:20:00','TM_MEST','N','N','S','N','V',1361288,'2003-05-26 16:02:25',2997);
@@ -84,9 +84,9 @@ INSERT INTO ASS_MARCAS VALUES(5592,900889,'2003-05-06 17:00:00',null,'N','N','S'
 INSERT INTO ASS_MARCAS VALUES(5592,900889,'2003-05-03 09:00:00','TM_MEST','N','N','S','N','V',1387542,'2003-05-20 19:36:31',5592);
 INSERT INTO ASS_MARCAS VALUES(5592,900889,'2003-05-03 11:00:00','TM_MEST','N','N','S','N','V',1387543,'2003-05-20 19:36:33',5592);
 
-#----------------------------
-# Table structure for ass_marreg
-#----------------------------
+------------------------------
+-- Table structure for ass_marreg
+------------------------------
 drop table if exists ass_marreg;
 create table ass_marreg (
    ASS_MARREGPESSOA int(10),
