@@ -5,6 +5,7 @@
 package Dominio;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import Util.MasterDegreeClassification;
 import Util.State;
@@ -24,8 +25,8 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 	private IMasterDegreeThesis masterDegreeThesis;
 	private IEmployee responsibleEmployee;
 	private Timestamp lastModification;
-	private Timestamp proofDate;
-	private Timestamp thesisDeliveryDate;
+	private Date proofDate;
+	private Date thesisDeliveryDate;
 	private MasterDegreeClassification finalResult;
 	private Integer attachedCopiesNumber;
 	private State currentState;
@@ -48,7 +49,7 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 	 * @param currentState
 	 */
 	public MasterDegreeProofVersion(IMasterDegreeThesis masterDegreeThesis, IEmployee responsibleEmployee, Timestamp lastModification,
-			Timestamp proofDate, Timestamp thesisDeliveryDate, MasterDegreeClassification finalResult, Integer attachedCopiesNumber,
+	Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult, Integer attachedCopiesNumber,
 			State currentState) {
 		this.masterDegreeThesis = masterDegreeThesis;
 		this.responsibleEmployee = responsibleEmployee;
@@ -77,16 +78,16 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 	public Integer getKeyMasterDegreeThesis() {
 		return keyMasterDegreeThesis;
 	}
-	public void setProofDate(Timestamp proofDate) {
+	public void setProofDate(Date proofDate) {
 		this.proofDate = proofDate;
 	}
-	public Timestamp getProofDate() {
+	public Date getProofDate() {
 		return proofDate;
 	}
-	public void setThesisDeliveryDate(Timestamp thesisDeliveryDate) {
+	public void setThesisDeliveryDate(Date thesisDeliveryDate) {
 		this.thesisDeliveryDate = thesisDeliveryDate;
 	}
-	public Timestamp getThesisDeliveryDate() {
+	public Date getThesisDeliveryDate() {
 		return thesisDeliveryDate;
 	}
 	public void setFinalResult(MasterDegreeClassification finalResult) {

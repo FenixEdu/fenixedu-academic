@@ -58,8 +58,8 @@ public class ChangeMasterDegreeProof implements IServico {
 	public void run(
 		IUserView userView,
 		InfoStudentCurricularPlan infoStudentCurricularPlan,
-		Timestamp proofDate,
-		Timestamp thesisDeliveryDate,
+		Date proofDate,
+		Date thesisDeliveryDate,
 		MasterDegreeClassification finalResult,
 		Integer attachedCopiesNumber)
 		throws FenixServiceException {
@@ -69,7 +69,7 @@ public class ChangeMasterDegreeProof implements IServico {
 
 			IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis().readByStudentCurricularPlan(studentCurricularPlan);
 			if (storedMasterDegreeThesis == null)
-				throw new NonExistingServiceException("message.masterDegree.nonExistentMasterDegreeThesis");
+				throw new NonExistingServiceException("error.exception.masterDegree.nonExistentMasterDegreeThesis");
 
 			IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
 			IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy =
@@ -77,7 +77,7 @@ public class ChangeMasterDegreeProof implements IServico {
 					studentCurricularPlan.getDegreeCurricularPlan());
 
 			if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan))
-				throw new ScholarshipNotFinishedServiceException("message.masterDegree.scholarshipNotFinished");
+				throw new ScholarshipNotFinishedServiceException("error.exception.masterDegree.scholarshipNotFinished");
 
 
 			IMasterDegreeProofVersion storedMasterDegreeProofVersion =

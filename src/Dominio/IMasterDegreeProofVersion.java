@@ -7,6 +7,7 @@
 package Dominio;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import Util.MasterDegreeClassification;
 import Util.State;
@@ -28,11 +29,11 @@ public interface IMasterDegreeProofVersion extends IDomainObject {
 	public abstract void setMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis);
 	public abstract IMasterDegreeThesis getMasterDegreeThesis();
 
-	public abstract void setProofDate(Timestamp proofDate);
-	public abstract Timestamp getProofDate();
+	public abstract void setProofDate(Date proofDate);
+	public abstract Date getProofDate();
 
-	public abstract void setThesisDeliveryDate(Timestamp thesisDeliveryDate);
-	public abstract Timestamp getThesisDeliveryDate();
+	public abstract void setThesisDeliveryDate(Date thesisDeliveryDate);
+	public abstract Date getThesisDeliveryDate();
 
 	public abstract void setFinalResult(MasterDegreeClassification finalResult);
 	public abstract MasterDegreeClassification getFinalResult();

@@ -5,6 +5,7 @@
 package DataBeans;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import Util.MasterDegreeClassification;
 import Util.State;
@@ -20,8 +21,8 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
 	private InfoMasterDegreeThesis infoMasterDegreeThesis;
 	private InfoEmployee infoResponsibleEmployee;
 	private Timestamp lastModification;
-	private Timestamp proofDate;
-	private Timestamp thesisDeliveryDate;
+	private Date proofDate;
+	private Date thesisDeliveryDate;
 	private MasterDegreeClassification finalResult;
 	private Integer attachedCopiesNumber;
 	private State currentState;
@@ -102,19 +103,19 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
 		return lastModification;
 	}
 
-	public void setProofDate(Timestamp proofDate) {
+	public void setProofDate(Date proofDate) {
 		this.proofDate = proofDate;
 	}
 
-	public Timestamp getProofDate() {
+	public Date getProofDate() {
 		return proofDate;
 	}
 
-	public void setThesisDeliveryDate(Timestamp thesisDeliveryDate) {
+	public void setThesisDeliveryDate(Date thesisDeliveryDate) {
 		this.thesisDeliveryDate = thesisDeliveryDate;
 	}
 
-	public Timestamp getThesisDeliveryDate() {
+	public Date getThesisDeliveryDate() {
 		return thesisDeliveryDate;
 	}
 

@@ -863,13 +863,13 @@
         <field-descriptor 
            name="proofDate"    
            column="PROOF_DATE"  
-           jdbc-type="TIMESTAMP"
+           jdbc-type="DATE"
         />
 
         <field-descriptor 
            name="thesisDeliveryDate"    
            column="THESIS_DELIVERY_DATE"  
-           jdbc-type="TIMESTAMP"
+           jdbc-type="DATE"
         />        
 
         <field-descriptor 
