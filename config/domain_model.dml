@@ -1,0 +1,5 @@
+class net.sourceforge.fenixedu.domain.DomainObject {
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
