@@ -1047,7 +1047,7 @@
 
 	<!-- <target name="create-and-update-all-past-curriculums" depends="create-past-execution-periods-and-execution-years"> -->
 	<target name="create-and-update-all-past-curriculums" depends="compile-proj">
-		<java classname="middleware.studentMigration.CreateAndUpdateAllPastCurriculums" fork="yes" failonerror="false" maxmemory="512m">
+		<java classname="middleware.studentMigration.enrollments.CreateAndUpdateAllPastCurriculums" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -1062,7 +1062,22 @@
 
 	<!--<target name="create-and-update-all-students-enrolments" depends="create-and-update-all-past-curriculums">-->
 	<target name="create-and-update-all-students-enrolments" depends="compile-proj">
-		<java classname="middleware.studentMigration.CreateAndUpdateAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
+		<java classname="middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<!--<target name="make-equivalences-for-all-students-past-enrolments" depends="create-and-update-all-students-enrolments">-->
+	<target name="make-equivalences-for-all-students-past-enrolments" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.MakeEquivalencesForAllStudentsPastEnrolments" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>

@@ -26,7 +26,9 @@ import Util.StudentCurricularPlanState;
 
 public class MakeEquivalencesForAllStudentsPastEnrolments
 {
-
+	private static int totalEnrollmentsCreated = 0;
+	private static int totalEnrollmentEvaluationsCreated = 0;
+    
 	public static void main(String args[])
 	{
 		IStudent student = null;
@@ -53,7 +55,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 
 //				fenixPersistentSuport.clearCache();
 				System.gc();
-	
+
 				System.out.println("[INFO] Reading Students...");
 				List result = persistentStudent.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
 	
@@ -76,6 +78,10 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			System.out.println("[ERROR 301] Exception giving equivalences for student [" + student.getNumber() + "] enrolments!");
 			e.printStackTrace(System.out);
 		}
+
+		System.out.println("[INFO] DONE!");
+		System.out.println("[INFO] Total Enrolments created: [" + MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentsCreated + "].");
+		System.out.println("[INFO] Total EnrolmentEvaluations created: [" + MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentEvaluationsCreated + "].");
 	}
 
 	/**
@@ -143,7 +149,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				continue;
 			}
 
-			MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, curricularCourse, currentStudentCurricularPlan, fenixPersistentSuport);
+			MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(enrolment, curricularCourseFromCurrentDegreeCurricularPlan, currentStudentCurricularPlan, fenixPersistentSuport);
 		}
 	}
 
@@ -186,6 +192,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 				}
 			} else
 			{
+				System.out.println("[ERROR 306] Cannot find Fenix CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] for Degree [" + currentDegreeCurricularPlan.getDegree().getNome() + "]!");
 				return null;
 			}
 		}
@@ -199,24 +206,33 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 */
 	private static void writeEnrollment(IEnrolment enrolment, ICurricularCourse curricularCourse, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		IEnrolment enrolmentToWrite = new Enrolment();
+		ICurricularCourseScope curricularCourseScope = MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseScope(enrolment, curricularCourse);
 
-		fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolmentToWrite);
+		if (curricularCourseScope != null)
+		{	
+			IEnrolment enrolmentToWrite = new Enrolment();
 
-		enrolmentToWrite.setCurricularCourseScope(MakeEquivalencesForAllStudentsPastEnrolments.getCurricularCourseScope(enrolment, curricularCourse));
-		enrolmentToWrite.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-		enrolmentToWrite.setEnrolmentState(enrolment.getEnrolmentState());
-		enrolmentToWrite.setExecutionPeriod(enrolment.getExecutionPeriod());
-		enrolmentToWrite.setStudentCurricularPlan(currentStudentCurricularPlan);
+			fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolmentToWrite);
 
-		List enrolmentEvaluationsList = enrolment.getEvaluations();
-		Iterator iterator = enrolmentEvaluationsList.iterator();
-		while (iterator.hasNext())
+			enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
+			enrolmentToWrite.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+			enrolmentToWrite.setEnrolmentState(enrolment.getEnrolmentState());
+			enrolmentToWrite.setExecutionPeriod(enrolment.getExecutionPeriod());
+			enrolmentToWrite.setStudentCurricularPlan(currentStudentCurricularPlan);
+
+			MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentsCreated++;
+			
+			List enrolmentEvaluationsList = enrolment.getEvaluations();
+			Iterator iterator = enrolmentEvaluationsList.iterator();
+			while (iterator.hasNext())
+			{
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+				MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollmentEvaluation(enrolmentEvaluation, enrolmentToWrite, fenixPersistentSuport);
+			}
+		} else
 		{
-			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-			MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollmentEvaluation(enrolmentEvaluation, enrolmentToWrite, fenixPersistentSuport);
+			System.out.println("[ERROR 307] Cannot find Fenix CurricularCourseScope for CurricularCourse with code [" + curricularCourse.getCode() + "] and name [" + curricularCourse.getName() + "] in period [year: " + enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().toString() + " semester: " + enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().toString() + "]!");
 		}
-
 	}
 
 	/**
@@ -278,6 +294,8 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		enrolmentEvaluationToWrite.setEmployee(enrolmentEvaluation.getEmployee());
 
 		enrolmentEvaluation.setCheckSum(null);
+		
+		MakeEquivalencesForAllStudentsPastEnrolments.totalEnrollmentEvaluationsCreated++;
 	}
 
 	/**
@@ -288,17 +306,23 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 */
 	private static boolean compare(ICurricularCourseScope curricularCourseScope, ICurricularCourseScope curricularCourseScopeToCompare)
 	{
-		if (curricularCourseScope.getCurricularSemester().equals(curricularCourseScopeToCompare.getCurricularSemester()) &&
-			curricularCourseScope.getBranch().getCode().equals(curricularCourseScopeToCompare.getBranch().getCode()))
+		Integer year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
+		Integer yearToCompare = curricularCourseScopeToCompare.getCurricularSemester().getCurricularYear().getYear();
+		Integer semester = curricularCourseScope.getCurricularSemester().getSemester();
+		Integer semesterToCompare = curricularCourseScopeToCompare.getCurricularSemester().getSemester();
+		String branchCode = curricularCourseScope.getBranch().getCode();
+		String branchCodeToCompare = curricularCourseScopeToCompare.getBranch().getCode();
+		
+		if (year.equals(yearToCompare) && semester.equals(semesterToCompare) && branchCode.equals(branchCodeToCompare))
 		{
 			return true;
-		} else if (curricularCourseScope.getCurricularSemester().equals(curricularCourseScopeToCompare.getCurricularSemester()))
+		} else if (year.equals(yearToCompare) && semester.equals(semesterToCompare))
 		{
 			return true;
-		} else if (curricularCourseScope.getCurricularSemester().getCurricularYear().equals(curricularCourseScopeToCompare.getCurricularSemester().getCurricularYear()))
+		} else if (year.equals(yearToCompare))
 		{
 			return true;
-		} else if (curricularCourseScope.getCurricularSemester().getSemester().equals(curricularCourseScopeToCompare.getCurricularSemester().getSemester()))
+		} else if (semester.equals(semesterToCompare))
 		{
 			return true;
 		} else

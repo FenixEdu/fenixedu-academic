@@ -82,12 +82,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	private static HashMap curricularCoursesCreated = new HashMap();
 	private static HashMap curricularCourseScopesCreated = new HashMap();
 
-//	private static int totalStudentCurricularPlansCreated = 0;
-//	private static int totalEnrollmentsCreated = 0;
-//	private static int totalEnrollmentEvaluationsCreated = 0;
-//	private static int totalCurricularCoursesCreated = 0;
-//	private static int totalCurricularCourseScopesCreated = 0;
-
 	public static void main(String args[])
 	{
 		MWAluno mwStudent = null;
@@ -134,12 +128,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	
 					fenixPersistentSuport.confirmarTransaccao();
 
-//					CreateAndUpdateAllStudentsPastEnrolments.totalStudentCurricularPlansCreated += CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.size();
-//					CreateAndUpdateAllStudentsPastEnrolments.totalEnrollmentsCreated += CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.size();
-//					CreateAndUpdateAllStudentsPastEnrolments.totalEnrollmentEvaluationsCreated += CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.size();
-//					CreateAndUpdateAllStudentsPastEnrolments.totalCurricularCoursesCreated += CreateAndUpdateAllStudentsPastEnrolments.curricularCoursesCreated.size();
-//					CreateAndUpdateAllStudentsPastEnrolments.totalCurricularCourseScopesCreated += CreateAndUpdateAllStudentsPastEnrolments.curricularCourseScopesCreated.size();
-
 					ReportAllPastEnrollmentMigration.addStudentCurricularPlansMigrated(CreateAndUpdateAllStudentsPastEnrolments.studentCurricularPlansCreated.size());
 					ReportAllPastEnrollmentMigration.addEnrolmentsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.size());
 					ReportAllPastEnrollmentMigration.addEnrollmentEvaluationsMigrated(CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.size());
@@ -160,13 +148,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			System.out.println("[ERROR 201] Branch: [" + mwStudent.getBranchcode() + "]");
 			e.printStackTrace(System.out);
 		}
-
-//		System.out.println("[INFO] DONE!");
-//		System.out.println("[INFO] Total StudentCurricularPlans created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalStudentCurricularPlansCreated + "].");
-//		System.out.println("[INFO] Total Enrolments created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalEnrollmentsCreated + "].");
-//		System.out.println("[INFO] Total EnrolmentEvaluations created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalEnrollmentEvaluationsCreated + "].");
-//		System.out.println("[INFO] Total CurricularCourses created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalCurricularCoursesCreated + "].");
-//		System.out.println("[INFO] Total CurricularCourseScopes created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalCurricularCourseScopesCreated + "].");
 
 		ReportAllPastEnrollmentMigration.report(new PrintWriter(System.out, true));
 //		ReportEnrolment.report(new PrintWriter(System.out, true));
@@ -263,11 +244,18 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 					return null;
 				}
 
-				ComparatorChain comparatorChain = new ComparatorChain();
-				comparatorChain.addComparator(new BeanComparator("enrolmentyear"));
-				Collections.sort(mwStudent.getEnrolments(), comparatorChain);
-				MWEnrolment mwEnrolment = (MWEnrolment) mwStudent.getEnrolments().get(0);
-				Date startDate = CreateAndUpdateAllStudentsPastEnrolments.getExecutionPeriodForThisMWEnrolment(mwEnrolment, fenixPersistentSuport).getBeginDate();
+				Date startDate = null;
+				if ((mwStudent.getEnrolments() == null) || (mwStudent.getEnrolments().isEmpty()) )
+				{
+				    startDate = new Date();
+				} else
+				{
+				    ComparatorChain comparatorChain = new ComparatorChain();
+				    comparatorChain.addComparator(new BeanComparator("enrolmentyear"));
+				    Collections.sort(mwStudent.getEnrolments(), comparatorChain);
+				    MWEnrolment mwEnrolment = (MWEnrolment) mwStudent.getEnrolments().get(0);
+				    startDate = CreateAndUpdateAllStudentsPastEnrolments.getExecutionPeriodForThisMWEnrolment(mwEnrolment, fenixPersistentSuport).getBeginDate();
+				}    
 
 				studentCurricularPlan = new StudentCurricularPlan();
 
@@ -374,13 +362,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				System.out.print("Curricular Year - [" + mwEnrolment.getCurricularcourseyear() + "], ");
 				System.out.print("Curricular Semester - [" + mwEnrolment.getCurricularcoursesemester() + "], ");
 				System.out.println("Enrolment Year: [" + mwEnrolment.getEnrolmentyear() + "]!");
-
-//				ReportEnrolment.addCurricularCourseScopeNotFound(mwEnrolment.getCoursecode(),
-//					mwEnrolment.getDegreecode().toString(),
-//					mwEnrolment.getNumber().toString(),
-//					mwEnrolment.getCurricularcourseyear().toString(),
-//					mwEnrolment.getCurricularcoursesemester().toString(),
-//					mwEnrolment.getBranchcode().toString());
 				continue;
 			}
 
@@ -425,20 +406,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				curricularCourse.setUniversity(university);
 			}
 		}
-
-
-//		ICurricularCourse curricularCourse = UpdateStudentEnrolments.getCurricularCourse(mwEnrolment, degreeCurricularPlan, fenixPersistentSuport, false);
-//		
-//		if (curricularCourse != null) {
-//			IUniversity university = CreateAndUpdateAllStudentsPastEnrolments.getUniversity(mwEnrolment.getUniversitycode(), fenixPersistentSuport);
-//			if (university == null) {
-//				System.out.println("[ERROR 210] No record of University with code: [" + mwEnrolment.getUniversitycode() + "]!");
-//			} else {
-//				persistentCurricularCourse.simpleLockWrite(curricularCourse);
-//				curricularCourse.setUniversity(university);
-//			}
-//		}
-
 		return curricularCourse;
 	}
 
@@ -482,18 +449,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			curricularCourseScope = CreateAndUpdateAllPastCurriculums.getCurricularCourseScope(mwCurricularCourseScope, curricularCourse, branch, fenixPersistentSuport);
 			CreateAndUpdateAllStudentsPastEnrolments.curricularCourseScopesCreated.put(key, curricularCourseScope);
 		}
-		
-//		IBranch branch = CreateAndUpdateAllStudentsPastEnrolments.getBranch(mwEnrolment.getDegreecode(), mwEnrolment.getBranchcode(), degreeCurricularPlan, fenixPersistentSuport);
-//		if (branch == null) {
-//			branch = CreateAndUpdateAllStudentsPastEnrolments.getBranch(mwEnrolment.getDegreecode(), new Integer(0), degreeCurricularPlan, fenixPersistentSuport);
-//			if (branch == null) {
-//				System.out.println("[ERROR 211] No record of Branch with code: [" + mwEnrolment.getBranchcode() + "] for Degree with code: [" + mwEnrolment.getDegreecode() + "]!");
-//				return null;
-//			}
-//		}
-//
-//		return UpdateStudentEnrolments.getCurricularCourseScopeToEnrollIn(studentCurricularPlan, mwEnrolment, curricularCourse, branch, fenixPersistentSuport);
-
 		return curricularCourseScope;
 	}
 
@@ -562,7 +517,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.put(key, enrolment);
 
-//				ReportEnrolment.addEnrolmentMigrated();
 //			} else {
 //				System.out.println("[WARNING 201] No Enrolment was created!");
 			}
@@ -613,9 +567,11 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
 			} else {
 				System.out.println("[WARNING 203] No EnrolmentEvaluation was created!");
+				System.out.println(mwEnrolment.toString());
 			}
 		} else {
 			System.out.println("[WARNING 204] No EnrolmentEvaluation was created!");
+			System.out.println(mwEnrolment.toString());
 		}
 
 		return enrolment;
