@@ -1,7 +1,6 @@
 package Dominio.degree.enrollment.rules;
 
 import java.util.List;
-import java.util.Map;
 
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
@@ -16,14 +15,12 @@ public class PrecedencesApplyToSpanEnrollmentRule extends PrecedencesEnrollmentR
 {
 	public PrecedencesApplyToSpanEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
 												List curricularCoursesWhereStudentCanBeEnrolled,
-												IExecutionPeriod executionPeriod, Map acumulatedEnrollments)
+												IExecutionPeriod executionPeriod)
 	{
 		super.precedenceContext = new PrecedenceContext();
-		super.precedenceContext.setAcumulatedEnrollments(acumulatedEnrollments);
+		super.precedenceContext.setStudentCurricularPlan(studentCurricularPlan);
 		super.precedenceContext.setCurricularCoursesWhereStudentCanBeEnrolled(curricularCoursesWhereStudentCanBeEnrolled);
 		super.precedenceContext.setExecutionPeriod(executionPeriod);
-		super.precedenceContext.setStudentApprovedEnrollments(studentCurricularPlan.getStudentApprovedEnrollments());
-		super.precedenceContext.setStudentEnrolledEnrollments(studentCurricularPlan.getStudentEnrolledEnrollments());
 	}
 
 	protected PrecedenceScopeToApply getScopeToApply()

@@ -54,15 +54,19 @@ public interface IStudentCurricularPlan extends IDomainObject
 	// -------------------------------------------------------------
 	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, IDegreeCurricularPlan degreeCurricularPlan,
 		EnrollmentRuleType enrollmentRuleType);
-	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType);
 	public List getStudentApprovedEnrollments();
 	public List getStudentEnrolledEnrollments();
 	public List getStudentTemporarilyEnrolledEnrollments();
-	public List getStudentNotNeedToEnrollCourses();
 	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
 	public Integer getMinimumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfAcumulatedEnrollments();
+	public int getNumberOfApprovedCurricularCourses();
+	public int getNumberOfEnrolledCurricularCourses();
+	public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse);
+	public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
+    public void calculateStudentAcumulatedEnrollments();
+    public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse);
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------

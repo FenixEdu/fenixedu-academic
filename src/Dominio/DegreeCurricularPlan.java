@@ -301,11 +301,13 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
 	public List getCurricularCoursesFromArea(IBranch area)
 	{
+		// TODO [DAVID]: Add code here.
 		return null;
 	}
 
 	public List getCommonAreas()
 	{
+		// TODO [DAVID]: Add code here.
 		return null;
 	}
 

@@ -3,17 +3,22 @@ package Dominio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import Dominio.degree.enrollment.rules.IEnrollmentRule;
 import Util.EnrolmentState;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
+import Util.enrollment.EnrollmentCondition;
 import Util.enrollment.EnrollmentRuleType;
-import Dominio.degree.enrollment.rules.IEnrollmentRule;
 
+/**
+ * @author David Santos in Jun 15, 2004
+ */
 public class StudentCurricularPlan extends DomainObject implements IStudentCurricularPlan {
 
 	protected Integer studentKey; 
@@ -37,6 +42,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     protected Integer enrolledCourses;
 	protected String observations;
 	protected Integer employeeKey;
+	protected Map acumulatedEnrollments;
 
 	public StudentCurricularPlan()
 	{
@@ -394,18 +400,13 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 			setOfCurricularCoursesToEnroll = enrollmentRule.apply(setOfCurricularCoursesToEnroll);
 			if (setOfCurricularCoursesToEnroll.isEmpty())
 			{
-				return new ArrayList();
+				break;
 			}
 		}
 
 		return setOfCurricularCoursesToEnroll;
 	}
 
-	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
-	{
-		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(enrollmentRuleType);
-	}
-	
 	public List getStudentApprovedEnrollments()
 	{
 		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
@@ -432,11 +433,197 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
 	public List getStudentTemporarilyEnrolledEnrollments()
 	{
-		return null;
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				return (enrollment.getEnrolmentState().equals(EnrolmentState.APROVED) && enrollment.getCondition().equals(
+					EnrollmentCondition.TEMPORARY));
+			}
+		});
 	}
 
-	public List getStudentNotNeedToEnrollCourses()
+	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment()
 	{
+		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
+
+		final List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				String key = getCurricularCourseUniqueKey(enrollment.getCurricularCourse());
+				return (key);
+			}
+		});
+
+		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				String key = getCurricularCourseUniqueKey(enrollment.getCurricularCourse());
+				return result.contains(key);
+			}
+		});
+	}
+
+	public Integer getMinimumNumberOfCoursesToEnroll()
+	{
+		return this.getStudent().getStudentKind().getMinCoursesToEnrol();
+	}
+
+	public Integer getMaximumNumberOfCoursesToEnroll()
+	{
+		return this.getStudent().getStudentKind().getMaxCoursesToEnrol();
+	}
+
+	public Integer getMaximumNumberOfAcumulatedEnrollments()
+	{
+		return this.getStudent().getStudentKind().getMaxNACToEnrol();
+	}
+
+	public int getNumberOfApprovedCurricularCourses()
+	{
+		int a = this.getStudentApprovedEnrollments().size();
+
+		int b = this.getStudentNotNeedToEnrollCourses().size();
+
+		// TODO [DAVID]: Still missing to check if the student has any approved enrollment
+		// in a curricular course with a degree curricular plan equivalence.
+
+		return a + b;
+	}
+
+	public int getNumberOfEnrolledCurricularCourses()
+	{
+		return this.getStudentEnrolledEnrollments().size();
+	}
+
+	public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse)
+	{
+		List studentApprovedEnrollments = this.getStudentApprovedEnrollments();
+
+		List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+
+				if(enrollment instanceof IEnrolmentInOptionalCurricularCourse)
+				{
+					return (((IEnrolmentInOptionalCurricularCourse) enrollment).getCurricularCourseForOption());
+				} else
+				{
+					return enrollment.getCurricularCourse();
+				}
+			}
+		});
+
+		if (result.contains(curricularCourse))
+		{
+			return true;
+		}
+
+		List studentNotNeedToEnrollCourses = this.getStudentNotNeedToEnrollCourses();
+
+		if (studentNotNeedToEnrollCourses.contains(curricularCourse))
+		{
+			return true;
+		}
+
+		// TODO [DAVID]: Still missing to check if the student has any approved enrollment
+		// in a curricular course with a degree curricular plan equivalence.
+
+		return false;
+	}
+
+	public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse)
+	{
+		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
+
+		List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer()
+		{
+			public Object transform(Object obj)
+			{
+				IEnrolment enrollment = (IEnrolment) obj;
+				return enrollment.getCurricularCourse();
+			}
+		});
+
+		if (result.contains(curricularCourse))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+    public void calculateStudentAcumulatedEnrollments()
+    {
+        List enrollments = this.getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+
+        List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
+
+            public Object transform(Object obj)
+            {
+                ICurricularCourse curricularCourse = ((IEnrolment) obj).getCurricularCourse();
+                return getCurricularCourseUniqueKey(curricularCourse);
+            }
+        });
+
+        setAcumulatedEnrollmentsMap(CollectionUtils.getCardinalityMap(curricularCourses));
+    }
+
+    public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse)
+	{
+		String key = this.getCurricularCourseUniqueKey(curricularCourse);
+
+		Integer curricularCourseAcumulatedEnrolments = (Integer) this.getAcumulatedEnrollmentsMap().get(key);
+
+		if (curricularCourseAcumulatedEnrolments == null)
+		{
+			curricularCourseAcumulatedEnrolments = new Integer(0);
+		}
+
+		return curricularCourseAcumulatedEnrolments;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    private String getCurricularCourseUniqueKey(ICurricularCourse curricularCourse)
+	{
+        return curricularCourse.getCode() + curricularCourse.getName()
+			+ curricularCourse.getDegreeCurricularPlan().getDegree().getNome()
+			+ curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso();
+	}
+
+    private Map getAcumulatedEnrollmentsMap()
+	{
+		return acumulatedEnrollments;
+	}
+
+    private void setAcumulatedEnrollmentsMap(Map acumulatedEnrollments)
+	{
+		this.acumulatedEnrollments = acumulatedEnrollments;
+	}
+
+	private List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
+	{
+		return this.getDegreeCurricularPlan().getListOfEnrollmentRules(enrollmentRuleType);
+	}
+	
+	private List getStudentNotNeedToEnrollCourses()
+	{
+		// TODO [DAVID]: Add code here.
 		return null;
 	}
 
@@ -465,52 +652,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		return curricularCourses;
 	}
 
-	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment()
-	{
-		List studentEnrolledEnrollments = this.getStudentEnrolledEnrollments();
-
-		final List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer()
-		{
-			public Object transform(Object obj)
-			{
-				IEnrolment enrollment = (IEnrolment) obj;
-				String key = enrollment.getCurricularCourse().getCode() + enrollment.getCurricularCourse().getName()
-					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome()
-					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getTipoCurso();
-				return (key);
-			}
-		});
-
-		return (List) CollectionUtils.select(this.getEnrolments(), new Predicate()
-		{
-			public boolean evaluate(Object obj)
-			{
-				IEnrolment enrollment = (IEnrolment) obj;
-				String key = enrollment.getCurricularCourse().getCode() + enrollment.getCurricularCourse().getName()
-					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome()
-					+ enrollment.getCurricularCourse().getDegreeCurricularPlan().getDegree().getTipoCurso();
-				return result.contains(key);
-			}
-		});
-	}
-
-	public Integer getMinimumNumberOfCoursesToEnroll()
-	{
-		return this.getStudent().getStudentKind().getMinCoursesToEnrol();
-	}
-
-	public Integer getMaximumNumberOfCoursesToEnroll()
-	{
-		return this.getStudent().getStudentKind().getMaxCoursesToEnrol();
-	}
-
-	public Integer getMaximumNumberOfAcumulatedEnrollments()
-	{
-		return this.getStudent().getStudentKind().getMaxNACToEnrol();
-	}
-
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
-
 }

@@ -14,8 +14,7 @@ public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNum
 
 	public boolean evaluate(PrecedenceContext precedenceContext)
 	{
-		return (((precedenceContext.getStudentApprovedEnrollments() == null || precedenceContext.getStudentApprovedEnrollments()
-			.isEmpty()) && (this.numberOfCurricularCourses.intValue() == 0)) || (precedenceContext
-			.getStudentApprovedEnrollments().size() >= numberOfCurricularCourses.intValue()));
+		return (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses
+			.intValue());
 	}
 }

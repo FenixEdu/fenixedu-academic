@@ -52,6 +52,7 @@ public class RestrictionPeriodToApply extends Restriction implements IRestrictio
 	public boolean evaluate(PrecedenceContext precedenceContext)
 	{
 		IExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();
+
 		boolean result = false;
 
 		if (this.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.BOTH_SEMESTERS))

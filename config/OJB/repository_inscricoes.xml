@@ -547,6 +547,12 @@
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentState2SqlEnrolmentStateFieldConversion"
 	/>
 	<field-descriptor
+		name="condition"
+		column="FNL_TMP_STATE"
+		jdbc-type="VARCHAR"
+		conversion="ServidorPersistente.Conversores.JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion"
+	/>
+	<field-descriptor
 		name="enrolmentEvaluationType"
 		column="EVALUATION_TYPE"
 		jdbc-type="INTEGER"

@@ -5,6 +5,7 @@ import java.util.List;
 
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
+import Util.enrollment.EnrollmentCondition;
 
 /**
  * @author dcs-rjao
@@ -28,6 +29,7 @@ public class Enrolment extends DomainObject implements IEnrolment
 	private List evaluations;
 	private String ojbConcreteClass;
     private Date creationDate;
+    private EnrollmentCondition condition;
 
 	public Enrolment()
 	{
@@ -234,5 +236,20 @@ public class Enrolment extends DomainObject implements IEnrolment
 	public void setCreationDate(Date creationDate)
 	{
 		this.creationDate = creationDate;
+	}
+
+	/**
+	 * @return Returns the condition.
+	 */
+	public EnrollmentCondition getCondition()
+	{
+		return condition;
+	}
+	/**
+	 * @param condition The condition to set.
+	 */
+	public void setCondition(EnrollmentCondition condition)
+	{
+		this.condition = condition;
 	}
 }

@@ -14,7 +14,6 @@ public class RestrictionNotDoneCurricularCourse extends RestrictionByCurricularC
 
 	public boolean evaluate(PrecedenceContext precedenceContext)
 	{
-		return !RestrictionDoneCurricularCourse.isCurricularCourseDone(this.getPrecedentCurricularCourse(),
-			precedenceContext.getStudentApprovedEnrollments());
+		return !precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(this.getPrecedentCurricularCourse());
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
+import Util.enrollment.EnrollmentCondition;
 
 /**
  * @author dcs-rjao
@@ -21,6 +22,7 @@ public interface IEnrolment extends IDomainObject
 	public EnrolmentEvaluationType getEnrolmentEvaluationType();
 	public List getEvaluations();
 	public Date getCreationDate();
+	public EnrollmentCondition getCondition();
 
 	public void setEnrolmentState(EnrolmentState state);
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
@@ -29,4 +31,5 @@ public interface IEnrolment extends IDomainObject
 	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
 	public void setEvaluations(List list);
 	public void setCreationDate(Date creationDate);
+	public void setCondition(EnrollmentCondition condition);
 }
