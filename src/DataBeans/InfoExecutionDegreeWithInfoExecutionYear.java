@@ -29,6 +29,7 @@ public class InfoExecutionDegreeWithInfoExecutionYear extends
             ICursoExecucao executionDegree) {
         InfoExecutionDegreeWithInfoExecutionYear infoExecutionDegree = null;
         if (executionDegree != null) {
+            infoExecutionDegree = new InfoExecutionDegreeWithInfoExecutionYear();
             infoExecutionDegree.copyFromDomain(executionDegree);
         }
         return infoExecutionDegree;
