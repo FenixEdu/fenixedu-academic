@@ -130,8 +130,8 @@
 															<dt:format pattern="HH:mm">
 																<bean:write name="lesson" property="fim.time.time"/>
 															</dt:format>
-															na 
-															<bean:write name="shift" property="infoRoom.nome"/>
+															na sala
+															<bean:write name="lesson" property="infoRoom.nome"/>
 															<br />
 														</logic:iterate>
 										</td>
