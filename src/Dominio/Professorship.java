@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * @author João Mota
- *
- *
  */
 public class Professorship extends DomainObject implements IProfessorship {
 	protected ITeacher teacher;
@@ -19,6 +17,7 @@ public class Professorship extends DomainObject implements IProfessorship {
 	private Integer keyTeacher;
 	private Integer keyExecutionCourse;
 	private List associatedTeacherShiftPercentage;
+	private Float credits;
 	/**
 	 * 
 	 */
@@ -116,5 +115,21 @@ public class Professorship extends DomainObject implements IProfessorship {
 		}
 		return false;
 	}
+
+    /* (non-Javadoc)
+     * @see Dominio.IProfessorship#getCredits()
+     */
+    public Float getCredits()
+    {
+        return credits;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IProfessorship#setCredits(java.lang.Float)
+     */
+    public void setCredits(Float credits)
+    {
+        this.credits = credits;
+    }
 
 }
