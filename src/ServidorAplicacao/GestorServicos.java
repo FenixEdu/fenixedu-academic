@@ -215,15 +215,23 @@ public class GestorServicos {
    * @throws NotAuthorizedException
    **/
   public Object executar(IUserView id, String servico, Object argumentos[])
-      throws Exception {
+      throws FenixServiceException {
     AssociacaoServico assoc = getInformacaoServico(servico);
 
     if (assoc == null || assoc.servico == null) {
       throw new FenixServiceException("Servico inválido : " + servico);
     }
 
-    assoc.gestorFiltros.preFiltragem(id, assoc.servico, argumentos);
-    return assoc.invocador.invoke(assoc.servico, argumentos);
+    try {
+		assoc.gestorFiltros.preFiltragem(id, assoc.servico, argumentos);
+		return assoc.invocador.invoke(assoc.servico, argumentos);
+	}catch (FenixServiceException e) {	
+			throw e;} 
+	catch (Exception e) {
+		e.printStackTrace();
+		throw new FenixServiceException(e);
+	}
+  
   }
 
   /**
