@@ -13,6 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -38,10 +39,15 @@ public class EscolherContextoFormAction extends FenixAction {
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
-			/* :FIXME: get semestre with executionPeriod */
-			Integer semestre = new Integer(2); 
+			Integer semestre = null;
+			/* TODO:FIXME: add to the executionPeriod functions to return the period in terms of integers */
+			if (((InfoExecutionPeriod)session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getName()=="1º Semestre") {
+				 semestre=new Integer(1);
+			} else {
+				semestre=new Integer(2);
+			}
 			
-			//(Integer) escolherContextoForm.get("semestre");
+			
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("anoCurricular");
 
@@ -53,11 +59,11 @@ public class EscolherContextoFormAction extends FenixAction {
 			session.setAttribute("anoCurricular", anoCurricular);
 			session.setAttribute("semestre", semestre);
 
-
+			
 			List infoExecutionDegreeList = (List) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
 			
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
-
+			
 			if (infoExecutionDegree != null) {
 				CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
 					new CurricularYearAndSemesterAndInfoExecutionDegree(
