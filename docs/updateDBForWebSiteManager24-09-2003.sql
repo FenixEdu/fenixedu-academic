@@ -20,7 +20,8 @@ create table WEBSITE_SECTION (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100) not null,
    SIZE int(11) unsigned not null,
-   SORTING_ORDER enum('ascendent', 'descendent'),
+   SORTING_ORDER enum('ascendent', 'descendent') not null,
+   WHAT_TO_SORT enum('CREATION_DATE', 'ITEM_BEGIN_DAY', 'ITEM_END_DAY') not null,
    EXCERPT_SIZE int(11),
    KEY_WEBSITE int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),
@@ -55,5 +56,5 @@ insert into PERSON_ROLE (ID_INTERNAL, KEY_ROLE, KEY_PERSON) values (0, 22, 2525)
 
 insert into WEBSITE (ID_INTERNAL, NAME, MAIL, STYLE, CLASS_NAME) values(1, 'Instituto Superior Técnico', null, null, 'Dominio.SiteIST');
 
-insert into WEBSITE_SECTION (ID_INTERNAL, NAME, SIZE, SORTING_ORDER, EXCERPT_SIZE, KEY_WEBSITE) values (1, 'Notícias', 5, 2, 30, 1);
-insert into WEBSITE_SECTION (ID_INTERNAL, NAME, SIZE, SORTING_ORDER, EXCERPT_SIZE, KEY_WEBSITE) values (2, 'Eventos', 5, 2, 30, 1);
+insert into WEBSITE_SECTION (ID_INTERNAL, NAME, SIZE, SORTING_ORDER, WHAT_TO_SORT, EXCERPT_SIZE, KEY_WEBSITE) values (1, 'Notícias', 5, 2, 1, 30, 1);
+insert into WEBSITE_SECTION (ID_INTERNAL, NAME, SIZE, SORTING_ORDER, WHAT_TO_SORT, EXCERPT_SIZE, KEY_WEBSITE) values (2, 'Eventos', 5, 1, 2, 30, 1);

@@ -13,11 +13,26 @@ public class InfoWebSiteSection extends InfoObject {
 	private String name;
 	private Integer size;
 	private String sortingOrder;
+	private String whatToSort;
 	private Integer excerptSize;
 	
 	private InfoWebSite infoWebSite;
 	private List infoItemsList;
 	
+	/**
+	 * @return
+	 */
+	public String getWhatToSort() {
+		return whatToSort;
+	}
+
+	/**
+	 * @param whatToSort
+	 */
+	public void setWhatToSort(String whatToSort) {
+		this.whatToSort = whatToSort;
+	}
+
 	/**
 	 * @return
 	 */
@@ -50,6 +65,7 @@ public class InfoWebSiteSection extends InfoObject {
 		result += ", name=" + getName();
 		result += ", size=" + getSize();
 		result += ", sortingOrder=" + getSortingOrder();
+		result += ", whatToSort=" + getWhatToSort();
 		result += ", excerptSize=" + getExcerptSize();
 		result += ", webSite=" + getInfoWebSite();
 		result += "]";
@@ -142,6 +158,10 @@ public class InfoWebSiteSection extends InfoObject {
 					|| (webSiteSection.getSortingOrder() != null
 						&& this.getSortingOrder() != null
 						&& webSiteSection.getSortingOrder().equals(this.getSortingOrder())))
+			&& ((webSiteSection.getWhatToSort() == null && this.getWhatToSort() == null)
+				|| (webSiteSection.getWhatToSort() != null
+					&& this.getWhatToSort() != null
+					&& webSiteSection.getWhatToSort().equals(this.getWhatToSort())))
 				&& ((webSiteSection.getInfoWebSite() == null && this.getInfoWebSite() == null)
 					|| (webSiteSection.getInfoWebSite() != null
 						&& this.getInfoWebSite() != null

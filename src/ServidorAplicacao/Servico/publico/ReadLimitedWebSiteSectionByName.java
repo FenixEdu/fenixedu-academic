@@ -96,7 +96,6 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 				public Object transform(Object arg0) {
 					IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
 					InfoWebSiteItem infoWebSiteItem = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
-					System.out.println("data de item " + webSiteItem.getItemBeginDay());
 
 					return infoWebSiteItem;
 				}

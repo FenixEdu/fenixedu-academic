@@ -21,6 +21,7 @@ import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -36,7 +37,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class ItemsManagementAction extends FenixDispatchAction {
 
-//****************************************** add item into section *******************************
+	//****************************************** add item into section *******************************
 	public ActionForward prepareAddItem(
 		ActionMapping mapping,
 		ActionForm form,
@@ -73,12 +74,16 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		InfoWebSiteItem infoWebSiteItem = new InfoWebSiteItem();
 
 		fillInfoWebSiteItem(form, infoWebSiteItem);
+
 		ActionErrors errors = new ActionErrors();
 		try {
 			Object args[] = { objectCode, infoWebSiteItem, userView.getUtilizador()};
 			webSite = (InfoWebSite) ServiceUtils.executeService(userView, "AddItem", args);
 		} catch (InvalidSituationServiceException e) {
 			errors.add("excerpt", new ActionError("error.excerptSize"));
+			saveErrors(request, errors);
+		} catch (InvalidArgumentsServiceException e) {
+			errors.add("notFilled", new ActionError("error.notFilled"));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -87,6 +92,16 @@ public class ItemsManagementAction extends FenixDispatchAction {
 
 		if (!errors.isEmpty()) {
 			return mapping.getInputForward();
+		}
+
+		if (infoWebSiteItem.getPublished() != null && infoWebSiteItem.getPublished().equals(Boolean.TRUE)) {
+			// build file to send to ist server
+			try {
+				Object args[] = { objectCode };
+				ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
 		}
 		return mapping.findForward("sectionPage");
 	}
@@ -107,7 +122,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		calendar.setTime(convertStringDate(itemEndDayString));
 		infoWebSiteItem.setItemEndDayCalendar(calendar);
 		System.out.println(infoWebSiteItem.getItemEndDayCalendar().getTime());
-		
+
 		infoWebSiteItem.setKeywords((String) itemForm.get("keywords"));
 		infoWebSiteItem.setMainEntryText((String) itemForm.get("mainEntryText"));
 
@@ -135,8 +150,8 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		}
 		return dateString;
 	}
-	
-//	*************************** list items belonging to section *******************************
+
+	//	*************************** list items belonging to section *******************************
 	public ActionForward listItems(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
@@ -158,7 +173,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		return mapping.findForward("listItems");
 	}
 
-//	****************************************** delete items from section *******************************
+	//	****************************************** delete items from section *******************************
 	public ActionForward deleteItems(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 		IUserView userView = SessionUtils.getUserView(request);
@@ -195,7 +210,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		}
 		return itemToDelete;
 	}
-//	****************************************** edit item belonging to section *******************************
+	//	****************************************** edit item belonging to section *******************************
 	public ActionForward prepareEditItem(
 		ActionMapping mapping,
 		ActionForm form,
@@ -283,7 +298,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		InfoWebSiteItem infoWebSiteItem = new InfoWebSiteItem();
 
 		fillInfoWebSiteItem(form, infoWebSiteItem);
-		
+
 		System.out.println("infoWebSiteItem.getItemBeginDayCalendar: " + infoWebSiteItem.getItemBeginDayCalendar().getTime());
 		System.out.println("infoWebSiteItem.getItemEndDayCalendar: " + infoWebSiteItem.getItemEndDayCalendar().getTime());
 		infoWebSiteItem.setIdInternal(itemCode);
@@ -291,15 +306,28 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		ActionErrors errors = new ActionErrors();
 		try {
 			Object args[] = { objectCode, infoWebSiteItem, userView.getUtilizador()};
-			ServiceUtils.executeService(userView, "EditItem", args);
+			ServiceUtils.executeService(userView, "EditWebSiteItem", args);
 		} catch (InvalidSituationServiceException e) {
 			errors.add("excerpt", new ActionError("error.excerptSize"));
+			saveErrors(request, errors);
+		} catch (InvalidArgumentsServiceException e) {
+			errors.add("notFilled", new ActionError("error.notFilled"));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		if(!errors.isEmpty()){
+		if (!errors.isEmpty()) {
 			return mapping.getInputForward();
+		}
+
+		if (infoWebSiteItem.getPublished() != null && infoWebSiteItem.getPublished().equals(Boolean.TRUE)) {
+			// build file to send to ist server
+			try {
+				Object args[] = { objectCode };
+				ServiceUtils.executeService(userView, "SendWebSiteSectionFileToServer", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
 		}
 		return listItems(mapping, form, request, response);
 	}

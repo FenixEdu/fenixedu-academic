@@ -13,6 +13,7 @@ import Dominio.WebSiteItem;
 import Dominio.WebSiteSection;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentWebSiteItem;
@@ -26,22 +27,22 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 30/09/2003
  * 
  */
-public class EditItem implements IServico {
+public class EditWebSiteItem implements IServico {
 
-	private static EditItem service = new EditItem();
+	private static EditWebSiteItem service = new EditWebSiteItem();
 
-	public static EditItem getService() {
+	public static EditWebSiteItem getService() {
 
 		return service;
 	}
 
-	private EditItem() {
+	private EditWebSiteItem() {
 
 	}
 
 	public final String getNome() {
 
-		return "EditItem";
+		return "EditWebSiteItem";
 	}
 
 	//infoItem with an infoSection
@@ -62,6 +63,15 @@ public class EditItem implements IServico {
 			webSiteSection = new WebSiteSection(sectionCode);
 			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
 
+			if (webSiteSection.getWhatToSort().equals("itemBeginDay")) {
+				if (infoWebSiteItem.getItemBeginDayCalendar() == null) {
+					throw new InvalidArgumentsServiceException();
+				}
+			} else if (webSiteSection.getWhatToSort().equals("itemEndDay")) {
+				if (infoWebSiteItem.getItemEndDayCalendar() == null) {
+					throw new InvalidArgumentsServiceException();
+				}
+			}
 			// if excerpt exceeds limit of words its invalid
 			if (infoWebSiteItem.getExcerpt() != null) {
 				if (StringUtils.countMatches(infoWebSiteItem.getExcerpt(), new String(" "))
@@ -81,12 +91,12 @@ public class EditItem implements IServico {
 
 			webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
 			webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
-			
+
 			System.out.println("info: " + infoWebSiteItem.getItemBeginDayCalendar().getTime());
 			System.out.println("info: " + infoWebSiteItem.getItemEndDayCalendar().getTime());
 			System.out.println(webSiteItem.getItemBeginDay());
 			System.out.println(webSiteItem.getItemEndDay());
-			
+
 			webSiteItem.setKeyEditor(person.getIdInternal());
 			webSiteItem.setKeyWebSiteSection(webSiteSection.getIdInternal());
 			webSiteItem.setKeywords(infoWebSiteItem.getKeywords());
@@ -108,7 +118,7 @@ public class EditItem implements IServico {
 							if (size != 1) {
 								excerpt = excerpt.concat(" ");
 							}
-						} else{
+						} else {
 							break;
 						}
 					}

@@ -41,6 +41,7 @@ public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
 		}
 
 		request.setAttribute("infoWebSiteSection", infoWebSiteSection);
+		
 		return mapping.findForward("viewLimitedWebSiteSection");
 	}
 	public ActionForward viewAllPublishedItemsFromSection(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

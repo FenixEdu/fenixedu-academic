@@ -112,6 +112,7 @@
 	    	<include name="**/ServidorPersistenteConfig.properties"/>
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 	    	<include name="**/**/slide.properties"/>
+	    	<include name="**/**/IstFtpServerConfig.properties"/>
 		  <replacefilter 
 		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
@@ -198,24 +199,33 @@
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
-		    <replacefilter 
+		  <replacefilter 
 		    token="@db.slide.driver@" 
 		    property="db.slide.driver"/>
-		    <replacefilter 
+		  <replacefilter 
 		    token="@db.slide.alias@" 
 		    property="db.slide.alias"/>
-		    <replacefilter 
+		  <replacefilter 
 		    token="@db.slide.user@" 
 		    property="db.slide.user"/>
-		    <replacefilter 
+		  <replacefilter 
 		    token="@db.slide.pass@" 
 		    property="db.slide.pass"/>
-		    <replacefilter 
+		  <replacefilter 
 		    token="@slide.config@" 
 		    property="slide.config"/>
+		  <replacefilter 
+		    token="@ftp.IST.server.user@" 
+		    property="ftp.IST.server.user"/>
+		  <replacefilter 
+		    token="@ftp.IST.server.pass@" 
+		    property="ftp.IST.server.pass"/>
+		  <replacefilter 
+		    token="@ftp.IST.server.address@" 
+		    property="ftp.IST.server.address"/>
 		</replace>
 		
-<!--		<antcall target="validate-xml"/>-->
+		<!--<antcall target="validate-xml"/>-->
     </target>
     
     <target name="compile-tests"

@@ -3,14 +3,10 @@ package ServidorAplicacao.Servico.webSiteManager;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 
 import DataBeans.InfoWebSite;
@@ -25,6 +21,7 @@ import Dominio.WebSiteItem;
 import Dominio.WebSiteSection;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentWebSiteItem;
@@ -84,6 +81,15 @@ public class AddItem implements IServico {
 			person = (IPessoa) persistentPerson.readDomainObjectByCriteria(person);
 			webSiteItem.setEditor(person);
 
+			if (webSiteSection.getWhatToSort().equals("itemBeginDay")) {
+				if (infoWebSiteItem.getItemBeginDayCalendar() == null) {
+					throw new InvalidArgumentsServiceException();
+				}
+			} else if (webSiteSection.getWhatToSort().equals("itemEndDay")) {
+				if (infoWebSiteItem.getItemEndDayCalendar() == null) {
+					throw new InvalidArgumentsServiceException();
+				}
+			}
 			if (infoWebSiteItem.getExcerpt() != null) {
 				if (StringUtils.countMatches(infoWebSiteItem.getExcerpt(), " ") >= webSiteSection.getExcerptSize().intValue()) {
 					throw new InvalidSituationServiceException();
@@ -114,7 +120,7 @@ public class AddItem implements IServico {
 							if (size != 1) {
 								excerpt = excerpt.concat(" ");
 							}
-						} else{
+						} else {
 							break;
 						}
 					}
@@ -135,22 +141,29 @@ public class AddItem implements IServico {
 
 				InfoWebSiteSection infoWebSiteSection2 = Cloner.copyIWebSiteSection2InfoWebSiteSection(section);
 
-				List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
-				List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
-					public Object transform(Object arg0) {
-						IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-						InfoWebSiteItem infoWebSiteItem = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
-
-						return infoWebSiteItem;
-					}
-				});
-
-				Collections.sort(infoWebSiteItems, new BeanComparator("creationDate"));
-				if (infoWebSiteSection2.getSortingOrder().equals("descendent")) {
-					Collections.reverse(infoWebSiteItems);
-				}
-
-				infoWebSiteSection2.setInfoItemsList(infoWebSiteItems);
+//				List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
+//				System.out.println("nome da seccao: " + section.getName());
+//				System.out.println(
+//					"tamanho da lista no add item: "
+//						+ webSiteItems.size()
+//						+ "valor do whattosort: "
+//						+ infoWebSiteSection2.getWhatToSort());
+//				BeanComparator beanComparator = getBeanComparator(infoWebSiteSection2);
+//				Collections.sort(webSiteItems, beanComparator);
+//				if (infoWebSiteSection2.getSortingOrder().equals("descendent")) {
+//					Collections.reverse(webSiteItems);
+//				}
+//
+//				List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
+//					public Object transform(Object arg0) {
+//						IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+//						InfoWebSiteItem infoWebSiteItem = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
+//
+//						return infoWebSiteItem;
+//					}
+//				});
+//
+//				infoWebSiteSection2.setInfoItemsList(infoWebSiteItems);
 
 				infoWebSiteSections.add(infoWebSiteSection2);
 			}
@@ -163,4 +176,14 @@ public class AddItem implements IServico {
 
 		return infoWebSite;
 	}
+
+//	private BeanComparator getBeanComparator(InfoWebSiteSection infoWebSiteSection) {
+//		BeanComparator beanComparator = new BeanComparator("creationDate");
+//		if (infoWebSiteSection.getWhatToSort().equals("ITEM_BEGIN_DAY")) {
+//			beanComparator = new BeanComparator("itemBeginDay");
+//		} else if (infoWebSiteSection.getWhatToSort().equals("ITEM_END_DAY")) {
+//			beanComparator = new BeanComparator("itemEndDay");
+//		}
+//		return beanComparator;
+//	}
 }

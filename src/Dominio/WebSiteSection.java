@@ -1,6 +1,5 @@
 package Dominio;
 
-
 /**
  * @author Fernanda Quitério
  * 23/09/2003
@@ -11,11 +10,26 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 	private String name;
 	private Integer size;
 	private String sortingOrder;
+	private String whatToSort;
 	private Integer excerptSize;
-	
+
 	private IWebSite webSite;
 	private Integer keyWebSite;
-//	private List itemsList;
+	/**
+	 * @return
+	 */
+	public String getWhatToSort() {
+		return whatToSort;
+	}
+
+	/**
+	 * @param whatToSort
+	 */
+	public void setWhatToSort(String whatToSort) {
+		this.whatToSort = whatToSort;
+	}
+
+	//	private List itemsList;
 
 	public WebSiteSection() {
 	}
@@ -27,16 +41,16 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 	/**
 	 * @return
 	 */
-//	public List getItemsList() {
-//		return itemsList;
-//	}
+	//	public List getItemsList() {
+	//		return itemsList;
+	//	}
 
 	/**
 	 * @param itemsList
 	 */
-//	public void setItemsList(List itemsList) {
-//		this.itemsList = itemsList;
-//	}
+	//	public void setItemsList(List itemsList) {
+	//		this.itemsList = itemsList;
+	//	}
 	/**
 	 * @return
 	 */
@@ -140,11 +154,16 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 					|| (webSiteSection.getSortingOrder() != null
 						&& this.getSortingOrder() != null
 						&& webSiteSection.getSortingOrder().equals(this.getSortingOrder())))
+				&& ((webSiteSection.getWhatToSort() == null && this.getWhatToSort() == null)
+					|| (webSiteSection.getWhatToSort() != null
+						&& this.getWhatToSort() != null
+						&& webSiteSection.getWhatToSort().equals(this.getWhatToSort())))
 				&& ((webSiteSection.getWebSite() == null && this.getWebSite() == null)
 					|| (webSiteSection.getWebSite() != null
 						&& this.getWebSite() != null
-						&& webSiteSection.getWebSite().equals(this.getWebSite())))
-//				&& (CollectionUtils.isEqualCollection(webSiteSection.getItemsList(), this.getItemsList()))
+						&& webSiteSection.getWebSite().equals(
+							this.getWebSite())))
+				//				&& (CollectionUtils.isEqualCollection(webSiteSection.getItemsList(), this.getItemsList()))
 				&& ((webSiteSection.getSize() == null && this.getSize() == null)
 					|| (webSiteSection.getSize() != null
 						&& this.getSize() != null
@@ -164,6 +183,7 @@ public class WebSiteSection extends DomainObject implements IWebSiteSection {
 		result += ", name=" + getName();
 		result += ", size=" + getSize();
 		result += ", sortingOrder=" + getSortingOrder();
+		result += ", whatToSort=" + getWhatToSort();
 		result += ", excerptSize=" + getExcerptSize();
 		result += ", webSite=" + getWebSite();
 		result += "]";

@@ -99,11 +99,16 @@
          jdbc-type="CHAR"
       />
     <field-descriptor id="5"
+        name="whatToSort"
+         column="WHAT_TO_SORT"
+         jdbc-type="CHAR"
+      />
+    <field-descriptor id="6"
         name="excerptSize"
          column="EXCERPT_SIZE"
          jdbc-type="INTEGER"
       />
-      <field-descriptor id="6"
+      <field-descriptor id="7"
          name="keyWebSite"
          column="KEY_WEBSITE"
          jdbc-type="INTEGER"
@@ -113,16 +118,8 @@
          class-ref="Dominio.WebSite"
          proxy="false"
       >
-         <foreignkey field-id-ref="6"/>
+         <foreignkey field-id-ref="7"/>
       </reference-descriptor>
-<!--	<collection-descriptor
-			name="itemsList"
-			element-class-ref="Dominio.WebSiteItem"
-			auto-retrieve="true" 
-			proxy="true">
-		<fk-pointing-to-this-class column="KEY_WEBSITE_SECTION"/>
-	</collection-descriptor> -->
-            
     </class-descriptor>
 
 

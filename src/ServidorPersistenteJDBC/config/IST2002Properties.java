@@ -6,7 +6,7 @@ import java.util.Properties;
 public class IST2002Properties extends Properties {
 
   public IST2002Properties(String filename) {
-    try {
+    try {      
       InputStream file = IST2002Properties.class.getResourceAsStream(filename);
       load(file);
     } catch (Exception e) {
