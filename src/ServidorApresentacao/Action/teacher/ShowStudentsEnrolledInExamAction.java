@@ -52,10 +52,11 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction{
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String executionCourseCodeString=  request.getParameter("objectCode");
-
 		Integer executionCourseCode = new Integer(executionCourseCodeString);
+		
 		String examCodeString = request.getParameter("evaluationCode");
 		Integer examCode = new Integer(examCodeString);
+		
 		Object[] args={executionCourseCode,examCode};
 		SiteView siteView=null;
 		try {
@@ -72,6 +73,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction{
 		comparatorChain.addComparator(new BeanComparator("infoRoom.nome"));		
 		comparatorChain.addComparator(new BeanComparator("infoStudent.number"));
 		
+		//Select all the objects with room to later sort them
 		List infoExamStudentRoomList = (List) CollectionUtils.select(infoSiteTeacherStudentsEnrolledList.getInfoExamStudentRoomList(), new Predicate(){
 			public boolean evaluate(Object input) {
 				InfoExamStudentRoom infoExamStudentRoom = (InfoExamStudentRoom) input;
@@ -90,6 +92,5 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction{
 		request.setAttribute("evaluationCode",examCode);
 		return mapping.findForward("showStudents");
 		
-		}
-			
+		}			
 }

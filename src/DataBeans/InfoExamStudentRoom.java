@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import Dominio.IDomainObject;
+
 /**
  * @author jpvl
  */
@@ -54,4 +56,12 @@ public class InfoExamStudentRoom extends InfoObject {
 		this.infoStudent = infoStudent;
 	}
 
+	public static InfoExamStudentRoom newInfoFromDomain(IDomainObject domainObject) {
+	    InfoExamStudentRoom infoExamStudentRoom = null;
+	    if(domainObject != null) {
+	        infoExamStudentRoom = new InfoExamStudentRoom();
+	        infoExamStudentRoom.copyFromDomain(domainObject);
+	    }
+	    return infoExamStudentRoom;
+	}
 }

@@ -9,26 +9,26 @@ import org.apache.commons.collections.Transformer;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExam;
+import DataBeans.InfoExamStudentRoomWithInfoStudentAndInfoRoom;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteTeacherStudentsEnrolledList;
 import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
-import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
-import Dominio.IExecutionCourse;
+import Dominio.ExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
+import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamStudentRoom;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -65,7 +65,6 @@ public class ReadStudentsEnrolledInExam implements IServico {
             IPersistentExecutionCourse persistentExecutionCourse = sp
                     .getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
-
             IPersistentExamStudentRoom examStudentRoomDAO = sp
                     .getIPersistentExamStudentRoom();
 
@@ -82,8 +81,11 @@ public class ReadStudentsEnrolledInExam implements IServico {
 
                         public Object transform(Object input) {
                             ExamStudentRoom examStudentRoom = (ExamStudentRoom) input;
-                            return Cloner
-                                    .copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
+                            //CLONER
+                            //return Cloner
+                                    //.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
+                            return InfoExamStudentRoomWithInfoStudentAndInfoRoom.newInfoFromDomain(examStudentRoom);
+                            
                         }
                     });
 
@@ -92,11 +94,15 @@ public class ReadStudentsEnrolledInExam implements IServico {
             while (iter.hasNext()) {
                 IStudent student = ((IExamStudentRoom) iter.next())
                         .getStudent();
-                InfoStudent infoStudent = Cloner
-                        .copyIStudent2InfoStudent(student);
-                infoStudents.add(infoStudent);
+                //CLONER
+                //InfoStudent infoStudent = Cloner
+                        //.copyIStudent2InfoStudent(student);
+                infoStudents.add(InfoStudent.newInfoFromDomain(student));
             }
-            InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+            //CLONER
+            //InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+            InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+            
             ISiteComponent component = new InfoSiteTeacherStudentsEnrolledList(
                     infoStudents, infoExam, infoExamStudentRoomList);
 
@@ -111,6 +117,5 @@ public class ReadStudentsEnrolledInExam implements IServico {
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
-
     }
 }
