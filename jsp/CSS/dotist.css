@@ -5,32 +5,33 @@
 *****************************************/
 
 body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	line-height: 16px;
-	color: #333333;
+	font: 11px/1em Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
 	text-align: left;
 	margin: 0px;
 	}
 
 table {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333333;
+	font. 11px Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
 	background-color: transparent;
 	}
 
 h1	{
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #FFFFFF;
+	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #fff;
 	background-color: transparent;
 	}
 
 h2	{
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #003366;
+	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #036;
+	background-color: transparent;
+	}
+
+h3 {
+	font: 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #666;
 	background-color: transparent;
 	}
 
@@ -223,7 +224,7 @@ a:hover {
 
 .infotable {
 	background-color: #EBECED;
-	padding: 10px;
+	padding: 20px;
 	border: 1px solid #ccc;
 	}
 	
