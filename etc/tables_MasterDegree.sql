@@ -369,10 +369,10 @@ DROP TABLE IF EXISTS PAYMENT_PHASE;
 CREATE TABLE PAYMENT_PHASE(
 	ID_INTERNAL int(11) not null auto_increment,
 	KEY_GRATUITY int(11),
-	START_DATE date
+	START_DATE date,
 	END_DATE date,
 	VALUE float,
 	DESCRIPTION varchar(50), 
-	ACK_OPT_LOCK int(11) default NULL
+	ACK_OPT_LOCK int(11) default NULL,
 	primary key (ID_INTERNAL)
 ) type=InnoDB;
