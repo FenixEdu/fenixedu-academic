@@ -1,5 +1,7 @@
 package Dominio;
 
+import Util.PeriodState;
+
 /**
  * Created on 11/Fev/2003
  * @author João Mota
@@ -9,6 +11,7 @@ package Dominio;
  */
 public class ExecutionYear implements IExecutionYear {
 
+	private PeriodState state;
 	protected String year;
 	private Integer internalCode;
 	/**
@@ -73,6 +76,18 @@ public class ExecutionYear implements IExecutionYear {
 		result += ", year=" + year;
 		result += "]";
 		return result;
+	}
+	/* (non-Javadoc)
+	 * @see Dominio.IExecutionYear#setState(Util.PeriodState)
+	 */
+	public void setState(PeriodState state) {
+		this.state = state;		
+	}
+	/* (non-Javadoc)
+	 * @see Dominio.IExecutionYear#getState()
+	 */
+	public PeriodState getState() {
+		return this.state;
 	}
 
 
