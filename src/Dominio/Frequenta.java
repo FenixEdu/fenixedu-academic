@@ -18,7 +18,6 @@ public class Frequenta extends DomainObject implements IFrequenta {
 	// códigos internos da base de dados
 	private Integer _chaveAluno;
 	private Integer _chaveDisciplinaExecucao;
-
 	private Integer _keyEnrolment;
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
@@ -68,6 +67,24 @@ public class Frequenta extends DomainObject implements IFrequenta {
 		_chaveDisciplinaExecucao = chaveDisciplinaExecucao;
 	}
 
+
+	public Integer getKeyEnrolment() {
+		return _keyEnrolment;
+	}
+
+	public void setKeyEnrolment(Integer integer) {
+		_keyEnrolment = integer;
+	}
+
+	public IEnrolment getEnrolment() {
+		return _enrolment;
+	}
+
+	public void setEnrolment(IEnrolment enrolment) {
+		this._enrolment = enrolment;
+		
+	}
+
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof IFrequenta) {
@@ -87,28 +104,4 @@ public class Frequenta extends DomainObject implements IFrequenta {
 		result += "]";
 		return result;
 	}
-
-	/**
-	 * @return
-	 */
-	public Integer getKeyEnrolment() {
-		return _keyEnrolment;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setKeyEnrolment(Integer integer) {
-		_keyEnrolment = integer;
-	}
-
-	public IEnrolment getEnrolment() {
-		return _enrolment;
-	}
-
-	public void setEnrolment(IEnrolment enrolment) {
-		this._enrolment = enrolment;
-		
-	}
-
 }

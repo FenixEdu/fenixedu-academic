@@ -132,72 +132,42 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		personResponsibleForGradeKey = integer;
 	}
 
-	/**
-	 * @return
-	 */
 	public Funcionario getEmployee() {
 		return employee;
 	}
 
-	/**
-	 * @return
-	 */
 	public Integer getEmployeeKey() {
 		return employeeKey;
 	}
 
-	/**
-	 * @param funcionario
-	 */
 	public void setEmployee(Funcionario funcionario) {
 		employee = funcionario;
 	}
 
-	/**
-	 * @param integer
-	 */
 	public void setEmployeeKey(Integer integer) {
 		employeeKey = integer;
 	}
 
-	/**
-	 * @return
-	 */
 	public String getCheckSum() {
 		return checkSum;
 	}
 
-	/**
-	 * @return
-	 */
 	public Date getWhen() {
 		return when;
 	}
 
-	/**
-	 * @param string
-	 */
 	public void setCheckSum(String string) {
 		checkSum = string;
 	}
 
-	/**
-	 * @param date
-	 */
 	public void setWhen(Date date) {
 		when = date;
 	}
 
-	/**
-	 * @return
-	 */
 	public String getObservation() {
 		return observation;
 	}
 
-	/**
-	 * @param string
-	 */
 	public void setObservation(String string) {
 		observation = string;
 	}

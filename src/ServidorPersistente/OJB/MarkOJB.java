@@ -49,7 +49,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		// If mark is not in database, then write it.
 		if (markFromDB == null) {
 			super.lockWrite(markToWrite);
-		// else If the mark is mapped to the database, then write any existing changes.
+			// else If the mark is mapped to the database, then write any existing changes.
 		} else if ((markToWrite instanceof Mark) && ((Mark) markFromDB).getIdInternal().equals(((Mark) markToWrite).getIdInternal())) {
 			super.lockWrite(markToWrite);
 			// else Throw an already existing exception
@@ -65,10 +65,26 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		}
 	}
 
+	public List readBy(IFrequenta attend) throws ExcepcaoPersistencia {
+		try {
+
+			String oqlQuery = "select all from " + Mark.class.getName();
+			oqlQuery += " where attend = $1";
+			query.create(oqlQuery);
+			query.bind(attend.getIdInternal());
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
 	public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia {
 
 		try {
-			
+
 			String oqlQuery = "select all from " + Mark.class.getName();
 			oqlQuery += " where evaluation = $1";
 			query.create(oqlQuery);
@@ -89,7 +105,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 			String oqlQuery = "select all from " + Mark.class.getName();
 			oqlQuery += " where evaluation = $1";
 			oqlQuery += " and attend = $2";
-			
+
 			query.create(oqlQuery);
 			query.bind(evaluation.getIdInternal());
 			query.bind(attend.getIdInternal());
@@ -100,7 +116,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				mark = (IMark) result.get(0);
 			}
 			return mark;
@@ -124,7 +140,7 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 				throw ex;
 			}
 
-			if( (result != null) && (result.size() != 0) ) {
+			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
 					list.add((IMark) iterator.next());
@@ -135,15 +151,13 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		}
 	}
 
-	public List readBy(IEvaluation evaluation, boolean published)
-		throws ExcepcaoPersistencia {
+	public List readBy(IEvaluation evaluation, boolean published) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyExam", evaluation.getIdInternal());
+		criteria.addEqualTo("keyEvaluation", evaluation.getIdInternal());
 		if (published) {
 			criteria.addNotNull("publishedMark");
-		} 
+		}
 		return queryList(Mark.class, criteria);
 	}
-
 }

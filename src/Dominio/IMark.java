@@ -14,9 +14,9 @@ public interface IMark extends IDomainObject{
 	public IFrequenta getAttend();	
 	public IEvaluation getEvaluation();
 
-	public Integer getKeyEvaluation();
 	public Integer getKeyAttend();
-	
+	public Integer getKeyEvaluation();
+		
 	public void setMark(String mark);
 	public void setPublishedMark(String publishedMark);
 	public void setAttend(IFrequenta attend);

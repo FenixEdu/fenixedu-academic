@@ -1,8 +1,3 @@
-/*
- * IPersistentExam.java
- *
- * Created on 2003/03/29
- */
 
 package ServidorPersistente;
 
@@ -15,7 +10,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  *
- * @author  Luis Cruz & Sara Ribeiro
+ * @author  Tânia Pousão
  */
 public interface IPersistentEvaluationExecutionCourse extends IPersistentObject {
 	public IEvalutionExecutionCourse readBy(IEvaluation evaluation, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;

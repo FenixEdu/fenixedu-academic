@@ -1855,7 +1855,6 @@ public abstract class Cloner {
 		InfoMark infoMark = new InfoMark();
 
 		InfoFrequenta infoFrequenta = new InfoFrequenta();
-		;
 		infoFrequenta = copyIFrequenta2InfoFrequenta(mark.getAttend());
 
 		InfoEvaluation infoEvaluation = new InfoExam();

@@ -23,6 +23,7 @@ public interface IPersistentMark extends IPersistentObject {
 		throws ExcepcaoPersistencia, ExistingPersistentException;
     public void deleteAll() throws ExcepcaoPersistencia;
 	public IMark readBy(IEvaluation evaluation , IFrequenta attend) throws ExcepcaoPersistencia;
+	public List readBy(IFrequenta attend) throws ExcepcaoPersistencia;
 	public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia;
 	public List readBy(IEvaluation evaluation, boolean published)
 		throws ExcepcaoPersistencia;
