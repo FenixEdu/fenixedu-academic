@@ -17,109 +17,250 @@ import DataBeans.util.ViewUtils;
  **/
 
 public class InfoSection {
+	private Integer internalCode;
     protected String name;
-    protected Integer order;
-    protected Date lastModificationDate;
-    protected InfoSite site;
-    protected InfoSection superiorSection;
+    protected Integer sectionOrder;
+    protected Date lastModifiedDate;
+    protected InfoSite infoSite;
+    protected InfoSection infoSuperiorSection;
     protected List superiorSectionsNames;
-    protected List inferiorSections;
-    protected List items;
+    protected List inferiorInfoSections;
+    protected List infoItems;
     
-    public InfoSection(String name, Integer order, InfoSite site, InfoSection superiorSection, List inferiorSections, List items) {
+	/** 
+	* Construtor
+	*/
+	
+	public InfoSection(){
+		}
+	
+	/** 
+	* Construtor
+	*/
+	
+	public InfoSection(String name,Integer sectionOrder,InfoSite infoSite){
+		
+		this.setName(name);
+		
+	}
+	
+	
+	
+    public InfoSection(String name, Integer sectionOrder, InfoSite infoSite, InfoSection infoSuperiorSection, List inferiorInfoSections, List infoItems) {
         this.name = name;
-        this.order = order;        
-        this.site = site;
-        this.superiorSection =superiorSection;
+        this.sectionOrder = sectionOrder;        
+        this.infoSite = infoSite;
+        this.infoSuperiorSection =infoSuperiorSection;
 		this.superiorSectionsNames =
-        ViewUtils.buildQualifiedName(superiorSection);
+        ViewUtils.buildQualifiedName(infoSuperiorSection);
         
-        if ((inferiorSections != null) &&
-        !inferiorSections.isEmpty()) {
-            this.inferiorSections =
-            ViewUtils.buildSectionsList(inferiorSections,
+        if ((inferiorInfoSections != null) &&
+        !inferiorInfoSections.isEmpty()) {
+            this.inferiorInfoSections =
+            ViewUtils.buildSectionsList(inferiorInfoSections,
             new ArrayList());
         } else
-            this.inferiorSections = new ArrayList();
+            this.inferiorInfoSections = new ArrayList();
         
-        this.items = new ArrayList();
-        if ((items != null) &&
-        !items.isEmpty()) {
+        this.infoItems = new ArrayList();
+        if ((infoItems != null) &&
+        !infoItems.isEmpty()) {
             
-            Iterator iter = items.iterator();
+            Iterator iter = infoItems.iterator();
             while (iter.hasNext()) {
                 InfoItem item = (InfoItem) iter.next();
-                items.add(item);
+                infoItems.add(item);
             }
         }
     }
     
-    public InfoSection(String name,List ancestors){
+ /*   public InfoSection(String name,List ancestors){
         this.name = name;
 		this.superiorSectionsNames =ancestors;
 		this.superiorSection = null;
-		this.order = new Integer(0);
-		this.lastModificationDate = new Date();
-		this.site = null;
-		this.inferiorSections = null;
-		this.items = null;
+		this.sectionOrder = new Integer(0);
+		this.lastModifiedDate = new Date();
+		this.infoSite = null;
+		this.inferiorInfoSections = null;
+		this.infoItems = null;
     }
     
     public InfoSection(List sonNodes){
 		this.name = null;
 		this.superiorSection = null;
-		this.order = new Integer(0);
-		this.lastModificationDate = new Date();
-		this.site = null;
-		this.inferiorSections = sonNodes;
-		this.items = null;
-    }
-    
+		this.sectionOrder = new Integer(0);
+		this.lastModifiedDate = new Date();
+		this.infoSite = null;
+		this.inferiorInfoSections = sonNodes;
+		this.infoItems = null;
+    }*/
+	
+	/**
+	* @return Integer
+	*/
+	public Integer getInternalCode() {
+		return internalCode;
+	}
+
+	
+
+	/**
+	* Sets the internalCode.
+	* @param internalCode The internalCode to set
+	*/
+	public void setInternalCode(Integer internalCode) {
+		this.internalCode=internalCode;
+	}
+	
+	
+	/**
+	* @return String
+	*/
     public String getName() {
         return name;
     }
     
-    public Integer getOrder() {
-        return order;
+    
+	/**
+	* Sets the name.
+	* @param name The name to set
+	*/
+	public void setName(String name) {
+		  this.name = name;
+	}
+	  
+	
+	/**
+	* @return Integer
+	*/	  
+    public Integer getSectionOrder() {
+        return sectionOrder;
+    }
+
+
+	/**
+	* Sets the sectionOrder.
+	* @param sectionOrder The sectionOrder to set
+	*/
+	public void setSectionOrder(Integer sectionOrder) {
+		this.sectionOrder=sectionOrder;
+		}
+    
+	
+	/**
+	* @return Date
+	*/	     
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
     
-    public Date getLastModificationDate() {
-        return lastModificationDate;
+
+	/**
+	* Sets the lastModifiedDate.
+	* @param lastModifiedDate The lastModifiedDate to set
+	*/
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+    
+    
+	/**
+	* @return InfoSite
+	*/
+    public InfoSite getInfoSite() {
+        return infoSite;
     }
     
-    public InfoSite getSite() {
-        return site;
+
+	/**
+	* Sets the infoSite.
+	* @param infoSite The infoSite to set
+	*/
+	public void setInfoSite(InfoSite infoSite) {
+		this.infoSite = infoSite;
+	}
+    
+    
+	/**
+	* @return InfoSection
+	*/
+    public InfoSection getInfoSuperiorSection() {
+        return infoSuperiorSection;
     }
     
-    public InfoSection getSuperiorSection() {
-        return superiorSection;
-    }
     
-    public List getInferiorSections() {
-        return inferiorSections;
-    }
+	/**
+	* Sets the infoSite.
+	* @param infoSite The infoSite to set
+	*/
+	public void setInfoSuperiorSection(InfoSection infoSuperiorSection) {
+		this.infoSuperiorSection = infoSuperiorSection;
+	}
     
-    public List getItems() {
-        return items;
-    }
     
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof InfoSection) {
-            resultado = getName().equals(((InfoSection) obj).getName())&&
-            getOrder() == ((InfoSection) obj).getOrder();
-            if(getSite() != null && ((InfoSection) obj).getSite() != null)
-                resultado = resultado && getSite().equals(((InfoSection) obj).getSite());
-            else
-                resultado = resultado && getSite() == null && ((InfoSection) obj).getSite() == null;
-        }
-        return resultado;
-    }
 	/**
 	 * @return List
 	 */
 	public List getSuperiorSectionsNames() {
 		return superiorSectionsNames;
 	}
+	
+	
+	/**
+	* Sets the superiorSectionsNames.
+	* @param superiorSectionsNames The superiorSectionsNames to set
+	*/
+	public void setSuperiorSectionsNames(List superiorSectionsNames) {
+		this.superiorSectionsNames = superiorSectionsNames;
+	}
+	
+
+	/**
+	 * @return List
+	 */	
+    public List getInferiorInfoSections() {
+        return inferiorInfoSections;
+    }
+
+
+	/**
+	* Sets the inferiorInfoSections.
+	* @param inferiorInfoSections The inferiorInfoSections to set
+	*/
+	public void setInferiorInfoSections(List inferiorInfoSections) {
+		this.inferiorInfoSections = inferiorInfoSections;
+	}
+
+
+	/**
+	 * @return List
+	 */	    
+    public List getInfoItems() {
+        return infoItems;
+    }
+
+
+	/**
+	* Sets the infoItems.
+	* @param infoItems The infoItems to set
+	*/
+	public void setInfoItems(List infoItems) {
+		this.infoItems = infoItems;
+	}
+
+    
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof InfoSection) {
+            resultado = getName().equals(((InfoSection) obj).getName())&&
+            getSectionOrder() == ((InfoSection) obj).getSectionOrder();
+            if(getInfoSite() != null && ((InfoSection) obj).getInfoSite() != null)
+                resultado = resultado && getInfoSite().equals(((InfoSection) obj).getInfoSite());
+            else
+                resultado = resultado && getInfoSite() == null && ((InfoSection) obj).getInfoSite() == null;
+        }
+        return resultado;
+    }
+
 
 }
