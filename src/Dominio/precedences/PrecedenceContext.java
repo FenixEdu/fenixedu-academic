@@ -11,7 +11,8 @@ import Dominio.IStudentCurricularPlan;
 
 public class PrecedenceContext
 {
-	private List curricularCoursesWhereStudentCanBeEnrolled;
+//	private List curricularCoursesWhereStudentCanBeEnrolled;
+	private List curricularCourses2Enroll;
 	private IExecutionPeriod executionPeriod;
 	private IStudentCurricularPlan studentCurricularPlan;
 
@@ -29,15 +30,23 @@ public class PrecedenceContext
 		this.executionPeriod = executionPeriod;
 	}
 
-	public List getCurricularCoursesWhereStudentCanBeEnrolled()
-	{
-		return curricularCoursesWhereStudentCanBeEnrolled;
-	}
+    public List getCurricularCourses2Enroll() {
+        return curricularCourses2Enroll;
+    }
 
-	public void setCurricularCoursesWhereStudentCanBeEnrolled(List curricularCoursesWhereStudentCanBeEnrolled)
-	{
-		this.curricularCoursesWhereStudentCanBeEnrolled = curricularCoursesWhereStudentCanBeEnrolled;
-	}
+    public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
+        this.curricularCourses2Enroll = curricularCourses2Enroll;
+    }
+	
+//    public List getCurricularCoursesWhereStudentCanBeEnrolled()
+//	{
+//		return curricularCoursesWhereStudentCanBeEnrolled;
+//	}
+//
+//	public void setCurricularCoursesWhereStudentCanBeEnrolled(List curricularCoursesWhereStudentCanBeEnrolled)
+//	{
+//		this.curricularCoursesWhereStudentCanBeEnrolled = curricularCoursesWhereStudentCanBeEnrolled;
+//	}
 
 	public IStudentCurricularPlan getStudentCurricularPlan()
 	{

@@ -5,6 +5,7 @@ import java.util.List;
 import Dominio.DomainObject;
 import Dominio.ICurricularCourse;
 import Util.PrecedenceScopeToApply;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author David Santos in Jun 9, 2004
@@ -62,18 +63,18 @@ public class Precedence extends DomainObject implements IPrecedence
 		this.restrictions = restrictions;
 	}
 
-	public boolean evaluate(PrecedenceContext precedenceContext)
-	{
-		List restrictions = getRestrictions();
-		boolean evaluate = true;
-
-		for (int i = 0; i < restrictions.size() && evaluate; i++)
-		{
-			IRestriction restriction = (IRestriction) restrictions.get(i);
-			evaluate = restriction.evaluate(precedenceContext);
-		}
-		return evaluate;
-	}
+//	public boolean evaluate(PrecedenceContext precedenceContext)
+//	{
+//		List restrictions = getRestrictions();
+//		boolean evaluate = true;
+//
+//		for (int i = 0; i < restrictions.size() && evaluate; i++)
+//		{
+//			IRestriction restriction = (IRestriction) restrictions.get(i);
+//			evaluate = restriction.evaluate(precedenceContext);
+//		}
+//		return evaluate;
+//	}
 
 	public boolean equals(Object obj)
 	{
@@ -116,4 +117,21 @@ public class Precedence extends DomainObject implements IPrecedence
 		stringBuffer.append("---------\n");
 		return stringBuffer.toString();
 	}
+
+	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
+	{
+		List restrictions = getRestrictions();
+		
+		int size = restrictions.size();
+		CurricularCourseEnrollmentType evaluate = ((IRestriction) restrictions.get(0)).evaluate(precedenceContext);
+
+		for (int i = 1; i < size; i++)
+		{
+			IRestriction restriction = (IRestriction) restrictions.get(i);
+			evaluate = evaluate.and(restriction.evaluate(precedenceContext));
+		}
+
+		return evaluate;
+	}
+
 }

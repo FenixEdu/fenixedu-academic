@@ -1,5 +1,6 @@
 package Dominio.precedences;
 
+import Util.enrollment.CurricularCourseEnrollmentType;
 import Dominio.IDomainObject;
 
 /**
@@ -12,5 +13,7 @@ public interface IRestriction extends IDomainObject
 
 	public void setPrecedence(IPrecedence precedence);
 
-	public boolean evaluate(PrecedenceContext precedenceContext);
+//	public boolean evaluate(PrecedenceContext precedenceContext);
+
+	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
 }

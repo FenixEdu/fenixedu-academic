@@ -1,5 +1,7 @@
 package Dominio.precedences;
 
+import Util.enrollment.CurricularCourseEnrollmentType;
+
 /**
  * @author David Santos in Jun 9, 2004
  */
@@ -12,9 +14,19 @@ public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNum
 		super();
 	}
 
-	public boolean evaluate(PrecedenceContext precedenceContext)
+//	public boolean evaluate(PrecedenceContext precedenceContext)
+//	{
+//		return (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses
+//			.intValue());
+//	}
+
+	public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext)
 	{
-		return (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses
-			.intValue());
+		if (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses
+                .intValue()) {
+            return CurricularCourseEnrollmentType.DEFINITIVE;
+        } else {
+            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        }
 	}
 }

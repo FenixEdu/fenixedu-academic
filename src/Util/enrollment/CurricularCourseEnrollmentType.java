@@ -63,4 +63,56 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
         return result;
     }
 
+    public CurricularCourseEnrollmentType and(CurricularCourseEnrollmentType other) {
+
+        int myType = this.getValue();
+        int othersType = other.getValue();
+        
+        if ( (myType == NOT_ALLOWED_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+            return NOT_ALLOWED;
+        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+            return NOT_ALLOWED;
+        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+            return NOT_ALLOWED;
+        } else if ( (myType == TEMPORARY_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+            return NOT_ALLOWED;
+        } else if ( (myType == TEMPORARY_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+            return TEMPORARY;
+        } else if ( (myType == TEMPORARY_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+            return TEMPORARY;
+        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+            return NOT_ALLOWED;
+        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+            return TEMPORARY;
+        } else {
+            return DEFINITIVE;
+        }
+    }
+
+    public CurricularCourseEnrollmentType or(CurricularCourseEnrollmentType other) {
+
+        int myType = this.getValue();
+        int othersType = other.getValue();
+
+        if ( (myType == NOT_ALLOWED_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+            return NOT_ALLOWED;
+        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+            return TEMPORARY;
+        } else if ( (myType == NOT_ALLOWED_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+            return DEFINITIVE;
+        } else if ( (myType == TEMPORARY_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+            return TEMPORARY;
+        } else if ( (myType == TEMPORARY_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+            return TEMPORARY;
+        } else if ( (myType == TEMPORARY_TYPE) && (othersType == DEFINITIVE_TYPE) ) {
+            return DEFINITIVE;
+        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == NOT_ALLOWED_TYPE) ) {
+            return DEFINITIVE;
+        } else if ( (myType == DEFINITIVE_TYPE) && (othersType == TEMPORARY_TYPE) ) {
+            return DEFINITIVE;
+        } else {
+            return DEFINITIVE;
+        }
+    }
+
 }
