@@ -1,67 +1,4 @@
-
-
-
-
 <!-- Definitions for . -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <class-descriptor 
   class="Dominio.FuncNaoDocente"
@@ -79,19 +16,12 @@
     column="chaveFuncionario"
     jdbc-type="INTEGER"
   />
+  <reference-descriptor
+  	name="funcionario"
+  	class-ref="Dominio.Funcionario"
+  	<foreikey field-ref="chaveFuncionario">
+  </reference-descriptor>  
 </class-descriptor>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <class-descriptor 
   class="Dominio.Funcionario"
@@ -174,6 +104,11 @@
     column="quando"
     jdbc-type="TIMESTAMP"
   />
+  <reference-descriptor
+         name="person"
+         class-ref="Dominio.Pessoa">
+         <foreignkey field-ref="chavePessoa"/>
+  </reference-descriptor>
 </class-descriptor>
 
 
