@@ -110,8 +110,32 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 				ExcepcaoPersistencia.UPGRADE_LOCK,
 				ex);
 		}
+		
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentObject#simpleLockWrite(Dominio.IDomainObject)
+	 */
+	public final void simpleLockWrite(IDomainObject obj)
+		throws ExcepcaoPersistencia {
+		try {
+			tx = odmg.currentTransaction();
+			tx.lock(obj, Transaction.WRITE);
+
+		} catch (ODMGRuntimeException ex) {
+			throw new ExcepcaoPersistencia(
+				ExcepcaoPersistencia.UPGRADE_LOCK,
+				ex);
+		}
+	}
+
+	
+
+	/**
+	 * Locks to WRITE and delete the object from database...
+	 * @param obj Object to delete 
+	 * @throws ExcepcaoPersistencia
+	 */
 	public void delete(Object obj) throws ExcepcaoPersistencia {
 		try {
 			tx = odmg.currentTransaction();
@@ -273,14 +297,17 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			throw new IllegalArgumentException("Not unique configured!");
 		} else {
 			IDomainObject objectReaded = null;
+			Transaction tx = odmg.currentTransaction();
 			if (!list.isEmpty()) {
 				objectReaded = (IDomainObject) list.get(0);
-				Transaction tx = odmg.currentTransaction();
 				if (lockWrite == true) {
 					tx.lock(objectReaded, Transaction.WRITE);
 				} else {
 					tx.lock(objectReaded, Transaction.READ);
 				}
+			}else if (lockWrite == true){
+				tx.lock(domainObject, Transaction.WRITE);
+				objectReaded = domainObject;
 			}
 			return objectReaded;
 		}
@@ -535,5 +562,4 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		}
 		return obj;
 	}
-
 }
