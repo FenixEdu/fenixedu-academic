@@ -17,15 +17,7 @@
         <form-property name="utilizador" type="java.lang.String" />
         <form-property name="password" type="java.lang.String" />
       </form-bean>
-		<!-- ERROR HANDLING  -->
-      <!-- Dynamic-FormBean for Error handling -->
-      <form-bean name="errorMailForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="email" type="java.lang.String" />
-        <form-property name="subject" type="java.lang.String" />
-        <form-property name="body" type="java.lang.String" />
-      </form-bean>
+		
 	  <!-- CONTEXTO -->
       <!-- Dynamic-FormBean para EscolherContexto -->
       <form-bean name="escolherContextoForm"
@@ -253,8 +245,6 @@
       <action path="/mainExams" forward="/mainExams.jsp"/>
       <action path="/index" forward="/autenticacaoSOP.jsp"/>
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
-      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
-      <action path="/naoExecutado" forward="/xptoerror.jsp"/>
       <action path="/criarSala" forward="/criarSala.jsp"/>
       <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"/>
       <action path="/principalAulas" forward="/principalAulas.jsp"/>
@@ -733,15 +723,7 @@
       	<forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>	
       </action>
       
-      	<!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
-              >
-        
-      </action>
+      
 
 	<!-- ========== EXAMS ========== -->
 	<action path="/chooseDayAndShiftForm"

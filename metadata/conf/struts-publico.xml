@@ -15,15 +15,7 @@
                 dynamic="true">
         <form-property name="index" type="java.lang.Integer"/>
       </form-bean>
-	<!-- ERROR HANDLING  -->
-      <!-- Dynamic-FormBean for Error handling -->
-      <form-bean name="errorMailForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="email" type="java.lang.String" />
-        <form-property name="subject" type="java.lang.String" />
-        <form-property name="body" type="java.lang.String" />
-      </form-bean>
+	
 	  <!-- CONTEXTO -->
       <!-- Dynamic-FormBean para EscolherContexto -->
       <form-bean name="chooseSearchContextForm"
@@ -117,7 +109,7 @@
       	  <forward name="Success" path="/index.jsp"/>
       </action>
     	
-    	 <action path="/naoExecutado" forward="/error.jsp"/>
+    	
     	
     	<action path="/viewExecutionCourseShifts" 
     		type="ServidorApresentacao.Action.publico.SectionRemoverAction">

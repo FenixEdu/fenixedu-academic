@@ -135,16 +135,6 @@
         	<form-property name="situation" type="java.lang.Integer" />
       </form-bean>
 
-
-
-      <form-bean name="errorMailForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="email" type="java.lang.String" />
-        <form-property name="subject" type="java.lang.String" />
-        <form-property name="body" type="java.lang.String" />
-      </form-bean>
-
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -182,7 +172,7 @@
       
       
             
-      <action path="/naoExecutado" forward="/error.jsp"/>
+    
       
       <!-- action definition -->
       
@@ -252,14 +242,7 @@
       <!-- Action For LogOff -->
       <action path="/logoff" forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
       
-      	<!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
-              >
-      </action>
+      
 
 
 

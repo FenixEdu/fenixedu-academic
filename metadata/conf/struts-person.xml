@@ -20,13 +20,7 @@
       </form-bean>
 
 
-      <form-bean name="errorMailForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="email" type="java.lang.String" />
-        <form-property name="subject" type="java.lang.String" />
-        <form-property name="body" type="java.lang.String" />
-      </form-bean>
+     
 
       <!-- Bean for change of Application Information -->
       <form-bean name="changePersonalInfoForm" 
@@ -104,7 +98,7 @@
       <!-- page fronting actions -->
       <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/personMainPage.jsp"/>
       <action path="/changePasswordForward" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/changePassword.jsp"/>
-      <action path="/naoExecutado" forward="/error.jsp"/>
+     
 
 	  <!-- Action for home portal -->
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
@@ -150,14 +144,7 @@
       </action>
 
 
-      <!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
-              >
-      </action>
+     
 
 
     </action-mappings>

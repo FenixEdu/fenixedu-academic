@@ -9,18 +9,7 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
-      
-
-      <form-bean name="errorMailForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="email" type="java.lang.String" />
-        <form-property name="subject" type="java.lang.String" />
-        <form-property name="body" type="java.lang.String" />
-      </form-bean>
-
-      
-
+     
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -54,8 +43,6 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
       <action path="/index" forward="/indexTreasury.jsp"/>
-      <action path="/naoExecutado" forward="/error.jsp"/>
-      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>      
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       
@@ -64,14 +51,7 @@
       <!-- Action For LogOff -->
       <action path="/logoff" forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
       
-      	<!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
-              >
-      </action>
+    
 
 
     </action-mappings>

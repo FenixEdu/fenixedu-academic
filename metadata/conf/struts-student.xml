@@ -17,15 +17,7 @@
         <form-property name="username" type="java.lang.String" />
         <form-property name="password" type="java.lang.String" />
       </form-bean>
-	<!-- ERROR HANDLING  -->
-      <!-- Dynamic-FormBean for Error handling -->
-      <form-bean name="errorMailForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="email" type="java.lang.String" />
-        <form-property name="subject" type="java.lang.String" />
-        <form-property name="body" type="java.lang.String" />
-      </form-bean>
+	
 	  <!-- Dynamic-FormBean para EscolherCertidao -->
       <form-bean name="escolherCertidaoForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -79,8 +71,7 @@
       <!-- page fronting actions -->
       <action path="/index" forward="/authenticationStudent.jsp"/>
       <action path="/authenticationStudent" forward="/authenticationStudent.jsp"/>
-      <action path="/naoAutorizado" forward="/naoAutorizado.jsp"/>
-        <action path="/naoExecutado" forward="/error.jsp"/>
+    
       <!--<action path="/obtainCertificate" forward="/obtainCertificate.jsp"/>-->
 
       <!-- action definitions -->
@@ -242,15 +233,7 @@
         <forward name="Tipo5" path="/obtainCertificateTipo5.do"/>
         <forward name="Inexistente" path="/naoExecutado.do"/>
       </action>
- 	<!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
-              >
-        
-      </action>
+ 	
      </action-mappings>     
 
     
