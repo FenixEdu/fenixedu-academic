@@ -192,6 +192,20 @@
           <forward name="Sucess" path="/viewShiftTimeTable.jsp"/>
       </action>
 
+
+
+
+    <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
+		<action path="/siteViewer"
+				input="/siteViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
+			<forward name="roomViewer" path="/viewRoom.jsp"/>
+			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
+		</action>
+
+
      </action-mappings>     
 
     
