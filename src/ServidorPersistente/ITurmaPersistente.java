@@ -37,7 +37,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 	public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 		
 	/**
-	 * Method readByNameAndExecutionDegreeAndExecutionPeriod.
+     * Method readByNameAndExecutionDegreeAndExecutionPeriod.
 	 * @param className
 	 * @param executionDegree
 	 * @param executionPeriod
@@ -47,13 +47,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 		String className,
 		ICursoExecucao executionDegree,
 		IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
-		
-	public ITurma readByNameAndExecutionDegreeAndExecutionPeriodAndCurricularYear(
-		String className,
-		ICursoExecucao executionDegree,
-		IExecutionPeriod executionPeriod, 
-		Integer curricularYear) throws ExcepcaoPersistencia;
-		
+	
 	public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia;
 		
 	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
