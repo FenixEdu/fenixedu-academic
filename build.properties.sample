@@ -264,7 +264,7 @@ log4j.email.smtp.subject=Hello
 #                    latter implementation in production is a major security
 #                    hole!
 #   roleback.filename: The filename to where the 
-#                         ServidorPersistente.AccessLayer.JdbcAccessRollbackImpl
+#                         net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
 #                      implementation will write the inverse sql operations. This
 #                      file is generated in cronilogical order. When reverting 
 #                      database state, the sql instructions should be executed

@@ -291,7 +291,7 @@
 	<target name="run-tests-cache-concurrency"
 			depends="compile-tests-cache"
             description="Verifies correct cache distribution.">
-		<java classname="ServidorPersistente.cache.DistributedCacheConcurrencyTest">
+		<java classname="net.sourceforge.fenixedu.persistenceTier.cache.DistributedCacheConcurrencyTest">
 			<classpath>
 				<pathelement path="${build.tests.cache}"/>
 				<pathelement path="${build.app-server}"/>
@@ -308,7 +308,7 @@
 	<target name="run-tests-cache-performance"
 			depends="compile-tests-cache"
             description="Verifies correct cache distribution.">
-		<java classname="ServidorPersistente.cache.DistributedCachePerformanceTest">
+		<java classname="net.sourceforge.fenixedu.persistenceTier.cache.DistributedCachePerformanceTest">
 			<classpath>
 				<pathelement path="${build.tests.cache}"/>
 				<pathelement path="${build.app-server}"/>

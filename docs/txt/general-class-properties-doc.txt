@@ -19,8 +19,8 @@ Dominio.classProperties.IGeneralClassProperty.java
 Util.classProperties.GeneralClassPropertyName.java
 Util.classProperties.GeneralClassPropertyValue.java
 
-ServidorPersistente.Conversores.classProperties.GeneralClassPropertyNameJava2SqlConversion.java
-ServidorPersistente.Conversores.classProperties.GeneralClassPropertyValueJava2SqlConversion.java
+net.sourceforge.fenixedu.persistenceTier.Conversores.classProperties.GeneralClassPropertyNameJava2SqlConversion.java
+net.sourceforge.fenixedu.persistenceTier.Conversores.classProperties.GeneralClassPropertyValueJava2SqlConversion.java
 
 UTILIZAÇÃO:
 ===========
