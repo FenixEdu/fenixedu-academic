@@ -13,10 +13,13 @@
  */
 package ServidorPersistente;
 
+import java.util.List;
+
 import Dominio.ICandidateSituation;
 
 public interface IPersistentCandidateSituation {
-    public ICandidateSituation readCandidateSituation(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia;
+    public ICandidateSituation readActiveCandidateSituation(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia;
+    public List readCandidateSituations(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia;
     public void writeCandidateSituation(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia;
     public void delete(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;

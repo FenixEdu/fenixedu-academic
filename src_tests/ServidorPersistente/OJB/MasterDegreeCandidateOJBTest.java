@@ -39,6 +39,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.EstadoCivil;
 import Util.Sexo;
 import Util.Specialization;
@@ -136,7 +137,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(masterDegreeCandidateTemp.getMajorDegreeYear().equals(new Integer(2000)));
         assertTrue(masterDegreeCandidateTemp.getAverage().equals(new Double(11)));
 
-        assertEquals(masterDegreeCandidateTemp.getSituations().size(), 1);
+        assertEquals(masterDegreeCandidateTemp.getSituations().size(), 2);
 
     }
     
@@ -166,8 +167,10 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		ICountry countryTemp = null;
         try {
             persistentSupport.iniciarTransaccao();
-	        masterDegreeTemp = persistentDegree.readBySigla("MEIC");
+	        masterDegreeTemp = persistentDegree.readBySigla("LEIC");
+	        assertNotNull(masterDegreeTemp);
 	        countryTemp = persistentCountry.readCountryByName("Portugal");
+	        assertNotNull(countryTemp);
             persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Error on test");
@@ -180,9 +183,13 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
             persistentMasterDegreeCandidate.writeMasterDegreeCandidate(candidateTemp);
             persistentSupport.confirmarTransaccao();
             fail("testWriteExistingMasterDegreeCandidate");
-        } catch (ExcepcaoPersistencia ex) {
-            // All is OK
-        }
+            
+		} catch (ExistingPersistentException eex) {
+			// all is ok
+			System.out.println("Caught ExistingPersistentException" + eex);
+		} catch (ExcepcaoPersistencia ex) {
+		  fail("Caught ExcepcaoPersistencia" + ex);
+		}
     }
     
     

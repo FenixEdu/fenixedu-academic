@@ -18,10 +18,11 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
-import Dominio.MasterDegreeCandidate;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.MasterDegreeCandidate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersistentMasterDegreeCandidate{
     
@@ -79,8 +80,21 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     }
 
     
-    public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
-        super.lockWrite(masterDegreeCandidate);        
+    public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidateToWrite) throws ExcepcaoPersistencia {
+    	if (masterDegreeCandidateToWrite == null) return;
+    	
+    	IMasterDegreeCandidate masterDegreeCandidateBD = this.readMasterDegreeCandidateByUsername(masterDegreeCandidateToWrite.getUsername());
+    	
+    	if (masterDegreeCandidateBD == null)    	
+        	super.lockWrite(masterDegreeCandidateToWrite);
+        	
+		else if ((masterDegreeCandidateToWrite instanceof MasterDegreeCandidate) &&
+				 ((MasterDegreeCandidate) masterDegreeCandidateBD).getInternalCode().equals(
+				 ((MasterDegreeCandidate) masterDegreeCandidateToWrite).getInternalCode())) {
+				 super.lockWrite(masterDegreeCandidateToWrite);
+		} else
+			throw new ExistingPersistentException();
+        
     }
     
     public void delete(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {

@@ -482,3 +482,23 @@ INSERT INTO EXECUTION_PERIOD values (2, '3º Semestre', 1);
 DELETE FROM EXECUTION_YEAR;
 INSERT INTO EXECUTION_YEAR values (1, '2002/2003');
 INSERT INTO EXECUTION_YEAR values (2, '2003/2004');
+
+
+#
+# Data for table 'MASTER_DEGREE_CANDIDATE'
+#
+
+DELETE FROM MASTER_DEGREE_CANDIDATE;
+INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (1, 112233, 1, 'Lisboa', '2002-11-17', 'Nuno Nunes', 1, 1, '2000-12-10', 'Manuel', 'Maria', 'Portugal', 'Oeiras', 'Oeiras', 'Lisboa', 'Rua Nuno', 'Localidade Nuno', '2795-833', 'Queijas', 'Oeiras', 'Lisboa', 11111, 33333, 'nmsn@rnl.ist.utl.pt', 'www.nuno.com', 11111, 'Estudante', 'LEIC', 'Cand1', 'Pass1', 1, 2002, 1, 'IST', 2000, 11.0, 10, 63 );
+INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (2, 445566, 2, 'Porto', '2002-11-12', 'Joana Mota', 2, 2, '2000-12-17', 'João', 'Silvia', 'UK', 'Almada', 'Almada', 'Almada', 'Rua Joana', 'Localidade Joana', '2779-558', 'Almada', 'Almada', 'Almada', 22222, 44444, 'jccm@rnl.ist.utl.pt', 'www.joana.com', 22222, 'Modelo', 'LEEC', 'Cand2', 'Pass2', 2, 2003, 2, 'IST2', 2001, 2.0, 10, 64 );
+
+
+#
+# Data for table 'CANDIDATE_SITUATION'
+#
+
+DELETE FROM CANDIDATE_SITUATION;
+INSERT INTO CANDIDATE_SITUATION VALUES (1, '2002-11-17', 'Nothing', 0, 1, 1);
+INSERT INTO CANDIDATE_SITUATION VALUES (2, '2002-11-17', 'Nothing', 1, 2, 1);
+INSERT INTO CANDIDATE_SITUATION VALUES (3, '2002-11-20', 'Nothing', 1, 1, 2);
+

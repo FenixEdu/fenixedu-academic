@@ -22,6 +22,7 @@ import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCandidateSituation;
+import Util.CandidateSituationValidation;
 
 public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistentCandidateSituation{
     
@@ -30,19 +31,21 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
     public CandidateSituationOJB() {
     }
     
-    public ICandidateSituation readCandidateSituation(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia {
+    public ICandidateSituation readActiveCandidateSituation(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia {
         try {
             ICandidateSituation candidate = null;
             
             String oqlQuery = "select all from " + CandidateSituation.class.getName()
             + " where masterDegreeCandidate.candidateNumber = $1"
             + " and masterDegreeCandidate.degree.sigla = $2"
-            + " and masterDegreeCandidate.applicationYear = $3";
+            + " and masterDegreeCandidate.applicationYear = $3"
+            + " and validation = $4";
             
             query.create(oqlQuery);
 			query.bind(candidateNumber);
 			query.bind(degreeCode);
 			query.bind(applicationYear);
+			query.bind(new Integer(CandidateSituationValidation.ACTIVE));
             
             List result = (List) query.execute();
             lockRead(result);
@@ -54,8 +57,28 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
         }
     }
     
-    public void writeCandidateSituation(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia {
-        super.lockWrite(candidateSituation);        
+	public List readCandidateSituations(Integer candidateNumber, String degreeCode, Integer applicationYear) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + CandidateSituation.class.getName()
+			+ " where masterDegreeCandidate.candidateNumber = $1"
+			+ " and masterDegreeCandidate.degree.sigla = $2"
+			+ " and masterDegreeCandidate.applicationYear = $3";
+            
+			query.create(oqlQuery);
+			query.bind(candidateNumber);
+			query.bind(degreeCode);
+			query.bind(applicationYear);
+            
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+    
+    public void writeCandidateSituation(ICandidateSituation candidateSituationToWrite) throws ExcepcaoPersistencia {
+        super.lockWrite(candidateSituationToWrite);        
     }
     
     public void delete(ICandidateSituation candidateSituation) throws ExcepcaoPersistencia {
