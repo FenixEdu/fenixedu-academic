@@ -82,11 +82,8 @@
         <form-property name="ids" type="java.lang.String" />
       </form-bean>
       
-	  <form-bean name="schoolRegistrationInquiryForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="answersMap" type="java.util.HashMap" />
-      </form-bean>
+      
+      
 
 	<!-- ******************* LEEC Enrollment **************** -->
 	<form-bean name="curricularCoursesEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -152,7 +149,7 @@
         	<forward name="Success" path="df.page.main"/>
         </action>
 
-	<action path="/showStudentInquiry" forward="definition.schoolRegistration"/>
+	
 
 
       <!-- SHIFT ENROLMENT -->
@@ -489,7 +486,7 @@
    
       <!-- END OF GROUPS -->
       
-      <!-- TESTS -->
+          <!-- TESTS -->
       <action path="/studentTests"
 		    name="studentTestForm"
 			input="/studentTests.do?method=prepareToDoTest"
@@ -511,17 +508,6 @@
 			>
 			<forward name="viewGaugingTestsResults" path="definition.gaugingTestResults"/>
 		</action>  
-    
-		<!-- INQUIRIES -->
-
-		<action path="/schoolRegistrationInquiry"
-			scope="request"
-			name="schoolRegistrationInquiryForm"
-			type="ServidorApresentacao.Action.student.schoolRegistration.InquiryAction"
-			input="definition.schoolRegistration"
-			>
-			<forward name="viewQuestions" path="definition.schoolRegistration"/>
-		</action>
     
     	<!-- ********************* LEEC Enrollment ********************** -->
     	<action	path="/studentCurricularCoursesEnrollment"
@@ -635,7 +621,7 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-student.xml"/>
     </plug-in>
- 	<!--  -->
+ <!--  -->
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/student/tiles-student-definitions.xml,/WEB-INF/tiles/student/tiles-student-pages-definitions.xml" />
