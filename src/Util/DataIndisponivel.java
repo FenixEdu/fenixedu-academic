@@ -1,5 +1,7 @@
 package Util;
 
+import java.util.Calendar;
+
 /**
  * Implementa um NullObject para representar uma data nao 
  * disponivel
@@ -14,7 +16,12 @@ public class DataIndisponivel extends java.util.Date {
     private static int dia = 1;
     
     /** variavel que contem valor de data invalida */
-    private static java.util.Date valor = new java.util.Date(ano, mes, dia);
+    private static java.util.Date valor = null;
+    static {
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.set(ano + 1900, mes, dia);
+    	valor = calendar.getTime();
+    }
     
     /** mensagem a imprimir */
     private static String mensagem = new String("Data Indisponível");
@@ -22,7 +29,7 @@ public class DataIndisponivel extends java.util.Date {
     /** Creates a new instance of DataIndisponivel */
     public DataIndisponivel() {
         /* invoca construtor da classe mae */
-        super(ano, mes, dia);
+        super();
     }
 
     /** Identifica esta data como data invalida
