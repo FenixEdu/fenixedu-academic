@@ -72,56 +72,57 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 
 	protected void processData() {
 
-		List allRooms = /*new ArrayList();
-		allRooms.add("VA4");
-		allRooms.add("V109");
-		allRooms.add("VA3");
-		allRooms.add("V004");
-		allRooms.add("QA02.1");
-		allRooms.add("V124");
-		allRooms.add("GA1");
-		allRooms.add("V133");
-		allRooms.add("V123");
-		allRooms.add("V131");
-		allRooms.add("GA5");
-		allRooms.add("QA02.2");
-		allRooms.add("C22");
-		allRooms.add("QA02.4");
-		allRooms.add("Q4.4");
-		allRooms.add("Q4.6");
-		allRooms.add("Q4.1");
-		allRooms.add("V116");
-		allRooms.add("VA5");
-		allRooms.add("V135");
-		allRooms.add("E3");
-		allRooms.add("GA3");
-		allRooms.add("PA1");
-		allRooms.add("V126");
-		allRooms.add("GA2");
-		allRooms.add("C9");
-		allRooms.add("V138");
-		allRooms.add("F3");
-		allRooms.add("C11");
-		allRooms.add("V111");
-		allRooms.add("GA4");
-		allRooms.add("EA4");
-		allRooms.add("0.2.20");
-		allRooms.add("0.2.18");
-		allRooms.add("0.2.1");
-		allRooms.add("Q4.5");
-		allRooms.add("V110");
-		allRooms.add("Q5.2");
-		allRooms.add("V108");
-		allRooms.add("V112");
-		allRooms.add("Q5.1");
-		allRooms.add("P12");
-		allRooms.add("C12");
-		allRooms.add("F4");
-		allRooms.add("C23");
-		allRooms.add("EA5");
-		allRooms.add("EA1");
-		allRooms.add("0.2.11");
-		allRooms.add("0.2.4"); */
+		List allRooms =
+		/*new ArrayList();
+				allRooms.add("VA4");
+				allRooms.add("V109");
+				allRooms.add("VA3");
+				allRooms.add("V004");
+				allRooms.add("QA02.1");
+				allRooms.add("V124");
+				allRooms.add("GA1");
+				allRooms.add("V133");
+				allRooms.add("V123");
+				allRooms.add("V131");
+				allRooms.add("GA5");
+				allRooms.add("QA02.2");
+				allRooms.add("C22");
+				allRooms.add("QA02.4");
+				allRooms.add("Q4.4");
+				allRooms.add("Q4.6");
+				allRooms.add("Q4.1");
+				allRooms.add("V116");
+				allRooms.add("VA5");
+				allRooms.add("V135");
+				allRooms.add("E3");
+				allRooms.add("GA3");
+				allRooms.add("PA1");
+				allRooms.add("V126");
+				allRooms.add("GA2");
+				allRooms.add("C9");
+				allRooms.add("V138");
+				allRooms.add("F3");
+				allRooms.add("C11");
+				allRooms.add("V111");
+				allRooms.add("GA4");
+				allRooms.add("EA4");
+				allRooms.add("0.2.20");
+				allRooms.add("0.2.18");
+				allRooms.add("0.2.1");
+				allRooms.add("Q4.5");
+				allRooms.add("V110");
+				allRooms.add("Q5.2");
+				allRooms.add("V108");
+				allRooms.add("V112");
+				allRooms.add("Q5.1");
+				allRooms.add("P12");
+				allRooms.add("C12");
+				allRooms.add("F4");
+				allRooms.add("C23");
+				allRooms.add("EA5");
+				allRooms.add("EA1");
+				allRooms.add("0.2.11");
+				allRooms.add("0.2.4"); */
 		persistentObjectOJB.readThorRooms();
 		int numAulas = 0;
 
@@ -142,54 +143,53 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 						Aulas aula = ((Aulas) aulas.get(a));
 						//if (aula.getDisciplina().equals("AL")) {
 
-							Integer degreeID =
-								new Integer(aula.getTurma().substring(0, 2));
-							Disciplinas disciplina =
-								persistentObjectOJB.readDisciplina(
-									aula.getDisciplina());
+						Integer degreeID =
+							new Integer(aula.getTurma().substring(0, 2));
+						Disciplinas disciplina =
+							persistentObjectOJB.readDisciplina(
+								aula.getDisciplina());
 
-							CourseDegreesPair courseDegreesPair =
-								(CourseDegreesPair) hashMapLessons.get(
-									aula.getHashKey());
-							if (courseDegreesPair == null) {
-								courseDegreesPair =
-									new CourseDegreesPair(
-										disciplina,
-										new ArrayList(),
-										new ArrayList(),
-										new ArrayList());
-								courseDegreesPair.getNames().add(
-									disciplina.getNome());
-								courseDegreesPair.getCodes().add(
-									disciplina.getSigla());
+						CourseDegreesPair courseDegreesPair =
+							(CourseDegreesPair) hashMapLessons.get(
+								aula.getHashKey());
+						if (courseDegreesPair == null) {
+							courseDegreesPair =
+								new CourseDegreesPair(
+									disciplina,
+									new ArrayList(),
+									new ArrayList(),
+									new ArrayList());
+							courseDegreesPair.getNames().add(
+								disciplina.getNome());
+							courseDegreesPair.getCodes().add(
+								disciplina.getSigla());
+							courseDegreesPair.getDegrees().add(degreeID);
+							hashMapLessons.put(
+								aula.getHashKey(),
+								courseDegreesPair);
+						} else {
+							if (!courseDegreesPair
+								.getDegrees()
+								.contains(degreeID)) {
 								courseDegreesPair.getDegrees().add(degreeID);
-								hashMapLessons.put(
-									aula.getHashKey(),
-									courseDegreesPair);
-							} else {
-								if (!courseDegreesPair
-									.getDegrees()
-									.contains(degreeID)) {
-									courseDegreesPair.getDegrees().add(
-										degreeID);
-									if (courseDegreesPair.getCourse().getNome()
-										!= disciplina.getNome()) {
-										courseDegreesPair.getNames().add(
-											disciplina.getNome());
-										courseDegreesPair.getCodes().add(
-											disciplina.getSigla());
-										System.out.println(
-											"Lesson with different names: "
-												+ courseDegreesPair
-													.getCourse()
-													.getNome()
-												+ " != "
-												+ disciplina.getNome());
-									}
+								if (courseDegreesPair.getCourse().getNome()
+									!= disciplina.getNome()) {
+									courseDegreesPair.getNames().add(
+										disciplina.getNome());
+									courseDegreesPair.getCodes().add(
+										disciplina.getSigla());
+									System.out.println(
+										"Lesson with different names: "
+											+ courseDegreesPair
+												.getCourse()
+												.getNome()
+											+ " != "
+											+ disciplina.getNome());
 								}
 							}
 						}
 					}
+				}
 				//}
 			}
 		}
@@ -220,17 +220,17 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 
 				for (int k = 0; k < matchingExecutionCourses.size(); k++) {
 
-//					System.out.println("### Before Merge, pos > -1");
-//					System.out.println("name = " + courseDegreesPair.getNome());
-//					for (int j = 0;
-//						j < courseDegreesPair.getDegrees().size();
-//						j++) {
-//						System.out.println(
-//							"degree["
-//								+ j
-//								+ "] = "
-//								+ courseDegreesPair.getDegrees().get(j));
-//					}
+					//					System.out.println("### Before Merge, pos > -1");
+					//					System.out.println("name = " + courseDegreesPair.getNome());
+					//					for (int j = 0;
+					//						j < courseDegreesPair.getDegrees().size();
+					//						j++) {
+					//						System.out.println(
+					//							"degree["
+					//								+ j
+					//								+ "] = "
+					//								+ courseDegreesPair.getDegrees().get(j));
+					//					}
 
 					((CourseDegreesPair) matchingExecutionCourses.get(k))
 						.getDegrees()
@@ -257,21 +257,21 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 							.getCodes());
 
 				}
-				
+
 				executionCourses.add(courseDegreesPair);
 
-				} else {
-//				System.out.println("### No Merge, pos = -1");
-//				System.out.println("name = " + courseDegreesPair.getNome());
-//				for (int j = 0;
-//					j < courseDegreesPair.getDegrees().size();
-//					j++) {
-//					System.out.println(
-//						"degree["
-//							+ j
-//							+ "] = "
-//							+ courseDegreesPair.getDegrees().get(j));
-//				}
+			} else {
+				//				System.out.println("### No Merge, pos = -1");
+				//				System.out.println("name = " + courseDegreesPair.getNome());
+				//				for (int j = 0;
+				//					j < courseDegreesPair.getDegrees().size();
+				//					j++) {
+				//					System.out.println(
+				//						"degree["
+				//							+ j
+				//							+ "] = "
+				//							+ courseDegreesPair.getDegrees().get(j));
+				//				}
 				executionCourses.add(courseDegreesPair);
 			}
 		}
@@ -300,7 +300,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 			}
 
 			IDisciplinaExecucao disciplinaExecucao = null;
-//				persistentObjectOJB.readExecutionCourse(siglaDE);
+			//				persistentObjectOJB.readExecutionCourse(siglaDE);
 
 			for (int j = 0; j < courseDegreesPair.degrees.size(); j++) {
 				ICurricularCourse curricularCourse =
@@ -309,8 +309,7 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 						courseDegreesPair);
 
 				if (curricularCourse != null
-					&& curricularCourse.getAssociatedExecutionCourses()
-						!= null
+					&& curricularCourse.getAssociatedExecutionCourses() != null
 					&& !curricularCourse
 						.getAssociatedExecutionCourses()
 						.isEmpty()) {
@@ -323,23 +322,20 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 
 			}
 
-
-
-
 			if (disciplinaExecucao == null) {
 
-					disciplinaExecucao = new DisciplinaExecucao();
-					disciplinaExecucao.setSigla(siglaDE);
-					disciplinaExecucao.setNome(courseDegreesPair.getNome());
-					disciplinaExecucao.setAssociatedExams(null);
-					disciplinaExecucao.setExecutionPeriod(executionPeriod);
-					disciplinaExecucao.setTheoreticalHours(new Double(0));
-					disciplinaExecucao.setPraticalHours(new Double(0));
-					disciplinaExecucao.setTheoPratHours(new Double(0));
-					disciplinaExecucao.setLabHours(new Double(0));
-					disciplinaExecucao.setComment(" ");
-					disciplinaExecucao.setAssociatedCurricularCourses(
-						new ArrayList());
+				disciplinaExecucao = new DisciplinaExecucao();
+				disciplinaExecucao.setSigla(siglaDE);
+				disciplinaExecucao.setNome(courseDegreesPair.getNome());
+				disciplinaExecucao.setAssociatedExams(null);
+				disciplinaExecucao.setExecutionPeriod(executionPeriod);
+				disciplinaExecucao.setTheoreticalHours(new Double(0));
+				disciplinaExecucao.setPraticalHours(new Double(0));
+				disciplinaExecucao.setTheoPratHours(new Double(0));
+				disciplinaExecucao.setLabHours(new Double(0));
+				disciplinaExecucao.setComment(" ");
+				disciplinaExecucao.setAssociatedCurricularCourses(
+					new ArrayList());
 			} else {
 			}
 
@@ -353,16 +349,25 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 				if (curricularCourse != null) {
 					disciplinaExecucao.getAssociatedCurricularCourses().add(
 						curricularCourse);
-
-					disciplinaExecucao.setTheoreticalHours(curricularCourse.getTheoreticalHours());
-					disciplinaExecucao.setPraticalHours(curricularCourse.getPraticalHours());
-					disciplinaExecucao.setTheoPratHours(curricularCourse.getTheoPratHours());
-					disciplinaExecucao.setLabHours(curricularCourse.getLabHours());
 				}
 			}
 
 			if (disciplinaExecucao.getAssociatedCurricularCourses().size()
 				> 0) {
+
+				ICurricularCourse curricularCourse =
+					(ICurricularCourse) disciplinaExecucao
+						.getAssociatedCurricularCourses()
+						.get(
+						0);
+
+				disciplinaExecucao.setTheoreticalHours(
+					curricularCourse.getTheoreticalHours());
+				disciplinaExecucao.setPraticalHours(
+					curricularCourse.getPraticalHours());
+				disciplinaExecucao.setTheoPratHours(
+					curricularCourse.getTheoPratHours());
+				disciplinaExecucao.setLabHours(curricularCourse.getLabHours());
 
 				if (numElements == null) {
 					hashMapCode.put(
