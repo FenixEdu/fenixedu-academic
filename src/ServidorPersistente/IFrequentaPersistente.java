@@ -27,7 +27,7 @@ public interface IFrequentaPersistente extends IPersistentObject {
 			throws ExcepcaoPersistencia;    
 
 	// FIXME: Must read by Username, not by Student Number
-	public List readByStudentId(Integer id) throws ExcepcaoPersistencia;
+	public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia;
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 
 	public IFrequenta readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia;
