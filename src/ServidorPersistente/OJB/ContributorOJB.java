@@ -73,7 +73,8 @@ public class ContributorOJB extends ObjectFenixOJB implements IPersistentContrib
 	
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + Contributor.class.getName();
+			String oqlQuery = "select all from " + Contributor.class.getName()
+							+ " order by contributorName asc";
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			super.lockRead(result);
