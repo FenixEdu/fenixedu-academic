@@ -162,7 +162,7 @@ public class SelectExecutionCourseTest extends TestCaseServicos
 
             if (!hasExecutionCourses)
             {
-                sp.getIPersistentExecutionCourse().apagarTodasAsDisciplinasExecucao();
+//                sp.getIPersistentExecutionCourse().apagarTodasAsDisciplinasExecucao(); no longer supported- too dangerous
                 PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
                 pb.clearCache();
             }

@@ -207,7 +207,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 					"exception",
 					new ActionError(
 						"error.impossible.insertGratuityValues",
-						(String) gratuityForm.get("degreeName")));
+						gratuityForm.get("degreeName")));
 			}
 			else
 			{

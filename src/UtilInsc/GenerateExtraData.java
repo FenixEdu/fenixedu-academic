@@ -59,7 +59,7 @@ public class GenerateExtraData
 		turnOnPersistentSuport();
 		IPersistentExecutionCourse persistentExecutionCourse =
 			persistentSupport.getIPersistentExecutionCourse();
-		persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
+	//TODO: deleted->	persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
 		turnOffPersistentSuport();
 
 		// APAGO TODOS OS EXECUTION_DEGREE PORQUE VOU ESCREVELOS DE RAIZ:

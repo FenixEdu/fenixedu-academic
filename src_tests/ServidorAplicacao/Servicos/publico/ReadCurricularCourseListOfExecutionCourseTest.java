@@ -158,7 +158,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest extends TestCaseServi
             if (!hasCurricularCourses)
             {
                 PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
-                sp.getIPersistentCurricularCourse().deleteAll();
+               // sp.getIPersistentCurricularCourse().deleteAll(); no longer suported- too dangerous
                 pb.removeFromCache(executionCourse);
                 //executionCourse.setAssociatedCurricularCourses(null);
             }

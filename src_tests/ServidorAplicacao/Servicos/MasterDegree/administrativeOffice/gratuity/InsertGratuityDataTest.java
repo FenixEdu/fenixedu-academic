@@ -242,7 +242,7 @@ public class InsertGratuityDataTest extends AdministrativeOfficeBaseTest
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setIdInternal(new Integer(76));
 			
-			IGratuityValues gratuityValues = (IGratuityValues) persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
+			IGratuityValues gratuityValues = persistentGratuityValues.readGratuityValuesByExecutionDegree(executionDegree);
 
 			InfoGratuityValues infoGratuityValuesDB = cloneGratuityValues(gratuityValues);
 			

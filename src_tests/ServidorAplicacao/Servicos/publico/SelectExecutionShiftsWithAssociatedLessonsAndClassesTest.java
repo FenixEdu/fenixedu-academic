@@ -262,7 +262,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest extends Te
 				// associadas");
 //TODO: deleteAll was deleted. replace with another metod
                // turnoAulaPersistente.deleteAll();
-                turmaTurnoPersistente.deleteAll();
+               // turmaTurnoPersistente.deleteAll();
             }
 
             if (testCase == 3)

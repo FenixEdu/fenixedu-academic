@@ -63,7 +63,7 @@ public class LerSalasServicosTest extends TestCaseReadServices {
 	try {
 		sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
-		sp.getISalaPersistente().deleteAll();
+		//sp.getISalaPersistente().deleteAll(); method deleted - too dangerous
 		sp.confirmarTransaccao();
 	} catch (ExcepcaoPersistencia excepcao) {
 	  fail("Exception when setUp");

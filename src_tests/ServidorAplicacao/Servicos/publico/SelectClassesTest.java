@@ -147,8 +147,8 @@ public class SelectClassesTest extends TestCaseServicos {
 			assertNotNull(class1);
 			
 			
-			if (!classesExist)
-				turmaPersistente.deleteAll();
+//			if (!classesExist)
+//				turmaPersistente.deleteAll(); method deleted- too dangerous
 
 			this.infoClass = Cloner.copyClass2InfoClass(class1);
 			

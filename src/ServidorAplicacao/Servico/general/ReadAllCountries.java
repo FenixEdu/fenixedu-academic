@@ -15,6 +15,7 @@
 package ServidorAplicacao.Servico.general;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -62,7 +63,7 @@ public class ReadAllCountries implements IService
     {
 
         ISuportePersistente sp = null;
-        ArrayList paises = new ArrayList();
+        List paises = new ArrayList();
 
         try
         {

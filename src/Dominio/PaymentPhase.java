@@ -6,9 +6,7 @@ package Dominio;
 
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
 
 /**
