@@ -40,10 +40,12 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		
-
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
+
+		String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+		if (nextPage != null)
+			request.setAttribute("nextPage", nextPage);
 
 		ArrayList horas = Util.getExamShifts();
 		session.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
@@ -71,8 +73,6 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
-		
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
@@ -115,7 +115,12 @@ public class ChooseExamDayAndShiftDispatchAction extends DispatchAction {
 			SessionConstants.EXAM_DATEANDTIME,
 			examDateAndTime);
 
-		return mapping.findForward("View Exams");
+		String nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
+			if (nextPage==null) System.out.println("Next Page parameter e NULL :(");
+			else System.out.println("Next Page parameter NAO e NULL :) " + nextPage);
+
+		return mapping.findForward(nextPage);
+
 	}
 
 }

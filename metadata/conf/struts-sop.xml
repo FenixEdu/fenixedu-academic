@@ -760,7 +760,8 @@
             validate="true"
             >
          <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
-         <forward name="View Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
+         <forward name="viewExams" path="/viewExamsDayAndShiftForm.do?method=view"/>
+         <forward name="viewEmptyRooms" path="/viewEmptyRoomsInDayAndShift.do"/>
 	</action>
 
 	<action path="/viewExamsDayAndShiftForm"		
@@ -775,6 +776,14 @@
          <forward name="Edit Exam" path="/editExam.jsp"/>
          <forward name="Add Execution Course" path="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext&amp;nextPage=addExecutionCourseToExam"/>
 	</action>
+	
+    <action	input="/viewEmptyRoomsInDayAndShift.jsp"
+      		path="/viewEmptyRoomsInDayAndShift"
+			type="ServidorApresentacao.Action.sop.ViewEmptyRoomsInDayAndShiftAction"
+        	>
+		<forward name="View" path="/viewEmptyRoomsInDayAndShift.jsp"/>
+      </action>
+	
 	
     <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext"
             name="chooseContextForm"

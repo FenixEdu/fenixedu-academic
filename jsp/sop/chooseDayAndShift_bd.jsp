@@ -8,6 +8,7 @@
 <html:form action="/chooseDayAndShiftForm">
 	<html:hidden property="method" value="choose"/>
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="nextPage" value='<%= pageContext.findAttribute(SessionConstants.NEXT_PAGE).toString() %>'/>
 		<table width="100%">
 	    	<tr>
 	            <td class="infoop">Por favor, proceda &agrave; escolha do dia pretendido.</td>

@@ -193,11 +193,9 @@
 
 	<!-- Turnos -->
 	
-	<action   
-	          
-	          path="/prepareSelectExecutionCourseAction"
-              type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction"
-              >
+	<action path="/prepareSelectExecutionCourseAction"
+            type="ServidorApresentacao.Action.publico.PrepareSelectExecutionCourseAction"
+            >
           <forward name="sucess" path="/prepareSelectExecutionCourse.jsp"/>
           
       </action>
@@ -279,10 +277,10 @@
             validate="true"
             >
          <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
-         <forward name="View Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
+         <forward name="view Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
 	</action>
 
-	<action path="/viewExamsDayAndShiftForm"		
+	<action path="/viewExamsDayAndShiftForm"
 			input="/viewExamsDayAndShift.jsp"
             type="ServidorApresentacao.Action.sop.ViewExamsByDayAndShiftDispatchAction"
             parameter="method"
