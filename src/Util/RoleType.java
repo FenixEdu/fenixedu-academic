@@ -101,7 +101,7 @@ public final class RoleType extends ValuedEnum {
 	public static final RoleType GRANT_OWNER =
 			new RoleType("grantOwner", RoleType.GRANT_OWNER_TYPE);
 	public static final RoleType GRANT_OWNER_MANAGER =
-			new RoleType("person", RoleType.GRANT_OWNER_MANAGER_TYPE);
+			new RoleType("grantOwnerManager", RoleType.GRANT_OWNER_MANAGER_TYPE);
 
 	/**
 	 * @param name
