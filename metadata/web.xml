@@ -5,8 +5,8 @@
 <web-app>
 	<filter>
 	    <filter-name>indexFilter</filter-name>
-	    <filter-class>ServidorApresentacao.servlets.filters.RequestWrapperFilter</filter-class>
-		<!--<filter-class>ServidorApresentacao.servlets.filters.CacheFilter</filter-class>-->
+	    <!--<filter-class>ServidorApresentacao.servlets.filters.RequestWrapperFilter</filter-class>-->
+		<filter-class>ServidorApresentacao.servlets.filters.RequestWrapperCacheFilter</filter-class>
 	</filter>
 	<filter>
 		 <filter-name>profiling</filter-name>

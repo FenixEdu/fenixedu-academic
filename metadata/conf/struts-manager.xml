@@ -267,6 +267,14 @@
     		<form-property name="file" type="java.lang.String"/>
     		<form-property name="executionYear" type="java.lang.String"/>	
     </form-bean>
+
+	    <form-bean name="cacheForm"
+    		type="org.apache.struts.validator.DynaValidatorForm"
+	    	dynamic="true">
+    			<form-property name="page" type="java.lang.Integer" initial="0"/> 
+    			<form-property name="responseRefreshTimeout" type="java.lang.Integer"/>
+	    </form-bean>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -923,6 +931,7 @@
 		      input="/manageCache.do?method=prepare"
               type="ServidorApresentacao.Action.manager.ManageCacheDA"
               parameter="method"
+			  name="cacheForm"
               >
           <forward name="Manage" path="df.page.manage-cache"/>
           <forward name="CacheCleared" path="/manageCache.do?method=prepare"/>

@@ -1,4 +1,4 @@
-package ServidorApresentacao.servlets.cache;
+package ServidorApresentacao.servlets.filters.cache;
 
 import java.io.*;
 import javax.servlet.*;
@@ -50,7 +50,7 @@ public class CacheResponseWrapper
     }
 
    stream = createOutputStream();
-   writer = new PrintWriter(new OutputStreamWriter(stream, "UTF-8"));
+   writer = new PrintWriter(new OutputStreamWriter(stream));
    return (writer);
   }
 }

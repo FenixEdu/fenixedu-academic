@@ -5,12 +5,8 @@
 package ServidorApresentacao.servlets.filters;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Vector;
@@ -30,32 +26,27 @@ import javax.servlet.http.HttpServletResponse;
 import DataBeans.InfoRole;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import ServidorApresentacao.servlets.cache.CacheResponseWrapper;
+import ServidorApresentacao.servlets.filters.cache.CacheResponseWrapper;
+import ServidorApresentacao.servlets.filters.cache.ResponseCacheOSCacheImpl;
 import Util.RoleType;
 
 /**
- * @author marvin
+ * @author Luis Cruz
  *  
  */
-public class CacheFilter implements Filter {
+public class RequestWrapperCacheFilter implements Filter {
 
-    ServletContext sc;
-    FilterConfig fc;
-
-    long cacheTimeout = Long.MAX_VALUE;
+    ServletContext servletContext;
+    FilterConfig filterConfig;
 
     public void init(FilterConfig filterConfig) {
-        this.fc = filterConfig;
-        String ct = fc.getInitParameter("cacheTimeout");
-        if (ct != null) {
-            cacheTimeout = 60 * 1000 * Long.parseLong(ct);
-        }
-        this.sc = filterConfig.getServletContext();
+        this.filterConfig = filterConfig;
+        this.servletContext = filterConfig.getServletContext();
     }
 
     public void destroy() {
-        this.sc = null;
-        this.fc = null;
+        this.servletContext = null;
+        this.filterConfig = null;
     }
 
     public void doFilter(ServletRequest req, ServletResponse res,
@@ -64,20 +55,21 @@ public class CacheFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         // check if was a resource that shouldn't be cached.
-        String r = sc.getRealPath("");
-        String path = fc.getInitParameter(request.getRequestURI());
-        if ((path != null && path.indexOf("/publico/") != -1)) {
-            System.out.println("Not cached.");
+        String uri = request.getRequestURI();
+        if ((uri == null) || (uri.indexOf("/publico/") == -1)) {
             chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
-            //chain.doFilter(request, response);
             return;
         }
-        path = r + path;
 
         // customize to match parameters
-        String id = request.getRequestURI() + request.getQueryString();
+        String queryString = constructQueryString(request);
+        StringBuffer id = new StringBuffer(request.getRequestURI());
+        if (queryString != null) {
+        	id.append("?");
+        	id.append(queryString);
+        }
         // optionally append i18n sensitivity
-        String localeSensitive = fc.getInitParameter("locale-sensitive");
+        String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
         if (localeSensitive != null) {
             StringWriter ldata = new StringWriter();
             Enumeration locales = request.getLocales();
@@ -85,64 +77,55 @@ public class CacheFilter implements Filter {
                 Locale locale = (Locale) locales.nextElement();
                 ldata.write(locale.getISO3Language());
             }
-            id = id + ldata.toString();
-        }
-        File tempDir = (File) sc.getAttribute("javax.servlet.context.tempdir");
-
-        // get possible cache
-        String temp = tempDir.getAbsolutePath();
-        File file = new File(temp + id);
-
-        // get current resource
-        if (path == null) {
-            path = sc.getRealPath(request.getRequestURI());
-        }
-        File current = new File(path);
-
-        try {
-            long now = Calendar.getInstance().getTimeInMillis();
-            //set timestamp check
-            if (!file.exists()
-                    || (file.exists() && current.lastModified() > file
-                            .lastModified())
-                    || cacheTimeout < now - file.lastModified()) {
-                String name = file.getAbsolutePath();
-                name = name.substring(0, name.lastIndexOf("/") == -1 ? 0 : name
-                        .lastIndexOf("/"));
-                new File(name).mkdirs();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                CacheResponseWrapper wrappedResponse = new CacheResponseWrapper(
-                        response, baos);
-                System.out.println("Caching Result.");
-                //chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
-                chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) req), wrappedResponse);
-                //chain.doFilter(req, wrappedResponse);
-
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(baos.toByteArray());
-                fos.flush();
-                fos.close();
-            }
-        } catch (ServletException e) {
-            e.printStackTrace();
-            if (!file.exists()) { throw new ServletException(e); }
-        } catch (IOException e) {
-            e.printStackTrace();
-            if (!file.exists()) { throw e; }
+            id.append(ldata.toString());
         }
 
-        FileInputStream fis = new FileInputStream(file);
-        String mt = sc.getMimeType(request.getRequestURI());
-        response.setContentType(mt);
-        ServletOutputStream sos = res.getOutputStream();
-        for (int i = fis.read(); i != -1; i = fis.read()) {
-            sos.write((byte) i);
-        }
-        System.out.println("Returning result.");
+        // Try getting response from cache
+        ByteArrayOutputStream responseOutputStream = ResponseCacheOSCacheImpl.getInstance().lookup(id.toString());
 
+        // if response not cached, create it and cache it
+        if (responseOutputStream == null) {
+        	responseOutputStream = new ByteArrayOutputStream();
+            CacheResponseWrapper wrappedResponse = new CacheResponseWrapper(response, responseOutputStream);
+            chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) req), wrappedResponse);
+            ResponseCacheOSCacheImpl.getInstance().cache(id.toString(), responseOutputStream);
+        }
+
+        // write the response to the output stream for the current thread
+        ServletOutputStream servletOutputStream = res.getOutputStream();
+        servletOutputStream.write(responseOutputStream.toByteArray());
     }
 
-    public class FenixHttpServletRequestWrapper extends HttpServletRequestWrapper
+	private String constructQueryString(HttpServletRequest request) {
+		StringBuffer queryString = new StringBuffer();
+		
+		String requestQueryString = request.getQueryString();
+		if (requestQueryString != null) {
+			queryString.append(requestQueryString);
+		}
+
+		Enumeration parameterNames = request.getParameterNames();
+		if (parameterNames != null) {
+			while(parameterNames.hasMoreElements()) {
+				String parameterName = (String) parameterNames.nextElement();
+				String parameterValue = request.getParameter(parameterName);
+				if (queryString.length() != 0) {
+					queryString.append("&");
+				}
+				queryString.append(parameterName);
+				queryString.append("=");
+				queryString.append(parameterValue);
+			}
+		}
+
+		if (queryString.length() != 0) {
+			return queryString.toString();
+		} else {
+			return null;
+		}
+	}
+
+	public class FenixHttpServletRequestWrapper extends HttpServletRequestWrapper
 	{
 
 		/**

@@ -83,6 +83,8 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	public static final String DEGREE = "degree";
 	public static final String NUMBER_CACHED_ITEMS = "number_cached_items";
+	public static final String NUMBER_CACHED_RESPONSES = "NUMBER_CACHED_RESPONSES";
+	public static final String CACHED_RESPONSES_TIMEOUT = "CACHED_RESPONSES_TIMEOUT";
 	
 	// -------------------------------------------------------------------------------
 	//    GesDis Constants - For GesDis
