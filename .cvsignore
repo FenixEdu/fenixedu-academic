@@ -26,3 +26,5 @@ javaDocSource
 javaDocTests
 
 Dominio.ucd
+buildToDeploy.properties
+buildToDeployFenix.properties
