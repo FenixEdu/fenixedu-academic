@@ -1,9 +1,7 @@
 /*
  * Created on 28/Jul/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
+*/
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.InfoGroupProperties;
@@ -23,15 +21,11 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 
 public class CreateGroupProperties implements IServico {
 
-	private ISuportePersistente persistentSupport = null;
-	private IPersistentGroupProperties persistentGroupProperties = null;
-
+	
 	private static CreateGroupProperties service = new CreateGroupProperties();
 
 	/**
@@ -54,13 +48,15 @@ public class CreateGroupProperties implements IServico {
 
 	private void checkIfGroupPropertiestExists(String name, IDisciplinaExecucao executionCourse)
 		throws FenixServiceException {
-
-		IGroupProperties groupProperties = null;
-		persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
-
+			
+		IGroupProperties groupProperties =null;	
 		try {
-			groupProperties =
-				persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse, name);
+			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+			persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+
+			groupProperties =persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse, name);
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
@@ -73,28 +69,30 @@ public class CreateGroupProperties implements IServico {
 	 */
 	public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
 		throws FenixServiceException {
-			
+		
+		System.out.println("<-------ENTRA NO SERVICO ");
+				
 		IDisciplinaExecucao executionCourse = null;
 		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
+				
+			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
-			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
-
 			executionCourse =(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
-
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
-
-		checkIfGroupPropertiestExists(infoGroupProperties.getName(),executionCourse);
-
-		try {
-			IGroupProperties newGroupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
+			
+			checkIfGroupPropertiestExists(infoGroupProperties.getName(),executionCourse);
+			
+			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+			infoGroupProperties.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+			
+			IGroupProperties newGroupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);	
+			newGroupProperties.setExecutionCourse(executionCourse);
+			
 			persistentGroupProperties.lockWrite(newGroupProperties);
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
+		System.out.println("<-------SAI DO SERVICO ");
 		return true;
 	}
 }

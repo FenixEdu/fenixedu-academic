@@ -10,8 +10,11 @@
 	<logic:empty name="component" property="infoSiteGroupsByShiftList">
 	<h2><bean:message key="message.infoSiteGroupsByShiftList.not.available" /></h2>
 	</logic:empty>
+	
 <table border="0" style="text-align: left;">
 	<tbody>
+	<b><html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupProperties=" + request.getParameter("groupProperties")%>" paramId="objectCode" paramName="objectCode" ><bean:message key="link.editGroupProperties"/></html:link></b>
+	
      <logic:iterate id="infoSiteGroupsByShift" name="component" property="infoSiteGroupsByShiftList" >
      <tr>
       <td>
@@ -20,31 +23,57 @@
            <bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>
 			
 			<bean:write name="infoShift" property="nome"/></h2>
-				<html:link page="<%= "/insertStudentGroup.do?method=insertStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+				<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupProperties=" + request.getParameter("groupProperties")%>" paramId="shiftCode" paramName="infoShift" paramProperty="idInternal">
 					<b><bean:message key="link.insertGroup"/></b>
 				</html:link>
-               <logic:iterate id="infoStudentGroup" name="infoSiteGroupsByShift" property="infoStudentGroupsList" >
+             <br>
+             <br>
+             
+<table width="500" cellpadding="0" border="0">
+          
+             <logic:iterate id="infoStudentGroup" name="infoSiteGroupsByShift" property="infoStudentGroupsList" >
         		<tr>
           		<td>
              	<br>
+             	<td class="listClasses">
                	<li><html:link page="<%= "/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="studentGroup" paramName="infoStudentGroup" paramProperty="idInternal">
 						<bean:message key="label.groupWord"/>
                 		<bean:write name="infoStudentGroup" property="groupNumber"/>
 					</html:link></li>
-               		&nbsp
+				</td>
+               		
 	           		<bean:define id="infoGroupProperties" name="infoStudentGroup" property="infoGroupProperties"/>
                		<bean:define id="idInternal" name="infoGroupProperties" property="idInternal"/>
-               		<html:link page="<%= "/editStudentGroup.do?method=editStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="studentGroup" paramName="infoStudentGroup" paramProperty="idInternal">
-               				<b><bean:message key="link.editGroup"/></b>
+        			
+					<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
+               	<td class="listClasses">
+               	
+               		<html:link page="<%="/editStudentGroup.do?method=prepareEditStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()%>" paramId="studentGroup" paramName="infoStudentGroup" paramProperty="idInternal">
+               				
+               		
+               				<b><bean:message key="link.editGroupMembers"/></b>
  					</html:link>
-                    &nbsp                
+                </td>
+               	<td class="listClasses">
+               	
+                    <html:link page="<%="/editStudentGroup.do?method=prepareEditStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()%>" paramId="studentGroup" paramName="infoStudentGroup" paramProperty="idInternal">
+               				
+               		
+               				<b><bean:message key="link.editGroupShift"/></b>
+ 					</html:link>
+                </td>
+                <td class="listClasses">
+               	
                 	<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupProperties=" + idInternal.toString()%>" paramId="studentGroup" paramName="infoStudentGroup" paramProperty="idInternal">
                				<b><bean:message key="link.deleteGroup"/></b>
  					</html:link>
              	</td>
+             	</td>
                 </tr>
 
             </logic:iterate>
+</table>   
+   
             
         </tbody>
                 

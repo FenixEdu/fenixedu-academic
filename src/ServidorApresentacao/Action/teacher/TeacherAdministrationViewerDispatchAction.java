@@ -3,8 +3,10 @@ package ServidorApresentacao.Action.teacher;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoEvaluationMethod;
+import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAllGroups;
@@ -32,6 +35,7 @@ import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteEvaluationMethods;
+import DataBeans.InfoSiteGroupProperties;
 import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
 import DataBeans.InfoSiteObjectives;
@@ -41,7 +45,9 @@ import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteSections;
+import DataBeans.InfoSiteShifts;
 import DataBeans.InfoSiteStudentGroup;
+import DataBeans.InfoSiteStudentInformation;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSiteTeachers;
@@ -65,6 +71,8 @@ import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
+import Util.EnrolmentGroupPolicyType;
+import Util.TipoAula;
 
 /**
  * @author Fernanda Quitério
@@ -360,8 +368,8 @@ public class TeacherAdministrationViewerDispatchAction
 
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
 		readSiteView(request, objectivesComponent, null, null, null);
-
 		return mapping.findForward("viewObjectives");
+
 	}
 
 	public ActionForward prepareEditObjectives(
@@ -545,6 +553,7 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
+
 		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("viewEvaluationMethod");
@@ -570,20 +579,19 @@ public class TeacherAdministrationViewerDispatchAction
 
 		TeacherAdministrationSiteView siteView =
 			(TeacherAdministrationSiteView) request.getAttribute("siteView");
-		if (siteView.getComponent()!=null){
-			
-	
-		DynaActionForm evaluationForm = (DynaActionForm) form;
-		evaluationForm.set(
-			"evaluationElements",
-			((InfoEvaluationMethod) siteView.getComponent())
-				.getEvaluationElements());
-		evaluationForm.set(
-			"evaluationElementsEn",
-			((InfoEvaluationMethod) siteView.getComponent())
-				.getEvaluationElementsEn());
-		}		
-		request.setAttribute("curricularCourseCode",curricularCourseCode);
+		if (siteView.getComponent() != null) {
+
+			DynaActionForm evaluationForm = (DynaActionForm) form;
+			evaluationForm.set(
+				"evaluationElements",
+				((InfoEvaluationMethod) siteView.getComponent())
+					.getEvaluationElements());
+			evaluationForm.set(
+				"evaluationElementsEn",
+				((InfoEvaluationMethod) siteView.getComponent())
+					.getEvaluationElementsEn());
+		}
+		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		return mapping.findForward("editEvaluationMethod");
 	}
 
@@ -1718,9 +1726,9 @@ public class TeacherAdministrationViewerDispatchAction
 
 		return showSummaries(mapping, form, request, response);
 	}
-	
-//	========================  GROUPS MANAGEMENT  ========================
-	
+
+	//	========================  GROUPS MANAGEMENT  ========================
+
 	public ActionForward viewExecutionCourseProjects(
 		ActionMapping mapping,
 		ActionForm form,
@@ -1729,14 +1737,12 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		ISiteComponent viewProjectsComponent = new InfoSiteProjects();
-			
-		readSiteView(request, viewProjectsComponent, null, null, null);
 
+		readSiteView(request, viewProjectsComponent, null, null, null);
 		return mapping.findForward("viewProjectsAndLink");
-		
-			
+
 	}
-	
+
 	public ActionForward viewProjectStudentGroups(
 		ActionMapping mapping,
 		ActionForm form,
@@ -1744,16 +1750,18 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		String objectCodeString =(String)request.getParameter("groupProperties");
-		Integer  groupPropertiesCode = new Integer(objectCodeString);
+		String groupPropertiesCodeString =
+			(String) request.getParameter("groupProperties");
+
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+
 		ISiteComponent viewAllGroups = new InfoSiteAllGroups();
-
-		readSiteView(request, viewAllGroups, null,groupPropertiesCode,null);
-
-		return mapping.findForward("groupsManagement");	
+		
+		readSiteView(request, viewAllGroups, null, groupPropertiesCode, null);
+		
+		return mapping.findForward("groupsManagement");
 	}
-	
-	
+
 	public ActionForward viewStudentGroupInformation(
 		ActionMapping mapping,
 		ActionForm form,
@@ -1761,14 +1769,317 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		String studentGroupCodeString =(String)request.getParameter("studentGroup");
+		String studentGroupCodeString = (String) request.getParameter("studentGroup");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 
-		readSiteView(request, viewStudentGroup,null,studentGroupCode,null);
-				
-		return mapping.findForward("viewStudentGroupInformation");	
+		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
+		readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
+
+		return mapping.findForward("viewStudentGroupInformation");
+
 	}
+	
+	
+	public ActionForward prepareCreateGroupProperties(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = request.getSession(false);
+		
+		readSiteView(request, null, null, null, null);
+		
+		List shiftTypeValues = new ArrayList();
+
+		shiftTypeValues.add(new Integer(1));
+		shiftTypeValues.add(new Integer(2));
+		shiftTypeValues.add(new Integer(3));
+		shiftTypeValues.add(new Integer(4));
+
+		List shiftTypeNames = new ArrayList();
+		
+		shiftTypeNames.add("Teórico");
+		shiftTypeNames.add("Prático");
+		shiftTypeNames.add("Teórico-Prático");
+		shiftTypeNames.add("Laboratorial");
+
+		request.setAttribute("shiftTypeValues",shiftTypeValues);
+		request.setAttribute("shiftTypeNames", shiftTypeNames);
+		
+
+		return mapping.findForward("insertGroupProperties");
+	}
+
+	public ActionForward createGroupProperties(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = request.getSession(false);
+
+
+		DynaActionForm insertGroupPropertiesForm = (DynaActionForm) form;
+
+		String name =
+					(String) insertGroupPropertiesForm.get("name");
+		
+		String maximumCapacity =
+			(String) insertGroupPropertiesForm.get("maximumCapacity");
+		String minimumCapacity =
+			(String) insertGroupPropertiesForm.get("minimumCapacity");
+
+		String idealCapacity =
+			(String) insertGroupPropertiesForm.get("idealCapacity");
+
+		String groupMaximumNumber =
+			(String) insertGroupPropertiesForm.get("groupMaximumNumber");
+		String enrolmentBeginDayString =
+			(String) insertGroupPropertiesForm.get("enrolmentBeginDay");
+
+		String enrolmentEndDayString =
+			(String) insertGroupPropertiesForm.get("enrolmentEndDay");
+
+		String shiftType =
+						(String) insertGroupPropertiesForm.get("shiftType");
+
+
+		Boolean optional =
+			new Boolean((String) insertGroupPropertiesForm.get("enrolmentPolicy"));
+		EnrolmentGroupPolicyType enrolmentPolicy;
+		if (optional.booleanValue())
+			enrolmentPolicy = new EnrolmentGroupPolicyType(1);
+		else
+			enrolmentPolicy = new EnrolmentGroupPolicyType(2);
+
+
+		String[] beginDate = enrolmentBeginDayString.split("/");
+		Calendar enrolmentBeginDay = Calendar.getInstance();
+		enrolmentBeginDay.set(
+			Calendar.DAY_OF_MONTH,
+			(new Integer(beginDate[0])).intValue());
+		enrolmentBeginDay.set(
+			Calendar.MONTH,
+			(new Integer(beginDate[1])).intValue() - 1);
+		enrolmentBeginDay.set(
+			Calendar.YEAR,
+			(new Integer(beginDate[2])).intValue());
+
+		String[] endDate = enrolmentEndDayString.split("/");
+		Calendar enrolmentEndDay = Calendar.getInstance();
+		enrolmentEndDay.set(
+			Calendar.DAY_OF_MONTH,
+			(new Integer(endDate[0])).intValue());
+		enrolmentEndDay.set(
+			Calendar.MONTH,
+			(new Integer(endDate[1])).intValue() - 1);
+		enrolmentEndDay.set(
+			Calendar.YEAR,
+			(new Integer(endDate[2])).intValue());
+
+		UserView userView = (UserView) session.getAttribute("UserView");
+		InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
+		infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
+		infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
+		infoGroupProperties.setEnrolmentPolicy(enrolmentPolicy);
+
+		infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
+		infoGroupProperties.setIdealCapacity(new Integer(idealCapacity));
+		infoGroupProperties.setMaximumCapacity(new Integer(maximumCapacity));
+		infoGroupProperties.setMinimumCapacity(new Integer(minimumCapacity));
+		infoGroupProperties.setName(name);
+		infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));
+		Integer objectCode = getObjectCode(request);
+
+		Object args[] = { objectCode, infoGroupProperties };
+
+		GestorServicos gestor = GestorServicos.manager();
+		Boolean result;
+		
+		try {
+			result = (Boolean) gestor.executar(userView, "CreateGroupProperties", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		
+		if (result.booleanValue() == false) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+
+			// Create an ACTION_ERROR for each GROUP_PROPERTIES
+			error =	new ActionError("errors.invalid.create.groupProperties");
+			actionErrors.add( "errors.invalid.create.groupProperties",error);
+			saveErrors(request, actionErrors);
+			
+			return prepareCreateGroupProperties(mapping, form, request, response);
+		}
+		
+		return viewExecutionCourseProjects(mapping,form,request,response);
+	}
+
+
+	public ActionForward prepareEditGroupProperties(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+
+			HttpSession session = request.getSession(false);
+			
+			String groupPropertiesCodeString = (String) request.getParameter("groupProperties");
+			Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+
+			ISiteComponent viewGroupProperties = new InfoSiteGroupProperties();
+			SiteView siteView = readSiteView(request, viewGroupProperties, null, groupPropertiesCode, null);
+
+			List shiftTypeValues = new ArrayList();
+
+			shiftTypeValues.add(new Integer(1));
+			shiftTypeValues.add(new Integer(2));
+			shiftTypeValues.add(new Integer(3));
+			shiftTypeValues.add(new Integer(4));
+
+			List shiftTypeNames = new ArrayList();
+			shiftTypeNames.add("Teórica");
+			shiftTypeNames.add("Prática");
+			shiftTypeNames.add("Teórico-Prática");
+			shiftTypeNames.add("Laboratorial");
+			
+			List enrolmentPolicyValues = new ArrayList();
+
+			enrolmentPolicyValues.add(new Integer(1));
+			enrolmentPolicyValues.add(new Integer(2));
+						
+			List enrolmentPolicyNames = new ArrayList();
+			
+			enrolmentPolicyNames.add("Atómica");
+			enrolmentPolicyNames.add("Individual");
+			
+			InfoSiteGroupProperties infoSiteGroupProperties = (InfoSiteGroupProperties)siteView.getComponent();
+			
+			Integer enrolmentPolicy = infoSiteGroupProperties.getInfoGroupProperties().getEnrolmentPolicy().getType();
+			enrolmentPolicyValues.remove(enrolmentPolicy.intValue()-1);
+			String enrolmentPolicyName =enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1).toString();
+			
+			Integer shiftType = infoSiteGroupProperties.getInfoGroupProperties().getShiftType().getTipo();
+			
+			shiftTypeValues.remove(shiftType.intValue() - 1);
+			String shiftTypeName =shiftTypeNames.remove(shiftType.intValue() - 1).toString();
+			
+		
+			request.setAttribute("shiftTypeName", shiftTypeName);
+			request.setAttribute("shiftTypeValue", shiftType);		
+			request.setAttribute("shiftTypeValues", shiftTypeValues);
+			request.setAttribute("shiftTypeNames", shiftTypeNames);
+			
+			request.setAttribute("enrolmentPolicyName", enrolmentPolicyName);
+			request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);		
+			request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
+			request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
+			
+			request.setAttribute("siteView", siteView);
+			return mapping.findForward("editGroupProperties");
+		}
+
+		public ActionForward editGroupProperties(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+
+			HttpSession session = request.getSession(false);
+
+			System.out.println("<-----------------ENTRA NA ACCAO EDIT GROUP PROPERTIES");
+
+			DynaActionForm editGroupPropertiesForm = (DynaActionForm) form;
+			
+			String groupPropertiesString = request.getParameter("groupProperties");
+			Integer groupPropertiesCode = new Integer(groupPropertiesString); 
+			
+			String name =(String) editGroupPropertiesForm.get("name");
+		
+			String maximumCapacity =(String) editGroupPropertiesForm.get("maximumCapacity");
+			
+			String minimumCapacity =(String) editGroupPropertiesForm.get("minimumCapacity");
+			
+			String idealCapacity =(String) editGroupPropertiesForm.get("idealCapacity");
+			
+			String groupMaximumNumber =(String) editGroupPropertiesForm.get("groupMaximumNumber");
+			
+			String enrolmentBeginDayString =(String) editGroupPropertiesForm.get("enrolmentBeginDayFormatted");
+		
+			String enrolmentEndDayString =(String) editGroupPropertiesForm.get("enrolmentEndDayFormatted");
+			
+			String shiftType =(String) editGroupPropertiesForm.get("shiftType");
+
+
+			Boolean optional =
+				new Boolean((String) editGroupPropertiesForm.get("enrolmentPolicy"));
+			EnrolmentGroupPolicyType enrolmentPolicy;
+			if (optional.booleanValue())
+				enrolmentPolicy = new EnrolmentGroupPolicyType(1);
+			else
+				enrolmentPolicy = new EnrolmentGroupPolicyType(2);
+
+			String[] beginDate = enrolmentBeginDayString.split("/");
+			
+			Calendar enrolmentBeginDay = Calendar.getInstance();
+			enrolmentBeginDay.set(Calendar.DAY_OF_MONTH,(new Integer(beginDate[0])).intValue());
+			enrolmentBeginDay.set(Calendar.MONTH,(new Integer(beginDate[1])).intValue() - 1);
+			enrolmentBeginDay.set(Calendar.YEAR,(new Integer(beginDate[2])).intValue());
+			
+			String[] endDate = enrolmentEndDayString.split("/");
+			Calendar enrolmentEndDay = Calendar.getInstance();
+			enrolmentEndDay.set(Calendar.DAY_OF_MONTH,(new Integer(endDate[0])).intValue());
+			enrolmentEndDay.set(Calendar.MONTH,(new Integer(endDate[1])).intValue() - 1);
+			enrolmentEndDay.set(Calendar.YEAR,(new Integer(endDate[2])).intValue());
+
+			UserView userView = (UserView) session.getAttribute("UserView");
+			InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
+			infoGroupProperties.setIdInternal(groupPropertiesCode);
+			infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
+			infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
+			infoGroupProperties.setEnrolmentPolicy(enrolmentPolicy);
+
+			infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
+			infoGroupProperties.setIdealCapacity(new Integer(idealCapacity));
+			infoGroupProperties.setMaximumCapacity(new Integer(maximumCapacity));
+			infoGroupProperties.setMinimumCapacity(new Integer(minimumCapacity));
+			infoGroupProperties.setName(name);
+			infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));
+			Integer objectCode = getObjectCode(request);
+
+			Object args[] = {objectCode,infoGroupProperties };
+			
+			GestorServicos gestor = GestorServicos.manager();
+			Boolean result;
+			try {
+				result = (Boolean) gestor.executar(userView, "EditGroupProperties", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+		
+			if (result.booleanValue() == false) {
+				ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+				System.out.println("ENTRA NOS ACTION ERRORS");
+				// Create an ACTION_ERROR for each GROUP_PROPERTIES
+				error =	new ActionError("errors.invalid.edit.groupProperties");
+				actionErrors.add("errors.invalid.edit.groupProperties",error);
+				saveErrors(request, actionErrors);
+			
+				return prepareEditGroupProperties(mapping, form, request, response);
+			}
+		
+			return viewProjectStudentGroups(mapping,form,request,response);
+		}
+
+
 
 	public ActionForward deleteStudentGroup(
 		ActionMapping mapping,
@@ -1779,34 +2090,227 @@ public class TeacherAdministrationViewerDispatchAction
 
 		Boolean result;
 		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-		String studentGroupCodeString =(String)request.getParameter("studentGroup");
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		String studentGroupCodeString =
+			(String) request.getParameter("studentGroup");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		
+
 		Object[] args = { studentGroupCode };
-		
+
 		GestorServicos gestorServicos = GestorServicos.manager();
+
+		try {
+			result =
+				(Boolean) gestorServicos.executar(
+					userView,
+					"DeleteStudentGroup",
+					args);
+
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			throw new FenixActionException(e.getMessage());
+		}
+
+		if (result.booleanValue() == false) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+
+			// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
+			error =
+				new ActionError("errors.invalid.delete.not.empty.studentGroup");
+			actionErrors.add(
+				"errors.invalid.delete.not.empty.studentGroup",
+				error);
+			saveErrors(request, actionErrors);
+		}
+		return viewProjectStudentGroups(mapping, form, request, response);
+	}
+
+	public ActionForward prepareCreateStudentGroup(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+			
+		HttpSession session = request.getSession(false);
+		session.removeAttribute("insertStudentGroupForm");
+		UserView userView = (UserView) session.getAttribute("UserView");
+		
+		String groupPropertiesString =
+					(String) request.getParameter("groupProperties");
+		Integer groupPropertiesCode = new Integer(groupPropertiesString);
+		Integer objectCode = getObjectCode(request);
+		
+		List infoStudentList;
+		
+		Object args[] = { objectCode,groupPropertiesCode};
+		GestorServicos gestor = GestorServicos.manager();
 		
 		try {
-				result = (Boolean) gestorServicos.executar(userView, "DeleteStudentGroup", args);
-												
-			 } catch (FenixServiceException e) {
-					e.printStackTrace();
-				throw new FenixActionException(e.getMessage());
-		      }
-		      
-			if(result.booleanValue() == false)
-			{	ActionErrors actionErrors = new ActionErrors();
-				ActionError error = null;
-			
-				// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
-				error = new ActionError("errors.invalid.delete.not.empty.studentGroup");
-				actionErrors.add("errors.invalid.delete.not.empty.studentGroup", error);
-				saveErrors(request, actionErrors);
-			}
-			return viewProjectStudentGroups(mapping,form,request,response);
+			infoStudentList = (List) gestor.executar(userView, "PrepareCreateStudentGroup", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		  }
+		  
+		request.setAttribute("infoStudentList",infoStudentList);
+		
+		readSiteView(request, null, null, null, null);
+
+		return mapping.findForward("insertStudentGroup");
+		
+	}	
+		
+	public ActionForward createStudentGroup(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = request.getSession(false);
+		Integer objectCode = getObjectCode(request);
+		
+		String shiftCodeString = (String) request.getParameter("shiftCode");
+		Integer shiftCode = new Integer(shiftCodeString);
+		
+		
+		String groupPropertiesCodeString = (String) request.getParameter("groupProperties");
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		
+		DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
+		UserView userView = (UserView) session.getAttribute("UserView");
+
+		List studentCodes = Arrays.asList((Integer[]) insertStudentGroupForm.get("studentCodes"));
+		Integer groupNumber = (Integer) insertStudentGroupForm.get("groupNumber");
+		
+		Object args[] = { groupNumber, groupPropertiesCode, shiftCode, studentCodes, objectCode};
+		GestorServicos gestor = GestorServicos.manager();
+
+		Boolean result;
+		
+		try {
+			result = (Boolean) gestor.executar(userView, "CreateStudentGroup", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
 		
+		if (result.booleanValue() == false) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+
+			// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
+			error =	new ActionError("errors.invalid.insert.studentGroup");
+			actionErrors.add( "errors.invalid.insert.studentGroup",error);
+			saveErrors(request, actionErrors);
+			
+			return prepareCreateStudentGroup(mapping, form, request, response);
+		}
 		
+		return viewProjectStudentGroups(mapping, form, request, response);
+		
+	}
+
+
+	public ActionForward prepareEditStudentGroup(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+			
+		System.out.println("<----------ENTRA NA ACCAO");	
+		HttpSession session = request.getSession(false);
+		
+		UserView userView = (UserView) session.getAttribute("UserView");
+		String studentGroupCodeString =(String) request.getParameter("studentGroup");
+		String shiftCodeString =(String) request.getParameter("shiftCode");
+		
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		Integer shiftCode = new Integer(shiftCodeString);
+		
+		Integer objectCode = getObjectCode(request);
+		
+
+		System.out.println("<----------ANTES DO 1º SERVICO");
+		ISiteComponent viewShifts = new InfoSiteShifts();
+		TeacherAdministrationSiteView shifts = (TeacherAdministrationSiteView)readSiteView(request, viewShifts, null, studentGroupCode, null);
+		InfoSiteShifts shiftsComponent = (InfoSiteShifts)shifts.getComponent();
+		request.setAttribute("shiftsList",shiftsComponent.getShifts());
+		request.setAttribute("shift",shiftCode);
+
+		System.out.println("<----------ANTES DO 2º SERVICO");
+		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
+		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView)readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
+		InfoSiteStudentGroup component = (InfoSiteStudentGroup)siteView.getComponent();
+		
+		
+		request.setAttribute("infoSiteStudentInformationList",component.getInfoSiteStudentInformationList());  
+		List infoStudentList;
+	
+		Object args[] = { objectCode,studentGroupCode};
+		GestorServicos gestor = GestorServicos.manager();
+
+		System.out.println("<----------ANTES DO 2º SERVICO");
+		try {
+			infoStudentList = (List) gestor.executar(userView, "PrepareEditStudentGroup", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		  }
+		  
+		request.setAttribute("infoStudentList",infoStudentList);
+
+		return mapping.findForward("editStudentGroup");
+		
+	}	
+		
+	public ActionForward editStudentGroup(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+//		HttpSession session = request.getSession(false);
+//		Integer objectCode = getObjectCode(request);
+//		
+//				
+//		DynaActionForm editStudentGroupForm = (DynaActionForm) form;
+//		UserView userView = (UserView) session.getAttribute("UserView");
+//
+//		List studentCodes = Arrays.asList((Integer[]) editStudentGroupForm.get("studentCodes"));
+//		String studentGroupCodeString =(String) request.getParameter("studentGroup");
+//		Integer studentGroupCode = new Integer(studentGroupCodeString);
+//		
+//		Object args[] = {studentCodes, studentGroupCode};
+//		GestorServicos gestor = GestorServicos.manager();
+//
+//		Boolean result;
+//		
+//		try {
+//			result = (Boolean) gestor.executar(userView, "EditStudentGroup", args);
+//		} catch (FenixServiceException e) {
+//			throw new FenixActionException(e);
+//		}
+//		
+//		if (result.booleanValue() == false) {
+//			ActionErrors actionErrors = new ActionErrors();
+//			ActionError error = null;
+//
+//			// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
+//			error =	new ActionError("errors.invalid.edit.studentGroup");
+//			actionErrors.add( "errors.invalid.edit.studentGroup",error);
+//			saveErrors(request, actionErrors);
+//			
+//			return prepareEditStudentGroup(mapping, form, request, response);
+//		}
+		
+		return viewProjectStudentGroups(mapping, form, request, response);
+		
+	}
+
+
+
 }

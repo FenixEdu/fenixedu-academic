@@ -1,9 +1,8 @@
 /*
  * Created on 29/Jul/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
+ 
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.InfoStudentGroup;
@@ -19,10 +18,10 @@ import ServidorPersistente.ISuportePersistente;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
+
 public class VerifyStudentGroupAtributes implements IServico {
+	
 	private ISuportePersistente persistentSupport = null;
 	
 	//private IPersistentGroupProperties persistentGroupProperties = null;

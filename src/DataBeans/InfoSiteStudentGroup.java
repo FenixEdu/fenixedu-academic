@@ -14,6 +14,7 @@ import java.util.ListIterator;
 public class InfoSiteStudentGroup implements ISiteComponent {
 
 	private List infoSiteStudentInformationList;
+
 	
 	/**
 	* @return
@@ -28,7 +29,8 @@ public class InfoSiteStudentGroup implements ISiteComponent {
 	public void setInfoSiteStudentInformationList(List infoSiteStudentInformationList) {
 		this.infoSiteStudentInformationList = infoSiteStudentInformationList;
 	}
-	
+
+		
 	public boolean equals(Object objectToCompare) {
 
 			boolean result = false;

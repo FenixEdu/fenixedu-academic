@@ -1,8 +1,6 @@
 /*
  * Created on 22/Jul/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package DataBeans;
 
@@ -10,44 +8,53 @@ package DataBeans;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
+
 public class InfoStudentGroup extends InfoObject{
 	
-		private Integer groupNumber;
-		private InfoShift infoShift;
-		private InfoGroupProperties infoGroupProperties;
+	private Integer groupNumber;
+	private InfoShift infoShift;
+	private InfoGroupProperties infoGroupProperties;
 		
-		/** 
-		 * Construtor
-		 */
-		public InfoStudentGroup() {}
+	/** 
+	 * Construtor
+	 */
+	public InfoStudentGroup() {}
 	
-		/** 
-		 * Construtor
-		 */
-		public InfoStudentGroup(Integer groupNumber,InfoGroupProperties infoGroupProperties,InfoShift infoShift) {
+	/** 
+	 * Construtor
+	 */
+	public InfoStudentGroup(Integer groupNumber,InfoGroupProperties infoGroupProperties,InfoShift infoShift) {
 			
-			this.groupNumber = groupNumber;
-			this.infoGroupProperties = infoGroupProperties;
-			this.infoShift = infoShift;
-		}
+		this.groupNumber = groupNumber;
+		this.infoGroupProperties = infoGroupProperties;
+		this.infoShift = infoShift;
+	}
 	
 	
 	
-		/**
-		 * @see java.lang.Object#equals(java.lang.Object)
-		 */
-		public boolean equals(Object arg0) {
-			boolean result = false;
-			if (arg0 instanceof InfoStudentGroup) {
-				result = (getInfoGroupProperties().equals(((InfoStudentGroup) arg0).getInfoGroupProperties()))&&
-						 (getGroupNumber().equals(((InfoStudentGroup) arg0).getGroupNumber()));
-			} 
-			return result;		
-		}
-
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object arg0) {
+		boolean result = false;
+		if (arg0 instanceof InfoStudentGroup) {
+			result = (getInfoGroupProperties().equals(((InfoStudentGroup) arg0).getInfoGroupProperties()))&&
+					 (getGroupNumber().equals(((InfoStudentGroup) arg0).getGroupNumber()));
+			if(getInfoShift()!=null)
+			{
+				result= result &&(getInfoShift().equals(((InfoStudentGroup) arg0).getInfoShift()));
+			}
+			else
+			if(((InfoStudentGroup) arg0).getInfoShift()!=null)
+			{
+				result = false;
+			}
+		} 
+		return result;		
+	}
+		
+		
 		/**
 		 * @see java.lang.Object#toString()
 		 */
