@@ -8,7 +8,7 @@
 	<bean:message key="button.delete"/>
 </html:link>
 
-<html:link page="/createSection.jsp">
+<html:link page="/prepareInsertSection.do">
 	<bean:message key="button.insert"/>
 </html:link>
 
