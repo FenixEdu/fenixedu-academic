@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.text.Collator;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -110,7 +112,11 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         for (final Iterator iterator = infoStudentCurricularPlans.iterator(); iterator.hasNext(); ) {
             final InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) iterator.next();
             final List infoEnrollmentGrades = infoStudentCurricularPlan.getInfoEnrolments();
-            Collections.sort(infoEnrollmentGrades, new BeanComparator("infoEnrollment.infoCurricularCourse.name"));
+			ComparatorChain comparatorChain = new ComparatorChain();
+			comparatorChain.addComparator(new BeanComparator("infoEnrollment.infoExecutionPeriod.infoExecutionYear.year"));
+			comparatorChain.addComparator(new BeanComparator("infoEnrollment.infoExecutionPeriod.semester"));
+			comparatorChain.addComparator(new BeanComparator("infoEnrollment.infoCurricularCourse.name", Collator.getInstance()));
+            Collections.sort(infoEnrollmentGrades, comparatorChain);
         }
     }
 
