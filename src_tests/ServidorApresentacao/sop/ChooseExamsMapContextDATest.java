@@ -100,13 +100,13 @@ public class ChooseExamsMapContextDATest extends TestCasePresentation {
 			executionDegreeListFromSession);
 		assertEquals(
 			"INFO_EXECUTION_DEGREE_LIST_KEY list size unexpected",
-			2,
+			4,
 			executionDegreeListFromSession.size());
 
 		ArrayList licenciaturas =
 			(ArrayList) request.getAttribute(SessionConstants.DEGREES);
 		assertNotNull("DEGREES not in session", licenciaturas);
-		assertEquals("DEGREES list size unexpected", 3, licenciaturas.size());
+		assertEquals("DEGREES list size unexpected", 5, licenciaturas.size());
 	}
 
 	public void testChoose() {
