@@ -142,7 +142,6 @@
    				         	 </table>
    				        </td>
    				        <td class="listClasses" >&nbsp;
-							<bean:define id="idInternal" name="infoExecutionDegree" property="idInternal"/>
 							<html:link page="/readCourseInformation.do"
 								       paramId="executionCourseId" 
 								       paramName="infoSiteCourseInformation"
