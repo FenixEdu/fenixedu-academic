@@ -18,7 +18,7 @@ using the MetadataManager.
    		jcd-alias="OJB/repository.xml"
    		default-connection="true"
    		platform="MySQL"
-   		jdbc-level="2.0"
+   		jdbc-level="1.0"
    		driver="com.mysql.jdbc.Driver"
    		protocol="jdbc"
    		subprotocol="mysql"
