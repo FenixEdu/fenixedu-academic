@@ -1,11 +1,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <h2><bean:message key="label.generateFiles"/></h2>
 <p>
 <b>
 	<bean:define id="fileToGenerate" name="file"/>
-	<bean:write name="fileToGenerate" />
-	
 	<logic:present name="fileToGenerate">
 		<logic:notEmpty name="fileToGenerate">
 			<logic:equal name="fileToGenerate" value="sibs">
