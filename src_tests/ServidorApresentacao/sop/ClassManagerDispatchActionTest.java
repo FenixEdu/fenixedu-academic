@@ -6,8 +6,6 @@
  */
 package ServidorApresentacao.sop;
 
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +25,7 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.TestCasePresentationSopPortal;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.TipoCurso;
 
 /**
  * @author João Mota
@@ -52,7 +51,7 @@ public class ClassManagerDispatchActionTest
 
 	
 	protected String getServletConfigFile() {
-			return "/WEB-INF/tests/web-sop.xml";
+			return "/WEB-INF/web.xml";
 		}
 	public void testUnAuthorizedCreateClass() {
 
@@ -84,9 +83,6 @@ public class ClassManagerDispatchActionTest
 		//sets needed objects to session/request
 		addRequestParameter("method", "createClass");
 
-		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-
 		setAuthorizedUser();
 
 		getSession().setAttribute(
@@ -101,7 +97,7 @@ public class ClassManagerDispatchActionTest
 					"plano1",
 					new InfoDegree(
 						"LEIC",
-						"Licenciatura de Engenharia Informatica e de Computadores")),
+						"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING)),
 				new InfoExecutionYear("2002/2003")));
 		//fills the form
 		addRequestParameter("className", "10501");
@@ -134,7 +130,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -175,7 +171,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -227,7 +223,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -278,7 +274,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -319,7 +315,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -374,7 +370,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -449,7 +445,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree infoDegree =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
 		InfoExecutionDegree infoExecutionDegree =
@@ -473,7 +469,7 @@ public class ClassManagerDispatchActionTest
 		verifyNoActionErrors();
 		//		verify correct Forward
 
-		verifyForwardPath("/ClassesManagerDA.do?method=listClasses");
+		verifyForward("listClasses");
 	}
 
 	public void testUnAuthorizedViewClass() {
@@ -512,7 +508,7 @@ public class ClassManagerDispatchActionTest
 		InfoDegree iL =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+				"Licenciatura de Engenharia Informatica e de Computadores", TipoCurso.LICENCIATURA_STRING);
 		InfoExecutionDegree iLE =
 			new InfoExecutionDegree(
 				new InfoDegreeCurricularPlan("plano1", iL),
@@ -547,8 +543,6 @@ public class ClassManagerDispatchActionTest
 		HttpSession session,
 		List existingAttributesList,
 		List nonExistingAttributesList) {
-		Enumeration attNames = session.getAttributeNames();
-
 		verifySessionAttributes(session, existingAttributesList, true);
 		verifySessionAttributes(session, nonExistingAttributesList, false);
 	}
