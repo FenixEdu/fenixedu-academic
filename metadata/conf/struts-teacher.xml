@@ -460,6 +460,15 @@
        <forward name="showTable" path="df.teacher.showShiftsPercentageTable"/>
         <forward name="acceptSuccess" path="df.page.viewProfessorships"/>
 	</action>	
+	<action 
+		input="/"
+		path="/showStudentsEnrolledInExam"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.ShowStudentsEnrolledInExamAction"
+		  >
+       <forward name="showStudents" path="showStudentsEnrolledInExam.jsp"/>
+       
+	</action>	
 	<!-- End of Actions for Teacher credits -->	
 	</action-mappings>
 
