@@ -300,7 +300,7 @@
     </path>
 
 	<!-- Access the classpath as a property -->
-    <property 	name="runtime.classpath" refid="runtime-classpath"/>
+    <property 	name="runtime-classpath" refid="runtime-classpath"/>
 
 	<target name="generate-dataset"
 			description="Generates a dataset using the parameters specified in SmartDataSetGenerator.properties"
@@ -966,5 +966,22 @@
             </classpath>
         </junit>
 	</target>
-		
+
+	
+	
+	
+	<target name="load-db-for-curicula-course-enrollment-test" description="" depends="compile-app-server">
+		<java classname="UtilTests.enrollment.LoadDBForCurricularCourseEnrollmentTest" fork="true">
+			<classpath>
+				<pathelement path="${build.app-server}"/>
+            	<fileset dir="${env.JBOSS_HOME}/client">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+	</target>
+
 </project>
