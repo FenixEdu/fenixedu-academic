@@ -21,6 +21,16 @@
 	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
 </ul>
 
+<br>
+<logic:present name="basic">
+		<h2><font color="#FF9966"><bean:message key="label.manager.curricularCourse.message.basic"/></font></h2>
+</logic:present>
+
+<logic:notPresent name="basic">
+		<h2><font color="#FF9966"><bean:message key="label.manager.curricularCourse.message.non.basic"/></font></h2>
+</logic:notPresent>
+
+
 <span class="error"><html:errors/></span>
 	
 	<h3><bean:message key="label.manager.executionCourses"/></h3>

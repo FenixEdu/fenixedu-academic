@@ -107,19 +107,29 @@
 					<bean:define id="executionYear" name="executionDegree" property="infoExecutionYear"/>				
 					<td class="listClasses"><bean:write name="executionYear" property="year"/>
 					</td>
-					<bean:define id="coordinator" name="executionDegree" property="infoCoordinator"/>
-					<bean:define id="person" name="coordinator" property="infoPerson"/>
-					<td class="listClasses"><bean:write name="person" property="nome"/>
+					<td class="listClasses">
+						<logic:notPresent name="executionDegree" property="infoCoordinator">
+							NA
+						</logic:notPresent>
+						<logic:present name="executionDegree" property="infoCoordinator">
+							<bean:write name="executionDegree" property="infoCoordinator.infoPerson.nome"/>
+						</logic:present>
 					</td>
-					<% String printing = "---"; %>
-					<logic:notEmpty name="executionDegree" property="temporaryExamMap">
-						<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
-						<% if(tempExamMap.toString() == "true")
-					   			printing = "Sim";
-					   	   else
-					   	   		printing = "Não"; %>
-					</logic:notEmpty>
-					<td class="listClasses"><%= printing %>
+					<td class="listClasses">
+						<logic:notEmpty name="executionDegree" property="temporaryExamMap">
+							<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
+							<logic:present name="tempExamMap">
+								<logic:equal name="tempExamMap" value="true">
+									Sim
+								</logic:equal> 
+								<logic:notEqual name="tempExamMap" value="true">
+									Não
+								</logic:notEqual>
+							</logic:present>
+						</logic:notEmpty>
+						<logic:notPresent name="tempExamMap">
+							---
+						</logic:notPresent>	
 					</td>
 					<td>
 						<html:link page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message key="label.edit"/></html:link>

@@ -55,13 +55,13 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		dynaForm.set("name", oldInfoCurricularCourse.getName());
 		dynaForm.set("code", oldInfoCurricularCourse.getCode());
 
-		if (oldInfoCurricularCourse.getType() != null)
-			dynaForm.set("type", oldInfoCurricularCourse.getType().toString());
+		dynaForm.set("type", oldInfoCurricularCourse.getType().getCurricularCourseType().toString());
+		System.out.println("type"+oldInfoCurricularCourse.getType().getCurricularCourseType());
 
-		if (oldInfoCurricularCourse.getMandatory() != null)
+//		if (oldInfoCurricularCourse.getMandatory() != null)
 			dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
 
-		if (oldInfoCurricularCourse.getBasic() != null)
+//		if (oldInfoCurricularCourse.getBasic() != null)
 			dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
 
 		return mapping.findForward("editCurricularCourse");
@@ -88,28 +88,26 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		newInfoCurricularCourse.setCode(code);
 		newInfoCurricularCourse.setIdInternal(oldCurricularCourseId);
 
-		if (typeString.compareTo("") != 0) {
-			CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
-			newInfoCurricularCourse.setType(type);
-		}
+		CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
+		newInfoCurricularCourse.setType(type);
 
-		if (mandatoryString.compareTo("") != 0) {
+//		if (mandatoryString.compareTo("") != 0) {
 			Boolean mandatory = new Boolean(mandatoryString);
 			newInfoCurricularCourse.setMandatory(mandatory);
-		}
+		
 
-		if (basicString.compareTo("") != 0) {
+//		if (basicString.compareTo("") != 0) {
 			Boolean basic = new Boolean(basicString);
 			newInfoCurricularCourse.setBasic(basic);
-		}
+		
 
 		Object args[] = { newInfoCurricularCourse };
 		GestorServicos manager = GestorServicos.manager();
-		
+
 		try {
 			manager.executar(userView, "EditCurricularCourse", args);
 		} catch (NonExistingServiceException ex) {
-							throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
+			throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {

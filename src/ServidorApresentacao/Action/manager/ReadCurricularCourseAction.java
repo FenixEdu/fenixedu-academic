@@ -45,8 +45,8 @@ public class ReadCurricularCourseAction extends FenixAction {
 		InfoCurricularCourse infoCurricularCourse = null;
 
 		try {
-				infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
-				
+			infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
+
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
 		} catch (FenixServiceException fenixServiceException) {
@@ -56,8 +56,8 @@ public class ReadCurricularCourseAction extends FenixAction {
 		// in case the curricular course really exists
 		List executionCourses = null;
 		try {
-				executionCourses = (List) manager.executar(userView, "ReadExecutionCoursesByCurricularCourse", args);
-				
+			executionCourses = (List) manager.executar(userView, "ReadExecutionCoursesByCurricularCourse", args);
+
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
@@ -66,18 +66,20 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 		List curricularCourseScopes = new ArrayList();
 		try {
-				curricularCourseScopes = (List) manager.executar(userView, "ReadCurricularCourseScopes", args);
-				
+			curricularCourseScopes = (List) manager.executar(userView, "ReadCurricularCourseScopes", args);
+
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		if(curricularCourseScopes != null) {
+		if (curricularCourseScopes != null) {
 			ComparatorChain comparatorChain = new ComparatorChain();
 			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
 			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
 			Collections.sort(curricularCourseScopes, comparatorChain);
 		}
 
+		if (infoCurricularCourse.getBasic().booleanValue())
+			request.setAttribute("basic", "");
 		request.setAttribute("executionCoursesList", executionCourses);
 		request.setAttribute("infoCurricularCourse", infoCurricularCourse);
 		request.setAttribute("curricularCourseScopesList", curricularCourseScopes);

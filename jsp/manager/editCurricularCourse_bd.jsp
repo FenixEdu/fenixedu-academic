@@ -32,7 +32,7 @@
 				<bean:message key="label.manager.curricularCourse.code"/>
 			</td>
 			<td>
-				<html:text size="60" property="code" />
+				<html:text size="12" property="code" />
 			</td>
 			
 		</tr>
@@ -43,7 +43,6 @@
 			</td>
 			<td>
 				<html:select property="type">
-				<html:option value=""/>
 				<html:option key="option.curricularCourse.normal" value="1"/>
     			<html:option key="option.curricularCourse.optional" value="2"/>
     			<html:option key="option.curricularCourse.project" value="3"/>
@@ -63,11 +62,7 @@
 				<bean:message key="message.manager.mandatory"/>
 			</td>
 			<td>
-				<html:select property="mandatory">
-				<html:option value=""/>
-				<html:option key="option.manager.true" value="true"/>
-    			<html:option key="option.manager.false" value="false"/>
-    			</html:select>
+				<html:checkbox property="mandatory" value ="true"/>
 			</td>
 		</tr>
 		<tr>
@@ -75,11 +70,7 @@
 				<bean:message key="message.manager.basic"/>
 			</td>
 			<td>
-				<html:select property="basic">
-				<html:option value=""/>
-				<html:option key="option.manager.true" value="true"/>
-    			<html:option key="option.manager.false" value="false"/>
-    			</html:select>
+				<html:checkbox property="basic" value ="true"/>
 			</td>
 		</tr>
 	</table>
