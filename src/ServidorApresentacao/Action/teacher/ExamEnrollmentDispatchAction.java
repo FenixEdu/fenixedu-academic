@@ -163,6 +163,10 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		String enrollmentBeginHour = (String) examEnrollmentForm.get("enrollmentBeginTimeFormatted");
 		String enrollmentEndDay = (String) examEnrollmentForm.get("enrollmentEndDayFormatted");
 		String enrollmentEndHour = (String) examEnrollmentForm.get("enrollmentEndTimeFormatted");
+		if (enrollmentBeginDay.length() == 0 || enrollmentBeginHour.length() == 0 || enrollmentEndDay.length() == 0 || enrollmentEndHour.length() == 0 ) {
+			setErrorMessage(request, "error.form.incomplete");
+			return mapping.getInputForward();
+		}
 
 		String[] enrollmentBeginDayArray = enrollmentBeginDay.split("/");
 		String[] enrollmentBeginHourArray = enrollmentBeginHour.split(":");
