@@ -53,7 +53,10 @@ public class EditCurricularCourseScope implements IServico {
 			IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
 			persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();			
 			
-			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(new CurricularCourseScope(oldCurricularCourseScopeId), false);
+			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+			curricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
+			
+			oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
 			ICurricularCourse curricularCourse = oldCurricularCourseScope.getCurricularCourse();	
 				
 						
@@ -68,7 +71,6 @@ public class EditCurricularCourseScope implements IServico {
 			ICurricularSemester curricularSemester = new CurricularSemester();
 			curricularSemester.setIdInternal(curricularSemesterId);
 			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(curricularSemester, false);
-//			System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd"+ newCurricularSemester+"DDDDD"+newBranch+"DDDDD"+curricularCourse);
 		
 			ICurricularCourseScope newCurricularCourseScope = 
 			        persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, newCurricularSemester, newBranch );
@@ -88,8 +90,7 @@ public class EditCurricularCourseScope implements IServico {
 				oldCurricularCourseScope.setBranch(newBranch);
 				//it already includes the curricular year
 				oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
-				System.out.println("2222222222222222CurricularCourseScopeQUE ESCREVEU NA BD"+oldCurricularCourseScope);
-				
+					
 				persistentCurricularCourseScope.simpleLockWrite(oldCurricularCourseScope);
 				return null;
 			}
