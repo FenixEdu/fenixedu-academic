@@ -50,6 +50,7 @@ import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
+import Dominio.IRole;
 import Dominio.ISala;
 import Dominio.ISection;
 import Dominio.ISite;
