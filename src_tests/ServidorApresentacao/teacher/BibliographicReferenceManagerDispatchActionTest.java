@@ -76,7 +76,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "create");
+		addRequestParameter("method", "Inserir");
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
@@ -114,7 +114,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "create");
+		addRequestParameter("method", "Inserir");
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
@@ -153,7 +153,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "view");
+		addRequestParameter("method", "Visualizar");
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
@@ -189,7 +189,7 @@ public class BibliographicReferenceManagerDispatchActionTest
 		//set request path		
 		setRequestPathInfo("/teacher", "/bibliographicReferenceManager");
 		//sets needed objects to session/request
-		addRequestParameter("method", "delete");
+		addRequestParameter("method", "Apagar");
 		addRequestParameter("infoBibliographicReferenceIndex", "1");
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 		infoExecutionCourse.setNome("Trabalho Final de Curso I");
