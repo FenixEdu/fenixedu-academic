@@ -1522,15 +1522,6 @@
         </filterChains>
     </service>
     <service>
-        <name>EditCurriculum</name>
-        <implementationClass>ServidorAplicacao.Servico.manager.EditCurriculum</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>DeleteBranches</name>
         <implementationClass>ServidorAplicacao.Servico.manager.DeleteBranches</implementationClass>
         <description/>
