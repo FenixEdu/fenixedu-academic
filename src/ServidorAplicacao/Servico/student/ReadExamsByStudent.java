@@ -132,7 +132,7 @@ public class ReadExamsByStudent implements IServico {
 				//				}
 
 				List attends =
-					sp.getIFrequentaPersistente().readByStudentId(
+					sp.getIFrequentaPersistente().readByStudentNumber(
 						student.getNumber());
 				Iterator examsToEnrollIterator = attends.iterator();
 				while (examsToEnrollIterator.hasNext()) {

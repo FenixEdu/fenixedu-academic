@@ -152,7 +152,7 @@
 	  <action name="studentShiftEnrolmentForm"
         type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
         path="/studentShiftEnrolmentManager"
-        input="/studentShiftEnrolmentManager.do?method=initializeEnrolment" 
+        input="/studentShiftEnrolmentManager.do?method=initializeEnrolment&amp;firstTime=yes" 
         parameter="method"
         scope="request"
         validate="false">

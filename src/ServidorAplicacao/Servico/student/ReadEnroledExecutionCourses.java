@@ -102,7 +102,7 @@ public class ReadEnroledExecutionCourses implements IServico {
 
 			IStudent student = persistentStudent.readByUsername(username);
 			List allAttend =
-				persistentAttend.readByStudentId(student.getNumber());
+				persistentAttend.readByStudentNumber(student.getNumber());
 
 			Iterator iter = allAttend.iterator();
 			allInfoExecutionCourses = new ArrayList();

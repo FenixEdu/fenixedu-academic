@@ -73,7 +73,7 @@ public class ReadShiftEnrolment implements IServico {
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      List frequencies = sp.getIFrequentaPersistente().readByStudentId(infoStudent.getNumber());
+      List frequencies = sp.getIFrequentaPersistente().readByStudentNumber(infoStudent.getNumber());
       for(int i = 0; i < frequencies.size(); i++) {
 		IFrequenta frequent = (IFrequenta) frequencies.get(i);
 		IDisciplinaExecucao de = frequent.getDisciplinaExecucao();

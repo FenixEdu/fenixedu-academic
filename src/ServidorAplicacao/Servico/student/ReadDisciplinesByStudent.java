@@ -52,7 +52,7 @@ public class ReadDisciplinesByStudent implements IServico {
 			IStudent student = sp.getIPersistentStudent().readByNumero(number,degreeType);
 			
 			if (student != null) {
-				List frequencies = sp.getIFrequentaPersistente().readByStudentId(number);
+				List frequencies = sp.getIFrequentaPersistente().readByStudentNumber(number);
 				for(int i = 0; i < frequencies.size(); i++) {
 					IFrequenta frequent = (IFrequenta) frequencies.get(i);
 					IDisciplinaExecucao executionCourse = frequent.getDisciplinaExecucao();
