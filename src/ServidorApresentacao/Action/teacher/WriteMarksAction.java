@@ -47,12 +47,13 @@ public class WriteMarksAction extends DispatchAction {
 		List marksList = null;
 		
 		//TODO: transform form into list with student's number and students's mark
-
 		Integer objectCode = getObjectCode(request);
 		Integer examCode = getExamCode(request);
 
 		IUserView userView = (IUserView) session.getAttribute("UserView");
-		Object[] args = { objectCode, examCode, };
+
+		//TODO: put list as argument for service
+		Object[] args = { objectCode, examCode };
 		GestorServicos manager = GestorServicos.manager();
 		TeacherAdministrationSiteView siteView = null;
 		try {

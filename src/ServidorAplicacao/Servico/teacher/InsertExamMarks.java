@@ -93,11 +93,12 @@ public class InsertExamMarks implements IServico {
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			site = persistentSite.readByExecutionCourse(executionCourse);
 
-			List attendList = persistentAttend.readByExecutionCourse(executionCourse);
-
 			exam = new Exam(examCode);
 			exam = (IExam) persistentExam.readByOId(exam, false);
 
+			List attendList = persistentAttend.readByExecutionCourse(executionCourse);
+
+			infoMarksList = new ArrayList();
 			marksErrors = new ArrayList();
 			boolean foundStudent = false;
 			ListIterator iterMarks = examMarks.listIterator();
@@ -105,29 +106,29 @@ public class InsertExamMarks implements IServico {
 				InfoMark infoMark = (InfoMark) iterMarks.next();
 
 				if (!isValidMark(infoMark)) {
-					marksErrors.add(infoMark);	
-//						new ActionError("errors.invalidMark", infoMark.getMark(), infoMark.getInfoFrequenta().getAluno().getNumber()));
-				}
-
-				IMark mark = new Mark();
-				ListIterator iterAttend = attendList.listIterator();
-				while (iterAttend.hasNext()) {
-					IFrequenta attend = (IFrequenta) iterAttend.next();
-					if (attend.getAluno().getNumber().equals(infoMark.getInfoFrequenta().getAluno().getNumber())) {
-						foundStudent = true;
-
-						mark.setAttend(attend);
-						mark.setExam(exam);
-						mark.setMark(infoMark.getMark());
-
-						persistentMark.lockWrite(mark);
-					}
-				}
-				if (!foundStudent) {
 					marksErrors.add(infoMark);
 				} else {
-					infoMarksList.add(Cloner.copyIMark2InfoMark(mark));
-					foundStudent = false;
+
+					IMark mark = new Mark();
+					ListIterator iterAttend = attendList.listIterator();
+					while (iterAttend.hasNext()) {
+						IFrequenta attend = (IFrequenta) iterAttend.next();
+						if (attend.getAluno().getNumber().equals(infoMark.getInfoFrequenta().getAluno().getNumber())) {
+							foundStudent = true;
+
+							mark.setAttend(attend);
+							mark.setExam(exam);
+							mark.setMark(infoMark.getMark());
+
+							persistentMark.lockWrite(mark);
+						}
+					}
+					if (!foundStudent) {
+						marksErrors.add(infoMark);
+					} else {
+						infoMarksList.add(Cloner.copyIMark2InfoMark(mark));
+						foundStudent = false;
+					}
 				}
 			}
 		} catch (ExcepcaoPersistencia ex) {
@@ -148,7 +149,7 @@ public class InsertExamMarks implements IServico {
 		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
 		return siteView;
 	}
-	
+
 	private boolean isValidMark(InfoMark infoMark) {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			infoMark.getInfoFrequenta().getEnrolment().getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan();
