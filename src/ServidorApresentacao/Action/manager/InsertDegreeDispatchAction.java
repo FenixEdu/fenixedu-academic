@@ -3,7 +3,6 @@
  */
 package ServidorApresentacao.Action.manager;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,27 +70,18 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 			throw new FenixActionException(e.getMessage());
 		}
 
-		try {	
-				List degrees = null;
-				degrees = (List) manager.executar(userView, "ReadDegreesService", null);
-				if (serviceResult != null) {
-					ActionErrors actionErrors = new ActionErrors();
-					ActionError error = null;
-					if(serviceResult.get(0) != null) {
-						error = new ActionError("message.existingDegreeCode", serviceResult.get(0));
-						actionErrors.add("message.existingDegreeCode", error);
-					}	
-					if(serviceResult.get(1) != null)
-					{
-						error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
-						actionErrors.add("message.existingDegreeName", error);
-					}			
-					saveErrors(request, actionErrors);
-				}
-				Collections.sort(degrees);
-				request.setAttribute(SessionConstants.INFO_DEGREES_LIST,degrees);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+		if(serviceResult != null) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			if(serviceResult.get(0) != null) {
+				error = new ActionError("message.existingDegreeCode", serviceResult.get(0));
+				actionErrors.add("message.existingDegreeCode", error);
+			}	
+			if(serviceResult.get(1) != null) {
+				error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
+				actionErrors.add("message.existingDegreeName", error);
+			}			
+			saveErrors(request, actionErrors);
 		}
 		return mapping.findForward("readDegrees");
 	}			

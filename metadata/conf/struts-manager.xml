@@ -120,7 +120,7 @@
 		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
         validate="true">  
        <forward name="insertDegree" path="df.page.insert-degree"/>
-       <forward name="readDegrees" path="df.page.read-degrees"/>      	      
+       <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>	
 	
 	   		     
@@ -146,7 +146,7 @@
 		type="ServidorApresentacao.Action.manager.EditDegreeDispatchAction"
         validate="true">  
        <forward name="editDegree" path="df.page.edit-degree"/>
-       <forward name="readDegrees" path="df.page.read-degrees"/>      	      
+       <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>
       
       <!-- Action for deleting degreeCurricularPlans --> 
