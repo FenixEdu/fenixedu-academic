@@ -22,6 +22,21 @@ public class Announcement implements IAnnouncement {
 	 * Construtor
 	 */
 	public Announcement() {}
+	
+	/** 
+		 * Construtor
+		 */
+		public Announcement(Integer internalCode, String title, Date date, 
+			Date lastModifiedDate, String information, ISite site, Integer keySite) {
+			
+			this.internalCode = internalCode;
+			this.keySite = keySite;
+			this.title = title;
+			this.creationDate = date;
+			this.lastModifiedDate = lastModifiedDate;
+			this.information = information;
+			this.site = site;
+		}
 
 	/** 
 	 * Construtor
