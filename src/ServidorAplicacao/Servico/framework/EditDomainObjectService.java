@@ -23,61 +23,76 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * @author jpvl
+ * @author Barbosa
  */
 public abstract class EditDomainObjectService implements IServico
 {
-    public Boolean run(Integer objectId, InfoObject infoObject) throws FenixServiceException
+
+    /**
+	 * Checks if the objectToEdit can be created or update
+	 * 
+	 * @param objectToEdit
+	 * @param existingDomainObject
+	 * @return
+	 */
+    private boolean canCreate(IDomainObject objectToEdit, IDomainObject existingDomainObject)
     {
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentObject persistentObject = getIPersistentObject(sp);
-            IDomainObject oldDomainObject = clone2DomainObject(infoObject);
+        /*
+		 * Not new and exist on database and object ids are equal OR is a new object and doesn't exist
+		 * on database OR is not new and doesn't exist on database (unique changed)
+		 */
 
-            if (canCreate(oldDomainObject, sp))
-            {
-                /**
-                 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
-                 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
-                 * Without this two lines the test above doesn't run.
-                 */
-                sp.confirmarTransaccao();
-                sp.iniciarTransaccao();
-                /************************************************************************************************/
-
-                IDomainObject newDomainObject = (IDomainObject) oldDomainObject.getClass().newInstance();
-                newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
-                persistentObject.simpleLockWrite(newDomainObject);
-                PropertyUtils.copyProperties(newDomainObject, oldDomainObject);
-                fillAssociatedObjects(newDomainObject, persistentObject);
-                doAfterLock(newDomainObject, infoObject, sp);
-                return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        } catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        } catch (Exception e)
-        {
-            throw new FenixServiceException(e);
-        }
+        return (
+            !isNew(objectToEdit)
+                && ((existingDomainObject != null)
+                    && (objectToEdit.getIdInternal().equals(existingDomainObject.getIdInternal())))
+                || ((existingDomainObject == null) && isNew(objectToEdit))
+                || ((!isNew(objectToEdit) && (existingDomainObject == null))));
     }
 
     /**
-     * @param newDomainObject
-     * @param infoObject
-     * @param sp
-     */
-    protected void doAfterLock(IDomainObject newDomainObject,InfoObject infoObject,ISuportePersistente sp)
+	 * This method invokes the Cloner to convert from InfoObject to IDomainObject
+	 * 
+	 * @param infoObject
+	 * @return
+	 */
+    protected abstract IDomainObject clone2DomainObject(InfoObject infoObject);
+
+    /**
+	 * By default this method does nothing
+	 * 
+	 * @param newDomainObject
+	 * @param infoObject
+	 * @param sp
+	 */
+    protected void doAfterLock(
+        IDomainObject domainObjectLocked,
+        InfoObject infoObject,
+        ISuportePersistente sp)
         throws FenixServiceException
     {
-        return; //by default this method does nothing
+
     }
 
     /**
-     * @param newDomainObject
-     * @param sp
-     */
+	 * By default this method does nothing
+	 * 
+	 * @param objectLocked
+	 * @param infoObject
+	 * @param sp
+	 */
+    protected void doBeforeLock(
+        IDomainObject domainObjectToLock,
+        InfoObject infoObject,
+        ISuportePersistente sp)
+        throws FenixServiceException
+    {
+    }
+
+    /**
+	 * @param newDomainObject
+	 * @param sp
+	 */
     private void fillAssociatedObjects(IDomainObject newDomainObject, IPersistentObject po)
         throws FenixServiceException
     {
@@ -96,32 +111,11 @@ public abstract class EditDomainObjectService implements IServico
                     PropertyUtils.setProperty(newDomainObject, entry.getKey().toString(), o);
                 }
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw new FenixServiceException(e.getMessage());
         }
-    }
-
-    /**
-     * By default returns true
-     * 
-     * @param domainObject
-     * @return
-     */
-    protected boolean canCreate(IDomainObject newDomainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
-    {
-        IDomainObject existingDomainObject = readObjectByUnique(newDomainObject, sp);
-        /**
-		 * não é novo e existe na bd e os ids são iguais || não existe na bd e é novo || não é novo e
-		 * não existe na bd
-		 */
-        return (
-            !isNew(newDomainObject)
-                && ((existingDomainObject != null)
-                    && (newDomainObject.getIdInternal().equals(existingDomainObject.getIdInternal())))
-                || ((existingDomainObject == null) && isNew(newDomainObject))
-                || ((!isNew(newDomainObject) && (existingDomainObject == null))));
     }
 
     /**
@@ -144,22 +138,72 @@ public abstract class EditDomainObjectService implements IServico
     }
 
     /**
-     * This method invokes the Cloner to convert from InfoObject to IDomainObject
-     * 
-     * @param infoObject
-     * @return
-     */
-    protected abstract IDomainObject clone2DomainObject(InfoObject infoObject);
-
-    /**
-     * This method invokes a persistent method to read an IDomainObject from database
-     * 
-     * @param domainObject
-     * @return
-     */
+	 * This method invokes a persistent method to read an IDomainObject from database
+	 * 
+	 * @param domainObject
+	 * @return By default returns null. When there is no unique in domainObject the object that we want
+	 *              to create never exists.
+	 */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
         return null;
+    }
+
+    /**
+	 * Executes the service
+	 * 
+	 * @param objectId
+	 * @param infoObject
+	 * @return @throws
+	 *              FenixServiceException
+	 * 
+	 * TODO Throw exceptions and remove objectId from method signature.
+	 */
+    public Boolean run(Integer objectId, InfoObject infoObject) throws FenixServiceException
+    {
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentObject persistentObject = getIPersistentObject(sp);
+            IDomainObject objectToEdit = clone2DomainObject(infoObject);
+
+            IDomainObject objectFromDatabase = readObjectByUnique(objectToEdit, sp);
+
+            if (canCreate(objectToEdit, objectFromDatabase))
+            {
+                IDomainObject domainObject = null;
+
+                if (isNew(objectToEdit))
+                {
+                    domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
+                }
+                else
+                {
+                    domainObject = objectFromDatabase == null ? objectToEdit : objectFromDatabase;
+                }
+                doBeforeLock(domainObject, infoObject, sp);
+
+                persistentObject.simpleLockWrite(domainObject);
+                PropertyUtils.copyProperties(domainObject, objectToEdit);
+
+                fillAssociatedObjects(domainObject, persistentObject);
+                doAfterLock(domainObject, infoObject, sp);
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+        catch (Exception e)
+        {
+            if (e instanceof FenixServiceException)
+            {
+                throw (FenixServiceException) e;
+            }
+            throw new FenixServiceException(e);
+        }
     }
 }
