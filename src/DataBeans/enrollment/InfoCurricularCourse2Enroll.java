@@ -17,22 +17,22 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject {
 
     private InfoCurricularCourse infoCurricularCourse;
 
-    private CurricularCourseEnrollmentType enrollmentRuleType;
+    private CurricularCourseEnrollmentType enrollmentType;
 
     /**
      * @return Returns the enrollmentRuleType.
      */
-    public CurricularCourseEnrollmentType getEnrollmentRuleType() {
-        return enrollmentRuleType;
+    public CurricularCourseEnrollmentType getEnrollmentType() {
+        return enrollmentType;
     }
 
     /**
      * @param enrollmentRuleType
      *            The enrollmentRuleType to set.
      */
-    public void setEnrollmentRuleType(
+    public void setEnrollmentType(
             CurricularCourseEnrollmentType enrollmentRuleType) {
-        this.enrollmentRuleType = enrollmentRuleType;
+        this.enrollmentType = enrollmentRuleType;
     }
 
     /**
@@ -53,7 +53,7 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject {
 
     public void copyFromDomain(CurricularCourse2Enroll curricularCourse2Enroll) {
         if (curricularCourse2Enroll != null) {
-            setEnrollmentRuleType(curricularCourse2Enroll
+            setEnrollmentType(curricularCourse2Enroll
                     .getEnrollmentType());
         }
     }
