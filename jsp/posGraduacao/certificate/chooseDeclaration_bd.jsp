@@ -20,7 +20,9 @@
          </td>
        </tr>
 
-       <!-- Graduation Type -->
+	
+
+      <!-- Graduation Type --> 
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.graduationType"/> </td>
          <td>

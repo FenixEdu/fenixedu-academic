@@ -28,6 +28,9 @@
  
    </table>
 
+
+
+
 	<br>
     <html:link page="/printDeclarationPage.do" target="_blank">
    		<bean:message key="link.masterDegree.administrativeOffice.print" />

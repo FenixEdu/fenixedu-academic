@@ -20,6 +20,7 @@ import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
@@ -137,5 +138,33 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }   
+    
+	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber , TipoCurso degreeType ,Specialization specialization) throws ExcepcaoPersistencia {
+		   try {
+			   IStudentCurricularPlan studentCurricularPlan = null;
+			   String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			   oqlQuery += " where student.number = $1" ;
+			   oqlQuery += " and student.degreeType = $2";
+			   oqlQuery += " and currentState = $3" ;
+			   oqlQuery += " and specialization = $4" ;
+
+			   query.create(oqlQuery);
+			   query.bind(studentNumber);
+			   query.bind(degreeType);
+			   query.bind(new Integer(StudentCurricularPlanState.ACTIVE));
+			   query.bind(specialization.getSpecialization());
+            
+            
+			   List result = (List) query.execute();
+			   lockRead(result);
+			   if (result.size() != 0) 
+				   studentCurricularPlan = (IStudentCurricularPlan) result.get(0);
+			   return studentCurricularPlan;
+		   } catch (QueryException ex) {
+			   throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		   }
+	   }
+
+
 
 }

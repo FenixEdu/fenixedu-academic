@@ -44,6 +44,7 @@ import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
@@ -348,6 +349,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 	}
 	
 	public void testReadStudentActiveCurricularPlan(){
+		System.out.println("- Test 10 : Read Student Active Curricular Plan ");
 		IStudentCurricularPlan studentCurricularPlan = null;
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -357,7 +359,18 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			ex.printStackTrace(System.out);
 			fail("Reading Actual Student Curricular Plan");
 		}
-		assertNotNull("Student curricular plan must be not null!",studentCurricularPlan);
+		assertNotNull("1 - Student curricular plan must be not null!",studentCurricularPlan);
+
+		try {
+			persistentSupport.iniciarTransaccao();
+
+			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentAndSpecializationCurricularPlan(new Integer(41329),new TipoCurso(TipoCurso.MESTRADO),new Specialization(Specialization.MESTRADO));
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace(System.out);
+			fail("Reading Actual Student Curricular Plan");
+		}
+		assertNotNull("2 - Student curricular plan must be not null!",studentCurricularPlan);
 	}
 
 }

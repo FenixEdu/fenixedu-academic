@@ -15,6 +15,7 @@ import java.util.List;
 
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Specialization;
 import Util.TipoCurso;
 
 public interface IStudentCurricularPlanPersistente extends IPersistentObject {
@@ -23,4 +24,5 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
     void delete(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAllFromStudent(int studentNumber /*, StudentType studentType */) throws ExcepcaoPersistencia;
+	IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(Integer studentNumber, TipoCurso degreeType, Specialization specialization ) throws ExcepcaoPersistencia;
 }

@@ -6,26 +6,36 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" scope="session" />
-    <table width="100%" height="100%" border="1">
+    <table width="100%">
+	  <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 	  <tr> 
-        <td align="right" valign="bottom"> <b>ALUNO Nº: </b> 
+	  	 <td width="5%">&nbsp;</td>
+	     <td align="right" valign="bottom"> <b>ALUNO Nº: </b> 
          <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> 
-        </td>
+         </td>
+         <td width="5%">&nbsp;</td>
       </tr>
-	  <tr> 
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+	  <tr> <td>&nbsp;</td>
         <td align="center" > <b>DECLARAÇÃO</b></td>
+           <td>&nbsp;</td>
       </tr>
- 
+ 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ 	<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 
-	<%-- The Original Guide --%>
+	<%-- The Original Declaration --%>
 	<jsp:include page="./declarationTemplate1.jsp" flush="true" />
 
-	<%-- The Original Guide --%> 
-	<%-- <jsp:include page="./declarationTemplate1.jsp" flush="true" /> --%>
-
-
-   <logic:equal name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="Mestrado">
+   <logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
     	<%-- Candidate Information if necessary --%>
    		<jsp:include page="./informationTemplate1.jsp" flush="true" />
 	</logic:equal >	
 
+	<jsp:include page="./informationTemplate2.jsp" flush="true" />
+	  	
+	</table>

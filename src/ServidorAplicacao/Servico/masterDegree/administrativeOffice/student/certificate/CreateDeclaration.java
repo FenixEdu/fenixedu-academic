@@ -19,6 +19,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.Specialization;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -49,7 +50,7 @@ public class CreateDeclaration implements IServico {
 		return "CreateDeclaration";
 	}
 
-	public InfoStudentCurricularPlan run(InfoStudent infoStudent)
+	public InfoStudentCurricularPlan run(InfoStudent infoStudent, Specialization specialization)
 		throws Exception {
 
 		IStudentCurricularPlan studentCurricularPlan = null;
@@ -65,9 +66,10 @@ public class CreateDeclaration implements IServico {
 			studentCurricularPlan =
 				sp
 					.getIStudentCurricularPlanPersistente()
-					.readActiveStudentCurricularPlan(
+					.readActiveStudentAndSpecializationCurricularPlan(
 					infoStudent.getNumber(),
-					infoStudent.getDegreeType());
+					infoStudent.getDegreeType(), 
+					specialization);
 					
 	
 		} catch (ExistingPersistentException ex) {

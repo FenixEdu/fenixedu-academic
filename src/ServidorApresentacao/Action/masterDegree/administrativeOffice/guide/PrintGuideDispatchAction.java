@@ -70,7 +70,6 @@ public class PrintGuideDispatchAction extends DispatchAction {
 
 			Locale locale = new Locale("pt", "PT");
 			Date date = new Date();
-//System.out.println("Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date));
 
 			String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 			session.setAttribute(SessionConstants.DATE, formatedDate);			

@@ -1,7 +1,10 @@
 
 package ServidorApresentacao.Action.certificate;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,21 +86,32 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			//remove sessions variables
 			session.removeAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
 			session.removeAttribute(SessionConstants.DEGREE_TYPE);
+			session.removeAttribute(SessionConstants.DATE);
+			session.removeAttribute(SessionConstants.DOCUMENT_REASON_LIST);
+
 			
 			// Get the Information
 			Integer requesterNumber = new Integer((String) chooseDeclaration.get("requesterNumber"));
-			String graduationType = (String) chooseDeclaration.get("graduationType");
-			
+     		String graduationType = (String) chooseDeclaration.get("graduationType");
+		    String[] destination =  (String[]) chooseDeclaration.get("destination");
+		    
+		    if (destination.length != 0)
+				session.setAttribute(SessionConstants.DOCUMENT_REASON_LIST,destination);
+		   
+		
+
 			// inputs
 			InfoStudent infoStudent = new InfoStudent();
 			infoStudent.setNumber(requesterNumber);
 			infoStudent.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
 			session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
-			Object args[] = {infoStudent};
+			Object args[] = {infoStudent, new Specialization(graduationType)};
 	        
 	        // output
 			InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 			
+			
+			//get informations
 			try {
 				infoStudentCurricularPlan = (InfoStudentCurricularPlan) serviceManager.executar(userView, "CreateDeclaration", args);
 
@@ -110,8 +124,13 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			}
 				
 		    else {
+				Locale locale = new Locale("pt", "PT");
+				Date date = new Date();
+				String formatedDate = "Lisboa, " + DateFormat.getDateInstance(DateFormat.LONG, locale).format(date);
 	
 				session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
+				
+				session.setAttribute(SessionConstants.DATE, formatedDate);	
 				return mapping.findForward("ChooseSuccess"); 
 		    }
 			
