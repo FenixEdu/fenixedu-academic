@@ -19,7 +19,7 @@
   <reference-descriptor
   	name="funcionario"
   	class-ref="Dominio.Funcionario">
-  	<foreignkey field-ref="chaveFuncionario">
+  	<foreignkey field-ref="chaveFuncionario"/>
   </reference-descriptor>  
 </class-descriptor>
 
