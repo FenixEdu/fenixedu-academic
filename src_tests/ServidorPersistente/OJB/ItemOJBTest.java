@@ -40,7 +40,9 @@ public class ItemOJBTest extends TestCaseOJB {
     
     
     // FIXME : NOT USED AT THIS TIME
-    
+	public void testVoidToDelete() {
+	}
+
     
   /** Test of readBySeccaoAndNome method, of class ServidorPersistente.OJB.ItemOJB. */
 //  public void testReadBySeccaoAndNome() {

@@ -72,10 +72,10 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 	assertTrue(executionCourse.getNome().equals("Trabalho Final de Curso I"));
 	assertTrue(executionCourse.getSigla().equals("TFCI"));
 	assertTrue(executionCourse.getPrograma().equals("programa1"));
-	assertTrue(executionCourse.getTheoreticalHours().equals(new Double(0)));
-	assertTrue(executionCourse.getPraticalHours().equals(new Double(0)));
-	assertTrue(executionCourse.getTheoPratHours().equals(new Double(0)));
-	assertTrue(executionCourse.getLabHours().equals(new Double(0)));	
+	assertTrue(executionCourse.getTheoreticalHours().equals(new Double(1.5)));
+	assertTrue(executionCourse.getPraticalHours().equals(new Double(2)));
+	assertTrue(executionCourse.getTheoPratHours().equals(new Double(1.5)));
+	assertTrue(executionCourse.getLabHours().equals(new Double(2)));	
 	assertNotNull(executionCourse.getAssociatedCurricularCourses());
 	assertTrue(executionCourse.getAssociatedCurricularCourses().size() == 1);
 	

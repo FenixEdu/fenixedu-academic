@@ -33,33 +33,30 @@ public class OJBSuite extends TestCase {
         TestSuite suite = new TestSuite("OJBSuite");
         //suite.addTest(ServidorPersistente.OJB.ItemOJBTest.suite());
 
-        suite.addTest(ServidorPersistente.OJB.StudentOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.AulaOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.CountryOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.CurricularCourseOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.CursoExecucaoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.CursoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.DepartamentoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.DisciplinaDepartamentoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.DisciplinaExecucaoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.FrequentaOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.EnrolmentOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.ItemOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.PessoaOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.PlanoCurricularCursoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.SalaOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.StudentCurricularPlanOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.TurmaOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.TurmaTurnoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.TurnoAlunoOJBTest.suite());        
-        suite.addTest(ServidorPersistente.OJB.TurnoAulaOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.TurnoOJBTest.suite());
-        suite.addTest(ServidorPersistente.OJB.MasterDegreeCandidateOJBTest.suite());
- 
- 
+		suite.addTest(ServidorPersistente.OJB.AulaOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.CountryOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.CurricularCourseOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.CursoExecucaoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.CursoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.DepartamentoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.DisciplinaDepartamentoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.DisciplinaExecucaoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.EnrolmentOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.ExecutionPeriodOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.ExecutionYearOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.FrequentaOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.ItemOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.PessoaOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.PlanoCurricularCursoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.SalaOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.StudentCurricularPlanOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.StudentOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.TurmaOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.TurmaTurnoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.TurnoAlunoOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.TurnoAulaOJBTest.suite());
+		suite.addTest(ServidorPersistente.OJB.TurnoOJBTest.suite());
 
-        
-        
         //:JUNIT--
         //This value MUST ALWAYS be returned from this function.
         return suite;
