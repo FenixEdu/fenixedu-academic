@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import DataBeans.InfoStudent;
 import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
+import Dominio.ITurnoAluno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -26,7 +30,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class WriteStudentAttendingCourses implements IServico {
 
-	private static WriteStudentAttendingCourses _servico = new WriteStudentAttendingCourses();
+	private static WriteStudentAttendingCourses _servico =
+		new WriteStudentAttendingCourses();
 
 	/**
 	 * The actor of this class.
@@ -59,87 +64,146 @@ public class WriteStudentAttendingCourses implements IServico {
 	 * @return a <code>Boolean</code> to indicate if all went fine.
 	 * @exception FenixServiceException if an error occurs.
 	 */
-	public Boolean run(InfoStudent infoStudent, List infoExecutionCourses) throws FenixServiceException {
+	public Boolean run(InfoStudent infoStudent, List infoExecutionCourses)
+		throws FenixServiceException {
 
 		if (infoExecutionCourses == null || infoStudent == null) {
 			return new Boolean(false);
-		} // end of if ()
-
-		//TODO: tdi-dev (edgar.goncalves) -> remove system.out.println's
-		boolean result = false;
+		}
 
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Reads the student from the database
-			IStudent student = sp.getIPersistentStudent().readByNumero(infoStudent.getNumber(), infoStudent.getDegreeType());
+			IStudent student =
+				sp.getIPersistentStudent().readByNumero(
+					infoStudent.getNumber(),
+					infoStudent.getDegreeType());
 
 			IFrequentaPersistente attendsDAO = sp.getIFrequentaPersistente();
 
 			//Read every course the student attends to:
-			List attendingCourses = attendsDAO.readByStudentId(student.getNumber());
+			List attends = attendsDAO.readByStudentNumber(student.getNumber());
 
-			IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			List attendingCourses = getExecutionCoursesFromAttends(attends);
+
+			IDisciplinaExecucaoPersistente executionCourseDAO =
+				sp.getIDisciplinaExecucaoPersistente();
 
 			//Gets the database objects for the wanted courses
-			List wantedAttends = new ArrayList();
+			List wantedAttendingCourses = new ArrayList();
 			Iterator i = infoExecutionCourses.iterator();
 			while (i.hasNext()) {
 				Integer executionCourseId = new Integer((String) i.next());
-				IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
-				executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
+				IDisciplinaExecucao executionCourse =
+					new DisciplinaExecucao(executionCourseId);
+				executionCourse =
+					(IDisciplinaExecucao) executionCourseDAO.readByOId(
+						executionCourse,
+						false);
 
 				if (executionCourse == null) {
-					System.out.println("Execution course with ID=" + executionCourseId + " does not exist in the database!");
+					System.out.println(
+						"Execution course with ID="
+							+ executionCourseId
+							+ " does not exist in the database!");
 					throw new FenixServiceException();
-				} // end of if ()
-				else {
-					wantedAttends.add(executionCourse);
-					System.out.println("Adding to the wantedAttends: " + executionCourse.getNome());
+				} else {
+					wantedAttendingCourses.add(executionCourse);
+
 				}
 			}
 
 			//Delete all courses the student is currently attendin to that he/she doesn't want to:
-			i = attendingCourses.iterator();
-			while (i.hasNext()) {
-				IFrequenta attendEntry = (IFrequenta) i.next();
-			
-				// FIXME SO REMOVES UM ELEMENTO.... DELETE SHIFT-STUDENT ASSOCIATIONS...
-				if (!wantedAttends.contains(attendEntry.getDisciplinaExecucao())) {
-					System.out.println("Deleting: " + attendEntry.getIdInternal());
-					attendsDAO.delete(attendEntry);
-					i.remove();
-				}
-				wantedAttends.remove(attendEntry.getDisciplinaExecucao());
+			//attendings to remove : 
+			List attendsToRemove =
+				(List) CollectionUtils.subtract(
+					attendingCourses,
+					wantedAttendingCourses);
+			List attendingCoursesToAdd =
+				(List) CollectionUtils.subtract(
+					wantedAttendingCourses,
+					attendingCourses);
+			if (attendsToRemove != null && !attendsToRemove.isEmpty()) {
+				deleteAttends(attendsToRemove, student);
 			}
 
 			//Add new courses (without duplicates)
-			i = wantedAttends.iterator();
+			i = attendingCoursesToAdd.iterator();
 			while (i.hasNext()) {
 
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) i.next();
+				IDisciplinaExecucao executionCourse =
+					(IDisciplinaExecucao) i.next();
 
-				System.out.println("Adding: " + executionCourse.getIdInternal() + ";" + executionCourse.getNome());
-
-				IFrequenta attendsEntry = new Frequenta();
-				//FIXME: (tdi-dev:edgar.goncalves) - lockWrite ain't working...
-				attendsDAO.simpleLockWrite(attendsEntry);
-				attendsEntry.setAluno(student);
-				attendsEntry.setDisciplinaExecucao(executionCourse);
-
-			} // end of while ()
-
-			result = true;
-
+				IFrequenta attendsEntry =
+					attendsDAO.readByAlunoAndDisciplinaExecucao(
+						student,
+						executionCourse);
+				if (attendsEntry == null) {
+					attendsEntry = new Frequenta();
+					attendsDAO.simpleLockWrite(attendsEntry);
+					attendsEntry.setAluno(student);
+					attendsEntry.setDisciplinaExecucao(executionCourse);
+				}
+			}
 		} catch (ExcepcaoPersistencia e) {
-
-			e.printStackTrace();
-			throw new FenixServiceException();
+			throw new FenixServiceException(e);
 		}
+		return new Boolean(true);
 
-		return new Boolean(result);
+	}
 
+	/**
+	 * @param attends
+	 * @return
+	 */
+	private List getExecutionCoursesFromAttends(List attends) {
+		List executionCourses = new ArrayList();
+		Iterator iter = attends.iterator();
+		while (iter.hasNext()) {
+			IFrequenta attend = (IFrequenta) iter.next();
+			executionCourses.add(attend.getDisciplinaExecucao());
+		}
+		return executionCourses;
+	}
+
+	private void deleteAttends(List attendingCoursesToRemove, IStudent student)
+		throws FenixServiceException {
+		Iterator iterator = attendingCoursesToRemove.iterator();
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IFrequentaPersistente persistentAttends =
+				sp.getIFrequentaPersistente();
+			ITurnoAlunoPersistente persistentShiftStudent =
+				sp.getITurnoAlunoPersistente();
+			while (iterator.hasNext()) {
+				IDisciplinaExecucao executionCourse =
+					(IDisciplinaExecucao) iterator.next();
+				IFrequenta attends =
+					persistentAttends.readByAlunoAndDisciplinaExecucao(
+						student,
+						executionCourse);
+				if (attends != null && attends.getEnrolment() == null) {
+					//NOTE: attends that are linked to enrollments are not deleted
+					List shiftAttendsToDelete =
+						persistentShiftStudent.readByStudentAndExecutionCourse(
+							student,
+							executionCourse);
+					if (shiftAttendsToDelete != null) {
+						Iterator iter = shiftAttendsToDelete.iterator();
+						while (iter.hasNext()) {
+							persistentShiftStudent.delete(
+								(ITurnoAluno) iter.next());
+						}
+					}
+					persistentAttends.delete(attends);
+				}
+
+			}
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
 	}
 
 }
