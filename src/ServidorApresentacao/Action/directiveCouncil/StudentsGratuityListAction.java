@@ -122,7 +122,8 @@ public class StudentsGratuityListAction extends DispatchAction
 
 		DynaActionForm studentListForm = (DynaActionForm) actionForm;
 		String executionYear = (String) studentListForm.get("executionYear");
-
+		request.setAttribute("executionYear", executionYear);
+		
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
 		infoExecutionYear.setYear(executionYear);
 
