@@ -1,11 +1,8 @@
 package ServidorAplicacao.Servico.commons.externalPerson;
 
-import DataBeans.InfoExternalPerson;
 import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
-import Dominio.IPessoa;
 import Dominio.IWorkLocation;
-import Dominio.Pessoa;
 import Dominio.WorkLocation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -61,10 +58,9 @@ public class EditExternalPerson implements IServico
 		String email)
 		throws FenixServiceException
 	{
-		InfoExternalPerson infoExternalPerson = null;
 		IExternalPerson storedExternalPerson = null;
 		IExternalPerson storedExternalPerson2 = null;
-		IPessoa person = null;
+
 		IWorkLocation storedWorkLocation = null;
 
 		try
@@ -92,7 +88,6 @@ public class EditExternalPerson implements IServico
 					throw new ExistingServiceException("error.exception.externalPerson.existingExternalPsrson");
 			}
 
-			person = new Pessoa();
 			storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(WorkLocation.class, workLocationID);
 			
 			storedExternalPerson.getPerson().setNome(name);

@@ -63,8 +63,6 @@ public class FilterChainDiscriptorProperty2XML extends FileUtil {
 				String implementationClassName = "AccessControlFilter";
 				String discription = "";
 				String invocationTiming = "1";
-				String isTransactional = "false";
-
 				String filterDescriptor = "\t<filterChain>\n";
 				filterDescriptor += "\t\t<idInternal>" + i + "</idInternal>\n";
 				filterDescriptor += "\t\t<name>" + filterAlias + "</name>\n";

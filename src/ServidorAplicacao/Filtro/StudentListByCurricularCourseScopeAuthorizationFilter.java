@@ -13,7 +13,6 @@ import Dominio.CurricularCourseScope;
 import Dominio.ICoordinator;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICursoExecucao;
-import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -152,7 +151,6 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 		if (CollectionUtils.containsAny(roles, roleTemp))
 		{
 
-			ITeacher teacher = null;
 			// Read The ExecutionDegree
 			try
 			{

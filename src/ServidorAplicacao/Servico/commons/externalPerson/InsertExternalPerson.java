@@ -1,6 +1,5 @@
 package ServidorAplicacao.Servico.commons.externalPerson;
 
-import DataBeans.InfoExternalPerson;
 import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
 import Dominio.IPessoa;
@@ -59,7 +58,6 @@ public class InsertExternalPerson implements IServico
 		String email)
 		throws FenixServiceException
 	{
-		InfoExternalPerson infoExternalPerson = null;
 		IExternalPerson externalPerson = null;
 		IExternalPerson storedExternalPerson = null;
 		IPessoa person = null;

@@ -433,10 +433,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			throw new FenixActionException(e);
 		}
 
-		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
-		Integer infoCurricularCourseCode =
-			getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-		String infoCurricularCourseName = getAndSetStringToRequest("infoCurricularCourseName", request);
+		getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
+		getAndSetIntegerToRequest("infoCurricularCourseCode", request);
+		getAndSetStringToRequest("infoCurricularCourseName", request);
 
 		request.setAttribute("infoExecutionYears", infoExecutionYears);
 
@@ -464,7 +463,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
 		Integer infoCurricularCourseCode =
 			getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-		String infoCurricularCourseName = getAndSetStringToRequest("infoCurricularCourseName", request);
+		getAndSetStringToRequest("infoCurricularCourseName", request);
 		String executionYear = getAndSetStringToRequest("executionYear", request);
 
 		InfoCurriculum infoCurriculum = null;

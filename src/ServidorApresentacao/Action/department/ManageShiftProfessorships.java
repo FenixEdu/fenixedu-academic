@@ -4,7 +4,6 @@
  */
 package ServidorApresentacao.Action.department;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -60,10 +59,7 @@ public class ManageShiftProfessorships extends DispatchAction
             if ((percentage != null) && (!percentage.equals("")))
             {
 
-                DecimalFormat df = new DecimalFormat();
-                char decimalSeparator = df.getDecimalFormatSymbols().getDecimalSeparator();
                 percentage = percentage.replace(',', '.');
-                //percentage = percentage.replace('.', '.');
 
                 InfoShiftProfessorship infoShiftProfessorship = new InfoShiftProfessorship();
                 infoShiftProfessorship.setInfoShift(new InfoShift(shiftIdInternal));

@@ -202,10 +202,9 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 				request.setAttribute("branchList", branchList);					
 					
 					
-				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
 				try {
 					Object args[] = { candidateID };
-					infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
+					ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
 				} catch (NonExistingServiceException ex) {
 					throw new FenixActionException(ex);
 				}

@@ -11,13 +11,11 @@ import org.apache.commons.collections.CollectionUtils;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
-
 import DataBeans.InfoRole;
 import Dominio.CurricularCourse;
 import Dominio.ICoordinator;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
-import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -166,7 +164,6 @@ public class StudentListByCurricularCourseAuthorizationFilter extends AccessCont
 		if (CollectionUtils.containsAny(roles, roleTemp))
 		{
 
-			ITeacher teacher = null;
 			// Read The ExecutionDegree
 			try
 			{

@@ -47,8 +47,6 @@ public class CreateCandidateDispatchAction extends DispatchAction
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
-			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			// Get Execution Year List

@@ -196,8 +196,8 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		Integer degreeId = getFromRequest("degreeId", request);
 		request.setAttribute("degreeId", degreeId);
 
-		Integer degreeCurricularPlanId =
-			getFromRequest("degreeCurricularPlanId", request);
+		getFromRequest("degreeCurricularPlanId", request);
+
 		request.setAttribute("degreeCurricularPlanId", executionDegreeId);
 
 		DynaActionForm coordinatorForm = (DynaActionForm) actionForm;
@@ -241,8 +241,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		Integer degreeId = getFromRequest("degreeId", request);
 		request.setAttribute("degreeId", degreeId);
 
-		Integer degreeCurricularPlanId =
-			getFromRequest("degreeCurricularPlanId", request);
+		getFromRequest("degreeCurricularPlanId", request);
 		request.setAttribute("degreeCurricularPlanId", executionDegreeId);
 
 		DynaActionForm coordinatorsForm = (DynaActionForm) actionForm;
@@ -307,21 +306,5 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			parameterCode = new Integer(parameterCodeString);
 		}
 		return parameterCode;
-	}
-
-	private Boolean getFromRequestBoolean(
-		String parameter,
-		HttpServletRequest request) {
-		Boolean parameterBoolean = null;
-
-		String parameterCodeString = request.getParameter(parameter);
-		if (parameterCodeString == null) {
-			parameterCodeString = (String) request.getAttribute(parameter);
-		}
-		if (parameterCodeString != null) {
-			parameterBoolean = new Boolean(parameterCodeString);
-		}
-
-		return parameterBoolean;
 	}
 }

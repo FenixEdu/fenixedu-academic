@@ -15,7 +15,6 @@ import DataBeans.InfoRole;
 import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
 import Dominio.IStudentCurricularPlan;
-import Dominio.ITeacher;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -174,7 +173,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 		if (CollectionUtils.containsAny(roles, roleTemp))
 		{
 
-			ITeacher teacher = null;
 			// Read The ExecutionDegree
 			try
 			{

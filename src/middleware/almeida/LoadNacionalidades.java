@@ -28,8 +28,6 @@ public class LoadNacionalidades extends LoadDataFile {
 		StringTokenizer stringTokenizer =
 			new StringTokenizer(line, getFieldSeparator());
 
-		int numberTokens = stringTokenizer.countTokens(); 
-
 		String codigo = stringTokenizer.nextToken();
 		String descricao = stringTokenizer.nextToken();
 
