@@ -57,11 +57,15 @@
 
     <!-- validation for the Create Candidate Form -->
     <form name="createCandidateForm">
+      <field property="executionYear" depends="required" page="0">
+        <arg0 key="label.executionYear" />
+      </field>
+
       <field property="specialization" depends="required" page="1">
         <arg0 key="label.specialization" />
       </field>
 
-      <field property="degree" depends="required" page="1">
+      <field property="executionDegreeOID" depends="required, integer" page="1">
         <arg0 key="label.degree" />
       </field>
 

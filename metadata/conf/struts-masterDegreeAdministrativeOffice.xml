@@ -62,8 +62,9 @@
                  dynamic="true">
         <form-property name="page" type="java.lang.Integer" />
         <form-property name="specialization" type="java.lang.String" />
-        <form-property name="degree" type="java.lang.String" />
+        <form-property name="executionDegreeOID" type="java.lang.String" />
         <form-property name="name" type="java.lang.String" />
+        <form-property name="executionYear" type="java.lang.String" />
         <form-property name="identificationDocumentNumber" type="java.lang.String" />
         <form-property name="identificationDocumentType" type="java.lang.String" />
       </form-bean>
@@ -496,7 +497,7 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
 	  <forward name="index" path="index.do" redirect="true"/>
       <forward name="firstPage" path="/index.do"/>
-      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/> 
 		<forward name="equivalenceForMasterDegreeAdministrativeOffice" path="/equivalence.do"/>
     </global-forwards>
     
@@ -773,7 +774,7 @@
       
       <!-- action to create a candidate -->
       <action attribute="createCandidateForm"
-      		  input="/createCandidate.jsp"
+      		  input="/createCandidateDispatchAction.do?page=0&amp;method=prepare"
       	      name="createCandidateForm"
 		      path="/createCandidateDispatchAction"
 		      parameter="method"
