@@ -95,6 +95,12 @@
     column="anoLectivo"
     jdbc-type="VARCHAR"
   />
+  
+  <field-descriptor id="8"
+    name="codigoInternoRamo"
+    column="codigoInternoRamo"
+    jdbc-type="INTEGER"
+  />
 </class-descriptor>
 
 <class-descriptor 
@@ -479,6 +485,17 @@
     jdbc-type="VARCHAR"
   />
   
+  <field-descriptor id="9"
+    name="codigoCurricularCourse"
+    column="codigoCurricularCourse"
+    jdbc-type="INTEGER"
+  />
+  
+  <field-descriptor id="10"
+    name="optativa"
+    column="optativa"
+    jdbc-type="VARCHAR"
+  />
   
   
 </class-descriptor>
