@@ -114,7 +114,6 @@ public class EditarTurno implements IServico {
 				(ITurno) sp.getITurnoPersistente().readByOID(
 					Turno.class,
 					infoShiftOld.getIdInternal());
-					System.out.println("############ shift: "+shift);
 			shiftLessons =
 				(List) sp.getITurnoAulaPersistente().readLessonsByShift(
 					shift);
@@ -182,7 +181,7 @@ public class EditarTurno implements IServico {
 				return false;
 			}
 		}
-		if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+		if (newShiftType.equals(new TipoAula(TipoAula.LABORATORIAL))) {
 			if (shiftDuration
 				> shift.getDisciplinaExecucao().getLabHours().doubleValue()) {
 				return false;
