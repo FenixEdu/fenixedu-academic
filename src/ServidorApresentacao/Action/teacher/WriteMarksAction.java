@@ -144,7 +144,7 @@ public class WriteMarksAction extends DispatchAction {
 		reader.close();
 		
 		
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		List marksList = new ArrayList();
 		invalidRecords = new ArrayList();
@@ -252,7 +252,7 @@ public class WriteMarksAction extends DispatchAction {
 		Integer objectCode = getObjectCode(request);
 		Integer evaluationCode = getEvaluationCode(request);
 
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		Object[] args = { objectCode, evaluationCode, marksList };
 		GestorServicos manager = GestorServicos.manager();

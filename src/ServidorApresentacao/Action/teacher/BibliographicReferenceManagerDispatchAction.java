@@ -70,7 +70,7 @@ public class BibliographicReferenceManagerDispatchAction
 		InfoExecutionCourse infoExecutionCourse =
 			infoSite.getInfoExecutionCourse();
 
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] =
 			{ infoExecutionCourse, title, authors, reference, year, optional };
 		GestorServicos gestor = GestorServicos.manager();
@@ -150,7 +150,7 @@ public class BibliographicReferenceManagerDispatchAction
 				infoBibliographicReference,
 				infoBibliographicReferenceNew };
 
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 		try {
 			gestor.executar(userView, "EditBibliographicReference", args);
@@ -204,7 +204,7 @@ public class BibliographicReferenceManagerDispatchAction
 			(InfoBibliographicReference) bibliographicReferences.get(
 				index.intValue());
 
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { infoExecutionCourse, infoBibliographicReference };
 		GestorServicos gestor = GestorServicos.manager();
 		try {

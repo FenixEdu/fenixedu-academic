@@ -38,7 +38,7 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 		DynaActionForm indexForm = (DynaActionForm) form;
 		request.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
 			
 			String roomId = (String) request.getAttribute("roomId");

@@ -56,7 +56,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		request.setAttribute("weekDays", Util.getDaysOfWeek());
 
 		// execution period selection		
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
 		Object argsReadExecutionPeriods[] = {

@@ -57,7 +57,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
 		throws FenixActionException
 	{
 		HttpSession session= this.getSession(request);
-		UserView userView= (UserView) session.getAttribute("UserView");
+		UserView userView= (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor= GestorServicos.manager();
 		TeacherAdministrationSiteView siteView= null;
 		Integer objectCode= null;
@@ -114,7 +114,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
 		throws FenixActionException
 	{
 		HttpSession session= this.getSession(request);
-		UserView userView= (UserView) session.getAttribute("UserView");
+		UserView userView= (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor= GestorServicos.manager();
 		TeacherAdministrationSiteView siteView= null;
 		Object argsReadPerson[]= { userView.getUtilizador()};
@@ -361,7 +361,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
 		throws FenixActionException
 	{
 		HttpSession session= this.getSession(request);
-		UserView userView= (UserView) session.getAttribute("UserView");
+		UserView userView= (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Integer objectCode= null;
 		Integer shiftID= null;
 		Integer groupCode= null;

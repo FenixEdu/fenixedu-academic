@@ -17,6 +17,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidPasswordServiceException;
 import ServidorApresentacao.Action.exceptions.InvalidPasswordActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -34,7 +35,7 @@ public class ChangePersonPasswordAction extends ServidorApresentacao.Action.base
 
 		if (session != null) {
 			DynaActionForm changePasswordForm = (DynaActionForm) form;
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			String oldPassword = (String) changePasswordForm.get("oldPassword");
 			String newPassword = (String) changePasswordForm.get("newPassword");
 

@@ -156,7 +156,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 		super.execute(mapping, form, request, response);
 		
 		HttpSession session = getSession(request);
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	
 		ArrayList listaSalasBean = (ArrayList) request.getAttribute(SessionConstants.SELECTED_ROOMS);
 		InfoRoom selectedSala = getSelectedSala(form, request);

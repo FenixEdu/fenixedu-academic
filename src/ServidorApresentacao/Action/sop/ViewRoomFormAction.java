@@ -45,7 +45,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 		DynaActionForm indexForm = (DynaActionForm) form;
 		request.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
 
 			List infoRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);

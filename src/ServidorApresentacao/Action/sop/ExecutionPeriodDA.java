@@ -39,7 +39,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		throws Exception {
 		HttpSession session = request.getSession(false);
 
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
 		InfoExecutionPeriod selectedExecutionPeriod =
@@ -100,7 +100,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
 
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
 		Object argsReadExecutionPeriods[] = { };
@@ -139,7 +139,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
 
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestor = GestorServicos.manager();
 
 		// get selected execution period

@@ -21,6 +21,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Fernanda Quitério
  * @author Tânia Pousão 
@@ -63,7 +64,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
 		{
 			scopeCode= new Integer(scopeCodeString);
 		}
-		UserView userView= (UserView) session.getAttribute("UserView");
+		UserView userView= (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[]= { objectCode, scopeCode };
 		Object argsProjects[]= { objectCode };
 		Object argsInfos[]= { objectCode };

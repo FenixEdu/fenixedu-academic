@@ -29,6 +29,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author asnr and scpo
@@ -40,7 +41,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String groupPropertiesCodeString = (String) request.getParameter("groupPropertiesCode");
 		String studentGroupCodeString = (String) request.getParameter("studentGroupCode");
@@ -132,7 +133,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
 		DynaActionForm editStudentGroupForm = (DynaActionForm) form;
 
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String studentGroupCodeString = (String) request.getParameter("studentGroupCode");
 

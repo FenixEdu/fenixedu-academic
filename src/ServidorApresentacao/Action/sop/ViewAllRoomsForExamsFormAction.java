@@ -37,7 +37,7 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 		HttpSession session = request.getSession();
 
 		if (session != null) {
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
 			
 			InfoExecutionPeriod infoExecutionPeriod =

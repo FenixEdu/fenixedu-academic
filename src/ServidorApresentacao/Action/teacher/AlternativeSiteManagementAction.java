@@ -74,7 +74,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		infoSiteNew.setInitialStatement(initialStatement);
 		infoSiteNew.setIntroduction(introduction);
 
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { infoSite, infoSiteNew };
 		GestorServicos gestor = GestorServicos.manager();
 		try {

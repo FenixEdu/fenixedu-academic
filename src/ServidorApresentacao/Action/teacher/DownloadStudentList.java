@@ -8,14 +8,17 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoGroupProjectStudents;
 import DataBeans.InfoGroupProperties;
@@ -27,6 +30,7 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -71,7 +75,7 @@ public class DownloadStudentList extends FenixAction
 		{
 			scopeCode= new Integer(scopeCodeString);
 		}
-		UserView userView= (UserView) session.getAttribute("UserView");
+		UserView userView= (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[]= { objectCode, scopeCode };
 		Object argsProjects[]= { objectCode };
 		Object argsInfos[]= { objectCode };
