@@ -21,7 +21,9 @@
 							<li><html:link page="<%= "/viewSite.do" + "?method=viewProjectStudentGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
 								<bean:write name="infoGroupProperties" property="name"/></h2>
 							</html:link></li>
-							
+							<br>
+							<BLOCKQUOTE><bean:write name="infoGroupProperties" property="projectDescription"/></BLOCKQUOTE>
+							<br>
                     </td>
                 </tr>
 

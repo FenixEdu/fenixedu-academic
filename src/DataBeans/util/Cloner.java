@@ -2114,6 +2114,7 @@ public abstract class Cloner {
 		infoGroupProperties.setIdInternal(groupProperties.getIdInternal());
 		infoGroupProperties.setName(groupProperties.getName());
 		infoGroupProperties.setShiftType(groupProperties.getShiftType());
+		infoGroupProperties.setProjectDescription(groupProperties.getProjectDescription());
 
 		infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(groupProperties.getExecutionCourse());
 		infoGroupProperties.setInfoExecutionCourse(infoExecutionCourse);
@@ -2140,7 +2141,8 @@ public abstract class Cloner {
 		groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
 		groupProperties.setName(infoGroupProperties.getName());
 		groupProperties.setShiftType(infoGroupProperties.getShiftType());
-
+		groupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
+		
 		executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoGroupProperties.getInfoExecutionCourse());
 		groupProperties.setExecutionCourse(executionCourse);
 		return groupProperties;

@@ -26,7 +26,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	private TipoAula shiftType;
 	private Calendar enrolmentBeginDay;
 	private Calendar enrolmentEndDay;
-
+	private String	projectDescription;
 
 	
 	/** 
@@ -55,7 +55,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	public GroupProperties(Integer maximumCapacity,Integer minimumCapacity,
 							Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
 	 						Integer groupMaximumNumber,String name,IDisciplinaExecucao executionCourse,
-							TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay) {
+							TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay,String projectDescription) {
 		this.maximumCapacity=maximumCapacity;
 		this.minimumCapacity=minimumCapacity;
 		this.idealCapacity=idealCapacity;
@@ -66,6 +66,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		this.shiftType = shiftType;
 		this.enrolmentBeginDay = enrolmentBeginDay;
 		this.enrolmentEndDay = enrolmentEndDay;
+		this.projectDescription = projectDescription;
 		
 		}
 	
@@ -96,6 +97,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		result += ", shiftType=" + getShiftType();
 		result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
 		result += ", enrolmentEndDay=" + getEnrolmentEndDay();
+		result += ", projectDescription=" + getProjectDescription();
 		result += "]";
 		return result;
 	}
@@ -150,6 +152,12 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		return name;
 	}
 
+	/**
+	* @return String
+	*/
+	public String getProjectDescription() {
+		return projectDescription;
+	}
 
 	/**
 	 * @return DisciplinaExecucao
@@ -233,6 +241,14 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	*/
 	public void setName(String name) {
 		this.name=name;
+	}
+	
+	/**
+	* Sets the name.
+	* @param name The name to set
+	*/
+	public void setProjectDescription(String projectDescription) {
+		this.projectDescription=projectDescription;
 	}
 	
 	/**

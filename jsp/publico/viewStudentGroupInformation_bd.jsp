@@ -13,9 +13,10 @@
 	</logic:empty> 
 
 	<logic:notEmpty name="component" property="infoSiteStudentInformationList">
+	
 	<table width="50%" cellpadding="0" border="0">
 		<h2><bean:message key="title.StudentGroupInformation"/></h2>
-	
+	<br>
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.numberWord" />
 		</td>

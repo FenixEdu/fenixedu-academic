@@ -198,6 +198,7 @@ create table GROUP_PROPERTIES (
    SHIFT_TYPE int(11),
    ENROLMENT_BEGIN_DAY date,
    ENROLMENT_END_DAY date,
+   PROJECT_DESCRIPTION text,
    KEY_EXECUTION_COURSE int(11) unsigned not null ,
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (NAME,KEY_EXECUTION_COURSE))

@@ -22,6 +22,7 @@ public interface IGroupProperties extends IDomainObject{
 		public EnrolmentGroupPolicyType getEnrolmentPolicy();
 		public Integer getGroupMaximumNumber();
 		public String getName();
+		public String getProjectDescription();
 		public IDisciplinaExecucao getExecutionCourse();
 		public TipoAula getShiftType();
 		public Calendar getEnrolmentBeginDay();
@@ -35,6 +36,7 @@ public interface IGroupProperties extends IDomainObject{
 		public void setEnrolmentPolicy(EnrolmentGroupPolicyType enrolmentPolicy);
 		public void setGroupMaximumNumber(Integer groupMaximumNumber);
 		public void setName(String name);
+		public void setProjectDescription(String projectDescription);
 		public void setExecutionCourse(IDisciplinaExecucao executionCourse);	
 		public void setShiftType(TipoAula shiftType);
 		public void setEnrolmentBeginDay(Calendar enrolmentBeginDay);

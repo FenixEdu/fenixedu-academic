@@ -1,8 +1,6 @@
 /*
  * Created on 22/Jul/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package DataBeans;
 
@@ -14,8 +12,6 @@ import Util.TipoAula;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class InfoGroupProperties extends InfoObject{
 		
@@ -29,7 +25,7 @@ public class InfoGroupProperties extends InfoObject{
 		private TipoAula shiftType;
 		private Calendar enrolmentBeginDay;
 		private Calendar enrolmentEndDay;
-
+		private String projectDescription;
 	
 		/** 
 		 * Construtor
@@ -50,7 +46,7 @@ public class InfoGroupProperties extends InfoObject{
 		public InfoGroupProperties(Integer maximumCapacity,Integer minimumCapacity,
 								Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
 								Integer groupMaximumNumber,InfoExecutionCourse infoExecutionCourse,String name,
-								TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay) {
+								TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay,String projectDescription) {
 			this.maximumCapacity=maximumCapacity;
 			this.minimumCapacity=minimumCapacity;
 			this.idealCapacity=idealCapacity;
@@ -61,6 +57,7 @@ public class InfoGroupProperties extends InfoObject{
 			this.shiftType = shiftType;
 			this.enrolmentBeginDay = enrolmentBeginDay;
 			this.enrolmentEndDay = enrolmentEndDay;
+			this.projectDescription = projectDescription;
 		
 		}
 	
@@ -91,6 +88,7 @@ public class InfoGroupProperties extends InfoObject{
 			result += ", shiftType=" + getShiftType();
 			result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
 			result += ", enrolmentEndDay=" + getEnrolmentEndDay();
+			result += ", projectDescription=" + getProjectDescription();
 			result += "]";
 			return result;
 		}
@@ -139,7 +137,13 @@ public class InfoGroupProperties extends InfoObject{
 		public String getName() {
 			return name;
 		}
-
+		
+		/**
+		* @return String
+		*/
+		public String getProjectDescription() {
+			return projectDescription;
+		}
 
 		/**
 		 * @return InfoExecutionCourse
@@ -214,6 +218,14 @@ public class InfoGroupProperties extends InfoObject{
 		*/
 		public void setName(String name) {
 			this.name=name;
+		}
+
+		/**
+		* Sets the name.
+		* @param name The name to set
+		*/
+		public void setProjectDescription(String projectDescription) {
+			this.projectDescription=projectDescription;
 		}
 
 		/**
