@@ -6,7 +6,7 @@
 <%@ page import="DataBeans.InfoCurricularCourseScope" %>
 <%@ page import="Util.TipoCurso" %>
 
-<span class="error"><html:errors/></span>
+<p><span class="error"><html:errors/></span></p>
 
 <div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <a href="http://www.ist.utl.pt/html/ensino/ensino.shtml">Ensino</a> &gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" + request.getAttribute("degreeId").toString() %>">

@@ -6,7 +6,7 @@
 <%@ page import="Util.TipoCurso" %>
 <%@ page import="Util.DegreeCurricularPlanState" %>
 
-<span class="error"><html:errors/></span>
+<p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoDegreeCurricularPlanList">
 <logic:notEmpty name="infoDegreeCurricularPlanList">
@@ -20,7 +20,7 @@
 		</div>		
 		
 		<!-- PÁGINA EM INGLÊS -->
-		<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+		<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 		<div class="clear"></div> 
 	
 		<h1><bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" /></h1>

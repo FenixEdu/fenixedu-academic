@@ -388,9 +388,11 @@
 			  scope="request"
 		    type="ServidorApresentacao.Action.coordinator.DegreeSiteManagementDispatchAction" 	
 		    name="degreeInfoForm"
-		    validate="true"	        
+		    validate="true"	      
+		    input="/degreeSiteManagement.do?method=subMenu"  
 		  >
 			<forward name="degreeSiteMenu" path="degreeSiteMenu" />
+			<forward name="editOK" path="editOK" />
 			<forward name="viewInformation" path="viewInformation" />
 			<forward name="viewHistoric" path="viewHistoric" />
 			<forward name="viewDescriptionCurricularPlan" path="viewDescriptionCurricularPlan" />

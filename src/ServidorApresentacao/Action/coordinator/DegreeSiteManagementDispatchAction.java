@@ -16,6 +16,8 @@ import DataBeans.InfoDegreeInfo;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
@@ -32,6 +34,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         HttpServletResponse response)
         throws FenixActionException
     {
+
         return mapping.findForward("degreeSiteMenu");
     }
 
@@ -54,7 +57,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
 
-        //TODO: verify if is necessary 
+        //it's necessary to find which information will be edited
         String info2Edit = getFromRequestString("info", request);
         request.setAttribute("info", info2Edit);
 
@@ -63,7 +66,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         GestorServicos gestorServicos = GestorServicos.manager();
 
         InfoDegreeInfo infoDegreeInfo = null;
-        Integer infoDegreeInfoId = new Integer(0);
         try
         {
             infoDegreeInfo =
@@ -71,33 +73,36 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
                     userView,
                     "ReadDegreeInfoByExecutionDegree",
                     args);
+        } catch (NotAuthorizedException e)
+        {
+            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
         } catch (FenixServiceException e)
         {
             if (e.getMessage().equals("error.invalidExecutionDegree"))
             {
-                errors.add(
-                    "invalidExecutionDegree",
-                    new ActionError("error.invalidExecutionDegree"));
-                saveErrors(request, errors);
+                errors.add("invalidExecutionDegree", new ActionError("error.invalidExecutionDegree"));
             } else if (e.getMessage().equals("error.impossibleDegreeInfo"))
             {
                 errors.add("impossibleDegreeInfo", new ActionError("error.impossibleDegreeInfo"));
-                saveErrors(request, errors);
             } else
             {
                 e.printStackTrace();
                 throw new FenixActionException(e);
             }
         }
+        if (infoDegreeInfo == null)
+        {
+            errors.add("impossibleDegreeInfo", new ActionError("error.impossibleDegreeInfo"));
+        }
+        if (!errors.isEmpty())
+        {
+            saveErrors(request, errors);
+            return (new ActionForward(mapping.getInput()));
+        }
 
         DynaActionForm degreeInfoForm = (DynaActionForm) form;
-
-        if (infoDegreeInfo != null)
-        {
-            fillForm(infoDegreeInfo, degreeInfoForm);
-
-            infoDegreeInfoId = infoDegreeInfo.getIdInternal();
-        }
+        fillForm(infoDegreeInfo, degreeInfoForm);
+        Integer infoDegreeInfoId = infoDegreeInfo.getIdInternal();
 
         request.setAttribute("infoDegreeInfoId", infoDegreeInfoId);
 
@@ -138,13 +143,29 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         try
         {
             gestorServicos.executar(userView, "EditDegreeInfoByExecutionDegree", args);
+        } catch (NotAuthorizedException e)
+        {
+            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
         } catch (FenixServiceException e)
         {
-            e.printStackTrace();
-            throw new FenixActionException(e);
+            if (e.getMessage().equals("error.impossibleEditDegreeInfo"))
+            {
+                errors.add(
+                    "impossibleEditDegreeInfo",
+                    new ActionError("error.impossibleEditDegreeInfo"));
+            } else
+            {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
+        }
+        if (!errors.isEmpty())
+        {
+            saveErrors(request, errors);
+            return (new ActionForward(mapping.getInput()));
         }
 
-        return mapping.findForward("degreeSiteMenu");
+        return mapping.findForward("editOK");
     }
 
     private void fillForm(InfoDegreeInfo infoDegreeInfo, DynaActionForm degreeInfoForm)
@@ -165,6 +186,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         degreeInfoForm.set("markAverage", convertDouble2String(infoDegreeInfo.getMarkAverage()));
         degreeInfoForm.set("lastModificationDate", infoDegreeInfo.getLastModificationDate().toString());
 
+        //information in english
         degreeInfoForm.set("descriptionEn", infoDegreeInfo.getDescriptionEn());
         degreeInfoForm.set("objectivesEn", infoDegreeInfo.getObjectivesEn());
         degreeInfoForm.set("historyEn", infoDegreeInfo.getHistoryEn());
@@ -233,31 +255,45 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
                     userView,
                     "ReadActiveDegreeCurricularPlanByExecutionDegreeCode",
                     args);
+        } catch (NotAuthorizedException e)
+        {
+            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
+        } catch (NonExistingServiceException e)
+        {
+            errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
         } catch (FenixServiceException e)
         {
-            if (e.getMessage().equals("error.coordinator.noExecutionDegree"))
+            if (e.getMessage().equals("error.invalidExecutionDegree"))
             {
-                errors.add("noExecutionDegree", new ActionError("error.coordinator.noExecutionDegree"));
-                saveErrors(request, errors);
+                errors.add("noDegreeCurricularPlan", new ActionError("error.invalidExecutionDegree"));
             } else
             {
+                e.printStackTrace();
                 throw new FenixActionException(e);
             }
+        }
+        if (infoDegreeCurricularPlan == null)
+        {
+            errors.add(
+                "noDegreeCurricularPlan",
+                new ActionError("error.coordinator.noDegreeCurricularPlan"));
+        }
+        if (!errors.isEmpty())
+        {
+            saveErrors(request, errors);
+            return (new ActionForward(mapping.getInput()));
         }
 
         DynaActionForm descriptionCurricularPlanForm = (DynaActionForm) form;
 
-        if (infoDegreeCurricularPlan != null)
-        {
-            descriptionCurricularPlanForm.set(
-                "descriptionDegreeCurricularPlan",
-                infoDegreeCurricularPlan.getDescription());
-            descriptionCurricularPlanForm.set(
-                "descriptionDegreeCurricularPlanEn",
-                infoDegreeCurricularPlan.getDescriptionEn());
+        descriptionCurricularPlanForm.set(
+            "descriptionDegreeCurricularPlan",
+            infoDegreeCurricularPlan.getDescription());
+        descriptionCurricularPlanForm.set(
+            "descriptionDegreeCurricularPlanEn",
+            infoDegreeCurricularPlan.getDescriptionEn());
 
-            request.setAttribute("infoDegreeCurricularPlanId", infoDegreeCurricularPlan.getIdInternal());
-        }
+        request.setAttribute("infoDegreeCurricularPlanId", infoDegreeCurricularPlan.getIdInternal());
 
         return mapping.findForward("viewDescriptionCurricularPlan");
     }
@@ -298,19 +334,45 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         try
         {
             gestorServicos.executar(userView, "EditDescriptionDegreeCurricularPlan", args);
+        } catch (NotAuthorizedException e)
+        {
+            errors.add("notAuthorized", new ActionError("error.exception.notAuthorized2"));
+        } catch (NonExistingServiceException e)
+        {
+            errors.add(
+                "noDegreeCurricularPlan",
+                new ActionError("message.nonExistingDegreeCurricularPlan"));
         } catch (FenixServiceException e)
         {
-			if (e.getMessage().equals("message.nonExistingDegreeCurricularPlan"))
-			{
-				errors.add("nonExistingDegreeCurricularPlan", new ActionError("message.nonExistingDegreeCurricularPlan"));
-				saveErrors(request, errors);
-			} else
-			{
-				throw new FenixActionException(e);
-			}
+            if (e.getMessage().equals("message.nonExistingDegreeCurricularPlan"))
+            {
+                errors.add(
+                    "nonExistingDegreeCurricularPlan",
+                    new ActionError("message.nonExistingDegreeCurricularPlan"));
+            } else
+            {
+                e.printStackTrace();
+                throw new FenixActionException(e);
+            }
+        }
+        if (!errors.isEmpty())
+        {
+            saveErrors(request, errors);
+            return (new ActionForward(mapping.getInput()));
         }
 
-        return mapping.findForward("degreeSiteMenu");
+        return mapping.findForward("editOK");
+    }
+
+    public ActionForward viewHistoric(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+
+        return mapping.findForward("viewHistoric");
     }
 
     public Integer convertString2Integer(String string)
@@ -355,17 +417,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         }
 
         return string;
-    }
-
-    public ActionForward viewHistoric(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-
-        return mapping.findForward("viewHistoric");
     }
 
     private Integer getFromRequest(String parameter, HttpServletRequest request)

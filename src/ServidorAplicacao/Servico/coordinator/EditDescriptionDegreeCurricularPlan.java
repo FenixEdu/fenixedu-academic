@@ -54,7 +54,7 @@ public class EditDescriptionDegreeCurricularPlan implements IServico
                 throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
             }
 
-			persistentDegreeCurricularPlan.simpleLockWrite(oldDegreeCP);
+			//persistentDegreeCurricularPlan.simpleLockWrite(oldDegreeCP);
 			
             oldDegreeCP.setDescription(newInfoDegreeCP.getDescription());
             oldDegreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());

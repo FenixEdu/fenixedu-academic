@@ -5,6 +5,18 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoExecutionPeriod" %>
 <span class="error"><html:errors/></span>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  		<tr>
+    		<td class="infoop">
+    			<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><h2 style="display: inline;"><bean:message key="link.degree.consult"/></h2></html:link>
+    		</td>
+  		</tr>
+	</table>
+<br />
+<p>
+<bean:message key="message.public.index.degree.consult"/>
+</p>
+<br />
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   		<tr>
     		<td class="infoop">
@@ -15,30 +27,6 @@
 <br />
 <p>
 <bean:message key="message.public.index.timetable.consult"/>
-</p>
-<br />
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td class="infoop">
-    			<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><h2 style="display: inline;"><bean:message key="link.degree.nonMaster.consult"/></h2></html:link>
-    		</td>
-  		</tr>
-	</table>
-<br />
-<p>
-<bean:message key="message.public.index.degree.nonMaster.consult"/>
-</p>
-<br />
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td class="infoop">
-    			<html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" ><h2 style="display: inline;"><bean:message key="link.degree.master.consult"/></h2></html:link>
-    		</td>
-  		</tr>
-	</table>
-<br />
-<p>
-<bean:message key="message.public.index.degree.master.consult"/>
 </p>
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">

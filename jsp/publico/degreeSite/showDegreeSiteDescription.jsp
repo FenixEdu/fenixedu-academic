@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<span class="error"><html:errors/></span>
+<p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoDegreeInfo">
 
@@ -12,7 +12,7 @@
 				</div>
 				
 				<!-- PÁGINA EM INGLÊS -->
-				<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+				<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 			 	<div class="clear"></div> 
 			  
 			  <!-- NOME DO CURSO -->
@@ -89,12 +89,12 @@
 			 
 			 	<div class="col_left">			 	
 			 		<logic:notEmpty name="infoDegreeInfo" property="description" >			 	
-				 	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.description" /> </h2>
+				 	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.description" /> </h2>
 				 	<p><!-- BREVE DESCRIÇAO DA LICENCIATURA--><bean:write name="infoDegreeInfo" property="description" filter="false" /></p>
 				 	</logic:notEmpty>
 				 
   			  <logic:notEmpty name="infoDegreeInfo" property="objectives" >
-				 	<h2> <img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.objectives" /></h2>
+				 	<h2> <img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.objectives" /></h2>
 		 	   	<p><!-- OBJECTIVOS --><bean:write name="infoDegreeInfo" property="objectives" filter="false" /></p>
 					</logic:notEmpty>
 				</div>
@@ -122,13 +122,13 @@
 				</div>
 				
 				<logic:notEmpty name="infoDegreeInfo" property="professionalExits" >
-			  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.professionalExits" /></h2>
+			  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.professionalExits" /></h2>
 			  <p><!-- TEXTO - SAÍDAS PROFISSIONAIS--><bean:write name="infoDegreeInfo" property="professionalExits" filter="false" /></p>  
 			  </logic:notEmpty>
 			  
 			  <logic:notEmpty name="infoDegreeInfo" property="history" >
 			  <div class="col_left">
-			  	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.history" /></h2>
+			  	<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.history" /></h2>
 				  <p><!-- TEXTO - HISTORIAL DA LICENCIATURA --><bean:write name="infoDegreeInfo" property="history" filter="false" /></p>
 				</div>
 				</logic:notEmpty>

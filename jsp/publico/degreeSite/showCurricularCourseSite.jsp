@@ -4,7 +4,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.TipoCurso" %>
 
-<span class="error"><html:errors/></span>
+<p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoCurriculum" >
 
@@ -27,7 +27,7 @@
 </div>	
 
 <!-- PÁGINA EM INGLÊS -->
-<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 <div class="clear"></div> 
 
 <br />
@@ -54,7 +54,7 @@
 				<logic:iterate id="infoExecutionCourse" name="infoCurricularCourse" property="infoAssociatedExecutionCourses">
 					<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
 					<p>
-					<html:link page="<%= "/viewSite.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseId").toString() + "&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" target="_blank" >
+					<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&amp;objectCode=" + pageContext.findAttribute("executionCourseId").toString() %>" target="_blank" >
 						<bean:write name="infoExecutionCourse" property="nome" />
 					</html:link>
 					<br />
@@ -66,7 +66,7 @@
 </div>
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
-<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.scope" />	</h2>
+<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.scope" />	</h2>
 <p>
 	<ul>
 		<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourse" property="infoScopes">
@@ -96,7 +96,7 @@
 <!-- CURRICULAR COURSE INFO -->
 <logic:notEmpty name="infoCurriculum" property="generalObjectives">
 		<logic:notEqual name="infoCurriculum" property="generalObjectives" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.generalObjectives" />	</h2>
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.generalObjectives" />	</h2>
 		<p>
 			<bean:write name="infoCurriculum" property="generalObjectives" filter="false"/>
 		</p>
@@ -104,7 +104,7 @@
 </logic:notEmpty>
 <logic:notEmpty name="infoCurriculum" property="operacionalObjectives">
 		<logic:notEqual name="infoCurriculum" property="operacionalObjectives" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.operacionalObjectives" /></h2>
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.operacionalObjectives" /></h2>
 		<p>
 			<bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/>
 		</p>
@@ -114,7 +114,7 @@
 <br/>
 <logic:notEmpty name="infoCurriculum" property="program">
 	<logic:notEqual name="infoCurriculum" property="program" value="">
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.program" /></h2>	
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.program" /></h2>	
 		<p>
 			<bean:write name="infoCurriculum" property="program" filter="false" />
 		</p>	

@@ -5,7 +5,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.TipoCurso" %>
 
-<span class="error"><html:errors/></span>
+<p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoDegreeInfo">
 
@@ -17,7 +17,7 @@
 	</div>
 	
 	<!-- PÁGINA EM INGLÊS -->
-	<div class="version"><span class="px10"><a href="http://www.ist.utl.pt/html/en/teaching.shtml">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
+	<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div>
 	<div class="clear"></div> 
 	
 	<h1><bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" /></h1>
@@ -52,13 +52,13 @@
 	  	
   <!-- CLASSIFICAÇÕES-->
   <logic:notEmpty name="infoDegreeInfo" property="classifications">
-	  <h2><img alt="" height="12" src="/img/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.classifications" /></h2>
+	  <h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.classifications" /></h2>
 	 	<bean:write name="infoDegreeInfo" property="classifications" filter="false" />
 	</logic:notEmpty>
  	
  	<!-- NOTAS -->
  	<logic:notEmpty name="infoDegreeInfo" property="markAverage">	 	
-		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" /><bean:message key="label.coordinator.degreeSite.marks" /></h2>
+		<h2><img alt="" height="12" src="<%= request.getContextPath() %>/images/icon_arrow.gif" width="12" />&nbsp;<bean:message key="label.coordinator.degreeSite.marks" /></h2>
 	  <ul>
 	  	<li><strong><bean:message key="label.coordinator.degreeSite.mark.average" />:</strong> <bean:write name="infoDegreeInfo" property="markAverage" /></li>
 	  	

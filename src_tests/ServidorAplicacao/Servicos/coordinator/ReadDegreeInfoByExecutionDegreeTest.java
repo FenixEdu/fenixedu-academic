@@ -175,8 +175,24 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 				fail("Reading a degree information" + e);
 			}
 
-			assertNull(infoDegreeInfo);
-
+			//In spite of this degree info doen't belong to the execution period used
+			//it's returned
+			assertNotNull(infoDegreeInfo);
+			assertEquals(new String("Obj2002"), infoDegreeInfo.getObjectives());
+			assertEquals(new String("His2002"), infoDegreeInfo.getHistory());
+			assertEquals(new String("Prof2002"), infoDegreeInfo.getProfessionalExits());
+			assertEquals(new String("addInfo2002"), infoDegreeInfo.getAdditionalInfo());
+			assertEquals(new String("Links2002"), infoDegreeInfo.getLinks());
+			assertEquals(new String("Test2002"), infoDegreeInfo.getTestIngression());
+			assertEquals(new Integer(60), infoDegreeInfo.getDriftsInitial());
+			assertEquals(new Integer(0), infoDegreeInfo.getDriftsFirst());
+			assertEquals(new Integer(0), infoDegreeInfo.getDriftsSecond());
+			assertEquals(new String("Class2002"), infoDegreeInfo.getClassifications());
+			assertEquals(new Double(0.0), infoDegreeInfo.getMarkMin());
+			assertEquals(new Double(0.0), infoDegreeInfo.getMarkMax());
+			assertEquals(new Double(10.0), infoDegreeInfo.getMarkAverage());
+			assertEquals(new Integer(2002), infoDegreeInfo.getInfoDegree().getIdInternal());
+			
 			System.out.println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testSuccessfullWithDegreeInfoLastYear");
 
 		} catch (FenixServiceException e) {
@@ -235,7 +251,7 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 				 gestor.executar(id, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
-				if (!msg.equals(new String("impossibleDegreeInfo"))) {
+				if (!msg.equals(new String("invalidExecutionDegree"))) {
 					e.printStackTrace();
 					fail("Reading a degree information");
 				} 
@@ -284,6 +300,37 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 		}
 	}
 
+	public void testNoExecutionDegree() {
+		try {
+			//Service Argument
+			Integer infoExecutionDegreeCode = new Integer(1);
+
+			Object[] args = { infoExecutionDegreeCode };
+
+			//Valid user
+			String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
+			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+
+			try {
+				 gestor.executar(id, getNameOfServiceToBeTested(), args);
+			} catch (FenixServiceException e) {
+				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
+				if (!msg.equals(new String("invalidExecutionDegree"))) {
+					e.printStackTrace();
+					fail("Reading a degree information");
+				} 
+			}
+
+			System.out.println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoExecutionDegree");
+
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			fail("Reading a degree information" + e);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Reading a degree information" + e);
+		}
+	}
 	public void testNoDegreeInfo() {
 		try {
 			//Service Argument
@@ -303,8 +350,12 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 				e.printStackTrace();
 				fail("Reading a degree information" + e);
 			}
-			assertNull(infoDegreeInfo);
-
+			
+			//this degree info isn't a null object
+			//but a "empty" object
+			assertNotNull(infoDegreeInfo);
+			assertNull(infoDegreeInfo.getDescription());
+						
 			System.out.println("ReadDegreeInfoByExecutionDegreeTest was SUCCESSFULY in test: testNoDegreeInfo");
 
 		} catch (FenixServiceException e) {

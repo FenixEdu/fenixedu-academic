@@ -19,11 +19,9 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão Created on 9/Out/2003
@@ -82,26 +80,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
             Collections.sort(allActiveCurricularCourseScopes, comparatorChain);
 
             request.setAttribute("allActiveCurricularCourseScopes", allActiveCurricularCourseScopes);
-        }
-
-        //read execution period for display the school year
-        Object[] args2 = { executionPeriodOId };
-
-        InfoExecutionPeriod infoExecutionPeriod = null;
-        try
-        {
-            infoExecutionPeriod =
-                (InfoExecutionPeriod) gestorServicos.executar(null, "ReadExecutionPeriodByOID", args2);
-        } catch (FenixServiceException e)
-        {
-			errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
-			saveErrors(request, errors);
-        }
-
-		request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
-       if (infoExecutionPeriod != null && infoExecutionPeriod.getInfoExecutionYear() != null)
-        {
-            request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
         }
 
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);

@@ -17,7 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoCurriculum;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteSection;
@@ -27,7 +26,6 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão Create on 20/Nov/2003
@@ -85,22 +83,6 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
 			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
 			Collections.sort(infoCurriculum.getInfoCurricularCourse().getInfoScopes(), comparatorChain);
-		}
-
-		//		read execution period for display the school year
-		Object[] args2 = { executionPeriodOId };
-
-		InfoExecutionPeriod infoExecutionPeriod = null;
-		try {
-			infoExecutionPeriod = (InfoExecutionPeriod) gestorServicos.executar(null, "ReadExecutionPeriodByOID", args2);
-		} catch (FenixServiceException e) {
-			errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
-			saveErrors(request, errors);
-		}
-
-		request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
-		if (infoExecutionPeriod != null && infoExecutionPeriod.getInfoExecutionYear() != null) {
-			request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
 		}
 
 		request.setAttribute("infoCurriculum", infoCurriculum);

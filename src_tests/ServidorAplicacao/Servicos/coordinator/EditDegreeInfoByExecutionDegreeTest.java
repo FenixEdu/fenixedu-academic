@@ -271,4 +271,94 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             fail("Reading a degree information" + e);
         }
     }
+
+	public void testNewDegreeInfoButWithLastPeriod()
+	{
+		try
+		{
+			//Service Argument
+			Integer infoExecutionDegreeCode = new Integer(2003);
+			Integer infoDegreeInfoCode = new Integer(4);
+			InfoDegreeInfo infoDegreeInfo = getNewDegreeInfoForm(infoDegreeInfoCode);
+
+			Object[] args = { infoExecutionDegreeCode, infoDegreeInfoCode, infoDegreeInfo };
+
+			//Valid user
+			String[] argsUser = getAuthenticatedAndAuthorizedUser();
+			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+
+			//Service
+			try
+			{
+				gestor.executar(id, getNameOfServiceToBeTested(), args);
+			} catch (FenixServiceException e)
+			{
+				e.printStackTrace();
+				fail("Reading a degree information" + e);
+			}
+
+			//Read the change in degree info
+			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+			ICursoExecucaoPersistente persistenExecutionDegree = sp.getICursoExecucaoPersistente();
+
+			//read executionDegree for find degree
+			ICursoExecucao executionDegree = new CursoExecucao();
+			executionDegree.setIdInternal(infoExecutionDegreeCode);
+
+			sp.iniciarTransaccao();
+			executionDegree =
+				(ICursoExecucao) persistenExecutionDegree.readByOId(executionDegree, false);
+			sp.confirmarTransaccao();
+
+			assertNotNull(executionDegree);
+			assertNotNull(executionDegree.getCurricularPlan());
+			assertNotNull(executionDegree.getCurricularPlan().getDegree());
+			assertEquals(
+				executionDegree.getCurricularPlan().getDegree().getIdInternal(),
+				new Integer(1000));
+
+			//read degree info by degree
+			IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
+
+			sp.iniciarTransaccao();
+			List degreeInfoList =
+				persistentDegreeInfo.readDegreeInfoByDegree(
+					executionDegree.getCurricularPlan().getDegree());
+			sp.confirmarTransaccao();
+
+			assertEquals(new Integer(degreeInfoList.size()), new Integer(2));
+
+			//verify change maded	
+			IDegreeInfo degreeInfoAck = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
+
+			assertNotNull(degreeInfoAck);
+			assertEquals(infoDegreeInfo.getObjectives(), degreeInfoAck.getObjectives());
+			assertEquals(infoDegreeInfo.getHistory(), degreeInfoAck.getHistory());
+			assertEquals(infoDegreeInfo.getProfessionalExits(), degreeInfoAck.getProfessionalExits());
+			assertEquals(infoDegreeInfo.getAdditionalInfo(), degreeInfoAck.getAdditionalInfo());
+			assertEquals(infoDegreeInfo.getLinks(), degreeInfoAck.getLinks());
+			assertEquals(infoDegreeInfo.getTestIngression(), degreeInfoAck.getTestIngression());
+			assertEquals(infoDegreeInfo.getDriftsInitial(), degreeInfoAck.getDriftsInitial());
+			assertEquals(infoDegreeInfo.getDriftsFirst(), degreeInfoAck.getDriftsFirst());
+			assertEquals(infoDegreeInfo.getDriftsSecond(), degreeInfoAck.getDriftsSecond());
+			assertEquals(infoDegreeInfo.getClassifications(), degreeInfoAck.getClassifications());
+			assertEquals(infoDegreeInfo.getMarkMin(), degreeInfoAck.getMarkMin());
+			assertEquals(infoDegreeInfo.getMarkMax(), degreeInfoAck.getMarkMax());
+			assertEquals(infoDegreeInfo.getMarkAverage(), degreeInfoAck.getMarkAverage());
+			assertNotNull(degreeInfoAck.getDegree());
+			assertEquals(degreeInfoAck.getDegree().getIdInternal(), new Integer(1000));
+
+			System.out.println(
+				"EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testNewDegreeInfo");
+
+		} catch (FenixServiceException e)
+		{
+			e.printStackTrace();
+			fail("Reading a degree information" + e);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			fail("Reading a degree information" + e);
+		}
+	}
 }
