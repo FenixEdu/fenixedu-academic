@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  * @author Ivo Brandão
  */
 
-public class InfoAnnouncement implements Comparable{
+public class InfoAnnouncement extends InfoObject implements Comparable,ISiteComponent {
 
 	private String title;
 	private Timestamp creationDate;

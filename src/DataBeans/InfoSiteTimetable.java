@@ -15,6 +15,8 @@ import java.util.List;
 public class InfoSiteTimetable implements ISiteComponent {
 
 private List lessons;
+
+
 /**
  * @return
  */

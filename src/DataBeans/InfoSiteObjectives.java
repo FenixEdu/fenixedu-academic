@@ -14,6 +14,9 @@ public class InfoSiteObjectives implements ISiteComponent {
 
 private String generalObjectives;
 private String operacionalObjectives;
+private String generalObjectivesEn;
+private String operacionalObjectivesEn;
+
 
 /**
  * @return
@@ -41,6 +44,34 @@ public void setGeneralObjectives(String string) {
  */
 public void setOperacionalObjectives(String string) {
 	operacionalObjectives = string;
+}
+
+/**
+ * @return
+ */
+public String getGeneralObjectivesEn() {
+	return generalObjectivesEn;
+}
+
+/**
+ * @return
+ */
+public String getOperacionalObjectivesEn() {
+	return operacionalObjectivesEn;
+}
+
+/**
+ * @param string
+ */
+public void setGeneralObjectivesEn(String string) {
+	generalObjectivesEn = string;
+}
+
+/**
+ * @param string
+ */
+public void setOperacionalObjectivesEn(String string) {
+	operacionalObjectivesEn = string;
 }
 
 }

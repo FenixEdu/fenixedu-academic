@@ -9,9 +9,8 @@ package DataBeans;
  * @author Ivo Brandão
  **/
 
-public class InfoSite extends InfoObject{
+public class InfoSite extends InfoObject implements ISiteComponent {
 
-	private InfoSection initialInfoSection;
 	private InfoExecutionCourse infoExecutionCourse;
 	private String alternativeSite;
 	private String mail;
@@ -41,11 +40,9 @@ public class InfoSite extends InfoObject{
 	*/
 
 	public InfoSite(
-		InfoSection initialInfoSection,
 		InfoExecutionCourse infoExecutionCourse,
 		String initialStatement,
 		String introduction) {
-		setInitialInfoSection(initialInfoSection);
 		setInfoExecutionCourse(infoExecutionCourse);
 		setInitialStatement(initialStatement);
 		setIntroduction(introduction);
@@ -82,24 +79,6 @@ public class InfoSite extends InfoObject{
 	//		this.infoAnnouncements = infoAnnouncements;
 	//	}
 
-	/**
-	* @return InfoSection
-	*/
-
-	public InfoSection getInitialInfoSection() {
-		return initialInfoSection;
-	}
-
-	/**
-	 * Sets the initialInfoSection.
-	 * @param initialInfoSection The initialInfoSection to set
-	 */
-	public void setInitialInfoSection(InfoSection initialInfoSection) {
-		this.initialInfoSection = initialInfoSection;
-	}
-
-	
-	
 
 	/**
 	* @return List of InfoSections
@@ -133,7 +112,6 @@ public class InfoSite extends InfoObject{
 	public String toString() {
 		String result = "[INFOSITE";
 		result += ", infoExecutionCourse=" + getInfoExecutionCourse();
-		result += ", initialInfoSection=" + getInitialInfoSection();
 		result += ", initialStatement=" + getInitialStatement();
 		result += ", introduction=" + getIntroduction();	
 		result += ", mail =" + getMail();

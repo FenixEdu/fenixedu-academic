@@ -6,6 +6,7 @@
 package DataBeans;
 
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * @author João Mota
@@ -14,81 +15,124 @@ import java.util.List;
  */
 public class InfoSiteCommon implements ISiteComponent {
 
-private String title;
-private String mail;
-private InfoExecutionCourse executionCourse;
-private List sections;
-private List associatedDegrees;
-// in reality the associatedDegrees list is a list of curricular courses
+	private String title;
+	private String mail;
+	private InfoExecutionCourse executionCourse;
+	private List sections;
+	private List associatedDegrees;
+	// in reality the associatedDegrees list is a list of curricular courses
 
-/**
- * @return
- */
-public List getAssociatedDegrees() {
-	return associatedDegrees;
-}
+	public boolean equals(Object objectToCompare) {
+		boolean result = false;
+		if (objectToCompare instanceof InfoSiteCommon
+			&& (((((InfoSiteCommon) objectToCompare).getTitle() != null
+				&& this.getTitle() != null
+				&& ((InfoSiteCommon) objectToCompare).getTitle().equals(this.getTitle()))
+				|| ((InfoSiteCommon) objectToCompare).getTitle() == null
+				&& this.getTitle() == null))
+				
+			&& (((((InfoSiteCommon) objectToCompare).getMail() != null
+				&& this.getMail() != null
+				&& ((InfoSiteCommon) objectToCompare).getMail().equals(this.getMail()))
+				|| ((InfoSiteCommon) objectToCompare).getMail() == null
+				&& this.getMail() == null))
+			&& (((((InfoSiteCommon) objectToCompare).getExecutionCourse() != null
+				&& this.getExecutionCourse() != null
+				&& ((InfoSiteCommon) objectToCompare).getExecutionCourse().equals(this.getExecutionCourse()))
+				|| ((InfoSiteCommon) objectToCompare).getExecutionCourse() == null
+				&& this.getExecutionCourse() == null))) {
+			result = true;
+		}
 
-/**
- * @return
- */
-public String getMail() {
-	return mail;
-}
+		if (((InfoSiteCommon) objectToCompare).getSections() == null && this.getSections() == null) {
+			return true;
+		}
+		if (((InfoSiteCommon) objectToCompare).getSections() == null
+			|| this.getSections() == null
+			|| ((InfoSiteCommon) objectToCompare).getSections().size() != this.getSections().size()) {
+			return false;
+		}
+		ListIterator iter1 = ((InfoSiteCommon) objectToCompare).getSections().listIterator();
+		ListIterator iter2 = this.getSections().listIterator();
+		while (result && iter1.hasNext()) {
+			InfoSection infoSection1 = (InfoSection) iter1.next();
+			InfoSection infoSection2 = (InfoSection) iter2.next();
+			if (!infoSection1.equals(infoSection2)) {
+				result = false;
+			}
+		}
 
-/**
- * @return
- */
-public List getSections() {
-	return sections;
-}
+		return result;
+	}
 
-/**
- * @return
- */
-public String getTitle() {
-	return title;
-}
+	/**
+	 * @return
+	 */
+	public List getAssociatedDegrees() {
+		return associatedDegrees;
+	}
 
-/**
- * @param list
- */
-public void setAssociatedDegrees(List list) {
-	associatedDegrees = list;
-}
+	/**
+	 * @return
+	 */
+	public String getMail() {
+		return mail;
+	}
 
-/**
- * @param string
- */
-public void setMail(String string) {
-	mail = string;
-}
+	/**
+	 * @return
+	 */
+	public List getSections() {
+		return sections;
+	}
 
-/**
- * @param list
- */
-public void setSections(List list) {
-	sections = list;
-}
+	/**
+	 * @return
+	 */
+	public String getTitle() {
+		return title;
+	}
 
-/**
- * @param string
- */
-public void setTitle(String string) {
-	title = string;
-}
+	/**
+	 * @param list
+	 */
+	public void setAssociatedDegrees(List list) {
+		associatedDegrees = list;
+	}
 
-/**
- * @return
- */
-public InfoExecutionCourse getExecutionCourse() {
-	return executionCourse;
-}
+	/**
+	 * @param string
+	 */
+	public void setMail(String string) {
+		mail = string;
+	}
 
-/**
- * @param course
- */
-public void setExecutionCourse(InfoExecutionCourse course) {
-	executionCourse = course;
-}
+	/**
+	 * @param list
+	 */
+	public void setSections(List list) {
+		sections = list;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setTitle(String string) {
+		title = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoExecutionCourse getExecutionCourse() {
+		return executionCourse;
+	}
+
+	/**
+	 * @param course
+	 */
+	public void setExecutionCourse(InfoExecutionCourse course) {
+		executionCourse = course;
+	}
 
 }
