@@ -304,6 +304,12 @@
 			</fileset>
 		</copy>
 		<copy todir="${build.web-client.webinf.libs}">
+			<fileset dir="${libs}" >
+				<include name="*.*"/>
+				<exclude name="servlet.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.web-client.webinf.libs}">
                         <fileset dir="${env.JBOSS_HOME}/client">
                                 <include name="*.jar"/>
 <!--
