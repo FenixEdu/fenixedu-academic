@@ -8,9 +8,9 @@
  */
 package ServidorApresentacao.Action.sop.utils;
 
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
  * @author jpvl

@@ -18,11 +18,11 @@ import org.apache.struts.action.ActionMapping;
 
 import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
-import ServidorAplicacao.NotAuthorizeException;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroPessoasGestaoAssiduidade;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorAplicacao.Servico.person.ServicoAutorizacaoAlterarPessoa;
 import ServidorAplicacao.Servico.person.ServicoAutorizacaoLerPessoa;
 import ServidorAplicacao.Servico.person.ServicoSeguroAlterarPessoa;

@@ -17,7 +17,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoSiteTimetable;
 import DataBeans.SiteView;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 

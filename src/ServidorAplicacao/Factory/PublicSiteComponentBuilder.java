@@ -20,7 +20,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurno;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;

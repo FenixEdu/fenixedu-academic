@@ -11,8 +11,8 @@ package ServidorAplicacao.Servico;
 
 import java.util.Calendar;
 
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import Util.Mes;
 
 

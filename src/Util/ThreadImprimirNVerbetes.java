@@ -22,12 +22,12 @@ import Dominio.CentroCusto;
 import Dominio.Funcionario;
 import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
-import ServidorAplicacao.NotAuthorizeException;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConsultarFuncionario;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConsultarVerbete;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import constants.assiduousness.Constants;
 
 /**

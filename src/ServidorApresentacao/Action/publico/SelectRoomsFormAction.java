@@ -14,8 +14,8 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import Util.TipoSala;

@@ -22,7 +22,7 @@ import DataBeans.InfoExecutionCourseAndExams;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 import Util.Season;
 import Util.TipoCurso;

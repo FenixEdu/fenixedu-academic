@@ -7,8 +7,8 @@ import java.util.List;
 import org.apache.struts.util.LabelValueBean;
 
 import Dominio.IExecutionYear;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;

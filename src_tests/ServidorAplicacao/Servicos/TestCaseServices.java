@@ -7,10 +7,10 @@
 package ServidorAplicacao.Servicos;
 
 import junit.framework.TestCase;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 

@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import Dominio.Funcionario;
 import Dominio.Pessoa;
-import ServidorAplicacao.NotExecuteException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.IPessoaPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;

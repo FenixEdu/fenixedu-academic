@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.assiduousness;
 import java.util.ArrayList;
 
 import Dominio.MarcacaoPonto;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IMarcacaoPontoPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 

@@ -13,8 +13,8 @@ package ServidorAplicacao.Servico.sop;
  **/
 import DataBeans.RoomKey;
 import Dominio.ISala;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;

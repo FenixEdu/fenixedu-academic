@@ -25,7 +25,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form,  
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		
 		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);

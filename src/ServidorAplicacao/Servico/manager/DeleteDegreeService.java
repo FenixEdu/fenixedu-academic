@@ -8,8 +8,8 @@ package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoDegree;
 import Dominio.ICurso;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;

@@ -22,9 +22,9 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoContributor;
 import DataBeans.InfoGuide;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.NoChangeMadeServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;

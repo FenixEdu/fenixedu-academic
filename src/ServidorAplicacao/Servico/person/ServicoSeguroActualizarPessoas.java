@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import Dominio.Pessoa;
-import ServidorAplicacao.NotExecuteException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IPessoaPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.LeituraFicheiroPessoa;

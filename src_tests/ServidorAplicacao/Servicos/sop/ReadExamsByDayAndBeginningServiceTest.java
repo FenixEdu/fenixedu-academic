@@ -25,7 +25,7 @@ import Dominio.ICurso;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.ISala;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;

@@ -20,8 +20,8 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 /**

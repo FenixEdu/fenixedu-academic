@@ -10,7 +10,6 @@ package ServidorAplicacao.Servico.exceptions;
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
-import ServidorAplicacao.FenixServiceException;
 
 public class InterceptingRoomsServiceException extends FenixServiceException {
 

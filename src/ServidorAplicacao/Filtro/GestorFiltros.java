@@ -19,7 +19,7 @@ import java.util.StringTokenizer;
 
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.InvalidServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidServiceException;
 
 public class GestorFiltros {
   private List _filters;

@@ -12,6 +12,9 @@ package ServidorAplicacao;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidServiceException;
+
 public abstract class InvocadorServicos {
 
   public static final int NONE = 0;

@@ -18,10 +18,10 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoSite;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;

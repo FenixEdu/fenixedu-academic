@@ -1,5 +1,8 @@
 package ServidorAplicacao;
 
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
+
 public abstract class ServicoSeguro implements IServicoAssiduidade {
     private ServicoAutorizacao _servicoAutorizacao;
     

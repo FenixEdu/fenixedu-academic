@@ -17,9 +17,9 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoGuide;
 import DataBeans.InfoMasterDegreeCandidate;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.GuideRequester;

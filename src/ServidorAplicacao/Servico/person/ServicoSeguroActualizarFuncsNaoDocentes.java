@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import Dominio.FuncNaoDocente;
 import Dominio.Funcionario;
-import ServidorAplicacao.NotExecuteException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;

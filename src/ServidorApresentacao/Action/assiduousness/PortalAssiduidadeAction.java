@@ -18,11 +18,11 @@ import org.apache.struts.util.MessageResources;
 
 import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
-import ServidorAplicacao.NotAuthorizeException;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoPortalAssiduidade;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroPortalAssiduidade;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import constants.assiduousness.Constants;
 
 /**

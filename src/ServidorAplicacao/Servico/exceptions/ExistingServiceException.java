@@ -10,7 +10,6 @@ package ServidorAplicacao.Servico.exceptions;
  *
  * @author  Luis Cruz & Nuno Nunes
  */
-import ServidorAplicacao.FenixServiceException;
 
 public class ExistingServiceException extends FenixServiceException {
 

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import Dominio.FuncNaoDocente;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.ICartaoPersistente;
 import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
 import ServidorPersistenteJDBC.SuportePersistente;

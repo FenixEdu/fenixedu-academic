@@ -11,9 +11,10 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISite;
 import Dominio.Site;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.ExecutionCourseSiteComponentBuilder;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentSite;
@@ -70,12 +71,18 @@ public class ExecutionCourseSiteComponentService implements IServico {
 			ISite site = null;
 			if (infoSiteCode != null) {
 
-				
-					site =(ISite) persistentSite.readByOId(new Site(infoSiteCode));
+				site = (ISite) persistentSite.readByOId(new Site(infoSiteCode));
+				if (site == null) {
+					throw new NonExistingServiceException();
+				}
 			} else {
 				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode));
-				 site = persistentSite.readByExecutionCourse(executionCourse); 					
+					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+						new DisciplinaExecucao(infoExecutionCourseCode));
+				if (executionCourse == null) {
+					throw new NonExistingServiceException();
+				}
+				site = persistentSite.readByExecutionCourse(executionCourse);
 			}
 			ExecutionCourseSiteComponentBuilder componentBuilder =
 				ExecutionCourseSiteComponentBuilder.getInstance();

@@ -4,10 +4,10 @@ import java.util.ListIterator;
 
 import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
-import ServidorAplicacao.NotAuthorizeException;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorAplicacao.Servico.person.ServicoSeguroEscreverPapelPessoa;
 import ServidorAplicacao.Servico.person.ServicoSeguroLerTodasPessoas;
 

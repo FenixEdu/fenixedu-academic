@@ -16,7 +16,7 @@ import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.NotAuthorizedException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;

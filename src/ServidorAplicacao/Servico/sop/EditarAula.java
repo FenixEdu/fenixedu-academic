@@ -13,7 +13,6 @@ package ServidorAplicacao.Servico.sop;
  **/
 import java.util.List;
 
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.KeyLesson;
@@ -22,9 +21,9 @@ import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;

@@ -11,7 +11,6 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import junit.framework.Test;

@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 
 import Dominio.Paises;
 import Dominio.Pessoa;
-import ServidorAplicacao.NotExecuteException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IPaisesPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 

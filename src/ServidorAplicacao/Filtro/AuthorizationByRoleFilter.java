@@ -10,7 +10,7 @@ import java.util.Iterator;
 import DataBeans.InfoRole;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.NotAuthorizedException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import Util.RoleType;
 
 /**

@@ -8,11 +8,11 @@ package ServidorAplicacao.Filtro;
  * @version
  **/
 
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.NotAuthorizedException;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
 public class FiltroAutorizacao extends Filtro {
   

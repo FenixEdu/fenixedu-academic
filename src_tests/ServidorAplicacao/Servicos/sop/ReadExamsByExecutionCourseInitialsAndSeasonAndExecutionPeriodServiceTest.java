@@ -16,7 +16,7 @@ import DataBeans.InfoExam;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoViewExamByDayAndShift;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 import Util.Season;
 

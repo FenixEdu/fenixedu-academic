@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import Dominio.Funcionario;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.IJustificacaoPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;

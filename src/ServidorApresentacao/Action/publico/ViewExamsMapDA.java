@@ -21,8 +21,8 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteExamMap;
 import DataBeans.SiteView;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 

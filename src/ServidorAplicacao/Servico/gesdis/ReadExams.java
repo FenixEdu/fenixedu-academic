@@ -13,8 +13,9 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -71,6 +72,9 @@ public class ReadExams implements IServico {
 				sp = SuportePersistenteOJB.getInstance();
 				IDisciplinaExecucaoPersistente persistentExecutionCourse=sp.getIDisciplinaExecucaoPersistente();
 				executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse);
+				if (executionCourse ==null){
+					throw new NonExistingServiceException();
+				}
 				List infoExams=new ArrayList();
 				List exams = null;
 				if (executionCourse!=null){ exams = executionCourse.getAssociatedExams();

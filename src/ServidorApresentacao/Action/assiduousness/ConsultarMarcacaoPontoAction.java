@@ -23,12 +23,12 @@ import org.apache.struts.util.MessageResources;
 
 import Dominio.MarcacaoPonto;
 import ServidorAplicacao.Executor;
-import ServidorAplicacao.NotAuthorizeException;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConstruirEscolhasMarcacoesPonto;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConsultarMarcacaoPonto;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.formbeans.assiduousness.ConsultarMarcacaoPontoForm;
 import Util.Comparador;
 import Util.FormataCalendar;

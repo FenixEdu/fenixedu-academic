@@ -1,5 +1,7 @@
 package ServidorAplicacao;
 
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.ErrorConstants;
 

@@ -28,7 +28,11 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
@@ -44,7 +48,7 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -65,12 +69,22 @@ public class ViewExamsMapDA extends FenixDispatchAction {
 
 			Object[] args =
 				{ infoExecutionDegree, curricularYears, infoExecutionPeriod };
-			InfoExamsMap infoExamsMap =
-				(InfoExamsMap) gestor.executar(userView, "ReadExamsMap", args);
+			InfoExamsMap infoExamsMap;
+			try {
+				infoExamsMap =
+					(InfoExamsMap) gestor.executar(
+						userView,
+						"ReadExamsMap",
+						args);
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException(e);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
 
 			session.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
 		} else {
-			throw new Exception();
+			throw new FenixActionException();
 		}
 
 		return mapping.findForward("viewExamsMap");

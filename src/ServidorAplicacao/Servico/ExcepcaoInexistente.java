@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico;
 
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
  * @author jorge

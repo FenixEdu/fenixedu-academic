@@ -28,6 +28,10 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -41,7 +45,7 @@ public class EditExamRoomsDA extends DispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
@@ -58,7 +62,8 @@ public class EditExamRoomsDA extends DispatchAction {
 		if (examRooms != null) {
 			String[] rooms = new String[examRooms.size()];
 			for (int i = 0; i < examRooms.size(); i++) {
-				rooms[i] = ((InfoRoom) examRooms.get(i)).getIdInternal().toString();
+				rooms[i] =
+					((InfoRoom) examRooms.get(i)).getIdInternal().toString();
 			}
 			editExamRoomsForm.set("selectedRooms", rooms);
 		} else {
@@ -66,8 +71,13 @@ public class EditExamRoomsDA extends DispatchAction {
 		}
 
 		Object[] args = { infoExam };
-		List availableRooms =
-			(List) gestor.executar(userView, "ReadEmptyRoomsForExam", args);
+		List availableRooms;
+		try {
+			availableRooms =
+				(List) gestor.executar(userView, "ReadEmptyRoomsForExam", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
 		Hashtable roomsHashTable = new Hashtable();
 		for (int i = 0; i < availableRooms.size(); i++) {
@@ -97,7 +107,7 @@ public class EditExamRoomsDA extends DispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
@@ -116,11 +126,20 @@ public class EditExamRoomsDA extends DispatchAction {
 		}
 
 		Object[] args = { infoExam, roomsToSet };
-		infoExam = (InfoExam) gestor.executar(userView, "EditExamRooms", args);
+		try {
+			infoExam =
+				(InfoExam) gestor.executar(userView, "EditExamRooms", args);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException(e);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
 
 		infoViewExamByDayAndShift.setInfoExam(infoExam);
 		session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
-		session.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
+		session.setAttribute(
+			SessionConstants.INFO_EXAMS_KEY,
+			infoViewExamByDayAndShift);
 
 		return mapping.findForward("ViewEditExamForm");
 	}

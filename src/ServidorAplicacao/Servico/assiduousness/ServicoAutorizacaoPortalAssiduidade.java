@@ -2,8 +2,8 @@ package ServidorAplicacao.Servico.assiduousness;
 
 import Dominio.Funcionario;
 import Dominio.Pessoa;
-import ServidorAplicacao.NotAuthorizeException;
 import ServidorAplicacao.ServicoAutorizacao;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;

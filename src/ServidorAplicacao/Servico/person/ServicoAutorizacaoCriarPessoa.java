@@ -1,8 +1,8 @@
 package ServidorAplicacao.Servico.person;
 
 import Dominio.Pessoa;
-import ServidorAplicacao.NotAuthorizeException;
 import ServidorAplicacao.ServicoAutorizacao;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorPersistenteJDBC.IPessoaPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 

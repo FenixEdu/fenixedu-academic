@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.enrolment.degree;
 
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.degree.IEnrolmentStrategyFactory;

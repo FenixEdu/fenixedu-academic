@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.assiduousness;
 
-import ServidorAplicacao.NotAuthorizeException;
 import ServidorAplicacao.ServicoAutorizacao;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 
 /**
  *

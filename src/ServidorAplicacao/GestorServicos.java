@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import ServidorAplicacao.Filtro.GestorFiltros;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidServiceException;
 
 /**
  * This class is the entry point of the system to execute

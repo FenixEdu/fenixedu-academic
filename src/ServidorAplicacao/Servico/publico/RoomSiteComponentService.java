@@ -11,9 +11,10 @@ import DataBeans.SiteView;
 import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.RoomSiteComponentBuilder;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISalaPersistente;
@@ -65,7 +66,9 @@ public class RoomSiteComponentService implements IServico {
 			ISala room = persistentRoom.readByName(roomKey.getNomeSala());
 			IExecutionPeriod executionPeriod =
 				(IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionPeriodCode));
-
+			if (executionPeriod==null) {
+				throw new NonExistingServiceException();
+			}
 			RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
 			bodyComponent = componentBuilder.getComponent(bodyComponent, executionPeriod, room);
 			System.out.println("component"+bodyComponent);

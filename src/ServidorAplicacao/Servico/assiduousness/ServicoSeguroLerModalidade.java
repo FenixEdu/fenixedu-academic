@@ -3,9 +3,9 @@ package ServidorAplicacao.Servico.assiduousness;
 import java.util.ArrayList;
 
 import Dominio.Modalidade;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IModalidadePersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 

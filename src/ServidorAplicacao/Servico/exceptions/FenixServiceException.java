@@ -1,4 +1,4 @@
-package ServidorAplicacao;
+package ServidorAplicacao.Servico.exceptions;
 
 public class FenixServiceException extends Exception {
 

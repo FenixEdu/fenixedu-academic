@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import Dominio.Funcionario;
 import Dominio.Pessoa;
-import ServidorAplicacao.NotAuthorizeException;
 import ServidorAplicacao.ServicoAutorizacao;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.IPessoaPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;

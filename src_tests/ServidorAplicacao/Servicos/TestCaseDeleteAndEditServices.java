@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servicos;
 
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
  * @author dcs-rjao

@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;

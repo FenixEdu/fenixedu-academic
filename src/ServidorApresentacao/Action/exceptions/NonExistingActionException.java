@@ -20,6 +20,7 @@ public class NonExistingActionException extends FenixActionException {
 		}
 
 	public NonExistingActionException(Throwable cause) {
+		
 		super(key, cause);
 	}
 	

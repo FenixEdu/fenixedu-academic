@@ -30,9 +30,9 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;

@@ -20,11 +20,11 @@ import javax.servlet.http.HttpSession;
 
 import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
-import ServidorAplicacao.NotAuthorizeException;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroPessoasGestaoAssiduidade;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 
 /**
  * @author Fernanda Quitério & Tânia Pousão

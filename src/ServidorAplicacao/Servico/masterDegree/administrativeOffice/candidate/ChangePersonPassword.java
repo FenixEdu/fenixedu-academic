@@ -6,9 +6,9 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
 import DataBeans.InfoPerson;
 import Dominio.IPessoa;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidPasswordServiceException;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;

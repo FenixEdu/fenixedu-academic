@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import Dominio.Horario;
 import Dominio.HorarioTipo;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IFeriadoPersistente;
 import ServidorPersistenteJDBC.IHorarioPersistente;
 import ServidorPersistenteJDBC.IHorarioTipoPersistente;

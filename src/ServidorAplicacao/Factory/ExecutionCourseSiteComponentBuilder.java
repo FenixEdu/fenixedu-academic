@@ -52,7 +52,7 @@ import Dominio.ISite;
 import Dominio.ITeacher;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;

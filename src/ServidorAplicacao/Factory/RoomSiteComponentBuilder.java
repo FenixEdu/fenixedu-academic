@@ -17,7 +17,7 @@ import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;

@@ -1,4 +1,4 @@
-package ServidorAplicacao;
+package ServidorAplicacao.Servico.exceptions;
 
 /**
  * This class represents an exception thrown when an invalid service

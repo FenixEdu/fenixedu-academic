@@ -11,8 +11,9 @@ import DataBeans.InfoExam;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
 import Dominio.Sala;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.ISalaPersistente;
@@ -61,6 +62,9 @@ public class EditExamRooms implements IServico {
 			Exam examQuery = new Exam();
 			examQuery.setIdInternal(infoExam.getIdInternal());
 			final Exam exam = (Exam) persistentRoom.readByOId(examQuery);
+			if (exam==null) {
+				throw new NonExistingServiceException();
+			}
 			persistentExam.lockWrite(exam);
 
 			// Remove all elements

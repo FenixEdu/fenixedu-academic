@@ -6,7 +6,7 @@ package ServidorAplicacao.Servico.person;
 
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import ServidorAplicacao.NotExecutedException;
+import ServidorAplicacao.Servico.exceptions.NotExecutedException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;

@@ -12,7 +12,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.OJB.SuportePersistenteOJB;

@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servico.exceptions;
 
-import ServidorAplicacao.FenixServiceException;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

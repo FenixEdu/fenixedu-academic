@@ -19,8 +19,8 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRole;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import Util.RoleType;
 

@@ -23,7 +23,7 @@ import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.TestCaseRequeiersAuthorizationServices;
 
 public class ReadExamsMapServiceTest extends TestCaseRequeiersAuthorizationServices {

@@ -18,12 +18,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.Exam;
 import Dominio.IExam;
-import Dominio.ISala;
-import Dominio.Sala;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISalaPersistente;
-import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.TipoSala;
 
 public class SalaOJBTest extends TestCaseOJB {
 	SuportePersistenteOJB persistentSupport = null;

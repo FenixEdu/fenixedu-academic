@@ -6,7 +6,6 @@ package ServidorAplicacao.Servico.exceptions;
 
 import java.util.Date;
 
-import ServidorAplicacao.FenixServiceException;
 
 /**
  * @author jpvl

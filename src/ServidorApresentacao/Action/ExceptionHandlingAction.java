@@ -1,8 +1,7 @@
 /*
  * Created on 25/Fev/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
  */
 package ServidorApresentacao.Action;
 
@@ -34,7 +33,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		
 		ActionMapping originalMapping =
 			(ActionMapping) session.getAttribute(
@@ -102,7 +101,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws Exception {
-			HttpSession session = request.getSession(false);
+			HttpSession session = request.getSession();
 
 			ActionMapping originalMapping =
 				(ActionMapping) session.getAttribute(
@@ -111,15 +110,16 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 			
 			ActionForward actionForward = originalMapping.getInputForward();
 			
+		
+			
 			RequestUtils.selectModule(
 				originalMapping.getModuleConfig().getPrefix(),
 				request,
 				this.servlet.getServletContext());
+			if (actionForward.getPath()==null){			
+			actionForward.setPath("/");
+			}
 			
-			actionForward.setPath(actionForward.getPath());
-			//actionForward.setContextRelative(true);
-		
-		
 			return actionForward;
 		}
 
@@ -139,10 +139,10 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	private void sessionRemover(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 
-//		session.removeAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
+
 		session.removeAttribute(Globals.ERROR_KEY);
 		session.removeAttribute(SessionConstants.REQUEST_CONTEXT);
-//		session.removeAttribute(SessionConstants.EXCEPTION_STACK_TRACE);
+
 	}
 
 	private String sessionContextGetter(HttpServletRequest request) {

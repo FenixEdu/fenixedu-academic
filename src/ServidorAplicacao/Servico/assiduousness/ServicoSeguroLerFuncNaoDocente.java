@@ -5,9 +5,9 @@
 package ServidorAplicacao.Servico.assiduousness;
 
 import Dominio.FuncNaoDocente;
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 

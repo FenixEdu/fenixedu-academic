@@ -3,9 +3,9 @@ package ServidorAplicacao.Servico.assiduousness;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IMarcacaoPontoPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
