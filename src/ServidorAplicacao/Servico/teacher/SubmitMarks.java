@@ -17,11 +17,12 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoEvaluation;
+import DataBeans.InfoFrequenta;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
-import DataBeans.util.Cloner;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
@@ -189,15 +190,18 @@ public class SubmitMarks implements IServico {
                 //check student´s degree type
                 if (attend.getAluno().getDegreeType().equals(
                         TipoCurso.MESTRADO_OBJ)) {
-                    enrolmentEvaluationsByDegree.put(new String("mestrado"),
-                            Cloner.copyIFrequenta2InfoFrequenta(attend));
+                    //CLONER
+                    //enrolmentEvaluationsByDegree.put(new String("mestrado"),
+                            //Cloner.copyIFrequenta2InfoFrequenta(attend));
+                    enrolmentEvaluationsByDegree.put(new String("mestrado"), InfoFrequenta.newInfoFromDomain(attend));
                     continue;
                 }
 
                 //check if this student is enrolled
                 if (enrolment == null) {
-                    enrolmentEvaluationsByDegree.put(new String("notEnrolled"),
-                            Cloner.copyIFrequenta2InfoFrequenta(attend));
+                    enrolmentEvaluationsByDegree.put(new String("notEnrolled"), InfoFrequenta.newInfoFromDomain(attend));
+                    //enrolmentEvaluationsByDegree.put(new String("notEnrolled"),
+                            //Cloner.copyIFrequenta2InfoFrequenta(attend));
                     continue;
                 }
 
@@ -208,10 +212,14 @@ public class SubmitMarks implements IServico {
                             userView, executionCourse, enrolment,
                             evaluationDate, "NA", employee, teacher);
                     InfoMark infoMark = new InfoMark();
-                    infoMark.setInfoEvaluation(Cloner
-                            .copyIEvaluation2InfoEvaluation(evaluation));
-                    infoMark.setInfoFrequenta(Cloner
-                            .copyIFrequenta2InfoFrequenta(attend));
+                    //CLONER
+                    //infoMark.setInfoEvaluation(Cloner
+                            //.copyIEvaluation2InfoEvaluation(evaluation));
+                    infoMark.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
+                    //CLONER
+                    //infoMark.setInfoFrequenta(Cloner
+                            //.copyIFrequenta2InfoFrequenta(attend));
+                    infoMark.setInfoFrequenta(InfoFrequenta.newInfoFromDomain(attend));
                     infoMark.setMark("NA");
                     enrolmentEvaluationsByDegree.put(new String("infoMarks"),
                             infoMark);
@@ -222,8 +230,10 @@ public class SubmitMarks implements IServico {
                             userView, executionCourse, enrolment,
                             evaluationDate, mark.getMark().toUpperCase(),
                             employee, teacher);
-                    enrolmentEvaluationsByDegree.put(new String("infoMarks"),
-                            Cloner.copyIMark2InfoMark(mark));
+                    //CLONER
+                    //enrolmentEvaluationsByDegree.put(new String("infoMarks"),
+                            //Cloner.copyIMark2InfoMark(mark));
+                    enrolmentEvaluationsByDegree.put(new String("infoMarks"), InfoMark.newInfoFromDomain(mark));
 
                 }
 
@@ -397,8 +407,9 @@ public class SubmitMarks implements IServico {
 
         InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
 
-        infoSiteSubmitMarks.setInfoEvaluation(Cloner
-                .copyIEvaluation2InfoEvaluation(evaluation));
+        //infoSiteSubmitMarks.setInfoEvaluation(Cloner
+                //.copyIEvaluation2InfoEvaluation(evaluation));
+        infoSiteSubmitMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
         infoSiteSubmitMarks.setMarksList(marksList);
 
         // order errorsNotEnrolmented list by student's number

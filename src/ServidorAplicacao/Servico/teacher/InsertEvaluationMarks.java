@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoEvaluation;
+import DataBeans.InfoFrequenta;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
-import DataBeans.util.Cloner;
 import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
 import Dominio.IDegreeCurricularPlan;
@@ -123,8 +124,10 @@ public class InsertEvaluationMarks implements IServico {
                     if (!isValidMark(evaluation, mark, attend.getAluno())) {
                         InfoMark infoMark = new InfoMark();
                         infoMark.setMark(mark);
-                        infoMark.setInfoFrequenta(Cloner
-                                .copyIFrequenta2InfoFrequenta(attend));
+                        //CLONER
+                        //infoMark.setInfoFrequenta(Cloner
+                                //.copyIFrequenta2InfoFrequenta(attend));
+                        infoMark.setInfoFrequenta(InfoFrequenta.newInfoFromDomain(attend));
                         marksErrorsInvalidMark.add(infoMark);
                     } else {
                         newHashMarks.put(attend.getAluno().getNumber()
@@ -178,8 +181,10 @@ public class InsertEvaluationMarks implements IServico {
             HashMap hashMarks, List marksErrorsInvalidMark, List attendList,
             HashMap nonExistingStudents) throws FenixServiceException {
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
-        infoSiteMarks.setInfoEvaluation(Cloner
-                .copyIEvaluation2InfoEvaluation(evaluation));
+        //CLONER
+        //infoSiteMarks.setInfoEvaluation(Cloner
+                //.copyIEvaluation2InfoEvaluation(evaluation));
+        infoSiteMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
         infoSiteMarks.setHashMarks(hashMarks);
         infoSiteMarks.setMarksListErrors(marksErrorsInvalidMark);
         infoSiteMarks.setInfoAttends(attendList);
@@ -230,8 +235,10 @@ public class InsertEvaluationMarks implements IServico {
         if (mark == null || mark.length() == 0) {
             return true;
         } 
-            return degreeCurricularPlanStrategy.checkMark(mark, Cloner
-                    .copyIEvaluation2InfoEvaluation(evaluation)
+            //return degreeCurricularPlanStrategy.checkMark(mark, Cloner
+                    //.copyIEvaluation2InfoEvaluation(evaluation)
+                    //.getEvaluationType());
+            return degreeCurricularPlanStrategy.checkMark(mark, InfoEvaluation.newInfoFromDomain(evaluation)
                     .getEvaluationType());
         
     }

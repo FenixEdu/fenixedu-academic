@@ -6,8 +6,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import DataBeans.InfoEvaluation;
 import DataBeans.InfoSiteSubmitMarks;
-import DataBeans.util.Cloner;
 import Dominio.Evaluation;
 import Dominio.ExecutionCourse;
 import Dominio.IEnrollment;
@@ -111,8 +111,10 @@ public class ValidateSubmitMarks implements IServico {
 
             InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
 
-            infoSiteSubmitMarks.setInfoEvaluation(Cloner
-                    .copyIEvaluation2InfoEvaluation(evaluation));
+            //CLONER
+            //infoSiteSubmitMarks.setInfoEvaluation(Cloner
+                    //.copyIEvaluation2InfoEvaluation(evaluation));
+            infoSiteSubmitMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
 
             return infoSiteSubmitMarks;
         } catch (Exception e) {
