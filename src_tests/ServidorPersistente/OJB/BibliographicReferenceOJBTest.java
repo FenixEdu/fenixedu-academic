@@ -56,12 +56,20 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 		// reads an execution course to serve as input to the next invoked method
 		try {
 			persistentSupport.iniciarTransaccao();
+//			executionCourse =
+//				persistentExecutionCourse
+//					.readByExecutionCourseInitialsAndExecutionPeriod(
+//					"TFCI",
+//					new ExecutionPeriod(
+//						"2º Semestre",
+//						new ExecutionYear("2002/2003")));
 			executionCourse =
 				persistentExecutionCourse
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 					"TFCI",
 					"2002/2003",
 					"LEIC");
+			assertNotNull(executionCourse);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("    -> Failed Reading Existing Execution Course");
@@ -103,6 +111,7 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 					"TFCI",
 					"2002/2003",
 					"LEIC");
+			assertNotNull(executionCourse);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("    -> Failed Reading Existing Execution Course");
@@ -111,6 +120,7 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 		// reads a bibliographic reference which exists in the database
 		try {
 			persistentSupport.iniciarTransaccao();
+			System.out.println("executionCourse : " + executionCourse);
 			IPersistentBibliographicReference ref =
 				persistentSupport.getIPersistentBibliographicReference();
 			reference =
@@ -140,6 +150,7 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 					"TFCI",
 					"2002/2003",
 					"LEIC");
+			assertNotNull(executionCourse);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("    -> Failed Reading Existing Execution Course");
@@ -157,7 +168,7 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 					"pedro",
 					"ref",
 					"2002");
-			ref.delete(reference);			
+			ref.delete(reference);
 			persistentSupport.confirmarTransaccao();
 			persistentSupport.iniciarTransaccao();
 			IBibliographicReference newBibRef = null;
@@ -175,44 +186,42 @@ public class BibliographicReferenceOJBTest extends TestCaseOJB {
 			fail("    -> Failed Reading Existing Bibliographic Reference");
 		}
 	}
-	
+
 	public void testDeleteNonExistingBibliographicReference() {
-			IDisciplinaExecucao executionCourse = null;
-			IBibliographicReference reference = null;
+		IDisciplinaExecucao executionCourse = null;
+		IBibliographicReference reference = null;
 
-			// reads an execution course to serve as input to the next invoked method
-			try {
-				persistentSupport.iniciarTransaccao();
-				executionCourse =
-					persistentExecutionCourse
-						.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
-						"TFCI",
-						"2002/2003",
-						"LEIC");
-				persistentSupport.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("    -> Failed Reading Existing Execution Course");
-			}
-
-			// reads a bibliographic reference which exists in the database
-			try {
-				persistentSupport.iniciarTransaccao();
-				IPersistentBibliographicReference ref =
-					persistentSupport.getIPersistentBibliographicReference();
-				reference = new BibliographicReference();				
-				reference.setExecutionCourse(executionCourse);
-				reference.setTitle("fvrtgtr");
-				reference.setAuthors("cref");
-				reference.setReference("ferj");
-				reference.setYear("ehri");						
-				ref.delete(reference);			
-				persistentSupport.confirmarTransaccao();
-						} catch (ExcepcaoPersistencia ex) {
-				fail("    -> Failed Reading Existing Bibliographic Reference");
-			}
+		// reads an execution course to serve as input to the next invoked method
+		try {
+			persistentSupport.iniciarTransaccao();
+			executionCourse =
+				persistentExecutionCourse
+					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+					"TFCI",
+					"2002/2003",
+					"LEIC");
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Failed Reading Existing Execution Course");
 		}
 
-	
+		// reads a bibliographic reference which exists in the database
+		try {
+			persistentSupport.iniciarTransaccao();
+			IPersistentBibliographicReference ref =
+				persistentSupport.getIPersistentBibliographicReference();
+			reference = new BibliographicReference();
+			reference.setExecutionCourse(executionCourse);
+			reference.setTitle("fvrtgtr");
+			reference.setAuthors("cref");
+			reference.setReference("ferj");
+			reference.setYear("ehri");
+			ref.delete(reference);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Failed Reading Existing Bibliographic Reference");
+		}
+	}
 
 	protected void tearDown() {
 		//super.tearDown();
