@@ -20,8 +20,9 @@
     <property name="dtds" location="${metadata}/dtds" />
     <property name="javadoc.source.home" location="javaDocSource" />
     <property name="javadoc.test.home" location="javaDocTests" />
-    <property name="etc.datasets" location="etc/datasets" />
-    <property name="etc.datasets_templates" location="etc/datasets_templates" />
+    <property name="etc" location="etc"/>
+    <property name="etc.datasets" location="${etc}/datasets" />
+    <property name="etc.datasets_templates" location="${etc}/datasets_templates" />
     
 	<property name="build.home" location="build"/>
 
@@ -225,7 +226,7 @@
 		    property="ftp.IST.server.pass"/>
 		  <replacefilter 
 		    token="@ftp.IST.server.address@" 
-		    property="ftp.IST.server.address"/>
+		    property="ftp.IST.server.address"/>   
 		</replace>
 		<antcall target="validate-xml"/>
     </target>
@@ -1211,5 +1212,11 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	          password="${db.pass}">
     	  <export dest="${metadata}/dtds/fenix-database.dtd" format="dtd"/> 
 	  </dbunit>
+	</target>
+	
+	<target name="generate-dataset" description="Generates a dataset using the parameters specified in DataSetGenerator.properties" depends="compile-proj">
+		<java classname="Tools.DataSetGeneratorMain" fork="true">
+			<classpath refid="runtime-classpath" />
+		</java>
 	</target>
 </project>
