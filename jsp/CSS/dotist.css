@@ -220,6 +220,7 @@ a:hover {
 	border-width: 1px;
 	border-style: dotted;
 	border-color: #333333;
+	text-align: left;
 	}
 	
 .formTD	{
