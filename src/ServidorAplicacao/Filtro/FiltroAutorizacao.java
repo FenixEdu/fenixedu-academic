@@ -8,12 +8,10 @@ package ServidorAplicacao.Filtro;
  * @version
  **/
 
-import java.util.Set;
-
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.NotAuthorizedException;
-import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.Servico.UserView;
 
 public class FiltroAutorizacao extends Filtro {
@@ -46,16 +44,16 @@ public class FiltroAutorizacao extends Filtro {
       throw new FenixServiceException("Invalid user ID");
     }
     
-    UserView userView = (UserView) id;
-    Set privilegios = userView.getPrivilegios();
-    if (privilegios != null) {
-      result = privilegios.contains(servico.getNome());
-    }
-//      System.out.println(result);
-    if (!result){
-      throw new NotAuthorizedException("User " + userView.getUtilizador() +
-				       " does not have privileges to run service " +
-				       servico.getNome());
-    }
+//    UserView userView = (UserView) id;
+//    Set privilegios = userView.getPrivilegios();
+//    if (privilegios != null) {
+//      result = privilegios.contains(servico.getNome());
+//    }
+////      System.out.println(result);
+//    if (!result){
+//      throw new NotAuthorizedException("User " + userView.getUtilizador() +
+//				       " does not have privileges to run service " +
+//				       servico.getNome());
+//    }
   }
 }
