@@ -25,6 +25,7 @@ public class PersistentObjectOJB {
 	public PersistentObjectOJB() {
 		try {
 			broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			broker.clearCache();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

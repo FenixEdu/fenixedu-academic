@@ -8,15 +8,14 @@ package middleware.almeida;
 
 import java.util.List;
 
-import middleware.almeida.dcsrjao.Almeida_curricular_course;
-import middleware.almeida.dcsrjao.Almeida_enrolment;
-import middleware.almeida.dcsrjao.velhos.Leq_cc_scope;
-import middleware.almeida.dcsrjao.velhos.Leq_new_curricular_course;
-
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.Branch;
 import Dominio.CurricularCourse;
+import Dominio.CurricularCourseEquivalence;
+import Dominio.CurricularCourseEquivalenceRestriction;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
 import Dominio.CurricularYear;
@@ -24,12 +23,17 @@ import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
+import Dominio.EnrolmentEquivalence;
+import Dominio.EnrolmentEquivalenceRestriction;
+import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Frequenta;
 import Dominio.Funcionario;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseEquivalence;
+import Dominio.ICurricularCourseEquivalenceRestricition;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
@@ -37,16 +41,22 @@ import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEquivalence;
+import Dominio.IEnrolmentEquivalenceRestriction;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.IUniversityCode;
 import Dominio.Pessoa;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
+import Dominio.UniversityCode;
 import Util.DegreeCurricularPlanState;
+import Util.EnrolmentEvaluationType;
 import Util.PeriodState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
@@ -80,7 +90,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	public IDegreeCurricularPlan readDegreeCurricularPlan(Integer degreeID) {
+	public IDegreeCurricularPlan readDegreeCurricularPlanByDegreeID(Integer degreeID) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("degree.idInternal", degreeID);
 		List result = query(DegreeCurricularPlan.class, criteria);
@@ -233,12 +243,8 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	 */
 	public IFrequenta readFrequenta(IStudent student, IDisciplinaExecucao disciplinaExecucao) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo(
-			"aluno.internalCode",
-			((Student) student).getIdInternal());
-			criteria.addEqualTo(
-				"disciplinaExecucao.idInternal",
-				((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
+		criteria.addEqualTo("aluno.internalCode", ((Student) student).getIdInternal());
+		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
 		criteria.addEqualTo("aluno.internalCode", ((Student) student).getIdInternal());
 		criteria.addEqualTo("disciplinaExecucao.idInternal", ((DisciplinaExecucao) disciplinaExecucao).getIdInternal());
 		List result = query(Frequenta.class, criteria);
@@ -281,9 +287,10 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		List result = query(DegreeCurricularPlan.class, criteria);
 		if (result.size() == 1) {
 			return (IDegreeCurricularPlan) result.get(0);
-		} else {
-			return null;
+		} else if (result.size() > 1) {
+			System.out.println("readDegreeCurricularPlanByName: name = " + name + " result.size = " + result.size());
 		}
+		return null;
 	}
 
 	public ICurso readDegreeByCode(String code) {
@@ -297,10 +304,10 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	public List readAllLEQNewCC() {
-		List result = query(Leq_new_curricular_course.class, null);
-		return result;
-	}
+//	public List readAllLEQNewCC() {
+//		List result = query(Leq_new_curricular_course.class, null);
+//		return result;
+//	}
 
 	public ICurricularCourse readCurricularCourseByNameAndDegreeCurricularPlan(String name, IDegreeCurricularPlan degreeCurricularPlan) {
 
@@ -317,10 +324,10 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
-	public List readAllLEQScopes() {
-		List result = query(Leq_cc_scope.class, null);
-		return result;
-	}
+//	public List readAllLEQScopes() {
+//		List result = query(Leq_cc_scope.class, null);
+//		return result;
+//	}
 
 	public ICurricularYear readCurricularYear(Integer key) {
 
@@ -374,10 +381,25 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		List result = query(StudentCurricularPlan.class, criteria);
 		if (result.size() == 1) {
 			return (IStudentCurricularPlan) result.get(0);
-//		} else {
-//			System.out.println("StudentCurricularPlan: " + result.size());
+			//		} else {
+			//			System.out.println("StudentCurricularPlan: " + result.size());
 		}
 		return null;
+	}
+
+	public IStudentCurricularPlan readActiveStudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("student.idInternal", student.getIdInternal());
+		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
+		List result = query(StudentCurricularPlan.class, criteria);
+		if (result.size() == 1) {
+			return (IStudentCurricularPlan) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readActiveStudentCurricularPlan mais que um");
+		}
+		return null;
+
 	}
 
 	public ICurricularCourse readCurricularCourseByCodeAndDegreeCurricularPlan(String code, IDegreeCurricularPlan degreeCurricularPlan) {
@@ -395,17 +417,34 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
-	public ICurricularCourseScope readCurricularCourseScopeByUnique(ICurricularCourse curricularCourse, IBranch branch, ICurricularSemester curricularSemester) {
+	public ICurricularCourseScope readCurricularCourseScopeByUnique(ICurricularCourse curricularCourse, IBranch branch, ICurricularSemester curricularSemester, Integer executionYear) {
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
 		criteria.addEqualTo("branch.internalID", branch.getInternalID());
 		criteria.addEqualTo("curricularSemester.internalID", curricularSemester.getInternalID());
+		criteria.addEqualTo("executionYear", executionYear);
 
 		List result = query(CurricularCourseScope.class, criteria);
 		if (result.size() == 1) {
 			return (ICurricularCourseScope) result.get(0);
 		} else if (result.size() > 1) {
+			System.out.println("CurricularCourseScope: " + result.size());
+		}
+		return null;
+	}
+
+	public ICurricularCourseScope readCurricularCourseScopeWithoutSemester(ICurricularCourse curricularCourse, IBranch branch, Integer executionYear) {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+		criteria.addEqualTo("branch.internalID", branch.getInternalID());
+		criteria.addEqualTo("executionYear", executionYear);
+
+		List result = query(CurricularCourseScope.class, criteria);
+		if (result.size() >= 1) {
+			return (ICurricularCourseScope) result.get(0);
+		} else if (result.size() < 1) {
 			System.out.println("CurricularCourseScope: " + result.size());
 		}
 		return null;
@@ -462,27 +501,27 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	public List readAllAlmeidaEnrolemts() {
+	public List readAllAlmeidaEnrolments() {
 		return query(Almeida_enrolment.class, null);
 	}
-	
+
 	public Almeida_curricular_course readAlmeidaCurricularCourse(String code) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
 		List result = query(Almeida_curricular_course.class, criteria);
 		if (result.size() == 1) {
 			return (Almeida_curricular_course) result.get(0);
-		} else {
+		} else if (result.size() > 1) {
 			System.out.println("readAlmeidaCurricularCourse: code = " + code + " result.size = " + result.size());
-			return null;
 		}
+		return null;
 	}
 
 	public Almeida_disc readAlmeidaDiscByCodeAndName(String code, long curso) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("coddis", code);
 		criteria.addEqualTo("codcur", (new Integer("" + curso)));
-		List result = query(Almeida_disc.class, criteria);		
+		List result = query(Almeida_disc.class, criteria);
 		if (result.size() == 1) {
 			return (Almeida_disc) result.get(0);
 		} else {
@@ -495,14 +534,220 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", code);
 		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
-		List result = query(Branch.class, criteria);		
+		List result = query(Branch.class, criteria);
 		if (result.size() == 1) {
 			return (IBranch) result.get(0);
-		} else {
-			System.out.println("readBranchByCode: code ["  + code + "] e plano curricular [" + degreeCurricularPlan.getName() + 
-								"] result.size = " + result.size());
-			return null;
+		} else if (result.size() > 1) {
+			System.out.println("readBranchByUnique: code [" + code + "] e plano curricular [" + degreeCurricularPlan.getIdInternal() + "] result.size = " + result.size());
 		}
+		return null;
 	}
 
+	//	public Almeida_disc readAlmeidaDiscByUnique(String codigoDisciplina, long longCodigoCurso, long longCodigoRamo, long longSemestre, long executionYear, long longAnoCurricular, long longOrientacao, double doubleCreditos, long tipo, double doubleTeorica, double doubleTeoricopratica, double doublePratica, double doubleLaboratorio) {
+	//		Criteria criteria = new Criteria();
+	//		criteria.addEqualTo("coddis", codigoDisciplina);
+	//		criteria.addEqualTo("codcur", (new Integer("" + longCodigoCurso)));
+	//		criteria.addEqualTo("codRam", (new Integer("" + longCodigoRamo)));
+	//		criteria.addEqualTo("semDis", (new Integer("" + longSemestre)));
+	//		criteria.addEqualTo("anoLectivo", (new Integer("" + executionYear)));
+	//		criteria.addEqualTo("anodis", (new Integer("" + longAnoCurricular)));
+	//		criteria.addEqualTo("orientation", (new Integer("" + longOrientacao)));
+	//		criteria.addEqualTo("credits", (new Double(doubleCreditos)));
+	//		criteria.addEqualTo("tipo", (new Integer("" + tipo)));
+	//		criteria.addEqualTo("teo", (new Double(doubleTeorica)));
+	//		criteria.addEqualTo("teopra", (new Double(doubleTeoricopratica)));
+	//		criteria.addEqualTo("pra", (new Double(doublePratica)));
+	//		criteria.addEqualTo("lab", (new Double(doubleLaboratorio)));
+	//
+	//		List result = query(Almeida_disc.class, criteria);
+	//		if (result.size() == 1) {
+	//			return (Almeida_disc) result.get(0);
+	//		} else if (result.size() > 1) {
+	//			System.out.println("readAlmeidaDiscByUnique: coddis = " + codigoDisciplina + "result.size = " + result.size());
+	//		}
+	//		return null;
+	//	}
+
+	public Almeida_curram readAlmeidaCurramByUnique(long curso, long ramo, long orientacao) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("codcur", (new Integer("" + curso)));
+		criteria.addEqualTo("codram", (new Integer("" + ramo)));
+		criteria.addEqualTo("codorien", (new Integer("" + orientacao)));
+		List result = query(Almeida_curram.class, criteria);
+		if (result.size() == 1) {
+			return (Almeida_curram) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readAlmeidaCurramByUnique:" + " codcur = " + curso + " codRam =  " + ramo + " codorien =  " + orientacao + " result.size = " + result.size());
+		}
+		return null;
+	}
+
+	public Almeida_disc readAlmeidaDiscByUnique(String codigoDisciplina, long longCodigoCurso, long longCodigoRamo, long longSemestre, long executionYear, long longAnoCurricular, long longOrientacao) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("coddis", codigoDisciplina);
+		criteria.addEqualTo("codcur", (new Integer("" + longCodigoCurso)));
+		criteria.addEqualTo("codRam", (new Integer("" + longCodigoRamo)));
+		criteria.addEqualTo("semDis", (new Integer("" + longSemestre)));
+		criteria.addEqualTo("anoLectivo", (new Integer("" + executionYear)));
+		criteria.addEqualTo("anodis", (new Integer("" + longAnoCurricular)));
+		criteria.addEqualTo("orientation", (new Integer("" + longOrientacao)));
+
+		List result = query(Almeida_disc.class, criteria);
+		if (result.size() == 1) {
+			return (Almeida_disc) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readAlmeidaDiscByUnique: coddis = " + codigoDisciplina + "result.size = " + result.size());
+		}
+		return null;
+	}
+
+	public IEnrolment readEnrolmentByUnique(IStudentCurricularPlan plan, ICurricularCourseScope scope, IExecutionPeriod period) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getInternalCode());
+		criteria.addEqualTo("curricularCourseScope.idInternal", scope.getIdInternal());
+		criteria.addEqualTo("executionPeriod.idInternal", period.getIdInternal());
+		List result = query(Enrolment.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolment) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readEnrolmentByUnique mais que um\n");
+		}
+		return null;
+	}
+
+	public IEnrolment readEnrolmentByStudentCurricularPlanAndScope(IStudentCurricularPlan plan, ICurricularCourseScope scope) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) plan).getInternalCode());
+		criteria.addEqualTo("curricularCourseScope.idInternal", scope.getIdInternal());
+		List result = query(Enrolment.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolment) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readEnrolmentByStudentCurricularPlanAndScope mais que um\n");
+		}
+		return null;
+	}
+
+	public IEnrolmentEvaluation readEnrolmentEvaluationByUnique(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+		criteria.addEqualTo("enrolmentEvaluationType", type);
+		criteria.addEqualTo("grade", grade);
+		List result = query(EnrolmentEvaluation.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolmentEvaluation) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readEnrolmentByUnique mais que um\n");
+		}
+		return null;
+	}
+
+	public List readAllCurricularCourses() {
+		return query(CurricularCourse.class, null);
+	}
+
+	public List readAllEnrolments() {
+		return query(Enrolment.class, null);
+	}
+
+	public ICurricularCourseEquivalence readCurricularCourseEquivalence(ICurricularCourse curricularCourse) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+		List result = query(CurricularCourseEquivalence.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourseEquivalence) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readCurricularCourseEquivalenceByUnique mais que um\n");
+		}
+		return null;
+	}
+
+	public ICurricularCourseEquivalence readCurricularCourseEquivalenceByCurricularCourse(ICurricularCourse curricularCourse) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
+		List result = query(CurricularCourseEquivalence.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourseEquivalence) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readCurricularCourseEquivalenceByCurricularCourse mais que um\n");
+		}
+		return null;
+	}
+
+	public IEnrolmentEquivalence readEnrolmentEquivalenceByUnique(IEnrolment enrolment) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+		List result = query(EnrolmentEquivalence.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolmentEquivalence) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readEnrolmentEquivalenceByUnique mais que um\n");
+		}
+		return null;
+	}
+
+	public IEnrolment readEnrolmentByID(int id) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("idInternal", new Integer(id));
+		List result = query(Enrolment.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolment) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readEnrolmentByID mais que um\n");
+		}
+		return null;
+	}
+
+	public IUniversityCode readUniversityCodeByCode(String universityCodeRead) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("universityCode", universityCodeRead);
+		List result = query(UniversityCode.class, criteria);
+		if (result.size() == 1) {
+			return (IUniversityCode) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readUniversityCodeByCode mais que um\n");
+		}
+		return null;
+	}
+
+	public ICurricularCourseEquivalenceRestricition readCurricularCourseEquivalenceRestrictionByUnique(ICurricularCourse equivalentCurricularCourse, ICurricularCourseEquivalence curricularCourseEquivalence) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("equivalentCurricularCourse.idInternal", equivalentCurricularCourse.getIdInternal());
+		criteria.addEqualTo("curricularCourseEquivalence.idInternal", curricularCourseEquivalence.getIdInternal());
+		List result = query(CurricularCourseEquivalenceRestriction.class, criteria);
+		if (result.size() == 1) {
+			return (ICurricularCourseEquivalenceRestricition) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("readCurricularCourseEquivalenceRestrictionByUnique mais que um\n");
+		}
+		return null;
+	}
+
+	public List readAllCurricularCourseEquivalences() {
+		Query query = new QueryByCriteria(CurricularCourseEquivalence.class, null);
+		return (List) broker.getCollectionByQuery(query);
+	}
+
+	public List readEnrolmentsByCurricularCourse(ICurricularCourse curricularCourseEnroled) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourseEnroled.getIdInternal());
+		List result = query(Enrolment.class, criteria);
+		if (result.size() < 0) {
+			return null;
+		}
+		return result;
+	}
+
+	public IEnrolmentEquivalenceRestriction readEnrolmentEquivalenceRestrictionByUnique(IEnrolment enrolment, IEnrolmentEquivalence enrolmentEquivalence) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
+		criteria.addEqualTo("equivalentEnrolment.idInternal", enrolment.getIdInternal());
+		List result = query(EnrolmentEquivalenceRestriction.class, criteria);
+		if (result.size() == 1) {
+			return (IEnrolmentEquivalenceRestriction) result.get(0);
+		} else if (result.size() > 1) {
+			System.out.println("IEnrolmentEquivalenceRestriction mais que um\n");
+		}
+		return null;
+	}
 }

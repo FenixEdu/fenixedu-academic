@@ -92,7 +92,7 @@ public class LoadInscricoes extends LoadDataFile {
 			if (enrolment == null) {
 				enrolment = new Enrolment();
 //				enrolment.setCurricularCourse(curricularCourse);
-				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
@@ -210,7 +210,7 @@ public class LoadInscricoes extends LoadDataFile {
 			studentCurricularPlan =
 				new StudentCurricularPlan(
 					student,
-					persistentObjectOJB.readDegreeCurricularPlan(
+					persistentObjectOJB.readDegreeCurricularPlanByDegreeID(
 						new Integer("" + almeida_inscricoes.getCurso())),
 					getBranch(almeida_inscricoes),
 					new Date(),

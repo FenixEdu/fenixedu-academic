@@ -38,6 +38,10 @@ public abstract class LoadDataFile {
 	protected Calendar startTime = null;
 	protected Calendar endTime = null;
 	protected String actualLine = null;
+	protected long inicio = 0;
+	protected long fim = 0;
+	protected long total = 0;
+
 
 	protected PersistentObjectOJBReader persistentObjectOJB = null;
 
@@ -97,8 +101,7 @@ public abstract class LoadDataFile {
 			String formattedString = dateString.substring(3, 5);
 			formattedString += "/" + dateString.substring(0, 2);
 			formattedString += "/" + dateString.substring(6);
-			return DateFormat.getDateInstance(DateFormat.SHORT).parse(
-				formattedString);
+			return DateFormat.getDateInstance(DateFormat.SHORT).parse(formattedString);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to parse date: " + dateString);
@@ -121,50 +124,30 @@ public abstract class LoadDataFile {
 			outFile.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println(
-				"Failed to obtain a file writer for " + getFilenameOutput());
+			System.out.println("Failed to obtain a file writer for " + getFilenameOutput());
 		}
 	}
 
 	protected void report() {
-		long duration =
-			(endTime.getTimeInMillis() - startTime.getTimeInMillis()) / 1000;
+		long duration = (endTime.getTimeInMillis() - startTime.getTimeInMillis()) / 1000;
 		long durationHour = duration / 3600;
 		long durationMin = (duration % 3600) / 60;
 		long durationSec = (duration % 3600) % 60;
 
-		System.out.println(
-			"----------------------------------------------------------------");
+		System.out.println("----------------------------------------------------------------");
 		System.out.println("   Report for loading of file: " + getFilename());
-		System.out.println(
-			"      Number of lines parsed: " + numberLinesProcessed);
-		System.out.println(
-			"      Number of elements added: " + numberElementsWritten);
-		System.out.println(
-			"      Number of untreatable elements: "
-				+ numberUntreatableElements);
-		System.out.println(
-			"      Total processing time: "
-				+ durationHour
-				+ "h "
-				+ durationMin
-				+ "m "
-				+ durationSec
-				+ "s");
-		System.out.println(
-			"----------------------------------------------------------------");
+		System.out.println("      Number of lines parsed: " + numberLinesProcessed);
+		System.out.println("      Number of elements added: " + numberElementsWritten);
+		System.out.println("      Number of untreatable elements: " + numberUntreatableElements);
+		System.out.println("      Total processing time: " + durationHour + "h " + durationMin + "m " + durationSec + "s");
+		System.out.println("----------------------------------------------------------------");
 	}
 
 	public ICountry convertCountry(String countryCode) {
 
 		Criteria criteria = new Criteria();
 
-		if (countryCode.equals("01")
-			|| countryCode.equals("02")
-			|| countryCode.equals("03")
-			|| countryCode.equals("04")
-			|| countryCode.equals("05")
-			|| countryCode.equals("06")) {
+		if (countryCode.equals("01") || countryCode.equals("02") || countryCode.equals("03") || countryCode.equals("04") || countryCode.equals("05") || countryCode.equals("06")) {
 			criteria.addEqualTo("name", "PORTUGAL");
 		} else if (countryCode.equals("10")) {
 			criteria.addEqualTo("name", "ANGOLA");
@@ -278,5 +261,34 @@ public abstract class LoadDataFile {
 		newRole.setRole(role);
 
 		writeElement(newRole);
+	}
+
+	public void signalAlive() {
+//		if((numberElementsWritten % 1000) == 0){
+//			System.out.print(".");
+//		}
+//		long duration = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis()) / 1000;
+//		long durationSec = (duration % 3600) % 60;
+//
+//		System.out.println("Duração: " + durationSec);
+
+	}
+	public void initDuration() {
+		this.inicio = Calendar.getInstance().getTimeInMillis();
+	}
+
+	public void endDuration() {
+		this.fim = Calendar.getInstance().getTimeInMillis();
+
+		long duracaoMills = fim - inicio;
+
+		total = total + duracaoMills;
+
+		System.out.println("Duração: " + duracaoMills);
+		System.out.println("Media: " + total / (numberLinesProcessed + 1));
+	}
+
+	public void printLine() {
+		System.out.println("Linha: " + (numberLinesProcessed + 1));
 	}
 }

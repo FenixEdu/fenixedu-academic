@@ -348,7 +348,7 @@ public class MigrateInscricoes2FenixEnrolments {
 					IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 					enrolmentEvaluation.setEnrolment(enrolment2Write);
 					enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-					enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.NORMAL_OBJ);
+					enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 					enrolmentEvaluation.setExamDate(inscricao.getDataexame());
 					enrolmentEvaluation.setGradeAvailableDate(inscricao.getDatalancamento());
 					if ((inscricao.getNota().equalsIgnoreCase("re")) || (inscricao.getNota().equalsIgnoreCase("rep"))) {
