@@ -19,7 +19,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class PrecedenceFilterRuleTest extends BaseEnrolmentRuleTestCase {
+public class EnrolmentFilterPrecedenceRuleTest extends BaseEnrolmentRuleTestCase {
 
 	private dbaccess dbAcessPoint;
 
@@ -28,11 +28,11 @@ public class PrecedenceFilterRuleTest extends BaseEnrolmentRuleTestCase {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(PrecedenceFilterRuleTest.class);
+		TestSuite suite = new TestSuite(EnrolmentFilterPrecedenceRuleTest.class);
 		return suite;
 	}
 	
-	public void testApplyPrecendenceRule(){
+	public void testApplyEnrolmentFilterPrecedenceRule(){
 		List finalSpan = new ArrayList();
 		List initialSpan = null;
 		

@@ -54,7 +54,7 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 					curricularCoursesFromDegreeList.addAll(curricularCoursesList);
 				} catch (ExcepcaoPersistencia e) {
 					e.printStackTrace(System.out);
-					throw new IllegalStateException("Cannot read from data base");
+					throw new IllegalStateException("Cannot read from data base" + e.toString());
 				}
 			}
 

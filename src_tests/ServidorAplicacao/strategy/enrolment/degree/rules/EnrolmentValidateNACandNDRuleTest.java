@@ -11,7 +11,7 @@ import Tools.dbaccess;
  *
  * 15/Abr/2003
  */
-public class NACandNDValidationRuleTest extends BaseEnrolmentRuleTestCase {
+public class EnrolmentValidateNACandNDRuleTest extends BaseEnrolmentRuleTestCase {
 
 	private dbaccess dbAcessPoint;
 
@@ -20,7 +20,7 @@ public class NACandNDValidationRuleTest extends BaseEnrolmentRuleTestCase {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(NACandNDValidationRuleTest.class);
+		TestSuite suite = new TestSuite(EnrolmentValidateNACandNDRuleTest.class);
 		return suite;
 	}
 
@@ -28,7 +28,7 @@ public class NACandNDValidationRuleTest extends BaseEnrolmentRuleTestCase {
 		return "etc/testEnrolmentDataSet.xml";
 	}
 	
-	public void testApplyNACandNDValidationRule() {
+	public void testApplyEnrolmentValidateNACandNDRule() {
 
 		autentication();
 		Object serviceArgs[] = { userView, new Integer(1)};

@@ -127,6 +127,13 @@ public abstract class EnrolmentContextManager {
 		enrolmentContext.setEnrolmentValidationResult(new EnrolmentValidationResult());
 		enrolmentContext.setCurricularCoursesScopesEnroledByStudent(studentEnroledCurricularCourseScopes);
 		enrolmentContext.setExecutionPeriod(actualExecutionPeriod);
+		
+//		enrolmentContext.setChosenOptionalDegree(new Curso());
+//		enrolmentContext.setChosenOptionalCurricularCourseScope(new CurricularCourseScope());
+		enrolmentContext.setActualEnrolment(new ArrayList());
+		enrolmentContext.setDegreesForOptionalCurricularCourses(new ArrayList());
+		enrolmentContext.setOptionalCurricularCoursesEnrolments(new ArrayList());
+		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(new ArrayList());
 
 		return enrolmentContext;
 	}
@@ -391,7 +398,7 @@ public abstract class EnrolmentContextManager {
 		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(enrolmentContext.getExecutionPeriod());
 		
 		InfoCurricularCourseScope infoChosenCurricularCourseScope = null;
-		if(enrolmentContext.getChosenOptionalCurricularCourseScope() != null){
+		if(enrolmentContext.getChosenOptionalCurricularCourseScope() != null) {
 			infoChosenCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(enrolmentContext.getChosenOptionalCurricularCourseScope());
 		}
 

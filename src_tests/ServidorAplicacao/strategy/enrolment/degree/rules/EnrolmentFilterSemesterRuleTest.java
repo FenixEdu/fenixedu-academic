@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterSemesterRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
 import Tools.dbaccess;
 import Util.TipoCurso;
@@ -20,7 +20,7 @@ import Util.TipoCurso;
 /**
  * @author jpvl
  */
-public class BranchFilterRuleTest extends BaseEnrolmentRuleTestCase {
+public class EnrolmentFilterSemesterRuleTest extends BaseEnrolmentRuleTestCase {
 
 	private dbaccess dbAcessPoint;
 
@@ -29,7 +29,7 @@ public class BranchFilterRuleTest extends BaseEnrolmentRuleTestCase {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(BranchFilterRuleTest.class);
+		TestSuite suite = new TestSuite(EnrolmentFilterSemesterRuleTest.class);
 		return suite;
 	}
 
@@ -37,36 +37,32 @@ public class BranchFilterRuleTest extends BaseEnrolmentRuleTestCase {
 		return "etc/testEnrolmentDataSet.xml";
 	}
 	
-	public void testApplyBranchRule() {
+	public void testApplyEnrolmentFilterSemesterRule() {
 		List finalSpan = new ArrayList();
 		List initialSpan = null;
 
 		EnrolmentContext enrolmentContext = getEnrolmentContext(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA), new Integer(1));
 		initialSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		doApplyRule(new EnrolmentFilterBranchRule(), enrolmentContext);
+		doApplyRule(new EnrolmentFilterSemesterRule(), enrolmentContext);
 
 		finalSpan = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		assertEquals("Inital span Size:", true, initialSpan.size() == 60);
-		assertEquals("Final span size:", true, finalSpan.size() == 40);
+		assertEquals("Inital span Size:", initialSpan.size(), 60);
+		assertEquals("Final span size:", finalSpan.size(), 30);
 		assertEquals("Contains assertion!", true, initialSpan.containsAll(finalSpan));
 
-		ICurricularCourse curricularCourse = getCurricularCourse("SISTEMAS OPERATIVOS", "");
+		ICurricularCourse curricularCourse = getCurricularCourse("FÍSICA II", "");
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, finalSpan.contains(curricularCourseScope));
 
-		curricularCourse = getCurricularCourse("ELECTRÓNICA I", "");
-		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
-		assertEquals(true, finalSpan.contains(curricularCourseScope));
-
-		curricularCourse = getCurricularCourse("INTERFACES PESSOA-MÁQUINA", "");
+		curricularCourse = getCurricularCourse("MATEMÁTICA COMPUTACIONAL", "AG7");
 		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
 		assertEquals(true, !finalSpan.contains(curricularCourseScope));
 
 	}
 
 	public void doApplyRule(IEnrolmentRule enrolmentRule, EnrolmentContext enrolmentContext) {
-			enrolmentRule.apply(enrolmentContext);
+		enrolmentRule.apply(enrolmentContext);
 	}
 }
