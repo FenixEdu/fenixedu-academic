@@ -30,17 +30,17 @@ public class EditAnnouncementTest
 		return "EditAnnouncementService";
 	}
 	protected String getDataSetFilePath() {
-		return "etc/datasets/servico/teacher/testEditAnnouncementDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditAnnouncementDataSet.xml";
 	}
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servico/teacher/testExpectedEditAnnouncementDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedEditAnnouncementDataSet.xml";
 	}
 	/*
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccefullDataSetFilePath()
 	 */
-	protected String getExpectedUnsuccefullDataSetFilePath() {
-		return "etc/datasets/servico/teacher/testExpectedEditAnnouncementUnsuccefullDataSet.xml";
+	protected String getExpectedUnsuccessfullDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testExpectedEditAnnouncementUnsuccefullDataSet.xml";
 	}
 	/*
 	 *  (non-Javadoc)
@@ -236,7 +236,7 @@ public class EditAnnouncementTest
 			 * o serviço nem sequer chega a ser invocado
 			 */
 			//Comparacao do dataset
-			compareDataSet(getExpectedUnsuccefullDataSetFilePath());
+			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Editing an announcement of a Site " + ex);
 		} catch (Exception ex) {

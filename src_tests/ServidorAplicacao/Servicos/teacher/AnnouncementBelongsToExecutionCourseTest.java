@@ -66,5 +66,5 @@ public abstract class AnnouncementBelongsToExecutionCourseTest
 	/*
 	 * DataSet igual ao dataset carregado na base de dados (sem alterações).
 	 */
-	protected abstract String getExpectedUnsuccefullDataSetFilePath();
+	protected abstract String getExpectedUnsuccessfullDataSetFilePath();
 }

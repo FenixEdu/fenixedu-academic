@@ -29,17 +29,17 @@ public class DeleteAnnouncementTest
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/servico/teacher/testDeleteAnnouncementDataSet.xml";
+		return "etc/datasets/servicos/teacher/testDeleteAnnouncementDataSet.xml";
 	}
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servico/teacher/testExpectedDeleteAnnouncementDataSet.xml";
+		return "etc/datasets/servicos/teacher/testExpectedDeleteAnnouncementDataSet.xml";
 	}
 	/*
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccefullDataSetFilePath()
 	 */
-	protected String getExpectedUnsuccefullDataSetFilePath() {
-		return "etc/datasets/servico/teacher/testExpectedDeleteAnnouncementUnsuccefullDataSet.xml";
+	protected String getExpectedUnsuccessfullDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testExpectedDeleteAnnouncementUnsuccefullDataSet.xml";
 	}
 	/*
 	 *  (non-Javadoc)
@@ -183,7 +183,7 @@ public class DeleteAnnouncementTest
 			 * o serviço nem sequer chega a ser invocado
 			 */
 			//Comparacao do dataset
-			compareDataSet(getExpectedUnsuccefullDataSetFilePath());
+			compareDataSet(getExpectedUnsuccessfullDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Deleting an announcement of a Site " + ex);
 		} catch (Exception ex) {
