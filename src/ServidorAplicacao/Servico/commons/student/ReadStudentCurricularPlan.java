@@ -58,13 +58,8 @@ public class ReadStudentCurricularPlan implements IServico {
         try {
             sp = SuportePersistenteOJB.getInstance();
             
-            // The student Curricular plan
-            
-            IStudentCurricularPlan studentCurricularPlanTemp = new StudentCurricularPlan();
-            studentCurricularPlanTemp.setIdInternal(studentCurricularPlanID);
-
-            studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOId(studentCurricularPlanTemp, false);
-          
+            // The student Curricular plan            
+            studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
         } catch (ExcepcaoPersistencia ex) {
         	ex.printStackTrace();
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -76,7 +71,7 @@ public class ReadStudentCurricularPlan implements IServico {
 			throw new NonExistingServiceException();
 		}
 		
-		//return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+		//return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);		
 		return InfoStudentCurricularPlanWithInfoStudentAndDegree.newInfoFromDomain(studentCurricularPlan);
     }
 }
