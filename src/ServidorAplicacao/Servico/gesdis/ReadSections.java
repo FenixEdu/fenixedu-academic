@@ -16,7 +16,6 @@ import Dominio.ISection;
 import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -63,7 +62,7 @@ public class ReadSections implements IServico {
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
 
-    if (allSections == null || allSections.isEmpty()) throw new InvalidArgumentsServiceException();
+    if (allSections == null || allSections.isEmpty()) {return allSections;} 
 
     // build the result of this service
     Iterator iterator = allSections.iterator();
