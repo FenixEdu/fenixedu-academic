@@ -5,7 +5,7 @@ package Util;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.enum.ValuedEnum;
+import org.apache.commons.lang.enums.ValuedEnum;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 20/Fev/2004

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sourceforge.fenixedu.org.apache.commons.lang.enums;
+package org.apache.commons.lang.enums;
 
 import java.util.Iterator;
 import java.util.List;

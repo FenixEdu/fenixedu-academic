@@ -101,9 +101,9 @@ public class DataSetGenerator {
             con = getConnection();
             QueryDataSet queryDataset = new QueryDataSet(con);
 
-            Enumeration enum = this.props.propertyNames();
-            while (enum.hasMoreElements()) {
-                String propertyName = (String) enum.nextElement();
+            Enumeration enumeration = this.props.propertyNames();
+            while (enumeration.hasMoreElements()) {
+                String propertyName = (String) enumeration.nextElement();
                 if (propertyName.endsWith(".columns") || propertyName.endsWith(".whereCondition")
                         || propertiesToIgnore.contains(propertyName))
                     continue; //we
