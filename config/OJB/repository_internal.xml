@@ -5,27 +5,37 @@
    	  class="org.apache.ojb.broker.util.sequence.HighLowSequence"
    	  table="OJB_HL_SEQ"
    >
-      <field-descriptor 
+
+       <object-cache class="org.apache.ojb.broker.cache.ObjectCacheEmptyImpl">
+       </object-cache>
+
+       <field-descriptor
          name="tableName"
          column="TABLENAME"
          jdbc-type="VARCHAR"
          primarykey="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="fieldName"
          column="FIELDNAME"
          jdbc-type="VARCHAR"
          primarykey="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="maxKey"
          column="MAX_KEY"
          jdbc-type="INTEGER"
       />
-      <field-descriptor 
+      <field-descriptor
          name="grabSize"
          column="GRAB_SIZE"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="version"
+         column="VERSION"
+         jdbc-type="INTEGER"
+         locking="true"
       />
    </class-descriptor>
 
@@ -35,29 +45,29 @@
    	  class="org.apache.ojb.odmg.locking.LockEntry"
    	  table="OJB_LOCKENTRY"
    >
-      <field-descriptor 
+      <field-descriptor
          name="oidString"
          column="OID_"
          jdbc-type="VARCHAR"
          primarykey="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="transactionId"
          column="TX_ID"
          jdbc-type="VARCHAR"
          primarykey="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="timestamp"
          column="TIMESTAMP_"
          jdbc-type="BIGINT"
       />
-      <field-descriptor 
+      <field-descriptor
          name="isolationLevel"
          column="ISOLATIONLEVEL"
          jdbc-type="INTEGER"
       />
-      <field-descriptor 
+      <field-descriptor
          name="lockType"
          column="LOCKTYPE"
          jdbc-type="INTEGER"
@@ -70,13 +80,13 @@
    	  class="org.apache.ojb.odmg.NamedRootsEntry"
    	  table="OJB_NRM"
    >
-      <field-descriptor 
+      <field-descriptor
          name="name"
          column="NAME"
          jdbc-type="VARCHAR"
          primarykey="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="oid"
          column="OID_"
          jdbc-type="LONGVARBINARY"
@@ -88,14 +98,14 @@
    	  class="org.apache.ojb.odmg.collections.DListImpl"
    	  table="OJB_DLIST"
    >
-      <field-descriptor 
+      <field-descriptor
          name="id"
          column="ID"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="size"
          column="SIZE_"
          jdbc-type="INTEGER"
@@ -125,12 +135,69 @@
          column="DLIST_ID"
          jdbc-type="INTEGER"
       />
-      <field-descriptor 
+      <field-descriptor
          name="position"
          column="POSITION_"
          jdbc-type="INTEGER"
       />
-      <field-descriptor 
+      <field-descriptor
+         name="oid"
+         column="OID_"
+         jdbc-type="LONGVARBINARY"
+         conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+      />
+   </class-descriptor>
+
+   <!-- THIS IS THE OJB DLIST IMPLEMENTATION, DO NOT EDIT-->
+   <!-- alternative implementation of DList -->
+   <class-descriptor
+   	  class="org.apache.ojb.odmg.collections.DListImpl_2"
+   	  table="OJB_DLIST"
+   >
+      <field-descriptor
+         name="id"
+         column="ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="size"
+         column="SIZE_"
+         jdbc-type="INTEGER"
+      />
+      <collection-descriptor
+         name="elements"
+         element-class-ref="org.apache.ojb.odmg.collections.DListEntry_2"
+         auto-retrieve = "true"
+      >
+         <inverse-foreignkey field-ref="dlistId"/>
+      </collection-descriptor>
+   </class-descriptor>
+
+<!-- THIS IS THE OJB DLIST ENTRY IMPLEMENTATION, DO NOT EDIT-->
+   <class-descriptor
+      class="org.apache.ojb.odmg.collections.DListEntry_2"
+      table="OJB_DLIST_ENTRIES"
+   >
+      <field-descriptor
+         name="id"
+         column="ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="dlistId"
+         column="DLIST_ID"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="position"
+         column="POSITION_"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
          name="oid"
          column="OID_"
          jdbc-type="LONGVARBINARY"
@@ -143,14 +210,14 @@
    	  class="org.apache.ojb.odmg.collections.DBagImpl"
    	  table="OJB_DLIST"
    >
-      <field-descriptor 
+      <field-descriptor
          name="id"
          column="ID"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="size"
          column="SIZE_"
          jdbc-type="INTEGER"
@@ -168,14 +235,14 @@
    	  class="org.apache.ojb.odmg.collections.DSetImpl"
    	  table="OJB_DSET"
    >
-      <field-descriptor 
+      <field-descriptor
          name="id"
          column="ID"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="size"
          column="SIZE_"
          jdbc-type="INTEGER"
@@ -193,24 +260,24 @@
    	  class="org.apache.ojb.odmg.collections.DSetEntry"
    	  table="OJB_DSET_ENTRIES"
    >
-      <field-descriptor 
+      <field-descriptor
          name="id"
          column="ID"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="dlistId"
          column="DLIST_ID"
          jdbc-type="INTEGER"
       />
-      <field-descriptor 
+      <field-descriptor
          name="position"
          column="POSITION_"
          jdbc-type="INTEGER"
       />
-      <field-descriptor 
+      <field-descriptor
          name="oid"
          column="OID_"
          jdbc-type="LONGVARBINARY"
@@ -223,14 +290,14 @@
    	  class="org.apache.ojb.odmg.collections.DMapImpl"
    	  table="OJB_DMAP"
    >
-      <field-descriptor 
+      <field-descriptor
          name="id"
          column="ID"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
       />
-      <field-descriptor 
+      <field-descriptor
          name="size"
          column="SIZE_"
          jdbc-type="INTEGER"
@@ -261,19 +328,20 @@
          column="DMAP_ID"
          jdbc-type="INTEGER"
       />
-      <field-descriptor 
+      <field-descriptor
          name="keyOID"
          column="KEY_OID"
          jdbc-type="LONGVARBINARY"
          conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
       />
-      <field-descriptor 
+      <field-descriptor
          name="valueOID"
          column="VALUE_OID"
          jdbc-type="LONGVARBINARY"
          conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
       />
    </class-descriptor>
+
 
 
    <!-- END OF OJB INTERNAL MAPPINGS-->

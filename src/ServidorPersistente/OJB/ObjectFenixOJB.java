@@ -48,7 +48,19 @@ import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 import org.odmg.Transaction;
 
+import Dominio.Advisory;
+import Dominio.CandidateSituation;
+import Dominio.DistributedTest;
 import Dominio.IDomainObject;
+import Dominio.MasterDegreeCandidate;
+import Dominio.Metadata;
+import Dominio.Pessoa;
+import Dominio.Question;
+import Dominio.StudentTestLog;
+import Dominio.StudentTestQuestion;
+import Dominio.Summary;
+import Dominio.Test;
+import Dominio.TestQuestion;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 
@@ -106,17 +118,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject
                 for (int i = 0; i < list.size(); i++)
                 {
                     Object obj = list.get(i);
-                    Object newObject =
-                        ((TransactionImpl) tx).getObjectByIdentity(
-                            new Identity(obj, getCurrentPersistenceBroker()));
-                    if (newObject != null)
-                    {
-                        obj = newObject;
 
-                        list.add(i, obj);
-                        list.remove(i + 1);
-                    }
-                    tx.lock(obj, Transaction.READ);
+                    lockRead(obj);
                 }
             }
         }
@@ -573,23 +576,19 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         // we allow queries even if no ODMG transaction is running.
         // thus we have to provide a pseudo tx if necessary
         /*
-		 * boolean needsCommit = false; if (tx == null) {
-		 * System.out.println("Transaction Null!"); //throw new
-		 * org.odmg.QueryException("Transaction Null!"); //tx =
-		 * OJBFactory.getInstance().newTransaction(); } // we allow to work
-		 * with unopened transactions. // we assume that such a tx is to be
-		 * closed after performing the query if (!tx.isOpen()) { tx.begin();
-		 * needsCommit = true; }
+		 * boolean needsCommit = false; if (tx == null) { System.out.println("Transaction Null!");
+		 * //throw new org.odmg.QueryException("Transaction Null!"); //tx =
+		 * OJBFactory.getInstance().newTransaction(); } // we allow to work with unopened transactions. //
+		 * we assume that such a tx is to be closed after performing the query if (!tx.isOpen()) {
+		 * tx.begin(); needsCommit = true; }
 		 */ // obtain a broker instance from the current transaction
         PersistenceBroker broker = ((HasBroker) tx).getBroker();
         //		/////////////////////////////////////////////////////////////////////////////////////////
         //		/////////////////////////////////////////////////////////////////////////////////////////
         /*
-		 * Iterator iterator = deletedObject.iterator(); while
-		 * (iterator.hasNext()) {
-		 * System.out.println("AQQIWUEWQOIEOQWUIEOIQUWEOI????????????????????????");
-		 * Object element = (Object) iterator.next();
-		 * broker.removeFromCache(element);
+		 * Iterator iterator = deletedObject.iterator(); while (iterator.hasNext()) {
+		 * System.out.println("AQQIWUEWQOIEOQWUIEOIQUWEOI????????????????????????"); Object element =
+		 * (Object) iterator.next(); broker.removeFromCache(element);
 		 */
         broker.clearCache();
     }
@@ -608,11 +607,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         List list = (List) pb.getCollectionByQuery(queryCriteria);
         if (list != null)
         {
-            List aux = new ArrayList();
-            aux.addAll(list);
-            list = aux;
+            lockRead(list);
         }
-        lockRead(list);
         return list;
     }
 
@@ -621,7 +617,19 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         PersistenceBroker pb = getCurrentPersistenceBroker();
         Query query = getQuery(classToQuery, criteria);
         Object object = pb.getObjectByQuery(query);
-        if (object != null)
+
+        if (object instanceof Metadata
+            || object instanceof Question
+            || object instanceof Test
+            || object instanceof TestQuestion
+            || object instanceof DistributedTest
+            || object instanceof StudentTestQuestion
+            || object instanceof StudentTestLog
+            || object instanceof MasterDegreeCandidate
+            || object instanceof CandidateSituation
+            || object instanceof Summary
+            || object instanceof Pessoa
+            || object instanceof Advisory)
         {
             Object newObject =
                 ((TransactionImpl) odmg.currentTransaction()).getObjectByIdentity(
@@ -630,6 +638,10 @@ public abstract class ObjectFenixOJB implements IPersistentObject
             {
                 object = newObject;
             }
+
+        }
+        if (object != null)
+        {
             lockRead(object);
         }
         return object;
@@ -643,8 +655,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject
     }
 
     /**
-	 * Use this method to return numberOfElementsInSpan elements starting at
-	 * index spanNumber * numberOfElementsInSpan
+	 * Use this method to return numberOfElementsInSpan elements starting at index spanNumber *
+	 * numberOfElementsInSpan
 	 * 
 	 * @param classToQuery
 	 *            class that is to be queried
