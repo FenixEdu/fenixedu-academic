@@ -1,13 +1,9 @@
 package ServidorAplicacao.Servico.manager.precedences;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularCourse;
@@ -43,9 +39,9 @@ public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
 
             List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(new BeanComparator("name"));
-			Collections.sort(curricularCourses, comparatorChain);
+//			ComparatorChain comparatorChain = new ComparatorChain();
+//			comparatorChain.addComparator(new BeanComparator("name"));
+//			Collections.sort(curricularCourses, comparatorChain);
 
 			int size = curricularCourses.size();
 
