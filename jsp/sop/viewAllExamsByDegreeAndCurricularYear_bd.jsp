@@ -8,13 +8,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <logic:present name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
-	<%int i=0; int curricularYear = i;%>
 	<logic:iterate id="infoViewAllExams" name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
-<!--		<bean:define id="<%= SessionConstants.INFO_EXECUTION_DEGREE_KEY %>" name="infoViewAllExams" property="infoExecutionDegree" toScope="session"/>
-		<bean:define id="<%= SessionConstants.CURRICULAR_YEAR_KEY %>" name="infoViewAllExams" property="curricularYear" toScope="session"/>	
-		<bean:write name="infoViewAllExams" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome" />
-		<bean:write name="infoViewAllExams" property="curricularYear"/>	-->
-		Licenciatura x - <%=curricularYear+1%>º Ano<br />	
 <!-- ******************************************************************************-->
 <!--     PRINT OF EXAMS TABLE FOR ONE EXECUTION DEGREE AND ONE CURRICULAR YEAR     -->
 <!-- ******************************************************************************-->		
@@ -22,7 +16,16 @@
 	 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			<tr>
         		<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
-				<strong><jsp:include page="context.jsp"/></strong>
+					<strong>
+						<bean:define id="infoDegree" name="infoViewAllExams" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree" />
+				  		<jsp:getProperty name="infoDegree" property="tipoCurso" /> em 
+						<jsp:getProperty name="infoDegree" property="nome" />
+						<br/>
+					   	<bean:define id="curricularYear" name="infoViewAllExams" property="curricularYear"/>
+						<bean:message key="label.year" arg0="<%= curricularYear.toString() %>" /> -	
+						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="name" scope="session"/> -
+						<bean:write name="<%=SessionConstants.INFO_EXECUTION_PERIOD_KEY%>" property="infoExecutionYear.year" scope="session"/>
+				</strong>
 				</td>
 			</tr>
 		</table>
@@ -36,7 +39,6 @@
 					</td>
 				</tr>
 			</table>
-			<%i++; curricularYear=(i%5);%>
 			<br style="page-break-before:always;">			
 		</logic:notPresent>
 
@@ -122,7 +124,6 @@
 					</tr>
 				</logic:iterate>
 			</table>
-			<%i++; curricularYear=(i%5);%>
 			<br style="page-break-before:always;">
 		</logic:present>		
 <!-- ******************************************************************************-->
