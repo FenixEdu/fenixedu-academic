@@ -27,6 +27,18 @@
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="program" type="java.lang.String" />
 	</form-bean>
+	
+	
+	<form-bean name="bibliographicReferenceForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">        
+            <form-property name="title" type="java.lang.String" />
+            <form-property name="authors" type="java.lang.String" />
+            <form-property name="reference" type="java.lang.String" />
+            <form-property name="year" type="java.lang.String" />
+            <form-property name="optional" type="java.lang.String" />
+	</form-bean>    			
+	
 	<!--
 	
 	<form-bean name="autenticacaoForm"
@@ -145,35 +157,7 @@
            
              <form-property name="opcao" type="java.lang.String" />
 	</form-bean>
-        
-        
-        
-        <form-bean name="docente.gestaoBibliografiaForm"
-		type="ServidorApresentacao.Action.FenixActionForm">
-	</form-bean>
-        
-	<form-bean name="docente.inserirReferenciaBibliograficaForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-            <form-property name="opcao" type="java.lang.String" />
-            <form-property name="titulo" type="java.lang.String" />
-            <form-property name="autores" type="java.lang.String" />
-            <form-property name="referencia" type="java.lang.String" />
-            <form-property name="ano" type="java.lang.String" />
-            <form-property name="facultativo" type="java.lang.String" />
-	</form-bean>
-        
-       <form-bean name="docente.editarReferenciaBibliograficaForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-            <form-property name="opcao" type="java.lang.String" />
-            <form-property name="titulo" type="java.lang.String" />
-            <form-property name="autores" type="java.lang.String" />
-            <form-property name="referencia" type="java.lang.String" />
-            <form-property name="ano" type="java.lang.String" />
-            <form-property name="facultativo" type="java.lang.String" />
-	</form-bean>
-
+                                                                      
 	-->
     </form-beans>
 
@@ -222,6 +206,18 @@
 		<forward name="EditAnnouncement" path="/editAnnouncement.do" />
 		<forward name="DeleteAnnouncement" path="/deleteAnnouncement.do" />
 	</action>
+	
+	<action parameter="method"      			
+      			name="bibliographicReferenceForm"
+                type="ServidorApresentacao.Action.teacher.BibliographicReferenceManagerDispatchAction"
+                path="/bibliographicReferenceManager"
+                validate="false">
+	            <forward name="deleteBibliographicReference" path="/deleteBibliographicReference.jsp"
+	            <forward name="insertBibliographicReference" path="/insertBibliographicReference.jsp"
+				<forward name="editBibliographicReference" path="/editBibliographicReference.jsp"
+				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
+	</action>             
+	
 
 	<!-- ExceptionHandling -->   
       <action parameter="method"
@@ -553,65 +549,6 @@
 		redirect = "true"/>
 	</action>
         
-        <action name="docente.acederGestaoBibliografia"
-                type="ServidorApresentacao.Action.Docente.AcederGestaoBibliografiaAction"
-                path="/docente/acederGestaoBibliografia">
-            <forward name="GestaoDeBibliografia"  path="/docente/gestaoDeBibliografia.do"
-                redirect="true"/>
-	</action>
-        
-        <action path="/docente/gestaoDeBibliografia" forward="docente.gestaoDeBibliografia"/>
-	
-        <action name="docente.gestaoBibliografiaForm"
-                type="ServidorApresentacao.Action.Docente.GestaoBibliografiaFormAction"
-                path="/docente/gestaoBibliografiaForm"
-                input="docente.gestaoDeBibliografia"
-                scope="request">
-            <forward name="InserirReferenciaBibliografica" path="/docente/inserirReferenciaBibliografica.do"
-		redirect = "true"/>
-            <forward name="EditarReferenciaBibliografica" path="/docente/editarReferenciaBibliografica.do"
-		redirect = "true"/>
-            <forward name="ApagarReferenciaBibliografica" path="/docente/apagarReferenciaBibliografica.do"
-		redirect = "true"/>
-	</action>
-        
-        <action path="/docente/inserirReferenciaBibliografica" forward="docente.inserirReferenciaBibliografica"/>
-        
-        <action name="docente.inserirReferenciaBibliograficaForm"
-                type="ServidorApresentacao.Action.Docente.InserirReferenciaBibliograficaFormAction"
-                path="/docente/inserirReferenciaBibliograficaForm"
-                input="docente.inserirReferenciaBibliografica"
-                scope="request">
-            <forward name="AcederGestaoBibliografia" path="/docente/acederGestaoBibliografia.do"
-                redirect = "true"/>
-                <exception type="ServidorAplicacao.Servico.ReferenciaBibliograficaJaExistenteException"
-                            key="ServidorAplicacao.Servico.ReferenciaBibliograficaJaExistenteException"
-                            path="docente.referenciaBibliograficaJaExistenteInserir"/>
-	</action>
-
-        <action path="/docente/editarReferenciaBibliografica" forward="docente.editarReferenciaBibliografica"/>
-
-	<action name="docente.editarReferenciaBibliograficaForm"
-                type="ServidorApresentacao.Action.Docente.EditarReferenciaBibliograficaFormAction"
-                path="/docente/editarReferenciaBibliograficaForm"
-                input="docente.editarReferenciaBibliografica"
-                scope="request">
-            <forward name="AcederGestaoBibliografia" path="/docente/acederGestaoBibliografia.do"
-                redirect = "true"/>
-            <exception type="ServidorAplicacao.Servico.ReferenciaBibliograficaJaExistenteException"
-                        key="ServidorAplicacao.Servico.ReferenciaBibliograficaJaExistenteException"
-                        path="docente.referenciaBibliograficaJaExistenteInserir"/>
-            <exception type="ServidorAplicacao.Servico.ReferenciaBibliograficaInexistenteException"
-                        key="ServidorAplicacao.Servico.ReferenciaBibliograficaInexistenteException"
-                        path="docente.referenciaBibliograficaInexistente"/>
-	</action>
-
-	<action name="docente.apagarReferenciaBibliografica"
-                type="ServidorApresentacao.Action.Docente.ApagarReferenciaBibliograficaAction"
-		path="/docente/apagarReferenciaBibliografica">
-            <forward name="AcederGestaoBibliografia" path="/docente/acederGestaoBibliografia.do"
-                redirect = "true"/>
-	</action>
 
 	-->   
 	
