@@ -141,8 +141,11 @@ public class SubmitMarksAction extends DispatchAction
 		for (int i = 0; i < sizeList.intValue(); i++)
 		{
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = getFinalEvaluation(request, i);
-			evaluations.add(infoEnrolmentEvaluation);
+			if (infoEnrolmentEvaluation != null){
+				evaluations.add(infoEnrolmentEvaluation);
+			}
 		}
+		
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -190,30 +193,36 @@ public class SubmitMarksAction extends DispatchAction
 
 	private InfoEnrolmentEvaluation getFinalEvaluation(HttpServletRequest request, int index)
 	{
+		Integer studentCode = null;
+		Integer enrolmentCode =null;
 		String evaluation = request.getParameter("enrolmentEvaluation[" + index + "].grade");
-		Integer studentCode =
+		if (request.getParameter("enrolmentEvaluation[" + index + "].studentCode")!= null ){
+		  studentCode =
 			Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].studentCode"));
-		Integer enrolmentCode =
+		
+		  enrolmentCode =
 			Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index + "].enrolmentCode"));
 
+		}
 		if (studentCode != null)
 		{
+			
 			//enrolment evaluation with only student code and mark and enrolment code
 			InfoStudent infoStudent = new InfoStudent();
 			infoStudent.setIdInternal(studentCode);
-
+			
 			InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
 			infoStudentCurricularPlan.setInfoStudent(infoStudent);
 
 			InfoEnrolment infoEnrolment = new InfoEnrolment();
 			infoEnrolment.setIdInternal(enrolmentCode);
 			infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+			
 
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 			infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
-
+			
 			infoEnrolmentEvaluation.setGrade(evaluation);
-
 			return infoEnrolmentEvaluation;
 		}
 		return null;

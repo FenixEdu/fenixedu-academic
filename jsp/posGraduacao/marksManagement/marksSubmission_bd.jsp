@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="DataBeans.InfoEnrolmentEvaluation" %>
+<%@ page import="Util.StudentCurricularPlanState" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.marksSubmission" /></h2>
 <logic:present name="infoSiteEnrolmentEvaluation">
 	<table width="100%">
@@ -71,7 +73,7 @@
 			<html:hidden property="sizeList" value="<%= size.toString() %>" />							
 					    			    		
 	    	<logic:iterate id="enrolmentEvaluation" name="infoSiteEnrolmentEvaluation" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" indexId="evaluationId" >
-	    		
+	    <% if (((InfoEnrolmentEvaluation) enrolmentEvaluation).getInfoEnrolment().getInfoStudentCurricularPlan().getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ)) { %> 		
 	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
 	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />
 	    		
@@ -88,6 +90,7 @@
 	 					<html:hidden name="enrolmentEvaluation" property="enrolmentCode" value="<%= enrolmentCode.toString() %>" indexed="true" />
 					</td>
 				</tr>
+				<% } %>
 	    	</logic:iterate>
 	    </table>
 		<br /><br />	

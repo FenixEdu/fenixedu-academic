@@ -39,7 +39,6 @@ public class ShowMarkDispatchAction extends DispatchAction
 		String curricularCourseId = MarksManagementDispatchAction.getFromRequest("courseId", request);
 		MarksManagementDispatchAction.getFromRequest("objectCode", request);
 		MarksManagementDispatchAction.getFromRequest("degreeId", request);
-System.out.println("markManagement" + curricularCourseId);	
 		// Get students List
 		IUserView userView = SessionUtils.getUserView(request);
 		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
@@ -62,7 +61,6 @@ System.out.println("markManagement" + curricularCourseId);
 			saveErrors(request, errors);
 			return mapping.findForward("NoStudents");
 		}
-
 		if (listEnrolmentEvaluation.size() == 0)
 		{
 			errors.add("StudentNotEnroled", new ActionError("error.students.Mark.NotAvailable"));

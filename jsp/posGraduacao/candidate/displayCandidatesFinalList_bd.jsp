@@ -42,6 +42,7 @@
 	</logic:equal>
 	<bean:define id="link">/displayListToSelectCandidates.do?method=print&executionDegreeID=<%= pageContext.findAttribute("executionDegreeID").toString() %></bean:define>
 	<logic:equal name="confirmation" value="NO">
+	<html:hidden property="executionDegreeID" value="<%= pageContext.findAttribute("executionDegreeID").toString() %>" />
 		<h2><bean:message key="label.candidateApprovalDone" /> </h2><br />
 		<br />
 		<br />

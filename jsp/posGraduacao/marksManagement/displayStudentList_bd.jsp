@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="Util.Data" %>
+<%@ page import="DataBeans.InfoEnrolment" %>
+<%@ page import="Util.StudentCurricularPlanState" %>
 <h2><bean:message key="label.students.listMarks"/></h2>
 <logic:present name="studentList">
 	<table width="100%">
@@ -40,81 +42,84 @@
     			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
     		</tr>
      		<logic:iterate id="enrolment" name="studentList" type="DataBeans.InfoEnrolment">
-	        	<tr>
-		        	<td class="listClasses">
-			      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber()%>">	
-			      			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
-			    		</html:link>
-		            </td>
-					<td class="listClasses">
-	    	        	<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
-	    	    	</td>
-		    	    <logic:empty name="enrolment" property="infoEnrolmentEvaluation.grade" >
-			    	   	 <td  class="listClasses" >
-							&nbsp;	
-						 </td> 	 
-					</logic:empty>
-					<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.grade" >
-			            <td class="listClasses">
-			  				<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>			
-			    	    </td>
-		    	    </logic:notEmpty>
-			    	<logic:empty name="enrolment" property="infoEnrolmentEvaluation.examDate" >
-				    	<td  class="listClasses" >
-							&nbsp;	
-						</td> 	 
-					</logic:empty>
-					<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.examDate" >
+     		   <% if (((InfoEnrolment) enrolment).getInfoStudentCurricularPlan().getCurrentState().equals(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE))) { %>
+	        		<tr>
+			        	<td class="listClasses">
+				      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber()%>">	
+				      			<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.number"/>
+				    		</html:link>
+			            </td>
 						<td class="listClasses">
-				    		<bean:define id="date" name="enrolment" property="infoEnrolmentEvaluation.examDate" />
-							<%= Data.format2DayMonthYear((Date) date) %>		
-			    	    </td>
-		    	    </logic:notEmpty>
-		    	    <logic:empty name="enrolment" property="infoEnrolmentEvaluation.gradeAvailableDate" >
-			    		<td  class="listClasses" >
-							&nbsp;	
-						</td> 	
-					</logic:empty>
-					<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.gradeAvailableDate" >
-			  	   		<td class="listClasses">
-			    	    	<bean:define id="date" name="enrolment" property="infoEnrolmentEvaluation.gradeAvailableDate" />
-							<%= Data.format2DayMonthYear((Date) date) %>					
-			    	    </td>
-		    	    </logic:notEmpty>
-			        <td  class="listClasses" >
-						<bean:write name="enrolment" property="infoEnrolmentEvaluation.enrolmentEvaluationType" />
-				    </td>
-					<logic:empty name="enrolment" property="infoEnrolmentEvaluation.infoPersonResponsibleForGrade" >
-						<td  class="listClasses" >
-							&nbsp;	
-						</td> 
-					</logic:empty>
-					<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.infoPersonResponsibleForGrade" >
-						<td  class="listClasses" >
-							<bean:write name="enrolment" property="infoEnrolmentEvaluation.infoPersonResponsibleForGrade.nome" />
-						</td>
-					</logic:notEmpty>
-					<logic:empty name="enrolment" property="infoEnrolmentEvaluation.infoEmployee" >	
-						<td  class="listClasses" >
-							&nbsp;	
-						</td> 
-					</logic:empty>
-					<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.infoEmployee" >	
-						<td  class="listClasses" >
-							<bean:write name="enrolment" property="infoEnrolmentEvaluation.infoEmployee.nome"/>	
-						</td> 
-					</logic:notEmpty>
-					<logic:empty name="enrolment" property="infoEnrolmentEvaluation.observation" >
-						<td  class="listClasses" >
-							&nbsp;	
-						</td> 	 
-					</logic:empty>
-					<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.observation" >	
-						<td  class="listClasses" >
-							<bean:write name="enrolment" property="infoEnrolmentEvaluation.observation"/>	
-						</td>	
-					</logic:notEmpty>
-	    		</tr>
+		    	        	<bean:write name="enrolment" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
+		    	    	</td>
+			    	    <logic:empty name="enrolment" property="infoEnrolmentEvaluation.grade" >
+				    	   	 <td  class="listClasses" >
+								&nbsp;	
+							 </td> 	 
+						</logic:empty>
+						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.grade" >
+				            <td class="listClasses">
+				  				<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>			
+				    	    </td>
+			    	    </logic:notEmpty>
+				    	<logic:empty name="enrolment" property="infoEnrolmentEvaluation.examDate" >
+					    	<td  class="listClasses" >
+								&nbsp;	
+							</td> 	 
+						</logic:empty>
+						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.examDate" >
+							<td class="listClasses">
+					    		<bean:define id="date" name="enrolment" property="infoEnrolmentEvaluation.examDate" />
+								<%= Data.format2DayMonthYear((Date) date) %>		
+				    	    </td>
+			    	    </logic:notEmpty>
+			    	    <logic:empty name="enrolment" property="infoEnrolmentEvaluation.gradeAvailableDate" >
+				    		<td  class="listClasses" >
+								&nbsp;	
+							</td> 	
+						</logic:empty>
+						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.gradeAvailableDate" >
+				  	   		<td class="listClasses">
+				    	    	<bean:define id="date" name="enrolment" property="infoEnrolmentEvaluation.gradeAvailableDate" />
+								<%= Data.format2DayMonthYear((Date) date) %>					
+				    	    </td>
+			    	    </logic:notEmpty>
+				        <td  class="listClasses" >
+							<bean:write name="enrolment" property="infoEnrolmentEvaluation.enrolmentEvaluationType" />
+					    </td>
+						<logic:empty name="enrolment" property="infoEnrolmentEvaluation.infoPersonResponsibleForGrade" >
+							<td  class="listClasses" >
+								&nbsp;	
+							</td> 
+						</logic:empty>
+						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.infoPersonResponsibleForGrade" >
+							<td  class="listClasses" >
+								<bean:write name="enrolment" property="infoEnrolmentEvaluation.infoPersonResponsibleForGrade.nome" />
+							</td>
+						</logic:notEmpty>
+						<logic:empty name="enrolment" property="infoEnrolmentEvaluation.infoEmployee" >	
+							<td  class="listClasses" >
+								&nbsp;	
+							</td> 
+						</logic:empty>
+						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.infoEmployee" >	
+							<td  class="listClasses" >
+								<bean:write name="enrolment" property="infoEnrolmentEvaluation.infoEmployee.nome"/>	
+							</td> 
+						</logic:notEmpty>
+						<logic:empty name="enrolment" property="infoEnrolmentEvaluation.observation" >
+							<td  class="listClasses" >
+								&nbsp;	
+							</td> 	 
+						</logic:empty>
+						<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.observation" >	
+							<td  class="listClasses" >
+								<bean:write name="enrolment" property="infoEnrolmentEvaluation.observation"/>	
+							</td>	
+						</logic:notEmpty>
+		    		</tr>
+		    		
+		    	<% } %>
 	        </logic:iterate>
 		</table>    	
 	</logic:notEqual>
