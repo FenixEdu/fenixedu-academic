@@ -1,7 +1,6 @@
 
 package ServidorPersistente.OJB;
 
-import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
@@ -65,11 +64,6 @@ public class GuideEntryOJBTest extends TestCaseOJB {
 			List result = persistentGuideEntry.readByGuide(guide);
 			assertTrue(!result.isEmpty());
 			assertEquals(result.size(), 3);
-			
-Iterator iterator = result.iterator();
-while(iterator.hasNext())
-	System.out.println(((IGuideEntry) iterator.next()));
-			
 			
 			IGuideEntry guideEntry = persistentGuideEntry.readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide, GraduationType.MAJOR_DEGREE_TYPE, 
 									 DocumentType.CERTIFICATE_OF_DEGREE_TYPE, "Conclusão");

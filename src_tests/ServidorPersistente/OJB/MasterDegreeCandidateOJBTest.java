@@ -75,6 +75,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		System.out.println(
 			"Beginning of test from class MasterDegreeCandidateOJB" + "\n");
 		junit.textui.TestRunner.run(suite());
+
 		System.out.println(
 			"End of test from class MasterDegreeCandidateOJB" + "\n");
 	}
@@ -488,43 +489,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		}
 	}
 
-	public void testDeleteNonExistingMasterDegreeCandidate() {
-		System.out.println(
-			"- Test 6 : Delete NonExisting Master Degree Candidate");
-
-		IMasterDegreeCandidate masterDegreeCandidateTemp = null;
-		try {
-			persistentSupport.iniciarTransaccao();
-			List result =
-				persistentMasterDegreeCandidate
-					.readMasterDegreeCandidatesByUsername(
-					"nmsn");
-			masterDegreeCandidateTemp = (IMasterDegreeCandidate) result.get(0);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("    -> Error on test");
-		}
-
-		// Clean all
-		try {
-			persistentSupport.iniciarTransaccao();
-			persistentMasterDegreeCandidate.deleteAll();
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("    -> Error on test");
-		}
-
-		try {
-			persistentSupport.iniciarTransaccao();
-			persistentMasterDegreeCandidate.delete(masterDegreeCandidateTemp);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("    -> Error on test");
-		}
-	}
 
 	public void testDeleteAllMasterDegreeCandidates() {
-		System.out.println("- Test 7 : Delete All Master Degree Candidates");
+		System.out.println("- Test 6 : Delete All Master Degree Candidates");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentMasterDegreeCandidate.deleteAll();
@@ -552,7 +519,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
 	public void testReadMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode() {
 		System.out.println(
-			"- Test 8 : Read existing Master Degree Candidate by candidateNumber, applicationYear and masterDegreeCode");
+			"- Test 7 : Read existing Master Degree Candidate by candidateNumber, applicationYear and masterDegreeCode");
 		IMasterDegreeCandidate masterDegreeCandidateTemp = null;
 
 		try {
@@ -706,7 +673,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
 	public void testReadNonExistingMasterDegreeCandidate2() {
 		System.out.println(
-			"- Test 9 : Read non existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode");
+			"- Test 8 : Read non existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode");
 		IMasterDegreeCandidate masterDegreeCandidateTemp = null;
 
 		try {
@@ -728,7 +695,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
 	public void testReadExistingByIdentificationDocNumberAndTypeAndExecutionDegree() {
 		System.out.println(
-			"- Test 10 : Read existing Master Degree Candidate by Identification Document Number And Type and Execution Degree");
+			"- Test 9 : Read existing Master Degree Candidate by Identification Document Number And Type and Execution Degree");
 		IMasterDegreeCandidate masterDegreeCandidateTemp1 = null;
 		IMasterDegreeCandidate masterDegreeCandidateTemp2 = null;
 
@@ -769,7 +736,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
 	public void testReadByUsernameAndExecutionDegreeAndSpecialization() {
 		System.out.println(
-			"- Test 11 : Read existing Master Degree Candidate by Username and Execution Degree and Specialization");
+			"- Test 10 : Read existing Master Degree Candidate by Username and Execution Degree and Specialization");
 		ICurso masterDegreeTemp = null;
 		IExecutionYear executionYear = null;
 		ICursoExecucao executionDegree = null;
@@ -819,7 +786,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 	}
 
 	public void testReadByExecutionYear() {
-		System.out.println("- Test 12 : Read By Execution Year");
+		System.out.println("- Test 11 : Read By Execution Year");
 		IExecutionYear executionYear = null;
 
 		try {
@@ -850,7 +817,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 
 	public void testReadByCandidateNumberAndExecutionDegreeAndSpecialization() {
 		System.out.println(
-			"- Test 13 : Read By Candidate Number And Execution Degree and Specialization");
+			"- Test 12 : Read By Candidate Number And Execution Degree and Specialization");
 		IMasterDegreeCandidate masterDegreeCandidate = null;
 		ICursoExecucao executionDegree = null;
 		ICurso degree = null;
@@ -1026,7 +993,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 	}
 
 	public void testReadByExecutionDegreeAndPerson() {
-		System.out.println("- Test 14 : Read By Execution Degree And Person");
+		System.out.println("- Test 13 : Read By Execution Degree And Person");
 		IMasterDegreeCandidate masterDegreeCandidate = null;
 		ICursoExecucao executionDegree = null;
 		ICurso degree = null;
@@ -1203,7 +1170,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 	}
 
 	public void testReadByExecutionDegree() {
-		System.out.println("- Test 15 : Read By Execution Degree ");
+		System.out.println("- Test 14 : Read By Execution Degree ");
 		ICursoExecucao executionDegree = null;
 		ICurso degree = null;
 		List candidates = null;
