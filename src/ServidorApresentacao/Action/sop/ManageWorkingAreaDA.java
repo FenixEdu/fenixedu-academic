@@ -169,6 +169,45 @@ public class ManageWorkingAreaDA extends FenixDispatchAction {
 	 * Prepare information to show existing execution periods
 	 * and working areas.
 	 **/
+	public ActionForward deleteWorkingArea(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		String year = request.getParameter("year");
+		Integer semester = new Integer(request.getParameter("semester"));
+
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear(year);
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod(
+				"AT:" + semester + "º Semestre",
+				infoExecutionYear);
+		infoExecutionPeriod.setSemester(new Integer(semester.intValue()));
+
+		IUserView userView = SessionUtils.getUserView(request);
+
+		Object[] argsDeleteWorkingArea = { infoExecutionPeriod };
+		try {
+			Boolean result =
+				(Boolean) ServiceUtils.executeService(
+					userView,
+					"DeleteWorkingArea",
+					argsDeleteWorkingArea);
+		} catch (FenixServiceException ex) {
+			throw new FenixActionException(
+				"Problemas a apagar a área de trabalho.",
+				ex);
+		}
+
+		return prepare(mapping, form, request, response);
+	}
+
+	/**
+	 * Prepare information to show existing execution periods
+	 * and working areas.
+	 **/
 	public ActionForward exportData(
 		ActionMapping mapping,
 		ActionForm form,

@@ -11,6 +11,15 @@
 	<logic:iterate id="infoWorkingArea" name="<%= SessionConstants.LIST_WORKING_AREAS %>">
 		<bean:write name="infoWorkingArea" property="name" /> - 
 		<bean:write name="infoWorkingArea" property="infoExecutionYear.year" />
+		<bean:define id="year" name="infoWorkingArea" property="infoExecutionYear.year"/>
+		<bean:define id="semester" name="infoWorkingArea" property="semester"/>
+		<html:link page="<%= "/manageWorkingArea.do?method=deleteWorkingArea"
+								+ "&amp;year="
+								+ year
+								+ "&amp;semester="
+								+ semester %>" >
+			<bean:message key="link.delete.to.working.area"/>
+		</html:link>
 		<br />
 	</logic:iterate>
 </logic:present>
@@ -19,6 +28,7 @@
 	<span class="error">
 		<bean:message key="errors.working.area.none"/>
 	</span>
+	<br />
 </logic:notPresent>
 
 <br />
@@ -86,15 +96,6 @@
 	<logic:iterate id="infoExecutionPeriod" name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>">
 		<bean:write name="infoExecutionPeriod" property="name" /> - 
 		<bean:write name="infoExecutionPeriod" property="infoExecutionYear.year" /> 
-		<bean:define id="year" name="infoExecutionPeriod" property="infoExecutionYear.year"/>
-		<bean:define id="semester" name="infoExecutionPeriod" property="semester"/>
-		<html:link page="<%= "/manageWorkingArea.do?method=createWorkingArea"
-								+ "&amp;year="
-								+ year
-								+ "&amp;semester="
-								+ semester %>" >
-			<bean:message key="link.export.to.working.area"/>
-		</html:link>
 		<br />
 	</logic:iterate>
 
