@@ -4,16 +4,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <h2><bean:message key="link.shift.enrolment" /></h2>
-
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <html:form action="/enrollStudentInShifts" >
 	<html:hidden property="studentId"/>
 	<logic:iterate id="infoClass" name="infoClassEnrollmentDetails" property="infoClassList">
 		<!-- CLASS -->
 		<bean:define id="infoClassId" name="infoClass" property="idInternal"/>		
-		<logic:present name="classId">
-			<bean:define id="classIdSelected" name="classId" />		
-			<logic:equal name="infoClassId" value="<%= classIdSelected.toString() %>">
+			<logic:present name="classId">
+				<bean:define id="classIdSelected" name="classId" />		
+				<logic:equal name="infoClassId" value="<%= classIdSelected.toString() %>">
 				<h2 class="redtxt" style="text-align:left"><bean:message key="label.class" />&nbsp;<bean:write name="infoClass" property="nome"/></h2>
 				<br />
 				<table border="0" width="75%" cellspacing="1" cellpadding="5">
@@ -23,15 +22,18 @@
 							<logic:iterate id="executionCourseDetails" name="executionCourseDetailsElem" property="value">		
 								<!-- COURSE -->	
 								<tr>
-									<td colspan="4" class="listClasses-subheader"><b><bean:message key="label.course" /></b>&nbsp;<bean:write name="executionCourseDetails" property="infoExecutionCourse.nome"/></td>
+									<td colspan="4" class="listClasses-subheader"><%--<b><bean:message key="label.course" /></b>&nbsp;--%><bean:write name="executionCourseDetails" property="infoExecutionCourse.nome"/></td>
 								</tr>
 						
 								<!-- SHIFT -->
 								<logic:iterate id="shiftEnrollmentDetails" name="executionCourseDetails" property="shiftEnrollmentDetailsList">						
 									<tr>
-										<td colspan="4" class="listClasses-header">
+										<td colspan="3" class="listClasses-header">
 											<b><bean:message key="label.shift" /></b>&nbsp;<bean:write name="shiftEnrollmentDetails" property="infoShift.nome"/>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<bean:message key="label.vacancies" />:&nbsp;<bean:write name="shiftEnrollmentDetails" property="vacancies"/>
+										</td>
+										<td  class="listClasses-header" style="text-align:right">
 											<bean:message key="label.enroll" />?
 											<!-- Radio button -->
 											<bean:define id="shiftKey">
@@ -63,13 +65,12 @@
 						</logic:equal>
 					</logic:iterate>	
 				</table>
-			</logic:equal>
-		</logic:present>		
+				</logic:equal>
+			</logic:present>		
 	</logic:iterate>
-	
 	<p>
-	<html:submit styleClass="inputbutton">
-		<bean:message key="button.enroll"/>
-	</html:submit>
+		<html:submit styleClass="inputbutton">
+			<bean:message key="button.enroll"/>
+		</html:submit>
 	</p>
 </html:form>
