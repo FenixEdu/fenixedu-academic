@@ -50,6 +50,12 @@
                        <% Integer iM = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer fM = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.MINUTE)); %>
+                       <% String appendStartMinute = ""; %>
+                       <% String appendEndMinute = ""; %>
+                       <% if (iM.intValue() == 0) { %>
+                       <% 	appendStartMinute = "0"; } %>
+                       <% if (fM.intValue() == 0) { %>
+                       <% 	appendEndMinute = "0"; } %>
                        <tr align="center">
                             <td>
                             	<html:radio property="indexAula" value="<%= (new Integer(i)).toString() %>"/>
@@ -58,10 +64,10 @@
                                 <bean:write name="elem" property="diaSemana" />
                             </td>
                             <td>
-                            	<%= iH.toString()%> : <%= iM.toString()%>
+                            	<%= iH.toString()%> : <%= iM.toString() + appendStartMinute %>
                             </td>
                             <td>
-                            	<%= fH.toString()%> : <%= fM.toString()%>
+                            	<%= fH.toString()%> : <%= fM.toString() + appendEndMinute %>
                             </td>
                             <td>
                             	<%= ((InfoLesson) iA.get(i)).getTipo().toString()%>
