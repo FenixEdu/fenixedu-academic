@@ -56,13 +56,13 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 
         criteria.addEqualTo("student.number", aluno.getNumber());
         criteria.addEqualTo("student.degreeType", aluno.getDegreeType());
-        criteria.addEqualTo("turno.nome", turno.getNome());
-        criteria.addEqualTo("turno.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
+        criteria.addEqualTo("shift.nome", turno.getNome());
+        criteria.addEqualTo("shift.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
         criteria.addEqualTo(
-            "turno.disciplinaExecucao.executionPeriod.name",
+            "shift.disciplinaExecucao.executionPeriod.name",
             turno.getDisciplinaExecucao().getExecutionPeriod().getName());
         criteria.addEqualTo(
-            "turno.disciplinaExecucao.executionPeriod.executionYear.year",
+            "shift.disciplinaExecucao.executionPeriod.executionYear.year",
             turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
 
         return (ITurnoAluno) queryObject(ShiftStudent.class, criteria);
