@@ -3,6 +3,7 @@ package ServidorAplicacao.strategy.enrolment.degree;
 import java.util.List;
 import java.util.Map;
 
+import DataBeans.InfoDegree;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 
@@ -15,15 +16,21 @@ import DataBeans.InfoStudentCurricularPlan;
 
 public class InfoEnrolmentContext {
 
-	private Map acumulatedEnrolments;
 	private InfoStudentCurricularPlan infoStudentActiveCurricularPlan;
-	private List actualEnrolment;
-	private List infoFinalCurricularCoursesScopesSpanToBeEnrolled;
 	private InfoStudent infoStudent;
 	private Integer semester;
 	private EnrolmentValidationResult enrolmentValidationResult;
+	private InfoDegree chosenOptionalInfoDegree;
+
+	private Map acumulatedEnrolments;
+
+	private List actualEnrolment;
+	private List infoFinalCurricularCoursesScopesSpanToBeEnrolled;
 	private List infoCurricularCoursesScopesEnroledByStudent;
 	
+	private List infoDegreesForOptionalCurricularCourses;
+	private List optionalInfoCurricularCoursesToChooseFromDegree;
+
 	public InfoEnrolmentContext() {
 		setAcumulatedEnrolments(null);
 		setInfoStudentActiveCurricularPlan(null);
@@ -51,6 +58,9 @@ public class InfoEnrolmentContext {
 		result += "infoFinalCurricularCoursesScopesSpanToBeEnrolled = " + this.infoFinalCurricularCoursesScopesSpanToBeEnrolled + "\n";
 		result += "enrolmentValidationResult = " + this.enrolmentValidationResult + "\n";
 		result += "student = " + this.infoStudent + "\n";
+		result += "chosenOptionalInfoDegree = " + this.chosenOptionalInfoDegree + "\n";
+		result += "InfodegreesForOptionalCurricularCourses = " + this.infoDegreesForOptionalCurricularCourses + "\n";
+		result += "optionalInfoCurricularCoursesToChooseFromDegree = " + this.optionalInfoCurricularCoursesToChooseFromDegree + "\n";
 		result += "semester= " + this.semester + "]";
 
 		return result;
@@ -174,6 +184,51 @@ public class InfoEnrolmentContext {
 	 */
 	public void setInfoCurricularCoursesScopesEnroledByStudent(List infoCurricularCoursesScopesEnroledByStudent) {
 		this.infoCurricularCoursesScopesEnroledByStudent = infoCurricularCoursesScopesEnroledByStudent;
+	}
+
+	/**
+	 * @return InfoDegree
+	 */
+	public InfoDegree getChosenOptionalInfoDegree() {
+		return chosenOptionalInfoDegree;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getInfoDegreesForOptionalCurricularCourses() {
+		return infoDegreesForOptionalCurricularCourses;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getOptionalInfoCurricularCoursesToChooseFromDegree() {
+		return optionalInfoCurricularCoursesToChooseFromDegree;
+	}
+
+	/**
+	 * Sets the chosenOptionalInfoDegree.
+	 * @param chosenOptionalInfoDegree The chosenOptionalInfoDegree to set
+	 */
+	public void setChosenOptionalInfoDegree(InfoDegree chosenOptionalInfoDegree) {
+		this.chosenOptionalInfoDegree = chosenOptionalInfoDegree;
+	}
+
+	/**
+	 * Sets the infoDegreesForOptionalCurricularCourses.
+	 * @param infoDegreesForOptionalCurricularCourses The infoDegreesForOptionalCurricularCourses to set
+	 */
+	public void setInfoDegreesForOptionalCurricularCourses(List infoDegreesForOptionalCurricularCourses) {
+		this.infoDegreesForOptionalCurricularCourses = infoDegreesForOptionalCurricularCourses;
+	}
+
+	/**
+	 * Sets the optionalInfoCurricularCoursesToChooseFromDegree.
+	 * @param optionalInfoCurricularCoursesToChooseFromDegree The optionalInfoCurricularCoursesToChooseFromDegree to set
+	 */
+	public void setOptionalInfoCurricularCoursesToChooseFromDegree(List optionalInfoCurricularCoursesToChooseFromDegree) {
+		this.optionalInfoCurricularCoursesToChooseFromDegree = optionalInfoCurricularCoursesToChooseFromDegree;
 	}
 
 }

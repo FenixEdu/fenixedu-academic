@@ -1,6 +1,5 @@
 package ServidorAplicacao.strategy.enrolment.degree.rules;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,8 +19,6 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		
-		HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
-		List actualEnrolments = enrolmentContext.getActualEnrolment();
 		int year = 0;
 		int year2 = 0;
 
@@ -41,7 +38,6 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 		for(int i = (year - 1); i > 0; i--) {
 			final int j = i;
 			List precedentCurricularCourses = (List) CollectionUtils.select(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled(), new Predicate() {
-
 				public boolean evaluate(Object obj) {
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
 					return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() == j;

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import Dominio.ICurricularCourse;
+import Dominio.ICurso;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 
@@ -23,14 +24,19 @@ public final class EnrolmentContext {
 	private Map acumulatedEnrolments;
 
 	private IStudent student;
-	private List curricularCoursesDoneByStudent;
 	private Integer semester;
-	private EnrolmentValidationResult enrolmentValidationResult;
 	private IStudentCurricularPlan studentActiveCurricularPlan;
+	private EnrolmentValidationResult enrolmentValidationResult;
+	private ICurso chosenOptionalDegree;
+
+	private List curricularCoursesDoneByStudent;
 	private List actualEnrolment;
 	private List curricularCoursesFromStudentCurricularPlan;
 	private List finalCurricularCoursesScopesSpanToBeEnrolled;
 	private List curricularCoursesScopesEnroledByStudent;
+
+	private List degreesForOptionalCurricularCourses;
+	private List optionalCurricularCoursesToChooseFromDegree;
 
 	/**
 	 *  
@@ -170,6 +176,9 @@ public final class EnrolmentContext {
 		result += "actualEnrolment = " + this.actualEnrolment + "\n";
 		result += "finalCurricularCoursesScopesSpanToBeEnrolled = " + this.finalCurricularCoursesScopesSpanToBeEnrolled + "\n";
 		result += "enrolmentValidationResult = " + this.enrolmentValidationResult + "\n";
+		result += "chosenOptionalDegree = " + this.chosenOptionalDegree + "\n";
+		result += "degreesForOptionalCurricularCourses = " + this.degreesForOptionalCurricularCourses + "\n";
+		result += "optionalCurricularCoursesToChooseFromDegree = " + this.optionalCurricularCoursesToChooseFromDegree + "\n";
 		result += "student = " + this.student + "]";
 		return result;
 	}	
@@ -201,6 +210,51 @@ public final class EnrolmentContext {
 	 */
 	public void setCurricularCoursesScopesEnroledByStudent(List curricularCoursesEnroledByStudent) {
 		this.curricularCoursesScopesEnroledByStudent = curricularCoursesEnroledByStudent;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getDegreesForOptionalCurricularCourses() {
+		return degreesForOptionalCurricularCourses;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getOptionalCurricularCoursesToChooseFromDegree() {
+		return optionalCurricularCoursesToChooseFromDegree;
+	}
+
+	/**
+	 * Sets the degreesForOptionalCurricularCourses.
+	 * @param degreesForOptionalCurricularCourses The degreesForOptionalCurricularCourses to set
+	 */
+	public void setDegreesForOptionalCurricularCourses(List degreesForOptionalCurricularCourses) {
+		this.degreesForOptionalCurricularCourses = degreesForOptionalCurricularCourses;
+	}
+
+	/**
+	 * Sets the optionalCurricularCoursesToChooseFromDegree.
+	 * @param optionalCurricularCoursesToChooseFromDegree The optionalCurricularCoursesToChooseFromDegree to set
+	 */
+	public void setOptionalCurricularCoursesToChooseFromDegree(List optionalCurricularCoursesToChooseFromDegree) {
+		this.optionalCurricularCoursesToChooseFromDegree = optionalCurricularCoursesToChooseFromDegree;
+	}
+
+	/**
+	 * @return ICurso
+	 */
+	public ICurso getChosenOptionalDegree() {
+		return chosenOptionalDegree;
+	}
+
+	/**
+	 * Sets the chosenOptionalDegree.
+	 * @param chosenOptionalDegree The chosenOptionalDegree to set
+	 */
+	public void setChosenOptionalDegree(ICurso chosenDegree) {
+		this.chosenOptionalDegree = chosenDegree;
 	}
 
 }

@@ -92,6 +92,12 @@
 		jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
 	/>
+	<collection-descriptor
+			name="degreeCurricularPlans"
+			element-class-ref="Dominio.DegreeCurricularPlan"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyDegree"/>
+	</collection-descriptor>    
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->

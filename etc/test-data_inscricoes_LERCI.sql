@@ -295,15 +295,15 @@ insert into ENROLMENT VALUES (23, 1, 23, 1, 1);
 insert into ENROLMENT VALUES (24, 1, 24, 1, 1);
 insert into ENROLMENT VALUES (25, 1, 50, 1, 3);
 
-insert into ENROLMENT VALUES (26, 1, 27, 1, 1);
-insert into ENROLMENT VALUES (27, 1, 28, 1, 1);
-insert into ENROLMENT VALUES (28, 1, 29, 1, 1);
-insert into ENROLMENT VALUES (29, 1, 30, 1, 1);
+#insert into ENROLMENT VALUES (26, 1, 27, 1, 1);
+#insert into ENROLMENT VALUES (27, 1, 28, 1, 1);
+#insert into ENROLMENT VALUES (28, 1, 29, 1, 1);
+#insert into ENROLMENT VALUES (29, 1, 30, 1, 1);
 
-insert into ENROLMENT VALUES (30, 1, 26, 1, 1);
-insert into ENROLMENT VALUES (31, 1, 35, 1, 1);
-insert into ENROLMENT VALUES (32, 1, 37, 1, 1);
-insert into ENROLMENT VALUES (33, 1, 38, 1, 1);
+#insert into ENROLMENT VALUES (30, 1, 26, 1, 1);
+#insert into ENROLMENT VALUES (31, 1, 35, 1, 1);
+#insert into ENROLMENT VALUES (32, 1, 37, 1, 1);
+#insert into ENROLMENT VALUES (33, 1, 38, 1, 1);
 
 #insert into ENROLMENT VALUES (34, 1, 42, 1, 1);
 #insert into ENROLMENT VALUES (35, 1, 43, 1, 1);

@@ -64,7 +64,12 @@ public class ShowAvailableCurricularCourses implements IServico {
 			return EnrolmentContextManager.getInfoEnrolmentContext(strategy.getAvailableCurricularCourses());
 
 		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex.getMessage());
+			ex.printStackTrace(System.out);
+			throw new FenixServiceException(ex);	
+		} catch(IllegalStateException ex) {
+			ex.printStackTrace(System.out);
+			throw new FenixServiceException(ex);
 		}
+
 	}
 }

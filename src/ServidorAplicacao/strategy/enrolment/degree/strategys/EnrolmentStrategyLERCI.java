@@ -1,6 +1,8 @@
 package ServidorAplicacao.strategy.enrolment.degree.strategys;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAllOptionalCoursesRule;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAllOptionalDegreesRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAnualCurricularCourseRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterAutomaticEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentFilterBranchRule;
@@ -76,6 +78,25 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 			// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
 			this.enrolmentContext.getEnrolmentValidationResult().setSucessMessage("Inscrição realizada com sucesso");
 		}
+		return this.enrolmentContext;
+	}
+
+	public EnrolmentContext getOptionalCurricularCourses() {
+		IEnrolmentRule enrolmentRule = null;
+
+		enrolmentRule = new EnrolmentFilterAllOptionalCoursesRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		return this.enrolmentContext;
+	}
+
+	public EnrolmentContext getDegreesForOptionalCurricularCourses() {
+
+		IEnrolmentRule enrolmentRule = null;
+
+		enrolmentRule = new EnrolmentFilterAllOptionalDegreesRule();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
 		return this.enrolmentContext;
 	}
 

@@ -6,6 +6,8 @@
 
 package Dominio;
 
+import java.util.List;
+
 import Util.TipoCurso;
 
 /**
@@ -14,42 +16,43 @@ import Util.TipoCurso;
  */
 
 public class Curso implements ICurso {
-  protected String sigla;
-  protected String nome;
-  protected TipoCurso tipoCurso;
-    
-  // códigos internos da base de dados
-  private Integer codigoInterno;
-    
-  /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-  public Curso() { }
-    
-  public Curso(String sigla, String nome, TipoCurso tipoCurso) {
-    setSigla(sigla);
-    setNome(nome);
-    setTipoCurso(tipoCurso);
-  }
-    
+	protected String sigla;
+	protected String nome;
+	protected TipoCurso tipoCurso;
+	private List degreeCurricularPlans;
 
-  public boolean equals(Object obj) {
-    boolean resultado = false;
-    if (obj instanceof ICurso) {
-      ICurso curso = (ICurso)obj;
-      resultado = getSigla().equals(curso.getSigla()); 
-    }
-    return resultado;
-  }
-  
-  public String toString() {
-    String result = "[CURSO";
-    result += ", codInt=" + codigoInterno;
-    result += ", sigla=" + sigla;
-    result += ", nome=" + nome;
-    result += ", tipoCurso=" + tipoCurso;
-    result += "]";
-    return result;
-  }
-  
+	// códigos internos da base de dados
+	private Integer codigoInterno;
+
+	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
+	public Curso() {
+	}
+
+	public Curso(String sigla, String nome, TipoCurso tipoCurso) {
+		setSigla(sigla);
+		setNome(nome);
+		setTipoCurso(tipoCurso);
+	}
+
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof ICurso) {
+			ICurso curso = (ICurso) obj;
+			resultado = getSigla().equals(curso.getSigla());
+		}
+		return resultado;
+	}
+
+	public String toString() {
+		String result = "[CURSO";
+		result += ", codInt=" + codigoInterno;
+		result += ", sigla=" + sigla;
+		result += ", nome=" + nome;
+		result += ", tipoCurso=" + tipoCurso;
+		result += "]";
+		return result;
+	}
+
 	/**
 	 * Returns the codigoInterno.
 	 * @return int
@@ -57,7 +60,7 @@ public class Curso implements ICurso {
 	public Integer getCodigoInterno() {
 		return codigoInterno;
 	}
-	
+
 	/**
 	 * Returns the nome.
 	 * @return String
@@ -65,7 +68,7 @@ public class Curso implements ICurso {
 	public String getNome() {
 		return nome;
 	}
-	
+
 	/**
 	 * Returns the sigla.
 	 * @return String
@@ -73,7 +76,7 @@ public class Curso implements ICurso {
 	public String getSigla() {
 		return sigla;
 	}
-	
+
 	/**
 	 * Returns the tipoCurso.
 	 * @return TipoCurso
@@ -81,7 +84,7 @@ public class Curso implements ICurso {
 	public TipoCurso getTipoCurso() {
 		return tipoCurso;
 	}
-	
+
 	/**
 	 * Sets the codigoInterno.
 	 * @param codigoInterno The codigoInterno to set
@@ -89,7 +92,7 @@ public class Curso implements ICurso {
 	public void setCodigoInterno(Integer codigoInterno) {
 		this.codigoInterno = codigoInterno;
 	}
-	
+
 	/**
 	 * Sets the nome.
 	 * @param nome The nome to set
@@ -97,7 +100,7 @@ public class Curso implements ICurso {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	/**
 	 * Sets the sigla.
 	 * @param sigla The sigla to set
@@ -105,7 +108,7 @@ public class Curso implements ICurso {
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
-	
+
 	/**
 	 * Sets the tipoCurso.
 	 * @param tipoCurso The tipoCurso to set
@@ -113,4 +116,20 @@ public class Curso implements ICurso {
 	public void setTipoCurso(TipoCurso tipoCurso) {
 		this.tipoCurso = tipoCurso;
 	}
+
+	/**
+	 * @return List
+	 */
+	public List getDegreeCurricularPlans() {
+		return degreeCurricularPlans;
+	}
+
+	/**
+	 * Sets the degreeCurricularPlans.
+	 * @param degreeCurricularPlans The degreeCurricularPlans to set
+	 */
+	public void setDegreeCurricularPlans(List degreeCurricularPlans) {
+		this.degreeCurricularPlans = degreeCurricularPlans;
+	}
+
 }
