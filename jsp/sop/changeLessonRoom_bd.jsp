@@ -1,4 +1,4 @@
-<%@ page language="java" %>
+			<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -21,9 +21,8 @@
                         <bean:message key="property.aula.weekDay"/>
                     </td>
                     <td align="left" height="40">
-                        <html:select property="diaSemana">
-                            <html:options collection="diasSemana" property="value" labelProperty="label"/>
-                        </html:select>
+	                    <html:hidden property="diaSemana"/>
+	                    <bean:write name="weekDayString"/>
                    </td>
                 </tr>
                 <tr>
@@ -31,12 +30,8 @@
                         <bean:message key="property.aula.time.begining"/>
                     </td>
                     <td align="left" height="40">
-                        <html:select property="horaInicio">
-                            <html:options name="horas"/>
-                        </html:select> :
-                        <html:select property="minutosInicio">
-                            <html:options name="minutos"/>
-                        </html:select>
+	                    <html:hidden property="horaInicio" write="true"/> :
+	                    <html:hidden property="minutosInicio" write="true"/>                        
                     </td>
                 </tr>
                 <tr>
@@ -44,12 +39,8 @@
                         <bean:message key="property.aula.time.end"/>
                     </td>
                     <td align="left" height="40">
-                        <html:select property="horaFim">
-                            <html:options name="horas"/>
-                        </html:select> :
-                        <html:select property="minutosFim">
-                            <html:options name="minutos"/>
-                        </html:select>
+						<html:hidden property="horaFim" write="true"/> :
+						<html:hidden property="minutosFim" write="true"/>
                     </td>
                  </tr>
                 <tr>
@@ -67,10 +58,9 @@
                         <bean:message key="property.aula.sala"/>
                     </td>
                     <td align="left" height="40">
-                    	<html:hidden property="nomeSala" write="true"/>
-                        <html:submit property="operation">
-                        	<bean:message key="lable.changeRoom"/>
-                        </html:submit>
+                        <html:select property="nomeSala" size="1" >
+                            <html:options collection="listaSalas" property="value" labelProperty="label"/>
+                        </html:select>
                     </td>
                 </tr>
             </table>

@@ -14,16 +14,15 @@
         <h2><bean:message key="title.criarAula"/></h2>
         <span class="error"><html:errors/></span>
         <html:form action="/criarAulaForm">
+	        <html:hidden property="page" value="1"/>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td nowrap class="formTD">
                         <bean:message key="property.aula.weekDay"/>
                     </td>
                     <td nowrap class="formTD">
-                        <html:select property="diaSemana"  size="1">
-                        	<option value="" selected="selected">escolher</option>
-                            <html:options collection="diasSemana" property="value" labelProperty="label"/>
-                        </html:select>
+                    	<html:hidden property="diaSemana"/>
+                    	<bean:write name="weekDayString"/>
                    </td>
                 </tr>
                 <tr>
@@ -31,14 +30,8 @@
                         <bean:message key="property.aula.time.begining"/>
                     </td>
                     <td nowrap="nowrap">
-                        <html:select property="horaInicio"  size="1">
-                        	<option value="" selected="selected">[Horas]</option>                        
-                            <html:options name="horas"/>
-                        </html:select> :
-                        <html:select property="minutosInicio" size="1">
-                        	<option value="" selected="selected">[Minutos]</option>                        
-                            <html:options name="minutos"/>
-                        </html:select>
+	                    <html:hidden property="horaInicio" write="true"/>:
+                        <html:hidden property="minutosInicio" write="true"/>
                     </td>
                 </tr>
                 <tr>
@@ -46,14 +39,8 @@
                         <bean:message key="property.aula.time.end"/>
                     </td>
                     <td nowrap="nowrap">
-                        <html:select property="horaFim"  size="1">
-                        	<option value="" selected="selected">[Horas]</option>                        
-                            <html:options name="horas"/>
-                        </html:select> :
-                        <html:select property="minutosFim"  size="1">
-                        	<option value="" selected="selected">[Minutos]</option>                        
-                            <html:options name="minutos"/>
-                        </html:select>
+	                    <html:hidden property="horaFim" write="true"/>:
+                        <html:hidden property="minutosFim" write="true"/>
                     </td> 
                 </tr> 
                 <tr>
@@ -75,13 +62,23 @@
                     	<jsp:include page="selectExecutionCourseList.jsp"/>
                     </td>
                 </tr>
+                <tr>
+                    <td align="right" height="40">
+                        <bean:message key="property.aula.sala"/>
+                    </td> 
+                    <td align="left" height="40">
+                        <html:select property="nomeSala" size="1" >
+                            <html:options collection="listaSalas" property="value" labelProperty="label"/>
+                        </html:select>
+                    </td>
+                </tr>
           </table>
             <br/>
             <table align="lef">
                 <tr align="center">
                     <td>
                         <html:submit property="operation" styleClass="inputbutton">
-                        	<bean:message key="lable.chooseRoom"/>
+                            <bean:message key="label.create"/>
                         </html:submit>
                     </td>
                     <td width="20"> </td>

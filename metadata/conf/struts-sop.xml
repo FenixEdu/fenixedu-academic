@@ -191,6 +191,10 @@
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
 
     
@@ -277,7 +281,8 @@
               name="aulaForm"
               path="/criarAulaForm"
               scope="request"
-              type="ServidorApresentacao.Action.sop.CriarAulaFormAction"
+              type="ServidorApresentacao.Action.sop.LessonManagerDispatchAction"
+              parameter="operation"
               validate="true"
               >
 		<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -292,7 +297,8 @@
         		   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />           
-		<forward name="Sucesso" path="/gestaoHorarios.do"/>
+		<forward name="Criar" path="/gestaoHorarios.do"/>
+		<forward name="Atribuir Sala" path="/chooseLessonRoom.jsp"/>
       </action>
 
       <action path="/escolherAulas"
@@ -330,7 +336,8 @@
 
      <action attribute="aulaForm"
              path="/editarAulaForm"
-             type="ServidorApresentacao.Action.sop.EditarAulaFormAction"
+             type="ServidorApresentacao.Action.sop.LessonManagerDispatchAction"
+             parameter="operation"
              name="aulaForm"
              scope="request"
              input="/editarAula.jsp">             
@@ -345,8 +352,10 @@
         <exception type="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
         		   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-                   />           
-         <forward name="Sucesso" path="/manipularAulas.jsp"/>
+                   />
+         <forward name="Guardar" path="/escolherAulas.do"/>
+         <forward name="Sucesso" path="/escolherAulas.do"/>
+         <forward name="Alterar Sala" path="/changeLessonRoom.jsp"/>
 	 </action>
 
       <!-- Gestao de Salas -->
