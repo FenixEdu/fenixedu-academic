@@ -22,7 +22,8 @@ import Util.enrollment.EnrollmentRuleType;
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricularPlan {
+public class DegreeCurricularPlan extends DomainObject implements
+        IDegreeCurricularPlan {
 
     protected Integer degreeKey;
 
@@ -58,6 +59,7 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
     // For enrollment purposes
     protected Integer minimalYearForOptionalCourses;
+
     protected List curricularCourseEquivalences;
 
     public DegreeCurricularPlan() {
@@ -68,8 +70,10 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         IStudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            Class classDefinition = Class.forName(getConcreteClassForStudentCurricularPlans());
-            studentCurricularPlan = (IStudentCurricularPlan) classDefinition.newInstance();
+            Class classDefinition = Class
+                    .forName(getConcreteClassForStudentCurricularPlans());
+            studentCurricularPlan = (IStudentCurricularPlan) classDefinition
+                    .newInstance();
         } catch (InstantiationException e) {
             System.out.println(e);
         } catch (IllegalAccessException e) {
@@ -87,7 +91,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         if (obj instanceof IDegreeCurricularPlan) {
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) obj;
 
-            result = getDegree().equals(degreeCurricularPlan.getDegree()) && getName().equals(degreeCurricularPlan.getName());
+            result = getDegree().equals(degreeCurricularPlan.getDegree())
+                    && getName().equals(degreeCurricularPlan.getName());
         }
 
         return result;
@@ -112,7 +117,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         return curricularCourseEquivalences;
     }
 
-    public void setCurricularCourseEquivalences(List curricularCourseEquivalences) {
+    public void setCurricularCourseEquivalences(
+            List curricularCourseEquivalences) {
         this.curricularCourseEquivalences = curricularCourseEquivalences;
     }
 
@@ -216,7 +222,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         this.markType = markType;
     }
 
-    public void setMinimalYearForOptionalCourses(Integer minimalYearForOptionalCourses) {
+    public void setMinimalYearForOptionalCourses(
+            Integer minimalYearForOptionalCourses) {
         this.minimalYearForOptionalCourses = minimalYearForOptionalCourses;
     }
 
@@ -244,7 +251,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         return ojbConcreteClass;
     }
 
-    public void setConcreteClassForStudentCurricularPlans(String concreteClassForStudentCurricularPlans) {
+    public void setConcreteClassForStudentCurricularPlans(
+            String concreteClassForStudentCurricularPlans) {
         this.concreteClassForStudentCurricularPlans = concreteClassForStudentCurricularPlans;
     }
 
@@ -256,43 +264,55 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
 
-    public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
+    public List getListOfEnrollmentRules(
+            IStudentCurricularPlan studentCurricularPlan,
+            IExecutionPeriod executionPeriod,
             EnrollmentRuleType enrollmentRuleType) {
-        return EnrollmentRulesFactory.getInstance().getListOfEnrollmentRules(this, studentCurricularPlan, executionPeriod,
+        return EnrollmentRulesFactory.getInstance().getListOfEnrollmentRules(
+                this, studentCurricularPlan, executionPeriod,
                 enrollmentRuleType);
     }
 
-    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) throws ExcepcaoPersistencia {
+    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType)
+            throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport.getIPersistentCurricularCourseScope();
+        ISuportePersistente persistentSuport = SuportePersistenteOJB
+                .getInstance();
+        IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport
+                .getIPersistentCurricularCourseScope();
 
-		List scopes = curricularCourseScopeDAO.readByBranch(area);
-		
-		List curricularCourses = new ArrayList();
-		
-		int scopesSize = scopes.size();
+        List scopes = curricularCourseScopeDAO.readByBranch(area);
 
-		for (int i = 0; i < scopesSize; i++)
-		{
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(i);
-			
-			ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+        List curricularCourses = new ArrayList();
 
-			if (curricularCourses.contains(curricularCourse))
-			{
-				curricularCourses.add(curricularCourse);
-			}
-		}
-		
-		return curricularCourses;
+        int scopesSize = scopes.size();
+
+        for (int i = 0; i < scopesSize; i++) {
+            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes
+                    .get(i);
+
+            ICurricularCourse curricularCourse = curricularCourseScope
+                    .getCurricularCourse();
+
+            if (curricularCourses.contains(curricularCourse)) {
+                curricularCourses.add(curricularCourse);
+            }
+        }
+
+        return curricularCourses;
     }
 
     public List getCommonAreas() {
         return (List) CollectionUtils.select(this.areas, new Predicate() {
             public boolean evaluate(Object obj) {
                 IBranch branch = (IBranch) obj;
-                return branch.getBranchType().equals(BranchType.COMMON_BRANCH);
+                if (branch.getBranchType() == null) {
+                    return branch.getName().equals("")
+                            && branch.getCode().equals("");
+                } else {
+                    return branch.getBranchType().equals(
+                            BranchType.COMMON_BRANCH);
+                }
             }
         });
     }
