@@ -109,8 +109,13 @@ public class Curriculum extends DomainObject implements ICurriculum {
 		boolean result = false;
 		if (obj instanceof ICurriculum) {
 			ICurriculum curriculum = (ICurriculum) obj;
-			result =
-				getCurricularCourse().equals(curriculum.getCurricularCourse());
+
+			
+			
+			result =((getCurricularCourse() == null && curriculum.getCurricularCourse() == null)
+			|| (getCurricularCourse() != null
+				&& curriculum.getCurricularCourse() != null
+				&& getCurricularCourse().equals(curriculum.getCurricularCourse())));
 		}
 		return result;
 	}

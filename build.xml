@@ -547,26 +547,19 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <!--<include name="**/DeleteSummaryTest.java"/>
-                    <include name="**/InsertSummaryTest.java"/>
-                    <include name="**/EditSummaryTest.java"/>
-                    <include name="**/ReadSummariesTest.java"/>
-                    <include name="**/ReadSummaryTest.java"/>-->
-                    <!--<include name="**/EditCourseInformationTest.java"/>
-                    <include name="**/ReadCourseInformationTest.java"/>-->
-                    <include name="**/EditCareerTest.java"/>
-                    <!--<include name="**/DeleteCareerTest.java"/>-->
-                    <include name="**/ReadCareerTest.java"/>
-                    <!--<include name="**/ReadCareersTest.java"/>
-                    <include name="**/DeleteExternalActivityTest.java"/>
-                    <include name="**/ReadExternalActivityTest.java"/>
-                    <include name="**/EditExternalActivityTest.java"/>
-                    <include name="**/ReadExternalActivitiesTest.java"/>
-                    <include name="**/EditTeacherInformationTest.java"/>
-                    <include name="**/ReadTeacherInformationTest.java"/>-->
+               	<include name="**/Upgrade*.java"/> 
+	 <!--			<include name="**/CreateAnnouncementTest.java"/>
+					<include name="**/ReadSiteAnnouncementTest.java"/>
+					<include name="**/ReadAnnouncementTest.java"/>
+					<include name="**/CreateGrantOwnerTest.java"/>
+                    <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
+                    <exclude name="**/ReadShiftEnrolmentTest.java"/>
+                   	<exclude name="**/StudentShiftEnrolmentTest.java"/>
+                    <exclude name="**/ReadActualExecutionPeriodTest.java"/>
                     <exclude name="ServidorApresentacao/**/*.java"/>
                     <exclude name="ServidorPersistente/**/*.java"/>
                     <exclude name="**/AllTests.java"/>
+-->
                 </fileset>
             </batchtest>
             <classpath>
@@ -1143,7 +1136,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
    			depends="compile-proj"
    			description="fills the curriculum table with the data from sigla"
    			>
-   			<java classname="middleware.sigla.SiglaDataLoader"
+   			<java classname="middleware.sigla.SiglaDataFixer"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
