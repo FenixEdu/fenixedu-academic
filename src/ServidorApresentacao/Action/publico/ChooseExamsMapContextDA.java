@@ -182,6 +182,9 @@ public class ChooseExamsMapContextDA extends DispatchAction {
 								"ReadExecutionDegreesByExecutionYear",
 								argsLerLicenciaturas);
 
+			Collections.sort(
+				infoExecutionDegreeList,
+				new ComparatorByNameForInfoExecutionDegree());
 			
 			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
