@@ -1,3 +1,4 @@
+
 /*
  * Created on 25/Fev/2003
  *
@@ -85,7 +86,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 		// Store the exception
 		request.setAttribute(Globals.EXCEPTION_KEY, ex);
 		super.storeException(request, property, error, forward, ae.getScope());
-		System.out.println("Mapping mandou para o FenixExceptionHandler " + mapping);
 	
 		return super.execute(ex, ae, mapping, formInstance, request, response);
 	}
@@ -106,3 +106,4 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	}
 
 }
+
