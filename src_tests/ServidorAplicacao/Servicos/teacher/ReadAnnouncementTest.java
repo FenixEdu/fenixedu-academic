@@ -20,64 +20,67 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * NOTA: TODO... os pré filtros ainda não verificam se um anúncio pertence à disciplina. Devido a isso
  * alguns dos testes seguintes podem falhar.
  */
-public class ReadAnnouncementTest
-	extends AnnouncementBelongsToExecutionCourseTest {
+public class ReadAnnouncementTest extends AnnouncementBelongsToExecutionCourseTest
+{
 
 	/**
 	 * @param testName
 	 */
-
-	public ReadAnnouncementTest(String testName) {
+	public ReadAnnouncementTest(String testName)
+	{
 		super(testName);
 	}
 
-	protected String getApplication() {
+	protected String getApplication()
+	{
 		return Autenticacao.EXTRANET;
 	}
 
-	protected String getNameOfServiceToBeTested() {
+	protected String getNameOfServiceToBeTested()
+	{
 		return "TeacherAdministrationSiteComponentService";
 	}
 
-	protected String getDataSetFilePath() {
+	protected String getDataSetFilePath()
+	{
 		return "etc/datasets/servicos/teacher/testReadAnnouncementDataSet.xml";
 	}
 	/*
-	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccessfullDataSetFilePath()
 	 */
-	protected String getExpectedUnsuccessfullDataSetFilePath() {
+	protected String getExpectedUnsuccessfullDataSetFilePath()
+	{
 		return "etc/datasets/servicos/teacher/testExpectedReadAnnouncementDataSet.xml";
 	}
 	/*
-	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizedUser()
-		 */
-	protected String[] getAuthenticatedAndAuthorizedUser() {
+	 */
+	protected String[] getAuthenticatedAndAuthorizedUser()
+	{
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 	/*
-	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
 	 */
-	protected String[] getAuthenticatedAndUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser()
+	{
 		String[] args = { "nmsn", "pass", getApplication()};
 		return args;
 	}
 	/*
-	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNonTeacherUser()
 	 */
-	protected String[] getNotAuthenticatedUser() {
+	protected String[] getNotAuthenticatedUser()
+	{
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
 	}
 	/*
-	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
 	 */
-	protected Object[] getAuthorizeArguments() {
+	protected Object[] getAuthorizeArguments()
+	{
 		Integer infoExecutionCourseCode = new Integer(24);
 		Integer infoSiteCode = new Integer(1);
 		InfoSiteCommon commonComponent = new InfoSiteCommon();
@@ -96,10 +99,10 @@ public class ReadAnnouncementTest
 		return args;
 	}
 	/*
-	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getAnnouncementUnsuccessfullArguments()
 	 */
-	protected Object[] getAnnouncementUnsuccessfullArguments() {
+	protected Object[] getAnnouncementUnsuccessfullArguments()
+	{
 		Integer infoExecutionCourseCode = new Integer(24);
 		Integer infoSiteCode = new Integer(1);
 		InfoSiteCommon commonComponent = new InfoSiteCommon();
@@ -122,8 +125,10 @@ public class ReadAnnouncementTest
 	/*
 	 * Teste de leitura com sucesso de um anúncio.
 	 */
-	public void testReadAnnouncementSuccessfull() {
-		try {
+	public void testReadAnnouncementSuccessfull()
+	{
+		try
+		{
 			//Argumentos do serviço
 			Integer infoExecutionCourseCode = new Integer(24);
 			Integer infoSiteCode = new Integer(1);
@@ -146,14 +151,11 @@ public class ReadAnnouncementTest
 
 			//Execução do serviço
 			SiteView siteView = null;
-			siteView =
-				(SiteView) gestor.executar(
-					id,
-					getNameOfServiceToBeTested(),
-					argserv);
+			siteView = (SiteView) gestor.executar(id, getNameOfServiceToBeTested(), argserv);
 
 			//Leu alguma coisa?
-			if (siteView == null) {
+			if (siteView == null)
+			{
 				fail("Reading an Announcement for a Site.");
 			}
 
@@ -161,42 +163,34 @@ public class ReadAnnouncementTest
 			InfoAnnouncement info = (InfoAnnouncement) siteView.getComponent();
 
 			//Verificar se o que foi lido pelo serviço está correcto
-			try {
+			try
+			{
 				//Anuncio lido
-				Announcement readannouncement =
-					new Announcement(announcementCode);
+				Announcement readannouncement = new Announcement(announcementCode);
 				IAnnouncement iAnnouncement = null;
 
 				//Ler o anúncio da base de dados.
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				sp.iniciarTransaccao();
 				iAnnouncement =
-					(IAnnouncement) sp.getIPersistentAnnouncement().readByOId(
-						readannouncement,
-						false);
+					(IAnnouncement) sp.getIPersistentAnnouncement().readByOId(readannouncement, false);
 				sp.confirmarTransaccao();
 
 				//Se o anúncio não existir..?!?!?!
-				if (iAnnouncement == null) {
+				if (iAnnouncement == null)
+				{
 					fail("Reading an Announcement for a Site.");
 				}
 
 				//Verificar se o anúncio esta correcto
 				assertEquals(iAnnouncement.getTitle(), info.getTitle());
-				assertEquals(
-					iAnnouncement.getInformation(),
-					info.getInformation());
-				assertEquals(
-					info.getLastModifiedDate(),
-					iAnnouncement.getLastModifiedDate());
-				assertEquals(
-					info.getIdInternal(),
-					iAnnouncement.getIdInternal());
-				assertEquals(
-					iAnnouncement.getCreationDate(),
-					info.getCreationDate());
+				assertEquals(iAnnouncement.getInformation(), info.getInformation());
+				assertEquals(info.getLastModifiedDate(), iAnnouncement.getLastModifiedDate());
+				assertEquals(info.getIdInternal(), iAnnouncement.getIdInternal());
+				assertEquals(iAnnouncement.getCreationDate(), info.getCreationDate());
 
-			} catch (ExcepcaoPersistencia e) {
+			} catch (ExcepcaoPersistencia e)
+			{
 				fail("Reading an Announcement for a Site " + e);
 			}
 
@@ -207,9 +201,11 @@ public class ReadAnnouncementTest
 				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("Reading an Announcement for a Site " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("Reading an Announcement for a Site " + e);
 		}
 	}
@@ -217,8 +213,10 @@ public class ReadAnnouncementTest
 	/*
 	 * Leitura de um anúncio que não existe
 	 */
-	public void testReadAnnouncementUnsuccessfull() {
-		try {
+	public void testReadAnnouncementUnsuccessfull()
+	{
+		try
+		{
 			//Argumentos inválidos.. anúncio inexistente
 			Integer infoExecutionCourseCode = new Integer(24);
 			Integer infoSiteCode = new Integer(1);
@@ -243,19 +241,21 @@ public class ReadAnnouncementTest
 			gestor.executar(id, getNameOfServiceToBeTested(), argserv);
 
 			fail("Reading an Announcement for a Site ");
-		} catch (NotAuthorizedException e) {
+		} catch (NotAuthorizedException e)
+		{
 			/*
-			 * Levantada a excepção pelos pré-flitros. O serviço não
-			 * chega a ser chamado.
+			 * Levantada a excepção pelos pré-flitros. O serviço não chega a ser chamado.
 			 */
 			//Verificar se a base de dados foi alterada
 			compareDataSetUsingExceptedDataSetTableColumns(getExpectedUnsuccessfullDataSetFilePath());
 			System.out.println(
 				"ReadAnnouncementTest was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("Reading an Announcement for a Site " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("Reading an Announcement for a Site " + e);
 		}
 	}
