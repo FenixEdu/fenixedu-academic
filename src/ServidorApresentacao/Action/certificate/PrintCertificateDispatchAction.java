@@ -150,6 +150,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                         .equals(new Specialization(Specialization.MESTRADO)))
                     {
                         certificate = new String("Matrícula");
+
                         session.setAttribute(
                             SessionConstants.DURATION_DEGREE,
                             certificate.toUpperCase());
@@ -234,10 +235,11 @@ public class PrintCertificateDispatchAction extends DispatchAction
                         session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
                     session.setAttribute(SessionConstants.ENROLMENT, certificate.toUpperCase());
 
-                }
+                }else {
                 if ((certificate.equals("Aproveitamento"))
                     || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular")))
                 {
+                	
                     Object args[] = { infoStudentCurricularPlan, EnrolmentState.APROVED };
                     try
                     {
@@ -255,6 +257,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
                         saveErrors(request, errors);
                         return new ActionForward(mapping.getInput());
                     }
+
                     List normalEnrolment = new ArrayList();
                     List extraEnrolment = new ArrayList();
 
@@ -332,11 +335,11 @@ public class PrintCertificateDispatchAction extends DispatchAction
                             certificate.toUpperCase());
                     }
 
-                }
-                if (infoStudentCurricularPlan
+                }else{
+                 if (infoStudentCurricularPlan
                     .getSpecialization()
                     .equals(new Specialization(Specialization.MESTRADO)))
-                {
+                 {
 
                     if ((certificate.equals("Fim parte escolar simples"))
                         || (certificate.equals("Fim parte escolar discriminada sem média"))
@@ -503,6 +506,8 @@ public class PrintCertificateDispatchAction extends DispatchAction
                     saveErrors(request, errors);
                     return new ActionForward(mapping.getInput());
                 }
+			  }
+            }
             }
 
             session.setAttribute(
