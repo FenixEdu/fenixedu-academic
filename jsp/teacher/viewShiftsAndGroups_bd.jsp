@@ -76,15 +76,15 @@
 			</tr>
 		</table>
 		
-		<br>
-		     <span class="error"><html:errors/></span> 	
+		<br/>
+		<br/>
 		
 		<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
     	<bean:message key="link.viewAllStudentsAndGroups"/>
     	</html:link>
 		<br/>
-		
-		
+		<span class="error"><html:errors/></span> 	
+		<br/>
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
@@ -118,12 +118,15 @@
 		</table>
 		
 		<br/>
-		     <span class="error"><html:errors/></span> 	
 		<br/>
+		
 		<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
     	<bean:message key="link.viewAllStudentsAndGroups"/>
     	</html:link>
     	<br/>
+		 <span class="error"><html:errors/></span> 	
+		<br/>
+		
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>

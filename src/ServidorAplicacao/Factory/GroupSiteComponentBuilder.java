@@ -21,8 +21,10 @@ import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteShift;
 import DataBeans.InfoSiteShiftsAndGroups;
+import DataBeans.InfoSiteStudentAndGroup;
 import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteStudentInformation;
+import DataBeans.InfoSiteStudentsAndGroups;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentGroupAttendWithAllUntilPersons;
@@ -34,12 +36,15 @@ import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITurno;
 import Dominio.StudentGroup;
+import Dominio.Turno;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
@@ -65,7 +70,7 @@ public class GroupSiteComponentBuilder {
 
     public ISiteComponent getComponent(ISiteComponent component,
             Integer executionCourseCode, Integer groupPropertiesCode,
-            Integer code) throws FenixServiceException {
+            Integer code, Integer shiftCode, Integer value) throws FenixServiceException {
 
         if (component instanceof InfoSiteProjects) {
             return getInfoSiteProjectsName((InfoSiteProjects) component,
@@ -77,6 +82,9 @@ public class GroupSiteComponentBuilder {
         } else if (component instanceof InfoSiteStudentGroup) {
             return getInfoSiteStudentGroupInformation(
                     (InfoSiteStudentGroup) component, code);
+        }else if (component instanceof InfoSiteStudentsAndGroups) {
+            return getInfoSiteStudentsAndGroups(
+                    (InfoSiteStudentsAndGroups) component, groupPropertiesCode, shiftCode, value);
         }
         return null;
     }
@@ -130,6 +138,301 @@ public class GroupSiteComponentBuilder {
         return projects;
     }
 
+    /**
+     * @param component
+     * @param site
+     * @param groupPropertiesCode
+     * @param shiftCode
+     * @return
+     */
+
+    private ISiteComponent getInfoSiteStudentsAndGroups(
+    		InfoSiteStudentsAndGroups component, Integer groupPropertiesCode, Integer shiftCode, Integer value)
+            throws FenixServiceException {
+
+    	List infoSiteStudentsAndGroups = new ArrayList();
+    	ITurno shift = null;
+    	if(value.intValue()==1){
+    		infoSiteStudentsAndGroups = readStudentsAndGroupsByShift(groupPropertiesCode, shiftCode);
+    		shift = readShift(shiftCode);
+    	}
+    	
+    	if(value.intValue()==2){
+    		infoSiteStudentsAndGroups = readStudentsAndGroupsWithoutShift(groupPropertiesCode);
+    	}
+    	
+    	if(value.intValue()==3){
+    		infoSiteStudentsAndGroups = readAllStudentsAndGroups(groupPropertiesCode);
+    	}
+        
+        component.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroups);
+         
+        if(shift!=null){
+        	component.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+        }
+        
+        return component;
+    }
+    
+    
+        
+    private List readStudentsAndGroupsByShift(Integer groupPropertiesCode, Integer shiftCode)
+    throws ExcepcaoInexistente, FenixServiceException {
+    	
+    	List infoSiteStudentsAndGroupsList = new ArrayList();
+    		try
+			{
+    			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+    			ITurnoPersistente persistentShift =  sp.getITurnoPersistente();
+
+    			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
+				.readByOID(GroupProperties.class, groupPropertiesCode);
+    			ITurno shift = (ITurno) persistentShift
+				.readByOID(Turno.class, shiftCode);
+	
+    			if(groupProperties == null){
+    				throw new ExistingServiceException();
+    			}
+	
+    			
+    			List studentGroups = getStudentGroupsByShiftAndGroupProperties(groupProperties, shift);
+    			Iterator iterStudentGroups = studentGroups.iterator();
+    			while(iterStudentGroups.hasNext()){
+		
+    				List studentGroupAttendList = new ArrayList();
+    				IStudentGroup studentGroup = (IStudentGroup)iterStudentGroups.next();
+		
+    				studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
+					.readAllByStudentGroup(studentGroup);
+		
+    				List infoSiteInformationList = new ArrayList();
+    				Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
+    				InfoSiteStudentInformation infoSiteStudentInformation = null;
+    				InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+    				InfoStudentGroupAttend infoStudentGroupAttend = null;
+		
+    				while(iterStudentGroupAttendList.hasNext()){
+    					infoSiteStudentInformation = new InfoSiteStudentInformation();
+    					infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+			
+    					IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend)iterStudentGroupAttendList.next();
+			
+    					infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
+			
+    					infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons.newInfoFromDomain(studentGroupAttend);
+			
+    					infoSiteStudentInformation.setNumber(infoStudentGroupAttend
+    							.getInfoAttend().getAluno().getNumber());
+
+    					infoSiteStudentInformation.setName(infoStudentGroupAttend
+    							.getInfoAttend().getAluno().getInfoPerson().getNome());
+
+    					infoSiteStudentInformation.setEmail(infoStudentGroupAttend
+    							.getInfoAttend().getAluno().getInfoPerson().getEmail());
+
+    					infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+		
+    					infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+    				}
+    			}
+	
+    			Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator(
+    			"infoSiteStudentInformation.number"));
+			}
+    		catch (ExcepcaoPersistencia e){
+    			e.printStackTrace();
+    			throw new FenixServiceException();
+    		}
+
+    		return infoSiteStudentsAndGroupsList;
+    	}
+    
+
+    private List readStudentsAndGroupsWithoutShift(Integer groupPropertiesCode)
+        throws ExcepcaoInexistente, FenixServiceException {
+        	
+        	List infoSiteStudentsAndGroupsList = new ArrayList();
+        		try
+    			{
+        			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+        			
+        			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
+    				.readByOID(GroupProperties.class, groupPropertiesCode);
+        			
+        			if(groupProperties == null){
+        				throw new ExistingServiceException();
+        			}
+    	
+        			List studentGroups = getStudentGroupsWithoutShiftByGroupProperties(groupProperties);
+        			Iterator iterStudentGroups = studentGroups.iterator();
+        			while(iterStudentGroups.hasNext()){
+    		
+        				List studentGroupAttendList = new ArrayList();
+        				IStudentGroup studentGroup = (IStudentGroup)iterStudentGroups.next();
+    		
+        				studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
+    					.readAllByStudentGroup(studentGroup);
+    		
+        				List infoSiteInformationList = new ArrayList();
+        				Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
+        				InfoSiteStudentInformation infoSiteStudentInformation = null;
+        				InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+        				InfoStudentGroupAttend infoStudentGroupAttend = null;
+    		
+        				while(iterStudentGroupAttendList.hasNext()){
+        					infoSiteStudentInformation = new InfoSiteStudentInformation();
+        					infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+    			
+        					IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend)iterStudentGroupAttendList.next();
+    			
+        					infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
+    			
+        					infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons.newInfoFromDomain(studentGroupAttend);
+    			
+        					infoSiteStudentInformation.setNumber(infoStudentGroupAttend
+        							.getInfoAttend().getAluno().getNumber());
+
+        					infoSiteStudentInformation.setName(infoStudentGroupAttend
+        							.getInfoAttend().getAluno().getInfoPerson().getNome());
+
+        					infoSiteStudentInformation.setEmail(infoStudentGroupAttend
+        							.getInfoAttend().getAluno().getInfoPerson().getEmail());
+
+        					infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+    		
+        					infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+        				}
+        			}
+    	
+        			Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator(
+        			"infoSiteStudentInformation.number"));
+    			}
+        		catch (ExcepcaoPersistencia e){
+        			e.printStackTrace();
+        			throw new FenixServiceException();
+        		}
+
+        		return infoSiteStudentsAndGroupsList;
+        	}
+
+
+    
+    private List readAllStudentsAndGroups(Integer groupPropertiesCode)
+    throws ExcepcaoInexistente, FenixServiceException {
+    	
+    	List infoSiteStudentsAndGroupsList = new ArrayList();
+    		try
+			{
+    			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+    			
+    			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
+				.readByOID(GroupProperties.class, groupPropertiesCode);
+    			
+    			if(groupProperties == null){
+    				throw new ExistingServiceException();
+    			}
+	
+    			List studentGroups = getAllStudentGroups(groupProperties);
+    			Iterator iterStudentGroups = studentGroups.iterator();
+    			while(iterStudentGroups.hasNext()){
+		
+    				List studentGroupAttendList = new ArrayList();
+    				IStudentGroup studentGroup = (IStudentGroup)iterStudentGroups.next();
+		
+    				studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
+					.readAllByStudentGroup(studentGroup);
+		
+    				List infoSiteInformationList = new ArrayList();
+    				Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
+    				InfoSiteStudentInformation infoSiteStudentInformation = null;
+    				InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+    				InfoStudentGroupAttend infoStudentGroupAttend = null;
+		
+    				while(iterStudentGroupAttendList.hasNext()){
+    					infoSiteStudentInformation = new InfoSiteStudentInformation();
+    					infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+			
+    					IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend)iterStudentGroupAttendList.next();
+			
+    					infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
+			
+    					infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons.newInfoFromDomain(studentGroupAttend);
+			
+    					infoSiteStudentInformation.setNumber(infoStudentGroupAttend
+    							.getInfoAttend().getAluno().getNumber());
+
+    					infoSiteStudentInformation.setName(infoStudentGroupAttend
+    							.getInfoAttend().getAluno().getInfoPerson().getNome());
+
+    					infoSiteStudentInformation.setEmail(infoStudentGroupAttend
+    							.getInfoAttend().getAluno().getInfoPerson().getEmail());
+
+    					infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+		
+    					infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+    				}
+    			}
+	
+    			Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator(
+    			"infoSiteStudentInformation.number"));
+			}
+    		catch (ExcepcaoPersistencia e){
+    			e.printStackTrace();
+    			throw new FenixServiceException();
+    		}
+
+    		return infoSiteStudentsAndGroupsList;
+    	}
+
+    
+    	private List getStudentGroupsByShiftAndGroupProperties(IGroupProperties groupProperties, ITurno shift){
+    		List result = new ArrayList();
+    		List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+    		Iterator iter = studentGroups.iterator();
+    		while(iter.hasNext()){
+    			IStudentGroup sg=(IStudentGroup)iter.next();
+    			if(sg.getShift().equals(shift)){
+    				result.add(sg);
+    			}
+    		} 
+    		return result;
+    	}
+    	
+    	private List getStudentGroupsWithoutShiftByGroupProperties(IGroupProperties groupProperties){
+    		List result = new ArrayList();
+    		List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+    		result.addAll(studentGroups);
+    		return result;
+    	}
+    	
+    	private List getAllStudentGroups(IGroupProperties groupProperties){
+    		List result = new ArrayList();
+    		List studentGroups = groupProperties.getAttendsSet().getStudentGroups();
+    		result.addAll(studentGroups);
+    		return result;
+    	}
+    	
+    	private ITurno readShift(Integer shiftCode)
+        throws ExcepcaoInexistente, FenixServiceException {
+    		ITurno shift = null;
+    		try
+			{
+    			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    			ITurnoPersistente persistentShift =  sp.getITurnoPersistente();
+    			
+    			shift = (ITurno) persistentShift
+				.readByOID(Turno.class, shiftCode);
+			}
+    		catch (ExcepcaoPersistencia e){
+    			e.printStackTrace();
+    			throw new FenixServiceException();
+    		}
+    		return shift;
+    	}
+    	
     
     /**
      * @param component

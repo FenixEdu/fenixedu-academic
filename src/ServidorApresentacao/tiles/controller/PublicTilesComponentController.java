@@ -27,6 +27,7 @@ import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShifts;
 import DataBeans.InfoSiteShiftsAndGroups;
 import DataBeans.InfoSiteStudentGroup;
+import DataBeans.InfoSiteStudentsAndGroups;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.SiteView;
@@ -97,6 +98,9 @@ public class PublicTilesComponentController extends ControllerSupport {
 
         else if (component instanceof InfoSiteStudentGroup) {
             tileContext.putAttribute("body", "/publico/viewStudentGroupInformation_bd.jsp");
+        }
+        else if (component instanceof InfoSiteStudentsAndGroups) {
+            tileContext.putAttribute("body", "/publico/viewStudentsAndgroups_bd.jsp");
         }
     }
 

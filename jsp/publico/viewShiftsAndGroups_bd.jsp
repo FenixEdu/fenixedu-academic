@@ -27,10 +27,19 @@
 	</logic:empty>
 	
 <logic:notEmpty name="component" property="infoSiteGroupsByShiftList">
+	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
+	
+	<br/>
+	
+	
+	<html:link page="<%= "/viewSite.do" + "?method=viewAllStudentsAndGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" >
+			<bean:message key="link.viewAllStudentsAndGroups"/>
+	</html:link>
+		
+		<br/>
+		<br/>
 		
 <table align="center" width="95%" cellspacing='1' cellpadding='1'>
-	<h2><bean:message key="title.ShiftsAndGroups"/></h2>
-	<br/>
 	<tbody>	
 			
 	<tr>
@@ -65,7 +74,10 @@
 			<tr>
 								
 						<td  class="listClasses">
+						<html:link page="<%= "/viewSite.do" + "?method=viewStudentsAndGroupsWithoutShiftAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties") %>" >
 							Sem Turno
+						</html:link>	
+							
 						</td>
 								
 						<td class="listClasses">
@@ -107,6 +119,7 @@
 		<logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteShift.infoShift">
 		<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
 			<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
+			<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                 	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
@@ -115,7 +128,9 @@
 					<tr>
 						
 						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
+						<html:link page="<%= "/viewSite.do" + "?method=viewStudentsAndGroupsByShiftAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;groupProperties=" + pageContext.findAttribute("groupProperties")+ "&amp;shift=" + shiftCode.toString() %>" >
 							<bean:write name="infoShift" property="nome"/>
+						</html:link>	
 						</td>
 						<td class="listClasses">
 							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
