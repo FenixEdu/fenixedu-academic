@@ -32,13 +32,13 @@ h3 {
 *******************************************/
 
 a:link {
-	font: 11pt Arial, Helvetica, sans-serif;
+	font: 9pt Arial, Helvetica, sans-serif;
 	color: black;
 	text-decoration: underline;
 	}
 
 a:visited {
-	font: 11pt Arial, Helvetica, sans-serif;
+	font: 9pt Arial, Helvetica, sans-serif;
 	color: #00427b;
 	}
 
@@ -211,4 +211,12 @@ a:visited {
 .px9-b {
 	font: bold 8pt/1em Arial, Helvetica, sans-serif;
 	color: #333;
+	}
+
+/*****************************************************************
+	for hidden misc elements
+******************************************************************/
+
+.invisible {
+	display: none;
 	}
