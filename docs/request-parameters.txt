@@ -3,14 +3,22 @@ I am using the following parameters for the following objects.
 RequestUtils methods also use the following parameters:
 
 eYName -> executionYear name
+
 ePName -> executionPeriod year
-exeCode -> executionCourse code
+
 evaluationElements -> evaluation evaluationElements
+
 siteMail -> site mail
 altSite -> site alternativeSite
 initStat -> site initialStatement
 intro -> site introduction
+
+exeCode -> executionCourse code
 exeCourse.theo -> executionCourse theoretical hours
 exeCourse.prat -> executionCourse pratical hours
 exeCourse.theoPrat -> executionCourse theoretical-pratical hours
 exeCourse.lab -> executionCourse lab hours
+
+program -> curriculum program
+genObjectives -> curriculum generalObjectives
+opObjectives -> curriculum operationalObjectives
