@@ -105,10 +105,6 @@ public class LeituraFicheiroFuncNaoDocente {
 			//instancia.put(iterador.next(), stringTokenizer.nextToken().trim());
 		}
 
-		//teste a instancia lida
-		System.out.println("Valores lidos para instancia");
-		System.out.println(instancia.toString());
-
 		return instancia;
 	}
 
