@@ -9,6 +9,7 @@
 <!ENTITY inscricoes SYSTEM "repository_inscricoes.xml">
 <!ENTITY sop SYSTEM "repository_sop.xml">
 <!ENTITY masterDegree SYSTEM "repository_masterDegree.xml">
+<!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY internal SYSTEM "repository_internal.xml">
 
 
@@ -36,6 +37,7 @@
     &inscricoes;
     &sop;
     &masterDegree;
+    &sopload;
     
 
     <!-- include ojb internal mappings here -->
