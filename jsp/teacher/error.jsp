@@ -1,9 +1,10 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/fenixLayout_2col.jsp" flush="true">
-  <tiles:put name="title" value=".IST - SOP" />
-  <tiles:put name="serviceName" value="Portal Docência" />
-  <tiles:put name="navGeral" value="" />
-  <tiles:put name="navLocal" value="" />
-  <tiles:put name="body" value="/sop/error_bd.jsp" />
-  <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<tiles:insert page="/teacherLayout_2col.jsp" flush="true">
+ 
+  <tiles:put name="institutionName" value="Instituto Superior T&eacute;cnico" />
+  <tiles:put name="executionCourseName" beanName="<%=SessionConstants.INFO_SITE %>" beanProperty="infoExecutionCourse.nome" />
+  <tiles:put name="body" value="/teacher/error_bd.jsp" />
+  <tiles:put name="navbar" value="/teacher/navbar.jsp" type="page"/>
+ 
 </tiles:insert>
