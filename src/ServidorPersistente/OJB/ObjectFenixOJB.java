@@ -285,9 +285,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		Vector ref = cld.getObjectReferenceDescriptors();
 		Criteria crit = criteria;
 
-		System.out.println("c.name= " + c.getName());
-		System.out.println("ref.size= " + ref.size());
-
 		Vector col = cld.getCollectionDescriptors();
 
 		///////////////////////////////////////////////////////////////////////////////////////////
