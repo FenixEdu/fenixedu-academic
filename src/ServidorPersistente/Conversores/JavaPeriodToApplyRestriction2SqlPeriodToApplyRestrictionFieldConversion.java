@@ -20,11 +20,21 @@ public class JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConver
     }
 
     public Object sqlToJava(Object source) {
+        PeriodToApplyRestriction periodToApplyRestriction = null;
+        
         if (source instanceof Integer) {
             Integer src = (Integer) source;
-            return new Integer(src.intValue());
+            
+            periodToApplyRestriction = PeriodToApplyRestriction.getEnum(src.intValue());
+            if (periodToApplyRestriction == null) {
+                throw new IllegalArgumentException(this.getClass().getName()
+                        + ": Illegal PeriodToApplyRestriction!(" + source + ")");
+            }
+        } else {
+            throw new IllegalArgumentException("Illegal PeriodToApplyRestriction!("
+                    + source + ")");
         }
-        return source;
+        return periodToApplyRestriction;
 
     }
 }
