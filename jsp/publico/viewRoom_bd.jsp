@@ -65,13 +65,6 @@
 
 		<br/>
 		<br/>
-		
-		<center><font color='#034D7A' size='5'> <b>
-			<bean:message key="title.room"/> 
-			<bean:write name="publico.infoRoom" property="nome"/>
-		</b> </font></center>
-
-		<br/>
 
 	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"/> 
 

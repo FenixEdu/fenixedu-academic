@@ -174,16 +174,6 @@
           <forward name="Sucess" path="/chooseSemester.jsp"/>
       </action>
 
-      <action attribute="indexForm"
-              input="/chooseSemester.jsp"
-              name="indexForm"
-      		  path="/viewRoomOcupation"
-              scope="request"
-              validate="true"
-              type="ServidorApresentacao.Action.publico.ViewRoomOcupationAction"
-              >
-          <forward name="Sucess" path="/viewRoomOcupation.jsp"/>
-      </action>
       <action 
               input="/viewClasses.jsp"
              
