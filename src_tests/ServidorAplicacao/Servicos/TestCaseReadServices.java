@@ -35,6 +35,7 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testUnsuccessfulExecutionOfReadService");
 		}
@@ -48,12 +49,13 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), getArgumentsOfServiceToBeTestedSuccessfuly());
 			if(result instanceof Collection) {
 				assertEquals("testSuccessfulExecutionOfReadService", getNumberOfItemsToRetrieve(), ((Collection) result).size());
-				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println("testSuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			} else {
 				assertEquals("testSuccessfulExecutionOfReadService", getObjectToCompare(), result);
-				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
+				System.out.println("testSuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testSuccessfulExecutionOfReadService");
 		}
