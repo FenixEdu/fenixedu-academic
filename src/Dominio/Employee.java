@@ -115,21 +115,26 @@ public class Employee extends DomainObject implements IEmployee {
 
 				if (historic.getKeyResponsableEmployee() != null) {
 					employeeHistoric.setKeyResponsableEmployee(historic.getKeyResponsableEmployee());
+					employeeHistoric.setResponsableEmployee(historic.getResponsableEmployee());
 				}
 				if (historic.getKeyMailingCostCenter() != null) {
 					employeeHistoric.setKeyMailingCostCenter(historic.getKeyMailingCostCenter());
+					employeeHistoric.setMailingCostCenter(historic.getMailingCostCenter());
 				}
 				if (historic.getKeyWorkingPlaceCostCenter() != null) {
 					employeeHistoric.setKeyWorkingPlaceCostCenter(historic.getKeyWorkingPlaceCostCenter());
+					employeeHistoric.setWorkingPlaceCostCenter(historic.getWorkingPlaceCostCenter());
 				}
 				if (historic.getKeySalaryCostCenter() != null) {
 					employeeHistoric.setKeySalaryCostCenter(historic.getKeySalaryCostCenter());
+					employeeHistoric.setSalaryCostCenter(historic.getSalaryCostCenter());
 				}
 				if (historic.getCalendar() != null) {
 					employeeHistoric.setCalendar(historic.getCalendar());
 				}
 				if (historic.getKeyStatus() != null) {
 					employeeHistoric.setKeyStatus(historic.getKeyStatus());
+					employeeHistoric.setStatus(historic.getStatus());
 				}
 			}
 		}
