@@ -510,4 +510,19 @@
 		<description></description>
 		<isTransactional>false</isTransactional>
 	</filter>
+	<filter>
+		<idInternal>240221</idInternal>
+		<name>ReadStudentTestToDoFilter</name>
+		<implementationClass>ServidorAplicacao.Filtro.student.tests.ReadStudentTestToDoFilter</implementationClass>
+		<description></description>
+		<isTransactional>false</isTransactional>
+	</filter>
+	<filter>
+		<idInternal>240222</idInternal>
+		<name>ReadStudentTestForCorrectionFilter</name>
+		<implementationClass>ServidorAplicacao.Filtro.student.tests.ReadStudentTestForCorrectionFilter</implementationClass>
+		<description></description>
+		<isTransactional>false</isTransactional>
+	</filter>
+	
 </filterDefinitions>

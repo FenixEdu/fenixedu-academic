@@ -902,6 +902,28 @@
 		</filterChains>
 	</service>
 	<service>
+		<idInternal>240221</idInternal>
+		<name>ReadStudentTestToDo</name>
+		<implementationClass>ServidorAplicacao.Servico.student.ReadStudentTest</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="240221"/>
+		</filterChains>
+	</service>
+	<service>
+		<idInternal>240222</idInternal>
+		<name>ReadStudentTestForCorrection</name>
+		<implementationClass>ServidorAplicacao.Servico.student.ReadStudentTest</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="240222"/>
+		</filterChains>
+	</service>
+	
+
+	<service>
 		<idInternal>95</idInternal>
 		<name>ReadStudentDoneTests</name>
 		<implementationClass>ServidorAplicacao.Servico.student.ReadStudentDoneTests</implementationClass>

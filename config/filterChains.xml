@@ -591,4 +591,22 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+	<filterChain>
+		<idInternal>240221</idInternal>
+		<name>ReadStudentTestToDoChain</name>
+		<expression>ReadStudentTestToDoFilter</expression>
+		<description></description>
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
+	<filterChain>
+		<idInternal>240222</idInternal>
+		<name>ReadStudentTestForCorrectionChain</name>
+		<expression>ReadStudentTestForCorrectionFilter</expression>
+		<description></description>
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
+	
+
 </filterChainsDefinitions>
