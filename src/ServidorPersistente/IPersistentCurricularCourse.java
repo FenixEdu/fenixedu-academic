@@ -6,6 +6,7 @@ import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.CurricularCourseType;
 import Util.DegreeCurricularPlanState;
 import Util.TipoCurso;
 
@@ -48,4 +49,5 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 	public List readbyCourseNameAndDegreeCurricularPlan(String curricularCourseName, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 	public List readAllCurricularCoursesByDegreeCurricularPlanAndBranchAndSemester(IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, Integer semester) throws ExcepcaoPersistencia;
 	public List readCurricularCoursesByDegreeCurricularPlanAndMandatoryAttribute(IDegreeCurricularPlan degreeCurricularPlan, Boolean mandatory) throws ExcepcaoPersistencia;
+	public List readAllByDegreeCurricularPlanAndType(IDegreeCurricularPlan degreeCurricularPlan, CurricularCourseType curricularCourseType) throws ExcepcaoPersistencia;
 }

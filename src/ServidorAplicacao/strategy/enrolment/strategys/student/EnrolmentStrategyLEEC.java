@@ -38,6 +38,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.BranchType;
+import Util.CurricularCourseType;
 import Util.EnrolmentState;
 
 /**
@@ -72,6 +73,8 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled();
 
 			finalCurricularCoursesWhereStudentCanBeEnrolled.addAll(specializationAndSecundaryAreaCurricularCourses);
+
+			finalCurricularCoursesWhereStudentCanBeEnrolled.addAll(getOptionalAndTFCCurricularCourses(studentEnrolmentContext));
 
 			studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(
 				finalCurricularCoursesWhereStudentCanBeEnrolled);
@@ -1180,4 +1183,34 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		}
 		return curricularCourses;
 	}
+
+	/**
+	 * @param studentEnrolmentContext
+	 * @return optionalAndTFCCurricularCourses
+	 * @throws ExcepcaoPersistencia
+	 */
+	private List getOptionalAndTFCCurricularCourses(StudentEnrolmentContext studentEnrolmentContext) throws ExcepcaoPersistencia
+	{
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
+
+		List optionalAndTFCCurricularCourses = new ArrayList();
+		
+		List result =
+			curricularCourseDAO.readAllByDegreeCurricularPlanAndType(
+				studentEnrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan(),
+				CurricularCourseType.OPTIONAL_COURSE_OBJ);
+
+		optionalAndTFCCurricularCourses.addAll(result);
+
+		result =
+			curricularCourseDAO.readAllByDegreeCurricularPlanAndType(
+				studentEnrolmentContext.getStudentCurricularPlan().getDegreeCurricularPlan(),
+				CurricularCourseType.TFC_COURSE_OBJ);
+
+		optionalAndTFCCurricularCourses.addAll(result);
+		
+		return optionalAndTFCCurricularCourses;
+	}
+
 }
