@@ -68,6 +68,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 	private Timestamp _dataInicio = null;
 	private Timestamp _dataFim = null;
 	private Date _dataAssiduidade = null;
+
 	private boolean _mesInjustificado = false;
 	private boolean _diasInjustificados = false;
 	private boolean _statusPendente = false;
@@ -135,13 +136,15 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 			Calendar calendario = Calendar.getInstance();
 			calendario.setLenient(false);
 
+			limpaListaSaldos(0);
+			
 			//==================================== Inicio da construcao da lista a mostrar no jsp =======================================
-			// comeca pela data final para que apareca por ordem crescente de datas no jsp
-			while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {
+			while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {			
+				
 				calendario.clear();
 				calendario.setTimeInMillis(_dataConsulta.getTime());
 
-				// consulta do horario do funcionario numa determinada data
+				// consulta do horario do funcionario neste dia
 				try {
 					lerHorario();
 				} catch (NotExecuteException nee) {
@@ -153,7 +156,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				} catch (NotExecuteException nee) {
 					throw new NotExecuteException(nee.getMessage());
 				}
-				//Se o status do funiocnário é Pendente então não vale a pena continuar os cálculos
+				//Se o status do funcionário é Pendente então não vale a pena continuar os cálculos
 				if (_statusPendente) {
 					_statusPendente = false;
 					continue;
@@ -169,7 +172,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					_diasInjustificados = false;
 					continue;
 				}
-
+				
 				//consulta das marcacoes do funcionario neste dia, tendo atencao ao expediente deste horario
 				calcularIntervaloConsulta();
 				try {
@@ -178,18 +181,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					throw new NotExecuteException(nee.getMessage());
 				}
 
-				_listaVerbeteDiaria.add(0, FormataCalendar.data(calendario)); //data
-				_listaVerbeteDiaria.add(1, "&nbsp;" + _horario.preencheSigla(_locale) + "&nbsp;"); //horário
-				_listaVerbeteDiaria.add(2, new String("&nbsp;")); // saldo HN
-				_listaVerbeteDiaria.add(3, new String("&nbsp;")); // saldo PF 
-				_listaVerbeteDiaria.add(4, new String("&nbsp;")); // justificacoes
-				//Formata as marcações deste dia para o verbete, mas
-				//também se calculao o saldo diário para aproveitar o ciclo das marcações
-				_listaVerbeteDiaria.add(5, formataMarcacoes()); // marcacoes
-
-				//calculo dos saldos diarios de trabalho
-
-				// consulta das justificacoes do funcionario numa determinada data
+				//consulta das justificacoes do funcionario neste dia
 				try {
 					consultarJustificacoesPorDia();
 				} catch (NotExecuteException nee) {
@@ -201,57 +193,48 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					throw new NotExecuteException(nee.getMessage());
 				}
 
+				//formata o verbete
+				_listaVerbeteDiaria.add(0, FormataCalendar.data(calendario)); //data
+				_listaVerbeteDiaria.add(1, "&nbsp;" + _horario.preencheSigla(_locale) + "&nbsp;"); //horário
+				_listaVerbeteDiaria.add(2, new String("&nbsp;")); // saldo HN
+				_listaVerbeteDiaria.add(3, new String("&nbsp;")); // saldo PF 
+				_listaVerbeteDiaria.add(4, formataJustificacoes()); //justificacoes 
+				_listaVerbeteDiaria.add(5, formataMarcacoes()); // marcacoes
+
 				if ((_horario.getSigla() != null)
 					&& (_horario.getSigla().equals(Constants.DSC)
 						|| _horario.getSigla().equals(Constants.DS)
 						|| _horario.getSigla().equals(Constants.FERIADO))) {
-					//Dias de Descanso 
+					//Dias de Descanso com marcacoes e sem justificacoes, logo calcula o saldo
 
-					// formata justificacoes para o jsp
-					if (_listaParamJustificacoes.size() > 0) {
-						//existem justificacoes nos dias de descanso
-						ListIterator iterJustificacoes = _listaJustificacoes.listIterator();
-						String justificacoes = new String();
-						ParamJustificacao paramJustificacao = null;
-						while (iterJustificacoes.hasNext()) {
-							iterJustificacoes.next();
-							paramJustificacao = (ParamJustificacao) _listaParamJustificacoes.get(iterJustificacoes.previousIndex());
+					//calculo do saldo de dias de descanso 
+					if (_listaMarcacoesPonto.size() > 0) {
 
-							if (paramJustificacao.getTipoDias().equals(Constants.TODOS)) {
-								// formatacao necessaria para o caso de varias justificacoes por dia
-								justificacoes = justificacoes.concat(new String(paramJustificacao.getSigla()));
-								if (iterJustificacoes.hasNext()) {
-									justificacoes = justificacoes.concat("<br>");
-								}
-							} else {
-								justificacoes = justificacoes.concat("&nbsp;");
-							}
+						//calculo do saldo diário
+						calcularSaldoDiario();
+
+						calendario.clear();
+						calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
+						_listaVerbeteDiaria.set(2, FormataCalendar.horasMinutosDuracao(calendario)); //saldo HN
+
+						IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
+						if (((Long) _listaSaldos.get(0)).longValue() > horarioStrategy.duracaoDiaria(_horario)) {
+							_listaSaldos.set(0, new Long(horarioStrategy.duracaoDiaria(_horario)));
 						}
-						_listaVerbeteDiaria.set(4, justificacoes);
-					} else {
-						//nao existem justificacoes nos dias de descanso, logo calcula o saldo 
-						if (_listaMarcacoesPonto.size() > 0) {
-							calendario.clear();
-							calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
-							_listaVerbeteDiaria.set(2, FormataCalendar.horasMinutosDuracao(calendario));
-
-							IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
-							if (((Long) _listaSaldos.get(0)).longValue() > horarioStrategy.duracaoDiaria(_horario)) {
-								_listaSaldos.set(0, new Long(horarioStrategy.duracaoDiaria(_horario)));
-							}
-							if (_horario.getSigla().equals(Constants.DSC) || _horario.getSigla().equals(Constants.FERIADO)) {
-								_saldoDSC = _saldoDSC + ((Long) _listaSaldos.get(0)).longValue();
-							} else if (_horario.getSigla().equals(Constants.DS)) {
-								_saldoDS = _saldoDS + ((Long) _listaSaldos.get(0)).longValue();
-							}
+						if (_horario.getSigla().equals(Constants.DSC) || _horario.getSigla().equals(Constants.FERIADO)) {
+							_saldoDSC = _saldoDSC + ((Long) _listaSaldos.get(0)).longValue();
+						} else if (_horario.getSigla().equals(Constants.DS)) {
+							_saldoDS = _saldoDS + ((Long) _listaSaldos.get(0)).longValue();
 						}
 					}
-				} else {
-					//Dias Uteis
+				} else { //Dias Uteis
 					if (_listaParamJustificacoes.size() > 0) {
 						// acrescenta as justificacoes na lista de marcacoes de ponto como se fossem marcacoes de ponto
 						completaListaMarcacoes();
 					}
+
+					// calculo do saldo diário
+					calcularSaldoDiario();
 					// nao efectua calculos de saldo para dias além do dia de hoje
 					if (!_dataConsulta.after(agoraTimestamp)) {
 						IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
@@ -262,28 +245,17 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 							_listaMarcacoesPonto,
 							_listaSaldos);
 					}
-
-					//formata os saldos
-					calendario.clear();
-					calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
-					_listaVerbeteDiaria.set(2, FormataCalendar.horasMinutosDuracao(calendario)); //saldo HN
-					calendario.clear();
-					calendario.setTimeInMillis(((Long) _listaSaldos.get(1)).longValue());
-					_listaVerbeteDiaria.set(3, FormataCalendar.horasMinutosDuracao(calendario)); //saldo PF
-
-					// formata justificacoes para o jsp
+					// actualiza o saldo
 					if (_listaParamJustificacoes.size() > 0) {
 						ListIterator iterJustificacoes = _listaJustificacoes.listIterator();
 
-						String justificacoes = new String();
 						ParamJustificacao paramJustificacao = null;
 						Justificacao justificacao = null;
-						long saldosHN = 0;
-						long saldosPF = 0;
 						while (iterJustificacoes.hasNext()) {
 							justificacao = (Justificacao) iterJustificacoes.next();
 							paramJustificacao = (ParamJustificacao) _listaParamJustificacoes.get(iterJustificacoes.previousIndex());
 
+							//actualiza saldo diario
 							IStrategyJustificacoes justificacaoStrategy =
 								SuporteStrategyJustificacoes.getInstance().callStrategy(paramJustificacao.getTipo());
 							justificacaoStrategy.updateSaldosHorarioVerbeteBody(
@@ -293,34 +265,16 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 								_listaRegimes,
 								_listaMarcacoesPonto,
 								_listaSaldos);
+						}
+					}
 
-							//actualiza os saldos	
-							saldosHN = saldosHN + ((Long) _listaSaldos.get(0)).longValue();
-							saldosPF = saldosPF + ((Long) _listaSaldos.get(1)).longValue();
-
-							//formatacao necessaria para o caso de varias justificacoes por dia	
-							justificacoes = justificacoes.concat(new String(paramJustificacao.getSigla()));
-							if (iterJustificacoes.hasNext()) {
-								justificacoes = justificacoes.concat("<br>");
-							}
+					if (_dataConsulta.before(agoraTimestamp)) {
+						//verifica se este dia nao teve assiduidade
+						if (_listaMarcacoesPonto.size() == 0 && _listaParamJustificacoes.size() == 0 && (!_dataConsulta.after(agoraTimestamp))) {
+							_listaVerbeteDiaria.set(4, new String("<b>" + Constants.INJUSTIFICADO + "</b>"));
 						}
 
-						calendario.clear();
-						calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
-						_listaVerbeteDiaria.set(2, FormataCalendar.horasMinutosDuracao(calendario));
-						calendario.clear();
-						calendario.setTimeInMillis(((Long) _listaSaldos.get(1)).longValue());
-						_listaVerbeteDiaria.set(3, FormataCalendar.horasMinutosDuracao(calendario));
-						_listaVerbeteDiaria.set(4, justificacoes);
-					}
-
-					// verifica se este dia nao teve assiduidade
-					if (_listaMarcacoesPonto.size() == 0 && _listaParamJustificacoes.size() == 0 && (!_dataConsulta.after(agoraTimestamp))) {
-						_listaVerbeteDiaria.set(4, new String("<b>" + Constants.INJUSTIFICADO + "</b>"));
-					}
-
-					// saldo global dos dias de consulta não conta com o dia de hoje pois ainda não terminou
-					if (_dataConsulta.before(agoraTimestamp)) {
+						//saldo global dos dias de consulta não conta com o dia de hoje pois ainda não terminou
 						_saldoHNFinal = _saldoHNFinal + ((Long) _listaSaldos.get(0)).longValue();
 						_saldoPFFinal = _saldoPFFinal + ((Long) _listaSaldos.get(1)).longValue();
 						// calculo das horas extraordinarias diurnas e nocturnas
@@ -328,6 +282,12 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 							calcularHorasEscalao();
 						}
 					}
+					calendario.clear();
+					calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
+					_listaVerbeteDiaria.set(2, FormataCalendar.horasMinutosDuracao(calendario)); //saldo HN
+					calendario.clear();
+					calendario.setTimeInMillis(((Long) _listaSaldos.get(1)).longValue());
+					_listaVerbeteDiaria.set(3, FormataCalendar.horasMinutosDuracao(calendario)); //saldo PF
 				}
 				// aumenta um dia no intervalo de consulta do verbete
 				calendario.clear();
@@ -339,10 +299,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				_listaVerbeteBody.addAll(_listaVerbeteDiaria);
 				_listaVerbeteDiaria.clear();
 			}
-
 			descontaSaldoNegativo();
 		}
-
 		_listaSaldos.set(0, new Long(_saldoHNFinal));
 		_listaSaldos.set(1, new Long(_saldoPFFinal));
 		_listaSaldos.set(2, new Long(_saldoPrimEscalao));
@@ -354,6 +312,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		_listaSaldos.set(8, new Long(_saldoNoctPrimEscalao));
 		_listaSaldos.set(9, new Long(_saldoNoctSegEscalao));
 		_listaSaldos.set(10, new Long(_saldoNoctDepoisSegEscalao));
+		
 	}
 
 	private void lerStatusAssiduidade() throws NotExecuteException {
@@ -412,7 +371,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				_dataFimEscolha);
 		servicoSeguro.execute();
 		_listaCartoes = servicoSeguro.getListaCartoes();
-		
+
 	} /* construirEscolhasMarcacoesPonto */
 
 	private void verificarMesInjustificado() throws NotExecuteException {
@@ -472,7 +431,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				new Timestamp(calendarioFim.getTimeInMillis()));
 		servicoSeguroLerMarcacoesPonto.execute();
 		ArrayList lista = servicoSeguroLerMarcacoesPonto.getListaMarcacoesPonto();
-		
 
 		if ((lista == null) || (lista.size() <= 0)) {
 			ServicoSeguroLerJustificacoesComValidade servicoSeguroLerJustificacoes =
@@ -550,6 +508,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 			//junta a lista diária à lista verbete
 			_listaVerbeteBody.addAll(_listaVerbeteDiaria);
 			_listaVerbeteDiaria.clear();
+			limpaListaSaldos(0);
 		}
 	} /* construirListaDiasInjustificados */
 
@@ -641,7 +600,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 	} /* construirListaDiasPendente */
 
 	private void verificarDiasInjustificados(Calendar calendario) throws NotExecuteException {
-	
+
 		IFeriadoPersistente iFeriadoPersistente = SuportePersistente.getInstance().iFeriadoPersistente();
 
 		Calendar agora = Calendar.getInstance();
@@ -653,7 +612,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 		//só classifica dias injustificados antes do dia de hoje
 		if (calendario.before(agora)) {
-			
+
 			if (_horario.getSigla() == Constants.DSC || _horario.getSigla() == Constants.FERIADO) {
 
 				// encontrar a data inicio de consulta
@@ -665,7 +624,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					|| iFeriadoPersistente.diaFeriado(calendarioAnterior.getTime())) {
 					calendarioAnterior.add(Calendar.DAY_OF_MONTH, -1);
 				}
-				
+
 				//só classifica dias injustificados antes do dia de hoje
 				if (calendarioAnterior.before(agora)) {
 					// encontrar a data fim de consulta
@@ -748,7 +707,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 	private String formataMarcacoes() {
 		Calendar calendario = Calendar.getInstance();
-		long saldo = 0;
 		String marcacoes = new String();
 
 		if (_listaMarcacoesPonto.size() > 0) {
@@ -773,11 +731,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					marcacoes = marcacoes.concat(FormataCalendar.horas(calendario));
 				}
 
-				// para o calculo do saldo
-				calendario.setTimeInMillis(entrada.getData().getTime() - _calendarioConsulta.getTimeInMillis());
-				calendario.set(Calendar.SECOND, 00);
-				entrada.setData(new Timestamp(calendario.getTimeInMillis()));
-
 				if (iteradorMarcacoes.hasNext()) {
 					saida = (MarcacaoPonto) iteradorMarcacoes.next();
 					//escreve marcacao no verbete
@@ -789,53 +742,11 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					} else {
 						marcacoes = marcacoes.concat(FormataCalendar.horas(calendario));
 					}
-
-					// para o calculo do saldo
-					calendario.setTimeInMillis(saida.getData().getTime() - _calendarioConsulta.getTimeInMillis());
-					calendario.set(Calendar.SECOND, 00);
-					saida.setData(new Timestamp(calendario.getTimeInMillis()));
-
-					if (entrada.getData().getTime() < _horario.getInicioExpediente().getTime()) {
-						entrada.setData(new Timestamp(_horario.getInicioExpediente().getTime()));
-					}
-					if (saida.getData().getTime() > _horario.getFimExpediente().getTime()) {
-						saida.setData(new Timestamp(_horario.getFimExpediente().getTime()));
-					}
-
-					IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
-					saldo = saldo + horarioStrategy.limitaTrabalhoSeguido(_horario, entrada.getData().getTime(), saida.getData().getTime());
-
-					if ((_horario.getSigla() != null)
-						&& !((_horario.getSigla().equals(Constants.DSC)
-							|| _horario.getSigla().equals(Constants.DS)
-							|| _horario.getSigla().equals(Constants.FERIADO)))) {
-						calcularTrabalhoNocturno(entrada, saida);
-					}
 				}
 			}
 		} else { // nao existem marcacoes de ponto neste dia
 			marcacoes = marcacoes.concat("&nbsp;");
 		}
-		_listaSaldos.clear();
-		_listaSaldos.add(new Long(saldo)); // horario normal
-		_listaSaldos.add(new Long(0)); // plataformas fixas
-		_listaSaldos.add(new Long(0));
-		// trabalho extraordinário 1º escalão
-		_listaSaldos.add(new Long(0));
-		// trabalho extraordinário 2º escalão
-		_listaSaldos.add(new Long(0));
-		// trabalho extraordinário depois do 2º escalão
-		_listaSaldos.add(new Long(0));
-		// horas em dia de descanso complementar DSC
-		_listaSaldos.add(new Long(0));
-		// horas em dia de descanso semanal DS
-		_listaSaldos.add(new Long(0)); // trabalho nocturno
-		_listaSaldos.add(new Long(0));
-		// trabalho extraordinário nocturno 1º escalao
-		_listaSaldos.add(new Long(0));
-		// trabalho extraordinário nocturno 2º escalao
-		_listaSaldos.add(new Long(0));
-		// trabalho extraordinário nocturno depois 2º escalao
 
 		return marcacoes;
 	} /* formataMarcacoes */
@@ -863,6 +774,44 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		_listaParamJustificacoes = servicoSeguro.getListaJustificacoes();
 	} /* buscarParamJustificacoes */
 
+	private String formataJustificacoes() {
+		String justificacoes = new String();
+
+		// formata justificacoes para o jsp
+		if (_listaParamJustificacoes.size() > 0) {
+			ListIterator iterJustificacoes = _listaJustificacoes.listIterator();
+
+			ParamJustificacao paramJustificacao = null;
+			while (iterJustificacoes.hasNext()) {
+				iterJustificacoes.next();
+				paramJustificacao = (ParamJustificacao) _listaParamJustificacoes.get(iterJustificacoes.previousIndex());
+
+				if ((_horario.getSigla() != null)
+					&& (_horario.getSigla().equals(Constants.DSC)
+						|| _horario.getSigla().equals(Constants.DS)
+						|| _horario.getSigla().equals(Constants.FERIADO))) { //Dias de Descanso
+					if (paramJustificacao.getTipoDias().equals(Constants.TODOS)) {
+						// formatacao necessaria para o caso de varias justificacoes por dia
+						justificacoes = justificacoes.concat(new String(paramJustificacao.getSigla()));
+						if (iterJustificacoes.hasNext()) {
+							justificacoes = justificacoes.concat("<br>");
+						}
+					} else {
+						justificacoes = justificacoes.concat("&nbsp;");
+					}
+				} else {
+					justificacoes = justificacoes.concat(new String(paramJustificacao.getSigla()));
+					if (iterJustificacoes.hasNext()) {
+						justificacoes = justificacoes.concat("<br>");
+					}
+				}
+			}
+		} else { // nao existem justificacoes de ponto neste dia
+			justificacoes = justificacoes.concat("&nbsp;");
+		}
+		return justificacoes;
+	} /* formataJustificacoes */
+
 	private void completaListaMarcacoes() {
 		ListIterator iterador = _listaJustificacoes.listIterator();
 		while (iterador.hasNext()) {
@@ -871,11 +820,94 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 			IStrategyJustificacoes justificacaoStrategy =
 				SuporteStrategyJustificacoes.getInstance().callStrategy(paramJustificacao.getTipo());
-			justificacaoStrategy.completaListaMarcacoes(justificacao, _listaMarcacoesPonto);
+
+			justificacaoStrategy.completaListaMarcacoes(_dataConsulta, justificacao, _listaMarcacoesPonto);
 		}
+	} /* completaListaMarcacoes */
+
+	private void calcularSaldoDiario() {
+		Calendar calendario = Calendar.getInstance();
+		long saldo = 0;
+		boolean limita5Horas = false;
+
 		Comparador comparadorMarcacoes = new Comparador(new String("MarcacaoPonto"), new String("crescente"));
 		Collections.sort(_listaMarcacoesPonto, comparadorMarcacoes);
-	} /* completaListaMarcacoes */
+
+		if (_listaMarcacoesPonto.size() > 0) {
+
+			ListIterator iteradorMarcacoes = _listaMarcacoesPonto.listIterator();
+			MarcacaoPonto entrada = null;
+			MarcacaoPonto saida = null;
+
+			while (iteradorMarcacoes.hasNext()) {
+				entrada = (MarcacaoPonto) iteradorMarcacoes.next();
+
+				// para o calculo do saldo
+				calendario.setTimeInMillis(entrada.getData().getTime() - _calendarioConsulta.getTimeInMillis());
+				calendario.set(Calendar.SECOND, 00);
+				entrada.setData(new Timestamp(calendario.getTimeInMillis()));
+
+				if (iteradorMarcacoes.hasNext()) {
+					saida = (MarcacaoPonto) iteradorMarcacoes.next();
+
+					// para o calculo do saldo
+					calendario.setTimeInMillis(saida.getData().getTime() - _calendarioConsulta.getTimeInMillis());
+					calendario.set(Calendar.SECOND, 00);
+					saida.setData(new Timestamp(calendario.getTimeInMillis()));
+
+					if (entrada.getData().getTime() < _horario.getInicioExpediente().getTime()) {
+						entrada.setData(new Timestamp(_horario.getInicioExpediente().getTime()));
+					}
+					if (saida.getData().getTime() > _horario.getFimExpediente().getTime()) {
+						saida.setData(new Timestamp(_horario.getFimExpediente().getTime()));
+					}
+
+					if (iteradorMarcacoes.nextIndex() < 3) {
+						limita5Horas = true;
+					}
+					IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
+					saldo =
+						saldo
+							+ horarioStrategy.limitaTrabalhoSeguido(_horario, entrada.getData().getTime(), saida.getData().getTime(), limita5Horas);
+					limita5Horas = false;
+					if ((_horario.getSigla() != null)
+						&& !((_horario.getSigla().equals(Constants.DSC)
+							|| _horario.getSigla().equals(Constants.DS)
+							|| _horario.getSigla().equals(Constants.FERIADO)))) {
+						calcularTrabalhoNocturno(entrada, saida);
+					}
+				}
+			}
+		}
+
+		limpaListaSaldos(saldo);
+	}
+
+	private void limpaListaSaldos(long saldo) {
+		_listaSaldos.clear();
+		// horario normal
+		_listaSaldos.add(new Long(saldo));
+		// plataformas fixas 
+		_listaSaldos.add(new Long(0));
+		// trabalho extraordinário 1º escalão 
+		_listaSaldos.add(new Long(0));
+		// trabalho extraordinário 2º escalão
+		_listaSaldos.add(new Long(0));
+		// trabalho extraordinário depois do 2º escalão
+		_listaSaldos.add(new Long(0));
+		// horas em dia de descanso complementar DSC
+		_listaSaldos.add(new Long(0));
+		// horas em dia de descanso semanal DS
+		_listaSaldos.add(new Long(0));
+		// trabalho nocturno
+		_listaSaldos.add(new Long(0));
+		// trabalho extraordinário nocturno 1º escalao
+		_listaSaldos.add(new Long(0));
+		// trabalho extraordinário nocturno 2º escalao
+		_listaSaldos.add(new Long(0));
+		// trabalho extraordinário nocturno depois 2º escalao
+		_listaSaldos.add(new Long(0));
+	}
 
 	private void calcularHorasEscalao() {
 		long saldo = ((Long) _listaSaldos.get(0)).longValue();

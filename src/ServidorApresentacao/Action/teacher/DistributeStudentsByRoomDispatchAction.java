@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.log4j.PropertyConfigurator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -23,7 +22,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExam;
-import DataBeans.InfoRoom;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteExam;
 import DataBeans.TeacherAdministrationSiteView;

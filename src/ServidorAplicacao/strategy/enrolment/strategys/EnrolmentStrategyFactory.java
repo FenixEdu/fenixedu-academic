@@ -1,6 +1,6 @@
 package ServidorAplicacao.strategy.enrolment.strategys;
 
-import ServidorAplicacao.strategy.enrolment.context.*;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.strategys.student.EnrolmentStrategyLARQ;
 import ServidorAplicacao.strategy.enrolment.strategys.student.EnrolmentStrategyLEQ;
 import ServidorAplicacao.strategy.enrolment.strategys.student.EnrolmentStrategyLERCI;

@@ -217,11 +217,11 @@ public class Turnos implements IStrategyHorarios {
 			} else {
 				listaRegime = Arrays.asList(formHorario.getRegime());
 
-				if (listaRegime.contains(Constants.NORMAL)) {
+				if (listaRegime.contains(Constants.REGIME_NORMAL)) {
 					errors.add("regime", new ActionError("error.regime.naoPermitido"));
 				}
 
-				if (!listaRegime.contains(Constants.IPF)) {
+				if (!listaRegime.contains(Constants.REGIME_IPF)) {
 					errors.add("periodoFixo", new ActionError("error.regime.IPFobrigatorio"));
 				}
 			}
@@ -834,7 +834,7 @@ public class Turnos implements IStrategyHorarios {
 		}
 	} /* calcularHorasExtraorinarias */
 
-	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida, boolean limita) {
 		long saldo = saida - entrada;
 
 		return saldo;
@@ -857,12 +857,6 @@ public class Turnos implements IStrategyHorarios {
 	} /* duracaoDiaria */
 
 	public int mapeamentoFechoMes(Horario horario, ArrayList listaRegimes) {
-		if (listaRegimes.contains(Constants.TE)) {
-			return Constants.MAP_TE;
-		} else if (listaRegimes.contains(Constants.APOIOFAMILIA)) {
-			return Constants.MAP_AF;
-		} else {
-			return Constants.MAP_TURNOS;
-		}
+		return Constants.MAP_TURNOS;
 	} /* mapeamentoFechoMes */
 }

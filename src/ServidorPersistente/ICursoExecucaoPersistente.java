@@ -12,12 +12,11 @@ package ServidorPersistente;
  */
 import java.util.List;
 
-import Util.TipoCurso;
-
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
+import Util.TipoCurso;
 
 public interface ICursoExecucaoPersistente extends IPersistentObject {
 	/**

@@ -1,7 +1,8 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan;
 
 import Dominio.IDegreeCurricularPlan;
-import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.*;
+import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.DegreeCurricularPlanStrategy;
+import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.MasterDegreeCurricularPlanStrategy;
 import Util.TipoCurso;
 

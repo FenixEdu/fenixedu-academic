@@ -23,7 +23,6 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExamStudentRoom;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
-import Dominio.Student;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;

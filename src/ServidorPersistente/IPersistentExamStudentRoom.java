@@ -7,7 +7,6 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Dominio.ExamStudentRoom;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.ISala;

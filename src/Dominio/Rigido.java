@@ -82,7 +82,7 @@ public class Rigido implements IStrategyHorarios {
 	public void calcularHorasExtraordinarias(Horario horario, ArrayList listaMarcacoesPonto, ArrayList listaSaldos) {
 	} /* calcularHorasExtraorinarias */
 
-	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida, boolean limita) {
 		return 0;
 	} /* limitaTrabalhoSeguido */
 

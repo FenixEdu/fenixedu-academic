@@ -21,15 +21,18 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 	public JustificacaoHoras() {
 	}
 
-	public void completaListaMarcacoes(Justificacao justificacao, ArrayList listaMarcacoesPonto) {
-		MarcacaoPonto entrada = new MarcacaoPonto(0, new Timestamp(justificacao.getHoraInicio().getTime()), 0);
-		MarcacaoPonto saida = new MarcacaoPonto(0, new Timestamp(justificacao.getHoraFim().getTime()), 0);
+	public void completaListaMarcacoes(Timestamp dataConsulta, Justificacao justificacao, ArrayList listaMarcacoesPonto) {
+		
+		
+		MarcacaoPonto entrada = new MarcacaoPonto(0, new Timestamp(dataConsulta.getTime() + justificacao.getHoraInicio().getTime()), 0);
+		MarcacaoPonto saida = new MarcacaoPonto(0, new Timestamp(dataConsulta.getTime() + justificacao.getHoraFim().getTime()), 0);
+		
 		listaMarcacoesPonto.add(entrada);
 		listaMarcacoesPonto.add(saida);
 	} /* completaListaMarcacoes */
 
 	public void setJustificacao(Justificacao justificacao, ActionForm form) {
-		IntroduzirJustificacaoForm formJustificacao = (IntroduzirJustificacaoForm) form;
+		IntroduzirJustificacaoForm formJustificacao = (IntroduzirJustificacaoForm)form;
 		Calendar calendario = Calendar.getInstance();
 		calendario.setLenient(false);
 
@@ -64,7 +67,13 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 		justificacao.setHoraInicio(new Time(calendario.getTimeInMillis()));
 
 		calendario.clear();
-		calendario.set(1970, 0, 1, new Integer(formJustificacao.getHoraFim()).intValue(), new Integer(formJustificacao.getMinutosFim()).intValue(), 00);
+		calendario.set(
+			1970,
+			0,
+			1,
+			new Integer(formJustificacao.getHoraFim()).intValue(),
+			new Integer(formJustificacao.getMinutosFim()).intValue(),
+			00);
 		justificacao.setHoraFim(new Time(calendario.getTimeInMillis()));
 
 		if (formJustificacao.getObservacao().length() < 1) {
@@ -74,7 +83,10 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 		}
 	} /* setJustificacao */
 
-	public void setListaJustificacoesBody(ParamJustificacao paramJustificacao, Justificacao justificacao, ArrayList listaJustificacoesBody) {
+	public void setListaJustificacoesBody(
+		ParamJustificacao paramJustificacao,
+		Justificacao justificacao,
+		ArrayList listaJustificacoesBody) {
 		Calendar calendario = Calendar.getInstance();
 
 		listaJustificacoesBody.add(1, paramJustificacao.getSigla());
@@ -109,13 +121,11 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 		ArrayList listaMarcacoesPonto,
 		ArrayList listaSaldos) {
 		// saldo do horario normal
-		long saldo = ((Long) listaSaldos.get(0)).longValue() + (justificacao.getHoraFim().getTime() - justificacao.getHoraInicio().getTime());
-		listaSaldos.set(0, new Long(saldo));
-		/*
-				// saldo da plataforma fixa e periodo de refeicao caso exista
-				IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(horario.getModalidade());
-				horarioStrategy.updateSaldosHorarioVerbeteBody(justificacao, horario, listaRegimes, listaMarcacoesPonto, listaSaldos);
-		*/
+		//		System.out.println("Upadate do saldo " + ((Long) listaSaldos.get(0)).longValue());
+		//		long saldo = ((Long) listaSaldos.get(0)).longValue() + (justificacao.getHoraFim().getTime() - justificacao.getHoraInicio().getTime());
+		//		listaSaldos.set(0, new Long(saldo));
+		//		System.out.println("Upadate do saldo2 " + ((Long) listaSaldos.get(0)).longValue());
+
 	} /* updateSaldosHorarioVerbeteBody */
 
 	public ActionErrors validateIntroduzirJustificacao(ActionForm form) {
@@ -125,7 +135,7 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 		 * permite haver varios dias a justificar algumas horas
 		 * isto acontece teoricamente e nao esta testado na exaustao
 		 */
-		IntroduzirJustificacaoForm formJustificacao = (IntroduzirJustificacaoForm) form;
+		IntroduzirJustificacaoForm formJustificacao = (IntroduzirJustificacaoForm)form;
 		ActionErrors errors = new ActionErrors();
 
 		int horaInicio = 0;
@@ -197,7 +207,7 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 				calendarFim.clear();
 				calendarFim.set(1970, 0, 1, horaFim, minutosFim, 00);
 
-				if (!(calendarInicio.before((Calendar) calendarFim))) {
+				if (!(calendarInicio.before((Calendar)calendarFim))) {
 					errors.add("horas", new ActionError("error.intervaloJustificacao.incorrecto"));
 				}
 			} catch (java.lang.IllegalArgumentException ee) {
@@ -206,9 +216,9 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 		}
 		return errors;
 	} /* validateIntroduzirJustificacao */
-	
+
 	public String formataDuracao(Horario horario, Justificacao justificacao) {
-		
+
 		Calendar calendario = Calendar.getInstance();
 		calendario.setLenient(false);
 		calendario.clear();
@@ -216,16 +226,15 @@ public class JustificacaoHoras implements IStrategyJustificacoes {
 		calendario.add(Calendar.HOUR_OF_DAY, -1);
 		Time diferenca = new Time(calendario.getTimeInMillis());
 
-		String duracao =
-			diferenca.toString().substring(0, diferenca.toString().lastIndexOf(":"));
-		
+		String duracao = diferenca.toString().substring(0, diferenca.toString().lastIndexOf(":"));
+
 		int indice = duracao.length();
-		while(indice < Constants.MAX_DURACAO){
+		while (indice < Constants.MAX_DURACAO) {
 			duracao = "0" + duracao;
-		
+
 			indice++;
-		} 
-				
+		}
+
 		return duracao;
-	}	/* formataDuracao */
+	} /* formataDuracao */
 }

@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.apache.struts.action.ActionErrors;
@@ -11,7 +12,7 @@ import org.apache.struts.action.ActionForm;
  */
 public interface IStrategyJustificacoes {
 
-	public void completaListaMarcacoes(Justificacao justificacao, ArrayList listaMarcacoesPonto);
+	public void completaListaMarcacoes(Timestamp dataConsulta, Justificacao justificacao, ArrayList listaMarcacoesPonto);
 	public void setJustificacao(Justificacao justificacao, ActionForm form);
 	public void setListaJustificacoesBody(ParamJustificacao paramJustificacao, Justificacao justificacao, ArrayList listaJustificacoesBody);
 	public void updateSaldosHorarioVerbeteBody(Justificacao justificacao, ParamJustificacao paramJustificacao, Horario horario, ArrayList listaRegimes, ArrayList listaMarcacoesPonto, ArrayList listaSaldos);

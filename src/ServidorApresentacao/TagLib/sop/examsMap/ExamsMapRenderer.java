@@ -14,12 +14,7 @@ import org.apache.commons.collections.Predicate;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
-import ServidorApresentacao
-	.TagLib
-	.sop
-	.examsMap
-	.renderers
-	.ExamsMapSlotContentRenderer;
+import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
 import Util.Season;
 
 /*

@@ -220,11 +220,11 @@ public class MeioTempo implements IStrategyHorarios {
 			} else {
 				listaRegime = Arrays.asList(formHorario.getRegime());
 
-				if (listaRegime.contains(Constants.NORMAL)) { //Regime: Normal
+				if (listaRegime.contains(Constants.REGIME_NORMAL)) { //Regime: Normal
 					errors.add("regime", new ActionError("error.regime.naoPermitido"));
 				}
 
-				if (!listaRegime.contains(Constants.IPF)) { //Regime: IPF
+				if (!listaRegime.contains(Constants.REGIME_IPF)) { //Regime: IPF
 					errors.add("periodoFixo", new ActionError("error.regime.IPFobrigatorio"));
 				}
 			}
@@ -910,7 +910,7 @@ public class MeioTempo implements IStrategyHorarios {
 		//não tem direito a trabalho extraordinário
 	} /* calcularHorasExtraorinarias */
 
-	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida, boolean limita) {
 		long saldo = saida - entrada;
 
 		return saldo;
@@ -933,13 +933,6 @@ public class MeioTempo implements IStrategyHorarios {
 	} /* duracaoDiaria */
 
 	public int mapeamentoFechoMes(Horario horario, ArrayList listaRegimes) {
-		if (listaRegimes.contains(Constants.TE)) {
-			return Constants.MAP_TE;
-		} else if (listaRegimes.contains(Constants.APOIOFAMILIA)) {
-			return Constants.MAP_AF;
-		} else {
-			return Constants.MAP_MEIOTEMPO;
-		}
+		return Constants.MAP_MEIOTEMPO;
 	} /* mapeamentoFechoMes */
-
 }

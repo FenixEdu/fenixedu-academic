@@ -5,11 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import Util.DegreeCurricularPlanState;
-
 import Dominio.Branch;
 import Dominio.IBranch;
 import Dominio.IDegreeCurricularPlan;
+import Util.DegreeCurricularPlanState;
 
 /**
  *

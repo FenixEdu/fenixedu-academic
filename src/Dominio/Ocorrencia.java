@@ -1,6 +1,7 @@
 package Dominio;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -20,7 +21,7 @@ public class Ocorrencia implements IStrategyJustificacoes {
 	public Ocorrencia() {
 	}
 
-	public void completaListaMarcacoes(Justificacao justificacao, ArrayList listaMarcacoesPonto) {
+	public void completaListaMarcacoes(Timestamp dataConsulta, Justificacao justificacao, ArrayList listaMarcacoesPonto) {
 	} /* completaListaMarcacoes */
 
 	public void setJustificacao(Justificacao justificacao, ActionForm form) {

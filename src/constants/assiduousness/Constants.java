@@ -47,20 +47,50 @@ public final class Constants {
 	public static final String MEIOTEMPO = new String("meioTempo");
 	public static final String TURNOS = new String("turnos");
 
+	/* Regimes de Horários */
+	public static final String REGIME_NORMAL = new String("normal");
+	public static final String REGIME_TE = new String("trabalhadorEstudante");
+	public static final String REGIME_IPF = new String("isencaoPeriodoFixo");
+	public static final String REGIME_APOIOFAMILIA = new String("apoioFamilia");
+	public static final String REGIME_AMAMENTACAO = new String("amamentacao");
+	public static final String REGIME_ALEITACAO = new String("aleitacao");
+	public static final String REGIME_MENORES12 = new String("assistenciaMenores12");
+	public static final String REGIME_FILHOSDEFICIENTES = new String("filhosDeficientes");
+	public static final String REGIME_MOTIVOSSAUDE = new String("motivosSaude");
+	public static final String REGIME_SERVICO = new String("convenienciaServico");
+	public static final String REGIME_OUTRAS_CIRCUNSTANCIAS = new String("outrasCircunstancias");
+
+
 	/* Mapeamento para Listagem do Fecho do Mes */
-	public static final int MAP_TURNOS = 1;
-	public static final int MAP_JC = 3;
-	public static final int MAP_TE = 6;
-	public static final int MAP_AF = 7;
-	public static final int MAP_AMAMENTACAO = 8;
+	
+	public static final int MAP_TURNOS = 8;
+		
 	public static final int MAP_ISE = 9;
 	public static final int MAP_FLEXIVEL = 11;
 	public static final int MAP_MEIOTEMPO = 12;
-	public static final int MAP_ESP = 13;
+	
+	public static final int MAP_JC_TE = 15;
+	public static final int MAP_JC_FILHOS12 = 16;
+	public static final int MAP_JC_FILHOSDEF = 17;
+	public static final int MAP_JC_CONVSERV = 18;
+	public static final int MAP_JC_OUTRAS = 19;
+	
+	public static final int MAP_FLEXIVEL_AJUST_TE = 20;
+	public static final int MAP_FLEXIVEL_AJUST_FILHOS12 = 21;
+	public static final int MAP_FLEXIVEL_AJUST_FILHOSDEF = 22;
+	public static final int MAP_FLEXIVEL_AJUST_CONVSERV = 23;
+	public static final int MAP_FLEXIVEL_AJUST_OUTROS = 24;
+	
+	public static final int MAP_ESP_1HORA_TE = 25;
+	public static final int MAP_ESP_1HORA_FILHOSDEF1ANO = 25;
+	public static final int MAP_ESP = 29;
+	
+	public static final int MAP_AMAMENTACAO = 27;
+	public static final int MAP_ALEITACAO = 28;
 	
 	/* siglas utilizadas no ficheiro do fecho do mês */
 	public static final String SALDO = "SALDO";
-	public static final String SALDO_INJUSTIFICADO = "INJUS.";
+	public static final String SALDO_INJUSTIFICADO = "INJS.";
 	public static final String SALDO_PRIM_ESCALAO = "125%";
 	public static final String SALDO_SEG_ESCALAO = "150%";
 	public static final String SALDO_DEPOIS_SEG_ESCALAO = "150%+2";
@@ -79,17 +109,6 @@ public final class Constants {
 	public static final String INJUSTIFICADO = "FINJUST";
 	/* Sigla de funcionário Desligado */
 	public static final String DESLIGADO = "DESLIGAD";
-	
-	/* Regimes de Horários */
-	public static final String NORMAL = new String("normal");
-	public static final String TE = new String("trabalhadorEstudante");
-	public static final String IPF = new String("isencaoPeriodoFixo");
-	public static final String APOIOFAMILIA = new String("apoioFamilia");
-	public static final String AMAMENTACAO = new String("amamentacao");
-	public static final String ALEITACAO = new String("aleitacao");
-	public static final String MENORES12 = new String("assistenciaMenores12");
-	public static final String MOTIVOSSAUDE = new String("motivosSaude");
-	public static final String SERVICO = new String("convenienciaServico");
 	
 	/* Rotacao de Horario por omissao */
 	public static final int NUMDIAS_ROTACAO = 5;

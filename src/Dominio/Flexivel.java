@@ -302,7 +302,7 @@ public class Flexivel implements IStrategyHorarios {
 			} else {
 				listaRegime = Arrays.asList(formHorario.getRegime());
 
-				if (listaRegime.contains(Constants.IPF)) { //Regime:new String("isencaoPeriodoFixo")
+				if (listaRegime.contains(Constants.REGIME_IPF)) { //Regime:new String("isencaoPeriodoFixo")
 					if ((formHorario.getInicioPF1Horas().length() > 0)
 						|| (formHorario.getInicioPF1Minutos().length() > 0)
 						|| (formHorario.getFimPF1Horas().length() > 0)
@@ -857,7 +857,7 @@ public class Flexivel implements IStrategyHorarios {
 
 		// Periodos Fixos 
 		listaRegime = Arrays.asList(formHorario.getRegime());
-		if (!listaRegime.contains(Constants.IPF)) { //Regimes: new String("isencaoPeriodoFixo")
+		if (!listaRegime.contains(Constants.REGIME_IPF)) { //Regimes: new String("isencaoPeriodoFixo")
 			if (formHorario.getDiaAnteriorPF1().length() < 1) {
 				calendar.set(
 					1970,
@@ -1151,7 +1151,7 @@ public class Flexivel implements IStrategyHorarios {
 			formHorario.setAnoFim("----");
 		}
 
-		if (!listaRegime.contains(Constants.IPF)) { //Regime: new String("isencaoPeriodoFixo")
+		if (!listaRegime.contains(Constants.REGIME_IPF)) { //Regime: new String("isencaoPeriodoFixo")
 			calendar.clear();
 			calendar.setTimeInMillis((horario.getInicioPF1()).getTime());
 			formHorario.setInicioPF1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
@@ -1383,7 +1383,7 @@ public class Flexivel implements IStrategyHorarios {
 			formHorario.setAnoFim("----");
 		}
 
-		if (!listaRegime.contains(Constants.IPF)) { //Regime: new String("isencaoPeriodoFixo")
+		if (!listaRegime.contains(Constants.REGIME_IPF)) { //Regime: new String("isencaoPeriodoFixo")
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getInicioPF1()).getTime());
 			formHorario.setInicioPF1Horas((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
@@ -1563,7 +1563,7 @@ public class Flexivel implements IStrategyHorarios {
 
 		descricao = new String((new Float(horarioTipo.getDuracaoSemanal())).intValue() + " horas ");
 
-		if (!listaRegimes.contains(Constants.IPF)) { //Regime: new String("isencaoPeriodoFixo")
+		if (!listaRegimes.contains(Constants.REGIME_IPF)) { //Regime: new String("isencaoPeriodoFixo")
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getInicioPF1()).getTime());
 			inicioPF1Horas = ((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
@@ -1800,36 +1800,8 @@ public class Flexivel implements IStrategyHorarios {
 				}
 			}
 
-			if (intervaloRefeicao >= horario.getIntervaloMinimoRefeicao().getTime()
-				&& intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
-				&& intervaloRefeicao != 0) {
+			if (intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime() && intervaloRefeicao != 0) {
 				saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
-			} else if (intervaloRefeicao < horario.getIntervaloMinimoRefeicao().getTime() || intervaloRefeicao == 0) {
-				if (listaParamJustificacoes.size() > 0) {
-					saldo = saldo - horario.getDescontoObrigatorioRefeicao().getTime();
-				} else {
-					// desconta o dia todo segundo consta do regulamento de assiduidade.
-					// horario normal
-					Float duracaoDiaria = new Float(horario.getDuracaoSemanal() / Constants.SEMANA_TRABALHO_FLEXIVEL);
-					saldo =
-						0
-							- (duracaoDiaria.intValue() * 3600 * 1000
-								+ new Float((duracaoDiaria.floatValue() - duracaoDiaria.intValue()) * 3600 * 1000).longValue());
-
-					listaSaldos.set(0, new Long(saldo));
-
-					// plataformas fixas
-					//if(!listaRegimes.contains("isencaoPeriodoFixo")){ quando estiver a funcionar a nossa base de dados
-					if (horario.getInicioPF1() != null) {
-						long saldoInjust =
-							horario.getFimPF1().getTime()
-								- horario.getInicioPF1().getTime()
-								+ horario.getFimPF2().getTime()
-								- horario.getInicioPF2().getTime();
-						listaSaldos.set(1, new Long(-saldoInjust));
-					}
-					return;
-				}
 			}
 		}
 
@@ -2000,17 +1972,23 @@ public class Flexivel implements IStrategyHorarios {
 		}
 	} /* calcularHorasExtraorinarias */
 
-	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida, boolean limita) {
 		long saldo = saida - entrada;
 
-		//		if (saldo > Constants.MAX_TRABALHO_FLEXIVEL)
-		//			return Constants.MAX_TRABALHO_FLEXIVEL;
-		//		else
+		if ((horario.getSigla() != null)
+			&& !((horario.getSigla().equals(Constants.DSC)
+				|| horario.getSigla().equals(Constants.DS)
+				|| horario.getSigla().equals(Constants.FERIADO)))) {
+			if (limita) {
+				if (saldo > Constants.MAX_TRABALHO_FLEXIVEL)
+					return Constants.MAX_TRABALHO_FLEXIVEL;
+			}
+		}
 		return saldo;
 	} /* limitaTrabalhoSeguido */
 
 	public long duracaoPF(Horario horario, ArrayList listaRegimes) {
-		if (!listaRegimes.contains(Constants.IPF)) {
+		if (!listaRegimes.contains(Constants.REGIME_IPF)) {
 			return Constants.PLATAFORMAS_FIXAS_FLEXIVEL;
 		}
 		return 0;
@@ -2028,10 +2006,16 @@ public class Flexivel implements IStrategyHorarios {
 	} /* duracaoDiaria */
 
 	public int mapeamentoFechoMes(Horario horario, ArrayList listaRegimes) {
-		if (listaRegimes.contains(Constants.TE)) {
-			return Constants.MAP_TE;
-		} else if (listaRegimes.contains(Constants.APOIOFAMILIA)) {
-			return Constants.MAP_AF;
+		if (listaRegimes.contains(Constants.REGIME_TE)) {
+			return Constants.MAP_FLEXIVEL_AJUST_TE;
+		} else if (listaRegimes.contains(Constants.REGIME_MENORES12)) {
+			return Constants.MAP_FLEXIVEL_AJUST_FILHOS12;
+		} else if (listaRegimes.contains(Constants.REGIME_FILHOSDEFICIENTES)) {
+			return Constants.MAP_FLEXIVEL_AJUST_FILHOSDEF;
+		} else if (listaRegimes.contains(Constants.REGIME_SERVICO)) {
+			return Constants.MAP_FLEXIVEL_AJUST_CONVSERV;
+		} else if (listaRegimes.contains(Constants.REGIME_OUTRAS_CIRCUNSTANCIAS)) {
+			return Constants.MAP_FLEXIVEL_AJUST_OUTROS;
 		} else {
 			return Constants.MAP_FLEXIVEL;
 		}

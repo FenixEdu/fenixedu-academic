@@ -103,7 +103,7 @@ public class Desfasado implements IStrategyHorarios {
 		ArrayList listaSaldos) {
 	} /* calcularHorasExtraorinarias */
 
-	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
+	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida, boolean limita) {
 		return 0;
 	}
 	

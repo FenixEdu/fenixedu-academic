@@ -1,7 +1,7 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan;
 
 import Dominio.IDegreeCurricularPlan;
-import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.*;
+import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 
 /**
  * 

@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import DataBeans.ISiteComponent;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoStudentSiteExams;

@@ -15,8 +15,6 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Util.TipoCurso;
-
 import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
@@ -25,6 +23,7 @@ import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
+import Util.TipoCurso;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
