@@ -141,7 +141,17 @@
       	     type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlansAction">
       	  <forward name="readDegreeCurricularPlans" path="df.page.read-degreeCurricularPlans"/>      	      
       </action>
-     
+      
+      <!-- Action for deleting degreeCurricularPlans --> 
+      <action 
+      		 path="/deleteDegreeCurricularPlans"
+      		 name="deleteForm"
+      		 input="/readDegreesInput.do"
+      		 scope="request"
+      	     type="ServidorApresentacao.Action.manager.DeleteDegreeCurricularPlansAction">
+      	  <forward name="readDegree" path="/readDegree.do"/>      	      
+      </action>
+    
       <!--Input actions-->
       <action path="/insertDegreeInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
