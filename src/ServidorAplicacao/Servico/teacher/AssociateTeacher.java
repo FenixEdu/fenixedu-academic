@@ -1,5 +1,10 @@
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
@@ -23,12 +28,6 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class AssociateTeacher implements IService {
 
     /**
-     * The Actor of this class.
-     */
-    public AssociateTeacher() {
-    }
-
-    /**
      * Executes the service.
      */
     public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber)
@@ -46,6 +45,11 @@ public class AssociateTeacher implements IService {
 
             IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, infoExecutionCourseCode);
+
+            if (lectures(iTeacher, iExecutionCourse.getProfessorships())) {
+                throw new ExistingServiceException();
+            }
+
             IProfessorship professorship = new Professorship();
             persistentProfessorship.simpleLockWrite(professorship);
 
@@ -57,5 +61,14 @@ public class AssociateTeacher implements IService {
             throw new FenixServiceException(ex);
         }
         return true;
+    }
+
+    protected boolean lectures(final ITeacher teacher, final List professorships) {
+        return CollectionUtils.find(professorships, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IProfessorship professorship = (IProfessorship) arg0;
+                return professorship.getTeacher().getIdInternal().equals(teacher.getIdInternal());
+            }}) != null;
     }
 }
