@@ -311,9 +311,9 @@ public class GeraXml
 
             persistentEnrolmentPeriod.simpleLockWrite(enrolmentPeriod);
             Calendar start = Calendar.getInstance();
-            start.roll(Calendar.DAY_OF_MONTH, false);
+            start.roll(Calendar.MONTH, false);
             Calendar end = Calendar.getInstance();
-            end.roll(Calendar.DAY_OF_MONTH, true);
+            end.roll(Calendar.MONTH, true);
             enrolmentPeriod.setStartDate(start.getTime());
             enrolmentPeriod.setEndDate(end.getTime());
             if (isnull)

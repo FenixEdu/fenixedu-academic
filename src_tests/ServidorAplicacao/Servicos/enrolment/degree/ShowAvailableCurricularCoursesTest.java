@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
@@ -16,20 +15,23 @@ import java.util.ResourceBundle;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolment;
+import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
+import Util.TipoCurso;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -56,14 +58,13 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         System.out.println("setup start");
         try
         {
-        
+
             dbAcessPoint = new dbaccess();
-           
+
             dbAcessPoint.openConnection();
-           
-//            dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-           
-           
+
+            //            dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+
             try
             {
                 dbAcessPoint.loadDataBase(getDataSetFilePath());
@@ -72,9 +73,9 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
             {
                 System.out.println(e);
             }
-          
+
             dbAcessPoint.closeConnection();
-           
+
             System.out.println("setup end");
         }
         catch (Exception ex)
@@ -104,12 +105,12 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
      */
     protected String getApplication()
     {
-        return Autenticacao.INTRANET;
+        return Autenticacao.EXTRANET;
     }
 
     protected String getNameOfServiceToBeTested()
     {
-        return "ShowAvailableCurricularCourses";
+        return "ShowAvailableCurricularCoursesNew";
     }
 
     protected String getDataSetFilePath()
@@ -136,11 +137,11 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
                 + "/output.txt";
 
     }
-    
+
     protected String getDatabaseBackupFilePath()
     {
         return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
-        + "/backupDataSet.xml";
+                + "/backupDataSet.xml";
 
     }
 
@@ -181,8 +182,53 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
             Integer studentNumber = new Integer(bundle
                     .getString(STUDENT_NUMBER));
-            Object[] args = {studentNumber};
+
+            Integer studentCurricularPlanId = new Integer(0);
+
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+
+            persistentSuport.iniciarTransaccao();
+
+            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSuport
+                    .getIStudentCurricularPlanPersistente();
+
+            List curricularPlans = persistentStudentCurricularPlan
+                    .readAllFromStudent(studentNumber.intValue());
+
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils
+                    .find(curricularPlans, new Predicate()
+                    {
+
+                        public boolean evaluate(Object arg0)
+                        {
+                            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
+                            if (studentCurricularPlan.getDegreeCurricularPlan()
+                                    .getIdInternal().intValue() == 48)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+
+                        }
+                    });
+            if (studentCurricularPlan == null)
+            {
+                fail("Not a LEEC Student");
+            }
+
+            persistentSuport.confirmarTransaccao();
+
+            studentCurricularPlanId = studentCurricularPlan.getIdInternal();
+
+            Object[] args = {new Integer(48), studentCurricularPlanId,
+                    studentNumber};
+
             return args;
+
         }
         catch (FileNotFoundException e)
         {
@@ -191,6 +237,11 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         catch (IOException e)
         {
             //
+        }
+        catch (ExcepcaoPersistencia e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
         Object[] args = {};
         return args;
@@ -228,10 +279,10 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
             fail("Executing Service: " + getNameOfServiceToBeTested());
             e.printStackTrace();
         }
-        System.out.println("2");
+
         System.out.println("service executed: comparing results");
         boolean result = CompareExpectedCCAndCreditsWithDataReturnedFromService(infoSEC);
-        System.out.println("3");
+
         if (result)
         {
             System.out
@@ -280,6 +331,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
                         return curricularCourse.getName();
                     }
                 });
+
         if (infoSEC.getStudentCurrentSemesterInfoEnrollments() != null)
         {
 
@@ -304,7 +356,9 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
                         }
                     });
+
             curricularCoursesNames.addAll(forcedEnrollments);
+
         }
         CollectionUtils.filter(curricularCoursesNames, new Predicate()
         {
@@ -430,8 +484,6 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
         return lista;
     }
-
-   
 
     protected IUserView authenticateUser(String[] arguments)
     {
