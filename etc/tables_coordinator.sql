@@ -17,7 +17,7 @@ create table COORDINATOR (
 -- ---------------------------------
 drop table if exists DEGREE_INFO;
 create table DEGREE_INFO(
-	ID_INTERNAL int(11) not null auto_increment;
+	ID_INTERNAL int(11) not null auto_increment,
 	KEY_DEGREE int(11) not null,
 	OBJECTIVES text,
 	HISTORY text,
