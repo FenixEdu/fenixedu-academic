@@ -3,9 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="Util.Data" %>
 
-<html>
-  <body>
+
     <div align="center">
       <font color="#023264" size="-1">
         <h2>          A sua situação actual não lhe permite alterar a informação da sua candidatura !         </h2>
@@ -30,7 +31,10 @@
         <!-- Data da Situacao -->
         <tr>
             <td><bean:message key="label.candidate.infoCandidateSituationDate" /></td>
-            <td><bean:write name="situation" property="date"/></td>
+            <logic:present name="situation" property="date" >
+	            <bean:define id="date" name="situation" property="date" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+			</logic:present>
         </tr>
         
         <!-- Observacoes -->
@@ -40,7 +44,4 @@
         </tr>
     </logic:present>
    </table>
-  </body>
-  
-</html>
 

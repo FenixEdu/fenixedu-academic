@@ -3,11 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="Util.Data" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.candidate.visualizeApplicationInfo" /></title>
-  </head>
+
   <body>
     <table>
     <bean:define id="applicationInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" />
@@ -59,7 +58,10 @@
           <!-- Data da Situacao -->
           <tr>
             <td><bean:message key="label.candidate.infoCandidateSituationDate" /></td>
-            <td><bean:write name="applicationInfo" property="infoCandidateSituation.date"/></td>
+            <logic:present name="applicationInfo" property="infoCandidateSituation.date" >
+	            <bean:define id="date" name="applicationInfo" property="infoCandidateSituation.date" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+			</logic:present>
           </tr>
 
           <!-- Observacoes -->
@@ -95,6 +97,3 @@
           </tr>
         </logic:present>
     </table>
-    
-  </body>
-</html>

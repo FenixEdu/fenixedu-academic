@@ -93,6 +93,7 @@
         	<form-property name="contributorName" type="java.lang.String" />
         	<form-property name="contributorAddress" type="java.lang.String" />
         	<form-property name="contributorList" type="java.lang.String" />
+
       </form-bean>
 
 	  <!-- Bean for ready to create a guide  -->
@@ -556,6 +557,19 @@
 			  >
 	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
 	         <forward name="ChooseSuccess" path="/editCandidates.do?method=prepareChoose&amp;action=edit&amp;page=0"/> 
+      </action>
+
+      <!-- Choose Execution Year To Create a Guide -->
+      <action path="/chooseExecutionYearToCreateGuide"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/createGuideDispatchAction.do?method=prepare&amp;page=0"/> 
       </action>
 
 

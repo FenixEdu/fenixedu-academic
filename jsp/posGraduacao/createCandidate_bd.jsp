@@ -4,11 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></title>
-  </head>
-  <body>
    
    <table>
     <span class="error"><html:errors/></span>
@@ -69,5 +64,3 @@
          </tr>
     </html:form>
    </table>
-  </body>
-</html>

@@ -4,12 +4,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="java.lang.Integer" %>
 
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoGuideSituation" %>
 <%@ page import="DataBeans.InfoGuide" %>
 <%@ page import="Util.State" %>
+<%@ page import="Util.Data" %>
+
 <%@ page import="Util.SituationOfGuide" %>
 
      <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="request" />
@@ -88,7 +91,10 @@
      <table>
 		<tr>
 			<td><bean:message key="label.masterDegree.administrativeOffice.creationDate" /></td>
-			<td><bean:write name="infoGuide" property="creationDate"/></td>
+            <logic:present name="infoGuide" property="creationDate" >
+	            <bean:define id="date" name="infoGuide" property="creationDate" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+			</logic:present>
 		</tr>
 		<tr>
 			<td><bean:message key="label.masterDegree.administrativeOffice.remarks" /></td>
@@ -124,7 +130,10 @@
            </tr>
            <tr>
 			<td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
-            <td><bean:write name="guideSituation" property="date"/></td>
+            <logic:present name="guideSituation" property="date" >
+	            <bean:define id="date" name="guideSituation" property="date" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>   			
+			</logic:present>
            </tr>
            <% if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) { %>
            		<tr>
@@ -133,7 +142,10 @@
         		</tr>
            		<tr>
         			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
-        			<td><bean:write name="infoGuide" property="paymentDate"/></td>
+		            <logic:present name="infoGuide" property="paymentDate" >
+			            <bean:define id="date" name="infoGuide" property="paymentDate" />
+						<td><%= Data.format2DayMonthYear((Date) date) %></td>   			
+					</logic:present>
         		</tr>
          	<% } %>
           </table>

@@ -1,11 +1,14 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.Collection" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoGuideSituation" %>
 <%@ page import="DataBeans.InfoGuide" %>
 <%@ page import="Util.State" %>
+<%@ page import="Util.Data" %>
 <%@ page import="Util.SituationOfGuide" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
 
@@ -53,7 +56,10 @@
        </tr>
        <tr>
 		<td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
-        <td><bean:write name="guideSituation" property="date"/></td>
+        <logic:present name="guideSituation" property="date" >
+			<bean:define id="date" name="guideSituation" property="date" />
+			<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+		</logic:present>
        </tr>
        <% if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) { %>
        		<tr>

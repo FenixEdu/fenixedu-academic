@@ -5,12 +5,6 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administrativeOffice.listCandidates" /></title>
-  </head>
-  <body>
-
     <span class="error"><html:errors/><br></span>
     <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />    
     <h2><bean:message name="title"/></h2>
@@ -37,5 +31,3 @@
          </tr>
     </html:form>
    </table>
-  </body>
-</html>

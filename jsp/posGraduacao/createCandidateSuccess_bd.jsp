@@ -4,11 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></title>
-  </head>
-  <body>
     <div align="center">
      <font color="#023264" size="-1">
         <h2>          Candidato Criado !         </h2>
@@ -63,6 +58,4 @@
 
       </logic:present>
     </table>
-  </body>
-</html>
 

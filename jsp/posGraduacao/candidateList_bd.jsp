@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="Util.Data" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <html>
@@ -57,7 +59,10 @@
     				<td><bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla" /></td>
     				<td><bean:write name="candidate" property="specialization" /></td>
     				<td><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
-    				<td><bean:write name="candidate" property="infoCandidateSituation.date" /></td>
+		            <logic:present name="candidate" property="infoCandidateSituation.date" >
+	   	            	<bean:define id="date" name="candidate" property="infoCandidateSituation.date" />
+						<td><%= Data.format2DayMonthYear((Date) date) %></td>  
+					</logic:present>
     			</tr>
     		</logic:iterate>
           </table>

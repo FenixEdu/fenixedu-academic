@@ -5,12 +5,6 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.masterDegree.administrativeOffice.listCandidates" /></title>
-  </head>
-  <body>
-   
    <table>
     <span class="error"><html:errors/></span>
     <bean:define id="specializationList" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="session" />
@@ -69,5 +63,3 @@
          </tr>
     </html:form>
    </table>
-  </body>
-</html>

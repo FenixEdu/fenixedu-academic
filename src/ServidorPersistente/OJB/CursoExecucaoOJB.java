@@ -254,7 +254,8 @@ public class CursoExecucaoOJB
 		try {
 
 			String oqlQuery = "select all from " + CursoExecucao.class.getName()
-							+ " where coordinator.teacherNumber = $1";
+							+ " where coordinator.teacherNumber = $1"
+							+ " order by curricularPlan.degree.nome, executionYear.year desc";
 			
 			query.create(oqlQuery);
 

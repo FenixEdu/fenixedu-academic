@@ -1,10 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<html>
-  <head>
-    <title><bean:message key="title.candidate.changePassword" /></title>
-  </head>
   <body>
    <span class="error"><html:errors/></span>
    <table>
@@ -37,5 +33,3 @@
          </td>
     </html:form>
    </table>
-  </body>
-</html>

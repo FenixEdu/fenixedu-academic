@@ -7,12 +7,6 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 
-
-<html>
-  <head>
-    <title><bean:message key="title.candidate.chooseCandidate" /></title>
-  </head>
-  <body>
    <span class="error"><html:errors/></span>
 
     <bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />
@@ -34,5 +28,3 @@
                 <br>
         	</logic:iterate>
 	<% } %>
-  </body>
-</html>

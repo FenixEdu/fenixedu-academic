@@ -4,9 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoGuideSituation" %>
 <%@ page import="Util.State" %>
+<%@ page import="Util.Data" %>
 <%@ page import="Util.SituationOfGuide" %>
 
    <span class="error"><html:errors/></span>
@@ -41,7 +43,10 @@
                 			Versão <bean:write name="version" property="version" />
                             </html:link>
                         </td>
-                        <td><bean:write name="guideSituation" property="date"/></td>
+			            <logic:present name="guideSituation" property="date" >
+	            			<bean:define id="date" name="guideSituation" property="date" />
+							<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+						</logic:present>
                         <td><bean:write name="guideSituation" property="situation"/></td>
         			</tr>               
              	<% } %>

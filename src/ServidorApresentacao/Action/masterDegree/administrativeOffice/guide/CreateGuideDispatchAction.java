@@ -23,7 +23,6 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoContributor;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGuide;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.FenixServiceException;
@@ -68,36 +67,17 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
 			session.removeAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR);
 			
-			// Clean The Form
-			createGuideForm.set("degree", null);
-			createGuideForm.set("number", null);
-			createGuideForm.set("requester", null);
-			createGuideForm.set("graduationType", null);
-			createGuideForm.set("contributorNumber", null);
-			createGuideForm.set("contributorName", null);
-			createGuideForm.set("contributorAddress", null);
-			createGuideForm.set("contributorList", null);			
-		
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Create the Degree Type List
 			ArrayList specializations = Specialization.toArrayList();
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
+			String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 
-
-			// Get the Actual ExecutionYear
-			InfoExecutionYear infoExecutionYear = null;
-			
-			try {
-				infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadActualExecutionYear", null);
-			} catch (Exception e) {
-				throw new Exception(e);
-			}
-			
 
 			// Get the Degree List
 			
-			Object args[] = {infoExecutionYear.getYear()};
+			Object args[] = {executionYear};
 			
 			ArrayList degreeList = null; 			
 			try {

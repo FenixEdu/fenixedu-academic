@@ -1,11 +1,11 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<html>
-  <head>
-    <title><bean:message key="label.person.visualizeInformation" /></title>
-  </head>
-  <body>
+<%@ page import="Util.Data" %>
+<%@ page import="java.util.Date" %>
+
+
     <table>
     	<tr>
     		<td><h2><bean:message key="label.person.title.personalConsult" /></h2><br /></td>
@@ -48,12 +48,18 @@
           <!-- Data de Emissao do Documento de Identificacao -->
           <tr>
             <td><bean:message key="label.person.identificationDocumentIssueDate" /></td>
-            <td><bean:write name="personalInfo" property="dataEmissaoDocumentoIdentificacao"/></td>
+            <logic:present name="personalInfo" property="dataEmissaoDocumentoIdentificacao" >
+	            <bean:define id="date" name="personalInfo" property="dataEmissaoDocumentoIdentificacao" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>            
+			</logic:present>
           </tr>
           <!-- Data de Validade do Documento de Identificacao -->
           <tr>
             <td><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
-            <td><bean:write name="personalInfo" property="dataValidadeDocumentoIdentificacao"/></td>
+            <logic:present name="personalInfo" property="dataValidadeDocumentoIdentificacao" >
+	            <bean:define id="date" name="personalInfo" property="dataValidadeDocumentoIdentificacao" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>            
+			</logic:present>
           </tr>
           <!-- Numero de Contribuinte -->
           <tr>
@@ -77,7 +83,10 @@
           <!-- Data de Nascimento -->
           <tr>
             <td><bean:message key="label.person.birth" /></td>
-            <td><bean:write name="personalInfo" property="nascimento"/></td>
+            <logic:present name="personalInfo" property="nascimento" >
+	            <bean:define id="date" name="personalInfo" property="nascimento" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>            
+			</logic:present>
           </tr>
           <!-- Nacionalidade -->
           <tr>
@@ -176,5 +185,3 @@
         </logic:present>
     </table>
     
-  </body>
-</html>

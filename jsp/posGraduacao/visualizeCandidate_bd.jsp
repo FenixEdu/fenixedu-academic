@@ -5,6 +5,8 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.State" %>
+<%@ page import="Util.Data" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="DataBeans.InfoCandidateSituation" %>
 
 
@@ -63,12 +65,18 @@
           <!-- Data de Emissao do Documento de Identificacao -->
           <tr>
             <td><bean:message key="label.person.identificationDocumentIssueDate" /></td>
-            <td><bean:write name="personalInfo" property="dataEmissaoDocumentoIdentificacao"/></td>
+            <logic:present name="personalInfo" property="dataEmissaoDocumentoIdentificacao" >
+	            <bean:define id="date" name="personalInfo" property="dataEmissaoDocumentoIdentificacao" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+			</logic:present>
           </tr>
           <!-- Data de Validade do Documento de Identificacao -->
           <tr>
             <td><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
-            <td><bean:write name="personalInfo" property="dataValidadeDocumentoIdentificacao"/></td>
+            <logic:present name="personalInfo" property="dataValidadeDocumentoIdentificacao" >
+	            <bean:define id="date" name="personalInfo" property="dataValidadeDocumentoIdentificacao" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td> 
+			</logic:present>
           </tr>
           <!-- Numero de Contribuinte -->
           <tr>
@@ -83,7 +91,10 @@
           <!-- Data de Nascimento -->
           <tr>
             <td><bean:message key="label.person.birth" /></td>
-            <td><bean:write name="personalInfo" property="nascimento"/></td>
+            <logic:present name="personalInfo" property="nascimento" >
+	            <bean:define id="date" name="personalInfo" property="nascimento" />
+				<td><%= Data.format2DayMonthYear((Date) date) %></td> 
+			</logic:present>
           </tr>
           <!-- Nacionalidade -->
           <tr>
@@ -246,7 +257,8 @@
 		   </tr>
 		   <tr>
             <td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
-            <td><bean:write name="situation" property="date"/></td>
+            <bean:define id="date" name="situation" property="date" />
+			<td><%= Data.format2DayMonthYear((Date) date) %></td>             
 		   </tr>
 		   <tr>
             <td><bean:message key="label.masterDegree.administrativeOffice.remarks" /></td>

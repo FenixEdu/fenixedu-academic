@@ -51,7 +51,9 @@ public class CreateGuideDispatchActionPrepareMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		return null;
+		HashMap sessionParameters = new HashMap();
+		sessionParameters.put(SessionConstants.EXECUTION_YEAR,"2002/2003");
+		return sessionParameters;		
 	}
 
 	/* (non-Javadoc)

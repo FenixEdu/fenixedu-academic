@@ -158,4 +158,26 @@ public class Data {
   	return true;
   }
   
+  
+  /**
+   * 
+   * @param Date to Format
+   * @return Date formated to day-month-year
+   * 
+   */
+  public static String format2DayMonthYear(java.util.Date date){
+  	if (date == null)
+  		return null;
+  		
+  	Calendar calendar = Calendar.getInstance();
+  	calendar.setTime(date);
+  	String result = new String();
+	result += calendar.get(Calendar.DAY_OF_MONTH);
+	result +="-";
+	result += calendar.get(Calendar.MONTH) + 1;
+    result +="-";
+	result += calendar.get(Calendar.YEAR);
+    return result;
+  }
+  
 }

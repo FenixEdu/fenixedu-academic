@@ -19,7 +19,7 @@
    <table>
    		<bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
     	<html:form action="/changePersonalInfoDispatchAction?method=change">
-   	    <html:hidden property="page" value="1"/>
+
    	    
        	<html:hidden property="name" />
       	<html:hidden property="username" />
@@ -32,7 +32,7 @@
                if ((userView.getCandidateView() != null) && (userView.getRoles().size() == 2) &&
                    (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)) && 
                    (userView.getCandidateView().changeablePersonalInfo())) { %>
-
+        	    <html:hidden property="page" value="2"/>
                 <!-- Estado Civil -->
                 <tr>
                  <td><bean:message key="label.person.maritalStatus" /></td>
@@ -206,6 +206,7 @@
                 </tr>
 
          	<% } else { %>
+      	   	    <html:hidden property="page" value="1"/>
               	<html:hidden property="sex" />
               	<html:hidden property="identificationDocumentType" />
               	<html:hidden property="identificationDocumentNumber" />
