@@ -245,7 +245,7 @@ public class Section extends DomainObject implements ISection {
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll(" ","");
+		String result = getParentNode().getSlideName()+"/S"+getIdInternal();
 		return result;
 	}
 

@@ -280,7 +280,7 @@ public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecu
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/"+getSigla().trim().replaceAll("/","-").replaceAll(" ","")+"-"+getNome().trim().replaceAll("/","-").replaceAll(" ","");
+		String result = getParentNode().getSlideName()+"/EC"+getIdInternal();
 		return result;
 	}
 

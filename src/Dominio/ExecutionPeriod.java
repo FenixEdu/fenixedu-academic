@@ -136,7 +136,7 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll(" ","");
+		String result = getParentNode().getSlideName()+"/EP"+getIdInternal();
 		return result;
 	}
 

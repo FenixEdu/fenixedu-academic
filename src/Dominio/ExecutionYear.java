@@ -79,7 +79,7 @@ public class ExecutionYear extends DomainObject implements IExecutionYear {
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {		
-		String result="/"+getYear().trim().replaceAll("/","-").replaceAll(" ","");
+		String result="/EY"+getIdInternal();
 		return result;
 	}
 	/* (non-Javadoc)

@@ -165,7 +165,7 @@ public class Item extends DomainObject implements IItem {
 	 * @see fileSuport.INode#getSlideName()
 	 */
 	public String getSlideName() {
-		String result=getParentNode().getSlideName()+"/"+getName().trim().replaceAll("/","-").replaceAll(" ","");
+		String result=getParentNode().getSlideName()+"/I"+getIdInternal();
 		return result;
 	}
 
