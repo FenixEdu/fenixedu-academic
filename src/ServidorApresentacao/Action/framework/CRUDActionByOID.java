@@ -234,10 +234,8 @@ public class CRUDActionByOID extends DispatchAction
             return new Integer(BeanUtils.getProperty(form, crudMapping.getOidProperty()));
         } catch (NumberFormatException e)
         {
-            e.printStackTrace();
         } catch (Exception e)
         {
-            e.printStackTrace();
         }
         return null;
     }
