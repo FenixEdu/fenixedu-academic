@@ -47,7 +47,7 @@ public class ViewUtils {
 		
 		while (tmpSection != null) {
 			name.add(0, tmpSection.getName());
-			tmpSection = tmpSection.getSuperiorSection();
+			tmpSection = tmpSection.getInfoSuperiorSection();
 		}
 		
 		return name;
