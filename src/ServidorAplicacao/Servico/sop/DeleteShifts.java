@@ -11,7 +11,6 @@ package ServidorAplicacao.Servico.sop;
  **/
 import java.util.List;
 
-import DataBeans.InfoShift;
 import Dominio.IAula;
 import Dominio.ITurno;
 import Dominio.Turno;

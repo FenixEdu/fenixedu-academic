@@ -6,8 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -15,11 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoClass;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
