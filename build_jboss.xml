@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-15"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="deploy-all" name="JBoss">
 
     <property environment="env"/>
-	<property name="encoding" value="ISO-8859-15"/>	
+	<property name="encoding" value="ISO-8859-1"/>	
 
 	<property file="build.properties"/>
 
