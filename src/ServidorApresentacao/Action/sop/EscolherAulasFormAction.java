@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
+import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.FenixAction;
@@ -82,8 +84,6 @@ public class EscolherAulasFormAction extends FenixAction {
         Object argsLerSalas[] = new Object[0];
         ArrayList infoSalas = (ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
 
-        //Collections.sort(infoSalas);
-        
         ArrayList listaSalas = new ArrayList();
         for(int i = 0; i < infoSalas.size(); i++) {
             InfoRoom elem = (InfoRoom)infoSalas.get(i);
@@ -102,10 +102,12 @@ public class EscolherAulasFormAction extends FenixAction {
         ArrayList infoAulas = (ArrayList) gestor.executar(userView, "LerAulasDeDisciplinaExecucao", argsLerAulas);
 
         sessao.removeAttribute("listaAulas");
-        if (infoAulas != null && !infoAulas.isEmpty())
+        if (infoAulas != null && !infoAulas.isEmpty()) {
+			Collections.sort(infoAulas, new InfoLessonComparatorByWeekDayAndTime());        	
 	        sessao.setAttribute("listaAulas", infoAulas);
+        }
 
-      return mapping.findForward("Sucesso");
+		return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
   }
