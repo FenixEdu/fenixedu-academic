@@ -62,7 +62,7 @@ public class TeacherLoginAction extends FenixAction {
 			userView,
 			"ReadProfessorships",
 			args1);
-			System.out.println("sites"+sites);	
+			
 			session.setAttribute(SessionConstants.INFO_TEACHER,teacher);
 			session.setAttribute(SessionConstants.INFO_SITES_LIST,sites);
 		} catch (FenixServiceException e) {

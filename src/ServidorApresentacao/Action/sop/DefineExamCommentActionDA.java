@@ -33,7 +33,7 @@ public class DefineExamCommentActionDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		System.out.println("############################################");
+		
 
 		HttpSession session = request.getSession(false);
 

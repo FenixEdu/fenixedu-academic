@@ -124,7 +124,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 			InfoSite infoSite =
 				(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 			InfoCurriculum curriculumView;
-			System.out.println(infoSite);
+			
 			Object args[] = { infoSite.getInfoExecutionCourse()};
 			GestorServicos serviceManager = GestorServicos.manager();
 			curriculumView =

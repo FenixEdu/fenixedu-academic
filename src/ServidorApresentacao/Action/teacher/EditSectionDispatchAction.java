@@ -101,7 +101,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 
 		String parentName = (String) sectionForm.get("parentSection");
 
-		System.out.println("parentSection: " + parentName);
+		
 
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);

@@ -82,9 +82,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		Object args[] = { infoSite, infoSiteNew };
 		GestorServicos gestor = GestorServicos.manager();
 		try {
-			System.out.println(
-				"resultado servico: "
-					+ gestor.executar(userView, "EditSite", args));
+			gestor.executar(userView, "EditSite", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
