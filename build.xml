@@ -212,7 +212,7 @@
                     <include name="**/*.jar"/>
                 </fileset>
                 <fileset dir="${libs.web}">
-                    <include name="**/struts*.jar"/>
+                    <include name="**/s*.jar"/>
                 </fileset>
             </classpath>
 
