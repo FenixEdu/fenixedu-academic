@@ -128,6 +128,9 @@
         <taglib-uri>/WEB-INF/app.tld</taglib-uri>
         <taglib-location>/WEB-INF/app.tld</taglib-location>
     </taglib>
-    
+  <taglib>
+    <taglib-uri>http://jakarta.apache.org/taglibs/datetime-1.0</taglib-uri>
+    <taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
+  </taglib>    
 </web-app>
 
