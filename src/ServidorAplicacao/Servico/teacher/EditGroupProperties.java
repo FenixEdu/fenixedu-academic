@@ -168,8 +168,8 @@ public class EditGroupProperties implements IService {
     			IStudentGroup studentGroup = (IStudentGroup)iterStudentGroupList.next();
     			ITurno shift = studentGroup.getShift();
     			if(shift!=null){
-    				studentGroup.setShift(null);
     				persistentStudentGroup.simpleLockWrite(studentGroup);
+    				studentGroup.setShift(null);
     			}
     		}
     	} catch (ExcepcaoPersistencia excepcaoPersistencia) {
