@@ -29,7 +29,7 @@
 <!ENTITY scientific_council SYSTEM "repository_scientificCouncil.xml">
 <!ENTITY seminary SYSTEM "repository_seminary.xml">
 <!ENTITY advisory SYSTEM "repository_advisory.xml">
-<!-- <!ENTITY middleware SYSTEM "repository_middleware.xml"> -->
+<!ENTITY middleware SYSTEM "repository_middleware.xml">
 <!ENTITY website SYSTEM "repository_website.xml">
 <!ENTITY coordinator SYSTEM "repository_coordinator.xml">
 <!ENTITY grant_owner_management SYSTEM "repository_grant_owner_management.xml">
@@ -67,7 +67,7 @@
     &scientific_council;
 	&seminary;
     &advisory;
- <!--   &middleware; -->
+	&middleware;
     &website;
 	&coordinator;
     &grant_owner_management;
