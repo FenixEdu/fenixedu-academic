@@ -1,14 +1,9 @@
-/*
- * Created on 24/Fev/2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package ServidorAplicacao.Servicos;
 
 /**
  * @author dcs-rjao
  *
+ * Created on 24/Fev/2003
  */
 public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationServices {
 
@@ -30,11 +25,11 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 		Object result = null;
 		try {
 			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), getArgumentsOfServiceToBeTestedUnsuccessfuly());
-			System.out.println("testUnsuccessfulExecutionOfCreateService was unsuccessfuly runned by class: " + this.getClass().getName());
+			System.out.println("testUnsuccessfulExecutionOfCreateService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testUnsuccessfulExecutionOfCreateService");
 		} catch (Exception ex) {
 			assertNull("testUnsuccessfulExecutionOfCreateService", result);
-			System.out.println("testUnsuccessfulExecutionOfCreateService was successfuly runned by class: " + this.getClass().getName());
+			System.out.println("testUnsuccessfulExecutionOfCreateService was SUCCESSFULY runned by class: " + this.getClass().getName());
 		}
 	}
 	
@@ -45,9 +40,9 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 		try {
 			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), getArgumentsOfServiceToBeTestedSuccessfuly());
 			assertEquals("testSuccessfulExecutionOfCreateService", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-			System.out.println("testSuccessfulExecutionOfCreateService was successfuly runned by class: " + this.getClass().getName());
+			System.out.println("testSuccessfulExecutionOfCreateService was SUCCESSFULY runned by class: " + this.getClass().getName());
 		} catch (Exception ex) {
-			System.out.println("testSuccessfulExecutionOfCreateService was unsuccessfuly runned by class: " + this.getClass().getName());
+			System.out.println("testSuccessfulExecutionOfCreateService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testSuccessfulExecutionOfCreateService");
 		}
 	}

@@ -71,6 +71,14 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 		return "AdicionarAula";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices
+	 */
+	// TODO This class must extend class TestCaseCreateServices so this method will be gonne
+	protected boolean needsAuthorization() {
+		return true;
+	}
+
 	// write existing turnoAula
 	public void testCreateExistingTurnoAula() {
 

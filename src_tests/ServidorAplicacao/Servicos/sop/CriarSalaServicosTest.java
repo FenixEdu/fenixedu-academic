@@ -49,6 +49,14 @@ public class CriarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 		return "CriarSala";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices
+	 */
+	// TODO This class must extend class TestCaseCreateServices so this method will be gonne
+	protected boolean needsAuthorization() {
+		return true;
+	}
+
 	// write existing sala
 	public void testCreateExistingSala() {
 		Object argsCriarSala[] = new Object[1];
@@ -76,10 +84,4 @@ public class CriarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testCreateNonExistingSala");
 		}
 	}
-
-	// TODO This class must extend class TestCaseNeedAuthorizationServices so this method will be gonne
-	protected boolean needsAuthorization() {
-		return true;
-	}
-
 }

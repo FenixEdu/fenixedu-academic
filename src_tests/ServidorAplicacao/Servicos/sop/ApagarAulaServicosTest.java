@@ -17,10 +17,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteServices;
 import Util.DiaSemana;
 
-public class ApagarAulaServicosTest extends TestCaseNeedAuthorizationServices {
+public class ApagarAulaServicosTest extends TestCaseDeleteServices {
 
 	public ApagarAulaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -51,6 +51,58 @@ public class ApagarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		return "ApagarAula";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		DiaSemana diaSemana = null;
+		Calendar inicio = null;
+		Calendar fim = null;
+		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+		inicio = Calendar.getInstance();
+		inicio.set(Calendar.HOUR_OF_DAY, 8);
+		inicio.set(Calendar.MINUTE, 0);
+		inicio.set(Calendar.SECOND, 0);
+		fim = Calendar.getInstance();
+		fim.set(Calendar.HOUR_OF_DAY, 9);
+		fim.set(Calendar.MINUTE, 30);
+		fim.set(Calendar.SECOND, 0);
+
+		RoomKey keySala = new RoomKey("Ga1");
+
+		Object argsDeleteAula[] = new Object[1];
+		argsDeleteAula[0] = new KeyLesson(diaSemana, inicio, fim, keySala);
+
+		return argsDeleteAula;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		DiaSemana diaSemana = null;
+		Calendar inicio = null;
+		Calendar fim = null;
+		diaSemana = new DiaSemana(DiaSemana.DOMINGO);
+		inicio = Calendar.getInstance();
+		inicio.set(Calendar.HOUR_OF_DAY, 8);
+		inicio.set(Calendar.MINUTE, 0);
+		inicio.set(Calendar.SECOND, 0);
+		fim = Calendar.getInstance();
+		fim.set(Calendar.HOUR_OF_DAY, 9);
+		fim.set(Calendar.MINUTE, 30);
+		fim.set(Calendar.SECOND, 0);
+
+		RoomKey keySala = new RoomKey("Ga1");
+
+		Object argsDeleteAula[] = new Object[1];
+		argsDeleteAula[0] = new KeyLesson(diaSemana, inicio, fim, keySala);
+
+		return argsDeleteAula;
+	}
+/*
 	// delete existing aula
 	public void testDeleteExistingAula() {
 
@@ -110,4 +162,5 @@ public class ApagarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testDeleteNonExistingAula");
 		}
 	}
+*/
 }

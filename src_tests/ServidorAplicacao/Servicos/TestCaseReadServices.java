@@ -1,9 +1,3 @@
-/*
- * Created on 24/Fev/2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package ServidorAplicacao.Servicos;
 
 import java.util.Collection;
@@ -11,7 +5,7 @@ import java.util.Collection;
 /**
  * @author dcs-rjao
  *
- * 24/Fev/2003
+ * Created on 24/Fev/2003
  */
 public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServices {
 
@@ -35,13 +29,13 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), getArgumentsOfServiceToBeTestedUnsuccessfuly());
 			if(result instanceof Collection) {
 				assertTrue("testUnsuccessfulExecutionOfReadService", ((Collection) result).isEmpty());
-				System.out.println("testUnsuccessfulExecutionOfReadService was successfuly runned by class: " + this.getClass().getName());
+				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			} else {
 				assertNull("testUnsuccessfulExecutionOfReadService", result);
-				System.out.println("testUnsuccessfulExecutionOfReadService was successfuly runned by class: " + this.getClass().getName());
+				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			}
 		} catch (Exception ex) {
-			System.out.println("testUnsuccessfulExecutionOfReadService was unsuccessfuly runned by class: " + this.getClass().getName());
+			System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testUnsuccessfulExecutionOfReadService");
 		}
 	}
@@ -54,13 +48,13 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), getArgumentsOfServiceToBeTestedSuccessfuly());
 			if(result instanceof Collection) {
 				assertEquals("testSuccessfulExecutionOfReadService", getNumberOfItemsToRetrieve(), ((Collection) result).size());
-				System.out.println("testUnsuccessfulExecutionOfReadService was successfuly runned by class: " + this.getClass().getName());
+				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			} else {
 				assertEquals("testSuccessfulExecutionOfReadService", getObjectToCompare(), result);
-				System.out.println("testUnsuccessfulExecutionOfReadService was successfuly runned by class: " + this.getClass().getName());
+				System.out.println("testUnsuccessfulExecutionOfReadService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			}
 		} catch (Exception ex) {
-			System.out.println("testUnsuccessfulExecutionOfReadService was unsuccessfuly runned by class: " + this.getClass().getName());
+			System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testSuccessfulExecutionOfReadService");
 		}
 	}
