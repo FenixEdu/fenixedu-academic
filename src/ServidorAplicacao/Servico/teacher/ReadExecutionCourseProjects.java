@@ -10,8 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoGroupProperties;
 import DataBeans.InfoSiteProjects;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
@@ -82,7 +82,9 @@ public class ReadExecutionCourseProjects implements IServico {
                     //infoGroupPropertiesList
                     //.add(Cloner
                     //.copyIGroupProperties2InfoGroupProperties(groupProperties));
-
+                    
+                    InfoGroupProperties infoGroupProperties = InfoGroupProperties.newInfoFromDomain(groupProperties);
+                    infoGroupPropertiesList.add(infoGroupProperties);
                 }
 
                 infoSiteProjects

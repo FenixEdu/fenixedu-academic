@@ -15,7 +15,7 @@ import org.apache.commons.collections.Transformer;
 import DataBeans.InfoGroupProjectStudents;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentGroup;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentGroupWithAll;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
@@ -99,11 +99,16 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico
                             IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) input;
                             IFrequenta attendacy = studentGroupAttend.getAttend();
                             IStudent student = attendacy.getAluno();
-                            InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                            //CLONER
+                            //InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                            InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
                             return infoStudent;
                         }
                     });
-                    InfoStudentGroup infoStudentGroup =Cloner.copyIStudentGroup2InfoStudentGroup(group);
+                    //CLONER
+                    //InfoStudentGroup infoStudentGroup = Cloner.copyIStudentGroup2InfoStudentGroup(group);
+                    InfoStudentGroup infoStudentGroup = InfoStudentGroupWithAll.newInfoFromDomain(group);
+                    
                     InfoGroupProjectStudents info = new InfoGroupProjectStudents();
                     info.setStudentList(infoStudents);
                     info.setStudentGroup(infoStudentGroup);

@@ -6,7 +6,7 @@ import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseOccupancy;
-import DataBeans.util.Cloner;
+import DataBeans.InfoShiftWithInfoLessons;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITurno;
@@ -65,9 +65,11 @@ public class ReadShiftsByExecutionCourseID implements IServico
 
             List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
 
-            infoExecutionCourseOccupancy.setInfoExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
-
+            //CLONER
+            //infoExecutionCourseOccupancy.setInfoExecutionCourse(
+                //(InfoExecutionCourse) Cloner.get(executionCourse));
+            infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+            
             Iterator iterator = shifts.iterator();
             while (iterator.hasNext())
             {
@@ -85,7 +87,9 @@ public class ReadShiftsByExecutionCourseID implements IServico
                         new Double(
                             shift.getOcupation().floatValue() * 100 / capacity.floatValue()),
                         1));
-                infoExecutionCourseOccupancy.getInfoShifts().add(Cloner.get(shift));
+                //CLONER
+                //infoExecutionCourseOccupancy.getInfoShifts().add(Cloner.get(shift));
+                infoExecutionCourseOccupancy.getInfoShifts().add(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
             }
 
         }

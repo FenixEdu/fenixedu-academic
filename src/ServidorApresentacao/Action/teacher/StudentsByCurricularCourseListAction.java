@@ -84,7 +84,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
                 (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsByCurricularCourse",
-                    args);//site, curricular course e nº de alunos
+                    args);
             projects =
                 (InfoSiteProjects) ServiceManagerServiceFactory.executeService(
                     userView,
