@@ -16,5 +16,5 @@ public interface IPersistentWebSiteItem extends IPersistentObject {
 	public List readPublishedWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection) throws ExcepcaoPersistencia;
 	public void lockWrite(IWebSiteItem webSiteItem) throws ExcepcaoPersistencia;
 	public void delete(IWebSiteItem webSiteItem) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 }

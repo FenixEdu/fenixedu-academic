@@ -33,8 +33,5 @@ public class WebSiteOJB extends ObjectFenixOJB implements IPersistentWebSite {
 		super.delete(site);
 	}
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + WebSite.class.getName();
-		super.deleteAll(oqlQuery);
-	}
+	
 }

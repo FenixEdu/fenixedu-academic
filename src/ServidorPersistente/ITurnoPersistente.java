@@ -10,7 +10,6 @@ package ServidorPersistente;
  *
  * @author  tfc130
  */
-import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICurricularYear;
@@ -29,12 +28,12 @@ public interface ITurnoPersistente extends IPersistentObject {
 	public void lockWrite(ITurno turno)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(ITurno turno) throws ExcepcaoPersistencia;
-	public void deleteAll() throws ExcepcaoPersistencia;
+	
 	public Integer countAllShiftsOfAllClassesAssociatedWithShift(ITurno shift)
 		throws ExcepcaoPersistencia;
 
 	// FIXME : O metodo nao seleciona bem as turmas ... mas nao da erro na query e usa o associatedCurricularCourses
-	public ArrayList readByDisciplinaExecucao(
+	public List readByDisciplinaExecucao(
 		String sigla,
 		String anoLectivo,
 		String siglaLicenciatura)
