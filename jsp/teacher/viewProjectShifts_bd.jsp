@@ -60,10 +60,10 @@
 						<td class="listClasses-header" width="20%" rowspan="2">
 							<bean:message key="property.shift"/>
 						</td>
-						<td class="listClasses-header" colspan="4" width="60%"> 
+						<td class="listClasses-header" colspan="4" width="55%"> 
 							<bean:message key="property.lessons"/>
 						</td>
-						<td class="listClasses-header" width="20%" rowspan="2" colspan="2">
+						<td class="listClasses-header" width="25%" rowspan="2" colspan="2">
 							<bean:message key="property.groups"/>
 						</td>
 					</tr>
@@ -159,34 +159,7 @@
            <span class="error"><html:errors/></span> 
         </tbody>
     
-<table border="0" style="text-align: left;">
-<tbody>
-<tr>
-<td><br/>
-  <html:form action="/viewProjectShifts" >
-	<html:submit styleClass="inputbutton"><bean:message key="button.refresh"/>                    		         	
-	</html:submit>
-	
-	<html:hidden property="method" value="viewProjectShifts"/>
-	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
-	<html:hidden  property="objectCode" value="<%= request.getParameter("objectCode")%>"/>
-	</html:form> 
-</td>
 
-<td><br/>
-  <html:form action="/viewExecutionCourseProjects" method="post">
-	<html:submit styleClass="inputbutton"><bean:message key="button.back"/>                    		         	
-	</html:submit>
-	
-	<html:hidden property="method" value="viewExecutionCourseProjects"/>
-	<html:hidden  property="objectCode" value="<%= request.getParameter("objectCode")%>"/>
-	</html:form> 
-</td>
-
-</tr>
-</tbody>
-</table>
-	
 </logic:notPresent>	
 </table>
 </logic:present>

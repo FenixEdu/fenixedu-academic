@@ -19,11 +19,7 @@
 <logic:present name="infoSiteGroupsByShift">
 
 
-<html:form action="/viewStudentGroups" method="get">
-
-
-
-<table width="100%" cellpadding="2" cellspacing="0">
+<table width="95%" cellpadding="2" cellspacing="0">
 	<tr>
 		<td class="infoop">
 			<bean:message key="label.student.viewStudentGroups.description" />
@@ -32,17 +28,11 @@
 </table>
 
 <br>
-	
 
 	<h2><span class="error"><html:errors/></span></h2>
+
 	
-	
-<table width="95%" border="0" style="text-align: left;">	
-	<tbody>
-	<tr>
-	<td>
-	
-	<table width="100%" cellpadding="2" border="0" style="text-align: left;" > 		
+	<table width="95%" cellpadding="2" border="0" style="text-align: left;" > 		
 																
 				<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>
 				<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>
@@ -144,7 +134,7 @@
 	
   	<logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
   		
-  		<table width="100%" cellpadding="2" border="0" style="text-align: left;">
+  		<table width="95%" cellpadding="2" border="0" style="text-align: left;">
        		<tbody>
 	
             	<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
@@ -216,36 +206,8 @@
    </td>  
 	<tr><td><br/>
 
-	
-	<html:submit styleClass="inputbutton"><bean:message key="button.refresh"/>                    		         	
-	</html:submit>
-	
-	<html:hidden property="method" value="execute"/>
-	<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
-	<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>	
-	
 </logic:notEmpty>
 
-
-
-	</tr>
-    </td>
-	</tbody>
-	
-
-		
-</table>
- </html:form>    
- 
- <html:form action="/viewProjectShifts" method="get">
- 	<html:submit styleClass="inputbutton"><bean:message key="button.back"/>                    		         	
-	</html:submit>
-	
-	<html:hidden property="method" value="execute"/>
-	<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
-  </html:form>  
 
 </logic:present>
 

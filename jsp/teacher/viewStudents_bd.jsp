@@ -187,8 +187,16 @@
 						N/A
 					</logic:notPresent>
 				</td>
-				<td class="listClasses">
-					<bean:write name="attendacy" property="aluno.infoPerson.nome"/>
+				<td  class="listClasses" title="<bean:write name="attendacy" property="aluno.infoPerson.nome"/>">
+						<bean:define id="shortName" value="" type="java.lang.String"/>
+						<%
+							shortName = attendacy.getAluno().getInfoPerson().getNome();
+							String[] names = shortName.split(" ");
+							String firstName = names[0];
+							String lastName = names[names.length-1];					
+							shortName = firstName + " " + lastName;
+							out.print(shortName);
+						%>
 				</td>
 				<%
 				for (Iterator projectsIterator= projects.iterator(); projectsIterator.hasNext();)
@@ -244,24 +252,16 @@
 				 }
 				%>
 				<td class="listClasses">
-				<%--	<logic:notEmpty name="student"  property="infoPerson.email"> --%>
-					<bean:define id="mail" name="attendacy" property="aluno.infoPerson.email"/>
-					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="attendacy" property="aluno.infoPerson.email"/></html:link>
-				<%--	</logic:notEmpty>
-					<logic:empty name="student"  property="infoPerson.email">
-					&nbsp;
-					</logic:empty> --%>
+					<logic:present name="attendacy" property="aluno.infoPerson.email">
+						<bean:define id="mail" name="attendacy" property="aluno.infoPerson.email"/>
+							<html:link href="<%= "mailto:"+ mail %>"><bean:write name="attendacy" property="aluno.infoPerson.email"/></html:link>
+						</bean:define>
+					</logic:present>
+					<logic:notPresent  name="attendacy" property="aluno.infoPerson.email">
+						&nbsp;
+					</logic:notPresent>
 				</td>
 			</tr>
-		<%--	<logic:notEmpty name="student"  property="infoPerson.email"> --%>
-			<bean:define id="aux" name="mailingList"/>
-			<logic:lessThan name="aux" value="1">
-				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
-			</logic:lessThan>
-			<logic:greaterThan name="aux" value="0">
-				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
-			</logic:greaterThan>
-	<%--			</logic:notEmpty> --%>
     	</logic:iterate>
 		
 </table>

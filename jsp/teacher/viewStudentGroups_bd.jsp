@@ -15,7 +15,6 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 
-  <html:form action="/viewStudentGroups" method="get">
 <br>
 
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -192,13 +191,6 @@
        
 <br>
 
-	<html:submit styleClass="inputbutton"><bean:message key="button.refresh"/>                    		         	
-	</html:submit>
-	
-	<html:hidden property="method" value="viewStudentGroups"/>
-	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
-	<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
-	<html:hidden  property="objectCode" value="<%= request.getParameter("objectCode")%>"/>
 	
 </logic:notEmpty>
 
@@ -206,22 +198,10 @@
     </tr>
     </tbody>	
 	</table>
-</html:form> 
+
 	
 	
-	<html:form action="/viewProjectShifts" method="get">
 	
-		<html:submit styleClass="inputbutton"><bean:message key="button.back"/>                    		         	
-		</html:submit>
-
-		<html:hidden property="method" value="viewProjectShifts"/>
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-		
-	</html:form>
-
-
-
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">

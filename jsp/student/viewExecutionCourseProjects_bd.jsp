@@ -26,12 +26,12 @@
 <table border="0" style="text-align: left;">
         <tbody>
          <tr>
-			<td class="listClasses-header"><bean:message key="label.projectName" />
+			<td class="listClasses-header" width="20%"><bean:message key="label.projectName" />
 			</td>
-			<td class="listClasses-header"><bean:message key="label.projectDescription" />
+			<td class="listClasses-header" width="45%"><bean:message key="label.projectDescription" />
 			</td>
-			<td class="listClasses-header"><bean:message key="label.properties" />
-			</td>
+			<td class="listClasses-header" width="35%"><bean:message key="label.properties" />
+			</td>		
 		</tr>
 		
             <logic:iterate id="infoGroupProperties" name="infoGroupPropertiesList">
@@ -49,8 +49,14 @@
 							
                     </td>
                      <td class="listClasses">
-                    <html:textarea readonly="true" name="infoGroupProperties" property="projectDescription" cols="30" rows="6"/>
                    
+             		<logic:notEmpty name="infoGroupProperties" property="projectDescription">
+                     	<bean:write name="infoGroupProperties" property="projectDescription"/>
+                	</logic:notEmpty>
+                	
+             		<logic:empty name="infoGroupProperties" property="projectDescription">
+                     	<bean:message key="message.project.wihtout.description"/>
+                	</logic:empty>
                 	</td>
                     
                      <td class="listClasses" >

@@ -20,17 +20,17 @@
 <logic:present name="infoSiteShifts">
 
 
-<table width="100%" cellpadding="0" cellspacing="0">
+<table width="95%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
 			<bean:message key="label.student.viewProjectShifts.description" />
 		</td>
 	</tr>
 </table>
+
 <br>
 
 <h2><span class="error"><html:errors/></span></h2>
-
 	
 	<logic:empty name="infoSiteShifts">
 		<h2><bean:message key="message.shifts.not.available" /></h2>
@@ -38,59 +38,61 @@
 	
 	
 	<logic:notEmpty name="infoSiteShifts">
-	
-	
-
-	
-	<table width="95%" border="0" style="text-align: left;">
-	
-		<tbody>
 		
+	<table width="95%" border="0" style="text-align: left;">
+	<tbody>
 		<tr>
 		<td>
 		
-	
-		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-			<b><bean:message key="link.insertGroup"/></b>
-		</html:link>	
+			<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+				<b><bean:message key="link.insertGroup"/></b>
+			</html:link>	
 
 		</td>
-		</tr>	
+		</tr>
+	</tbody>
+	</table>
+	
+	
+	
+		
+		<br>
+		<br>
+			
+		<table align="left" width="95%" cellspacing='1' cellpadding='1'>	
+			
+		<tr>
+			<td class="listClasses-header" width="20%" rowspan="2">
+				<bean:message key="property.turno"/>
+			</td>
+			<td class="listClasses-header" colspan="4" width="55%">
+				<bean:message key="property.lessons"/>
+			</td>
+			<td class="listClasses-header" width="25%" rowspan="2" colspan="2">
+				<bean:message key="property.groups"/>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="listClasses-header" width="20%">
+				<bean:message key="property.lesson.weekDay"/>
+			</td>
+			<td class="listClasses-header" width="10%">
+				<bean:message key="property.lesson.beginning"/>
+			</td>
+			<td class="listClasses-header" width="10%">
+				<bean:message key="property.lesson.end"/>
+			</td>
+			<td class="listClasses-header" width="15%">
+				<bean:message key="property.lesson.room"/>
+			</td>
+		</tr>			
+		
 		
 		<logic:iterate id="infoSiteShift" name="infoSiteShifts">
-     		<tr>
-			<td>	
-			<br>   
-			<table width="100%" cellpadding="0" border="0" style="text-align: left;" > 		
-																
+     											
 				<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>
-							
-				<tr >
-						<td class="listClasses-header" width="20%" rowspan="2">
-							<bean:message key="property.turno"/>
-						</td>
-						<td class="listClasses-header" colspan="4" width="60%">
-							<bean:message key="property.lessons"/>
-						</td>
-						<td class="listClasses-header" width="20%" rowspan="2" colspan="2">
-							<bean:message key="property.groups"/>
-						</td>
-					</tr>
-					<tr>
-						<td class="listClasses-header" width="20%">
-							<bean:message key="property.lesson.weekDay"/>
-						</td>
-						<td class="listClasses-header" width="10%">
-							<bean:message key="property.lesson.beginning"/>
-						</td>
-						<td class="listClasses-header" width="10%">
-							<bean:message key="property.lesson.end"/>
-						</td>
-						<td class="listClasses-header" width="20%">
-							<bean:message key="property.lesson.room"/>
-						</td>
-					</tr>	
-					
+								
 				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                 	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
@@ -133,11 +135,7 @@
                				</html:link>
                				
 							
-						</td>
-									
-						
-						
-						
+						</td>	
 				 	</tr>
 				</logic:iterate>
 				
@@ -146,7 +144,7 @@
                        <% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
-						<tr >
+						<tr>
 							<td class="listClasses">
 								<b><bean:write name="infoLesson" property="diaSemana"/></b> &nbsp;
 							</td>
@@ -161,39 +159,11 @@
 							</td>
 						</tr>
 					</logic:iterate>
-			</table>
-		<br>
-             
 			
-            </td>
-            </tr>
-            </logic:iterate>
-            <br>
-        </tbody>
+            </logic:iterate>       
 </table>
 
-<html:form action="/viewProjectShifts" method="get">	
-	<html:submit styleClass="inputbutton"><bean:message key="button.refresh"/>                    		         	
-	</html:submit>
-
-	<html:hidden property="method" value="execute"/>
-	<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
-	
-</html:form>
 </logic:notEmpty>
-	
-	<html:form action="/viewExecutionCourseProjects" method="get">     
-		<html:submit styleClass="inputbutton"><bean:message key="button.back"/>                    		         	
-		</html:submit>
-		<html:hidden property="method" value="execute"/>
-		<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
-
- 	</html:form>
-
-
-
-
 
 </logic:present>
 

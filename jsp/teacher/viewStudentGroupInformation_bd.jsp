@@ -20,9 +20,9 @@
 					<bean:message key="label.teacher.viewStudentGroupInformation.description" />
 				</td>
 			</tr>
-		</table>
-	<br>
-		<br>
+	</table>
+	<br />
+	<br />
 		
 	
 	
@@ -53,7 +53,6 @@
 	   <html:link page="/sendMailToAllStudents.do" name="sendMailLinkParameters">
 			<bean:message key="link.sendEmailToAllStudents"/><br/><br/>
 	   </html:link>
-	<bean:define id="mailingList" value=""/>	
 	<logic:iterate id="infoSiteStudentInformation" name="component" property="infoSiteStudentInformationList">			
 		<tr>		
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
@@ -63,18 +62,17 @@
 			</td>		
 			
 			<td class="listClasses">
-				<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
-				<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
+				<logic:present name="infoSiteStudentInformation" property="email">
+					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
+					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
+				</logic:present>
+				<logic:notPresent name="infoSiteStudentInformation" property="email">
+					&nbsp;
+				</logic:notPresent>
+				
 			</td>
 		</tr>
 		
-			<bean:define id="aux" name="mailingList"/>
-			<logic:lessThan name="aux" value="1">
-				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
-			</logic:lessThan>
-			<logic:greaterThan name="aux" value="0">
-				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
-			</logic:greaterThan>
 				
 	 </logic:iterate>
 	 
@@ -85,17 +83,6 @@
 	</logic:notEmpty> 
 </tbody>
 </table>
-
-	<html:form action="/viewStudentGroups" method="get">
-	
-		<html:submit styleClass="inputbutton"><bean:message key="button.back"/>                    		         	
-		</html:submit>
-	
-		<html:hidden property="method" value="viewStudentGroups"/>
-		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-		<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
-	</html:form>
 
 </logic:present>
 
