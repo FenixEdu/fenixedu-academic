@@ -20,6 +20,8 @@
     <property name="dtds" location="${metadata}/dtds" />
     <property name="javadoc.source.home" location="javaDocSource" />
     <property name="javadoc.test.home" location="javaDocTests" />
+    <property name="etc.datasets" location="etc/datasets" />
+    <property name="etc.datasets_templates" location="etc/datasets_templates" />
     
 	<property name="build.home" location="build"/>
 
@@ -229,7 +231,7 @@
     </target>
     
     <target name="compile-tests"
-            depends="compile-proj"
+            depends="compile-proj, prepare-datasets"
             description="Compiles tests classes">
         <javac classpath="${webapp.classes}"
                destdir="${tests.classes}"
@@ -345,10 +347,26 @@
 		</junitreport>
 
     </target>
+    
+    <target name="prepare-datasets">
+    	<mkdir dir="${etc.datasets}" />
+    	<copy todir="${etc.datasets}" overwrite="true">
+    		<fileset dir="${etc.datasets_templates}"/>
+    	</copy>
+    	<replace 
+	    	dir="${etc.datasets}">
+	    	
+	    	<include name="**/**/*.xml"/>
+    		<replacefilter 
+		    	token="@project.base.path@" 
+		    	value="${basedir}"/>
+		</replace>
+    </target>
 
     <target depends="compile-tests, load-dump-db"
             description="Executa todos os testes"
             name="run-tests">
+
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
 <!--
            	<jvmarg value="-DproxySet=true"/>
@@ -917,6 +935,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                      dir="${basedir}"
                      includes="**/*~,**/#*#,**/semantic.cache" />
         </delete>
+        <delete dir="${etc.datasets}"/>
     </target>
 	<target name="replace-all">
 		<replace dir="${src.tests}">
