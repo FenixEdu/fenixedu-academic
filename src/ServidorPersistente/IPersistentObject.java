@@ -55,4 +55,6 @@ public interface IPersistentObject
 
     public Iterator readSpanIterator(Class classToQuery, Criteria criteria,
             Integer numberOfElementsInSpan, Integer spanNumber);
+    
+    public Iterator readIteratorByCriteria(Class classToQuery, Criteria criteria);
 }

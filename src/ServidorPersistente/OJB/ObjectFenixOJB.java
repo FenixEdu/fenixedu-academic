@@ -807,6 +807,14 @@ public abstract class ObjectFenixOJB implements IPersistentObject
         return iterator;
     }
 
+    public Iterator readIteratorByCriteria(Class classToQuery, Criteria criteria)
+    {
+        PersistenceBroker pb = getCurrentPersistenceBroker();
+        Query query = getQuery(classToQuery, criteria);
+        Iterator iterator = pb.getIteratorByQuery(query);
+        return iterator;
+    }
+
     /**
      * @see ObjectFenixOJB#count(PersistenceBroker, Query)
      */
