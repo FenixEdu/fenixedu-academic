@@ -224,4 +224,17 @@ CREATE TABLE MASTER_DEGREE_PROOF_VERSION (
   LAST_MODIFICATION timestamp,
   CURRENT_STATE int(11) not null,
   PRIMARY KEY  (ID_INTERNAL)
-) TYPE=InnoDB;  
+) TYPE=InnoDB;
+
+#------------------------------------------------------------
+# Table structure for table Master Degree Proof Version Jury
+#------------------------------------------------------------
+DROP TABLE IF EXISTS MASTER_DEGREE_PROOF_VERSION_JURY;
+CREATE TABLE MASTER_DEGREE_PROOF_VERSION_JURY (
+  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
+  KEY_MASTER_DEGREE_PROOF_VERSION int(11) not null,
+  KEY_TEACHER int(11) not null,
+  PRIMARY KEY (ID_INTERNAL),
+  UNIQUE KEY U1 (KEY_MASTER_DEGREE_PROOF_VERSION,KEY_TEACHER)
+) TYPE=InnoDB;
+  
