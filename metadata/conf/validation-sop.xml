@@ -179,7 +179,7 @@
         <arg0 key="property.aula.weekDay"/>
         <var>
           <var-name>mask</var-name>
-          <var-value>[23456sSdD]</var-value>
+          <var-value>[23456sSdD]$</var-value>
         </var>
       </field>
 
@@ -201,7 +201,7 @@
         <arg0 key="property.aula.time.begining"/>
         <var>
           <var-name>mask</var-name>
-          <var-value>00|0|30</var-value>
+          <var-value>00|0|30$</var-value>
         </var>
       </field>
       
@@ -223,7 +223,7 @@
         <arg0 key="property.aula.time.minutes.end"/>
         <var>
           <var-name>mask</var-name>
-          <var-value>00|0|30</var-value>
+          <var-value>00|0|30$</var-value>
         </var>
       </field>
 
@@ -252,7 +252,7 @@
         <arg0 key="property.aula.weekDay"/>
         <var>
           <var-name>mask</var-name>
-          <var-value>[23456sSdD]</var-value>
+          <var-value>[23456sSdD]$</var-value>
         </var>
       </field>
 
@@ -274,7 +274,7 @@
         <arg0 key="property.aula.time.begining"/>
         <var>
           <var-name>mask</var-name>
-          <var-value>00|0|30</var-value>
+          <var-value>00|0|30$</var-value>
         </var>
       </field>
       
@@ -296,7 +296,7 @@
         <arg0 key="property.aula.time.minutes.end"/>
         <var>
           <var-name>mask</var-name>
-          <var-value>00|0|30</var-value>
+          <var-value>00|0|30$</var-value>
         </var>
       </field>
 
