@@ -9,6 +9,7 @@
     <html:errors/>
     <html:link page="/candidato/visualizeApplicationInfo.do">Visualizar a Informação de Candidatura</html:link><br/>
     <html:link page="/candidato/changeApplicationInfo.do">Alterar a Informação de Candidatura</html:link><br/>
+    <html:link page="/candidato/changePasswordForward.do">Alterar a Password</html:link><br/>
     <html:link page="/candidato/logoff.do">LogOff</html:link><br/>
     
   </body>
