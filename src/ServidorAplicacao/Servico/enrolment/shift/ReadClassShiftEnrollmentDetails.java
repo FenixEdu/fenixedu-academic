@@ -110,7 +110,7 @@ public class ReadClassShiftEnrollmentDetails implements IService
 			enrollmentDetails.setClassExecutionCourseShiftEnrollmentDetailsMap(
 				classExecutionCourseShiftEnrollmentDetailsMap);
 
-//Only prints for test			
+			//Only prints for test			
 //			ListIterator iterator = infoClassList.listIterator();
 //			while (iterator.hasNext())
 //			{
@@ -211,6 +211,10 @@ public class ReadClassShiftEnrollmentDetails implements IService
 
 		for (int i = 0; i < classList.size(); i++)
 		{
+			// Clean auxiliar
+			shiftsTreated = new HashMap();
+			executionCourseTreated = new HashMap();
+		
 			//Clone class
 			ITurma klass = (ITurma) classList.get(i);
 			InfoClass infoClass = Cloner.copyClass2InfoClass(klass);
@@ -238,6 +242,8 @@ public class ReadClassShiftEnrollmentDetails implements IService
 					if (executionCourseShiftEnrollmentDetailsList == null)
 					{
 						executionCourseShiftEnrollmentDetailsList = new ArrayList();
+						executionCourseShiftEnrollmentDetailsList.add(
+								executionCourseShiftEnrollmentDetails);
 						classExecutionCourseShiftEnrollmentDetailsMap.put(
 							klassId,
 							executionCourseShiftEnrollmentDetailsList);
