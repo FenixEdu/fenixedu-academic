@@ -183,12 +183,14 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			// Read associated curricular courses to display curricular course information.
 			Object argsReadCurricularCourseListOfExecutionCourse[] =
 				{ infoExecCourse };
+				
 			List infoCurricularCourses =
 				(List) gestor.executar(
 					null,
 					"ReadCurricularCourseListOfExecutionCourse",
 					argsReadCurricularCourseListOfExecutionCourse);
 
+			
 			if (infoCurricularCourses != null
 				&& !infoCurricularCourses.isEmpty()) {
 				request.setAttribute(

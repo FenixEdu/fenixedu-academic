@@ -21,6 +21,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.gesdis.InfoSite;
+import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
@@ -40,27 +41,44 @@ public class ViewShiftTimeTableAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			
-		
-						
+
 		String shiftName = request.getParameter("shiftName");
 
 		if (shiftName == null)
 			return mapping.getInputForward();
-			HttpSession session = request.getSession(true);
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) RequestUtils.getExecutionCourseFromRequest(request);
+		HttpSession session = request.getSession(true);
+		InfoExecutionCourse infoExecutionCourse =
+			(InfoExecutionCourse) RequestUtils.getExecutionCourseFromRequest(
+				request);
 
 		Object[] args = { new ShiftKey(shiftName, infoExecutionCourse)};
 		List lessons =
 			(List) ServiceUtils.executeService(null, "LerAulasDeTurno", args);
 
+		GestorServicos manager = GestorServicos.manager();
+
+		Object argsReadCurricularCourseListOfExecutionCourse[] =
+			{ infoExecutionCourse };
+		List infoCurricularCourses =
+			(List) manager.executar(
+				null,
+				"ReadCurricularCourseListOfExecutionCourse",
+				argsReadCurricularCourseListOfExecutionCourse);
+
+		if (infoCurricularCourses != null
+			&& !infoCurricularCourses.isEmpty()) {
+			request.setAttribute(
+				"publico.infoCurricularCourses",
+				infoCurricularCourses);
+		}
+
 		InfoShift shiftView = new InfoShift();
 		shiftView.setNome(shiftName);
-		request.setAttribute("shift",shiftView);
+		request.setAttribute("shift", shiftView);
 		request.setAttribute("lessonList", lessons);
-		InfoSite site =RequestUtils.getSiteFromRequest(request);
-		RequestUtils.setExecutionCourseToRequest(request,infoExecutionCourse);
-		RequestUtils.setSectionsToRequest(request,site);
+		InfoSite site = RequestUtils.getSiteFromRequest(request);
+		RequestUtils.setExecutionCourseToRequest(request, infoExecutionCourse);
+		RequestUtils.setSectionsToRequest(request, site);
 		RequestUtils.setSectionToRequest(request);
 
 		return mapping.findForward("Sucess");

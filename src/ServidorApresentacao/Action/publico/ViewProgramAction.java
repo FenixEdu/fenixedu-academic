@@ -6,6 +6,8 @@
  */
 package ServidorApresentacao.Action.publico;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,40 +32,58 @@ import ServidorApresentacao.Action.sop.utils.RequestUtils;
  */
 public class ViewProgramAction extends FenixAction {
 
-
 	public ActionForward execute(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-				HttpSession session = request.getSession(true);
-			try {
+		HttpSession session = request.getSession(true);
+		try {
 
-				InfoSite infoSite = RequestUtils.getSiteFromAnyScope(request);
-				
-				Object args[] = { infoSite.getInfoExecutionCourse()};
-				GestorServicos serviceManager = GestorServicos.manager();
-				InfoCurriculum curriculumView =
-					(InfoCurriculum) serviceManager.executar(
-						null,
-						"ReadCurriculum",
-						args);
-			
-				if (curriculumView!=null){		
-			
-				request.setAttribute("program",curriculumView.getProgram());
-				
-				}
-				RequestUtils.setExecutionCourseToRequest(request,infoSite.getInfoExecutionCourse());
-				RequestUtils.setSectionsToRequest(request,infoSite);
-				RequestUtils.setSectionToRequest(request);
-				return mapping.findForward("viewProgram");
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
+			InfoSite infoSite = RequestUtils.getSiteFromAnyScope(request);
+
+			Object args[] = { infoSite.getInfoExecutionCourse()};
+			GestorServicos serviceManager = GestorServicos.manager();
+			InfoCurriculum curriculumView =
+				(InfoCurriculum) serviceManager.executar(
+					null,
+					"ReadCurriculum",
+					args);
+
+			GestorServicos manager = GestorServicos.manager();
+
+			Object argsReadCurricularCourseListOfExecutionCourse[] =
+				{ infoSite.getInfoExecutionCourse()};
+			List infoCurricularCourses =
+				(List) manager.executar(
+					null,
+					"ReadCurricularCourseListOfExecutionCourse",
+					argsReadCurricularCourseListOfExecutionCourse);
+
+			if (infoCurricularCourses != null
+				&& !infoCurricularCourses.isEmpty()) {
+				request.setAttribute(
+					"publico.infoCurricularCourses",
+					infoCurricularCourses);
 			}
 
+			if (curriculumView != null) {
+
+				request.setAttribute("program", curriculumView.getProgram());
+
+			}
+			RequestUtils.setExecutionCourseToRequest(
+				request,
+				infoSite.getInfoExecutionCourse());
+			RequestUtils.setSectionsToRequest(request, infoSite);
+			RequestUtils.setSectionToRequest(request);
+			return mapping.findForward("viewProgram");
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
+
+	}
 
 }

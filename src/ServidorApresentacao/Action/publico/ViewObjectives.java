@@ -6,6 +6,8 @@
  */
 package ServidorApresentacao.Action.publico;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,11 +39,11 @@ public class ViewObjectives extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-			HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(true);
 		try {
 
 			InfoSite infoSite = RequestUtils.getSiteFromAnyScope(request);
-				
+
 			Object args[] = { infoSite.getInfoExecutionCourse()};
 			GestorServicos serviceManager = GestorServicos.manager();
 			InfoCurriculum curriculumView =
@@ -50,13 +52,35 @@ public class ViewObjectives extends FenixAction {
 					"ReadCurriculum",
 					args);
 			
-			if (curriculumView!=null){		
-			
-			request.setAttribute("genObjectives",curriculumView.getGeneralObjectives());
-			request.setAttribute("opObjectives",curriculumView.getOperacionalObjectives());
+			GestorServicos manager = GestorServicos.manager();
+					
+			Object argsReadCurricularCourseListOfExecutionCourse[] =
+				{ infoSite.getInfoExecutionCourse()};
+			List infoCurricularCourses =
+				(List) manager.executar(
+					null,
+					"ReadCurricularCourseListOfExecutionCourse",
+					argsReadCurricularCourseListOfExecutionCourse);
+
+			if (infoCurricularCourses != null
+				&& !infoCurricularCourses.isEmpty()) {
+				request.setAttribute(
+					"publico.infoCurricularCourses",
+					infoCurricularCourses);
 			}
-			RequestUtils.setExecutionCourseToRequest(request,infoSite.getInfoExecutionCourse());
-			RequestUtils.setSectionsToRequest(request,infoSite);
+			if (curriculumView != null) {
+
+				request.setAttribute(
+					"genObjectives",
+					curriculumView.getGeneralObjectives());
+				request.setAttribute(
+					"opObjectives",
+					curriculumView.getOperacionalObjectives());
+			}
+			RequestUtils.setExecutionCourseToRequest(
+				request,
+				infoSite.getInfoExecutionCourse());
+			RequestUtils.setSectionsToRequest(request, infoSite);
 			RequestUtils.setSectionToRequest(request);
 
 			return mapping.findForward("viewObjectives");

@@ -18,7 +18,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.comparators.ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons;
+import DataBeans
+	.comparators
+	.ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -43,7 +45,7 @@ public class ViewExecutionCourseShifts extends FenixAction {
 			(InfoExecutionCourse) RequestUtils.getExecutionCourseFromRequest(
 				request);
 
-			HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(true);
 		GestorServicos gestor = GestorServicos.manager();
 		// Read shifts of execution course.
 		// Just the shifts aren't enough... we also need to read the classes
@@ -56,19 +58,34 @@ public class ViewExecutionCourseShifts extends FenixAction {
 				argsSelectShifts);
 
 		if (infoShifts != null && !infoShifts.isEmpty()) {
-		
+
 			Collections.sort(
 				infoShifts,
 				new ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons());
-				
-		
+
 			request.setAttribute("publico.infoShifts", infoShifts);
-		} 
+		}
 		InfoSite infoSite = RequestUtils.getSiteFromRequest(request);
-		RequestUtils.setExecutionCourseToRequest(request,infoExecCourse);
-		RequestUtils.setSiteToRequest(request,infoSite);
-		RequestUtils.setSectionsToRequest(request,infoSite);
-		RequestUtils.setSectionToRequest(request);	
+
+		Object argsReadCurricularCourseListOfExecutionCourse[] =
+			{ infoSite.getInfoExecutionCourse()};
+		List infoCurricularCourses =
+			(List) gestor.executar(
+				null,
+				"ReadCurricularCourseListOfExecutionCourse",
+				argsReadCurricularCourseListOfExecutionCourse);
+
+		if (infoCurricularCourses != null
+			&& !infoCurricularCourses.isEmpty()) {
+			request.setAttribute(
+				"publico.infoCurricularCourses",
+				infoCurricularCourses);
+		}
+
+		RequestUtils.setExecutionCourseToRequest(request, infoExecCourse);
+		RequestUtils.setSiteToRequest(request, infoSite);
+		RequestUtils.setSectionsToRequest(request, infoSite);
+		RequestUtils.setSectionToRequest(request);
 		return mapping.findForward("Sucess");
 	}
 

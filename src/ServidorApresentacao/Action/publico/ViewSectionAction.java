@@ -38,54 +38,67 @@ public class ViewSectionAction extends FenixAction {
 	 * Window>Preferences>Java>Code Generation>Code Template
 	 */
 
-		
-		public ActionForward execute(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws Exception {
+	public ActionForward execute(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
 
-		  
-			
-			
-				HttpSession session = request.getSession(true);
-			
-		    String indexString = (String) request.getParameter("index");
-		    Integer index = new Integer(indexString);
-		    
-		    InfoSite infoSite = RequestUtils.getSiteFromRequest(request);
-		    
-			List sections = null;
-		 try {
-			 
-			 Object[] args = { infoSite };
-			 sections =
-				 (List) ServiceUtils.executeService(null, "ReadSections", args);
-		
-			Collections.sort(sections);	
-		 } catch (FenixServiceException e) {
-			 throw new FenixActionException(e);
-		 }
-		    
-		    
-		    InfoSection infoSection = (InfoSection) sections.get(index.intValue());
-			
-			request.setAttribute("infoSection", infoSection);
-			request.setAttribute("sections",sections);
-		    
-			GestorServicos gestor = GestorServicos.manager();
-			
-			Object argsViewSection[] = { infoSection };
-	
-			List infoItems = (List) gestor.executar(null, "ReadItems", argsViewSection);
-			
-			request.setAttribute("itemList",infoItems);
-			
-			RequestUtils.setExecutionCourseToRequest(request,infoSite.getInfoExecutionCourse());
-			return mapping.findForward("Sucess");
-		
-			}
-			
+		HttpSession session = request.getSession(true);
+
+		String indexString = (String) request.getParameter("index");
+		Integer index = new Integer(indexString);
+
+		InfoSite infoSite = RequestUtils.getSiteFromRequest(request);
+
+		List sections = null;
+		try {
+
+			Object[] args = { infoSite };
+			sections =
+				(List) ServiceUtils.executeService(null, "ReadSections", args);
+
+			Collections.sort(sections);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		GestorServicos manager = GestorServicos.manager();
+
+		Object argsReadCurricularCourseListOfExecutionCourse[] =
+			{ infoSite.getInfoExecutionCourse()};
+		List infoCurricularCourses =
+			(List) manager.executar(
+				null,
+				"ReadCurricularCourseListOfExecutionCourse",
+				argsReadCurricularCourseListOfExecutionCourse);
+
+		if (infoCurricularCourses != null
+			&& !infoCurricularCourses.isEmpty()) {
+			request.setAttribute(
+				"publico.infoCurricularCourses",
+				infoCurricularCourses);
+		}
+
+		InfoSection infoSection = (InfoSection) sections.get(index.intValue());
+
+		request.setAttribute("infoSection", infoSection);
+		request.setAttribute("sections", sections);
+
+		GestorServicos gestor = GestorServicos.manager();
+
+		Object argsViewSection[] = { infoSection };
+
+		List infoItems =
+			(List) gestor.executar(null, "ReadItems", argsViewSection);
+
+		request.setAttribute("itemList", infoItems);
+
+		RequestUtils.setExecutionCourseToRequest(
+			request,
+			infoSite.getInfoExecutionCourse());
+		return mapping.findForward("Sucess");
+
 	}
 
+}

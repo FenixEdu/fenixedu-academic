@@ -6,6 +6,8 @@
  */
 package ServidorApresentacao.Action.publico;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import DataBeans.InfoEvaluation;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
@@ -38,16 +41,16 @@ public class ViewEvaluationAction extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-			HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(true);
 		//get executionCourse from request
 		InfoExecutionCourse infoExecutionCourse =
 			RequestUtils.getExecutionCourseFromRequest(request);
-		
+
 		//execute action main service
 		Object[] args = { infoExecutionCourse };
 		InfoEvaluation infoEvaluation = null;
 		try {
-			 infoEvaluation =
+			infoEvaluation =
 				(InfoEvaluation) ServiceUtils.executeService(
 					null,
 					"ReadEvaluation",
@@ -55,16 +58,37 @@ public class ViewEvaluationAction extends FenixAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-				
-				
+		GestorServicos manager = GestorServicos.manager();
+		Object argsReadCurricularCourseListOfExecutionCourse[] =
+			{ infoExecutionCourse };
+
+		List infoCurricularCourses;
+		try {
+			infoCurricularCourses =
+				(List) manager.executar(
+					null,
+					"ReadCurricularCourseListOfExecutionCourse",
+					argsReadCurricularCourseListOfExecutionCourse);
+		} catch (FenixServiceException e1) {
+			throw new FenixActionException(e1);
+		}
+
+		if (infoCurricularCourses != null
+			&& !infoCurricularCourses.isEmpty()) {
+			request.setAttribute(
+				"publico.infoCurricularCourses",
+				infoCurricularCourses);
+		}
 		//place in request everything needed	
-		if (infoEvaluation!=null){				
-		request.setAttribute("evaluationElements",infoEvaluation.getEvaluationElements());
-		}	
+		if (infoEvaluation != null) {
+			request.setAttribute(
+				"evaluationElements",
+				infoEvaluation.getEvaluationElements());
+		}
 		InfoSite infoSite = RequestUtils.getSiteFromRequest(request);
-		RequestUtils.setSiteToRequest(request,infoSite);
-		RequestUtils.setExecutionCourseToRequest(request,infoExecutionCourse);
-		RequestUtils.setSectionsToRequest(request,infoSite);
+		RequestUtils.setSiteToRequest(request, infoSite);
+		RequestUtils.setExecutionCourseToRequest(request, infoExecutionCourse);
+		RequestUtils.setSectionsToRequest(request, infoSite);
 		RequestUtils.setSectionToRequest(request);
 		//find forward			
 		return mapping.findForward("Sucess");

@@ -52,7 +52,20 @@ public class AccessBibliographyAction extends FenixAction {
 				throw new FenixActionException(e);
 			}
 		
-			
+			Object argsReadCurricularCourseListOfExecutionCourse[] =
+						{ infoSite.getInfoExecutionCourse()};
+					List infoCurricularCourses =
+						(List) gestor.executar(
+							null,
+							"ReadCurricularCourseListOfExecutionCourse",
+							argsReadCurricularCourseListOfExecutionCourse);
+
+					if (infoCurricularCourses != null
+						&& !infoCurricularCourses.isEmpty()) {
+						request.setAttribute(
+							"publico.infoCurricularCourses",
+							infoCurricularCourses);
+					}
 
 			
 				request.setAttribute(
