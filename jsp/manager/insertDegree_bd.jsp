@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <h2><bean:message key="message.insertDegree" /></h2>
 <br/>
@@ -15,7 +14,7 @@
 		<bean:message key="message.degreeName"/>
 	</td>
 	<td>
-		<html:textarea cols="60" property="name" />
+		<html:text size="80" property="name" />
 	</td>
 	<td>
 		<span class="error"><html:errors property="name"  /></span>
@@ -26,7 +25,7 @@
 		<bean:message key="message.degreeCode"/>
 	</td>
 	<td>
-		<html:textarea cols="60" property="code" />
+		<html:text size="80" property="code" />
 	</td>
 	<td>
 		<span class="error"><html:errors property="code" /></span>

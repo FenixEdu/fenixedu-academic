@@ -26,6 +26,10 @@
 		<put name="body" value="/manager/readDegreeCurricularPlans_bd.jsp" />
 		<put name="navLocal" value="/manager/mainMenu.jsp" />
 	</definition>
+	<definition name="df.page.insert-degree-curricular-plan" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/insertDegreeCurricularPlan_bd.jsp" />
+		<put name="navLocal" value="/manager/mainMenu.jsp" />
+	</definition>
 	<definition name="df.page.read-degreeCurricularPlan" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readDegreeCurricularPlan_bd.jsp" />
 		<put name="navLocal" value="/manager/mainMenu.jsp" />

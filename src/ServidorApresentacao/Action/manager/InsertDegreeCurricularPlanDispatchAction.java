@@ -45,6 +45,15 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws FenixActionException {
+				
+				
+//				DynaActionForm dynaForm = (DynaValidatorForm) form;
+				
+				System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqANTES");
+				Integer degreeId =new Integer(request.getParameter("degreeId"));
+				
+//				dynaForm.set("degreeId",degreeId);
+				request.setAttribute("degreeId",degreeId);
 
 			return mapping.findForward("insertDegreeCurricularPlan");
 		}
@@ -56,28 +65,36 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-	
+			System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqDEPOIS");
 		HttpSession session = request.getSession(false);
 		UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
-		Integer degreeId =new Integer(request.getParameter("degreeId"));
+		Integer degreeId =(Integer) dynaForm.get("degreeId");
+		
+//		Integer degreeId =(Integer)request.getAttribute("degreeId");
+		System.out.println("DEGREEIDSSSSSSSSSSSS"+degreeId);
+		
 		ICurso degree = new Curso(degreeId);
 		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree((ICurso) degree);
+
 		
 		String name = (String) dynaForm.get("name");
-		Integer stateInt = (Integer) dynaForm.get("state");
+		Integer stateInt = new Integer((String) dynaForm.get("state"));
 		String initialDateString = (String) dynaForm.get("initialDate");
 		String endDateString = (String) dynaForm.get("endDate");
-		Integer degreeDuration = (Integer) dynaForm.get("degreeDuration");
-		Integer minimalYearForOptionalCourses = (Integer) dynaForm.get("minimalYearForOptionalCourses");
+		Integer degreeDuration = new Integer((String) dynaForm.get("degreeDuration"));
+		Integer minimalYearForOptionalCourses = new Integer((String) dynaForm.get("minimalYearForOptionalCourses"));
 		String neededCreditsString = (String) dynaForm.get("neededCredits");
-		Integer markTypeString = (Integer) dynaForm.get("markType");
-		Integer numerusClausus = (Integer) dynaForm.get("numerusClausus");
+		Integer markTypeString = new Integer((String) dynaForm.get("markType"));
+		Integer numerusClausus = new Integer ((String) dynaForm.get("numerusClausus"));
 			
 		DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
-		Date initialDate = new Date(initialDateString);
+		String[] initialDateArgs =  initialDateString.split("/",2);
+		System.out.println("SPLITSPLIT11111111111"+initialDateArgs);
+		
+		Date initialDate = new Date("initialDateArgs.");
 		Date endDate = new Date(endDateString);
 		Double neededCredits = new Double(neededCreditsString);
 		MarkType markType = new MarkType(markTypeString);
@@ -123,10 +140,12 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 				}
 				Collections.sort(degreeCurricularPlans);
 				request.setAttribute("lista de planos curriculares",degreeCurricularPlans);
+				request.setAttribute("degreeId",degreeId);
+			
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		return mapping.findForward("readDegreeCurricularPlans");
+		return mapping.findForward("readDegree");
 	}			
 }
 

@@ -12,6 +12,48 @@
         <arg0 key="message.manager.code" resource="true" />
       </field>
     </form>
+
+    	<!--validation to the form to insert and edit a DegreeCurricularPlan-->
+
+
+    <form name="degreeCurricularPlanForm">
+      <field property="name" depends="required" page="1" >
+        <arg0 key="message.manager.degree.curricular.plan.name" resource="true"/>
+      </field>
+
+     <!-- <field property="state" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.state" resource="true" />
+      </field>-->
+      
+      <field property="initialDate" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.initialDate" resource="true" />
+      </field>
+      
+      <field property="endDate" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.endDate" resource="true" />
+      </field>
+      
+      <field property="degreeDuration" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.degreeDuration" resource="true" />
+      </field>
+      
+      <field property="minimalYearForOptionalCourses" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.minimalYearForOptionalCourses" resource="true" />
+      </field>
+      
+      <field property="neededCredits" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.neededCredits" resource="true" />
+      </field>
+      
+      <!--<field property="markType" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.markType" resource="true" />
+      </field>-->
+      
+      <field property="numerusClausus" depends="required" page="1">
+        <arg0 key="message.manager.degree.curricular.plan.numerusClausus" resource="true" />
+      </field>
+      
+    </form>
     
     </formset>
 </form-validation>

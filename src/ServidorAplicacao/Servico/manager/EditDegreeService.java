@@ -72,10 +72,10 @@ public class EditDegreeService implements IServico {
 				errors.add(null);
 			    errors.add(null);
 			errors.add(null);
-//				if(newCode.compareToIgnoreCase(oldDegree.getSigla())==0 ||(newName.compareToIgnoreCase(oldDegree.getNome())==0 && newType.equals((TipoCurso) oldDegree.getTipoCurso())))
-//					errors = null;
-//				else
-//				{
+				if(newCode.compareToIgnoreCase(oldDegree.getSigla())==0 && (newName.compareToIgnoreCase(oldDegree.getNome())==0 && newType.equals((TipoCurso) oldDegree.getTipoCurso())))
+					errors = null;
+				else
+				{
 					int modified = 0;
 					Iterator iter = degrees.iterator();
 				
@@ -87,15 +87,17 @@ public class EditDegreeService implements IServico {
 				 		}
 						if(newName.compareToIgnoreCase(degreeIter.getNome())==0 && newType.equals((TipoCurso) degreeIter.getTipoCurso())) {
 						modified++;
-						errors.set(2, newName);
 						errors.set(1, newType.toString());
+						errors.set(2, newName);
 						}
 					}
-
-					oldDegree.setNome(newName);
-					oldDegree.setSigla(newCode);
-					oldDegree.setTipoCurso(newType);
-//				}
+					if(modified == 0) {
+						persistentDegree.simpleLockWrite(oldDegree);
+						oldDegree.setNome(newName);
+						oldDegree.setSigla(newCode);
+						oldDegree.setTipoCurso(newType);
+					}
+				}
 				
 				return errors;
 			

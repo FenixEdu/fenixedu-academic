@@ -2,16 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-	<logic:present name="degreeId" >
+
+<%--<logic:present name="degreeId" >--%>
+	<%--<bean:define id="degreeId" name="degreeId" />--%>
 <h2><bean:message key="message.editDegree" /></h2>
 <br/>
 <table>
 <html:form action="/editDegree" method="get">
 	<html:hidden property="page" value="1"/>
-	
-	<bean:define id="degreeId" name="degreeId" />
-<html:hidden  property="degreeId" />
 	
 <tr>
 	<td>
@@ -44,15 +42,18 @@
 	<td>
 		
 		<html:select property="degreeType">
-    		<html:option key="option.editDegree.licenciatura" value="1"/>
-    		<html:option key="option.editDegree.mestrado" value="2"/>
+    		<html:option key="option.editDegree.degree" value="1"/>
+    		<html:option key="option.editDegree.masterDegree" value="2"/>
     	</html:select>
 		
 	</td>
 </tr>
 
 </table>
+<html:hidden property="method" value="edit" />
+<html:hidden property="degreeId"/>
 
+	
 
 <br />
 <html:submit styleClass="inputbutton">
@@ -62,6 +63,6 @@
 <bean:message key="label.clear"/>
 </html:reset>			
 
-<html:hidden property="method" value="edit" />
+
 </html:form>
-</logic:present>
+<%--</logic:present>--%>

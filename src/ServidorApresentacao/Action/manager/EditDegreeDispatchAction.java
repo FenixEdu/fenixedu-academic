@@ -48,6 +48,8 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 				
 			Integer degreeId =new Integer(request.getParameter("degreeId"));
 			
+			System.out.println("NO PREPARE EDIT"+degreeId);
+			
 			InfoDegree oldInfoDegree = null;
 
 			Object args[] = { degreeId };
@@ -65,7 +67,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 			readDegreeForm.set("name",(String) oldInfoDegree.getNome());
 			readDegreeForm.set("code",(String) oldInfoDegree.getSigla());
 			readDegreeForm.set("degreeType",degreeType.getTipoCurso());
-			readDegreeForm.set("degreeId",degreeId);
+//			readDegreeForm.set("degreeId",degreeId);
 			
 
 			request.setAttribute("degreeId",degreeId);
@@ -89,9 +91,10 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
 //		Integer oldDegreeId = (Integer)request.getAttribute("degreeId");
+//		System.out.println("NO EDIT"+oldDegreeId);
 		
 		Integer oldDegreeId = (Integer) editDegreeForm.get("degreeId");
-		System.out.println("DEGREEIDaaaaaaaaaaaaaaaaaaaAA"+oldDegreeId);	
+//		System.out.println("DEGREEIDaaaaaaaaaaaaaaaaaaaAA"+oldDegreeId);	
 		
 		String code = (String) editDegreeForm.get("code");
 		String name = (String) editDegreeForm.get("name");
@@ -124,7 +127,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 					}	
 					if(serviceResult.get(1) != null)
 					{
-						error = new ActionError("message.existingDegreeName", serviceResult.get(1));
+						error = new ActionError("message.existingDegreeName", serviceResult.get(1),serviceResult.get(2));
 						actionErrors.add("message.existingDegreeName", error);
 					}			
 					saveErrors(request, actionErrors);
