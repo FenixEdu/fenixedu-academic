@@ -42,7 +42,6 @@ public final class MainPage extends Action {
 					"ReadPersonByUsername",
 					args);
 			if (infoPerson.getInfoAdvisories() == null || infoPerson.getInfoAdvisories().isEmpty()) {
-				System.out.println("advisories list is null");
 				infoPerson.setInfoAdvisories(new ArrayList());
 			} else {
 				Collections.sort(

@@ -67,7 +67,6 @@ public class Autenticacao implements IServico {
 					.getIPessoaPersistente()
 					.lerPessoaPorUsername(utilizador);
 		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace(System.out);
 			throw new FenixServiceException(ex.getMessage());
 		}
 		if (pessoa != null
@@ -143,6 +142,11 @@ public class Autenticacao implements IServico {
 		InfoRole degreeAdministrativeOfficeSuperUser = new InfoRole();
 		degreeAdministrativeOfficeSuperUser.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
 		rolesIntranet.add(degreeAdministrativeOfficeSuperUser);
+
+
+//InfoRole person = new InfoRole();
+//person.setRoleType(RoleType.PERSON);
+//rolesIntranet.add(person);
 
 		if (application.equalsIgnoreCase(Autenticacao.INTRANET)){
 			Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);
