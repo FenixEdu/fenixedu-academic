@@ -231,7 +231,7 @@ public class Section implements ISection {
 //		result += ", site=" + getSite();
 		result += ", superiorSection=" + getSuperiorSection();
 		result += ", inferiorSections=" + getInferiorSections();
-		result += ", items=" + getItems();
+		//result += ", items=" + getItems();
 		result += "]";
 
 		return result;
