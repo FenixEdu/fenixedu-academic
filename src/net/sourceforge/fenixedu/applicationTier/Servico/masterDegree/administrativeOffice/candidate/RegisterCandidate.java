@@ -381,7 +381,7 @@ public class RegisterCandidate implements IService {
 
     private void changeUsernameIfNeccessary(IStudent student) throws ExcepcaoPersistencia {
         try {
-            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             if ((student.getPerson().getUsername().indexOf("Mes") != -1)
                     || (student.getPerson().getUsername().indexOf("Esp") != -1)

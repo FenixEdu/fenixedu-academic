@@ -323,7 +323,7 @@ public class MergeExecutionCourses implements IService {
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
                 attend.setDisciplinaExecucao(destination);
                 try {
-                    PersistenceSupportFactory.getDefaultPersistenceSupport().currentBroker().store(attend);
+                    PersistenceSupportFactory.getOJBPersistenceSupport().currentBroker().store(attend);
                 } catch (Exception e) {
                     throw new ExcepcaoPersistencia("Error storing attend", e);
                 }

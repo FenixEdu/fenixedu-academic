@@ -87,7 +87,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.TIME_TABLE_MANAGER);

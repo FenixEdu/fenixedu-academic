@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
@@ -43,7 +44,7 @@ public class ReadOldIquiriesSummaryByDegreeID implements IServico{
             if (degreeID == null) {
                 throw new FenixServiceException("nullDegreeId");
             }
-            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentOldInquiriesSummary pois = sp.getIPersistentOldInquiriesSummary();
         
             oldInquiriesSummaryList = pois.readByDegreeId(degreeID);

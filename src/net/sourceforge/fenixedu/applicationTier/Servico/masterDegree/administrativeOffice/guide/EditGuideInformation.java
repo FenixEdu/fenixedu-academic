@@ -360,7 +360,7 @@ public class EditGuideInformation implements IService {
     }
 
     private void chekIfChangeable(InfoGuide infoGuide) throws FenixServiceException {
-        SuportePersistenteOJB sp = null;
+        ISuportePersistente sp = null;
         List guides = null;
 
         // Annuled Guides cannot be changed
@@ -384,7 +384,7 @@ public class EditGuideInformation implements IService {
 
     private IGuide createNewGuideVersion(InfoGuide infoGuide) throws FenixServiceException {
         IGuide guide = new Guide();
-        SuportePersistenteOJB sp = null;
+        ISuportePersistente sp = null;
         IContributor contributor = null;
         IPerson person = null;
         IExecutionDegree executionDegree = null;

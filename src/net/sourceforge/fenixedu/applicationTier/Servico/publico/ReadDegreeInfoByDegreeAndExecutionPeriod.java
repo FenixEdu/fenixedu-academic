@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
@@ -46,7 +47,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
-            SuportePersistenteOJB sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             //Execution Period

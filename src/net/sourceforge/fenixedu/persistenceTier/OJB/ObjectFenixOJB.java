@@ -49,7 +49,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     public ObjectFenixOJB() {
 
         try {
-            odmg = PersistenceSupportFactory.getDefaultPersistenceSupport().getImplementation();
+            odmg = PersistenceSupportFactory.getOJBPersistenceSupport().getImplementation();
         } catch (ExcepcaoPersistencia e1) {
             e1.printStackTrace();
         }
@@ -114,7 +114,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
      * 
      * @see ServidorPersistente.IPersistentObject#simpleLockWrite(Dominio.IDomainObject)
      */
-    public final void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia {
+    public void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia {
         try {
             tx = odmg.currentTransaction();
             tx.lock(obj, Transaction.WRITE);
