@@ -12,7 +12,6 @@
         <tbody>
             <tr>
                 <td>
-                    <br>
 					<html:link page="/announcementManagementAction.do?method=prepareCreateAnnouncement">
 						<bean:message key="label.insertAnnouncement" />
 					</html:link>
@@ -38,7 +37,6 @@
                 <tr>
                 	<td>
                 		<bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/>
-						<br><br>
                 	</td>
             	</tr>
                 <tr>

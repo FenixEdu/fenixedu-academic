@@ -4,7 +4,7 @@
  */
 package Dominio;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Ivo Brandão
@@ -12,14 +12,14 @@ import java.util.Date;
 public interface IAnnouncement {
 
 	String getTitle();
-	Date getCreationDate();
-	Date getLastModifiedDate();
+	Timestamp getCreationDate();
+	Timestamp getLastModifiedDate();
 	String getInformation();
 	ISite getSite();
 
 	void setTitle(String title);
-	void setCreationDate(Date date);
-	void setLastModifiedDate(Date lastModifiedDate);
+	void setCreationDate(Timestamp date);
+	void setLastModifiedDate(Timestamp lastModifiedDate);
 	void setInformation(String information);
 	void setSite(ISite site);
 }

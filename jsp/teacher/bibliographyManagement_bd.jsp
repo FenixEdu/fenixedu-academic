@@ -10,8 +10,10 @@
             <tr>
                 <td>
                   	<html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference">			
-                         <bean:message key="button.insert"/>                    		     
+                         <bean:message key="label.insertBibliographicReference"/>                    		     
                     </html:link>                               	       
+                    &nbsp;&nbsp;
+                    <br><br><hr>
                 </td>
             </tr>
             <tr>
@@ -56,6 +58,8 @@
                   			<html:link page="/bibliographicReferenceManager.do?method=deleteBibliographicReference" indexId="index" indexed="true">			
                                   <bean:message key="button.delete"/>                    		     
                             </html:link>                               	                       
+	                    &nbsp;&nbsp;
+    	                <br><hr>
                         </td>
                     </tr>
                 </logic:notEqual>

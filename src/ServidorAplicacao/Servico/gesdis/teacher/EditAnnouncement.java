@@ -8,6 +8,7 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  * @author  EP15
  * @author Ivo Brandão
  */
+import java.sql.Timestamp;
 import java.util.Date;
 
 import DataBeans.InfoExecutionCourse;
@@ -75,7 +76,7 @@ public class EditAnnouncement implements IServico {
      */
     public boolean run (InfoSite infoSite, InfoAnnouncement infoAnnouncement, String announcementNewTitle, String announcementNewInformation) throws FenixServiceException {
 		ISite site = null;
-        Date date = null;
+        Timestamp date = null;
         String announcementOldTitle = infoAnnouncement.getTitle();
         
 		try {
@@ -106,7 +107,7 @@ public class EditAnnouncement implements IServico {
 				persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(), 
 					executionPeriod); 
 			site = persistentSite.readByExecutionCourse(executionCourse);
-        	date = new Date((infoAnnouncement.getCreationDate()).getTime());
+        	date = new Timestamp(new Date((infoAnnouncement.getCreationDate()).getTime()).getTime());
         	checkIfAnnouncementExists(announcementOldTitle, date, announcementNewTitle, site);
 			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(announcementOldTitle, date, site);
 
@@ -114,7 +115,7 @@ public class EditAnnouncement implements IServico {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
         if (announcement == null) throw new InvalidArgumentsServiceException();
-        Date lastModificationDate = new Date(System.currentTimeMillis());
+        Timestamp lastModificationDate = new Timestamp(new Date(System.currentTimeMillis()).getTime());
         announcement.setTitle(announcementNewTitle);
         announcement.setLastModifiedDate(lastModificationDate);
         announcement.setInformation(announcementNewInformation);

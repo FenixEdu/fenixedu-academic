@@ -32,7 +32,6 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 			HttpSession session = request.getSession(false);
 			
 			session.removeAttribute("insertAnnouncementForm");
-			
 			return mapping.findForward("insertAnnouncement");
 	}
 
@@ -97,7 +96,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
 			//remove index from session
 			session.removeAttribute("index");
-		
+
 			//return to announcementManagement
 			return mapping.findForward("accessAnnouncementManagement");
 	}

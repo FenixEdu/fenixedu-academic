@@ -3,6 +3,7 @@
  */
 package Dominio;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -12,8 +13,8 @@ public class Announcement implements IAnnouncement {
 
 	private Integer internalCode;
 	private String title;
-	private Date creationDate;
-	private Date lastModifiedDate;
+	private Timestamp creationDate;
+	private Timestamp lastModifiedDate;
 	private String information;
 	private ISite site;
 	private Integer keySite; 
@@ -26,8 +27,8 @@ public class Announcement implements IAnnouncement {
 	/** 
 	 * Construtor
 	 */
-	public Announcement(String title, Date date, 
-		Date lastModifiedDate, String information, ISite site) {
+	public Announcement(String title, Timestamp date, 
+		Timestamp lastModifiedDate, String information, ISite site) {
 			
 		this.title = title;
 		this.creationDate = date;
@@ -39,7 +40,7 @@ public class Announcement implements IAnnouncement {
 	/** 
 	 * Construtor
 	 */
-	public Announcement(String title, Date date, ISite site) {
+	public Announcement(String title, Timestamp date, ISite site) {
 			
 		this.title = title;
 		this.creationDate = date;
@@ -62,9 +63,23 @@ public class Announcement implements IAnnouncement {
 	}
 
 	/**
-	 * @return Date
+	 * @see java.lang.Object#toString()
 	 */
-	public Date getCreationDate() {
+	public String toString() {
+		String result = "[ANNOUNCEMENT";
+		result += ", codInt=" + getInternalCode();
+		result += ", creationDate=" + getCreationDate();
+		result += ", lastModifiedDate=" + getLastModifiedDate();
+		result += ", information=" + getInformation();
+//		result += ", site=" + getSite();
+		result += "]";
+		return result;
+	}
+
+	/**
+	 * @return Timestamp
+	 */
+	public Timestamp getCreationDate() {
 		return creationDate;
 	}
 
@@ -90,9 +105,9 @@ public class Announcement implements IAnnouncement {
 	}
 
 	/**
-	 * @return Date
+	 * @return Timestamp
 	 */
-	public Date getLastModifiedDate() {
+	public Timestamp getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
@@ -111,11 +126,11 @@ public class Announcement implements IAnnouncement {
 	}
 
 	/**
-	 * Sets the date.
-	 * @param date The date to set
+	 * Sets the creationDate.
+	 * @param creationDate The creationDate to set
 	 */
-	public void setCreationDate(Date date) {
-		this.creationDate = date;
+	public void setCreationDate(Timestamp creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	/**
@@ -146,7 +161,7 @@ public class Announcement implements IAnnouncement {
 	 * Sets the lastModifiedDate.
 	 * @param lastModifiedDate The lastModifiedDate to set
 	 */
-	public void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(Timestamp lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
@@ -164,22 +179,6 @@ public class Announcement implements IAnnouncement {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		String result = "[ANNOUNCEMENT";
-		result += ", codInt=" + getInternalCode();
-		result += ", creationDate=" + getCreationDate();
-		result += ", lastModifiedDate=" + getLastModifiedDate();
-		result += ", information=" + getInformation();
-//		result += ", site=" + getSite();
-		result += "]";
-		return result;
 	}
 
 }

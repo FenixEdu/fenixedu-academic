@@ -1,5 +1,5 @@
 package ServidorPersistente.OJB;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -14,7 +14,7 @@ import ServidorPersistente.IPersistentAnnouncement;
  * @author  EP 15
  */
 public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnouncement {
-    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Date cDate, ISite site) throws ExcepcaoPersistencia {
+    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Timestamp cDate, ISite site) throws ExcepcaoPersistencia {
         try {
             IAnnouncement announcementResult = null;
            

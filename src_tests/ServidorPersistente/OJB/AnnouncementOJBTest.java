@@ -1,5 +1,6 @@
 package ServidorPersistente.OJB;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -123,7 +124,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		
-		Date date = calendar.getTime();
+		Timestamp date = new Timestamp(calendar.getTime().getTime());
 
 		announcement = new Announcement("newTitle", date, date, "newInformation", this.site);
 
@@ -302,7 +303,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		IAnnouncement newAnnouncement = null;
 
 		Calendar calendar = Calendar.getInstance();
-		Date actualDate = calendar.getTime();
+		Timestamp actualDate = new Timestamp(calendar.getTime().getTime());
 
 		newAnnouncement = new Announcement("newTitle", actualDate, actualDate, "newInformation", this.site);
 		try {

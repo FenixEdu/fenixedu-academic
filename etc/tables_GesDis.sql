@@ -14,7 +14,7 @@ create table ANNOUNCEMENT (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    TITLE varchar(100),
    CREATION_DATE timestamp,
-   LAST_MODIFICATION_DATE date,
+   LAST_MODIFICATION_DATE timestamp,
    INFORMATION varchar(100),
    KEY_SITE int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),

@@ -1,6 +1,6 @@
 package DataBeans.gesdis;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * @author EP 15
@@ -11,8 +11,8 @@ import java.util.Date;
 public class InfoAnnouncement {
 
 	private String title;
-	private Date creationDate;
-	private Date lastModifiedDate;
+	private Timestamp creationDate;
+	private Timestamp lastModifiedDate;
 	private String information;
 //	private InfoSite site;	
 	private InfoSite infoSite;
@@ -20,9 +20,9 @@ public class InfoAnnouncement {
 	public InfoAnnouncement() {
 	}
 
-	public InfoAnnouncement(String title, Date creationDate, Date lastModifiedDate, String information, InfoSite infoSite) {
+	public InfoAnnouncement(String title, Timestamp creationDate, Timestamp lastModifiedDate, String information, InfoSite infoSite) {
 		this.title = title;
-		this.creationDate = creationDate;
+		this.creationDate = (Timestamp)creationDate;
 		this.lastModifiedDate = lastModifiedDate;
 		this.information = information;
 		this.infoSite = infoSite;
@@ -55,42 +55,48 @@ public class InfoAnnouncement {
 	}
 
 	/**
-	 * @return Date
+	 * @return Timestamp
 	 */
-	public Date getCreationDate() {
+	public Timestamp getCreationDate() {
 		return creationDate;
 	}
+
 	/**
 	 * @return String
 	 */
 	public String getInformation() {
 		return information;
 	}
+
+/**
+ * @return InfoSite
+ */
+public InfoSite getInfoSite() {
+	return infoSite;
+}
+
 	/**
-	 * @return InfoSite
+	 * @return Timestamp
 	 */
-	public InfoSite getInfoSite() {
-		return infoSite;
-	}
-	/**
-	 * @return Date
-	 */
-	public Date getLastModifiedDate() {
+	public Timestamp getLastModifiedDate() {
 		return lastModifiedDate;
 	}
+
 	/**
 	 * @return String
 	 */
 	public String getTitle() {
 		return title;
 	}
+
 	/**
 	 * Sets the creationDate.
 	 * @param creationDate The creationDate to set
 	 */
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
 	}
+
 	/**
 	 * Sets the information.
 	 * @param information The information to set
@@ -98,20 +104,23 @@ public class InfoAnnouncement {
 	public void setInformation(String information) {
 		this.information = information;
 	}
-	/**
-	 * Sets the infoSite.
-	 * @param infoSite The infoSite to set
-	 */
-	public void setInfoSite(InfoSite infoSite) {
-		this.infoSite = infoSite;
-	}
+
+/**
+ * Sets the infoSite.
+ * @param infoSite The infoSite to set
+ */
+public void setInfoSite(InfoSite infoSite) {
+	this.infoSite = infoSite;
+}
+
 	/**
 	 * Sets the lastModifiedDate.
 	 * @param lastModifiedDate The lastModifiedDate to set
 	 */
-	public void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(Timestamp lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+
 	/**
 	 * Sets the title.
 	 * @param title The title to set
@@ -119,4 +128,5 @@ public class InfoAnnouncement {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 }

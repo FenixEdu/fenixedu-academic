@@ -76,7 +76,7 @@
     <field-descriptor id="4"
         name="lastModifiedDate"
         column="LAST_MODIFICATION_DATE"
-        jdbc-type="DATE"
+        jdbc-type="TIMESTAMP"
 	/>
     <field-descriptor id="5"
         name="information"

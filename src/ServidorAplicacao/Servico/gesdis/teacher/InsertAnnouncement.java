@@ -6,8 +6,8 @@ package ServidorAplicacao.Servico.gesdis.teacher;
  * @author  EP15
  * @author Ivo Brandão
  */
+import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
@@ -56,7 +56,7 @@ public class InsertAnnouncement implements IServico {
         return "InsertAnnouncement";
     }
 
-    private void checkIfAnnouncementExists(String announcementTitle, ISite announcementSite, Date currentDate) throws FenixServiceException {
+    private void checkIfAnnouncementExists(String announcementTitle, ISite announcementSite, Timestamp currentDate) throws FenixServiceException {
         IAnnouncement announcement = null;
         persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 
@@ -110,15 +110,15 @@ public class InsertAnnouncement implements IServico {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
 		
-		checkIfAnnouncementExists(newAnnouncementTitle, site, calendar.getTime());
+		checkIfAnnouncementExists(newAnnouncementTitle, site, new Timestamp(calendar.getTime().getTime()));
 
 		IAnnouncement newAnnouncement = null;
 		try {
 			newAnnouncement =
 				new Announcement(
 					newAnnouncementTitle,
-					calendar.getTime(),
-					calendar.getTime(),
+					new Timestamp(calendar.getTime().getTime()),
+					new Timestamp(calendar.getTime().getTime()),
 					newAnnouncementInformation,
 					site);
 			persistentAnnouncement.lockWrite(newAnnouncement);

@@ -10,7 +10,7 @@
 <html:form action="/alternativeSite">
 
 <logic:present name="<%=SessionConstants.ALTERNATIVE_SITE%>">	
-	<html:link href="<%=(String)session.getAttribute(SessionConstants.ALTERNATIVE_SITE)%>">
+	<html:link href="<%=(String)session.getAttribute(SessionConstants.ALTERNATIVE_SITE)%>" target="_blank">
 		<%=(String)session.getAttribute(SessionConstants.ALTERNATIVE_SITE)%>
 	</html:link>	
 </logic:present>
