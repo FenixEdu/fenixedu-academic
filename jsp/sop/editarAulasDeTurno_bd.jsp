@@ -7,8 +7,7 @@
 <%@ page import="DataBeans.InfoLesson" %>
 	   	<table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td bgcolor="#FFFFFF" class="infoselected"><p>O curso seleccionado
-              &eacute;:</p>
+            <td class="infoselected"><p>O curso seleccionado &eacute;:</p>
 			  <strong><jsp:include page="context.jsp"/></strong>
             </td>
           </tr>
@@ -16,12 +15,10 @@
         <br/>
 	   	<% ArrayList iA = (ArrayList) session.getAttribute("infoAulasDeTurno"); %>
         <center>
-            <font color='#034D7A' size='5'>
-                <b>
+            <span class="error">
                     <bean:message key="title.editAulaOfTurnoXPTO"/>
                     <bean:write name="infoTurno" property="nome" scope="session" filter="true"/>
-                </b>
-            </font>
+            </span>
         </center>
         <br/>
         <html:errors/>

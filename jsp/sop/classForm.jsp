@@ -5,14 +5,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <html:form action="/ClassManagerDA" >
 	<span class="error"><html:errors/></span>	
-	
 	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
 		<input type="hidden" name="method" value="createClass">
 	</logic:notPresent>
 	<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
 		<input type="hidden" name="method" value="editClass"/>
 		<input type="hidden" name="change" value= "1"/>
-		<table border="0" cellspacing="0" cellpadding="0">
+		<table width="100%" cellspacing="0">
 		  <tr>
 		   	<td nowrap="nowrap" class="infoop">
 		   		<html:link page="/ClassShiftManagerDA.do?method=viewClassShiftList"><bean:message key="label.add.shifts"/></html:link>
@@ -27,9 +26,9 @@
 		</table>
 	</logic:present>
 	<html:hidden property="page" value="1"/>
-	<table border="0" cellspacing="0" cellpadding="0">
+	<table cellspacing="0">
 	  <tr>
-	    <td nowrap="nowrap">
+	    <td nowrap="nowrap" class="formTD">
 	    	<br />
 		    <bean:message key="property.class.nameShift" />
 		</td>

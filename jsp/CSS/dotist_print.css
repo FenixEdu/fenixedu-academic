@@ -5,13 +5,12 @@
 *****************************************/
 
 body {
-	font: 11pt/1em Arial, Helvetica, sans-serif;
+	font: 11pt Arial, Helvetica, sans-serif;
 	color: #fff;
 	text-align: left;
-	background: #fff;
 	margin: 0;
 	}
-
+	
 table {
 	font: 9pt Arial, Helvetica, sans-serif;
 	color: black;
@@ -55,23 +54,25 @@ a:visited {
 	}
 
 .bodycontent {
-	font-family: 11pt/em Arial, Helvetica, sans-serif;
-	color: black;
-	margin:0;
+	width: 100%;
+	font: 11pt/0.5em Arial, Helvetica, sans-serif;
+	color: #000;
+	margin: 0;
+	padding 0;
+	vertical-align: top;
 	}
 
 /**********************************************
-	 navlateral list
+	 for navLateral multi use 
 ***********************************************/	
 
-.navlateral-td ul {
+.navlateral-td {
 	display: none;
 	}
 	
-.navlateral-td li {
+.navlateral-td {
 	display: none;
 	}
-
 
 /**********************************************
 	 FORMS Classes: inputs
@@ -81,7 +82,7 @@ a:visited {
 	font: bold 11pt Arial, Helvetica, sans-serif;
 	color: red;
 	background: yellow;
-	}
+	}	
 	
 .inputlist {
 	font: 11pt Arial, Helvetica, sans-serif;

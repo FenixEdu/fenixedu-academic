@@ -12,11 +12,7 @@
     <body>
         <jsp:include page="context.jsp"/><br/>
         <br/>
-        <center>
-            <font color='#034D7A' size='5'>
-                <b> Turma <bean:write name="turmaFormBean" property="nome" scope="request" filter="true"/> </b>
-            </font>
-        </center>
+            <h2>Turma <bean:write name="turmaFormBean" property="nome" scope="request" filter="true"/></h2>
         <br/>
         <br/>
         <app:gerarHorario name="aulasDeTurma"/>

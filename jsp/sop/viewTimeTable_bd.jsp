@@ -16,7 +16,7 @@
 	<logic:present name="<%= SessionConstants.CLASS_VIEW %>" scope="session">
 <table width="100%" cellspacing="0">
 	<tr>   		
-		<td nowrap="nowrap" class="formTD">
+		<td nowrap="nowrap">
 			<%-- Create class form --%>
 			<h2><bean:message key="label.class.edit"/></h2>    		
 			<jsp:include page="classForm.jsp"/>
@@ -26,7 +26,7 @@
 </table>
 <br />
 <h2>Horário da Turma</h2>
-	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>		
+<div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/></div>		
 <br />
 	</logic:present>
 	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="session">

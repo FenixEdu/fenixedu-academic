@@ -44,9 +44,6 @@
 			    </div>
 		    </html:link>
 		  </td>
-		  
-
-		  
 		  <td nowrap="nowrap" class="listClasses">
 			<div align="center">
 			  <html:link paramId="className" paramName="classView" paramProperty="nome" href="ClassManagerDA.do?method=deleteClass" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
