@@ -71,10 +71,12 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
                 actionErrors);
             operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-        } catch (Exception e1)
+        }
+        catch (Exception e1)
         {
             throw new FenixActionException(e1);
-        } finally
+        }
+        finally
         {
             saveErrors(request, actionErrors);
         }
@@ -115,10 +117,12 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
                 actionErrors);
             operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-        } catch (Exception e1)
+        }
+        catch (Exception e1)
         {
             throw new FenixActionException(e1);
-        } finally
+        }
+        finally
         {
             saveErrors(request, actionErrors);
         }
@@ -135,8 +139,9 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         throws FenixActionException
     {
 
-        DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
+
+        DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
         Integer degreeType = (Integer) changeMasterDegreeProofForm.get("degreeType");
         Integer studentNumber = (Integer) changeMasterDegreeProofForm.get("studentNumber");
@@ -144,49 +149,31 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
             MasterDegreeClassification.getEnum(
                 ((Integer) changeMasterDegreeProofForm.get("finalResult")).intValue());
         Integer attachedCopiesNumber = (Integer) changeMasterDegreeProofForm.get("attachedCopiesNumber");
-        Integer proofDateDay = (Integer) changeMasterDegreeProofForm.get("proofDateDay");
-        Integer proofDateMonth = (Integer) changeMasterDegreeProofForm.get("proofDateMonth");
-        Integer proofDateYear = (Integer) changeMasterDegreeProofForm.get("proofDateYear");
-        Integer thesisDeliveryDateDay =
-            (Integer) changeMasterDegreeProofForm.get("thesisDeliveryDateDay");
-        Integer thesisDeliveryDateMonth =
-            (Integer) changeMasterDegreeProofForm.get("thesisDeliveryDateMonth");
-        Integer thesisDeliveryDateYear =
-            (Integer) changeMasterDegreeProofForm.get("thesisDeliveryDateYear");
 
-        Calendar proofDateCalendar =
-            new GregorianCalendar(
-                proofDateYear.intValue(),
-                proofDateMonth.intValue(),
-                proofDateDay.intValue());
-        Date proofDate = proofDateCalendar.getTime();
-        Calendar thesisDeliveryDateCalendar =
-            new GregorianCalendar(
-                thesisDeliveryDateYear.intValue(),
-                thesisDeliveryDateMonth.intValue(),
-                thesisDeliveryDateDay.intValue());
-        Date thesisDeliveryDate = thesisDeliveryDateCalendar.getTime();
+        String proofDateDay = (String) changeMasterDegreeProofForm.get("proofDateDay");
+        String proofDateMonth = (String) changeMasterDegreeProofForm.get("proofDateMonth");
+        String proofDateYear = (String) changeMasterDegreeProofForm.get("proofDateYear");
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        ArrayList infoTeacherJuries = null;
+        String thesisDeliveryDateDay = (String) changeMasterDegreeProofForm.get("thesisDeliveryDateDay");
+        String thesisDeliveryDateMonth =
+            (String) changeMasterDegreeProofForm.get("thesisDeliveryDateMonth");
+        String thesisDeliveryDateYear =
+            (String) changeMasterDegreeProofForm.get("thesisDeliveryDateYear");
 
-        // get student curricular plan
-        Object args[] = { studentNumber, new TipoCurso(degreeType)};
-        try
-        {
-            infoStudentCurricularPlan =
-                (InfoStudentCurricularPlan) ServiceUtils.executeService(
-                    userView,
-                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-                    args);
-        } catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
+        Date proofDate = buildProofDate(proofDateDay, proofDateMonth, proofDateYear);
+
+        Date thesisDeliveryDate =
+            buildThesisDeliveryDate(
+                thesisDeliveryDateDay,
+                thesisDeliveryDateMonth,
+                thesisDeliveryDateYear);
+
+        InfoStudentCurricularPlan infoStudentCurricularPlan =
+            readStudentCurricularPlan(userView, degreeType, studentNumber);
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
         ActionErrors actionErrors = new ActionErrors();
-
+        ArrayList infoTeacherJuries = null;
         try
         {
             operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
@@ -198,10 +185,12 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
                     SessionConstants.JURIES_LIST,
                     actionErrors);
 
-        } catch (Exception e1)
+        }
+        catch (Exception e1)
         {
             throw new FenixActionException(e1);
-        } finally
+        }
+        finally
         {
             if (infoTeacherJuries.isEmpty())
                 actionErrors.add(
@@ -218,6 +207,35 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         }
 
+        executeChangeMasterDegreeProofService(
+            mapping,
+            userView,
+            finalResult,
+            attachedCopiesNumber,
+            proofDate,
+            thesisDeliveryDate,
+            infoStudentCurricularPlan,
+            infoTeacherJuries);
+
+        return mapping.findForward("success");
+
+    }
+
+    private void executeChangeMasterDegreeProofService(
+        ActionMapping mapping,
+        IUserView userView,
+        MasterDegreeClassification finalResult,
+        Integer attachedCopiesNumber,
+        Date proofDate,
+        Date thesisDeliveryDate,
+        InfoStudentCurricularPlan infoStudentCurricularPlan,
+        ArrayList infoTeacherJuries)
+        throws
+            RequiredJuriesActionException,
+            NonExistingActionException,
+            ScholarshipNotFinishedActionException,
+            ExistingActionException
+    {
         Object args2[] =
             {
                 userView,
@@ -231,24 +249,92 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         try
         {
             ServiceUtils.executeService(userView, "ChangeMasterDegreeProof", args2);
-        } catch (RequiredJuriesServiceException e)
+        }
+        catch (RequiredJuriesServiceException e)
         {
             throw new RequiredJuriesActionException(e.getMessage(), mapping.findForward("start"));
-        } catch (NonExistingServiceException e)
+        }
+        catch (NonExistingServiceException e)
         {
             throw new NonExistingActionException(e.getMessage(), mapping.findForward("start"));
-        } catch (ScholarshipNotFinishedServiceException e)
+        }
+        catch (ScholarshipNotFinishedServiceException e)
         {
             throw new ScholarshipNotFinishedActionException(
                 e.getMessage(),
                 mapping.findForward("start"));
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
         }
+    }
 
-        return mapping.findForward("success");
+    private InfoStudentCurricularPlan readStudentCurricularPlan(
+        IUserView userView,
+        Integer degreeType,
+        Integer studentNumber)
+        throws FenixActionException
+    {
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
+        Object args[] = { studentNumber, new TipoCurso(degreeType)};
+        try
+        {
+            infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) ServiceUtils.executeService(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    args);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        return infoStudentCurricularPlan;
+    }
+
+    private Date buildThesisDeliveryDate(
+        String thesisDeliveryDateDay,
+        String thesisDeliveryDateMonth,
+        String thesisDeliveryDateYear)
+        throws NumberFormatException
+    {
+        Date thesisDeliveryDate = null;
+
+        if ((thesisDeliveryDateDay.length() > 0)
+            && (thesisDeliveryDateMonth.length() > 0)
+            && (thesisDeliveryDateYear.length() > 0))
+        {
+            Calendar thesisDeliveryDateCalendar =
+                new GregorianCalendar(
+                    Integer.parseInt(thesisDeliveryDateYear),
+                    Integer.parseInt(thesisDeliveryDateMonth),
+                    Integer.parseInt(thesisDeliveryDateDay));
+
+            thesisDeliveryDate = thesisDeliveryDateCalendar.getTime();
+        }
+        return thesisDeliveryDate;
+    }
+
+    private Date buildProofDate(String proofDateDay, String proofDateMonth, String proofDateYear)
+        throws NumberFormatException
+    {
+        Date proofDate = null;
+
+        if ((proofDateDay.length() > 0)
+            && (proofDateMonth.length() > 0)
+            && (proofDateYear.length() > 0))
+        {
+            Calendar proofDateCalendar =
+                new GregorianCalendar(
+                    Integer.parseInt(proofDateYear),
+                    Integer.parseInt(proofDateMonth),
+                    Integer.parseInt(proofDateDay));
+
+            proofDate = proofDateCalendar.getTime();
+        }
+        return proofDate;
     }
 
     public ActionForward cancelChangeMasterDegreeProof(

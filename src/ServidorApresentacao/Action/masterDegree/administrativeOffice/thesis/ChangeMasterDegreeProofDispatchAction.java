@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -39,173 +40,317 @@ import Util.TipoCurso;
  *
  */
 
-public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
+public class ChangeMasterDegreeProofDispatchAction extends DispatchAction
+{
 
-	public ActionForward getStudentAndMasterDegreeProofVersion(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward getStudentAndMasterDegreeProofVersion(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
-		Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
+        Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
+        Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
-		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
+        boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		if (isSuccess == false) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("error"));
+        if (isSuccess == false)
+        {
+            throw new NonExistingActionException(
+                "error.exception.masterDegree.nonExistentStudent",
+                mapping.findForward("error"));
 
-		}
+        }
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
-		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+        InfoStudentCurricularPlan infoStudentCurricularPlan =
+            readStudentCurricularPlan(mapping, userView, degreeType, studentNumber);
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
+            readMasterDegreeThesisDataVersion(mapping, userView, infoStudentCurricularPlan);
 
-		/* * * get student curricular plan * * */
-		Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType)};
-		try {
-			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) ServiceUtils.executeService(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsStudentCurricularPlan);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		if (infoStudentCurricularPlan == null) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentActiveStudentCurricularPlan", mapping.findForward("error"));
-		}
-
-		/* * * get master degree thesis data * * */
-		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
-		try {
-			infoMasterDegreeThesisDataVersion =
-				(InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
-					userView,
-					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
-					argsMasterDegreeThesisDataVersion);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistingMasterDegreeThesis", mapping.findForward("error"));
-
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		request.setAttribute(SessionConstants.DISSERTATION_TITLE, infoMasterDegreeThesisDataVersion.getDissertationTitle());
-
-		List finalResult = MasterDegreeClassification.toArrayList();
-		request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
-
-		request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
-		request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
-		request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+        putMasterDegreeThesisDataInRequest(request, infoMasterDegreeThesisDataVersion);
 
 		/* * * get master degree proof * * */
-		Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
-		try {
-			infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) ServiceUtils.executeService(
-					userView,
-					"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
-					argsMasterDegreeProofVersion);
-		} catch (NonExistingServiceException e) {
-			//throw new NonExistingActionException("error.exception.masterDegree.nonExistingMasterDegreeThesis", mapping.findForward("error"));
-			infoMasterDegreeProofVersion = new InfoMasterDegreeProofVersion();
+        InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
+        Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
+        try
+        {
+            infoMasterDegreeProofVersion =
+                (InfoMasterDegreeProofVersion) ServiceUtils.executeService(
+                    userView,
+                    "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
+                    argsMasterDegreeProofVersion);
+        }
+        catch (NonExistingServiceException e)
+        {
+            DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
 
-			DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
-			
-			Calendar calendar = new GregorianCalendar();
+            prepareFormForNewMasterDegreeProofVersion(
+                degreeType,
+                studentNumber,
+                infoMasterDegreeThesisDataVersion,
+                changeMasterDegreeThesisForm);
 
-			changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
-			changeMasterDegreeThesisForm.set("degreeType", degreeType);
-			changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion.getDissertationTitle());
-			changeMasterDegreeThesisForm.set("finalResult", new Integer(MasterDegreeClassification.UNDEFINED_TYPE));
-			changeMasterDegreeThesisForm.set("attachedCopiesNumber", new Integer(0));
-			changeMasterDegreeThesisForm.set("proofDateDay", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
-			changeMasterDegreeThesisForm.set("proofDateMonth", new Integer(calendar.get(Calendar.MONTH)));
-			changeMasterDegreeThesisForm.set("proofDateYear", new Integer(calendar.get(Calendar.YEAR)));
-			changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
-			changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", new Integer(calendar.get(Calendar.MONTH)));
-			changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", new Integer(calendar.get(Calendar.YEAR)));
+            return mapping.findForward("start");
 
-			return mapping.findForward("start");
+        }
+        catch (ScholarshipNotFinishedServiceException e)
+        {
+            throw new ScholarshipNotFinishedActionException(
+                "error.exception.masterDegree.scholarshipNotFinished",
+                mapping.findForward("errorScholarshipNotFinished"));
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		} catch (ScholarshipNotFinishedServiceException e) {
-			throw new ScholarshipNotFinishedActionException(
-				"error.exception.masterDegree.scholarshipNotFinished",
-				mapping.findForward("errorScholarshipNotFinished"));
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
+            request.setAttribute(
+                SessionConstants.JURIES_LIST,
+                infoMasterDegreeProofVersion.getInfoJuries());
 
-		if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
-			request.setAttribute(SessionConstants.JURIES_LIST, infoMasterDegreeProofVersion.getInfoJuries());
+        String proofDateDay = null;
+        String proofDateMonth = null;
+        String proofDateYear = null;
 
-		Calendar proofDateCalendar = new GregorianCalendar();
-		Calendar thesisDeliveryDateCalendar = new GregorianCalendar();
-		proofDateCalendar.setTime(infoMasterDegreeProofVersion.getProofDate());
-		thesisDeliveryDateCalendar.setTime(infoMasterDegreeProofVersion.getThesisDeliveryDate());
+        Date proofDate = infoMasterDegreeProofVersion.getProofDate();
+        if (proofDate != null)
+        {
+            Calendar proofDateCalendar = new GregorianCalendar();
+            proofDateCalendar.setTime(proofDate);
+            proofDateDay = (new Integer(proofDateCalendar.get(Calendar.DAY_OF_MONTH))).toString();
+            proofDateMonth = (new Integer(proofDateCalendar.get(Calendar.MONTH))).toString();
+            proofDateYear = (new Integer(proofDateCalendar.get(Calendar.YEAR))).toString();
 
-		DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
+        }
 
-		changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
-		changeMasterDegreeThesisForm.set("degreeType", degreeType);
-		changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion.getDissertationTitle());
-		changeMasterDegreeThesisForm.set("finalResult", new Integer(infoMasterDegreeProofVersion.getFinalResult().getValue()));
-		changeMasterDegreeThesisForm.set("attachedCopiesNumber", infoMasterDegreeProofVersion.getAttachedCopiesNumber());
-		changeMasterDegreeThesisForm.set("proofDateDay", new Integer(proofDateCalendar.get(Calendar.DAY_OF_MONTH)));
-		changeMasterDegreeThesisForm.set("proofDateMonth", new Integer(proofDateCalendar.get(Calendar.MONTH)));
-		changeMasterDegreeThesisForm.set("proofDateYear", new Integer(proofDateCalendar.get(Calendar.YEAR)));
-		changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", new Integer(thesisDeliveryDateCalendar.get(Calendar.DAY_OF_MONTH)));
-		changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", new Integer(thesisDeliveryDateCalendar.get(Calendar.MONTH)));
-		changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", new Integer(thesisDeliveryDateCalendar.get(Calendar.YEAR)));
+        String thesisDeliveryDateDay = null;
+        String thesisDeliveryDateMonth = null;
+        String thesisDeliveryDateYear = null;
 
-		return mapping.findForward("start");
+        Date thesisDeliveryDate = infoMasterDegreeProofVersion.getThesisDeliveryDate();
+        if (thesisDeliveryDate != null)
+        {
+            Calendar thesisDeliveryDateCalendar = new GregorianCalendar();
+            thesisDeliveryDateCalendar.setTime(thesisDeliveryDate);
+            thesisDeliveryDateDay =
+                new Integer(thesisDeliveryDateCalendar.get(Calendar.DAY_OF_MONTH)).toString();
+            thesisDeliveryDateMonth =
+                new Integer(thesisDeliveryDateCalendar.get(Calendar.MONTH)).toString();
+            thesisDeliveryDateYear =
+                new Integer(thesisDeliveryDateCalendar.get(Calendar.YEAR)).toString();
+        }
 
-	}
+        prepareFormForMasterDegreeProofEdition(
+            form,
+            degreeType,
+            studentNumber,
+            infoMasterDegreeProofVersion,
+            infoMasterDegreeThesisDataVersion,
+            proofDateDay,
+            proofDateMonth,
+            proofDateYear,
+            thesisDeliveryDateDay,
+            thesisDeliveryDateMonth,
+            thesisDeliveryDateYear);
 
-	public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+        return mapping.findForward("start");
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
+    }
 
-		transportData(form, request);
+    private void prepareFormForMasterDegreeProofEdition(
+        ActionForm form,
+        Integer degreeType,
+        Integer studentNumber,
+        InfoMasterDegreeProofVersion infoMasterDegreeProofVersion,
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion,
+        String proofDateDay,
+        String proofDateMonth,
+        String proofDateYear,
+        String thesisDeliveryDateDay,
+        String thesisDeliveryDateMonth,
+        String thesisDeliveryDateYear)
+    {
+        DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
 
-		try {
-			operations.getTeachersByNumbers(form, request, "juriesNumbers", SessionConstants.JURIES_LIST, actionErrors);
-			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+        changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
+        changeMasterDegreeThesisForm.set("degreeType", degreeType);
+        changeMasterDegreeThesisForm.set(
+            "dissertationTitle",
+            infoMasterDegreeThesisDataVersion.getDissertationTitle());
+        changeMasterDegreeThesisForm.set(
+            "finalResult",
+            new Integer(infoMasterDegreeProofVersion.getFinalResult().getValue()));
+        changeMasterDegreeThesisForm.set(
+            "attachedCopiesNumber",
+            infoMasterDegreeProofVersion.getAttachedCopiesNumber());
+        changeMasterDegreeThesisForm.set("proofDateDay", proofDateDay);
+        changeMasterDegreeThesisForm.set("proofDateMonth", proofDateMonth);
+        changeMasterDegreeThesisForm.set("proofDateYear", proofDateYear);
+        changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", thesisDeliveryDateDay);
+        changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", thesisDeliveryDateMonth);
+        changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", thesisDeliveryDateYear);
+    }
 
-		} catch (Exception e1) {
-			throw new FenixActionException(e1);
-		}
+    private void prepareFormForNewMasterDegreeProofVersion(
+        Integer degreeType,
+        Integer studentNumber,
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion,
+        DynaActionForm changeMasterDegreeThesisForm)
+    {
+        changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
+        changeMasterDegreeThesisForm.set("degreeType", degreeType);
+        changeMasterDegreeThesisForm.set(
+            "dissertationTitle",
+            infoMasterDegreeThesisDataVersion.getDissertationTitle());
+        changeMasterDegreeThesisForm.set(
+            "finalResult",
+            new Integer(MasterDegreeClassification.UNDEFINED_TYPE));
+        changeMasterDegreeThesisForm.set("attachedCopiesNumber", new Integer(0));
+        changeMasterDegreeThesisForm.set("proofDateDay", null);
+        changeMasterDegreeThesisForm.set("proofDateMonth", null);
+        changeMasterDegreeThesisForm.set("proofDateYear", null);
+        changeMasterDegreeThesisForm.set("thesisDeliveryDateDay", null);
+        changeMasterDegreeThesisForm.set("thesisDeliveryDateMonth", null);
+        changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", null);
+    }
 
-		return mapping.findForward("start");
+    private void putMasterDegreeThesisDataInRequest(
+        HttpServletRequest request,
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion)
+    {
+        request.setAttribute(
+            SessionConstants.DISSERTATION_TITLE,
+            infoMasterDegreeThesisDataVersion.getDissertationTitle());
 
-	}
+        List finalResult = MasterDegreeClassification.toArrayList();
+        request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
 
-	private void transportData(ActionForm form, HttpServletRequest request) throws FenixActionException {
+        request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
+        request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
+        request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+    }
 
-		// dissertation title
-		DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
-		String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
-		request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
+    private InfoMasterDegreeThesisDataVersion readMasterDegreeThesisDataVersion(
+        ActionMapping mapping,
+        IUserView userView,
+        InfoStudentCurricularPlan infoStudentCurricularPlan)
+        throws NonExistingActionException, FenixActionException
+    {
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-		// final result options
-		List finalResult = MasterDegreeClassification.toArrayList();
-		request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
+        /* * * get master degree thesis data * * */
+        Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
+        try
+        {
+            infoMasterDegreeThesisDataVersion =
+                (InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
+                    userView,
+                    "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
+                    argsMasterDegreeThesisDataVersion);
+        }
+        catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException(
+                "error.exception.masterDegree.nonExistingMasterDegreeThesis",
+                mapping.findForward("error"));
 
-		// dates combo boxes options
-		request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
-		request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
-		request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        return infoMasterDegreeThesisDataVersion;
+    }
 
-	}
+    private InfoStudentCurricularPlan readStudentCurricularPlan(
+        ActionMapping mapping,
+        IUserView userView,
+        Integer degreeType,
+        Integer studentNumber)
+        throws FenixActionException, NonExistingActionException
+    {
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+
+        Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType)};
+        try
+        {
+            infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) ServiceUtils.executeService(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsStudentCurricularPlan);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+
+        if (infoStudentCurricularPlan == null)
+        {
+            throw new NonExistingActionException(
+                "error.exception.masterDegree.nonExistentActiveStudentCurricularPlan",
+                mapping.findForward("error"));
+        }
+        return infoStudentCurricularPlan;
+    }
+
+    public ActionForward reloadForm(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
+
+        transportData(form, request);
+
+        try
+        {
+            operations.getTeachersByNumbers(
+                form,
+                request,
+                "juriesNumbers",
+                SessionConstants.JURIES_LIST,
+                actionErrors);
+            operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+
+        }
+        catch (Exception e1)
+        {
+            throw new FenixActionException(e1);
+        }
+
+        return mapping.findForward("start");
+
+    }
+
+    private void transportData(ActionForm form, HttpServletRequest request) throws FenixActionException
+    {
+
+        // dissertation title
+        DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
+        String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
+        request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
+
+        // final result options
+        List finalResult = MasterDegreeClassification.toArrayList();
+        request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
+
+        // dates combo boxes options
+        request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
+        request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
+        request.setAttribute(SessionConstants.YEARS_LIST, Data.getExpirationYears());
+
+    }
 
 }
