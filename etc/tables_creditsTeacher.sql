@@ -25,6 +25,7 @@ create table CREDITS (
    INSTITUTION_WORK_TIME float,
    LESSONS float,
    DEGREE_FINAL_PROJECT_STUDENTS float,
+   OTHER_TYPE_CREDITS float,
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXECUTION_PERIOD, KEY_TEACHER))
    type=InnoDB;
@@ -33,6 +34,20 @@ create table CREDITS (
 -- Table structure for CREDIT_LINE
 -- Types : Sabática, Outro, Dispensa de Serviço Docente, Cargos de Gestão
 ----------------------------
+drop table if exists crd_OTHER_TYPE_CREDIT_LINE;
+create table crd_OTHER_TYPE_CREDIT_LINE (
+   ID_INTERNAL int(11) not null auto_increment,
+   ACK_OPT_LOCK int(11),
+   KEY_TEACHER int(11) not null,
+   CREDITS float not null,
+   REASON TEXT not null,
+   KEY_EXECUTION_PERIOD	int(11) not null,
+   primary key (ID_INTERNAL)
+)type=InnoDB;   
+
+
+
+
 drop table if exists CREDIT_LINE;
 create table CREDIT_LINE (
    ID_INTERNAL int(11) not null auto_increment,
