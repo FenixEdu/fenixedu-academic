@@ -13,6 +13,8 @@ import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.cache.ObjectCache;
 import org.apache.ojb.broker.cache.RuntimeCacheException;
 
+import ServidorPersistente.cache.logging.CacheLog;
+
 import com.opensymphony.oscache.base.CacheEntry;
 import com.opensymphony.oscache.general.GeneralCacheAdministrator;
 /**
@@ -24,6 +26,7 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 	private static GeneralCacheAdministrator admin = new GeneralCacheAdministrator();
 	private static final int NO_REFRESH = CacheEntry.INDEFINITE_EXPIRY;
 
+	
 	public ObjectCacheOSCacheImpl() {
 	}
 
@@ -38,6 +41,7 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 	  try {
 		this.remove(oid);
 		admin.putInCache(oid.toString(), obj);
+		CacheLog.incrementPuts();
 	  }
 	  catch (Exception e) {
 		throw new RuntimeCacheException(e.getMessage());
@@ -46,9 +50,12 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 
 	public Object lookup(Identity oid) {
 	  try {
-		return admin.getFromCache(oid.toString(), NO_REFRESH);
+	  	Object result = admin.getFromCache(oid.toString(), NO_REFRESH); 
+		CacheLog.incrementSuccessfulLookUps();
+		return result;
 	  }
 	  catch (Exception e) {
+	  	CacheLog.incrementFailedLookUps();
 		admin.cancelUpdate(oid.toString());
 		return null;
 	  }
@@ -57,6 +64,7 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 	public void remove(Identity oid) {
 	  try {
 		admin.flushEntry(oid.toString());
+		CacheLog.incrementRemoves();
 	  }
 	  catch (Exception e) {
 		throw new RuntimeCacheException(e.getMessage());
@@ -67,10 +75,12 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 	  if (admin != null) {
 		try {
 		  admin.flushAll();
+		  CacheLog.incrementClears();
 		}
 		catch (Exception e) {
 		  throw new RuntimeCacheException(e);
 		}
 	  }
 	}
+
 }
