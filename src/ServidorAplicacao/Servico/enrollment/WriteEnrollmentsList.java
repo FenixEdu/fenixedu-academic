@@ -25,6 +25,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author Tânia Pousão
@@ -90,12 +91,15 @@ public class WriteEnrollmentsList implements IService
 						executionPeriodId = executionPeriod.getIdInternal();
 					}
 
-					WriteEnrolment writeEnrolmentService = new WriteEnrolment();
+					WriteEnrollment writeEnrolmentService = new WriteEnrollment();
 					writeEnrolmentService.run(
 						null,
 						studentCurricularPlan.getIdInternal(),
 						curricularCourseID,
-						executionPeriodId);
+						executionPeriodId,
+						//TODO: JMOTA: FIX THIS ARGUMENT
+						CurricularCourseEnrollmentType.getEnum(1)
+					);
 				}
 			}
 		}

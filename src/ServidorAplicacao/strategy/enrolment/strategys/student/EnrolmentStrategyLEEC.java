@@ -22,7 +22,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IScientificArea;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ScientificArea;
-import ServidorAplicacao.Servico.enrollment.WriteEnrolment;
+import ServidorAplicacao.Servico.enrollment.WriteEnrollment;
 import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentApplyPrecedencesRule;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentMaximumNumberOfAcumulatedEnrollmentsAndMaximumNumberOfCoursesToEnrollFilterRule;
@@ -1499,7 +1499,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 				enrolment.setCreationDate(new Date());
-				WriteEnrolment.createAttend(enrolment);
+				WriteEnrollment.createAttend(enrolment);
 				return enrolment;
 			}
 		}

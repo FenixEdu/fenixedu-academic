@@ -2296,9 +2296,7 @@
         <filterChains>
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
-    </service>
-    
-    
+    </service>  
     <service>
         <name>ReadAllGrantMovementsByContract</name>
         <implementationClass> 
@@ -5600,9 +5598,9 @@
         </filterChains>
     </service>
     <service>
-        <name>WriteEnrolment</name>
+        <name>WriteEnrollment</name>
         <description>Enrolls student in curricular course</description>
-        <implementationClass>ServidorAplicacao.Servico.enrollment.WriteEnrolment</implementationClass>
+        <implementationClass>ServidorAplicacao.Servico.enrollment.WriteEnrollment</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>

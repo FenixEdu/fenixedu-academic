@@ -35,15 +35,17 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
+import Util.enrollment.CurricularCourseEnrollmentType;
+import Util.enrollment.EnrollmentCondition;
 
 /**
  * @author David Santos Jan 26, 2004
  */
-public class WriteEnrolment implements IService
+public class WriteEnrollment implements IService
 {
 	private static Map createdAttends = null;
 	
-	public WriteEnrolment()
+	public WriteEnrollment()
 	{
 		createdAttends = new HashMap();
 	}
@@ -53,7 +55,8 @@ public class WriteEnrolment implements IService
 		Integer executionDegreeId, 
 		Integer studentCurricularPlanID,
 		Integer curricularCourseID,
-		Integer executionPeriodID)
+		Integer executionPeriodID,
+		CurricularCourseEnrollmentType enrollmentType)
 		throws FenixServiceException
 	{
 		try
@@ -105,6 +108,7 @@ public class WriteEnrolment implements IService
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 				enrolmentToWrite.setCreationDate(new Date());
+				enrolmentToWrite.setCondition(getEnrollmentCondition(enrollmentType));
 
 				createEnrollmentEvaluation(enrolmentToWrite);
 
@@ -118,7 +122,6 @@ public class WriteEnrolment implements IService
 		}
 		catch (ExcepcaoPersistencia e)
 		{
-			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}
 		resetAttends();
@@ -238,6 +241,18 @@ public class WriteEnrolment implements IService
 		{
 			createdAttends.clear();
 		}
+	}
+	
+	protected EnrollmentCondition getEnrollmentCondition(CurricularCourseEnrollmentType enrollmentType) {
+	    switch (enrollmentType.getValue()) {
+        case 1:            
+            return EnrollmentCondition.getEnum(2);
+        case 2:
+            return EnrollmentCondition.getEnum(1);
+        default:
+            return null;
+        }
+	    
 	}
 
 }

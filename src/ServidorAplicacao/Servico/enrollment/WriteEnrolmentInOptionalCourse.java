@@ -78,7 +78,7 @@ public class WriteEnrolmentInOptionalCourse implements IService
 
 				createEnrollmentEvaluation(enrolmentToWrite);
 
-				WriteEnrolment.createAttend(studentCurricularPlan.getStudent(), chosenCurricularCourse, executionPeriod,
+				WriteEnrollment.createAttend(studentCurricularPlan.getStudent(), chosenCurricularCourse, executionPeriod,
 					enrolmentToWrite);
 			}
 
@@ -87,7 +87,7 @@ public class WriteEnrolmentInOptionalCourse implements IService
 			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}
-		WriteEnrolment.resetAttends();
+		WriteEnrollment.resetAttends();
 	}
 
 	private void createEnrollmentEvaluation(IEnrollment enrolment) throws ExcepcaoPersistencia
