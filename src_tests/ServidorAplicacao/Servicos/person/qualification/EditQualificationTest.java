@@ -47,7 +47,7 @@ public class EditQualificationTest
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
 	 */
 	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/person/testEditQualificationDataSet.xml";
+		return "etc/datasets/servicos/person/qualification/testEditQualificationDataSet.xml";
 	}
 	/*
 	 * (non-Javadoc)
@@ -195,7 +195,7 @@ public class EditQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditCreateGOMQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditCreateGOMQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -222,7 +222,7 @@ public class EditQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationGOMSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationGOMSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -248,7 +248,7 @@ public class EditQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditCreateTQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditCreateTQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -273,7 +273,7 @@ public class EditQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationTSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationTSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -303,7 +303,7 @@ public class EditQualificationTest
 			fail("CreateQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -330,7 +330,7 @@ public class EditQualificationTest
 			fail("CreateQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -361,7 +361,7 @@ public class EditQualificationTest
 			fail("CreateQualificationUnsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedEditQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "

@@ -46,7 +46,7 @@ public class DeleteQualificationTest
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
 	 */
 	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/person/testDeleteQualificationDataSet.xml";
+		return "etc/datasets/servicos/person/qualification/testDeleteQualificationDataSet.xml";
 	}
 	/*
 	 * (non-Javadoc)
@@ -152,7 +152,7 @@ public class DeleteQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteGOMQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteGOMQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -178,7 +178,7 @@ public class DeleteQualificationTest
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteTQualificationSuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteTQualificationSuccesfullDataSet.xml");
 
 			System.out.println(
 				getNameOfServiceToBeTested()
@@ -195,7 +195,7 @@ public class DeleteQualificationTest
 	/*
 	 * Valid user(teacher), but wrong arguments(Grant Owner)
 	 */
-	public void testCreateQualificationUnsuccessfull1() {
+	public void testDeleteQualificationUnsuccessfull1() {
 
 		try {
 			String[] args = getAuthorizedUserTeacher();
@@ -208,7 +208,7 @@ public class DeleteQualificationTest
 			fail("Delete Qualification Unsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -223,7 +223,7 @@ public class DeleteQualificationTest
 	/*
 	 * Valid user(Grant Owner), but wrong arguments(Teacher)
 	 */
-	public void testCreateQualificationUnsuccessfull2() {
+	public void testDeleteQualificationUnsuccessfull2() {
 		try {
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
@@ -235,7 +235,7 @@ public class DeleteQualificationTest
 			fail("Delete Qualification Unsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -251,7 +251,7 @@ public class DeleteQualificationTest
 	 * Valid user, but wrong arguments (deleting a qualification that does't
 	 * exists)
 	 */
-	public void testCreateQualificationUnsuccessfull3() {
+	public void testDeleteQualificationUnsuccessfull3() {
 		try {
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
@@ -266,7 +266,7 @@ public class DeleteQualificationTest
 			fail("Delete Qualification Unsuccessfull.");
 
 		} catch (NotAuthorizedException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
@@ -282,7 +282,7 @@ public class DeleteQualificationTest
 	/*
 	 * Valid user, but wrong arguments (qualification id is null)
 	 */
-	public void testCreateQualificationUnsuccessfull4() {
+	public void testDeleteQualificationUnsuccessfull4() {
 		try {
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
@@ -299,7 +299,7 @@ public class DeleteQualificationTest
 		} catch (NotAuthorizedException e) {
 			fail("DeleteQualificationUnsuccessfull: " + e);
 		} catch (FenixServiceException e) {
-			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedDeleteQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
