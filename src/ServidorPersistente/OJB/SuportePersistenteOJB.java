@@ -222,28 +222,42 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionYear()
 	 */
+
+	public IPersistentExecutionYear getIPersistentExecutionYear() {
+		return new ExecutionYearOJB();
+	}	
+		
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSite()
+	 */
 	public IPersistentSite getIPersistentSite() {
 		return new SiteOJB();
 	}
 
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSection()
+	 */
 	public IPersistentSection getIPersistentSection() {
 			return new SectionOJB();
 		}
 		
+
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentItem()
+	 */
 	public IPersistentItem getIPersistentItem() {
 			return new ItemOJB();
 		}
 		
+	/**
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentAnnouncement()
+	 */
 	public IPersistentAnnouncement getIPersistentAnnouncement() {
 			return new AnnouncementOJB();
 		}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExecutionYear()
-	 */
-	public IPersistentExecutionYear getIPersistentExecutionYear() {
-		return new ExecutionYearOJB();
-	}
 
 	
 	/* (non-Javadoc)
