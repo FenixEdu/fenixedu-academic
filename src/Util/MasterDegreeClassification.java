@@ -46,6 +46,12 @@ public final class MasterDegreeClassification extends ValuedEnum {
 	  return (MasterDegreeClassification) getEnum(MasterDegreeClassification.class, value);
 	}
  
+ 	public static String getClassificationString (int value){
+ 		if (value == 1) return "Aprovado";
+		if (value == 2) return "Não Aprovado";
+		else return "Não Definido";
+ 	}
+ 
 	public static Map getEnumMap() {
 	  return getEnumMap(MasterDegreeClassification.class);
 	}
