@@ -4,7 +4,6 @@
 package Dominio;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * @author Ivo Brandão

@@ -10,6 +10,7 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
  */
 
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -79,7 +80,7 @@ public class DeleteAnnouncementTest extends TestCaseDeleteAndEditServices {
 		argsDeleteAnnouncement[0] = infoSite;
 
 		//infoAnnouncement
-		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1", date, date, "information1", infoSite);
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1",(Timestamp) date,(Timestamp) date, "information1", infoSite);
 		argsDeleteAnnouncement[1] = infoAnnouncement;
 
 		return argsDeleteAnnouncement;

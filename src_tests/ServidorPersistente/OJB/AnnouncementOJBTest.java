@@ -171,7 +171,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", (Timestamp)date, this.site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testDeleteAllAnnouncements: readAnnouncementByTitleAndDateAndSite");
@@ -191,7 +191,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", (Timestamp)date, this.site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testDeleteAllAnnouncements: readAnnouncementByTitleAndDateAndSite");
@@ -215,7 +215,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		Date date = calendar.getTime();
         try {
             persistentSupport.iniciarTransaccao();
-            announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+            announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI",(Timestamp) date, this.site);
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia excepcaoPersistencia) {
             fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
@@ -231,7 +231,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", date, site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("unexistingAnnouncement", (Timestamp)date, site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
 			fail("testReadAnnouncementByTitleAndDateAndSite: readAnnouncementByTitleAndDateAndSite");
@@ -255,7 +255,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		Date date = calendar.getTime();		
         try {
             persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI",(Timestamp) date, this.site);
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite existing");
@@ -275,7 +275,7 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		announcement = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", date, this.site);
+			announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite("announcement1deTFCI", (Timestamp)date, this.site);
 			persistentSupport.confirmarTransaccao();
 		} catch(ExcepcaoPersistencia ex) {
 			fail("testDeleteAnnouncement: readAnnouncementByTitleAndCreationDateAndSite unexisting");

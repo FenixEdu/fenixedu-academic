@@ -9,6 +9,7 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
 /**
  * @author Ivo Brandão
  */
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -79,7 +80,7 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		argsEditAnnouncement[0] = infoSite;
 
 		//infoAnnouncement
-		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1", date, date, "information1", infoSite);
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("announcement1",(Timestamp) date,(Timestamp) date, "information1", infoSite);
 		argsEditAnnouncement[1] = infoAnnouncement;
 
 		//title
@@ -119,7 +120,7 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		argsEditAnnouncement[0] = infoSite;
 
 		//infoAnnouncement
-		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("unexistingAnnouncement", date, date, "information1", infoSite);
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement("unexistingAnnouncement",(Timestamp) date,(Timestamp) date, "information1", infoSite);
 		argsEditAnnouncement[1] = infoAnnouncement;
 
 		//title

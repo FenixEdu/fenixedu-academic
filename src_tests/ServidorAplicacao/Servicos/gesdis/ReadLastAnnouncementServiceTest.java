@@ -1,5 +1,6 @@
 package ServidorAplicacao.Servicos.gesdis;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -159,7 +160,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 					.getIPersistentAnnouncement()
 					.readAnnouncementByTitleAndCreationDateAndSite(
 						"announcement2deTFCI",
-						date,
+			(Timestamp)date,
 						site);
 			infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
 			SuportePersistenteOJB.getInstance().confirmarTransaccao();
