@@ -4,10 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<h2>Listagem de Horários por Turmas</h2>
 <span class="error"><html:errors/></span>
 <html:form action="/viewAllClassesSchedulesDA">
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="list"/>
+	<bean:define id="infoExecutionDegreesList" name="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" scope="request"/>
+	<html:hidden property="<%=SessionConstants.INFO_EXECUTION_DEGREE_LIST%>" value="infoExecutionDegreesList"/>
     <table width="100%">
     	<tr>
 			<td class="infoop"><bean:message key="label.select.degrees" /></td>    	
@@ -18,15 +21,15 @@
    	<br />
 	<br />
 	
-	<logic:present name="<%= SessionConstants.DEGREE_NAMES_LIST %>" scope="request">
+	<logic:present name="<%= SessionConstants.INFO_EXECUTION_DEGREE_LIST %>" scope="request">
 		<html:checkbox property="selectAllDegrees">
 			<bean:message key="checkbox.show.all.degrees"/><br />
 		</html:checkbox>
-		<logic:iterate id="item" name="<%= SessionConstants.DEGREE_NAMES_LIST %>">
-			<html:multibox property="selectedDegrees">
-				<bean:write name="item"/>
-			</html:multibox>
-			<bean:write name="item"/><br/>
+		<%int index = 0;%>
+		<logic:iterate id="infoExecutionDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_LIST %>">
+			<html:multibox property="selectedDegrees" value="<%= new String(""+index)%>"/>
+			<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/> em <bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
+			<%index++;%>			
 		</logic:iterate>
 	</logic:present>
 	<br/>

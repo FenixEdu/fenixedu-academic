@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoDegree;
@@ -58,49 +59,9 @@ public class ViewAllClassesSchedulesDA extends DispatchAction {
 				executionDegreeList,
 				new ComparatorByNameForInfoExecutionDegree());
 
-			ArrayList degreeNamesList = new ArrayList();
-
-			Iterator iterator = executionDegreeList.iterator();
-
-			int index = 0;
-			while (iterator.hasNext()) {
-				InfoExecutionDegree infoExecutionDegree =
-					(InfoExecutionDegree) iterator.next();
-				String name =
-					infoExecutionDegree
-						.getInfoDegreeCurricularPlan()
-						.getInfoDegree()
-						.getNome();
-
-				name =
-					infoExecutionDegree
-						.getInfoDegreeCurricularPlan()
-						.getInfoDegree()
-						.getTipoCurso()
-						.toString()
-						+ " em "
-						+ name;
-
-				name
-					+= duplicateInfoDegree(
-						executionDegreeList,
-						infoExecutionDegree)
-					? "-"
-						+ infoExecutionDegree
-							.getInfoDegreeCurricularPlan()
-							.getName()
-					: "";
-
-				degreeNamesList.add(name);
-			}
-
 			request.setAttribute(
 				SessionConstants.INFO_EXECUTION_DEGREE_LIST,
 				executionDegreeList);
-
-			request.setAttribute(
-				SessionConstants.DEGREE_NAMES_LIST,
-				degreeNamesList);
 
 			return mapping.findForward("choose");
 		} else
@@ -120,13 +81,54 @@ public class ViewAllClassesSchedulesDA extends DispatchAction {
 			GestorServicos gestor = GestorServicos.manager();
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			DynaActionForm chooseViewAllClassesSchedulesContextForm =
+				(DynaActionForm) form;
 
 			InfoExecutionPeriod infoExecutionPeriod =
 				setExecutionContext(request);
 
-			Object[] args = { infoExecutionPeriod };
+			Object argsLerLicenciaturas[] =
+				{ infoExecutionPeriod.getInfoExecutionYear()};
+			List infoExecutionDegreeList =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionDegreesByExecutionYear",
+					argsLerLicenciaturas);
+			Collections.sort(
+				infoExecutionDegreeList,
+				new ComparatorByNameForInfoExecutionDegree());
+
+			Boolean selectAllDegrees =
+				(Boolean) chooseViewAllClassesSchedulesContextForm.get(
+					"selectAllDegrees");
+			List selectedInfoExecutionDegrees = null;
+			if (selectAllDegrees != null && selectAllDegrees.booleanValue()) {
+				selectedInfoExecutionDegrees = infoExecutionDegreeList;
+			} else {
+				String[] selectedDegreesIndexes =
+					(String[]) chooseViewAllClassesSchedulesContextForm.get(
+						"selectedDegrees");
+				selectedInfoExecutionDegrees = new ArrayList();						
+				for (int i = 0; i < selectedDegreesIndexes.length; i++) {
+					//System.out.println("### "+selectedDegreesIndexes[i]);
+					Integer index = new Integer("" + selectedDegreesIndexes[i]);
+					selectedInfoExecutionDegrees.add(
+						(InfoExecutionDegree) infoExecutionDegreeList.get(
+							index.intValue()));
+				}
+			}
+
+			if (selectedInfoExecutionDegrees == null)
+			System.out.println("## É NULL");
+			else System.out.println("## NAO e null, size="+selectedInfoExecutionDegrees.size());
+
+			Object[] args =
+				{ selectedInfoExecutionDegrees, infoExecutionPeriod };
 			List infoViewClassScheduleList =
-				(List) gestor.executar(userView, "ReadAllClassesLessons", args);
+				(List) gestor.executar(
+					userView,
+					"ReadDegreesClassesLessons",
+					args);
 
 			if (infoViewClassScheduleList != null
 				&& infoViewClassScheduleList.isEmpty()) {
