@@ -21,7 +21,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.ISuportePersistente;
-import Util.EnrolmentPolicyType;
+import Util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
@@ -201,7 +201,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 			}
 			
 			GroupProperties newGroupProperties =  new GroupProperties(new Integer(4),new Integer (1),
-			new Integer(3),new EnrolmentPolicyType(2),
+			new Integer(3),new EnrolmentGroupPolicyType(2),
 			new Integer(10),"projectD",executionCourse2);
 			
 			try {

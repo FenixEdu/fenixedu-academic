@@ -5,7 +5,7 @@
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package Dominio;
-import Util.EnrolmentPolicyType;
+import Util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
@@ -19,7 +19,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	private Integer maximumCapacity;
 	private Integer minimumCapacity;
 	private Integer idealCapacity;
-	private EnrolmentPolicyType enrolmentPolicy;
+	private EnrolmentGroupPolicyType enrolmentPolicy;
 	private Integer groupMaximumNumber;
 	private String projectName;
 	private Integer keyExecutionCourse;
@@ -42,7 +42,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	 * Construtor
 	 */
 	public GroupProperties(Integer maximumCapacity,Integer minimumCapacity,
-							Integer idealCapacity,EnrolmentPolicyType enrolmentPolicy,
+							Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
 	 						Integer groupMaximumNumber,String projectName,IDisciplinaExecucao executionCourse) {
 		this.maximumCapacity=maximumCapacity;
 		this.minimumCapacity=minimumCapacity;
@@ -113,7 +113,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	/**
 	* @return EnrolmentPolicy
 	*/
-	public EnrolmentPolicyType getEnrolmentPolicy() {
+	public EnrolmentGroupPolicyType getEnrolmentPolicy() {
 		return enrolmentPolicy;
 	}
 			
@@ -175,7 +175,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	* Sets the enrolmentPolicy.
 	* @param enrolmentPolicy The enrolmentPolicy to set
 	*/
-	public void setEnrolmentPolicy(EnrolmentPolicyType enrolmentPolicy) {
+	public void setEnrolmentPolicy(EnrolmentGroupPolicyType enrolmentPolicy) {
 		this.enrolmentPolicy=enrolmentPolicy;
 	}		
 	/**

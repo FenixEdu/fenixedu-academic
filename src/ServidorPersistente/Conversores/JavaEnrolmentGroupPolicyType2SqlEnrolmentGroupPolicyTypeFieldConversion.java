@@ -8,7 +8,7 @@ package ServidorPersistente.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.EnrolmentPolicyType;
+import Util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
@@ -16,16 +16,16 @@ import Util.EnrolmentPolicyType;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class JavaEnrolmentPolicyType2SqlEnrolmentPolicyTypeFieldConversion implements FieldConversion {
+public class JavaEnrolmentGroupPolicyType2SqlEnrolmentGroupPolicyTypeFieldConversion implements FieldConversion {
     
 /*
  * @see FieldConversion#javaToSql(Object)
  */
 	public Object javaToSql(Object source)
 	{
-		if (source instanceof EnrolmentPolicyType)
+		if (source instanceof EnrolmentGroupPolicyType)
 		{
-			EnrolmentPolicyType s = (EnrolmentPolicyType) source;
+			EnrolmentGroupPolicyType s = (EnrolmentGroupPolicyType) source;
 			return s.getType();
 		}
 		else 			
@@ -41,7 +41,7 @@ public class JavaEnrolmentPolicyType2SqlEnrolmentPolicyTypeFieldConversion imple
 			if (source instanceof Integer)
 			{
 				Integer src = (Integer) source;
-				return new EnrolmentPolicyType(src);
+				return new EnrolmentGroupPolicyType(src);
 			}
 			else
 			{

@@ -12,7 +12,7 @@ package Util;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class EnrolmentPolicyType {
+public class EnrolmentGroupPolicyType {
 	
 	public static final int ATOMIC = 1;
 	public static final int INDIVIDUAL = 2;
@@ -20,14 +20,14 @@ public class EnrolmentPolicyType {
 	private Integer type;
 
 	/** Creates a new instance of EnrolmentPolicyType */
-	public EnrolmentPolicyType() {
+	public EnrolmentGroupPolicyType() {
 	}
 
-	public EnrolmentPolicyType(int type) {
+	public EnrolmentGroupPolicyType(int type) {
 		this.type = new Integer(type);
 	}
 
-	public EnrolmentPolicyType(Integer type) {
+	public EnrolmentGroupPolicyType(Integer type) {
 		this.type = type;
 	}
 
@@ -50,8 +50,8 @@ public class EnrolmentPolicyType {
 	}
 
 	public boolean equals(Object o) {
-			if (o instanceof EnrolmentPolicyType) {
-				EnrolmentPolicyType aux = (EnrolmentPolicyType) o;
+			if (o instanceof EnrolmentGroupPolicyType) {
+				EnrolmentGroupPolicyType aux = (EnrolmentGroupPolicyType) o;
 				return this.type.equals(aux.getType());
 			} else {
 				return false;

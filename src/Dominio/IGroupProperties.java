@@ -6,7 +6,7 @@
  */
 package Dominio;
 
-import Util.EnrolmentPolicyType;
+import Util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
@@ -20,7 +20,7 @@ public interface IGroupProperties extends IDomainObject{
 		public Integer getMaximumCapacity();
 		public Integer getMinimumCapacity() ;
 		public Integer getIdealCapacity();
-		public EnrolmentPolicyType getEnrolmentPolicy();
+		public EnrolmentGroupPolicyType getEnrolmentPolicy();
 		public Integer getGroupMaximumNumber();
 		public String getProjectName();
 		public IDisciplinaExecucao getExecutionCourse();
@@ -28,7 +28,7 @@ public interface IGroupProperties extends IDomainObject{
 		public void setMaximumCapacity(Integer maximumCapacity);
 		public void setMinimumCapacity(Integer minimumCapacity);
 		public void setIdealCapacity(Integer idealCapacity);
-		public void setEnrolmentPolicy(EnrolmentPolicyType enrolmentPolicy);
+		public void setEnrolmentPolicy(EnrolmentGroupPolicyType enrolmentPolicy);
 		public void setGroupMaximumNumber(Integer groupMaximumNumber);
 		public void setProjectName(String projectName);
 		public void setExecutionCourse(IDisciplinaExecucao executionCourse);	

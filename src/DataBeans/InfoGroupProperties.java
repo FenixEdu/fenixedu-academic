@@ -6,7 +6,7 @@
  */
 package DataBeans;
 
-import Util.EnrolmentPolicyType;
+import Util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo
@@ -19,7 +19,7 @@ public class InfoGroupProperties {
 		private Integer maximumCapacity;
 		private Integer minimumCapacity;
 		private Integer idealCapacity;
-		private EnrolmentPolicyType enrolmentPolicy;
+		private EnrolmentGroupPolicyType enrolmentPolicy;
 		private Integer groupMaximumNumber;
 		private String projectName;
 		private InfoExecutionCourse infoExecutionCourse;
@@ -40,7 +40,7 @@ public class InfoGroupProperties {
 		 * Construtor
 		 */
 		public InfoGroupProperties(Integer maximumCapacity,Integer minimumCapacity,
-								Integer idealCapacity,EnrolmentPolicyType enrolmentPolicy,
+								Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
 								Integer groupMaximumNumber,InfoExecutionCourse infoExecutionCourse) {
 			this.maximumCapacity=maximumCapacity;
 			this.minimumCapacity=minimumCapacity;
@@ -105,7 +105,7 @@ public class InfoGroupProperties {
 		/**
 		* @return EnrolmentPolicy
 		*/
-		public EnrolmentPolicyType getEnrolmentPolicy() {
+		public EnrolmentGroupPolicyType getEnrolmentPolicy() {
 			return enrolmentPolicy;
 		}
 			
@@ -161,7 +161,7 @@ public class InfoGroupProperties {
 		* Sets the enrolmentPolicy.
 		* @param enrolmentPolicy The enrolmentPolicy to set
 		*/
-		public void setEnrolmentPolicy(EnrolmentPolicyType enrolmentPolicy) {
+		public void setEnrolmentPolicy(EnrolmentGroupPolicyType enrolmentPolicy) {
 			this.enrolmentPolicy=enrolmentPolicy;
 		}		
 		/**
