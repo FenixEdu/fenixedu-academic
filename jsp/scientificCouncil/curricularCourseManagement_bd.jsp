@@ -14,4 +14,4 @@
 <li><html:link page="/curricularCourseManager.do?method=prepareSelectDegree" ><bean:message key="link.curricularInformationManagement"/></html:link></li>
 <br/>
 <br/>
-<li><html:link page="/curricularCourseManager.do?method=prepareSelectDegree" ><bean:message key="link.basicCurricularCourseManagement"/></html:link></li>
+<li><html:link page="/basicCurricularCourseManager.do?method=prepareSelectDegree" ><bean:message key="link.basicCurricularCourseManagement"/></html:link></li>

@@ -9,12 +9,12 @@
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 	
-      <!-- Dynamic-FormBean para EscolherContexto de disciplina curricular -->
-      <form-bean name="curricularCourseContextForm"
-                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+      <!-- Dynamic-FormBean for basic curricular course selection -->
+     <form-bean name="selectBasicCurricularCourses"
+                 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-        <form-property name="index" type="java.lang.String"/>
-        <form-property name="page" type="java.lang.Integer" initial="0"/>
+         <form-property name="basicCurricularCourses" type="java.lang.String[]" />  
+         <form-property name="nonBasicCurricularCourses" type="java.lang.String[]" />  
       </form-bean>
 		
     </form-beans>
@@ -69,7 +69,18 @@
     		<forward name="showCurricularCourses" path="showCurricularCourses.jsp"/>
     		
     		</action>	  
-	
+	<action path="/basicCurricularCourseManager"
+			name="selectBasicCurricularCourses"
+    		type="ServidorApresentacao.Action.scientificCouncil.CurricularCourseManagerDA" 
+    		parameter="method"
+    		scope="request"
+    		
+    		>
+    		<forward name="selectDegree" path="selectDegreeBasic.jsp"/>
+    		<forward name="showDegreeCurricularPlans" path="showDegreeCurricularPlansBasic.jsp"/>
+    		<forward name="showCurricularCourses" path="showCurricularCoursesBasic.jsp"/>
+    		
+    		</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoSiteBasicCurricularCourses;
 import DataBeans.InfoSiteCurricularCourses;
 import DataBeans.InfoSiteDegreeCurricularPlans;
 import DataBeans.InfoSiteSCDegrees;
@@ -44,72 +45,122 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);			
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			ISiteComponent component = new InfoSiteSCDegrees();
-			readSiteView(request, userView, null, null,null, component);			
+			readSiteView(request, userView, null, null, null, component);
 			return mapping.findForward("selectDegree");
 		} else
 			throw new FenixActionException();
 		//			 nao ocorre... pedido passa pelo filtro Autorizacao
 
 	}
-	
+
 	public ActionForward showDegreeCurricularPlans(
-				ActionMapping mapping,
-				ActionForm form,
-				HttpServletRequest request,
-				HttpServletResponse response)
-				throws FenixActionException {
-				HttpSession session = request.getSession(false);
-				if (session != null) {
-					IUserView userView =
-						(IUserView) session.getAttribute(SessionConstants.U_VIEW);	
-					
-					String degreeIdString = (String) request.getParameter("index");	
-				
-					Integer degreeId= new Integer(degreeIdString);
-					ISiteComponent component = new InfoSiteDegreeCurricularPlans();
-					readSiteView(request, userView, degreeId, null,null, component);			
-					return mapping.findForward("showDegreeCurricularPlans");
-				} else
-					throw new FenixActionException();
-				//			 nao ocorre... pedido passa pelo filtro Autorizacao
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			}
-	
-	
+			String degreeIdString = (String) request.getParameter("index");
+
+			Integer degreeId = new Integer(degreeIdString);
+			ISiteComponent component = new InfoSiteDegreeCurricularPlans();
+			readSiteView(request, userView, degreeId, null, null, component);
+			return mapping.findForward("showDegreeCurricularPlans");
+		} else
+			throw new FenixActionException();
+		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+	}
+
 	public ActionForward showCurricularCourses(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				IUserView userView =
-					(IUserView) session.getAttribute(SessionConstants.U_VIEW);	
-					
-				String degreeCurricularPlanIdString = (String) request.getParameter("index");	
-				Integer degreeCurricularPlanId= new Integer(degreeCurricularPlanIdString);
-				
-				ISiteComponent component = new InfoSiteCurricularCourses();
-				readSiteView(request, userView, null, null,degreeCurricularPlanId, component);			
-				return mapping.findForward("showCurricularCourses");
-			} else
-				throw new FenixActionException();
-			//			 nao ocorre... pedido passa pelo filtro Autorizacao
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		}
+			String degreeCurricularPlanIdString =
+				(String) request.getParameter("index");
+			Integer degreeCurricularPlanId =
+				new Integer(degreeCurricularPlanIdString);
 
-	private void readSiteView(HttpServletRequest request, IUserView userView, Integer degreeId, Integer curricularYear,Integer degreeCurricularPlanId, ISiteComponent component) throws FenixActionException {
-		Object[] args = {component,degreeId,curricularYear,degreeCurricularPlanId};
-		SiteView siteView = null;			
+			ISiteComponent component = new InfoSiteCurricularCourses();
+			readSiteView(
+				request,
+				userView,
+				null,
+				null,
+				degreeCurricularPlanId,
+				component);
+			return mapping.findForward("showCurricularCourses");
+		} else
+			throw new FenixActionException();
+		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+	}
+
+	public ActionForward showBasicCurricularCourses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+			String degreeCurricularPlanIdString =
+				(String) request.getParameter("index");
+			Integer degreeCurricularPlanId =
+				new Integer(degreeCurricularPlanIdString);
+
+			ISiteComponent component = new InfoSiteBasicCurricularCourses();
+			readSiteView(
+				request,
+				userView,
+				null,
+				null,
+				degreeCurricularPlanId,
+				component);
+			return mapping.findForward("showCurricularCourses");
+		} else
+			throw new FenixActionException();
+		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+	}
+
+	private void readSiteView(
+		HttpServletRequest request,
+		IUserView userView,
+		Integer degreeId,
+		Integer curricularYear,
+		Integer degreeCurricularPlanId,
+		ISiteComponent component)
+		throws FenixActionException {
+		Object[] args =
+			{ component, degreeId, curricularYear, degreeCurricularPlanId };
+		SiteView siteView = null;
 		try {
-		siteView=(SiteView) ServiceUtils.executeService(userView, "ScientificCouncilComponentService", args);
+			siteView =
+				(SiteView) ServiceUtils.executeService(
+					userView,
+					"ScientificCouncilComponentService",
+					args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
-		}			
-		request.setAttribute("siteView",siteView);
+		}
+		request.setAttribute("siteView", siteView);
 	}
 
 }

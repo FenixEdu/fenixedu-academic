@@ -214,7 +214,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 	public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(IDegreeCurricularPlan degreeCurricularPlan,Boolean basic) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyDegreeCurricularPlan",degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("degreeCurricularPlanKey",degreeCurricularPlan.getIdInternal());
 		criteria.addEqualTo("basic",basic);
 		return queryList(CurricularCourse.class,criteria);
 		}
