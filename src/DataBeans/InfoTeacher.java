@@ -14,7 +14,7 @@ import Dominio.Teacher;
 /**
  * @author João Mota
  */
-public class InfoTeacher extends InfoObject {
+public class InfoTeacher extends InfoObject implements ISmsDTO {
 
     private Integer teacherNumber;
 
@@ -194,5 +194,10 @@ public class InfoTeacher extends InfoObject {
             infoTeacher.copyToDomain(infoTeacher,teacher);
         }
         return teacher;
+    }
+    
+    public String toSmsText() {
+        
+        return "Nome: " + this.infoPerson.getNome() + " Numero: " + this.teacherNumber;
     }
 }
