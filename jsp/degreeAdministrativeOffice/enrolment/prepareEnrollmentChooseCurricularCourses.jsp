@@ -23,7 +23,6 @@
 		</tr>
 	</table>
 	<br />
-	<%--<bean:define id="branches" name="infoStudentEnrolmentContext" property="infoAreas"/>--%>
 	<table>	
 		<tr>
 			<td class="listClasses-header"><bean:message key="label.student.enrollment.specializationArea" /></td>
@@ -33,7 +32,7 @@
 		<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 			<tr>
 				<td class="listClasses">
-					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
+					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />
 				</td>
 				<td class="listClasses">
 					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
