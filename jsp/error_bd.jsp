@@ -2,14 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
-<html>
-  <head>
     <title><bean:message key="title.error"/></title>
-  </head>
-  <body>
     <html:errors/>
-   <center> <b><bean:message key="message.error.ocurred"/></b> </center>
+    <center> <b><bean:message key="message.error.ocurred"/></b> </center>
      <br/> <bean:message key="message.error.sendEmail"/>
      <br/><bean:message key="message.error.goBack"/>
      <br/>
@@ -29,8 +24,7 @@
     	<tr><td>
    		<bean:message key="property.message"/></td><td>
     	<html:textarea property="body" value=""/></td>
-    	</tr>
-    	
+    	</tr>	
       </table>	
       <center>
     	<html:submit >
@@ -38,5 +32,3 @@
     	</html:submit>
    	  </center>
     </html:form>
-  </body>
-</html>
