@@ -27,6 +27,11 @@
 				</html:link>
 			</li>
 			<li><bean:message key="link.teacher.sheet"/></li>
+			<li>
+				<html:link page="/prepareListDepartmentTeachers.do">
+					<bean:message key="link.list-department-teachers"/>
+				</html:link>
+			</li>
 		</ul>
 		<br/>
 	</logic:present>
