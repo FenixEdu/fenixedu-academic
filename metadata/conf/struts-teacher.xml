@@ -126,7 +126,7 @@
 
 	<!-- input of actions for announcement management -->	
 	<action name="insertAnnouncementForm"
-		type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
+		type="ServidorApresentacao.Action.teacher.AnnouncementManagementDispatchAction"
 		scope="session"
 		parameter="method"      			
         path="/announcementManagementAction" 
@@ -142,7 +142,7 @@
 	</action>
 
 	<action name="insertAnnouncementForm"
-		type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
+		type="ServidorApresentacao.Action.teacher.AnnouncementManagementDispatchAction"
 		scope="session"
 		parameter="method"      			
         path="/editAnnouncement" 

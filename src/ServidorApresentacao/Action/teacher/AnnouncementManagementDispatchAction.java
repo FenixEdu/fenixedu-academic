@@ -22,7 +22,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author Ivo Brandão
  */
-public class AnnouncementManagementAction extends FenixDispatchAction {
+public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
 	public ActionForward prepareCreateAnnouncement(
 		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
