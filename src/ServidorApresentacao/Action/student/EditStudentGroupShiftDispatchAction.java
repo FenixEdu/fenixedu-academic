@@ -59,15 +59,15 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 			error1 = new ActionError("errors.editStudentGroupShift.notEnroled");
 			actionErrors1.add("errors.editStudentGroupShift.notEnroled", error1);
 			saveErrors(request, actionErrors1);
-			return mapping.findForward("viewStudentGroups");
-			
+			return mapping.findForward("viewStudentGroupInformation");
+
 		} catch (FenixServiceException e) {
 			ActionErrors actionErrors2 = new ActionErrors();
 			ActionError error2 = null;
 			error2 = new ActionError("error.noGroup");
 			actionErrors2.add("error.noGroup", error2);
 			saveErrors(request, actionErrors2);
-			return mapping.findForward("viewStudentGroups");
+			return mapping.findForward("viewShiftsAndGroups");
 		}
 
 		List shifts = null;
@@ -86,7 +86,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 			actionErrors3.add("errors.editStudentGroupShift.allShiftsFull", error3);
 			saveErrors(request, actionErrors3);
 			request.setAttribute("groupPropertiesCode", groupPropertiesCode);
-			return mapping.findForward("viewStudentGroups");
+			return mapping.findForward("viewStudentGroupInformation");
 		} else {
 
 			ArrayList shiftsList = new ArrayList();
@@ -107,13 +107,13 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 						shiftsList.add(new LabelValueBean(label, value));
 					}
 				}
-				if(shiftsList.size() == 1){
+				if (shiftsList.size() == 1) {
 					ActionErrors actionErrors4 = new ActionErrors();
 					ActionError error4 = null;
 					error4 = new ActionError("errors.editStudentGroupShift.allShiftsFull");
 					actionErrors4.add("errors.editStudentGroupShift.allShiftsFull", error4);
 					saveErrors(request, actionErrors4);
-					return mapping.findForward("viewStudentGroups");	
+					return mapping.findForward("viewStudentGroupInformation");
 				}
 				request.setAttribute("shiftsList", shiftsList);
 			}
@@ -146,34 +146,32 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 			saveErrors(request, actionErrors);
 			return prepareEdit(mapping, form, request, response);
 
-
 		} else {
 			Integer newShiftCode = new Integer(newShiftString);
 			Object args[] = { studentGroupCode, newShiftCode, userView.getUtilizador()};
 
 			try {
 				ServiceUtils.executeService(userView, "EditGroupShift", args);
-				
-			} catch (InvalidSituationServiceException e) {
-				ActionErrors actionErrors = new ActionErrors();
-				ActionError error = null;
-				error = new ActionError("errors.editStudentGroupShift.notEnroled");
-				actionErrors.add("errors.editStudentGroupShift.notEnroled", error);
-				saveErrors(request, actionErrors);
-				return mapping.findForward("viewProjectShifts");
-
 			} catch (InvalidArgumentsServiceException e) {
 				ActionErrors actionErrors = new ActionErrors();
 				ActionError error = null;
 				error = new ActionError("error.noGroup");
 				actionErrors.add("error.noGroup", error);
 				saveErrors(request, actionErrors);
-				return mapping.findForward("viewProjectShifts");
+				return mapping.findForward("viewShiftsAndGroups");
+
+			} catch (InvalidSituationServiceException e) {
+				ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+				error = new ActionError("errors.editStudentGroupShift.notEnroled");
+				actionErrors.add("errors.editStudentGroupShift.notEnroled", error);
+				saveErrors(request, actionErrors);
+				return mapping.findForward("viewStudentGroupInformation");
 
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-			return mapping.findForward("viewProjectShifts");
+			return mapping.findForward("viewShiftsAndGroups");
 
 		}
 

@@ -63,11 +63,10 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors2 = new ActionErrors();
 			ActionError error2 = null;
-			// Create an ACTION_ERROR 
 			error2 = new ActionError("errors.existing.groupStudentEnrolment");
 			actionErrors2.add("errors.existing.groupStudentEnrolment", error2);
 			saveErrors(request, actionErrors2);
-			return mapping.findForward("viewProjectShifts");
+			return mapping.findForward("viewShiftsAndGroups");
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -90,7 +89,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			actionErrors.add("errors.fullShift", error);
 			saveErrors(request, actionErrors);
 
-			return mapping.findForward("viewProjectShifts");
+			return mapping.findForward("viewShiftsAndGroups");
 
 		} else {
 			ArrayList shiftsList = new ArrayList();
@@ -201,7 +200,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			error1 = new ActionError("errors.existing.groupStudentEnrolment");
 			actionErrors1.add("errors.existing.groupStudentEnrolment", error1);
 			saveErrors(request, actionErrors1);
-			return mapping.findForward("viewProjectShifts");
+			return mapping.findForward("viewShiftsAndGroups");
 
 		} catch (FenixServiceException e) {
 			ActionErrors actionErrors1 = new ActionErrors();
@@ -216,7 +215,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
 		request.setAttribute("groupPropertiesCode", groupPropertiesCode);
 
-		return mapping.findForward("viewProjectShifts");
+		return mapping.findForward("viewShiftsAndGroups");
 
 	}
 

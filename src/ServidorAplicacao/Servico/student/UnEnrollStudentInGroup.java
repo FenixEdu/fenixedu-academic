@@ -67,6 +67,8 @@ public class UnEnrollStudentInGroup implements IServico {
 			IFrequentaPersistente persistentAttend = persistentSuport.getIFrequentaPersistente();
 
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
+			System.out.println("NO SERVICO STUDENT_GROUP CODE"+studentGroupCode);
+			System.out.println("NO SERVICO STUDENT_GROUP "+studentGroup);
 			
 			if(studentGroup == null)
 				throw new InvalidSituationServiceException();
@@ -95,6 +97,7 @@ public class UnEnrollStudentInGroup implements IServico {
 			if (resultEmpty) 
 			{
 				persistentStudentGroup.delete(studentGroup);
+				return new Boolean(false);
 			}
 	
 		} catch (ExcepcaoPersistencia e) {

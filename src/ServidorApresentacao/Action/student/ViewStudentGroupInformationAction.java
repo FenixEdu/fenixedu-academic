@@ -4,9 +4,6 @@
  */
 package ServidorApresentacao.Action.student;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +18,7 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentGroup;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -46,23 +44,19 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 		try {
 			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args);
 
-		} catch (FenixServiceException e) {
+		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			error = new ActionError("error.noGroup");
 			actionErrors.add("error.noGroup", error);
 			saveErrors(request, actionErrors);
-			return mapping.findForward("viewStudentGroups");
+			return mapping.findForward("viewShiftsAndGroups");
+		}catch (FenixServiceException e){
+			throw new FenixActionException(e);
 		}
+		
 		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
-
-		List infoSiteStudentInformationList = new ArrayList();
-		if (infoSiteStudentGroup != null) {
-			infoSiteStudentInformationList = infoSiteStudentGroup.getInfoSiteStudentInformationList();
-		}
-
-		request.setAttribute("infoSiteStudentInformationList", infoSiteStudentInformationList);
-
+		request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 		return mapping.findForward("sucess");
 	}
 }

@@ -27,7 +27,6 @@
 
 <html:form action="/groupEnrolment" method="get">
 
-
 <br>
 
 <h2><span class="error"><html:errors/></span></h2>		 
@@ -107,7 +106,7 @@
 		</html:form>
 	</td>
 	<td>
-		<html:form action="/viewProjectShifts" method="get">
+		<html:form action="/viewShiftsAndGroups" method="get">
 	
 		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>

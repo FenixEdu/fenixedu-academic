@@ -84,15 +84,10 @@
 		<put name="body" value="/student/viewExecutionCourseProjects_bd.jsp" />		
 	</definition>
 	
-	<definition name="view-Project-Shifts" extends="definition.student.masterPage">
-		<put name="body" value="/student/viewProjectShifts_bd.jsp" />		
+	<definition name="view-Shifts-Groups" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewShiftsAndGroups_bd.jsp" />		
 	</definition>
-	
-	
-	<definition name="view-StudentGroups" extends="definition.student.masterPage">
-		<put name="body" value="/student/viewStudentGroups_bd.jsp" />		
-	</definition>
-	
+
 	<definition name="view-StudentGroup-Information" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewStudentGroupInformation_bd.jsp" />		
 	</definition>

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 
-<logic:present name="infoSiteStudentInformationList">
+<logic:present name="infoSiteStudentGroup">
 
 <table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
@@ -19,13 +19,13 @@
 
 <html:form action="/groupStudentEnrolment" method="get">
 	
-	<logic:empty name="infoSiteStudentInformationList">
+	<logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 	</logic:empty> 
 	
 
 
-	<logic:notEmpty name="infoSiteStudentInformationList">
+	<logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 	<table width="50%" cellpadding="0" border="0">
 		<h2><bean:message key="title.GroupStudentEnrolment"/></h2>
 	
@@ -41,7 +41,7 @@
 	</tr>
 	
 	 <bean:define id="mailingList" value=""/>
-	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentInformationList">			
+	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">			
 		<tr>		
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>	
@@ -91,7 +91,7 @@
 			  </td>
 				
 			<td>
-			<html:form action="/viewStudentGroups" method="get">
+			<html:form action="/viewStudentGroupInformation" method="get">
 	
 			<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 			</html:cancel>
@@ -99,7 +99,8 @@
 			<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 			<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
 			<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
-		
+			<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />	
+				
 			</html:form>
 			</td>
 		</tr>
@@ -108,10 +109,7 @@
 
 
 
-
-
-
-<logic:notPresent name="infoSiteStudentInformationList">
+<logic:notPresent name="infoSiteStudentGroup">
 <h4>
 <bean:message key="message.infoSiteStudentGroupList.not.available" />
 </h4>

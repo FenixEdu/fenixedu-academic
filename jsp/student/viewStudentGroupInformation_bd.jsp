@@ -1,76 +1,168 @@
-
 <%@ page language="java" %>
-
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page import="java.util.TreeMap" %>
+<%@ page import="java.util.Map" %>
 
 
-<logic:present name="infoSiteStudentInformationList">
+
+<logic:present name="infoSiteStudentGroup">
 	
-
+	<h2><bean:message key="title.StudentGroupInformation"/></h2>
+	
+	<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
+	<bean:define id="studentGroupCode" name="infoStudentGroup" property="idInternal"/>
+	<bean:define id="groupPropertiesCode" name="infoStudentGroup" property="infoGroupProperties.idInternal"/>
+	<bean:define id="executionCourseCode" name="infoStudentGroup" property="infoGroupProperties.infoExecutionCourse.idInternal"/>
+	<bean:define id="shiftCode" name="infoStudentGroup" property="infoShift.idInternal"/>
+	
+	
+<logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
+		
 	<table width="100%" cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="infoop">
-				<bean:message key="label.student.viewStudentGroupInformation.description" />
-			</td>
-		</tr>
+			<tr>
+				<td class="infoop">
+					<bean:message key="label.student.emptyStudentGroupInformation.description" />
+				</td>
+			</tr>
 	</table>
-	<br>
+	<br />
 	
-	<logic:empty name="infoSiteStudentInformationList">
+	
+	 <span class="error"><html:errors/></span> 	
+	 <br/>
+	<br/>
+	
+<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + executionCourseCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
+	<br/>
+	
+	<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
+				 			 		
+	<b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
+	<br/>	
+	<br/>
+	
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
-	</logic:empty> 
-
-	<logic:notEmpty name="infoSiteStudentInformationList">
-	<table width="50%" cellpadding="0" border="0">
-		<h2><bean:message key="title.StudentGroupInformation"/></h2>
 	
+	
+	
+			 			
+	<b><bean:message key="label.groupOption"/></b>&nbsp
+	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + executionCourseCode.toString()+"&amp;groupPropertiesCode=" + groupPropertiesCode.toString() +"&amp;shiftCode=" +shiftCode.toString()%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+    	<bean:message key="link.enrolment"/>
+    </html:link>
+	
+</logic:empty> 
+	
+	
+	
+	<logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
+	
+	<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="infoop">
+					<bean:message key="label.student.viewStudentGroupInformation.description" />
+				</td>
+			</tr>
+	</table>
+	<br />
+	
+	 <span class="error"><html:errors/></span> 	
+
+
+	<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;executionCourseCode=" + executionCourseCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+    	<bean:message key="link.backToShiftsAndGroups"/></html:link><br/>
+	<br/>	
+	<bean:define id="nrOfElements" name="infoSiteStudentGroup" property="nrOfElements"/>
+				 			 		
+	<b><bean:message key="label.nrOfElements"/> </b><bean:write name="nrOfElements"/>
+	<br/>
+	
+	<table width="70%" cellpadding="0" border="0">
+	<tbody>   
 	<tr>
-		<td class="listClasses-header"><bean:message key="label.numberWord" />
+		<td class="listClasses-header" width="15%"><bean:message key="label.numberWord" />
 		</td>
-		<td class="listClasses-header"><bean:message key="label.nameWord" />
+		<td class="listClasses-header" width="60%"><bean:message key="label.nameWord" />
 		</td>
-		<td class="listClasses-header"><bean:message key="label.emailWord" />
+		<td class="listClasses-header" width="25%"><bean:message key="label.emailWord" />
 		</td>
 	</tr>
 	
-	 <bean:define id="mailingList" value=""/>
-	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentInformationList">			
+		
+	<logic:iterate id="infoSiteStudentInformation" name="infoSiteStudentGroup" property="infoSiteStudentInformationList">			
 		<tr>		
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>	
+			
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
 			</td>		
+			
 			<td class="listClasses">
+				<logic:present name="infoSiteStudentInformation" property="email">
 					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
 					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
+				</logic:present>
+				<logic:notPresent name="infoSiteStudentInformation" property="email">
+					&nbsp;
+				</logic:notPresent>
+				
 			</td>
 		</tr>
-		 
 		
-		 	
-		  <bean:define id="aux" name="mailingList"/>
-			<logic:lessThan name="aux" value="1">
-				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
-			</logic:lessThan>
-			<logic:greaterThan name="aux" value="0">
-				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
-			</logic:greaterThan>
-			</logic:iterate>
-	 		
-	 
-	 
+				
+	 </logic:iterate>
 
-	</table>
+</tbody>
+</table>
 
-	</logic:notEmpty> 
+<br/>
+<br/>
+
+<table width="70%" cellpadding="0" border="0">
+<tbody>
+
+	<b><bean:message key="label.groupOperations"/></b>&nbsp
+	
+	<html:link page="<%="/groupStudentEnrolment.do?method=prepareEnrolment&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+    	<bean:message key="link.enrolment"/>
+    </html:link> &nbsp|&nbsp
+ 
+    
+   <html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+"&amp;shiftCode=" + request.getParameter("shiftCode")%>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+   	    <bean:message key="link.removeEnrolment"/>
+    </html:link> &nbsp|&nbsp
+    
+  
+   <html:link page="<%="/editStudentGroupShift.do?method=prepareEdit&amp;executionCourseCode=" + request.getParameter("executionCourseCode")+"&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>"  paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+        <bean:message key="link.editStudentGroupShift"/>
+   </html:link>
+               		
+  
+  
+ </tbody>
+</table>   	
+  </logic:notEmpty>
+
 
 </logic:present>
 
-
-<logic:notPresent name="infoSiteStudentInformationList">
+<logic:notPresent name="infoSiteStudentGroup">
 <h2>
 <bean:message key="message.infoSiteStudentGroupList.not.available" />
 </h2>
 </logic:notPresent>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -41,7 +41,7 @@
                 	
                     <td class="listClasses">
                                                               
-                        <html:link page="<%="/viewProjectShifts.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode") %>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
+                        <html:link page="<%="/viewShiftsAndGroups.do?method=execute&executionCourseCode=" + request.getParameter("executionCourseCode") %>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
 							<b><bean:write name="infoGroupProperties" property="name"/></b>
 						</html:link>
 						

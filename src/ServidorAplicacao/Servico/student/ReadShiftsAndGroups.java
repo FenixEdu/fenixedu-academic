@@ -13,8 +13,11 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoSiteProjectShifts;
+import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteShift;
+import DataBeans.InfoSiteShiftsAndGroups;
+import DataBeans.InfoSiteStudentGroup;
+import DataBeans.InfoStudentGroup;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
@@ -32,26 +35,26 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author asnr and scpo
  *
  */
-public class ReadProjectShifts implements IServico {
+public class ReadShiftsAndGroups implements IServico {
 
-	private static ReadProjectShifts service = new ReadProjectShifts();
+	private static ReadShiftsAndGroups service = new ReadShiftsAndGroups();
 
 	/**
 		* The singleton access method of this class.
 		*/
-	public static ReadProjectShifts getService() {
+	public static ReadShiftsAndGroups getService() {
 		return service;
 	}
 	/**
 	 * The constructor of this class.
 	 */
-	private ReadProjectShifts() {
+	private ReadShiftsAndGroups() {
 	}
 	/**
 	 * The name of the service
 	 */
 	public final String getNome() {
-		return "ReadProjectShifts";
+		return "ReadShiftsAndGroups";
 	}
 
 	/**
@@ -59,7 +62,8 @@ public class ReadProjectShifts implements IServico {
 	 */
 	public ISiteComponent run(Integer groupPropertiesCode) throws FenixServiceException {
 
-		InfoSiteProjectShifts infoSiteProjectShifts = null;
+		InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
+		List infoSiteShiftsAndGroupsList = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -77,7 +81,6 @@ public class ReadProjectShifts implements IServico {
 			List allStudentsGroup = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupProperties(groupProperties);
 
 			if (allStudentsGroup.size() != 0) {
-				infoSiteProjectShifts = new InfoSiteProjectShifts();
 
 				Iterator iterator = allStudentsGroup.iterator();
 				while (iterator.hasNext()) {
@@ -91,16 +94,19 @@ public class ReadProjectShifts implements IServico {
 
 			if (allShifts.size() != 0) {
 				Iterator iter = allShifts.iterator();
-				List infoSiteShifts = new ArrayList();
+				infoSiteShiftsAndGroupsList = new ArrayList();
+				InfoSiteGroupsByShift infoSiteGroupsByShift = null;
 				InfoSiteShift infoSiteShift = null;
 
 				while (iter.hasNext()) {
+
 					ITurno shift = (ITurno) iter.next();
 					List allStudentGroups =
 						persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 
 					infoSiteShift = new InfoSiteShift();
 					infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+
 					if (groupProperties.getGroupMaximumNumber() != null) {
 
 						int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentGroups.size();
@@ -110,24 +116,47 @@ public class ReadProjectShifts implements IServico {
 							infoSiteShift.setNrOfGroups(new Integer(0));
 					} else
 						infoSiteShift.setNrOfGroups("Sem limite");
-					infoSiteShifts.add(infoSiteShift);
-					/* Sort the list of shifts */
-					ComparatorChain chainComparator = new ComparatorChain();
-					chainComparator.addComparator(new BeanComparator("infoShift.tipo"));
-					chainComparator.addComparator(new BeanComparator("infoShift.nome"));
-					Collections.sort(infoSiteShifts, chainComparator);
+
+					infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+					infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+
+					List infoSiteStudentGroupsList = null;
+					if (allStudentGroups.size() != 0) {
+						infoSiteStudentGroupsList = new ArrayList();
+						Iterator iterGroups = allStudentGroups.iterator();
+
+						while (iterGroups.hasNext()) {
+							InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+							InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+							infoStudentGroup = Cloner.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iterGroups.next());
+							infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
+							infoSiteStudentGroupsList.add(infoSiteStudentGroup);
+
+						}
+						Collections.sort(infoSiteStudentGroupsList, new BeanComparator("infoStudentGroup.groupNumber"));
+
+					}
+
+					infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
+
+					infoSiteShiftsAndGroupsList.add(infoSiteGroupsByShift);
 				}
+				/* Sort the list of shifts */
 
-				infoSiteProjectShifts = new InfoSiteProjectShifts();
-				infoSiteProjectShifts.setInfoSiteShifts(infoSiteShifts);
+				ComparatorChain chainComparator = new ComparatorChain();
+				chainComparator.addComparator(new BeanComparator("infoSiteShift.infoShift.tipo"));
+				chainComparator.addComparator(new BeanComparator("infoSiteShift.infoShift.nome"));
 
+				Collections.sort(infoSiteShiftsAndGroupsList, chainComparator);
 			}
 
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException("error.impossibleReadProjectShifts");
 		}
-
-		return infoSiteProjectShifts;
+		infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroupsList);
+		
+		return infoSiteShiftsAndGroups;
 	}
 }
+

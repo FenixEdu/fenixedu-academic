@@ -34,13 +34,16 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
 			
 			if(maximumCapacity == null && minimumCapacity == null)
 				return new Integer(1);
-		
-			if(nrStudents.compareTo(minimumCapacity)<0)
-				return new Integer(-2);
-					
-			if (nrStudents.compareTo(maximumCapacity)>0)
+			if(minimumCapacity!=null)
+			{
+				if(nrStudents.compareTo(minimumCapacity)<0)
+					return new Integer(-2);
+			}
+			if(maximumCapacity!=null)
+			{		
+				if (nrStudents.compareTo(maximumCapacity)>0)
 					return new Integer(-3);
-				
+			}	
 		}
 		else
 			return new Integer(-1);

@@ -69,7 +69,7 @@
 
 	</td>
 	<td>
-		<html:form action="/viewStudentGroups" method="get">
+		<html:form action="/viewStudentGroupInformation" method="get">
 	
 		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
@@ -78,6 +78,7 @@
 		<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>		
 		<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
+		<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
 		
 	</html:form>
 	</td>

@@ -4,9 +4,6 @@
  */
 package ServidorApresentacao.Action.student;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoSiteProjectShifts;
+import DataBeans.InfoSiteShiftsAndGroups;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
@@ -27,7 +24,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author asnr and scpo
  *
  */
-public class ViewProjectShiftsAction extends FenixContextAction {
+public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
@@ -40,22 +37,17 @@ public class ViewProjectShiftsAction extends FenixContextAction {
 		
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		InfoSiteProjectShifts infoSiteProjectShifts;
+		InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
 		Object[] args = { groupPropertiesCode };
 		try {
-			infoSiteProjectShifts = (InfoSiteProjectShifts) ServiceUtils.executeService(userView, "ReadProjectShifts", args);
+			infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(userView, "ReadShiftsAndGroups", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 		
-		List infoSiteShifts = new ArrayList();
-		if (infoSiteProjectShifts != null) {
-			infoSiteShifts = infoSiteProjectShifts.getInfoSiteShifts();
-			
-		}
-	
-		request.setAttribute("infoSiteShifts", infoSiteShifts);
+
+		request.setAttribute("infoSiteShiftsAndGroups", infoSiteShiftsAndGroups);
 		
 		
 		return mapping.findForward("sucess");

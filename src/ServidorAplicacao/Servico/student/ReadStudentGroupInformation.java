@@ -17,11 +17,13 @@ import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteStudentInformation;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.util.Cloner;
+import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -32,8 +34,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadStudentGroupInformation implements IServico {
 
-	private static ReadStudentGroupInformation _servico =
-		new ReadStudentGroupInformation();
+	private static ReadStudentGroupInformation _servico = new ReadStudentGroupInformation();
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -54,57 +55,64 @@ public class ReadStudentGroupInformation implements IServico {
 		return "ReadStudentGroupInformation";
 	}
 
-	public ISiteComponent run(Integer studentGroupCode)
-		throws FenixServiceException {
+	public ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
 
-			
-			InfoSiteStudentGroup infoSiteStudentGroup = null;
-			try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+		List studentGroupAttendInformationList = null;
+		List studentGroupAttendList = null;
+		IStudentGroup studentGroup = null;
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-				IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
-				
-				if(studentGroup==null)
-					throw new FenixServiceException();
-					
-				List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
-				if(studentGroupAttendList.size()!=0)
-				{
-				
-				infoSiteStudentGroup= new InfoSiteStudentGroup();
-				List studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
-				Iterator iter = studentGroupAttendList.iterator();
-				InfoSiteStudentInformation infoSiteStudentInformation = null;
-				InfoStudentGroupAttend infoStudentGroupAttend = null;
+			studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
 
-				while (iter.hasNext()) {
+			if (studentGroup == null)
+				throw new InvalidSituationServiceException();
 
-					infoSiteStudentInformation = new InfoSiteStudentInformation();
+			studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
 
-					infoStudentGroupAttend = Cloner.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
 
-					infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno().getNumber());
+			//throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
+		}
 
-					infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
+		studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
+		Iterator iter = studentGroupAttendList.iterator();
+		InfoSiteStudentInformation infoSiteStudentInformation = null;
+		InfoStudentGroupAttend infoStudentGroupAttend = null;
 
-					infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
-				
-					infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getUsername());
-				
-					studentGroupAttendInformationList.add(infoSiteStudentInformation);
+		while (iter.hasNext()) {
+			infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-				}
+			infoStudentGroupAttend = Cloner.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
 
-				Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
-				
-				infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
-				infoSiteStudentGroup.setInfoStudentGroup(Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup));
-				
-				}
-				} catch (ExcepcaoPersistencia ex) {
-				ex.printStackTrace();
-			}
-			
-			return infoSiteStudentGroup;
+			infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno().getNumber());
+
+			infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
+
+			infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
+
+			infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getUsername());
+
+			studentGroupAttendInformationList.add(infoSiteStudentInformation);
+
+		}
+
+		Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+		infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
+		infoSiteStudentGroup.setInfoStudentGroup(Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup));
+		IGroupProperties groupProperties = studentGroup.getGroupProperties();
+		if (groupProperties.getMaximumCapacity() != null) {
+
+			int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
+			if (vagas >= 0)
+				infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
+			else
+				infoSiteStudentGroup.setNrOfElements(new Integer(0));
+		} else
+			infoSiteStudentGroup.setNrOfElements("Sem limite");
+
+		return infoSiteStudentGroup;
 	}
 }
