@@ -78,7 +78,7 @@ create table section (
    NAME varchar(100),
    SECTION_ORDER int(11) unsigned,
    KEY_SITE int(10) unsigned not null default '0',
-   KEY_SUPERIOR_SECTION int(10) unsigned not null default '0',
+   KEY_SUPERIOR_SECTION int(10) unsigned,
    LAST_MODIFIED_DATE date,
    primary key (ID_INTERNAL))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
