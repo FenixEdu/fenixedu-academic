@@ -14,11 +14,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoCurricularCourseScope;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão Created on 9/Out/2003
@@ -35,6 +34,8 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 	{
 		ActionErrors errors = new ActionErrors();
 
+		Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+		
 		Integer degreeId = getFromRequest("degreeID", request);
 		request.setAttribute("degreeID", degreeId);
 
@@ -47,7 +48,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
 		request.setAttribute("inEnglish", inEnglish);
 
-		Object[] args = { degreeCurricularPlanId };
+		Object[] args = { degreeCurricularPlanId, executionPeriodOId};
 
 		List activeCurricularCourseScopes = null;
 		try
@@ -64,11 +65,12 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 			saveErrors(request, errors);
 			return (new ActionForward(mapping.getInput()));
 		}
+		
 		if (activeCurricularCourseScopes == null || activeCurricularCourseScopes.size() <= 0)
 		{
 			errors.add(
 				"noDegreeCurricularPlan",
-				new ActionError("error.coordinator.noDegreeCurricularPlan"));
+				new ActionError("error.impossibleCurricularPlan"));
 			saveErrors(request, errors);
 		}
 

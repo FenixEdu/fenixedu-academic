@@ -17,6 +17,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -232,6 +233,27 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 
 		Criteria crit4 = new Criteria();
 		crit4.addGreaterThan("endDate", executionPeriod.getBeginDate());
+
+		crit.addAndCriteria(crit3);
+		crit3.addOrCriteria(crit4);
+
+		List result = queryList(CurricularCourseScope.class, crit);
+		return result;
+	}
+	
+	public List readCurricularCourseScopesByCurricularCourseInExecutionYear(
+			IDegreeCurricularPlan degreeCurricularPlan,
+			IExecutionYear executionYear)
+	throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+		crit.addLessThan("beginDate", executionYear.getEndDate());
+
+		Criteria crit3 = new Criteria();
+		crit3.addIsNull("endDate");
+
+		Criteria crit4 = new Criteria();
+		crit4.addGreaterThan("endDate", executionYear.getBeginDate());
 
 		crit.addAndCriteria(crit3);
 		crit3.addOrCriteria(crit4);

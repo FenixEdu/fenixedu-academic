@@ -25,7 +25,7 @@
         <arg0 key="message.manager.degree.curricular.plan.state" resource="true"/>
       </field>
       
-      <field property="initialDate" depends="mask,date" page="1">
+      <field property="initialDate" depends="required, mask,date" page="1">
       	<msg name="date" key="errors.invalid.date"/>
       	<msg name="mask" key="errors.invalid.date"/>
         <arg0 key="message.initialDate" resource="true" />

@@ -75,13 +75,9 @@ public class ResponsibleCoordinators implements IServico
 				
 				if (coordinatorsIds.contains(coordinatorId))
 				{//coordinator is responsible
-					coordinator.setResponsible(Boolean.TRUE);
-					System.out.println(
-							"Alterar responsabilidade(sim): " + coordinator.getTeacher().getTeacherNumber());	
+					coordinator.setResponsible(Boolean.TRUE);					
 				} else {//coordinator isn't responsible
 					coordinator.setResponsible(Boolean.FALSE);
-					System.out.println(
-							"Alterar responsabilidade(não): " + coordinator.getTeacher().getTeacherNumber());
 				}
 			}
 
