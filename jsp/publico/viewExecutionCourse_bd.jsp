@@ -31,7 +31,7 @@
           	<tr>
             	<td  class="ultAnuncioAviso"> 
             		<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
-            		<bean:message key="message.lastWeekAnnouncements"/> 
+            		<bean:message key="message.lastAnnouncement"/> 
              	</td>      
            </tr>
            <tr>
