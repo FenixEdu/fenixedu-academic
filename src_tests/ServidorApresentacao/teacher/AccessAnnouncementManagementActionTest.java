@@ -129,7 +129,7 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-teacher.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/**
