@@ -24,16 +24,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class WriteStudentAttendingCourse implements IService
 {
-	public class AlreadyEnroledInGroupServiceException extends FenixServiceException
-	{
-	}
-	public class AlreadyEnroledServiceException extends FenixServiceException
-	{
-	}
-	public class ReachedAttendsLimitServiceException extends FenixServiceException
-	{
-	}
-
 	public WriteStudentAttendingCourse()
 	{
 	}
@@ -62,7 +52,7 @@ public class WriteStudentAttendingCourse implements IService
 
 				if (attends != null && attends.size() >= 8)
 				{
-					throw new ReachedAttendsLimitServiceException();
+					throw new FenixServiceException("reachedAteendsLimit");
 				}
 
 				IFrequenta attendsEntry =
@@ -93,7 +83,7 @@ public class WriteStudentAttendingCourse implements IService
 
 		if (executionCourse == null)
 		{
-			throw new FenixServiceException("nullExecutionCourseId");
+			throw new FenixServiceException("noExecutionCourse");
 		}
 		return executionCourse;
 	}

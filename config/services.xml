@@ -5714,4 +5714,11 @@
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service> 
+    <service>
+    	<name>DeleteStudentAttendingCourse</name>
+    	<description>Deletes the attending of a student in an execution course</description>
+    	<implementationClass>ServidorAplicacao.Servico.student.DeleteStudentAttendingCourse</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service> 
 </serviceDefinitions>
