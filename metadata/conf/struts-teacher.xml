@@ -611,6 +611,24 @@
 
 	<!-- End of Action for Teacher Administration Site -->
 	
+	<!-- Action for Tests Administration Site -->
+	<action path="/testsViewer"
+				input="/teacherAdministrationViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+			<forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
+	</action>
+	<action path="/testsManagement"
+				input="/teacherAdministrationViewerError.jsp"
+				scope="request"
+				parameter="method"
+				type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+			<forward name="createTest" path="/createTest.jsp"/>
+	</action>	
+	
+	<!-- End Action for Tests Administration Site -->
+		
 	<!-- Students list -->
         <action path="/readCurricularCourseList"
 				input="/teacherAdministrationViewerError.jsp"
