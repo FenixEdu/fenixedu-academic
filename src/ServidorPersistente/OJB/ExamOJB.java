@@ -22,7 +22,6 @@ import ServidorPersistente.IPersistentExam;
 
 public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
-
 	public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia{
 		try {
 			String oqlQuery = "select exams from " + Exam.class.getName();
@@ -52,7 +51,6 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-
 
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
 		super.delete(exam);

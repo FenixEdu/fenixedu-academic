@@ -1,5 +1,5 @@
 /*
- * ExamOJB.java
+ * ExamExecutionCourseOJB.java
  *
  * Created on 2003/03/29
  */
@@ -10,7 +10,6 @@ package ServidorPersistente.OJB;
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
-import java.util.Calendar;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -57,7 +56,6 @@ public class ExamExecutionCourseOJB
 		}
 	}
 
-
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + ExamExecutionCourse.class.getName();
@@ -71,34 +69,10 @@ public class ExamExecutionCourseOJB
 		}
 	}
 
-	public List readBy(Calendar day, Calendar beginning)
-		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select examexecutioncourse from " + ExamExecutionCourse.class.getName();
-			oqlQuery += " where exam.day = $1";
-			oqlQuery += " and exam.beginning = $2";
-			oqlQuery += " order by executionCourse.sigla asc, exam.season asc";
-
-			query.create(oqlQuery);
-			query.bind(day);
-			query.bind(beginning);
-
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
-	// TODO : method not yet tested
 	public void lockWrite(IExamExecutionCourse examExecutionCourseToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 		IExamExecutionCourse examExecutionCourseFromDB = null;
 		if (examExecutionCourseToWrite == null)
-			// Should we throw an exception saying nothing to write or
-			// something of the sort?
-			// By default, if OJB received a null object it would complain.
 			return;
 
 		// read exam		
@@ -119,19 +93,15 @@ public class ExamExecutionCourseOJB
 					((Exam) examExecutionCourseToWrite).getIdInternal())) {
 			examExecutionCourseFromDB.setExam(examExecutionCourseToWrite.getExam());
 			examExecutionCourseFromDB.setExecutionCourse(examExecutionCourseToWrite.getExecutionCourse());
-			// No need to werite it because it is already mapped.
-			//super.lockWrite(examToWrite);
-			// else throw an AlreadyExists exception.
+		// else throw an AlreadyExists exception.
 		} else
 			throw new ExistingPersistentException();
 	}
 
-	// TODO : method not yet tested
 	public void delete(IExamExecutionCourse examExecutionCourse) throws ExcepcaoPersistencia {
 		super.delete(examExecutionCourse);
 	}
 
-	// TODO : method not yet tested
 	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + ExamExecutionCourse.class.getName();
 		super.deleteAll(oqlQuery);

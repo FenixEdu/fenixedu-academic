@@ -6,7 +6,6 @@
 
 package ServidorPersistente;
 
-import java.util.Calendar;
 import java.util.List;
 
 import Dominio.IDisciplinaExecucao;
@@ -23,8 +22,6 @@ public interface IPersistentExamExecutionCourse extends IPersistentObject {
 		IExam exam,
 		IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia;
-	public List readBy(Calendar day, Calendar beginning)
-			throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IExamExecutionCourse examExecutionCourseToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException;

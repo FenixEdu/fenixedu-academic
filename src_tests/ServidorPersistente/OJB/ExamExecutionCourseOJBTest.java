@@ -117,29 +117,7 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 		} catch (ExcepcaoPersistencia e) {
 			fail("testReadByDayAndBeginningAndExecutionCourse: unexpected exception: " + e);
 		}
-	}
-
-	
-	public void testReadByDayAndBeginning(){
-		Calendar beginning = Calendar.getInstance();
-		beginning.set(Calendar.YEAR, 2003);
-		beginning.set(Calendar.MONTH, Calendar.MARCH);
-		beginning.set(Calendar.DAY_OF_MONTH, 19);
-		beginning.set(Calendar.HOUR_OF_DAY, 13);
-		beginning.set(Calendar.MINUTE, 0);
-		beginning.set(Calendar.SECOND, 0);
-		
-		try {
-			ps.iniciarTransaccao();
-			List result = ps.getIPersistentExamExecutionCourse().readBy(beginning, beginning);
-			ps.confirmarTransaccao();
-			assertNotNull("result list is null", result);
-			assertEquals("result list size not expected", 7, result.size());
-		} catch (ExcepcaoPersistencia e) {
-			fail("unexpected exception" + e);
-		}
-				
-	}
+	}	
 
 	public void testLockWrite(){
 
