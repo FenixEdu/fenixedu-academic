@@ -64,27 +64,14 @@
       <br />
       </td>
     </tr>
-    <tr>
-      <td  colspan="2">
-        <table border="0">
-      	  <tr>
-            <td >
-              <html:form action="/consultarFuncionarioMostrar" focus="submit">
-                <html:submit property="submit" styleClass="inputbutton">
-                  <bean:message key="link.novaConsulta"/>
-                </html:submit>
-    	      </html:form>	
-            </td>
-            <td >
-              <html:form action="/imprimirVerbetes" focus="submit">
-                <html:submit property="submit" styleClass="inputbutton">
-                  <bean:message key="link.imprimir"/>
-                </html:submit>
-    	      </html:form>		   			              
-            </td>            
-          </tr>
-        </table>
-      </td>
+     </tr>
+      <td colspan='2' align="center">
+        <html:form action="/consultarFuncionarioMostrar" focus="submit">
+    	  <html:submit property="submit" styleClass="inputbutton">
+            <bean:message key="link.novaConsulta"/>
+          </html:submit>
+    	</html:form>		   			
+      </td>      
     </tr>
   </table>
   <br />

@@ -37,6 +37,7 @@
         <br />
       </td>
     </tr>
+    </tr>
       <td colspan='2' align="center">
         <html:form action="/consultarFuncionarioMostrar" focus="submit">
     	  <html:submit property="submit" styleClass="inputbutton">

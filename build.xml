@@ -481,7 +481,8 @@
             password="${dbMarcacoesPonto.pass}"
             encoding="${encoding}">
 	        <fileset dir="${sql}">
-			 <include name="tables_AssiduidadeASSMARCAS.sql" />
+			 <include name="tables_AssiduousnessASSMARCAS.sql" />
+			 <include name="test-data_AssiduousnessASSMARCAS.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -579,6 +580,21 @@
             password="${db.pass}"
             encoding="${encoding}"
             src="${sql}/test-data_GesDis.sql"
+        >
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+        
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_Assiduousness.sql"
         >
             <classpath>
                 <fileset dir="${lib}">
