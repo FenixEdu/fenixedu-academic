@@ -27,13 +27,13 @@ public class SectionChooserRenderer
 	/**
 	 * @see ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer#renderSectionLabel(int, java.lang.String)
 	 */
-	public StringBuffer renderSectionLabel(int i, String path) {
+	public StringBuffer renderSectionLabel(int i, String path, boolean hasChilds) {
 		StringBuffer strBuffer = new StringBuffer();
-		strBuffer.append(renderDepthContent(getInfoSection(),i,path));
+		strBuffer.append(renderDepthContent(getInfoSection(),i,path, hasChilds));
 		return strBuffer;
 	}
 
-	private StringBuffer renderDepthContent(InfoSection infoSection, int i,String path) {
+	private StringBuffer renderDepthContent(InfoSection infoSection, int i,String path, boolean hasChilds) {
 		StringBuffer strBuffer = new StringBuffer();
 		
 		strBuffer.append(renderDepthIdent(getInfoSection()));
