@@ -74,6 +74,8 @@ import Util.TipoAula;
 import Util.TipoCurso;
 import Util.TipoDocumentoIdentificacao;
 import Util.TipoSala;
+import Tools.dbaccess;
+
 
 public class TestCaseServicos extends TestCase {
 	protected ISuportePersistente _suportePersistente = null;
@@ -136,7 +138,9 @@ public class TestCaseServicos extends TestCase {
 	protected ICursoExecucao _cursoExecucao1 = null;
 	protected ICursoExecucao _cursoExecucao2 = null;
 	protected IStudent _aluno1 = null;
-	
+
+	private dbaccess dbAcessPoint = null;
+
 
 	public TestCaseServicos(String testName) {
 		super(testName);
@@ -144,9 +148,25 @@ public class TestCaseServicos extends TestCase {
 	
 	protected void setUp() {
 		ligarSuportePersistente();
-		cleanData();
+//		cleanData();
+		
 		try {
-			_suportePersistente.iniciarTransaccao();
+			dbAcessPoint = new dbaccess();
+			dbAcessPoint.openConnection();
+			dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+			dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+			dbAcessPoint.closeConnection();
+		} catch (Exception ex) {
+			System.out.println("Setup failed: " + ex);
+		}
+
+		
+		
+		// None of the variables defined here will be written to the database
+		// To remove later because of the DBUnit
+		
+//		try {
+//			_suportePersistente.iniciarTransaccao();
 			
 			_pessoa1 = new Pessoa();
 			_pessoa1.setNumeroDocumentoIdentificacao("0123456789");
@@ -250,7 +270,7 @@ public class TestCaseServicos extends TestCase {
 
 			_pessoa1.setPrivilegios(_privilegios);
 			//_pessoaPersistente.lockWrite(_pessoa1);
-			_pessoaPersistente.escreverPessoa(_pessoa1);
+			//_pessoaPersistente.escreverPessoa(_pessoa1);
 			//_pessoa2 = new Pessoa("nome2", "pass2", null);
 			_pessoa2 = new Pessoa();
 			_pessoa2.setNumeroDocumentoIdentificacao("0321654987");
@@ -262,20 +282,20 @@ public class TestCaseServicos extends TestCase {
 			_pessoa2.setPassword("pass2");
 			_pessoa2.setPrivilegios(null);
 			
-			_pessoaPersistente.escreverPessoa(_pessoa2);
+			//_pessoaPersistente.escreverPessoa(_pessoa2);
 
 			IExecutionYear executionYear = new ExecutionYear("2002/03");
-			persistentExecutionYear.lockWrite(executionYear);
+			//persistentExecutionYear.lockWrite(executionYear);
 			
 			IExecutionPeriod executionPeriod = new ExecutionPeriod("2º Semestre",executionYear);
-			persistentExecutionPeriod.lockWrite(executionPeriod);
+			//persistentExecutionPeriod.lockWrite(executionPeriod);
 
 			_curso1 =
 				new Curso(
 					"LEIC",
 					"Informatica",
 					new TipoCurso(TipoCurso.LICENCIATURA));
-			_cursoPersistente.lockWrite(_curso1);
+			//_cursoPersistente.lockWrite(_curso1);
 			_curso2 =
 				new Curso(
 					"LEGI",
@@ -286,26 +306,26 @@ public class TestCaseServicos extends TestCase {
 			IPlanoCurricularCurso curricularPlan2 = new PlanoCurricularCurso("plano2",_curso2);
 					
 			_cursoExecucao1 = new CursoExecucao(executionYear, curricularPlan1);
-			_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
+//			_cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
 			_cursoExecucao2 = new CursoExecucao(executionYear, curricularPlan2);
-			_suportePersistente.confirmarTransaccao();
+//			_suportePersistente.confirmarTransaccao();
 
 			IDisciplinaDepartamento departmentCourse = null;
 			IPlanoCurricularCurso degreeCurricularPlan = null;
 
-			_suportePersistente.iniciarTransaccao();
+//			_suportePersistente.iniciarTransaccao();
 			IDepartamento department = new Departamento("nome", "sigle");
 			departmentCourse =
 				new DisciplinaDepartamento("nome", "sigla", department);
-			_persistentDepartmentCourse.escreverDisciplinaDepartamento(
-				departmentCourse);
+//			_persistentDepartmentCourse.escreverDisciplinaDepartamento(
+//				departmentCourse);
 			degreeCurricularPlan =
 				new PlanoCurricularCurso("nome",  _curso1);
-			_persistentDegreeCurricularPlan.escreverPlanoCurricular(
-				degreeCurricularPlan);
-			_suportePersistente.confirmarTransaccao();
+//			_persistentDegreeCurricularPlan.escreverPlanoCurricular(
+//				degreeCurricularPlan);
+//			_suportePersistente.confirmarTransaccao();
 
-			_suportePersistente.iniciarTransaccao();
+//			_suportePersistente.iniciarTransaccao();
 			_disciplinaCurricular1 =
 				new CurricularCourse(
 					new Double(4.0),
@@ -332,10 +352,10 @@ public class TestCaseServicos extends TestCase {
 					"TFC2",
 					departmentCourse,
 					degreeCurricularPlan);
-			_disciplinaCurricularPersistente.writeCurricularCourse(
-				_disciplinaCurricular1);
-			_disciplinaCurricularPersistente.writeCurricularCourse(
-				_disciplinaCurricular2);
+//			_disciplinaCurricularPersistente.writeCurricularCourse(
+//				_disciplinaCurricular1);
+//			_disciplinaCurricularPersistente.writeCurricularCourse(
+//				_disciplinaCurricular2);
 
 			_disciplinaExecucao1 =
 			new DisciplinaExecucao(
@@ -361,13 +381,13 @@ public class TestCaseServicos extends TestCase {
 			List aCC2 = new ArrayList();
 			aCC2.add(_disciplinaCurricular1);
 			_disciplinaExecucao1.setAssociatedCurricularCourses(aCC2);
-			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
-				_disciplinaExecucao1);
-			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
-				_disciplinaExecucao2);
+//			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
+//				_disciplinaExecucao1);
+//			_disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
+//				_disciplinaExecucao2);
 
-			_suportePersistente.confirmarTransaccao();
-			_suportePersistente.iniciarTransaccao();
+//			_suportePersistente.confirmarTransaccao();
+//			_suportePersistente.iniciarTransaccao();
 			_tipoSala = new TipoSala(TipoSala.ANFITEATRO);
 			_sala1 =
 				new Sala(
@@ -377,10 +397,10 @@ public class TestCaseServicos extends TestCase {
 					_tipoSala,
 					new Integer(100),
 					new Integer(50));
-			_salaPersistente.lockWrite(_sala1);
+//			_salaPersistente.lockWrite(_sala1);
 			_turma1 =
 				new Turma("turma1",  new Integer(1), _cursoExecucao1,executionPeriod);
-			_turmaPersistente.lockWrite(_turma1);
+//			_turmaPersistente.lockWrite(_turma1);
 			_turma2 =
 				new Turma("turma2", new Integer(1), _cursoExecucao1,executionPeriod);
 			_turma3 =
@@ -392,7 +412,7 @@ public class TestCaseServicos extends TestCase {
 					new TipoAula(TipoAula.TEORICA),
 					new Integer(100),
 					_disciplinaExecucao1);
-			_turnoPersistente.lockWrite(_turno1);
+//			_turnoPersistente.lockWrite(_turno1);
 
 			_turno2 =
 				new Turno(
@@ -406,7 +426,7 @@ public class TestCaseServicos extends TestCase {
 								new TipoAula(TipoAula.TEORICA),
 								new Integer(100),
 								_disciplinaExecucao2);		
-			_turnoPersistente.lockWrite(_turno2);
+//			_turnoPersistente.lockWrite(_turno2);
 			_diaSemana1 = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
 			_inicio = Calendar.getInstance();
 			_inicio.set(Calendar.HOUR, 8);
@@ -423,7 +443,7 @@ public class TestCaseServicos extends TestCase {
 					_tipoAula,
 					_sala1,
 					_disciplinaExecucao1);
-			_aulaPersistente.lockWrite(_aula1);
+//			_aulaPersistente.lockWrite(_aula1);
 			_diaSemana2 = new DiaSemana(DiaSemana.TERCA_FEIRA);			
 			_aula2 =
 				new Aula(
@@ -445,8 +465,8 @@ public class TestCaseServicos extends TestCase {
 					_tipoAula,
 					_sala1,
 					_disciplinaExecucao2);
-			_aulaPersistente.lockWrite(_aula2);
-			_aulaPersistente.lockWrite(_aula3);			
+//			_aulaPersistente.lockWrite(_aula2);
+//			_aulaPersistente.lockWrite(_aula3);			
 			_aluno1 =
 				new Student(
 					new Integer(600),
@@ -454,11 +474,11 @@ public class TestCaseServicos extends TestCase {
 					_pessoa1,
 					new TipoCurso(TipoCurso.LICENCIATURA));
 			_turnoAluno1 = new TurnoAluno(_turno1, _aluno1);
-			_turnoAlunoPersistente.lockWrite(_turnoAluno1);
+//			_turnoAlunoPersistente.lockWrite(_turnoAluno1);
 			_turnoAula1 = new TurnoAula(_turno1, _aula1);
-			_turnoAulaPersistente.lockWrite(_turnoAula1);
+//			_turnoAulaPersistente.lockWrite(_turnoAula1);
 			_turmaTurno1 = new TurmaTurno(_turma1, _turno1);
-			_turmaTurnoPersistente.lockWrite(_turmaTurno1);
+//			_turmaTurnoPersistente.lockWrite(_turmaTurno1);
 			_sala2 =
 				new Sala(
 					new String("Ga2"),
@@ -467,13 +487,13 @@ public class TestCaseServicos extends TestCase {
 					_tipoSala,
 					new Integer(100),
 					new Integer(50));
-			_suportePersistente.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia excepcao) {
-			fail("Exception when setUp");
-		}
+//			_suportePersistente.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia excepcao) {
+//			fail("Exception when setUp");
+//		}
 		_gestor = GestorServicos.manager();
-		String argsAutenticacao[] = { "nome", "pass" };
-		String argsAutenticacao2[] = { "nome2", "pass2" };
+		String argsAutenticacao[] = { "user", "pass" };
+		String argsAutenticacao2[] = { "4", "a" };
 		try {
 			/* user View from _pessoa1 */
 			_userView =
@@ -495,7 +515,14 @@ public class TestCaseServicos extends TestCase {
 		}
 	}
 	protected void tearDown() {
-		cleanData();
+		try {
+			dbAcessPoint.openConnection();
+			dbAcessPoint.loadDataBase("etc/testBackup.xml");
+			//dbAcessPoint.loadDataBase("etc/testDataSet.xml");
+			dbAcessPoint.closeConnection();
+		} catch (Exception ex) {
+			System.out.println("Tear down failed: " +ex);
+		}
 	}
 	protected void ligarSuportePersistente() {
 		try {
