@@ -79,6 +79,7 @@ create table site (
 # Table structure for table 'OWNS'
 #
 
+drop table if exists OWNS;
 CREATE TABLE `OWNS` (
   `ID_TEACHER` int(11) unsigned NOT NULL default '0',
   `ID_SITE` int(11) unsigned NOT NULL default '0',
@@ -91,6 +92,7 @@ CREATE TABLE `OWNS` (
 # Table structure for table 'PROFESSORSHIPS'
 #
 
+drop table if exists PROFESSORSHIPS;
 CREATE TABLE `PROFESSORSHIPS` (
   `ID_TEACHER` int(11) unsigned NOT NULL default '0',
   `ID_SITE` int(11) unsigned NOT NULL default '0',
@@ -103,6 +105,7 @@ CREATE TABLE `PROFESSORSHIPS` (
 # Table structure for table 'TEACHER'
 #
 
+drop table if exists TEACHER;
 CREATE TABLE `TEACHER` (
   `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
   `USERNAME` varchar(20) default NULL,
