@@ -118,7 +118,7 @@ public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry {
         try {
             ArrayList countryList = new ArrayList();
             String oqlQuery = "select all from " + Country.class.getName()
-            				+ " order by name asc";
+            				+ " order by nationality asc";
             		
             query.create(oqlQuery);
             List result = (List) query.execute();
