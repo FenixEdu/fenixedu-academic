@@ -47,7 +47,7 @@ public class DomainObject extends DomainObject_Base {
 		List<Class> result = new ArrayList<Class>();
 
 		Class innerClass = thisClass;
-		while (!innerClass.equals(DomainObject_Base.class)
+		while (innerClass != null && !innerClass.equals(DomainObject_Base.class)
 				&& !innerClass.equals(DomainObject.class)) {
 			if (innerClass.getInterfaces().length != 0) {
 				result.addAll(Arrays.asList(innerClass.getInterfaces()));
