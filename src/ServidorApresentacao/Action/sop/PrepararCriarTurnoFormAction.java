@@ -6,24 +6,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoAula;
 
 /**
  * @author tfc130
 */
-public class PrepararCriarTurnoFormAction extends Action {
+public class PrepararCriarTurnoFormAction extends FenixExecutionDegreeAndCurricularYearContextAction {
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
+
+	super.execute(mapping, form, request, response);
 		
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
@@ -40,8 +41,8 @@ public class PrepararCriarTurnoFormAction extends Action {
         tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString() ));
         request.setAttribute("tiposAula", tiposAula);
         
-	  request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-	  request.removeAttribute(SessionConstants.CLASS_VIEW);
+	  //request.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+	  //request.removeAttribute(SessionConstants.CLASS_VIEW);
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

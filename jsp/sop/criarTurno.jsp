@@ -7,6 +7,5 @@
   <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/sop/criarTurno_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+  <tiles:put name="context" value="/commons/contextExecutionDegreeAndCurricularYear.jsp" />
 </tiles:insert>
-
-

@@ -75,7 +75,10 @@ public class CriarTurno implements IServico {
 					infoTurno.getTipo(),
 					infoTurno.getLotacao(),
 					executionCourse);
-
+			// TODO : this is requierd to write shifts.
+			//        I'm not sure of the significance, nor do I know if it is to
+			//        be attributed by SOP users. So for now just set it to 0. 
+			turno.setAvailabilityFinal(new Integer(0));
 			
 			try {
 				sp.getITurnoPersistente().lockWrite(turno);

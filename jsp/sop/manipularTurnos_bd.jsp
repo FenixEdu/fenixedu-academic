@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.List"%>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -49,6 +50,15 @@
         </logic:iterate>
 		</table>
         <br/>
+<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+			 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.view.Turno"/></html:submit>
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.edit.Turno"/></html:submit>
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.delete.Turno"/></html:submit>

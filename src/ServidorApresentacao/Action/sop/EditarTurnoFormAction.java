@@ -1,6 +1,4 @@
 package ServidorApresentacao.Action.sop;
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,20 +13,22 @@ import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author tfc130
  */
-public class EditarTurnoFormAction extends FenixAction {
+public class EditarTurnoFormAction extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+		
+		super.execute(mapping, form, request, response);
 			
 		DynaActionForm editarTurnoForm = (DynaActionForm) form;
 		HttpSession session = request.getSession(false);
@@ -37,11 +37,21 @@ public class EditarTurnoFormAction extends FenixAction {
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
 
-			ArrayList infoTurnos =
-				(ArrayList) session.getAttribute(
-					"infoTurnosDeDisciplinaExecucao");
-			InfoShift infoTurnoAntigo =
-				(InfoShift) session.getAttribute("infoTurno");
+//			ArrayList infoTurnos =
+//				(ArrayList) session.getAttribute(
+//					"infoTurnosDeDisciplinaExecucao");
+
+			Integer shiftOID = new Integer(request.getParameter("old_shift_oid"));
+
+			//InfoShift infoTurnoAntigo =
+			//	(InfoShift) request.getAttribute("infoTurno");
+
+			Object args[] = { shiftOID };
+			InfoShift infoTurnoAntigo = (InfoShift) gestor.executar(
+					userView,
+					"ReadShiftByOID",
+					args);
+
 
 			InfoShift infoTurnoNovo =
 				new InfoShift(
@@ -52,11 +62,9 @@ public class EditarTurnoFormAction extends FenixAction {
 
 			Object argsEditarTurno[] = { infoTurnoAntigo, infoTurnoNovo };
 
-			Boolean result = Boolean.TRUE;
 			ActionErrors actionErrors = null;
 			try {
-				result =
-					(Boolean) gestor.executar(
+					gestor.executar(
 						userView,
 						"EditarTurno",
 						argsEditarTurno);
@@ -76,10 +84,10 @@ public class EditarTurnoFormAction extends FenixAction {
 			}
 
 			if (actionErrors == null) {
-				infoTurnos.set(
-					infoTurnos.indexOf(infoTurnoAntigo),
-					infoTurnoNovo);
-				session.removeAttribute("indexTurno");
+//				infoTurnos.set(
+//					infoTurnos.indexOf(infoTurnoAntigo),
+//					infoTurnoNovo);
+				//session.removeAttribute("indexTurno");
 				return (mapping.findForward("Guardar"));
 			} else {
 				return mapping.getInputForward();

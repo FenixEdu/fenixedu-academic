@@ -12,21 +12,23 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import Util.TipoAula;
 /**
  * @author tfc130
  */
-public class CriarTurnoFormAction extends FenixAction {
+public class CriarTurnoFormAction extends FenixExecutionDegreeAndCurricularYearContextAction {
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
+		super.execute(mapping, form, request, response);
 			
 		DynaActionForm criarTurnoForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);

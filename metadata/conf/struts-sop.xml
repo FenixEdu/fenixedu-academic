@@ -618,7 +618,7 @@
           <forward name="Sucesso" path="/criarTurno.jsp"/>
       </action>
       <action attribute="criarTurnoForm"
-              input="/criarTurno.jsp"
+              input="/prepararCriarTurno.do"
               name="criarTurnoForm"
               path="/criarTurnoForm"
               scope="request"
@@ -646,10 +646,10 @@
       </action>
       
       <action attribute="manipularTurnosForm"
-              input="/manipularTurnos.jsp"
+              input="/prepararManipularTurnos.do"
               name="manipularTurnosForm"
               path="/manipularTurnosForm"
-              scope="session"
+              scope="request"
               type="ServidorApresentacao.Action.sop.ManipularTurnosFormAction">
         <forward name="Ver Turno" path="/prepararVerTurno.do"/>
         <forward name="Editar Turno" path="/prepararEditarTurno.do"/>
@@ -681,7 +681,7 @@
       </action>
 
       <action attribute="editarTurnoForm"
-              input="/editarTurno.jsp"
+              input="/prepararEditarTurno.do"
               name="editarTurnoForm"
               path="/editarTurnoForm"
               scope="request"
@@ -690,7 +690,7 @@
          	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />     
-        <forward name="Guardar" path="/manipularTurnos.do"/>
+        <forward name="Guardar" path="/prepararManipularTurnos.do"/>
       </action>
 
       <action path="/prepararEditarAulasDeTurno"
