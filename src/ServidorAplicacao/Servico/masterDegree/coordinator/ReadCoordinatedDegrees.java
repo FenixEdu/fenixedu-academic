@@ -82,10 +82,8 @@ public class ReadCoordinatedDegrees implements IServico {
             newEx.fillInStackTrace();
             throw newEx;
         } 
-
 		if (degrees == null)
 			throw new ExcepcaoInexistente("No Degrees Found !!");	
-		
 		
 		Iterator iterator = degrees.iterator();
 		List result = new ArrayList();
@@ -93,6 +91,7 @@ public class ReadCoordinatedDegrees implements IServico {
 			ICursoExecucao executionDegree = (ICursoExecucao) iterator.next(); 
 			result.add(Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
 		}
+
 		return result;
     }
 }
