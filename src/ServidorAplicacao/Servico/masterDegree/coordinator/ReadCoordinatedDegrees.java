@@ -25,49 +25,50 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.DegreeCurricularPlanState;
 
 public class ReadCoordinatedDegrees implements IService {
 
-	public ReadCoordinatedDegrees() {
-	}
+    public ReadCoordinatedDegrees() {
+    }
 
-	public List run(UserView userView) throws ExcepcaoInexistente,
-			FenixServiceException {
+    public List run(UserView userView) throws ExcepcaoInexistente, FenixServiceException {
 
-		ISuportePersistente sp = null;
+        ISuportePersistente sp = null;
 
-		List plans = null;
+        List plans = null;
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
+        try {
+            sp = SuportePersistenteOJB.getInstance();
 
-			// Read the Teacher
+            // Read the Teacher
 
-			ITeacher teacher = sp.getIPersistentTeacher()
-					.readTeacherByUsername(userView.getUtilizador());
-			if (teacher == null) {
-				throw new ExcepcaoInexistente("No Teachers Found !!");
-			}
-			plans = sp.getIPersistentCoordinator()
-					.readCurricularPlansByTeacher(teacher);
+            ITeacher teacher = sp.getIPersistentTeacher()
+                    .readTeacherByUsername(userView.getUtilizador());
+            if (teacher == null) {
+                throw new ExcepcaoInexistente("No Teachers Found !!");
+            }
+            plans = sp.getIPersistentCoordinator().readCurricularPlansByTeacher(teacher);
 
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException(
-					"Persistence layer error", ex);
-			throw newEx;
-		}
-		if (plans == null) {
-			throw new ExcepcaoInexistente("No Degrees Found !!");
-		}
-		Iterator iterator = plans.iterator();
-		List result = new ArrayList();
-		while (iterator.hasNext()) {
-			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator
-					.next();
-			result.add(InfoDegreeCurricularPlanWithDegree
-					.newInfoFromDomain(degreeCurricularPlan));
-		}
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+            throw newEx;
+        }
+        if (plans == null) {
+            throw new ExcepcaoInexistente("No Degrees Found !!");
+        }
+        Iterator iterator = plans.iterator();
+        List result = new ArrayList();
+        while (iterator.hasNext()) {
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator.next();
 
-		return result;
-	}
+            if (!degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE_OBJ)) {
+                continue;
+            }
+
+            result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan));
+        }
+
+        return result;
+    }
 }

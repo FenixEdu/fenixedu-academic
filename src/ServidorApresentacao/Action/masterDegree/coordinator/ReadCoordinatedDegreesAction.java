@@ -57,10 +57,10 @@ public class ReadCoordinatedDegreesAction extends
 			//sets in the session a list containing the master degree curricular plans
 			session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
 
-			if (degrees.size() == 1) {
-				request.setAttribute("degree", "0");
-				return mapping.findForward("oneDegreeSucces");
-			}
+//			if (degrees.size() == 1) {
+//				request.setAttribute("degree", "0");
+//				return mapping.findForward("oneDegreeSucces");
+//			}
 
 			return mapping.findForward("ChooseDegree");
 		}
