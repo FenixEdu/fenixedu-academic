@@ -32,12 +32,12 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
     public List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia{
         try {
             String oqlQuery = "select announcement from " + Announcement.class.getName();
-			oqlQuery += " where site.executionCourse.nome = $1";
+			oqlQuery += " where site.executionCourse.sigla = $1";
 			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
 			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
 			
 			query.create(oqlQuery);
-			query.bind(executionCourse.getNome());
+			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
 			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 			
@@ -57,11 +57,11 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
 			ISite site = null;
 			
 			String oqlQuery = "select site from " + Site.class.getName();
-			oqlQuery += " where executionCourse.nome = $1";
+			oqlQuery += " where executionCourse.sigla = $1";
 			oqlQuery += " and executionCourse.executionPeriod.name = $2";
 			oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $3";
 			query.create(oqlQuery);
-			query.bind(executionCourse.getNome());
+			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
 			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 			List result = (List) query.execute();

@@ -21,13 +21,13 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
             String oqlQuery1 = "select announcement from " + Announcement.class.getName();
             oqlQuery1 += " where title = $1";
 			oqlQuery1 += " and creationDate = $2";
-			oqlQuery1 += " and site.executionCourse.nome = $3";
+			oqlQuery1 += " and site.executionCourse.sigla = $3";
 			oqlQuery1 += " and site.executionCourse.executionPeriod.name = $4";
 			oqlQuery1 += " and site.executionCourse.executionPeriod.executionYear.year = $5";
             query.create(oqlQuery1);
             query.bind(title);
             query.bind(cDate);
-            query.bind(site.getExecutionCourse().getNome());
+            query.bind(site.getExecutionCourse().getSigla());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
             List result1 = (List) query.execute();

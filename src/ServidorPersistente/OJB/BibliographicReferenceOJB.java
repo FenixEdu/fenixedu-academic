@@ -47,7 +47,7 @@ public class BibliographicReferenceOJB
 				"select bibiographicReference from "
 					+ BibliographicReference.class.getName();
 			oqlQuery
-				+= " where executionCourse.nome = $1";
+				+= " where executionCourse.sigla = $1";
 			oqlQuery
 				+= " and executionCourse.executionPeriod.name = $2";
 			oqlQuery
@@ -57,7 +57,7 @@ public class BibliographicReferenceOJB
 			oqlQuery += " and reference = $6";
 			oqlQuery += " and year = $7";
 			query.create(oqlQuery);
-			query.bind(executionCourse.getNome());
+			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
 			query.bind(
 				executionCourse

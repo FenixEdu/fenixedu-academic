@@ -38,7 +38,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			Section section = (Section) superiorSection;
 			String oqlQuery = "select section from " + Section.class.getName();
 			oqlQuery += " where name = $1 ";
-			oqlQuery +=	" and site.executionCourse.nome = $2";
+			oqlQuery +=	" and site.executionCourse.sigla = $2";
 			oqlQuery += " and site.executionCourse.executionPeriod.name = $3";
 			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $4";
 			if (section == null) {
@@ -53,7 +53,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			query.create(oqlQuery);
 			
 			query.bind(name);
-			query.bind(site.getExecutionCourse().getNome());
+			query.bind(site.getExecutionCourse().getSigla());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 			

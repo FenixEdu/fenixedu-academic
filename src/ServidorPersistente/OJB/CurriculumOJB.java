@@ -31,12 +31,12 @@ public class CurriculumOJB
 			ICurriculum curriculumResultado = null;
 			String oqlQuery =
 				"select curriculum from " + Curriculum.class.getName();
-			oqlQuery += " where executionCourse.nome = $1";
+			oqlQuery += " where executionCourse.sigla = $1";
 			oqlQuery += " and executionCourse.executionPeriod.name = $2";
 			oqlQuery
 				+= " and executionCourse.executionPeriod.executionYear.year = $3";
 			query.create(oqlQuery);
-			query.bind(executionCourse.getNome());
+			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
 			query.bind(
 				executionCourse
