@@ -140,7 +140,7 @@ public class ExamEnrollmentOJBTest extends TestCaseOJB {
 
 			exam.setIdInternal(new Integer("10"));
 
-			exam = (IExam) sp.getIPersistentExam().readByOId(exam);
+			exam = (IExam) sp.getIPersistentExam().readByOId(exam, false);
 
 			examEnrollment = new ExamEnrollment();
 			examEnrollment.setExam(exam);
@@ -178,7 +178,7 @@ public class ExamEnrollmentOJBTest extends TestCaseOJB {
 
 			exam.setIdInternal(new Integer("10"));
 
-			exam = (IExam) sp.getIPersistentExam().readByOId(exam);
+			exam = (IExam) sp.getIPersistentExam().readByOId(exam, false);
 
 			examEnrollment = new ExamEnrollment();
 			examEnrollment.setExam(exam);
@@ -216,7 +216,7 @@ public class ExamEnrollmentOJBTest extends TestCaseOJB {
 			sp.iniciarTransaccao();
 
 			exam.setIdInternal(new Integer("1"));
-			exam = (IExam) sp.getIPersistentExam().readByOId(exam);
+			exam = (IExam) sp.getIPersistentExam().readByOId(exam, false);
 			examEnrollment =
 				(IExamEnrollment) sp.getIPersistentExamEnrollment().readIExamEnrollmentByExam(exam);
 

@@ -74,13 +74,13 @@ public class ReadStudentsEnrolledInExamTest extends TestCaseReadServices {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IStudent student = new Student(new Integer(3));
-			student = (IStudent) sp.getIPersistentStudent().readByOId(student);
+			student = (IStudent) sp.getIPersistentStudent().readByOId(student, false);
 			InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
 			infoStudents.add(infoStudent);
 			IExam exam = new Exam();
 			exam.setIdInternal(new Integer(2));
 			IPersistentExam persistentExam = sp.getIPersistentExam();
-			exam = (IExam) persistentExam.readByOId(exam);
+			exam = (IExam) persistentExam.readByOId(exam, false);
 			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents,infoExam);
 			siteView.setComponent(component);

@@ -65,7 +65,7 @@ public class EditExamEnrollment implements IServico {
 
 			IExamEnrollment oldExamEnrollment =
 				(IExamEnrollment) persistentExamEnrollment.readByOId(
-					examEnrollment);
+					examEnrollment, false);
 
 			oldExamEnrollment.setBeginDate(newBeginDate);
 			oldExamEnrollment.setEndDate(newEndDate);

@@ -53,7 +53,7 @@ public class ReadStudentsEnrolledInExam implements IServico {
 				sp.getIDisciplinaExecucaoPersistente();
 			IExam exam = new Exam();
 			exam.setIdInternal(examCode);
-			exam = (IExam) persistentExam.readByOId(exam);
+			exam = (IExam) persistentExam.readByOId(exam, false);
 			List students = exam.getStudentsEnrolled();
 			List infoStudents = new ArrayList();
 			Iterator iter = students.iterator();

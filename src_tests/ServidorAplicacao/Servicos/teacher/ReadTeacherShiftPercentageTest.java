@@ -66,7 +66,7 @@ public class ReadTeacherShiftPercentageTest extends TestCaseServices {
 			teacher.setIdInternal(new Integer(1));
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-			teacher = (ITeacher) teacherDAO.readByOId(teacher);
+			teacher = (ITeacher) teacherDAO.readByOId(teacher, false);
 
 			InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 

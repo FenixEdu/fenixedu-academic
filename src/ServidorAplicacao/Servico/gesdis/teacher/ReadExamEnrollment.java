@@ -62,7 +62,7 @@ public class ReadExamEnrollment implements IServico {
 			exam.setIdInternal(examIdInternal);
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExam persistentExam = sp.getIPersistentExam();
-			exam = (IExam) persistentExam.readByOId(exam);
+			exam = (IExam) persistentExam.readByOId(exam, false);
 
 			ServidorPersistente
 				.IPersistentExamEnrollment persistentExamEnrollment =

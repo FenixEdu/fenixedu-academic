@@ -72,7 +72,7 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			sp.iniciarTransaccao();
-			teacher = (ITeacher) teacherDAO.readByOId(teacher);
+			teacher = (ITeacher) teacherDAO.readByOId(teacher, false);
 
 			sp.confirmarTransaccao();
 
@@ -138,7 +138,7 @@ public class WriteCreditsTeacherTest extends TestCaseServices {
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			sp.iniciarTransaccao();
-			teacher = (ITeacher) teacherDAO.readByOId(teacher);
+			teacher = (ITeacher) teacherDAO.readByOId(teacher, false);
 
 			sp.confirmarTransaccao();
 

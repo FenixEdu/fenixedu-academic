@@ -105,7 +105,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter
 					 executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 				} else {
 					executionCourse = 
-							(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao((Integer) argumentos[0]));
+							(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao((Integer) argumentos[0]), false);
 				}
 		
 				IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();

@@ -213,7 +213,7 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 
 			professorship = new Professorship();
 			professorship.setIdInternal(professorShipId);
-			professorship = (IProfessorship) professorshipDAO.readByOId(professorship);
+			professorship = (IProfessorship) professorshipDAO.readByOId(professorship, false);
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("Getting professorship id=" + professorShipId);
@@ -239,7 +239,7 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-			shift = (ITurno) shiftDAO.readByOId(shift);
+			shift = (ITurno) shiftDAO.readByOId(shift, false);
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("Reading shift! id=" + shiftId);
@@ -284,7 +284,7 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			teacher = new Teacher();
 			teacher.setIdInternal(teacherInternalCode);
-			teacher = (ITeacher) teacherDAO.readByOId(teacher);
+			teacher = (ITeacher) teacherDAO.readByOId(teacher, false);
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			fail("Reading teacher! id=" + teacherInternalCode);

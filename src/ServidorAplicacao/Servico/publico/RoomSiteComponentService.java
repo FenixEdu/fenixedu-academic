@@ -65,13 +65,13 @@ public class RoomSiteComponentService implements IServico {
 
 			ISala room = persistentRoom.readByName(roomKey.getNomeSala());
 			IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionPeriodCode));
+				(IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionPeriodCode), false);
 			if (executionPeriod==null) {
 				throw new NonExistingServiceException();
 			}
 			RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
 			bodyComponent = componentBuilder.getComponent(bodyComponent, executionPeriod, room);
-			System.out.println("component"+bodyComponent);
+			
 			siteView = new SiteView(bodyComponent);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

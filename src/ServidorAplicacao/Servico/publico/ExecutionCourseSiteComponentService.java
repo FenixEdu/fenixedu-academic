@@ -71,14 +71,14 @@ public class ExecutionCourseSiteComponentService implements IServico {
 			ISite site = null;
 			if (infoSiteCode != null) {
 
-				site = (ISite) persistentSite.readByOId(new Site(infoSiteCode));
+				site = (ISite) persistentSite.readByOId(new Site(infoSiteCode), false);
 				if (site == null) {
 					throw new NonExistingServiceException();
 				}
 			} else {
 				IDisciplinaExecucao executionCourse =
 					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao(infoExecutionCourseCode));
+						new DisciplinaExecucao(infoExecutionCourseCode), false);
 				if (executionCourse == null) {
 					throw new NonExistingServiceException();
 				}

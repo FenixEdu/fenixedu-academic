@@ -44,7 +44,7 @@ public class WriteCreditsTeacher implements IServico {
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 			ITeacher teacherParam = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-			ITeacher teacher = (ITeacher) teacherDAO.readByOId(teacherParam);
+			ITeacher teacher = (ITeacher) teacherDAO.readByOId(teacherParam, false);
 
 			IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();

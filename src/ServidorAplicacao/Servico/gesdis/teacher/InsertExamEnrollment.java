@@ -65,7 +65,7 @@ public class InsertExamEnrollment implements IServico {
 
 			IExam exam = new Exam();
 			exam.setIdInternal(examIdInternal);
-			exam = (IExam) persistentExam.readByOId(exam);
+			exam = (IExam) persistentExam.readByOId(exam, false);
 			
 			if (exam != null){			
 				examEnrollment.setExam(exam);}

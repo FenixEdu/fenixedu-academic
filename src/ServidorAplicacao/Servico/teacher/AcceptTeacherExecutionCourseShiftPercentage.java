@@ -74,11 +74,11 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 			//read execution course
 			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
-			executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse);
+			executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
 
 			//read teacher
 			ITeacher teacherParam = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-			ITeacher teacher = (ITeacher) teacherDAO.readByOId(teacherParam);
+			ITeacher teacher = (ITeacher) teacherDAO.readByOId(teacherParam, false);
 
 			//read professorship
 			IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacher, executionCourse);
@@ -125,7 +125,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 		throws ExcepcaoPersistencia {
 		ITurno shiftParam = new Turno();
 		shiftParam.setIdInternal(infoTeacherShiftPercentage.getInfoShift().getIdInternal());
-		ITurno shift = (ITurno) shiftDAO.readByOId((IDomainObject) shiftParam);
+		ITurno shift = (ITurno) shiftDAO.readByOId(shiftParam, false);
 		return shift;
 	}
 

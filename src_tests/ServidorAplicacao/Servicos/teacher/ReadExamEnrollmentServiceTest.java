@@ -74,7 +74,7 @@ public class ReadExamEnrollmentServiceTest extends TestCaseReadServices {
 				(IExam) ((ISuportePersistente) SuportePersistenteOJB
 					.getInstance())
 					.getIPersistentExam()
-					.readByOId(exam);
+					.readByOId(exam, false);
 			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 			infoExamEnrollment.setInfoExam(infoExam);
 

@@ -68,12 +68,12 @@ public class StudentOJBTest extends TestCaseOJB {
 			person= new Pessoa();
 			person.setIdInternal(new Integer(3));
 			persistentSupport.iniciarTransaccao();
-			person = (IPessoa)persistentPerson.readByOId(person);
+			person = (IPessoa)persistentPerson.readByOId(person, false);
 			assertNotNull(person);
 			String username = person.getUsername();
 			student = new Student();
 			student.setIdInternal(new Integer(3));
-			student = (IStudent) persistentStudent.readByOId(student);
+			student = (IStudent) persistentStudent.readByOId(student, false);
 			assertNotNull(student);
 			IStudent studentFromDb = persistentStudent.readByUsername(username);
 			assertNotNull(studentFromDb);

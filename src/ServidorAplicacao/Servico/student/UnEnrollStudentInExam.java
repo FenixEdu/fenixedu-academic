@@ -49,7 +49,7 @@ public class UnEnrollStudentInExam implements IServico {
 			IPersistentExam persistentExam = sp.getIPersistentExam();
 			IExam exam = new Exam();
 			exam.setIdInternal(examId);
-			exam = (IExam) persistentExam.readByOId(exam);
+			exam = (IExam) persistentExam.readByOId(exam, false);
 			
 			if (student!=null){
 				student.getExamsEnrolled().remove(exam);

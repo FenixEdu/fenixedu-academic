@@ -61,7 +61,7 @@ public class EditExamRooms implements IServico {
 		try {
 			Exam examQuery = new Exam();
 			examQuery.setIdInternal(infoExam.getIdInternal());
-			final Exam exam = (Exam) persistentRoom.readByOId(examQuery);
+			final Exam exam = (Exam) persistentRoom.readByOId(examQuery, false);
 			if (exam==null) {
 				throw new NonExistingServiceException();
 			}
@@ -102,11 +102,7 @@ public class EditExamRooms implements IServico {
 		public Object transform(Object id) {
 			Sala room = new Sala();
 			room.setIdInternal((Integer) id);
-			try {
-				return persistentRoom.readByOId(room);
-			} catch (ExcepcaoPersistencia e) {
-				return null;
-			}
+			return persistentRoom.readByOId(room, false);
 		}
 	};
 
