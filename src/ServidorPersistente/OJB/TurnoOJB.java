@@ -31,23 +31,6 @@ import Util.TipoAula;
 
 public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
-	public ITurno readByNome(String nome) throws ExcepcaoPersistencia {
-		try {
-			ITurno turno = null;
-			String oqlQuery = "select turnonome from " + Turno.class.getName();
-			oqlQuery += " where nome = $1";
-			query.create(oqlQuery);
-			query.bind(nome);
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				turno = (ITurno) result.get(0);
-			return turno;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
 	public ITurno readByNameAndExecutionCourse(
 		String shiftName,
 		IDisciplinaExecucao executionCourse)
@@ -83,7 +66,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
 	public void delete(ITurno turno) throws ExcepcaoPersistencia {
 
-		try {
+		try { 
 
 			ITurnoAula turnoAula = null;
 			TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
@@ -209,20 +192,35 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + Turno.class.getName();
-		super.deleteAll(oqlQuery);
+		try {
+			String oqlQuery = "select all from " + Turno.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()){
+				delete((ITurno) iterator.next());
+			}
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
-	public Integer querie2(String nomeTurno) throws ExcepcaoPersistencia {
+	public Integer countAllShiftsOfAllClassesAssociatedWithShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + TurmaTurno.class.getName();
-			//oqlQuery += ", " + Turno.class.getName();// + " " ;//, " + TurmaTurno.class.getName() + ") ";
-			oqlQuery += " where turno.nome = $1 and turno.tipo = $2";
-			//                        "";
-			//                        "turma_turno.chave_turma = turma.codigo_interno";
+			String oqlQuery = "select all from " + TurmaTurno.class.getName()
+							+ " where turno.nome = $1 "
+							+ " and turno.disciplinaExecucao.sigla = $2 "
+							+ " and turno.disciplinaExecucao.executionPeriod.name = $3 "
+							+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4"
+							+ " and turno.tipo = $5";
 			query.create(oqlQuery);
-			query.bind(nomeTurno);
-			query.bind(new Integer(TipoAula.TEORICA));
+			
+			query.bind(shift.getNome());
+			query.bind(shift.getDisciplinaExecucao().getSigla());
+			query.bind(shift.getDisciplinaExecucao().getExecutionPeriod().getName());
+			query.bind(shift.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+			query.bind(shift.getTipo().getTipo());
+
 			List result = (List) query.execute();
 			lockRead(result);
 
@@ -268,17 +266,18 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		try {
 			ArrayList turnos = new ArrayList();
 			String oqlQuery = "select turnos from " + Turno.class.getName();
-			oqlQuery += " where disciplinaExecucao.sigla = $1";
-			oqlQuery
-				+= " and disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2";
-			oqlQuery
-				+= " and disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3";
+			oqlQuery += " where disciplinaExecucao.sigla = $1"
+					 + " and disciplinaExecucao.executionPeriod.executionYear.year = $2"
+					 + " and disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.curso.sigla = $3";
 			query.create(oqlQuery);
 			query.bind(sigla);
 			query.bind(anoLectivo);
 			query.bind(siglaLicenciatura);
 			List result = (List) query.execute();
 			lockRead(result);
+			
+			System.out.println(result.size());
+			
 			for (int i = 0; i != result.size(); i++)
 				turnos.add((ITurno) (result.get(i)));
 			return turnos;
