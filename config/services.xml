@@ -1256,7 +1256,7 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadExecutionPeriod</name>
+        <name>ReadExecutionPeriodForExecutionCourseAssociation</name>
         <implementationClass>ServidorAplicacao.Servico.manager.ReadExecutionPeriod</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>

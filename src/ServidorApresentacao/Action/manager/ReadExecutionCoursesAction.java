@@ -59,7 +59,7 @@ public class ReadExecutionCoursesAction extends FenixAction {
 						infoExecutionPeriod =
 							(InfoExecutionPeriod) ServiceUtils.executeService(
 								userView,
-								"ReadExecutionPeriod",
+								"ReadExecutionPeriodForExecutionCourseAssociation",
 								args);
 
 					} catch (NonExistingServiceException e) {
