@@ -265,7 +265,8 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
                     newEnrolmentList.add(infoEnrolment2);
                 }
             }
-            if (!infoStudentCurricularPlan.getGivenCredits().equals(new Double(0))) {
+            if ((infoStudentCurricularPlan.getGivenCredits() != null)
+                    && (!infoStudentCurricularPlan.getGivenCredits().equals(new Double(0)))) {
                 sum = sum
                         + Double
                                 .parseDouble(String.valueOf(infoStudentCurricularPlan.getGivenCredits()));
