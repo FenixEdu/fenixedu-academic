@@ -29,7 +29,7 @@
          class-ref="Dominio.DisciplinaExecucao"
          proxy="true"
     >
-		<foreignkey field-id-ref="2"/>
+	<foreignkey field-id-ref="2"/>
 	
 	</reference-descriptor>
     <reference-descriptor
@@ -37,7 +37,7 @@
          class-ref="Dominio.Section"
          proxy="true"
       >
-    	<foreignkey field-id-ref="3"/>
+    <foreignkey field-id-ref="3"/>
     </reference-descriptor>
     
     <collection-descriptor
@@ -243,7 +243,7 @@
 <class-descriptor class="Dominio.BibliographicReference"
                   table="BIBLIOGRAPHIC_REFERENCE">
     <field-descriptor id="1"
-        name="INTERNAL_CODE"
+        name="internalCode"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
@@ -271,13 +271,14 @@
     <field-descriptor id="5"
         name="year"
         column="YEAR"
-        jdbc-type="DATE"
+        jdbc-type="VARCHAR"
 	/>
 	
 	<field-descriptor id="6"
-        name="facultative"
-        column="FACULTATIVE"
+        name="optional"
+        column="OPTIONAL"
         jdbc-type="INTEGER"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
 	/>
 		   
     <field-descriptor id="7"
