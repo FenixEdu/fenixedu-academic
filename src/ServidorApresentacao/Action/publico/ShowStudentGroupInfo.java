@@ -67,6 +67,7 @@ public class ShowStudentGroupInfo extends Action
 						result += lesson.getDiaSemana().toString()
 							+ " "
 							+ lesson.getInicio().get(Calendar.HOUR_OF_DAY)
+							+":"+lesson.getInicio().get(Calendar.MINUTE)
 							+ "\n";
 					}
 				}
