@@ -462,6 +462,7 @@
    	        <form-property name="currentState" type="java.lang.String"/>
    	        <form-property name="credits" type="java.lang.String"/>
    	        <form-property name="extraCurricularCourses" type="java.lang.String[]"/>
+   	        <form-property name="observations" type="java.lang.String"/>
       </form-bean>
      
 

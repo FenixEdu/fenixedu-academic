@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoEnrolment" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
@@ -20,29 +19,30 @@
 <table border="0" cellspacing="3" cellpadding="10">
 	<tr>
 		<td>
-			<b><bean:message key="label.student.degree" /></b>
+			<strong><bean:message key="label.student.degree" /></strong>
 			<bean:write name="studentCurricularPlan" property="infoDegreeCurricularPlan.name" />
 			<bean:write name="studentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome" />
 		</td>						
 	</tr>	
 	<tr>
 		<td>
-			<b><bean:message key="label.student.branch" /></b>
+			<strong><bean:message key="label.student.branch" /></strong>
 			<bean:write name="studentCurricularPlan" property="infoBranch.code" />
 			<bean:write name="studentCurricularPlan" property="infoBranch.name" />
 		</td>						
 	</tr>		
 	<tr>
 		<td>
-			<b><bean:message key="label.student.specialization" /></b>
+			<strong><bean:message key="label.student.specialization" /></strong>
 			<bean:write name="studentCurricularPlan" property="specialization" />
 		</td>
 	</tr>		
 	<tr>
 		<td>
-			<b><bean:message key="label.student.state" /></b>
+			<strong><bean:message key="label.student.state" /></strong>
 			<logic:present name="<%= SessionConstants.STATE %>">   
-				<html:select property="currentState" value="<%= state.getState() %>">	 	
+				<html:select property="currentState" >					 
+				
 	          	 <html:options collection="<%= SessionConstants.STATE %>" property="value" labelProperty="label"/>
 	    	 	</html:select>   
 			</logic:present>
@@ -50,13 +50,13 @@
 	</tr>	
 	<tr>
 		<td>
-			<b><bean:message key="label.student.startDate" /></b>
+			<strong><bean:message key="label.student.startDate" /></strong>
 			<bean:write name="studentCurricularPlan" property="startDate" />
 		</td>								
 	</tr>	
 	<tr>
 		<td>
-			<b><bean:message key="label.student.credits" /></b>
+			<strong><bean:message key="label.student.credits" /></strong>
 			<logic:present name="<%= SessionConstants.STATE %>">
 				<html:text name="studentCurricularPlanForm" property="credits" size="4"/>
 			</logic:present>
@@ -64,22 +64,32 @@
 	</tr>	
 	<tr>
 		<td>
-			<b><bean:message key="label.student.completedCourses" /></b>	
+			<strong><bean:message key="label.student.completedCourses" /></strong>	
 			<bean:write name="studentCurricularPlan" property="completedCourses" />
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<b><bean:message key="label.student.enrolledCourses" /></b>
+			<strong><bean:message key="label.student.enrolledCourses" /></strong>
 			<bean:write name="studentCurricularPlan" property="enrolledCourses" />
 		</td>
 	</tr>	
 	<tr>
 		<td>
-			<b><bean:message key="label.student.classification" /></b>
+			<strong><bean:message key="label.student.classification" /></strong>
 			<bean:write name="studentCurricularPlan" property="classification" />
 		</td>
 	</tr>	
+	<tr>
+		<td>
+		<strong><bean:message key="label.student.observations"/></strong>
+		
+		</td>
+	</tr>
+	<tr>
+		<td><html:textarea name="studentCurricularPlan" property="observations" cols="40" rows="4"/>
+		</td>
+	</tr>
 	<tr>
 		<td>
 			<logic:notPresent name="studentCurricularPlan" property="infoEnrolments">

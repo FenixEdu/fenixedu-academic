@@ -6,10 +6,10 @@ package ServidorAplicacao
 	.studentCurricularPlan;
 
 import java.util.Iterator;
-import java.util.List;   
+import java.util.List;
 
-import Dominio.Enrolment; 
-import Dominio.EnrolmentInExtraCurricularCourse; 
+import Dominio.Enrolment;
+import Dominio.EnrolmentInExtraCurricularCourse;
 import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IPessoa;
@@ -26,6 +26,7 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 
 /**
@@ -55,7 +56,8 @@ public class EditPosGradStudentCurricularPlanStateAndCredits
 		Integer studentCurricularPlanId,
 		String currentState,
 		Double credits,
-		List extraCurricularCourses)
+		List extraCurricularCourses,
+		String observations)
 		throws FenixServiceException {
 
 		try {
@@ -93,68 +95,82 @@ public class EditPosGradStudentCurricularPlanStateAndCredits
 			studentCurricularPlan.setCurrentState(newState);
 			studentCurricularPlan.setEmployee(employee);
 			studentCurricularPlan.setGivenCredits(credits);
+			studentCurricularPlan.setObservations(observations);
 			List enrollments = studentCurricularPlan.getEnrolments();
 			Iterator iterator = enrollments.iterator();
-			while (iterator.hasNext()) {
-				IEnrolment enrolment = (IEnrolment) iterator.next();
-				IEnrolment auxEnrolment = null;
-				if (extraCurricularCourses
-					.contains(enrolment.getIdInternal())) {
-					if (!(enrolment
-						instanceof EnrolmentInExtraCurricularCourse)) {
-						System.out.println("normal->extra");
-
-						auxEnrolment = new EnrolmentInExtraCurricularCourse();
-						auxEnrolment.setIdInternal(enrolment.getIdInternal());
-						auxEnrolment.setCurricularCourseScope(
-							enrolment.getCurricularCourseScope());
-						auxEnrolment.setExecutionPeriod(
-							enrolment.getExecutionPeriod());
-						auxEnrolment.setStudentCurricularPlan(
-							enrolment.getStudentCurricularPlan());
-						persistentEnrolment.simpleLockWrite(auxEnrolment);
-						try {
-
-							auxEnrolment.setEnrolmentEvaluationType(
-								enrolment.getEnrolmentEvaluationType());
-							auxEnrolment.setEnrolmentState(
-								enrolment.getEnrolmentState());
-							auxEnrolment.setEvaluations(
-								enrolment.getEvaluations());
-
-						} catch (Exception e1) {
-							throw new FenixServiceException(e1);
-						}
-					}
-				} else {
-					if (enrolment
-						instanceof EnrolmentInExtraCurricularCourse) {
-
-						auxEnrolment = new Enrolment();
-						auxEnrolment.setIdInternal(enrolment.getIdInternal());
-						auxEnrolment.setCurricularCourseScope(
-							enrolment.getCurricularCourseScope());
-						auxEnrolment.setExecutionPeriod(
-							enrolment.getExecutionPeriod());
-						auxEnrolment.setStudentCurricularPlan(
-							enrolment.getStudentCurricularPlan());
-						persistentEnrolment.simpleLockWrite(auxEnrolment);
-						try {
-							auxEnrolment.setEnrolmentEvaluationType(
-							enrolment.getEnrolmentEvaluationType());
-						auxEnrolment.setEnrolmentState(
-							enrolment.getEnrolmentState());
-						auxEnrolment.setEvaluations(
-							enrolment.getEvaluations());
-						} catch (Exception e1) {
-							throw new FenixServiceException(e1);
-						}
-
+			if (newState.getState().intValue()
+				== StudentCurricularPlanState.INACTIVE) {
+				while (iterator.hasNext()) {
+					IEnrolment enrolment = (IEnrolment) iterator.next();
+					if (enrolment.getEnrolmentState().getValue()
+						!= EnrolmentState.APROVED_TYPE) {
+						enrolment.setEnrolmentState(EnrolmentState.ANNULED);
 					}
 
 				}
-			}
+			} else {
 
+				while (iterator.hasNext()) {
+					IEnrolment enrolment = (IEnrolment) iterator.next();
+					IEnrolment auxEnrolment = null;
+					if (extraCurricularCourses
+						.contains(enrolment.getIdInternal())) {
+						if (!(enrolment
+							instanceof EnrolmentInExtraCurricularCourse)) {
+							auxEnrolment =
+								new EnrolmentInExtraCurricularCourse();
+							auxEnrolment.setIdInternal(
+								enrolment.getIdInternal());
+							auxEnrolment.setCurricularCourseScope(
+								enrolment.getCurricularCourseScope());
+							auxEnrolment.setExecutionPeriod(
+								enrolment.getExecutionPeriod());
+							auxEnrolment.setStudentCurricularPlan(
+								enrolment.getStudentCurricularPlan());
+							persistentEnrolment.simpleLockWrite(auxEnrolment);
+							try {
+
+								auxEnrolment.setEnrolmentEvaluationType(
+									enrolment.getEnrolmentEvaluationType());
+								auxEnrolment.setEnrolmentState(
+									enrolment.getEnrolmentState());
+								auxEnrolment.setEvaluations(
+									enrolment.getEvaluations());
+
+							} catch (Exception e1) {
+								throw new FenixServiceException(e1);
+							}
+						}
+					} else {
+						if (enrolment
+							instanceof EnrolmentInExtraCurricularCourse) {
+
+							auxEnrolment = new Enrolment();
+							auxEnrolment.setIdInternal(
+								enrolment.getIdInternal());
+							auxEnrolment.setCurricularCourseScope(
+								enrolment.getCurricularCourseScope());
+							auxEnrolment.setExecutionPeriod(
+								enrolment.getExecutionPeriod());
+							auxEnrolment.setStudentCurricularPlan(
+								enrolment.getStudentCurricularPlan());
+							persistentEnrolment.simpleLockWrite(auxEnrolment);
+							try {
+								auxEnrolment.setEnrolmentEvaluationType(
+									enrolment.getEnrolmentEvaluationType());
+								auxEnrolment.setEnrolmentState(
+									enrolment.getEnrolmentState());
+								auxEnrolment.setEvaluations(
+									enrolment.getEvaluations());
+							} catch (Exception e1) {
+								throw new FenixServiceException(e1);
+							}
+
+						}
+
+					}
+				}
+			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

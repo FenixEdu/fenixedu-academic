@@ -65,14 +65,14 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 		//put request			
 		request.setAttribute(
 			SessionConstants.STATE,
-			StudentCurricularPlanState.toArrayList());
+			StudentCurricularPlanState.toOrderedArrayList(infoStudentCurricularPlan.getCurrentState()));
 		request.setAttribute(
 			"student",
 			infoStudentCurricularPlan.getInfoStudent());
 		request.setAttribute(
 			"studentCurricularPlan",
 			infoStudentCurricularPlan);
-	    request.setAttribute("state",infoStudentCurricularPlan.getCurrentState());	
+	
 		editStudentCurricularPlanForm.set(
 			"currentState",
 			infoStudentCurricularPlan.getCurrentState().toString());
@@ -123,6 +123,7 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 
 		Integer studentCurricularPlanId =
 			new Integer(studentCurricularPlanIdString);
+		String observations = 	(String) editStudentCurricularPlanForm.get("observations");
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -139,7 +140,8 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 				studentCurricularPlanId,
 				currentState,
 				credits,
-				extraCurricularCourses };
+				extraCurricularCourses,
+				observations };
 
 		GestorServicos gestor = GestorServicos.manager();
 

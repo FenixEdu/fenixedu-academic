@@ -70,6 +70,12 @@
 	</tr>	
 	<tr>
 		<td>
+		<strong><bean:message key="label.student.observations"/></strong>
+		<bean:write name="studentCurricularPlan" property="observations"/>
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<logic:notPresent name="studentCurricularPlan" property="infoEnrolments">
 				<p><bean:message key="message.no.enrolments" /></p>
 			</logic:notPresent>

@@ -33,7 +33,7 @@ public class InfoStudentCurricularPlan
 	protected Integer completedCourses;
 	protected Date when;
 	protected InfoPerson infoEmployee;
-	
+	protected String observations;
 	protected List infoEnrolments;
 
 	/**
@@ -290,6 +290,20 @@ public class InfoStudentCurricularPlan
 	 */
 	public void setWhen(Date when) {
 		this.when = when;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getObservations() {
+		return observations;
+	}
+
+	/**
+	 * @param observations
+	 */
+	public void setObservations(String observations) {
+		this.observations = observations;
 	}
 
 }

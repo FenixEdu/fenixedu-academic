@@ -285,7 +285,7 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.StudentCurricularPlan -->
+<!-- Definitions for Dominio.	CurricularPlan -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.StudentCurricularPlan" table="STUDENT_CURRICULAR_PLAN">
 	<field-descriptor
@@ -350,6 +350,11 @@
 		column="CLASSIFICATION"
 		jdbc-type="FLOAT"
 	/>
+	 <field-descriptor 
+         name="observations"
+         column="OBSERVATIONS"
+    	  jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
     <field-descriptor
 		name="employeeKey"
 		column="KEY_EMPLOYEE"

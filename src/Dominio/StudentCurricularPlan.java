@@ -25,6 +25,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     protected Integer completedCourses;
     protected Double classification;
     protected Integer enrolledCourses;
+	protected String observations;
 	protected Integer employeeKey;
 
 	public StudentCurricularPlan() {
@@ -339,6 +340,20 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	 */
 	public void setWhen(Date when) {
 		this.when = when;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getObservations() {
+		return observations;
+	}
+
+	/**
+	 * @param observations
+	 */
+	public void setObservations(String observations) {
+		this.observations = observations;
 	}
 
 }
