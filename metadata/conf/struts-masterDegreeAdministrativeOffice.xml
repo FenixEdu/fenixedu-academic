@@ -475,11 +475,12 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 	  </form-bean>
 
-      <form-bean name="createMasterDegreeThesisForm" 
+      <form-bean name="createMasterDegreeThesisForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
    	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
    	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
@@ -496,6 +497,7 @@
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
    	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
    	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
@@ -512,6 +514,7 @@
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
    	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
    	        <form-property name="juriesNumbers" type="java.lang.Integer[]"/>
@@ -1730,24 +1733,25 @@
 	 </action>
 
 	<!-- create master degree thesis -->
-	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisDispatchAction"
+	<action		name="createMasterDegreeThesisForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisDispatchAction"
 				path="/createMasterDegreeThesis"
 				parameter="method"
 				scope="request"
-				validate="true">
+				validate="false">
 			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="/thesis/createMasterDegreeThesis.jsp"/>
 			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
 	</action>
-
+	
 	<action		name="createMasterDegreeThesisForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisLookupDispatchAction"
 				path="/createMasterDegreeThesisLookup"
 				parameter="method"
 				scope="request"
-				input="/createMasterDegreeThesisLookup.do"
+				input="/createMasterDegreeThesis.do?page=0&amp;method=reloadForm"
 				validate="true">
 			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
@@ -1774,7 +1778,7 @@
 				path="/changeMasterDegreeThesis"
 				parameter="method"
 				scope="request"
-				validate="true">
+				validate="false">
 			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -1787,7 +1791,7 @@
 				path="/changeMasterDegreeThesisLookup"
 				parameter="method"
 				scope="request"
-				input="/changeMasterDegreeThesisLookup.do"
+				input="/changeMasterDegreeThesis.do?page=0&amp;method=reloadForm"
 				validate="true">
 			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
@@ -1826,7 +1830,8 @@
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeProofDispatchAction"
 				path="/changeMasterDegreeProof"
 				parameter="method"
-				scope="request">
+				scope="request"
+				validate="false">
 			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -1843,7 +1848,7 @@
 				path="/changeMasterDegreeProofLookup"
 				parameter="method"
 				scope="request"
-				input="/changeMasterDegreeProofLookup.do"
+				input="/changeMasterDegreeProof.do?page=0&amp;method=reloadForm"
 				validate="true">
 			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
 						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
