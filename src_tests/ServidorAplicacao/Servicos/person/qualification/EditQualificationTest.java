@@ -17,71 +17,65 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
  *  
  */
 
-public class EditQualificationTest
-	extends QualificationServiceNeedsAuthenticationTestCase {
+public class EditQualificationTest extends QualificationServiceNeedsAuthenticationTestCase
+{
 
-	public EditQualificationTest(java.lang.String testName) {
+	public EditQualificationTest(java.lang.String testName)
+	{
 		super(testName);
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getApplication()
 	 */
-	protected String getApplication() {
+	protected String getApplication()
+	{
 		return Autenticacao.EXTRANET;
 	}
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
 	 */
-	protected String getNameOfServiceToBeTested() {
+	protected String getNameOfServiceToBeTested()
+	{
 		return "EditQualification";
 	}
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
 	 */
-	protected String getDataSetFilePath() {
+	protected String getDataSetFilePath()
+	{
 		return "etc/datasets/servicos/person/qualification/testEditQualificationDataSet.xml";
 	}
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizedUser_GrantOwnerManager()
 	 */
-	protected String[] getAuthorizedUserGrantOwnerManager() {
+	protected String[] getAuthorizedUserGrantOwnerManager()
+	{
 		String[] args = { "user_gom", "pass", getApplication()};
 		return args;
 	}
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizedUser_Teacher()
 	 */
-	protected String[] getAuthorizedUserTeacher() {
+	protected String[] getAuthorizedUserTeacher()
+	{
 		String[] args = { "user_t", "pass", getApplication()};
 		return args;
 	}
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getUnauthorizedUser()
 	 */
-	protected String[] getUnauthorizedUser() {
+	protected String[] getUnauthorizedUser()
+	{
 		String[] args = { "julia", "pass", getApplication()};
 		return args;
 	}
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_GrantOwnerManager()
 	 */
-	protected Object[] getAuthorizeArgumentsGrantOwnerManager() {
-		//Qualificação de um bolseiro
+	protected Object[] getAuthorizeArgumentsGrantOwnerManager()
+	{
+		//Grant Owner Qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
 		info.setMark("mark");
@@ -90,18 +84,17 @@ public class EditQualificationTest
 		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonGO());
 
-		Integer infoManagerPersonCode = new Integer(17);
+		Integer infoManagerPersonKey = new Integer(17);
 
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { infoManagerPersonKey, info };
 		return args;
 	}
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_Teacher()
 	 */
-	protected Object[] getAuthorizeArgumentsTeacher() {
-		//Qualificação de um professor
+	protected Object[] getAuthorizeArgumentsTeacher()
+	{
+		//Teacher qualification
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
 		info.setMark("mark");
@@ -110,19 +103,15 @@ public class EditQualificationTest
 		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonT());
 
-		Integer infoManagerPersonCode = new Integer(18);
+		Integer infoManagerPersonKey = new Integer(18);
 
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { infoManagerPersonKey, info };
 		return args;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.person.QualificationServiceNeedsAuthenticationTestCase#getAuthorizeArguments_GrantOwnerManager()
-	 */
-	protected Object[] getAuthorizeArgumentsCreateQualificationGrantOwner() {
-		//Qualificação de um bolseiro
+	protected Object[] getAuthorizeArgumentsCreateQualificationGrantOwner()
+	{
+		//Grant Owner qualification
 		InfoQualification info = new InfoQualification();
 		info.setMark("mark");
 		info.setSchool("tagus");
@@ -130,14 +119,15 @@ public class EditQualificationTest
 		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonGO());
 
-		Integer infoManagerPersonCode = new Integer(17);
+		Integer infoManagerPersonKey = new Integer(17);
 
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { infoManagerPersonKey, info };
 		return args;
 	}
 
-	protected Object[] getAuthorizeArgumentsCreateQualificationTeacher() {
-		//Qualificação de um professor
+	protected Object[] getAuthorizeArgumentsCreateQualificationTeacher()
+	{
+		//Teacher qualification
 		InfoQualification info = new InfoQualification();
 		info.setMark("mark");
 		info.setSchool("tagus");
@@ -145,52 +135,56 @@ public class EditQualificationTest
 		info.setYear(new Integer(2001));
 		info.setPersonInfo(getInfoPersonT());
 
-		Integer infoManagerPersonCode = new Integer(18);
+		Integer infoManagerPersonKey = new Integer(18);
 
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { infoManagerPersonKey, info };
 		return args;
 	}
 
-	protected Object[] getAuthorizeArgumentsEditQualificationGrantOwner() {
-		//Qualificação de um bolseiro já existente
-
+	protected Object[] getAuthorizeArgumentsEditQualificationGrantOwner()
+	{
+		//Grant Owner Qualification that already exists
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(2));
 		info.setSchool("NewSchool");
 		info.setYear(new Integer(2003));
 		info.setPersonInfo(getInfoPersonGO());
-		Integer infoManagerPersonCode = new Integer(17);
+		Integer infoManagerPersonKey = new Integer(17);
 
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { infoManagerPersonKey, info };
 		return args;
 	}
 
-	protected Object[] getAuthorizeArgumentsEditQualificationTeacher() {
-		//Qualificação de um professor já existente
-
+	protected Object[] getAuthorizeArgumentsEditQualificationTeacher()
+	{
+		//Teacher qualification that already exists
 		InfoQualification info = new InfoQualification();
 		info.setIdInternal(new Integer(1));
 		info.setYear(new Integer(2000));
 		info.setSchool("tagus");
 		info.setPersonInfo(getInfoPersonT());
-		Integer infoManagerPersonCode = new Integer(18);
+		Integer infoManagerPersonKey = new Integer(18);
 
-		Object[] args = { infoManagerPersonCode, info };
+		Object[] args = { infoManagerPersonKey, info };
 		return args;
 	}
 
-	/** **************************** INICIO DOS TESTES******************* */
-
-	/*
-	 * Um Grant Owner Manager tenta criar com sucesso uma qualificação a um
-	 * Grant Owner
+	/**
+	 * 
+	 * Start of the tests 
+	 *
 	 */
-	public void testCreateQualificationGOMSuccessfull() {
-		try {
+
+	/**
+	 * A Grant Owner Manager creates a qualification of a Grant Owner
+	 */
+	public void testCreateQualificationGOMSuccessfull()
+	{
+		try
+		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv =
-				getAuthorizeArgumentsCreateQualificationGrantOwner();
+			Object[] argserv = getAuthorizeArgumentsCreateQualificationGrantOwner();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
@@ -201,23 +195,25 @@ public class EditQualificationTest
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("Creating a new Qualification for GrantOwner: " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("Creating a new Qualification for GrantOwner: " + e);
 		}
 	}
 
-	/*
-	 * Um Grant Owner Manager tenta editar com sucesso uma qualificação de um
-	 * Grant Owner
+	/**
+	 * A Grant Owner Manager edits a qualification of a Grant Owner
 	 */
-	public void testEditQualificationGOMSuccessfull() {
-		try {
+	public void testEditQualificationGOMSuccessfull()
+	{
+		try
+		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv =
-				getAuthorizeArgumentsEditQualificationGrantOwner();
+			Object[] argserv = getAuthorizeArgumentsEditQualificationGrantOwner();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
@@ -228,22 +224,25 @@ public class EditQualificationTest
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("Editing a Qualification for a GrantOwner: " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("Editing a Qualification for a GrantOwner: " + e);
 		}
 	}
 
-	/*
-	 * Um professor tenta criar com sucesso uma qualificação sua.
+	/**
+	 * A Teacher creates a own qualification
 	 */
-	public void testCreateQualificationTSuccessfull() {
-		try {
+	public void testCreateQualificationTSuccessfull()
+	{
+		try
+		{
 			String[] args = getAuthorizedUserTeacher();
 			IUserView user = authenticateUser(args);
-			Object[] argserv =
-				getAuthorizeArgumentsCreateQualificationTeacher();
+			Object[] argserv = getAuthorizeArgumentsCreateQualificationTeacher();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
@@ -254,18 +253,22 @@ public class EditQualificationTest
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("Creating a new Qualification for Teacher: " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("Creating a new Qualification for Teacher: " + e);
 		}
 	}
 
-	/*
-	 * Um professor tenta editar com sucesso uma qualificação sua
+	/**
+	 * A Teacher edits a own qualification
 	 */
-	public void testEditQualificationTSuccessfull() {
-		try {
+	public void testEditQualificationTSuccessfull()
+	{
+		try
+		{
 			String[] args = getAuthorizedUserTeacher();
 			IUserView user = authenticateUser(args);
 			Object[] argserv = getAuthorizeArgumentsEditQualificationTeacher();
@@ -279,78 +282,88 @@ public class EditQualificationTest
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("Editing a Qualification for a teacher: " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("Editing a Qualification for a teacher: " + e);
 		}
 	}
 
-	/*
+	/**
 	 * Valid user(teacher), but wrong arguments(Grant Owner)
 	 */
-	public void testCreateQualificationUnsuccessfull1() {
+	public void testCreateQualificationUnsuccessfull1()
+	{
 
-		try {
+		try
+		{
 			String[] args = getAuthorizedUserTeacher();
 			IUserView user = authenticateUser(args);
-			Object[] argserv =
-				getAuthorizeArgumentsCreateQualificationGrantOwner();
+			Object[] argserv = getAuthorizeArgumentsCreateQualificationGrantOwner();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("CreateQualificationUnsuccessfull.");
 
-		} catch (NotAuthorizedException e) {
+		} catch (NotAuthorizedException e)
+		{
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("CreateQualificationUnsuccessfull: " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 	}
 
-	/*
-	 * Valid user(Grant Owner), but wrong arguments(Teacher)
+	/**
+	 * Valid user(Grant Owner Manager), but wrong arguments(Teacher)
 	 */
-	public void testCreateQualificationUnsuccessfull2() {
-		try {
+	public void testCreateQualificationUnsuccessfull2()
+	{
+		try
+		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv =
-				getAuthorizeArgumentsCreateQualificationTeacher();
+			Object[] argserv = getAuthorizeArgumentsCreateQualificationTeacher();
 
 			gestor.executar(user, getNameOfServiceToBeTested(), argserv);
 
 			fail("CreateQualificationUnsuccessfull.");
 
-		} catch (NotAuthorizedException e) {
+		} catch (NotAuthorizedException e)
+		{
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("CreateQualificationUnsuccessfull: " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 	}
 
-	/*
-	 * Valid user, but wrong arguments (editing a qualification that does't
-	 * exists)
+	/**
+	 * Valid user, but wrong arguments (editing a qualification that does't exists)
 	 */
-	public void testCreateQualificationUnsuccessfull3() {
-		try {
+	public void testCreateQualificationUnsuccessfull3()
+	{
+		try
+		{
 			String[] args = getAuthorizedUserGrantOwnerManager();
 			IUserView user = authenticateUser(args);
-			Object[] argserv =
-				getAuthorizeArgumentsEditQualificationGrantOwner();
+			Object[] argserv = getAuthorizeArgumentsEditQualificationGrantOwner();
 
 			//Invalid qualification
 			 ((InfoQualification) argserv[1]).setIdInternal(new Integer(1220));
@@ -359,34 +372,44 @@ public class EditQualificationTest
 
 			fail("CreateQualificationUnsuccessfull.");
 
-		} catch (NotAuthorizedException e) {
+		} catch (NotAuthorizedException e)
+		{
 			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/person/qualification/testExpectedEditQualificationUnsuccesfullDataSet.xml");
 			System.out.println(
 				getNameOfServiceToBeTested()
 					+ " was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			fail("CreateQualificationUnsuccessfull: " + e);
-		} catch (Exception e) {
+		} catch (Exception e)
+		{
 			fail("CreateQualificationUnsuccessfull: " + e);
 		}
 
 	}
 
-	/** **************************** FIM DOS TESTES******************* */
+	/**
+	 * 
+	 * End of the tests
+	 * 
+	 */
 
-	protected InfoPerson getInfoPersonGO() {
+	//Return a valid GrantOwner Manager user
+	protected InfoPerson getInfoPersonGO()
+	{
 		InfoPerson info = new InfoPerson();
 		info.setIdInternal(new Integer(14));
 		info.setUsername("user_gom");
 		return info;
 	}
-	protected InfoPerson getInfoPersonT() {
+	//Return a valid Teacher user
+	protected InfoPerson getInfoPersonT()
+	{
 		InfoPerson info = new InfoPerson();
 		info.setIdInternal(new Integer(18));
 		info.setUsername("user_t");
 		return info;
 	}
-	
 
 }
