@@ -41,11 +41,11 @@ public class MigrateAreasCientificas2FenixBranch {
 	public static void main(String args[]) throws Exception{
 		MigrateAreasCientificas2FenixBranch migrateAreasCientificas2FenixBrach = new MigrateAreasCientificas2FenixBranch();
 		
-		migrateAreasCientificas2FenixBrach.broker.beginTransaction();
-		migrateAreasCientificas2FenixBrach.broker.clearCache();
+//		migrateAreasCientificas2FenixBrach.broker.beginTransaction();
+//		migrateAreasCientificas2FenixBrach.broker.clearCache();
 		migrateAreasCientificas2FenixBrach.migratePosgradAreaCientifica2FenixBranch();
 		
-		migrateAreasCientificas2FenixBrach.broker.commitTransaction();
+//		migrateAreasCientificas2FenixBrach.broker.commitTransaction();
 	}
 
 	private void migratePosgradAreaCientifica2FenixBranch() throws Exception{
@@ -58,13 +58,23 @@ public class MigrateAreasCientificas2FenixBranch {
 		DegreeCurricularPlan degreeCurricularPlan = null;
 		try {
 			System.out.print("Reading PosGrad Areas Cientificas ...");
+			
+			broker.beginTransaction();
+			broker.clearCache();
+
 			List areasCientificasPG = getAreasCientificas();
 			System.out.println("  Done !");
+
+			broker.commitTransaction();
 			
 			System.out.println("Migrating " + areasCientificasPG.size() + " PosGrad Areas Cientificas to Fenix Branch ...");
 			Iterator iterator = areasCientificasPG.iterator();
 			while(iterator.hasNext()){
 				areaCientifica = (Posgrad_area_cientifica) iterator.next();
+				
+				broker.beginTransaction();
+				broker.clearCache();
+				
 				
 				// Delete unwanted Areas Cientificas
 				if (areaCientifica.getNome().equals("DISCIPLINAS DE ESCOLHA LIVRE") ||
@@ -72,6 +82,7 @@ public class MigrateAreasCientificas2FenixBranch {
 					(areaCientifica.getCodigocursomestrado() == 15) ||
 					(areaCientifica.getCodigocursomestrado() == 31) ||
 					(areaCientifica.getCodigocursomestrado() == 50)) {
+						broker.commitTransaction();
 						continue;
 				}
 				branch2Write = new Branch();
@@ -147,6 +158,7 @@ public class MigrateAreasCientificas2FenixBranch {
 					areaCientifica.setCodigoInternoRamo(branch2Write.getInternalID());
 				}
 				broker.store(areaCientifica);
+				broker.commitTransaction();
 			}
 			System.out.println("  Done !");
 

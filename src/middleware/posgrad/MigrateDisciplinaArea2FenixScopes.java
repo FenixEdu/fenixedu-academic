@@ -43,11 +43,11 @@ public class MigrateDisciplinaArea2FenixScopes {
 	public static void main(String args[]) throws Exception{
 		MigrateDisciplinaArea2FenixScopes migrateDisciplina2Fenix = new MigrateDisciplinaArea2FenixScopes();
 		
-		migrateDisciplina2Fenix.broker.beginTransaction();
-		migrateDisciplina2Fenix.broker.clearCache();
+//		migrateDisciplina2Fenix.broker.beginTransaction();
+//		migrateDisciplina2Fenix.broker.clearCache();
 		migrateDisciplina2Fenix.migrateDisciplinaArea2FenixScopes();
 	
-		migrateDisciplina2Fenix.broker.commitTransaction();
+//		migrateDisciplina2Fenix.broker.commitTransaction();
 	}
 
 
@@ -64,13 +64,23 @@ public class MigrateDisciplinaArea2FenixScopes {
 		
 		try {
 			System.out.print("Reading PosGrad Disciplina Area ...");
+			
+			broker.beginTransaction();
+			broker.clearCache();
+			
 			List discAreasPG = getDisciplinaArea();
+			
+			broker.commitTransaction();
+			
 			System.out.println("  Done !");
 			
 			System.out.println("Migrating " + discAreasPG.size() + " PosGrad Disciplina Area to Fenix Scopes ...");
 			Iterator iterator = discAreasPG.iterator();
 			while(iterator.hasNext()){
 				discArea = (Posgrad_disc_area) iterator.next();
+
+				broker.beginTransaction();
+				broker.clearCache();
 
 
 				// Get the Area Cientifica
@@ -92,6 +102,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 					(areaCientifica.getCodigocursomestrado() == 31) ||
 					(areaCientifica.getCodigocursomestrado() == 50)) {
 						discAreasIgnored++;
+						broker.commitTransaction();
 						continue;
 				}
 
@@ -189,6 +200,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 				if ((posgrad_disciplina.getNome().indexOf("CRÉDITOS") != -1) ||
 					(posgrad_disciplina.getNome().indexOf("CURRICULAR") != -1)){
 						discAreasIgnored++;
+						broker.commitTransaction();
 						continue;
 				}
 				
@@ -241,6 +253,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 					scopesWritten++;
 					broker.store(curricularCourseScope);
 				}
+				broker.commitTransaction();
 			}
 			System.out.println(scopesWritten + " Scopes written for " + discAreasPG.size() + " Disciplina Area PG");
 			System.out.println(" Scopes ignored " + discAreasIgnored);

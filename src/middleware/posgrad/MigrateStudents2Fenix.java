@@ -57,11 +57,11 @@ public class MigrateStudents2Fenix {
 	public static void main(String args[]) throws Exception{
 		MigrateStudents2Fenix migrateStudents2Fenix = new MigrateStudents2Fenix();
 		
-		migrateStudents2Fenix.broker.beginTransaction();
-		migrateStudents2Fenix.broker.clearCache();
+//		migrateStudents2Fenix.broker.beginTransaction();
+//		migrateStudents2Fenix.broker.clearCache();
 		migrateStudents2Fenix.migrateStudents2Fenix();
 		
-		migrateStudents2Fenix.broker.commitTransaction();
+//		migrateStudents2Fenix.broker.commitTransaction();
 	}
 
 	private void migrateStudents2Fenix() throws Exception{
@@ -76,6 +76,8 @@ public class MigrateStudents2Fenix {
 		
 		try {
 			System.out.print("A Ler Alunos de Pos-Graduacao ...");
+			broker.beginTransaction();
+			broker.clearCache();
 			List studentsPG = getStudents();
 			System.out.println("  Done !");
 			
@@ -101,10 +103,15 @@ public class MigrateStudents2Fenix {
 				studentGroupInfo = (IStudentKind) result.get(0);
 			}
 
+			broker.commitTransaction();
+
 			Iterator iterator = studentsPG.iterator();
 			while(iterator.hasNext()){
 				student2Convert = (Posgrad_aluno_mestrado) iterator.next();
-		
+				
+				broker.beginTransaction();
+				broker.clearCache();
+				
 				criteria = new Criteria();
 				criteria.addEqualTo("number", new Integer(String.valueOf(student2Convert.getNumero())));
 				criteria.addEqualTo("degreeType", new TipoCurso(TipoCurso.MESTRADO));
@@ -254,6 +261,7 @@ public class MigrateStudents2Fenix {
 					person.setUsername("M" + student2Convert.getNumero());
 					broker.store(person);
 				} 
+				broker.commitTransaction();
 			}
 			System.out.println("  Students Written: " + studentsWritten);
 			System.out.println("  Roles Written: " + rolesWritten);

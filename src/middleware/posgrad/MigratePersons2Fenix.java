@@ -37,11 +37,11 @@ public class MigratePersons2Fenix {
 	public static void main(String args[]) throws Exception{
 		MigratePersons2Fenix migratePersons2Fenix = new MigratePersons2Fenix();
 		
-		migratePersons2Fenix.broker.beginTransaction();
-		migratePersons2Fenix.broker.clearCache();
+//		migratePersons2Fenix.broker.beginTransaction();
+//		migratePersons2Fenix.broker.clearCache();
 		migratePersons2Fenix.migratePosgradPessoa2Fenix();
 		
-		migratePersons2Fenix.broker.commitTransaction();
+//		migratePersons2Fenix.broker.commitTransaction();
 	}
 	
 	private void migratePosgradPessoa2Fenix() throws Exception{
@@ -57,13 +57,24 @@ public class MigratePersons2Fenix {
 		
 		try {
 			System.out.print("A Ler Pessoas de Pos-Graduacao ...");
+			
+			
+			broker.beginTransaction();
+			broker.clearCache();
+			
 			List pessoasPG = getPessoas();
 			System.out.println("  Done !");
 			
 			System.out.println("A Converter " + pessoasPG.size() + " pessoas de Pos-Graduacao para o Fenix ...");
 
+			broker.commitTransaction();
+
 			Iterator iterator = pessoasPG.iterator();
 			while(iterator.hasNext()){
+				
+				broker.beginTransaction();
+				broker.clearCache();
+				
 				person2Convert = (Posgrad_pessoa) iterator.next();
 				person2Write = new Pessoa();
 				// Remove the PosGrad User
@@ -119,7 +130,8 @@ public class MigratePersons2Fenix {
  			  		person2Write.getPersonRoles().add(RoleUtils.readRole(RoleType.PERSON, broker));
 					rolesWritten++;
 				}
-				broker.store(person2Write);				
+				broker.store(person2Write);			
+				broker.commitTransaction();	
 			}
 			System.out.println("   Persons Written : " + personsWritten);
 			System.out.println("   Persons NOT Written : " + personsNotWritten);
