@@ -110,8 +110,7 @@ INSERT INTO PRIVILEGIO VALUES (1,'ReadShiftsByTypeFromExecutionCourse',51);
 INSERT INTO PRIVILEGIO VALUES (1,'ReadStudent',52);
 INSERT INTO PRIVILEGIO VALUES (1,'ReadStudentByUsername',53);
 INSERT INTO PRIVILEGIO VALUES (1,'ReadStudentLessons',54);
-
-
+INSERT INTO PRIVILEGIO VALUES (1,'StudentShiftEnrolment',55);
 
 
 #

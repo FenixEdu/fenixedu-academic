@@ -451,6 +451,23 @@ public abstract class Cloner {
 		
 		return student;
 	}
+	
+	
+	/**
+	 * Method copyIStudent2InfoStudent.
+	 * @param elem
+	 * @return Object
+	 */
+	public static InfoStudent copyIStudent2InfoStudent(IStudent student) {
+		InfoStudent infoStudent = new InfoStudent();
+		copyObjectProperties(infoStudent, student);
+		infoStudent.setInfoPerson(Cloner.copyIPerson2InfoPerson(student.getPerson()));
+		return infoStudent;
+	}
+	
+	
+	
+	
 	/**
 	 * Method copyInfoPerson2IPerson.
 	 * @param infoPerson
@@ -461,6 +478,19 @@ public abstract class Cloner {
 		copyObjectProperties(person, infoPerson);
 		return person;
 	}
+
+
+	/**
+	 * Method copyInfoPerson2IPerson.
+	 * @param infoPerson
+	 * @return IPessoa
+	 */
+	public static InfoPerson copyIPerson2InfoPerson(IPessoa person) {
+		InfoPerson infoPerson = new InfoPerson();
+		copyObjectProperties(infoPerson, person);
+		return infoPerson;
+	}
+
 
 	/**
 	 * Method copyInfoMasterDegreeCandidate2IMasterDegreCandidate
