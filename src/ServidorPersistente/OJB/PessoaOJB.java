@@ -113,21 +113,10 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
     }
 
     public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
-        try {
-            IPessoa p = null;
-            String oqlQuery = "select all from " + Pessoa.class.getName();
-            oqlQuery += " where numeroDocumentoIdentificacao = $1 and tipoDocumentoIdentificacao = $2";
-            query.create(oqlQuery);
-            query.bind(numeroDocumentoIdentificacao);
-            query.bind(tipoDocumentoIdentificacao.getTipo());
-            List result = (List) query.execute();
-            super.lockRead(result);
-            if(result.size() != 0)
-                p = (IPessoa) result.get(0);
-            return p;
-        } catch(QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
+		criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao.getTipo());
+        return (IPessoa) queryObject(Pessoa.class, criteria);
     }
 
     public ArrayList lerTodasAsPessoas() throws ExcepcaoPersistencia {

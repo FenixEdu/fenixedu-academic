@@ -57,41 +57,32 @@ public class CreateGrantOwner
 		return result;
 	}
 
-	private IPessoa checkIfPersonExists(InfoPerson person)
+	private IPessoa checkIfPersonExists(InfoPerson infoPerson,IPessoaPersistente persistentPerson)
 		throws FenixServiceException {
-		ISuportePersistente persistentSupport = null;
-		IPessoaPersistente persistentPerson = null;
-		IPessoa personToCheck = null;
+			IPessoa person = null;
 
 		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentPerson = persistentSupport.getIPessoaPersistente();
-			personToCheck = persistentPerson.lerPessoaPorNumDocIdETipoDocId(
-										person.getNumeroDocumentoIdentificacao(),
-										person.getTipoDocumentoIdentificacao());
+			person =
+				persistentPerson.lerPessoaPorNumDocIdETipoDocId(
+					infoPerson.getNumeroDocumentoIdentificacao(),
+					infoPerson.getTipoDocumentoIdentificacao());
 		} catch (ExcepcaoPersistencia persistentException) {
 			throw new FenixServiceException(persistentException.getMessage());
 		}
-		
-		return personToCheck;
+
+		return person;
 	}
 
-	private void checkIfGrantOwnerExists(Integer personIdInternal)
+	private void checkIfGrantOwnerExists(
+		Integer personIdInternal,
+		IPessoaPersistente persistentPerson,
+		IPersistentGrantOwner persistentGrantOwner)
 		throws FenixServiceException {
-		ISuportePersistente persistentSupport = null;
-		IPersistentGrantOwner persistentGrantOwner = null;
-		IPessoaPersistente persistentPerson = null;
 		IPessoa person = null;
 		IGrantOwner grantOwner = null;
-
 		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentPerson = persistentSupport.getIPessoaPersistente();
-			persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
-
 			grantOwner =
 				persistentGrantOwner.readGrantOwnerByPerson(personIdInternal);
-
 		} catch (ExcepcaoPersistencia persistentException) {
 			throw new FenixServiceException(persistentException.getMessage());
 		}
@@ -107,52 +98,68 @@ public class CreateGrantOwner
 		ISuportePersistente persistentSupport = null;
 		IPersistentGrantOwner persistentGrantOwner = null;
 		IPersistentPersonRole persistentPersonRole = null;
-
-		IPessoa person = checkIfPersonExists(infoGrantOwner.getPersonInfo());
-
-		if (person != null) 
-			{
-				System.out.println("PERSON EXISTS!!");
-				checkIfGrantOwnerExists(person.getIdInternal());	
-			}else System.out.println("PERSON DOES NOT EXIST!!");
-			
-
+		IPessoaPersistente persistentPerson = null;
+		
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
-			persistentPersonRole = persistentSupport.getIPersistentPersonRole();
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			throw new FenixServiceException("Unable to dao factory!", e);
+		}
+		persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
+		persistentPersonRole = persistentSupport.getIPersistentPersonRole();
+		persistentPerson = persistentSupport.getIPessoaPersistente();
 
+		IPessoa person = null;
+
+		person = checkIfPersonExists(
+			infoGrantOwner.getPersonInfo(),
+			persistentPerson);
+
+		if (person != null)
+			checkIfGrantOwnerExists(
+				person.getIdInternal(),
+				persistentPerson,
+				persistentGrantOwner);
+				
+		try {
+			//next 2lines are necessary due to a possible OJB lock problem
+			persistentSupport.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+			
+			person =
+				createPersonBase(
+					infoGrantOwner.getPersonInfo(),
+					persistentSupport,
+					persistentPerson,
+					persistentPersonRole);
 			IGrantOwner grantOwner = new GrantOwner();
+			grantOwner.setPerson(person);
+			grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
+			grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
 			persistentGrantOwner.simpleLockWrite(grantOwner);
-			person = createPersonBase(infoGrantOwner.getPersonInfo());
 
 			//Generate the GrantOwner's number
 			Integer maxNumber = persistentGrantOwner.readMaxGrantOwnerNumber();
 			int aux = maxNumber.intValue() + 1;
 			Integer nextNumber = new Integer(aux);
 			grantOwner.setNumber(nextNumber);
-			
-			grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
-			grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
 
 			//Generate the GrantOwner's Person Username
-			if(person.getUsername() == null)
-				//UNCOMMENT this line to run CreateGrantOwnerTest
-				person.setUsername("17");
-				//COMMENT this line to run CreateGrantOwnerTest
-				//person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
+			if (person.getUsername() == null)
+				person.setUsername(
+					generateGrantOwnerPersonUsername(grantOwner.getNumber()));
 
 			//Set the GRANT_OWNER Role to this new GrantOwner
 			IPersonRole personRole = new PersonRole();
-			persistentPersonRole.simpleLockWrite(personRole);
 			personRole.setPerson(person);
-			personRole.setRole(persistentSupport.getIPersistentRole().readByRoleType(RoleType.GRANT_OWNER));
-
-			grantOwner.setPerson(person);
+			persistentPersonRole.simpleLockWrite(personRole);
+			personRole.setRole(
+				persistentSupport.getIPersistentRole().readByRoleType(
+					RoleType.GRANT_OWNER));
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
-
 		return true;
 	}
 }
