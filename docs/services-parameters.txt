@@ -1,4 +1,86 @@
+
 ----------------------------------------------
-Nome:
-Parametros:
+Nome:AssociateTeacher
+Parametros:InfoExecutionCourse infoExecutionCourse,Integer teacherNumber
+Role: teacher
+----------------------------------------------
+Nome:DeleteAnnouncement
+Parametros:InfoSite infoSite, InfoAnnouncement infoAnnouncement
+Role: teacher
+----------------------------------------------
+Nome:DeleteBibliographicReference
+Parametros:	InfoExecutionCourse infoExecutionCourse,InfoBibliographicReference infoBibliographicReference
+Role: teacher
+----------------------------------------------
+Nome:DeleteItem
+Parametros:InfoItem infoItem
+Role: teacher
+----------------------------------------------
+Nome:DeleteSection
+Parametros:InfoSection infoSection
+Role: teacher
+----------------------------------------------
+Nome:EditAnnouncement
+Parametros:InfoSite infoSite, InfoAnnouncement infoAnnouncement, String announcementNewTitle, String announcementNewInformation
+Role: teacher
+----------------------------------------------
+Nome:EditBibliographicReference
+Parametros:InfoExecutionCourse infoExecutionCourse,	InfoBibliographicReference infoBibliographicReferenceOld,InfoBibliographicReference infoBibliographicReferenceNew 
+Role: teacher
+----------------------------------------------
+Nome:EditCurriculum
+Parametros:InfoCurriculum oldInfoCurriculum, InfoCurriculum newInfoCurriculum
+Role: teacher
+----------------------------------------------
+Nome:EditItem
+Parametros:InfoItem oldInfoItem, InfoItem newInfoItem
+Role: teacher
+----------------------------------------------
+Nome:EditSection
+Parametros:InfoSection oldInfoSection, InfoSection newInfoSection
+Role: teacher
+----------------------------------------------
+Nome:EditSite
+Parametros:InfoSite infoSiteOld, InfoSite infoSiteNew
+Role: teacher
+----------------------------------------------
+Nome:InsertAnnouncement
+Parametros:InfoSite infoSite, String newAnnouncementTitle, String newAnnouncementInformation
+Role: teacher
+----------------------------------------------
+Nome:InsertBibliographicReference
+Parametros:InfoExecutionCourse infoExecutionCourse,	String title,String authors,String reference,String year,Boolean optional
+Role: teacher
+----------------------------------------------
+Nome:InsertCurriculum
+Parametros:InfoCurriculum infoCurriculum
+Role: teacher
+----------------------------------------------
+Nome:InsertItem
+Parametros:InfoItem infoItem
+Role: teacher
+----------------------------------------------
+Nome:InsertSection
+Parametros:InfoSection infoSection
+Role: teacher
+----------------------------------------------
+Nome:ReadBibliographicReference
+Parametros:InfoExecutionCourse infoExecutionCourse, Boolean optional
+Role: teacher
+----------------------------------------------
+Nome:ReadProfessorships
+Parametros:InfoTeacher infoTeacher
+Role: teacher
+----------------------------------------------
+Nome:ReadTeacherByUsername
+Parametros:String username
+Role: teacher
+----------------------------------------------
+Nome:ReadTeacherSite
+Parametros:InfoExecutionCourse infoExecutionCourse
+Role: teacher
+----------------------------------------------
+Nome:RemoveTeacher
+Parametros:InfoExecutionCourse infoExecutionCourse,	Integer teacherNumber
+Role: teacher
 ----------------------------------------------
