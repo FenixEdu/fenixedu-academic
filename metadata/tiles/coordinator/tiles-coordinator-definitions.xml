@@ -26,6 +26,7 @@
 	</definition>
 	
 	<definition name="definition.coordinator.two-column.extra-menu.student" extends="definition.coordinator.two-column.extra-menu">	  
+		<put name="body-context" value="" /> 
 		<put name="navLocalExtra" value="/coordinator/enrollment/enrollmentStudentMenu.jsp" />		
 	</definition>
 	

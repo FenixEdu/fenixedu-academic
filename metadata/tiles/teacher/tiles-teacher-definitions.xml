@@ -49,6 +49,7 @@
 	</definition>
 	
 	<definition name="definition.teacher.two-column.extra-menu.tutor" extends="definition.teacher.two-column.extra-menu">	  
-       <put name="navLocalExtra" value="/teacher/tutor/tutorMenu.jsp" />
+		<put name="body-context" value="" />  
+    	<put name="navLocalExtra" value="/teacher/tutor/tutorMenu.jsp" />
 	</definition>    
 </tiles-definitions>

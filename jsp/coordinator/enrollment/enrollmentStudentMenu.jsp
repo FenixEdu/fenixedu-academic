@@ -16,7 +16,7 @@
 	<p>
 	<ul>
 		<li>
-			<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;infoExecutionDegreeId=" + infoExecutionDegreeID.toString()%>">
+			<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + infoExecutionDegreeID.toString()%>">
 			    <bean:message key="link.student.curriculum" /></html:link>
 			    <br/>
 				<br/>
