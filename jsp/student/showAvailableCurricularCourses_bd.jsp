@@ -30,7 +30,7 @@
 </logic:notEqual>
 
 <logic:notEqual name="sizeToBeEnroled" value="0">
-	<html:form action="/curricularCourseEnrolmentWithRulesManager.do">
+	<html:form action="/curricularCourseEnrolmentManager.do">
 		<html:hidden property="step" value="0"/>
 		<html:hidden property="method" value="verifyEnrolment"/>
 		<html:hidden property="optionalCourseIndex" value=""/>

@@ -12,6 +12,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.util.Cloner;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
+import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
@@ -22,7 +23,6 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentState;
-import Util.StudentCurricularPlanState;
 
 /**
  * @author David Santos
@@ -51,51 +51,40 @@ public class GetAllAvailableCurricularCoursesForCoordinatorEquivalence implement
 
 		try {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-//			ICursoExecucaoPersistente persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-//			ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
-//			List executionDegreesList = persistentExecutionDegree.readByTeacher(teacher);
-//
-//			Iterator iterator1 = executionDegreesList.iterator();
-//			while(iterator1.hasNext()) {
-//				ICursoExecucao executionDegree = (ICursoExecucao) iterator1.next();
-//				IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+			IDegreeCurricularPlan degreeCurricularPlan = Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-				InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
-				IDegreeCurricularPlan degreeCurricularPlan = Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoDegreeCurricularPlan);
+			List studentCurricularPlansList = persistentStudentCurricularPlan.readByDegreeCurricularPlan(degreeCurricularPlan);
+			
+			Iterator iterator2 = studentCurricularPlansList.iterator();
+			while(iterator2.hasNext()) {
+				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator2.next();
+				IStudent student = studentCurricularPlan.getStudent();
+				final IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
-				List studentCurricularPlansList = persistentStudentCurricularPlan.readByDegreeCurricularPlan(degreeCurricularPlan);
-				
-				Iterator iterator2 = studentCurricularPlansList.iterator();
-				while(iterator2.hasNext()) {
-					final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator2.next();
-					if(studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ)) {
-						List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
+				List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
 
-						List studentAprovedEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
-							public boolean evaluate(Object obj) {
-								IEnrolment enrolment = (IEnrolment) obj;
-								return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
-							}
-						});
-
-						List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan = (List) CollectionUtils.select(studentAprovedEnrolments, new Predicate() {
-							public boolean evaluate(Object obj) {
-								IEnrolment enrolment = (IEnrolment) obj;
-								return !enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan());
-							}
-						});
-
-						List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences = GetListsOfCurricularCoursesForEquivalence.getEnrolmentsWithNoEquivalences(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan, persistentSupport);
-
-						midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences);
-//						midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan);
+				List studentAprovedEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
+					public boolean evaluate(Object obj) {
+						IEnrolment enrolment = (IEnrolment) obj;
+						return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
 					}
-				}
-//			}
+				});
+
+				List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan = (List) CollectionUtils.select(studentAprovedEnrolments, new Predicate() {
+					public boolean evaluate(Object obj) {
+						IEnrolment enrolment = (IEnrolment) obj;
+						return !enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(studentActiveCurricularPlan.getDegreeCurricularPlan());
+					}
+				});
+
+				List studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences = GetListsOfCurricularCoursesForEquivalence.getEnrolmentsWithNoEquivalences(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlan, persistentSupport);
+
+				midResult.addAll(studentAprovedEnrolmentsWithDiferentDegreeCurricularPlanAndWithNoEquivalences);
+			}
 
 			Iterator iterator3 = midResult.iterator();
 			while(iterator3.hasNext()) {
