@@ -193,7 +193,6 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 
     String[] wantedCourses =
       ((String[]) ((DynaActionForm) form).get("wantedCourse"));
-    //Collection  wantedCourses = ( (Collection)  ((DynaActionForm)form).get("wantedCourseList") );
 
     if (wantedCourses.length > 0) {
       
@@ -316,7 +315,48 @@ public class ShiftStudentEnrolmentManagerDispatchAction
     // inscrever nas cadeiras 
     // EXPLICAÇÂO: supostamente haveria um passo intermedio onde se inscreve nas cadeiras que escolheu antes de escolher as turmas
     //                        mas acho q deixou de ser necessário ao tratar disso na action anterior. ou não...                            
-    // return initializeShiftEnrolment
+
+    HttpSession session = request.getSession();
+    IUserView userView =
+      (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+    // retrieve the student information to fill the info 
+    // to be passed to the readShifts service
+    InfoStudent infoStudent = null;
+    infoStudent =
+      (InfoStudent) ServiceUtils.executeService(
+						userView,
+						"ReadStudentByUsername",
+						new Object[] { userView.getUtilizador()});
+
+    //Update the student's attending courses:
+
+    String[] wantedCourses =
+      ((String[]) ((DynaActionForm) form).get("wantedCourse"));
+
+    if (wantedCourses.length > 0) {
+      
+      //Build up the arrayList
+      List newAttendingCourses = new ArrayList(wantedCourses.length);
+
+      for (int i = 0; i < wantedCourses.length; i++) {
+        newAttendingCourses.add(i, wantedCourses[i]);
+      } // end of for (int  = 0;  < ; ++)
+
+      Boolean attendenceChanged =
+        (Boolean) (ServiceUtils
+		   .executeService(
+				   userView,
+				   "WriteStudentAttendingCourses",
+				   new Object[] { infoStudent, newAttendingCourses }));
+      if (!attendenceChanged.booleanValue()) {
+        System.out.println(
+			   "Nao foi possivel actualizar as disciplinas do aluno");
+        throw new FenixActionException("Can't Change Degree Attending.");
+      }
+    }
+
+
     return initializeShiftEnrolment(mapping, form, request, response);
   }
 
