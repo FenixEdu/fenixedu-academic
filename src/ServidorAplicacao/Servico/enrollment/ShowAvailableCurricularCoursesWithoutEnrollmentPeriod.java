@@ -11,7 +11,6 @@ import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
-import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
@@ -30,7 +29,6 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
-import Util.enrollment.CurricularCourseEnrollmentType;
 import Util.enrollment.EnrollmentRuleType;
 
 /**
@@ -82,22 +80,8 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
             throws ExcepcaoPersistencia {
 
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
-        List curricularCourses2Enroll = (List) CollectionUtils.collect(
-                studentCurricularPlan.getCurricularCoursesToEnroll(null,
-                        EnrollmentRuleType.TOTAL), new Transformer() {
-
-                    public Object transform(Object arg0) {
-                        if (arg0 instanceof ICurricularCourse) {
-                            ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-
-                            return new CurricularCourse2Enroll(
-                                    curricularCourse,
-                                    CurricularCourseEnrollmentType.TEMPORARY);
-                        }
-                        return arg0;
-
-                    }
-                });
+        List curricularCourses2Enroll = studentCurricularPlan
+                .getCurricularCoursesToEnroll(null, EnrollmentRuleType.TOTAL);
 
         infoStudentEnrolmentContext
                 .setCurricularCourses2Enroll((List) CollectionUtils.collect(
