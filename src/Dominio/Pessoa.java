@@ -7,11 +7,11 @@ import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
-public class Pessoa implements IPessoa {
+public class Pessoa extends DomainObject implements IPessoa {
 	private Integer chavePais;
 	private String codigoFiscal;
 
-	private Integer codigoInterno;
+	
 	private String codigoPostal;
 	private String concelhoMorada;
 	private String concelhoNaturalidade;
@@ -153,7 +153,7 @@ public class Pessoa implements IPessoa {
 		String username,
 		String password,
 		String codigoFiscal) {
-		setCodigoInterno(codigoInterno);
+		setIdInternal(codigoInterno);
 		setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
 		setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
 		setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
@@ -329,13 +329,7 @@ public class Pessoa implements IPessoa {
 		return codigoFiscal;
 	}
 
-	/** Getter for property codigoInterno.
-	 * @return Value of property codigoInterno.
-	 *
-	 */
-	public java.lang.Integer getCodigoInterno() {
-		return codigoInterno;
-	}
+	
 
 	/** Getter for property codigoPostal.
 	 * @return Value of property codigoPostal.
@@ -608,13 +602,7 @@ public class Pessoa implements IPessoa {
 		this.codigoFiscal = codigoFiscal;
 	}
 
-	/** Setter for property codigoInterno.
-	 * @param codigoInterno New value of property codigoInterno.
-	 *
-	 */
-	public void setCodigoInterno(java.lang.Integer codigoInterno) {
-		this.codigoInterno = codigoInterno;
-	}
+	
 
 	/** Setter for property codigoPostal.
 	 * @param codigoPostal New value of property codigoPostal.
@@ -874,7 +862,7 @@ public class Pessoa implements IPessoa {
 
 	public String toString() {
 		String result = "Person :\n";
-		result += "\n  - Internal Code : " + codigoInterno;
+		result += "\n  - Internal Code : " + getIdInternal();
 		result += "\n  - Identification Document Number : " + numeroDocumentoIdentificacao;
 		result += "\n  - Identification Document Type : " + tipoDocumentoIdentificacao;
 		result += "\n  - Identification Document Issue Place : " + localEmissaoDocumentoIdentificacao;

@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.List;
+
 import Util.StudentState;
 import Util.TipoCurso;
 
@@ -9,24 +11,29 @@ import Util.TipoCurso;
  * 24/Mar/2003
  */
 
-public class Student implements IStudent {
+public class Student extends DomainObject implements IStudent {
 
 	protected Integer number;
 	protected StudentState state;
 	protected TipoCurso degreeType;
 	private IStudentKind studentKind;
 
-	private Integer internalCode;
+	
 	private Integer personKey;
 	private Integer studentKindKey;
 	private IPessoa person;
-
+	private List examsEnrolled;
+	
+	public Student(Integer idInternal){
+		setIdInternal(idInternal);
+	}
+	
 	public Student() {
 		setNumber(null);
 		setState(null);
 		setPerson(null);
 		setDegreeType(null);
-		setInternalCode(null);
+		
 		setPersonKey(null);
 		setStudentKind(null);
 		setStudentKindKey(null);
@@ -38,7 +45,7 @@ public class Student implements IStudent {
 		setState(state);
 		setPerson(person);
 		setDegreeType(degreeType);
-		setInternalCode(null);
+		
 		setPersonKey(null);
 	}
 
@@ -58,7 +65,7 @@ public class Student implements IStudent {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
-		result += "internalCode = " + this.internalCode + "; ";
+		result += "internalCode = " + getIdInternal() + "; ";
 		result += "number = " + this.number + "; ";
 		result += "state = " + this.state + "; ";
 		result += "degreeType = " + this.degreeType + "; ";
@@ -75,13 +82,7 @@ public class Student implements IStudent {
 		return degreeType;
 	}
 
-	/**
-	 * Returns the internalCode.
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
+	
 
 	/**
 	 * Returns the number.
@@ -123,13 +124,7 @@ public class Student implements IStudent {
 		this.degreeType = degreeType;
 	}
 
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
-	}
+	
 
 	/**
 	 * Sets the number.
@@ -188,6 +183,20 @@ public class Student implements IStudent {
 	 */
 	public void setStudentKindKey(Integer studentKindKey) {
 		this.studentKindKey = studentKindKey;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getExamsEnrolled() {
+		return examsEnrolled;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setExamsEnrolled(List list) {
+		examsEnrolled = list;
 	}
 
 }

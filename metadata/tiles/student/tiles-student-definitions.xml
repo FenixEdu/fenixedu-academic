@@ -19,4 +19,7 @@
 	<definition name="definition.out.of.period" extends="definition.student.masterPage">
 		<put name="body" value="/outOfPeriod.jsp"/>
 	</definition>
+	<definition name="definition.myExams" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewExams_bd.jsp"/>
+	</definition>
 </tiles-definitions>

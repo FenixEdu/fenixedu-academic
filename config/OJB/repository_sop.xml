@@ -151,7 +151,7 @@
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>
       
-      <collection-descriptor
+     <collection-descriptor
 			name="associatedTeacherProfessorShipPercentage"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			element-class-ref="Dominio.TeacherShiftPercentage"
@@ -448,6 +448,19 @@
 		<fk-pointing-to-this-class column="KEY_EXAM"/>
 		<fk-pointing-to-element-class column="KEY_ROOM"/>
 	</collection-descriptor>
+<!--	<collection-descriptor
+			name="studentsEnrolled"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			element-class-ref="Dominio.Student"
+			indirection-table="EXAM_STUDENT"
+			proxy="true"
+			auto-retrieve="true"
+			auto-update="false"
+			auto-delete="false"
+			>
+		<fk-pointing-to-this-class column="KEY_EXAM"/>
+		<fk-pointing-to-element-class column="KEY_STUDENT"/>
+	</collection-descriptor> -->
    </class-descriptor>
 
 <!-- Definitions for Dominio.ExamExecutionCourse -->
@@ -507,19 +520,19 @@
          name="beginDate"
          column="BEGIN_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+          conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
       />
       <field-descriptor id="4"
          name="endDate"
          column="END_DATE"
          jdbc-type="DATE"
-         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+          conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
       />
       
       <reference-descriptor
          name="exam"
          class-ref="Dominio.Exam"
-        
+         proxy="true"
     >
 	<foreignkey field-id-ref="2"/>
 	</reference-descriptor>

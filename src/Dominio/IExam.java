@@ -17,6 +17,7 @@ public interface IExam extends IDomainObject{
 	public Season getSeason();	
 	public List getAssociatedExecutionCourses();
 	public List getAssociatedRooms();
+	public List getStudentsEnrolled();
 
 	public void setBeginning(Calendar beginning);
 	public void setDay(Calendar day);
@@ -24,5 +25,6 @@ public interface IExam extends IDomainObject{
 	public void setSeason(Season epoca);
 	public void setAssociatedExecutionCourses(List list);
 	public void setAssociatedRooms(List rooms);
+	public void setStudentsEnrolled(List list);
 
 }

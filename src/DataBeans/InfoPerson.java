@@ -17,7 +17,7 @@ import Util.TipoDocumentoIdentificacao;
  * @author  tfc130
  */
 
-public class InfoPerson {
+public class InfoPerson extends InfoObject{
     
     private String numeroDocumentoIdentificacao;
     private String localEmissaoDocumentoIdentificacao;

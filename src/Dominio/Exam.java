@@ -20,6 +20,7 @@ public class Exam extends DomainObject implements IExam {
 	protected Season season;
 	protected List associatedExecutionCourses;
 	protected List associatedRooms;
+	protected List studentsEnrolled;
 
 	public Exam() {}
 
@@ -136,6 +137,20 @@ public class Exam extends DomainObject implements IExam {
 	 */
 	public void setAssociatedRooms(List rooms) {
 		associatedRooms = rooms;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getStudentsEnrolled() {
+		return studentsEnrolled;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setStudentsEnrolled(List list) {
+		studentsEnrolled = list;
 	}
 
 }

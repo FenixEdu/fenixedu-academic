@@ -14,11 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
-import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.Exam;
@@ -39,6 +35,8 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 			criteria.addEqualTo("beginning",beginning);
 			return queryList(Exam.class, criteria);
 	}
+	
+	
 
 	public List readAll() throws ExcepcaoPersistencia {
 		try {

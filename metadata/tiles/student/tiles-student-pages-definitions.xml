@@ -20,4 +20,5 @@
 	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.student.choose.optional.curricular.course.enrolment" >
 		<put name="body" value="/student/searchOptionalCurricularCourses_bd.jsp" />
 	</definition>	
+	
 </tiles-definitions>

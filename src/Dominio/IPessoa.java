@@ -13,7 +13,7 @@ import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
-public interface IPessoa {
+public interface IPessoa extends IDomainObject {
 
 	public String getCodigoFiscal();
 	public String getCodigoPostal();
