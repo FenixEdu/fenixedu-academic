@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -75,7 +76,8 @@ public class VisualizeMasterDegreeThesisDispatchAction extends DispatchAction
 					userView,
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					argsStudentCurricularPlan);
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
@@ -96,20 +98,22 @@ public class VisualizeMasterDegreeThesisDispatchAction extends DispatchAction
 					userView,
 					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
 					argsMasterDegreeThesisDataVersion);
-		} catch (NonExistingServiceException e)
+		}
+		catch (NonExistingServiceException e)
 		{
 			throw new NonExistingActionException(
 				"error.exception.masterDegree.nonExistingMasterDegreeThesis",
 				mapping.findForward("error"));
 
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
 
+		/* * * get master degree thesis history * * */
 		Object argsMasterDegreeThesisDataHistory[] = { infoStudentCurricularPlan };
 		List masterDegreeThesisDataHistory = null;
-
 		try
 		{
 			masterDegreeThesisDataHistory =
@@ -117,12 +121,22 @@ public class VisualizeMasterDegreeThesisDispatchAction extends DispatchAction
 					userView,
 					"ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan",
 					argsMasterDegreeThesisDataHistory);
-		} catch (NonExistingServiceException e)
+		}
+		catch (NonExistingServiceException e)
 		{
 			//no history yet
-		} catch (FenixServiceException e)
+			masterDegreeThesisDataHistory = new ArrayList();
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
+		}
+
+		if (masterDegreeThesisDataHistory.isEmpty() == false)
+		{
+			request.setAttribute(
+				SessionConstants.MASTER_DEGREE_THESIS_HISTORY,
+				masterDegreeThesisDataHistory);
 		}
 
 		if (infoMasterDegreeThesisDataVersion.getInfoGuiders().isEmpty() == false)

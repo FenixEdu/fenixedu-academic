@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -78,7 +79,8 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
 					userView,
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					argsStudentCurricularPlan);
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
@@ -99,13 +101,15 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
 					userView,
 					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
 					argsMasterDegreeThesisDataVersion);
-		} catch (NonExistingServiceException e)
+		}
+		catch (NonExistingServiceException e)
 		{
 			throw new NonExistingActionException(
 				"error.exception.masterDegree.nonExistingMasterDegreeThesis",
 				mapping.findForward("error"));
 
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
@@ -119,19 +123,22 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
 					userView,
 					"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
 					argsMasterDegreeProofVersion);
-		} catch (NonExistingServiceException e)
+		}
+		catch (NonExistingServiceException e)
 		{
 			throw new NonExistingActionException(
 				"error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
 				mapping.findForward("errorNonExistingProofVersion"));
 
-		} catch (ScholarshipNotFinishedServiceException e)
+		}
+		catch (ScholarshipNotFinishedServiceException e)
 		{
 			throw new ScholarshipNotFinishedActionException(
 				e.getMessage(),
 				mapping.findForward("errorScholarshipNotFinished"));
 
-		} catch (FenixServiceException e)
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
 		}
@@ -147,12 +154,20 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
 					userView,
 					"ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan",
 					argsMasterDegreeProofHistory);
-		} catch (NonExistingServiceException e)
+		}
+		catch (NonExistingServiceException e)
 		{
 			//no history yet
-		} catch (FenixServiceException e)
+			masterDegreeProofHistory = new ArrayList();
+		}
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException(e);
+		}
+
+		if (masterDegreeProofHistory.isEmpty() == false)
+		{
+			request.setAttribute(SessionConstants.MASTER_DEGREE_PROOF_HISTORY, masterDegreeProofHistory);
 		}
 
 		if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
