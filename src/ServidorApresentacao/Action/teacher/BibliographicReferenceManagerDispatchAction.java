@@ -8,7 +8,6 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,8 +26,8 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author PTRLV
@@ -45,7 +44,7 @@ public class BibliographicReferenceManagerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
+	
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
