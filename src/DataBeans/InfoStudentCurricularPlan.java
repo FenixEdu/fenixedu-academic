@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.IStudentCurricularPlan;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 
@@ -328,5 +329,27 @@ public class InfoStudentCurricularPlan
 	{
 		this.infoSecundaryBranch = infoSecundaryBranch;
 	}
-
+	
+	public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
+		super.copyFromDomain(studentCurricularPlan);
+		if(studentCurricularPlan != null) {
+			setSpecialization(studentCurricularPlan.getSpecialization());
+			setStartDate(studentCurricularPlan.getStartDate());
+			setCurrentState(studentCurricularPlan.getCurrentState());
+			//setObservations(studentCurricularPlan.getObservations());
+			//setClassification(studentCurricularPlan.getClassification());
+			//setGivenCredits(studentCurricularPlan.getGivenCredits());
+			//setCompletedCourses(studentCurricularPlan.getCompletedCourses());
+			//setEnrolledCourses(studentCurricularPlan.getEnrolledCourses());
+		}
+	}
+	
+	public static InfoStudentCurricularPlan newInfoFromDomain(IStudentCurricularPlan studentCurricularPlan) {
+		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+		if(studentCurricularPlan != null) {
+			infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+			infoStudentCurricularPlan.copyFromDomain(studentCurricularPlan);
+		}
+		 return infoStudentCurricularPlan;
+	}
 }

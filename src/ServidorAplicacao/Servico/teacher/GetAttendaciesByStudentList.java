@@ -16,8 +16,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoAttendWithEnrollment;
 import DataBeans.InfoAttendsSummary;
 import DataBeans.InfoFrequenta;
+import DataBeans.InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan;
+import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
@@ -113,10 +114,14 @@ public class GetAttendaciesByStudentList implements IService
                     Iterator iter = shifts.iterator();
                     while (iter.hasNext()) {
                         ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
-                        infoShifts.put(shiftStudent.getShift().getTipo().getSiglaTipoAula(),Cloner.get(shiftStudent.getShift()));
+                        //CLONER
+                        //infoShifts.put(shiftStudent.getShift().getTipo().getSiglaTipoAula(),Cloner.get(shiftStudent.getShift()));
+                        infoShifts.put(shiftStudent.getShift().getTipo().getSiglaTipoAula(), InfoShift.newInfoFromDomain(shiftStudent.getShift()));
                     }
                 }
-                InfoFrequenta infoFrequenta = Cloner.copyIFrequenta2InfoFrequenta(attendacy);
+                //CLONER
+                //InfoFrequenta infoFrequenta = Cloner.copyIFrequenta2InfoFrequenta(attendacy);
+                InfoFrequenta infoFrequenta = InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan.newInfoFromDomain(attendacy);
                 InfoAttendWithEnrollment infoAttendWithEnrollment = new InfoAttendWithEnrollment();
                 infoAttendWithEnrollment.setAluno(infoFrequenta.getAluno());
                 infoAttendWithEnrollment.setDisciplinaExecucao(infoFrequenta.getDisciplinaExecucao());

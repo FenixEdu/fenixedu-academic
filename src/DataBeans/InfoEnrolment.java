@@ -3,6 +3,7 @@ package DataBeans;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.IEnrolment;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 
@@ -186,5 +187,23 @@ public class InfoEnrolment extends InfoObject
 	public void setCreationDate(Date creationDate)
 	{
 		this.creationDate = creationDate;
+	}
+	
+	public void copyFromDomain(IEnrolment enrolment) {
+		super.copyFromDomain(enrolment);
+		if(enrolment != null) {
+			setCreationDate(enrolment.getCreationDate());
+			setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+			setEnrolmentState(enrolment.getEnrolmentState());
+		}		
+	}
+	
+	public static InfoEnrolment newInfoFromDomain(IEnrolment enrolment) {
+		InfoEnrolment infoEnrolment = null;
+		if(enrolment != null) {
+			infoEnrolment = new InfoEnrolment();
+			infoEnrolment.copyFromDomain(enrolment);
+		}
+		return infoEnrolment;			
 	}
 }

@@ -6,6 +6,9 @@
 
 package DataBeans;
 
+import Dominio.IDomainObject;
+import Dominio.IFrequenta;
+
 /**
  *
  * @author  tfc130
@@ -76,5 +79,17 @@ public class InfoFrequenta  extends InfoObject{
 		this.infoEnrolment = enrolment;
 		
 	}
-
+	
+	public void copyFromDomain(IFrequenta frequenta) {
+		super.copyFromDomain(frequenta);
+	}
+	
+	public static InfoFrequenta newInfoFromDomain(IFrequenta frequenta) {
+		InfoFrequenta infoFrequenta = null;
+		if(frequenta != null) {
+			infoFrequenta = new InfoFrequenta();
+			infoFrequenta.copyFromDomain(frequenta);
+		}
+		return infoFrequenta;
+	}
 }
