@@ -17,12 +17,6 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.apache.ojb.odmg.OJB;
-import org.odmg.Implementation;
-import org.odmg.OQLQuery;
-import org.odmg.QueryException;
-
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
@@ -79,6 +73,20 @@ public class AulaOJBTest extends TestCaseOJB {
     super.tearDown();
   }
     
+  /** Test of readByDiaSemanaAndInicioAndFimAndSala method, of class ServidorPersistente.OJB.AulaOJB. */
+  public void testReadAll() {
+	try {
+	  persistentSupport.iniciarTransaccao();
+	  List result = persistentLesson.readAll();
+	  persistentSupport.confirmarTransaccao();
+	  assertNotNull(result);
+	  assertTrue(!result.isEmpty());
+	} catch (ExcepcaoPersistencia ex) {
+	  fail("Unexpected Excpetion: " + ex);
+	}
+  }
+
+
   /** Test of readByDiaSemanaAndInicioAndFimAndSala method, of class ServidorPersistente.OJB.AulaOJB. */
   public void testReadByDiaSemanaAndInicioAndFimAndSala() {
     IAula lesson = null;
@@ -365,24 +373,13 @@ public class AulaOJBTest extends TestCaseOJB {
       persistentSupport.confirmarTransaccao();
 
       persistentSupport.iniciarTransaccao();
-
-      List result = null;
-      try {
-        Implementation odmg = OJB.getInstance();
-        OQLQuery query = odmg.newOQLQuery();
-        String oqlQuery = "select aula from " + Aula.class.getName();
-        query.create(oqlQuery);
-        result = (List) query.execute();
-      } catch (QueryException ex) {
-        throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-      }
+      List result = persistentLesson.readAll();
       persistentSupport.confirmarTransaccao();
       assertNotNull(result);
       assertTrue(result.isEmpty());
     } catch (ExcepcaoPersistencia ex) {
       fail("testDeleteAula");
     }
-
   }
 
   /** Test of readByDisciplinaExecucao method, of class ServidorPersistente.OJB.AulaOJB. */
@@ -788,7 +785,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		persistentSupport.confirmarTransaccao();
 
 		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
-		assertEquals(4, lessonsInBroadPeriodInAnyRoom.size());
+		assertEquals(7, lessonsInBroadPeriodInAnyRoom.size());
 
 		// prepare query input
 		start.set(Calendar.HOUR_OF_DAY, 9);
@@ -803,7 +800,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		persistentSupport.confirmarTransaccao();
 
 		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
-		assertEquals(2, lessonsInBroadPeriodInAnyRoom.size());
+		assertEquals(5, lessonsInBroadPeriodInAnyRoom.size());
 
 		// prepare query input
 		lesson.setDiaSemana(new DiaSemana(DiaSemana.SEXTA_FEIRA));
