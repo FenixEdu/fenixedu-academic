@@ -19,7 +19,6 @@ import Dominio.ICursoExecucao;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
 import Dominio.IGuideSituation;
-import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -69,7 +68,6 @@ public class CreateGuide implements IServico {
 
 		ISuportePersistente sp = null;
 		IContributor contributor = null;
-		IMasterDegreeCandidate masterDegreeCandidate = null;
 		IGuide guide = new Guide();
 		IGuideSituation guideSituation = null;
 		IPessoa person = null;		

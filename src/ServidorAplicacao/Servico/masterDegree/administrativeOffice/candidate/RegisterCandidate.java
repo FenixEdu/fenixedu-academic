@@ -119,7 +119,9 @@ public class RegisterCandidate implements IServico {
 			IRole role = new Role();
 			role.setRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
 			IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(masterDegreeCandidate.getPerson(), role);
-			sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+			if (personRole!=null) {
+				sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());	
+			}
 			Integer newStudentNumber = null;
 			newStudentNumber= sp.getIPersistentStudent().generateStudentNumber(TipoCurso.MESTRADO_OBJ);
 			
