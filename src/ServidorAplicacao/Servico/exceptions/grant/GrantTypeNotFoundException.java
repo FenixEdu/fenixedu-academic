@@ -1,7 +1,6 @@
 /*
- * GrantTypeNotFoundException.java
- *
- * November 19th, 2003
+ * Created on 19/Nov/2003
+ * 
  */
  
 package ServidorAplicacao.Servico.exceptions.grant;

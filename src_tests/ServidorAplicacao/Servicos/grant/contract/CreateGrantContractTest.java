@@ -17,6 +17,9 @@ import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoundException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
 
 /**
  * @author  Barbosa
@@ -100,7 +103,7 @@ public class CreateGrantContractTest
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2003);
         calendar.set(Calendar.MONTH, Calendar.NOVEMBER);
-        calendar.set(Calendar.DAY_OF_MONTH, 19);
+        calendar.set(Calendar.DAY_OF_MONTH, 12);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -157,14 +160,28 @@ public class CreateGrantContractTest
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2003);
         calendar.set(Calendar.MONTH, Calendar.NOVEMBER);
-        calendar.set(Calendar.DAY_OF_MONTH, 12);
+        calendar.set(Calendar.DAY_OF_MONTH, 19);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         Date dateBegin = calendar.getTime();
+        calendar.getTimeZone();
         responsibleTeacherInfo.setBeginDate(dateBegin);
         orientationTeacherInfo.setBeginDate(dateBegin);
+        
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2004);
+        calendar.set(Calendar.MONTH, Calendar.MAY);
+        calendar.set(Calendar.DAY_OF_MONTH, 15);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date dateEnd = calendar.getTime();
+		calendar.getTimeZone();
+        responsibleTeacherInfo.setEndDate(dateEnd);
+        orientationTeacherInfo.setEndDate(dateEnd);
 
         responsibleTeacherInfo.setResponsibleTeacherInfo(responsibleTeacher);
         orientationTeacherInfo.setOrientationTeacherInfo(orientationTeacher);
@@ -175,26 +192,64 @@ public class CreateGrantContractTest
 
     protected Object[] getUnauthorizeArgumentsUnknownType()
     {
-
-        Object[] args = {
-        };
+        Object[] args = getAuthorizeArguments();
+        InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
+        infoGrantContract.getGrantTypeInfo().setSigla("G");
+        Object[] args2 = { infoGrantContract };
         return args;
     }
 
     protected Object[] getUnauthorizeArgumentsUnknownResponsibleTeacher()
     {
-
-        Object[] args = {
-        };
+        Object[] args = getAuthorizeArguments();
+        InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
+        infoGrantContract.getGrantResponsibleTeacherInfo().getResponsibleTeacherInfo().setTeacherNumber(
+            new Integer(69));
+        Object[] args2 = { infoGrantContract };
         return args;
     }
 
     protected Object[] getUnauthorizeArgumentsUnknownGrantOrientationTeacher()
     {
-
-        Object[] args = {
-        };
+        Object[] args = getAuthorizeArguments();
+        InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
+        infoGrantContract.getGrantOrientationTeacherInfo().getOrientationTeacherInfo().setTeacherNumber(
+            new Integer(69));
+        Object[] args2 = { infoGrantContract };
         return args;
+    }
+
+    protected Object[] getAuthorizeArgumentsEdit()
+    {
+        Object[] args = getAuthorizeArguments();
+        InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
+        infoGrantContract.getGrantTypeInfo().setSigla("M");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2010);
+        calendar.set(Calendar.MONTH, Calendar.MARCH);
+        calendar.set(Calendar.DAY_OF_MONTH, 13);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date dateEnd = calendar.getTime();
+        infoGrantContract.setDateEndContract(dateEnd);
+        infoGrantContract.setIdInternal(new Integer(1));
+        infoGrantContract.getGrantResponsibleTeacherInfo().setIdInternal(new Integer(1));
+        infoGrantContract.getGrantOrientationTeacherInfo().setIdInternal(new Integer(1));
+        Object[] args2 = { infoGrantContract };
+        return args;
+    }
+
+    protected Object[] getUnauthorizeArgumentsEdit()
+    {
+        Object[] args = getAuthorizeArguments();
+        InfoGrantContract infoGrantContract = (InfoGrantContract) args[0];
+        infoGrantContract.getGrantOwnerInfo().setIdInternal(new Integer(2));
+        infoGrantContract.setIdInternal(new Integer(1));
+
+        Object[] args2 = { infoGrantContract };
+        return args2;
     }
 
     /************  Inicio dos testes ao serviço **************/
@@ -210,12 +265,16 @@ public class CreateGrantContractTest
             IUserView id = authenticateUser(args);
             Object[] args2 = getAuthorizeArguments();
 
-            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
 
-            compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
-            System.out.println(
-                getNameOfServiceToBeTested()
-                    + " was SUCCESSFULY runned by test: testCreateGrantContractSuccessfull");
+            if (result.booleanValue())
+            {
+                compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+                System.out.println(
+                    getNameOfServiceToBeTested()
+                        + " was SUCCESSFULY runned by test: testCreateGrantContractSuccessfull");
+            } else
+                fail("Creating a new GrantContract ");
         } catch (FenixServiceException e)
         {
             fail("Creating a new GrantContract " + e);
@@ -226,7 +285,67 @@ public class CreateGrantContractTest
     }
 
     /*
-     * Grant Contract Creation Unsuccessfull: unknown grant type
+     * Grant Contract Edition Successfull
+     */
+    public void testEditGrantContractSuccessfull()
+    {
+        try
+        {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArgumentsEdit();
+
+            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+
+            if (result.booleanValue())
+            {
+                compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/grant/contract/testEditGrantContractExpectedDataSet.xml");
+                System.out.println(
+                    getNameOfServiceToBeTested()
+                        + " was SUCCESSFULY runned by test: testCreateGrantContractSuccessfull");
+            } else
+                fail("Editing a GrantContract successfull ");
+        } catch (FenixServiceException e)
+        {
+            fail("Editing a GrantContract successfull " + e);
+        } catch (Exception e)
+        {
+            fail("Editing a GrantContract successfull " + e);
+        }
+    }
+
+    //    /*
+    //   	 * Grant Contract Edition Unsuccessfull: new data conflicts with existing data.
+    //     */
+    //    public void testEditGrantContractUnsuccessfull()
+    //    {
+    //        try
+    //        {
+    //            String[] args = getAuthenticatedAndAuthorizedUser();
+    //            IUserView id = authenticateUser(args);
+    //            Object[] args2 = getUnauthorizeArgumentsEdit();
+    //
+    //            Boolean result = (Boolean) gestor.executar(id, getNameOfServiceToBeTested(), args2);
+    //
+    //            if (!result.booleanValue())
+    //            {
+    //                compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+    //                System.out.println(
+    //                    getNameOfServiceToBeTested()
+    //                        + " was SUCCESSFULY runned by test: testEditGrantContractUnsuccessfull");
+    //            } else
+    //                fail("Editing a GrantContract unsuccessfull");
+    //        } catch (FenixServiceException e)
+    //        {
+    //            fail("Editing a GrantContract unsuccessfull " + e);
+    //        } catch (Exception e)
+    //        {
+    //            fail("Editing a GrantContract unsuccessfull " + e);
+    //        }
+    //    }
+
+    /*
+     * Grant Contract Edition Unsuccessfull: unknown grant type
      */
     public void testCreateGrantContractUnsuccessfullUnknownType()
     {
@@ -239,7 +358,7 @@ public class CreateGrantContractTest
             gestor.executar(id, getNameOfServiceToBeTested(), args2);
 
             fail("Creating a new GrantContract with Unknown Type: test failed!");
-        } catch (FenixServiceException e)
+        } catch (GrantTypeNotFoundException e)
         {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out.println(
@@ -252,7 +371,7 @@ public class CreateGrantContractTest
     }
 
     /*
-     * Grant Contract Creation Unsuccessfull: unknown (responsible) teacher
+     * Grant Contract Creation/Edition Unsuccessfull: unknown (responsible) teacher
      */
     public void testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher()
     {
@@ -265,7 +384,7 @@ public class CreateGrantContractTest
             gestor.executar(id, getNameOfServiceToBeTested(), args2);
 
             fail("Creating a new GrantContract with Unknown Responsible Teacher: test failed!");
-        } catch (FenixServiceException e)
+        } catch (GrantResponsibleTeacherNotFoundException e)
         {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out.println(
@@ -278,7 +397,7 @@ public class CreateGrantContractTest
     }
 
     /*
-     * Grant Contract Creation Unsuccessfull: unknown (grant orientation) teacher
+     * Grant Contract Creation/Edition Unsuccessfull: unknown (grant orientation) teacher
      */
     public void testCreateGrantContractUnsuccessfullUnknownGrantOrientationTeacher()
     {
@@ -291,7 +410,7 @@ public class CreateGrantContractTest
             gestor.executar(id, getNameOfServiceToBeTested(), args2);
 
             fail("Creating a new GrantContract with Unknown Grant Orientation Teacher: test failed!");
-        } catch (FenixServiceException e)
+        } catch (GrantOrientationTeacherNotFoundException e)
         {
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
             System.out.println(
