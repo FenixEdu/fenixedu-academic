@@ -146,6 +146,13 @@
 		<foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>
 	<collection-descriptor
+			name="enrolmentInfo"
+			element-class-ref="Dominio.DegreeCurricularPlanEnrolmentInfo"
+			auto-retrieve="true"
+			proxy="true">
+			<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor
 			name="curricularCourses"
 			element-class-ref="Dominio.CurricularCourse"
 			auto-retrieve="true"
@@ -679,27 +686,27 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.DegreeEnrolmentInfo -->
+<!-- Definitions for Dominio.DegreeCurricularPlanEnrolmentInfo -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.DegreeEnrolmentInfo" table="DEGREE_ENROLMENT_INFO">
-	<field-descriptor id="1"
+<class-descriptor class="Dominio.DegreeCurricularPlanEnrolmentInfo" table="DEGREE_ENROLMENT_INFO">
+	<field-descriptor
 		name="internalID"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
 	/>
-	<field-descriptor id="2"
+	<field-descriptor
 		name="degreeCurricularPlanKey"
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="degreeDuration"
 		column="DEGREE_DURATION"
 		jdbc-type="INTEGER"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
 		name="minimalYearForOptionalCourses"
 		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
 		jdbc-type="INTEGER"
@@ -708,7 +715,7 @@
 			name="degreeCurricularPlan"
 			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="false">
-		<foreignkey field-id-ref="2"/>
+		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
 </class-descriptor>
 

@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
-import Dominio.DegreeEnrolmentInfo;
+import Dominio.DegreeCurricularPlanEnrolmentInfo;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDegreeEnrolmentInfo;
+import Dominio.IDegreeCurricularPlanEnrolmentInfo;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDegreeEnrolmentInfo;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -20,32 +20,32 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class DegreeEnrolmentInfoOJB extends ObjectFenixOJB implements IPersistentDegreeEnrolmentInfo {
 
 	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + DegreeEnrolmentInfo.class.getName();
+		String oqlQuery = "select all from " + DegreeCurricularPlanEnrolmentInfo.class.getName();
 		super.deleteAll(oqlQuery);
 	}
 
-	public void delete(IDegreeEnrolmentInfo degreeEnrolmentInfo) throws ExcepcaoPersistencia {
+	public void delete(IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfo) throws ExcepcaoPersistencia {
 		super.delete(degreeEnrolmentInfo);
 	}
 
-	public void lockWrite(IDegreeEnrolmentInfo degreeEnrolmentInfoToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfoToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
-		IDegreeEnrolmentInfo degreeEnrolmentInfoFromDB = null;
+		IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfoFromDB = null;
 
 		// If there is nothing to write, simply return.
 		if (degreeEnrolmentInfoToWrite == null) {
 			return;
 		}
 
-		// Read DegreeEnrolmentInfo from database.
-		degreeEnrolmentInfoFromDB =(IDegreeEnrolmentInfo) this.readDegreeEnrolmentInfoByDegreeCurricularPlan(degreeEnrolmentInfoToWrite.getDegreeCurricularPlan());
-		// If DegreeEnrolmentInfo is not in database, then write it.
+		// Read DegreeCurricularPlanEnrolmentInfo from database.
+		degreeEnrolmentInfoFromDB =(IDegreeCurricularPlanEnrolmentInfo) this.readDegreeEnrolmentInfoByDegreeCurricularPlan(degreeEnrolmentInfoToWrite.getDegreeCurricularPlan());
+		// If DegreeCurricularPlanEnrolmentInfo is not in database, then write it.
 		if (degreeEnrolmentInfoFromDB == null) {
 			super.lockWrite(degreeEnrolmentInfoToWrite);
-		// else If the DegreeEnrolmentInfo is mapped to the database, then write any existing changes.
+		// else If the DegreeCurricularPlanEnrolmentInfo is mapped to the database, then write any existing changes.
 		} else if (
-			(degreeEnrolmentInfoToWrite instanceof DegreeEnrolmentInfo) &&
-			((DegreeEnrolmentInfo) degreeEnrolmentInfoFromDB).getInternalID().equals(((DegreeEnrolmentInfo) degreeEnrolmentInfoToWrite).getInternalID())) {
+			(degreeEnrolmentInfoToWrite instanceof DegreeCurricularPlanEnrolmentInfo) &&
+			((DegreeCurricularPlanEnrolmentInfo) degreeEnrolmentInfoFromDB).getInternalID().equals(((DegreeCurricularPlanEnrolmentInfo) degreeEnrolmentInfoToWrite).getInternalID())) {
 			super.lockWrite(degreeEnrolmentInfoToWrite);
 		// else Throw an already existing exception
 		} else {
@@ -56,7 +56,7 @@ public class DegreeEnrolmentInfoOJB extends ObjectFenixOJB implements IPersisten
 	public List readAll() throws ExcepcaoPersistencia {
 
 		try {
-			String oqlQuery = "select all from " + DegreeEnrolmentInfo.class.getName();
+			String oqlQuery = "select all from " + DegreeCurricularPlanEnrolmentInfo.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			lockRead(result);
@@ -66,11 +66,11 @@ public class DegreeEnrolmentInfoOJB extends ObjectFenixOJB implements IPersisten
 		}
 	}
 
-	public IDegreeEnrolmentInfo readDegreeEnrolmentInfoByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+	public IDegreeCurricularPlanEnrolmentInfo readDegreeEnrolmentInfoByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
 
 		try {
-			IDegreeEnrolmentInfo degreeEnrolmentInfo = null;
-			String oqlQuery = "select all from " + DegreeEnrolmentInfo.class.getName() +
+			IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfo = null;
+			String oqlQuery = "select all from " + DegreeCurricularPlanEnrolmentInfo.class.getName() +
 			" where degreeCurricularPlan.name = $1 " +
 			" and degreeCurricularPlan.degree.sigla = $2";
 
@@ -80,7 +80,7 @@ public class DegreeEnrolmentInfoOJB extends ObjectFenixOJB implements IPersisten
 			List result = (List) query.execute();
 			lockRead(result);
 			if ((result != null) && (result.size() != 0)) {
-				degreeEnrolmentInfo = (IDegreeEnrolmentInfo) result.get(0);
+				degreeEnrolmentInfo = (IDegreeCurricularPlanEnrolmentInfo) result.get(0);
 			}
 			return degreeEnrolmentInfo;
 		} catch (QueryException ex) {

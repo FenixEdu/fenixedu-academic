@@ -4,7 +4,7 @@ package Dominio;
  * @author dcs-rjao
  *
  */
-public interface IDegreeEnrolmentInfo {
+public interface IDegreeCurricularPlanEnrolmentInfo {
 	/**
 	 * @return
 	 */

@@ -302,15 +302,15 @@ insert into ENROLMENT values (27, 1, 28, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (28, 1, 29, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (29, 1, 30, 1, 1, 'Dominio.Enrolment', null);
 
-insert into ENROLMENT values (30, 1, 26, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (31, 1, 35, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (32, 1, 37, 1, 2, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (33, 1, 38, 1, 2, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (30, 1, 26, 1, 2, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (31, 1, 35, 1, 2, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (32, 1, 37, 1, 2, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (33, 1, 38, 1, 2, 'Dominio.Enrolment', null);
 
-insert into ENROLMENT values (34, 1, 42, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (35, 1, 43, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (36, 1, 44, 1, 1, 'Dominio.Enrolment', null);
-insert into ENROLMENT values (37, 1, 45, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (34, 1, 42, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (35, 1, 43, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (36, 1, 44, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (37, 1, 45, 1, 1, 'Dominio.Enrolment', null);
 
 #insert into ENROLMENT values (38, 1, 51, 1, 4, 'Dominio.EnrolmentInOptionalCurricularCourse', 25);
 #insert into ENROLMENT values (39, 1, 52, 1, 4, 'Dominio.EnrolmentInOptionalCurricularCourse', 26);
@@ -463,3 +463,13 @@ INSERT INTO EXECUTION_YEAR values (5, '2007/2008','NO');
 INSERT INTO EXECUTION_YEAR values (6, '2008/2009','NO');
 INSERT INTO EXECUTION_YEAR values (7, '2009/2010','NO');
 INSERT INTO EXECUTION_YEAR values (8, '2010/2011','NO');
+
+# para sair até aqui
+
+#-----------------------------
+# Data for table 'ENROLMENT_PERIOD'
+# (ID_INTERNAL, KEY_DEGREE_CURRICULAR_PLAN, DEGREE_DURATION, MINIMAL_YEAR_FOR_OPTIONAL_COURSES, END_DATE) 
+#-----------------------------
+;
+DELETE FROM DEGREE_ENROLMENT_INFO;
+INSERT INTO DEGREE_ENROLMENT_INFO values (1, 1, 5, 3);

@@ -21,6 +21,7 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
+	private List enrolmentInfo;
 
 	public DegreeCurricularPlan() {
 	}
@@ -189,5 +190,25 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	 */
 	public void setCurricularCourses(List curricularCourses) {
 		this.curricularCourses = curricularCourses;		
+	}
+
+	public List getEnrolmentInfo() {
+		return enrolmentInfo;	
+	}
+
+	public void setEnrolmentInfo(List list) {
+		enrolmentInfo = list;
+	}
+	
+	public IDegreeCurricularPlanEnrolmentInfo getDegreeCurricularPlanEnrolmentInfo(){
+		if(enrolmentInfo.isEmpty()){
+			return null;
+		}else{
+			return (IDegreeCurricularPlanEnrolmentInfo) enrolmentInfo.get(0);
+		}
+	}
+
+	public void setDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo) {
+		enrolmentInfo.set(0, degreeCurricularPlanEnrolmentInfo);
 	}
 }

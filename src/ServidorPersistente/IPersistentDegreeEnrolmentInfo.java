@@ -9,7 +9,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IDegreeEnrolmentInfo;
+import Dominio.IDegreeCurricularPlanEnrolmentInfo;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -20,11 +20,9 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  */
 public interface IPersistentDegreeEnrolmentInfo {
 	public abstract void deleteAll() throws ExcepcaoPersistencia;
-	public abstract void delete(IDegreeEnrolmentInfo degreeEnrolmentInfo)
-		throws ExcepcaoPersistencia;
-	public abstract void lockWrite(IDegreeEnrolmentInfo degreeEnrolmentInfoToWrite)
-		throws ExcepcaoPersistencia, ExistingPersistentException;
+	public abstract void delete(IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfo) throws ExcepcaoPersistencia;
+	public abstract void lockWrite(IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfoToWrite)	throws ExcepcaoPersistencia, ExistingPersistentException;
 	public abstract List readAll() throws ExcepcaoPersistencia;
-	public abstract IDegreeEnrolmentInfo readDegreeEnrolmentInfoByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
+	public abstract IDegreeCurricularPlanEnrolmentInfo readDegreeEnrolmentInfoByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
 		throws ExcepcaoPersistencia;
 }

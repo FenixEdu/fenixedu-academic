@@ -7,7 +7,7 @@ package Dominio;
  * 24/Mar/2003
  */
 
-public class DegreeEnrolmentInfo implements IDegreeEnrolmentInfo {
+public class DegreeCurricularPlanEnrolmentInfo implements IDegreeCurricularPlanEnrolmentInfo {
 
 	private IDegreeCurricularPlan degreeCurricularPlan;
 	private Integer degreeDuration;
@@ -16,18 +16,18 @@ public class DegreeEnrolmentInfo implements IDegreeEnrolmentInfo {
 	private Integer internalID;
 	private Integer degreeCurricularPlanKey;
 
-	public DegreeEnrolmentInfo() {
+	public DegreeCurricularPlanEnrolmentInfo() {
 	}
 
-	public DegreeEnrolmentInfo(IDegreeCurricularPlan degreeCurricularPlan, Integer degreeDuration, Integer minimalYearForOptionalCourses) {
+	public DegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlan degreeCurricularPlan, Integer degreeDuration, Integer minimalYearForOptionalCourses) {
 		this();
 		setDegreeCurricularPlan(degreeCurricularPlan);
 	}
 
 	public boolean equals(Object obj) {
 		boolean result = false;
-		if (obj instanceof IDegreeEnrolmentInfo) {
-			IDegreeEnrolmentInfo degreeEnrolmentInfo = (IDegreeEnrolmentInfo) obj;
+		if (obj instanceof IDegreeCurricularPlanEnrolmentInfo) {
+			IDegreeCurricularPlanEnrolmentInfo degreeEnrolmentInfo = (IDegreeCurricularPlanEnrolmentInfo) obj;
 			result = this.getDegreeCurricularPlan().equals(degreeEnrolmentInfo.getDegreeCurricularPlan());
 		}
 		return result;

@@ -27,9 +27,9 @@ public class InscTeste2 {
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		autentication();
 		boolean flag = generateEnrolmentProssess(infoEnrolmentContext, true, true, false);
-		if(flag) {
-			flag = generateEnrolmentProssess(infoEnrolmentContext, true, true, false);
-		}
+//		if(flag) {
+//			flag = generateEnrolmentProssess(infoEnrolmentContext, true, true, false);
+//		}
 	}
 
 	private static void autentication() {
