@@ -152,10 +152,10 @@ create table ENROLMENT_EVALUATION (
    RESPONSIBLE_PERSON int(11),
    STATE int(11) not null,
    KEY_ENROLMENT int(11) not null,
-   WHEN_ALTER date,
-   CHECKSUM varchar(50),
    KEY_EMPLOYEE int(11),
+   WHEN_ALTER date,
    OBSERVATION varchar(255),
+   CHECKSUM varchar(50),
    primary key (ID_INTERNAL),
    index U2 (KEY_ENROLMENT, EVALUATION_TYPE, GRADE),
    unique U1 (KEY_ENROLMENT, EVALUATION_TYPE, GRADE)

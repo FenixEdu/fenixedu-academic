@@ -48,8 +48,8 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		// else If the Enrolment is mapped to the database, then write any existing changes.
 		} else if (
 			(enrolmentToWrite instanceof Enrolment)
-				&& ((Enrolment) enrolmentFromDB).getInternalID().equals(
-					((Enrolment) enrolmentToWrite).getInternalID())) {
+				&& ((Enrolment) enrolmentFromDB).getIdInternal().equals(
+					((Enrolment) enrolmentToWrite).getIdInternal())) {
 			super.lockWrite(enrolmentToWrite);
 		// else Throw an already existing exception
 		} else

@@ -98,7 +98,7 @@
 						</tr> 
 						<tr>
 							<td colspan="3">
-								<html:link page="<%= "/marksList.do?method=submitMarks&amp;objectCode="+ pageContext.findAttribute("objectCode")+"&amp;evaluationCode=" +pageContext.findAttribute("evaluationCode") %>" >
+								<html:link page="<%= "/marksList.do?method=prepareSubmitMarks&amp;objectCode="+ pageContext.findAttribute("objectCode")+"&amp;evaluationCode=" +pageContext.findAttribute("evaluationCode") %>" >
 									<b><bean:message key="label.submit.listMarks"/></b>
 								</html:link><br />
 							</td>
@@ -108,17 +108,3 @@
 		</logic:iterate>
 	</logic:notEqual>
 </logic:present>
-
-<%--
-<bean:define id="evaluation" name="siteView" property="component" type="DataBeans.InfoEvaluation" />
-
-<logic:equal name="evalution" property="type" value="<%= EvaluationType.FINAL %>">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="infoop"><bean:message key="label.submitMarks.information" /></td>
-  </tr>
-</table>
-<p><html:link page="<%= "/marksList.do?method=submitMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;evaluationCode=" + pageContext.findAttribute("evaluationCode") %>" ><bean:message key="link.submitMarks"/></html:link></p>
-<br />
-</logic:equal>
---%>

@@ -1,12 +1,21 @@
 package ServidorApresentacao.Action.teacher;
 
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -16,8 +25,11 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
+import DataBeans.InfoExam;
+import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
+import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
@@ -34,32 +46,32 @@ public class MarksListAction extends DispatchAction {
 
 	public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-			
-			HttpSession session = request.getSession();
 
-			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		HttpSession session = request.getSession();
 
-			Integer executionCourseCode = getFromRequest("objectCode", request);
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			Integer evaluationCode = getFromRequest("evaluationCode", request);
-			
-			ISiteComponent commonComponent = new InfoSiteCommon();
-			Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
+		Integer executionCourseCode = getFromRequest("objectCode", request);
 
-			try {
-				TeacherAdministrationSiteView siteView =
-					(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
+		Integer evaluationCode = getFromRequest("evaluationCode", request);
 
-				request.setAttribute("siteView", siteView);
-				request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
+		ISiteComponent commonComponent = new InfoSiteCommon();
+		Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
-			request.setAttribute("evaluationCode", evaluationCode);
+		try {
+			TeacherAdministrationSiteView siteView =
+				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
 
-			return mapping.findForward("loadMarks");
-		
+			request.setAttribute("siteView", siteView);
+			request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("evaluationCode", evaluationCode);
+
+		return mapping.findForward("loadMarks");
+
 	}
 
 	/** 
@@ -124,10 +136,7 @@ public class MarksListAction extends DispatchAction {
 		TeacherAdministrationSiteView siteView = null;
 		try {
 			siteView =
-				(TeacherAdministrationSiteView) ServiceUtils.executeService(
-					userView,
-					"TeacherAdministrationSiteComponentService",
-					args);
+				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -144,11 +153,7 @@ public class MarksListAction extends DispatchAction {
 	 * @author Fernanda Quitério 
 	 *
 	 */
-	public ActionForward publishMarks(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward publishMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 		HttpSession session = request.getSession();
 
@@ -165,7 +170,7 @@ public class MarksListAction extends DispatchAction {
 			MessageResources messages = getResources(request);
 			announcementTitle = messages.getMessage("message.publishment");
 		}
-		
+
 		Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos gestorServicos = GestorServicos.manager();
@@ -181,11 +186,184 @@ public class MarksListAction extends DispatchAction {
 		return mapping.findForward("viewMarksOptions");
 	}
 
-	public ActionForward submitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	/** 
+	 * @author Tânia Pousão 
+	 *
+	 */
+	public ActionForward prepareSubmitMarks(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
 		throws Exception {
+
+		HttpSession session = request.getSession();
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer evaluationCode = getFromRequest("evaluationCode", request);
+
+		Integer executionCourseCode = getFromRequest("objectCode", request);
+
+		//Read evalauations
+		Object[] argsReadEvaluations = { executionCourseCode };
+
+		List infoEvaluationsList;
+		try {
+			infoEvaluationsList = (List) ServiceUtils.executeService(userView, "ReadEvaluations", argsReadEvaluations);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+		Date evaluationDate = lastDateEvaluation(infoEvaluationsList);
+
+		ISiteComponent commonComponent = new InfoSiteCommon();
+
+		Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
+
+		TeacherAdministrationSiteView siteView = null;
+		try {
+			siteView =
+				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(evaluationDate);
+		DynaValidatorForm dateAvaliationForm = (DynaValidatorForm) form;
+		dateAvaliationForm.set("day", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
+		dateAvaliationForm.set("month", new Integer(calendar.get(Calendar.MONTH)+1));
+		dateAvaliationForm.set("year", new Integer(calendar.get(Calendar.YEAR)));
+
+		request.setAttribute("siteView", siteView);
+		request.setAttribute("objectCode", executionCourseCode);
+		request.setAttribute("evaluationCode", evaluationCode);
+
+		return mapping.findForward("prepareSubmitMarks");
+	}
+
+	private Date lastDateEvaluation(List infoEvaluationsList) {
+		List infoEvaluationsListWithoutFinal = (List) CollectionUtils.select(infoEvaluationsList, new Predicate() {
+			public boolean evaluate(Object input) {
+					//for now returns only exams
+	if (input instanceof InfoExam)
+					return true;
+				return false;
+			}
+		});
+
+		ComparatorChain comparatorChain = new ComparatorChain();
+		comparatorChain.addComparator(new BeanComparator("day.time"));
+		comparatorChain.addComparator(new BeanComparator("beginning.time"));
+
+		Collections.sort(infoEvaluationsListWithoutFinal, comparatorChain);
+
+		if (infoEvaluationsListWithoutFinal.get(infoEvaluationsListWithoutFinal.size() - 1) instanceof InfoExam) {
+			InfoExam lastEvaluation = (InfoExam) (infoEvaluationsListWithoutFinal.get(infoEvaluationsListWithoutFinal.size() - 1));
+			return lastEvaluation.getDay().getTime();
+		}
 		return null;
 	}
-	
+
+	/** 
+	 * @author Tânia Pousão 
+	 *
+	 */
+	public ActionForward submitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+		HttpSession session = request.getSession();
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer evaluationCode = getFromRequest("evaluationCode", request);
+
+		Integer objectCode = getFromRequest("objectCode", request);
+
+		DynaValidatorForm dateForm = (DynaValidatorForm) form;
+		Integer yearEvaluationDate = (Integer) dateForm.get("year");
+		Integer monthEvaluationDate = (Integer) dateForm.get("month");
+		Integer dayEvaluationDate = (Integer) dateForm.get("day");
+		Date evaluationDate = null;
+		if (yearEvaluationDate != null
+			&& monthEvaluationDate != null
+			&& dayEvaluationDate != null
+			&& yearEvaluationDate.intValue() > 0
+			&& monthEvaluationDate.intValue() > 0
+			&& dayEvaluationDate.intValue() > 0) {
+			Calendar evaluationCalendar = Calendar.getInstance();
+			evaluationCalendar.set(yearEvaluationDate.intValue(), monthEvaluationDate.intValue() - 1, dayEvaluationDate.intValue());
+			evaluationDate = evaluationCalendar.getTime();
+		}
+
+		Object[] args = { objectCode, evaluationCode, evaluationDate, userView };
+
+		GestorServicos gestorServicos = GestorServicos.manager();
+
+		TeacherAdministrationSiteView administrationSiteView = null;
+		try {
+			administrationSiteView = (TeacherAdministrationSiteView) gestorServicos.executar(userView, "SubmitMarks", args);
+		} catch (FenixServiceException exception) {
+			exception.printStackTrace();
+			throw new FenixActionException();
+		}
+
+		request.setAttribute("siteView", administrationSiteView);
+		request.setAttribute("objectCode", objectCode);
+		request.setAttribute("evaluationCode", evaluationCode);
+
+		InfoSiteSubmitMarks infoSiteSubmitMarks = (InfoSiteSubmitMarks) administrationSiteView.getComponent();
+		ActionErrors actionErrors = sendErrors(infoSiteSubmitMarks);
+		if (actionErrors.size() > 0) {
+			saveErrors(request, actionErrors);
+			return mapping.findForward("submitMarksOK");
+		}
+
+		return mapping.findForward("submitMarksOK");
+	}
+
+	private ActionErrors sendErrors(InfoSiteSubmitMarks infoSiteSubmitMarks) {
+		ActionErrors actionErrors = new ActionErrors();
+
+		//	Check if ocurr errors in service
+		if (infoSiteSubmitMarks.getNoMarks()) {
+			actionErrors.add("noMarks", new ActionError("errors.submitMarks.noMarks"));
+		} else if (infoSiteSubmitMarks.getAllMarksNotPublished()) {
+			actionErrors.add("allMarksNotPublished", new ActionError("errors.submitMarks.allMarksNotPublished"));
+		} else {
+
+			if ((infoSiteSubmitMarks.getErrorsNotEnrolmented() != null && infoSiteSubmitMarks.getErrorsNotEnrolmented().size() > 0)
+				|| (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null && infoSiteSubmitMarks.getErrorsMarkNotPublished().size() > 0)) {
+
+				if (infoSiteSubmitMarks.getErrorsNotEnrolmented() != null && infoSiteSubmitMarks.getErrorsNotEnrolmented().size() > 0) {
+					//list with	errors Student Not Enrolmented
+					ListIterator iterator = infoSiteSubmitMarks.getErrorsNotEnrolmented().listIterator();
+					while (iterator.hasNext()) {
+						InfoMark infoMark = (InfoMark) iterator.next();
+						actionErrors.add(
+							"errorsNotEnrolmented",
+							new ActionError(
+								"errors.submitMarks.notEnrolmented",
+								String.valueOf((infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
+					}
+				}
+
+				if (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null && infoSiteSubmitMarks.getErrorsMarkNotPublished().size() > 0) {
+					//list with	errors Mark Not Published
+					ListIterator iterator = infoSiteSubmitMarks.getErrorsMarkNotPublished().listIterator();
+					while (iterator.hasNext()) {
+						InfoMark infoMark = (InfoMark) iterator.next();
+						actionErrors.add(
+							"markNotPublished",
+							new ActionError(
+								"errors.submitMarks.markNotPublished",
+								String.valueOf(infoMark.getPublishedMark()),
+								String.valueOf((infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
+					}
+				}
+			}
+		}
+		return actionErrors;
+	}
+
 	private Integer getFromRequest(String parameter, HttpServletRequest request) {
 		Integer parameterCode = null;
 		String parameterCodeString = request.getParameter(parameter);
@@ -196,5 +374,6 @@ public class MarksListAction extends DispatchAction {
 			parameterCode = new Integer(parameterCodeString);
 		}
 		return parameterCode;
+
 	}
 }

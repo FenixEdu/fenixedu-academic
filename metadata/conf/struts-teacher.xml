@@ -164,7 +164,9 @@
 	        <form-property name="publishmentMessage"  type="java.lang.String" />
 	        <form-property name="sendSMS"  type="java.lang.Boolean" />
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-	        
+			<form-property name="year" type="java.lang.Integer" />
+			<form-property name="month" type="java.lang.Integer" />
+			<form-property name="day" type="java.lang.Integer" />				        
 		</form-bean>	
 
     </form-beans>
@@ -646,6 +648,8 @@
        <forward name="loadMarks" path="/loadMarks.jsp" />            
        <forward name="preparePublishMarks" path="/preparePublishMarks.jsp" />       
        <forward name="viewMarksOptions" path="/showMarksListOptions.do"/>
+       <forward name="prepareSubmitMarks" path="/prepareSubmitMarks.jsp" />
+       <forward name="submitMarksOK" path="/submitMarksOK.jsp" />
 	</action>
 	<action 
 		path="/writeMarks"

@@ -9,9 +9,7 @@ import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 
 /**
- * @author dcs-rjao
- *
- * 24/Mar/2003
+ * @author Ângela
  */
 
 public interface IPersistentEnrolmentEvaluation extends IPersistentObject {
@@ -19,6 +17,7 @@ public interface IPersistentEnrolmentEvaluation extends IPersistentObject {
 	public void lockWrite(IEnrolmentEvaluation enrolmentEvaluationToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IEnrolmentEvaluation enrolmentEvaluation) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;	
-	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(IEnrolment enrolment,EnrolmentEvaluationType evaluationType,String grade) throws ExcepcaoPersistencia; 
+	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(IEnrolment enrolment,EnrolmentEvaluationType evaluationType,String grade) throws ExcepcaoPersistencia;
 	public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrolment enrolment,EnrolmentEvaluationState evaluationState) throws ExcepcaoPersistencia; 
+	public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia; 
 }

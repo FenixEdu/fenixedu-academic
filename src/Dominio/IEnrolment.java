@@ -11,7 +11,7 @@ import Util.EnrolmentState;
  * 24/Mar/2003
  */
 
-public interface IEnrolment {
+public interface IEnrolment extends IDomainObject{
 
 //	public ICurricularCourse getCurricularCourse();
 	public IStudentCurricularPlan getStudentCurricularPlan();
@@ -20,7 +20,6 @@ public interface IEnrolment {
 	public EnrolmentEvaluationType getEnrolmentEvaluationType();
 	public List getEvaluations();
 	public ICurricularCourseScope getCurricularCourseScope();
-	public Integer getInternalID();
 
 	public void setEnrolmentState(EnrolmentState state);
 //	public void setCurricularCourse(ICurricularCourse curricularCourse);

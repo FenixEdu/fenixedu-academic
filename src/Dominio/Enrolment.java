@@ -11,7 +11,7 @@ import Util.EnrolmentState;
  * 24/Mar/2003
  */
 
-public class Enrolment implements IEnrolment {
+public class Enrolment extends DomainObject implements IEnrolment {
 
 	private IStudentCurricularPlan studentCurricularPlan;
 //	private ICurricularCourse curricularCourse;
@@ -20,7 +20,7 @@ public class Enrolment implements IEnrolment {
 	private EnrolmentEvaluationType enrolmentEvaluationType;
 	private ICurricularCourseScope curricularCourseScope;
 
-	private Integer internalID;
+//	private Integer internalID;
 	private Integer studentCurricularPlanKey;
 //	private Integer curricularCourseKey;
 	private Integer curricularCourseScopeKey;
@@ -71,12 +71,13 @@ public class Enrolment implements IEnrolment {
 
 			resultado =
 				this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
+//					&& this.getCurricularCourse().equals(enrolment.getCurricularCourse())
 					&& this.getCurricularCourseScope().equals(enrolment.getCurricularCourseScope())
 					&& this.getExecutionPeriod().equals(enrolment.getExecutionPeriod());
 		}
 		return resultado;
 	}
-		
+
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "studentCurricularPlan = " + this.studentCurricularPlan + "; ";
@@ -95,9 +96,9 @@ public class Enrolment implements IEnrolment {
 //		return curricularCourseKey;
 //	}
 
-	public Integer getInternalID() {
-		return internalID;
-	}
+//	public Integer getInternalID() {
+//		return internalID;
+//	}
 
 	/**
 	 * Returns the studentCurricularPlan.
@@ -123,13 +124,13 @@ public class Enrolment implements IEnrolment {
 //		this.curricularCourseKey = curricularCourseKey;
 //	}
 
-	/**
-	 * Sets the internalID.
-	 * @param internalID The internalID to set
-	 */
-	public void setInternalID(Integer internalID) {
-		this.internalID = internalID;
-	}
+//	/**
+//	 * Sets the internalID.
+//	 * @param internalID The internalID to set
+//	 */
+//	public void setInternalID(Integer internalID) {
+//		this.internalID = internalID;
+//	}
 
 	/**
 	 * Sets the studentCurricularPlan.
@@ -240,5 +241,4 @@ public class Enrolment implements IEnrolment {
 	public void setCurricularCourseScopeKey(Integer integer) {
 		curricularCourseScopeKey = integer;
 	}
-
 }

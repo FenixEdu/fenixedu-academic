@@ -427,9 +427,9 @@ public class MigrateInscricoes2FenixEnrolments {
 		} else if (result.size() == 1) {
 //			System.out.println("Encontrei o enrolment");
 			Enrolment enrolmentFromDatabase = (Enrolment) result.get(0); 
-			Integer idInternal = enrolmentFromDatabase.getInternalID();
+			Integer idInternal = enrolmentFromDatabase.getIdInternal();
 			BeanUtils.copyProperties(enrolmentFromDatabase, enrolment);
-			enrolmentFromDatabase.setInternalID(idInternal);
+			enrolmentFromDatabase.setIdInternal(idInternal);
 			return enrolmentFromDatabase;
 		}
 		
@@ -445,7 +445,7 @@ public class MigrateInscricoes2FenixEnrolments {
 		
 		
 		criteria.addEqualTo("enrolmentEvaluationType", enrolmentEvaluation.getEnrolmentEvaluationType().getType());
-		criteria.addEqualTo("enrolmentKey", new Integer(String.valueOf(((Enrolment) enrolmentEvaluation.getEnrolment()).getInternalID())));
+		criteria.addEqualTo("enrolmentKey", new Integer(String.valueOf(((Enrolment) enrolmentEvaluation.getEnrolment()).getIdInternal())));
 		Query query = new QueryByCriteria(EnrolmentEvaluation.class,criteria);
 
 		List result = (List) broker.getCollectionByQuery(query);		

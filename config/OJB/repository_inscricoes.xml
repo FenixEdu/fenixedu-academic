@@ -341,7 +341,7 @@
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.Enrolment" table="ENROLMENT">
 	<field-descriptor
-		name="internalID"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
@@ -404,7 +404,7 @@
 
 <class-descriptor class="Dominio.EnrolmentInOptionalCurricularCourse" table="ENROLMENT">
 	<field-descriptor
-		name="internalID"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
@@ -476,7 +476,7 @@
 
 <class-descriptor class="Dominio.EnrolmentInExtraCurricularCourse" table="ENROLMENT">
 	<field-descriptor
-		name="internalID"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"

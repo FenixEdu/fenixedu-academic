@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * @author jpvl
  */
-public interface IEnrolmentPeriod {
+public interface IEnrolmentPeriod extends IDomainObject{
 
 	/**
 	 * @param degreeCurricularPlan

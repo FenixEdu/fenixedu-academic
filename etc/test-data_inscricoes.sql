@@ -101,7 +101,7 @@ INSERT INTO ENROLMENT VALUES (20, 7, 10, 2, 3, 'Dominio.Enrolment', null, 1);
 #-----------------------------
 #Angela
 #-----------------------------
-#Data for table 'ENROLMENT_EVALUATION'  (int ID_INTERNAL, varchar GRADE, int EVALUATION_TYPE(unique), date EXAM_DATE, date GRADE_AVAILABLE_DATE,int RESPONSIBLE_TEACHER, int STATE, int KEY_ENROLMENT(unique), date WHEN_ALTER, varchar CHECKSUM, int KEY_EMPLOYEE, varchar OBSERVATION)
+#Data for table 'ENROLMENT_EVALUATION'  (int ID_INTERNAL, varchar GRADE, int EVALUATION_TYPE(unique), date EXAM_DATE, date GRADE_AVAILABLE_DATE,int RESPONSIBLE_TEACHER, int STATE, int KEY_ENROLMENT(unique), int KEY_EMPLOYEE, date WHEN_ALTER, varchar OBSERVATION, varchar CHECKSUM)
 ;
 DELETE FROM ENROLMENT_EVALUATION;
 INSERT INTO ENROLMENT_EVALUATION VALUES (1, '15', 1, '2003-02-12', '2003-03-20', 1, 1, 10, null, null, null, null);
