@@ -50,8 +50,8 @@ public class TimePeriod
         int hours = endCalendar.get(Calendar.HOUR_OF_DAY);
         int minutes = endCalendar.get(Calendar.MINUTE);
 
-        double minutesInHours = (double) minutes / 60.0;
+        double minutesInHours = minutes / 60.0;
 
-        return new Double((double) hours + minutesInHours);
+        return new Double(hours + minutesInHours);
     }
 }

@@ -106,8 +106,8 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
         // else if (item is mapped to the database then write any existing changes)
         else if (
             (groupPropertiesToWrite instanceof IGroupProperties)
-                && ((IGroupProperties) groupPropertiesFromDB).getIdInternal().equals(
-                    ((IGroupProperties) groupPropertiesToWrite).getIdInternal()))
+                && groupPropertiesFromDB.getIdInternal().equals(
+                    groupPropertiesToWrite.getIdInternal()))
         {
 
             super.lockWrite(groupPropertiesToWrite);

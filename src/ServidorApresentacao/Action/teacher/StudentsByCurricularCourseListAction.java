@@ -25,9 +25,9 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Fernanda Quitério
- * @author Tânia Pousão 
+ * @author Tânia Pousão
  * @author Ângela
- *
+ *  
  */
 public class StudentsByCurricularCourseListAction extends DispatchAction
 {
@@ -44,7 +44,8 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
         try
         {
             shiftID = new Integer(request.getParameter("shiftCode"));
-        } catch (NumberFormatException ex)
+        }
+        catch (NumberFormatException ex)
         {
             //ok, we don't want to view a shift's student list
         }
@@ -87,7 +88,7 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
                     userView,
                     "teacher.ReadExecutionCourseProjects",
                     argsProjects);
-            System.out.println("Tenho estes projectos:" + projects);
+
             infosGroups =
                 (List) ServiceManagerServiceFactory.executeService(
                     userView,
@@ -101,8 +102,10 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
                     argsReadShifts);
             if (shiftID != null)
             {
-                //the objectCode is needed by the filter...doing this is awfull !!!
-                //please read http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
+                //the objectCode is needed by the filter...doing this is
+				// awfull !!!
+                //please read
+				// http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
                 Object[] argsReadShiftStudents = { objectCode, shiftID };
                 shiftStudents =
                     (List) ServiceManagerServiceFactory.executeService(
@@ -114,9 +117,13 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
             Collections.sort(infoSiteStudents.getStudents(), new BeanComparator("number"));
             Object[] argsAttendacies = { objectCode, infoSiteStudents.getStudents()};
             attendacies =
-                (List) ServiceManagerServiceFactory.executeService(userView, "teacher.GetAttendaciesByStudentList", argsAttendacies);
+                (List) ServiceManagerServiceFactory.executeService(
+                    userView,
+                    "teacher.GetAttendaciesByStudentList",
+                    argsAttendacies);
 
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
         }
@@ -127,7 +134,8 @@ public class StudentsByCurricularCourseListAction extends DispatchAction
         if (projects == null || projects.getInfoGroupPropertiesList() == null)
         {
             request.setAttribute("projects", new ArrayList());
-        } else
+        }
+        else
         {
             request.setAttribute("projects", projects.getInfoGroupPropertiesList());
         }

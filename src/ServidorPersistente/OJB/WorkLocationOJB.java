@@ -35,7 +35,7 @@ public class WorkLocationOJB extends ObjectFenixOJB implements IPersistentWorkLo
 
     public IWorkLocation readByOID(Integer oid) throws ExcepcaoPersistencia
     {
-        return (IWorkLocation) readByOID(oid);
+        return readByOID(oid);
     }
 
     public List readAll() throws ExcepcaoPersistencia

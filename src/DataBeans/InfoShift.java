@@ -124,13 +124,13 @@ public class InfoShift extends InfoObject {
 			InfoLesson lesson = (InfoLesson) itLesson.next();
 			result += lesson.getDiaSemana().toString();
 			result += " (";
-			result += ((Calendar) lesson.getInicio()).get(Calendar.HOUR_OF_DAY);
+			result += lesson.getInicio().get(Calendar.HOUR_OF_DAY);
 			result += ":";
-			result += minutesFormatter(((Calendar) lesson.getInicio()).get(Calendar.MINUTE));
+			result += minutesFormatter(lesson.getInicio().get(Calendar.MINUTE));
 			result += "-";
-			result += ((Calendar) lesson.getFim()).get(Calendar.HOUR_OF_DAY);
+			result += lesson.getFim().get(Calendar.HOUR_OF_DAY);
 			result += ":";
-			result += minutesFormatter(((Calendar) lesson.getFim()).get(Calendar.MINUTE));
+			result += minutesFormatter(lesson.getFim().get(Calendar.MINUTE));
 			result += ") ";
 			result += lesson.getInfoSala().getNome().toString();
 			int last = (infoLessonsList.size());

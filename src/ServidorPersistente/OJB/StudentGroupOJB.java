@@ -116,8 +116,8 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
         // else if (item is mapped to the database then write any existing changes)
         else if (
             (studentGroupToWrite instanceof IStudentGroup)
-                && ((IStudentGroup) studentGroupFromDB).getIdInternal().equals(
-                    ((IStudentGroup) studentGroupToWrite).getIdInternal()))
+                && studentGroupFromDB.getIdInternal().equals(
+                    studentGroupToWrite.getIdInternal()))
         {
 
             super.lockWrite(studentGroupToWrite);

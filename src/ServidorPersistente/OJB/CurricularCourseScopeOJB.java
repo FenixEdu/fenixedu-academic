@@ -278,6 +278,6 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("branchKey", branch.getIdInternal());
-		return (List) queryList(CurricularCourseScope.class, criteria);
+		return queryList(CurricularCourseScope.class, criteria);
 	}
 }

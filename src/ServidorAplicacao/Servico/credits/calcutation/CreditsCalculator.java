@@ -128,7 +128,7 @@ public class CreditsCalculator
         List teacherDegreeFinalProjectStudents = teacherDegreeFinalProjectStudentDAO
                         .readByTeacherAndExecutionYear(teacher, executionPeriod.getExecutionYear());
 
-        double numberOfStudents = (double) teacherDegreeFinalProjectStudents.size();
+        double numberOfStudents = teacherDegreeFinalProjectStudents.size();
         if (!teacherDegreeFinalProjectStudents.contains(degreeFinalProjectStudent))
         {
             numberOfStudents++;
@@ -155,7 +155,7 @@ public class CreditsCalculator
         List teacherDegreeFinalProjectStudents = teacherDegreeFinalProjectStudentDAO
                         .readByTeacherAndExecutionYear(teacher, executionPeriod.getExecutionYear());
 
-        double numberOfStudents = (double) teacherDegreeFinalProjectStudents.size();
+        double numberOfStudents = teacherDegreeFinalProjectStudents.size();
         if (teacherDegreeFinalProjectStudents.contains(degreeFinalProjectStudent))
         {
             numberOfStudents--;

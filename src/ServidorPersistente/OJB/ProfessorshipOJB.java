@@ -213,7 +213,10 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
         criteria.addEqualTo(
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
                 executionDegree.getCurricularPlan().getIdInternal());
-        return queryList(Professorship.class, criteria, true);
+        criteria.addEqualTo(
+                "executionCourse.executionPeriod.executionYear.idInternal",
+                executionDegree.getExecutionYear().getIdInternal());
+        return queryList(Professorship.class, criteria);
     }
     /* (non-Javadoc)
      * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionYear(Dominio.ITeacher, Dominio.IExecutionYear)

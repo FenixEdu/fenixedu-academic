@@ -102,8 +102,8 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
             // else if (item is mapped to the database then write any existing changes)
         } else if (
             (studentGroupAttendToWrite instanceof IStudentGroupAttend)
-                && ((IStudentGroupAttend) studentGroupAttendFromDB).getIdInternal().equals(
-                    ((IStudentGroupAttend) studentGroupAttendToWrite).getIdInternal()))
+                && studentGroupAttendFromDB.getIdInternal().equals(
+                    studentGroupAttendToWrite.getIdInternal()))
         {
 
             super.lockWrite(studentGroupAttendToWrite);

@@ -5,151 +5,145 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <logic:notPresent name="siteView">
-<table align="center"  cellpadding='0' cellspacing='0'>
-			<tr align="center">
-				<td>
-					<span class="error"> <bean:message key="errors.invalidSiteExecutionCourse"/> </span>
-				</td>
-			</tr>
-		</table>
+<table align="center" cellpadding='0' cellspacing='0'>
+    <tr align="center">
+        <td>
+            <span class="error">
+                <bean:message key="errors.invalidSiteExecutionCourse"/>
+            </span>
+        </td>
+    </tr>
+</table>
 </logic:notPresent>
 
 <logic:present name="siteView">
-<logic:notPresent name="siteView" property="component">
-<table align="center"  cellpadding='0' cellspacing='0'>
+    <logic:notPresent name="siteView" property="component">
+        <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
 				<td>
-					<span class="error"> <bean:message key="message.public.notfound.executionCourse"/> </span>
+					<span class="error">
+					     <bean:message key="message.public.notfound.executionCourse"/> 
+					 </span>
 				</td>
 			</tr>
 		</table>
-</logic:notPresent>
+    </logic:notPresent>
 
 
-<logic:present name="siteView" property="component">
-	<bean:define id="component" name="siteView" property="component" />
+    <logic:present name="siteView" property="component">
+        <bean:define id="component" name="siteView" property="component" />
 	
- 	<logic:notEmpty name="component" property="initialStatement">
-	<table align="center" cellspacing="0" width="90%">
-        <tr>
-          <td class="citation">
-            <p><bean:write name="component" property="initialStatement" filter="false"/></p>
-          </td>
-        </tr>
-      </table>		
-      <br/>
-      <br/>
-	</logic:notEmpty>
+        <logic:notEmpty name="component" property="initialStatement">
+            <table align="center" cellspacing="0" width="90%">
+             <tr>
+               <td class="citation">
+                 <p><bean:write name="component" property="initialStatement" filter="false"/></p>
+               </td>
+            </tr>
+            </table>		
+         <br/>
+         <br/>
+        </logic:notEmpty>
 		
- <logic:notEmpty name="component" property="lastAnnouncement" >		
- 	<bean:define id="announcement" name="component" property="lastAnnouncement"/>
-        <table id="anuncios" cellspacing="0" width="90%">
-          	<tr>
-            	<td  class="ultAnuncioAviso"> 
+        <logic:notEmpty name="component" property="lastAnnouncement" >		
+            <bean:define id="announcement" name="component" property="lastAnnouncement"/>
+            <table id="anuncios" cellspacing="0" width="90%">
+            	<tr>
+                    <td  class="ultAnuncioAviso"> 
             		<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
             		<bean:message key="message.lastAnnouncement"/> 
-             	</td>      
-           </tr>
-           <tr>
-           		<td class="ultAnuncio">
-           			<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
-           			<html:link  page="<%="/viewSite.do"+"?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
-            		<bean:write name="announcement" property="title"/>:
-            		</html:link>	
-            		<br>
-            		<bean:write name="announcement" property="information" filter="false"/>
-           		</td>
-           </tr>
-           <tr>		
+                    </td>      
+                </tr>
+                 <tr>
+                    <td class="ultAnuncio">
+                    	<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
+                    	<html:link  page="<%="/viewSite.do"+"?method=announcements&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+                    	<bean:write name="announcement" property="title"/>:
+                    	</html:link>	
+                    	<br/>
+                        <bean:write name="announcement" property="information" filter="false"/>
+                    </td>
+                 </tr>
+                 <tr>		
            		<td class="ultAnuncio-date">	
            			<bean:message key="message.modifiedOn"/>
-           			<dt:format pattern="dd-MM-yyyy"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format></td>
-           </tr>           
-        </table>
+           			<dt:format pattern="dd-MM-yyyy">
+           			    <bean:write name="announcement" property="lastModifiedDate.time"/>
+           			  </dt:format>
+                </td>
+                </tr>           
+             </table>
         </logic:notEmpty>
 <br/>
 <br/>
 <br/>
 <br/>
 <br/>
- 
+
     
      <logic:notEmpty 	name="component" property="alternativeSite" >	
-     	<h2><bean:message key="message.siteAddress" /></h2>
-	<bean:define id="alternativeSite" name="component" property="alternativeSite"/>
-	<html:link href="<%=(String)pageContext.findAttribute("alternativeSite") %>" target="_blank">
+            <h2><bean:message key="message.siteAddress" /></h2>
+            <bean:define id="alternativeSite" name="component" property="alternativeSite"/>
+            <html:link href="<%=(String)pageContext.findAttribute("alternativeSite") %>" target="_blank">
 			<bean:write name="alternativeSite" />
-	</html:link>
+            </html:link>
 			<br/>
 			<br/>
+		
 	</logic:notEmpty>			
 
    
      <logic:notEmpty name="component" property="introduction">
      	
-	<h2><bean:message key="message.introduction" /></h2>
-      <p><bean:write name="component" property="introduction" filter="false" /></p>
-      <br/>
-      <br/>
+        <h2><bean:message key="message.introduction" /></h2>
+          <p><bean:write name="component" property="introduction" filter="false" /></p>
+         <br/>
+        <br/>
       </logic:notEmpty>
 	
 	
-
-	<%-- FIXME:as soon as we have responsible teachers remove this commment
-	 <logic:empty name="component" property="responsibleTeachers">
-		<table >
-	<tr>
-		<td>
-			<h2><bean:message key="label.responsableProfessor"/></h2>	
-		</td>
-	</tr>
-	<tr>
-		<td>		
-         <bean:message key="message.teachers.not.available" />	
-		</td>
-	</tr>
-	</table>
-	<br/>
-	<html:link href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</html:link>
-	</logic:empty> --%>
-
-	<logic:notEmpty name="component" property="responsibleTeachers">	
+        <table>
+            <tr></tr>
+        <logic:notEmpty name="component" property="responsibleTeachers">	
 	
-	<table>
-	<tr>
-		<td>
-			<h2><bean:message key="label.lecturingTeachers"/></h2>	
-		</td>
-	</tr>	
+           
+                <tr>
+            	<td>
+            		<h2><bean:message key="label.lecturingTeachers"/></h2>	
+            	</td>
+                </tr>	
 
-	<logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
-		<tr>
-			<td>
+            <logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
+            	<tr>
+            	<td>
 				<bean:write name="infoResponsableTeacher" property="infoPerson.nome" /> <bean:message key="label.responsible"/>
-			</td>
-		</tr>
-	</logic:iterate>	
-</logic:notEmpty>
-<logic:notEmpty name="component" property="lecturingTeachers" >	
-	<logic:empty name="component" property="responsibleTeachers">	
-	
-	<table>
-	<tr>
-		<td>
-			<h2><bean:message key="label.lecturingTeachers"/></h2>	
-		</td>
-	</tr>	
-	</logic:empty>
-	<logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
-		<tr>
-			<td>
+                </td>
+                </tr>
+            </logic:iterate>	
+        </logic:notEmpty>
+        <logic:notEmpty name="component" property="lecturingTeachers" >	
+             
+            <logic:empty name="component" property="responsibleTeachers">	
+	            
+                <table>
+                <tr>
+                <td>
+                <h2><bean:message key="label.lecturingTeachers"/></h2>	
+                </td>
+                </tr>	
+             </logic:empty>
+            <logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
+                <tr>
+                <td>
 				<bean:write name="infoTeacher" property="infoPerson.nome" /> 
-			</td>
-		</tr>
-	</logic:iterate>	
+                </td>
+                </tr>
+            </logic:iterate>	
 
-</logic:notEmpty>
-</table>
-</logic:notEmpty> 
-</logic:present>
+        </logic:notEmpty>
+     
+         </table>
+       
+    </logic:notEmpty> 
+   </logic:present>
 </logic:present>
