@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.SiteView;
 import DataBeans.teacher.InfoExternalActivity;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
@@ -71,14 +70,12 @@ public class ReadExternalActivityTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            SiteView result = null;
+            InfoExternalActivity result = null;
             Object[] args = { new Integer(1)};
 
-            result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
+            result = (InfoExternalActivity) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-            InfoExternalActivity infoExternalActivity = (InfoExternalActivity) result.getComponent();
-
-            assertTrue(infoExternalActivity.getIdInternal().equals(args[0]));
+            assertTrue(result.getIdInternal().equals(args[0]));
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
         } catch (Exception ex)

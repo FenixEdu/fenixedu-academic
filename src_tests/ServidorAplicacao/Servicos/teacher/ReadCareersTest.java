@@ -40,32 +40,25 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
 
     protected String[] getAuthenticatedAndAuthorizedUser()
     {
-
         String[] args = { "user", "pass", getApplication()};
         return args;
     }
 
     protected String[] getAuthenticatedAndUnauthorizedUser()
     {
-
         String[] args = { "julia", "pass", getApplication()};
         return args;
     }
 
     protected String[] getNotAuthenticatedUser()
     {
-
         String[] args = { "jccm", "pass", getApplication()};
         return args;
     }
 
     protected Object[] getAuthorizeArguments()
     {
-
-        int tipoCareer = CareerType.PROFESSIONAL;
-        CareerType careerType = new CareerType(tipoCareer);
-
-        Object[] args = { careerType, userView.getUtilizador() };
+        Object[] args = { CareerType.PROFESSIONAL, userView.getUtilizador()};
         return args;
     }
 
@@ -81,7 +74,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             SiteView result = null;
             CareerType careerType = null;
 
-            Object[] args = { careerType, userView.getUtilizador() };
+            Object[] args = { careerType, userView.getUtilizador()};
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
@@ -108,7 +101,7 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
             String[] args = { "maria", "pass", getApplication()};
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView.getUtilizador() };
+            Object[] serviceArgs = { careerType, userView.getUtilizador()};
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
@@ -132,9 +125,9 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
         try
         {
             SiteView result = null;
-            CareerType careerType = new CareerType(CareerType.PROFESSIONAL);
+            CareerType careerType = CareerType.PROFESSIONAL;
 
-            Object[] args = { careerType, userView.getUtilizador() };
+            Object[] args = { careerType, userView.getUtilizador()};
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
@@ -156,12 +149,12 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
         try
         {
             SiteView result = null;
-            CareerType careerType = new CareerType(CareerType.PROFESSIONAL);
+            CareerType careerType = CareerType.PROFESSIONAL;
 
             String[] args = { "maria", "pass", getApplication()};
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView.getUtilizador() };
+            Object[] serviceArgs = { careerType, userView.getUtilizador()};
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");
@@ -185,9 +178,9 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
         try
         {
             SiteView result = null;
-            CareerType careerType = new CareerType(CareerType.TEACHING);
+            CareerType careerType = CareerType.TEACHING;
 
-            Object[] args = { careerType, userView.getUtilizador() };
+            Object[] args = { careerType, userView.getUtilizador()};
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
@@ -209,12 +202,12 @@ public class ReadCareersTest extends ServiceNeedsAuthenticationTestCase
         try
         {
             SiteView result = null;
-            CareerType careerType = new CareerType(CareerType.TEACHING);
+            CareerType careerType = CareerType.TEACHING;
 
             String[] args = { "maria", "pass", getApplication()};
             IUserView userView = authenticateUser(args);
 
-            Object[] serviceArgs = { careerType, userView.getUtilizador() };
+            Object[] serviceArgs = { careerType, userView.getUtilizador()};
 
             result = (SiteView) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArgs);
             System.out.println("passei o servico");

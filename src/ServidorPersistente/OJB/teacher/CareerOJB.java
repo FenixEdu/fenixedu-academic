@@ -45,7 +45,7 @@ public class CareerOJB extends ObjectFenixOJB implements IPersistentCareer
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
         if (careerType != null)
         {
-            if (careerType.equals(new CareerType(CareerType.PROFESSIONAL)))
+            if (careerType.equals(CareerType.PROFESSIONAL))
             {
                 criteria.addEqualTo("ojbConcreteClass", ProfessionalCareer.class.getName());
             } else

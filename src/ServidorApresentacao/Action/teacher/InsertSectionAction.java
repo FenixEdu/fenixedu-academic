@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
@@ -36,7 +35,7 @@ public class InsertSectionAction extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		DynaActionForm dynaForm = (DynaValidatorForm) form;
+		DynaActionForm dynaForm = (DynaActionForm) form;
 		String sectionName = (String) dynaForm.get("name");
 		String order = (String) dynaForm.get("sectionOrder");
 

@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.teacher.InfoExternalActivity;
 import DataBeans.util.Cloner;
@@ -73,17 +72,6 @@ public class ReadExternalActivity extends ReadDomainObjectService
     protected InfoObject clone2InfoObject(IDomainObject domainObject)
     {
         InfoExternalActivity infoExternalActivity = Cloner.copyIExternalActivity2InfoExternalActivity((IExternalActivity) domainObject);
-        return infoExternalActivity;
-    }
-
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(DataBeans.InfoObject)
-	 */
-    protected ISiteComponent getISiteComponent(InfoObject infoObject)
-    {
-        InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoObject;
         return infoExternalActivity;
     }
 }

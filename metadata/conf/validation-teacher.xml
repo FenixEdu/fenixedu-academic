@@ -555,5 +555,12 @@
    	</field>
     </form>
     
+    <!-- validation for the courseInformationForm -->
+    <form name="courseInformationForm">
+      <field property="report" depends="required" page="1">
+      	<arg0 key="message.courseInformationReport" resource="true"/>
+      </field>
+    </form>
+    
   </formset>
 </form-validation>

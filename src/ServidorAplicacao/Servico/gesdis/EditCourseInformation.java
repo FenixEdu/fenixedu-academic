@@ -49,36 +49,6 @@ public class EditCourseInformation extends EditDomainObjectService
         return "EditCourseInformation";
     }
 
-    /**
-	 * Executes the service.
-	 */
-    //	public Boolean run(Integer executionCourseId, InfoCourseReport infoCourseReport)
-    //		throws FenixServiceException {
-    //
-    //		try {
-    //			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-    //			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-    //				sp.getIDisciplinaExecucaoPersistente();
-    //
-    //			IDisciplinaExecucao executionCourse =
-    //				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-    //					new DisciplinaExecucao(executionCourseId),
-    //					false);
-    //
-    //			IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
-    //            ICourseReport oldCourseReport = Cloner.copyInfoCourseReport2ICourseReport(infoCourseReport);
-    //            
-    //            ICourseReport newCourseReport = new CourseReport();
-    //            newCourseReport.setIdInternal(oldCourseReport.getIdInternal());
-    //			persistentCourseReport.simpleLockWrite(newCourseReport);
-    //            PropertyUtils.copyProperties(newCourseReport, oldCourseReport);
-    //
-    //			return new Boolean(true);
-    //		} catch (Exception e) {
-    //			throw new FenixServiceException(e);
-    //		}
-    //	}
-
     /*
 	 * (non-Javadoc)
 	 * 

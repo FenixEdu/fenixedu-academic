@@ -4,9 +4,7 @@
  */
 package ServidorAplicacao.Servico.framework;
 
-import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
-import DataBeans.SiteView;
 import Dominio.IDomainObject;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -22,7 +20,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public abstract class ReadDomainObjectService implements IServico
 {
-	public SiteView run(Integer objectId) throws FenixServiceException
+	public InfoObject run(Integer objectId) throws FenixServiceException
 	{
 		try
 		{
@@ -32,9 +30,8 @@ public abstract class ReadDomainObjectService implements IServico
 			IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 
 			InfoObject infoObject = clone2InfoObject(domainObject);
-			ISiteComponent bodyComponent = getISiteComponent(infoObject);
 
-			return new SiteView(bodyComponent);
+			return infoObject;
 		} catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException(e);
@@ -65,12 +62,4 @@ public abstract class ReadDomainObjectService implements IServico
 	 * @return
 	 */
 	protected abstract InfoObject clone2InfoObject(IDomainObject domainObject);
-
-	/**
-	 * This method gets the siteComponent created from the infoObject read
-	 * 
-	 * @param infoObject
-	 * @return
-	 */
-	protected abstract ISiteComponent getISiteComponent(InfoObject infoObject);
 }

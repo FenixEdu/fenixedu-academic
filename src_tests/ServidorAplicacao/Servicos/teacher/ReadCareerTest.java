@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.SiteView;
 import DataBeans.teacher.InfoCareer;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
@@ -74,18 +73,16 @@ public class ReadCareerTest extends ServiceNeedsAuthenticationTestCase
 	{
 		try
 		{
-			SiteView result = null;
+            InfoCareer result = null;
             Object[] args = { new Integer(1) };
 
 			result =
-				(SiteView) gestor.executar(
+				(InfoCareer) gestor.executar(
 					userView,
 					getNameOfServiceToBeTested(),
 					args);
-
-			InfoCareer infoCareer = (InfoCareer) result.getComponent();
 			
-			assertTrue(infoCareer.getIdInternal().equals(args[0]));
+			assertTrue(result.getIdInternal().equals(args[0]));
 			// verifica se a base de dados nao foi alterada
 			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 		} catch (Exception ex)
@@ -98,18 +95,16 @@ public class ReadCareerTest extends ServiceNeedsAuthenticationTestCase
     {
         try
         {
-            SiteView result = null;
+            InfoCareer result = null;
             Object[] args = { new Integer(2) };
 
             result =
-                (SiteView) gestor.executar(
+                (InfoCareer) gestor.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);
-
-            InfoCareer infoCareer = (InfoCareer) result.getComponent();
             
-            assertTrue(infoCareer.getIdInternal().equals(args[0]));
+            assertTrue(result.getIdInternal().equals(args[0]));
             // verifica se a base de dados nao foi alterada
             compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
         } catch (Exception ex)

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.teacher.one-column" extends="df.layout.one-column">
+		<put name="serviceName" value="Portal Docente" />
+	  	<put name="institutionName" value="Instituto Superior Técnico" />
+	  	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	</definition>
+	<definition name="definition.teacher.two-column" extends="df.layout.two-column">
+	  <put name="serviceName" value="Portal Docente" />
+	  <put name="institutionName" value="Instituto Superior Técnico" />
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	</definition>
+	<definition name="df.gesdis.course-information" extends="definition.teacher.two-column">
+		<put name="body-context" value=""></put>
+<!--		/gesdis/courseInformationContext.jsp-->
+	</definition>
+	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
+	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
+	</definition>
+</tiles-definitions>

@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.teacher.InfoCareer;
 import DataBeans.util.Cloner;
@@ -73,17 +72,6 @@ public class ReadCareer extends ReadDomainObjectService
     protected InfoObject clone2InfoObject(IDomainObject domainObject)
     {
         InfoCareer infoCareer = Cloner.copyICareer2InfoCareer((ICareer) domainObject);
-        return infoCareer;
-    }
-
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(DataBeans.InfoObject)
-	 */
-    protected ISiteComponent getISiteComponent(InfoObject infoObject)
-    {
-        InfoCareer infoCareer = (InfoCareer) infoObject;
         return infoCareer;
     }
 }

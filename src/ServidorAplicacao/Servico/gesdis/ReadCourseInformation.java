@@ -85,34 +85,34 @@ public class ReadCourseInformation implements IServico
                     new DisciplinaExecucao(executionCourseId),
                     false);
 
-            InfoSiteCourseInformation infoSiteCourseReport = new InfoSiteCourseInformation();
+            InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 
-            infoSiteCourseReport.setInfoExecutionCourse(
+            infoSiteCourseInformation.setInfoExecutionCourse(
                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
             List infoResponsibleTeachers = getInfoResponsibleTeachers(executionCourse, sp);
-            infoSiteCourseReport.setInfoResponsibleTeachers(infoResponsibleTeachers);
+            infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
 
             List curricularCourses = executionCourse.getAssociatedCurricularCourses();
             List infoCurricularCourses = getInfoCurricularCourses(curricularCourses);
-            infoSiteCourseReport.setInfoCurricularCourses(infoCurricularCourses);
+            infoSiteCourseInformation.setInfoCurricularCourses(infoCurricularCourses);
 
             List infoCurriculums = getInfoCurriculums(curricularCourses, sp);
-            infoSiteCourseReport.setInfoCurriculums(infoCurriculums);
+            infoSiteCourseInformation.setInfoCurriculums(infoCurriculums);
 
             List infoLecturingTeachers = getInfoLecturingTeachers(executionCourse, sp);
-            infoSiteCourseReport.setInfoLecturingTeacher(infoLecturingTeachers);
+            infoSiteCourseInformation.setInfoLecturingTeacher(infoLecturingTeachers);
 
             List infoBibliographicReferences = getInfoBibliographicReferences(executionCourse, sp);
-            infoSiteCourseReport.setInfoBibliographicReferences(infoBibliographicReferences);
+            infoSiteCourseInformation.setInfoBibliographicReferences(infoBibliographicReferences);
 
             IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
             ICourseReport courseReport =
                 persistentCourseReport.readCourseReportByExecutionCourse(executionCourse);
-            infoSiteCourseReport.setInfoCourseReport(
+            infoSiteCourseInformation.setInfoCourseReport(
                 Cloner.copyICourseReport2InfoCourseReport(courseReport));
 
-            siteView.setComponent(infoSiteCourseReport);
+            siteView.setComponent(infoSiteCourseInformation);
 
             return siteView;
         } catch (ExcepcaoPersistencia e)

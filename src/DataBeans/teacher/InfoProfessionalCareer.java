@@ -22,7 +22,7 @@ public class InfoProfessionalCareer extends InfoCareer
 	 */
 	public InfoProfessionalCareer()
 	{
-	    setCareerType(new CareerType(CareerType.PROFESSIONAL));
+	    setCareerType(CareerType.PROFESSIONAL);
 	}
 	
     /**

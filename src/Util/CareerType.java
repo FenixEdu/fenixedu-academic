@@ -4,93 +4,61 @@
  */
 package Util;
 
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.struts.util.LabelValueBean;
+import org.apache.commons.lang.enum.ValuedEnum;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class CareerType
+public class CareerType extends ValuedEnum
 {
 
-	public static final int PROFESSIONAL = 1;
-	public static final int TEACHING = 2;
+    public static final int PROFESSIONAL_TYPE = 1;
+    public static final int TEACHING_TYPE = 2;
 
-	public static final String PROFESSIONAL_STRING = "Professional";
-	public static final String TEACHING_STRING = "Teaching";
+    public static CareerType PROFESSIONAL = new CareerType("Professional", PROFESSIONAL_TYPE);
+    public static CareerType TEACHING = new CareerType("Teaching", TEACHING_TYPE);
 
-	private Integer careerType;
+    public CareerType(String name, int value)
+    {
+        super(name, value);
+    }
 
-	/** Creates a new instance of CareerType */
-	public CareerType()
-	{
-	}
+    public static CareerType getEnum(String careerType)
+    {
+        return (CareerType) getEnum(CareerType.class, careerType);
+    }
 
-	public CareerType(int careerType)
-	{
-		this.careerType = new Integer(careerType);
-	}
+    public static CareerType getEnum(int careerType)
+    {
+        return (CareerType) getEnum(CareerType.class, careerType);
+    }
 
-	public CareerType(Integer careerType)
-	{
-		this.careerType = careerType;
-	}
+    public static Map getEnumMap()
+    {
+        return getEnumMap(CareerType.class);
+    }
 
-	public CareerType(String careerType)
-	{
-		if (careerType.equals(CareerType.PROFESSIONAL_STRING))
-			this.careerType = new Integer(CareerType.PROFESSIONAL);
-		if (careerType.equals(CareerType.TEACHING_STRING))
-			this.careerType = new Integer(CareerType.TEACHING);
-	}
+    public static List getEnumList()
+    {
+        return getEnumList(CareerType.class);
+    }
 
-	/**
-	 * @return Returns the careerType.
-	 */
-	public Integer getCareerType()
-	{
-		return careerType;
-	}
+    public static Iterator iterator()
+    {
+        return iterator(CareerType.class);
+    }
 
-	/**
-	 * @param careerType
-	 *                    The careerType to set.
-	 */
-	public void setCareerType(Integer careerType)
-	{
-		this.careerType = careerType;
-	}
+    public String toString()
+    {
+        String result = "Career Type :\n";
+        result += "\n  - Career Type : " + this.getName();
 
-	public boolean equals(Object obj)
-	{
-		if (obj instanceof CareerType)
-		{
-			CareerType career = (CareerType) obj;
-			return this.careerType.equals(career.getCareerType());
-		} else
-		{
-			return false;
-		}
-	}
-
-	public ArrayList toArrayList()
-	{
-		ArrayList result = new ArrayList();
-		result.add(new LabelValueBean(CareerType.PROFESSIONAL_STRING, CareerType.PROFESSIONAL_STRING));
-		result.add(new LabelValueBean(CareerType.TEACHING_STRING, CareerType.TEACHING_STRING));
-		return result;
-	}
-
-	public String toString()
-	{
-		if (careerType.intValue() == CareerType.PROFESSIONAL)
-			return CareerType.PROFESSIONAL_STRING;
-		if (careerType.intValue() == CareerType.TEACHING)
-			return CareerType.TEACHING_STRING;
-		return ""; // Nunca e atingido
-	}
-
+        return result;
+    }
 }
