@@ -126,7 +126,7 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 				  super.lockWrite(masterDegreeCandidateToWrite);
 				  return;
 				}
-System.out.println("Existente");				
+			
 		throw new ExistingPersistentException();
     }
     
@@ -350,6 +350,38 @@ System.out.println("Existente");
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+		
+		
+	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(ICursoExecucao executionDegree, IPessoa person, Integer number) throws ExcepcaoPersistencia{
+		try {
+			IMasterDegreeCandidate candidate = null;
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+					+ " where person.username = $1"
+					+ " and executionDegree.executionYear.year = $2" 
+					+ " and executionDegree.curricularPlan.name = $3" 
+					+ " and executionDegree.curricularPlan.degree.nome = $4"
+					+ " and candidateNumber = $5"; 
+	
+			query.create(oqlQuery);
+			query.bind(person.getUsername());
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+			query.bind(number);
+			
+	
+			List result = (List) query.execute();
+	
+			lockRead(result);
+			if (result.size() != 0)
+				candidate = (IMasterDegreeCandidate) result.get(0);
+	
+			return candidate;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
 		
 	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia{
 		try {

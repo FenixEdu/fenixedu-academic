@@ -11,15 +11,15 @@ import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.Departamento;
-import Dominio.IDepartamento;
+import Dominio.Department;
+import Dominio.IDepartment;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DepartamentoOJBTest extends TestCaseOJB {
 	SuportePersistenteOJB persistentSupport = null; 
-	IDepartamentoPersistente persistentDepartment = null;
+	IPersistentDepartment persistentDepartment = null;
     public DepartamentoOJBTest(java.lang.String testName) {
         super(testName);
     }
@@ -53,7 +53,7 @@ public class DepartamentoOJBTest extends TestCaseOJB {
     public void testEscreverDepartamento() {
         
         // Tentativa de escrita na BD de um objecto existente.
-        IDepartamento dep = new Departamento("dep1", "d1");
+        IDepartment dep = new Department("dep1", "d1");
         
         try {
             persistentSupport.iniciarTransaccao();
@@ -66,7 +66,7 @@ public class DepartamentoOJBTest extends TestCaseOJB {
 			fail("testEscreverDepartamento: unexpected exception");
 		}        
         // Tentativa de escrita na BD de um objecto inexistente.
-        dep = new Departamento("dep2", "d2");
+        dep = new Department("dep2", "d2");
         
         try {
             persistentSupport.iniciarTransaccao();
@@ -78,26 +78,26 @@ public class DepartamentoOJBTest extends TestCaseOJB {
         }
         
         // Agora faz-se uma tentativa de ler a dep que se acabou de escrever.
-        IDepartamento dep2 = null;
+        IDepartment dep2 = null;
 
         try {
             persistentSupport.iniciarTransaccao();
-            dep2 = persistentDepartment.lerDepartamentoPorNome(dep.getNome());
+            dep2 = persistentDepartment.lerDepartamentoPorNome(dep.getName());
             persistentSupport.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverDepartamento: confirmarTransaccao_3");
         }
         
         assertNotNull(dep2);
-        assertEquals(dep2.getNome(), dep.getNome());
-        assertEquals(dep2.getSigla(), dep.getSigla());
+        assertEquals(dep2.getName(), dep.getName());
+        assertEquals(dep2.getCode(), dep.getCode());
         
         
         // Agora vai ler por Sigla
         dep2 = null;
         try {
             persistentSupport.iniciarTransaccao();
-            dep2 = persistentDepartment.lerDepartamentoPorSigla(dep.getSigla());
+            dep2 = persistentDepartment.lerDepartamentoPorSigla(dep.getCode());
             persistentSupport.confirmarTransaccao();
             
         } catch(ExcepcaoPersistencia ex) {
@@ -105,8 +105,8 @@ public class DepartamentoOJBTest extends TestCaseOJB {
         }
         
         assertNotNull(dep2);
-        assertEquals(dep2.getNome(), dep.getNome());
-        assertEquals(dep2.getSigla(), dep.getSigla());
+        assertEquals(dep2.getName(), dep.getName());
+        assertEquals(dep2.getCode(), dep.getCode());
         
     }
 // -------------------------------------------------------------------------------------------------------------------------------------------
@@ -140,7 +140,7 @@ public class DepartamentoOJBTest extends TestCaseOJB {
     public void testLerDepartamento() {
         
         // Tentativa de leitura da BD de um objecto existente.
-        IDepartamento dep = null;
+        IDepartment dep = null;
 
         try {
             persistentSupport.iniciarTransaccao();
@@ -150,8 +150,8 @@ public class DepartamentoOJBTest extends TestCaseOJB {
             fail("testLerDepartamento: confirmarTransaccao_1");
         }
         assertNotNull(dep);
-        assertTrue(dep.getNome().equals("dep1"));
-        assertTrue(dep.getSigla().equals("d1"));
+        assertTrue(dep.getName().equals("dep1"));
+        assertTrue(dep.getCode().equals("d1"));
         assertNotNull(dep.getDisciplinasAssociadas());
         assertTrue(dep.getDisciplinasAssociadas().size() == 2);
         
@@ -203,7 +203,7 @@ public class DepartamentoOJBTest extends TestCaseOJB {
             fail("testApagarDepartamento: confirmarTransaccao_1");
         }
         
-        IDepartamento dep = null;
+        IDepartment dep = null;
         try {
             persistentSupport.iniciarTransaccao();
             dep = persistentDepartment.lerDepartamentoPorNome("dep1");
@@ -226,13 +226,13 @@ public class DepartamentoOJBTest extends TestCaseOJB {
         }
  
         try {
-            persistentDepartment.apagarDepartamento(new Departamento());
+            persistentDepartment.apagarDepartamento(new Department());
         } catch(ExcepcaoPersistencia ex1) {
             fail("testApagarDepartamento: apagarDepartamento_2");
         }
         try {
             persistentSupport.confirmarTransaccao();
-            assertTrue("testApagarDepartamento: Departamento apagado", true);
+            assertTrue("testApagarDepartamento: Department apagado", true);
         } catch(ExcepcaoPersistencia ex2) {
             try {
                 persistentSupport.cancelarTransaccao();

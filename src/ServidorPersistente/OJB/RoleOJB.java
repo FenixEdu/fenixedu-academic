@@ -29,7 +29,7 @@ public class RoleOJB extends ObjectFenixOJB	implements IPersistentRole {
 					+ " where roleType = $1";
 
 			query.create(oqlQuery);
-			query.bind(new Integer(roleType.getId()));
+			query.bind(new Integer(roleType.getValue()));
 
 			List result = (List) query.execute();
 			lockRead(result);

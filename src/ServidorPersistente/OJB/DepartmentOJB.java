@@ -10,81 +10,78 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
-import Dominio.Departamento;
-import Dominio.IDepartamento;
+import Dominio.Department;
+import Dominio.IDepartment;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class DepartamentoOJB extends ObjectFenixOJB implements IDepartamentoPersistente {
+public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartment {
     
-    public DepartamentoOJB() {
+    public DepartmentOJB() {
     }
     
     public void apagarTodosOsDepartamentos() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + Departamento.class.getName();
+        String oqlQuery = "select all from " + Department.class.getName();
         super.deleteAll(oqlQuery);
     }
     
-    public void escreverDepartamento(IDepartamento departmentToWrite)
+    public void escreverDepartamento(IDepartment departmentToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 
-		IDepartamento departmentFromDB = null;
+		IDepartment departmentFromDB = null;
 
 		// If there is nothing to write, simply return.
 		if (departmentToWrite == null)
 			return;
 
 		// Read department from database.
-		departmentFromDB = this.lerDepartamentoPorNome(departmentToWrite.getNome());
+		departmentFromDB = this.lerDepartamentoPorNome(departmentToWrite.getName());
 
 		// If department is not in database, then write it.
 		if (departmentFromDB == null)
 			super.lockWrite(departmentToWrite);
 		// else If the department is mapped to the database, then write any existing changes.
-		else if (
-			(departmentToWrite instanceof Departamento)
-				&& ((Departamento) departmentFromDB)
-					.getCodigoInterno()
-					.equals(
-					((Departamento) departmentToWrite)
-						.getCodigoInterno())) {
+		else if (departmentFromDB.getIdInternal()
+				.equals(
+					(departmentToWrite.getIdInternal()))) {
 			super.lockWrite(departmentToWrite);
 			// else Throw an already existing exception
 		} else
 			throw new ExistingPersistentException();
     }
     
-    public IDepartamento lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia {
+    public IDepartment lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia {
         try {
-            IDepartamento de = null;
-            String oqlQuery = "select all from " + Departamento.class.getName();
+            IDepartment de = null;
+            String oqlQuery = "select all from " + Department.class.getName();
             oqlQuery += " where nome = $1";
             query.create(oqlQuery);
             query.bind(nome);
             List result = (List) query.execute();
             super.lockRead(result);
             if(result.size() != 0)
-                de = (IDepartamento) result.get(0);
+                de = (IDepartment) result.get(0);
             return de;
         } catch (QueryException ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
 
-    public IDepartamento lerDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia {
+    public IDepartment lerDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia {
         try {
-            IDepartamento de = null;
-            String oqlQuery = "select all from " + Departamento.class.getName();
+            IDepartment de = null;
+            String oqlQuery = "select all from " + Department.class.getName();
             oqlQuery += " where sigla = $1";
             query.create(oqlQuery);
             query.bind(sigla);
             List result = (List) query.execute();
             super.lockRead(result);
             if(result.size() != 0)
-                de = (IDepartamento) result.get(0);
+                de = (IDepartment) result.get(0);
             return de;
         } catch (QueryException ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
@@ -93,7 +90,7 @@ public class DepartamentoOJB extends ObjectFenixOJB implements IDepartamentoPers
     
     public void apagarDepartamentoPorNome(String nome) throws ExcepcaoPersistencia {
         try {
-            String oqlQuery = "select all from " + Departamento.class.getName();
+            String oqlQuery = "select all from " + Department.class.getName();
             oqlQuery += " where nome = $1";
             query.create(oqlQuery);
             query.bind(nome);
@@ -108,7 +105,7 @@ public class DepartamentoOJB extends ObjectFenixOJB implements IDepartamentoPers
 
     public void apagarDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia {
         try {
-            String oqlQuery = "select all from " + Departamento.class.getName();
+            String oqlQuery = "select all from " + Department.class.getName();
             oqlQuery += " where sigla = $1";
             query.create(oqlQuery);
             query.bind(sigla);
@@ -124,14 +121,14 @@ public class DepartamentoOJB extends ObjectFenixOJB implements IDepartamentoPers
     public ArrayList lerTodosOsDepartamentos() throws ExcepcaoPersistencia {
         try {
             ArrayList listade = new ArrayList();
-            String oqlQuery = "select all from " + Departamento.class.getName();
+            String oqlQuery = "select all from " + Department.class.getName();
             query.create(oqlQuery);
             List result = (List) query.execute();
             super.lockRead(result);
             if (result.size() != 0) {
                 ListIterator iterator = result.listIterator();
                 while(iterator.hasNext())
-                    listade.add((IDepartamento)iterator.next());
+                    listade.add((IDepartment)iterator.next());
             }
             return listade;
         } catch (QueryException ex) {
@@ -139,8 +136,17 @@ public class DepartamentoOJB extends ObjectFenixOJB implements IDepartamentoPers
         }
     }
     
-    public void apagarDepartamento(IDepartamento disciplina) throws ExcepcaoPersistencia {
+    public void apagarDepartamento(IDepartment disciplina) throws ExcepcaoPersistencia {
         super.delete(disciplina);
     }
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentDepartment#readTeacherList(Dominio.IDepartment)
+	 */
+	public List readTeacherList(IDepartment department) {
+		Criteria criteria = new Criteria();
+		
+		return null;
+	}
     
 }

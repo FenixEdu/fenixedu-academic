@@ -8,12 +8,17 @@ package Dominio;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import Util.EstadoCivil;
 import Util.Sexo;
 import Util.TipoDocumentoIdentificacao;
 
 public interface IPessoa extends IDomainObject {
+
+	public List getManageableDepartmentCredits();
+	public void setManageableDepartmentCredits(List manageableDepartmentCredits);
+
 
 	public String getCodigoFiscal();
 	public String getCodigoPostal();

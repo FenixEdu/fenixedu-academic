@@ -2,6 +2,7 @@ package Dominio;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import Util.EstadoCivil;
 import Util.Sexo;
@@ -46,6 +47,22 @@ public class Pessoa extends DomainObject implements IPessoa {
 	private String telemovel;
 	private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
 	private String username;
+
+	private List manageableDepartmentCredits;
+
+	/**
+	 * @return
+	 */
+	public List getManageableDepartmentCredits() {
+		return this.manageableDepartmentCredits;
+	}
+
+	/**
+	 * @param manageableDepartmentCredits
+	 */
+	public void setManageableDepartmentCredits(List manageableDepartmentCredits) {
+		this.manageableDepartmentCredits = manageableDepartmentCredits;
+	}
 
 	/* Construtores */
 

@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.DisciplinaDepartamento;
-import Dominio.IDepartamento;
+import Dominio.IDepartment;
 import Dominio.IDisciplinaDepartamento;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
 	SuportePersistenteOJB persistentSupport = null; 
-	IDepartamentoPersistente persistentDepartment = null;
+	IPersistentDepartment persistentDepartment = null;
 	IDisciplinaDepartamentoPersistente persistentDepartmentCourse = null;
 	
     public DisciplinaDepartamentoOJBTest(java.lang.String testName) {
@@ -57,7 +57,7 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
 // -------------------------------------------------------------------------------------------------------------------------------------------
     public void testEscreverDisciplina() {
         
-        IDepartamento depTemp = null;
+        IDepartment depTemp = null;
         try {
         	persistentSupport.iniciarTransaccao();
         	depTemp = persistentDepartment.lerDepartamentoPorSigla("d1");
@@ -147,8 +147,8 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
         assertEquals(disciplinaDepartamento2.getNome(), disciplina.getNome());
         assertEquals(disciplinaDepartamento2.getSigla(), disciplina.getSigla());
         assertNotNull(disciplinaDepartamento2.getDepartamento());
-        assertTrue(disciplinaDepartamento2.getDepartamento().getNome().equals("dep1"));
-        assertTrue(disciplinaDepartamento2.getDepartamento().getSigla().equals("d1"));
+        assertTrue(disciplinaDepartamento2.getDepartamento().getName().equals("dep1"));
+        assertTrue(disciplinaDepartamento2.getDepartamento().getCode().equals("d1"));
         
     }
 // -------------------------------------------------------------------------------------------------------------------------------------------

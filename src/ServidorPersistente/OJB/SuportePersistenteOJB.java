@@ -13,6 +13,7 @@ package ServidorPersistente.OJB;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
 import org.odmg.Database;
 import org.odmg.Implementation;
@@ -24,7 +25,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -32,7 +33,8 @@ import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCandidateSituation;
-import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente
+	.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCreditsTeacher;
@@ -92,6 +94,18 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return _odmg;
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#clearCache()
+	 */
+	public void clearCache() {
+		if (_odmg != null) {
+			HasBroker hasBroker = ((HasBroker) _odmg.currentTransaction());
+			if (hasBroker != null) {
+				hasBroker.getBroker().clearCache();
+			}				
+		}
+	}
+
 	public static synchronized SuportePersistenteOJB getInstance()
 		throws ExcepcaoPersistencia {
 		if (_instance == null) {
@@ -115,6 +129,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	private void init() throws ExcepcaoPersistencia {
+		
 		_odmg = OJB.getInstance();
 		try {
 			openDatabase();
@@ -251,8 +266,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new StudentOJB();
 	}
 
-	public IDepartamentoPersistente getIDepartamentoPersistente() {
-		return new DepartamentoOJB();
+	public IPersistentDepartment getIDepartamentoPersistente() {
+		return new DepartmentOJB();
 	}
 	public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente() {
 		return new DisciplinaDepartamentoOJB();
@@ -412,6 +427,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
 		return new EvaluationMethodOJB();
 	}
+	
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
 		return new PersistentEnrolmentPeriod();

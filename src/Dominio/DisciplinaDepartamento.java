@@ -19,7 +19,7 @@ public class DisciplinaDepartamento implements IDisciplinaDepartamento{
     
     private String nome;
     private String sigla;
-    private IDepartamento departamento;
+    private IDepartment departamento;
         
     public DisciplinaDepartamento() {
         setNome("");
@@ -27,7 +27,7 @@ public class DisciplinaDepartamento implements IDisciplinaDepartamento{
         setDepartamento(null);
     }
     
-    public DisciplinaDepartamento(String nome, String sigla, IDepartamento departamento) {
+    public DisciplinaDepartamento(String nome, String sigla, IDepartment departamento) {
         setCodigoInterno(null);
         setNome(nome);
         setSigla(sigla);
@@ -121,9 +121,9 @@ public class DisciplinaDepartamento implements IDisciplinaDepartamento{
     
 	/**
 	 * Returns the departamento.
-	 * @return IDepartamento
+	 * @return IDepartment
 	 */
-	public IDepartamento getDepartamento() {
+	public IDepartment getDepartamento() {
 		return departamento;
 	}
 
@@ -131,7 +131,7 @@ public class DisciplinaDepartamento implements IDisciplinaDepartamento{
 	 * Sets the departamento.
 	 * @param departamento The departamento to set
 	 */
-	public void setDepartamento(IDepartamento departamento) {
+	public void setDepartamento(IDepartment departamento) {
 		this.departamento = departamento;
 	}
 

@@ -23,7 +23,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
@@ -60,7 +60,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
 		null;
 	protected IDisciplinaDepartamentoPersistente _persistentDepartmentCourse =
 		null;
-	protected IDepartamentoPersistente _persistentDepartment = null;
+	protected IPersistentDepartment _persistentDepartment = null;
 
 	protected IPessoa _person1 = null;
 	protected IPessoa _person2 = null;

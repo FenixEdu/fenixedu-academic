@@ -59,7 +59,7 @@ public class PersonRoleOJB extends ObjectFenixOJB implements IPersistentPersonRo
 
 			query.create(oqlQuery);
 			query.bind(person.getUsername());
-			query.bind(new Integer(role.getRoleType().getId()));
+			query.bind(new Integer(role.getRoleType().getValue()));
 			
 			List result = (List) query.execute();
 			lockRead(result);

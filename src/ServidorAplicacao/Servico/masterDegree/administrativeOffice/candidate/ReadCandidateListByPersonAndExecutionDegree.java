@@ -53,10 +53,11 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IServico {
 	}
 
 	
-	public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) throws FenixServiceException {
+	public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson, Integer number) throws FenixServiceException {
 		
 		ISuportePersistente sp = null;
 		IMasterDegreeCandidate result = null;
+		
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			
@@ -65,13 +66,14 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IServico {
 			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 			IPessoa person = Cloner.copyInfoPerson2IPerson(infoPerson);
 			
-			result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPerson(executionDegree, person);
+			result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(executionDegree, person, number);
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		} 
-
+		
+		
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(result);
 		Iterator situationIterator = result.getSituations().iterator();
 		List situations = new ArrayList();

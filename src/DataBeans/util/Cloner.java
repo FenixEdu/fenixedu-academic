@@ -20,6 +20,7 @@ import DataBeans.InfoCurricularYear;
 import DataBeans.InfoCurriculum;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoDeparment;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
@@ -102,6 +103,7 @@ import Dominio.ICurriculum;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IDepartment;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
@@ -1981,6 +1983,12 @@ public abstract class Cloner {
 		infoExamStudentRoom.setInfoRoom(infoRoom);
 		infoExamStudentRoom.setInfoStudent(infoStudent);
 		return infoExamStudentRoom;
+	}
+	
+	public static InfoDeparment copyIDepartment2InfoDepartment(IDepartment department) {
+		InfoDeparment infoDeparment = new InfoDeparment();
+		copyObjectProperties(infoDeparment, department);
+		return infoDeparment;
 	}
 
 }

@@ -137,6 +137,7 @@ public class ChangeCandidate implements IServico {
 		masterDegreeCandidate.setMajorDegree(newCandidate.getMajorDegree());
 		masterDegreeCandidate.setMajorDegreeSchool(newCandidate.getMajorDegreeSchool());
 		masterDegreeCandidate.setMajorDegreeYear(newCandidate.getMajorDegreeYear());
+		masterDegreeCandidate.setSpecializationArea(newCandidate.getSpecializationArea());
 		
 		// Change Situation
 		
@@ -165,7 +166,6 @@ public class ChangeCandidate implements IServico {
 		
 			candidateSituation.setSituation(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()));
 			candidateSituation.setValidation(new State(State.ACTIVE));
-
 			try {		
 				sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
 			} catch (ExcepcaoPersistencia ex) {

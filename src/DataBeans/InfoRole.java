@@ -95,6 +95,6 @@ public class InfoRole{
 	}
 	
 	public int hashCode(){
-		return this.roleType.getId(); 
+		return this.roleType.getValue(); 
 	}
 }

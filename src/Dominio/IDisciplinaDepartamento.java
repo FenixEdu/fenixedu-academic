@@ -13,9 +13,9 @@ package Dominio;
 public interface IDisciplinaDepartamento {
     public java.lang.String getNome();
     public java.lang.String getSigla();
-    public IDepartamento getDepartamento();
+    public IDepartment getDepartamento();
 
     public void setNome(java.lang.String nome);
     public void setSigla(java.lang.String sigla);
-    public void setDepartamento(IDepartamento departamento);
+    public void setDepartamento(IDepartment departamento);
 }

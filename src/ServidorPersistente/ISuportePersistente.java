@@ -15,7 +15,7 @@ public interface ISuportePersistente {
 	public void iniciarTransaccao() throws ExcepcaoPersistencia;
 	public void confirmarTransaccao() throws ExcepcaoPersistencia;
 	public void cancelarTransaccao() throws ExcepcaoPersistencia;
-
+	public void clearCache();
 	//public IPessoaPersistente getIPessoaPersistente();
 
 	public IAulaPersistente getIAulaPersistente();
@@ -41,7 +41,7 @@ public interface ISuportePersistente {
 	public IPersistentStudent getIPersistentStudent();
 	public IPersistentBibliographicReference getIPersistentBibliographicReference();
 
-	public IDepartamentoPersistente getIDepartamentoPersistente();
+	public IPersistentDepartment getIDepartamentoPersistente();
 	public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente();
 	public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan();
 	public IStudentCurricularPlanPersistente getIStudentCurricularPlanPersistente();

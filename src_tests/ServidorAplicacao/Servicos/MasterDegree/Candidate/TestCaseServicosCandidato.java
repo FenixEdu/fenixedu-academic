@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 import ServidorAplicacao.GestorServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IDepartamentoPersistente;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -21,7 +21,7 @@ import Tools.dbaccess;
 
 public class TestCaseServicosCandidato extends TestCase {
     protected ISuportePersistente suportePersistente = null;
-    protected IDepartamentoPersistente persistentDepartment = null;
+    protected IPersistentDepartment persistentDepartment = null;
     protected ICursoPersistente persistentDegree = null;
 	protected IPersistentMasterDegreeCandidate persistentMasterDegreeCandidate = null;
 	    

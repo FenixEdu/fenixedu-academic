@@ -29,6 +29,8 @@ public class InfoMasterDegreeCandidate {
     private String specialization = null;
 	private InfoCandidateSituation infoCandidateSituation = null;
 	private List situationList = null;
+	private String specializationArea;
+	
     	
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public InfoMasterDegreeCandidate() {
@@ -71,7 +73,23 @@ public class InfoMasterDegreeCandidate {
 			 (this.specialization.equals(((InfoMasterDegreeCandidate)o).getSpecialization()))));       
         
 		}
+		
+	
 
+
+	/**
+	 * @return Specialization Area
+	 */
+	public String getSpecializationArea() {
+		return specializationArea;
+	}
+
+	/**
+	 * @param specializationArea
+	 */
+	public void setSpecializationArea(String specializationArea) {
+		this.specializationArea = specializationArea;
+	}
 
 	public String toString() {
 		   String result = "Master Degree Candidate :\n";
@@ -83,6 +101,7 @@ public class InfoMasterDegreeCandidate {
 		   result += "\n  - Major Degree Year : " + majorDegreeYear;
 		   result += "\n  - Major Degree Average : " + average;
 		   result += "\n  - Master Degree : " + infoExecutionDegree;
+		   result += "\n  - Specialization Area  : " + specializationArea;
 
         
 		   return result;
