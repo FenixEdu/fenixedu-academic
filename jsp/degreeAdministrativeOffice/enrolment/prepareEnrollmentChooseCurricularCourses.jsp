@@ -113,7 +113,9 @@
 				</td>
 				<td>
 					<bean:define id="enrollmentIndex" name="enrollmentElem" property="idInternal"/>
-					<html:multibox property="enrolledCurricularCoursesAfter" onclick="<%=onclick.toString()%>" >
+					<%--<html:multibox property="enrolledCurricularCoursesAfter" onclick="<%=onclick.toString()%>" >--%>
+					
+					<html:multibox property="enrolledCurricularCoursesAfter" onclick="document.curricularCoursesEnrollmentForm.method.value='unenrollFromCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >
 						<bean:write name="enrollmentIndex"/>
 					</html:multibox>
 				</td>
@@ -127,7 +129,6 @@
 		</tr>
 		<logic:iterate id="curricularCourse" name="infoStudentEnrolmentContext" property="finalInfoCurricularCoursesWhereStudentCanBeEnrolled">
 			<bean:define id="curricularCourseIndex" name="curricularCourse" property="idInternal"/>
-			<%--<html:hidden property="unenrolledCurricularCoursesToDisable" value="<%=curricularCourseIndex.toString()%>"/>--%>
 			<bean:define id="onclick">
 				if (this.checked == true) {this.form.method.value='enrollInCurricularCourse'; disableAllElementsInEnrollment(this.form,'unenrolledCurricularCourses','enrolledCurricularCoursesAfter');this.form.submit();}	
 			</bean:define>
@@ -136,8 +137,8 @@
 					<bean:write name="curricularCourse" property="name"/>
 				</td>
 				<td>
-					<html:multibox property="unenrolledCurricularCourses" onclick="<%=onclick.toString()%>" >
-					<%--<html:multibox property="unenrolledCurricularCourses" onclick="document.curricularCoursesEnrollmentForm.method.value='enrollInCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >--%>
+					<%--<html:multibox property="unenrolledCurricularCourses" onclick="<%=onclick.toString()%>" >--%>
+					<html:multibox property="unenrolledCurricularCourses" onclick="document.curricularCoursesEnrollmentForm.method.value='enrollInCurricularCourse';document.curricularCoursesEnrollmentForm.submit();" >
 						<bean:write name="curricularCourseIndex"/>
 					</html:multibox>
 				</td>

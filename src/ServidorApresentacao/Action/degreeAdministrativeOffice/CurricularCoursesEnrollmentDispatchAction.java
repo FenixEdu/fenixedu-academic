@@ -23,6 +23,7 @@ import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -83,6 +84,11 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 			}
 			saveErrors(request, errors);
 			return mapping.getInputForward();
+		}catch (OutOfCurricularCourseEnrolmentPeriod e)
+		{
+			errors.add("enrolment", new ActionError(e.getMessage()));
+			saveErrors(request, errors);
+			return mapping.getInputForward();
 		}
 		catch (FenixServiceException e)
 		{
@@ -92,6 +98,13 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 				saveErrors(request, errors);
 				return mapping.getInputForward();
 			}
+			if (e.getMessage().equals("enrolmentPeriod"))
+			{
+				errors.add("enrolmentPeriod", new ActionError("error.student.enrolmentPeriod"));
+				saveErrors(request, errors);
+				return mapping.getInputForward();
+			}
+			
 			throw new FenixActionException(e);
 		}
 
@@ -271,7 +284,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		Integer studentCurricularPlanId =
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
-		if (toEnroll.size() > 0)
+		if (toEnroll.size() == 1)
 		{
 			Object[] args = { studentCurricularPlanId, toEnroll.get(0), null };
 			try
@@ -303,7 +316,10 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 		List enrollmentsBefore = Arrays.asList(enrolledCurricularCoursesBefore);
 		List enrollmentsAfter = Arrays.asList(enrolledCurricularCoursesAfter);
 		List toUnenroll = (List) CollectionUtils.subtract(enrollmentsBefore, enrollmentsAfter);
-		if (toUnenroll.size() > 0)
+		System.out.println("valor da lista antes: " + enrollmentsBefore);
+		System.out.println("valor da lista depois: " + enrollmentsAfter);
+		System.out.println("valor da lista resultante: " + toUnenroll);
+		if (toUnenroll.size() == 1)
 		{
 			Object[] args = {(Integer) toUnenroll.get(0)};
 			try

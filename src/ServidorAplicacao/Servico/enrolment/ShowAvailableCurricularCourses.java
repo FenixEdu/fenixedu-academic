@@ -69,7 +69,7 @@ public class ShowAvailableCurricularCourses implements IService
 						}
 					} else
 					{
-						throw new FenixServiceException("enrolment period is in wrong execution period");
+						throw new FenixServiceException("enrolmentPeriod");
 					}
 				}
 				else
