@@ -6,12 +6,13 @@
 
 package ServidorPersistente.OJB;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.odmg.QueryException;
 
+import Dominio.CurricularCourse;
 import Dominio.DisciplinaExecucao;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
@@ -22,7 +23,9 @@ import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 
-public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplinaExecucaoPersistente {
+public class DisciplinaExecucaoOJB
+	extends ObjectFenixOJB
+	implements IDisciplinaExecucaoPersistente {
 
 	public DisciplinaExecucaoOJB() {
 	}
@@ -55,10 +58,12 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 		try {
 			IDisciplinaExecucao disciplinaExecucao = null;
 			String oqlQuery =
-				"select disciplinaExecucao from " + DisciplinaExecucao.class.getName();
+				"select disciplinaExecucao from "
+					+ DisciplinaExecucao.class.getName();
 			oqlQuery += " where sigla = $1";
 			oqlQuery += " and executionPeriod.executionYear.year = $2";
-			oqlQuery += " and associatedCurricularCourses.degreeCurricularPlan.curso.sigla = $3";
+			oqlQuery
+				+= " and associatedCurricularCourses.degreeCurricularPlan.curso.sigla = $3";
 			query.create(oqlQuery);
 			query.bind(sigla);
 			query.bind(anoLectivo);
@@ -74,80 +79,82 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 	}
 
 	/**
-	 * :FIXME: THIS QUERY IS TOO SLOW... Must implement indirection Class.
+	 * TODO: :FIXME: THIS QUERY IS TOO SLOW... Must implement indirection Class.
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer, Dominio.IExecutionPeriod, java.lang.String)
 	 */
 	public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-		Integer anoCurricular,
+		Integer curricularYear,
 		IExecutionPeriod executionPeriod,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
-			try {
-				String oqlQuery =
-					"select distinct all from "
-						+ DisciplinaExecucao.class.getName();
-				oqlQuery += " where executionPeriod.name = $1 ";
-				oqlQuery += " and executionPeriod.executionYear.year = $2 ";
+		List resultList = new ArrayList();
+		try {
 
-				query.create(oqlQuery);
-				
-				query.bind(executionPeriod.getName());
-				query.bind(executionPeriod.getExecutionYear().getYear());
-				
+			String oqlQuery =
+				"select distinct all from "
+					+ CurricularCourse.class.getName()
+					+ " where curricularYear = $1 "
+					+ " and degreeCurricularPlan.name = $2 "
+					+ " and degreeCurricularPlan.curso.sigla = $3";
 
-				List result = (List) query.execute();
+			query.create(oqlQuery);
 
-				Iterator iterator = result.listIterator();
+			query.bind(curricularYear);
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(
+				executionDegree.getCurricularPlan().getCurso().getSigla());
 
-				List resultList = new LinkedList();
-				lockRead(result);
-				while (iterator.hasNext()) {
-					IDisciplinaExecucao disciplinaExecucao =
-						(IDisciplinaExecucao) iterator.next();
-					Iterator iterator2 =
-						disciplinaExecucao
-							.getAssociatedCurricularCourses()
-							.iterator();
-					while (iterator2.hasNext()) {
-						ICurricularCourse curricularCourse =
-							(ICurricularCourse) iterator2.next();
-							
-						//System.out.println("############# curricular course:" +  curricularCourse.getDegreeCurricularPlan().getCurso());
-						//System.out.println("############# execution course:" +  executionDegree.getCurricularPlan().getCurso());
-							
-						if (curricularCourse.getCurricularYear().equals(anoCurricular) &&
-							curricularCourse.getDegreeCurricularPlan().getCurso().equals(executionDegree.getCurricularPlan().getCurso())){
-							resultList.add(disciplinaExecucao);
-							break;
-						}
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			Iterator iterator = result.listIterator();
+
+			
+			while (iterator.hasNext()) {
+				ICurricularCourse curricularCourse =
+					(ICurricularCourse) iterator.next();
+				Iterator executionCourseIterator =
+					curricularCourse.getAssociatedExecutionCourses().iterator();
+
+				while (executionCourseIterator.hasNext()) {
+					IDisciplinaExecucao executionCourse =
+						(IDisciplinaExecucao) executionCourseIterator.next();
+					if (executionCourse
+						.getExecutionPeriod()
+						.equals(executionPeriod)
+						&& !resultList.contains(executionCourse)) {
+						resultList.add(executionCourse);
 					}
 				}
-				return resultList;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
+
+		} catch (QueryException ex) {
+			ex.printStackTrace(System.out);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+		return resultList;
 	}
 	/**
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
 	 */
-	public IDisciplinaExecucao readByExecutionCourseInitialsAndExecutionPeriod(String courseInitials, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+	public IDisciplinaExecucao readByExecutionCourseInitialsAndExecutionPeriod(
+		String courseInitials,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
 		try {
-				
 
 			String oqlQuery =
 				"select distinct all from "
 					+ DisciplinaExecucao.class.getName();
 			oqlQuery += " where executionPeriod.name = $1 ";
 			oqlQuery += " and executionPeriod.executionYear.year = $2 "
-						+ " and sigla = $3 ";
-						
-			
+				+ " and sigla = $3 ";
 
 			query.create(oqlQuery);
-				
+
 			query.bind(executionPeriod.getName());
 			query.bind(executionPeriod.getExecutionYear().getYear());
-			query.bind(courseInitials);	
+			query.bind(courseInitials);
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -161,67 +168,88 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
 		}
 	}
 
-	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+			String oqlQuery =
+				"select all from " + DisciplinaExecucao.class.getName();
 			oqlQuery += " where executionPeriod.name = $1 "
-					 + " and executionPeriod.executionYear.year = $2 "
-					 + " and sigla = $3 ";
+				+ " and executionPeriod.executionYear.year = $2 "
+				+ " and sigla = $3 ";
 			query.create(oqlQuery);
-				
+
 			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-			query.bind(executionCourse.getSigla());	
+			query.bind(
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
+			query.bind(executionCourse.getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);
 
-			if (!result.isEmpty()){
-				IDisciplinaExecucao executionCourseTemp = (IDisciplinaExecucao) result.get(0);
+			if (!result.isEmpty()) {
+				IDisciplinaExecucao executionCourseTemp =
+					(IDisciplinaExecucao) result.get(0);
 				// Delete All Attends
-				
-				List attendsTemp = SuportePersistenteOJB.getInstance().getIFrequentaPersistente().readByExecutionCourse(executionCourseTemp);
+
+				List attendsTemp =
+					SuportePersistenteOJB
+						.getInstance()
+						.getIFrequentaPersistente()
+						.readByExecutionCourse(executionCourseTemp);
 				Iterator iterator = attendsTemp.iterator();
-				while(iterator.hasNext()){
-					SuportePersistenteOJB.getInstance().getIFrequentaPersistente().delete((IFrequenta) iterator.next());
+				while (iterator.hasNext()) {
+					SuportePersistenteOJB
+						.getInstance()
+						.getIFrequentaPersistente()
+						.delete(
+						(IFrequenta) iterator.next());
 				}
 
 				// Delete All Shifts
-				List shiftsTemp = SuportePersistenteOJB.getInstance().getITurnoPersistente().readByExecutionCourse(executionCourseTemp);
+				List shiftsTemp =
+					SuportePersistenteOJB
+						.getInstance()
+						.getITurnoPersistente()
+						.readByExecutionCourse(executionCourseTemp);
 				iterator = shiftsTemp.iterator();
-				while(iterator.hasNext()){
-					SuportePersistenteOJB.getInstance().getITurnoPersistente().delete((ITurno) iterator.next());
+				while (iterator.hasNext()) {
+					SuportePersistenteOJB
+						.getInstance()
+						.getITurnoPersistente()
+						.delete(
+						(ITurno) iterator.next());
 				}
 				super.delete(executionCourseTemp);
 			}
-				
+
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-	
-	public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+
+	public List readByExecutionPeriod(IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+			String oqlQuery =
+				"select all from " + DisciplinaExecucao.class.getName();
 			oqlQuery += " where executionPeriod.name = $1 "
-					 + " and executionPeriod.executionYear.year = $2 ";
+				+ " and executionPeriod.executionYear.year = $2 ";
 			query.create(oqlQuery);
-				
+
 			query.bind(executionPeriod.getName());
 			query.bind(executionPeriod.getExecutionYear().getYear());
 
 			List result = (List) query.execute();
 			lockRead(result);
-			
+
 			return result;
-				
+
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-
-
-
-
 
 }
