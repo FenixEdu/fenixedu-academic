@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<dataset>
+  <ATTEND ID_INTERNAL='87176' KEY_STUDENT='2516' KEY_EXECUTION_COURSE='34033' ACK_OPT_LOCK='1'/>
+  <ATTEND ID_INTERNAL='92518' KEY_STUDENT='3617' KEY_EXECUTION_COURSE='34033' ACK_OPT_LOCK='1'/>
+  <ATTEND ID_INTERNAL='92539' KEY_STUDENT='3621' KEY_EXECUTION_COURSE='34033' ACK_OPT_LOCK='1'/>
+  <CATEGORY ID_INTERNAL='19' CODE='PAS' LONG_NAME='PROFESSOR ASSOCIADO' SHORT_NAME='PROF.ASSOCIADO' CAN_BE_EXECUTION_COURSE_RESPONSIBLE='1' ACK_OPT_LOCK='1'/>
+  <COUNTRY ID_INTERNAL='1' NAME='PORTUGAL' NATIONALITY='PORTUGUESA' CODE='PT' ACK_OPT_LOCK='1'/>
+  <EXECUTION_COURSE ID_INTERNAL='34033' NAME='AstroF�sica' CODE='AF' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='1.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' KEY_EXECUTION_PERIOD='1' COMMENT='' ACK_OPT_LOCK='1'/>
+  <EXECUTION_PERIOD ID_INTERNAL='1' NAME='2 Semestre' KEY_EXECUTION_YEAR='1' STATE='O' SEMESTER='2' BEGIN_DATE='2003-02-19' END_DATE='2003-06-07' ACK_OPT_LOCK='1'/>
+  <EXECUTION_YEAR ID_INTERNAL='1' YEAR='2002/2003' STATE='O' BEGIN_DATE='2002-08-01' END_DATE='2003-07-31' ACK_OPT_LOCK='1'/>
+  <METADATA ID_INTERNAL='706' KEY_EXECUTION_COURSE='34033' VISIBILITY='1' ACK_OPT_LOCK='2' DESCRIPTION='num' DIFFICULTY='N�o definido' LEVEL='' MAIN_SUBJECT='' SECONDARY_SUBJECT='' AUTHOR='' NUMBER_OF_MEMBERS='1'/>
+  <METADATA ID_INTERNAL='707' KEY_EXECUTION_COURSE='34033' VISIBILITY='1' ACK_OPT_LOCK='2' DESCRIPTION='dec' DIFFICULTY='N�o definido' LEVEL='' MAIN_SUBJECT='' SECONDARY_SUBJECT='' AUTHOR='' NUMBER_OF_MEMBERS='1'/>
+  <METADATA ID_INTERNAL='708' KEY_EXECUTION_COURSE='34033' VISIBILITY='1' ACK_OPT_LOCK='2' DESCRIPTION='string' DIFFICULTY='N�o definido' LEVEL='' MAIN_SUBJECT='' SECONDARY_SUBJECT='' AUTHOR='' NUMBER_OF_MEMBERS='1'/>
+  <PERSON ID_INTERNAL='2697' DOCUMENT_ID_NUMBER='5032212' EMISSION_LOCATION_OF_DOCUMENT_ID='Lisboa' EMISSION_DATE_OF_DOCUMENT_ID='1996-03-04' NAME='Jose Pizarro De Sande E Lemos' DATE_OF_BIRTH='1957-11-18' NAME_OF_FATHER='Rodrigo Aboim Ascensao De Sande E Lemos' NAME_OF_MOTHER='Maria Da Conceicao Machado Pizarro De Sampaio Melo Sande E Lemos' NATIONALITY='Portuguesa' PARISH_OF_BIRTH='Campo Grande' DISTRICT_SUBDIVISION_OF_BIRTH='Lisboa' DISTRICT_OF_BIRTH='Lisboa' ADDRESS='Av. Duque De Loule, N 70 - 4 Esq.' AREA='' AREA_CODE='1000-' AREA_OF_AREA_CODE='' PARISH_OF_RESIDENCE='Coracao De Jesus' DISTRICT_SUBDIVISION_OF_RESIDENCE='Lisboa' DISTRICT_OF_RESIDENCE='' PHONE='3960441' MOBILE='' EMAIL='lemos@kelvin.ist.utl.pt' WEB_ADRDRESS='' SOCIAL_SECURITY_NUMBER='200737449' PROFESSION='' USERNAME='D3673' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='001' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1' ACK_OPT_LOCK='16'/>
+  <PERSON ID_INTERNAL='5835' DOCUMENT_ID_NUMBER='12270086' EMISSION_LOCATION_OF_DOCUMENT_ID='' NAME='GUILLAUME FERNANDO DE ALMEIDA FERREIRA RIFLET' DATE_OF_BIRTH='1980-04-13' NAME_OF_FATHER='CHRISTIAN RIFLET' NAME_OF_MOTHER='MARIA FERNANDA DE ALMEIDA FERREIRA RIFLET' NATIONALITY='' PARISH_OF_BIRTH='' DISTRICT_SUBDIVISION_OF_BIRTH='' DISTRICT_OF_BIRTH='' ADDRESS='CAL�ADA DA PALMA DE BAIXO-N�9-1�E.' AREA='S.domingos Benfica' AREA_CODE='1500' AREA_OF_AREA_CODE='S.DOMINGOS BENFICA' PARISH_OF_RESIDENCE='' DISTRICT_SUBDIVISION_OF_RESIDENCE='' DISTRICT_OF_RESIDENCE='' PHONE='217268327' MOBILE='' EMAIL='l46730@alfa.ist.utl.pt' WEB_ADRDRESS='' SOCIAL_SECURITY_NUMBER='' PROFESSION='' USERNAME='L46730' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1' ACK_OPT_LOCK='1'/>
+  <PERSON ID_INTERNAL='6921' DOCUMENT_ID_NUMBER='12011612' EMISSION_LOCATION_OF_DOCUMENT_ID='' NAME='PEDRO JOS� GON�ALVES RIBEIRO' DATE_OF_BIRTH='1981-10-20' NAME_OF_FATHER='JO�O JOS� FREIRE RIBEIRO' NAME_OF_MOTHER='ISILDA MARIA RODRIGUES GON�ALVES RIBEIRO' NATIONALITY='' PARISH_OF_BIRTH='' DISTRICT_SUBDIVISION_OF_BIRTH='' DISTRICT_OF_BIRTH='' ADDRESS='R.D.JO�O II-N�43.' AREA='Entroncamento' AREA_CODE='2330' AREA_OF_AREA_CODE='ENTRONCAMENTO' PARISH_OF_RESIDENCE='' DISTRICT_SUBDIVISION_OF_RESIDENCE='' DISTRICT_OF_RESIDENCE='' PHONE='049726127' MOBILE='' EMAIL='pethros_ribeirous@yahoo.com' WEB_ADRDRESS='' SOCIAL_SECURITY_NUMBER='' PROFESSION='' USERNAME='L48178' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1' ACK_OPT_LOCK='1'/>
+  <PERSON ID_INTERNAL='6925' DOCUMENT_ID_NUMBER='11856173' EMISSION_LOCATION_OF_DOCUMENT_ID='' NAME='TELMA ALEXANDRA MANTAS SILVA' DATE_OF_BIRTH='1981-02-20' NAME_OF_FATHER='JOS� ANT�NIO AMARAL DA SILVA' NAME_OF_MOTHER='FLORIANA MARIA CORREIA MANTAS' NATIONALITY='' PARISH_OF_BIRTH='' DISTRICT_SUBDIVISION_OF_BIRTH='' DISTRICT_OF_BIRTH='' ADDRESS='RUA CAMILO CASTELO BRANCO-LT.3A-8�B.' AREA='S.ant�nio  Dos Cavaleiros' AREA_CODE='2670' AREA_OF_AREA_CODE='S.ANT�NIO  DOS CAVALEIROS' PARISH_OF_RESIDENCE='' DISTRICT_SUBDIVISION_OF_RESIDENCE='' DISTRICT_OF_RESIDENCE='' PHONE='938230077' MOBILE='' EMAIL='l48184@alfa.ist.utl.pt' WEB_ADRDRESS='' SOCIAL_SECURITY_NUMBER='' PROFESSION='' USERNAME='L48184' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='' TYPE_ID_DOCUMENT='1' SEX='2' MARITAL_STATUS='1' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='5393' KEY_ROLE='1' KEY_PERSON='2697' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='11719' KEY_ROLE='1' KEY_PERSON='5835' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='13906' KEY_ROLE='1' KEY_PERSON='6921' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='13914' KEY_ROLE='1' KEY_PERSON='6925' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='23199' KEY_ROLE='3' KEY_PERSON='2697' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='24597' KEY_ROLE='9' KEY_PERSON='2697' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='27510' KEY_ROLE='2' KEY_PERSON='5835' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='28596' KEY_ROLE='2' KEY_PERSON='6921' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='28600' KEY_ROLE='2' KEY_PERSON='6925' ACK_OPT_LOCK='1'/>
+  <PROFESSORSHIPS INTERNAL_CODE='16' KEY_TEACHER='773' KEY_EXECUTION_COURSE='34033' CREDITS='0.0' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='1' ROLE_TYPE='1' PORTAL_SUB_APPLICATION='/person' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.person' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='2' ROLE_TYPE='2' PORTAL_SUB_APPLICATION='/student' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.student' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='3' ROLE_TYPE='3' PORTAL_SUB_APPLICATION='/teacher' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.teacher' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='9' ROLE_TYPE='9' PORTAL_SUB_APPLICATION='/employee' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.employee' ACK_OPT_LOCK='1'/>
+  <STUDENT ID_INTERNAL='2516' NUMBER='46730' KEY_PERSON='5835' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1' AGREEMENT_TYPE='0' ACK_OPT_LOCK='1'/>
+  <STUDENT ID_INTERNAL='3617' NUMBER='48178' KEY_PERSON='6921' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1' AGREEMENT_TYPE='0' ACK_OPT_LOCK='1'/>
+  <STUDENT ID_INTERNAL='3621' NUMBER='48184' KEY_PERSON='6925' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1' AGREEMENT_TYPE='0' ACK_OPT_LOCK='1'/>
+  <STUDENT_KIND ID_INTERNAL='1' STUDENT_TYPE='1' MIN_COURSES_TO_ENROL='3' MAX_COURSES_TO_ENROL='7' MAX_NAC_TO_ENROL='10' ACK_OPT_LOCK='1'/>
+  <TEACHER ID_INTERNAL='773' TEACHER_NUMBER='3673' KEY_PERSON='2697' KEY_CATEGORY='19' ACK_OPT_LOCK='6'/>
+  <TESTS ID_INTERNAL='273' TITLE='Ficha1' INFORMATION='' NUMBER_OF_QUESTIONS='2' CREATION_DATE='2004-05-26 16:22:50.0' LAST_MODIFICATION_DATE='2004-05-26 16:22:55.0' ACK_OPT_LOCK='2' KEY_TEST_SCOPE='63'/>
+  <TEST_QUESTION ID_INTERNAL='312' TEST_QUESTION_ORDER='1' TEST_QUESTION_VALUE='1.0' KEY_XML_DOCUMENT='10114' KEY_TEST='273' ACK_OPT_LOCK='1' CORRECTION_FORMULA='1'/>
+  <TEST_QUESTION ID_INTERNAL='313' TEST_QUESTION_ORDER='2' TEST_QUESTION_VALUE='1.0' KEY_XML_DOCUMENT='10116' KEY_TEST='273' ACK_OPT_LOCK='1' CORRECTION_FORMULA='1'/>
+  <TEST_SCOPE ID_INTERNAL='63' CLASS_NAME='Dominio.ExecutionCourse' KEY_CLASS='34033' ACK_OPT_LOCK='1'/>
+  <XML_DOCUMENTS ID_INTERNAL='10114' XML_FILE='&lt;?xml version = &quot;1.0&quot; encoding = &quot;UTF-8&quot; standalone = &quot;no&quot;?&gt;
+&lt;!DOCTYPE questestinterop SYSTEM &quot;ims_qtiasiv1p2p1.dtd&quot;&gt;
+
+&lt;!-- Author:	Colin Smythe     						--&gt;
+
+&lt;!-- Date:	14th February, 2003     					--&gt;
+
+&lt;!-- Version 1.2 Compliant Example: BasicExample016b	--&gt;
+
+&lt;!-- Basic Example with response processing.			--&gt;
+&lt;questestinterop&gt;
+	&lt;qticomment&gt;This is a standard numerical fill-in-blank (integer) example.&lt;/qticomment&gt;
+	&lt;item title = &quot;Standard FIB numerical Item&quot; ident = &quot;IMS_V01_I_fibi_ir_001&quot;&gt;
+		&lt;presentation label = &quot;BasicExample016b&quot;&gt;
+			&lt;flow&gt;
+				&lt;response_num ident = &quot;NUM02&quot; rcardinality = &quot;Single&quot; rtiming = &quot;No&quot;&gt;
+					&lt;render_fib fibtype = &quot;Integer&quot; prompt = &quot;Asterisk&quot; maxchars = &quot;3&quot;&gt;
+						&lt;material&gt;
+							&lt;mattext charset = &quot;ascii/us&quot;&gt;What is 13 x 13 ?&lt;/mattext&gt;
+						&lt;/material&gt;
+						&lt;response_label ident = &quot;A&quot;/&gt;
+					&lt;/render_fib&gt;
+				&lt;/response_num&gt;
+			&lt;/flow&gt;
+		&lt;/presentation&gt;
+		&lt;resprocessing&gt;
+			&lt;outcomes&gt;
+				&lt;decvar varname = &quot;INTSCORE&quot; vartype = &quot;Integer&quot; defaultval = &quot;0&quot;/&gt;
+			&lt;/outcomes&gt;
+			&lt;respcondition&gt;
+				&lt;qticomment&gt;Scoring for the correct answer.&lt;/qticomment&gt;
+				&lt;conditionvar&gt;
+					&lt;varequal respident = &quot;NUM02&quot;&gt;169&lt;/varequal&gt;
+				&lt;/conditionvar&gt;
+				&lt;setvar action = &quot;Add&quot; varname = &quot;INTSCORE&quot;&gt;1&lt;/setvar&gt;
+				&lt;displayfeedback feedbacktype = &quot;Response&quot; linkrefid = &quot;Correct&quot;/&gt;
+			&lt;/respcondition&gt;
+			&lt;respcondition&gt;
+				&lt;qticomment&gt;Scoring for the incorrect answer.&lt;/qticomment&gt;
+				&lt;conditionvar&gt;
+					&lt;not&gt;
+						&lt;varequal respident = &quot;NUM02&quot;&gt;169&lt;/varequal&gt;
+					&lt;/not&gt;
+				&lt;/conditionvar&gt;
+				&lt;setvar action = &quot;Subtract&quot; varname = &quot;INTSCORE&quot;&gt;1&lt;/setvar&gt;
+				&lt;displayfeedback feedbacktype = &quot;Response&quot; linkrefid = &quot;Incorrect&quot;/&gt;
+			&lt;/respcondition&gt;
+		&lt;/resprocessing&gt;
+		&lt;itemfeedback ident = &quot;Correct&quot; view = &quot;Candidate&quot;&gt;
+			&lt;flow_mat&gt;
+				&lt;material&gt;
+					&lt;mattext&gt;Yes, you are correct.  Well done.&lt;/mattext&gt;
+				&lt;/material&gt;
+			&lt;/flow_mat&gt;
+		&lt;/itemfeedback&gt;
+		&lt;itemfeedback ident = &quot;Incorrect&quot; view = &quot;Candidate&quot;&gt;
+			&lt;flow_mat&gt;
+				&lt;material&gt;
+					&lt;mattext&gt;No.  The correct answer is 169.&lt;/mattext&gt;
+				&lt;/material&gt;
+			&lt;/flow_mat&gt;
+		&lt;/itemfeedback&gt;
+	&lt;/item&gt;
+&lt;/questestinterop&gt;' XML_FILE_NAME='fibi_ir_002.xml' KEY_METADATA='706' VISIBILITY='1' ACK_OPT_LOCK='1'/>
+  <XML_DOCUMENTS ID_INTERNAL='10115' XML_FILE='&lt;?xml version = &quot;1.0&quot; encoding = &quot;UTF-8&quot; standalone = &quot;no&quot;?&gt;
+&lt;!DOCTYPE questestinterop SYSTEM &quot;ims_qtiasiv1p2p1.dtd&quot;&gt;
+
+&lt;!-- Author:	Colin Smythe     						--&gt;
+
+&lt;!-- Date:	14th February, 2003    					--&gt;
+
+&lt;!-- Version 1.2 Compliant Example: BasicExample015b	--&gt;
+
+&lt;!-- Basic Example 15b with response processing			--&gt;
+&lt;questestinterop&gt;
+	&lt;qticomment&gt;This is a standard numerical fill-in-blank (decimal) example.&lt;/qticomment&gt;
+	&lt;item title = &quot;Standard FIB numerical Item&quot; ident = &quot;IMS_V01_I_fibn_ir_001&quot;&gt;
+		&lt;presentation label = &quot;BasicExample015b&quot;&gt;
+			&lt;flow&gt;
+				&lt;material&gt;
+					&lt;mattext charset = &quot;ascii/us&quot;&gt;Give the value of &lt;/mattext&gt;
+					&lt;mattext charset = &quot;greek&quot;&gt;p&lt;/mattext&gt;
+					&lt;mattext charset = &quot;ascii/us&quot;&gt; to three decimal places: &lt;/mattext&gt;
+				&lt;/material&gt;
+				&lt;response_num ident = &quot;NUM01&quot; rcardinality = &quot;Single&quot; rtiming = &quot;No&quot; numtype = &quot;Decimal&quot;&gt;
+					&lt;render_fib fibtype = &quot;Decimal&quot; prompt = &quot;Box&quot; maxchars = &quot;6&quot;&gt;
+						&lt;response_label ident = &quot;A&quot;/&gt;
+					&lt;/render_fib&gt;
+				&lt;/response_num&gt;
+			&lt;/flow&gt;
+		&lt;/presentation&gt;
+		&lt;resprocessing&gt;
+			&lt;outcomes&gt;
+				&lt;decvar varname = &quot;REALSCORE&quot; vartype = &quot;Integer&quot; defaultval = &quot;0&quot;/&gt;
+			&lt;/outcomes&gt;
+			&lt;respcondition&gt;
+				&lt;qticomment&gt;Scoring for the correct answer.&lt;/qticomment&gt;
+				&lt;conditionvar&gt;
+					&lt;vargte respident = &quot;NUM01&quot;&gt;3.141&lt;/vargte&gt;
+					&lt;varlte respident = &quot;NUM01&quot;&gt;3.149&lt;/varlte&gt;
+				&lt;/conditionvar&gt;
+				&lt;setvar action = &quot;Add&quot; varname = &quot;REALSCORE&quot;&gt;1&lt;/setvar&gt;
+				&lt;displayfeedback feedbacktype = &quot;Response&quot; linkrefid = &quot;Correct&quot;/&gt;
+			&lt;/respcondition&gt;
+			&lt;respcondition&gt;
+				&lt;qticomment&gt;Scoring for the incorrect answer.&lt;/qticomment&gt;
+				&lt;conditionvar&gt;
+					&lt;not&gt;
+						&lt;and&gt;
+							&lt;vargte respident = &quot;NUM01&quot;&gt;3.141&lt;/vargte&gt;
+							&lt;varlte respident = &quot;NUM01&quot;&gt;3.149&lt;/varlte&gt;
+						&lt;/and&gt;
+					&lt;/not&gt;
+				&lt;/conditionvar&gt;
+				&lt;setvar action = &quot;Subtract&quot; varname = &quot;REALSCORE&quot;&gt;1&lt;/setvar&gt;
+				&lt;displayfeedback feedbacktype = &quot;Response&quot; linkrefid = &quot;Incorrect&quot;/&gt;
+			&lt;/respcondition&gt;
+		&lt;/resprocessing&gt;
+		&lt;itemfeedback ident = &quot;Correct&quot; view = &quot;Candidate&quot;&gt;
+			&lt;flow_mat&gt;
+				&lt;material&gt;
+					&lt;mattext&gt;Yes, you are correct.  Well done.&lt;/mattext&gt;
+				&lt;/material&gt;
+			&lt;/flow_mat&gt;
+		&lt;/itemfeedback&gt;
+		&lt;itemfeedback ident = &quot;Incorrect&quot; view = &quot;Candidate&quot;&gt;
+			&lt;flow_mat&gt;
+				&lt;material&gt;
+					&lt;mattext&gt;No.  The correct answer is 3.142.&lt;/mattext&gt;
+				&lt;/material&gt;
+			&lt;/flow_mat&gt;
+		&lt;/itemfeedback&gt;
+	&lt;/item&gt;
+&lt;/questestinterop&gt;' XML_FILE_NAME='fibn_ir_001.xml' KEY_METADATA='707' VISIBILITY='1' ACK_OPT_LOCK='1'/>
+  <XML_DOCUMENTS ID_INTERNAL='10116' XML_FILE='&lt;?xml version = &quot;1.0&quot; encoding = &quot;UTF-8&quot; standalone = &quot;no&quot;?&gt;
+&lt;!DOCTYPE questestinterop SYSTEM &quot;ims_qtiasiv1p2p1.dtd&quot;&gt;
+
+&lt;!-- Author:	Colin Smythe     						--&gt;
+
+&lt;!-- Date:	14th February, 2003     					--&gt;
+
+&lt;!-- Version 1.2 Compliant Example: BasicExample012b	--&gt;
+
+&lt;!-- Basic Example with response processing.			--&gt;
+&lt;questestinterop&gt;
+	&lt;qticomment&gt;This is a standard fill-in-blank (text) example.&lt;/qticomment&gt;
+	&lt;item title = &quot;Standard FIB string Item&quot; ident = &quot;IMS_V01_I_fibs_ir_001&quot;&gt;
+		&lt;presentation label = &quot;BasicExample012b&quot;&gt;
+			&lt;flow&gt;
+				&lt;material&gt;
+					&lt;mattext&gt;Complete the sequence: &lt;/mattext&gt;
+				&lt;/material&gt;
+				&lt;flow&gt;
+					&lt;material&gt; 
+						&lt;mattext&gt;Winter, Spring, Summer, &lt;/mattext&gt;
+					&lt;/material&gt;
+					&lt;response_str ident = &quot;FIB01&quot; rcardinality = &quot;Single&quot; rtiming = &quot;No&quot;&gt;
+						&lt;render_fib fibtype = &quot;String&quot; prompt = &quot;Dashline&quot; maxchars = &quot;6&quot;&gt;
+							&lt;response_label ident = &quot;A&quot;/&gt;
+							&lt;material&gt;
+								&lt;mattext&gt;.&lt;/mattext&gt;
+							&lt;/material&gt;
+						&lt;/render_fib&gt;
+					&lt;/response_str&gt;
+				&lt;/flow&gt;
+			&lt;/flow&gt;
+		&lt;/presentation&gt;
+		&lt;resprocessing&gt;
+			&lt;outcomes&gt;
+				&lt;decvar varname = &quot;FIBSCORE&quot; vartype = &quot;Integer&quot; defaultval = &quot;0&quot;/&gt;
+			&lt;/outcomes&gt;
+			&lt;respcondition&gt;
+				&lt;qticomment&gt;Scoring for the correct answer.&lt;/qticomment&gt;
+				&lt;conditionvar&gt;
+					&lt;varequal respident = &quot;FIB01&quot; case = &quot;Yes&quot;&gt;Autumn&lt;/varequal&gt;
+				&lt;/conditionvar&gt;
+				&lt;setvar action = &quot;Add&quot; varname = &quot;FIBSCORE&quot;&gt;1&lt;/setvar&gt;
+				&lt;displayfeedback feedbacktype = &quot;Response&quot; linkrefid = &quot;Correct&quot;/&gt;
+			&lt;/respcondition&gt;
+		&lt;/resprocessing&gt;
+		&lt;itemfeedback ident = &quot;Correct&quot; view = &quot;Candidate&quot;&gt;
+			&lt;flow_mat&gt;
+				&lt;material&gt;
+					&lt;mattext&gt;Yes, the season of Autumn.&lt;/mattext&gt;
+				&lt;/material&gt;
+			&lt;/flow_mat&gt;
+		&lt;/itemfeedback&gt;
+	&lt;/item&gt;
+&lt;/questestinterop&gt;' XML_FILE_NAME='fibs_ir_001.xml' KEY_METADATA='708' VISIBILITY='1' ACK_OPT_LOCK='1'/>
+</dataset>

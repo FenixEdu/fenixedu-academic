@@ -1,6 +1,6 @@
 /*
  * Created on Oct 24, 2003
- *
+ *  
  */
 package DataBeans;
 
@@ -8,68 +8,82 @@ import java.util.List;
 
 /**
  * @author Susana Fernandes
- *
+ *  
  */
-public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject implements ISiteComponent
-{
-	private List correctAnswersPercentage;
-	private List wrongAnswersPercentage;
-	private List notAnsweredPercentage;
-	private InfoDistributedTest infoDistributedTest;
-	private InfoExecutionCourse executionCourse;
+public class InfoSiteStudentsTestMarksStatistics extends DataTranferObject
+        implements ISiteComponent {
 
-	public InfoSiteStudentsTestMarksStatistics()
-	{
-	}
+    private List correctAnswersPercentage;
 
-	public List getCorrectAnswersPercentage()
-	{
-		return correctAnswersPercentage;
-	}
+    private List partiallyCorrectAnswersPercentage;
 
-	public InfoDistributedTest getInfoDistributedTest()
-	{
-		return infoDistributedTest;
-	}
+    private List wrongAnswersPercentage;
 
-	public List getNotAnsweredPercentage()
-	{
-		return notAnsweredPercentage;
-	}
+    private List notAnsweredPercentage;
 
-	public List getWrongAnswersPercentage()
-	{
-		return wrongAnswersPercentage;
-	}
+    private List answeredPercentage;
 
-	public void setCorrectAnswersPercentage(List list)
-	{
-		correctAnswersPercentage = list;
-	}
+    private InfoDistributedTest infoDistributedTest;
 
-	public void setInfoDistributedTest(InfoDistributedTest infoDistributedTest)
-	{
-		this.infoDistributedTest = infoDistributedTest;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public void setNotAnsweredPercentage(List list)
-	{
-		notAnsweredPercentage = list;
-	}
+    public InfoSiteStudentsTestMarksStatistics() {
+    }
 
-	public void setWrongAnswersPercentage(List list)
-	{
-		wrongAnswersPercentage = list;
-	}
+    public List getCorrectAnswersPercentage() {
+        return correctAnswersPercentage;
+    }
 
-	public InfoExecutionCourse getExecutionCourse()
-	{
-		return executionCourse;
-	}
+    public InfoDistributedTest getInfoDistributedTest() {
+        return infoDistributedTest;
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course)
-	{
-		executionCourse = course;
-	}
+    public List getNotAnsweredPercentage() {
+        return notAnsweredPercentage;
+    }
 
+    public List getWrongAnswersPercentage() {
+        return wrongAnswersPercentage;
+    }
+
+    public void setCorrectAnswersPercentage(List list) {
+        correctAnswersPercentage = list;
+    }
+
+    public void setInfoDistributedTest(InfoDistributedTest infoDistributedTest) {
+        this.infoDistributedTest = infoDistributedTest;
+    }
+
+    public void setNotAnsweredPercentage(List list) {
+        notAnsweredPercentage = list;
+    }
+
+    public void setWrongAnswersPercentage(List list) {
+        wrongAnswersPercentage = list;
+    }
+
+    public InfoExecutionCourse getExecutionCourse() {
+        return executionCourse;
+    }
+
+    public void setExecutionCourse(InfoExecutionCourse course) {
+        executionCourse = course;
+    }
+
+    public List getPartiallyCorrectAnswersPercentage() {
+        return partiallyCorrectAnswersPercentage;
+    }
+
+    public void setPartiallyCorrectAnswersPercentage(
+            List partiallyCorrectAnswersPercentage) {
+        this.partiallyCorrectAnswersPercentage = partiallyCorrectAnswersPercentage;
+    }
+
+    public List getAnsweredPercentage() {
+        return answeredPercentage;
+    }
+
+    public void setAnsweredPercentage(List answeredPercentage) {
+        this.answeredPercentage = answeredPercentage;
+    }
 }

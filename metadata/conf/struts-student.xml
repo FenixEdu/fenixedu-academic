@@ -66,14 +66,11 @@
       <!-- Student tests -->
  	
  	  <form-bean name="studentTestForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
+                 type="ServidorApresentacao.formbeans.tests.TestForm"
                  dynamic="true">
-        <form-property name="option" type="java.lang.String[]"/>
         <form-property name="testCode" type="java.lang.String"/>
       </form-bean>
  
-	 <!-- <form-bean name="studentTestForm" type="ServidorApresentacao.formbeans.student.StudentTestForm" /> -->
-      
        <form-bean name="groupEnrolmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">

@@ -37,7 +37,7 @@ function cleanSelect() {
 <html:hidden property="endHourFormatted"/>
 <html:hidden property="testType"/>
 <html:hidden property="availableCorrection"/>
-<html:hidden property="studentFeedback"/>
+<html:hidden property="imsFeedback"/>
 
 <bean:size id="shiftsSize" name="shifts"/>
 <logic:equal name="shiftsSize" value="0">

@@ -1,10 +1,10 @@
 /*
  * Created on 26/Ago/2003
- *
  */
 package ServidorAplicacao.Servicos.teacher;
 
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -20,217 +20,189 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
-import Util.CorrectionAvailability;
-import Util.TestType;
+import Util.tests.CorrectionAvailability;
+import Util.tests.TestType;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Susana Fernandes
  */
-public class InsertDistributedTestTest extends ServiceNeedsAuthenticationTestCase
-{
+public class InsertDistributedTestTest extends
+        ServiceNeedsAuthenticationTestCase {
 
-	public InsertDistributedTestTest(String testName)
-	{
-		super(testName);
-	}
+    public InsertDistributedTestTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testInsertDistributedTestDataSet.xml";
-	}
+    protected String getDataSetFilePath() {
+        return "etc/datasets/servicos/teacher/testEditTestQuestionTestDataSet.xml";
+    }
 
-	protected String getExpectedDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testExpectedInsertDistributedTestDataSet.xml";
-	}
+    protected String getNameOfServiceToBeTested() {
+        return "InsertDistributedTest";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "InsertDistributedTest";
-	}
+    protected String[] getAuthenticatedAndAuthorizedUser() {
+        String[] args = { "D3673", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+    protected String[] getAuthenticatedAndUnauthorizedUser() {
+        String[] args = { "L46730", "pass", getApplication()};
+        return args;
+    }
 
-		String[] args = { "D2543", "pass", getApplication()};
-		return args;
-	}
+    protected String[] getNotAuthenticatedUser() {
+        String[] args = { "L46730", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+    protected Object[] getAuthorizeArguments() {
+        Integer executionCourseId = new Integer(34033);
+        Integer testId = new Integer(273);
+        String info = new String("informação da ficha");
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        Calendar beginDate = Calendar.getInstance();
+        beginDate.set(Calendar.DAY_OF_MONTH, 1);
+        beginDate.set(Calendar.MONTH, 1);
+        beginDate.set(Calendar.YEAR, 2004);
+        Calendar beginHour = Calendar.getInstance();
+        beginHour.set(Calendar.HOUR_OF_DAY, 10);
+        beginHour.set(Calendar.MINUTE, 0);
+        beginHour.set(Calendar.SECOND, 0);
 
-	protected String[] getNotAuthenticatedUser()
-	{
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(Calendar.DAY_OF_MONTH, 1);
+        endDate.set(Calendar.MONTH, 6);
+        endDate.set(Calendar.YEAR, 2004);
+        Calendar endHour = Calendar.getInstance();
+        endHour.set(Calendar.HOUR_OF_DAY, 10);
+        endHour.set(Calendar.MINUTE, 0);
+        endHour.set(Calendar.SECOND, 0);
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        TestType testType = new TestType(1);
+        CorrectionAvailability correctionAvailability = new CorrectionAvailability(
+                1);
+        Boolean imsFeedback = new Boolean(true);
+        String[] selected = { new String("2516")};
+        Boolean shifts = new Boolean(false);
+        String path = new String(
+                "e:\\eclipse-m8\\workspace\\fenix\\build\\standalone\\");
+        Object[] args = { executionCourseId, testId, info, beginDate,
+                beginHour, endDate, endHour, testType, correctionAvailability,
+                imsFeedback, selected, shifts, path};
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer executionCourseId = new Integer(34882);
-		Integer testId = new Integer(108);
-		String info = new String("informação da ficha");
+    protected String getApplication() {
+        return Autenticacao.EXTRANET;
+    }
 
-		Calendar beginDate = Calendar.getInstance();
-		beginDate.set(Calendar.DAY_OF_MONTH, 1);
-		beginDate.set(Calendar.MONTH, 1);
-		beginDate.set(Calendar.YEAR, 2004);
-		Calendar beginHour = Calendar.getInstance();
-		beginHour.set(Calendar.HOUR_OF_DAY, 10);
-		beginHour.set(Calendar.MINUTE, 0);
-		beginHour.set(Calendar.SECOND, 0);
+    public void testSuccessfull() {
 
-		Calendar endDate = Calendar.getInstance();
-		endDate.set(Calendar.DAY_OF_MONTH, 1);
-		endDate.set(Calendar.MONTH, 2);
-		endDate.set(Calendar.YEAR, 2004);
-		Calendar endHour = Calendar.getInstance();
-		endHour.set(Calendar.HOUR_OF_DAY, 10);
-		endHour.set(Calendar.MINUTE, 0);
-		endHour.set(Calendar.SECOND, 0);
+        try {
+            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            Object[] args = getAuthorizeArguments();
+            ServiceManagerServiceFactory.executeService(userView,
+                    getNameOfServiceToBeTested(), args);
+            PersistenceBroker broker = PersistenceBrokerFactory
+                    .defaultPersistenceBroker();
 
-		TestType testType = new TestType(1);
-		CorrectionAvailability correctionAvailability = new CorrectionAvailability(1);
-		Boolean studentFeedback = new Boolean(true);
-		String[] selected = { new String("3701")};
-		Boolean shifts = new Boolean(false);
-		String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
-		Object[] args =
-			{
-				executionCourseId,
-				testId,
-				info,
-				beginDate,
-				beginHour,
-				endDate,
-				endHour,
-				testType,
-				correctionAvailability,
-				studentFeedback,
-				selected,
-				shifts,
-				path };
-		return args;
-	}
+            Criteria criteria = new Criteria();
+            criteria.addOrderBy("idInternal", false);
+            Query queryCriteria = new QueryByCriteria(DistributedTest.class,
+                    criteria);
+            IDistributedTest distributedTest = (IDistributedTest) broker
+                    .getObjectByQuery(queryCriteria);
+            broker.close();
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+            //ver se os dados do distributed_test estão correctos
+            Calendar expectedDistributedTestBeginDate = (Calendar) args[3];
+            Calendar expectedDistributedTestBeginHour = (Calendar) args[4];
+            Calendar expectedDistributedTestEndDate = (Calendar) args[5];
+            Calendar expectedDistributedTestEndHour = (Calendar) args[6];
 
-	public void testSuccessfull()
-	{
+            //assertEquals(distributedTest.getTestScope().getDomainObject().getIdInternal(),
+            // args[0]);
 
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
-			ServiceManagerServiceFactory.executeService(userView, getNameOfServiceToBeTested(), args);
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+            assertEquals(distributedTest.getBeginDate().get(
+                    Calendar.DAY_OF_MONTH), expectedDistributedTestBeginDate
+                    .get(Calendar.DAY_OF_MONTH));
+            assertEquals(distributedTest.getBeginDate().get(Calendar.MONTH),
+                    expectedDistributedTestBeginDate.get(Calendar.MONTH));
+            assertEquals(distributedTest.getBeginDate().get(Calendar.YEAR),
+                    expectedDistributedTestBeginDate.get(Calendar.YEAR));
 
-			Criteria criteria = new Criteria();
-			criteria.addOrderBy("idInternal", false);
-			Query queryCriteria = new QueryByCriteria(DistributedTest.class, criteria);
-			IDistributedTest distributedTest = (IDistributedTest) broker.getObjectByQuery(queryCriteria);
-			broker.close();
+            assertEquals(distributedTest.getBeginHour().get(
+                    Calendar.HOUR_OF_DAY), expectedDistributedTestBeginHour
+                    .get(Calendar.HOUR_OF_DAY));
+            assertEquals(distributedTest.getBeginHour().get(Calendar.MINUTE),
+                    expectedDistributedTestBeginHour.get(Calendar.MINUTE));
+            assertEquals(distributedTest.getBeginHour().get(Calendar.SECOND),
+                    expectedDistributedTestBeginHour.get(Calendar.SECOND));
 
-			//ver se os dados do distributed_test estão correctos
-			Calendar expectedDistributedTestBeginDate = (Calendar) args[3];
-			Calendar expectedDistributedTestBeginHour = (Calendar) args[4];
-			Calendar expectedDistributedTestEndDate = (Calendar) args[5];
-			Calendar expectedDistributedTestEndHour = (Calendar) args[6];
+            assertEquals(distributedTest.getEndDate()
+                    .get(Calendar.DAY_OF_MONTH), expectedDistributedTestEndDate
+                    .get(Calendar.DAY_OF_MONTH));
+            assertEquals(distributedTest.getEndDate().get(Calendar.MONTH),
+                    expectedDistributedTestEndDate.get(Calendar.MONTH));
+            assertEquals(distributedTest.getEndDate().get(Calendar.YEAR),
+                    expectedDistributedTestEndDate.get(Calendar.YEAR));
 
-			//assertEquals(distributedTest.getTestScope().getDomainObject().getIdInternal(), args[0]);
+            assertEquals(
+                    distributedTest.getEndHour().get(Calendar.HOUR_OF_DAY),
+                    expectedDistributedTestEndHour.get(Calendar.HOUR_OF_DAY));
+            assertEquals(distributedTest.getEndHour().get(Calendar.MINUTE),
+                    expectedDistributedTestEndHour.get(Calendar.MINUTE));
+            assertEquals(distributedTest.getEndHour().get(Calendar.SECOND),
+                    expectedDistributedTestEndHour.get(Calendar.SECOND));
 
-			assertEquals(
-				distributedTest.getBeginDate().get(Calendar.DAY_OF_MONTH),
-				expectedDistributedTestBeginDate.get(Calendar.DAY_OF_MONTH));
-			assertEquals(
-				distributedTest.getBeginDate().get(Calendar.MONTH),
-				expectedDistributedTestBeginDate.get(Calendar.MONTH));
-			assertEquals(
-				distributedTest.getBeginDate().get(Calendar.YEAR),
-				expectedDistributedTestBeginDate.get(Calendar.YEAR));
+            assertEquals(distributedTest.getTestType(), args[7]);
+            assertEquals(distributedTest.getCorrectionAvailability(), args[8]);
+            //  assertEquals(distributedTest.getStudentFeedback(), args[9]);
 
-			assertEquals(
-				distributedTest.getBeginHour().get(Calendar.HOUR_OF_DAY),
-				expectedDistributedTestBeginHour.get(Calendar.HOUR_OF_DAY));
-			assertEquals(
-				distributedTest.getBeginHour().get(Calendar.MINUTE),
-				expectedDistributedTestBeginHour.get(Calendar.MINUTE));
-			assertEquals(
-				distributedTest.getBeginHour().get(Calendar.SECOND),
-				expectedDistributedTestBeginHour.get(Calendar.SECOND));
+            broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+            criteria = new Criteria();
+            criteria.addEqualTo("keyDistributedTest", distributedTest
+                    .getIdInternal());
+            queryCriteria = new QueryByCriteria(StudentTestQuestion.class,
+                    criteria);
+            List studentTestQuestionList = (List) broker
+                    .getCollectionByQuery(queryCriteria);
+            broker.close();
 
-			assertEquals(
-				distributedTest.getEndDate().get(Calendar.DAY_OF_MONTH),
-				expectedDistributedTestEndDate.get(Calendar.DAY_OF_MONTH));
-			assertEquals(
-				distributedTest.getEndDate().get(Calendar.MONTH),
-				expectedDistributedTestEndDate.get(Calendar.MONTH));
-			assertEquals(
-				distributedTest.getEndDate().get(Calendar.YEAR),
-				expectedDistributedTestEndDate.get(Calendar.YEAR));
+            assertEquals(studentTestQuestionList.size(), 2);
+            Iterator it = studentTestQuestionList.iterator();
 
-			assertEquals(
-				distributedTest.getEndHour().get(Calendar.HOUR_OF_DAY),
-				expectedDistributedTestEndHour.get(Calendar.HOUR_OF_DAY));
-			assertEquals(
-				distributedTest.getEndHour().get(Calendar.MINUTE),
-				expectedDistributedTestEndHour.get(Calendar.MINUTE));
-			assertEquals(
-				distributedTest.getEndHour().get(Calendar.SECOND),
-				expectedDistributedTestEndHour.get(Calendar.SECOND));
+            //			if (distributedTest.getTestType().getType().intValue() ==
+            // (TestType.EVALUATION))
+            //			{
+            //				broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+            //				criteria = new Criteria();
+            //				criteria.addEqualTo("keyDistributedTest",
+            // distributedTest.getIdInternal());
+            //				queryCriteria = new QueryByCriteria(OnlineTest.class, criteria);
+            //				IOnlineTest onlineTest = (IOnlineTest)
+            // broker.getObjectByQuery(queryCriteria);
+            //				
+            //				assertNotNull("onlineTest null", onlineTest);
+            //
+            //				criteria = new Criteria();
+            //				criteria.addEqualTo("keyEvaluation", onlineTest.getIdInternal());
+            //				queryCriteria = new QueryByCriteria(Mark.class, criteria);
+            //				List marksList = (List)
+            // broker.getCollectionByQuery(queryCriteria);
+            //				broker.close();
+            //				
+            //				assertEquals(marksList.size(), 1);
+            //
+            //			}
 
-			assertEquals(distributedTest.getTestType(), args[7]);
-			assertEquals(distributedTest.getCorrectionAvailability(), args[8]);
-			assertEquals(distributedTest.getStudentFeedback(), args[9]);
-
-			broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			criteria = new Criteria();
-			criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-			queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
-			List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
-			broker.close();
-
-			assertEquals(studentTestQuestionList.size(), 6);
-			//Iterator it = studentTestQuestionList.iterator();
-
-			//			if (distributedTest.getTestType().getType().intValue() == (TestType.EVALUATION))
-			//			{	
-			//				broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			//				criteria = new Criteria();
-			//				criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-			//				queryCriteria = new QueryByCriteria(OnlineTest.class, criteria);
-			//				IOnlineTest onlineTest = (IOnlineTest) broker.getObjectByQuery(queryCriteria);
-			//				
-			//				assertNotNull("onlineTest null", onlineTest);
-			//
-			//				criteria = new Criteria();
-			//				criteria.addEqualTo("keyEvaluation", onlineTest.getIdInternal());
-			//				queryCriteria = new QueryByCriteria(Mark.class, criteria);
-			//				List marksList = (List) broker.getCollectionByQuery(queryCriteria);
-			//				broker.close();
-			//				
-			//				assertEquals(marksList.size(), 1);
-			//
-			//			}
-
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("Insert Distributed Test " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("Insert Distributed Test " + ex);
-		}
-	}
+        } catch (FenixServiceException ex) {
+            fail("Insert Distributed Test " + ex);
+        } catch (Exception ex) {
+            fail("Insert Distributed Test " + ex);
+        }
+    }
 
 }

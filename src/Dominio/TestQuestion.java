@@ -1,73 +1,89 @@
 /*
  * Created on 29/Jul/2003
- *
  */
 package Dominio;
+
+import Util.tests.CorrectionFormula;
 
 /**
  * @author Susana Fernandes
  */
 public class TestQuestion extends DomainObject implements ITestQuestion {
-	private Integer testQuestionOrder;
-	private Integer testQuestionValue;
-	private IQuestion question;
-	private Integer keyQuestion;
-	private ITest test;
-	private Integer keyTest;
 
-	public TestQuestion() {
-	}
+    private Integer testQuestionOrder;
 
-	public TestQuestion(Integer testId) {
-		setIdInternal(testId);
-	}
+    private Double testQuestionValue;
 
-	public Integer getKeyQuestion() {
-		return keyQuestion;
-	}
+    private IQuestion question;
 
-	public Integer getKeyTest() {
-		return keyTest;
-	}
+    private Integer keyQuestion;
 
-	public IQuestion getQuestion() {
-		return question;
-	}
+    private ITest test;
 
-	public ITest getTest() {
-		return test;
-	}
+    private Integer keyTest;
 
-	public void setKeyQuestion(Integer integer) {
-		keyQuestion = integer;
-	}
+    private CorrectionFormula formula;
 
-	public void setKeyTest(Integer integer) {
-		keyTest = integer;
-	}
+    public TestQuestion() {
+    }
 
-	public void setQuestion(IQuestion question) {
-		this.question = question;
-	}
+    public TestQuestion(Integer testId) {
+        setIdInternal(testId);
+    }
 
-	public void setTest(ITest test) {
-		this.test = test;
-	}
+    public Integer getKeyQuestion() {
+        return keyQuestion;
+    }
 
-	public Integer getTestQuestionOrder() {
-		return testQuestionOrder;
-	}
+    public Integer getKeyTest() {
+        return keyTest;
+    }
 
-	public void setTestQuestionOrder(Integer integer) {
-		testQuestionOrder = integer;
-	}
+    public IQuestion getQuestion() {
+        return question;
+    }
 
-	public Integer getTestQuestionValue() {
-		return testQuestionValue;
-	}
+    public ITest getTest() {
+        return test;
+    }
 
-	public void setTestQuestionValue(Integer integer) {
-		testQuestionValue = integer;
-	}
+    public void setKeyQuestion(Integer integer) {
+        keyQuestion = integer;
+    }
 
+    public void setKeyTest(Integer integer) {
+        keyTest = integer;
+    }
+
+    public void setQuestion(IQuestion question) {
+        this.question = question;
+    }
+
+    public void setTest(ITest test) {
+        this.test = test;
+    }
+
+    public Integer getTestQuestionOrder() {
+        return testQuestionOrder;
+    }
+
+    public void setTestQuestionOrder(Integer integer) {
+        testQuestionOrder = integer;
+    }
+
+    public Double getTestQuestionValue() {
+        return testQuestionValue;
+    }
+
+    public void setTestQuestionValue(Double value) {
+        testQuestionValue = value;
+    }
+
+    public CorrectionFormula getCorrectionFormula() {
+        return formula;
+    }
+
+    public void setCorrectionFormula(CorrectionFormula formula) {
+        this.formula = formula;
+    }
 }

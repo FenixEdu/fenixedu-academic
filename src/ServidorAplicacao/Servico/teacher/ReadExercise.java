@@ -30,6 +30,7 @@ import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.tests.QuestionType;
 import UtilTests.ParseQuestion;
 
 /**
@@ -82,8 +83,10 @@ public class ReadExercise implements IService
                         {
                             infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion,
                                     this.path);
-                            infoQuestion.setCorrectResponse(parse.newResponseList(infoQuestion
-                                    .getCorrectResponse(), infoQuestion.getOptions()));
+                            if (infoQuestion.getQuestionType().getType().equals(
+                                    new Integer(QuestionType.LID)))
+                                infoQuestion.setResponseProcessingInstructions(parse.newResponseList(infoQuestion
+                                        .getResponseProcessingInstructions(), infoQuestion.getOptions()));
                         }
                         catch (Exception e)
                         {

@@ -52,7 +52,7 @@ public class ReadDistributedTestMarksToString implements IService
 					.readByOId(distributedTest, false);
 			if (distributedTest == null)
 				throw new InvalidArgumentsServiceException();
-			//int numberOfQuestions = distributedTest.getNumberOfQuestions().intValue();
+			int numberOfQuestions = distributedTest.getNumberOfQuestions().intValue();
 			String result = new String("Número\tNome\t");
 			for (int i = 1; i <= distributedTest.getNumberOfQuestions().intValue(); i++)
 			{
@@ -125,7 +125,7 @@ public class ReadDistributedTestMarksToString implements IService
 					});
 			List distributedTestIdsList = new ArrayList();
 			CollectionUtils.addAll(distributedTestIdsList, distributedTestCodes);
-			List studentsFromTestsList = persistentStudentTestQuestion
+			List studentsFromTestsList = (List) persistentStudentTestQuestion
 					.readStudentsByDistributedTests(distributedTestIdsList);
 			List studentList = concatStudentsLists(studentsFromAttendsList, studentsFromTestsList);
 			for (int i = 0; i < distributedTestCodes.length; i++)

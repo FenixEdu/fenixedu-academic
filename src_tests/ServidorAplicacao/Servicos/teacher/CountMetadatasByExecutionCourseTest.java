@@ -88,7 +88,7 @@ public class CountMetadatasByExecutionCourseTest extends ServiceNeedsAuthenticat
 			Criteria criteria = new Criteria();
 			criteria.addEqualTo("keyExecutionCourse", args[0]);
 			Query queryCriteria = new QueryByCriteria(Metadata.class, criteria);
-			int metadataNumber = broker.getCount(queryCriteria);
+			int metadataNumber = (int) broker.getCount(queryCriteria);
 			broker.close();
 			if (count.intValue() != metadataNumber)
 				fail("CountMetadatasByExecutionCourseTest " + "wrong number of metadatas");

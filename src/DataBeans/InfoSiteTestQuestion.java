@@ -1,57 +1,51 @@
 /*
  * Created on 6/Ago/2003
- *
  */
 package DataBeans;
 
 /**
  * @author Susana Fernandes
  */
-public class InfoSiteTestQuestion extends DataTranferObject implements ISiteComponent {
-	private InfoTestQuestion infoTestQuestion;
-	private InfoQuestion infoQuestion;
-	private InfoExecutionCourse executionCourse;
+public class InfoSiteTestQuestion extends DataTranferObject implements ISiteComponent
+{
 
-	public InfoSiteTestQuestion() {
-	}
+    private InfoTestQuestion infoTestQuestion;
 
-	public InfoExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public InfoTestQuestion getInfoTestQuestion() {
-		return infoTestQuestion;
-	}
+    public InfoSiteTestQuestion()
+    {
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course) {
-		executionCourse = course;
-	}
+    public InfoExecutionCourse getExecutionCourse()
+    {
+        return executionCourse;
+    }
 
-	public void setInfoTestQuestion(InfoTestQuestion question) {
-		infoTestQuestion = question;
-	}
+    public InfoTestQuestion getInfoTestQuestion()
+    {
+        return infoTestQuestion;
+    }
 
-	public InfoQuestion getInfoQuestion() {
-		return infoQuestion;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course)
+    {
+        executionCourse = course;
+    }
 
-	public void setInfoQuestion(InfoQuestion question) {
-		infoQuestion = question;
-	}
+    public void setInfoTestQuestion(InfoTestQuestion question)
+    {
+        infoTestQuestion = question;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof InfoSiteTestQuestion) {
-			InfoSiteTestQuestion infoSiteTestQuestion =
-				(InfoSiteTestQuestion) obj;
-			result =
-				getExecutionCourse().equals(
-					infoSiteTestQuestion.getExecutionCourse())
-					&& getInfoTestQuestion().equals(
-						infoSiteTestQuestion.getInfoTestQuestion())
-					&& getInfoQuestion().equals(
-						infoSiteTestQuestion.getInfoQuestion());
-		}
-		return result;
-	}
+    public boolean equals(Object obj)
+    {
+        boolean result = false;
+        if (obj instanceof InfoSiteTestQuestion)
+        {
+            InfoSiteTestQuestion infoSiteTestQuestion = (InfoSiteTestQuestion) obj;
+            result = getExecutionCourse().equals(infoSiteTestQuestion.getExecutionCourse())
+                    && getInfoTestQuestion().equals(infoSiteTestQuestion.getInfoTestQuestion());
+        }
+        return result;
+    }
 }

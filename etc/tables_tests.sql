@@ -63,9 +63,10 @@ CREATE TABLE TEST_QUESTION(
   ID_INTERNAL int(11) unsigned not null auto_increment,
   ACK_OPT_LOCK int(11),
   TEST_QUESTION_ORDER int(2) not null default '1',
-  TEST_QUESTION_VALUE int(2) not null default '0',
+  TEST_QUESTION_VALUE double not null default '0',
   KEY_XML_DOCUMENT int(11) unsigned not null default '0',
   KEY_TEST int(11) unsigned not null default '0',
+  CORRECTION_FORMULA int(1) not null default 1,
   PRIMARY KEY  (ID_INTERNAL),
   unique U1 (KEY_XML_DOCUMENT, KEY_TEST)
 ) TYPE=InnoDB;
@@ -86,7 +87,7 @@ CREATE TABLE DISTRIBUTED_TESTS(
   TEST_END_HOUR time,
   TEST_TYPE int(1) not null default '0',
   CORRECTION_AVAILABILITY int(1) not null default '0',
-  STUDENT_FEEDBACK int(1) not null default '0',
+  IMS_FEEDBACK int(1) not null default '0',
   NUMBER_OF_QUESTIONS int(2) not null default '0',
   KEY_TEST_SCOPE int(11) unsigned not null default '0',
   PRIMARY KEY  (ID_INTERNAL)
@@ -103,12 +104,16 @@ CREATE TABLE STUDENT_TEST_QUESTION(
   KEY_DISTRIBUTED_TEST int(11) unsigned not null default '0',
   KEY_XML_DOCUMENT int(11) unsigned not null default '0',
   TEST_QUESTION_ORDER int(2) not null default '1',
-  TEST_QUESTION_VALUE int(2) not null default '0',
+  TEST_QUESTION_VALUE double not null default '0',
   TEST_QUESTION_MARK double not null default '0',
-  RESPONSE int not null default '0',
+  OLD_RESPONSE int not null default '0',
+  RESPONSE mediumblob,
   OPTION_SHUFFLE text,
+  CORRECTION_FORMULA int(1) not null default 1,
   PRIMARY KEY  (ID_INTERNAL),
-  unique U1 (KEY_STUDENT, KEY_DISTRIBUTED_TEST, KEY_XML_DOCUMENT)
+  unique U1 (KEY_STUDENT, KEY_DISTRIBUTED_TEST, KEY_XML_DOCUMENT),
+  index INDEX1 (TEST_QUESTION_ORDER),
+  index INDEX2 (KEY_DISTRIBUTED_TEST)
 ) TYPE=InnoDB;
 
 #-------------------------------------

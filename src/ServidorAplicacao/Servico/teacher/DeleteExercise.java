@@ -30,11 +30,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DeleteExercise implements IService
 {
-
     private String path = new String();
 
-    public DeleteExercise()
-    {
+    public DeleteExercise() {
     }
 
     public boolean run(Integer executionCourseId, Integer metadataId, String path)
@@ -69,7 +67,7 @@ public class DeleteExercise implements IService
                 }
                 else
                 {
-                    persistentQuestion.simpleLockWrite(question);
+                    persistentQuestion.lockWrite(question);
                     question.setVisibility(new Boolean("false"));
                     delete = false;
                 }
@@ -79,8 +77,7 @@ public class DeleteExercise implements IService
                 persistentQuestion.deleteByMetadata(metadata);
                 persistentMetadata.delete(metadata);
             }
-            else
-            {
+            else{
                 persistentMetadata.simpleLockWrite(metadata);
                 metadata.setVisibility(new Boolean("false"));
             }

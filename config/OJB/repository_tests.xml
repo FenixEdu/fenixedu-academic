@@ -220,7 +220,7 @@
     <field-descriptor id="3"
         name="testQuestionValue"
         column="TEST_QUESTION_VALUE"
-        jdbc-type="INTEGER"
+        jdbc-type="DOUBLE"
     />
     <field-descriptor id="4"
          name="keyQuestion"
@@ -231,6 +231,12 @@
         name="keyTest"
         column="KEY_TEST"
         jdbc-type="INTEGER"
+	/>
+	<field-descriptor id="6"
+        name="correctionFormula"
+        column="CORRECTION_FORMULA"
+        jdbc-type="INTEGER"
+        conversion="ServidorPersistente.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion"
 	/>
       <field-descriptor
       	name="ackOptLock"
@@ -313,9 +319,9 @@
         jdbc-type="INTEGER"
         conversion="ServidorPersistente.Conversores.CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion"
 	/>
-   <field-descriptor id="10"
-        name="studentFeedback"
-        column="STUDENT_FEEDBACK"
+ 	<field-descriptor id="10"
+        name="imsFeedback"
+        column="IMS_FEEDBACK"
         jdbc-type="INTEGER"
         conversion="ServidorPersistente.Conversores.Int2BooleanFieldConversion"
  	/>
@@ -378,7 +384,7 @@
         name="keyDistributedTest"
         column="KEY_DISTRIBUTED_TEST"
         jdbc-type="INTEGER"/>
-	<field-descriptor id="4"
+	<field-descriptor
          name="keyQuestion"
          column="KEY_XML_DOCUMENT"
     	 jdbc-type="INTEGER"/>
@@ -389,19 +395,29 @@
     <field-descriptor
         name="testQuestionValue"
         column="TEST_QUESTION_VALUE"
-        jdbc-type="INTEGER"/>
+        jdbc-type="DOUBLE"/>
     <field-descriptor
         name="testQuestionMark"
         column="TEST_QUESTION_MARK"
         jdbc-type="DOUBLE"/>
     <field-descriptor
+        name="oldResponse"
+        column="OLD_RESPONSE"
+        jdbc-type="INTEGER"/>
+    <field-descriptor
         name="response"
         column="RESPONSE"
-        jdbc-type="INTEGER"/>    
+        jdbc-type="LONGVARCHAR"/>   
     <field-descriptor
         name="optionShuffle"
         column="OPTION_SHUFFLE"
         jdbc-type="LONGVARCHAR"/>
+    <field-descriptor
+        name="correctionFormula"
+        column="CORRECTION_FORMULA"
+        jdbc-type="INTEGER"
+        conversion="ServidorPersistente.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion"
+	/>
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -410,18 +426,21 @@
       />
      <reference-descriptor
         name="student"
+        proxy="true"
         class-ref="Dominio.Student">
-     <foreignkey field-ref="keyStudent"/>
+	     <foreignkey field-ref="keyStudent"/>
      </reference-descriptor>
      <reference-descriptor
         name="distributedTest"
+        proxy="true"
         class-ref="Dominio.DistributedTest">
-     <foreignkey field-ref="keyDistributedTest"/>
+     	<foreignkey field-ref="keyDistributedTest"/>
      </reference-descriptor>
-          <reference-descriptor
+     <reference-descriptor
         name="question"
+        proxy="true"
         class-ref="Dominio.Question">
-     <foreignkey field-ref="keyQuestion"/>
+     	<foreignkey field-ref="keyQuestion"/>
      </reference-descriptor>
 </class-descriptor>
 

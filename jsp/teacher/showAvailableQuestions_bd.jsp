@@ -229,10 +229,20 @@ function invertSelect(){
 			</html:multibox> 
 		</td>
 		<logic:notEqual name="metadata" property="description" value="">
-			<td class="listClasses"><bean:write name="metadata" property="description"/></td>
+			<td class="listClasses">
+			<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode+ "&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">
+			<bean:write name="metadata" property="description"/>
+			</html:link></div>
+			</td>
 		</logic:notEqual>
 		<logic:equal name="metadata" property="description" value="">
-			<td class="listClasses"><bean:message key="message.tests.notDefined"/></td>
+			<td class="listClasses">
+			<div class="gen-button">
+			<html:link page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode+ "&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">
+			<bean:message key="message.tests.notDefined"/>
+			</html:link></div>
+			</td>
 		</logic:equal>
 		<logic:notEqual name="metadata" property="mainSubject" value="">
 			<td class="listClasses"><bean:write name="metadata" property="mainSubject"/></td>
@@ -252,12 +262,6 @@ function invertSelect(){
 		<logic:equal name="metadata" property="numberOfMembers" value="">
 			<td class="listClasses"><bean:message key="message.tests.notDefined"/></td>
 		</logic:equal>
-		<td>
-			<div class="gen-button">
-			<html:link page="<%= "/questionsManagement.do?method=prepareInsertTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") + "&amp;metadataCode=" + metadataCode+ "&amp;order="+ pageContext.findAttribute("order")+"&amp;asc="+pageContext.findAttribute("asc")%>">
-			<bean:message key="link.see" />
-			</html:link></div>
-		</td>
 	</tr>
 	</logic:iterate>
 	</table>

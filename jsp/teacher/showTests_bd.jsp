@@ -26,6 +26,7 @@
 <bean:message key="link.createTest"/>
 </html:link></div>
 <br/>
+<span class="error"><html:errors property="InvalidDistribution"/></span>
 <table>
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.test.title"/></td>

@@ -62,8 +62,8 @@ public class InsertTest implements IServico
 			}
 			
 			ITestScope testScope =
-				persistentSuport.getIPersistentTestScope().readByDomainObject(
-            	executionCourse);
+				(ITestScope) persistentSuport.getIPersistentTestScope().readByDomainObject(
+					executionCourse);
 			if (testScope == null)
 			{
 				testScope = new TestScope(executionCourse);

@@ -13,7 +13,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.TestType;
+import Util.tests.TestType;
 
 /**
  * @author Susana Fernandes

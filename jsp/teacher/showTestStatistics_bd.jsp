@@ -7,6 +7,10 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="infoInquiryStatistics" name="component" property="infoInquiryStatistics"/>
 
+<html:form action="/testDistribution">
+<html:hidden property="method" value="showDistributedTests"/>
+<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
+	
 	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="DataBeans.InfoInquiryStatistics"/>
 	<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="DataBeans.InfoStudentTestQuestion"/>
 
@@ -28,10 +32,12 @@
 	<table width="100%" border="0" cellpadding="0" cellspacing="10">
 	<logic:iterate id="infoInquiryStatisticsList" name="infoInquiryStatistics" type="DataBeans.InfoInquiryStatistics">
 		<bean:define id="testQuestion" name ="infoInquiryStatisticsList" property="infoStudentTestQuestion" type="DataBeans.InfoStudentTestQuestion"/>
+		<bean:define id="index" value="0"/>
 		<tr><td><hr></td></tr>
 		<bean:define id="question" name="testQuestion" property="question" type="DataBeans.InfoQuestion"/>
 		<bean:define id="questionCode" name="question" property="idInternal"/>
 		<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
+		<bean:define id="questionType" name="question" property="questionType.type"/>
 		<tr><td><b><bean:message key="message.tests.question" /></b>&nbsp;<bean:write name="questionOrder"/></td></tr>
 		<tr><td>
 			<logic:iterate id="questionBody" name="question" property="question"/>
@@ -76,9 +82,8 @@
 				</td>
 			</tr><tr>
 				<td>
-					<bean:define id="cardinality" name="question" property="questionCardinality"/>
+					<bean:define id="cardinality" name="question" property="cardinalityType.type"/>
 			<table><td>
-				<bean:define id="index" value="0"/>
 				<bean:define id="optionOrder" value="<%= (new Integer(Integer.parseInt(questionOrder.toString()) -1)).toString() %>"/>
 				<bean:define id="indexOption" value="0"/>
 				<bean:define id="correct" value="false"/>
@@ -92,39 +97,54 @@
 						<br/>
 					<% } else if (((String)optionLabel).equals("response_label")){ %>				
 						<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
-						<%	if(cardinality.equals("Single")){ %>
+						
+						<%	if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
+							<%	if(((Integer)cardinality).intValue()==1 ){ %>  <%--CardinalityType.SINGLE--%>
 							</td></tr><tr><td>
 							<logic:iterate id="statistic" name="infoInquiryStatisticsList" property="optionStatistics" offset="<%=new Integer(new Integer(indexOption).intValue()-1).toString()%>" length="1"/>
 							<b><bean:write name="statistic" property="value"/>)</b>
 							</td><td>
-						<% }else if(cardinality.equals("Multiple")){ %>
+						<% }else if(((Integer)cardinality).intValue()==2){ %><%--CardinalityType.MULTIPLE--%>
 							</td></tr><tr><td>
 							<logic:iterate id="statistic" name="infoInquiryStatisticsList" property="optionStatistics" offset="<%=new Integer(new Integer(indexOption).intValue()-1).toString()%>" length="1"/>
 							<b><bean:write name="statistic" property="value"/>)</b>
 							</td><td>
-						<%}%>
-					<% } else {%>
+						<%}
+						}else{%> <%--QuestionType.STR ou QuestionType.NUM--%>
+							<html:text property="selected" value="" disabled="true"/>
+					<%  }
+					 } else {%>
 					<bean:write name="optionBody" property="value"/>
 					<% } %>
 				</logic:iterate>
 				</td></tr></table></td>	
 			</tr>
 			<tr><td><table>
-			<logic:iterate id="statistic" name="infoInquiryStatisticsList" property="optionStatistics" offset="<%=indexOption%>" length="1">
+			<bean:size id="size" name="infoInquiryStatisticsList" property="optionStatistics"/>
+			<%if(((Integer)questionType).intValue()<=1 ){ %> 
+			<logic:iterate id="statistic" name="infoInquiryStatisticsList" property="optionStatistics" offset="<%=new Integer(size.intValue()-1).toString()%>" length="1">
 			<tr>
-			<td><b><bean:write name="statistic" property="label"/>:</b></td>
-			<td><bean:write name="statistic" property="value"/></td>
+			<td><b><bean:write name="statistic" property="label"/>:</b>
+			<bean:write name="statistic" property="value"/></td>
 			</tr>
 			</logic:iterate>
+			<%}else{ %>
+				<logic:iterate id="statistic" name="infoInquiryStatisticsList" property="optionStatistics"indexId="i">
+				<tr>
+				<td><b><bean:write name="statistic" property="label"/>
+				<logic:equal name="i" value="<%=new Integer(size.intValue()-1).toString()%>">:</logic:equal>
+				<logic:notEqual name="i" value="<%=new Integer(size.intValue()-1).toString()%>">)</logic:notEqual>
+				</b>
+				<bean:write name="statistic" property="value"/></td>
+				</tr>
+			</logic:iterate>
+			<%} %> 
 			</table></td></tr>
 	</logic:iterate>
 	<tr><td><hr></td></tr>
 	</table>
 	<br/>
 	<br/>
-	<html:form action="/testDistribution">
-	<html:hidden property="method" value="showDistributedTests"/>
-	<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
 	<table align="center">
 	<tr>
 		<td><html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>

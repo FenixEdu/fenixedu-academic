@@ -17,17 +17,20 @@
         <form-bean name="testForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="title" type="java.lang.String"/>
             <form-property name="information" type="java.lang.String"/>
-            <form-property name="option" type="java.lang.String[]"/>
+            <form-property name="option" type="Util.tests.Response[]"/>
             <form-property name="objectCode" type="java.lang.String"/>
+            <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="changesType" type="java.lang.String"/>
             <form-property name="studentsType" type="java.lang.String"/>
-            <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="deleteVariation" type="java.lang.String"/>
             <form-property name="order" type="java.lang.String"/>
             <form-property name="asc" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
+               <form-bean name="studentTestForm" type="ServidorApresentacao.formbeans.tests.TestForm" dynamic="true">
+       </form-bean>
         <form-bean name="exerciseForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+
             <form-property name="metadataFile" type="org.apache.struts.upload.FormFile"/>
             <form-property name="xmlZipFile" type="org.apache.struts.upload.FormFile"/>
             <form-property name="objectCode" type="java.lang.String"/>
@@ -53,6 +56,7 @@
         </form-bean>
         <form-bean name="questionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="questionValue" type="java.lang.String"/>
+            <form-property name="formula" type="java.lang.String" initial="2"/>
             <form-property name="testCode" type="java.lang.String"/>
             <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="questionOrder" type="java.lang.String"/>
@@ -65,6 +69,7 @@
         <form-bean name="testQuestionForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="testQuestionValue" type="java.lang.String"/>
+            <form-property name="formula" type="java.lang.String"/>
             <form-property name="testCode" type="java.lang.String"/>
             <form-property name="testQuestionOrder" type="java.lang.String"/>
             <form-property name="option" type="java.lang.String"/>
@@ -82,13 +87,21 @@
         <form-bean name="distributedTestForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="testInformation" type="java.lang.String"/>
-            <form-property name="beginDateFormatted" type="java.lang.String"/>
+            <form-property name="notInquiryInformation" type="java.lang.String"/>
+            <form-property name="inquiryInformation" type="java.lang.String"/>
+            <form-property name="beginDayFormatted" type="java.lang.String"/>
+            <form-property name="beginMonthFormatted" type="java.lang.String"/>
+            <form-property name="beginYearFormatted" type="java.lang.String"/>
             <form-property name="beginHourFormatted" type="java.lang.String"/>
-            <form-property name="endDateFormatted" type="java.lang.String"/>
+            <form-property name="beginMinuteFormatted" type="java.lang.String"/>
+            <form-property name="endDayFormatted" type="java.lang.String"/>
+            <form-property name="endMonthFormatted" type="java.lang.String"/>
+            <form-property name="endYearFormatted" type="java.lang.String"/>
             <form-property name="endHourFormatted" type="java.lang.String"/>
+            <form-property name="endMinuteFormatted" type="java.lang.String"/>
             <form-property name="testType" type="java.lang.String"/>
             <form-property name="availableCorrection" type="java.lang.String"/>
-            <form-property name="studentFeedback" type="java.lang.String"/>
+            <form-property name="imsFeedback" type="java.lang.String"/>
             <form-property name="selected" type="java.lang.String"/>
             <form-property name="insertByShifts" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
@@ -845,15 +858,22 @@
             input="/testsManagement.do?method=prepareCreateTest&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-                      <forward name="testsFirstPage" path="tests-First-Page"/>
+            <forward name="testsFirstPage" path="tests-First-Page"/>
             <forward name="createTest" path="create-Test"/>
             <forward name="showAvailableQuestions" path="show-Available-Questions"/>
             <forward name="showTests" path="show-Tests"/>
             <forward name="prepareDeleteTest" path="prepare-Delete-Test"/>
-            <forward name="showStudentTest" path="show-Student-Test"/>
             <forward name="showStudentTestLog" path="show-Student-Test-Log"/>
-            <forward name="changeStudentTestQuestion" path="change-Student-Test-Question"/>
+            <forward name="showTestMarks" path="show-Test-Marks"/>
             <forward name="chooseAnotherExercise" path="choose-Another-Exercise"/>
+            <forward name="changeStudentTestQuestion" path="change-Student-Test-Question"/>
+            <forward name="showStudentTest" path="/studentTestManagement.do?method=showStudentTest"/>
+        </action>
+		<action path="/studentTestManagement" name="studentTestForm"
+        	scope="request"
+            parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
+            validate="true">
+            <forward name="showStudentTest" path="show-Student-Test"/>
             <forward name="showTestMarks" path="show-Test-Marks"/>
         </action>
         <action path="/exercisesManagement" name="exerciseForm"
@@ -906,15 +926,17 @@
             input="/testDistribution.do?method=prepareDistributeTest&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-           <forward name="distributeTest" path="distribute-Test"/>
+                      <forward name="distributeTest" path="distribute-Test"/>
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
             <forward name="distributeTestByShifts" path="distribute-Test-By-Shifts"/>
             <forward name="distributeTestByStudents" path="distribute-Test-By-Students"/>
             <forward name="showTestMarks" path="show-Test-Marks"/>
             <forward name="showTestMarksStatistics" path="show-Test-Marks-Statistics"/>
             <forward name="showTestStatistics" path="show-Test-Statistics"/>
-            <forward name="prepareDeleteDistributedTest" path="prepare-Delete-Distributed-Test"/>      
-        </action>
+            <forward name="prepareDeleteDistributedTest" path="prepare-Delete-Distributed-Test"/>
+            <forward name="showTests" path="show-Tests"/>    
+
+		</action>
         <action path="/testDistributionByShifts" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseShifts&amp;page=1" scope="request" parameter="method" 
             type="ServidorApresentacao.Action.teacher.TestsManagementAction" validate="true">

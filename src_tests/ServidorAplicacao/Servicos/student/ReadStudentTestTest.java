@@ -91,7 +91,7 @@ public class ReadStudentTestTest extends TestCaseReadServices
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			//List distributedTestList = new ArrayList();
+			List distributedTestList = new ArrayList();
 			sp.iniciarTransaccao();
 			IStudent student = sp.getIPersistentStudent().readByUsername((String) args[0]);
 			assertNotNull("student is null", student);
@@ -155,7 +155,7 @@ public class ReadStudentTestTest extends TestCaseReadServices
 		InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
 		infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
 		infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
-		infoStudentTestQuestion.setResponse(studentTestQuestion.getResponse());
+		infoStudentTestQuestion.setOldResponse(studentTestQuestion.getOldResponse());
 		infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
 		infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
 		infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());

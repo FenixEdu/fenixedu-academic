@@ -91,7 +91,7 @@ public class ReadStudentDoneTestsTest extends TestCaseReadServices
 			IStudent student = sp.getIPersistentStudent().readByUsername((String) args[0]);
 			assertNotNull("student is null", student);
 
-			distributedTestList = sp.getIPersistentDistributedTest().readByStudent(student);
+			distributedTestList = (List) sp.getIPersistentDistributedTest().readByStudent(student);
 
 			sp.confirmarTransaccao();
 

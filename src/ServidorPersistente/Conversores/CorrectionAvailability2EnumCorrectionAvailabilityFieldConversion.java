@@ -7,7 +7,7 @@ package ServidorPersistente.Conversores;
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.CorrectionAvailability;
+import Util.tests.CorrectionAvailability;
 
 /**
  * @author Susana Fernandes

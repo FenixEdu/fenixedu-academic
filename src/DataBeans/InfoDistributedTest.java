@@ -1,250 +1,277 @@
 /*
  * Created on 20/Ago/2003
- *
  */
 package DataBeans;
 
 import java.util.Calendar;
 
-import Util.CorrectionAvailability;
-import Util.TestType;
+import Util.tests.CorrectionAvailability;
+import Util.tests.TestType;
 
 /**
  * @author Susana Fernandes
  */
-public class InfoDistributedTest extends InfoObject
-{
-	private String Title;
-	private String TestInformation;
-	private Calendar beginDate;
-	private Calendar endDate;
-	private Calendar beginHour;
-	private Calendar endHour;
-	private TestType testType;
-	private CorrectionAvailability correctionAvailability;
-	private Boolean studentFeedback;
-	private Integer numberOfQuestions;
-	private InfoTestScope infoTestScope;
+public class InfoDistributedTest extends InfoObject {
 
-	public InfoDistributedTest()
-	{
-	}
+    private String title;
 
-	public String getTitle()
-	{
-		return Title;
-	}
+    private String testInformation;
 
-	public String getTestInformation()
-	{
-		return TestInformation;
-	}
+    private Calendar beginDate;
 
-	public Calendar getBeginDate()
-	{
-		return beginDate;
-	}
+    private Calendar endDate;
 
-	public Calendar getBeginHour()
-	{
-		return beginHour;
-	}
-	public CorrectionAvailability getCorrectionAvailability()
-	{
-		return correctionAvailability;
-	}
+    private Calendar beginHour;
 
-	public Calendar getEndDate()
-	{
-		return endDate;
-	}
+    private Calendar endHour;
 
-	public Calendar getEndHour()
-	{
-		return endHour;
-	}
+    private TestType testType;
 
-	public Boolean getStudentFeedback()
-	{
-		return studentFeedback;
-	}
+    private CorrectionAvailability correctionAvailability;
 
-	public TestType getTestType()
-	{
-		return testType;
-	}
+    private Boolean imsFeedback;
 
-	public Integer getNumberOfQuestions()
-	{
-		return numberOfQuestions;
-	}
+    private Integer numberOfQuestions;
 
-	public void setTitle(String string)
-	{
-		Title = string;
-	}
-	
-	public void setTestInformation(String string)
-	{
-		TestInformation = string;
-	}
+    private InfoTestScope infoTestScope;
 
-	public void setBeginDate(Calendar calendar)
-	{
-		beginDate = calendar;
-	}
+    public InfoDistributedTest() {
+    }
 
-	public void setBeginHour(Calendar calendar)
-	{
-		beginHour = calendar;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setCorrectionAvailability(CorrectionAvailability availability)
-	{
-		correctionAvailability = availability;
-	}
+    public String getTestInformation() {
+        return testInformation;
+    }
 
-	public void setEndDate(Calendar calendar)
-	{
-		endDate = calendar;
-	}
+    public Calendar getBeginDate() {
+        return beginDate;
+    }
 
-	public void setEndHour(Calendar calendar)
-	{
-		endHour = calendar;
-	}
+    public Calendar getBeginHour() {
+        return beginHour;
+    }
 
-	public void setStudentFeedback(Boolean boolean1)
-	{
-		studentFeedback = boolean1;
-	}
+    public CorrectionAvailability getCorrectionAvailability() {
+        return correctionAvailability;
+    }
 
-	public void setTestType(TestType type)
-	{
-		testType = type;
-	}
+    public Calendar getEndDate() {
+        return endDate;
+    }
 
-	public void setNumberOfQuestions(Integer integer)
-	{
-		numberOfQuestions = integer;
-	}
+    public Calendar getEndHour() {
+        return endHour;
+    }
 
-	public String getBeginDateFormatted()
-	{
-		String result = new String();
-		Calendar date = getBeginDate();
-		result += date.get(Calendar.DAY_OF_MONTH);
-		result += "/";
-		result += date.get(Calendar.MONTH) + 1;
-		result += "/";
-		result += date.get(Calendar.YEAR);
-		return result;
-	}
+    public TestType getTestType() {
+        return testType;
+    }
 
-	public String getBeginHourFormatted()
-	{
-		String result = "";
-		Calendar date = getBeginHour();
-		result += date.get(Calendar.HOUR_OF_DAY);
-		result += ":";
-		if (date.get(Calendar.MINUTE) < 10)
-			result += "0";
-		result += date.get(Calendar.MINUTE);
-		return result;
-	}
+    public Integer getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
 
-	public String getEndDateFormatted()
-	{
-		String result = new String();
-		Calendar date = getEndDate();
-		result += date.get(Calendar.DAY_OF_MONTH);
-		result += "/";
-		result += date.get(Calendar.MONTH) + 1;
-		result += "/";
-		result += date.get(Calendar.YEAR);
-		return result;
-	}
+    public void setTitle(String string) {
+        title = string;
+    }
 
-	public String getEndHourFormatted()
-	{
-		String result = "";
-		Calendar date = getEndHour();
-		result += date.get(Calendar.HOUR_OF_DAY);
-		result += ":";
-		if (date.get(Calendar.MINUTE) < 10)
-			result += "0";
-		result += date.get(Calendar.MINUTE);
-		return result;
-	}
+    public void setTestInformation(String string) {
+        testInformation = string;
+    }
 
-	public String getBeginDateTimeFormatted()
-	{
-		String result = new String();
-		Calendar date = getBeginDate();
-		result += date.get(Calendar.DAY_OF_MONTH);
-		result += "/";
-		result += date.get(Calendar.MONTH) + 1;
-		result += "/";
-		result += date.get(Calendar.YEAR);
-		result += " ";
-		date = getBeginHour();
-		result += date.get(Calendar.HOUR_OF_DAY);
-		result += ":";
-		if (date.get(Calendar.MINUTE) < 10)
-			result += "0";
-		result += date.get(Calendar.MINUTE);
-		return result;
-	}
+    public void setBeginDate(Calendar calendar) {
+        beginDate = calendar;
+    }
 
-	public String getEndDateTimeFormatted()
-	{
-		String result = new String();
-		Calendar date = getEndDate();
-		result += date.get(Calendar.DAY_OF_MONTH);
-		result += "/";
-		result += date.get(Calendar.MONTH) + 1;
-		result += "/";
-		result += date.get(Calendar.YEAR);
-		result += " ";
-		date = getEndHour();
-		result += date.get(Calendar.HOUR_OF_DAY);
-		result += ":";
-		if (date.get(Calendar.MINUTE) < 10)
-			result += "0";
-		result += date.get(Calendar.MINUTE);
-		return result;
-	}
+    public void setBeginHour(Calendar calendar) {
+        beginHour = calendar;
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof InfoDistributedTest)
-		{
-			InfoDistributedTest infoDistributedTest = (InfoDistributedTest) obj;
-			result =
-				(getIdInternal().equals(infoDistributedTest.getIdInternal()))
-					&& (getTitle().equals(infoDistributedTest.getTitle()))
-					&& (getBeginDate().equals(infoDistributedTest.getBeginDate()))
-					&& (getBeginHour().equals(infoDistributedTest.getBeginHour()))
-					&& (getEndDate().equals(infoDistributedTest.getEndDate()))
-					&& (getEndHour().equals(infoDistributedTest.getEndHour()))
-					&& (getTestType().equals(infoDistributedTest.getTestType()))
-					&& (getCorrectionAvailability()
-						.equals(infoDistributedTest.getCorrectionAvailability()))
-					&& (getStudentFeedback().equals(infoDistributedTest.getStudentFeedback()))
-					&& (getNumberOfQuestions().equals(infoDistributedTest.getNumberOfQuestions()));
-		}
-		return result;
-	}
+    public void setCorrectionAvailability(CorrectionAvailability availability) {
+        correctionAvailability = availability;
+    }
 
-	public InfoTestScope getInfoTestScope()
-	{
-		return infoTestScope;
-	}
+    public void setEndDate(Calendar calendar) {
+        endDate = calendar;
+    }
 
-	public void setInfoTestScope(InfoTestScope scope)
-	{
-		infoTestScope = scope;
-	}
+    public void setEndHour(Calendar calendar) {
+        endHour = calendar;
+    }
 
+    public void setTestType(TestType type) {
+        testType = type;
+    }
+
+    public void setNumberOfQuestions(Integer integer) {
+        numberOfQuestions = integer;
+    }
+
+    public InfoTestScope getInfoTestScope() {
+        return infoTestScope;
+    }
+
+    public void setInfoTestScope(InfoTestScope scope) {
+        infoTestScope = scope;
+    }
+
+    public Boolean getImsFeedback() {
+        return imsFeedback;
+    }
+
+    public void setImsFeedback(Boolean imsFeedback) {
+        this.imsFeedback = imsFeedback;
+    }
+
+    /*
+     * public String getBeginDateFormatted() { String result = new String();
+     * Calendar date = getBeginDate(); result +=
+     * date.get(Calendar.DAY_OF_MONTH); result += "/"; result +=
+     * date.get(Calendar.MONTH) + 1; result += "/"; result +=
+     * date.get(Calendar.YEAR); return result; }
+     * 
+     * public String getBeginHourFormatted() { String result = ""; Calendar date =
+     * getBeginHour(); result += date.get(Calendar.HOUR_OF_DAY); result += ":";
+     * if (date.get(Calendar.MINUTE) < 10) result += "0"; result +=
+     * date.get(Calendar.MINUTE); return result; }
+     * 
+     * public String getEndDateFormatted() { String result = new String();
+     * Calendar date = getEndDate(); result += date.get(Calendar.DAY_OF_MONTH);
+     * result += "/"; result += date.get(Calendar.MONTH) + 1; result += "/";
+     * result += date.get(Calendar.YEAR); return result; }
+     * 
+     * public String getEndHourFormatted() { String result = ""; Calendar date =
+     * getEndHour(); result += date.get(Calendar.HOUR_OF_DAY); result += ":"; if
+     * (date.get(Calendar.MINUTE) < 10) result += "0"; result +=
+     * date.get(Calendar.MINUTE); return result; }
+     */
+
+    public String getBeginDateTimeFormatted() {
+        String result = new String();
+        Calendar date = getBeginDate();
+        result += date.get(Calendar.DAY_OF_MONTH);
+        result += "/";
+        result += date.get(Calendar.MONTH) + 1;
+        result += "/";
+        result += date.get(Calendar.YEAR);
+        result += " ";
+        date = getBeginHour();
+        result += date.get(Calendar.HOUR_OF_DAY);
+        result += ":";
+        if (date.get(Calendar.MINUTE) < 10) result += "0";
+        result += date.get(Calendar.MINUTE);
+        return result;
+    }
+
+    public String getEndDateTimeFormatted() {
+        String result = new String();
+        Calendar date = getEndDate();
+        result += date.get(Calendar.DAY_OF_MONTH);
+        result += "/";
+        result += date.get(Calendar.MONTH) + 1;
+        result += "/";
+        result += date.get(Calendar.YEAR);
+        result += " ";
+        date = getEndHour();
+        result += date.get(Calendar.HOUR_OF_DAY);
+        result += ":";
+        if (date.get(Calendar.MINUTE) < 10) result += "0";
+        result += date.get(Calendar.MINUTE);
+        return result;
+    }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof InfoDistributedTest) {
+            InfoDistributedTest infoDistributedTest = (InfoDistributedTest) obj;
+            result = (getIdInternal().equals(infoDistributedTest
+                    .getIdInternal()))
+                    && (getTitle().equals(infoDistributedTest.getTitle()))
+                    && (getBeginDate().equals(infoDistributedTest
+                            .getBeginDate()))
+                    && (getBeginHour().equals(infoDistributedTest
+                            .getBeginHour()))
+                    && (getEndDate().equals(infoDistributedTest.getEndDate()))
+                    && (getEndHour().equals(infoDistributedTest.getEndHour()))
+                    && (getTestType().equals(infoDistributedTest.getTestType()))
+                    && (getCorrectionAvailability().equals(infoDistributedTest
+                            .getCorrectionAvailability()))
+                    && (getImsFeedback().equals(infoDistributedTest
+                            .getImsFeedback()))
+                    && (getNumberOfQuestions().equals(infoDistributedTest
+                            .getNumberOfQuestions()));
+        }
+        return result;
+    }
+
+    public String getBeginDayFormatted() {
+        String result = new String();
+        if (getBeginDate().get(Calendar.DAY_OF_MONTH) < 10) result += "0";
+        return result.concat(new Integer(getBeginDate().get(
+                Calendar.DAY_OF_MONTH)).toString());
+
+    }
+
+    public String getBeginMonthFormatted() {
+        String result = new String();
+        if (getBeginDate().get(Calendar.MONTH) + 1 < 10) result += "0";
+        return result
+                .concat(new Integer(getBeginDate().get(Calendar.MONTH) + 1)
+                        .toString());
+    }
+
+    public String getBeginYearFormatted() {
+        return new Integer(getBeginDate().get(Calendar.YEAR)).toString();
+    }
+
+    public String getBeginHourFormatted() {
+        String result = new String();
+        if (getBeginHour().get(Calendar.HOUR_OF_DAY) < 10) result += "0";
+        return result.concat(new Integer(getBeginHour().get(
+                Calendar.HOUR_OF_DAY)).toString());
+    }
+
+    public String getBeginMinuteFormatted() {
+        String result = new String();
+        if (getBeginHour().get(Calendar.MINUTE) < 10) result += "0";
+        return result.concat(new Integer(getBeginHour().get(Calendar.MINUTE))
+                .toString());
+    }
+
+    public String getEndDayFormatted() {
+        String result = new String();
+        if (getEndDate().get(Calendar.DAY_OF_MONTH) < 10) result += "0";
+        return result.concat(new Integer(getEndDate()
+                .get(Calendar.DAY_OF_MONTH)).toString());
+    }
+
+    public String getEndMonthFormatted() {
+        String result = new String();
+        if (getEndDate().get(Calendar.MONTH) + 1 < 10) result += "0";
+        return result.concat(new Integer(getEndDate().get(Calendar.MONTH) + 1)
+                .toString());
+    }
+
+    public String getEndYearFormatted() {
+        return new Integer(getEndDate().get(Calendar.YEAR)).toString();
+    }
+
+    public String getEndHourFormatted() {
+        String result = new String();
+        if (getEndHour().get(Calendar.HOUR_OF_DAY) < 10) result += "0";
+        return result
+                .concat(new Integer(getEndHour().get(Calendar.HOUR_OF_DAY))
+                        .toString());
+
+    }
+
+    public String getEndMinuteFormatted() {
+        String result = new String();
+        if (getEndHour().get(Calendar.MINUTE) < 10) result += "0";
+        return result.concat(new Integer(getEndHour().get(Calendar.MINUTE))
+                .toString());
+    }
 }

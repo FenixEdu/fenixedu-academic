@@ -37,13 +37,19 @@ function cleanSelect() {
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 
 <html:hidden property="testInformation"/>
-<html:hidden property="beginDateFormatted"/>
+<html:hidden property="beginDayFormatted"/>
+<html:hidden property="beginMonthFormatted"/>
+<html:hidden property="beginYearFormatted"/>
 <html:hidden property="beginHourFormatted"/>
-<html:hidden property="endDateFormatted"/>
+<html:hidden property="beginMinuteFormatted"/>
+<html:hidden property="endDayFormatted"/>
+<html:hidden property="endMonthFormatted"/>
+<html:hidden property="endYearFormatted"/>
 <html:hidden property="endHourFormatted"/>
+<html:hidden property="endMinuteFormatted"/>
 <html:hidden property="testType"/>
 <html:hidden property="availableCorrection"/>
-<html:hidden property="studentFeedback"/>
+<html:hidden property="imsFeedback"/>
 <html:hidden property="insertByShifts" value="true"/>
 
 <table>

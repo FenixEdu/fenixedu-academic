@@ -138,7 +138,7 @@ public class ReadStudentDistributedTestTest extends ServiceNeedsAuthenticationTe
 		InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
 		infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
 		infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
-		infoStudentTestQuestion.setResponse(studentTestQuestion.getResponse());
+		infoStudentTestQuestion.setOldResponse(studentTestQuestion.getOldResponse());
 		infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
 		infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
 		infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());

@@ -24,7 +24,9 @@ function back(){
 <bean:define id="metadata" name="component" property="infoMetadata"/>
 <bean:define id="metadataId" name="metadata" property="idInternal"/>
 <bean:define id="variationCode" value="<%=(pageContext.findAttribute("variationCode")).toString()%>"/>
-
+<table>
+	<tr><td class="infoop"><bean:message key="message.editExercise.information" /></td></tr>
+</table>
 <html:form action="/exercisesEdition">
 <html:hidden property="page" value="1"/>
 <html:hidden property="method" value="editExercise"/>
@@ -46,7 +48,7 @@ function back(){
 			</tr>
 		</logic:equal>
 		<tr>
-			<td><b><bean:message key="label.test.quantidadeExercicios"/></b></td>
+			<td><b><bean:message key="label.test.quantidadeExercicios"/>:</b></td>
 			<td><bean:write name="metadata" property="numberOfMembers"/></td>
 		</tr>
 		<tr>
@@ -85,7 +87,6 @@ function back(){
 		</tr>
 </table>
 <br/>
-
 <table align="center">
 	<tr>
 		<td><html:submit styleClass="inputbutton"><bean:message key="label.change"/></html:submit> </td>
@@ -94,6 +95,10 @@ function back(){
 </table>
 <br/>
 <br/>
+<br/>
+<table>
+	<tr><td class="infoop"><bean:message key="message.showVariation.information" /></td></tr>
+</table>
 <br/>
 <bean:define id="questionName" name="component" property="questionNames"/>
 <bean:size id="questionsSize" name="questionName"/>
@@ -109,85 +114,17 @@ function back(){
 	<br/>
 	<br/>
 	<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
-			<bean:define id="questionCode" name="iquestion" property="idInternal"/>
-			<bean:define id="index" value="0"/>
-			<bean:define id="imageLabel" value="false"/>
-			<table>
-			<tr><td>
-			<logic:iterate id="questionBody" name="iquestion" property="question" indexId="indexQuestion">
-					<logic:equal name="indexQuestion" value="0">
-						<h2><bean:message key="title.exercise"/>:&nbsp;<bean:write name="iquestion" property="xmlFileName"/></h2>
-					</logic:equal>
-				<bean:define id="questionLabel" name="questionBody" property="label"/>
-				<% if (((String)questionLabel).startsWith("image/")){%>
-					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
-					<logic:equal name="imageLabel" value="true">
-						</td><td>
-					</logic:equal>
-				<% } else if (((String)questionLabel).equals("image_label")){%>		
-					<logic:equal name="imageLabel" value="false">
-						<bean:define id="imageLabel" value="true"/>
-						<table><tr><td>
-					</logic:equal>
-					<bean:write name="questionBody" property="value"/>
-					<br/>
-				<% }else if (((String)questionLabel).equals("flow")){%>
-					<logic:equal name="imageLabel" value="true">
-						</td></tr></table>
-						<bean:define id="imageLabel" value="false"/>
-					</logic:equal>
-					</td></tr>
-					<tr><td>
-				<% }else{%>
-					<bean:write name="questionBody" property="value"/>
-				<% } %>
-				</logic:iterate>
-				<logic:equal name="imageLabel" value="true">
-					</td></tr></table>
-				</logic:equal>
-				</td></tr>
-			</table>
-			<br/>
-			<bean:define id="indexOption" value="0"/>
-			<bean:define id="cardinality" name="iquestion" property="questionCardinality"/>
-			<table>
-			<tr><td>
-				<logic:iterate id="optionBody" name="iquestion" property="options">
-					<bean:define id="optionLabel" name="optionBody" property="label"/>
-					<% if (((String)optionLabel).startsWith("image/")){ %>
-						<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-						<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
-					<% } else if (((String)optionLabel).equals("image_label")){%>
-						<bean:write name="optionBody" property="value"/>
-						<br/>
-					<% } else if (((String)optionLabel).equals("response_label")){ %>				
-						<bean:define id="indexOption" value="<%= (new Integer(Integer.parseInt(indexOption)+1)).toString() %>"/>
-						<%	if(cardinality.equals("Single")){ %>
-							</td></tr><tr><td>
-							<bean:define id="button" value="true"/>
-							<logic:iterate id="correctResponse" name="iquestion" property="correctResponse">
-								<logic:equal name="correctResponse" value="<%= (new Integer(Integer.parseInt(indexOption))).toString() %>">
-									<img src="<%= request.getContextPath() %>/images/checkUnselected.gif" alt="" />
-									<bean:define id="button" value="false"/>
-								</logic:equal>
-							</logic:iterate>
-							<logic:equal name="button" value="true">
-								<html:radio property="option" value="<%= indexOption.toString() %>" disabled="true"/>
-							</logic:equal>
-							</td><td>
-						<% }else if(cardinality.equals("Multiple")){ %>
-							</td></tr><tr><td>
-								<html:multibox property="option" value="<%= indexOption.toString() %>">
-								</html:multibox>
-							</td><td>
-						<%}%>
-					<% } else {%>
-					<bean:write name="optionBody" property="value"/>
-					<% } %>
-				</logic:iterate>
-			</td></tr>
-			</table>
+		<bean:define id="questionCode" name="iquestion" property="idInternal"/>
+		<bean:define id="index" value="0"/>
+		<bean:define id="imageLabel" value="false"/>
+		<logic:iterate id="questionBody" name="iquestion" property="question" length="1">
+			<h2><bean:message key="title.exercise"/>:&nbsp;<bean:write name="iquestion" property="xmlFileName"/></h2>
+		</logic:iterate>
+		<% request.setAttribute("iquestion", iquestion); %>
+		<jsp:include page="showQuestion.jsp">
+			<jsp:param name="showResponses" value="true"/>
+		</jsp:include>
+		<br/>
 	</logic:iterate>
 </logic:notEqual>
 </html:form>

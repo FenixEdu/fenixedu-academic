@@ -32,12 +32,11 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-
 public class ReadMetadatas implements IServico
 {
-
 	private static ReadMetadatas service = new ReadMetadatas();
 	private String path = new String();
+
 	public static ReadMetadatas getService()
 	{
 		return service;
@@ -47,42 +46,35 @@ public class ReadMetadatas implements IServico
 	{
 		return "ReadMetadatas";
 	}
+
 	public SiteView run(Integer executionCourseId, String order, String asc, String path)
-		throws FenixServiceException
+			throws FenixServiceException
 	{
 		this.path = path.replace('\\', '/');
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSuport.getIPersistentExecutionCourse();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+					.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-			executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse,
+					false);
 			if (executionCourse == null)
 			{
 				throw new InvalidArgumentsServiceException();
 			}
-
 			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 			List metadatas = new ArrayList();
 			if (order == null
-				|| !(order.equals("description")
-					|| order.equals("mainSubject")
-					|| order.equals("difficulty")
-					|| order.equals("numberOfMembers")))
+					|| !(order.equals("description") || order.equals("mainSubject")
+							|| order.equals("difficulty") || order.equals("numberOfMembers")))
 				order = new String("description");
-			metadatas =
-				persistentMetadata.readByExecutionCourseAndVisibilityAndOrder(
-					executionCourse,
-					order,
-					asc);
-
+			metadatas = persistentMetadata.readByExecutionCourseAndVisibilityAndOrder(executionCourse,
+					order, asc);
 			List result = new ArrayList();
 			Iterator iter = metadatas.iterator();
 			while (iter.hasNext())
 				result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter.next()));
-
 			if (order.equals("difficulty"))
 			{
 				if (asc != null && asc.equals("false"))
@@ -90,12 +82,10 @@ public class ReadMetadatas implements IServico
 				else
 					Collections.sort(result, new QuestionDifficultyTypeComparatorByAscendingOrder());
 			}
-
 			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
 			bodyComponent.setInfoMetadatas(result);
 			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
 			SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-
 			return siteView;
 		}
 		catch (ExcepcaoPersistencia e)

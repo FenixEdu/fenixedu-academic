@@ -18,7 +18,7 @@
 	<html:form action="/testDistribution">
 	<html:hidden property="method" value="showDistributedTests"/>
 
-	<bean:size id="questionNumber" name="component" property="correctAnswersPercentage"/>
+	<bean:size id="questionNumber" name="component" property="answeredPercentage"/>
 	<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
 	<table>
 		<tr>
@@ -28,19 +28,11 @@
 		} %>
 		</tr>
 		<tr>
-		<logic:iterate id="correctAnswers" name="component" property="correctAnswersPercentage" indexId="correctAnswersIndex">
-			<logic:equal name="correctAnswersIndex" value="0">
-				<td class="listClasses"><bean:message key="label.correct"/></td>
+		<logic:iterate id="answered" name="component" property="answeredPercentage" indexId="answeredIndex">
+			<logic:equal name="answeredIndex" value="0">
+				<td class="listClasses"><bean:message key="label.aswered"/></td>
 			</logic:equal>
-			<td class="listClasses"><bean:write name="correctAnswers"/></td>
-		</logic:iterate>
-		</tr>
-		<tr>
-		<logic:iterate id="wrongAnswers" name="component" property="wrongAnswersPercentage" indexId="wrongAnswersIndex">
-			<logic:equal name="wrongAnswersIndex" value="0">
-				<td class="listClasses"><bean:message key="label.incorrect"/></td>
-			</logic:equal>
-			<td class="listClasses"><bean:write name="wrongAnswers"/></td>
+			<td class="listClasses"><bean:write name="answered"/></td>
 		</logic:iterate>
 		</tr>
 		<tr>
@@ -51,7 +43,49 @@
 			<td class="listClasses"><bean:write name="notAnswered"/></td>
 		</logic:iterate>
 		</tr>
+		<tr></tr>
+		<logic:notEmpty name="component" property="correctAnswersPercentage">
+		<tr>
+		<logic:iterate id="correctAnswers" name="component" property="correctAnswersPercentage" indexId="correctAnswersIndex">
+			<logic:equal name="correctAnswersIndex" value="0">
+				<td class="listClasses"><bean:message key="label.correct"/>*</td>
+			</logic:equal>
+			<td class="listClasses"><bean:write name="correctAnswers"/></td>
+		</logic:iterate>
+		</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="component" property="partiallyCorrectAnswersPercentage">
+		<tr>
+		<logic:iterate id="partiallyCorrect" name="component" property="partiallyCorrectAnswersPercentage" indexId="partiallyCorrectIndex">
+			<logic:equal name="partiallyCorrectIndex" value="0">
+				<td class="listClasses"><bean:message key="label.partiallyCorrect"/>**</td>
+			</logic:equal>
+			<td class="listClasses"><bean:write name="partiallyCorrect"/></td>
+		</logic:iterate>
+		</tr>
+		</logic:notEmpty>
+		<logic:notEmpty name="component" property="wrongAnswersPercentage">
+		<tr>
+		<logic:iterate id="wrongAnswers" name="component" property="wrongAnswersPercentage" indexId="wrongAnswersIndex">
+			<logic:equal name="wrongAnswersIndex" value="0">
+				<td class="listClasses"><bean:message key="label.incorrect"/>*</td>
+			</logic:equal>
+			<td class="listClasses"><bean:write name="wrongAnswers"/></td>
+		</logic:iterate>
+		</tr>
+		</logic:notEmpty>
 	</table>
+	<logic:notEmpty name="component" property="correctAnswersPercentage">
+		<h6>*<bean:message key="message.feedbackScope"/><h6>
+	</logic:notEmpty>
+	<logic:empty name="component" property="correctAnswersPercentage">
+			<logic:notEmpty name="component" property="wrongAnswersPercentage">
+				<h6>*<bean:message key="message.feedbackScope"/><h6>
+			</logic:notEmpty>
+	</logic:empty>
+	<logic:notEmpty name="component" property="partiallyCorrectAnswersPercentage">
+		<h6>**<bean:message key="message.feedbackScope"/>&nbsp;<bean:message key="message.partiallyCorrectScope"/><h6>
+	</logic:notEmpty>
 	<br/>
 	<br/>
 	<table align="center">
@@ -60,7 +94,7 @@
 	</tr>
 	</table>
 	</html:form>
-	</logic:notEmpty>
+	
 </logic:present>
 <logic:notPresent name="siteView">
 <center>

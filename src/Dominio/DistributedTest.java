@@ -1,181 +1,164 @@
 /*
  * Created on 19/Ago/2003
- *
  */
 
 package Dominio;
 
 import java.util.Calendar;
 import java.util.List;
-import Util.CorrectionAvailability;
-import Util.TestType;
+
+import Util.tests.CorrectionAvailability;
+import Util.tests.TestType;
 
 /**
  * @author Susana Fernandes
  */
-public class DistributedTest extends DomainObject implements IDistributedTest
-{
-	private String title;
-	private String testInformation;
-	private Calendar beginDate;
-	private Calendar endDate;
-	private Calendar beginHour;
-	private Calendar endHour;
-	private TestType testType;
-	private CorrectionAvailability correctionAvailability;
-	private Boolean studentFeedback;
-	private Integer numberOfQuestions;
-	private ITestScope testScope;
-	private Integer keyTestScope;
-	private List studentLogs;
-	private List studentQuestions;
+public class DistributedTest extends DomainObject implements IDistributedTest {
 
-	public DistributedTest()
-	{
-	}
+    private String title;
 
-	public DistributedTest(Integer distributedTestId)
-	{
-		setIdInternal(distributedTestId);
-	}
+    private String testInformation;
 
-	public Calendar getBeginDate()
-	{
-		return beginDate;
-	}
+    private Calendar beginDate;
 
-	public Calendar getBeginHour()
-	{
-		return beginHour;
-	}
+    private Calendar endDate;
 
-	public CorrectionAvailability getCorrectionAvailability()
-	{
-		return correctionAvailability;
-	}
+    private Calendar beginHour;
 
-	public Calendar getEndDate()
-	{
-		return endDate;
-	}
+    private Calendar endHour;
 
-	public Calendar getEndHour()
-	{
-		return endHour;
-	}
+    private TestType testType;
 
-	public Boolean getStudentFeedback()
-	{
-		return studentFeedback;
-	}
+    private CorrectionAvailability correctionAvailability;
 
-	public TestType getTestType()
-	{
-		return testType;
-	}
+    private Boolean imsFeedback;
 
-	public void setBeginDate(Calendar calendar)
-	{
-		beginDate = calendar;
-	}
+    private Integer numberOfQuestions;
 
-	public void setBeginHour(Calendar calendar)
-	{
-		beginHour = calendar;
-	}
+    private ITestScope testScope;
 
-	public void setCorrectionAvailability(CorrectionAvailability availability)
-	{
-		correctionAvailability = availability;
-	}
+    private Integer keyTestScope;
 
-	public void setEndDate(Calendar calendar)
-	{
-		endDate = calendar;
-	}
+    private List studentLogs;
 
-	public void setEndHour(Calendar calendar)
-	{
-		endHour = calendar;
-	}
+    private List studentQuestions;
 
-	public void setStudentFeedback(Boolean studentFeedback)
-	{
-		this.studentFeedback = studentFeedback;
-	}
+    public DistributedTest() {
+    }
 
-	public void setTestType(TestType type)
-	{
-		testType = type;
-	}
+    public DistributedTest(Integer distributedTestId) {
+        setIdInternal(distributedTestId);
+    }
 
-	public String getTestInformation()
-	{
-		return testInformation;
-	}
+    public Calendar getBeginDate() {
+        return beginDate;
+    }
 
-	public void setTestInformation(String string)
-	{
-		testInformation = string;
-	}
+    public Calendar getBeginHour() {
+        return beginHour;
+    }
 
-	public String getTitle()
-	{
-		return title;
-	}
+    public CorrectionAvailability getCorrectionAvailability() {
+        return correctionAvailability;
+    }
 
-	public void setTitle(String string)
-	{
-		title = string;
-	}
+    public Calendar getEndDate() {
+        return endDate;
+    }
 
-	public Integer getNumberOfQuestions()
-	{
-		return numberOfQuestions;
-	}
+    public Calendar getEndHour() {
+        return endHour;
+    }
 
-	public void setNumberOfQuestions(Integer integer)
-	{
-		numberOfQuestions = integer;
-	}
+    public TestType getTestType() {
+        return testType;
+    }
 
-	public ITestScope getTestScope()
-	{
-		return testScope;
-	}
+    public void setBeginDate(Calendar calendar) {
+        beginDate = calendar;
+    }
 
-	public Integer getKeyTestScope()
-	{
-		return keyTestScope;
-	}
+    public void setBeginHour(Calendar calendar) {
+        beginHour = calendar;
+    }
 
-	public void setTestScope(ITestScope scope)
-	{
-		testScope = scope;
-	}
+    public void setCorrectionAvailability(CorrectionAvailability availability) {
+        correctionAvailability = availability;
+    }
 
-	public void setKeyTestScope(Integer integer)
-	{
-		keyTestScope = integer;
-	}
+    public void setEndDate(Calendar calendar) {
+        endDate = calendar;
+    }
 
-	public List getStudentLogs()
-	{
-		return studentLogs;
-	}
+    public void setEndHour(Calendar calendar) {
+        endHour = calendar;
+    }
 
-	public void setStudentLogs(List studentLogs)
-	{
-		this.studentLogs = studentLogs;
-	}
+    public void setTestType(TestType type) {
+        testType = type;
+    }
 
-	public List getStudentQuestions()
-	{
-		return studentQuestions;
-	}
+    public String getTestInformation() {
+        return testInformation;
+    }
 
-	public void setStudentQuestions(List studentQuestions)
-	{
-		this.studentQuestions = studentQuestions;
-	}
+    public void setTestInformation(String string) {
+        testInformation = string;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String string) {
+        title = string;
+    }
+
+    public Integer getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
+
+    public void setNumberOfQuestions(Integer integer) {
+        numberOfQuestions = integer;
+    }
+
+    public ITestScope getTestScope() {
+        return testScope;
+    }
+
+    public Integer getKeyTestScope() {
+        return keyTestScope;
+    }
+
+    public void setTestScope(ITestScope scope) {
+        testScope = scope;
+    }
+
+    public void setKeyTestScope(Integer integer) {
+        keyTestScope = integer;
+    }
+
+    public List getStudentLogs() {
+        return studentLogs;
+    }
+
+    public void setStudentLogs(List studentLogs) {
+        this.studentLogs = studentLogs;
+    }
+
+    public List getStudentQuestions() {
+        return studentQuestions;
+    }
+
+    public void setStudentQuestions(List studentQuestions) {
+        this.studentQuestions = studentQuestions;
+    }
+
+    public Boolean getImsFeedback() {
+        return imsFeedback;
+    }
+
+    public void setImsFeedback(Boolean imsFeedback) {
+        this.imsFeedback = imsFeedback;
+    }
 }

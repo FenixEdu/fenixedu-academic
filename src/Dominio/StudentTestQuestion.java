@@ -1,121 +1,150 @@
 /*
  * Created on 27/Ago/2003
- *
  */
 package Dominio;
+
+import Util.tests.CorrectionFormula;
 
 /**
  * @author Susana Fernandes
  */
-public class StudentTestQuestion
-	extends DomainObject
-	implements IStudentTestQuestion {
-	private Integer keyStudent;
-	private IStudent student;
-	private Integer keyDistributedTest;
-	private IDistributedTest distributedTest;
-	private IQuestion question;
-	private Integer keyQuestion;
+public class StudentTestQuestion extends DomainObject implements
+        IStudentTestQuestion {
 
-	private Integer testQuestionOrder;
-	private Integer testQuestionValue;
-	private Double testQuestionMark;
-	private Integer response;
-	private String optionShuffle;
+    private Integer keyStudent;
 
-	public StudentTestQuestion() {
-	}
+    private IStudent student;
 
-	public StudentTestQuestion(Integer studentTestQuestionId) {
-		setIdInternal(studentTestQuestionId);
-	}
+    private Integer keyDistributedTest;
 
-	public IDistributedTest getDistributedTest() {
-		return distributedTest;
-	}
+    private IDistributedTest distributedTest;
 
-	public Integer getKeyDistributedTest() {
-		return keyDistributedTest;
-	}
+    private IQuestion question;
 
-	public Integer getKeyQuestion() {
-		return keyQuestion;
-	}
+    private Integer keyQuestion;
 
-	public Integer getKeyStudent() {
-		return keyStudent;
-	}
+    private Integer testQuestionOrder;
 
-	public String getOptionShuffle() {
-		return optionShuffle;
-	}
+    private Double testQuestionValue;
 
-	public IQuestion getQuestion() {
-		return question;
-	}
+    private Double testQuestionMark;
 
-	public Integer getResponse() {
-		return response;
-	}
+    private Integer oldResponse;
 
-	public IStudent getStudent() {
-		return student;
-	}
+    private String response;
 
-	public Integer getTestQuestionOrder() {
-		return testQuestionOrder;
-	}
+    private String optionShuffle;
 
-	public Integer getTestQuestionValue() {
-		return testQuestionValue;
-	}
+    private CorrectionFormula formula;
 
-	public Double getTestQuestionMark() {
-		return testQuestionMark;
-	}
+    public StudentTestQuestion() {
+    }
 
-	public void setDistributedTest(IDistributedTest test) {
-		distributedTest = test;
-	}
+    public StudentTestQuestion(Integer studentTestQuestionId) {
+        setIdInternal(studentTestQuestionId);
+    }
 
-	public void setKeyDistributedTest(Integer integer) {
-		keyDistributedTest = integer;
-	}
+    public IDistributedTest getDistributedTest() {
+        return distributedTest;
+    }
 
-	public void setKeyQuestion(Integer integer) {
-		keyQuestion = integer;
-	}
+    public Integer getKeyDistributedTest() {
+        return keyDistributedTest;
+    }
 
-	public void setKeyStudent(Integer integer) {
-		keyStudent = integer;
-	}
+    public Integer getKeyQuestion() {
+        return keyQuestion;
+    }
 
-	public void setOptionShuffle(String string) {
-		optionShuffle = string;
-	}
+    public Integer getKeyStudent() {
+        return keyStudent;
+    }
 
-	public void setQuestion(IQuestion question) {
-		this.question = question;
-	}
+    public String getOptionShuffle() {
+        return optionShuffle;
+    }
 
-	public void setResponse(Integer response) {
-		this.response = response;
-	}
+    public IQuestion getQuestion() {
+        return question;
+    }
 
-	public void setStudent(IStudent student) {
-		this.student = student;
-	}
+    public String getResponse() {
+        return response;
+    }
 
-	public void setTestQuestionOrder(Integer integer) {
-		testQuestionOrder = integer;
-	}
+    public IStudent getStudent() {
+        return student;
+    }
 
-	public void setTestQuestionValue(Integer integer) {
-		testQuestionValue = integer;
-	}
+    public Integer getTestQuestionOrder() {
+        return testQuestionOrder;
+    }
 
-	public void setTestQuestionMark(Double double1) {
-		testQuestionMark = double1;
-	}
+    public Double getTestQuestionValue() {
+        return testQuestionValue;
+    }
 
+    public Double getTestQuestionMark() {
+        return testQuestionMark;
+    }
+
+    public void setDistributedTest(IDistributedTest test) {
+        distributedTest = test;
+    }
+
+    public void setKeyDistributedTest(Integer integer) {
+        keyDistributedTest = integer;
+    }
+
+    public void setKeyQuestion(Integer integer) {
+        keyQuestion = integer;
+    }
+
+    public void setKeyStudent(Integer integer) {
+        keyStudent = integer;
+    }
+
+    public void setOptionShuffle(String string) {
+        optionShuffle = string;
+    }
+
+    public void setQuestion(IQuestion question) {
+        this.question = question;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    public void setStudent(IStudent student) {
+        this.student = student;
+    }
+
+    public void setTestQuestionOrder(Integer integer) {
+        testQuestionOrder = integer;
+    }
+
+    public void setTestQuestionValue(Double value) {
+        testQuestionValue = value;
+    }
+
+    public void setTestQuestionMark(Double double1) {
+        testQuestionMark = double1;
+    }
+
+    public Integer getOldResponse() {
+        return oldResponse;
+    }
+
+    public void setOldResponse(Integer oldResponse) {
+        this.oldResponse = oldResponse;
+    }
+
+    public CorrectionFormula getCorrectionFormula() {
+        return formula;
+    }
+
+    public void setCorrectionFormula(CorrectionFormula formula) {
+        this.formula = formula;
+    }
 }

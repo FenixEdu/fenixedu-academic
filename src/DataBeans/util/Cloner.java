@@ -1,5 +1,7 @@
 package DataBeans.util;
 
+import java.beans.XMLDecoder;
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -217,6 +219,7 @@ import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
 import Util.EvaluationType;
 import Util.State;
+import Util.tests.Response;
 
 /**
  * @author jpvl
@@ -3864,6 +3867,7 @@ public abstract class Cloner
         infoTestQuestion.setIdInternal(testQuestion.getIdInternal());
         infoTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
         infoTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
+        infoTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
         InfoTest infoTest = copyITest2InfoTest(testQuestion.getTest());
         infoTestQuestion.setTest(infoTest);
         InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(testQuestion.getQuestion());
@@ -3888,24 +3892,33 @@ public abstract class Cloner
         return infoTestScope;
     }
 
-    public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion studentTestQuestion)
+    public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(
+            IStudentTestQuestion studentTestQuestion)
     {
         InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
         //copyObjectProperties(infoStudentTestQuestion, studentTestQuestion);
         infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
         infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
-        infoStudentTestQuestion.setResponse(studentTestQuestion.getResponse());
+        infoStudentTestQuestion.setOldResponse(studentTestQuestion.getOldResponse());
         infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
         infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
         infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
+        infoStudentTestQuestion.setCorrectionFormula(studentTestQuestion.getCorrectionFormula());
         //  
-        InfoDistributedTest infoDistributedTest =
-            copyIDistributedTest2InfoDistributedTest(studentTestQuestion.getDistributedTest());
+        InfoDistributedTest infoDistributedTest = copyIDistributedTest2InfoDistributedTest(studentTestQuestion
+                .getDistributedTest());
         InfoStudent infoStudent = copyIStudent2InfoStudent(studentTestQuestion.getStudent());
         InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
         infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
         infoStudentTestQuestion.setStudent(infoStudent);
         infoStudentTestQuestion.setQuestion(infoQuestion);
+        if (studentTestQuestion.getResponse() != null)
+        {
+            XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(studentTestQuestion
+                    .getResponse().getBytes()));
+            infoStudentTestQuestion.setResponse((Response) decoder.readObject());
+            decoder.close();
+        }
         return infoStudentTestQuestion;
     }
 

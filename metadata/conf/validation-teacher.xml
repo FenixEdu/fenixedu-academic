@@ -22,7 +22,8 @@
   	</form>
 
    <form name="questionForm">
-	<field property="questionValue" depends="required,integer" page="2">
+		<field property="questionValue" depends="required,double" page="2">
+
 		<arg0 key="message.questionValue" resource="true"/>
 	</field>
 	<field property="metadataCode" depends="required" page="1">
@@ -31,7 +32,7 @@
    </form>
 
    <form name="testQuestionForm">
-	<field property="testQuestionValue" depends="required, integer" page="1">
+	<field property="testQuestionValue" depends="required, double" page="1">
 		<arg0 key="message.questionValue" resource="true"/>
 	</field>
    </form>
@@ -71,58 +72,154 @@
    	<field property="selected" depends="required" page="2">
     	<arg0 key="message.shiftsOrStudents" resource="true"/>
     </field>
-   	<field property="beginDateFormatted" depends="required, mask, date" page="1">
-		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-		<arg0 key="message.testBeginDate" resource="true"/>
+    <field property="beginDayFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.beginDay" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
 		<var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
         </var>
         <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+          <var-name>max</var-name>
+          <var-value>31</var-value>
         </var>
 	</field>
-	<field property="endDateFormatted" depends="required, mask, date" page="1">
-		<msg name="date" key="errors.invalid.date"/>
-   		<msg name="mask" key="errors.invalid.date"/>
-		<arg0 key="message.testEndDate" resource="true"/>
+	  <field property="beginMonthFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.beginMonth" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
 		<var>
-           <var-name>datePattern</var-name>
-           <var-value>dd/MM/yyyy</var-value>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
         </var>
         <var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+          <var-name>max</var-name>
+          <var-value>12</var-value>
         </var>
 	</field>
-	<field property="beginHourFormatted" depends="required, mask, date" page="1">
-		<msg name="date" key="error.invalid.hour"/>
-   		<msg name="mask" key="error.invalid.hour"/>   		
-   		<arg0 key="message.testBeginHour" resource="true"/>
+	  <field property="beginYearFormatted" depends="required, integer, range" page="1">
+      	<arg0 key="message.beginYear" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
 		<var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..):(.||..))$</var-value>
+          <var-name>month</var-name>
+          <var-value>month</var-value>
         </var>
    		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
+          <var-name>day</var-name>
+          <var-value>day</var-value>
         </var>
+
+        <var>
+          <var-name>min</var-name>
+          <var-value>1900</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>2100</var-value>
+        </var> 
 	</field>
-	<field property="endHourFormatted" depends="required, mask, date" page="1">
-		<msg name="date" key="error.invalid.hour"/>
-   		<msg name="mask" key="error.invalid.hour"/>   		
-   		<arg0 key="message.testEndHour" resource="true"/>
+      <field property="endDayFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.endDay" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
 		<var>
-           <var-name>mask</var-name>
-           <var-value>^((.||..):(.||..))$</var-value>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
         </var>
    		<var>
-           <var-name>datePattern</var-name>
-           <var-value>HH:mm</var-value>
+          <var-name>max</var-name>
+          <var-value>31</var-value>
         </var>
 	</field>
+	  <field property="endMonthFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.endMonth" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>12</var-value>
+        </var>
+      </field>
+	  <field property="endYearFormatted" depends="required, integer, range" page="1">
+      	<arg0 key="message.endYear" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>month</var-name>
+          <var-value>month</var-value>
+        </var>
+        <var>
+          <var-name>day</var-name>
+          <var-value>day</var-value>
+        </var>
+
+        <var>
+          <var-name>min</var-name>
+          <var-value>1900</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>2100</var-value>
+        </var> 
+      </field>
+      <field property="beginHourFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.testBeginHour" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>24</var-value>
+        </var>
+   	</field>
+   	<field property="beginMinuteFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.beginMinute" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>60</var-value>
+        </var>
+   	</field>
+   	 <field property="endHourFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.testEndHour" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>24</var-value>
+        </var>
+   	</field>
+   	<field property="endMinuteFormatted" depends="required, integer, range" page="1">
+        <arg0 key="message.endMinute" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>60</var-value>
+        </var>
+   	</field>
    </form>
    
    <form name="testMarksForm">

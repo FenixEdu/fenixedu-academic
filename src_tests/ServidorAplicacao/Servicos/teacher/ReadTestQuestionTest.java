@@ -120,7 +120,7 @@ public class ReadTestQuestionTest extends TestCaseReadServices
         }
 
         bodyComponent.setInfoTestQuestion(infoTestQuestion);
-        bodyComponent.setInfoQuestion(infoQuestion);
+        //bodyComponent.setInfoQuestion(infoQuestion);
         bodyComponent.setExecutionCourse(infoExecutionCourse);
         SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
         return siteView;

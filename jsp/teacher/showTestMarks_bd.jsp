@@ -69,8 +69,13 @@
 				<bean:define id="studentIndex" value="<%=new Integer(new Integer(studentIndex).intValue()+1).toString()%>"/>
 			<%if (new Integer(studentIndex).equals(questionNumber)) {%>
 				<bean:define id="finalMarkValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(finalMark.toString())).toString()) %>"/>
-				<td class="listClasses"><bean:write name="finalMarkValue"/></td>
-				<td><html:link page="<%= "/testsManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showStudentTest"/></html:link></td>
+				<logic:lessEqual name="finalMarkValue" value="0">
+					<td class="listClasses">0</td>
+				</logic:lessEqual>
+				<logic:greaterThan name="finalMarkValue" value="0">
+					<td class="listClasses"><bean:write name="finalMarkValue"/></td>
+				</logic:greaterThan>
+				<td><html:link page="<%= "/studentTestManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showStudentTest"/></html:link></td>
 				<td><html:link page="<%= "/testsManagement.do?method=showStudentTestLog&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showLog"/></html:link></td>
 				<bean:define id="markIndex" value="0"/>
 				</tr>

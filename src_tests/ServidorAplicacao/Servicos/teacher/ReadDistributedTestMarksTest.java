@@ -14,6 +14,7 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import DataBeans.InfoDistributedTest;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteStudentsTestMarks;
 import DataBeans.InfoStudentTestQuestionMark;
 import DataBeans.SiteView;
@@ -118,7 +119,7 @@ public class ReadDistributedTestMarksTest extends ServiceNeedsAuthenticationTest
 				studentTestQuestionList.size(),
 				infoSiteStudentsTestMarks.getInfoStudentTestQuestionList().size());
 			assertEquals(
-				Cloner.get(executionCourse),
+				(InfoExecutionCourse) Cloner.get(executionCourse),
 				infoSiteStudentsTestMarks.getExecutionCourse());
 			assertEquals(
 				copyIDistributedTest2InfoDistributedTest(

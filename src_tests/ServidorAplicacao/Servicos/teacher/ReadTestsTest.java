@@ -13,6 +13,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteTests;
 import DataBeans.InfoTest;
 import DataBeans.SiteView;
@@ -104,7 +105,7 @@ public class ReadTestsTest extends ServiceNeedsAuthenticationTestCase
 
 			InfoSiteTests infoSiteTests = (InfoSiteTests) siteView.getComponent();
 			List infoServiceTestsList = infoSiteTests.getInfoTests();
-			//InfoExecutionCourse executionCourse = infoSiteTests.getExecutionCourse();
+			InfoExecutionCourse executionCourse = infoSiteTests.getExecutionCourse();
 
 			assertEquals(infoServiceTestsList.size(), testList.size());
 			int i = 0;
