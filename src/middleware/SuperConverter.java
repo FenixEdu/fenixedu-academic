@@ -26,6 +26,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.Country;
+import Dominio.Funcionario;
 import Dominio.ICountry;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
@@ -39,6 +40,7 @@ import Dominio.StudentGroupInfo;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
+import Util.EstadoCivil;
 import Util.RoleType;
 import Util.Sexo;
 import Util.StudentState;
@@ -59,6 +61,9 @@ public class SuperConverter extends ObjectFenixOJB {
 public static void main(String args[]) throws Exception{
 	// Start Converting
  
+ 
+ 	// TODO: Quando se le as pessoas para ver se elas ja existem temos de ler tambem por Username
+ 	// Para garantir que nao vao haver colisoes
 
 	SuperConverter superConverter = new SuperConverter();
 
@@ -66,7 +71,7 @@ public static void main(String args[]) throws Exception{
 	
 	
 	// Converter Alunos de Licenciatura em Persons e em Students
-	superConverter.migrateAluno2Fenix();
+//	superConverter.migrateAluno2Fenix();
 		
 	
 	// Converter Pessoas de Pos Graduacao em Persons
@@ -92,30 +97,145 @@ public static void main(String args[]) throws Exception{
 	
 	}
 
-	public void migratePosgradPessoa2Fenix(){
-		
-//		try {
-//			System.out.print("A Ler Pessoas de Pos-Graduacao ...");
-//			List alunosG = get();
-//			System.out.println("  Done !");
-//
-//			System.out.println("A Converter " + alunosG.size() + " alunos de Licenciatura para o Fenix ...");
-//			
-//			
-//		
-//		} catch(Exception e) {
-//			System.out.println("Erro na Pessoa de Pos-Graduacao : " + person2Convert.getNome());
-//			throw new Exception(e);
-//		}	
+	public void migratePosgradPessoa2Fenix() throws Exception{
+		IPessoa person2Write = null;
+		List result = null;
+		Query query = null;
+		Criteria criteria = null;
+		try {
+			System.out.print("A Ler Pessoas de Pos-Graduacao ...");
+			List pessoasPG = getPessoas();
+			System.out.println("  Done !");
+			
+			System.out.println("A Converter " + pessoasPG.size() + " pessoas de Pos-Graduacao para o Fenix ...");
+
+			Iterator iterator = pessoasPG.iterator();
+			while(iterator.hasNext()){
+				Posgrad_pessoa person2Convert = (Posgrad_pessoa) iterator.next();
+				
+
+				// Verificar o Tipo de Documento
+				TipoDocumentoIdentificacao identificationDocumentType = null;
+				if (person2Convert.getTipodocumentoidentificacao().equalsIgnoreCase("BILHETE DE IDENTIDADE")){
+					identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+				} else if (person2Convert.getTipodocumentoidentificacao().equalsIgnoreCase("PASSAPORTE")){
+					identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.PASSAPORTE);
+				} else identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.OUTRO);
+
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("numeroDocumentoIdentificacao",person2Convert.getNumerodocumentoidentificacao());
+				criteria.addEqualTo("tipoDocumentoIdentificacao", identificationDocumentType);
+				query = new QueryByCriteria(Pessoa.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);
+
+				if (result.size() == 0){
+					person2Write = copyPessoaPG2Person(person2Convert, identificationDocumentType);
+					broker.store(person2Write);
+					givePersonRole(person2Write);
+
+				} else {
+					person2Write = (IPessoa) result.get(0);
 					
+					System.out.println("A Pessoa " + person2Write.getNome() + " ja existe.");
+					
+					// Verificar se a Pessoa e um Funcionario
+					criteria = new Criteria();
+					
+					// A classe funcionario ainda usa os codigos internos por isso temos de procurar pelos codigos internos
+					Pessoa personTemp = (Pessoa) person2Write;
+					criteria.addEqualTo("chavePessoa", personTemp.getCodigoInterno());
+					query = new QueryByCriteria(Funcionario.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);
+					
+					if (result.size() == 0){
+						// A pessoa nao e um funcionario. Entao vamos fazer update dos campos todos
+						person2Write = copyPessoaPG2Person(person2Convert, identificationDocumentType);
+						broker.store(person2Write);
+						
+					} else {
+						// A Pessoa e um funcionario
+						
+					}
+					
+					
+				}
+				
+			}
+		
+		} catch(Exception e) {
+//			System.out.println("Erro na Pessoa de Pos-Graduacao : " + person2Convert.getNome());
+			throw new Exception(e);
+		}	
+					
+	}
+	
+	private IPessoa copyPessoaPG2Person(Posgrad_pessoa person2Convert, TipoDocumentoIdentificacao identificationDocumentType){
+		IPessoa person2Write = new Pessoa();
+		person2Write.setNumeroDocumentoIdentificacao(person2Convert.getNumerodocumentoidentificacao());
+		person2Write.setTipoDocumentoIdentificacao(identificationDocumentType);
+		person2Write.setLocalEmissaoDocumentoIdentificacao(person2Convert.getLocalemissaodocumentoidentificacao());
+		person2Write.setDataEmissaoDocumentoIdentificacao(person2Convert.getDataemissaodocumentoidentificacao());
+		person2Write.setNome(person2Convert.getNome());
+		person2Write.setNomePai(person2Convert.getNomepai());
+		person2Write.setNomeMae(person2Convert.getNomemae());
+					
+		// Verificar o Sexo
+					
+		if (person2Convert.getSexo().equalsIgnoreCase("masculino"))
+			person2Write.setSexo(new Sexo(Sexo.MASCULINO));
+		else if (person2Convert.getSexo().equalsIgnoreCase("feminino"))
+			person2Write.setSexo(new Sexo(Sexo.FEMININO));
+		else {
+			System.out.println();
+			System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no SEXO.");
+		} 
+					
+		// Verificar o Estado Civil
+
+		if (person2Convert.getEstadocivil().equalsIgnoreCase("solteiro")){
+			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.SOLTEIRO));
+		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("casado")){
+			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.CASADO));
+		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("divorciado")){
+			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.DIVORCIADO));
+		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("viúvo")){
+			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.VIUVO));
+		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("separado")){
+			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.SEPARADO));
+		} else if (person2Convert.getEstadocivil().equalsIgnoreCase("união de facto")){
+			person2Write.setEstadoCivil(new EstadoCivil(EstadoCivil.UNIAO_DE_FACTO));
+		} else {
+			System.out.println("Erro a converter Pessoa  " + person2Convert.getNome() + ". Erro no ESTADO CIVIL.");
+		} 
+					
+		person2Write.setNascimento(person2Convert.getNascimento());
+		person2Write.setNacionalidade(person2Convert.getNacionalidade());
+		person2Write.setFreguesiaNaturalidade(person2Convert.getFreguesianaturalidade());
+		person2Write.setConcelhoNaturalidade(person2Convert.getConcelhonaturalidade());
+		person2Write.setDistritoNaturalidade(person2Convert.getDistritonaturalidade());
+		person2Write.setMorada(person2Convert.getMorada());
+		person2Write.setLocalidade(person2Convert.getLocalidade());
+		person2Write.setCodigoPostal(person2Convert.getCodigopostal());
+		person2Write.setFreguesiaMorada(person2Convert.getFreguesiamorada());
+		person2Write.setConcelhoMorada(person2Convert.getConcelhomorada());
+		person2Write.setDistritoMorada(person2Convert.getDistritomorada());
+		person2Write.setTelefone(person2Convert.getTelefone());
+		person2Write.setTelemovel(person2Convert.getTelemovel());
+		person2Write.setEmail(person2Convert.getEmail());
+		person2Write.setEnderecoWeb(person2Convert.getEnderecoweb());
+		person2Write.setNumContribuinte(person2Convert.getNumcontribuinte());
+		person2Write.setProfissao(person2Convert.getProfissao());
+		person2Write.setUsername(person2Convert.getUsername());
+		person2Write.setPassword(PasswordEncryptor.encryptPassword(person2Convert.getPassword()));
+		
+		return person2Write;		
 	}
 
 
    
 	public void migrateAluno2Fenix() throws Exception {
 		IPessoa person2Write = null;
-		boolean newPerson = false;
-		boolean newStudent = false;
 		List result = null;
 		Query query = null;
 		QueryByCriteria queryByCriteria = null;
@@ -149,8 +269,6 @@ public static void main(String args[]) throws Exception{
 
 			Iterator iterator = alunosG.iterator();
 			while(iterator.hasNext()){
-				newPerson = false;
-				newStudent = false;
 				student2Convert = (Almeida_aluno) iterator.next();
 
 				Criteria criteria = new Criteria();
@@ -162,7 +280,6 @@ public static void main(String args[]) throws Exception{
 				if (result.size() == 0) {
 					// Cria uma nova Pessoa		
 						
-					newPerson = true;
 					person2Write = new Pessoa();	
 					person2Write.setNumeroDocumentoIdentificacao(student2Convert.getBi());
 					person2Write.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
@@ -207,17 +324,14 @@ public static void main(String args[]) throws Exception{
 					
 					person2Write.setEmail(student2Convert.getEmail());
 					broker.store(person2Write);
+					givePersonRole(person2Write);
 	
 				} else {
 					person2Write = (IPessoa) result.get(0);
 					System.out.println("A Pessoa " + student2Convert.getNome() + " já existe.");
 				}
 				
-				// Se for uma nova pessoa dar o novo Role
-				if (newPerson) {
-					givePersonRole(person2Write);
-				}
-				
+		
 				
 				// Criar o Aluno
 				IStudent student2Write = null;
@@ -229,7 +343,6 @@ public static void main(String args[]) throws Exception{
 				result = (List)broker.getCollectionByQuery(query);
 
 				if (result.size() == 0){
-					newStudent = true;
 					student2Write = new Student();
 					student2Write.setNumber(new Integer(String.valueOf(student2Convert.getNumero())));
 					student2Write.setDegreeType(new TipoCurso(TipoCurso.LICENCIATURA));
@@ -237,9 +350,7 @@ public static void main(String args[]) throws Exception{
 					student2Write.setState(new StudentState(StudentState.INSCRITO));
 					student2Write.setStudentGroupInfo(studentGroupInfo);
 				
-					if (newStudent){				
-						giveStudentRole(student2Write);
-					}	
+					giveStudentRole(student2Write);
 				} else {
 					student2Write = (IStudent) result.get(0);
 					student2Write.setStudentGroupInfo(studentGroupInfo);
