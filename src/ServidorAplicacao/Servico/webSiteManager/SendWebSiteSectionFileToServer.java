@@ -419,8 +419,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				" ("
 					+ "<a href='"
 					+ infoWebSiteSection.getName()
-					+ "_principal/"
-					+ infoWebSiteSection.getName()
 					+ "-"
 					+ new Mes(calendar.get(Calendar.MONTH) + 1)
 					+ ".html'>"
