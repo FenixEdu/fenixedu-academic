@@ -24,6 +24,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public abstract class ServiceTestCase extends TestCase {
 
+	protected GestorServicos gestor = null;
+	
 	public ServiceTestCase(String name) {
 		super(name);
 	}
@@ -68,6 +70,8 @@ public abstract class ServiceTestCase extends TestCase {
 
 			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
 
+			gestor = GestorServicos.manager();
+			
 			connection.close();
 		} catch (Exception ex) {
 			fail("Setup failed loading database with test data set: " + ex);
@@ -84,24 +88,7 @@ public abstract class ServiceTestCase extends TestCase {
 //		}
 	}
 
-	protected IUserView authenticateUser(
-		String userName,
-		String passwd,
-		String application) {
-		SuportePersistenteOJB.resetInstance();
-		String args[] = { userName, passwd, application };
 
-		try {
-			return (IUserView) GestorServicos.manager().executar(
-					null,
-					"Autenticacao",
-					args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-			
-		}
-	}
 
 	protected String getBackUpDataSetFilePath() {
 		return "etc/testBackup.xml";
