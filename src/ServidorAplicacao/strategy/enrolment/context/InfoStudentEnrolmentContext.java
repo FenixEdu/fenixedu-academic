@@ -20,6 +20,7 @@ import Dominio.IEnrolment;
 
 public final class InfoStudentEnrolmentContext extends InfoObject
 {
+    //deprecated
 	private InfoExecutionPeriod infoExecutionPeriod;
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	private List studentCurrentSemesterInfoEnrollments;
@@ -27,6 +28,10 @@ public final class InfoStudentEnrolmentContext extends InfoObject
 	private Integer creditsInSecundaryArea;
 	private Integer creditsInSpecializationArea;
 
+	//not deprecated
+	private List curricularCourses2Enroll;
+	
+	
 	public InfoStudentEnrolmentContext() {}
 
 	
@@ -184,4 +189,16 @@ public final class InfoStudentEnrolmentContext extends InfoObject
 		return infoStudentEnrolmentContext;
 	}
 
+    /**
+     * @return Returns the curricularCourses2Enroll.
+     */
+    public List getCurricularCourses2Enroll() {
+        return curricularCourses2Enroll;
+    }
+    /**
+     * @param curricularCourses2Enroll The curricularCourses2Enroll to set.
+     */
+    public void setCurricularCourses2Enroll(List curricularCourses2Enroll) {
+        this.curricularCourses2Enroll = curricularCourses2Enroll;
+    }
 }

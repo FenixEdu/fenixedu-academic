@@ -2,6 +2,7 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import ServidorPersistente.ExcepcaoPersistencia;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.enrollment.EnrollmentRuleType;
@@ -48,7 +49,7 @@ public interface IStudentCurricularPlan extends IDomainObject
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
-	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType);
+	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType) throws ExcepcaoPersistencia;
 	public List getStudentApprovedEnrollments();
 	public List getStudentEnrolledEnrollments();
 	public List getStudentTemporarilyEnrolledEnrollments();
