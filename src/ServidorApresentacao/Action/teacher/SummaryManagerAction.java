@@ -343,10 +343,10 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                 } else {
                     Object argsLesson[] = { element.getIdInternal() };
                     Calendar lessonStartDate = (Calendar) ServiceManagerServiceFactory.executeService(userView, "ReadLessonStartDate", argsLesson);
+                    lessonStartDate.set(Calendar.DAY_OF_WEEK, element.getDiaSemana().getDiaSemana().intValue());                 
                     dates.add(lessonStartDate.getTime());
                     request.setAttribute("dates", dates);
-                }
-                
+                }                
                 break;
             }
         }

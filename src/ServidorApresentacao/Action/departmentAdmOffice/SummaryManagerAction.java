@@ -320,11 +320,18 @@ public class SummaryManagerAction extends FenixDispatchAction {
         			dates.add(calendar.getTime());							
         			request.setAttribute("dates", dates);
         		}
-        		else
-        			request.setAttribute("datesVisible", "false");   
-        		
+        		else {
+                    Object argsLesson[] = { element.getIdInternal() };
+                    Calendar lessonStartDate = (Calendar) ServiceManagerServiceFactory.executeService(userView, "ReadLessonStartDate", argsLesson);
+                    lessonStartDate.set(Calendar.DAY_OF_WEEK, element.getDiaSemana().getDiaSemana().intValue());
+                    dates.add(lessonStartDate.getTime());
+                    request.setAttribute("dates", dates);
+                }
         		break;
         	}
+        }
+        if (request.getAttribute("dates") == null) {
+            request.setAttribute("dates", new ArrayList());
         }
     }
 

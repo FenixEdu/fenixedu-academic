@@ -69,10 +69,10 @@ public class ReadLastSummary implements IService {
 				Collections.sort(summaries, comparator);
 				DiaSemana diaSemana = aula.getDiaSemana();
 				int summaryDayOfWeek;
-				for(int i = summaries.size() - 1; i > 0; i--){
+				for(int i = summaries.size() - 1; i >= 0; i--){
 				    ISummary summary1 = (ISummary) summaries.get(i);
 				    summary = InfoSummary.newInfoFromDomain(summary1);
-				    summaryDayOfWeek = summary.getSummaryDate().get(Calendar.DAY_OF_WEEK);			
+				    summaryDayOfWeek = summary.getSummaryDate().get(Calendar.DAY_OF_WEEK);
 				    if(summaryDayOfWeek == diaSemana.getDiaSemana().intValue())
 				        break;	
 				}				
