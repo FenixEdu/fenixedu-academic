@@ -13,10 +13,38 @@ package ServidorAplicacao.Servicos.sop;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.ClassAndShiftKeys;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import DataBeans.InfoClass;
+import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
+import Dominio.ICurso;
+import Dominio.ICursoExecucao;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.IPlanoCurricularCurso;
+import Dominio.ITurma;
+import Dominio.ITurno;
+import Dominio.Turma;
+import Dominio.Turno;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurmaPersistente;
+import ServidorPersistente.ITurnoPersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoAula;
 
-public class RemoverTurnoServicosTest extends TestCaseServicos {
+public class RemoverTurnoServicosTest extends TestCaseServicosWithAuthorization {
+	private InfoClass infoClass = null;
+	private InfoShift infoShift = null;
+
+
 	public RemoverTurnoServicosTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -38,36 +66,96 @@ public class RemoverTurnoServicosTest extends TestCaseServicos {
 	protected void tearDown() {
 		super.tearDown();
 	}
+	
+	protected String getNameOfServiceToBeTested() {
+		return "RemoverTurno";
+	}
 
-	// remove Turno by unauthorized user
-	public void testUnauthorizedRemoveTurno() {
-		Object argsRemoverTurno[] = new Object[1];
-		argsRemoverTurno[0] = new ClassAndShiftKeys("turma1", "turno1");
+
+	public void testRemoveExistingShift() {
+		this.ligarSuportePersistente(true);
+		
+		Object argsRemoverTurno[] = {this.infoShift, this.infoClass} ;
 
 		Object result = null;
 		try {
-			result =
-				_gestor.executar(_userView2, "RemoverTurno", argsRemoverTurno);
-			fail("testUnauthorizedRemoveTurno");
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoverTurno);
+			assertEquals("testRemoverTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
-			assertNull("testUnauthorizedRemoveTurno", result);
+			fail("testRemoverTurno");
 		}
 	}
 
-	public void testRemoverTurno() {
-		Object argsRemoverTurno[] = new Object[1];
-		argsRemoverTurno[0] = new ClassAndShiftKeys("turma1", "turno1");
+	public void testRemoveNonExistingShift() {
+		this.ligarSuportePersistente(false);
+		
+		Object argsRemoverTurno[] = {this.infoShift, this.infoClass} ;
 
 		Object result = null;
 		try {
-			result =
-				_gestor.executar(_userView, "RemoverTurno", argsRemoverTurno);
-			assertEquals(
-				"testRemoverTurno",
-				Boolean.TRUE.booleanValue(),
-				((Boolean) result).booleanValue());
+			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoverTurno);
+			assertEquals("testRemoverTurno", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testRemoverTurno");
+		}
+	}
+
+
+	private void ligarSuportePersistente(boolean existing) {
+
+		ISuportePersistente sp = null;
+
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+
+			ICursoPersistente icp = sp.getICursoPersistente();
+			ICurso ic = icp.readBySigla("LEIC");
+
+			IPlanoCurricularCursoPersistente ipccp = sp.getIPlanoCurricularCursoPersistente();
+			IPlanoCurricularCurso ipcc = ipccp.readByNameAndDegree("plano1", ic);
+
+			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+
+			ICursoExecucaoPersistente icep = sp.getICursoExecucaoPersistente();
+			ICursoExecucao ice = icep.readByDegreeCurricularPlanAndExecutionYear(ipcc, iey);
+
+			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
+			
+			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
+			ITurma turma = null;
+			
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+			assertNotNull(executionCourse);
+			
+			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+			ITurno shift = null;
+			
+			if(existing) {
+				turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("10501", ice, iep);
+				assertNotNull(turma);
+				shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
+				assertNotNull(shift);
+			} else {
+				turma = new Turma("turma1", new Integer(1), ice, iep);
+				shift = new Turno("desc", new TipoAula(TipoAula.RESERVA), new Integer(1000), executionCourse);
+			}
+			
+			this.infoClass = Cloner.copyClass2InfoClass(turma);
+			this.infoShift = Cloner.copyShift2InfoShift(shift);
+
+			sp.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia excepcao) {
+			try {
+				sp.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("ligarSuportePersistente: cancelarTransaccao");
+			}
+			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
 

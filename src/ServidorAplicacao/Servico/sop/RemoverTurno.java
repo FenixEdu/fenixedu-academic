@@ -11,6 +11,7 @@ import DataBeans.InfoClass;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ITurma;
+import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -41,21 +42,30 @@ public class RemoverTurno implements IServico {
 
   public Object run(InfoShift infoShift, InfoClass infoClass) {
 
-    boolean result = false;
-
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       
       ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
       ITurma classTemp = Cloner.copyInfoClass2Class(infoClass);
       
-      sp.getITurmaTurnoPersistente().delete(shift, classTemp);
-      result = true;
+      // Read From Database
+      
+	  ITurno shiftToDelete = SuportePersistenteOJB.getInstance().getITurnoPersistente().readByNameAndExecutionCourse(shift.getNome(), shift.getDisciplinaExecucao());
+	  ITurma classToDelete = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getNome(), classTemp.getExecutionDegree(), classTemp.getExecutionPeriod());
+	  ITurmaTurno turmaTurnoToDelete = null;
+	  if ((shiftToDelete != null) && (classToDelete != null)){
+		  turmaTurnoToDelete = SuportePersistenteOJB.getInstance().getITurmaTurnoPersistente().readByTurmaAndTurno(classToDelete, shiftToDelete);
+	  } else return Boolean.FALSE;
+	  
+	  // Check if exists	  
+	  if (turmaTurnoToDelete != null)
+		  SuportePersistenteOJB.getInstance().getITurmaTurnoPersistente().delete(turmaTurnoToDelete);
+	  else return Boolean.FALSE;
+	
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
     }
-    
-    return new Boolean (result);
+    return Boolean.TRUE;
   }
 
 }

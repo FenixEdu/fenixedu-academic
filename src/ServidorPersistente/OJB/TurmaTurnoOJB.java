@@ -77,17 +77,6 @@ public class TurmaTurnoOJB
 		super.delete(turmaTurno);
 	}
 
-	public void delete(ITurno shift, ITurma classTemp)
-		throws ExcepcaoPersistencia {
-		// Read From DataBase			
-		ITurno shiftToDelete = SuportePersistenteOJB.getInstance().getITurnoPersistente().readByNameAndExecutionCourse(shift.getNome(), shift.getDisciplinaExecucao());
-		ITurma classToDelete = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getNome(), classTemp.getExecutionDegree(), classTemp.getExecutionPeriod());
-		ITurmaTurno turmaTurnoToDelete = readByTurmaAndTurno(classToDelete, shiftToDelete);
-		
-		// Delete association
-		delete(turmaTurnoToDelete);
-	}
-
 	public void deleteAll() throws ExcepcaoPersistencia {
 		String oqlQuery = "select all from " + TurmaTurno.class.getName();
 		super.deleteAll(oqlQuery);
