@@ -419,7 +419,7 @@ public class ExecutionPeriodOJB
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
 
-		System.out.println("Finished creating sites.");
+		System.out.println("Finished creating professorships.");
 
 		System.out.println("Confirming transaction.");
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
@@ -436,22 +436,22 @@ public class ExecutionPeriodOJB
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
 
-		System.out.println("Finished creating sites.");
+		System.out.println("Finished creating responsiblefor.");
 
-		System.out.println("Confirming transaction.");
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		System.out.println("Starting transaction.");
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		System.out.println("Clearing cache.");
-		SuportePersistenteOJB.getInstance().clearCache();
-		System.out.println("Confirming transaction.");
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		System.out.println("Starting transaction.");
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-
-		cleanUpLessons(executionPeriodToImportDataTo);
-		cleanUpShifts(executionPeriodToImportDataTo);
-		System.out.println("Completed cleanup.");
+//		System.out.println("Confirming transaction.");
+//		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+//		System.out.println("Starting transaction.");
+//		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+//		System.out.println("Clearing cache.");
+//		SuportePersistenteOJB.getInstance().clearCache();
+//		System.out.println("Confirming transaction.");
+//		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+//		System.out.println("Starting transaction.");
+//		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+//
+//		cleanUpLessons(executionPeriodToImportDataTo);
+//		cleanUpShifts(executionPeriodToImportDataTo);
+//		System.out.println("Completed cleanup.");
 	}
 
 	/**
