@@ -310,15 +310,7 @@
             type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
           <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
     </action>
-     	 	<!-- ExceptionHandling -->   
-      <action parameter="method"
-              name="errorMailForm" 
-              path="/exceptionHandling"
-              scope="request"
-              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
-              >
-        
-      </action>  
+     	 
     
      </action-mappings>     
 

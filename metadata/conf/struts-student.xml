@@ -64,6 +64,7 @@
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="index" path="/index.do" redirect="true"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->

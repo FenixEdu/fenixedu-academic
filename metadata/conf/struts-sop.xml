@@ -236,6 +236,7 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="index" path="/index.do" redirect="true"/>
       <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
+   	  <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -260,10 +261,7 @@
               type="ServidorApresentacao.Action.base.FenixForwardAction" 
               parameter="/sop/principalSalas.jsp"/>
 
-      <!-- Action For LogOff -->
-      <action path="/logoff" 
-		      type="ServidorApresentacao.Action.base.FenixForwardAction"
-		      forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
+    
 
      
 <!--      <action path="/editarTurno" forward="/editarTurno.jsp"/>-->
