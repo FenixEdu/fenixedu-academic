@@ -133,23 +133,4 @@ public class SelectRoomsFormAction extends FenixAction {
 		return obj;
 	}
 
-//	private Integer readIntegerRequestValue(
-//		HttpServletRequest request,
-//		String name) {
-//		String obj = readRequestValue(request, name);
-//		if (obj != null)
-//			return new Integer(obj);
-//		else
-//			return null;
-//	}
-//
-//	private TipoSala readTypeRoomRequestValue(
-//		HttpServletRequest request,
-//		String name) {
-//		Integer obj = readIntegerRequestValue(request, name);
-//		if (obj != null)
-//			return new TipoSala(obj);
-//		else
-//			return null;
-//	}
 }

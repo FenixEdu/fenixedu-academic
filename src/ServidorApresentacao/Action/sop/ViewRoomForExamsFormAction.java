@@ -1,7 +1,5 @@
 package ServidorApresentacao.Action.sop;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,12 +41,7 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 			IUserView userView = (IUserView) session.getAttribute("UserView");
 			GestorServicos gestor = GestorServicos.manager();
 			
-			List infoRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
-			InfoRoom infoRoom =
-				(InfoRoom) infoRooms.get(
-					((Integer) indexForm.get("index")).intValue());
-			request.removeAttribute("publico.infoRoom");
-			request.setAttribute("publico.infoRoom", infoRoom);
+			String roomId = (String) request.getAttribute("roomId");
 
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) this
@@ -57,22 +50,15 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 					.getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-			Object argsReadLessons[] = { infoExecutionPeriod, infoRoom };
+			Object argsReadRoom[] = { new Integer(roomId) };
 
+			InfoRoom infoRoom = null;
 			try {
-				List lessons;
-				lessons =
-					(List) ServiceUtils.executeService(
+				infoRoom =
+					(InfoRoom) ServiceUtils.executeService(
 						null,
-						"LerAulasDeSalaEmSemestre",
-						argsReadLessons);
-
-				if (lessons != null) {
-					request.setAttribute(
-						SessionConstants.LESSON_LIST_ATT,
-						lessons);
-				}
-
+						"ReadRoomByOID",
+						argsReadRoom);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException();
 			}
@@ -92,6 +78,7 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 				throw new FenixActionException(e);
 			}
 			request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
+			request.setAttribute("publico.infoRoom", infoRoom);
 
 			return mapping.findForward("Sucess");
 		} else {

@@ -135,13 +135,15 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 		Integer capacidadeNormal,
 		Integer capacidadeExame)
 		throws ExcepcaoPersistencia {
+
 		if (nome == null
 			&& edificio == null
 			&& piso == null
 			&& tipo == null
 			&& capacidadeExame == null
-			&& capacidadeNormal == null)
+			&& capacidadeNormal == null) {
 			return readAll();
+		}
 
 		try {
 			StringBuffer oqlQuery = new StringBuffer("select sala from ");

@@ -1,15 +1,13 @@
 /*
- * ReadExamsMap.java
- *
- * Created on 2003/04/02
+ * ReadExamsMap.java  Created on 2003/04/02
  */
 
 package ServidorAplicacao.Servico.sop;
 
 /**
-  * @author Luis Cruz & Sara Ribeiro
-  * 
- **/
+ * @author Luis Cruz & Sara Ribeiro
+ *          
+ */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,20 +34,20 @@ public class ReadExamsMap implements IServico {
 	private static ReadExamsMap servico = new ReadExamsMap();
 	/**
 	 * The singleton access method of this class.
-	 **/
+	 */
 	public static ReadExamsMap getService() {
 		return servico;
 	}
 
 	/**
 	 * The actor of this class.
-	 **/
+	 */
 	private ReadExamsMap() {
 	}
 
 	/**
 	 * Devolve o nome do servico
-	 **/
+	 */
 	public String getNome() {
 		return "ReadExamsMap";
 	}
@@ -64,7 +62,7 @@ public class ReadExamsMap implements IServico {
 
 		// Set Execution Degree
 		infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
-		
+
 		// Set List of Curricular Years
 		infoExamsMap.setCurricularYears(curricularYears);
 
@@ -94,6 +92,24 @@ public class ReadExamsMap implements IServico {
 			.equals("LEEC")) {
 			startSeason1.set(Calendar.DAY_OF_MONTH, 5);
 			endSeason2.set(Calendar.DAY_OF_MONTH, 14);
+		}
+		if (infoExecutionDegree
+			.getInfoDegreeCurricularPlan()
+			.getInfoDegree()
+			.getSigla()
+			.equals("LEC")
+			|| infoExecutionDegree
+				.getInfoDegreeCurricularPlan()
+				.getInfoDegree()
+				.getSigla()
+				.equals("LET")
+			|| infoExecutionDegree
+				.getInfoDegreeCurricularPlan()
+				.getInfoDegree()
+				.getSigla()
+				.equals("LA")) {
+			startSeason1.set(Calendar.DAY_OF_MONTH, 12);
+			endSeason2.set(Calendar.DAY_OF_MONTH, 7);
 		}
 
 		// Set Exam Season info
@@ -127,7 +143,8 @@ public class ReadExamsMap implements IServico {
 							executionPeriod,
 							executionDegree);
 
-				// For each execution course obtain curricular courses and exams
+				// For each execution course obtain curricular courses and
+				// exams
 				for (int j = 0; j < executionCourses.size(); j++) {
 					InfoExecutionCourse infoExecutionCourse =
 						Cloner.copyIExecutionCourse2InfoExecutionCourse(

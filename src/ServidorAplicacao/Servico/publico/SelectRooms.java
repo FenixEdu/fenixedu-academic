@@ -73,9 +73,6 @@ public class SelectRooms implements IServico {
 	  while (iter.hasNext()) {
 		sala = (ISala)iter.next();
 		salasView.add(Cloner.copyRoom2InfoRoom(sala));
-//		salasView.add(new InfoRoom(sala.getNome(), sala.getEdificio(),
-//				   sala.getPiso(), sala.getTipo(),
-//				   sala.getCapacidadeNormal(), sala.getCapacidadeExame()));
 	  }
 
 	  return salasView;

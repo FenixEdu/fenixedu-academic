@@ -6,15 +6,16 @@
 <h2><bean:message key="manipularSalas.titleSuccess"/></h2>
   <br/>
   <span class="error"><html:errors/></span>
-  <logic:present name="publico.infoRooms" scope="request">
+  <logic:present name="selectedRooms" scope="request">
     <table border="0" cellpadding="5">
       <%! int i; %>
       <% i = 0; %>
-      <logic:iterate id="infoRoom" name="publico.infoRooms">
+      <logic:iterate id="infoRoom" name="selectedRooms">
         <tr align="center">
           <td>
             <html:radio property="index" value="<%= (new Integer(i)).toString()%>"/>
-            <html:hidden property="nome" value='<bean:write name="infoRoom" property="nome"/>'/>
+            <bean:define id="roomId" name="infoRoom" property="idInternal"/>
+            <html:hidden property="roomId" value="<%= pageContext.findAttribute("roomId").toString() %>"/>
           </td>
           <td><bean:write name="infoRoom" property="nome"/></td>
         </tr>
@@ -24,7 +25,7 @@
     <br/>
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="manipularSalas.verSalaOperation"/></html:submit>
   </logic:present>
-  <logic:notPresent name="publico.infoRooms" scope="request">
+  <logic:notPresent name="selectedRooms" scope="request">
     <table>
       <tr>
         <td>
