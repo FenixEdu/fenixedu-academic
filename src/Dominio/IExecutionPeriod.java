@@ -1,5 +1,8 @@
 package Dominio;
 
+import Util.PeriodState;
+
+
 /**
  * Created on 11/Fev/2003
  * @author João Mota
@@ -12,4 +15,7 @@ public interface IExecutionPeriod {
 	public IExecutionYear getExecutionYear();
 	public void setExecutionYear(IExecutionYear executionYear);
 	public void setName(String name);
+	
+	void setState(PeriodState newState);
+	PeriodState getState();
 }
