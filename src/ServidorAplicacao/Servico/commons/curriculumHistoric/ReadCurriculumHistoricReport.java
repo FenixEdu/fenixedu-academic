@@ -36,6 +36,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrollmentState;
+import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 
 /**
@@ -167,30 +168,47 @@ public class ReadCurriculumHistoricReport implements IService {
         List specialSeasonEnrolmentEvaluations = new ArrayList();
         List improvmentEnrolmentEvaluations = new ArrayList();
         List equivalenceEnrolmentEvaluations = new ArrayList();
-        
+
         Iterator iterator = evaluations.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL_OBJ)
-                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.FIRST_SEASON_OBJ)
-                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SECOND_SEASON_OBJ)
-                    || enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NO_SEASON_OBJ))
-                normalEnrolmentEvaluations.add(enrolmentEvaluation);
             
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
-                improvmentEnrolmentEvaluations.add(enrolmentEvaluation);
-            
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON_OBJ))
-                specialSeasonEnrolmentEvaluations.add(enrolmentEvaluation);
-            
-            if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.EQUIVALENCE_OBJ))
-                equivalenceEnrolmentEvaluations.add(enrolmentEvaluation);
+            if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(
+                    EnrolmentEvaluationState.FINAL_OBJ)) {
+                
+                
+                if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                        EnrolmentEvaluationType.NORMAL_OBJ)
+                        || enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                                EnrolmentEvaluationType.FIRST_SEASON_OBJ)
+                        || enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                                EnrolmentEvaluationType.SECOND_SEASON_OBJ)
+                        || enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                                EnrolmentEvaluationType.NO_SEASON_OBJ))
+                    normalEnrolmentEvaluations.add(enrolmentEvaluation);
+
+                if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                        EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+                    improvmentEnrolmentEvaluations.add(enrolmentEvaluation);
+
+                if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                        EnrolmentEvaluationType.SPECIAL_SEASON_OBJ))
+                    specialSeasonEnrolmentEvaluations.add(enrolmentEvaluation);
+
+                if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                        EnrolmentEvaluationType.EQUIVALENCE_OBJ))
+                    equivalenceEnrolmentEvaluations.add(enrolmentEvaluation);
+            }
         }
-        
-        infoEnrolment.setInfoNormalEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(normalEnrolmentEvaluations));
-        infoEnrolment.setInfoImprovmentEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(improvmentEnrolmentEvaluations));
-        infoEnrolment.setInfoSpecialSeasonEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(specialSeasonEnrolmentEvaluations));
-        infoEnrolment.setInfoEquivalenceEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(equivalenceEnrolmentEvaluations));
+
+        infoEnrolment
+                .setInfoNormalEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(normalEnrolmentEvaluations));
+        infoEnrolment
+                .setInfoImprovmentEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(improvmentEnrolmentEvaluations));
+        infoEnrolment
+                .setInfoSpecialSeasonEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(specialSeasonEnrolmentEvaluations));
+        infoEnrolment
+                .setInfoEquivalenceEnrolmentEvaluation(getLatestInfoEnrolmentEvaluation(equivalenceEnrolmentEvaluations));
     }
 
     /**
