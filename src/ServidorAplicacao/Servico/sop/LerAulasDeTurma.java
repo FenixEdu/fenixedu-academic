@@ -16,17 +16,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-
 import DataBeans.InfoClass;
 import DataBeans.InfoLesson;
-import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Turma;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;

@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -119,7 +120,7 @@ public class ReadStudentTest implements IServico
 				IStudentTestLog studentTestLog = new StudentTestLog();
 				studentTestLog.setDistributedTest(distributedTest);
 				studentTestLog.setStudent(student);
-				studentTestLog.setDate(null);
+				studentTestLog.setDate(Calendar.getInstance().getTime());
 				studentTestLog.setEvent(new String("Ler Ficha de Trabalho"));
 
 				persistentStudentTestLog.simpleLockWrite(studentTestLog);

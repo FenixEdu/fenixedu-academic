@@ -76,10 +76,14 @@ public class ReadShiftsByExecutionCourseID implements IServico
                 List studentsInShift = sp.getITurnoAlunoPersistente().readByShift(shift);
 
                 shift.setOcupation(new Integer(studentsInShift.size()));
+                Integer capacity = new Integer(1);
+                if (shift.getLotacao()!=null && shift.getLotacao().intValue()!=0) {
+                    capacity=shift.getLotacao();
+                }
                 shift.setPercentage(
                     NumberUtils.formatNumber(
                         new Double(
-                            shift.getOcupation().floatValue() * 100 / shift.getLotacao().floatValue()),
+                            shift.getOcupation().floatValue() * 100 / capacity.floatValue()),
                         1));
                 infoExecutionCourseOccupancy.getInfoShifts().add(Cloner.get(shift));
             }
