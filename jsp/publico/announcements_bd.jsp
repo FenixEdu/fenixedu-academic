@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 	<logic:empty name="component" property="announcements">
@@ -14,8 +15,10 @@
             <logic:iterate id="announcement" name="component" property="announcements" >
                 <tr>
                     <td>
-                        <br>
-                        <h2><bean:write name="announcement" property="title"/></h2>
+                        <h2>
+                        <img src="<%= request.getContextPath() %>/images/icon_anuncio.gif" alt="" />&nbsp;
+                        <bean:write name="announcement" property="title"/>&nbsp;&nbsp;
+                       <span class="post-date">(<dt:format pattern="dd-MM-yyyy"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format>)</span></h2>
                     </td>
                 </tr>
                 <tr>
@@ -24,12 +27,7 @@
                         <br><br>
                     </td>
                 </tr>
-                <tr>
-                	<td>
-                		<bean:message key="label.creationDate" /><bean:write name="announcement" property="creationDateFormatted"/></BR>
-                		<bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDateFormatted"/>
-                	</td>
-            	</tr>
+          
             </logic:iterate>
         </tbody>
 </table>

@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.Calendar" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <logic:notPresent name="siteView" property="component">
 <table align="center"  cellpadding='0' cellspacing='0'>
@@ -51,11 +52,9 @@
            		</td>
            </tr>
            <tr>		
-           		<td class="ultAnuncio-date"><bean:message key="message.createdOn"/>
-           			<bean:write name="announcement" property="creationDateFormatted"/>
-           			<br/>		
+           		<td class="ultAnuncio-date">	
            			<bean:message key="message.modifiedOn"/>
-           			<bean:write name="announcement" property="lastModifiedDateFormatted"/></td>
+           			<dt:format pattern="dd-MM-yyyy"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format></td>
            </tr>           
         </table>
         </logic:notEmpty>

@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <br />
 <table width="100%">
 <tr>
@@ -31,12 +32,7 @@
             <logic:iterate id="announcement" name="announcementsList" >
                 <tr>
                     <td>
-                        <strong><bean:write name="announcement" property="title"/></strong>
-                    </td>
-                </tr>
-               	<tr>
-                    <td>
-						<span class="px9"><bean:write name="announcement" property="creationDateFormatted"/> | <bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDateFormatted"/></span>
+                        <strong><bean:write name="announcement" property="title"/></strong>&nbsp;&nbsp;<span class="greytxt">(<dt:format pattern="dd-MM-yyyy"><bean:write name="announcement" property="lastModifiedDate.time"/></dt:format>)</span>
                     </td>
                 </tr>
                 <tr>
