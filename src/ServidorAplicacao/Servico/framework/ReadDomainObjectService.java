@@ -4,9 +4,9 @@
  */
 package ServidorAplicacao.Servico.framework;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
 import Dominio.IDomainObject;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -18,7 +18,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Sergio Montelobo
  * @author jpvl
  */
-public abstract class ReadDomainObjectService implements IServico
+public abstract class ReadDomainObjectService implements IService
 {
     public InfoObject run(Integer objectId) throws FenixServiceException
     {

@@ -4,12 +4,12 @@
  */
 package ServidorAplicacao.Servico.grant.owner;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoObject;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -20,7 +20,7 @@ import ServidorPersistente.ISuportePersistente;
  * @author  Pica
  *  
  */
-public class ReadGrantOwner extends ReadDomainObjectService implements IServico
+public class ReadGrantOwner extends ReadDomainObjectService implements IService
 {
     private static ReadGrantOwner service = new ReadGrantOwner();
     /**
