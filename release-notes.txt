@@ -5,6 +5,10 @@ Release 2004-04-13
 NEW FEATURES:
 - Change state of a student curricular course in master degree operation INACTIVE for ACTIVE, it should change all curricular course ANNULLED for ENROLEMENT
 (modified service file EditPosGradStudentCurricularPlanStateAndCredits.java )
+- task [#179] Student Candidacy for Final Degree Works
+- task [#181] View of Student Candidacies
+- task [#175] Fénix Error Page - don't kill session when showing the error page.
+- task [#175] Attribution of final degree work (and confirmation)
 
 NOTES:
  	
@@ -30,7 +34,10 @@ ENROLMENT_EQUIVALENCE, EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE,
 CREDITS_IN_SCIENTIFIC_AREA, CREDITS_IN_ANY_SECUNDARY_AREA)
  
 KNOWN ISSUES:
-
+- Final degree work proposals are associated with the execution degree prior to the one they
+  are proposed for. This is due to not yet having information regarding the next execution
+  year. This must be resolved by establishing dates when the information must be introduced
+  into the database.
 
 
 ---------------------------------------------------------------------
