@@ -18,7 +18,7 @@
 <div id="nav">
 <h3>Navega&ccedil;&atilde;o Local</h3>	
 <ul>
-<li><html:link page="/viewSite.do">
+<li><html:link page="<%= "/viewSite.do?method=executionCourseViewer&exeCode=" + pageContext.findAttribute("executionCourseName") + "&amp;ePName=" + pageContext.findAttribute("executionPeriodName") + "&amp;eYName=" + pageContext.findAttribute("executionYearYear") %>">
 	<bean:message key="link.inicialPage"/>
 </html:link></li>
 <li>

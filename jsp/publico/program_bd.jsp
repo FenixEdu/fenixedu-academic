@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" >
+<logic:present name="program" >
 	<table>
 		<tr>
 			<td>
@@ -13,14 +13,12 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:define id="program" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program">
-				</bean:define> 
 				<bean:write name="program" filter="false"/>
 			</td>
 		</tr>
 	</table>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>">
+<logic:notPresent name="program">
 <h2><bean:message key="message.program.not.available"/>
 </h2>
 </logic:notPresent>

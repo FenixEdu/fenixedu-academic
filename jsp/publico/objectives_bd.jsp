@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 	
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" >
+<logic:present name="genObjectives" >
 <table>
 <tr>
 	<td>
@@ -13,9 +13,8 @@
 </tr>
 <tr>
 	<td>
-		<bean:define id="generalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives">
-		</bean:define> 
-		<bean:write name="generalObjectives" filter="false"/>
+		 
+		<bean:write name="genObjectives" filter="false"/>
 	</td>
 </tr>
 <tr>
@@ -25,14 +24,13 @@
 </tr>
 <tr>
 	<td>
-		<bean:define id="operacionalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives">
-		</bean:define> 
-		<bean:write name="operacionalObjectives" filter="false"/>
+		
+		<bean:write name="opObjectives" filter="false"/>
 	</td>
 </tr>
 </table>
 </logic:present>
-<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>">
+<logic:notPresent name="genObjectives">
 <h2><bean:message key="message.objectives.not.available"/>
 </h2>
 </logic:notPresent>
