@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-
+<logic:present name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>">
 <table border="0" style="text-align: left;">
         <tbody>
             <logic:iterate id="announcement" name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>" scope="session" >
@@ -31,3 +31,10 @@
             </logic:iterate>
         </tbody>
 </table>
+</logic:present>
+<logic:notPresent name="<%= SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST %>">
+<h2>
+         <bean:message key="message.announcements.not.available" />
+	</h2>
+	
+</logic:notPresent>

@@ -32,3 +32,7 @@
 </tr>
 </table>
 </logic:present>
+<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>">
+<h2><bean:message key="message.objectives.not.available"/>
+</h2>
+</logic:notPresent>
