@@ -99,11 +99,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
-
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
 
 		//Integer index = (Integer) indexForm.get("index");
 		Integer executionPeriodOid = (Integer) indexForm.get("index");

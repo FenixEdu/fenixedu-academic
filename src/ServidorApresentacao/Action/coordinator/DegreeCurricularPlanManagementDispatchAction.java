@@ -369,8 +369,6 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		HttpServletResponse response)
 		throws FenixActionException
 	{
-		HttpSession session = request.getSession(false);
-
 		List infoExecutionYears = null;
 		Object[] args = {
 		};

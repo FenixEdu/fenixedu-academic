@@ -11,19 +11,16 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoExam;
-import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IFrequenta;
-import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentExam;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
@@ -66,12 +63,9 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
 
     private boolean attendsExamExecutionCourse(IUserView id, Object[] argumentos)
     {
-        IDisciplinaExecucao executionCourse = null;
         ISuportePersistente sp;
         IExam exam = null;
         InfoExam infoExam = null;
-        IStudent student = null;
-        InfoStudent infoStudent = null;
         List intersection = null;
 
         if (argumentos == null)
@@ -82,7 +76,6 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
         {
             sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IFrequentaPersistente persistentFrequenta = sp.getIFrequentaPersistente();
 
             if (argumentos[1] instanceof InfoExam)
