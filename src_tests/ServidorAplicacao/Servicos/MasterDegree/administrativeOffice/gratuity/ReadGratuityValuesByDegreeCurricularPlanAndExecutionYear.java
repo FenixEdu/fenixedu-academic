@@ -4,10 +4,10 @@
  */
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.gratuity;
 
-import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoGratuityValues;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão
@@ -29,14 +29,14 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear
 		return "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear";
 	}
 
-	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser()
 	{
 		Object[] args = { new Integer(33), new String("2003/2004")};
 
 		return args;
 	}
 
-	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
+	protected Object[] getServiceArgumentsForNotAuthorizedUser()
 	{
 		Object[] args = { new Integer(33), new String("2003/2004")};
 
