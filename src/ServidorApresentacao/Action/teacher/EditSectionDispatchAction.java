@@ -50,7 +50,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		List allSections = new ArrayList();
 		allSections.addAll(all);
 
-		session.removeAttribute("ALL_SECTIONS");
+		session.removeAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
 
 		//remove parent section, current section and all of it's daughters
 		allSections.remove(currentSection.getSuperiorInfoSection());
@@ -195,11 +195,23 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 		InfoSection newSection = new InfoSection(oldSection.getName(), oldSection.getSectionOrder(), oldSection.getInfoSite(), newParent);
 
-		//TODO: section order
+		GestorServicos manager = GestorServicos.manager();
+
+		//the new order should be after the last child section
+		//read child sections for newParent, get the size of the list and use size as section order
+		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+		Object args[] = { infoSite, newParent };
+		List sisters = null;
+		try {
+			sisters = (List) manager.executar(userView, "ReadSectionsBySiteAndSuperiorSection", args);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		if (sisters!=null) newSection.setSectionOrder(new Integer(sisters.size()));
+		else newSection.setSectionOrder(new Integer(0));
 		
 		//perform edition
 		Object editionArgs[] = { oldSection, newSection };
-		GestorServicos manager = GestorServicos.manager();
 		
 		try {
 			manager.executar(userView, "EditSection", editionArgs);
