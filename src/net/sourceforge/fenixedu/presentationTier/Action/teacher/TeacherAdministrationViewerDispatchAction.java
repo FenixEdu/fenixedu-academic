@@ -193,10 +193,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String title = (String) insertAnnouncementForm.get("title");
         String information = (String) insertAnnouncementForm.get("information");
         
-        HtmlValidator htmlValidator = new HtmlValidator();     
+        HtmlValidator htmlValidator = new HtmlValidator();
+        htmlValidator.validateHTMLString(information);
         String errors = htmlValidator.getErrors();
         
-        if(!errors.equals("")){
+        if((errors != null) && (!errors.equals(""))){
             ActionErrors actionErrors = new ActionErrors();
             request.setAttribute("errors", errors);
             actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
@@ -260,10 +261,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String newTitle = (String) insertAnnouncementForm.get("title");
         String newInformation = (String) insertAnnouncementForm.get("information");
         
-        HtmlValidator htmlValidator = new HtmlValidator();     
+        HtmlValidator htmlValidator = new HtmlValidator();   
+        htmlValidator.validateHTMLString(newInformation);
         String errors = htmlValidator.getErrors();
         
-        if(!errors.equals("")){
+        if((errors != null) && (!errors.equals(""))){
             ActionErrors actionErrors = new ActionErrors();
             request.setAttribute("errors", errors);
             actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
