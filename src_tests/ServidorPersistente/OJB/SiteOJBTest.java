@@ -84,7 +84,7 @@ public class SiteOJBTest extends TestCaseOJB{
 			
 		try{
 			 persistentSupport.iniciarTransaccao();
-		 	 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");	
+		 	 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","LEEC");	
 		 	 System.out.println("EXECUTION COURSE"+executionCourse.toString());
 		 	 assertNotNull(executionCourse);
 		 	 persistentSupport.confirmarTransaccao();
@@ -105,8 +105,8 @@ public class SiteOJBTest extends TestCaseOJB{
 			} catch (ExcepcaoPersistencia ex) {
 				fail("testReadByExecutionCourse:fail read existing site");
 			}
-			assertEquals("testReadByExecutionCourse:read existing site",site.getExecutionCourse(),executionCourse);
-			assertEquals("testReadByExecutionCourse:read existing site",site.getInitialSection(),null);
+			assertEquals("testReadByExecutionCourse:read existing site",executionCourse,site.getExecutionCourse());
+			assertEquals("testReadByExecutionCourse:read existing site",null,site.getInitialSection());
 			
 				
 //				delete Site
