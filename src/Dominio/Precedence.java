@@ -70,7 +70,8 @@ public class Precedence extends DomainObject implements IPrecedence {
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
 		List restrictions = getRestrictions();
 		boolean evaluate = true;
-		for (int i = 0; i < restrictions.size() || evaluate == false ; i++){
+		// made and of all restrictions
+		for (int i = 0; i < restrictions.size() && evaluate; i++){
 			IRestriction restriction = (IRestriction) restrictions.get(i);
 			evaluate = restriction.evaluate(enrolmentContext);
 		}
