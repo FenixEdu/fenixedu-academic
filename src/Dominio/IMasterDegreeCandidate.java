@@ -36,7 +36,7 @@ public interface IMasterDegreeCandidate {
     void setBirth(Date birth);
     void setFatherName(String fatherName);
     void setMotherName(String motherName);
-    void setNationality(String nationality);
+    void setNationality(ICountry nationality);
     void setBirthPlaceParish(String birthPlaceParish);
     void setBirthPlaceMunicipality(String birthPlaceMunicipality);
     void setBirthPlaceDistrict(String birthPlaceDistrict);
@@ -76,7 +76,7 @@ public interface IMasterDegreeCandidate {
     Date getBirth();
     String getFatherName();
     String getMotherName();
-    String getNationality();
+    ICountry getNationality();
     String getBirthPlaceParish();
     String getBirthPlaceMunicipality();
     String getBirthPlaceDistrict();
@@ -114,7 +114,7 @@ public interface IMasterDegreeCandidate {
     		String addressParish, String addressMunicipality, String addressDistrict, 
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
-    		String maritalStatus, ICountry country, String nationality, String specialization, Double average,
+    		String maritalStatus, ICountry country, ICountry nationality, String specialization, Double average,
     		Date birth, Date identificationDocumentIssueDate 
     );
     

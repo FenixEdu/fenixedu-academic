@@ -82,14 +82,16 @@ public class ChangeMasterDegreeCandidate implements IServico {
 
 		// Get new Country
 		ICountry country = null;
+		ICountry nationality = null;
         try {
-			country = sp.getIPersistentCountry().readCountryByName(newMasterDegreeCandidate.getCountry());
+			country = sp.getIPersistentCountry().readCountryByName(newMasterDegreeCandidate.getInfoCountry().getName());
+			nationality = sp.getIPersistentCountry().readCountryByNationality(newMasterDegreeCandidate.getInfoNationality().getNationality());
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx; 
         } 
-
+        
 	    // Change the Master Degree Candidate Personal Information 
 		existingMasterDegreeCandidate.changePersonalData(newMasterDegreeCandidate.getName(), 
 								newMasterDegreeCandidate.getPassword(),
@@ -119,7 +121,7 @@ public class ChangeMasterDegreeCandidate implements IServico {
 								newMasterDegreeCandidate.getIdentificationDocumentType(),
 								newMasterDegreeCandidate.getMaritalStatus(),
 								country,
-								newMasterDegreeCandidate.getNationality(), 
+								nationality, 
 								newMasterDegreeCandidate.getSpecialization(), 
 							    newMasterDegreeCandidate.getAverage(), 
 							    newMasterDegreeCandidate.getBirth(), 

@@ -26,7 +26,6 @@ public class InfoMasterDegreeCandidate {
     private Date birth;
     private String fatherName = null;
     private String motherName = null;
-    private String nationality = null;
     private String birthPlaceParish = null;
     private String birthPlaceMunicipality = null;
     private String birthPlaceDistrict = null;
@@ -57,7 +56,8 @@ public class InfoMasterDegreeCandidate {
   	private InfoDegree infoDegree = null;
 //    private String degreeName = null;
 //    private String degreeCode = null;
-    private String country = null;
+    private InfoCountry infoCountry = null;
+	private InfoCountry infoNationality = null;
 
     private String identificationDocumentType = null;
     private String specialization = null;
@@ -77,7 +77,7 @@ public class InfoMasterDegreeCandidate {
         birth = null;
         fatherName = null;
         motherName = null;
-        nationality = null;
+        infoNationality = null;
         birthPlaceParish = null;
         birthPlaceMunicipality = null;
         birthPlaceDistrict = null;
@@ -102,7 +102,7 @@ public class InfoMasterDegreeCandidate {
         majorDegreeSchool = null;
         majorDegreeYear = null;
         average = null;
-		country = null;		
+		infoCountry = null;		
 		infoCandidateSituation = null;
 		infoDegree = null;
 
@@ -118,7 +118,7 @@ public class InfoMasterDegreeCandidate {
     		String addressParish, String addressMunicipality, String addressDistrict, 
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
-			String maritalStatus, String country, String nationality, String specialization, Integer applicationYear,
+			String maritalStatus, InfoCountry country, InfoCountry nationality, String specialization, Integer applicationYear,
 			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate
     		) {
 	    
@@ -132,7 +132,7 @@ public class InfoMasterDegreeCandidate {
         setBirth(birth);
         setFatherName(fatherName);
         setMotherName(motherName);
-        setNationality(nationality);
+        setInfoNationality(nationality);
         setBirthPlaceParish(birthPlaceParish);
         setBirthPlaceMunicipality(birthPlaceMunicipality);
 		setBirthPlaceDistrict(birthPlaceDistrict);
@@ -154,7 +154,7 @@ public class InfoMasterDegreeCandidate {
         setMajorDegreeYear(majorDegreeYear);
 		setSpecialization(specialization);		
         setAverage(average);
-        setCountry(country);
+        setInfoCountry(country);
 		setApplicationYear(applicationYear);
 		setCandidateNumber(candidateNumber);
         
@@ -237,7 +237,7 @@ public class InfoMasterDegreeCandidate {
         result += "\n  - Data de Nascimento : " + birth;
         result += "\n  - Nome do Pai : " + fatherName;
         result += "\n  - Nome da Mae : " + motherName;
-        result += "\n  - Nacionalidade : " + nationality;
+        result += "\n  - Nacionalidade : " + infoNationality;
         result += "\n  - Freguesia de Naturalidade : " + birthPlaceParish;
         result += "\n  - Concelho de Naturalidade : " + birthPlaceMunicipality;
         result += "\n  - Distrito de Naturalidade : " + birthPlaceDistrict;
@@ -262,17 +262,14 @@ public class InfoMasterDegreeCandidate {
         result += "\n  - Escola de Licenciatura : " + majorDegreeSchool;
         result += "\n  - Ano de Licenciatura : " + majorDegreeYear;
         result += "\n  - Media de Licenciatura : " + average;
-		result += "\n  - Pais : " + country;
+		result += "\n  - Pais : " + infoCountry;
 		result += "\n  - Situação Activa : " + infoCandidateSituation;
 		result += "\n  - InfoDegree : " + infoDegree;
         return result;
     }
     
 
-
-
 	/**
-	 * Returns the address.
 	 * @return String
 	 */
 	public String getAddress() {
@@ -280,7 +277,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the addressDistrict.
 	 * @return String
 	 */
 	public String getAddressDistrict() {
@@ -288,7 +284,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the addressMunicipality.
 	 * @return String
 	 */
 	public String getAddressMunicipality() {
@@ -296,7 +291,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the addressParish.
 	 * @return String
 	 */
 	public String getAddressParish() {
@@ -304,7 +298,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the applicationYear.
 	 * @return Integer
 	 */
 	public Integer getApplicationYear() {
@@ -312,7 +305,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the average.
 	 * @return Double
 	 */
 	public Double getAverage() {
@@ -320,7 +312,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birth.
 	 * @return Date
 	 */
 	public Date getBirth() {
@@ -328,7 +319,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birthPlaceDistrict.
 	 * @return String
 	 */
 	public String getBirthPlaceDistrict() {
@@ -336,7 +326,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birthPlaceMunicipality.
 	 * @return String
 	 */
 	public String getBirthPlaceMunicipality() {
@@ -344,7 +333,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birthPlaceParish.
 	 * @return String
 	 */
 	public String getBirthPlaceParish() {
@@ -352,7 +340,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the candidateNumber.
 	 * @return Integer
 	 */
 	public Integer getCandidateNumber() {
@@ -360,24 +347,20 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the contributorNumber.
 	 * @return String
 	 */
 	public String getContributorNumber() {
 		return contributorNumber;
 	}
 
-	/**
-	 * Returns the country.
-	 * @return String
-	 */
-	public String getCountry() {
-		return country;
-	}
-
+/**
+ * @return InfoCountry
+ */
+public InfoCountry getInfoCountry() {
+	return infoCountry;
+}
 
 	/**
-	 * Returns the email.
 	 * @return String
 	 */
 	public String getEmail() {
@@ -385,7 +368,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the fatherName.
 	 * @return String
 	 */
 	public String getFatherName() {
@@ -393,7 +375,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentIssueDate.
 	 * @return Date
 	 */
 	public Date getIdentificationDocumentIssueDate() {
@@ -401,7 +382,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentIssuePlace.
 	 * @return String
 	 */
 	public String getIdentificationDocumentIssuePlace() {
@@ -409,7 +389,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentNumber.
 	 * @return String
 	 */
 	public String getIdentificationDocumentNumber() {
@@ -417,7 +396,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentType.
 	 * @return String
 	 */
 	public String getIdentificationDocumentType() {
@@ -425,7 +403,20 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the majorDegree.
+	 * @return InfoCandidateSituation
+	 */
+	public InfoCandidateSituation getInfoCandidateSituation() {
+		return infoCandidateSituation;
+	}
+
+	/**
+	 * @return InfoDegree
+	 */
+	public InfoDegree getInfoDegree() {
+		return infoDegree;
+	}
+
+	/**
 	 * @return String
 	 */
 	public String getMajorDegree() {
@@ -433,7 +424,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the majorDegreeSchool.
 	 * @return String
 	 */
 	public String getMajorDegreeSchool() {
@@ -441,7 +431,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the majorDegreeYear.
 	 * @return Integer
 	 */
 	public Integer getMajorDegreeYear() {
@@ -449,7 +438,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the maritalStatus.
 	 * @return String
 	 */
 	public String getMaritalStatus() {
@@ -457,7 +445,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the mobilePhone.
 	 * @return String
 	 */
 	public String getMobilePhone() {
@@ -465,7 +452,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the motherName.
 	 * @return String
 	 */
 	public String getMotherName() {
@@ -473,15 +459,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the nationality.
-	 * @return String
-	 */
-	public String getNationality() {
-		return nationality;
-	}
-
-	/**
-	 * Returns the name.
 	 * @return String
 	 */
 	public String getName() {
@@ -489,7 +466,13 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the occupation.
+	 * @return InfoCountry
+	 */
+	public InfoCountry getInfoNationality() {
+		return infoNationality;
+	}
+
+	/**
 	 * @return String
 	 */
 	public String getOccupation() {
@@ -497,7 +480,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the password.
 	 * @return String
 	 */
 	public String getPassword() {
@@ -505,7 +487,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the place.
 	 * @return String
 	 */
 	public String getPlace() {
@@ -513,7 +494,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the postCode.
 	 * @return String
 	 */
 	public String getPostCode() {
@@ -521,7 +501,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the sex.
 	 * @return String
 	 */
 	public String getSex() {
@@ -529,7 +508,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the specialization.
 	 * @return String
 	 */
 	public String getSpecialization() {
@@ -537,7 +515,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the telephone.
 	 * @return String
 	 */
 	public String getTelephone() {
@@ -545,7 +522,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the username.
 	 * @return String
 	 */
 	public String getUsername() {
@@ -553,7 +529,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the webSite.
 	 * @return String
 	 */
 	public String getWebSite() {
@@ -656,13 +631,13 @@ public class InfoMasterDegreeCandidate {
 		this.contributorNumber = contributorNumber;
 	}
 
-	/**
-	 * Sets the country.
-	 * @param country The country to set
-	 */
-	public void setCountry(String country) {
-		this.country = country;
-	}
+/**
+ * Sets the infoCountry.
+ * @param infoCountry The infoCountry to set
+ */
+public void setInfoCountry(InfoCountry country) {
+	this.infoCountry = country;
+}
 
 	/**
 	 * Sets the email.
@@ -714,6 +689,22 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
+	 * Sets the infoCandidateSituation.
+	 * @param infoCandidateSituation The infoCandidateSituation to set
+	 */
+	public void setInfoCandidateSituation(InfoCandidateSituation infoCandidateSituation) {
+		this.infoCandidateSituation = infoCandidateSituation;
+	}
+
+	/**
+	 * Sets the infoDegree.
+	 * @param infoDegree The infoDegree to set
+	 */
+	public void setInfoDegree(InfoDegree infoDegree) {
+		this.infoDegree = infoDegree;
+	}
+
+	/**
 	 * Sets the majorDegree.
 	 * @param majorDegree The majorDegree to set
 	 */
@@ -762,19 +753,19 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Sets the nationality.
-	 * @param nationality The nationality to set
-	 */
-	public void setNationality(String nacionality) {
-		this.nationality = nacionality;
-	}
-
-	/**
 	 * Sets the name.
 	 * @param name The name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Sets the infoNationality.
+	 * @param infoNationality The infoNationality to set
+	 */
+	public void setInfoNationality(InfoCountry nationality) {
+		this.infoNationality = nationality;
 	}
 
 	/**
@@ -847,37 +838,6 @@ public class InfoMasterDegreeCandidate {
 	 */
 	public void setWebSite(String webSite) {
 		this.webSite = webSite;
-	}
-
-	/**
-	 * Returns the infoCandidateSituation.
-	 * @return InfoCandidateSituation
-	 */
-	public InfoCandidateSituation getInfoCandidateSituation() {
-		return infoCandidateSituation;
-	}
-
-	/**
-	 * Sets the infoCandidateSituation.
-	 * @param infoCandidateSituation The infoCandidateSituation to set
-	 */
-	public void setInfoCandidateSituation(InfoCandidateSituation infoCandidateSituation) {
-		this.infoCandidateSituation = infoCandidateSituation;
-	}
-
-	/**
-	 * @return InfoDegree
-	 */
-	public InfoDegree getInfoDegree() {
-		return infoDegree;
-	}
-
-	/**
-	 * Sets the infoDegree.
-	 * @param infoDegree The infoDegree to set
-	 */
-	public void setInfoDegree(InfoDegree infoDegree) {
-		this.infoDegree = infoDegree;
 	}
 
 }

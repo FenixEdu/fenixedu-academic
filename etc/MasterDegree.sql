@@ -15,7 +15,7 @@ create table MASTER_DEGREE_CANDIDATE (
    BIRTH date default '0001-01-01',
    FATHER_NAME varchar(100),
    MOTHER_NAME varchar(100),
-   NATIONALITY varchar(50),
+   NATIONALITY_COUNTRY_KEY integer(11),
    BIRTH_PLACE_PARISH varchar(100),
    BIRTH_PLACE_MUNICIPALITY varchar(100),
    BIRTH_PLACE_DISTRICT varchar(100),

@@ -35,7 +35,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     private Date birth;
     private String fatherName = null;
     private String motherName = null;
-    private String nationality = null;
     private String birthPlaceParish = null;
     private String birthPlaceMunicipality = null;
     private String birthPlaceDistrict = null;
@@ -66,16 +65,17 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 
     // Instance from class Country
     private ICountry country = null;
+	private ICountry nationality = null;
 
 	// List of Situations
     private Set situations;
  
     
     // Internal Codes from Database
-    private Integer internalCode;        // Internal code for Master Degree Candidate
-    private Integer degreeKey;           // Foreign Key from table Degree
-	private Integer countryKey;          // Foreign Key from table Country
-	
+    private Integer internalCode;          // Internal code for Master Degree Candidate
+    private Integer degreeKey;             // Foreign Key from table Degree
+	private Integer countryKey;            // Foreign Key from table Country
+	private Integer nationalityCountryKey; // Foreign Key from table Country
     
     
     public MasterDegreeCandidate() {
@@ -123,7 +123,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     TipoDocumentoIdentificacao identificationDocumentType, String identificationDocumentIssuePlace,
     Date identificationDocumentIssueDate, String name, Sexo sex,
     EstadoCivil maritalStatus, Date birth, String fatherName, String motherName,
-    String nationality, String birthPlaceParish, String birthPlaceMunicipality,
+    ICountry nationality, String birthPlaceParish, String birthPlaceMunicipality,
     String birthPlaceDistrict, String address, String place,
     String postCode, String addressParish, String addressMunicipality,
     String addressDistrict, String telephone, String mobilePhone, String email,
@@ -175,41 +175,18 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     public boolean equals(Object o) {
         return
         ((o instanceof MasterDegreeCandidate) &&
-        (identificationDocumentNumber.equals(((MasterDegreeCandidate)o).getIdentificationDocumentNumber())) &&
-        (identificationDocumentType.equals(((MasterDegreeCandidate)o).getIdentificationDocumentType())) &&
-        (identificationDocumentIssuePlace.equals(((MasterDegreeCandidate)o).getIdentificationDocumentIssuePlace())) &&
-        (identificationDocumentIssueDate.getTime() == (((MasterDegreeCandidate)o).getIdentificationDocumentIssueDate().getTime())) &&
-        (name.equals(((MasterDegreeCandidate)o).getName())) &&
-        (sex.equals(((MasterDegreeCandidate)o).getSex())) &&
-        (maritalStatus.equals(((MasterDegreeCandidate)o).getMaritalStatus())) &&
-        (birth.getTime() == (((MasterDegreeCandidate)o).getBirth().getTime())) &&
-        (fatherName.equals(((MasterDegreeCandidate)o).getFatherName())) &&
-        (motherName.equals(((MasterDegreeCandidate)o).getMotherName())) &&
-        (nationality.equals(((MasterDegreeCandidate)o).getNationality())) &&
-        (birthPlaceParish.equals(((MasterDegreeCandidate)o).getBirthPlaceParish())) &&
-        (birthPlaceMunicipality.equals(((MasterDegreeCandidate)o).getBirthPlaceMunicipality())) &&
-        (birthPlaceDistrict.equals(((MasterDegreeCandidate)o).getBirthPlaceDistrict())) &&
-        (address.equals(((MasterDegreeCandidate)o).getAddress())) &&
-        (place.equals(((MasterDegreeCandidate)o).getPlace())) &&
-        (postCode.equals(((MasterDegreeCandidate)o).getPostCode())) &&
-        (addressParish.equals(((MasterDegreeCandidate)o).getAddressParish())) &&
-        (addressMunicipality.equals(((MasterDegreeCandidate)o).getAddressMunicipality())) &&
-        (addressDistrict.equals(((MasterDegreeCandidate)o).getAddressDistrict())) &&
-        (telephone.equals(((MasterDegreeCandidate)o).getTelephone())) &&
-        (mobilePhone.equals(((MasterDegreeCandidate)o).getMobilePhone())) &&
-        (email.equals(((MasterDegreeCandidate)o).getEmail())) &&
-        (webSite.equals(((MasterDegreeCandidate)o).getWebSite())) &&
-        (contributorNumber.equals(((MasterDegreeCandidate)o).getContributorNumber())) &&
-        (occupation.equals(((MasterDegreeCandidate)o).getOccupation())) &&
-        (majorDegree.equals(((MasterDegreeCandidate)o).getMajorDegree())) &&
-        (username.equals(((MasterDegreeCandidate)o).getUsername())) &&
-        (password.equals(((MasterDegreeCandidate)o).getPassword())) &&
-        (candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
-		(applicationYear.equals(((MasterDegreeCandidate)o).getApplicationYear())) &&
-		(specialization.equals(((MasterDegreeCandidate)o).getSpecialization())) &&
-		(majorDegreeSchool.equals(((MasterDegreeCandidate)o).getMajorDegreeSchool())) &&
-		(majorDegreeYear.equals(((MasterDegreeCandidate)o).getMajorDegreeYear())) &&
-		(average.equals(((MasterDegreeCandidate)o).getAverage())));
+		
+		(this.username.equals(((MasterDegreeCandidate)o).getUsername())) ||
+		
+		((this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
+		 (this.applicationYear.equals(((MasterDegreeCandidate)o).getApplicationYear())) &&
+		 (this.degree.equals(((MasterDegreeCandidate)o).degree))) ||
+		 
+		((this.applicationYear.equals(((MasterDegreeCandidate)o).getApplicationYear())) && 
+		 (this.degree.equals(((MasterDegreeCandidate)o).degree)) &&
+		 (this.identificationDocumentNumber.equals(((MasterDegreeCandidate)o).getIdentificationDocumentNumber())) &&
+		 (this.identificationDocumentType.equals(((MasterDegreeCandidate)o).getIdentificationDocumentType()))));       
+        
     }
 
     public String toString() {
@@ -266,7 +243,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     		String addressParish, String addressMunicipality, String addressDistrict, 
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType,
-    		String maritalStatus, ICountry country , String nationality, String specialization, Double average,
+    		String maritalStatus, ICountry country , ICountry nationality, String specialization, Double average,
     		Date birth, Date identificationDocumentIssueDate
     		) {
         setIdentificationDocumentNumber(identificationDocumentNumber);
@@ -307,7 +284,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
  
 
 	/**
-	 * Returns the address.
 	 * @return String
 	 */
 	public String getAddress() {
@@ -315,7 +291,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the addressDistrict.
 	 * @return String
 	 */
 	public String getAddressDistrict() {
@@ -323,7 +298,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the addressMunicipality.
 	 * @return String
 	 */
 	public String getAddressMunicipality() {
@@ -331,7 +305,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the addressParish.
 	 * @return String
 	 */
 	public String getAddressParish() {
@@ -339,7 +312,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the applicationYear.
 	 * @return Integer
 	 */
 	public Integer getApplicationYear() {
@@ -347,7 +319,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the average.
 	 * @return Double
 	 */
 	public Double getAverage() {
@@ -355,7 +326,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birth.
 	 * @return Date
 	 */
 	public Date getBirth() {
@@ -363,7 +333,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birthPlaceDistrict.
 	 * @return String
 	 */
 	public String getBirthPlaceDistrict() {
@@ -371,7 +340,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birthPlaceMunicipality.
 	 * @return String
 	 */
 	public String getBirthPlaceMunicipality() {
@@ -379,7 +347,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the birthPlaceParish.
 	 * @return String
 	 */
 	public String getBirthPlaceParish() {
@@ -387,7 +354,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the candidateNumber.
 	 * @return Integer
 	 */
 	public Integer getCandidateNumber() {
@@ -395,7 +361,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the contributorNumber.
 	 * @return String
 	 */
 	public String getContributorNumber() {
@@ -403,7 +368,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the country.
 	 * @return ICountry
 	 */
 	public ICountry getCountry() {
@@ -411,7 +375,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the countryKey.
 	 * @return Integer
 	 */
 	public Integer getCountryKey() {
@@ -419,7 +382,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the degree.
 	 * @return ICurso
 	 */
 	public ICurso getDegree() {
@@ -427,7 +389,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the degreeKey.
 	 * @return Integer
 	 */
 	public Integer getDegreeKey() {
@@ -435,7 +396,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the email.
 	 * @return String
 	 */
 	public String getEmail() {
@@ -443,7 +403,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the fatherName.
 	 * @return String
 	 */
 	public String getFatherName() {
@@ -451,7 +410,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentIssueDate.
 	 * @return Date
 	 */
 	public Date getIdentificationDocumentIssueDate() {
@@ -459,7 +417,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentIssuePlace.
 	 * @return String
 	 */
 	public String getIdentificationDocumentIssuePlace() {
@@ -467,7 +424,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentNumber.
 	 * @return String
 	 */
 	public String getIdentificationDocumentNumber() {
@@ -475,7 +431,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the identificationDocumentType.
 	 * @return TipoDocumentoIdentificacao
 	 */
 	public TipoDocumentoIdentificacao getIdentificationDocumentType() {
@@ -483,7 +438,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the internalCode.
 	 * @return Integer
 	 */
 	public Integer getInternalCode() {
@@ -491,7 +445,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the majorDegree.
 	 * @return String
 	 */
 	public String getMajorDegree() {
@@ -499,7 +452,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the majorDegreeSchool.
 	 * @return String
 	 */
 	public String getMajorDegreeSchool() {
@@ -507,7 +459,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the majorDegreeYear.
 	 * @return Integer
 	 */
 	public Integer getMajorDegreeYear() {
@@ -515,7 +466,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the maritalStatus.
 	 * @return EstadoCivil
 	 */
 	public EstadoCivil getMaritalStatus() {
@@ -523,7 +473,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the mobilePhone.
 	 * @return String
 	 */
 	public String getMobilePhone() {
@@ -531,7 +480,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the motherName.
 	 * @return String
 	 */
 	public String getMotherName() {
@@ -539,7 +487,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the name.
 	 * @return String
 	 */
 	public String getName() {
@@ -547,15 +494,20 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the nationality.
-	 * @return String
+	 * @return ICountry
 	 */
-	public String getNationality() {
+	public ICountry getNationality() {
 		return nationality;
 	}
 
 	/**
-	 * Returns the occupation.
+	 * @return Integer
+	 */
+	public Integer getNationalityCountryKey() {
+		return nationalityCountryKey;
+	}
+
+	/**
 	 * @return String
 	 */
 	public String getOccupation() {
@@ -563,7 +515,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the password.
 	 * @return String
 	 */
 	public String getPassword() {
@@ -571,7 +522,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the place.
 	 * @return String
 	 */
 	public String getPlace() {
@@ -579,7 +529,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the postCode.
 	 * @return String
 	 */
 	public String getPostCode() {
@@ -587,7 +536,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the sex.
 	 * @return Sexo
 	 */
 	public Sexo getSex() {
@@ -595,7 +543,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the situations.
 	 * @return Set
 	 */
 	public Set getSituations() {
@@ -603,7 +550,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the specialization.
 	 * @return Specialization
 	 */
 	public Specialization getSpecialization() {
@@ -611,7 +557,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the telephone.
 	 * @return String
 	 */
 	public String getTelephone() {
@@ -619,7 +564,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the username.
 	 * @return String
 	 */
 	public String getUsername() {
@@ -627,7 +571,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Returns the webSite.
 	 * @return String
 	 */
 	public String getWebSite() {
@@ -879,8 +822,16 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 * Sets the nationality.
 	 * @param nationality The nationality to set
 	 */
-	public void setNationality(String nationality) {
+	public void setNationality(ICountry nationality) {
 		this.nationality = nationality;
+	}
+
+	/**
+	 * Sets the nationalityCountryKey.
+	 * @param nationalityCountryKey The nationalityCountryKey to set
+	 */
+	public void setNationalityCountryKey(Integer nationalityCountryKey) {
+		this.nationalityCountryKey = nationalityCountryKey;
 	}
 
 	/**

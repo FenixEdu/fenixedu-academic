@@ -147,12 +147,12 @@
           <!-- Nacionalidade -->
           <tr>
             <td><bean:message key="candidate.nationality" /></td>
-            <td><bean:write name="applicationInfo" property="nationality"/></td>
+            <td><bean:write name="applicationInfo" property="infoNationality.nationality"/></td>
           </tr>
           <!-- Naturalidade -->
           <tr>
             <td><bean:message key="candidate.country" /></td>
-            <td><bean:write name="applicationInfo" property="country"/></td>
+            <td><bean:write name="applicationInfo" property="infoCountry.name"/></td>
           </tr>
           
           <!-- Freguesia de Naturalidade -->

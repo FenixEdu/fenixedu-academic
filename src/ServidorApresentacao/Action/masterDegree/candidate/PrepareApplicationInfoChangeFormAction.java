@@ -103,7 +103,7 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 
 		  changePersonalInfoForm.set("fatherName", masterDegreeCandidate.getFatherName()); 
 		  changePersonalInfoForm.set("motherName", masterDegreeCandidate.getMotherName()); 
-		  changePersonalInfoForm.set("nationality", masterDegreeCandidate.getNationality());
+		  changePersonalInfoForm.set("nationality", masterDegreeCandidate.getInfoNationality().getNationality());
 		  changePersonalInfoForm.set("birthPlaceParish", masterDegreeCandidate.getBirthPlaceParish());
 		  changePersonalInfoForm.set("birthPlaceMunicipality", masterDegreeCandidate.getBirthPlaceMunicipality()); 
 		  changePersonalInfoForm.set("birthPlaceDistrict", masterDegreeCandidate.getBirthPlaceDistrict()); 
@@ -124,8 +124,8 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		  changePersonalInfoForm.set("majorDegreeYear", masterDegreeCandidate.getMajorDegreeYear()); 
 		  changePersonalInfoForm.set("password", masterDegreeCandidate.getPassword()); 
 		  changePersonalInfoForm.set("applicationYear", masterDegreeCandidate.getApplicationYear());
-		  changePersonalInfoForm.set("average", masterDegreeCandidate.getAverage()); 
-		  changePersonalInfoForm.set("country", masterDegreeCandidate.getCountry());
+		  changePersonalInfoForm.set("average", String.valueOf(masterDegreeCandidate.getAverage())); 
+		  changePersonalInfoForm.set("country", masterDegreeCandidate.getInfoCountry().getName());
 		  changePersonalInfoForm.set("specialization", masterDegreeCandidate.getSpecialization());
 
 		  changePersonalInfoForm.set("candidateNumber", masterDegreeCandidate.getCandidateNumber());

@@ -72,9 +72,9 @@
 	     jdbc-type="VARCHAR"
 	  />
 	  <field-descriptor id="12"
-	     name="nationality"
-	     column="NATIONALITY"
-	     jdbc-type="VARCHAR"
+	     name="nationalityCountryKey"
+	     column="NATIONALITY_COUNTRY_KEY"
+	     jdbc-type="INTEGER"
 	  />
 	  <field-descriptor id="13"
 	     name="birthPlaceParish"
@@ -229,6 +229,13 @@
           <foreignkey field-id-ref="38"/>
           </reference-descriptor>
 
+          <reference-descriptor
+         	name="nationality"
+         	class-ref="Dominio.Country"
+         	proxy="true"
+      	  >
+          <foreignkey field-id-ref="12"/>
+          </reference-descriptor>
 
          <collection-descriptor
 	         name="situations"
