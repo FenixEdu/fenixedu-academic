@@ -25,6 +25,8 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 	private static GeneralCacheAdministrator admin = new GeneralCacheAdministrator();
 	private static final int NO_REFRESH = CacheEntry.INDEFINITE_EXPIRY;
 
+	private static int numberOfCachedItems = 0;
+
 	public ObjectCacheOSCacheImpl()
 	{
 	}
@@ -41,9 +43,10 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 	{
 		try
 		{
-			this.remove(oid);
+			this.removeForInsert(oid);
 			admin.putInCache(oid.toString(), obj);
 			CacheLog.incrementPuts();
+			numberOfCachedItems++;
 		}
 		catch (Exception e)
 		{
@@ -74,6 +77,21 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 			InfoObjectCache.remove(InfoObjectCache.getKey(oid));
 			admin.flushEntry(oid.toString());
 			CacheLog.incrementRemoves();
+			numberOfCachedItems--;
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeCacheException(e.getMessage());
+		}
+	}
+
+	private void removeForInsert(Identity oid)
+	{
+		try
+		{
+			InfoObjectCache.remove(InfoObjectCache.getKey(oid));
+			admin.flushEntry(oid.toString());
+			CacheLog.incrementRemoves();
 		}
 		catch (Exception e)
 		{
@@ -90,12 +108,17 @@ public class ObjectCacheOSCacheImpl implements ObjectCache
 				InfoObjectCache.clear();
 				admin.flushAll();
 				CacheLog.incrementClears();
+				numberOfCachedItems = 0;
 			}
 			catch (Exception e)
 			{
 				throw new RuntimeCacheException(e);
 			}
 		}
+	}
+
+	public static int getNumberOfCachedItems() {
+        return numberOfCachedItems;
 	}
 
 }

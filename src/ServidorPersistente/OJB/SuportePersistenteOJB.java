@@ -77,6 +77,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
+import ServidorPersistente.cache.ObjectCacheOSCacheImpl;
 import ServidorPersistente.credits.IPersistentCredits;
 import ServidorPersistente.credits.IPersistentManagementPositionCreditLine;
 import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
@@ -157,32 +158,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	 */
     public Integer getNumberCachedItems()
     {
-//        TODO: fix this method so it returns the amount of objects cached
-        Integer numberCachedObjects = new Integer(0);
-
-        if (_odmg != null)
-        {
-            HasBroker hasBroker = ((HasBroker) _odmg.currentTransaction());
-            if (hasBroker != null)
-            {
-                //PersistenceBroker broker = hasBroker.getBroker();
-
-//                System.out.println("###########################################33");
-//                System.out.println(
-//                    "broker.serviceObjectCache().class= " + broker.serviceObjectCache().getClass());
-
-                //CacheFilterRegistry cacheFilter = (CacheFilterRegistry) broker.serviceObjectCache();
-
-//                System.out.println("###########################################33");
-//                System.out.println(
-//                    "broker.serviceObjectCache().class= "
-//                        + cacheFilter.getCache(null, null, CacheFilterRegistry.METHOD_LOOKUP));
-
-                numberCachedObjects = new Integer(-1);
-            }
-        }
-
-        return numberCachedObjects;
+        return new Integer(ObjectCacheOSCacheImpl.getNumberOfCachedItems());
     }
 
     public static synchronized SuportePersistenteOJB getInstance() throws ExcepcaoPersistencia

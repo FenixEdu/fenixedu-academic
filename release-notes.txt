@@ -49,6 +49,7 @@ BUG FIXES:
 - fixed bug [ #224 ] GEP's Portal - wrong presentation of responsible teachers for acreditation listing
 - fixed bug [ #197 ] Faculty Adm Office (edit Grant Payment Entities)
 - fixed bug [ #223 ] Faculty Adm Office (manageGrantContract)
+- fixed bug [ #158 ] Manager - number of cached objects
 
 KNOWN ISSUES:
 =============
