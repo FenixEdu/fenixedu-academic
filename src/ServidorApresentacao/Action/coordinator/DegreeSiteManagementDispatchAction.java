@@ -376,8 +376,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
     {
 
         HttpSession session = request.getSession(false);
-		ActionErrors errors = new ActionErrors();
-		
+        ActionErrors errors = new ActionErrors();
+
         Integer executionDegreeId = getFromRequest("infoExecutionDegreeId", request);
 
         GestorServicos gestorServicos = GestorServicos.manager();
@@ -386,42 +386,47 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         Object[] args = { executionDegreeId };
 
         InfoExecutionDegree infoExecutionDegree = null;
-        Integer degreeId = null; 
+        Integer degreeId = null;
         try
         {
             infoExecutionDegree =
                 (InfoExecutionDegree) gestorServicos.executar(null, "ReadExecutionDegreeByOID", args);
         } catch (FenixServiceException e)
         {
-            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-            saveErrors(request, errors);
+            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));            
         }
-
-        if (infoExecutionDegree != null
-            && infoExecutionDegree.getInfoDegreeCurricularPlan() != null
-            && infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null)
-        {
-            degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
-        }
-        
+		if (infoExecutionDegree == null
+			|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null
+			|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null)
+		{
+			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));			
+		}
+		if (!errors.isEmpty())
+		{
+			saveErrors(request, errors);
+			return (new ActionForward(mapping.getInput()));
+		}
+		
+		degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
         
         //read all execution degres this degree
-		Object[] args2 = { degreeId };
-			
-		List infoExecutionDegrees = null;
-		 try
-		 {
-			infoExecutionDegrees =
-				 (List) gestorServicos.executar(null, "ReadExecutionDegreesByDegree", args2);
-		 } catch (FenixServiceException e)
-		 {
-			 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
-			 saveErrors(request, errors);
-		 }
+        Object[] args2 = { degreeId };
 
-		request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
-		request.setAttribute("infoExecutionDegreeId", executionDegreeId);
-		
+        List infoExecutionDegrees = null;
+        try
+        {
+            infoExecutionDegrees =
+                (List) gestorServicos.executar(null, "ReadExecutionDegreesByDegree", args2);
+        } catch (FenixServiceException e)
+        {
+            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            saveErrors(request, errors);
+            return (new ActionForward(mapping.getInput()));
+        }
+
+        request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
+        request.setAttribute("infoExecutionDegreeId", executionDegreeId);
+
         return mapping.findForward("viewHistoric");
     }
 

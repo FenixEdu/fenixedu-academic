@@ -69,3 +69,7 @@
 		</logic:iterate>
 	</table>
 </logic:present>
+
+<logic:notPresent name="allActiveCurricularCourseScopes">
+	<h1><p><bean:message key="error.impossibleDegreeSite" /></p></h1>
+</logic:notPresent>

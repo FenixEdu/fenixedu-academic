@@ -26,6 +26,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão Create on 20/Nov/2003
@@ -53,20 +54,22 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 			infoCurriculum = (InfoCurriculum) gestorServicos.executar(null, "ReadCurriculumByCurricularCourseCode", args);
 		} catch (NonExistingServiceException e) {
 			errors.add("chosenCurricularCourse", new ActionError("error.coordinator.chosenCurricularCourse"));
-			saveErrors(request, errors);
 		} catch (FenixServiceException e) {
 			if (e.getMessage().equals("nullCurricularCourse")) {
 				errors.add("nullCode", new ActionError("error.coordinator.noCurricularCourse"));
-				saveErrors(request, errors);
 			} else {
 				throw new FenixActionException(e);
 			}
 		}
 		if (infoCurriculum == null) {
 			errors.add("noCurriculum", new ActionError("error.coordinator.noCurriculum"));
-			saveErrors(request, errors);
 		}
-
+		if (!errors.isEmpty())
+		{
+			saveErrors(request, errors);
+			return (new ActionForward(mapping.getInput()));
+		}
+		
 		//order list of execution courses by name
 		if (infoCurriculum.getInfoCurricularCourse() != null
 			&& infoCurriculum.getInfoCurricularCourse().getInfoAssociatedExecutionCourses() != null) {
@@ -85,6 +88,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 			Collections.sort(infoCurriculum.getInfoCurricularCourse().getInfoScopes(), comparatorChain);
 		}
 
+		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
 		request.setAttribute("infoCurriculum", infoCurriculum);
 		request.setAttribute("degreeId", degreeId);
 		return mapping.findForward("showCurricularCourseSite");

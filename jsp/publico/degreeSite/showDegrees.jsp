@@ -53,3 +53,9 @@
 	</table>
 
 </logic:present>
+
+<logic:notPresent name="degreesList">
+	<p><h1><bean:message key="error.impossibleDegreeList" /></h1></p>
+</logic:notPresent>
+
+

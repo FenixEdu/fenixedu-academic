@@ -22,6 +22,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão Created on 9/Out/2003
@@ -57,8 +58,9 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-			errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
-			saveErrors(request, errors);
+            errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
+            saveErrors(request, errors);
+            return (new ActionForward(mapping.getInput()));
         }
 
         //order list by year, next semester, next course
@@ -82,6 +84,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
             request.setAttribute("allActiveCurricularCourseScopes", allActiveCurricularCourseScopes);
         }
 
+        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         request.setAttribute("degreeId", degreeId);
         return mapping.findForward("showDegreeCurricularPlan");

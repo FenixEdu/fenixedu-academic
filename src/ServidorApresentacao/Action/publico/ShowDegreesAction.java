@@ -65,7 +65,8 @@ public class ShowDegreesAction extends FenixContextDispatchAction
 
         //put both list in request
         request.setAttribute("degreesList", degreesList);
-        request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+        //request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal());
 
         return mapping.findForward("showDegrees");
     }
@@ -77,8 +78,8 @@ public class ShowDegreesAction extends FenixContextDispatchAction
         HttpServletResponse response)
         throws Exception
     {
-		ActionErrors errors = new ActionErrors();
-		
+        ActionErrors errors = new ActionErrors();
+
         InfoExecutionPeriod infoExecutionPeriod =
             (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
         InfoExecutionYear infoExecutionYear = null;
@@ -99,8 +100,8 @@ public class ShowDegreesAction extends FenixContextDispatchAction
             executionDegreesList = (List) gestor.executar(null, "ReadMasterDegrees", args);
         } catch (FenixServiceException e)
         {
-			errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
-			saveErrors(request, errors);
+            errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
+            saveErrors(request, errors);
         }
 
         //buil a list of degrees by execution degrees list
@@ -108,9 +109,8 @@ public class ShowDegreesAction extends FenixContextDispatchAction
 
         //put both list in request
         request.setAttribute("degreesList", degreesList);
-        request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-
-        System.out.println("DegreeList: " + degreesList.size());
+        //request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal());
 
         return mapping.findForward("showDegrees");
     }

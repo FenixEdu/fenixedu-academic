@@ -98,3 +98,7 @@
 	
 </logic:notEmpty>  
 </logic:present>
+
+<logic:notPresent name="infoDegreeCurricularPlanList">
+	<h1><p><bean:message key="error.impossibleDegreeSite" /></p></h1>
+</logic:notPresent>
