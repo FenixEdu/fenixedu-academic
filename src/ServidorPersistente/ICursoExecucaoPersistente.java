@@ -41,7 +41,7 @@ public interface ICursoExecucaoPersistente extends IPersistentObject
 	 * @param executionYear
 	 * @return List
 	 */
-    public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia;
+    public List readByExecutionYear(String executionYear) throws ExcepcaoPersistencia;
 
     /**
 	 * @param degree

@@ -12,8 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
-import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -40,18 +42,17 @@ public class ReadExecutionDegreesByExecutionYear implements IService
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
 
-            IExecutionYear executionYear = null;
+            List executionDegrees = null;
             if (infoExecutionYear == null)
             {
                 IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-                executionYear = persistentExecutionYear.readCurrentExecutionYear();
+                IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+                executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
             }
             else
             {
-                executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+            	executionDegrees = executionDegreeDAO.readByExecutionYear(infoExecutionYear.getYear());
             }
-
-            List executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear);
 
             Iterator iterator = executionDegrees.iterator();
             infoExecutionDegreeList = new ArrayList();
@@ -59,8 +60,12 @@ public class ReadExecutionDegreesByExecutionYear implements IService
             while (iterator.hasNext())
             {
                 ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-                infoExecutionDegreeList.add(
-                    Cloner.get(executionDegree));
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getCurricularPlan()));
+                infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(InfoDegree.newInfoFromDomain(executionDegree.getCurricularPlan().getDegree()));
+                infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setNome(executionDegree.getCurricularPlan().getDegree().getNome());
+                infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setSigla(executionDegree.getCurricularPlan().getDegree().getSigla());
+                infoExecutionDegreeList.add(infoExecutionDegree);
             }
 
         }

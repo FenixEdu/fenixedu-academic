@@ -54,14 +54,14 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 
    
     /**
-	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYear(Dominio.IExecutionYear)
+	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYear(String)
 	 */
-    public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia
+    public List readByExecutionYear(String executionYear) throws ExcepcaoPersistencia
     {
 
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionYear.year", executionYear.getYear());
+        criteria.addEqualTo("executionYear.year", executionYear);
         criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
 
         return queryList(CursoExecucao.class, criteria);

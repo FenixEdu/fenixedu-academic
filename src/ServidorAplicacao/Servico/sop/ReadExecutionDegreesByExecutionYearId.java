@@ -53,7 +53,7 @@ public class ReadExecutionDegreesByExecutionYearId implements IService {
             }
 
             List executionDegrees = executionDegreeDAO
-                    .readByExecutionYear(executionYear);
+                    .readByExecutionYear(executionYear.getYear());
 
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 Iterator iterator = executionDegrees.iterator();

@@ -61,7 +61,7 @@ public class ReadExecutionDegreesByExecutionPeriodId implements IServico {
                     .readByOID(ExecutionPeriod.class, executionPeriodId);
 
             List executionDegrees = executionDegreeDAO
-                    .readByExecutionYear(executionPeriod.getExecutionYear());
+                    .readByExecutionYear(executionPeriod.getExecutionYear().getYear());
 
             Iterator iterator = executionDegrees.iterator();
             infoExecutionDegreeList = new ArrayList();

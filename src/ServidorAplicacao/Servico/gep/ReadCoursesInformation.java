@@ -86,7 +86,7 @@ public class ReadCoursesInformation implements IService {
                 IExecutionYear executionYear = persistentExecutionYear
                         .readCurrentExecutionYear();
                 List executionDegrees = persistentExecutionDegree
-                        .readByExecutionYear(executionYear);
+                        .readByExecutionYear(executionYear.getYear());
 
                 if (basic == null) {
                     professorships = persistentProfessorship

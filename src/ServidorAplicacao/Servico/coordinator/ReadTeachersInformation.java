@@ -97,7 +97,7 @@ public class ReadTeachersInformation implements IService
             {
                 IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
                 IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-                List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear);
+                List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear.getYear());
 
                 if (basic == null) 
                 {
