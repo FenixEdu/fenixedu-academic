@@ -48,6 +48,7 @@ public class CandidateAuthentication implements IServico {
     return "CandidateAuthentication";
   }
 
+// FIXME: Nuno Nunes Delete ME
 
   public IUserView run(String username, String password)
       throws FenixServiceException, ExcepcaoAutenticacao {

@@ -2,7 +2,7 @@
  * Created on 13/Mar/2003
  *
  */
-package ServidorAplicacao.Servico.masterDegree.candidate;
+package ServidorAplicacao.Servico.person;
 
 import Dominio.IPessoa;
 import ServidorAplicacao.FenixServiceException;

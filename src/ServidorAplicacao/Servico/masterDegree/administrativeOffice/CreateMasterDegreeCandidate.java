@@ -15,10 +15,13 @@ import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.IPessoa;
 import Dominio.MasterDegreeCandidate;
+import Dominio.Pessoa;
 import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -27,7 +30,6 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.CandidateSituationValidation;
 import Util.SituationName;
 import Util.Specialization;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -58,8 +60,8 @@ public class CreateMasterDegreeCandidate implements IServico {
 		return "CreateMasterDegreeCandidate";
 	}
 
-	public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate, String degreeName)
-		throws ExcepcaoInexistente, FenixServiceException , ExistingServiceException{
+	public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate, String degreeName, IUserView userView)
+		throws Exception{
 
 		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 		
@@ -70,6 +72,32 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
+			
+			// Check if the person Exists
+			
+			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(), 
+							 newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+			
+			if (person == null) {
+				// Create the new Person
+				person = new Pessoa();
+				person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
+				person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+				
+				// Generate Person Username
+				
+				String username = null;
+				GestorServicos serviceManager = GestorServicos.manager();
+				try {
+					username = (String) serviceManager.executar(userView, "GenerateUsername", null);
+				} catch (Exception e) {
+					throw new Exception(e);
+				}
+				person.setUsername(username);
+				
+				sp.getIPessoaPersistente().escreverPessoa(person);
+			}
+			
 			executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();		
   		    
 			// Read the Execution of this degree in the current execution Year
@@ -92,9 +120,7 @@ public class CreateMasterDegreeCandidate implements IServico {
 			situations.add(candidateSituation);
 			
 			masterDegreeCandidate.setSituations(situations);
-//			masterDegreeCandidate.setName(newMasterDegreeCandidate.getName());
-//			masterDegreeCandidate.setIdentificationDocumentNumber(newMasterDegreeCandidate.getIdentificationDocumentNumber());
-//			masterDegreeCandidate.setIdentificationDocumentType(new TipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoIdentificationDocumentType()));			
+			masterDegreeCandidate.setPerson(person);
 			masterDegreeCandidate.setSpecialization(new Specialization(newMasterDegreeCandidate.getSpecialization()));
 			masterDegreeCandidate.setExecutionDegree(executionDegree);
 

@@ -115,7 +115,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 //			newMasterDegreeCandidate.setInfoIdentificationDocumentType(identificationDocumentType);
 			newMasterDegreeCandidate.setSpecialization(degreeType);
 			
-			Object args[] = { newMasterDegreeCandidate , degreeName };
+			Object args[] = { newMasterDegreeCandidate , degreeName , userView};
 	  
 	  		InfoMasterDegreeCandidate createdCandidate = null;
 			try {
