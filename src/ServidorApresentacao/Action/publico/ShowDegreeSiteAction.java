@@ -40,8 +40,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
     {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession(true);
-
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
         //request.setAttribute("executionPeriodOID", executionPeriodOId);
 
@@ -180,8 +178,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
     {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession(true);
-
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
         //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
 
@@ -221,8 +217,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         throws Exception
     {
         ActionErrors errors = new ActionErrors();
-
-        HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
         //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);

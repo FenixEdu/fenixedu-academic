@@ -38,8 +38,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
     {
         ActionErrors errors = new ActionErrors();
 
-        HttpSession session = request.getSession(true);
-
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
         
         Integer degreeId = getFromRequest("degreeID", request);
