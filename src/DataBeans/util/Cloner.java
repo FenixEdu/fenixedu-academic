@@ -1903,12 +1903,15 @@ public abstract class Cloner
             copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
                 infoCurricularCourse.getInfoDegreeCurricularPlan());
                 
-		IScientificArea scientificArea = copyInfoScientificArea2IScientificArea(infoCurricularCourse.getInfoScientificArea());
-
         copyObjectProperties(curricularCourse, infoCurricularCourse);
 
+        if (infoCurricularCourse.getInfoScientificArea() != null)
+        {
+	        IScientificArea scientificArea = copyInfoScientificArea2IScientificArea(infoCurricularCourse.getInfoScientificArea());
+	        curricularCourse.setScientificArea(scientificArea);
+        }
+
         curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
-        curricularCourse.setScientificArea(scientificArea);
         
         return curricularCourse;
     }
@@ -1928,14 +1931,16 @@ public abstract class Cloner
             copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
                 curricularCourse.getDegreeCurricularPlan());
 
-        InfoScientificArea infoScientificArea =
-            copyIScientificArea2InfoScientificArea(curricularCourse.getScientificArea());
-
         copyObjectProperties(infoCurricularCourse, curricularCourse);
+        
+        if (curricularCourse.getScientificArea() != null) 
+        {
+	        InfoScientificArea infoScientificArea =
+	            copyIScientificArea2InfoScientificArea(curricularCourse.getScientificArea());
+	        infoCurricularCourse.setInfoScientificArea(infoScientificArea);
+        }
 
         infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        infoCurricularCourse.setInfoScientificArea(infoScientificArea);
-
         return infoCurricularCourse;
     }
 
