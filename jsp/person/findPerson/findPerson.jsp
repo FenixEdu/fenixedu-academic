@@ -4,7 +4,7 @@
 <br />
 <span class="error"><html:errors/></span>
 
-<html:form action="/findPerson" focus="username">
+<html:form action="/findPerson" focus="name">
 <html:hidden property="method" value="findPerson" />
 <table>
 	<tr>
@@ -33,7 +33,7 @@
 </table>
 
 <html:submit styleClass="inputbutton">
-	<bean:message key="button.save"/>
+	<bean:message key="button.search"/>
 </html:submit>
 <html:reset  styleClass="inputbutton">
 	<bean:message key="label.clear"/>
