@@ -17,12 +17,13 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Tânia Pousão
+ * @author Tânia Pousão 
  * Created on 10/Out/2003
  */
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements IServico {
 
-	private static ReadCurricularCourseScopeListByDegreeCurricularPlan service = new ReadCurricularCourseScopeListByDegreeCurricularPlan();
+	private static ReadCurricularCourseScopeListByDegreeCurricularPlan service =
+		new ReadCurricularCourseScopeListByDegreeCurricularPlan();
 
 	/**
 	 * The singleton access method of this class.
@@ -50,37 +51,42 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
 	public List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
 		ISuportePersistente sp;
 		List allCurricularCourses = null;
+		List allCurricularCourseScope = new ArrayList();
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			IDegreeCurricularPlan degreeCurricularPlan =
 				(IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(
 					new DegreeCurricularPlan(idDegreeCurricularPlan),
 					false);
-			allCurricularCourses =
-				sp.getIPersistentCurricularCourse().readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+			allCurricularCourses = sp.getIPersistentCurricularCourse().readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+
+			if (allCurricularCourses == null || allCurricularCourses.isEmpty())
+				return allCurricularCourses;
+
+			// build the result of this service, ie, curricular course scope's list
+			//for each curricular course, add it scopes in the result list
+			Iterator iterator = allCurricularCourses.iterator();
+
+			ICurricularCourse curricularCourse = null;
+			ListIterator iteratorScopes = null;
+			while (iterator.hasNext()) {
+				curricularCourse = (ICurricularCourse) iterator.next();
+
+				List curricularCourseScopes =
+					(List) sp.getIPersistentCurricularCourseScope().readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
+
+				if (curricularCourseScopes != null) {
+					iteratorScopes = curricularCourseScopes.listIterator();
+					while (iteratorScopes.hasNext()) {
+						allCurricularCourseScope.add(
+							Cloner.copyICurricularCourseScope2InfoCurricularCourseScope((ICurricularCourseScope) iteratorScopes.next()));
+					}
+				}
+			}
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
 
-		if (allCurricularCourses == null || allCurricularCourses.isEmpty())
-			return allCurricularCourses;
-
-		// build the result of this service, ie, curricular course scope's list
-		//for each curricular course, add it scopes in the result list
-		Iterator iterator = allCurricularCourses.iterator();
-		List allCurricularCourseScope = new ArrayList();
-
-		ICurricularCourse curricularCourse = null;
-		ListIterator iteratorScopes = null;
-		while (iterator.hasNext()) {
-			curricularCourse = (ICurricularCourse) iterator.next();
-			
-			iteratorScopes = curricularCourse.getScopes().listIterator();
-			while (iteratorScopes.hasNext()) {
-				allCurricularCourseScope.add(Cloner.copyICurricularCourseScope2InfoCurricularCourseScope((ICurricularCourseScope) iteratorScopes.next()));
-			}
-		}
-		
 		return allCurricularCourseScope;
 	}
 }
