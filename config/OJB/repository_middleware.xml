@@ -107,153 +107,163 @@
   class="middleware.middlewareDomain.MWPessoa"
   table="mw_PESSOA"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="documentidnumber"
     column="documentIdNumber"
     jdbc-type="VARCHAR"
 	primarykey="true"    
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="documentidtype"
     column="documentIdType"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="documentidplace"
     column="documentIdPlace"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="3"
+  <field-descriptor
     name="documentiddate"
     column="documentIdDate"
     jdbc-type="DATE"
   />
-  <field-descriptor id="4"
+  <field-descriptor
     name="name"
     column="name"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="5"
+  <field-descriptor
     name="sex"
     column="sex"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="8"
+  <field-descriptor
     name="maritalstatus"
     column="maritalStatus"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="9"
+  <field-descriptor
     name="dateofbirth"
     column="dateOfBirth"
     jdbc-type="DATE"
   />
-  <field-descriptor id="10"
+  <field-descriptor
     name="fathername"
     column="fatherName"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="11"
+  <field-descriptor
     name="mothername"
     column="motherName"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="12"
+  <field-descriptor
     name="countrycode"
     column="countryCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="13"
+  <field-descriptor
     name="parishofbirth"
     column="parishOfBirth"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="14"
+  <field-descriptor
     name="municipalityofbirth"
     column="municipalityOfBirth"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="15"
+  <field-descriptor
     name="districtofbirth"
     column="districtOfBirth"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="16"
+  <field-descriptor
     name="address"
     column="address"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="17"
+  <field-descriptor
+    name="addressAreaCode"
+    column="addressAreaCode"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
     name="zipcode"
     column="zipCode"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="18"
-    name="areacode"
-    column="areaCode"
+  <field-descriptor
+    name="zipAreaCode"
+    column="zipAreaCode"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="19"
+  <field-descriptor
     name="parishofaddress"
     column="parishOfAddress"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="20"
+  <field-descriptor
     name="municipalityofaddress"
     column="municipalityOfAddress"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="21"
+  <field-descriptor
     name="districtofaddress"
     column="districtOfAddress"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="22"
+  <field-descriptor
     name="phone"
     column="phone"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="23"
+  <field-descriptor
     name="mobilephone"
     column="mobilePhone"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="24"
+  <field-descriptor
     name="email"
     column="email"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="25"
+  <field-descriptor
     name="homepage"
     column="homePage"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="26"
+  <field-descriptor
     name="contributornumber"
     column="contributorNumber"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="27"
+  <field-descriptor
+    name="job"
+    column="job"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor
     name="username"
     column="username"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="28"
+  <field-descriptor
     name="password"
     column="password"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="29"
+  <field-descriptor
     name="fiscalcode"
     column="fiscalCode"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="30"
+  <field-descriptor
     name="documentidvalidation"
     column="documentIdValidation"
     jdbc-type="DATE"
   />
-  <field-descriptor id="31"
+  <field-descriptor
     name="financialrepcode"
     column="financialRepCode"
     jdbc-type="VARCHAR"
