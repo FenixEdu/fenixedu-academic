@@ -12,8 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
@@ -25,7 +25,6 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.FilteredDataSet;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
@@ -136,9 +135,15 @@ public abstract class ServiceTestCase extends TestCase {
 			ResourceBundle bundle =
 				new PropertyResourceBundle(
 					new FileInputStream(getTableNamesToFilterFilePath()));
+					
 			stringTableNamesToFilter =
 				bundle.getString(getNameOfServiceToBeTested());
+				
 			defaultStringTableNamesToFilter = bundle.getString("Default");
+		}
+		catch(MissingResourceException ex)
+		{
+			fail("Resource " + getNameOfServiceToBeTested() + " not found in "+getTableNamesToFilterFilePath());
 		}
 		catch (FileNotFoundException ex) {
 			fail("File " + getTableNamesToFilterFilePath() + " not found.");
