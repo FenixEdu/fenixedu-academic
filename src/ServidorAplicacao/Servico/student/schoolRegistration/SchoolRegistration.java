@@ -8,13 +8,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoPerson;
+import Dominio.ICountry;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IPessoa;
+import Dominio.IRole;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Pessoa;
+import Dominio.Role;
 import Dominio.student.ISchoolRegistrationInquiryAnswer;
 import Dominio.student.SchoolRegistrationInquiryAnswer;
 import ServidorAplicacao.Servico.UserView;
@@ -22,16 +27,21 @@ import ServidorAplicacao.Servico.enrollment.WriteEnrollment;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentSchoolRegistrationInquiryAnswer;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.RoleType;
 import Util.TipoCurso;
 import Util.enrollment.CurricularCourseEnrollmentType;
+
+import commons.CollectionUtils;
 
 /**
  * @author Nuno Correia
@@ -104,7 +114,12 @@ public class SchoolRegistration implements IService {
     		FenixServiceException {
         
         IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,infoPerson.getIdInternal());        
+        IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,infoPerson.getIdInternal());
+        IPersistentRole pRole = sp.getIPersistentRole();
+        IRole newRole = (IRole) pRole.readByRoleType(RoleType.STUDENT);
+        IPersistentCountry pCountry = sp.getIPersistentCountry();
+        ICountry country = (ICountry) pCountry.readCountryByNationality(infoPerson.getNacionalidade());
+        
         pessoaPersistente.simpleLockWrite(pessoa);
         
         pessoa.setCodigoPostal(infoPerson.getCodigoPostal());
@@ -131,7 +146,26 @@ public class SchoolRegistration implements IService {
         pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"/*infoPerson.getPassword()*/));
         pessoa.setProfissao(infoPerson.getProfissao());       
         pessoa.setTelefone(infoPerson.getTelefone());
-        pessoa.setTelemovel(infoPerson.getTelemovel());        
+        pessoa.setTelemovel(infoPerson.getTelemovel());
+        pessoa.setPais(country);
+
+        //remove firstTimeStudentRole and add studentRole
+        CollectionUtils.filter(pessoa.getPersonRoles(), new Predicate() {
+        	
+        	public boolean evaluate(Object arg0) {
+        		IRole role = (Role) arg0;
+        		
+        		IRole newRole = new Role();
+        		newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
+        		
+        		return !role.equals(newRole);
+        	}
+        });
+        
+        Object[] obj = {newRole};
+        
+        CollectionUtils.addAll(pessoa.getPersonRoles(), obj);
         
     }
+    
 }
