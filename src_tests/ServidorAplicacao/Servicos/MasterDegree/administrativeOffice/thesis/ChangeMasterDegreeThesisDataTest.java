@@ -175,13 +175,23 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					argsReadStudentCurricularPlan);
 
-			Object[] argsReadMasterDegreeThesisDataVersion = { infoStudentCurricularPlan };
-			InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-				(InfoMasterDegreeThesisDataVersion) serviceManager.executar(
-					userView,
-					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
-					argsReadMasterDegreeThesisDataVersion);
+			InfoTeacher infoTeacherGuider = new InfoTeacher();
+			infoTeacherGuider.setIdInternal(new Integer(956));
+			InfoTeacher infoTeacherAssistent = new InfoTeacher();
+			infoTeacherAssistent.setIdInternal(new Integer(957));
 
+			List guiders = new ArrayList();
+			List assistentGuiders = new ArrayList();
+			List externalAssistentGuiders = new ArrayList();
+
+			guiders.add(infoTeacherGuider);
+			assistentGuiders.add(infoTeacherAssistent);
+
+			Object[] argsChangeMasterDegreeThesis =
+				{ userView, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
+
+			serviceManager.executar(this.userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeThesis);
+			
 			fail("testChangeWhenMasterDegreeThesisDoesNotExist did not throw NonExistingServiceException");
 
 		} catch (NonExistingServiceException ex) {
