@@ -4,5 +4,5 @@
 -- *** testing. *************************************
 -- **************************************************
 
-delete from mw_ENROLMENT where degreeCode <> 22;
-delete from mw_ALUNO where degreeCode <> 22;
+delete from mw_ENROLMENT where degreeCode <> 1;
+delete from mw_ALUNO where degreeCode <> 1;

@@ -437,4 +437,22 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
 
 		return queryList(Student.class, criteria);
 	}
+
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#readAllBySpan(java.lang.Integer, java.lang.Integer)
+	 */
+	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		return readSpan(Student.class, criteria, numberOfElementsInSpan, spanNumber);
+	}
+	
+	/* (non-Javadoc)
+	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#countAll()
+	 */
+	public Integer countAll() throws ExcepcaoPersistencia
+	{
+		return new Integer(count(Student.class, new Criteria()));
+	}
+
 }

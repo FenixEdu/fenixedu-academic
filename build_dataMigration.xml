@@ -906,12 +906,8 @@
     </target>
 
 
-<!--
-	        depends="compile-proj, load-2003-enrolments, clean-persons-with-duplicate-id, load-semester-students">
--->
-
 	<target name="update-students-enrolments" depends="compile-proj, load-2003-enrolments, clean-persons-with-duplicate-id, load-semester-students, create-MWCurricularCourseOutsideStudentDegree-table">
-		<java classname="middleware.studentMigration.UpdateStudentEnrolments"
+		<java classname="middleware.studentMigration.enrollments.UpdateStudentEnrolments"
 			fork="yes"
 			failonerror="false"
 			maxmemory="512m"
@@ -1007,6 +1003,8 @@
 	</target>
 
 
+	<!-- ***************** ADDED BY DAVID SANTOS ***************** -->
+
     <target name="create-MWCurricularCourseOutsideStudentDegree-table">
         <sql driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -1014,7 +1012,7 @@
             password="${db.pass}"
             encoding="${encoding}">
 	        <fileset dir="${sql}">
-			 <include name="middleware/createMWCurricularCourseOutsideStudentDegreeTable.sql" />
+			 <include name="middleware/allEnrollmentsMigration/createMWCurricularCourseOutsideStudentDegreeTable.sql"/>
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -1024,9 +1022,7 @@
         </sql>
     </target>
 
-	<!-- ***************** ADDED BY DAVID SANTOS ***************** -->
-
-	<target name="create-past-execution-periods-and-execution-years" depends="">
+	<target name="create-past-execution-periods-and-execution-years" depends="load-mw-tables-with-data-for-all-enrollment-migration">
 		<exec executable="${sql}/middleware/commands/createPastExecutionPeriodsAndExecutionYears.sh" os="Linux, Unix">
 			<arg value="stop"/>
 		</exec>
@@ -1049,7 +1045,7 @@
 		</sequential>
 	</target>
 
-	<!-- <target name="create-and-update-all-past-curriculums" depends="load-mw-tables-with-data-for-all-enrollment-migration, create-past-execution-periods-and-execution-years"> -->
+	<!-- <target name="create-and-update-all-past-curriculums" depends="create-past-execution-periods-and-execution-years"> -->
 	<target name="create-and-update-all-past-curriculums" depends="compile-proj">
 		<java classname="middleware.studentMigration.CreateAndUpdateAllPastCurriculums" fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>

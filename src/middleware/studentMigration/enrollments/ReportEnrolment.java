@@ -1,4 +1,4 @@
-package middleware.studentMigration;
+package middleware.studentMigration.enrollments;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;

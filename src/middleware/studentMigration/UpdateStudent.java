@@ -51,7 +51,7 @@ public class UpdateStudent {
 		sp.iniciarTransaccao();
 		Integer numberOfStudents = persistentAluno.countAll();
 		sp.confirmarTransaccao();
-		int numberOfElementsInSpan = 100;
+		int numberOfElementsInSpan = 1;
 		
 		int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
 		numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;

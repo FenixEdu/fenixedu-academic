@@ -64,4 +64,6 @@ public interface IPersistentStudent extends IPersistentObject {
 
 	public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(String studentName, String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber) throws ExcepcaoPersistencia;
 
+	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
+	public Integer countAll() throws ExcepcaoPersistencia;
 }

@@ -1,4 +1,4 @@
-package middleware.studentMigration;
+package middleware.studentMigration.enrollments;
 
 import java.io.PrintWriter;
 import java.util.Calendar;
@@ -478,6 +478,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			MWCurricularCourseScope mwCurricularCourseScope = new MWCurricularCourseScope();
 			mwCurricularCourseScope.setCurricularsemester(mwEnrolment.getCurricularcoursesemester());
 			mwCurricularCourseScope.setCurricularyear(mwEnrolment.getCurricularcourseyear());
+			mwCurricularCourseScope.setExecutionyear(mwEnrolment.getEnrolmentyear());
 			curricularCourseScope = CreateAndUpdateAllPastCurriculums.getCurricularCourseScope(mwCurricularCourseScope, curricularCourse, branch, fenixPersistentSuport);
 			CreateAndUpdateAllStudentsPastEnrolments.curricularCourseScopesCreated.put(key, curricularCourseScope);
 		}
@@ -530,13 +531,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	{
 		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
 		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
-//		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
-//		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();
-
-//		String executionYearName = mwEnrolment.getEnrolmentyear().intValue() + "/" + (mwEnrolment.getEnrolmentyear().intValue() + 1);
-//		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
-//		String executionPeriodName = mwEnrolment.getCurricularcoursesemester() + " Semestre";
-//		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
 
 		IExecutionPeriod executionPeriod = CreateAndUpdateAllStudentsPastEnrolments.getExecutionPeriodForThisMWEnrolment(mwEnrolment, fenixPersistentSuport);
 
@@ -905,7 +899,13 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			calendar.get(Calendar.DAY_OF_MONTH); 
 	}
 
-	private static IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Exception
+	/**
+	 * @param mwEnrolment
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Exception
+	 */
+	public static IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		IPersistentExecutionPeriod persistentExecutionPeriod = fenixPersistentSuport.getIPersistentExecutionPeriod();
 		IPersistentExecutionYear persistentExecutionYear = fenixPersistentSuport.getIPersistentExecutionYear();

@@ -1,4 +1,4 @@
-package middleware.studentMigration;
+package middleware.studentMigration.enrollments;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
+import middleware.studentMigration.enrollments.ReportEnrolment;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;

@@ -1,4 +1,4 @@
-package middleware.studentMigration;
+package middleware.studentMigration.enrollments;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +11,7 @@ import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWCurricularCourse;
 import middleware.middlewareDomain.MWCurricularCourseScope;
 import middleware.middlewareDomain.MWDegreeTranslation;
+import middleware.middlewareDomain.MWEnrolment;
 import middleware.middlewareDomain.MWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
@@ -33,6 +34,7 @@ import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IExecutionPeriod;
 import Dominio.IUniversity;
 import Dominio.University;
 import ServidorPersistente.IPersistentBranch;
@@ -129,7 +131,7 @@ public class CreateAndUpdateAllPastCurriculums
 	private static void writeAndUpdate(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		try {
-			IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllPastCurriculums.getDegreeCurricularPlan(mwCurricularCourseScope.getDegreecode(), fenixPersistentSuport);
+			IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllPastCurriculums.getDegreeCurricularPlan(mwCurricularCourseScope, fenixPersistentSuport);
 			if (degreeCurricularPlan == null) {
 				System.out.println("[ERROR 101] No record of Degree with code: [" + mwCurricularCourseScope.getDegreecode() + "]! ExecutionYear: [" + mwCurricularCourseScope.getExecutionyear() + "]");
 				return;
@@ -178,7 +180,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Exception
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode, ISuportePersistente fenixPersistentSuport) throws Exception
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Exception
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws.getIPersistentMWDegreeTranslation();
@@ -186,7 +188,7 @@ public class CreateAndUpdateAllPastCurriculums
 		
 		IDegreeCurricularPlan degreeCurricularPlan = null;
 
-		MWDegreeTranslation mwDegreeTranslation = persistentMWDegreeTranslation.readByDegreeCode(degreeCode);
+		MWDegreeTranslation mwDegreeTranslation = persistentMWDegreeTranslation.readByDegreeCode(mwCurricularCourseScope.getDegreecode());
 
 		if (mwDegreeTranslation != null) {
 			String degreeCurricularPlanName = "PAST-" + mwDegreeTranslation.getDegree().getSigla();
@@ -379,8 +381,12 @@ public class CreateAndUpdateAllPastCurriculums
 			curricularCourseScope.setTheoreticalHours(mwCurricularCourseScope.getTheoreticalhours());
 			curricularCourseScope.setPraticalHours(mwCurricularCourseScope.getPraticahours());
 			curricularCourseScope.setTheoPratHours(mwCurricularCourseScope.getTheoprathours());
-			curricularCourseScope.setBeginDate(Calendar.getInstance());
-			curricularCourseScope.setEndDate(Calendar.getInstance());
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(CreateAndUpdateAllPastCurriculums.getExecutionPeriod(mwCurricularCourseScope, fenixPersistentSuport).getBeginDate().getTime());
+			curricularCourseScope.setBeginDate(calendar);
+			calendar.setTimeInMillis(CreateAndUpdateAllPastCurriculums.getExecutionPeriod(mwCurricularCourseScope, fenixPersistentSuport).getEndDate().getTime());
+			curricularCourseScope.setEndDate(calendar);
 
 			curricularCourseScope.setEctsCredits(null);
 			curricularCourseScope.setWeigth(null);
@@ -488,5 +494,20 @@ public class CreateAndUpdateAllPastCurriculums
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * @param mwCurricularCourseScope
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Exception
+	 */
+	public static IExecutionPeriod getExecutionPeriod(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Exception
+	{
+		MWEnrolment mwEnrolment = new MWEnrolment();
+		mwEnrolment.setEnrolmentyear(mwCurricularCourseScope.getExecutionyear());
+		mwEnrolment.setCurricularcoursesemester(mwCurricularCourseScope.getCurricularsemester());
+		IExecutionPeriod executionPeriod = CreateAndUpdateAllStudentsPastEnrolments.getExecutionPeriodForThisMWEnrolment(mwEnrolment, fenixPersistentSuport);
+		return executionPeriod;
 	}
 }

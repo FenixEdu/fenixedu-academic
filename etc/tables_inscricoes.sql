@@ -77,7 +77,6 @@ create table BRANCH (
    KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
    BRANCH_ACRONYM varchar(50) not null,
    primary key (ID_INTERNAL),
-   index U2 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN),
    unique U1 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
@@ -103,7 +102,6 @@ create table CURRICULAR_COURSE (
    BASIC bit not null default '0',
    PRIMARY KEY  (ID_INTERNAL),
    UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN),
-   index U2 (CODE, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
 -- ----------------------------
@@ -168,8 +166,7 @@ create table ENROLMENT_EVALUATION (
    KEY_EMPLOYEE int(11),
    OBSERVATION varchar(255),
    primary key (ID_INTERNAL),
-   index U2 (KEY_ENROLMENT, EVALUATION_TYPE, GRADE),
-   unique U1 (KEY_ENROLMENT, WHEN_ALTER)
+   unique U1 (KEY_ENROLMENT,WHEN_ALTER,EVALUATION_TYPE,GRADE)
 )type=InnoDB;
 
 drop table if exists CURRICULAR_COURSE_SCOPE;
@@ -191,7 +188,6 @@ create table CURRICULAR_COURSE_SCOPE (
    END_DATE date default null,
    primary key (ID_INTERNAL),
    unique U1(KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, BEGIN_DATE),
-   index U2(KEY_CURRICULAR_SEMESTER, KEY_CURRICULAR_COURSE, KEY_BRANCH, BEGIN_DATE)
 )type=InnoDB;
 
 
