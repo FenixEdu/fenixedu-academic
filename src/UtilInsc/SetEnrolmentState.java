@@ -117,7 +117,7 @@ public class SetEnrolmentState {
 			if(chooseExecutionPeriodsMode) {
 				enrolmentList = readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(persistentEnrolment, studentActiveCurricularPlan);
 			} else {
-				enrolmentList = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+				enrolmentList = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentActiveCurricularPlan, EnrolmentState.TEMPORARILY_ENROLED);
 			}
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace(System.out);

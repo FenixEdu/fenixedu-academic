@@ -69,7 +69,7 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 			List studentAprovedEnrolments = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 				public boolean evaluate(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
-					return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ);
+					return enrolment.getEnrolmentState().equals(EnrolmentState.APROVED);
 				}
 			});
 

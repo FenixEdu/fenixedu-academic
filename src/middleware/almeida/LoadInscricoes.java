@@ -86,14 +86,14 @@ public class LoadInscricoes extends LoadDataFile {
 				//				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.CLOSED_OBJ);
 				enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
+				enrolment.setEnrolmentState(EnrolmentState.ENROLED);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 
 				writeElement(enrolment);
 			} else {
 				//				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
+				enrolment.setEnrolmentState(EnrolmentState.ENROLED);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 				writeElement(enrolment);
 			}

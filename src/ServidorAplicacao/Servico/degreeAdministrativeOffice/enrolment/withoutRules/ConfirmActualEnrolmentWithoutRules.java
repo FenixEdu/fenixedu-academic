@@ -96,8 +96,8 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 			final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
 
 			// list of all enrolments that may have been deleted.
-			List enrolmentsWithStateTemporarilyEnroled = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.TEMPORARILY_ENROLED_OBJ);
-			List enrolmentsWithStateEnroled = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.ENROLED_OBJ);
+			List enrolmentsWithStateTemporarilyEnroled = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.TEMPORARILY_ENROLED);
+			List enrolmentsWithStateEnroled = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.ENROLED);
 			List enrolmentsRead = new ArrayList();
 			enrolmentsRead.addAll(enrolmentsWithStateTemporarilyEnroled);
 			enrolmentsRead.addAll(enrolmentsWithStateEnroled);
@@ -133,7 +133,7 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 					enrolmentToWrite.setCurricularCourseScope(curricularCourseScope);
 					enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
-					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED);
 					enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 					enrolmentsToWrite.add(enrolmentToWrite);
 				}

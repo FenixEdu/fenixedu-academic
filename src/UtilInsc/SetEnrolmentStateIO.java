@@ -56,28 +56,7 @@ public abstract class SetEnrolmentStateIO {
 	}
 
 	public static String showEnrolmentState(EnrolmentState enrolmentState) {
-		int value = enrolmentState.getState().intValue();
-		String valueS = null;
-		switch (value) {
-			case EnrolmentState.NOT_APROVED :
-				valueS = "NOT_APROVED";
-				break;
-			case EnrolmentState.APROVED :
-				valueS = "APROVED";
-				break;
-			case EnrolmentState.ENROLED :
-				valueS = "ENROLED";
-				break;
-			case EnrolmentState.TEMPORARILY_ENROLED :
-				valueS = "TEMPORARILY_ENROLED";
-				break;
-			case EnrolmentState.ANNULED :
-				valueS = "ANNULED";
-				break;
-			default:
-				break;
-		}
-		return valueS;
+		return enrolmentState.toString();
 	}
 
 	public static void selectNewStatesForListOfTemporarilyEnrolments(List enrolmentList, boolean chooseExecutionPeriodsMode) {
@@ -107,7 +86,7 @@ public abstract class SetEnrolmentStateIO {
 					if(!str.equals(endStr)) {
 						int i = (new Integer(str)).intValue();
 						if( (i < 6) && (i > 0) ) {
-							enrolment.setEnrolmentState(new EnrolmentState(i));
+							enrolment.setEnrolmentState(EnrolmentState.getEnum(i));
 							break;
 						}
 					}

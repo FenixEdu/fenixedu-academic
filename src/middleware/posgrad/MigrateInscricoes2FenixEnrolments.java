@@ -320,15 +320,15 @@ public class MigrateInscricoes2FenixEnrolments {
 					}
 
 					if ((inscricao.getNota().equalsIgnoreCase("re")) || (inscricao.getNota().equalsIgnoreCase("rep"))) {
-						enrolment.setEnrolmentState(EnrolmentState.NOT_APROVED_OBJ);
+						enrolment.setEnrolmentState(EnrolmentState.NOT_APROVED);
 						
 					} else {
-						enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
+						enrolment.setEnrolmentState(EnrolmentState.APROVED);
 					}
 					evaluationNeeded = true;						
 				} else {
 					enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-					enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
+					enrolment.setEnrolmentState(EnrolmentState.ENROLED);
 				}
 				
 				

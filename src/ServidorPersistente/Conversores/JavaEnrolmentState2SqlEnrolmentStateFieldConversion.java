@@ -6,6 +6,7 @@
 
 package ServidorPersistente.Conversores;
 
+import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.EnrolmentState;
@@ -15,31 +16,34 @@ public class JavaEnrolmentState2SqlEnrolmentStateFieldConversion implements Fiel
     /*
      * @see FieldConversion#javaToSql(Object)
      */
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof EnrolmentState)
-        {
-            EnrolmentState s = (EnrolmentState) source;
-            return s.getState();
-        }
-        else {
-            return source;
-        }
-    }    
+    
+	public Object javaToSql(Object obj) throws ConversionException {
+		if (obj instanceof EnrolmentState) {
+			EnrolmentState enrolmentState = (EnrolmentState) obj;
+			return new Integer(enrolmentState.getValue());
+		}
+		return obj;
+	}
+       
 
    /*
      * @see FieldConversion#sqlToJava(Object)
      */
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Integer)
-        {
-            Integer src = (Integer) source;
-            return new EnrolmentState(src);
-        }
-        else
-        {
-            return source;
-        }
-    }    
+
+	public Object sqlToJava(Object obj) throws ConversionException {
+		EnrolmentState enrolmentState = null;
+		if (obj instanceof Integer) {
+			Integer enrolmentStateId = (Integer) obj;
+			
+			enrolmentState = EnrolmentState.getEnum(enrolmentStateId.intValue());
+			if (enrolmentState == null) {
+				throw new IllegalArgumentException(this.getClass().getName() + ": Illegal EnrolmentState type!(" + obj + ")");
+			}
+		} else {
+			throw new IllegalArgumentException("Illegal EnrolmentState type!(" + obj + ")");
+		}
+		return enrolmentState;
+
+	}
+    
 }

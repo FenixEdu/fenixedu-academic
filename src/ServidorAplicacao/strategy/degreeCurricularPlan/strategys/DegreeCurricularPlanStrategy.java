@@ -55,7 +55,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		int courses = 0;
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ)) &&
+			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)) &&
 				(!enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
 				if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)){
 					
@@ -95,7 +95,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		int courses = 0;
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ)) &&
+			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)) &&
 				(!enrolment.getCurricularCourseScope().getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ))){
 				if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)){
 					
