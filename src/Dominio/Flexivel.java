@@ -147,8 +147,7 @@ public class Flexivel implements IStrategyHorarios {
 
 				if (!(timeInicioExpediente < timeFimExpediente)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
-				} else if (
-					(timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
+				} else if ((timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
 				}
 			}
@@ -319,7 +318,7 @@ public class Flexivel implements IStrategyHorarios {
 
 			if (formHorario.getRegime().length < 0) {
 				errors.add("regime", new ActionError("error.regime.obrigatorio"));
-			} else {				
+			} else {
 				listaRegime = Arrays.asList(formHorario.getRegime());
 
 				if (listaRegime.contains(Constants.REGIME_IPF)) { //Regime:new String("isencaoPeriodoFixo")
@@ -456,9 +455,7 @@ public class Flexivel implements IStrategyHorarios {
 						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 						java.util.Date dataInicio = calendar.getTime();
 
-						if ((formHorario.getDiaFim() != null)
-							&& (formHorario.getMesFim() != null)
-							&& (formHorario.getAnoFim() != null)) {
+						if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
 							if ((formHorario.getDiaFim().length() > 0)
 								&& (formHorario.getMesFim().length() > 0)
 								&& (formHorario.getAnoFim().length() > 0)) {
@@ -566,9 +563,7 @@ public class Flexivel implements IStrategyHorarios {
 						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 						java.util.Date dataInicio = calendar.getTime();
 
-						if ((formHorario.getDiaFim() != null)
-							&& (formHorario.getMesFim() != null)
-							&& (formHorario.getAnoFim() != null)) {
+						if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
 							if ((formHorario.getDiaFim().length() > 0)
 								&& (formHorario.getMesFim().length() > 0)
 								&& (formHorario.getAnoFim().length() > 0)) {
@@ -1870,8 +1865,7 @@ public class Flexivel implements IStrategyHorarios {
 							// testar a entrada
 							if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
 								&& entrada.getData().getTime() <= horario.getFimRefeicao().getTime()) {
-								intervaloRefeicao =
-									intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
+								intervaloRefeicao = intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
 								horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
 							} else if (entrada.getData().getTime() <= horario.getInicioRefeicao().getTime()) {
 								intervaloRefeicao =
@@ -1905,11 +1899,16 @@ public class Flexivel implements IStrategyHorarios {
 							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
 
 						} else {
-							// houve ausencia de refeicao neste dia logo deve haver penalizacao
-							saldoPenalizacaoAusenciaRefeicao =
-								horario.getFimRefeicao().getTime()
-									- entrada.getData().getTime()
-									- horario.getDescontoObrigatorioRefeicao().getTime();
+							//houve ausencia de refeicao neste dia 
+
+							//logo deve haver penalizacao, mas só se o funcionário efectuou trabalho em todo o periodo de refeição
+							if (entrada.getData().getTime() < horario.getInicioRefeicao().getTime()
+								&& saida.getData().getTime() > horario.getFimRefeicao().getTime()) {
+								saldoPenalizacaoAusenciaRefeicao =
+									horario.getFimRefeicao().getTime()
+										- entrada.getData().getTime()
+										- horario.getDescontoObrigatorioRefeicao().getTime();
+							}
 
 							if (entrada.getNumFuncionario() == 0) {
 								intervaloRefeicaoJustificado = encontrarIntervaloRefeicaoJustificado(horario, entrada, saida);
@@ -1928,7 +1927,7 @@ public class Flexivel implements IStrategyHorarios {
 					// nao houve periodo de refeicao, logo tem que haver penalizacao
 					// que consiste em contar para saldo apenas o periodo de trabalho 
 					// até atingir o desconto obrigatorio de refeicao
-					if (saldo > saldoPenalizacaoAusenciaRefeicao) {
+					if (saldo > saldoPenalizacaoAusenciaRefeicao && intervaloRefeicao == 0) {
 						saldo = saldoPenalizacaoAusenciaRefeicao;
 					}
 				}
@@ -1938,7 +1937,7 @@ public class Flexivel implements IStrategyHorarios {
 					&& !refeicaoAntesEntrada) {
 					// o periodo de refeicao é menor que o obrigatorio logo a penalizacao é contar o período 
 					// de trabalho efectuado até à saída para a refeicao
-					if (saldo > saldoPenalizacaoMinimoRefeicao) {
+					if (saldo > saldoPenalizacaoMinimoRefeicao && saldoPenalizacaoAusenciaRefeicao != 0) {
 						saldo = saldoPenalizacaoMinimoRefeicao;
 					}
 				}

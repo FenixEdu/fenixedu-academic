@@ -144,8 +144,7 @@ public class Especifico implements IStrategyHorarios {
 
 				if (!(timeInicioExpediente < timeFimExpediente)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
-				} else if (
-					(timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
+				} else if ((timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
 				}
 			}
@@ -512,94 +511,94 @@ public class Especifico implements IStrategyHorarios {
 			}
 
 			// DATA DE VALIDADE 
-//			if (!formHorario.isExcepcaoHorario()) {
-//				if ((formHorario.getDiaInicio() != null)
-//					&& (formHorario.getMesInicio() != null)
-//					&& (formHorario.getAnoInicio() != null)) {
-//					if ((formHorario.getDiaInicio().length() < 1)
-//						|| (formHorario.getMesInicio().length() < 1)
-//						|| (formHorario.getAnoInicio().length() < 1)) {
-//						errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
-//					} else {
-//						try {
-//							diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
-//							mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
-//							anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
-//						} catch (java.lang.NumberFormatException e) {
-//							errors.add("numero", new ActionError("error.numero.naoInteiro"));
-//						}
-//						calendar.clear();
-//						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
-//						java.util.Date dataInicio = calendar.getTime();
-//
-//						if ((formHorario.getDiaFim() != null)
-//							&& (formHorario.getMesFim() != null)
-//							&& (formHorario.getAnoFim() != null)) {
-//							if ((formHorario.getDiaFim().length() > 0)
-//								&& (formHorario.getMesFim().length() > 0)
-//								&& (formHorario.getAnoFim().length() > 0)) {
-//								try {
-//									diaFim = (new Integer(formHorario.getDiaFim())).intValue();
-//									mesFim = (new Integer(formHorario.getMesFim())).intValue();
-//									anoFim = (new Integer(formHorario.getAnoFim())).intValue();
-//								} catch (java.lang.NumberFormatException e) {
-//									errors.add("numero", new ActionError("error.numero.naoInteiro"));
-//								}
-//
-//								calendar.clear();
-//								calendar.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
-//								java.util.Date dataFim = calendar.getTime();
-//
-//								if (!(dataInicio.getTime() < dataFim.getTime())) {
-//									errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
-//								}
-//							}
-//						}
-//					}
-//				}
-//			} else {
-				if ((formHorario.getDiaInicio() != null)
-					&& (formHorario.getMesInicio() != null)
-					&& (formHorario.getAnoInicio() != null)
-					&& (formHorario.getDiaFim() != null)
-					&& (formHorario.getMesFim() != null)
-					&& (formHorario.getAnoFim() != null)) {
-					if ((formHorario.getDiaInicio().length() < 1)
-						|| (formHorario.getMesInicio().length() < 1)
-						|| (formHorario.getAnoInicio().length() < 1)
-						|| (formHorario.getDiaFim().length() < 1)
-						|| (formHorario.getMesFim().length() < 1)
-						|| (formHorario.getAnoFim().length() < 1)) {
-						errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
-					} else {
-						try {
-							diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
-							mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
-							anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
-							diaFim = (new Integer(formHorario.getDiaFim())).intValue();
-							mesFim = (new Integer(formHorario.getMesFim())).intValue();
-							anoFim = (new Integer(formHorario.getAnoFim())).intValue();
-						} catch (java.lang.NumberFormatException e) {
-							errors.add("numero", new ActionError("error.numero.naoInteiro"));
-						}
+			//			if (!formHorario.isExcepcaoHorario()) {
+			//				if ((formHorario.getDiaInicio() != null)
+			//					&& (formHorario.getMesInicio() != null)
+			//					&& (formHorario.getAnoInicio() != null)) {
+			//					if ((formHorario.getDiaInicio().length() < 1)
+			//						|| (formHorario.getMesInicio().length() < 1)
+			//						|| (formHorario.getAnoInicio().length() < 1)) {
+			//						errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
+			//					} else {
+			//						try {
+			//							diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+			//							mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+			//							anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+			//						} catch (java.lang.NumberFormatException e) {
+			//							errors.add("numero", new ActionError("error.numero.naoInteiro"));
+			//						}
+			//						calendar.clear();
+			//						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
+			//						java.util.Date dataInicio = calendar.getTime();
+			//
+			//						if ((formHorario.getDiaFim() != null)
+			//							&& (formHorario.getMesFim() != null)
+			//							&& (formHorario.getAnoFim() != null)) {
+			//							if ((formHorario.getDiaFim().length() > 0)
+			//								&& (formHorario.getMesFim().length() > 0)
+			//								&& (formHorario.getAnoFim().length() > 0)) {
+			//								try {
+			//									diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+			//									mesFim = (new Integer(formHorario.getMesFim())).intValue();
+			//									anoFim = (new Integer(formHorario.getAnoFim())).intValue();
+			//								} catch (java.lang.NumberFormatException e) {
+			//									errors.add("numero", new ActionError("error.numero.naoInteiro"));
+			//								}
+			//
+			//								calendar.clear();
+			//								calendar.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
+			//								java.util.Date dataFim = calendar.getTime();
+			//
+			//								if (!(dataInicio.getTime() < dataFim.getTime())) {
+			//									errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
+			//								}
+			//							}
+			//						}
+			//					}
+			//				}
+			//			} else {
+			if ((formHorario.getDiaInicio() != null)
+				&& (formHorario.getMesInicio() != null)
+				&& (formHorario.getAnoInicio() != null)
+				&& (formHorario.getDiaFim() != null)
+				&& (formHorario.getMesFim() != null)
+				&& (formHorario.getAnoFim() != null)) {
+				if ((formHorario.getDiaInicio().length() < 1)
+					|| (formHorario.getMesInicio().length() < 1)
+					|| (formHorario.getAnoInicio().length() < 1)
+					|| (formHorario.getDiaFim().length() < 1)
+					|| (formHorario.getMesFim().length() < 1)
+					|| (formHorario.getAnoFim().length() < 1)) {
+					errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
+				} else {
+					try {
+						diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+						mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+						anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+						diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+						mesFim = (new Integer(formHorario.getMesFim())).intValue();
+						anoFim = (new Integer(formHorario.getAnoFim())).intValue();
+					} catch (java.lang.NumberFormatException e) {
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
+					}
 
-						Calendar calendarInicio = Calendar.getInstance();
-						Calendar calendarFim = Calendar.getInstance();
+					Calendar calendarInicio = Calendar.getInstance();
+					Calendar calendarFim = Calendar.getInstance();
 
-						calendarInicio.clear();
-						calendarInicio.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
-						java.util.Date dataInicio = calendarInicio.getTime();
+					calendarInicio.clear();
+					calendarInicio.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
+					java.util.Date dataInicio = calendarInicio.getTime();
 
-						calendarFim.clear();
-						calendarFim.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
-						java.util.Date dataFim = calendarFim.getTime();
+					calendarFim.clear();
+					calendarFim.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
+					java.util.Date dataFim = calendarFim.getTime();
 
-						if (!(dataInicio.getTime() <= dataFim.getTime())) {
-							errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
-						}
+					if (!(dataInicio.getTime() <= dataFim.getTime())) {
+						errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
 					}
 				}
-//			}
+			}
+			//			}
 		} catch (java.lang.IllegalArgumentException e) {
 			errors.add("horasData", new ActionError("error.data.horas"));
 		}
@@ -623,94 +622,94 @@ public class Especifico implements IStrategyHorarios {
 
 		try {
 			// DATA DE VALIDADE 
-//			if (!formHorario.isExcepcaoHorario()) {
-//				if ((formHorario.getDiaInicio() != null)
-//					&& (formHorario.getMesInicio() != null)
-//					&& (formHorario.getAnoInicio() != null)) {
-//					if ((formHorario.getDiaInicio().length() < 1)
-//						|| (formHorario.getMesInicio().length() < 1)
-//						|| (formHorario.getAnoInicio().length() < 1)) {
-//						errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
-//					} else {
-//						try {
-//							diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
-//							mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
-//							anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
-//						} catch (java.lang.NumberFormatException e) {
-//							errors.add("numero", new ActionError("error.numero.naoInteiro"));
-//						}
-//						calendar.clear();
-//						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
-//						java.util.Date dataInicio = calendar.getTime();
-//
-//						if ((formHorario.getDiaFim() != null)
-//							&& (formHorario.getMesFim() != null)
-//							&& (formHorario.getAnoFim() != null)) {
-//							if ((formHorario.getDiaFim().length() > 0)
-//								&& (formHorario.getMesFim().length() > 0)
-//								&& (formHorario.getAnoFim().length() > 0)) {
-//								try {
-//									diaFim = (new Integer(formHorario.getDiaFim())).intValue();
-//									mesFim = (new Integer(formHorario.getMesFim())).intValue();
-//									anoFim = (new Integer(formHorario.getAnoFim())).intValue();
-//								} catch (java.lang.NumberFormatException e) {
-//									errors.add("numero", new ActionError("error.numero.naoInteiro"));
-//								}
-//
-//								calendar.clear();
-//								calendar.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
-//								java.util.Date dataFim = calendar.getTime();
-//
-//								if (!(dataInicio.getTime() < dataFim.getTime())) {
-//									errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
-//								}
-//							}
-//						}
-//					}
-//				}
-//			} else {
-				if ((formHorario.getDiaInicio() != null)
-					&& (formHorario.getMesInicio() != null)
-					&& (formHorario.getAnoInicio() != null)
-					&& (formHorario.getDiaFim() != null)
-					&& (formHorario.getMesFim() != null)
-					&& (formHorario.getAnoFim() != null)) {
-					if ((formHorario.getDiaInicio().length() < 1)
-						|| (formHorario.getMesInicio().length() < 1)
-						|| (formHorario.getAnoInicio().length() < 1)
-						|| (formHorario.getDiaFim().length() < 1)
-						|| (formHorario.getMesFim().length() < 1)
-						|| (formHorario.getAnoFim().length() < 1)) {
-						errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
-					} else {
-						try {
-							diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
-							mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
-							anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
-							diaFim = (new Integer(formHorario.getDiaFim())).intValue();
-							mesFim = (new Integer(formHorario.getMesFim())).intValue();
-							anoFim = (new Integer(formHorario.getAnoFim())).intValue();
-						} catch (java.lang.NumberFormatException e) {
-							errors.add("numero", new ActionError("error.numero.naoInteiro"));
-						}
+			//			if (!formHorario.isExcepcaoHorario()) {
+			//				if ((formHorario.getDiaInicio() != null)
+			//					&& (formHorario.getMesInicio() != null)
+			//					&& (formHorario.getAnoInicio() != null)) {
+			//					if ((formHorario.getDiaInicio().length() < 1)
+			//						|| (formHorario.getMesInicio().length() < 1)
+			//						|| (formHorario.getAnoInicio().length() < 1)) {
+			//						errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
+			//					} else {
+			//						try {
+			//							diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+			//							mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+			//							anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+			//						} catch (java.lang.NumberFormatException e) {
+			//							errors.add("numero", new ActionError("error.numero.naoInteiro"));
+			//						}
+			//						calendar.clear();
+			//						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
+			//						java.util.Date dataInicio = calendar.getTime();
+			//
+			//						if ((formHorario.getDiaFim() != null)
+			//							&& (formHorario.getMesFim() != null)
+			//							&& (formHorario.getAnoFim() != null)) {
+			//							if ((formHorario.getDiaFim().length() > 0)
+			//								&& (formHorario.getMesFim().length() > 0)
+			//								&& (formHorario.getAnoFim().length() > 0)) {
+			//								try {
+			//									diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+			//									mesFim = (new Integer(formHorario.getMesFim())).intValue();
+			//									anoFim = (new Integer(formHorario.getAnoFim())).intValue();
+			//								} catch (java.lang.NumberFormatException e) {
+			//									errors.add("numero", new ActionError("error.numero.naoInteiro"));
+			//								}
+			//
+			//								calendar.clear();
+			//								calendar.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
+			//								java.util.Date dataFim = calendar.getTime();
+			//
+			//								if (!(dataInicio.getTime() < dataFim.getTime())) {
+			//									errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
+			//								}
+			//							}
+			//						}
+			//					}
+			//				}
+			//			} else {
+			if ((formHorario.getDiaInicio() != null)
+				&& (formHorario.getMesInicio() != null)
+				&& (formHorario.getAnoInicio() != null)
+				&& (formHorario.getDiaFim() != null)
+				&& (formHorario.getMesFim() != null)
+				&& (formHorario.getAnoFim() != null)) {
+				if ((formHorario.getDiaInicio().length() < 1)
+					|| (formHorario.getMesInicio().length() < 1)
+					|| (formHorario.getAnoInicio().length() < 1)
+					|| (formHorario.getDiaFim().length() < 1)
+					|| (formHorario.getMesFim().length() < 1)
+					|| (formHorario.getAnoFim().length() < 1)) {
+					errors.add("dates", new ActionError("error.dataValidade.obrigatoria"));
+				} else {
+					try {
+						diaInicio = (new Integer(formHorario.getDiaInicio())).intValue();
+						mesInicio = (new Integer(formHorario.getMesInicio())).intValue();
+						anoInicio = (new Integer(formHorario.getAnoInicio())).intValue();
+						diaFim = (new Integer(formHorario.getDiaFim())).intValue();
+						mesFim = (new Integer(formHorario.getMesFim())).intValue();
+						anoFim = (new Integer(formHorario.getAnoFim())).intValue();
+					} catch (java.lang.NumberFormatException e) {
+						errors.add("numero", new ActionError("error.numero.naoInteiro"));
+					}
 
-						Calendar calendarInicio = Calendar.getInstance();
-						Calendar calendarFim = Calendar.getInstance();
+					Calendar calendarInicio = Calendar.getInstance();
+					Calendar calendarFim = Calendar.getInstance();
 
-						calendarInicio.clear();
-						calendarInicio.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
-						java.util.Date dataInicio = calendarInicio.getTime();
+					calendarInicio.clear();
+					calendarInicio.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
+					java.util.Date dataInicio = calendarInicio.getTime();
 
-						calendarFim.clear();
-						calendarFim.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
-						java.util.Date dataFim = calendarFim.getTime();
+					calendarFim.clear();
+					calendarFim.set(anoFim, mesFim - 1, diaFim, 00, 00, 00);
+					java.util.Date dataFim = calendarFim.getTime();
 
-						if (!(dataInicio.getTime() <= dataFim.getTime())) {
-							errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
-						}
+					if (!(dataInicio.getTime() <= dataFim.getTime())) {
+						errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
 					}
 				}
-//			}
+			}
+			//			}
 
 			if (listaRegimes.size() < 0) {
 				errors.add("regime", new ActionError("error.regime.obrigatorio"));
@@ -805,7 +804,7 @@ public class Especifico implements IStrategyHorarios {
 				00);
 			horario.setDescontoObrigatorioRefeicao(new Time(calendar.getTimeInMillis()));
 		}
-		
+
 		// trabalho consecutivo
 		if ((formHorario.getTrabalhoConsecutivoHoras() != null) && (formHorario.getTrabalhoConsecutivoHoras().length() > 0)) {
 			calendar.clear();
@@ -2035,13 +2034,11 @@ public class Especifico implements IStrategyHorarios {
 								// testar a entrada
 								if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
 									&& entrada.getData().getTime() <= horario.getFimRefeicao().getTime()) {
-									intervaloRefeicao =
-										intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
+									intervaloRefeicao = intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
 									horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
 								} else if (entrada.getData().getTime() <= horario.getInicioRefeicao().getTime()) {
 									intervaloRefeicao =
-										intervaloRefeicao
-											- (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
+										intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
 								}
 							} else {
 								if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
@@ -2067,14 +2064,19 @@ public class Especifico implements IStrategyHorarios {
 								&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
 								intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
 								horario.setInicioRefeicao(new Timestamp(saida.getData().getTime()));
-							} else if (saida.getData().getTime() == horario.getInicioRefeicao().getTime()) {
+						 	} else if (saida.getData().getTime() == horario.getInicioRefeicao().getTime()) {
 								intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
 							} else {
-								// houve ausencia de refeicao neste dia logo deve haver penalizacao
-								saldoPenalizacaoAusenciaRefeicao =
-									horario.getFimRefeicao().getTime()
-										- entrada.getData().getTime()
-										- horario.getDescontoObrigatorioRefeicao().getTime();
+								//houve ausencia de refeicao neste dia 
+
+								//logo deve haver penalizacao, mas só se o funcionário efectuou trabalho em todo o periodo de refeição
+								if (entrada.getData().getTime() < horario.getInicioRefeicao().getTime()
+									&& saida.getData().getTime() > horario.getFimRefeicao().getTime()) {
+									saldoPenalizacaoAusenciaRefeicao =
+										horario.getFimRefeicao().getTime()
+											- entrada.getData().getTime()
+											- horario.getDescontoObrigatorioRefeicao().getTime();
+								}
 
 								if (entrada.getNumFuncionario() == 0) {
 									intervaloRefeicaoJustificado = encontrarIntervaloRefeicaoJustificado(horario, entrada, saida);
@@ -2093,7 +2095,7 @@ public class Especifico implements IStrategyHorarios {
 						// nao houve periodo de refeicao, logo tem que haver penalizacao
 						// que consiste em contar para saldo apenas o periodo de trabalho 
 						// até atingir o desconto obrigatorio de refeicao
-						if (saldo > saldoPenalizacaoAusenciaRefeicao) {
+						if (saldo > saldoPenalizacaoAusenciaRefeicao && saldoPenalizacaoAusenciaRefeicao != 0) {
 							saldo = saldoPenalizacaoAusenciaRefeicao;
 						}
 					}
