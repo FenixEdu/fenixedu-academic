@@ -5,13 +5,13 @@
  */
 package ServidorAplicacao.Servico.publico;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ISite;
 import Dominio.Site;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.ExecutionCourseSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingAssociatedCurricularCoursesServiceException;
@@ -27,32 +27,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  * 
  */
-public class ExecutionCourseSiteComponentService implements IServico {
+public class ExecutionCourseSiteComponentService implements IService {
 
-	private static ExecutionCourseSiteComponentService _servico = new ExecutionCourseSiteComponentService();
+	
 
-	/**
-	  * The actor of this class.
-	  **/
-
-	private ExecutionCourseSiteComponentService() {
+	public ExecutionCourseSiteComponentService() {
 
 	}
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "ExecutionCourseSiteComponentService";
-	}
-
-	/**
-	 * Returns the _servico.
-	 * @return ReadExecutionCourse
-	 */
-	public static ExecutionCourseSiteComponentService getService() {
-		return _servico;
-	}
+	
 
 	public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId)
 		throws FenixServiceException, NonExistingAssociatedCurricularCoursesServiceException {

@@ -4,7 +4,6 @@
  *  
  */
 package ServidorAplicacao.Factory;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -13,7 +12,6 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.slide.common.SlideException;
-
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
@@ -24,7 +22,6 @@ import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
-import DataBeans.InfoLink;
 import DataBeans.InfoSection;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoSiteAnnouncement;
@@ -45,6 +42,7 @@ import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
+import DataBeans.util.CMSUtils;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
 import Dominio.IAnnouncement;
@@ -80,7 +78,6 @@ import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import fileSuport.FileSuport;
-import fileSuport.FileSuportObject;
 import fileSuport.IFileSuport;
 
 /**
@@ -402,75 +399,59 @@ public class ExecutionCourseSiteComponentBuilder
         return component;
     }
 
-    /**
-     * @param section
-     * @param site
-     * @return
-     */
-    private ISiteComponent getInfoSiteSection(
-        InfoSiteSection component,
-        ISite site,
-        InfoSiteCommon commonComponent,
-        Integer sectionIndex)
-        throws FenixServiceException
-    {
-
-        List sections = commonComponent.getSections();
-        InfoSection infoSection = (InfoSection) sections.get(sectionIndex.intValue());
-        component.setSection(infoSection);
-        List itemsList = null;
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentItem persistentItem = sp.getIPersistentItem();
-
-            ISection section = Cloner.copyInfoSection2ISection(infoSection);
-
-            itemsList = persistentItem.readAllItemsBySection(section);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        }
-
-        List infoItemsList = new ArrayList(itemsList.size());
-        Iterator iter = itemsList.iterator();
-
-        IFileSuport fileSuport = FileSuport.getInstance();
-        while (iter.hasNext())
-        {
-            IItem item = (IItem) iter.next();
-            InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
-            try
-            {
-                List files = fileSuport.getDirectoryFiles(item.getSlideName());
-                if (files != null && !files.isEmpty())
-                {
-                    List links = new ArrayList();
-                    Iterator iterFiles = files.iterator();
-                    while (iterFiles.hasNext())
-                    {
-                        FileSuportObject file = (FileSuportObject) iterFiles.next();
-                        InfoLink infoLink = new InfoLink();
-                        infoLink.setLink(file.getFileName());
-                        infoLink.setLinkName(file.getLinkName());
-                        links.add(infoLink);
-                    }
-                    infoItem.setLinks(links);
-                }
-            }
-            catch (SlideException e1)
-            {
-                //the item does not have a folder associated
-            }
-            infoItemsList.add(infoItem);
-        }
-
-        Collections.sort(infoItemsList);
-        component.setItems(infoItemsList);
-
-        return component;
-    }
+	/**
+	 * @param section
+	 * @param site
+	 * @return
+	 */
+	private ISiteComponent getInfoSiteSection(InfoSiteSection component,
+			ISite site, InfoSiteCommon commonComponent, Integer sectionIndex)
+			throws FenixServiceException {
+		List sections = commonComponent.getSections();
+		InfoSection infoSection = (InfoSection) sections.get(sectionIndex
+				.intValue());
+		component.setSection(infoSection);
+		List itemsList = null;
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentItem persistentItem = sp.getIPersistentItem();
+			ISection section = Cloner.copyInfoSection2ISection(infoSection);
+			itemsList = persistentItem.readAllItemsBySection(section);
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+		List infoItemsList = new ArrayList(itemsList.size());
+		Iterator iter = itemsList.iterator();
+		IFileSuport fileSuport = FileSuport.getInstance();
+		try {
+			fileSuport.beginTransaction();
+		} catch (Exception e) {
+			throw new FenixServiceException(e);
+		}
+		try {
+			while (iter.hasNext()) {
+				IItem item = (IItem) iter.next();
+				InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+				try {
+					infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item
+							.getSlideName()));
+				} catch (SlideException e1) {
+					//the item does not have a folder associated
+				}
+				infoItemsList.add(infoItem);
+			}
+			fileSuport.commitTransaction();
+		} catch (Exception e1) {
+			try {
+				fileSuport.abortTransaction();
+			} catch (Exception e2) {
+				throw new FenixServiceException(e2);
+			}
+		}
+		Collections.sort(infoItemsList);
+		component.setItems(infoItemsList);
+		return component;
+	}
 
     /**
      * @param shifts

@@ -3,9 +3,6 @@
  *
  */
 package ServidorAplicacao.Servico.fileManager;
-
-import org.apache.slide.common.SlideException;
-
 import Dominio.IItem;
 import Dominio.Item;
 import ServidorAplicacao.IServico;
@@ -19,62 +16,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import fileSuport.FileSuport;
 import fileSuport.FileSuportObject;
 import fileSuport.IFileSuport;
-
 /**
- *fenix-head
- *ServidorAplicacao.Servico.fileManager
- * @author João Mota
- *17/Set/2003
- *
+ * fenix-head ServidorAplicacao.Servico.fileManager
+ * 
+ * @author João Mota 17/Set/2003
+ *  
  */
 public class StoreItemFile implements IServico {
-
 	private static StoreItemFile service = new StoreItemFile();
-
 	public static StoreItemFile getService() {
-
 		return service;
 	}
-
 	private StoreItemFile() {
-
 	}
-
 	public final String getNome() {
-
 		return "StoreItemFile";
 	}
-
-	public Boolean run(FileSuportObject file,Integer itemId)
-		throws FenixServiceException {
-			
+	public Boolean run(FileSuportObject file, Integer itemId)
+			throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentItem persistentItem = sp.getIPersistentItem();
 			IItem item = new Item(itemId);
 			item = (IItem) persistentItem.readByOId(item, false);
 			file.setUri(item.getSlideName());
-			file.setRootUri(item.getSection().getSite().getExecutionCourse().getSlideName());
+			file.setRootUri(item.getSection().getSite().getExecutionCourse()
+					.getSlideName());
 			IFileSuport fileSuport = FileSuport.getInstance();
-			if (!fileSuport.isFileNameValid(file)) {
-				throw new FileNameTooLongServiceException();
+			try {
+				fileSuport.beginTransaction();
+			} catch (Exception e) {
+				throw new FenixServiceException(e);
 			}
-			if (fileSuport.isStorageAllowed(file)) {
-				boolean result=fileSuport.storeFile(file);
-				if (!result) {
-					throw new FileAlreadyExistsServiceException();
+			try {
+				if (!fileSuport.isFileNameValid(file)) {
+					try {
+						fileSuport.abortTransaction();
+					} catch (Exception e1) {
+						throw new FenixServiceException(e1);
+					}
+					throw new FileNameTooLongServiceException();
 				}
-				return new Boolean(true);
-			}else {
-				return new Boolean(false);
+				if (fileSuport.isStorageAllowed(file)) {
+					boolean result = fileSuport.storeFile(file);
+					if (!result) {
+						try {
+							fileSuport.abortTransaction();
+						} catch (Exception e1) {
+							throw new FenixServiceException(e1);
+						}
+						throw new FileAlreadyExistsServiceException();
+					}
+					fileSuport.commitTransaction();
+					return new Boolean(true);
+				} else {
+					fileSuport.commitTransaction();
+					return new Boolean(false);
+				}
+			} catch (FileNameTooLongServiceException e1) {
+				throw e1;
+			} catch (FileAlreadyExistsServiceException e1) {
+				throw e1;
+			} catch (FenixServiceException e1) {
+				throw e1;
+			} catch (Exception e1) {
+				throw new FenixServiceException(e1);
 			}
-			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
-		} catch (SlideException e) {
-			throw new FenixServiceException(e);
 		}
-		
-		
 	}
 }

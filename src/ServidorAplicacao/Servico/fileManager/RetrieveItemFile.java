@@ -52,7 +52,23 @@ public class RetrieveItemFile implements IServico {
 			IItem item = new Item(itemId);
 			item = (IItem) persistentItem.readByOId(item, false);
 			IFileSuport fileSuport = FileSuport.getInstance();
+             try {
+                fileSuport.beginTransaction();
+            } catch (Exception e1) {
+                throw new FenixServiceException(e1);
+            }    
 			 file = fileSuport.retrieveFile(item.getSlideName()+"/"+fileName);
+             try {
+                fileSuport.commitTransaction();
+            } catch (Exception e2) {
+                try {
+                    fileSuport.abortTransaction();
+                    throw new FenixServiceException(e2);
+                } catch (Exception e3) {
+                    throw new FenixServiceException(e3);
+                } 
+            }
+             
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		} catch (SlideException e) {

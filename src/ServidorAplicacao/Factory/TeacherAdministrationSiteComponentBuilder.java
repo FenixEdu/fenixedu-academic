@@ -1,6 +1,5 @@
 package ServidorAplicacao.Factory;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +24,6 @@ import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
-import DataBeans.InfoLink;
 import DataBeans.InfoSection;
 import DataBeans.InfoShift;
 import DataBeans.InfoSite;
@@ -57,6 +55,7 @@ import DataBeans.InfoSiteTeachers;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoTeacher;
+import DataBeans.util.CMSUtils;
 import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.BibliographicReference;
@@ -116,7 +115,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import fileSuport.FileSuport;
-import fileSuport.FileSuportObject;
 import fileSuport.IFileSuport;
 
 /**
@@ -1066,44 +1064,30 @@ public class TeacherAdministrationSiteComponentBuilder
         List infoItemsList = new ArrayList(itemsList.size());
         Iterator iter = itemsList.iterator();
         IFileSuport fileSuport = FileSuport.getInstance();
-        while (iter.hasNext())
-        {
-            IItem item = (IItem) iter.next();
-            InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
-            try
+        try {
+            fileSuport.beginTransaction();
+            while (iter.hasNext())
             {
-                List files = fileSuport.getDirectoryFiles(item.getSlideName());
-                if (files != null && !files.isEmpty())
+                IItem item = (IItem) iter.next();
+                InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+                try
                 {
-                    List links = new ArrayList();
-                    Iterator iterFiles = files.iterator();
-                    while (iterFiles.hasNext())
-                    {
-                        FileSuportObject file = (FileSuportObject) iterFiles.next();
-                        InfoLink infoLink = new InfoLink();
-                        try
-                        {
-                            infoLink.setLink(
-                                new String(file.getFileName().getBytes("ISO-8859-1"), "ISO-8859-1"));
-                        }
-                        catch (UnsupportedEncodingException e2)
-                        {
-                            infoLink.setLink(file.getFileName());
-                        }
-                        infoLink.setLinkName(file.getLinkName());
-                        links.add(infoLink);
-                    }
-                    Collections.sort(links, new BeanComparator("linkName"));
-                    infoItem.setLinks(links);
-
+                    infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item.getSlideName()));
                 }
+                catch (SlideException e1)
+                {
+                    //the item does not have a folder associated
+                }
+                infoItemsList.add(infoItem);
             }
-            catch (SlideException e1)
-            {
-                //the item does not have a folder associated
-            }
-            infoItemsList.add(infoItem);
-        }
+            fileSuport.commitTransaction();
+        } catch (Exception e1) {
+            try {
+                fileSuport.abortTransaction();
+            } catch (Exception e2) {
+                throw new FenixServiceException(e2);
+            } 
+        } 
         component.setSection(Cloner.copyISection2InfoSection(iSection));
         Collections.sort(infoItemsList);
         component.setItems(infoItemsList);
