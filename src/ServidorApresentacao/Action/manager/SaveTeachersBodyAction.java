@@ -28,35 +28,49 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class SaveTeachersBodyAction extends FenixAction {
+public class SaveTeachersBodyAction extends FenixAction
+{
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
-		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
-		DynaActionForm actionForm = (DynaActionForm) form;
-		
-		Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
-		Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
-		List respTeachersIds = Arrays.asList(responsibleTeachersIds);
-		List profTeachersIds = Arrays.asList(professorShipTeachersIds);
-//TODO:		Collections.sort(profTeachersIds, new BeanComparator("name"));
-		Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
-		Boolean result;
-		
-		try {
-				result = (Boolean) ServiceUtils.executeService(userView, "SaveTeachersBody", args);
-				
-		} catch (NonExistingServiceException e) {
-					throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
-				
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		
-		if(!result.booleanValue())
-			throw new InvalidArgumentsActionException("message.non.existing.teachers");
-		
-		return mapping.findForward("readCurricularCourse");
-	}
+        IUserView userView = SessionUtils.getUserView(request);
+        Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+        DynaActionForm actionForm = (DynaActionForm) form;
+
+        Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
+        Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
+        List respTeachersIds = Arrays.asList(responsibleTeachersIds);
+        List profTeachersIds = Arrays.asList(professorShipTeachersIds);
+        //TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
+        Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
+        Boolean result;
+
+        try
+        {
+            result = (Boolean) ServiceUtils.executeService(userView, "SaveTeachersBody", args);
+
+        }
+        catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException(
+                e.getMessage(),
+                mapping.findForward("readCurricularCourse"));
+
+        }
+        catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        if (!result.booleanValue())
+            throw new InvalidArgumentsActionException("message.non.existing.teachers");
+
+        return mapping.findForward("readCurricularCourse");
+    }
 }
