@@ -65,15 +65,15 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 			return null;
 		} else
 		{
-//			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
-//			{
+			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
+			{
 //				super.out.println(
 //					"[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree curricular plan!");
-//				return studentCurricularPlan.getDegreeCurricularPlan();
-//			} else
-//			{
+				return studentCurricularPlan.getDegreeCurricularPlan();
+			} else
+			{
 				return executionDegree.getCurricularPlan();
-//			}
+			}
 		}
 	}
 

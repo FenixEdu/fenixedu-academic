@@ -185,12 +185,12 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 
 			if (curricularCourse == null)
 			{
-				curricularCourse = super.getCurricularCourse(mwEnrolment, studentCurricularPlan.getDegreeCurricularPlan(), true);
-
-				if (curricularCourse == null)
-				{
+//				curricularCourse = super.getCurricularCourse(mwEnrolment, studentCurricularPlan.getDegreeCurricularPlan(), true);
+//
+//				if (curricularCourse == null)
+//				{
 					continue;
-				}
+//				}
 			}
 
 			IExecutionPeriod currentExecutionPeriod =

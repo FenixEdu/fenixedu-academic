@@ -565,9 +565,7 @@
 	</reference-descriptor>
 	<collection-descriptor
 			name="evaluations"
-			refresh="true"
 			proxy="true"
-			auto-update="true"
 			refresh="true"
 			element-class-ref="Dominio.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
