@@ -14,6 +14,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.struts.util.MessageResources;
 
 import DataBeans.InfoLesson;
+import ServidorApresentacao.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
+import ServidorApresentacao.TagLib.sop.v3.colorPickers.ExecutionCourseTimeTableColorPicker;
+import ServidorApresentacao.TagLib.sop.v3.colorPickers.RoomTimeTableColorPicker;
 import ServidorApresentacao.TagLib.sop.v3.renderers.ClassTimeTableLessonContentRenderer;
 import ServidorApresentacao.TagLib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
 import ServidorApresentacao.TagLib.sop.v3.renderers.RoomTimeTableLessonContentRenderer;
@@ -29,13 +32,15 @@ public final class RenderTimeTableTag extends TagSupport {
 	private final Integer endTimeTableHour = new Integer(24);
 
 	private final Integer slotSizeMinutes = new Integer(30);
+	
 
-
-	final int HORA_MINIMA = 8;
-	final int HORA_MAXIMA = 24;
+	private final int HORA_MINIMA = 8;
+	private final int HORA_MAXIMA = 24;
 
 	// Factor de divisão das celulas.
-	final int COL_SPAN_FACTOR = 24;
+	private final int COL_SPAN_FACTOR = 24;
+	
+	private ColorPicker colorPicker;
 
 	// Nome do atributo que contém a lista de aulas.
 	private String name;
@@ -75,7 +80,7 @@ public final class RenderTimeTableTag extends TagSupport {
 				lessonSlotContentRenderer,
 				this.slotSizeMinutes,
 				this.startTimeTableHour,
-				this.endTimeTableHour);
+				this.endTimeTableHour, colorPicker);
 
 		try {
 			writer.print(renderer.render());
@@ -180,18 +185,22 @@ public final class RenderTimeTableTag extends TagSupport {
 			case TimeTableType.SHIFT_TIMETABLE :
 				this.lessonSlotContentRenderer =
 					new ShiftTimeTableLessonContentRenderer();
+				this.colorPicker = new ClassTimeTableColorPicker();
 				break;
 			case TimeTableType.EXECUTION_COURSE_TIMETABLE :
 				this.lessonSlotContentRenderer =
 					new ExecutionCourseTimeTableLessonContentRenderer();
+				this.colorPicker = new ExecutionCourseTimeTableColorPicker();					
 				break;
 			case TimeTableType.ROOM_TIMETABLE :
 				this.lessonSlotContentRenderer =
 					new RoomTimeTableLessonContentRenderer();
+				this.colorPicker = new RoomTimeTableColorPicker();
 				break;
 			default :
 				this.lessonSlotContentRenderer =
 					new ClassTimeTableLessonContentRenderer();
+				this.colorPicker = new ClassTimeTableColorPicker();
 				break;
 		}
 	}

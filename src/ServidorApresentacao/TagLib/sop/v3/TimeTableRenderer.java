@@ -17,6 +17,8 @@ public class TimeTableRenderer {
 	private TimeTable timeTable;
 	private LessonSlotContentRenderer lessonSlotContentRenderer;
 
+	private ColorPicker colorPicker;
+
 	/**
 	 * Constructor TimeTableRenderer.
 	 * @param timeTable
@@ -30,13 +32,15 @@ public class TimeTableRenderer {
 		LessonSlotContentRenderer lessonSlotContentRenderer,
 		Integer slotSize,
 		Integer startHour,
-		Integer endHour) {
+		Integer endHour,
+		ColorPicker colorPicker) {
 		this.timeTable = timeTable;
 		this.lessonSlotContentRenderer = lessonSlotContentRenderer;
 
 		this.endHour = endHour;
 		this.startHour = startHour;
 		this.slotSize = slotSize;
+		this.colorPicker = colorPicker;
 	}
 
 	public StringBuffer render() {
@@ -57,7 +61,7 @@ public class TimeTableRenderer {
 			strBuffer.append("<td class='horariosHoras");
 			if (hourIndex == 0)
 				strBuffer.append("_first");
-			if (hourIndex == timeTable.getNumberOfHours().intValue() - 1){
+			if (hourIndex == timeTable.getNumberOfHours().intValue() - 1) {
 				strBuffer.append("_bottom");
 			}
 
@@ -94,10 +98,13 @@ public class TimeTableRenderer {
 						strBuffer.append("<td ");
 
 						if (infoLessonWrapper != null) {
-							strBuffer.append(
-								"style='background-color: #99CCFF' ");
+							strBuffer
+								.append("style='background-color: ")
+								.append(
+									colorPicker.getBackgroundColor(
+										infoLessonWrapper))
+								.append("' ");
 						}
-						
 
 						if (infoLessonWrapper != null
 							&& infoLessonWrapper
@@ -123,7 +130,6 @@ public class TimeTableRenderer {
 								slotIndex));
 						strBuffer.append("' ");
 
-
 						strBuffer.append(">");
 
 						if (infoLessonWrapper != null) {
@@ -145,22 +151,24 @@ public class TimeTableRenderer {
 						strBuffer.append("</td>\r\n");
 					}
 				} else { /** no lessons */
-					for (int slotIndex = 0; slotIndex < dayColumn.getMaxColisionSize().intValue(); slotIndex ++){
-					strBuffer
-						.append("<td ")
-						.append(" class='")
-						.append(
-							getSlotCssClass(
-								null,
-								hourIndex,
-								dayColumn,
-								grid,
-								null,
-								slotIndex))
-						.append("'")
-						.append(">")
-						.append("&nbsp;")
-						.append("</td>\r\n");
+					for (int slotIndex = 0;
+						slotIndex < dayColumn.getMaxColisionSize().intValue();
+						slotIndex++) {
+						strBuffer
+							.append("<td ")
+							.append(" class='")
+							.append(
+								getSlotCssClass(
+									null,
+									hourIndex,
+									dayColumn,
+									grid,
+									null,
+									slotIndex))
+							.append("'")
+							.append(">")
+							.append("&nbsp;")
+							.append("</td>\r\n");
 					}
 				}
 
