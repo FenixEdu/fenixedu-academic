@@ -606,6 +606,10 @@
         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/> 
+		<exception type="ServidorAplicacao.Servico.manager.InsertCurricularCourseAtDegreeCurricularPlan$ExistingAcronymException"
+					key="message.manager.existing.curricular.course.acronym"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                  />
        <forward name="insertCurricularCourse" path="df.page.insert-curricular-course"/>
        <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
        <forward name="readDegree" path="/readDegree.do"/>    	      
@@ -637,6 +641,10 @@
                      <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                  />
+				  <exception type="ServidorAplicacao.Servico.manager.EditCurricularCourse$ExistingAcronymException"
+					key="message.manager.existing.curricular.course.acronym"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                   />
        <forward name="editCurricularCourse" path="df.page.edit-curricular-course"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	

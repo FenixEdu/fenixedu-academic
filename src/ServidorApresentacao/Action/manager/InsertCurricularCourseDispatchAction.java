@@ -39,7 +39,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -112,8 +112,6 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         } catch (NonExistingServiceException exception) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping
                     .findForward("readDegree"));
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
         }
 
         return mapping.findForward("readDegreeCurricularPlan");

@@ -80,7 +80,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -159,9 +159,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
                     .findForward("readDegreeCP"));
         } catch (ExistingServiceException e) {
             throw new ExistingActionException("message.manager.existing.curricular.course");
-        } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
-        }
+        } 
 
         return mapping.findForward("readCurricularCourse");
     }

@@ -11,7 +11,8 @@
 			</td>
 			<td>
 				<bean:define id="curricularCourseName" name="infoCurricularCourse" property="name"/>
-				<h2><b><bean:write name="curricularCourseName"/></b></h2>
+				<bean:define id="curricularCourseAcronym" name="infoCurricularCourse" property="acronym"/>
+				<h2><b><bean:write name="curricularCourseName"/> - <bean:write name="curricularCourseAcronym"/></b></h2>
 			</td>
 		</logic:present>		
 	</tr>

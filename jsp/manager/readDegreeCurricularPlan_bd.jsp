@@ -54,6 +54,8 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.code" />
 					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.acronym" />
+					</td>
 				</tr>
 				<logic:iterate id="curricularCourse" name="curricularCoursesList">
 				<tr>	 
@@ -65,6 +67,8 @@
 					<td class="listClasses"><p align="left"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="name"/></html:link></p>
 					</td>
 					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="code"/></html:link>
+					</td>
+					<td class="listClasses"><html:link page="<%= "/readCurricularCourse.do?degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="curricularCourseId" paramName="curricularCourse" paramProperty="idInternal"><bean:write name="curricularCourse" property="acronym"/></html:link>
 					</td>
 	 			</tr>
 	 			</logic:iterate>			
