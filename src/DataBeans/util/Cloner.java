@@ -266,7 +266,7 @@ public abstract class Cloner
 					|| (interfaces[i].getSuperclass().getName().equals(IDomainObject.class.getName())))
 				{
 					parameters = new Class[1];
-					parameters[1] = interfaces[i];
+					parameters[0] = interfaces[i];
 				}
 			}
 			return parameters;
