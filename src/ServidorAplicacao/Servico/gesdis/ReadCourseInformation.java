@@ -250,6 +250,13 @@ public class ReadCourseInformation implements IServico
         return infoBibliographicReferences;
     }
 
+    /**
+     * 
+     * @param executionCourse
+     * @param sp
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
     private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
@@ -267,6 +274,13 @@ public class ReadCourseInformation implements IServico
         return infoLecturingTeachers;
     }
 
+    /**
+     * 
+     * @param curricularCourses
+     * @param sp
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
     private List getInfoCurriculums(List curricularCourses, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
@@ -295,6 +309,13 @@ public class ReadCourseInformation implements IServico
         return infoCurriculums;
     }
 
+    /**
+     * 
+     * @param executionCourse
+     * @param sp
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
     private List getInfoResponsibleTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
@@ -312,6 +333,12 @@ public class ReadCourseInformation implements IServico
         return infoResponsibleTeachers;
     }
 
+    /**
+     * 
+     * @param curricularCourses
+     * @param sp
+     * @return
+     */
     private List getInfoCurricularCourses(List curricularCourses, ISuportePersistente sp)
     {
         List infoCurricularCourses = new ArrayList();
@@ -330,6 +357,12 @@ public class ReadCourseInformation implements IServico
         return infoCurricularCourses;
     }
 
+    /**
+     * 
+     * @param scopes
+     * @param sp
+     * @return
+     */
     private List getInfoScopes(List scopes, ISuportePersistente sp)
     {
         List infoScopes = new ArrayList();
@@ -344,6 +377,13 @@ public class ReadCourseInformation implements IServico
         return infoScopes;
     }
 
+    /**
+     * 
+     * @param executionCourse
+     * @param sp
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
     private List getInfoLessons(IExecutionCourse executionCourse, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {

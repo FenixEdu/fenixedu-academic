@@ -69,9 +69,7 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectTeache
             ICareer career =
                 (ICareer) persistentCareer.readByOID(Career.class, infoCareer.getIdInternal());
 
-            if (!career.getTeacher().equals(teacher))
-                return false;
-            return true;
+            return career.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());

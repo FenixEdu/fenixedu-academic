@@ -72,9 +72,7 @@ public class EditOldPublicationTeacherAuthorizationFilter
                     OldPublication.class,
                     infoOldPublication.getIdInternal());
 
-            if (!oldPublication.getTeacher().equals(teacher))
-                return false;
-            return true;
+            return oldPublication.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());

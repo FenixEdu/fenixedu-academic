@@ -61,11 +61,7 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectTeac
                     ExternalActivity.class,
                     objectId);
 
-            if (!externalActivity.getTeacher().equals(teacher))
-            {
-                return false;
-            }
-            return true;
+            return externalActivity.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());

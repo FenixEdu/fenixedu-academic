@@ -5,7 +5,7 @@
 package ServidorAplicacao.Filtro.person;
 
 import DataBeans.person.InfoQualification;
-import DataBeans.util.Cloner;
+import Dominio.IPessoa;
 import Dominio.IQualification;
 import Dominio.Qualification;
 import Dominio.grant.owner.IGrantOwner;
@@ -14,7 +14,9 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentQualification;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.grant.IPersistentGrantOwner;
@@ -70,42 +72,31 @@ public class QualificationManagerAuthorizationFilter extends Filtro
                 throw new NotAuthorizedException();
             }
 
-            boolean isNew = (arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0));
-
             if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
                 throw new NotAuthorizedException();
 
-            InfoQualification infoqualification = null;
-            if (!isNew)
-            {
-                //New Qualification, second argument is a qualification
-                infoqualification = (InfoQualification) arguments[1];
-                //            } else
-                //            {
-                //                infoqualification = getInfoQualification((Integer) arguments[0]);
-                //            }
+            InfoQualification infoQualification = null;
 
-                if (infoqualification == null)
-                    throw new NotAuthorizedException();
+            //New Qualification, second argument is a qualification
+            infoQualification = (InfoQualification) arguments[1];
+            if (infoQualification == null)
+                throw new NotAuthorizedException();
 
-                boolean valid = false;
-                //Verify if:
-                // 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
-                // 2: The user ir a Teacher and the qualification is his own
-                if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-                    && isGrantOwner(infoqualification))
-                    valid = true;
+            boolean valid = false;
+            //Verify if:
+            // 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
+            // 2: The user ir a Teacher and the qualification is his own
+            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
+                && isGrantOwner(infoQualification))
+                valid = true;
 
-                /*if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
-                    && isOwnQualification(id.getUtilizador(), infoqualification))
-                    valid = true;*/
-                if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
-                    valid = true;
+            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
+                && isOwnQualification(id.getUtilizador(), infoQualification))
+                valid = true;
 
-                if (!valid)
-                    throw new NotAuthorizedException();
-            }
+            if (!valid)
+                throw new NotAuthorizedException();
 
         } catch (RuntimeException e)
         {
@@ -119,31 +110,28 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 	 * @param arguments
 	 * @return true or false
 	 */
-    private boolean isGrantOwner(InfoQualification infoqualification)
+    private boolean isGrantOwner(InfoQualification infoQualification)
     {
-        ISuportePersistente persistentSuport = null;
-        IPersistentGrantOwner persistentGrantOwner = null;
-
         try
         {
-            persistentSuport = SuportePersistenteOJB.getInstance();
-            persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
 
             //Try to read the grant owner from de database
-            IGrantOwner grantowner = null;
-            grantowner =
+            IGrantOwner grantOwner =
                 persistentGrantOwner.readGrantOwnerByPerson(
-                    infoqualification.getInfoPerson().getIdInternal());
+                    infoQualification.getInfoPerson().getIdInternal());
 
-            if (grantowner != null) //The grant owner exists!
-            {
-                return true;
-            }
+            return grantOwner != null;
+        } catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
-
         } catch (Exception e)
         {
-            return false; //The qualification user is not a grant owner.
+            System.out.println("Filter error(Unknown): " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -153,52 +141,36 @@ public class QualificationManagerAuthorizationFilter extends Filtro
 	 * @param arguments
 	 * @return true or false
 	 */
-    private boolean isOwnQualification(String username, InfoQualification infoqualification)
+    private boolean isOwnQualification(String username, InfoQualification infoQualification)
     {
         try
         {
-            if (username.equals(infoqualification.getInfoPerson().getUsername()))
-            {
-                return true;
-            }
-        } catch (Exception e)
-        {
-            return false;
-        }
-        return false;
-    }
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPessoa person = persistentPerson.lerPessoaPorUsername(username);
 
-    /**
-	 * Returns the qualification form the database
-	 * 
-	 * @param arguments
-	 * @return infoqualification
-	 */
-    private InfoQualification getInfoQualification(Integer qualificationKey)
-    {
-        ISuportePersistente persistentSuport = null;
-        IPersistentQualification persistentQualification = null;
-        
-        try
-        {
-            persistentSuport = SuportePersistenteOJB.getInstance();
-            persistentQualification = persistentSuport.getIPersistentQualification();
-            
-            //Try to read the qualification from the database
-            IQualification qualification = null;
-            qualification =
-            (IQualification) persistentQualification.readByOID(
+            boolean isNew =
+                (infoQualification.getIdInternal() == null)
+                    || (infoQualification.getIdInternal().equals(new Integer(0)));
+            if (isNew)
+                return true;
+
+            IPersistentQualification persistentQualification = sp.getIPersistentQualification();
+            IQualification qualification =
+                (IQualification) persistentQualification.readByOID(
                     Qualification.class,
-                    qualificationKey);
-            
-            if (qualification == null)
-                return null;
-            else
-                return Cloner.copyIQualification2InfoQualification(qualification);
-            
+                    infoQualification.getIdInternal());
+
+            return qualification.getPerson().equals(person);
+        } catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
+            return false;
         } catch (Exception e)
         {
-            return null;
+            System.out.println("Filter error(Unknown): " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 }

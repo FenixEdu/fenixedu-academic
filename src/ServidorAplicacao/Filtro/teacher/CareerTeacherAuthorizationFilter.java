@@ -57,9 +57,7 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectTeacherAuthori
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             ICareer career = (ICareer) persistentCareer.readByOID(Career.class, objectId);
 
-            if (!career.getTeacher().equals(teacher))
-                return false;
-            return true;
+            return career.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e)
         {
             System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
