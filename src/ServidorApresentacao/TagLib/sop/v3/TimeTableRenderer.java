@@ -9,7 +9,7 @@ import java.util.List;
  * @author jpvl
  */
 public class TimeTableRenderer {
-	// TODO: modify getSlotCssClass... 
+	 
 
 	private Integer endHour;
 	private Integer startHour;
