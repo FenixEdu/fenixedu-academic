@@ -148,9 +148,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(masterDegreeCandidateTemp.getPerson().getProfissao().equals("Profissao"));
         assertTrue(masterDegreeCandidateTemp.getMajorDegree().equals("LEIC"));
         assertTrue(masterDegreeCandidateTemp.getPerson().getUsername().equals("nmsn"));
-		// FIXME: Nuno Nunes
+
 		// Ver como se comparam as passwords encriptadas
-//        assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals("Pass1"));
+        assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("Pass1")));
         assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(1)));
         assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.INTEGRADO));
         assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
@@ -302,9 +302,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertTrue(masterDegreeCandidateTemp.getPerson().getCodigoFiscal().equals("0312645978"));
 		assertTrue(masterDegreeCandidateTemp.getMajorDegree().equals("LEIC"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getUsername().equals("ars"));
-		// FIXME: Nuno Nunes
+		
 		// Ver como se comparam as passwords encriptadas
-		//		  assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals("Pass1"));
+		assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("Pass1")));
 		assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(10)));
 		assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.MESTRADO));
 		assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
@@ -446,9 +446,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertTrue(masterDegreeCandidateTemp.getPerson().getProfissao().equals("Profissao"));
 		assertTrue(masterDegreeCandidateTemp.getMajorDegree().equals("LEIC"));
 		assertTrue(masterDegreeCandidateTemp.getPerson().getUsername().equals("nmsn"));
-		// FIXME: Nuno Nunes
+		
 		// Ver como se comparam as passwords encriptadas
-//		  assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals("Pass1"));
+		  assertTrue(masterDegreeCandidateTemp.getPerson().getPassword().equals(PasswordEncryptor.encryptPassword("Pass1")));
 		assertTrue(masterDegreeCandidateTemp.getCandidateNumber().equals(new Integer(1)));
 		assertEquals(masterDegreeCandidateTemp.getSpecialization(), new Specialization(Specialization.INTEGRADO));
 		assertTrue(masterDegreeCandidateTemp.getMajorDegreeSchool().equals("IST"));
