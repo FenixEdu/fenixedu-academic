@@ -93,14 +93,14 @@ public class ReadCurricularCourseAction extends FenixAction  {
 						throw new FenixActionException(e);
 				}
 				
-				Object args1[] = { curricularCourseId };
+				
 				List curricularCourseScopes = new ArrayList();
 				
 				try {		
 					curricularCourseScopes = (List) manager.executar(
 														userView,
 														"ReadCurricularCourseScopes",
-														args1);	
+														args);	
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
 				}						
