@@ -1,6 +1,10 @@
 /*
  * Created on 11/Abr/2003
  */
+/**
+ * @author lmac1
+ *
+ */
 package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
@@ -21,17 +25,25 @@ import DataBeans.gesdis.InfoSection;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-/**
- * @author lmac1
- *
- */
-public class InsertItemAction extends FenixAction {
 
-	public ActionForward execute(
+public class InsertItemDispatchAction extends FenixDispatchAction {
+
+	public ActionForward prepareInsert(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		return mapping.findForward("insertItem");
+			} 
+
+
+	public ActionForward insert(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -39,17 +51,14 @@ public class InsertItemAction extends FenixAction {
 		throws FenixActionException {
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
-		String itemName = (String) dynaForm.get("name");
-		Integer itemOrder = (Integer) dynaForm.get("order");
+		String itemName = (String) dynaForm.get("itemName");
+		Integer itemOrder = (Integer) dynaForm.get("itemOrder");
     	String information = (String) dynaForm.get("information");
-		Boolean urgent = (Boolean) dynaForm.get("urgen");
-	
+		Boolean urgent = (Boolean) dynaForm.get("urgent");
+		
 		HttpSession session = request.getSession();
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-
-		InfoSection infoSection =
-			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+		UserView userView =(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		InfoSection infoSection =(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 	
 //		String indexString = (String) request.getParameter("index");
 //					Integer index = new Integer(indexString);
@@ -65,10 +74,10 @@ public class InsertItemAction extends FenixAction {
 				new InfoItem(information,itemName, itemOrder, infoSection, urgent);
 			
 
-			Object args[] = { infoSection };
+			Object args[] = { infoItem};
 			GestorServicos manager = GestorServicos.manager();
 			try {
-				manager.executar(userView, "InsertItem", args);
+				Boolean result = (Boolean) manager.executar(userView, "InsertItem", args);
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(
 					fenixServiceException.getMessage());
@@ -89,7 +98,7 @@ public class InsertItemAction extends FenixAction {
 			Collections.sort(infoItems);
 			session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, infoItems);
 			
-			return mapping.findForward("AccessSectionManager"); 
+			return mapping.findForward("viewSection"); 
 					
 	}
 }
