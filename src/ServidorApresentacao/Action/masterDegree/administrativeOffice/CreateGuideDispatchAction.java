@@ -92,7 +92,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			}
 
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
-
+			session.removeAttribute(SessionConstants.PRINT_PASSWORD);
+			
 			List result = null; 			
 			try {
 				result = (List) serviceManager.executar(userView, "ReadAllContributors", null);
@@ -232,6 +233,9 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			if ((othersPriceString != null) && (othersPriceString.length() != 0))
 				othersPrice = new Double(othersPriceString);
 				
+				
+			System.out.println("[" + guideSituationString + "] tamanho " + guideSituationString.length());
+				
 			SituationOfGuide situationOfGuide = new SituationOfGuide(new Integer(guideSituationString));
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 	
@@ -253,13 +257,10 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			String requesterType = (String) session.getAttribute(SessionConstants.REQUESTER_TYPE);
 			session.removeAttribute(SessionConstants.REQUESTER_TYPE); 
 			
-
-			System.out.println("--- " + newInfoGuide.getInfoGuideEntries().size());
 			
 			// We need to check if the Guide has been payd 
 			if ((requesterType.equals(GuideRequester.CANDIDATE_STRING)) &&
-				(newInfoGuide.getPaymentType() != null)) 
-				//((InfoGuideSituation) infoGuide.get().get(0)).getSituation().equals(SituationOfGuide.PAYED_TYPE))
+				(situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))) 
 				if ((newInfoGuide.getInfoPerson().getPassword() == null) || (newInfoGuide.getInfoPerson().getPassword().length() == 0)){
 					// Generate the password
 
@@ -290,7 +291,7 @@ System.out.println("New Password: " + newInfoGuide.getInfoPerson().getPassword()
 					InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
 					try {
 						Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
-						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadCandidateList", args);
+						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadCandidateListByPersonAndExecutionDegree", args);
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}

@@ -23,7 +23,7 @@
         <!-- Nome -->
         <tr>
          <td><bean:message key="label.person.name" /></td>
-         <td><bean:write name="personalInfo" property="nome"/></td>
+         <td><html:text property="name"/></td>
         </tr>
         <!-- Estado Civil -->
         <tr>
@@ -107,7 +107,7 @@
           </td>          
         </tr>
 
-	<!-- Data de Validade do Documento de Identificacao -->
+	    <!-- Data de Validade do Documento de Identificacao -->
         <tr>
          <td><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
          <td><html:select property="idExpirationDateYear">
@@ -216,7 +216,28 @@
              </html:select>          
          </td>
         </tr>
-        
+
+
+
+	   <tr>
+        <td><bean:message key="label.candidate.majorDegree" /></td>
+        <td><html:text property="majorDegree"/></td>
+	   </tr>
+
+	   <tr>
+        <td><bean:message key="label.candidate.majorDegreeSchool" /></td>
+        <td><html:text property="majorDegreeSchool"/></td>
+	   </tr>
+
+	   <tr>
+        <td><bean:message key="label.candidate.average" /></td>
+        <td><html:text property="average"/></td>
+	   </tr>
+
+	   <tr>
+        <td><bean:message key="label.candidate.majorDegreeYear" /></td>
+        <td><html:text property="majorDegreeYear"/></td>
+	   </tr>
 
 		<!-- Active Situation -->
        <tr>
@@ -238,8 +259,14 @@
         </tr>
  	   <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.newSituation" /></td>
-         <td><html:text property="situation"/></td>
+		 <td>
+            <html:select property="situation">
+                <html:options collection="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" property="value" labelProperty="label"/>
+             </html:select>          
+		 </td>
         </tr>
+
+
 		<tr>
         <td colspan="2">
            <html:submit property="Alterar">Alterar Dados</html:submit>

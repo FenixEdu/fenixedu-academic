@@ -79,21 +79,17 @@
     </form>
     
 
+   <!-- validation for the Final Step in a Guide Creation -->
+    <form name="guideCreateReadyForm">
+	  <field property="guideSituation" depends="required" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.guideSituation" />
+      </field>
+    </form>
+
+
 	<!-- validation for the List of Candidates Form -->
     <form name="listCandidatesForm">
-      <field property="degree" depends="required" page="1">
-        <arg0 key="label.degree" />
-      </field>
-      
-      <field property="specialization" depends="required" page="1">
-        <arg0 key="label.specialization" />
-      </field>
-
-      <field property="candidateSituation" depends="required" page="1">
-        <arg0 key="label.candidate.candidateSituation" />
-      </field>
-
-	  <field property="candidateNumber" depends="required, integer" page="1">
+	  <field property="candidateNumber" depends="integer" page="1">
         <arg0 key="label.candidate.candidateNumber" />
       </field>
      
@@ -114,9 +110,23 @@
 
 
 
+
+
     <!-- validation for the Change Application Info Form-->
-    <form name="editCandidateForm">
+    <form name="changeCandidateForm">
       
+      
+      <field property="name" depends="required" page="1">
+        <arg0 key="label.person.name" />
+      </field>
+      
+      <field property="identificationDocumentNumber" depends="required, integer" page="1">
+        <arg0 key="label.person.identificationDocumentNumber" />
+      </field>
+      
+      <field property="identificationDocumentType" depends="required" page="1">
+        <arg0 key="label.person.identificationDocumentType" />
+      </field>
       
       <field property="telephone" depends="integer" page="1">
         <arg0 key="label.person.telephone" />

@@ -7,8 +7,9 @@
   </head>
   <body>
    <span class="error"><html:errors/></span>
+   
+   <h2><bean:message key="label.action.contributors.create" /></h2>
    <table>
-
     <html:form action="/createContributorDispatchAction?method=create">
    	  <html:hidden property="page" value="1"/>
        <!-- Contributor Number -->

@@ -8,12 +8,11 @@
 <%@ page import="DataBeans.InfoCandidateSituation" %>
 
 
-
- <table>
      <bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" property="infoPerson"/>
      <bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
 
-   
+     <table>
+
         <logic:present name="personalInfo">
           <!-- Nome -->
           <tr>
@@ -231,6 +230,7 @@
           <tr>
             <td><h2><bean:message key="label.masterDegree.administrativeOffice.situationHistory" /><h2></td>
           </tr>
+
          <logic:iterate id="situation" name="masterDegreeCandidate" property="situationList">
          	<% if (((InfoCandidateSituation) situation).getValidation().equals(new State(State.ACTIVE))) { %>
          		<td><center><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></center></td>
@@ -252,10 +252,10 @@
           <tr></tr>
 
          </logic:iterate>
-          
+
         </logic:present>
-    </table>
-    
+     </table>
+
     <html:link page="/editCandidate.do?method=prepareEdit">
     	<bean:message key="link.masterDegree.administrativeOffice.editCandidate" />
     </html:link>

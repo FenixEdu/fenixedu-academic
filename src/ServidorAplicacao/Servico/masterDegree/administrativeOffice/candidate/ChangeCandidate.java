@@ -8,9 +8,14 @@
 
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
+import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.CandidateSituation;
@@ -78,18 +83,20 @@ public class ChangeCandidate implements IServico {
 
 		// Get new Country
 		ICountry nationality = null;
-		try {
-			if (!newCandidate.getInfoPerson().getInfoPais().getNationality().equals(
-					masterDegreeCandidate.getPerson().getPais().getNationality())) {
-				nationality = sp.getIPersistentCountry().readCountryByNationality(newCandidate.getInfoPerson().getInfoPais().getNationality());
-				masterDegreeCandidate.getPerson().setPais(nationality);
+		if ((newCandidate.getInfoPerson().getInfoPais() != null) && (masterDegreeCandidate.getPerson().getPais() != null)){
+			try {
+				if (!newCandidate.getInfoPerson().getInfoPais().getNationality().equals(
+						masterDegreeCandidate.getPerson().getPais().getNationality())) {
+					nationality = sp.getIPersistentCountry().readCountryByNationality(newCandidate.getInfoPerson().getInfoPais().getNationality());
+					masterDegreeCandidate.getPerson().setPais(nationality);
+				}
+			} catch (ExcepcaoPersistencia ex) {
+			  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			  newEx.fillInStackTrace();
+			  throw newEx;
 			}
-		} catch (ExcepcaoPersistencia ex) {
-		  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-		  newEx.fillInStackTrace();
-		  throw newEx;
 		}
-
+		
 		// Change personal Information
 		masterDegreeCandidate.getPerson().setNascimento(newCandidate.getInfoPerson().getNascimento());
 		masterDegreeCandidate.getPerson().setDataEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson().getDataEmissaoDocumentoIdentificacao());		
@@ -129,7 +136,10 @@ public class ChangeCandidate implements IServico {
 		// Change Situation
 		
 		ICandidateSituation candidateSituation = null;
-		if (!oldCandidate.getInfoCandidateSituation().equals(newCandidate.getInfoCandidateSituation())){
+		Set situations = new HashSet();
+				
+		if (!oldCandidate.getInfoCandidateSituation().getSituation().equals(newCandidate.getInfoCandidateSituation().getSituation())){
+
 			candidateSituation = new CandidateSituation();
 			
 			// Change the Active Situation
@@ -137,7 +147,7 @@ public class ChangeCandidate implements IServico {
 			while(iterator.hasNext()) {
 				ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
 				if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))){
-					candidateSituation.setValidation(new State(State.INACTIVE));
+					candidateSituationTemp.setValidation(new State(State.INACTIVE));
 					try {		
 						sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationTemp);
 					} catch (ExcepcaoPersistencia ex) {
@@ -146,12 +156,14 @@ public class ChangeCandidate implements IServico {
 					  throw newEx;
 					}		
 				}
+				situations.add(candidateSituationTemp);
 			}
 			
 			Calendar calendar = Calendar.getInstance();
 			candidateSituation.setDate(calendar.getTime());
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 			candidateSituation.setRemarks(newCandidate.getInfoCandidateSituation().getRemarks());
+		
 			candidateSituation.setSituation(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()));
 			candidateSituation.setValidation(new State(State.ACTIVE));
 			try {		
@@ -161,7 +173,11 @@ public class ChangeCandidate implements IServico {
 			  newEx.fillInStackTrace();
 			  throw newEx;
 			}	
-		}
+			
+			situations.add(candidateSituation);
+		} else 
+			situations.addAll(masterDegreeCandidate.getSituations());
+		
 		
 		try {
             sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
@@ -171,6 +187,23 @@ public class ChangeCandidate implements IServico {
 	      throw newEx;
 	    }
 	    
-	    return Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+		
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+		
+		List situationsList = new ArrayList();
+		Iterator iterator = situations.iterator();
+		while(iterator.hasNext()){
+			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator.next()); 
+			situationsList.add(infoCandidateSituation);
+
+			// Check if this is the Active Situation
+			if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+				infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+		}
+
+		infoMasterDegreeCandidate.setSituationList(situationsList);
+
+		return infoMasterDegreeCandidate;
+
     }
 }

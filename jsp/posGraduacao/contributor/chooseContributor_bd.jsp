@@ -12,14 +12,15 @@
   <body>
 
     <span class="error"><html:errors/><br></span>
+    <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />    
+    <h2><bean:message name="title"/></h2>
+        
    <table>
-    <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />
-    
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         <input type="hidden" value="getContributors" name="method"/>
      	<html:hidden property="page" value="1"/>
-        <h2><bean:message name="title"/></h2>
+
         
        <!-- Contributor Number -->
        <tr>

@@ -7,8 +7,10 @@
   </head>
   <body>
    <span class="error"><html:errors/></span>
+   
+   <h2><bean:message key="label.action.contributors.edit" /></h2>
+   
    <table>
-
     <html:form action="/editContributor?method=edit">
    	  <html:hidden property="page" value="1"/>
        <!-- Contributor Number -->

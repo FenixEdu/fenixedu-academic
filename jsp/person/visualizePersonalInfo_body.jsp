@@ -7,6 +7,7 @@
     <title><bean:message key="label.person.visualizeInformation" /></title>
   </head>
   <body>
+  
     <table>
     
         <logic:present name="personalInfo">
@@ -19,6 +20,7 @@
           <tr>
             <td><bean:message key="label.person.username" /></td>
             <td><bean:write name="personalInfo" property="username"/></td>
+          
           </tr>
 
           <!-- Dados Pessoais -->

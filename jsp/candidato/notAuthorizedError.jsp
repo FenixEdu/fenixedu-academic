@@ -3,7 +3,7 @@
   <tiles:put name="title" value=".IST - Candidatos de Mestrado" />
   <tiles:put name="serviceName" value="Portal de Candidatos a Pós-Graduações" />
   <tiles:put name="navGeral" value="" />
-  <tiles:put name="navLocal" value="" />
+  <tiles:put name="navGeral" value="/candidato/commonNavGeralCandidate.jsp" />
   <tiles:put name="body" value="/candidato/notAuthorizedError_bd.jsp" />
   <tiles:put name="footer" value="/candidato/copyrightDefault.jsp" />
 </tiles:insert>

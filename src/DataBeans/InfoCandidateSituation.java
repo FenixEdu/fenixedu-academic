@@ -46,15 +46,6 @@ public class InfoCandidateSituation {
         setRemarks(candidateSituation.getRemarks());
     } 
     
-    public boolean equals(Object o) {
-        return
-        ((o instanceof InfoCandidateSituation) &&
-        (date.getTime() == (((InfoCandidateSituation)o).getDate().getTime())) &&
-        (remarks.equals(((InfoCandidateSituation)o).getRemarks())) &&
-		(situation.equals(((InfoCandidateSituation)o).getSituation())));
-        
-    }
-
     public String toString() {
         String result = "DataBean Situacao do Candidato:\n";
         result += "\n  - Data : " + date;

@@ -65,6 +65,7 @@
 		</logic:iterate>
 
       <html:form action="/createGuideReadyDispatchAction?method=create">
+       <html:hidden property="page" value="1"/>
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.others"/> </td>
          <td><html:textarea property="othersRemarks"/></td>
@@ -82,11 +83,12 @@
 	<table>
 	   <!-- Guide Situation -->
        <tr>
-       	<td><html:textarea property="remarks"/>
-           <bean:message key="label.masterDegree.administrativeOffice.newGuideSituation" />
-           <html:select property="guideSituation">
+        <td><bean:message key="label.masterDegree.administrativeOffice.remarks"/> </td>
+       	<td><html:textarea property="remarks"/></td>
+        <td><bean:message key="label.masterDegree.administrativeOffice.newGuideSituation" />
+            <html:select property="guideSituation">
            		<html:options collection="<%= SessionConstants.GUIDE_SITUATION_LIST %>" property="value" labelProperty="label" />
-           </html:select>          
+            </html:select>          
        	</td>
        </tr>
 	</table>

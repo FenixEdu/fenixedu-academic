@@ -10,7 +10,7 @@ create table MASTER_DEGREE_CANDIDATE (
    SPECIALIZATION int(11) not null, 
    MAJOR_DEGREE varchar(100),
    MAJOR_DEGREE_SCHOOL varchar(100),
-   MAJOR_DEGREE_YEAR int(11) default '0',
+   MAJOR_DEGREE_YEAR int(11),
    AVERAGE float,
    primary key (ID_INTERNAL),
    unique u1 (PERSON_KEY, EXECUTION_DEGREE_KEY, SPECIALIZATION),

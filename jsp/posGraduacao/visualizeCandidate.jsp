@@ -3,7 +3,7 @@
   <tiles:put name="title" value=".IST - Secretaria de Pós-Graduação" />
   <tiles:put name="serviceName" value="Secretaria de Pós-Graduação" />
   <tiles:put name="navLocal" value="/posGraduacao/candidateMenu.jsp" />
-  <tiles:put name="navGeral" value="/posGraduacao/globalNav.jsp" />
+  <tiles:put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
   <tiles:put name="body" value="/posGraduacao/visualizeCandidate_bd.jsp" />
   <tiles:put name="footer" value="/posGraduacao/copyrightDefault.jsp" />
 </tiles:insert>

@@ -78,6 +78,7 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
+            <form-property name="page" type="java.lang.Integer" />
         	<form-property name="othersRemarks" type="java.lang.String" />
         	<form-property name="othersPrice" type="java.lang.String" />
         	<form-property name="remarks" type="java.lang.String" />
@@ -131,9 +132,9 @@
         	<form-property name="average" type="java.lang.String" />
         	<form-property name="majorDegree" type="java.lang.String" />
         	<form-property name="majorDegreeSchool" type="java.lang.String" />
-        	<form-property name="majorDegreeYear" type="java.lang.Integer" />
+        	<form-property name="majorDegreeYear" type="java.lang.String" />
         	<form-property name="situationRemarks" type="java.lang.String" />
-        	<form-property name="situation" type="java.lang.Integer" />
+        	<form-property name="situation" type="java.lang.String" />
       </form-bean>
 
     </form-beans>
@@ -184,6 +185,7 @@
       	      name="createCandidateForm"
 		      path="/createCandidateDispatchAction"
 		      parameter="method"
+		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateCandidateDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -199,6 +201,7 @@
       	      name="listCandidatesForm"
 		      path="/visualizeCandidates"
 		      parameter="method"
+		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
               validate="true">
 	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
@@ -212,6 +215,7 @@
       	      name="listCandidatesForm"
 		      path="/editCandidates"
 		      parameter="method"
+		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -254,6 +258,7 @@
 	         input="/contributor/createContributor.jsp"
 	      validate="true"
 		 parameter="method"
+  	         scope="request"
       	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateContributorDispatchAction">
    		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
             key="ServidorApresentacao.Action.exceptions.ExistingActionException"
@@ -333,6 +338,7 @@
       	      name="guideCreateReadyForm"
 		      path="/createGuideReadyDispatchAction"
 		      parameter="method"
+		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateGuideDispatchAction"
               validate="true">
      		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"

@@ -81,8 +81,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Create the Degree Type List
-			ArrayList specializations = Specialization.toArrayList();
-			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
+			
+			session.setAttribute(SessionConstants.SPECIALIZATIONS, Specialization.toArrayList());
 			
 			// Get the Degree List
 			
@@ -290,8 +290,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			editCandidateForm.set("occupation", infoPerson.getProfissao());
 			editCandidateForm.set("username", infoPerson.getUsername());
 			editCandidateForm.set("areaOfAreaCode",infoPerson.getLocalidadeCodigoPostal());
-
-			if (infoPerson.getSexo() != null)
+			editCandidateForm.set("situation",infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation());
+			
+			if ((infoPerson.getSexo() != null))
 				editCandidateForm.set("sex", infoPerson.getSexo().toString());
 			if (infoPerson.getEstadoCivil() != null)
 				editCandidateForm.set("maritalStatus",infoPerson.getEstadoCivil().toString());
@@ -326,7 +327,11 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			editCandidateForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
 			editCandidateForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
 			editCandidateForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
-			editCandidateForm.set("majorDegreeYear", infoMasterDegreeCandidate.getMajorDegreeYear());
+			
+			if ((infoMasterDegreeCandidate.getMajorDegreeYear().intValue() == 0))
+				editCandidateForm.set("majorDegreeYear", null);
+			else
+				editCandidateForm.set("majorDegreeYear", String.valueOf(infoMasterDegreeCandidate.getMajorDegreeYear()));
 		
 			return mapping.findForward("PrepareReady");
 			
@@ -354,6 +359,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 
 			// Clear the Session
+			session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
 			session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
 			session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
 			session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
@@ -365,40 +371,76 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
 
 			
-
 			// FIXME: Check All if fields are empty 
 
 			Calendar birthDate = Calendar.getInstance();
 			Calendar idDocumentIssueDate = Calendar.getInstance();
 			Calendar idDocumentExpirationDate = Calendar.getInstance();
+			
+			InfoPerson infoPerson = new InfoPerson();
+			
+			Integer day = new Integer(((String) editCandidateForm.get("birthDay")));
+			Integer month = new Integer(((String) editCandidateForm.get("birthMonth")));
+			Integer year = new Integer(((String) editCandidateForm.get("birthYear")));
+			
+			if ((day == null) ||(month == null) ||(year == null) ||
+			    (day.intValue() == -1) ||(month.intValue() == -1) ||(year.intValue() == -1))
+				infoPerson.setNascimento(null);
+			else {
+				birthDate.set(new Integer(((String) editCandidateForm.get("birthYear"))).intValue(),
+					new Integer(((String) editCandidateForm.get("birthMonth"))).intValue(),
+					new Integer(((String) editCandidateForm.get("birthDay"))).intValue());
+				infoPerson.setNascimento(birthDate.getTime());
+			}
 		
-			birthDate.set(new Integer(((String) editCandidateForm.get("birthYear"))).intValue(),
-				new Integer(((String) editCandidateForm.get("birthMonth"))).intValue(),
-				new Integer(((String) editCandidateForm.get("birthDay"))).intValue());
 		
-			idDocumentIssueDate.set(new Integer(((String) editCandidateForm.get("idIssueDateYear"))).intValue(),
-				new Integer(((String) editCandidateForm.get("idIssueDateMonth"))).intValue(),
-				new Integer(((String) editCandidateForm.get("idIssueDateDay"))).intValue());
-		
-			idDocumentExpirationDate.set(new Integer(((String) editCandidateForm.get("idExpirationDateYear"))).intValue(),
-				new Integer(((String) editCandidateForm.get("idExpirationDateMonth"))).intValue(),
-				new Integer(((String) editCandidateForm.get("idExpirationDateDay"))).intValue());
-		
+			day = new Integer(((String) editCandidateForm.get("idIssueDateDay")));
+			month = new Integer(((String) editCandidateForm.get("idIssueDateMonth")));
+			year = new Integer(((String) editCandidateForm.get("idIssueDateYear")));
+	
+			if ((day == null) ||(month == null) ||(year == null) ||
+				(day.intValue() == -1) ||(month.intValue() == -1) ||(year.intValue() == -1))
+				infoPerson.setDataEmissaoDocumentoIdentificacao(null);
+			else {
+				idDocumentIssueDate.set(new Integer(((String) editCandidateForm.get("idIssueDateYear"))).intValue(),
+					new Integer(((String) editCandidateForm.get("idIssueDateMonth"))).intValue(),
+					new Integer(((String) editCandidateForm.get("idIssueDateDay"))).intValue());
+				infoPerson.setDataEmissaoDocumentoIdentificacao(idDocumentIssueDate.getTime());		
+			}
+
+			day = new Integer(((String) editCandidateForm.get("idExpirationDateDay")));
+			month = new Integer(((String) editCandidateForm.get("idExpirationDateMonth")));
+			year = new Integer(((String) editCandidateForm.get("idExpirationDateYear")));
+	
+			if ((day == null) ||(month == null) ||(year == null) ||
+				(day.intValue() == -1) ||(month.intValue() == -1) ||(year.intValue() == -1))
+				infoPerson.setDataValidadeDocumentoIdentificacao(null);
+			else {
+				idDocumentExpirationDate.set(new Integer(((String) editCandidateForm.get("idExpirationDateYear"))).intValue(),
+					new Integer(((String) editCandidateForm.get("idExpirationDateMonth"))).intValue(),
+					new Integer(((String) editCandidateForm.get("idExpirationDateDay"))).intValue());
+				infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());		
+			}		
 			InfoCountry nationality = new InfoCountry();
 			nationality.setNationality((String) editCandidateForm.get("nationality"));
-		
-			InfoPerson infoPerson = new InfoPerson();
-		
-			infoPerson.setDataEmissaoDocumentoIdentificacao(idDocumentIssueDate.getTime());
-			infoPerson.setDataValidadeDocumentoIdentificacao(idDocumentExpirationDate.getTime());
-			infoPerson.setNascimento(birthDate.getTime());
 		
 			infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao((String) editCandidateForm.get("identificationDocumentType")));
 			infoPerson.setNumeroDocumentoIdentificacao((String) editCandidateForm.get("identificationDocumentNumber"));
 			infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editCandidateForm.get("identificationDocumentIssuePlace"));
 			infoPerson.setNome((String) editCandidateForm.get("name"));
-			infoPerson.setSexo(new Sexo((String) editCandidateForm.get("sex")));
-			infoPerson.setEstadoCivil(new EstadoCivil((String) editCandidateForm.get("maritalStatus")));
+			
+			String sex = (String) editCandidateForm.get("sex");
+			if ((sex == null) || (sex.length() == 0))
+				infoPerson.setSexo(null);
+			else 
+				infoPerson.setSexo(new Sexo(sex));
+			
+			String maritalStatus = (String) editCandidateForm.get("maritalStatus");
+			if ((maritalStatus == null) || (maritalStatus.length() == 0))
+				infoPerson.setEstadoCivil(null);
+			else 
+				infoPerson.setEstadoCivil(new EstadoCivil(maritalStatus));
+				
 			infoPerson.setInfoPais(nationality);
 			infoPerson.setNomePai((String) editCandidateForm.get("fatherName"));
 			infoPerson.setNomeMae((String) editCandidateForm.get("motherName"));
@@ -423,6 +465,16 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			InfoMasterDegreeCandidate newCandidate = new InfoMasterDegreeCandidate();
 			newCandidate.setInfoPerson(infoPerson);
 			
+			newCandidate.setMajorDegree((String) editCandidateForm.get("majorDegree"));
+			newCandidate.setMajorDegreeSchool((String) editCandidateForm.get("majorDegreeSchool"));
+			
+			String majorDegreeYearString = (String) editCandidateForm.get("majorDegreeYear");
+			
+			if ((majorDegreeYearString == null) || (majorDegreeYearString.length() == 0))
+				newCandidate.setMajorDegreeYear(null);
+			else
+				newCandidate.setMajorDegreeYear(new Integer(majorDegreeYearString));
+			
 			String averageString = (String) editCandidateForm.get("average");
 			if ((averageString != null) && (averageString.length() != 0))
 				newCandidate.setAverage(new Double(averageString));
@@ -432,8 +484,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			String situationRemarks = (String) editCandidateForm.get("situationRemarks");
 			InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
 			infoCandidateSituation.setRemarks(situationRemarks);
-			infoCandidateSituation.setSituation(situation);
-			infoMasterDegreeCandidateInSession.setInfoCandidateSituation(infoCandidateSituation);
+			
+			infoCandidateSituation.setSituation(new SituationName(situation).toString());
+			newCandidate.setInfoCandidateSituation(infoCandidateSituation);
 
 			Object args[] = {infoMasterDegreeCandidateInSession, newCandidate};
 			InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
@@ -442,8 +495,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			} catch(FenixServiceException e){
 				throw new FenixActionException(e);
 			}
-			
-			session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
+
 			session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
 			return mapping.findForward("ChangeSuccess");
 			

@@ -232,7 +232,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 				"http123"));
 		assertTrue(
 			masterDegreeCandidateTemp.getPerson().getCodigoFiscal().equals(
-				"4444444444"));
+				"444444444"));
 		assertTrue(
 			masterDegreeCandidateTemp.getPerson().getProfissao().equals(
 				"Profissao"));
@@ -675,7 +675,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 				"http123"));
 		assertTrue(
 			masterDegreeCandidateTemp.getPerson().getCodigoFiscal().equals(
-				"4444444444"));
+				"444444444"));
 		assertTrue(
 			masterDegreeCandidateTemp.getPerson().getProfissao().equals(
 				"Profissao"));
@@ -991,7 +991,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 					"http123"));
 			assertTrue(
 				masterDegreeCandidate.getPerson().getCodigoFiscal().equals(
-					"4444444444"));
+					"444444444"));
 			assertTrue(
 				masterDegreeCandidate.getPerson().getProfissao().equals(
 					"Profissao"));
@@ -1168,7 +1168,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 					"http123"));
 			assertTrue(
 				masterDegreeCandidate.getPerson().getCodigoFiscal().equals(
-					"4444444444"));
+					"444444444"));
 			assertTrue(
 				masterDegreeCandidate.getPerson().getProfissao().equals(
 					"Profissao"));
