@@ -17,10 +17,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
 import Util.DiaSemana;
 
-public class ApagarAulaServicosTest extends TestCaseServicos {
+public class ApagarAulaServicosTest extends TestCaseServicosWithAuthorization {
 
 	public ApagarAulaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -47,31 +47,33 @@ public class ApagarAulaServicosTest extends TestCaseServicos {
 	// delete aula by unauthorized user
 	public void testUnauthorizedDeleteAula() {
 
-		DiaSemana diaSemana = null;
-		Calendar inicio = null;
-		Calendar fim = null;
-		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-		inicio = Calendar.getInstance();
-		inicio.set(Calendar.HOUR_OF_DAY, 8);
-		inicio.set(Calendar.MINUTE, 0);
-		inicio.set(Calendar.SECOND, 0);
-		fim = Calendar.getInstance();
-		fim.set(Calendar.HOUR_OF_DAY, 9);
-		fim.set(Calendar.MINUTE, 30);
-		fim.set(Calendar.SECOND, 0);
+		super.testUnauthorizedExecutionOfService("ApagarAula");
 
-		RoomKey keySala = new RoomKey("Ga1");
-
-		Object argsDeleteAula[] = new Object[1];
-		argsDeleteAula[0] = new KeyLesson(diaSemana, inicio, fim, keySala);
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView2, "ApagarAula", argsDeleteAula);
-			fail("testUnauthorizedDeleteAula");
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedDeleteAula", result);
-		}
+//		DiaSemana diaSemana = null;
+//		Calendar inicio = null;
+//		Calendar fim = null;
+//		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+//		inicio = Calendar.getInstance();
+//		inicio.set(Calendar.HOUR_OF_DAY, 8);
+//		inicio.set(Calendar.MINUTE, 0);
+//		inicio.set(Calendar.SECOND, 0);
+//		fim = Calendar.getInstance();
+//		fim.set(Calendar.HOUR_OF_DAY, 9);
+//		fim.set(Calendar.MINUTE, 30);
+//		fim.set(Calendar.SECOND, 0);
+//
+//		RoomKey keySala = new RoomKey("Ga1");
+//
+//		Object argsDeleteAula[] = new Object[1];
+//		argsDeleteAula[0] = new KeyLesson(diaSemana, inicio, fim, keySala);
+//
+//		Object result = null;
+//		try {
+//			result = _gestor.executar(_userView2, "ApagarAula", argsDeleteAula);
+//			fail("testUnauthorizedDeleteAula");
+//		} catch (Exception ex) {
+//			assertNull("testUnauthorizedDeleteAula", result);
+//		}
 	}
 
 	// delete existing aula

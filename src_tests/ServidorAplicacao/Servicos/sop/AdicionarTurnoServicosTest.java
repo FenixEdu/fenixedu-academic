@@ -24,7 +24,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.ITurno;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -37,7 +37,7 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class AdicionarTurnoServicosTest extends TestCaseServicos {
+public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 	
 	private InfoClass infoClass = null;
 	private InfoShift infoShift = null;
@@ -67,17 +67,19 @@ public class AdicionarTurnoServicosTest extends TestCaseServicos {
 	// write turmaTurno by unauthorized user
 	public void testUnauthorizedCreateTurmaTurno() {
 
-		this.ligarSuportePersistente(false);
+		super.testUnauthorizedExecutionOfService("AdicionarTurno");
 
-		Object argsCriarTurmaTurno[] = { this.infoClass, this.infoShift };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView2, "AdicionarTurno", argsCriarTurmaTurno);
-			fail("testUnauthorizedCreateTurmaTurno");
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedCreateTurmaTurno", result);
-		}
+//		this.ligarSuportePersistente(false);
+//
+//		Object argsCriarTurmaTurno[] = { this.infoClass, this.infoShift };
+//
+//		Object result = null;
+//		try {
+//			result = _gestor.executar(_userView2, "AdicionarTurno", argsCriarTurmaTurno);
+//			fail("testUnauthorizedCreateTurmaTurno");
+//		} catch (Exception ex) {
+//			assertNull("testUnauthorizedCreateTurmaTurno", result);
+//		}
 	}
 
 	// write existing turmaTurno

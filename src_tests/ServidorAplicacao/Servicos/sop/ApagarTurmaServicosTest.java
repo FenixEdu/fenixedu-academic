@@ -22,7 +22,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.Turma;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -33,7 +33,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ApagarTurmaServicosTest extends TestCaseServicos {
+public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 	
 	private InfoClass infoClass = null;
 	
@@ -62,16 +62,18 @@ public class ApagarTurmaServicosTest extends TestCaseServicos {
 	// unauthorized delete turma
 	public void testUnauthorizedDeleteTurma() {
 
-		this.ligarSuportePersistente(true);
-		Object argsDeleteTurma[] = {this.infoClass};
+		super.testUnauthorizedExecutionOfService("ApagarSala");
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView2, "ApagarTurma", argsDeleteTurma);
-			fail("testUnauthorizedDeleteTurma");
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedDeleteTurma", result);
-		}
+//		this.ligarSuportePersistente(true);
+//		Object argsDeleteTurma[] = {this.infoClass};
+//
+//		Object result = null;
+//		try {
+//			result = _gestor.executar(_userView2, "ApagarTurma", argsDeleteTurma);
+//			fail("testUnauthorizedDeleteTurma");
+//		} catch (Exception ex) {
+//			assertNull("testUnauthorizedDeleteTurma", result);
+//		}
 	}
 
 	// delete existing turma

@@ -42,7 +42,7 @@ public class ApagarTurnoFormAction extends FenixAction {
 	  InfoExecutionCourse IEC = (InfoExecutionCourse) sessao.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 	  
 	  
-	  Object argsApagarTurno[] = { new ShiftKey(infoTurno.getNome(),IEC),IEC};
+	  Object argsApagarTurno[] = { new ShiftKey(infoTurno.getNome(),IEC) };
       Boolean result = (Boolean) gestor.executar(userView, "ApagarTurno", argsApagarTurno);
 	  
 	  if (result != null && result.booleanValue()) {

@@ -25,7 +25,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISala;
 import Dominio.ITurno;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -37,7 +37,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
 
-public class AdicionarAulaServicosTest extends TestCaseServicos {
+public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization {
 
 	private InfoLesson infoLesson = null;
 	private InfoShift infoShift = null;
@@ -67,34 +67,32 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 	// write turnoAula by unauthorized user
 	public void testUnauthorizedCreateTurnoAula() {
 
-		DiaSemana diaSemana = null;
-		Calendar inicio = null;
-		Calendar fim = null;
-		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-		inicio = Calendar.getInstance();
-		inicio.set(Calendar.HOUR_OF_DAY, 8);
-		inicio.set(Calendar.MINUTE, 0);
-		inicio.set(Calendar.SECOND, 0);
-		fim = Calendar.getInstance();
-		fim.set(Calendar.HOUR_OF_DAY, 9);
-		fim.set(Calendar.MINUTE, 30);
-		fim.set(Calendar.SECOND, 0);
-		
-		this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
-		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
+		super.testUnauthorizedExecutionOfService("AdicionarAula");
 
-//		RoomKey keySala = new RoomKey("Ga1");
-//		Object argsCriarTurnoAula[] = new Object[1];
-//		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno1", diaSemana, inicio, fim, keySala);
-
-		Object result = null;
-
-		try {
-			result = _gestor.executar(_userView2, "AdicionarAula", argsCriarTurnoAula);
-			fail("testUnauthorizedCreateTurnoAula");
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedCreateTurnoAula", result);
-		}
+//		DiaSemana diaSemana = null;
+//		Calendar inicio = null;
+//		Calendar fim = null;
+//		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+//		inicio = Calendar.getInstance();
+//		inicio.set(Calendar.HOUR_OF_DAY, 8);
+//		inicio.set(Calendar.MINUTE, 0);
+//		inicio.set(Calendar.SECOND, 0);
+//		fim = Calendar.getInstance();
+//		fim.set(Calendar.HOUR_OF_DAY, 9);
+//		fim.set(Calendar.MINUTE, 30);
+//		fim.set(Calendar.SECOND, 0);
+//		
+//		this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
+//		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
+//
+//		Object result = null;
+//
+//		try {
+//			result = _gestor.executar(_userView2, "AdicionarAula", argsCriarTurnoAula);
+//			fail("testUnauthorizedCreateTurnoAula");
+//		} catch (Exception ex) {
+//			assertNull("testUnauthorizedCreateTurnoAula", result);
+//		}
 	}
 
 	// write existing turnoAula
@@ -115,10 +113,6 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 
 		this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
 		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
-
-//		RoomKey keySala = new RoomKey("Ga1");
-//		Object argsCriarTurnoAula[] = new Object[1];
-//		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno1", diaSemana, inicio, fim, keySala);
 
 		Object result = null;
 		try {
@@ -147,10 +141,6 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 
 		this.ligarSuportePersistente("turno2", diaSemana, inicio, fim);
 		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
-
-//		RoomKey keySala = new RoomKey("Ga1");
-//		Object argsCriarTurnoAula[] = new Object[1];
-//		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno2", diaSemana, inicio, fim, keySala);
 
 		Object result = null;
 		try {
@@ -190,13 +180,6 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 
 		this.ligarSuportePersistente("turno3", diaSemana2, inicio, fim2);
 		Object argsCriarTurnoAula2[] = {this.infoShift, this.infoLesson};
-
-//		RoomKey keySala = new RoomKey("Ga1");
-//
-//		Object argsCriarTurnoAula1[] = new Object[1];
-//		Object argsCriarTurnoAula2[] = new Object[1];
-//		argsCriarTurnoAula1[0] = new ShiftAndLessonKeys("turno3", diaSemana1, inicio,  fim1, keySala);
-//		argsCriarTurnoAula2[0] = new ShiftAndLessonKeys("turno3", diaSemana2, inicio,  fim2, keySala);
 
 		Object result = null;
 		try {
@@ -243,14 +226,6 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 		this.ligarSuportePersistente("turno3", diaSemana2, inicio2, fim2);
 		Object argsCriarTurnoAula2[] = {this.infoShift, this.infoLesson};
 
-//		RoomKey keySala = new RoomKey("Ga1");
-//
-//		Object argsCriarTurnoAula1[] = new Object[1];
-//		Object argsCriarTurnoAula2[] = new Object[1];
-//
-//		argsCriarTurnoAula1[0] = new ShiftAndLessonKeys("turno3", diaSemana1, inicio1, fim1, keySala);
-//		argsCriarTurnoAula2[0] = new ShiftAndLessonKeys("turno3", diaSemana2, inicio2, fim2, keySala);
-//	    
 	    Object result = null; 
 	      try {
 			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula1);

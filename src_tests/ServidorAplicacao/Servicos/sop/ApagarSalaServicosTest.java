@@ -14,9 +14,9 @@ package ServidorAplicacao.Servicos.sop;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
 
-public class ApagarSalaServicosTest extends TestCaseServicos {
+public class ApagarSalaServicosTest extends TestCaseServicosWithAuthorization {
 
 	public ApagarSalaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -43,16 +43,18 @@ public class ApagarSalaServicosTest extends TestCaseServicos {
 	// unauthorized delete sala
 	public void testUnauthorizedDeleteSala() {
 
-		Object argsDeleteSala[] = new Object[1];
-		argsDeleteSala[0] = new RoomKey(new String("Ga1"));
+		super.testUnauthorizedExecutionOfService("ApagarSala");
 
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView2, "ApagarSala", argsDeleteSala);
-			fail("testUnauthorizedDeleteSala");
-		} catch (Exception ex) {
-			assertNull("testUnauthorizedDeleteSala", result);
-		}
+//		Object argsDeleteSala[] = new Object[1];
+//		argsDeleteSala[0] = new RoomKey(new String("Ga1"));
+//
+//		Object result = null;
+//		try {
+//			result = _gestor.executar(_userView2, "ApagarSala", argsDeleteSala);
+//			fail("testUnauthorizedDeleteSala");
+//		} catch (Exception ex) {
+//			assertNull("testUnauthorizedDeleteSala", result);
+//		}
 	}
 
 	// delete existing sala

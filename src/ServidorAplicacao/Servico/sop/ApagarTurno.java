@@ -11,7 +11,6 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import DataBeans.InfoExecutionCourse;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
@@ -45,7 +44,7 @@ public class ApagarTurno implements IServico {
 		return "ApagarTurno";
 	}
 
-	public Boolean run(ShiftKey keyTurno, InfoExecutionCourse infoExecutionCourse) {
+	public Boolean run(ShiftKey keyTurno) {
 
 		ITurno turno1 = null;
 		boolean result = false;
@@ -53,7 +52,7 @@ public class ApagarTurno implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
 
 			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
