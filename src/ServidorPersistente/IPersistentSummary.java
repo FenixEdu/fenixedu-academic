@@ -20,9 +20,9 @@ import Util.TipoAula;
  * 
  */
 public interface IPersistentSummary extends IPersistentObject{
-	public abstract List readByExecutionCourse(IDisciplinaExecucao executionCourse)
-		throws ExcepcaoPersistencia;
-	public abstract List readByExecutionCourseAndType(
+	public  List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia;		
+	public  List readByExecutionCourseAndType(
 		IDisciplinaExecucao executionCourse,
 		TipoAula summaryType)
 		throws ExcepcaoPersistencia;

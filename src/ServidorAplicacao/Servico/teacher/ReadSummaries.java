@@ -25,6 +25,7 @@ import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoAula;
 
 /**
  * @author João Mota
@@ -57,7 +58,7 @@ public class ReadSummaries implements IServico {
 		return "ReadSummaries";
 	}
 
-	public SiteView run(Integer executionCourseId) throws FenixServiceException {
+	public SiteView run(Integer executionCourseId,TipoAula summaryType) throws FenixServiceException {
 
 		try {
 			ISuportePersistente persistentSuport =
@@ -75,9 +76,15 @@ public class ReadSummaries implements IServico {
 			}
 			IPersistentSummary persistentSummary =
 				persistentSuport.getIPersistentSummary();
-
-			List summaries =
-				persistentSummary.readByExecutionCourse(executionCourse);
+			List summaries;
+			if (summaryType==null) {
+				summaries =
+								persistentSummary.readByExecutionCourse(executionCourse);
+			}else {
+				summaries =
+								persistentSummary.readByExecutionCourseAndType(executionCourse,summaryType);
+			}
+			 
 			List result = new ArrayList();
 			Iterator iter = summaries.iterator();
 			while (iter.hasNext()) {
@@ -92,6 +99,7 @@ public class ReadSummaries implements IServico {
 			InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
 			bodyComponent.setInfoSummaries(result);
 			bodyComponent.setExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+			bodyComponent.setSummaryType(summaryType);
 		
 			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,bodyComponent);
 			return siteView;

@@ -38,6 +38,7 @@ import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import Util.TipoAula;
 
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
@@ -206,6 +207,12 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		throws FenixActionException {
 
 		ISiteComponent summariesComponent = new InfoSiteSummaries();
+		String typeFilter = request.getParameter("typeFilter");
+		TipoAula summaryType=null;
+		if (typeFilter!=null) {
+				summaryType=mapFromStringToLessonType(typeFilter);
+			}
+		((InfoSiteSummaries)summariesComponent).setSummaryType(summaryType);
 		SiteView siteView= readSiteView(request, summariesComponent, null, null, null);
 		
 		Collections.sort(((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView)
@@ -216,7 +223,24 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		return mapping.findForward("sucess");
 
 	}
-	
+	/**
+		 * @param typeFilter
+		 * @return
+		 */
+		private TipoAula mapFromStringToLessonType(String typeFilter) {
+			TipoAula result = null;
+			if (typeFilter.equals("T")) {
+				result= new TipoAula(TipoAula.TEORICA);
+			} else if (typeFilter.equals("P")) {
+				result= new TipoAula(TipoAula.PRATICA);
+			}else if (typeFilter.equals("TP")) {
+				result= new TipoAula(TipoAula.TEORICO_PRATICA);
+			} else if (typeFilter.equals("L")) {
+				result= new TipoAula(TipoAula.LABORATORIAL);
+			}
+		
+			return result;
+		}
 	public ActionForward curricularCourse(
 		ActionMapping mapping,
 		ActionForm form,

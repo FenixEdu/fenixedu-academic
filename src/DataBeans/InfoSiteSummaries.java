@@ -7,6 +7,8 @@ package DataBeans;
 
 import java.util.List;
 
+import Util.TipoAula;
+
 /**
  * @author João Mota
  *
@@ -19,6 +21,8 @@ public class InfoSiteSummaries implements ISiteComponent {
 
 	private List infoSummaries;
 	private InfoExecutionCourse executionCourse;
+	private TipoAula summaryType;
+	private InfoSite infoSite;
 	/**
 	 * @return
 	 */
@@ -65,4 +69,34 @@ public class InfoSiteSummaries implements ISiteComponent {
 		
 		return result;
 	}
+	/**
+	 * @return
+	 */
+	public TipoAula getSummaryType() {
+		return summaryType;
+	}
+
+	/**
+	 * @param summaryType
+	 */
+	public void setSummaryType(TipoAula summaryType) {
+		this.summaryType = summaryType;
+	}
+	
+	
+
+	/**
+	 * @return
+	 */
+	public InfoSite getInfoSite() {
+		return infoSite;
+	}
+
+	/**
+	 * @param infoSite
+	 */
+	public void setInfoSite(InfoSite infoSite) {
+		this.infoSite = infoSite;
+	}
+
 }

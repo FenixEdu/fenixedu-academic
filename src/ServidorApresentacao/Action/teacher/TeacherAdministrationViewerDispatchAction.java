@@ -1407,11 +1407,17 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 		String executionCourseIdString = request.getParameter("objectCode");
+		String typeFilter = request.getParameter("typeFilter");
+		TipoAula summaryType=null;
+		if (typeFilter!=null) {
+			summaryType=mapFromStringToLessonType(typeFilter);
+		}
+		//TODO: add number filter
 		Integer executionCourseId = new Integer(executionCourseIdString);
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object[] args = { executionCourseId };
+		Object[] args = { executionCourseId,summaryType };
 		SiteView siteView = null;
 		try {
 			siteView =
@@ -1430,6 +1436,24 @@ public class TeacherAdministrationViewerDispatchAction
 
 		request.setAttribute("siteView", siteView);
 		return mapping.findForward("showSummaries");
+	}
+	/**
+	 * @param typeFilter
+	 * @return
+	 */
+	private TipoAula mapFromStringToLessonType(String typeFilter) {
+		TipoAula result = null;
+		if (typeFilter.equals("T")) {
+			result= new TipoAula(TipoAula.TEORICA);
+		} else if (typeFilter.equals("P")) {
+			result= new TipoAula(TipoAula.PRATICA);
+		}else if (typeFilter.equals("TP")) {
+			result= new TipoAula(TipoAula.TEORICO_PRATICA);
+		} else if (typeFilter.equals("L")) {
+			result= new TipoAula(TipoAula.LABORATORIAL);
+		}
+		
+		return result;
 	}
 	public ActionForward prepareInsertSummary(
 		ActionMapping mapping,
@@ -1658,6 +1682,7 @@ public class TeacherAdministrationViewerDispatchAction
 
 			request.setAttribute("noShifts", new Boolean(true));
 		}
+
 		return mapping.findForward("viewProjectShifts");
 
 	}
