@@ -34,8 +34,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
-			HttpSession session = request.getSession(true);
+		
 		String roomName = (String) request.getParameter("roomName");
 		ActionErrors errors = new ActionErrors();
 		RoomKey roomKey = null;
@@ -94,8 +93,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-			HttpSession session = request.getSession(true);
-
 		DynaActionForm courseForm = (DynaActionForm) form;
 
 		return executionCourseViewerSelectedByInitials(
@@ -113,8 +110,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
-			HttpSession session = request.getSession(true);
 		String exeCourseCode = null;
 
 		exeCourseCode = (String) request.getParameter("exeCourseCode");
@@ -147,6 +142,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		if (session != null) {
 			infoExecPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
 				
+			// TODO: Isto não faz nada, pois não?
 			if (infoExecPeriod == null) {
 				infoExecPeriod =
 					RequestUtils.getExecutionPeriodFromRequest(request);
@@ -174,10 +170,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if (infoExecCourse != null) {
-
 				RequestUtils.setExecutionCourseToRequest(request,infoExecCourse);
-				
-				
 			}
 
 			// Read associated curricular courses to display curricular course information.
@@ -189,7 +182,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					null,
 					"ReadCurricularCourseListOfExecutionCourse",
 					argsReadCurricularCourseListOfExecutionCourse);
-
+			
 			
 			if (infoCurricularCourses != null
 				&& !infoCurricularCourses.isEmpty()) {
@@ -204,7 +197,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			InfoSite site = null;
 			Object[] args2 = { infoExecCourse };
 			site = (InfoSite) manager.executar(null, "ReadSite", args2);
-			RequestUtils.setSiteToRequest(request,site);
+			RequestUtils.setSiteFirstPageToRequest(request,site);
 			
 			//read Sections			
 			RequestUtils.setSectionsToRequest(request,site);
