@@ -30,7 +30,7 @@
 		<field property="year" depends="required, integer" page="1">
 			<arg0 key="property.exam.year"/>
 		</field>
-		<field property="beginning" depends="required, integer" page="1">
+		<field property="beginning" depends="integer" page="1">
 			<arg0 key="property.exam.beginning"/>
 		</field>
 		<field property="season" depends="required, integer" page="1">

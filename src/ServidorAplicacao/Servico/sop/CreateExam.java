@@ -54,7 +54,8 @@ public class CreateExam implements IServico {
 	}
 
 	public Boolean run(
-		Calendar examDateAndTime,
+		Calendar examDate,
+		Calendar examTime,
 		Season season,
 		InfoExecutionCourse infoExecutionCourse)
 		throws FenixServiceException {
@@ -78,8 +79,8 @@ public class CreateExam implements IServico {
 
 			IExam exam =
 				new Exam(
-					examDateAndTime.getTime(),
-					examDateAndTime,
+					examDate.getTime(),
+					examTime,
 					null,
 					season,
 					executionCourse);

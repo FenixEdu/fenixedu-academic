@@ -789,6 +789,10 @@
     		type="ServidorApresentacao.Action.sop.CreateExamActionDA"
             parameter="method"
     		>
+    	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+        		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        		   />
     	<forward name="showCreateForm" path="/createExam.jsp"/>
     	<forward name="Sucess" path="/mainExams.jsp"/>
 	</action>

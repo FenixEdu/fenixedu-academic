@@ -65,23 +65,29 @@ public class CreateExamActionDA extends DispatchAction {
 			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
 
 			Season season = new Season(new Integer((String) chooseDayAndShiftForm.get("season")));
-			Calendar examDateAndTime = Calendar.getInstance();
+			Calendar examDate = Calendar.getInstance();
+			Calendar examTime = Calendar.getInstance();
 			InfoExecutionCourse executionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 
 			Integer day = new Integer((String) chooseDayAndShiftForm.get("day"));
 			Integer month = new Integer((String) chooseDayAndShiftForm.get("month"));
 			Integer year = new Integer((String) chooseDayAndShiftForm.get("year"));
-			Integer beginning = new Integer((String) chooseDayAndShiftForm.get("beginning"));
+			Integer beginning = null;
+			try {
+				beginning = new Integer((String) chooseDayAndShiftForm.get("beginning"));
+				examTime.set(Calendar.HOUR_OF_DAY, beginning.intValue());
+				examTime.set(Calendar.MINUTE, 0);
+				examTime.set(Calendar.SECOND, 0);
+			} catch(NumberFormatException ex) {
+				// No problem, it isn't requiered.
+			}
 
-			examDateAndTime.set(Calendar.YEAR, year.intValue());
-			examDateAndTime.set(Calendar.MONTH, month.intValue());
-			examDateAndTime.set(Calendar.DAY_OF_MONTH, day.intValue());
-			examDateAndTime.set(Calendar.HOUR_OF_DAY, beginning.intValue());
-			examDateAndTime.set(Calendar.MINUTE, 0);
-			examDateAndTime.set(Calendar.SECOND, 0);
+			examDate.set(Calendar.YEAR, year.intValue());
+			examDate.set(Calendar.MONTH, month.intValue());
+			examDate.set(Calendar.DAY_OF_MONTH, day.intValue());
 
 			// Create an exam with season, examDateAndTime and executionCourse
-			Object argsCreateExam[] = { examDateAndTime, season, executionCourse };
+			Object argsCreateExam[] = { examDate, examTime, season, executionCourse };
 			try {
 				ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
 			} catch (ExistingServiceException ex) {
