@@ -23,4 +23,12 @@
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/degreeSite/showDegreeCurricularPlan.jsp"/>
 	</definition>
+	<definition name="showCurricularCourseSite" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
+		<put name="body" value="/publico/degreeSite/showCurricularCourseSite.jsp"/>
+	</definition>
+		<definition name="showExecutionCourseSite" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/degreeSite/executionCourseSiteMainNavigation.jsp" />	
+		<put name="body" value="/publico/degreeSite/showExecutionCourseSite.jsp"/>
+	</definition>	
 </tiles-definitions>

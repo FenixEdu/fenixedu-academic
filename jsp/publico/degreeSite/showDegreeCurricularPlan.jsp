@@ -11,8 +11,12 @@
 <div  class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <a href="http://www.ist.utl.pt/html/ensino/ensino.shtml">Ensino</a> &gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" + request.getAttribute("degreeId").toString() %>">
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
-	</html:link>
-	 &gt;&nbsp;<bean:message key="label.curricularPlan"/>
+	</html:link>&gt;&nbsp;
+	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId") %>" >
+	<bean:message key="label.curricularPlan"/>
+	</html:link>&gt;&nbsp;
+	<bean:message key="label.curriculum"/>	
+	
 </div>	
 
 <br />
@@ -51,7 +55,12 @@
 				<tr>
 					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
 					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
-					<td class="listClasses" style="text-align:left"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name"/></td>
+					<td class="listClasses" style="text-align:left">
+						<bean:define id="curricularCourseId" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
+						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseId=" +  pageContext.findAttribute("curricularCourseId") + "&amp;executionPeriodOId=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeId=" +  request.getAttribute("degreeId")%>" >
+							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
+						</html:link>
+					</td>
 					<td class="listClasses">
 						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
 					</td>

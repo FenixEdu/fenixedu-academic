@@ -54,6 +54,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
 
+        //TODO: verify if is necessary 
         String info2Edit = getFromRequestString("info", request);
         request.setAttribute("info", info2Edit);
 
