@@ -13,7 +13,7 @@
 
 	<logic:present name="publico.infoRoom" scope="session">
 
-            <table cellspacing="0" cellpadding="0" width="100%">
+            <table cellspacing="0" cellpadding="0" width="90%">
                 <tr class="timeTable_line">
                     <td class="horariosHoras_first">
                         <b><bean:message key="property.room.name"/>:</b> <bean:write name="publico.infoRoom" property="nome"/>

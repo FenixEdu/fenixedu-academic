@@ -4,6 +4,6 @@
   <tiles:put name="serviceName" value="Instituto Superior Técnico" />
   <tiles:put name="executionCourseName" beanName="<%=SessionConstants.INFO_SITE %>" beanProperty="infoExecutionCourse.nome" />
   <tiles:put name="body" value="/publico/viewTimeTable_bd.jsp" />
-  <tiles:put name="navbar" value="/publico/gesdisNavbar.jsp"/>
+  <tiles:put name="navbar" value="/publico/gesdisNavbarTimeTable.jsp"/>
   <tiles:put name="footer" value="/publico/commonFooterPub.jsp" />
 </tiles:insert>

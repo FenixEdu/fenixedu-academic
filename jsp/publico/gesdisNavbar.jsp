@@ -30,6 +30,3 @@
 <html:link page="/viewTimeTable.do">
 		<li><bean:message key="link.executionCourse.timeTable"/></li>
 </html:link>
-<html:link page="/viewExecutionCourseShifts.do">
-		<li><bean:message key="link.executionCourse.shifts"/></li>
-</html:link>
