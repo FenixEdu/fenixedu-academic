@@ -9,6 +9,7 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.ClassAndShiftKeys;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -49,18 +49,8 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 			HttpSession session = request.getSession();
 			IUserView userView = SessionUtils.getUserView(request);
 
-			String shiftName = request.getParameter("shiftName");
-
+			InfoShift infoShift = getInfoShift (request, SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);
 			InfoClass classView = getInfoTurma(request);
-
-			InfoShift infoShift = new InfoShift();
-
-			InfoExecutionCourse infoExecutionCourse =
-				(InfoExecutionCourse) session.getAttribute(
-					SessionConstants.EXECUTION_COURSE_KEY);
-
-			infoShift.setNome(shiftName);
-			infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
 			Object[] argsAdicionarTurno = { classView, infoShift };
 
@@ -70,6 +60,10 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 				argsAdicionarTurno);
 
 			setClassShiftListToRequest(request, userView, classView.getNome());
+
+			session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
+			session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
+			
 
 			//			/* TO REMOVE */
 			//			session.setAttribute(SessionConstants.CLASS_VIEW, classView);
@@ -91,31 +85,44 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		throws Exception {
 			HttpSession session = request.getSession();
 		IUserView userView = SessionUtils.getUserView(request);
-		
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
-		
-		InfoShift infoShift = new InfoShift();
-		
-		String shiftName = request.getParameter("shiftName");
-		infoShift.setNome(shiftName);
-		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-		
+
+		InfoShift infoShift = getInfoShift(request, SessionConstants.CLASS_INFO_SHIFT_LIST_KEY);
 
 		InfoClass classView = getInfoTurma(request);
-		ClassAndShiftKeys keysTurmaAndTurno =
-			new ClassAndShiftKeys(classView.getNome(), shiftName);
-
+		
 		Object[] argsRemoverTurno = { infoShift, classView };
-
 		ServiceUtils.executeService(userView, "RemoverTurno", argsRemoverTurno);
 
 		setClassShiftListToRequest(request, userView, classView.getNome());
 
+		session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
+		session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
 		
 		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		return mapping.findForward("viewClassShiftList");
 
+	}
+
+	/**
+	 * @param request
+	 * @return InfoShift
+	 */
+	private InfoShift getInfoShift(HttpServletRequest request, String listAttributeKey) {
+		try {
+			Integer infoShiftIndex = new Integer(request.getParameter("shiftIndex"));
+			HttpSession session = request.getSession();
+			
+			List infoShiftList = (List) session.getAttribute(listAttributeKey);
+			
+			return (InfoShift) infoShiftList.get(infoShiftIndex.intValue());
+		} catch (RuntimeException e) {
+			e.printStackTrace(System.out);
+			
+		}
+		return null;
+		
+		
 	}
 
 	public ActionForward viewClassShiftList(
@@ -129,10 +136,14 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 		InfoClass classView = getInfoTurma(request);
 
+		HttpSession session = request.getSession();
+		
 		setClassShiftListToRequest(request, userView, classView.getNome());
 
-		HttpSession session = request.getSession();
-
+		
+		session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);
+		session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));		
+	
 		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		return mapping.findForward("viewClassShiftList");
@@ -145,11 +156,17 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		HttpSession session = request.getSession();
+		
 		IUserView userView = SessionUtils.getUserView(request);
 
 		setShiftAvailableListToRequest(request, userView);
 
 		request.setAttribute(AVAILABLE_LIST, " ");
+
+		session.setAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
+		session.removeAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY);
+		
 
 		return mapping.findForward("viewAvailableShiftList");
 
@@ -182,7 +199,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		/** InfoShift ArrayList */
 		ArrayList shiftList =
 			returnShiftList(request, userView, serviceName, args);
-		if (shiftList != null && !shiftList.isEmpty())
+		//if (shiftList != null && !shiftList.isEmpty())
 			request.setAttribute(SHIFT_LIST_ATT, shiftList);
 	}
 
@@ -271,7 +288,6 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		if (listAvailable != null && !listAvailable.isEmpty()) {
 			request.setAttribute(SHIFT_LIST_ATT, listAvailable);
 		}
-
 	}
 
 	/**
