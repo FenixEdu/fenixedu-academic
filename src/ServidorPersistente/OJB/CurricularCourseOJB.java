@@ -449,4 +449,13 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
+	public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("code", curricularCourseCode);
+		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+
+		return queryList(CurricularCourse.class, criteria);
+	}
 }

@@ -56,14 +56,6 @@ create table mw_PESSOA(
 )type= InnoDB;
 
 
-drop table if exists mw_COURSE;
-create table mw_COURSE(
-  courseCode varchar(10) not null,
-  courseName varchar(250),
-  universityCode varchar(10)
-)type= InnoDB;
-
-
 drop table if exists mw_BRANCH;
 create table mw_BRANCH(
   degreeCode integer(10),
@@ -94,7 +86,7 @@ create table mw_ENROLMENT_temp(
 	curricularCourseYear integer(11),
 	curricularCourseSemester integer(11),
 	season integer(11), 
-	courseCode integer(11),
+	courseCode varchar(11),
 	degreeCode integer(11),
 	branchCode integer(11),
 	grade varchar(10),

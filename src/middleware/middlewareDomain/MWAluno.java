@@ -4,6 +4,8 @@
 
 package middleware.middlewareDomain;
 
+import java.util.List;
+
 
 public class MWAluno  
 {
@@ -24,6 +26,7 @@ public class MWAluno
   private String trash;
   private String worker;
   private Integer year;
+  private List enrolments; 
 
 
   private MWPessoa middlewarePerson;
@@ -206,6 +209,20 @@ public class MWAluno
 	 */
 	public void setMiddlewarePerson(MWPessoa oldPerson) {
 		this.middlewarePerson = oldPerson;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getEnrolments() {
+		return enrolments;
+	}
+	
+	/**
+	 * @param enrolments
+	 */
+	public void setEnrolments(List enrolments) {
+		this.enrolments = enrolments;
 	}
 
 }

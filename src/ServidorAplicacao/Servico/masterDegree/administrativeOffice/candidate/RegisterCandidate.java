@@ -239,7 +239,9 @@ public class RegisterCandidate implements IServico {
 			
 			IQualification qualification = new Qualification();
 			sp.getIPersistentQualification().simpleLockWrite(qualification);
-			qualification.setMark(masterDegreeCandidate.getAverage().toString());
+			if (masterDegreeCandidate.getAverage() != null) {
+				qualification.setMark(masterDegreeCandidate.getAverage().toString());
+			}
 			qualification.setPerson(masterDegreeCandidate.getPerson());
 			qualification.setSchool(masterDegreeCandidate.getMajorDegreeSchool());
 			qualification.setTitle(masterDegreeCandidate.getMajorDegree());

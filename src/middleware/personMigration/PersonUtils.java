@@ -18,7 +18,6 @@ import Dominio.IPessoa;
 import Dominio.IRole;
 import Dominio.PersonRole;
 import Dominio.Pessoa;
-import Dominio.Role;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -282,44 +281,22 @@ public class PersonUtils {
 		
 		// Generate Password
 		person.setPassword(PasswordEncryptor.encryptPassword(oldStudent.getDocumentidnumber()));
-		
-		sp.confirmarTransaccao();
-		
 
 
-		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-		broker.beginTransaction();		
 
-
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("roleType", RoleType.PERSON);
-		Query query = new QueryByCriteria(Role.class, criteria);
-		IRole role = (IRole) broker.getObjectByQuery(query);
-
-		
+		IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
 		IPersonRole personRole = new PersonRole();
+		sp.getIPersistentPersonRole().simpleLockWrite(personRole);
 		personRole.setPerson(person);
 		personRole.setRole(role);
-		broker.store(personRole);
-		broker.commitTransaction();
-
-		broker.beginTransaction();		
-
-
-		criteria = new Criteria();
-		criteria.addEqualTo("roleType", RoleType.STUDENT);
-		query = new QueryByCriteria(Role.class, criteria);
-		role = (IRole) broker.getObjectByQuery(query);
-
 		
+		
+		role = sp.getIPersistentRole().readByRoleType(RoleType.STUDENT);
 		personRole = new PersonRole();
+		sp.getIPersistentPersonRole().simpleLockWrite(personRole);
 		personRole.setPerson(person);
 		personRole.setRole(role);
-		broker.store(personRole);
-		broker.commitTransaction();
-
-		sp.iniciarTransaccao();		
-		
+				
 		return person;
 	}
 

@@ -120,7 +120,7 @@ public class UpdateStudent {
 		
 				if (!studentCurricularPlan.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
 					System.out.print("The Student [" + oldStudent.getNumber() + "] has changed his degree!!");
-					System.out.println(" [" + studentCurricularPlan.getDegreeCurricularPlan().getName() + " " + degreeCurricularPlan.getName() + "]");
+					System.out.println(" [" + studentCurricularPlan.getDegreeCurricularPlan().getName() + " -> " + degreeCurricularPlan.getName() + "]");
 					
 					studentCurricularPlan.setCurrentState(StudentCurricularPlanState.INCOMPLETE_OBJ);
 	
@@ -142,7 +142,7 @@ public class UpdateStudent {
 
 	
 			if (hasMasterDegree(studentList, sp)) {
-				System.out.println("Master Degree Student Found [Person ID" + student.getPerson().getIdInternal() + "]");
+				System.out.println("Master Degree Student Found [Person ID " + student.getPerson().getIdInternal() + "]");
 			} else {
 				// Change all the information
 				PersonUtils.updateStudentPerson(student.getPerson(), oldStudent.getMiddlewarePerson());

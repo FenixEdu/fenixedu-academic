@@ -34,4 +34,11 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 	public void delete(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(IDegreeCurricularPlan degreeCurricularPlan,Boolean basic) throws ExcepcaoPersistencia;
+
+	/**
+	 * @param string
+	 * @param degreeCurricularPlan
+	 * @return
+	 */
+	public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 }

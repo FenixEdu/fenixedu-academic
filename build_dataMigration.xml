@@ -840,24 +840,64 @@
     <target name="load-2003-enrolments"
     		depends="load-data"
             description="Carrega as inscricoes de 2003 para a Tabela MW_ENROLMENT">
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}">
-	        <fileset dir="${sql}">
-			 <include name="middleware/Load2003Enrolments.sql" />
-  			</fileset>
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
+		<sequential>
+	        <sql
+	            driver="com.mysql.jdbc.Driver"
+	            url="jdbc:mysql://localhost/${db.name}"
+	            userid="${db.user}"
+	            password="${db.pass}"
+	            encoding="${encoding}">
+		        <fileset dir="${sql}">
+				 <include name="middleware/Load2003Enrolments.sql" />
+	  			</fileset>
+	            <classpath>
+	                <fileset dir="${lib}">
+	                    <include name="**/*.jar"/>
+	                </fileset>
+	            </classpath>
+	        </sql>
+        
+	        <sql
+	            driver="com.mysql.jdbc.Driver"
+	            url="jdbc:mysql://localhost/${db.name}"
+	            userid="${db.user}"
+	            password="${db.pass}"
+	            encoding="${encoding}">
+		        <fileset dir="${sql}">
+				 <include name="middleware/LoadAllStudents.sql" />
+	  			</fileset>
+	            <classpath>
+	                <fileset dir="${lib}">
+	                    <include name="**/*.jar"/>
+	                </fileset>
+	            </classpath>
+	        </sql>
+        
+        
+        </sequential>
     </target>
 	
 	
+	
+	
+	<target name="update-students-enrolments"
+	        depends="compile-proj, load-2003-enrolments">
+		<java classname="middleware.studentMigration.UpdateStudentEnrolments"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+	</target>
 
 
 
