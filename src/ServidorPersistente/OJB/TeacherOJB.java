@@ -173,17 +173,17 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         criteriaDate2.addLessOrEqualThan("beginDate", now);
         criteriaDate2.addNotNull("endDate");
         criteriaDate2.addGreaterOrEqualThan("endDate", now);
-        Criteria criteriaFinal = new Criteria();
-        criteriaFinal.addOrCriteria(workingCostCenter);
+        Criteria finalCriteria = new Criteria();
+        finalCriteria.addOrCriteria(workingCostCenter);
         
-        Criteria inactivePersonCriteria = new Criteria();
-        inactivePersonCriteria.addNotLike("employee.person.username", "INA%");
+        Criteria activeEmployeeCriteria = new Criteria();
+        activeEmployeeCriteria.addEqualTo("employee.active", Boolean.TRUE);
         
-        criteriaFinal.addAndCriteria(criteriaDate);
-        criteriaFinal.addOrCriteria(criteriaDate2);
-        criteriaFinal.addAndCriteria(inactivePersonCriteria);
+        finalCriteria.addAndCriteria(criteriaDate);
+        finalCriteria.addOrCriteria(criteriaDate2);
+        finalCriteria.addAndCriteria(activeEmployeeCriteria);
         
-        List employeesHistoric = queryList(EmployeeHistoric.class, criteriaFinal);
+        List employeesHistoric = queryList(EmployeeHistoric.class, finalCriteria);
 
         Collection employeesIdInternals = CollectionUtils.collect(employeesHistoric, new Transformer() {
 
