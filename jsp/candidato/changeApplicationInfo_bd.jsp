@@ -8,18 +8,19 @@
 <%@ page import="DataBeans.InfoCandidateSituation" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
 <%@ page import="ServidorAplicacao.IUserView" %>
-
   <body>
-   <span class="error"><html:errors/></span>
-   <table>
-   
-   
-   
+   <span class="error"><html:errors/></span> 
+   <table width="100%" cellspacing="0">
+   	<tr>
+   		<td class="infoop" width="50px"><span class="emphasis-box">1</span></td>
+   		<td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong</td>
+   	</tr>
+   </table>
+   <br />
     <html:form action="/changeApplicationInfoDispatchAction?method=change">
-   
+    <table>  
 	<html:hidden property="name" />
 	<html:hidden property="username" />
-   
     <% IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW); 
        if ((userView.getCandidateView() != null) && (userView.getRoles().size() == 2) &&
            (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)) && 
@@ -27,63 +28,23 @@
     	    <html:hidden property="page" value="2"/>
 			<html:hidden property="identificationDocumentNumber" />
             <html:hidden property="identificationDocumentType" />          			
-			
-            <!-- Estado Civil -->
+			<!-- Sexo -->
             <tr>
-             <td with="15%"><bean:message key="label.person.maritalStatus" /></td>
+             <td width="150px"><bean:message key="label.person.sex" /></td>
              <td>
-                <html:select property="maritalStatus">
-                    <html:options collection="<%= SessionConstants.MARITAL_STATUS_LIST_KEY %>" property="value" labelProperty="label"/>
+                <html:select property="sex">
+                    <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
                  </html:select>          
              </td>
-            </tr>
-            <!-- Nome do Pai -->
-            <tr>
-             <td><bean:message key="label.person.fatherName" /></td>
-              <td><html:text property="fatherName"/></td>
-            </tr>
-            <!-- Nome da Mae -->
-            <tr>
-             <td><bean:message key="label.person.motherName" /></td>
-              <td><html:text property="motherName"/></td>
-            </tr>
-            <!-- Data de Nascimento -->
-            <tr>
-             <td><bean:message key="label.person.birth" /></td>
-              <td><html:select property="birthYear">
-                    <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
-                 </html:select>
-                 <html:select property="birthMonth">
-                    <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
-                 </html:select>
-                 <html:select property="birthDay">
-                    <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
-                 </html:select>
-              </td>          
-            </tr>
-            <!-- Freguesia de Naturalidade -->
-            <tr>
-             <td><bean:message key="label.person.birthPlaceParish" /></td>
-              <td><html:text property="birthPlaceParish"/></td>
-            </tr>
-            <!-- Concelho de Naturalidade -->
-            <tr>
-             <td><bean:message key="label.person.birthPlaceMunicipality" /></td>
-              <td><html:text property="birthPlaceMunicipality"/></td>
-            </tr>
-            <!-- Distrito de Naturalidade -->
-            <tr>
-             <td><bean:message key="label.person.birthPlaceDistrict" /></td>
-              <td><html:text property="birthPlaceDistrict"/></td>
-            </tr>
+            </tr>  
             <!-- Local de Emissao do Documento de Identificacao -->
             <tr>
-             <td><bean:message key="label.person.identificationDocumentIssuePlace" /></td>
+             <td width="150px"><bean:message key="label.person.identificationDocumentIssuePlace" /></td>
               <td><html:text property="identificationDocumentIssuePlace"/></td>
             </tr>
     	    <!-- Data de Emissao do Documento de Identificacao -->
             <tr>
-             <td><bean:message key="label.person.identificationDocumentIssueDate" /></td>
+             <td width="150px"><bean:message key="label.person.identificationDocumentIssueDate" /></td>
               <td><html:select property="idIssueDateYear">
                     <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
                  </html:select>
@@ -97,7 +58,7 @@
             </tr>
        	    <!-- Data de Validade do Documento de Identificacao -->
             <tr>
-             <td><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
+             <td width="150px"><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
              <td><html:select property="idExpirationDateYear">
                     <html:options collection="<%= SessionConstants.EXPIRATION_YEARS_KEY %>" property="value" labelProperty="label"/>
                  </html:select>
@@ -109,80 +70,148 @@
                  </html:select>
               </td>          
             </tr>
-  
-            </tr>
-            <!-- Morada -->
-            <tr>
-             <td><bean:message key="label.person.address" /></td>
-              <td><html:text property="address"/></td>
-            </tr>
-            <!-- Localidade -->
-            <tr>
-             <td><bean:message key="label.person.place" /></td>
-              <td><html:text property="place"/></td>
-            </tr>
-            <!-- Codigo Postal -->
-            <tr>
-             <td><bean:message key="label.person.postCode" /></td>
-              <td><html:text property="postCode"/></td>
-            </tr>
-            <!-- Area do Codigo Postal -->
-            <tr>
-             <td><bean:message key="label.person.areaOfPostCode" /></td>
-              <td><html:text property="areaOfAreaCode"/></td>
-            </tr>
-            <!-- Freguesia de Morada -->
-            <tr>
-             <td><bean:message key="label.person.addressParish" /></td>
-              <td><html:text property="addressParish"/></td>
-            </tr>
-            <!-- Concelho de Morada -->
-            <tr>
-             <td><bean:message key="label.person.addressMunicipality" /></td>
-              <td><html:text property="addressMunicipality"/></td>
-            </tr>
-            <!-- Distrito de Morada -->
-            <tr>
-             <td><bean:message key="label.person.addressDistrict" /></td>
-              <td><html:text property="addressDistrict"/></td>
-            </tr>
-            <!-- telefone -->
-            <tr>
-             <td><bean:message key="label.person.telephone" /></td>
-              <td><html:text property="telephone"/></td>
-            </tr>
             <!-- Numero de Contribuinte -->
             <tr>
-             <td><bean:message key="label.person.contributorNumber" /></td>
+             <td width="150px"><bean:message key="label.person.contributorNumber" /></td>
               <td><html:text property="contributorNumber"/></td>
             </tr>
             <!-- Profissao -->
             <tr>
-             <td><bean:message key="label.person.occupation" /></td>
+             <td width="150px"><bean:message key="label.person.occupation" /></td>
               <td><html:text property="occupation"/></td>
             </tr>
-            <!-- Sexo -->
+    		<!-- Estado Civil -->
             <tr>
-             <td><bean:message key="label.person.sex" /></td>
+             <td width="150px"><bean:message key="label.person.maritalStatus" /></td>
              <td>
-                <html:select property="sex">
-                    <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
+                <html:select property="maritalStatus">
+                    <html:options collection="<%= SessionConstants.MARITAL_STATUS_LIST_KEY %>" property="value" labelProperty="label"/>
                  </html:select>          
              </td>
-            </tr>   
-           <!-- Nacionalidade -->
+            </tr>
+    <!--Filiação -->
+    <table width="100%" cellspacing="0">
+		<tr>
+			<td class="infoop" width="50px"><span class="emphasis-box">2</span></td>
+			<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
+		</tr>
+	</table>
+	<br />
+	<table>
+            <!-- Data de Nascimento -->
             <tr>
-             <td><bean:message key="label.person.nationality" /></td>
+             <td width="150px"><bean:message key="label.person.birth" /></td>
+              <td><html:select property="birthYear">
+                    <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>
+                 <html:select property="birthMonth">
+                    <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>
+                 <html:select property="birthDay">
+                    <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>
+              </td>          
+            </tr>
+            <!-- Nacionalidade -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.nationality" /></td>
              <td>
                 <html:select property="nationality">
                     <html:options collection="<%= SessionConstants.NATIONALITY_LIST_KEY %>" property="value" labelProperty="label"/>
                  </html:select>          
              </td>
             </tr>
+             <!-- Freguesia de Naturalidade -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.birthPlaceParish" /></td>
+              <td><html:text property="birthPlaceParish"/></td>
+            </tr>
+            <!-- Concelho de Naturalidade -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.birthPlaceMunicipality" /></td>
+              <td><html:text property="birthPlaceMunicipality"/></td>
+            </tr>
+            <!-- Distrito de Naturalidade -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.birthPlaceDistrict" /></td>
+              <td><html:text property="birthPlaceDistrict"/></td>
+            </tr>
+            <!-- Nome do Pai -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.fatherName" /></td>
+              <td><html:text property="fatherName"/></td>
+            </tr>
+            <!-- Nome da Mae -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.motherName" /></td>
+              <td><html:text property="motherName"/></td>
+            </tr>
+            </table>
+            <br />
+    <!-- Residência -->
+    <table width="100%" cellspacing="0">
+   	<tr>
+   		<td class="infoop" width="50px"><span class="emphasis-box">3</span></td>
+   		<td class="infoop"><strong><bean:message key="label.person.title.addressInfo" /></strong></td>
+   	</tr>
+   </table>
+   <br />
+   		<table>
+            <!-- Morada -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.address" /></td>
+              <td><html:text property="address"/></td>
+            </tr>
+            <!-- Localidade -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.place" /></td>
+             <td><html:text property="place"/></td>
+            </tr>
+            <!-- Codigo Postal -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.postCode" /></td>
+              <td><html:text property="postCode"/></td>
+            </tr>
+            <!-- Area do Codigo Postal -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.areaOfPostCode" /></td>
+              <td><html:text property="areaOfAreaCode"/></td>
+            </tr>
+            <!-- Freguesia de Morada -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.addressParish" /></td>
+              <td><html:text property="addressParish"/></td>
+            </tr>
+            <!-- Concelho de Morada -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.addressMunicipality" /></td>
+              <td><html:text property="addressMunicipality"/></td>
+            </tr>
+            <!-- Distrito de Morada -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.addressDistrict" /></td>
+             <td><html:text property="addressDistrict"/></td>
+            </tr>
+       </table>
+       <br />
+    <!--Contactos -->
+    <table width="100%" cellspacing="0">
+   	<tr>
+   		<td class="infoop" width="50px"><span class="emphasis-box">4</span></td>
+   		<td class="infoop"><strong><bean:message key="label.person.title.contactInfo" /></strong></td>
+   	</tr>
+   </table>
+   <br />
+   		<table>
+            <!-- telefone -->
+            <tr>
+             <td width="150px"><bean:message key="label.person.telephone" /></td>
+             <td><html:text property="telephone"/></td>
+            </tr> 
+
      	<% }else { %>
 
   	   	    <html:hidden property="page" value="1"/>
-
           	<html:hidden property="sex" />
           	<html:hidden property="identificationDocumentType" />
           	<html:hidden property="identificationDocumentNumber" />
@@ -218,60 +247,46 @@
 
           <!-- Telemovel -->
           <tr>
-            <td width="15%"><bean:message key="label.person.mobilePhone" /></td>
+            <td width="150px"><bean:message key="label.person.mobilePhone" /></td>
             <td><html:text property="mobilePhone"/></td>
           </tr>
           <!-- E-Mail -->
           <tr>
-            <td><bean:message key="label.person.email" /></td>
+            <td width="150px"><bean:message key="label.person.email" /></td>
 	        <td><html:text property="email"/></td>
 	      </tr>
           <!-- WebPage -->
           <tr>
-            <td><bean:message key="label.person.webSite" /></td>
+            <td width="150px"><bean:message key="label.person.webSite" /></td>
             <td><html:text property="webSite"/></td>
           </tr>
-
 	       <!-- Major Degree -->
 	       <tr>
-	         <td><bean:message key="label.candidate.majorDegree"/> </td>
+	         <td width="150px"><bean:message key="label.candidate.majorDegree"/> </td>
 	         <td><html:text property="majorDegree"/></td>
-	         </td>
 	       </tr>
-	
 	       <!-- Major Degree School -->
 	       <tr>
-	         <td><bean:message key="label.candidate.majorDegreeSchool"/> </td>
+	         <td width="150px"><bean:message key="label.candidate.majorDegreeSchool"/> </td>
 	         <td><html:text property="majorDegreeSchool"/></td>
-	         </td>
 	       </tr>
-	
 	       <!-- Major Degree Year -->
 	       <tr>
-	         <td><bean:message key="label.candidate.majorDegreeYear"/> </td>
+	         <td width="150px"><bean:message key="label.candidate.majorDegreeYear"/> </td>
 	         <td><html:text property="majorDegreeYear"/></td>
-	         </td>
 	       </tr>
-	
 	       <!-- Average -->
 	       <tr>
 	         <td><bean:message key="label.candidate.average"/> </td>
 	         <td><html:text property="average"/></td>
-	         </td>
 	       </tr>
-	
 	       <!-- Specialization Area -->
 	       <tr>
 	         <td><bean:message key="label.candidate.specializationArea"/> </td>
 	         <td><html:text property="specializationArea"/></td>
-	         </td>
 	       </tr>
-
-
-       <br/>
-           <td align="right">
-             <html:submit value="Alterar" styleClass="button" property="ok"/>
-             <html:reset value="Limpar" styleClass="button"/>
-         </td>
-    </html:form>
    </table>
+<br />
+ <html:submit value="Alterar" styleClass="inputbutton" property="ok"/>
+ <html:reset value="Limpar" styleClass="inputbutton"/>
+</html:form>
