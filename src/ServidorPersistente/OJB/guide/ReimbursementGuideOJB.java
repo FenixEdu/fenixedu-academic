@@ -34,7 +34,7 @@ public class ReimbursementGuideOJB extends ObjectFenixOJB implements IPersistent
     public List readByGuide(IGuide guide) throws ExcepcaoPersistencia
     {
         Criteria crit = new Criteria();
-        crit.addEqualTo("paymentGuide.idInternal", guide.getIdInternal());
+        crit.addEqualTo("guide.idInternal", guide.getIdInternal());
         return queryList(ReimbursementGuide.class, crit);
     }
 
@@ -42,11 +42,14 @@ public class ReimbursementGuideOJB extends ObjectFenixOJB implements IPersistent
     {
         Integer reimbursementGuideNumber = new Integer(1);
         Criteria crit = new Criteria();
-        crit.addOrderBy("number", true);
-        List reimbursementGuides = queryList(ReimbursementGuide.class,crit);
-        if (reimbursementGuides!=null) {
+        crit.addOrderBy("number", false);
+        List reimbursementGuides = queryList(ReimbursementGuide.class, crit);
+
+        if (reimbursementGuides != null && !reimbursementGuides.isEmpty())
+        {
+            System.out.println("guides->" + reimbursementGuides.size());
             IReimbursementGuide reimbursementGuide = (IReimbursementGuide) reimbursementGuides.get(0);
-            reimbursementGuideNumber = new Integer(reimbursementGuide.getNumber().intValue()+1);
+            reimbursementGuideNumber = new Integer(reimbursementGuide.getNumber().intValue() + 1);
         }
         return reimbursementGuideNumber;
     }
