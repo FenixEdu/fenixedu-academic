@@ -64,15 +64,20 @@ public class testUpdateStudents
 				
 				if (infoStudentTestQuestion.getResponse().intValue() != 0)
 				{
-
-					if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(studentTestQuestion.getResponse()))
+					System.out.println("Aqui");
+					if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(studentTestQuestion.getResponse())) {
 						studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
-					else
+						System.out.println("AQUI 2" + new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
+					}
+					
+					else {
+						System.out.println("AQUI");
 						studentTestQuestion.setTestQuestionMark(
 							new Double(
 								- (
 									infoStudentTestQuestion.getTestQuestionValue().intValue()
 										* (java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
+					}
 					//persistentStudentTestQuestion.lockWrite(studentTestQuestion);
 				}
 
