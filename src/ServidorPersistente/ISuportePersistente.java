@@ -34,6 +34,8 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
 import ServidorPersistente.grant.IPersistentGrantProject;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
+import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
+import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
@@ -300,5 +302,8 @@ public interface ISuportePersistente
 	public IPersistentPublicationAttribute getIPersistentPublicationAttribute();
 	public IPersistentPublicationFormat getIPersistentPublicationFormat();
 	public IPersistentAuthor getIPersistentAuthor();
+	
+	public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile();
+	public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry();
 		
 }

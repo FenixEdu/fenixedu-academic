@@ -39,10 +39,16 @@
 </strong></p>
 
 <br />
-<strong><bean:message key="label.generateFiles"/></strong>
+
+<strong><bean:message key="label.manageFiles"/></strong>
 <p><strong>&raquo;
 	<html:link page="/generateFiles.do?method=firstPage">
 		<bean:message key="label.generateFiles"/>
+	</html:link>
+</strong></p>
+<p><strong>&raquo;
+	<html:link page="/uploadFiles.do?method=firstPage">
+		<bean:message key="label.uploadFiles"/>
 	</html:link>
 </strong></p>
 

@@ -277,6 +277,18 @@
 		<put name="body" value="/manager/generateFiles/confirmation.jsp" />
 		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
 	</definition>
+    <definition name="firstPageUploadFiles" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/uploadFiles/welcomeScreen.jsp" />
+		<put name="navLocal" value="/manager/uploadFiles/mainMenu.jsp" />
+	</definition>
+	<definition name="chooseForUploadFiles" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/uploadFiles/chooseForUploadFiles.jsp" />
+		<put name="navLocal" value="/manager/uploadFiles/mainMenu.jsp" />
+	</definition>
+	<definition name="chooseForUploadFiles.error" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/uploadFiles/chooseForUploadFiles_error.jsp" />
+		<put name="navLocal" value="/manager/uploadFiles/mainMenu.jsp" />
+	</definition>	
 
 	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
 	<definition name="df.page.manage.precedences" extends="definition.manager.masterPage">

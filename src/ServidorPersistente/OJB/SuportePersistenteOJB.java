@@ -55,6 +55,8 @@ import ServidorPersistente.OJB.grant.contract.GrantProjectOJB;
 import ServidorPersistente.OJB.grant.contract.GrantSubsidyOJB;
 import ServidorPersistente.OJB.grant.contract.GrantTypeOJB;
 import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
+import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
+import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideEntryOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideSituationOJB;
@@ -106,6 +108,8 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
 import ServidorPersistente.grant.IPersistentGrantProject;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
+import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
+import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
@@ -1332,4 +1336,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentAuthor getIPersistentAuthor() {
 		return new AuthorOJB();
 	}
+	
+	public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile() {
+        return new SibsPaymentFileOJB();
+    }
+
+    public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry() {
+        return new SibsPaymentFileEntryOJB();
+    }
 }
