@@ -3,6 +3,11 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
+	<definition name="definition.teacher.one-column" extends="df.layout.one-column">
+		<put name="serviceName" value="Portal Docente" />
+	  	<put name="institutionName" value="Instituto Superior Técnico" />
+	  	<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	</definition>
 	<definition name="definition.teacher.two-column" extends="df.layout.two-column">
 	  <put name="serviceName" value="Portal Docente" />
 	  <put name="institutionName" value="Instituto Superior Técnico" />
@@ -18,9 +23,7 @@
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
 	</definition>
-	
-	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
-				controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
+	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
 		<put name="title" value=""/>
 	    <put name="link" value=""/>
    	    <put name="professorshipList" />
