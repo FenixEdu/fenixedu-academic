@@ -3,6 +3,7 @@
  */
 package ServidorApresentacao.Action.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +52,6 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				
 				
 				
-				
 				try {
 					infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
 				} catch(FenixServiceException e) {
@@ -71,6 +71,7 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				
 				
 				// in case the CurricularCourse really exists
+				
 				List executionCourses = null;
 				try {		
 					executionCourses = (List) manager.executar(
@@ -90,14 +91,30 @@ public class ReadCurricularCourseAction extends FenixAction  {
 													args);	
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
-				}		
+				}
+				
+				Object args1[] = { curricularCourseId };
+				List curricularCourseScopes = new ArrayList();
+				
+				try {		
+					curricularCourseScopes = (List) manager.executar(
+														userView,
+														"ReadCurricularCourseScopes",
+														args1);	
+				} catch (FenixServiceException e) {
+						throw new FenixActionException(e);
+				}						
+			
+				
+					
 //				Collections.sort(studentCurricularPlans, new BeanComparator("name"));
 				request.setAttribute("executionCoursesList", executionCourses);
 				request.setAttribute("studentCurricularPlansList", studentCurricularPlans);
 				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("curricularCourseId", curricularCourseId);
 				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
-				request.setAttribute("infoCurricularCourse", infoCurricularCourse);					
+				request.setAttribute("infoCurricularCourse", infoCurricularCourse);	
+				request.setAttribute("curricularCourseScopesList", curricularCourseScopes);				
 				return mapping.findForward("viewCurricularCourse");
 	}
 }
