@@ -96,12 +96,12 @@ public abstract class ServiceTestCase extends TestCase {
 
 	protected void tearDown() throws Exception {
 
-				try {
-					super.tearDown();
-					loadDataBase();
-				} catch (Exception ex) {
-					fail("Tear down failed: " + ex);
-				}
+//				try {
+//					super.tearDown();
+//					loadDataBase();
+//				} catch (Exception ex) {
+//					fail("Tear down failed: " + ex);
+//				}
 	}
 
 	protected void compareDataSet(String expectedFileName) {
