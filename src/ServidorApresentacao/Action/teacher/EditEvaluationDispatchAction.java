@@ -17,7 +17,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;

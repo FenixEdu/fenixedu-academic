@@ -19,9 +19,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoBibliographicReference;
-import DataBeans.gesdis.InfoSite;
+import DataBeans.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;

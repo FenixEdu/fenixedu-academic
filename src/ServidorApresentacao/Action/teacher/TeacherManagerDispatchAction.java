@@ -17,8 +17,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.gesdis.InfoSite;
-import DataBeans.gesdis.InfoTeacher;
+import DataBeans.InfoSite;
+import DataBeans.InfoTeacher;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
