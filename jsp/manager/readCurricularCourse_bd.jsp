@@ -65,44 +65,9 @@
 			<br>
 		</logic:notEmpty>	 	
 	</logic:present>
-
 	
+<span class="error"><html:errors/></span>
 	
-	<h3><bean:message key="label.manager.studentCurricularPlans"/></h3>
-
-	<logic:empty name="studentCurricularPlansList">
-		<i><bean:message key="label.manager.studentCurricularPlans.nonExisting"/></i>
-	</logic:empty>
-
-	<logic:present name="studentCurricularPlansList" scope="request">
-		<logic:notEmpty name="studentCurricularPlansList">
-	
-			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
-			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
-			<table width="50%" cellpadding="0" border="0">
-				<tr>
-					<td class="listClasses-header"><bean:message key="label.manager.studentCurricularPlan.name" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.studentCurricularPlan.code" />
-					</td>
-				</tr>
-				
-				<logic:iterate id="studentCurricularPlan" name="studentCurricularPlansList">
-					<tr>	 
-						<td class="listClasses"><bean:write name="studentCurricularPlan" property="name"/>
-						</td>
-						<td class="listClasses"><bean:write name="studentCurricularPlans" property="code"/>
-						</td>
-	 				</tr>
-	 			</logic:iterate>			
-			
-			</table>
-			<br>
-		</logic:notEmpty>	 	
-	</logic:present>
-
-
-
 	<h3><bean:message key="label.manager.curricularCourseScopes"/></h3>
 
 	<logic:empty name="curricularCourseScopesList">
