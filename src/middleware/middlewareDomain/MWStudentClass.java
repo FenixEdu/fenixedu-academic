@@ -3,16 +3,17 @@ package middleware.middlewareDomain;
 
 public class MWStudentClass  
 {
-	private Float average;
+	private Double average;
 	private String className;	
 	private Integer degreeCode;
+	private Integer idInternal;		
 	private String studentName;
 	private String studentNumber;
 
 	/**
 	 * @return
 	 */
-	public Float getAverage()
+	public Double getAverage()
 	{
 		return this.average;
 	}
@@ -36,6 +37,14 @@ public class MWStudentClass
 	/**
 	 * @return
 	 */
+	public Integer getIdInternal()
+	{
+		return this.idInternal;
+	}
+
+	/**
+	 * @return
+	 */
 	public String getStudentName()
 	{
 		return this.studentName;
@@ -52,7 +61,7 @@ public class MWStudentClass
 	/**
 	 * @param average
 	 */
-	public void setAverage(Float average)
+	public void setAverage(Double average)
 	{
 		this.average = average;
 	}
@@ -71,6 +80,14 @@ public class MWStudentClass
 	public void setDegreeCode(Integer degreeCode)
 	{
 		this.degreeCode = degreeCode;
+	}
+
+	/**
+	 * @param idInternal
+	 */
+	public void setIdInternal(Integer idInternal)
+	{
+		this.idInternal = idInternal;
 	}
 
 	/**
