@@ -68,6 +68,7 @@ public class EditExamRooms implements IServico {
 			persistentExam.lockWrite(exam);
 
 			// Remove all elements
+			// TODO : Do this more intelegently.
 			exam.getAssociatedRooms().clear();
 			
 			// Add all elements
