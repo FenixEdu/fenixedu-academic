@@ -26,7 +26,6 @@ import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.PeriodToApplyRestriction;
 
 /**
  * @author Tânia Pousão
