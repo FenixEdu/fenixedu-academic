@@ -67,7 +67,7 @@ public class Guide extends DomainObject implements IGuide  {
   
   public String toString() {
     String result = "[GUIDE";
-    result += ", codInt=" + internalCode;
+    result += ", codInt=" + getIdInternal();
     result += ", number=" + number;
     result += ", year=" + year;
     result += ", contributor=" + contributor;
@@ -113,12 +113,6 @@ public class Guide extends DomainObject implements IGuide  {
 		return guideRequester;
 	}
 	
-	/**
-	 * @return
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
 	
 	/**
 	 * @return
@@ -202,13 +196,6 @@ public class Guide extends DomainObject implements IGuide  {
 	 */
 	public void setGuideRequester(GuideRequester requester) {
 		guideRequester = requester;
-	}
-	
-	/**
-	 * @param integer
-	 */
-	public void setInternalCode(Integer integer) {
-		internalCode = integer;
 	}
 	
 	/**
