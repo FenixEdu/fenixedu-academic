@@ -3,7 +3,7 @@ package middleware.middlewareDomain;
 
 public class MWAreaSecundariaIleec
 {
-	private Integer idAreaEspeciaplizacao;
+	private Integer idAreaEspecializacao;
 	private Integer idAreaSecundaria;
 	private Integer maxCreditos;
 	private String nome;
@@ -11,7 +11,7 @@ public class MWAreaSecundariaIleec
 	public String toString()
 	{
 		return " [idAreaEspeciaplizacao] "
-			+ idAreaEspeciaplizacao
+			+ idAreaEspecializacao
 			+ " [idAreaSecundaria] "
 			+ idAreaSecundaria
 			+ " [maxCreditos] "
@@ -20,14 +20,14 @@ public class MWAreaSecundariaIleec
 			+ nome;
 	}
 
-	public Integer getIdAreaEspeciaplizacao()
+	public Integer getIdAreaEspecializacao()
 	{
-		return idAreaEspeciaplizacao;
+		return idAreaEspecializacao;
 	}
 
-	public void setIdAreaEspeciaplizacao(Integer idAreaEspeciaplizacao)
+	public void setIdAreaEspecializacao(Integer idAreaEspeciaplizacao)
 	{
-		this.idAreaEspeciaplizacao = idAreaEspeciaplizacao;
+		this.idAreaEspecializacao = idAreaEspeciaplizacao;
 	}
 
 	public Integer getIdAreaSecundaria()
@@ -66,7 +66,7 @@ public class MWAreaSecundariaIleec
 			MWAreaSecundariaIleec mwAreasSecundariasIleec = (MWAreaSecundariaIleec) obj;
 			result =	this.getNome().equals(mwAreasSecundariasIleec.getNome()) &&
 						this.getMaxCreditos().equals(mwAreasSecundariasIleec.getMaxCreditos()) &&
-						this.getIdAreaEspeciaplizacao().equals(mwAreasSecundariasIleec.getIdAreaEspeciaplizacao()) &&
+						this.getIdAreaEspecializacao().equals(mwAreasSecundariasIleec.getIdAreaEspecializacao()) &&
 						this.getIdAreaSecundaria().equals(mwAreasSecundariasIleec.getIdAreaSecundaria());
 		}
 		return result;
