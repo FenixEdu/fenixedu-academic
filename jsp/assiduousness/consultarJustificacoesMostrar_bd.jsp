@@ -48,8 +48,7 @@
     </tr>
     <tr>
       <td colspan='2' align="center">
-          <html:link forward="ConsultarFuncionarioMostrarAction"><bean:message key="link.novaConsulta" styleClass="inputbutton" /></html:link>
-        &nbsp;&nbsp;&nbsp;
+          <html:link forward="ConsultarFuncionarioMostrarAction"><bean:message key="link.novaConsulta" /></html:link>
       </td>
       <%--
       <td align="left">
