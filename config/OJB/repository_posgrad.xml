@@ -56,7 +56,7 @@
   <field-descriptor id="19"
     name="media"
     column="media"
-    jdbc-type="FLOAT"
+    jdbc-type="DOUBLE"
   />
   <field-descriptor id="20"
     name="creditos"
