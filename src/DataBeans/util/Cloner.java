@@ -1,9 +1,9 @@
 package DataBeans.util;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.commons.beanutils.BeanUtils;
+
+import Util.TipoCurso;
+import Util.TipoDocumentoIdentificacao;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoCountry;
@@ -17,6 +17,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
+import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
@@ -52,6 +53,7 @@ import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
+import Dominio.IRole;
 import Dominio.ISala;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -419,6 +421,7 @@ public abstract class Cloner {
 		InfoDegree infoDegree = new InfoDegree();
 		try {
 			BeanUtils.copyProperties(infoDegree, degree);
+			infoDegree.setDegreeType(degree.getTipoCurso().toString());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -433,6 +436,7 @@ public abstract class Cloner {
 		ICurso degree = new Curso();
 		try {
 			BeanUtils.copyProperties(degree, infoDegree);
+			degree.setTipoCurso(new TipoCurso(infoDegree.getDegreeType()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -551,19 +555,15 @@ public abstract class Cloner {
 	public static IMasterDegreeCandidate copyInfoMasterDegreeCandidate2IMasterDegreCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
 		IMasterDegreeCandidate masterDegreeCandidate =
 			new MasterDegreeCandidate();
-		ICountry country =
-			Cloner.copyInfoCountry2ICountry(
-				infoMasterDegreeCandidate.getInfoCountry());
-		ICountry nationality =
-			Cloner.copyInfoCountry2ICountry(
-				infoMasterDegreeCandidate.getInfoNationality());
-		IExecutionYear executionYear =
-			Cloner.copyInfoExecutionYear2IExecutionYear(
-				infoMasterDegreeCandidate.getInfoExecutionYear());
+		ICountry country = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoCountry());
+		ICountry nationality = Cloner.copyInfoCountry2ICountry(infoMasterDegreeCandidate.getInfoNationality());
+
+		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoMasterDegreeCandidate.getInfoExecutionDegree());
 		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
+		masterDegreeCandidate.setIdentificationDocumentType(new TipoDocumentoIdentificacao(infoMasterDegreeCandidate.getInfoIdentificationDocumentType()));
 		masterDegreeCandidate.setCountry(country);
 		masterDegreeCandidate.setNationality(nationality);
-		masterDegreeCandidate.setExecutionYear(executionYear);
+		masterDegreeCandidate.setExecutionDegree(executionDegree);
 		return masterDegreeCandidate;
 	}
 
@@ -576,22 +576,17 @@ public abstract class Cloner {
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate =
 			new InfoMasterDegreeCandidate();
 		copyObjectProperties(infoMasterDegreeCandidate, masterDegreeCandidate);
-		InfoDegree infoDegree =
-			Cloner.copyIDegree2InfoDegree(masterDegreeCandidate.getDegree());
+		InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(masterDegreeCandidate.getExecutionDegree());
 		InfoCountry infoCountry =
 			Cloner.copyICountry2InfoCountry(masterDegreeCandidate.getCountry());
 		InfoCountry infoNationality =
 			Cloner.copyICountry2InfoCountry(
 				masterDegreeCandidate.getNationality());
-		InfoExecutionYear infoExecutionYear =
-			Cloner.copyIExecutionYear2InfoExecutionYear(
-				masterDegreeCandidate.getExecutionYear());
-		infoMasterDegreeCandidate.setInfoDegree(infoDegree);
+		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 		infoMasterDegreeCandidate.setInfoCountry(infoCountry);
 		infoMasterDegreeCandidate.setInfoNationality(infoNationality);
-		infoMasterDegreeCandidate.setIdentificationDocumentType(
+		infoMasterDegreeCandidate.setInfoIdentificationDocumentType(
 			masterDegreeCandidate.getIdentificationDocumentType().toString());
-		infoMasterDegreeCandidate.setInfoExecutionYear(infoExecutionYear);
 		return infoMasterDegreeCandidate;
 	}
 
@@ -615,6 +610,15 @@ public abstract class Cloner {
 		InfoCountry infoCountry = new InfoCountry();
 		copyObjectProperties(infoCountry, country);
 		return infoCountry;
+	}
+	/**
+	 * @param role
+	 * @return InfoRole
+	 */
+	public static InfoRole copyIRole2InfoRole(IRole role) {
+		InfoRole infoRole = new InfoRole();
+		copyObjectProperties(infoRole, role);
+		return infoRole;
 	}
 
 	public static IBibliographicReference copyInfoBibliographicReference2IBibliographicReference(InfoBibliographicReference infoBibliographicReference) {
@@ -642,62 +646,21 @@ public abstract class Cloner {
 		infoBibliographicReference.setInfoExecutionCourse(infoExecutionCourse);
 		return infoBibliographicReference;
 	}
-	
-	
 	/**
-	* Method copyInfoSite2ISite.
-	* @param infoSite
-	* @return ISite
-	*/
-	
+			 * Method copyInfoSite2ISite.
+			 * @param infoSite
+			 * @return ISite
+			 */
 	public static ISite copyInfoSite2ISite(InfoSite infoSite) {
 		ISite site = new Site();
 		IDisciplinaExecucao executionCourse =
 			Cloner.copyInfoExecutionCourse2ExecutionCourse(
 				infoSite.getInfoExecutionCourse());
-		
-		ISection initialSection = Cloner.copyInfoSection2ISection(
-			infoSite.getInitialInfoSection());
-		
-		List sections = Cloner.copyListInfoSections2ListISections(infoSite.getInfoSections());
-		List announcements = Cloner.copyListInfoAnnouncements2ListIAnnouncements(infoSite.getInfoAnnouncements());
-		
+
 		copyObjectProperties(site, infoSite);
 		site.setExecutionCourse(executionCourse);
-		site.setInitialSection(initialSection);
-		site.setSections(sections);
-		site.setAnnouncements(announcements);
 
 		return site;
-	}
-	
-	/**
-	 * Method copyISite2InfoSite.
-	 * @param site
-	 * @return InfoSite
-	 */
-	
-	public static InfoSite copyISite2InfoSite(ISite site) {
-		InfoSite infoSite = new InfoSite();
-
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				site.getExecutionCourse());
-				
-		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
-					site.getInitialSection());
-		
-		List infoSections = Cloner.copyListISections2ListInfoSections(site.getSections());
-		List infoAnnouncements = Cloner.copyListIAnnouncements2ListInfoAnnouncements(site.getAnnouncements());
-		
-				
-		copyObjectProperties(infoSite, site);
-		infoSite.setInfoExecutionCourse(infoExecutionCourse);
-		infoSite.setInitialInfoSection(initialInfoSection);
-		infoSite.setInfoSections(infoSections);
-		infoSite.setInfoAnnouncements(infoAnnouncements);
-		
-		return infoSite;
 	}
 
 	/**
@@ -712,119 +675,25 @@ public abstract class Cloner {
 
 		ISection fatherSection = null;
 
-		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
+		ISite site = Cloner.copyInfoSite2ISite(infoSection.getSite());
 
 		InfoSection infoSuperiorSection =
-			(InfoSection) infoSection.getInfoSuperiorSection();
+			(InfoSection) infoSection.getSuperiorSection();
 
-		if(infoSuperiorSection != null) {
+		while (infoSuperiorSection != null) {
 			fatherSection =
 				Cloner.copyInfoSection2ISection(infoSuperiorSection);
 		}
-
-		List inferiorSections = Cloner.copyListInfoSections2ListISections(infoSection.getInferiorInfoSections());
-
-		List items=Cloner.copyListInfoItems2ListIItems(infoSection.getInfoItems());
 
 		copyObjectProperties(section, infoSection);
 
 		section.setSuperiorSection(fatherSection);
 		section.setSite(site);
-		section.setInferiorSections(inferiorSections);
-		section.setItems(items);
-		
+
 		return section;
 
 	}
 
-
-	/**
-	 * Method copyISection2InfoSection.
-	 * @param section
-	 * @return InfoSection
-	 **/
-	
-
-	public static InfoSection copyISection2InfoSection(ISection section) {
-
-   		InfoSection infoSection = new InfoSection();
-
-		InfoSection fatherInfoSection = null;
-
-		InfoSite infoSite = Cloner.copyISite2InfoSite(section.getSite());
-
-		ISection superiorSection =(ISection) section.getSuperiorSection();
-			
-		if (superiorSection != null) {
-			fatherInfoSection =
-				Cloner.copyISection2InfoSection(superiorSection);
-		}
-
-		List inferiorInfoSections = Cloner.copyListISections2ListInfoSections(section.getInferiorSections());
-
-		List infoItems=Cloner.copyListIItems2ListInfoItems(section.getItems());
-
-		copyObjectProperties(infoSection, section);
-
-		infoSection.setInfoSuperiorSection(fatherInfoSection);
-		infoSection.setInfoSite(infoSite);
-		infoSection.setInferiorInfoSections(inferiorInfoSections);
-		infoSection.setInfoItems(infoItems);
-		
-		return infoSection;
-
-	
-	}
-	
-	
-	/**
-	* 
-	* @param listInfoSections
-	* @return listISections
-	*/
-	
-	private static List copyListInfoSections2ListISections(List listInfoSections){
-			
-		List listSections=null;
-		
-		Iterator iterListInfoSections=listInfoSections.iterator();
-		
-		while(iterListInfoSections.hasNext())
-		{
-			InfoSection infoSection = (InfoSection) iterListInfoSections.next();
-			ISection section=Cloner.copyInfoSection2ISection(infoSection);
-			listSections.add(section);
-		}
-		
-		return listSections;
-	}
-		
-
-	/**
-	* 
-	* @param listISections
-	* @return listInfoSections
-	*/
-	
-	private static List copyListISections2ListInfoSections(List listISections)
-	{			
-		List listInfoSections=null;
-		
-		Iterator iterListISections=listISections.iterator();
-		
-		while(iterListISections.hasNext())
-		{
-			ISection section = (ISection) iterListISections.next();
-			InfoSection infoSection=Cloner.copyISection2InfoSection(section);
-			listInfoSections.add(infoSection);
-		}
-		
-		return listInfoSections;
-	}
-
-	
-	
-	
 	/**
 	 * Method copyInfoItem2IItem.
 	 * @param infoItem
@@ -845,76 +714,6 @@ public abstract class Cloner {
 		return item;
 
 	}
-
-	/**
-	* Method copyIItem2InfoItem.
-	* @param item
-	* @return InfoItem
-	**/
-	
-
-	public static InfoItem copyIItem2InfoItem(IItem item) {
-
-		InfoItem infoItem =new InfoItem();
-		InfoSection infoSection =
-						Cloner.copyISection2InfoSection(item.getSection());
-
-		copyObjectProperties(infoItem, item);
-
-		infoItem.setInfoSection(infoSection);
-
-			
-			return infoItem;
-	
-		}
-
-
-
-	/**
-	* 
-	* @param listInfoItems
-	* @return listIItems
-	*/
-	
-	private static List copyListInfoItems2ListIItems(List listInfoItems)
-	{
-		List listItems=null;
-		
-		Iterator iterListInfoItems=listInfoItems.iterator();
-		
-		while(iterListInfoItems.hasNext())
-		{
-			InfoItem infoItem = (InfoItem) iterListInfoItems.next();
-			IItem item=Cloner.copyInfoItem2IItem(infoItem);
-			listItems.add(item);
-		}
-		
-		return listItems;
-	}
-	
-	/**
-	* 
-	* @param listIItems
-	* @return listInfoItems
-	*/
-	
-		private static List copyListIItems2ListInfoItems(List listIItems)
-		{			
-			List listInfoItems=null;
-		
-			Iterator iterListIItems=listIItems.iterator();
-		
-			while(iterListIItems.hasNext())
-			{
-				IItem item = (IItem) iterListIItems.next();
-				InfoItem infoItem=Cloner.copyIItem2InfoItem(item);
-				listInfoItems.add(infoItem);
-			}
-		
-			return listInfoItems;
-		}
-
-
 
 	/**
 	 * Method copyInfoAnnouncement2IAnnouncement.
@@ -949,49 +748,22 @@ public abstract class Cloner {
 	}
 
 	/**
-	* 
-	* @param listInfoAnnouncements
-	* @return listIAnnouncements
-	*/
-		
-	private static List copyListInfoAnnouncements2ListIAnnouncements(List listInfoAnnouncements){
-		List listAnnouncements=null;
-		
-		Iterator iterListInfoAnnouncements=listInfoAnnouncements.iterator();
-		
-		while(iterListInfoAnnouncements.hasNext())
-		{
-			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) iterListInfoAnnouncements.next();
-			IAnnouncement announcement=Cloner.copyInfoAnnouncement2IAnnouncement(infoAnnouncement);				
-			listAnnouncements.add(announcement);
-		}
-		
-		return listAnnouncements;
-	}
+	 * Method copyISite2InfoSite.
+	 * @param site
+	 * @return InfoSite
+	 */
+	public static InfoSite copyISite2InfoSite(ISite site) {
+		InfoSite infoSite = new InfoSite();
 
-	/**
-	* 
-	* @param listIAnnouncements
-	* @return listInfoAnnouncements
-	*/
-	
-	private static List copyListIAnnouncements2ListInfoAnnouncements(List listIAnnouncements)
-	{			
-		List listInfoAnnouncements=null;
-		
-		Iterator iterListIAnnouncements=listIAnnouncements.iterator();
-		
-		while(iterListIAnnouncements.hasNext())
-		{
-			IAnnouncement announcement = (IAnnouncement) iterListIAnnouncements.next();
-			InfoAnnouncement infoAnnouncement=Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
-			listInfoAnnouncements.add(infoAnnouncement);
-		}
-		
-		return listInfoAnnouncements;
+		InfoExecutionCourse infoExecutionCourse =
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				site.getExecutionCourse());
+
+		copyObjectProperties(infoSite, site);
+		infoSite.setInfoExecutionCourse(infoExecutionCourse);
+
+		return infoSite;
 	}
-	
-	
 
 	/**
 	 * 
@@ -1028,9 +800,4 @@ public abstract class Cloner {
 
 		return curriculum;
 	}
-
-
-	
-	
-		
 }
