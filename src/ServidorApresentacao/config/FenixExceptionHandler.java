@@ -59,7 +59,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 		ActionError error = null;
 
-		if(!request.getSession().getAttributeNames().hasMoreElements()) {
+		if(!request.getSession(false).getAttributeNames().hasMoreElements()) {
 			ActionErrors errors = new ActionErrors();
 			error = new ActionError("error.invalid.session");
 			errors.add("error.invalid.session", error);
@@ -67,15 +67,15 @@ public class FenixExceptionHandler extends ExceptionHandler {
 			return mapping.findForward("firstPage");
 		}
 
-		request.getSession().setAttribute(
+		request.getSession(false).setAttribute(
 			SessionConstants.ORIGINAL_MAPPING_KEY,
 			mapping);
 
-		request.getSession().setAttribute(
+		request.getSession(false).setAttribute(
 			SessionConstants.EXCEPTION_STACK_TRACE,
 			ex.getStackTrace());
 
-		request.getSession().setAttribute(
+		request.getSession(false).setAttribute(
 			SessionConstants.REQUEST_CONTEXT,
 			requestContextGetter(request));
 
@@ -95,7 +95,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 		}
 
 		// Store the exception
-		request.getSession().setAttribute(Globals.EXCEPTION_KEY, ex);
+		request.getSession(false).setAttribute(Globals.EXCEPTION_KEY, ex);
 		super.storeException(request, property, error, forward, ae.getScope());
 	
 		return super.execute(ex, ae, mapping, formInstance, request, response);

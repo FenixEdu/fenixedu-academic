@@ -30,7 +30,7 @@ public abstract class RequestUtils {
 		List executionCourseList =
 			SessionUtils.getExecutionCourses(request);
 			
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);	
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();

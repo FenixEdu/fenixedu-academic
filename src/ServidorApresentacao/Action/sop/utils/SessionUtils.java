@@ -27,7 +27,7 @@ import ServidorAplicacao.IUserView;
 public final class SessionUtils {
 
 	public static CurricularYearAndSemesterAndInfoExecutionDegree getContext(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		return (
 			CurricularYearAndSemesterAndInfoExecutionDegree) session
@@ -36,7 +36,7 @@ public final class SessionUtils {
 	}
 
 	public static IUserView getUserView(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		return (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	}
@@ -45,7 +45,7 @@ public final class SessionUtils {
 		HttpServletRequest request)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		ArrayList infoCourseList =
 			(ArrayList) session.getAttribute(
 				SessionConstants.EXECUTION_COURSE_LIST_KEY);

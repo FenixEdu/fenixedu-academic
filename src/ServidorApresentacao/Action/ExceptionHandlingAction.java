@@ -32,10 +32,10 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		ActionMapping originalMapping =
-			(ActionMapping) request.getSession().getAttribute(
+			(ActionMapping) request.getSession(false).getAttribute(
 				SessionConstants.ORIGINAL_MAPPING_KEY);
 
 		DynaActionForm emailForm = (DynaActionForm) form;
@@ -44,10 +44,10 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		String formBody = (String) emailForm.get("body");
 
 		StackTraceElement[] stackTrace =
-			(StackTraceElement[]) request.getSession().getAttribute(
+			(StackTraceElement[]) request.getSession(false).getAttribute(
 				SessionConstants.EXCEPTION_STACK_TRACE);
 
-		String requestContext= (String) request.getSession().getAttribute(SessionConstants.REQUEST_CONTEXT);
+		String requestContext= (String) request.getSession(false).getAttribute(SessionConstants.REQUEST_CONTEXT);
 
 		String sender = "Sender: " + formEmail;
 		String subject = "Error Report - " + formSubject;
@@ -56,7 +56,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		mailBody += sender +"\n\n";
 		mailBody += "User Comment: \n" + formBody + "\n\n";
 		mailBody += "Error Origin: \n";
-		mailBody += "Exception: \n" + request.getSession().getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
+		mailBody += "Exception: \n" + request.getSession(false).getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
 		mailBody += "RequestContext: \n" + requestContext + "\n\n\n";
 		mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
 		mailBody += "Path: " + originalMapping.getPath() + "\n";
@@ -79,10 +79,10 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws Exception {
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 
 			ActionMapping originalMapping =
-				(ActionMapping) request.getSession().getAttribute(
+				(ActionMapping) request.getSession(false).getAttribute(
 					SessionConstants.ORIGINAL_MAPPING_KEY);
 				sessionRemover(request);
 			return originalMapping.getInputForward();
@@ -102,7 +102,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	}
 
 	private void sessionRemover(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 //		session.removeAttribute(SessionConstants.ORIGINAL_MAPPING_KEY);
 		session.removeAttribute(Globals.ERROR_KEY);
@@ -111,7 +111,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	}
 
 	private String sessionContextGetter(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		Enumeration sessionContents = session.getAttributeNames();
 		String context = "";
 		while (sessionContents.hasMoreElements()) {

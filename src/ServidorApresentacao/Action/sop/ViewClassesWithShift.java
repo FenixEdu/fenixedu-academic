@@ -67,7 +67,7 @@ public class ViewClassesWithShift extends Action {
 	 * @return InfoShift
 	 */
 	private InfoShift getInfoShift(String name, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		List infoShiftList = (List) session.getAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
 		
 		if (infoShiftList == null){

@@ -40,7 +40,7 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		

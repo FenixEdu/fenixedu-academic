@@ -49,7 +49,7 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 			List infoExecutionCourses =
 				(List) gestor.executar(null, "SelectExecutionCourse", argsSelectExecutionCourse);
 		
-			request.getSession().setAttribute(
+			request.getSession(false).setAttribute(
 				SessionConstants.EXECUTION_COURSE_LIST_KEY,
 				infoExecutionCourses);
 			return mapping.findForward("sucess");

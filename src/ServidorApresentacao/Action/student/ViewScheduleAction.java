@@ -30,7 +30,7 @@ public class ViewScheduleAction extends Action {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		Object argsReadStudentLessons[] = { (InfoStudent) session.getAttribute("infoStudent") };
 

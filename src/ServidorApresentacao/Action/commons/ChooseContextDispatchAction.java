@@ -51,7 +51,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 			
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 			if (session != null) {
 				IUserView userView = SessionUtils.getUserView(request);
 
@@ -201,7 +201,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletResponse response) {
 
 		List curricularYearList =
-			(List) request.getSession().getAttribute(
+			(List) request.getSession(false).getAttribute(
 				SessionConstants.CURRICULAR_YEAR_LIST_KEY);
 
 		if (curricularYearList == null) {
@@ -211,7 +211,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			curricularYearList.add(new LabelValueBean("3º", "3"));
 			curricularYearList.add(new LabelValueBean("4º", "4"));
 			curricularYearList.add(new LabelValueBean("5º", "5"));
-			request.getSession().setAttribute(
+			request.getSession(false).setAttribute(
 				SessionConstants.CURRICULAR_YEAR_LIST_KEY,
 				curricularYearList);
 		}
@@ -231,7 +231,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletResponse response) {
 
 		List semesterList =
-			(List) request.getSession().getAttribute(
+			(List) request.getSession(false).getAttribute(
 				SessionConstants.SEMESTER_LIST_KEY);
 
 		if (semesterList == null) {
@@ -239,7 +239,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 			semesterList = new ArrayList();
 			semesterList.add(new LabelValueBean("1º", "1"));
 			semesterList.add(new LabelValueBean("2º", "2"));
-			request.getSession().setAttribute(
+			request.getSession(false).setAttribute(
 				SessionConstants.SEMESTER_LIST_KEY,
 				semesterList);
 		}
@@ -261,7 +261,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		infoExecutionDegreeList =
 			(List) ServiceUtils.executeService(null, "ReadExecutionDegreesByExecutionYear", args);
 
-		request.getSession().setAttribute(
+		request.getSession(false).setAttribute(
 			SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
 			infoExecutionDegreeList);
 
@@ -307,7 +307,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				userView,
 				"ReadActualExecutionPeriod",
 				new Object[0]);
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		
 		session.setAttribute(

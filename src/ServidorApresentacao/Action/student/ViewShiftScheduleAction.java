@@ -32,7 +32,7 @@ public class ViewShiftScheduleAction extends Action {
 		DynaValidatorForm enrolForm = (DynaValidatorForm) form;
 		String shiftName = (String) enrolForm.get("shiftName");
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoShift infoShift = new InfoShift(shiftName, null, null, null);
 

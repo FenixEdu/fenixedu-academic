@@ -34,7 +34,7 @@ public class PrepararEscolherContextoFormAction extends Action {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if (session != null) {
 			IUserView userView = SessionUtils.getUserView(request);
 
@@ -150,7 +150,7 @@ public class PrepararEscolherContextoFormAction extends Action {
 				userView,
 				"ReadActualExecutionPeriod",
 				new Object[0]);
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		
 		session.setAttribute(

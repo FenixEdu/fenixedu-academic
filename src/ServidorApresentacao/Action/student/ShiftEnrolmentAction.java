@@ -56,7 +56,7 @@ public class ShiftEnrolmentAction extends Action {
 		DynaValidatorForm enrolForm = (DynaValidatorForm) form;
 		String shiftName = (String) enrolForm.get(PARAMETER_SHIFT_NAME);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoStudent infoStudent =
 			(InfoStudent) session.getAttribute(INFO_STUDENT_KEY);

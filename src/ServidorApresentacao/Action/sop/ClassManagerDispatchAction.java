@@ -51,7 +51,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		session.removeAttribute(SessionConstants.CLASS_VIEW);
 		session.removeAttribute(SessionConstants.LESSON_LIST_ATT);
@@ -61,7 +61,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 
 		if (className != null && !className.equals("")) {
 			InfoClass classView =
-				getInfoTurma(userView, className, request.getSession());
+				getInfoTurma(userView, className, request.getSession(false));
 
 			if (classView == null) {
 				Integer curricularYear =
@@ -121,7 +121,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 
 		String className = getClassName(form);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 		boolean change = request.getParameter("change") != null;
 
@@ -197,9 +197,9 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		String className = getClassName(form);
 		IUserView userView = SessionUtils.getUserView(request);
 		InfoClass classView =
-			getInfoTurma(userView, className, request.getSession());
-		setLessonListToSession(request.getSession(), userView, className);
-		HttpSession session = request.getSession();
+			getInfoTurma(userView, className, request.getSession(false));
+		setLessonListToSession(request.getSession(false), userView, className);
+		HttpSession session = request.getSession(false);
 		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
 
 		return mapping.getInputForward();
@@ -216,7 +216,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		throws Exception {
 
 		DynaValidatorForm classForm = (DynaValidatorForm) form;
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		String className = getClassName(classForm);
 		IUserView userView = SessionUtils.getUserView(request);
 

@@ -49,7 +49,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		try {
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 			IUserView userView = SessionUtils.getUserView(request);
 
 			InfoShift infoShift = getInfoShift (request, SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);
@@ -84,7 +84,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		InfoShift infoShift = getInfoShift(request, SessionConstants.CLASS_INFO_SHIFT_LIST_KEY);
@@ -112,7 +112,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 	private InfoShift getInfoShift(HttpServletRequest request, String listAttributeKey) {
 		try {
 			Integer infoShiftIndex = new Integer(request.getParameter("shiftIndex"));
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 			
 			List infoShiftList = (List) session.getAttribute(listAttributeKey);
 			
@@ -137,7 +137,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 		InfoClass classView = getInfoTurma(request);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		setClassShiftListToRequest(request, userView, classView.getNome());
 
@@ -157,7 +157,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -210,7 +210,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		String className)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) session.getAttribute(
@@ -236,7 +236,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		String className)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) session.getAttribute(
@@ -263,7 +263,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		IUserView userView)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoClass classView = getInfoTurma(request);
 
@@ -298,7 +298,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 	 */
 	private InfoClass getInfoTurma(HttpServletRequest request)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoClass classView =
 			(InfoClass) session.getAttribute(SessionConstants.CLASS_VIEW);

@@ -39,7 +39,7 @@ public class ChooseExecutionCourseAction extends Action {
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
 		

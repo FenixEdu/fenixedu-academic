@@ -36,7 +36,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		session.setAttribute("minutes", Util.getMinutes());
 		session.setAttribute("hours", Util.getHours());
 		session.setAttribute("weekDays", Util.getDaysOfWeek());

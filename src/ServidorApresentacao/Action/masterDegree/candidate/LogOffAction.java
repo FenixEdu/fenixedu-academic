@@ -30,7 +30,7 @@ public class LogOffAction extends ServidorApresentacao.Action.FenixAction {
 
 	HttpSession session = request.getSession(false);
 	if (session != null)
-      request.getSession().invalidate();
+      request.getSession(false).invalidate();
     return mapping.findForward("Success");
   }
 }

@@ -29,7 +29,7 @@ public class ViewEnrolmentAction extends Action {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		Object argsReadShiftEnrolment[] =
 			{(InfoStudent) session.getAttribute("infoStudent")};

@@ -40,7 +40,7 @@ public class GrauMestreAction extends Action {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		InfoStudent infoStudent = (InfoStudent) session.getAttribute(INFO_STUDENT_KEY);
 

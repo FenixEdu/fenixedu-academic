@@ -42,7 +42,7 @@ public class ViewClassTimeTableAction extends Action {
 			
 		System.out.println("Entrou na antiga Action... :o)");
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		String className = request.getParameter("className");
 

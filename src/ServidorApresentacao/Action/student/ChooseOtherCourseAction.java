@@ -30,7 +30,7 @@ public class ChooseOtherCourseAction extends Action {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		if (session != null) {
 		

@@ -37,7 +37,7 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 		throws Exception {
 		System.out.println("#####################################################");
 			
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		
 		System.out.println("1");
 		
