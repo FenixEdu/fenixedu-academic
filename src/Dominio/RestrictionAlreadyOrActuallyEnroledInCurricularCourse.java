@@ -1,4 +1,4 @@
-/*
+/**
  * Created on 9/Mai/2003 by jpvl
  *
  */

@@ -30,7 +30,8 @@ public class DeleteDegreesService implements IServico {
 	public final String getNome() {
 		return "DeleteDegreesService";
 	}
-
+	
+// delete a set of degrees
 	public Boolean run(List degreesInternalIds) throws FenixServiceException {
 
 		try {
