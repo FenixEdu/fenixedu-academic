@@ -1,19 +1,16 @@
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
-import DataBeans.InfoSection;
 import DataBeans.InfoSite;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.ISection;
 import Dominio.ISite;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -52,7 +49,7 @@ public class EditSiteServiceTest extends TestCaseDeleteAndEditServices {
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
 		IDisciplinaExecucao executionCourse = null;
-		InfoSection infoSection = null;
+		//InfoSection infoSection = null;
 		ISite site = null;
 
 		try {
@@ -72,9 +69,9 @@ public class EditSiteServiceTest extends TestCaseDeleteAndEditServices {
 
 			site = persistentSite.readByExecutionCourse(executionCourse);
 			
-			IPersistentSection persistentSection = sp.getIPersistentSection();
+		//	IPersistentSection persistentSection = sp.getIPersistentSection();
 
-			ISection section = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
+		//	ISection section = persistentSection.readBySiteAndSectionAndName(site,null,"Seccao1deTFCI");
 			
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

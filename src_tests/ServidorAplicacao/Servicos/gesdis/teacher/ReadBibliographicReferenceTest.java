@@ -8,7 +8,6 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -41,7 +40,7 @@ public class ReadBibliographicReferenceTest extends TestCaseReadServices {
 		IExecutionYear executionYear = null;
 		IExecutionPeriod executionPeriod = null;
 		IDisciplinaExecucao executionCourse = null;
-		IBibliographicReference biblioRef = null;
+	
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();

@@ -136,7 +136,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 			System.out.println("getObjectToCompare1:failed setting up the test data" + e);
 		}
 
-		InfoSite infoSite = Cloner.copyISite2InfoSite(site);
+	//	InfoSite infoSite = Cloner.copyISite2InfoSite(site);
 		
 		//read existing
 		Calendar calendar = Calendar.getInstance();
