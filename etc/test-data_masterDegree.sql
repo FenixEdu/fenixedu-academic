@@ -86,5 +86,11 @@ INSERT INTO PRICE values (4, 2, 1, 'Matrícula', '75');
 INSERT INTO PRICE values (5, 2, 1, 'Inscrição', '75');
 INSERT INTO PRICE values (6, 2, 1, 'Matrícula e Inscrição', '75');
 INSERT INTO PRICE values (7, 2, 1, 'Aproveitamento', '75');
+INSERT INTO PRICE values (8, 2, 1, 'Aproveitamento de Disciplinas Extra Curricular', '75');
+INSERT INTO PRICE values (9, 2, 4, 'Emolumentos de Candidatura', '100');
+INSERT INTO PRICE values (10, 2, 4, 'Mestrado', '100');
+INSERT INTO PRICE values (11, 2, 4, 'Especialização', '100');
+
+
 
 

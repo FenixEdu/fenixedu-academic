@@ -19,6 +19,7 @@ public class InfoEnrolment implements Serializable {
 	private EnrolmentState state;
 	private EnrolmentEvaluationType evaluationType;
 	private String universityCode;
+	private InfoEnrolmentInExtraCurricularCourse infoEnrolmentInExtraCurricularCourse;
 	
 	private List infoEvaluations;
 
@@ -56,6 +57,7 @@ public class InfoEnrolment implements Serializable {
 		result += "enrolmentEvaluationType = " + this.evaluationType + "]\n";
 		result += "universityCode = " + this.universityCode + "]\n";
 		result += "infoEvaluations = " + this.infoEvaluations + "]\n";
+		result += "infoEnrolmentInExtraCurricularCourse = " + this.infoEnrolmentInExtraCurricularCourse + "]\n";
 		
 		
 		return result;
@@ -144,5 +146,7 @@ public class InfoEnrolment implements Serializable {
 	public void setInfoEvaluations(List list) {
 		infoEvaluations = list;
 	}
+
+
 
 }

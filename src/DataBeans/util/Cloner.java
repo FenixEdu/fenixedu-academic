@@ -22,6 +22,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
+import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
 import DataBeans.InfoEvaluation;
@@ -93,6 +94,7 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
 import Dominio.IEvaluation;
@@ -1621,6 +1623,7 @@ public abstract class Cloner {
 
 		InfoEnrolment infoEnrolment = null;
 		InfoCurricularCourse infoCurricularCourseOption = null;
+		InfoEnrolment infoEnrolmentInExtraCurricularCourse = null;
 
 		InfoStudentCurricularPlan infoStudentCurricularPlan =Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolment.getStudentCurricularPlan());
 		InfoCurricularCourse infoCurricularCourse =	Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
@@ -1628,6 +1631,7 @@ public abstract class Cloner {
 
 		List infoEnrolmentEvaluationsList = new ArrayList();
 		List enrolmentEvaluationsList = enrolment.getEvaluations();
+		
 		if (enrolmentEvaluationsList != null && !enrolmentEvaluationsList.isEmpty()) {
 			Iterator iterator = enrolmentEvaluationsList.iterator();
 			while (iterator.hasNext()) {
@@ -1642,16 +1646,19 @@ public abstract class Cloner {
 			infoCurricularCourseOption = Cloner.copyCurricularCourse2InfoCurricularCourse(((IEnrolmentInOptionalCurricularCourse) enrolment).getCurricularCourseForOption());
 			((InfoEnrolmentInOptionalCurricularCourse) infoEnrolment).setInfoCurricularCourseForOption(infoCurricularCourseOption);
 		} else {
-			infoEnrolment = new InfoEnrolment();
+			if (enrolment instanceof IEnrolmentInExtraCurricularCourse)
+				infoEnrolment = new InfoEnrolmentInExtraCurricularCourse();
+			else 
+				infoEnrolment = new InfoEnrolment();
 		}
-
+		
 		copyObjectProperties(infoEnrolment, enrolment);
-
+	
 		infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
 		infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
 		infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		infoEnrolment.setInfoEvaluations(infoEnrolmentEvaluationsList);
-
+	
 		return infoEnrolment;
 	}
 
