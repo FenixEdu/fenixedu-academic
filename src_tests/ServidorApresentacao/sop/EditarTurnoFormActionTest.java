@@ -132,7 +132,7 @@ public class EditarTurnoFormActionTest extends TestCasePresentation {
     actionPerform();
     verifyForwardPath("/editarTurno.jsp");
     
-    verifyActionErrors(new String[] {"error.shift.duplicate"});
+    verifyActionErrors(new String[] {"error.exception.existing"});
   }
   
 

@@ -15,10 +15,13 @@ import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class EditarTurno implements IServico {
 
@@ -43,9 +46,8 @@ public class EditarTurno implements IServico {
 		return "EditarTurno";
 	}
 
-	public Object run(
-		InfoShift shiftToEdit,
-		InfoShift turnoNova) {
+	public Object run(InfoShift shiftToEdit, InfoShift turnoNova)
+		throws FenixServiceException {
 
 		ITurno turno = null;
 		boolean result = false;
@@ -54,9 +56,11 @@ public class EditarTurno implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//Copia infoExecutionCourse para DisciplinaExecucao
-			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(shiftToEdit.getInfoDisciplinaExecucao());
+			IDisciplinaExecucao executionCourse =
+				Cloner.copyInfoExecutionCourse2ExecutionCourse(
+					shiftToEdit.getInfoDisciplinaExecucao());
 			// fim da cópia 
-						
+
 			turno =
 				sp.getITurnoPersistente().readByNameAndExecutionCourse(
 					shiftToEdit.getNome(),
@@ -65,11 +69,16 @@ public class EditarTurno implements IServico {
 				turno.setNome(turnoNova.getNome());
 				turno.setTipo(turnoNova.getTipo());
 				turno.setLotacao(turnoNova.getLotacao());
-				sp.getITurnoPersistente().lockWrite(turno);
+				try {
+					sp.getITurnoPersistente().lockWrite(turno);
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException(ex);
+
+				}
 				result = true;
 			}
 		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace(System.out);
+			throw new FenixServiceException(ex);
 		}
 
 		return new Boolean(result);

@@ -506,6 +506,9 @@
               path="/editarTurnoForm"
               scope="request"
               type="ServidorApresentacao.Action.sop.EditarTurnoFormAction">
+         <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />     
         <forward name="Guardar" path="/manipularTurnos.do"/>
       </action>
 

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,7 +15,10 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author tfc130
@@ -34,48 +36,58 @@ public class EditarTurnoFormAction extends FenixAction {
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
-
 			InfoExecutionCourse executionCourse =
 				(InfoExecutionCourse) session.getAttribute(
 					SessionConstants.EXECUTION_COURSE_KEY);
-
 			ArrayList infoTurnos =
 				(ArrayList) session.getAttribute(
 					"infoTurnosDeDisciplinaExecucao");
 			InfoShift infoTurnoAntigo =
 				(InfoShift) session.getAttribute("infoTurno");
-			
+
 			InfoShift infoTurnoNovo =
 				new InfoShift(
 					(String) editarTurnoForm.get("nome"),
 					infoTurnoAntigo.getTipo(),
 					(Integer) editarTurnoForm.get("lotacao"),
 					infoTurnoAntigo.getInfoDisciplinaExecucao());
-			
-			Object argsEditarTurno[] = { infoTurnoAntigo, infoTurnoNovo};
-			
+
+			Object argsEditarTurno[] = { infoTurnoAntigo, infoTurnoNovo };
+
 			Boolean result = Boolean.TRUE;
 			ActionErrors actionErrors = null;
 			try {
-				 result = (Boolean) gestor.executar(userView, "EditarTurno", argsEditarTurno);
-			} catch (Exception e) {
-				//e.printStackTrace(System.out);
-				actionErrors = new ActionErrors();
-				actionErrors.add("error.shift.duplicate",new ActionError("error.shift.duplicate",infoTurnoNovo.getNome(), infoTurnoAntigo.getInfoDisciplinaExecucao().getNome()));
-				editarTurnoForm.set("nome", infoTurnoAntigo.getNome());
-				saveErrors(request, actionErrors);
+				result =
+					(Boolean) gestor.executar(
+						userView,
+						"EditarTurno",
+						argsEditarTurno);
+			} catch (ExistingServiceException e) {
+//NOTE: Agora com as excepções este erro não é utilizado
+//				actionErrors = new ActionErrors();
+//				actionErrors.add(
+//					"error.shift.duplicate",
+//					new ActionError(
+//						"error.shift.duplicate",
+//						infoTurnoNovo.getNome(),
+//						infoTurnoAntigo.getInfoDisciplinaExecucao().getNome()));
+//				editarTurnoForm.set("nome", infoTurnoAntigo.getNome());
+//				saveErrors(request, actionErrors);
+				throw new ExistingActionException("O Turno", e);
+
 			}
-			
-			if (actionErrors == null){			
-				infoTurnos.set(infoTurnos.indexOf(infoTurnoAntigo), infoTurnoNovo);
+
+			if (actionErrors == null) {
+				infoTurnos.set(
+					infoTurnos.indexOf(infoTurnoAntigo),
+					infoTurnoNovo);
 				session.removeAttribute("indexTurno");
 				return (mapping.findForward("Guardar"));
-			}
-			else {
+			} else {
 				return mapping.getInputForward();
 			}
 		} else
-			throw new Exception();
+			throw new FenixActionException();
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
 }

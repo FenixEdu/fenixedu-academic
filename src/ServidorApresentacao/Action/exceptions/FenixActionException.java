@@ -24,6 +24,8 @@ public class FenixActionException extends Exception {
 
 	// --- End of Variable Declarations ----------------------------------
 
+	public FenixActionException() {};
+
 	public FenixActionException(String key) {
 		super(key);
 		error = new ActionError(key);
