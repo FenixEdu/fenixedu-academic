@@ -3,10 +3,6 @@
  */
 package ServidorApresentacao.Action.manager;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,12 +11,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoDepartmentCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -44,34 +38,6 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws FenixActionException {
-
-				HttpSession session = request.getSession(false);
-				UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
-				
-				
-				GestorServicos manager = GestorServicos.manager();
-				List result = null;
-				try {
-						result = (List) manager.executar(userView, "ReadAllDepartmentCourses", null);
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}
-				
-//			creation of bean of InfoDepartmentCourses for use in jsp
-				ArrayList departmentCoursesList = new ArrayList();
-				if(result != null) {
-					departmentCoursesList.add(new LabelValueBean("", ""));
-					InfoDepartmentCourse infoDepartmentCourse;
-					Iterator iter = result.iterator();
-					String label, value;
-					while(iter.hasNext()) {
-						infoDepartmentCourse = (InfoDepartmentCourse) iter.next();
-						value = infoDepartmentCourse.getCode() + "-" + infoDepartmentCourse.getName();
-						label = infoDepartmentCourse.getCode() + " - " + infoDepartmentCourse.getName();
-						departmentCoursesList.add(new LabelValueBean(label, value));
-					}
-					request.setAttribute("departmentCoursesList", departmentCoursesList);
-				}
 				
 				return mapping.findForward("insertCurricularCourse");
 	}
@@ -93,7 +59,6 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		String type = (String) dynaForm.get("type");
 		String mandatory = (String) dynaForm.get("mandatory");
 		String basic = (String) dynaForm.get("basic");
-		String departmentCourse = (String) dynaForm.get("departmentCourse");
 		
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);

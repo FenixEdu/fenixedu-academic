@@ -31,16 +31,6 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message key="message.departmentCourse"/>
-			</td>
-			<td>
-				<html:select property="departmentCourse">
-					<html:options collection="departmentCoursesList" property="value" labelProperty="label"/>
-				</html:select>				
-			</td>
-		</tr>
-		<tr>
-			<td>
 				<bean:message key="message.manager.type"/>
 			</td>
 			<td>

@@ -128,8 +128,10 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 					
 				// Check for related scopes
 				result = curricularCourse.getScopes();
-				if(!result.isEmpty())
-					return new Boolean(false);
+				if(result != null) {
+					if(!result.isEmpty())
+						return new Boolean(false);
+				}
 					
 				//Check for related StudentCurricularPlans
 				Criteria criteria = new Criteria();
