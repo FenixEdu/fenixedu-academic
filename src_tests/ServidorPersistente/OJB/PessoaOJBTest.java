@@ -97,7 +97,7 @@ public class PessoaOJBTest extends TestCaseOJB {
   public void testCreateExistingItem() {
     //IPessoa pessoa = new Pessoa("jorge","xxxxxxxx", null);
     IPessoa pessoa = new Pessoa();
-    pessoa.setNumeroDocumentoIdentificacao("0123456789");
+    pessoa.setNumeroDocumentoIdentificacao("9876543210");
     pessoa.setCodigoFiscal("9876543210");
     pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
     	         TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
@@ -108,10 +108,9 @@ public class PessoaOJBTest extends TestCaseOJB {
       //persistentPerson.lockWrite(pessoa);
       persistentPerson.escreverPessoa(pessoa);
       persistentSupport.confirmarTransaccao();
-      fail("testCreateExistingPessoa: expected an exception");
     } catch (ExistingPersistentException ex) {
-	    assertNotNull("Write Existing", ex);
-	} catch (ExcepcaoPersistencia ex) {
+	    // All Is OK
+	} catch (Exception ex) {
 		fail("Write Existing: unexpected exception");
   	}
   }

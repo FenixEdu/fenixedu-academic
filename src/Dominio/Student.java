@@ -46,10 +46,14 @@ public class Student implements IStudent {
 		boolean resultado = false;
 		if (obj instanceof IStudent) {
 			IStudent student = (IStudent) obj;
-			resultado = ( this.getNumber().equals(student.getNumber()) && this.getDegreeType().equals(student.getDegreeType()) ) ||
-									( this.getDegreeType().equals(student.getDegreeType()) && this.getPerson().equals(student.getPerson())	);
+			
+			resultado = (student != null) &&
+						((this.getNumber().equals(student.getNumber()) && this.getDegreeType().equals(student.getDegreeType()) )
+						&&
+						(this.getDegreeType().equals(student.getDegreeType()) && this.getPerson().equals(student.getPerson())));
 		}
 		return resultado;
+//		return true;
 	}
 
 	public String toString() {

@@ -1,6 +1,6 @@
 package ServidorPersistente;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -19,7 +19,7 @@ public interface IPersistentStudent extends IPersistentObject {
 // feitos por David \ Ricardo
 	public IStudent readStudentByNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia;
 	public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPessoa person) throws ExcepcaoPersistencia;
-	public ArrayList readAll() throws ExcepcaoPersistencia;
+	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IStudent student) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public void delete(IStudent student) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;

@@ -11,9 +11,7 @@ package ServidorPersistente.OJB;
  * @author  Ricardo Nortadas
  */
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
@@ -300,19 +298,13 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 
 	}
 
-	public ArrayList readAll() throws ExcepcaoPersistencia {
+	public List readAll() throws ExcepcaoPersistencia {
 		try {
-			ArrayList listade = new ArrayList();
 			String oqlQuery = "select all from " + Student.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
-			super.lockRead(result);
-			if (result.size() != 0) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					listade.add((IStudent) iterator.next());
-			}
-			return listade;
+			lockRead(result);
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

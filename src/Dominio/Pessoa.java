@@ -299,11 +299,18 @@ public class Pessoa implements IPessoa {
 		setCodigoFiscal(codigoFiscal);
 	}
 
-	public boolean equals(Object o) {
-		return (
-			(o instanceof IPessoa)
-				&& (numeroDocumentoIdentificacao.equals(((IPessoa) o).getNumeroDocumentoIdentificacao()))
-				&& (tipoDocumentoIdentificacao == ((IPessoa) o).getTipoDocumentoIdentificacao()));
+	public boolean equals(Object obj) {		
+		boolean resultado = false;
+		if (obj instanceof IPessoa) {
+			IPessoa person = (IPessoa) obj;
+			resultado = ( 
+				((this.numeroDocumentoIdentificacao.equals(person.getNumeroDocumentoIdentificacao())) &&
+				(this.tipoDocumentoIdentificacao.equals(person.getTipoDocumentoIdentificacao()))) 
+				||
+				(this.username.equals(person.getUsername()))
+			);
+		}
+		return resultado;
 	}
 
 	/** Getter for property chavePais.

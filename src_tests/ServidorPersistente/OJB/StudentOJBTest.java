@@ -1,6 +1,6 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -135,7 +135,7 @@ public class StudentOJBTest extends TestCaseOJB {
 			fail("Delete All Students");
 		}
 
-		ArrayList result = null;
+		List result = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -242,7 +242,7 @@ public class StudentOJBTest extends TestCaseOJB {
 
 	public void testReadAllStudents() {
 
-		ArrayList list = null;
+		List list = null;
 
 		System.out.println("\n- Test 5 : Read All Existing Student\n");
 		try {

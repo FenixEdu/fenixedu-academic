@@ -26,30 +26,37 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
 	public void escreverPessoa(IPessoa personToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 
-		IPessoa personFromDB = null;
+			IPessoa personFromDB1 = null;
+			IPessoa personFromDB2 = null;
 
 		// If there is nothing to write, simply return.
 		if (personToWrite == null)
 			return;
 
 		// Read person from database.
-		personFromDB =
-			this.lerPessoaPorUsername(personToWrite.getUsername());
+		personFromDB1 = this.lerPessoaPorUsername(personToWrite.getUsername());
+		personFromDB2 = this.lerPessoaPorNumDocIdETipoDocId(personToWrite.getNumeroDocumentoIdentificacao(), personToWrite.getTipoDocumentoIdentificacao());
 
 		// If person is not in database, then write it.
-		if (personFromDB == null)
+		if ((personFromDB1 == null) && (personFromDB2 == null))
 			super.lockWrite(personToWrite);
+			
 		// else If the person is mapped to the database, then write any existing changes.
-		else if (
-			(personToWrite instanceof Pessoa)
-				&& ((Pessoa) personFromDB)
-					.getCodigoInterno()
-					.equals(
-					((Pessoa) personToWrite)
-						.getCodigoInterno())) {
-			super.lockWrite(personToWrite);
-			// else Throw an already existing exception
-		} else
+		else if ((personFromDB1 != null) &&
+				 (personToWrite instanceof Pessoa) && 
+				 (((Pessoa) personFromDB1).getCodigoInterno().equals(((Pessoa) personToWrite).getCodigoInterno())))
+
+					super.lockWrite(personToWrite);
+			
+		else if ((personFromDB2 != null) &&
+				 (personToWrite instanceof Pessoa) && 
+				 (((Pessoa) personFromDB2).getCodigoInterno().equals(((Pessoa) personToWrite).getCodigoInterno())))
+					super.lockWrite(personToWrite);
+			
+			
+			
+		// else Throw an already existing exception
+		else
 			throw new ExistingPersistentException();
 	}
     
