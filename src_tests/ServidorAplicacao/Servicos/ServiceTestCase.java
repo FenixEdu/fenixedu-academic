@@ -89,7 +89,6 @@ public abstract class ServiceTestCase extends TestCase {
 		String passwd,
 		String application) {
 		SuportePersistenteOJB.resetInstance();
-
 		String args[] = { userName, passwd, application };
 
 		try {
