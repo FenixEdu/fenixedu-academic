@@ -21,6 +21,7 @@ import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -216,7 +217,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 
     private InfoMasterDegreeThesisDataVersion readMasterDegreeThesisDataVersion(ActionMapping mapping,
             IUserView userView, InfoStudentCurricularPlan infoStudentCurricularPlan)
-            throws NonExistingActionException, FenixActionException {
+            throws NonExistingActionException, FenixActionException, FenixFilterException {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
         /* * * get master degree thesis data * * */
@@ -239,7 +240,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 
     private InfoStudentCurricularPlan readStudentCurricularPlan(ActionMapping mapping,
             IUserView userView, Integer degreeType, Integer studentNumber) throws FenixActionException,
-            NonExistingActionException {
+            NonExistingActionException, FenixFilterException {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
         Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType) };

@@ -22,6 +22,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoPerson;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.sms.SmsLimitReachedServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -37,7 +38,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class SendSmsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -88,7 +89,7 @@ public class SendSmsDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward send(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm sendSmsForm = (DynaActionForm) form;

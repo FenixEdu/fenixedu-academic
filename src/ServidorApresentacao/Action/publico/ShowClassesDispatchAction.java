@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ClassView;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -62,7 +63,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
      * @throws FenixServiceException
      */
     private InfoExecutionPeriod getNextExecutionPeriod(HttpServletRequest request)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
@@ -156,7 +157,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
 //    }
 
     private List getClassViewsForCurrentAndNextPeriods(HttpServletRequest request, Integer degreeOID)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
 
         return (List) ServiceManagerServiceFactory.executeService(null,
@@ -164,7 +165,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
     }
 
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
 
         InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService(null,

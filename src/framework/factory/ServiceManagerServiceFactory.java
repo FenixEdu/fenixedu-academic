@@ -1,14 +1,19 @@
 package framework.factory;
 
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJBException;
+
+import pt.utl.ist.berserk.logic.filterManager.FilterInvocationTimingType;
+import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 
 import ServidorAplicacao.IServiceManagerWrapper;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.ServiceManagerHome;
 import ServidorAplicacao.ServiceManagerLocalHome;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixRemoteServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.logging.SystemInfo;
@@ -91,12 +96,12 @@ public class ServiceManagerServiceFactory {
     }
 
     public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         return getInstance().executeServiceDelegate(userView, serviceName, serviceArgs);
     }
 
     private Object executeServiceDelegate(IUserView userView, String serviceName, Object[] serviceArgs)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         try {
             return service.execute(userView, serviceName, serviceArgs);
         } catch (EJBException e) {
@@ -104,8 +109,20 @@ public class ServiceManagerServiceFactory {
                 FenixServiceException fenixServiceException = (FenixServiceException) e.getCause();
                 throw fenixServiceException;
             }
+            if (e != null && e.getCause() != null && e.getCause() instanceof FilterChainFailedException) {
+                FilterChainFailedException filterChainFailedException = (FilterChainFailedException) e.getCause();
+                Map failedPreFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.PRE);
+                Map failedPostFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.POST);
+                if (failedPreFilters != null && !failedPreFilters.isEmpty()) {
+                    List failledExceptions = (List) failedPreFilters.values().iterator().next();
+                    throw (FenixFilterException) failledExceptions.get(0);
+                }
+                if (failedPostFilters != null && !failedPostFilters.isEmpty()) {
+                    List failledExceptions = (List) failedPostFilters.values().iterator().next();
+                    throw (FenixFilterException) failledExceptions.get(0);
+                }
+            }
             throw new FenixRemoteServiceException(e);
-
         } catch (RemoteException e) {
             service = null;
             throw new FenixRemoteServiceException(e);

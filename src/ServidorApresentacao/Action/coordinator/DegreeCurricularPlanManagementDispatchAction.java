@@ -26,6 +26,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -39,7 +40,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showActiveCurricularCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         final HttpSession session = request.getSession(false);
         final IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -97,7 +98,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward showCurricularCoursesHistory(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -201,7 +202,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     // ============================
 
     public ActionForward viewActiveCurricularCourseInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -320,7 +321,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
     public ActionForward prepareViewCurricularCourseInformationHistory(ActionMapping mapping,
             ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         List infoExecutionYears = null;
         Object[] args = {};
         try {
@@ -348,7 +349,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward viewCurricularCourseInformationHistory(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -415,7 +416,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward prepareEditCurriculum(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -511,7 +512,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
     }
 
     public ActionForward editCurriculum(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 

@@ -29,6 +29,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -46,7 +47,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEditECChooseExecutionPeriod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         List infoExecutionPeriods = null;
@@ -102,7 +103,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditECChooseExecDegreeAndCurYear(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         buildCurricularYearLabelValueBean(request);
@@ -164,7 +165,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -201,7 +202,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -281,7 +282,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteExecutionCourse(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 

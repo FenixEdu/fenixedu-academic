@@ -41,6 +41,7 @@ import DataBeans.InfoSiteTimetable;
 import DataBeans.RoomKey;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -52,7 +53,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixFilterException {
 
         ISiteComponent firstPageComponent = new InfoSiteFirstPage();
         String objectCodeString = request.getParameter("objectCode");
@@ -98,7 +99,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward announcements(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
         readSiteView(request, announcementsComponent, null, null, null);
@@ -107,7 +108,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward objectives(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent objectivesComponent = new InfoSiteObjectives();
         readSiteView(request, objectivesComponent, null, null, null);
@@ -116,7 +117,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward program(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent programComponent = new InfoSiteProgram();
         readSiteView(request, programComponent, null, null, null);
@@ -125,7 +126,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward evaluationMethod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent evaluationComponent = new InfoEvaluationMethod();
         readSiteView(request, evaluationComponent, null, null, null);
@@ -135,7 +136,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward bibliography(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent bibliographyComponent = new InfoSiteBibliography();
         readSiteView(request, bibliographyComponent, null, null, null);
@@ -144,7 +145,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward curricularCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent curricularCoursesComponent = new InfoSiteAssociatedCurricularCourses();
         readSiteView(request, curricularCoursesComponent, null, null, null);
@@ -153,7 +154,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward timeTable(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent timeTableComponent = new InfoSiteTimetable();
         readSiteView(request, timeTableComponent, null, null, null);
@@ -162,7 +163,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward shifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent shiftsComponent = new InfoSiteShifts();
         readSiteView(request, shiftsComponent, null, null, null);
@@ -171,7 +172,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward evaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent evaluationComponent = new InfoSiteEvaluation();
         readSiteView(request, evaluationComponent, null, null, null);
@@ -180,7 +181,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward section(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         String indexString = request.getParameter("index");
         Integer sectionIndex = new Integer(indexString);
@@ -192,7 +193,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward summaries(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent summariesComponent = new InfoSiteSummaries();
 
@@ -228,7 +229,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward curricularCourse(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         String curricularCourseIdString = request.getParameter("ccCode");
         if (curricularCourseIdString == null) {
@@ -243,7 +244,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward viewExecutionCourseProjects(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         ISiteComponent viewProjectsComponent = new InfoSiteProjects();
         readGroupView(request, viewProjectsComponent, null, null, null, null, null);
@@ -252,7 +253,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward viewShiftsAndGroupsAction(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         String objectCodeString = null;
         Integer groupPropertiesCode = null;
@@ -271,7 +272,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
     
     public ActionForward viewStudentsAndGroupsByShiftAction(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         String objectCodeString = null;
         String shiftCodeString = null;
@@ -306,7 +307,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
     
     public ActionForward viewStudentsAndGroupsWithoutShiftAction(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         String objectCodeString = null;
         Integer groupPropertiesCode = null;
@@ -328,7 +329,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
     
     public ActionForward viewAllStudentsAndGroupsAction(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         String objectCodeString = null;
         Integer groupPropertiesCode = null;
@@ -349,7 +350,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
     }
 
     public ActionForward viewStudentGroupInformationAction(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         setFromRequest(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
 
@@ -365,7 +366,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
             Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException, FenixFilterException {
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {
             String objectCodeString = request.getParameter("objectCode");
@@ -501,7 +502,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
     private ExecutionCourseSiteView readGroupView(HttpServletRequest request,
             ISiteComponent firstPageComponent, Integer infoExecutionCourseCode,
-            Integer groupPropertiesCode, Integer studentGroupCode, Integer shiftCode, Integer value) throws FenixActionException {
+            Integer groupPropertiesCode, Integer studentGroupCode, Integer shiftCode, Integer value) throws FenixActionException, FenixFilterException, FenixFilterException {
 
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {

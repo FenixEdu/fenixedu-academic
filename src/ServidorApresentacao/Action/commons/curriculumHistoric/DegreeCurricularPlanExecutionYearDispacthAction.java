@@ -30,6 +30,7 @@ import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeCurricularPlanWithCurricularCourseScopes;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -43,7 +44,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         List executionYears = null;
         try {
@@ -58,7 +59,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
     }
 
     public ActionForward chooseDegreeCurricularPlan(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         DynaActionForm actionForm = (DynaActionForm) form;
         String executionYearID = (String) actionForm.get("executionYearID");
         IUserView userView = SessionUtils.getUserView(request);
@@ -105,7 +106,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
     }
 
     public ActionForward showActiveCurricularCourseScope(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm actionForm = (DynaActionForm) form;

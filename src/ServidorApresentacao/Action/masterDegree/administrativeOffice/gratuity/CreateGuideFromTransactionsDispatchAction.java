@@ -21,6 +21,7 @@ import DataBeans.InfoStudent;
 import DataBeans.transactions.InfoPaymentTransaction;
 import DataBeans.transactions.InfoTransaction;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -153,7 +154,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws FenixActionException
      */
     private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView,
-            Integer contributorNumber) throws NonExistingActionException, FenixActionException {
+            Integer contributorNumber) throws NonExistingActionException, FenixActionException, FenixFilterException {
 
         InfoContributor infoContributor = null;
         Object argsContributor[] = { contributorNumber };
@@ -179,7 +180,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      *         FenixActionException
      */
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoGratuitySituation infoGratuitySituation = null;
         Object argsGratuitySituation[] = { gratuitySituationId };
         try {
@@ -203,7 +204,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws NonExistingActionException
      */
     private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId)
-            throws FenixActionException, NonExistingActionException {
+            throws FenixActionException, NonExistingActionException, FenixFilterException {
         InfoStudent infoStudent = null;
         Object argsStudent[] = { studentId };
         try {

@@ -21,6 +21,7 @@ import DataBeans.InfoCurricularCourseGroup;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoOptionalCurricularCourseGroup;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -37,7 +38,7 @@ import Util.AreaType;
 public class CurricularCourseGroupManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewCurricularCourseGroups(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -88,7 +89,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
     }
 
     public ActionForward prepareInsertAreaCurricularCourseGroup(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -128,7 +129,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
 
     public ActionForward prepareInsertOptionalCurricularCourseGroup(ActionMapping mapping,
             ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -167,7 +168,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
     }
 
     public ActionForward insertCurricularCourseGroup(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -213,7 +214,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
     }
 
     public ActionForward deleteCurricularCourseGroup(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -252,7 +253,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
     }
 
     public ActionForward prepareEditCurricularCourseGroup(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));

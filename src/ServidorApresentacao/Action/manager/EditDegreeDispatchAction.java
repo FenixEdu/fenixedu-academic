@@ -13,6 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -31,7 +32,7 @@ import Util.TipoCurso;
 public class EditDegreeDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -62,7 +63,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 

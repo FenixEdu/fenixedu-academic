@@ -18,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -63,7 +64,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm itemForm = (DynaActionForm) form;
         HttpSession session = request.getSession(false);

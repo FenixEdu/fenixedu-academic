@@ -22,6 +22,7 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.equivalence.InfoCurricularCourseGrade;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -569,7 +570,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
      */
     private InfoEquivalenceContext runFirstService(IUserView userView, Integer studentNumber,
             TipoCurso degreeType, Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         InfoEquivalenceContext infoEquivalenceContext = null;
 
         Object args[] = { studentNumber, degreeType, fromStudentCurricularPlanID,
@@ -591,7 +592,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
      */
     private InfoEquivalenceContext runSecondService(IUserView userView, Integer studentNumber,
             TipoCurso degreeType, List idsOfChosenEnrollmentsToGiveEquivalence,
-            List idsOfChosenCurricularCoursesToGetEquivalence) throws FenixServiceException {
+            List idsOfChosenCurricularCoursesToGetEquivalence) throws FenixServiceException, FenixFilterException {
         InfoEquivalenceContext infoEquivalenceContext = null;
 
         Object args[] = { studentNumber, degreeType, idsOfChosenEnrollmentsToGiveEquivalence,

@@ -21,6 +21,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoShift;
 import DataBeans.enrollment.shift.ShiftEnrollmentErrorReport;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.enrollment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -34,7 +35,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class EnrollStudentInShiftsAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors actionErrors = new ActionErrors();

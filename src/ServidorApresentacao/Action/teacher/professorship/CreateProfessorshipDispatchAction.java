@@ -28,6 +28,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -72,12 +73,12 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
      * @return
      */
     private Object executeService(String serviceName, HttpServletRequest request, Object[] arguments)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         return ServiceUtils.executeService(userView, serviceName, arguments);
     }
 
-    private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException {
+    private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute("infoExecutionPeriod");
         Object[] arguments = { infoExecutionPeriod.getInfoExecutionYear(), null };
@@ -102,7 +103,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
      * @param request
      */
     private void prepareConstants(DynaActionForm teacherExecutionCourseForm, HttpServletRequest request)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Integer teacherNumber = Integer
                 .valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
 
@@ -113,7 +114,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
     }
 
     private void prepareFirstStep(DynaValidatorForm teacherExecutionCourseForm,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         prepareConstants(teacherExecutionCourseForm, request);
 
@@ -129,14 +130,14 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
     }
 
     private void prepareSecondStep(DynaValidatorForm teacherExecutionCourseForm,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         prepareFirstStep(teacherExecutionCourseForm, request);
         List executionDegrees = getExecutionDegrees(request);
         request.setAttribute("executionDegrees", executionDegrees);
     }
 
     private void prepareThirdStep(DynaValidatorForm teacherExecutionCourseForm,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         prepareSecondStep(teacherExecutionCourseForm, request);
         Integer executionDegreeId = Integer.valueOf((String) teacherExecutionCourseForm
                 .get("executionDegreeId"));

@@ -17,6 +17,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.Seminaries.SelectCandidaciesDTO;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -33,7 +34,7 @@ import framework.factory.ServiceManagerServiceFactory;
 // select box to select which seminary's candidacies to view
 public class SelectCandidacies extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         ActionForward destiny = null;
         String seminaryIDString = request.getParameter("seminaryID");
@@ -90,7 +91,7 @@ public class SelectCandidacies extends FenixDispatchAction {
     }
 
     public ActionForward changeSelection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = this.getSession(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm selectCases = (DynaActionForm) form;

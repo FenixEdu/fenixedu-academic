@@ -19,6 +19,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.projectsManagement.InfoProjectReport;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -33,7 +34,7 @@ public class ProjectReportsAction extends FenixDispatchAction {
     private final int numberOfSpanElements = 20;
 
     public ActionForward prepareShowReport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
@@ -50,7 +51,7 @@ public class ProjectReportsAction extends FenixDispatchAction {
     }
 
     public ActionForward getReport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
@@ -77,7 +78,7 @@ public class ProjectReportsAction extends FenixDispatchAction {
     }
 
     public ActionForward getExpensesReport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
         final Integer projectCode = getCodeFromRequest(request, "projectCode");
         final String rubric = request.getParameter("rubric");
@@ -125,7 +126,7 @@ public class ProjectReportsAction extends FenixDispatchAction {
     }
 
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
@@ -164,7 +165,7 @@ public class ProjectReportsAction extends FenixDispatchAction {
     }
 
     public ActionForward showHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
         final String helpPage = request.getParameter("helpPage");
 

@@ -13,6 +13,7 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -23,7 +24,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 public class SiteViewerDispatchAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         ISiteComponent firstPageComponent = new InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses();
 
@@ -39,7 +40,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
     }
 
     private boolean readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
-            Integer infoExecutionCourseCode, Integer sectionIndex) throws FenixActionException {
+            Integer infoExecutionCourseCode, Integer sectionIndex) throws FenixActionException, FenixFilterException {
 
         Integer objectCode = null;
         if (infoExecutionCourseCode == null) {

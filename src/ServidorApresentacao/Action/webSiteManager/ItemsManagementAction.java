@@ -27,6 +27,7 @@ import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -45,7 +46,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
     //****************************************** add item into section
     // *******************************
     public ActionForward prepareAddItem(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
@@ -76,7 +77,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward addItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         MessageResources messages = getResources(request);
@@ -180,7 +181,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
     //	*************************** list items belonging to section
     // *******************************
     public ActionForward listItems(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
@@ -261,7 +262,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
     //	****************************************** delete items from section
     // *******************************
     public ActionForward deleteItems(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         // get items to delete
@@ -307,7 +308,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
     //	****************************************** edit item belonging to section
     // *******************************
     public ActionForward prepareEditItem(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
@@ -399,7 +400,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         MessageResources messages = getResources(request);

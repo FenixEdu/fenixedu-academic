@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import DataBeans.InfoViewExam;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
 /**
@@ -76,7 +77,7 @@ public class RequestContextUtil {
      * @return
      */
     public static InfoViewExam getInfoViewExams(IUserView userView, Calendar examDateAndTime)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Calendar examDate = Calendar.getInstance();
         Calendar examTime = Calendar.getInstance();
 

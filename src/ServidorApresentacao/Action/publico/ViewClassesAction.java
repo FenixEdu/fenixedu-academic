@@ -11,6 +11,7 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteClasses;
 import DataBeans.SiteView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -29,7 +30,7 @@ public class ViewClassesAction extends FenixContextAction {
      *      javax.servlet.http.HttpServletResponse)
      */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e) {

@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -24,7 +25,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  */
 public class CareerAction extends CRUDActionByOID {
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         List categories = (List) ServiceUtils
                 .executeService(userView, "ReadCategories", new Object[] {});

@@ -17,6 +17,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -32,7 +33,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class EditSectionDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 
@@ -81,7 +82,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm sectionForm = (DynaValidatorForm) form;
         String sectionName = (String) sectionForm.get("name");
@@ -145,7 +146,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward changeParent(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 
@@ -211,7 +212,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
     }
 
     private List removeDaughters(UserView userView, InfoSite infoSite, InfoSection infoSection,
-            List allSections) throws FenixActionException {
+            List allSections) throws FenixActionException, FenixFilterException {
 
         List sections = new ArrayList();
         Object args[] = { infoSite, infoSection };

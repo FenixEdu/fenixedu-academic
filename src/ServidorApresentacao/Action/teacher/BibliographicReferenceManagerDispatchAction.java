@@ -20,6 +20,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -34,7 +35,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -78,7 +79,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -131,7 +132,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -170,7 +171,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward viewBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);

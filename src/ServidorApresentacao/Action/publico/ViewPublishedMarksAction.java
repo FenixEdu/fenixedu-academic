@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -25,7 +26,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class ViewPublishedMarksAction extends FenixContextDispatchAction {
 
     public ActionForward viewPublishedMarks(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         Integer objectCode = getFromRequest("objectCode", request);
         Integer examCode = getFromRequest("evaluationCode", request);

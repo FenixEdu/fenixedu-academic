@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentGroup;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -37,7 +38,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException, FenixFilterException {
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -116,7 +117,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 	}
 
-	public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixFilterException{
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

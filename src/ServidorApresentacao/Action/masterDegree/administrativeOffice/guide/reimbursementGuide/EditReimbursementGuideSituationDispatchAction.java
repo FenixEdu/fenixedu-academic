@@ -18,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
@@ -38,7 +39,7 @@ import Util.ReimbursementGuideState;
 public class EditReimbursementGuideSituationDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -72,7 +73,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 

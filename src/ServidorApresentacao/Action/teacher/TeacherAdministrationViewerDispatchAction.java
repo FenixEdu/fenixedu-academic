@@ -67,6 +67,7 @@ import DataBeans.InfoSiteTeachers;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -100,7 +101,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class TeacherAdministrationViewerDispatchAction extends FenixDispatchAction
 {
     public ActionForward instructions(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent instructionsComponent = new InfoSiteInstructions();
         readSiteView(request, instructionsComponent, null, null, null);
         return mapping.findForward("viewSite");
@@ -109,7 +110,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     // ======================== Customization Options Management
     // ========================
     public ActionForward prepareCustomizationOptions(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent customizationOptionsComponent = new InfoSite();
         readSiteView(request, customizationOptionsComponent, null, null, null);
         TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
@@ -125,7 +126,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editCustomizationOptions(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
         HttpSession session = request.getSession(false);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -155,7 +156,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     //	======================== Announcements Management
     // ========================
     public ActionForward showAnnouncements(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         ISiteComponent announcementsComponent = new InfoSiteAnnouncement();
         readSiteView(request, announcementsComponent, null, null, null);
@@ -176,7 +177,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareCreateAnnouncement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         session.removeAttribute("insertAnnouncementForm");
         readSiteView(request, null, null, null, null);
@@ -184,7 +185,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward createAnnouncement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
@@ -208,7 +209,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareEditAnnouncement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         //retrieve announcement
         Integer announcementCode = getAnnouncementCode(request);
         ISiteComponent announcementComponent = new InfoAnnouncement();
@@ -228,7 +229,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         String announcementCodeString = request.getParameter("announcementCode");
         if (announcementCodeString == null) {
@@ -252,7 +253,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward deleteAnnouncement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         String announcementCodeString = request.getParameter("announcementCode");
         if (announcementCodeString == null) {
@@ -282,14 +283,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     //	======================== Objectives Management ========================
     public ActionForward viewObjectives(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent objectivesComponent = new InfoSiteObjectives();
         readSiteView(request, objectivesComponent, null, null, null);
         return mapping.findForward("viewObjectives");
     }
 
     public ActionForward prepareEditObjectives(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         ISiteComponent objectivesComponent = new InfoCurriculum();
 
@@ -348,7 +349,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editObjectives(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
@@ -379,14 +380,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     //	======================== Program Management ========================
     public ActionForward viewProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent programComponent = new InfoSitePrograms();
         readSiteView(request, programComponent, null, null, null);
         return mapping.findForward("viewProgram");
     }
 
     public ActionForward prepareEditProgram(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer objectCode = getObjectCode(request);
 
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
@@ -438,7 +439,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editProgram(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         String curricularCourseCodeString = request.getParameter("curricularCourseCode");
@@ -465,7 +466,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     //	======================== EvaluationMethod Management
     // ========================
     public ActionForward viewEvaluationMethod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         //ISiteComponent evaluationComponent = new
         // InfoSiteEvaluationMethods();
 
@@ -476,7 +477,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareEditEvaluationMethod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         ISiteComponent evaluationComponent = new InfoEvaluationMethod();
         try {
@@ -536,7 +537,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editEvaluationMethod(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
 
         Integer objectCode = getObjectCode(request);
@@ -598,7 +599,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     //	======================== Bibliographic References Management
     // ========================
     public ActionForward viewBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent bibliographyComponent = new InfoSiteBibliography();
         readSiteView(request, bibliographyComponent, null, null, null);
         TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request
@@ -625,7 +626,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer objectCode = getObjectCode(request);
         DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
@@ -647,7 +648,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareEditBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         //retrieve bibliographic reference
         String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
         if (bibliographicReferenceCodeString == null)
@@ -662,7 +663,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
         if (bibliographicReferenceCodeString == null) {
@@ -700,7 +701,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward deleteBibliographicReference(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         String bibliographicReferenceCodeString = request.getParameter("bibliographicReferenceCode");
         if (bibliographicReferenceCodeString == null) {
@@ -721,7 +722,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     //	======================== Teachers Management ========================
     public ActionForward viewTeachersByProfessorship(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         String username = getUsername(request);
         ISiteComponent teachersComponent = new InfoSiteTeachers();
         readSiteView(request, teachersComponent, null, null, username);
@@ -737,7 +738,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward prepareAssociateTeacher(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		HttpSession session = request.getSession(false);
 		session.removeAttribute("teacherForm");
@@ -746,7 +747,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	}
 
     public ActionForward associateTeacher(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
         Integer objectCode = getObjectCode(request);
         DynaActionForm teacherForm = (DynaActionForm) form;
@@ -766,7 +767,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward removeTeacher(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = getSession(request);
         String teacherCodeString = request.getParameter("teacherCode");
         if (teacherCodeString == null) {
@@ -788,7 +789,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     //	======================== Evaluation Management ========================
     public ActionForward viewEvaluation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent evaluationComponent = new InfoSiteEvaluation();
         readSiteView(request, evaluationComponent, null, null, null);
         return mapping.findForward("viewEvaluation");
@@ -796,26 +797,26 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
     //	======================== Sections Management ========================
     public ActionForward sectionsFirstPage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         readSiteView(request, null, null, null, null);
         return mapping.findForward("sectionsFirstPage");
     }
 
     public ActionForward viewSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer sectionCode = getSectionCode(request);
         return viewSection(mapping, form, request, response, sectionCode);
     }
 
     public ActionForward viewSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, Integer sectionCode) throws FenixActionException {
+            HttpServletResponse response, Integer sectionCode) throws FenixActionException, FenixFilterException {
         ISiteComponent sectionComponent = new InfoSiteSection();
         readSiteView(request, sectionComponent, null, sectionCode, null);
         return mapping.findForward("viewSection");
     }
 
     public ActionForward prepareCreateRegularSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer sectionCode = getSectionCode(request);
         ISiteComponent regularSectionsComponent = new InfoSiteRegularSections();
         readSiteView(request, regularSectionsComponent, null, sectionCode, null);
@@ -836,14 +837,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareCreateRootSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ISiteComponent rootSectionsComponent = new InfoSiteRootSections();
         readSiteView(request, rootSectionsComponent, null, null, null);
         return mapping.findForward("createSection");
     }
 
     public ActionForward createSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer sectionCode = getSectionCode(request);
         Integer objectCode = getObjectCode(request);
@@ -863,7 +864,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareEditSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer sectionCode = getSectionCode(request);
         ISiteComponent sectionsComponent = new InfoSiteSections();
         readSiteView(request, sectionsComponent, null, sectionCode, null);
@@ -871,7 +872,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer sectionCode = getSectionCode(request);
         Integer objectCode = getObjectCode(request);
@@ -894,7 +895,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward deleteSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer superiorSectionCode = getSuperiorSectionCode(request);
         Integer sectionCode = getSectionCode(request);
@@ -940,7 +941,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareFileUpload(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer itemCode = getItemCode(request);
         ISiteComponent itemsComponent = new InfoSiteItems();
         readSiteView(request, itemsComponent, null, itemCode, null);
@@ -948,7 +949,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer itemCode = getItemCode(request);
@@ -1015,7 +1016,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward deleteFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         Integer itemCode = getItemCode(request);
         String fileName;
@@ -1039,7 +1040,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareInsertItem(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer sectionCode = getSectionCode(request);
         ISiteComponent sectionComponent = new InfoSiteSection();
         readSiteView(request, sectionComponent, null, sectionCode, null);
@@ -1047,7 +1048,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward insertItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer sectionCode = getSectionCode(request);
         Integer objectCode = getObjectCode(request);
@@ -1074,7 +1075,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward prepareEditItem(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer itemCode = getItemCode(request);
         ISiteComponent itemsComponent = new InfoSiteItems();
         readSiteView(request, itemsComponent, null, itemCode, null);
@@ -1094,7 +1095,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward editItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer itemCode = getItemCode(request);
         Integer objectCode = getObjectCode(request);
@@ -1122,7 +1123,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward deleteItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer itemCode = getItemCode(request);
         Integer objectCode = getObjectCode(request);
@@ -1142,7 +1143,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public ActionForward validationError(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         SiteManagementActionMapping siteManagementActionMapping = (SiteManagementActionMapping) mapping;
         ISiteComponent siteComponent = getSiteComponentForValidationError(siteManagementActionMapping);
         Integer infoExecutionCourseCode = null;
@@ -1216,7 +1217,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
-            Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException {
+            Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException, FenixFilterException {
 
         HttpSession session = getSession(request);
 
@@ -1255,7 +1256,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward viewExecutionCourseProjects(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
     {
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -1291,7 +1292,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward prepareViewExecutionCourseProjects(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		ISiteComponent viewProjectsComponent = new InfoSiteProjects();
 		readSiteView(request, viewProjectsComponent, null, null, null);
@@ -1300,7 +1301,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward viewNewProjectProposals(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		ISiteComponent viewNewProjectProposalsComponent = new InfoSiteNewProjectProposals();
 		readSiteView(request, viewNewProjectProposalsComponent, null, null, null);
@@ -1318,7 +1319,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward viewSentedProjectProposalsWaiting(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		ISiteComponent viewSentedProjectProposalsWaitingComponent = new InfoSiteSentedProjectProposalsWaiting();
 		readSiteView(request, viewSentedProjectProposalsWaitingComponent, null, null, null);
@@ -1337,7 +1338,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward rejectNewProjectProposal(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 
 		HttpSession session = request.getSession(false);
@@ -1378,7 +1379,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward acceptNewProjectProposal(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 
 		HttpSession session = request.getSession(false);
@@ -1425,7 +1426,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward viewShiftsAndGroups(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -1478,7 +1479,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward viewStudentGroupInformation(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -1534,7 +1535,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward prepareCreateGroupProperties(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		readSiteView(request, null, null, null, null);
 		List shiftTypeValues = new ArrayList();
@@ -1556,7 +1557,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward createGroupProperties(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		HttpSession session = request.getSession(false);
 		DynaActionForm insertGroupPropertiesForm = (DynaActionForm) form;
@@ -1714,7 +1715,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward prepareEditGroupProperties(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
@@ -1786,7 +1787,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward editGroupProperties(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -1985,7 +1986,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	}
 
 	public ActionForward deleteGroupProperties(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException
     {
 
 		ActionErrors actionErrors = new ActionErrors();
@@ -2057,7 +2058,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward prepareImportGroupProperties(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -2111,7 +2112,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward deleteStudentGroup(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -2153,7 +2154,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward prepareCreateStudentGroup(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		HttpSession session = request.getSession(false);
 		session.removeAttribute("insertStudentGroupForm");
@@ -2192,7 +2193,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward createStudentGroup(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -2270,7 +2271,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward viewStudentsAndGroupsByShift(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -2320,7 +2321,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward viewStudentsAndGroupsWithoutShift(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -2353,7 +2354,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward viewAllStudentsAndGroups(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -2386,7 +2387,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward prepareEditStudentGroupShift(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -2454,7 +2455,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward editStudentGroupShift(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 		HttpSession session = request.getSession(false);
 		Integer objectCode = getObjectCode(request);
@@ -2524,7 +2525,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 //////////////////	
 	public ActionForward prepareEnrollStudentGroupShift(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -2590,7 +2591,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward enrollStudentGroupShift(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		Integer objectCode = getObjectCode(request);
@@ -2664,7 +2665,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 //////////////////////
 	public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-	throws FenixActionException
+	throws FenixActionException, FenixFilterException
 	{
 		HttpSession session = request.getSession(false);
 		Integer objectCode = getObjectCode(request);
@@ -2715,7 +2716,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward prepareEditStudentGroupMembers(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -2762,7 +2763,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward prepareEditStudentGroupsShift(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -2794,7 +2795,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward editStudentGroupsShift(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -2859,7 +2860,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward insertStudentGroupMembers(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -2919,7 +2920,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward deleteStudentGroupMembers(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -2982,7 +2983,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward viewAttendsSet(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		String attendsSetCodeString = request.getParameter("attendsSetCode");
 		Integer attendsSetCode = new Integer(attendsSetCodeString);
@@ -3009,7 +3010,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward prepareEditAttendsSetMembers(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 
 		HttpSession session = request.getSession(false);
@@ -3058,7 +3059,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward insertAttendsSetMembers(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -3100,7 +3101,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	public ActionForward deleteAttendsSetMembers(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
-					throws FenixActionException
+					throws FenixActionException, FenixFilterException
 	{
 
 		HttpSession session = request.getSession(false);
@@ -3142,7 +3143,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward deleteAttendsSetMembersByExecutionCourse(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -3179,7 +3180,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward deleteAllAttendsSetMembers(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -3210,7 +3211,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	public ActionForward deleteProjectProposal(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 
 		HttpSession session = request.getSession(false);
@@ -3253,7 +3254,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	        ActionForm form,
 	        HttpServletRequest request,
 	        HttpServletResponse response)
-	        throws FenixActionException
+	        throws FenixActionException, FenixFilterException
 	    {
 			
 	        ISiteComponent firstPageComponent = new InfoSiteFirstPage();

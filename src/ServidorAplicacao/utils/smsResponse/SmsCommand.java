@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import DataBeans.ISmsDTO;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -310,8 +311,9 @@ public class SmsCommand {
      *            The command to handle
      * 
      * @return boolean indicating if could handle the command
+     * @throws FenixFilterException
      */
-    public boolean handleCommand(String senderMsisdn, String smsText) {
+    public boolean handleCommand(String senderMsisdn, String smsText) throws FenixFilterException {
         Matcher matcher = expression.matcher(smsText);
 
         if (matcher.matches() == false) {

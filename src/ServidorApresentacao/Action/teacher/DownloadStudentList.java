@@ -32,6 +32,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteStudents;
 import DataBeans.TeacherAdministrationSiteView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -52,7 +53,7 @@ public class DownloadStudentList extends FenixAction {
     static final String RESUME_COLUMNS_HEADERS = "Número total de inscrições\tNúmero de Alunos";
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer objectCode = null;
         Integer shiftID = null;

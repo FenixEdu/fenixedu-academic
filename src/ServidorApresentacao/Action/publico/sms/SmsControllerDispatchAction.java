@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.utils.SmsUtil;
 import ServidorAplicacao.utils.exceptions.SmsCommandConfigurationException;
@@ -29,7 +30,7 @@ import Util.SmsDeliveryType;
 public class SmsControllerDispatchAction extends FenixDispatchAction {
 
     public void updateDeliveryReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws FenixFilterException {
 
         if (checkRemoteAddress(request) == false)
             return;
@@ -59,7 +60,7 @@ public class SmsControllerDispatchAction extends FenixDispatchAction {
     }
 
     public void receiveSms(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws FenixFilterException{
 
         //if(checkRemoteAddress(request) == false)
         //	return;

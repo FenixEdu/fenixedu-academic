@@ -22,6 +22,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoObject;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -332,7 +333,7 @@ public class CRUDActionByOID extends DispatchAction {
      * @param request
      */
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
     }
 
     /**
@@ -367,7 +368,7 @@ public class CRUDActionByOID extends DispatchAction {
      * @return
      */
     private InfoObject readInfoObject(CRUDMapping crudMapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         Integer oid = getOIDProperty(crudMapping, form);
         InfoObject infoObject = null;

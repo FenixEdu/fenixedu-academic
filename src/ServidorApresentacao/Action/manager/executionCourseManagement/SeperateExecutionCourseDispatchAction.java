@@ -19,6 +19,7 @@ import org.apache.struts.util.LabelValueBean;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -34,7 +35,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -80,7 +81,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward changeDestinationContext(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
         prepareTransfer(mapping, form, request, response);
 
@@ -109,7 +110,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 

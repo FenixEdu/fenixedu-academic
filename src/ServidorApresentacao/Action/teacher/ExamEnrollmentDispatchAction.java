@@ -24,6 +24,7 @@ import DataBeans.InfoExam;
 import DataBeans.InfoSiteCommon;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -44,7 +45,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
      *  
      */
     public ActionForward prepareEnrolmentManagement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 
@@ -92,7 +93,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
      *  
      */
     public ActionForward prepareEditEvaluationEnrolment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 
@@ -136,7 +137,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editExamEnrollment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);

@@ -15,6 +15,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegreeCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -39,7 +40,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 

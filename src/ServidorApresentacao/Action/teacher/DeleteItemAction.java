@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -31,7 +32,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class DeleteItemAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 

@@ -13,6 +13,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
@@ -54,7 +55,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
     }
 
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 

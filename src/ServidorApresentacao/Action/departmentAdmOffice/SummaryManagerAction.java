@@ -35,6 +35,7 @@ import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -52,7 +53,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class SummaryManagerAction extends FenixDispatchAction {
 	
 	public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
@@ -158,7 +159,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 	}
 	
 	public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
@@ -301,7 +302,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
      * @param lessonSelected
      * @throws FenixServiceException
      */
-    protected void findNextSummaryDate(HttpServletRequest request, InfoSummary infoSummary, Integer lessonSelected) throws FenixServiceException {
+    protected void findNextSummaryDate(HttpServletRequest request, InfoSummary infoSummary, Integer lessonSelected) throws FenixServiceException, FenixFilterException {
         List lessons = infoSummary.getInfoShift().getInfoLessons();					
         for (Iterator iter = lessons.iterator(); iter.hasNext();) {
         	InfoLesson element = (InfoLesson) iter.next();
@@ -328,7 +329,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
     }
 
     public ActionForward insertSummary(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 		try {
 			HttpSession session = request.getSession(false);
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -430,7 +431,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 	}
 	
 	public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
@@ -554,7 +555,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 	}
 	
 	public ActionForward editSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws FenixFilterException {
 		try {
 			HttpSession session = request.getSession(false);
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -588,7 +589,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 	}
 	
 	public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 		try {
 			HttpSession session = request.getSession(false);
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

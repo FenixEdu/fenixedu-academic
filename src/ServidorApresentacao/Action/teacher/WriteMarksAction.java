@@ -28,6 +28,7 @@ import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -170,7 +171,7 @@ public class WriteMarksAction extends DispatchAction {
     }
 
     private void prepareInputForward(HttpServletRequest request, HttpSession session,
-            Integer objectCode, Integer evaluationCode) throws FenixActionException {
+            Integer objectCode, Integer evaluationCode) throws FenixActionException, FenixFilterException {
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         ISiteComponent commonComponent = new InfoSiteCommon();
         Object[] args = { objectCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };

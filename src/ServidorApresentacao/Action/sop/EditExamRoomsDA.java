@@ -26,6 +26,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRoom;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -47,7 +48,7 @@ public class EditExamRoomsDA
         FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         System.out.println("ainda sou usado");
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
@@ -126,7 +127,7 @@ public class EditExamRoomsDA
     }
 
     public ActionForward select(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;

@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -36,7 +37,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class PrepareInsertSectionAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertRegularSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 
@@ -66,7 +67,7 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareInsertRootSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 

@@ -25,6 +25,7 @@ import DataBeans.InfoContributor;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -129,7 +130,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
     }
 
     public ActionForward requesterChosen(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
 

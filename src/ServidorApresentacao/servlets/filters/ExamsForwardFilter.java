@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
@@ -50,7 +51,8 @@ public class ExamsForwardFilter implements Filter{
         this.filterConfig = null;
 	}
 
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         
@@ -91,6 +93,8 @@ public class ExamsForwardFilter implements Filter{
                     degreeId = getDegreeId(degreeCode);
                 } catch (FenixServiceException e) {
                     throw new ServletException(e);
+                } catch (FenixFilterException e) {
+                    throw new ServletException(e);
                 }
                 if(degreeId != null){
 		        	forwardURI.append(forwardExamsList);
@@ -115,7 +119,7 @@ public class ExamsForwardFilter implements Filter{
 	 * @throws IOException
 	 * @throws FenixServiceException
 	 */
-	private Integer getDegreeId(String degreeCode) throws FenixServiceException {
+	private Integer getDegreeId(String degreeCode) throws FenixServiceException, FenixFilterException {
 		
         Object args[] = { degreeCode };
         Integer degreeOID = new Integer(0);

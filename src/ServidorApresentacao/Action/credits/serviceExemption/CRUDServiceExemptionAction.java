@@ -17,6 +17,7 @@ import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import DataBeans.credits.InfoServiceExemptionCreditLine;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
@@ -104,7 +105,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
      *      javax.servlet.http.HttpServletRequest)
      */
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         DynaActionForm managementPositionForm = (DynaActionForm) form;
 
         IUserView userView = SessionUtils.getUserView(request);

@@ -30,6 +30,7 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -66,6 +67,8 @@ public class ContextUtils {
                         "ReadExecutionPeriodByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
+            } catch (FenixFilterException e) {
+                e.printStackTrace();
             }
         } else {
 
@@ -74,6 +77,8 @@ public class ContextUtils {
                 infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(null,
                         "ReadCurrentExecutionPeriod", new Object[0]);
             } catch (FenixServiceException e) {
+                e.printStackTrace();
+            } catch (FenixFilterException e) {
                 e.printStackTrace();
             }
         }
@@ -127,6 +132,8 @@ public class ContextUtils {
                         "ReadExecutionDegreeByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
+            } catch (FenixFilterException e) {
+                e.printStackTrace();
             }
 
             if (infoExecutionDegree != null) {
@@ -165,6 +172,8 @@ public class ContextUtils {
                 infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(null,
                         "ReadCurricularYearByOID", args);
             } catch (FenixServiceException e) {
+                e.printStackTrace();
+            } catch (FenixFilterException e) {
                 e.printStackTrace();
             }
 
@@ -271,6 +280,8 @@ public class ContextUtils {
                         "ReadExecutionCourseByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
+            } catch (FenixFilterException e) {
+                e.printStackTrace();
             }
 
             if (infoExecutionCourse != null) {
@@ -305,6 +316,8 @@ public class ContextUtils {
                 Object[] args = { shiftOID };
                 infoShift = (InfoShift) ServiceUtils.executeService(null, "ReadShiftByOID", args);
             } catch (FenixServiceException e) {
+                e.printStackTrace();
+            } catch (FenixFilterException e) {
                 e.printStackTrace();
             }
 
@@ -392,6 +405,8 @@ public class ContextUtils {
                 infoClass = (InfoClass) ServiceUtils.executeService(null, "ReadClassByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
+            } catch (FenixFilterException e) {
+                e.printStackTrace();
             }
 
             // Place it in request
@@ -422,6 +437,8 @@ public class ContextUtils {
                 infoLesson = (InfoLesson) ServiceUtils.executeService(null, "ReadLessonByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
+            } catch (FenixFilterException e) {
+                e.printStackTrace();
             }
 
             // Place it in request
@@ -443,6 +460,8 @@ public class ContextUtils {
             selectedRooms = (List) ServiceManagerServiceFactory.executeService(null, "SelectRooms",
                     argsSelectRooms);
         } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
+        } catch (FenixFilterException e) {
             throw new FenixActionException(e);
         }
         if (selectedRooms != null && !selectedRooms.isEmpty()) {
@@ -519,6 +538,8 @@ public class ContextUtils {
         } catch (FenixServiceException e) {
 
             e.printStackTrace();
+        } catch (FenixFilterException e) {
+            e.printStackTrace();
         }
         /* Sort the list of degrees */
         if (executionDegreeList != null && executionDegreeList.size() > 0) {
@@ -585,6 +606,8 @@ public class ContextUtils {
             request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD,
                     executionPeriodsLabelValueList);
         } catch (FenixServiceException e1) {
+        } catch (FenixFilterException e) {
+            e.printStackTrace();
         }
 
     }
@@ -688,7 +711,7 @@ public class ContextUtils {
     }
 
     public static List createExecutionDegreeList(HttpServletRequest request)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request

@@ -20,6 +20,7 @@ import DataBeans.InfoStudent;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import DataBeans.enrollment.shift.InfoShiftEnrollment;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -94,7 +95,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private String obtainStudentNumber(HttpServletRequest request, IUserView userView)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         String studentNumber = getStudent(request);
         if (studentNumber == null) {
             InfoStudent infoStudent = obtainStudent(request, userView);
@@ -132,7 +133,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private InfoStudent obtainStudent(HttpServletRequest request, IUserView userView)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoStudent infoStudent = null;
         try {
             Object args[] = { userView.getUtilizador() };

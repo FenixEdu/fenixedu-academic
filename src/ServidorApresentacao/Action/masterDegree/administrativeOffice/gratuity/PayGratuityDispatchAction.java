@@ -25,6 +25,7 @@ import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.transactions.InfoInsuranceTransaction;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -304,7 +305,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws FenixActionException
      */
     private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView,
-            Integer contributorNumber) throws NonExistingActionException, FenixActionException {
+            Integer contributorNumber) throws NonExistingActionException, FenixActionException, FenixFilterException {
 
         InfoContributor infoContributor = null;
         Object argsContributor[] = { contributorNumber };
@@ -330,7 +331,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      *         FenixActionException
      */
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoGratuitySituation infoGratuitySituation = null;
         Object argsGratuitySituation[] = { gratuitySituationId };
         try {
@@ -354,7 +355,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws NonExistingActionException
      */
     private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId)
-            throws FenixActionException, NonExistingActionException {
+            throws FenixActionException, NonExistingActionException, FenixFilterException {
         InfoStudent infoStudent = null;
         Object argsStudent[] = { studentId };
         try {
@@ -379,7 +380,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      *         FenixActionException
      */
     private InfoInsuranceValue readInsuranceValue(IUserView userView, Integer insuranceExecutionYearId)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoInsuranceValue infoInsuranceValue = null;
         Object argsInsuranceValue[] = { insuranceExecutionYearId };
         try {

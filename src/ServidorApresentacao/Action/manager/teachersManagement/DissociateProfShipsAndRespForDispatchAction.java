@@ -19,6 +19,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -39,7 +40,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 
     public ActionForward prepareDissociateECShowProfShipsAndRespFor(ActionMapping mapping,
             ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -85,7 +86,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
     }
 
     public ActionForward dissociateProfShipsAndRespFor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 

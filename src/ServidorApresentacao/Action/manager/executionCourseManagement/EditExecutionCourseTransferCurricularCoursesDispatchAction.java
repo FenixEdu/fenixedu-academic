@@ -20,6 +20,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -40,7 +41,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
             ActionMapping mapping,
             ActionForm form,
             HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -74,7 +75,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
             ActionMapping mapping,
             ActionForm form,
             HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
@@ -110,7 +111,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
             ActionMapping mapping,
             ActionForm form,
             HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 

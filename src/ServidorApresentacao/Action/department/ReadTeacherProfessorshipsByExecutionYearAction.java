@@ -21,6 +21,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.professorship.DetailedProfessorship;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import Util.PeriodState;
@@ -39,7 +40,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
      *      javax.servlet.http.HttpServletRequest)
      */
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
     	
         List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(userView,
                 "ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId, actionForm.get("executionYearId")});
@@ -54,7 +55,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
      *      org.apache.struts.action.DynaActionForm)
      */
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher,
-            HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException {
+            HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
 
         prepareConstants(userView, infoTeacher, request);
 
@@ -99,7 +100,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     }
 
     private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
 
         List executionYears = (List) ServiceUtils.executeService(userView,
                 "ReadNotClosedExecutionYears", null);

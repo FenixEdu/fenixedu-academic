@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -27,7 +28,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class PrepareSelectExecutionCourseActionNew extends FenixContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e1) {

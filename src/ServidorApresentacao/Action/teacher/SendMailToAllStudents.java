@@ -37,6 +37,7 @@ import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -49,23 +50,23 @@ import framework.factory.ServiceManagerServiceFactory;
  * 
  * 
  * Created at 17/Set/2003, 15:19:24
- *  
+ * 
  */
 public class SendMailToAllStudents extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = this.getSession(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         TeacherAdministrationSiteView siteView = null;
         Integer objectCode = null;
-        //        Integer shiftID = null;
-        //        try
-        //        {
-        //            shiftID = new Integer(request.getParameter("shiftID"));
-        //        } catch (NumberFormatException ex)
-        //        {
-        //            //ok, we don't want to view a shift's student list
-        //        }
+        // Integer shiftID = null;
+        // try
+        // {
+        // shiftID = new Integer(request.getParameter("shiftID"));
+        // } catch (NumberFormatException ex)
+        // {
+        // //ok, we don't want to view a shift's student list
+        // }
         String objectCodeString = request.getParameter("objectCode");
         if (objectCodeString == null) {
             objectCodeString = (String) request.getAttribute("objectCode");
@@ -75,17 +76,15 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         Object argsReadExecutionCourse[] = { objectCode };
         InfoExecutionCourse infoExecutionCourse = null;
         InfoSite infoSite = null;
-        try {
-            siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadStudentsByCurricularCourse", argsReadSiteView);
-            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadExecutionCourseByOID", argsReadExecutionCourse);
-            Object argsReadSite[] = { infoExecutionCourse };
-            infoSite = (InfoSite) ServiceManagerServiceFactory.executeService(userView, "ReadSite",
-                    argsReadSite);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+
+        siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+                "ReadStudentsByCurricularCourse", argsReadSiteView);
+        infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
+                userView, "ReadExecutionCourseByOID", argsReadExecutionCourse);
+        Object argsReadSite[] = { infoExecutionCourse };
+        infoSite = (InfoSite) ServiceManagerServiceFactory.executeService(userView, "ReadSite",
+                argsReadSite);
+
         DynaActionForm sendMailForm = (DynaActionForm) form;
         sendMailForm.set("from", infoSite.getMail());
         sendMailForm.set("fromName", infoSite.getInfoExecutionCourse().getNome());
@@ -95,22 +94,21 @@ public class SendMailToAllStudents extends FenixDispatchAction {
     }
 
     public ActionForward prepareCandidaciesSend(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixServiceException, FenixFilterException {
         HttpSession session = this.getSession(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         TeacherAdministrationSiteView siteView = null;
         Object argsReadPerson[] = { userView.getUtilizador() };
         InfoPerson infoPerson = null;
-        try {
-            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadPersonByUsername", argsReadPerson);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+
+        infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+                "ReadPersonByUsername", argsReadPerson);
+
         DynaActionForm sendMailForm = (DynaActionForm) form;
         sendMailForm.set("from", infoPerson.getEmail());
         sendMailForm.set("fromName", infoPerson.getNome());
-        //        String subject = request.getParameter("subject");
+        // String subject = request.getParameter("subject");
         sendMailForm.set("text", "");
         request.setAttribute("siteView", siteView);
         return mapping.findForward("showEmailForm");
@@ -211,7 +209,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
                 InfoCurricularCourse curricularCourse = null;
                 InfoTheme theme = null;
                 InfoModality modality = null;
-                //                String motivation = null;
+                // String motivation = null;
                 InfoSeminary seminary = null;
                 List casesChoices = null;
                 List cases = new LinkedList();
@@ -222,7 +220,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
                 theme = candidacy.getTheme();
                 modality = candidacy.getInfoModality();
                 seminary = candidacy.getInfoSeminary();
-                //                motivation = candidacy.getMotivation();
+                // motivation = candidacy.getMotivation();
                 casesChoices = candidacy.getCaseStudyChoices();
                 //
                 for (Iterator casesIterator = casesChoices.iterator(); casesIterator.hasNext();) {
@@ -265,7 +263,8 @@ public class SendMailToAllStudents extends FenixDispatchAction {
     }
 
     public ActionForward send(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException,
+            FenixFilterException {
         HttpSession session = this.getSession(request);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         Integer objectCode = null;
@@ -283,12 +282,12 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         try {
             groupCode = new Integer(request.getParameter("studentGroupCode"));
         } catch (NumberFormatException ex) {
-            //ok, we don't want to view a group's student list
+            // ok, we don't want to view a group's student list
         }
         try {
             shiftID = new Integer(request.getParameter("shiftCode"));
         } catch (NumberFormatException ex) {
-            //ok, we don't want to view a shift's student list
+            // ok, we don't want to view a shift's student list
         }
         String objectCodeString = request.getParameter("objectCode");
         if (objectCodeString == null) {
@@ -301,44 +300,42 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         List groupStudents = null;
         List shiftStudents = null;
         List failedEmails = null;
-        try {
-            siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadStudentsByCurricularCourse", args);
-            infoSiteStudents = (InfoSiteStudents) siteView.getComponent();
-            if (shiftID != null) {
-                //the objectCode is needed by the filter...doing this is
-                // awfull !!!
-                //please read
-                // http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
-                Object[] argsReadShiftStudents = { objectCode, shiftID };
-                shiftStudents = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "teacher.ReadStudentsByShiftID", argsReadShiftStudents);
-                infoSiteStudents.setStudents(shiftStudents);
-            }
-            if (groupCode != null) {
-                Object[] argsReadGroupStudents = { objectCode, groupCode };
-                groupStudents = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "teacher.ReadStudentsByStudentGroupID", argsReadGroupStudents);
-                infoSiteStudents.setStudents(groupStudents);
-            }
-            Collections.sort(infoSiteStudents.getStudents(), new BeanComparator("number"));
-            //
-            // and finnaly, let us send the emaaaaaaaails !
-            //
-            List bccList = new LinkedList();
-            List toList = new LinkedList();
-            toList.add(from);
-            List ccList = new LinkedList();
-            for (Iterator iter = infoSiteStudents.getStudents().iterator(); iter.hasNext();) {
-                InfoStudent infoStudent = (InfoStudent) iter.next();
-                bccList.add(infoStudent.getInfoPerson().getEmail());
-            }
-            Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
-            failedEmails = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "commons.SendMail", argsSendMails);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
+
+        siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+                "ReadStudentsByCurricularCourse", args);
+        infoSiteStudents = (InfoSiteStudents) siteView.getComponent();
+        if (shiftID != null) {
+            // the objectCode is needed by the filter...doing this is
+            // awfull !!!
+            // please read
+            // http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
+            Object[] argsReadShiftStudents = { objectCode, shiftID };
+            shiftStudents = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "teacher.ReadStudentsByShiftID", argsReadShiftStudents);
+            infoSiteStudents.setStudents(shiftStudents);
         }
+        if (groupCode != null) {
+            Object[] argsReadGroupStudents = { objectCode, groupCode };
+            groupStudents = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "teacher.ReadStudentsByStudentGroupID", argsReadGroupStudents);
+            infoSiteStudents.setStudents(groupStudents);
+        }
+        Collections.sort(infoSiteStudents.getStudents(), new BeanComparator("number"));
+        //
+        // and finnaly, let us send the emaaaaaaaails !
+        //
+        List bccList = new LinkedList();
+        List toList = new LinkedList();
+        toList.add(from);
+        List ccList = new LinkedList();
+        for (Iterator iter = infoSiteStudents.getStudents().iterator(); iter.hasNext();) {
+            InfoStudent infoStudent = (InfoStudent) iter.next();
+            bccList.add(infoStudent.getInfoPerson().getEmail());
+        }
+        Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
+        failedEmails = (List) ServiceManagerServiceFactory.executeService(userView, "commons.SendMail",
+                argsSendMails);
+
         getFailedMails(request, infoSiteStudents.getStudents(), failedEmails);
         return mapping.findForward("mailSent");
 

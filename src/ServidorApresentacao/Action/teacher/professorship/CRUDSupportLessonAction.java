@@ -17,6 +17,7 @@ import DataBeans.InfoObject;
 import DataBeans.InfoProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
@@ -152,7 +153,7 @@ public class CRUDSupportLessonAction extends CRUDActionByOID {
      *      javax.servlet.http.HttpServletRequest)
      */
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm supportLessonForm = (DynaActionForm) form;
 

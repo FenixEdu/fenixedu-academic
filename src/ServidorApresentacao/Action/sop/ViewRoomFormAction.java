@@ -18,6 +18,7 @@ import org.apache.struts.util.LabelValueBean;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
@@ -30,7 +31,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e2) {

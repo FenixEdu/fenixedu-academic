@@ -15,6 +15,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -114,7 +115,7 @@ public class DefineExamCommentActionDA extends
         return mapping.findForward("showExamsMap");
     }
 
-    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException {
+    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request

@@ -18,6 +18,7 @@ import DataBeans.grant.list.InfoListGrantOwnerComplete;
 import DataBeans.grant.list.InfoSpanByCriteriaListGrantContract;
 import Dominio.grant.contract.GrantType;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -238,7 +239,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         return infoSpanByCriteriaListGrantOwner;
     }
 
-    private List createGrantTypeList(IUserView userView) throws FenixServiceException {
+    private List createGrantTypeList(IUserView userView) throws FenixServiceException, FenixFilterException {
         //Read grant types for the contract
         Object[] args = {};
         List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);

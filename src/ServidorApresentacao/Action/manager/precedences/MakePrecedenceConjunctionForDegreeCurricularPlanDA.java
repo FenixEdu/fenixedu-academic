@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -27,7 +28,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDispatchAction {
 
     public ActionForward showFirstPage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -56,7 +57,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
     }
 
     public ActionForward showSecondPage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -83,7 +84,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
     }
 
     public ActionForward merge(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         ActionErrors errors = new ActionErrors();
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;

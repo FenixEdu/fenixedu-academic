@@ -38,6 +38,7 @@ import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -55,7 +56,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
     
     public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         List infoExecutionPeriods = null;
@@ -120,7 +121,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
 
     public ActionForward prepareChooseExecDegreeAndCurYear(
             ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         buildCurricularYearLabelValueBean(request);
@@ -209,7 +210,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
 
     public ActionForward showExecutionCourses(ActionMapping mapping,
             ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -314,7 +315,7 @@ public class CopySiteExecutionCourseAction extends FenixDispatchAction {
     }
     
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
-            Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException {
+            Integer infoExecutionCourseCode, Object obj1, Object obj2) throws FenixActionException, FenixFilterException {
 
         HttpSession session = getSession(request);
 

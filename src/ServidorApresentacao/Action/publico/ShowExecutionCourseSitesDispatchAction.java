@@ -20,6 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseView;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -107,7 +108,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
         request.setAttribute("executionCourseViewsTablePrevious5", executionCourseViewsTablePrevious5);
     }
     
-    private InfoExecutionPeriod getPreviouseExecutionPeriod(HttpServletRequest request) throws FenixServiceException {
+    private InfoExecutionPeriod getPreviouseExecutionPeriod(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         Object[] args = { infoExecutionPeriod.getIdInternal() };
@@ -119,7 +120,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
         return previousInfoExecutionPeriod;
     }
 
-    private List getExecutionCourseViews(HttpServletRequest request, Integer degreeOID) throws FenixServiceException {
+    private List getExecutionCourseViews(HttpServletRequest request, Integer degreeOID) throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
 
         List executionCourseViews = (List) ServiceManagerServiceFactory.executeService(
@@ -131,7 +132,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
         return executionCourseViews;        
     }
 
-    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID) throws FenixServiceException {
+    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID) throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
 
         InfoDegree infoDegree = (InfoDegree)

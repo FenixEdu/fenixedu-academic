@@ -29,6 +29,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import Util.DegreeCurricularPlanState;
@@ -108,6 +109,8 @@ public class ExecutionCourseForwardFilter implements Filter {
                 degreeId = getDegreeId(degreeCode);
             } catch (FenixServiceException e) {
                 throw new ServletException(e);
+            } catch (FenixFilterException e) {
+                throw new ServletException(e);
             }
 
             if (degreeId != null) {
@@ -126,6 +129,8 @@ public class ExecutionCourseForwardFilter implements Filter {
                         infoCurricularCourseRecent = getCurricularCourseRecent(degreeId, acronym);
                     } catch (FenixServiceException e1) {
                         throw new ServletException(e1);
+                    } catch (FenixFilterException e) {
+                        throw new ServletException(e);
                     }
 
                     if (infoCurricularCourseRecent != null) {
@@ -134,6 +139,8 @@ public class ExecutionCourseForwardFilter implements Filter {
                             infoExecutionCourseRecent = getExecutionCourseRecent(infoCurricularCourseRecent);
                         } catch (FenixServiceException e2) {
                             throw new ServletException(e2);
+                        } catch (FenixFilterException e) {
+                            throw new ServletException(e);
                         }
                         if (infoExecutionCourseRecent != null) {
                             constructForwardExecutionCourseURI(forwardURI, infoExecutionCourseRecent);
@@ -223,6 +230,8 @@ public class ExecutionCourseForwardFilter implements Filter {
 
                     } catch (FenixServiceException e3) {
                         throw new ServletException(e3);
+                    } catch (FenixFilterException e) {
+                        throw new ServletException(e);
                     }
                 }
             } else {
@@ -236,10 +245,10 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param idInternal
      * @param token_3
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private InfoCurricularCourse getExecutionCourseByDegreeCurricularPlan(Integer idInternal,
-            final String token_3) throws FenixServiceException {
+            final String token_3) throws FenixServiceException, FenixFilterException {
         Object args[] = { idInternal };
 
         List listCurricularCourses = (List) ServiceUtils.executeService(null,
@@ -264,10 +273,10 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param token_2
      * @param degreeId
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private InfoDegreeCurricularPlan getDegreeCurricularPlan(String token_2, Integer degreeId)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         try {
             String[] tokens = token_2.split("-");
             
@@ -314,10 +323,10 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param token_3
      * @param degreeId
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private boolean isDegreeCurricularPlanYear(String token_3, Integer degreeId)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         try {
             
             String[] tokens = token_3.split("-");
@@ -348,9 +357,9 @@ public class ExecutionCourseForwardFilter implements Filter {
     /**
      * @param string
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
-    private boolean isExecutionPeriod(final String newToken) throws FenixServiceException {
+    private boolean isExecutionPeriod(final String newToken) throws FenixServiceException, FenixFilterException {
         List listInfoExecutionPeriods = (List) ServiceUtils.executeService(null, "ReadExecutionPeriods",
                 null);
         if (listInfoExecutionPeriods != null) {
@@ -371,9 +380,9 @@ public class ExecutionCourseForwardFilter implements Filter {
     /**
      * @param newToken
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
-    private boolean isExecutionYear(String newToken) throws FenixServiceException {
+    private boolean isExecutionYear(String newToken) throws FenixServiceException, FenixFilterException {
         Object args[] = { newToken };
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null,
                 "ReadExecutionYear", args);
@@ -384,11 +393,11 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param infoCurricularCourseRecent
      * @param string
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourseByExecutionPeriod(
             InfoCurricularCourse infoCurricularCourseRecent, final String string)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object args1[] = { infoCurricularCourseRecent.getIdInternal() };
         List listExecutionCourses = (List) ServiceUtils.executeService(null,
                 "ReadExecutionCoursesByCurricularCourse", args1);
@@ -418,11 +427,11 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param infoCurricularCourseRecent
      * @param newToken
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourseByExecutionYear(
             InfoCurricularCourse infoCurricularCourseRecent, final String newToken)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object args1[] = { infoCurricularCourseRecent.getIdInternal() };
         List listExecutionCourses = (List) ServiceUtils.executeService(null,
                 "ReadExecutionCoursesByCurricularCourse", args1);
@@ -453,10 +462,10 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param executionYear
      * @param executionPeriod
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourse(InfoCurricularCourse infoCurricularCourseRecent,
-            String executionYear, String executionPeriod) throws FenixServiceException {
+            String executionYear, String executionPeriod) throws FenixServiceException, FenixFilterException {
         Object args1[] = { infoCurricularCourseRecent.getIdInternal() };
         List listExecutionCourses = (List) ServiceUtils.executeService(null,
                 "ReadExecutionCoursesByCurricularCourse", args1);
@@ -489,10 +498,10 @@ public class ExecutionCourseForwardFilter implements Filter {
 
     /**
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private InfoExecutionCourse getExecutionCourseRecent(InfoCurricularCourse infoCurricularCourseRecent)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object args[] = { infoCurricularCourseRecent.getIdInternal() };
         List listExecutionCourses = (List) ServiceUtils.executeService(null,
                 "ReadExecutionCoursesByCurricularCourse", args);
@@ -509,10 +518,10 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param degreeId
      * @param acronym
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
     private InfoCurricularCourse getCurricularCourseRecent(Integer degreeId, String acronym)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object args1[] = { degreeId };
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
@@ -544,9 +553,9 @@ public class ExecutionCourseForwardFilter implements Filter {
     /**
      * @param degreeCode
      * @return
-     * @throws FenixServiceException
+     * @throws FenixServiceException, FenixFilterException
      */
-    private Integer getDegreeId(String degreeCode) throws FenixServiceException {
+    private Integer getDegreeId(String degreeCode) throws FenixServiceException, FenixFilterException {
         Object args[] = { degreeCode };
         Integer executionCourseOID = new Integer(0);
 

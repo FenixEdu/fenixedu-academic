@@ -24,6 +24,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import DataBeans.teacher.workTime.TeacherInstitutionWorkingTimeDTO;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
@@ -220,7 +221,7 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
      *      javax.servlet.http.HttpServletRequest)
      */
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         super.prepareFormConstants(mapping, form, request);
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;

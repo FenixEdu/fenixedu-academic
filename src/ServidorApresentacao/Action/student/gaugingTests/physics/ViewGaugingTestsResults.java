@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -27,7 +28,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewGaugingTestsResults extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

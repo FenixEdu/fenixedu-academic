@@ -38,6 +38,7 @@ import DataBeans.finalDegreeWork.InfoGroupProposal;
 import DataBeans.finalDegreeWork.InfoProposal;
 import DataBeans.finalDegreeWork.InfoScheduleing;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -58,7 +59,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
 
         String idInternal = (String) finalWorkForm.get("idInternal");
@@ -183,7 +184,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -248,7 +249,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -310,7 +311,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward showTeacherName(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
@@ -381,7 +382,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward coorientatorVisibility(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String alteredField = (String) finalWorkForm.get("alteredField");
         String companionName = (String) finalWorkForm.get("companionName");
@@ -408,7 +409,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null
@@ -427,7 +428,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null
@@ -451,7 +452,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
 
         if (finalDegreeWorkProposalOIDString != null
@@ -569,7 +570,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         return mapping.findForward("submitFinalWorkProposal");
     }
 
-    InfoTeacher getTeacher(IUserView userView) throws FenixActionException {
+    InfoTeacher getTeacher(IUserView userView) throws FenixActionException, FenixFilterException {
         Object argsTeacher[] = { userView.getUtilizador() };
 
         InfoTeacher infoTeacher;
@@ -587,7 +588,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward attributeFinalDegreeWork(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         DynaActionForm finalWorkAttributionForm = (DynaActionForm) form;
 
         String selectedGroupProposalOID = (String) finalWorkAttributionForm.get("selectedGroupProposal");

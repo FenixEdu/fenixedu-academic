@@ -16,6 +16,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoCurricularCourseScope;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
@@ -36,7 +37,7 @@ import Util.Data;
 public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 
     public ActionForward prepareEnd(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -64,7 +65,7 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
     }
 
     public ActionForward end(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaValidatorForm) form;

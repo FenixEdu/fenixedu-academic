@@ -21,6 +21,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -60,7 +61,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
      * @param dynaForm
      */
     protected void extraPreparation(IUserView userView, InfoTeacher infoTeacher,
-            HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException {
+            HttpServletRequest request, DynaActionForm dynaForm) throws FenixServiceException, FenixFilterException {
     }
 
     protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm)
@@ -77,5 +78,5 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
     }
 
     abstract List getDetailedProfessorships(IUserView userView, Integer teacherId,
-            DynaActionForm actionForm, HttpServletRequest request) throws FenixServiceException;
+            DynaActionForm actionForm, HttpServletRequest request) throws FenixServiceException, FenixFilterException;
 }

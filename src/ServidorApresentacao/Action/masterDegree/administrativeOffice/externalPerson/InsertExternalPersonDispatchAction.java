@@ -18,6 +18,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoWorkLocation;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
@@ -53,7 +54,7 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
 
     }
 
-    private List getWorkLocations(HttpServletRequest request) throws FenixActionException {
+    private List getWorkLocations(HttpServletRequest request) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         List workLocations = null;
 

@@ -18,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -35,7 +36,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -77,7 +78,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
@@ -104,7 +105,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm teacherForm = (DynaActionForm) form;
@@ -134,7 +135,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);        
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;

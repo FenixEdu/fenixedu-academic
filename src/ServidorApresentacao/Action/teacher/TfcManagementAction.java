@@ -19,6 +19,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoBranch;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -48,7 +49,7 @@ public class TfcManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareTfcInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException {
+            FenixServiceException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 

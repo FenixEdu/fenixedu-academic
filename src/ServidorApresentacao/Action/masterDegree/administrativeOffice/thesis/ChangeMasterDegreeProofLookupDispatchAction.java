@@ -20,6 +20,7 @@ import org.apache.struts.actions.LookupDispatchAction;
 
 import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -216,7 +217,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
     }
 
     public ActionForward changeMasterDegreeProof(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -284,7 +285,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
             Date thesisDeliveryDate, InfoStudentCurricularPlan infoStudentCurricularPlan,
             List infoTeacherJuries, List infoExternalPersonExternalJuries)
             throws NonExistingActionException, ScholarshipNotFinishedActionException,
-            ExistingActionException {
+            ExistingActionException, FenixFilterException {
         Object args2[] = { userView, infoStudentCurricularPlan, proofDate, thesisDeliveryDate,
                 finalResult, attachedCopiesNumber, infoTeacherJuries, infoExternalPersonExternalJuries };
 
@@ -300,7 +301,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
     }
 
     private InfoStudentCurricularPlan readStudentCurricularPlan(IUserView userView, Integer degreeType,
-            Integer studentNumber) throws FenixActionException {
+            Integer studentNumber) throws FenixActionException, FenixFilterException {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
         Object args[] = { studentNumber, new TipoCurso(degreeType) };

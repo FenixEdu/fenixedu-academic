@@ -22,6 +22,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoShift;
 import DataBeans.InfoSiteShifts;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -47,7 +48,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws FenixActionException
+        throws FenixActionException, FenixFilterException
     {
 
         HttpSession session = request.getSession(false);
@@ -184,7 +185,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws FenixActionException
+        throws FenixActionException, FenixFilterException
     {
 
         HttpSession session = request.getSession(false);

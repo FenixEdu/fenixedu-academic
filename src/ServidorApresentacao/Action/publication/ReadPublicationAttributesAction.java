@@ -24,6 +24,7 @@ import DataBeans.publication.InfoSiteAttributes;
 import DataBeans.util.Cloner;
 import Dominio.publication.IAuthor;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -115,7 +116,7 @@ public class ReadPublicationAttributesAction extends FenixAction {
         return actionForward;
     }
 
-    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException {
+    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException, FenixFilterException {
 
         List newAuthorsIds = new ArrayList();
         Iterator iteratorIds = authorsIds.iterator();

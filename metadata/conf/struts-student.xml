@@ -222,7 +222,7 @@
         parameter="method"
         scope="request"
         validate="false">
-			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			<exception type="ServidorAplicacao.Filtro.enrollment.ClassEnrollmentAuthorizationFilter$OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
 					key="error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan"
 					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
 			/>

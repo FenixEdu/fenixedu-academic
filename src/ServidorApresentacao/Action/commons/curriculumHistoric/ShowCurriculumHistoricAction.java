@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.commons.curriculumHistoric.InfoCurriculumHistoricReport;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -29,7 +30,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 
     public ActionForward showCurriculumHistoric(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         Integer semester = getFromRequest("semester", request);
         Integer curricularCourseCode = getFromRequest("curricularCourseCode", request);

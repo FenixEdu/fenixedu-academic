@@ -5,7 +5,6 @@
  */
 package DataBeans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.gesdis.InfoSiteEvaluationStatistics;
@@ -408,7 +407,6 @@ public class InfoExecutionCourse extends InfoObject {
             setLabHours(executionCourse.getLabHours());
             setPraticalHours(executionCourse.getPraticalHours());
             setComment(executionCourse.getComment());
-            List associatedCurricularCourses = new ArrayList();
         }
     }
 

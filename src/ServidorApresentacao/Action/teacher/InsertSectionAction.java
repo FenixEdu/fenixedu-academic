@@ -15,6 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -30,7 +31,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class InsertSectionAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm dynaForm = (DynaActionForm) form;
         String sectionName = (String) dynaForm.get("name");

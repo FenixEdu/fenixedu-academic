@@ -20,6 +20,7 @@ import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteStudents;
 import DataBeans.TeacherAdministrationSiteView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -34,7 +35,7 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class StudentsByCurricularCourseListAction extends DispatchAction {
     public ActionForward readStudents(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         Integer objectCode = null;
         Integer shiftID = null;

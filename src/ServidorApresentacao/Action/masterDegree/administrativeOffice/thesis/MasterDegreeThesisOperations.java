@@ -15,6 +15,7 @@ import DataBeans.InfoExternalPerson;
 import DataBeans.InfoStudent;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -33,7 +34,7 @@ import Util.TipoCurso;
 public class MasterDegreeThesisOperations extends DispatchAction {
 
     public boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request,
-            ActionErrors actionErrors) throws FenixActionException {
+            ActionErrors actionErrors) throws FenixActionException, FenixFilterException {
 
         boolean result = false;
 
@@ -81,7 +82,7 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 
     public List getTeachersByNumbers(ActionForm form, HttpServletRequest request,
             String teachersNumbersListField, String sessionConstant, ActionErrors actionErrors)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
 
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -128,7 +129,7 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 
     public void getExternalPersonsByName(ActionForm form, HttpServletRequest request,
             String externalPersonNameField, String sessionConstant, ActionErrors actionErrors)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
 
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -159,7 +160,7 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 
     public List getExternalPersonsByIDs(ActionForm form, HttpServletRequest request,
             String externalPersonsIDsListField, String sessionConstant, ActionErrors actionErrors)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
 
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);

@@ -27,6 +27,7 @@ import DataBeans.InfoStudent;
 import DataBeans.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
 import DataBeans.enrollment.shift.InfoClassEnrollmentDetails;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.enrollment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInGroupServiceException;
 import ServidorAplicacao.Servico.enrollment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInShiftServiceException;
 import ServidorAplicacao.Servico.enrollment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledServiceException;
@@ -43,7 +44,7 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class ShiftStudentEnrollmentManagerLookupDispatchAction extends TransactionalLookupDispatchAction {
     public ActionForward addCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixTransactionException {
+            HttpServletResponse response) throws FenixTransactionException, FenixFilterException {
         super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
         checkParameter(request);
@@ -89,7 +90,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward removeCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixTransactionException, FenixFilterException {
         super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
         checkParameter(request);
@@ -137,7 +138,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
     }
 
     public ActionForward proceedToShiftEnrolment(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         checkParameter(request);
 
         ActionErrors errors = new ActionErrors();

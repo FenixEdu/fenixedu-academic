@@ -19,6 +19,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -39,7 +40,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ActionErrors errors = new ActionErrors();
 
         HttpSession session = request.getSession();
@@ -94,7 +95,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editDegreeInformation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ActionErrors errors = new ActionErrors();
 
         HttpSession session = request.getSession();
@@ -206,7 +207,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewDescriptionCurricularPlan(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ActionErrors errors = new ActionErrors();
 
         HttpSession session = request.getSession();
@@ -274,7 +275,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward editDescriptionDegreeCurricularPlan(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ActionErrors errors = new ActionErrors();
 
         HttpSession session = request.getSession();
@@ -332,7 +333,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward viewHistoric(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
 
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();

@@ -23,6 +23,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import DataBeans.teacher.professorship.DetailedProfessorship;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -45,7 +46,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	}
 
     public ActionForward prepareForm(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm executionYearForm = (DynaActionForm) actionForm;
         Integer executionYearId = (Integer) executionYearForm.get("executionYearId");
@@ -139,7 +140,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
     public ActionForward showProfessorshipsByExecutionDegree(ActionMapping mapping,
             ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
 
         DynaActionForm executionDegreeForm = (DynaActionForm) actionForm;
         Integer executionDegreeId = (Integer) executionDegreeForm.get("executionDegreeId");
@@ -196,7 +197,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward showTeachersBodyByDepartment(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm departmentForm = (DynaActionForm) actionForm;
         Integer departmentId = (Integer) departmentForm.get("departmentId");

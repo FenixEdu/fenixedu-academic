@@ -16,6 +16,7 @@ import org.apache.struts.util.MessageResources;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteSection;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -32,7 +33,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class SectionsManagementAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
@@ -64,7 +65,7 @@ public class SectionsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward getSection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
@@ -91,7 +92,7 @@ public class SectionsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareSectionsConfiguration(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
@@ -119,7 +120,7 @@ public class SectionsManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward configureSections(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();

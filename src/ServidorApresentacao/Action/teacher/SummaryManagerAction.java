@@ -35,6 +35,7 @@ import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -50,7 +51,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAction {
     
     public ActionForward showSummaries(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         
         DynaActionForm actionForm = (DynaActionForm) form;
         
@@ -106,7 +107,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      * @throws FenixServiceException
      */
     protected SiteView getSiteView(IUserView userView, Integer executionCourseId, Integer lessonType,
-            Integer shiftId, Integer professorShipId) throws FenixServiceException {
+            Integer shiftId, Integer professorShipId) throws FenixServiceException, FenixFilterException {
         Object[] args = { executionCourseId, lessonType, shiftId, professorShipId };
         SiteView siteView = null;
         siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaries", args);
@@ -122,7 +123,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      * @throws FenixServiceException
      */
     protected Integer getProfessorShipId(HttpServletRequest request, DynaActionForm actionForm,
-            IUserView userView, Integer executionCourseId) throws FenixServiceException {
+            IUserView userView, Integer executionCourseId) throws FenixServiceException, FenixFilterException {
         
         Integer professorShipId = null;
         
@@ -181,7 +182,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     }
     
     public ActionForward prepareInsertSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         
@@ -320,7 +321,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      * @param lessonSelected
      * @throws FenixServiceException
      */
-    protected void findNextSummaryDate(HttpServletRequest request, InfoSummary infoSummary, Integer lessonSelected) throws FenixServiceException {
+    protected void findNextSummaryDate(HttpServletRequest request, InfoSummary infoSummary, Integer lessonSelected) throws FenixServiceException, FenixFilterException {
         List lessons = infoSummary.getInfoShift().getInfoLessons();
         for (Iterator iter = lessons.iterator(); iter.hasNext();) {
             InfoLesson element = (InfoLesson) iter.next();
@@ -493,7 +494,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     }
     
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
@@ -613,7 +614,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     }
     
     public ActionForward editSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
         try {
             HttpSession session = request.getSession(false);
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

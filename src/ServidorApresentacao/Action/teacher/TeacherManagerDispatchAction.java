@@ -18,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoSite;
 import DataBeans.InfoTeacher;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -39,7 +40,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class TeacherManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewTeachersByProfessorship(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         try {
 
@@ -75,7 +76,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeTeacher(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = getSession(request);
         session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -97,7 +98,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward associateTeacher(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = getSession(request);
         session.removeAttribute(SessionConstants.INFO_SECTION);

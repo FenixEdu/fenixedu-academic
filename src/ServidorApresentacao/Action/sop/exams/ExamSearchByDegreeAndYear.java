@@ -23,6 +23,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -173,7 +174,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
      * @throws FenixServiceException
      */
     private InfoExamsMap getExamsMap(HttpServletRequest request, List curricularYears,
-            InfoExecutionDegree infoExecutionDegree) throws FenixActionException, FenixServiceException {
+            InfoExecutionDegree infoExecutionDegree) throws FenixActionException, FenixServiceException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
@@ -195,7 +196,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
      * @throws FenixServiceException
      */
     private List getExamsMap(HttpServletRequest request, List curricularYears, List executionDegreeList)
-            throws FenixActionException, FenixServiceException {
+            throws FenixActionException, FenixServiceException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request

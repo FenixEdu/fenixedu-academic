@@ -20,6 +20,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoSiteClassesComponent;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
@@ -36,7 +37,7 @@ public class AddShiftsToClassesDA extends
         FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward showClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         if (session != null) {
 
@@ -68,7 +69,7 @@ public class AddShiftsToClassesDA extends
     }
 
     public ActionForward addShiftToClasses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession sessao = request.getSession(false);
         if (sessao != null) {
             DynaActionForm classesForm = (DynaActionForm) form;

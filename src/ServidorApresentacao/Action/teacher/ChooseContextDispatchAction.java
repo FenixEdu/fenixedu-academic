@@ -34,6 +34,7 @@ import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -319,7 +320,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction{
 
 	public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
-			throws FenixActionException {
+			throws FenixActionException, FenixFilterException {
 		HttpSession session = request.getSession(true);
 		DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
@@ -492,7 +493,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction{
 		
 		private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
 				Integer infoExecutionCourseCode, Object obj1, Object obj2)
-				throws FenixActionException
+				throws FenixActionException, FenixFilterException
 {
 
 	HttpSession session = getSession(request);

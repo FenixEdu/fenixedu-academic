@@ -21,6 +21,7 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoEnrolment;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -129,12 +130,7 @@ public class DeleteEnrollmentEquivalenceDispatchAction extends DispatchAction {
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         List idsOfChosenEnrollments = getIDsOfChosenEnrollments(deleteEnrollmentEquivalenceFrom);
-        try {
             runSecondService(userView, studentNumber, degreeType, idsOfChosenEnrollments);
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-            throw new FenixActionException(e);
-        }
 
         setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
                 fromStudentCurricularPlanID, null);
@@ -349,7 +345,7 @@ public class DeleteEnrollmentEquivalenceDispatchAction extends DispatchAction {
      * @throws FenixServiceException
      */
     private InfoEquivalenceContext runFirstService(IUserView userView, Integer studentNumber,
-            TipoCurso degreeType, Integer fromStudentCurricularPlanID) throws FenixServiceException {
+            TipoCurso degreeType, Integer fromStudentCurricularPlanID) throws FenixServiceException, FenixFilterException {
         InfoEquivalenceContext infoEquivalenceContext = null;
 
         Object args[] = { studentNumber, degreeType, fromStudentCurricularPlanID };
@@ -366,9 +362,10 @@ public class DeleteEnrollmentEquivalenceDispatchAction extends DispatchAction {
      * @param idsOfChosenEnrollments
      * @return InfoEquivalenceContext
      * @throws FenixServiceException
+     * @throws FenixServiceException
      */
     private InfoEquivalenceContext runSecondService(IUserView userView, Integer studentNumber,
-            TipoCurso degreeType, List idsOfChosenEnrollments) throws FenixServiceException {
+            TipoCurso degreeType, List idsOfChosenEnrollments) throws FenixFilterException, FenixServiceException {
         InfoEquivalenceContext infoEquivalenceContext = null;
 
         Object args[] = { studentNumber, degreeType, idsOfChosenEnrollments };

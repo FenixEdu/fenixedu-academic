@@ -23,6 +23,7 @@ import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -37,7 +38,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewExamsMapDA extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(true);
 
         if (session != null) {
@@ -139,7 +140,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
     
     private InfoExamsMap getInfoExamsMap(InfoExecutionDegree infoExecutionDegree,InfoExecutionPeriod infoExecutionPeriod,
      							 List curricularYears, IUserView userView,HttpServletRequest request)  
-     							 throws FenixActionException, FenixServiceException{
+     							 throws FenixActionException, FenixServiceException, FenixFilterException{
 	   request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
 
 	   Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
@@ -156,7 +157,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
     }
 	private InfoExamsMap getInfoExamsMapList(List infoExecutionDegree,InfoExecutionPeriod infoExecutionPeriod,
 									 List curricularYears, IUserView userView,HttpServletRequest request)  
-									 throws FenixActionException{
+									 throws FenixActionException, FenixFilterException {
 		   request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree.get(0));
 
 		   Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };

@@ -32,6 +32,7 @@ import Dominio.publication.IAuthor;
 import Dominio.publication.IPublication;
 import Dominio.publication.IPublicationType;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
@@ -252,7 +253,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
     }
 
     public List readAuthorsToInsert(List authorsIds, IUserView userView)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
 
         List newAuthorsIds = new ArrayList();
         Iterator iteratorIds = authorsIds.iterator();
@@ -308,7 +309,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
      * @return
      */
     private boolean verifyIfPublicationExists(HttpServletRequest request, InfoObject infoObject)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { userView };

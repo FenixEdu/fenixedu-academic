@@ -25,6 +25,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import ServidorAplicacao.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
@@ -45,7 +46,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareChooseForGenerateFiles(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         String file = request.getParameter("file");
         request.setAttribute("file", file);
 

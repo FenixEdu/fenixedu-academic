@@ -31,6 +31,7 @@ import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -48,7 +49,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class InsertGratuityDataDispatchAction extends DispatchAction {
 
     public ActionForward prepareInsertChooseExecutionYear(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         //execution years
         List executionYears = null;
         Object[] args = {};
@@ -86,7 +87,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction {
     }
 
     public ActionForward prepareInsertGratuityDataChooseDegree(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm gratuityForm = (DynaActionForm) form;
 
@@ -150,7 +151,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction {
     }
 
     public ActionForward prepareInsertGratuityData(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
         ActionErrors errors = new ActionErrors();

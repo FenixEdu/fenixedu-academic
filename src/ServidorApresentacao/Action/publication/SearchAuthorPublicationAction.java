@@ -40,6 +40,7 @@ import Dominio.publication.Author;
 import Dominio.publication.IAuthor;
 import Dominio.publication.IPublicationType;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -379,7 +380,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
     }
 
-    public List getInfoAuthors(IUserView userView, List authorsPersonsKey) throws FenixServiceException {
+    public List getInfoAuthors(IUserView userView, List authorsPersonsKey) throws FenixServiceException, FenixFilterException {
         List infoAuthors = new ArrayList();
 
         List authorsIds = new ArrayList();
@@ -423,7 +424,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
         return infoAuthors;
     }
 
-    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException {
+    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException, FenixFilterException {
 
         List newAuthorsIds = new ArrayList();
         Iterator iteratorIds = authorsIds.iterator();
@@ -485,7 +486,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
      * @return
      */
     private List removeFromPersonsTheAuthorsInserted(List persons, List authorsIds, IUserView userView)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         // TODO Auto-generated method stub
 
         List newAuthorsIds = new ArrayList();

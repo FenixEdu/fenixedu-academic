@@ -26,6 +26,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -44,7 +45,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class ViewExamsMapDA extends FenixExecutionDegreeAndCurricularYearsContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
@@ -57,7 +58,7 @@ public class ViewExamsMapDA extends FenixExecutionDegreeAndCurricularYearsContex
         return mapping.findForward("viewExamsMap");
     }
 
-    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException {
+    private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request

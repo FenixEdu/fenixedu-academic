@@ -8,6 +8,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoWebSiteSection;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -22,7 +23,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
 
     public ActionForward viewLimitedSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         String sectionName = request.getParameter("sectionName");
 
@@ -45,7 +46,7 @@ public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
     }
 
     public ActionForward viewAllPublishedItemsFromSection(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         Integer sectionCode = Integer.valueOf(request.getParameter("objectCode2"));
         Integer itemCode = Integer.valueOf(request.getParameter("objectCode"));

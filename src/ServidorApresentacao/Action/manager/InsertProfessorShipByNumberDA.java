@@ -16,6 +16,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -36,7 +37,7 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
     }
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));

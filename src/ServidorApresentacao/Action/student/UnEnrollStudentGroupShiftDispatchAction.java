@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -39,7 +40,7 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
         ActionForm form,
         HttpServletRequest request,
         HttpServletResponse response)
-        throws FenixActionException
+        throws FenixActionException, FenixFilterException
     {
 
         HttpSession session = request.getSession(false);

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 
 import DataBeans.dto.SchoolClassDTO;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
@@ -93,6 +94,8 @@ public class SchoolClassForwardFilter implements Filter {
                     degreeId = getDegreeId(degreeCode);
                 } catch (FenixServiceException e) {
                     throw new ServletException(e);
+                } catch (FenixFilterException e) {
+                    throw new ServletException(e);
                 }
                 if(degreeId != null){
 		        	forwardURI.append(forwardScheduleList);
@@ -110,12 +113,16 @@ public class SchoolClassForwardFilter implements Filter {
                     degreeId = getDegreeId(degreeCode);
                 } catch (FenixServiceException e) {
                     throw new ServletException(e);
+                } catch (FenixFilterException e) {
+                    throw new ServletException(e);
                 }
                 if (degreeId != null){
                     SchoolClassDTO schoolClassDTO;
                     try {
                         schoolClassDTO = getClass(className);
                     } catch (FenixServiceException e) {
+                        throw new ServletException(e);
+                    } catch (FenixFilterException e) {
                         throw new ServletException(e);
                     }
                     if (schoolClassDTO != null){
@@ -146,7 +153,7 @@ public class SchoolClassForwardFilter implements Filter {
      * @return
      * @throws FenixServiceException
      */
-    private SchoolClassDTO getClass(final String className) throws FenixServiceException {
+    private SchoolClassDTO getClass(final String className) throws FenixServiceException, FenixFilterException {
         Object args[] = { className };
         
         SchoolClassDTO schoolClassDTO = (SchoolClassDTO) ServiceUtils.executeService(null,
@@ -161,7 +168,7 @@ public class SchoolClassForwardFilter implements Filter {
 	 * @throws IOException
      * @throws FenixServiceException
 	 */
-	private Integer getDegreeId(String degreeCode) throws FenixServiceException {
+	private Integer getDegreeId(String degreeCode) throws FenixServiceException, FenixFilterException {
 		
         Object args[] = { degreeCode };
         Integer executionCourseOID = new Integer(0);

@@ -28,6 +28,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -44,7 +45,7 @@ public class ShowExamsManagement
         extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
@@ -62,7 +63,7 @@ public class ShowExamsManagement
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException,
-            FenixServiceException {
+            FenixServiceException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request

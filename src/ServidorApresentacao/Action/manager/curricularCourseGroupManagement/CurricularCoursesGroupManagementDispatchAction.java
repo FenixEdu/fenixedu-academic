@@ -20,6 +20,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseGroupWithCoursesToAdd;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -33,7 +34,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward manageCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -62,7 +63,7 @@ public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatc
     }
 
     public ActionForward removeCourses(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         //             Integer degreeID = new Integer(request.getParameter("degreeId"));
         //        Integer degreeCurricularPlanID = new
@@ -90,7 +91,7 @@ public class CurricularCoursesGroupManagementDispatchAction extends FenixDispatc
     }
 
     public ActionForward addCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         //  Integer degreeID = new Integer(request.getParameter("degreeId"));
         //                Integer degreeCurricularPlanID = new

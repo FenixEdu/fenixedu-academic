@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoAdvisory;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -24,7 +25,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public final class MainPage extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
 

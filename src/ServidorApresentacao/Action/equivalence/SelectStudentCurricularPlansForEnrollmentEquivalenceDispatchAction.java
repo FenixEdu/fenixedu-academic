@@ -20,6 +20,7 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.equivalence.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -213,7 +214,7 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
      * @throws FenixServiceException
      */
     private List runService(IUserView userView, Integer studentNumber, TipoCurso degreeType)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         List infoStudentCurricularPlans = null;
 
         Object args[] = { studentNumber, degreeType };

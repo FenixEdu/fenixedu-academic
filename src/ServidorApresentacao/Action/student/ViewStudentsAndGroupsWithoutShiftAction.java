@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoSiteStudentsAndGroups;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
@@ -30,7 +31,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewStudentsAndGroupsWithoutShiftAction extends FenixContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

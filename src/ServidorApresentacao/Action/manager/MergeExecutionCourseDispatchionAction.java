@@ -23,6 +23,7 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -38,7 +39,7 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction {
 
     public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException {
+            FenixServiceException, FenixFilterException {
 
         DynaActionForm degreesForm = (DynaActionForm) form;
         Integer sourceDegreeId = (Integer) degreesForm.get("sourceDegreeId");
@@ -56,7 +57,7 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction {
     }
 
     protected void getExecutionPeriod(HttpServletRequest request, Integer executionPeriodId)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         Object[] args = { executionPeriodId };
@@ -68,7 +69,7 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction {
     }
 
     protected void getSourceAndDestinationDegrees(HttpServletRequest request, Integer sourceDegreeId,
-            Integer destinationDegreeId) throws FenixServiceException {
+            Integer destinationDegreeId) throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         Object[] args1 = { sourceDegreeId };
@@ -85,7 +86,7 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction {
 
     protected void getSourceAndDestinationExecutionCourses(HttpServletRequest request,
             Integer sourceDegreeId, Integer destinationDegreeId, Integer executionPeriodId)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         Object[] args1 = { destinationDegreeId, executionPeriodId };
@@ -105,7 +106,7 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction {
 
     public ActionForward prepareChooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException {
+            FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -131,7 +132,7 @@ public class MergeExecutionCourseDispatchionAction extends DispatchAction {
 
     public ActionForward mergeExecutionCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException {
+            FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm mergeExecutionCoursesForm = (DynaActionForm) form;

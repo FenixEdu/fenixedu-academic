@@ -27,6 +27,7 @@ import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -141,7 +142,7 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
     }
 
     public ActionForward insertGratuityData(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;

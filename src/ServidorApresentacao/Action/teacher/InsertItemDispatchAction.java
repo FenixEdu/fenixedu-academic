@@ -22,6 +22,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -62,7 +63,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);

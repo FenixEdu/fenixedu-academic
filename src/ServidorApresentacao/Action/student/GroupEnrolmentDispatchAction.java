@@ -23,6 +23,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoSiteStudentsWithoutGroup;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -49,7 +50,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException, FenixFilterException {
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -139,7 +140,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
 	}
 	public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException, FenixFilterException {
 
 		HttpSession session = request.getSession(false);
 		DynaActionForm enrolmentForm = (DynaActionForm) form;

@@ -34,6 +34,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.base.FenixDateAndTimeDispatchAction;
@@ -240,7 +241,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
     }
 
     public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 		ActionErrors errors = new ActionErrors();

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.DynaActionForm;
 
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
@@ -27,7 +28,7 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
      *      javax.servlet.http.HttpServletRequest)
      */
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
-            HttpServletRequest request) throws FenixServiceException {
+            HttpServletRequest request) throws FenixServiceException, FenixFilterException {
         Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
         executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null
                 : executionPeriodId;

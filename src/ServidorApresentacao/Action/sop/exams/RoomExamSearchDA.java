@@ -16,6 +16,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
@@ -114,7 +115,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         return mapping.findForward("showExamsMap");
     }
 
-    private List getExamsMap(HttpServletRequest request, List infoRooms) throws FenixActionException {
+    private List getExamsMap(HttpServletRequest request, List infoRooms) throws FenixActionException, FenixFilterException {
 
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 

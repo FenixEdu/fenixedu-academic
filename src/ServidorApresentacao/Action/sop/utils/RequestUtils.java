@@ -24,6 +24,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import Util.TipoAula;
@@ -57,7 +58,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionCourse getExecutionCourseFromRequest(HttpServletRequest request)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoExecutionCourse infoExecutionCourse = null;
         try {
             InfoExecutionPeriod infoExecutionPeriod = getExecutionPeriodFromRequest(request);
@@ -76,7 +77,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionYear getExecutionYearFromRequest(HttpServletRequest request)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoExecutionYear infoExecutionYear = null;
         try {
             String year = (String) request.getAttribute("eYName");
@@ -101,7 +102,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionPeriod getExecutionPeriodFromRequest(HttpServletRequest request)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoExecutionPeriod infoExecutionPeriod = null;
         try {
             InfoExecutionYear infoExecutionYear = getExecutionYearFromRequest(request);
@@ -126,7 +127,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoSite getSiteFromRequest(HttpServletRequest request)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoSite infoSite = null;
 
         try {
@@ -142,7 +143,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoSite getSiteFromAnyScope(HttpServletRequest request)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoSite infoSite = null;
         HttpSession session = request.getSession(true);
 
@@ -162,7 +163,7 @@ public abstract class RequestUtils {
     }
 
     public static final List getSectionsFromRequest(HttpServletRequest request)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         List sections = null;
         try {
             InfoSite infoSite = getSiteFromRequest(request);
@@ -177,7 +178,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
-            InfoExecutionYear infoExecutionYear) throws FenixActionException {
+            InfoExecutionYear infoExecutionYear) throws FenixActionException, FenixFilterException {
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute("exeDegree");
@@ -240,7 +241,7 @@ public abstract class RequestUtils {
     }
 
     public static final void setSectionsToRequest(HttpServletRequest request, InfoSite infoSite)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         if (infoSite != null) {
             Object argsReadSections[] = { infoSite };
 
@@ -295,7 +296,7 @@ public abstract class RequestUtils {
     }
 
     public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
 
         //HttpSession session = request.getSession(false);
         IUserView userView = SessionUtils.getUserView(request);

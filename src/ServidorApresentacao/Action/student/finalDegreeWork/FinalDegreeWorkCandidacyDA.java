@@ -24,6 +24,7 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.finalDegreeWork.InfoGroup;
 import DataBeans.finalDegreeWork.InfoGroupStudent;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -218,7 +219,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     }
 
     private boolean checkCandidacyConditions(IUserView userView, String executionDegreeOID)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object[] args = { userView, new Integer(executionDegreeOID) };
         ServiceUtils.executeService(userView, "CheckCandidacyConditionsForFinalDegreeWork", args);
         return true;
@@ -288,7 +289,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
      * @param request
      */
     private List placeListOfExecutionDegreesInRequest(HttpServletRequest request)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
         Object[] args = {};
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null,
                 "ReadCurrentExecutionYear", args);

@@ -11,6 +11,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.utils.exceptions.SmsCommandConfigurationException;
 
 /**
@@ -109,7 +110,7 @@ public class SmsCommandManager {
     }
 
     public void handleCommand(String senderMsisdn, String smsText)
-            throws SmsCommandConfigurationException {
+            throws SmsCommandConfigurationException, FenixFilterException {
         for (Iterator iter = this.smsCommandList.iterator(); iter.hasNext();) {
             SmsCommand smsCommand = (SmsCommand) iter.next();
             if (smsCommand.handleCommand(senderMsisdn, smsText) == true) {

@@ -21,6 +21,7 @@ import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShiftsAndGroups;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
@@ -40,7 +41,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws FenixActionException, FenixFilterException {
 		try {
 			super.execute(mapping, form, request, response);
 		} catch (Exception e1) {
@@ -89,7 +90,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 
 	private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent,
 			Integer infoExecutionCourseCode, Object obj1, Object obj2)
-			throws FenixActionException
+			throws FenixActionException, FenixFilterException
 			{
 
 		HttpSession session = getSession(request);

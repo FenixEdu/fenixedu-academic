@@ -24,6 +24,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -45,7 +46,7 @@ public class MyProfessorships extends ControllerSupport {
      */
 
     public InfoExecutionPeriod getExecutionPeriods(HttpServletRequest request, IUserView userView)
-            throws FenixServiceException {
+            throws FenixServiceException, FenixFilterException {
 
         InfoExecutionPeriod selectedExecutionPeriod = null;
 
@@ -125,6 +126,8 @@ public class MyProfessorships extends ControllerSupport {
             professorShipList = (List) ServiceUtils.executeService(userView, "ReadProfessorships", args);
 
         } catch (FenixServiceException e) {
+            e.printStackTrace();
+        } catch (FenixFilterException e) {
             e.printStackTrace();
         }
 

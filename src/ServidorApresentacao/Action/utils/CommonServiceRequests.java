@@ -11,6 +11,7 @@ import java.util.List;
 import DataBeans.InfoBranch;
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -28,7 +29,7 @@ public class CommonServiceRequests {
      * @return
      */
     public static List getBranchesByDegreeCurricularPlan(IUserView userView,
-            Integer degreeCurricularPlanOID) throws FenixActionException {
+            Integer degreeCurricularPlanOID) throws FenixActionException, FenixFilterException {
         Object[] argsBranches = { degreeCurricularPlanOID };
         List branches = null;
         try {
@@ -54,7 +55,7 @@ public class CommonServiceRequests {
      * @return
      */
     public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID)
-            throws FenixActionException {
+            throws FenixActionException, FenixFilterException {
         InfoExecutionDegree infoExecutionDegree = null;
         Object[] args = { degreeOID };
         try {

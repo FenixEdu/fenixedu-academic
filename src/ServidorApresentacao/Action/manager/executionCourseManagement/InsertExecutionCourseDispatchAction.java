@@ -22,6 +22,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -40,7 +41,7 @@ import Util.PeriodState;
  */
 public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareInsertExecutionCourse(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         List infoExecutionPeriods = null;
@@ -93,7 +94,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward insertExecutionCourse(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
         InfoExecutionCourse infoExecutionCourse = fillInfoExecutionCourse(form, request);

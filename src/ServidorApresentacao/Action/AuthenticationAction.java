@@ -18,6 +18,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoRole;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.ExcepcaoAutenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -33,7 +34,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class AuthenticationAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = null;
         try {
             DynaActionForm authenticationForm = (DynaActionForm) form;

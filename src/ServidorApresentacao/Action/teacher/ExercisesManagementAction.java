@@ -23,6 +23,7 @@ import org.apache.struts.upload.FormFile;
 import DataBeans.InfoQuestion;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -46,7 +47,7 @@ import UtilTests.ParseQuestionException;
 public class ExercisesManagementAction extends FenixDispatchAction {
 
     public ActionForward prepareChooseExerciseType(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("questionsTypes", QuestionType.getAllTypes());
@@ -55,7 +56,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseQuestionType(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
         if (questionType.intValue() == QuestionType.LID) {
@@ -80,7 +81,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreateExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
 
         Integer questionType = (Integer) ((DynaActionForm) form).get("questionType");
@@ -125,7 +126,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward createExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         //METADATA
@@ -231,7 +232,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward previewExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         //QUESTION
         Integer questionTypeId = (Integer) ((DynaActionForm) form).get("questionType");
         Integer cardinalityTypeId = (Integer) ((DynaActionForm) form).get("cardinalityType");
@@ -412,7 +413,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward addNewCondition(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         ((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form)
                 .get("optionNumber")).intValue() + 1));
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
@@ -447,7 +448,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward removeCondition(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         Integer conditionId = (Integer) (((DynaActionForm) form).get("conditionId"));
         Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
@@ -509,7 +510,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward exercisesFirstPage(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         List badXmls = (List) request.getAttribute("badXmls");
         HttpSession session = request.getSession(false);
@@ -532,7 +533,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward chooseNewExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         HttpSession session = request.getSession(false);
@@ -554,7 +555,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddExerciseVariation(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
         request.setAttribute("order", request.getParameter("order"));
@@ -596,7 +597,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward insertNewExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("order", request.getParameter("order"));
         request.setAttribute("asc", request.getParameter("asc"));
@@ -642,7 +643,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareRemoveExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
         request.setAttribute("exerciseCode", getCodeFromRequest(request, "exerciseCode"));
         request.setAttribute("objectCode", getCodeFromRequest(request, "objectCode"));
@@ -652,7 +653,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward removeExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer metadataId = getCodeFromRequest(request, "exerciseCode");
@@ -670,7 +671,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer exerciseId = getCodeFromRequest(request, "exerciseCode");
@@ -697,7 +698,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
     }
 
     public ActionForward editExercise(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
         Integer executionCourseId = getCodeFromRequest(request, "objectCode");
         Integer exerciseId = getCodeFromRequest(request, "exerciseCode");

@@ -20,6 +20,7 @@ import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -38,7 +39,7 @@ import Util.SituationOfGuide;
 public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -66,7 +67,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException {
+            HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm createReimbursementGuideForm = (DynaActionForm) form;
 

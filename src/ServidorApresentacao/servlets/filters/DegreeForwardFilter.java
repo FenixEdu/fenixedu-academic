@@ -20,6 +20,7 @@ import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
@@ -86,6 +87,10 @@ public class DegreeForwardFilter implements Filter {
             }
         } catch (FenixServiceException e2) {
             throw new ServletException(e2);
+        } catch (FenixFilterException e) {
+            throw new ServletException(e);
+        } catch (IOException e) {
+            throw new ServletException(e);
         }
 
         StringBuffer forwardURI = new StringBuffer(context);
@@ -95,6 +100,8 @@ public class DegreeForwardFilter implements Filter {
         try {
             degreeId = getDegreeId(degreeCode);
         } catch (FenixServiceException e) {
+            throw new ServletException(e);
+        } catch (FenixFilterException e) {
             throw new ServletException(e);
         }
 
@@ -113,6 +120,8 @@ public class DegreeForwardFilter implements Filter {
 
             } catch (FenixServiceException e1) {
                 throw new ServletException(e1);
+            } catch (FenixFilterException e) {
+                throw new ServletException(e);
             }
         } else {
             forwardURI.append(notFoundURI);
@@ -125,7 +134,7 @@ public class DegreeForwardFilter implements Filter {
      * @return
      * @throws FenixServiceException
      */
-    private boolean isDegree(final String string) throws FenixServiceException {
+    private boolean isDegree(final String string) throws FenixServiceException, FenixFilterException {
 
         List listDegrees = (List) ServiceUtils.executeService(null, "ReadDegrees", null);
 
@@ -148,7 +157,7 @@ public class DegreeForwardFilter implements Filter {
      * @return
      * @throws FenixServiceException
      */
-    private InfoExecutionPeriod getCurrentExecutionPeriod() throws FenixServiceException {
+    private InfoExecutionPeriod getCurrentExecutionPeriod() throws FenixServiceException, FenixFilterException {
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                 null, "ReadCurrentExecutionPeriod", null);
@@ -160,7 +169,7 @@ public class DegreeForwardFilter implements Filter {
      * @return
      * @throws FenixServiceException
      */
-    private Integer getDegreeId(String degreeCode) throws FenixServiceException {
+    private Integer getDegreeId(String degreeCode) throws FenixServiceException, FenixFilterException {
         Object args[] = { degreeCode };
         Integer executionCourseOID = new Integer(0);
 
