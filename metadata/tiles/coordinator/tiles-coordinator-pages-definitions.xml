@@ -31,7 +31,7 @@
 	
 	<definition name="viewHistoric" extends="definition.coordinator.two-column.extra-menu">
 		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
-		<put name="body" value="" />
+		<put name="body" value="/coordinator/degreeSite/viewHistoric.jsp" />
 	</definition>
 	
 	<definition name="viewSite" extends="definition.coordinator.two-column.extra-menu">

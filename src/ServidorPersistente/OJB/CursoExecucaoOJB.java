@@ -437,4 +437,12 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 
     }
 
+    public List readExecutionsDegreesByDegree(ICurso degree) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        
+        criteria.addEqualTo("curricularPlan.degree.idInternal", degree.getIdInternal());
+        
+        return queryList(CursoExecucao.class, criteria);
+    }
 }

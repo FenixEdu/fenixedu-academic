@@ -152,4 +152,10 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	public ICursoExecucao readByDegreeNameAndExecutionYearAndDegreeType(String name, IExecutionYear executionYear, TipoCurso degreeType)
 		throws ExcepcaoPersistencia;
 
+	
+	/**
+	 * @param executionCourse
+	 * @param degree
+	 */
+	public List readExecutionsDegreesByDegree(ICurso degree) throws ExcepcaoPersistencia;
 }

@@ -1,5 +1,7 @@
 package ServidorApresentacao.Action.coordinator;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
+import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -372,6 +375,53 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         throws FenixActionException
     {
 
+        HttpSession session = request.getSession(false);
+		ActionErrors errors = new ActionErrors();
+		
+        Integer executionDegreeId = getFromRequest("infoExecutionDegreeId", request);
+
+        GestorServicos gestorServicos = GestorServicos.manager();
+
+        //read execution degree
+        Object[] args = { executionDegreeId };
+
+        InfoExecutionDegree infoExecutionDegree = null;
+        Integer degreeId = null; 
+        try
+        {
+            infoExecutionDegree =
+                (InfoExecutionDegree) gestorServicos.executar(null, "ReadExecutionDegreeByOID", args);
+        } catch (FenixServiceException e)
+        {
+            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            saveErrors(request, errors);
+        }
+
+        if (infoExecutionDegree != null
+            && infoExecutionDegree.getInfoDegreeCurricularPlan() != null
+            && infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() != null)
+        {
+            degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
+        }
+        
+        
+        //read all execution degres this degree
+		Object[] args2 = { degreeId };
+			
+		List infoExecutionDegrees = null;
+		 try
+		 {
+			infoExecutionDegrees =
+				 (List) gestorServicos.executar(null, "ReadExecutionDegreesByDegree", args2);
+		 } catch (FenixServiceException e)
+		 {
+			 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+			 saveErrors(request, errors);
+		 }
+
+		request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
+		request.setAttribute("infoExecutionDegreeId", executionDegreeId);
+		
         return mapping.findForward("viewHistoric");
     }
 
