@@ -29,11 +29,19 @@ public class EditAnnouncementTest
 	protected String getNameOfServiceToBeTested() {
 		return "EditAnnouncementService";
 	}
-
 	protected String getDataSetFilePath() {
-		return "etc/testEditAnnouncementDataSet.xml";
+		return "etc/datasets/servico/teacher/testEditAnnouncementDataSet.xml";
 	}
-
+	protected String getExpectedDataSetFilePath() {
+		return "etc/datasets/servico/teacher/testExpectedEditAnnouncementDataSet.xml";
+	}
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccefullDataSetFilePath()
+	 */
+	protected String getExpectedUnsuccefullDataSetFilePath() {
+		return "etc/datasets/servico/teacher/testExpectedEditAnnouncementUnsuccefullDataSet.xml";
+	}
 	/*
 	 *  (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
@@ -185,7 +193,7 @@ public class EditAnnouncementTest
 				sp.confirmarTransaccao();
 
 				//Comparacao com o data set
-				//compareDataSet(getDataSetFilePath());				
+				compareDataSet(getExpectedDataSetFilePath());
 			} catch (ExcepcaoPersistencia ex) {
 				fail("Editing an announcement of a Site " + ex);
 			}
@@ -228,7 +236,7 @@ public class EditAnnouncementTest
 			 * o serviço nem sequer chega a ser invocado
 			 */
 			//Comparacao do dataset
-			//compareDataSet(getDataSetFilePath());
+			compareDataSet(getExpectedUnsuccefullDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Editing an announcement of a Site " + ex);
 		} catch (Exception ex) {

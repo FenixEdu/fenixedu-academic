@@ -29,13 +29,17 @@ public class DeleteAnnouncementTest
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testDeleteAnnouncementDataSet.xml";
+		return "etc/datasets/servico/teacher/testDeleteAnnouncementDataSet.xml";
 	}
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/testExpectedDeleteAnnouncementDataSet.xml";
+		return "etc/datasets/servico/teacher/testExpectedDeleteAnnouncementDataSet.xml";
 	}
+	/*
+	 *  (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.teacher.AnnouncementBelongsToExecutionCourseTest#getExpectedUnsuccefullDataSetFilePath()
+	 */
 	protected String getExpectedUnsuccefullDataSetFilePath() {
-		return "etc/datasets/testExpectedDeleteAnnouncementUnsuccefullDataSet.xml";
+		return "etc/datasets/servico/teacher/testExpectedDeleteAnnouncementUnsuccefullDataSet.xml";
 	}
 	/*
 	 *  (non-Javadoc)
