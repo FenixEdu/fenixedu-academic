@@ -7,11 +7,9 @@
 <span class="error"><html:errors/></span>	
 
 <logic:present name="<%= SessionConstants.INFO_SITES_LIST %>" scope="session">
-	
+	<h3><bean:message key="label.professorships" />	</h3>
 		<table cellpadding="0" border="0">
-	 	<tr>   		
-	 		<bean:message key="label.professorships" />	
-		 </tr>
+	 	
 	<% int index = 0; %>	 
 
 	<logic:iterate name="<%= SessionConstants.INFO_SITES_LIST %>" id="site" >
@@ -24,6 +22,4 @@
 	 <% index++; %>	
 	</logic:iterate>
 	 </table>
-	
-	
 </logic:present>

@@ -17,8 +17,8 @@
      <img alt="" border="0"  src="<%= request.getContextPath() %>/images/LogoIST.gif"  />
 	</td>
     <td id="principal" bgcolor="#FFFFFF">
-      <div id="header"><h4><tiles:getAsString name="institutionName" /></h4></div>
-      <h1><tiles:getAsString name="executionCourseName"/></h1>
+      <div id="header"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
+      <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
       <br />
 	  <tiles:insert attribute="body" />      
     </td>	
@@ -27,7 +27,7 @@
         <h3>Navega&ccedil;&atilde;o</h3>
       </div>
       <div id="nav">
-      <tiles:insert attribute="navbar"/>	
+      <tiles:insert attribute="navbar" ignore="true"/>	
 <%--        <ul>
 		  <li><a href="index.html">P&aacute;gina Inicial</a></li>
           <li><a href="anuncios.html">An&uacute;ncios</a></li>
