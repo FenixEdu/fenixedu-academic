@@ -192,7 +192,6 @@ public class UnEnrollStudentInExamTest
 	}
 
 	public void testUnEnrollStudentInExam() {
-		Object[] args = { userView.getUtilizador(), new Integer(2)};
 		Boolean result;
 
 		try {
@@ -200,7 +199,7 @@ public class UnEnrollStudentInExamTest
 				(Boolean) gestor.executar(
 					userView,
 					getNameOfServiceToBeTested(),
-					args);
+					getAuthorizeArguments());
 			assertTrue(result.booleanValue());
 			compareDataSetUsingExceptedDataSetTableColumns(
 				"etc/datasets/servicos/student/"
