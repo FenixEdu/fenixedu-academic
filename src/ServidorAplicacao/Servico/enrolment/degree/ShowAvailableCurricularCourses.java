@@ -49,7 +49,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 	 * @return EnrolmentContext
 	 * @throws FenixServiceException
 	 */
-	public InfoEnrolmentContext run(IUserView userView, Integer semester) throws FenixServiceException {
+	public InfoEnrolmentContext run(IUserView userView) throws FenixServiceException {
 
 		try {
 
@@ -58,7 +58,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
 
 			IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
-			IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student, semester));
+			IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student));
 
 			return EnrolmentContextManager.getInfoEnrolmentContext(strategy.getAvailableCurricularCourses());
 

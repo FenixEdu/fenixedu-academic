@@ -45,7 +45,7 @@ import Util.EnrolmentState;
  */
 public abstract class EnrolmentContextManager {
 
-	public static EnrolmentContext initialEnrolmentContext(IStudent student, Integer semester) throws ExcepcaoPersistencia {
+	public static EnrolmentContext initialEnrolmentContext(IStudent student) throws ExcepcaoPersistencia {
 
 		EnrolmentContext enrolmentContext = new EnrolmentContext();
 
